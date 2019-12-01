@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileSystem\INIFile.cs" />
+    <Compile Include="FileSystem\LangFile.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +62,7 @@
       <DependentUpon>INIComparator.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\File.cs" />
+    <Compile Include="Utils\Lang.cs" />
     <Compile Include="Utils\Misc.cs" />
     <Compile Include="_run.cs" />
     <EmbeddedResource Include="Main.resx">

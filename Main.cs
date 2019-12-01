@@ -8,11 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using relert_sharp.SubWindows;
+using relert_sharp.Utils;
 
 namespace relert_sharp
 {
     public partial class Main : Form
     {
+        public Cons.Language lang = Cons.Language.EnglishUS;
         public Main()
         {
             InitializeComponent();
@@ -20,8 +22,8 @@ namespace relert_sharp
 
         private void btnOpenINIComp_Click(object sender, EventArgs e)
         {
-            INIComparator c = new INIComparator();
-            c.Show();
+            INIComparator c = new INIComparator(lang);
+            c.ShowDialog();
         }
     }
 }
