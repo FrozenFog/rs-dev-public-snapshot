@@ -13,14 +13,8 @@ namespace relert_sharp.Utils
         public Lang(Cons.Language l)
         {
             LangFile f = null;
-            if (l == Cons.Language.EnglishUS)
-            {
-                f = new LangFile("en-us.lang");
-            }
-            else if (l == Cons.Language.Chinese)
-            {
-                f = new LangFile("chs.lang");
-            }
+            if (l == Cons.Language.EnglishUS) f = new LangFile("en-us.lang", false);
+            else if (l == Cons.Language.Chinese) f = new LangFile("chs.lang", false);
             foreach (INIEntity ent in f.IniData)
             {
                 foreach (INIPair p in ent.DataList)
@@ -28,17 +22,12 @@ namespace relert_sharp.Utils
                     dict[p.Name] = p.Value;
                 }
             }
+            
         }
         public string Ds(string key)
         {
-            if (dict.Keys.Contains(key))
-            {
-                return dict[key];
-            }
-            else
-            {
-                return key;
-            }
+            if (dict.Keys.Contains(key)) return dict[key];
+            else return key;
         }
     }
 }

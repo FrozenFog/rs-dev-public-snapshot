@@ -9,7 +9,7 @@ namespace relert_sharp.FileSystem
 {
     public class LangFile : INIFile
     {
-        public LangFile(string path) : base(path)
+        public LangFile(string path, bool removeSpace) : base(path,removeSpace=false)
         {
             
         }

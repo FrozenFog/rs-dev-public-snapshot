@@ -49,14 +49,15 @@ namespace relert_sharp.Utils
             {
                 "Bounty.Value","Cost","PhysicalSize","Points","Sight","Size","Soylent","Speed","Strength","ThreatPosed","GuardRange","DetectDisguiseRange",
                 "Adjacent","TechLevel","Ammo","Reload","UndeployDelay","AirRangeBonus","JumpjetSpeed","JumpjetClimb","JumpJetAccel","BuildLimit","SensorsSight",
-                "Passengers","Weight","InitialPayload.Nums","AttachEffect.Duration","MaxDebris","ROT","Power","MinDebris","FireAngle","TurretCount","WeaponCount",
-                "DebrisMaximums","Damage","ROF","LaserDuration","EMP.Duration","EMP.Cap","AmbientDamage","Burst","DisableWeapons.Duration","EmptyReload","MaxNumberOccupants",
+                "Passengers","AttachEffect.Duration","MaxDebris","ROT","Power","MinDebris","FireAngle","TurretCount","WeaponCount",
+                "Damage","ROF","LaserDuration","EMP.Duration","EMP.Cap","AmbientDamage","Burst","DisableWeapons.Duration","EmptyReload","MaxNumberOccupants",
                 "Money.Amount","SizeLimit","Sonar.Duration","TurretROT"
             };
             public static readonly string[] FloatKey =
             {
                 "BuildTimeMultiplier","Range","MinimumRange","CellSpread","PercentAtMax","AttachEffect.SpeedMultiplier","AttachEffect.ArmorMultiplier",
-                "AttachEffect.FirepowerMultiplier","BallisticScatter.Max","BallisticScatter.Min","DeathWeaponDamageModifier","IronCurtain.Modifier"
+                "AttachEffect.FirepowerMultiplier","BallisticScatter.Max","BallisticScatter.Min","DeathWeaponDamageModifier","IronCurtain.Modifier",
+                "Weight"
             };
             public static readonly string[] PercentListKey =
             {
@@ -64,7 +65,7 @@ namespace relert_sharp.Utils
             };
             public static readonly string[] PercentKey =
             {
-                "ProneDamage"
+                "ProneDamage","Survivor.VeteranPassengerChance","Survivor.RookiePassengerChance","Survivor.ElitePassengerChance"
             };
             public static readonly string[] SpaceListKey =
             {
@@ -76,23 +77,42 @@ namespace relert_sharp.Utils
             public static readonly string[] SightLike =
             {
                 "Sight","Size","AirRangeBonus","ThreatPosed","Soylent","Bounty.Value","JumpjetSpeed","JumpjetClimb","AmbientDamage","Ammo","AttachEffect.Duration",
-                "BallisticScatter.Max","BallisticScatter.Min","BuildLimit","Burst","BuildTimeMultiplier","CellSpread","Cost","Damage","DeathWeaponDamageModifier",
-                "DebrisMaximums","DisableWeapons.Duration","EMP.Cap","EMP.Duration","EmptyReload","Fearless","GuardRange","IronCurtain.Modifier","LaserDuration","MaxDebris",
-                "MaxNumberOccupants","MinDebris","MinimumRange","Money.Amount","Passengers","PercentAtMax","Points","Power","Range","Reload","ROF","ROT","SizeLimit",
-                "Sonar.Duration","Speed","Strength","TurretROT","UndeployDelay","Weight"
+                "BuildLimit","Burst","CellSpread","Cost","Damage","DisableWeapons.Duration","EMP.Cap","EMP.Duration","EmptyReload","Fearless","GuardRange",
+                "LaserDuration","MaxDebris","MaxNumberOccupants","MinDebris","MinimumRange","Money.Amount","Passengers","PercentAtMax","Points","Power","Range",
+                "Reload","ROF","ROT","SizeLimit","Sonar.Duration","Speed","Strength","TurretROT","UndeployDelay","Weight","SpecialThreatValue","TurretCount,",
+                "WeaponCount","Survivor.RookiePassengerChance","Survivor.VeteranPassengerChance","Survivor.ElitePassengerChance","TechLevel"
             };
             public static readonly string[] ActiveBoolLike =
             {
                 "AffectsAllies","AffectsOwner","Bounty.Display","Bright","Deployer","DeployFire","ImmuneToPsionics","ImmuneToRadiation","Malicious","OmniFire","OpportunityFire",
-                "RadarInvisible","Rocker","Selectable","Trainable","Wall","Wood"
+                "RadarInvisible","Rocker","Selectable","Trainable","Wall","Wood","Bounty","CanBeReversed","DefaultToGuardArea","IsSelectableCombatant","OpenTopped","NoManualUnload",
+                "NoManualEnter","DontScore","Insignificant","ProtectedDriver","Turret","Crusher","Accelerates","ImmuneToPsionicWeapons","VehicleThief.Allowed","IsSimpleDeployer",
+                "Arcing","SubjectToCliffs","SubjectToElevation","SubjectToWalls","SubjectToBuildings","Shadow","AA","AG"
             };
             public static readonly string[] PassiveBoolLike =
             {
-                "Bounty","CanBeReversed"
+                
             };
             public static readonly string[] AcquireBoolLike =
             {
                 "Fearless"
+            };
+            public static readonly string[] ListLike =
+            {
+                "DebrisMaximums","Anim","Prerequisite","Prerequisite.StolenTechs","InitialPayload.Nums","Owner","AnimList"
+            };
+            public static readonly string[] NameLike =
+            {
+                "Name", "VoiceSecondaryWeaponAttack","ElitePrimary","EliteSecondary","Armor","VoiceDeploy","Promote.VeteranSound","Promote.EliteSound","Secondary","Primary",
+                "UIName","DeathWeapon","Passengers.Allowed","InitialPayload.Types","Image","AttachEffect.Animation","Locomotor","Parachute.Anim","Convert.Deploy","Category",
+                "CrushSound","DamageSound","Insignia.Rookie","Insignia.Veteran","Insignia.Elite","Projectile","Warhead","Report","OccupantAnim","AssaultAnim",
+                "PreImpactAnim","OpenTransportWeapon","VoiceSpecialAttack","IFVMode","ReversedAs","Cursor.Deploy","GroupAs","OpenToppedAnim","SW.AITargeting","InfDeathAnim",
+                "InfDeath"
+            };
+            public static readonly string[] MultiplierLike =
+            {
+                "BuildTimeMultiplier","DeathWeaponDamageModifier","IronCurtain.Modifier","ForceShield.Modifier","EMP.Modifier","LightningRod.Modifier",
+                "Experience.MindControlSelfModifier","Experience.SpawnOwnerModifier","BallisticScatter.Max","BallisticScatter.Min"
             };
         }
 

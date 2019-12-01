@@ -11,16 +11,20 @@ namespace relert_sharp.Utils
     {
         private FileStream fs;
         private string filename;
+        private string fullname;
+        private string filepath;
         private Cons.FileExtension extension = Cons.FileExtension.Undefined;
         public File(string path, FileMode m, FileAccess a)
         {
-            fs = new FileStream(path.ToLower(), m, a);
+            fs = new FileStream(path, m, a);
+            filepath = path;
             string ext = "";
             if (fs.Name.Contains("."))
             {
                 string[] sl = path.Split(new char[] { '.' });
                 filename = sl[0];
                 ext = sl[1];
+                fullname = filename + "." + ext;
             }
             else
             {
@@ -52,6 +56,7 @@ namespace relert_sharp.Utils
         {
             return Cons.FileExtension.UnknownBinary;
         }
+        #region Public Methods
         public List<string> readlines()
         {
             StreamReader sr = new StreamReader(fs);
@@ -63,6 +68,21 @@ namespace relert_sharp.Utils
             }
             return result;
         }
+        public void Write(string s)
+        {
+            Close();
+            StreamWriter sw = new StreamWriter(filepath);
+            sw.Write(s);
+            sw.Close();
+            sw.Dispose();
+        }
+        public void Close()
+        {
+            fs.Close();
+            fs.Dispose();
+        }
+        #endregion
+        #region Public Calls
         public Cons.FileExtension FileExt
         {
             get
@@ -77,5 +97,6 @@ namespace relert_sharp.Utils
                 }
             }
         }
+        #endregion
     }
 }

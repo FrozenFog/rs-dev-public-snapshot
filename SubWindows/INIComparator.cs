@@ -121,6 +121,7 @@ namespace relert_sharp.SubWindows
                     log.AddLog(ent.Name, p1, INIPair.NullPair);
                 }
             }
+            log.RemoveEmpty();
             log.Translate(Trans);
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Title = Trans.Ds("ResultSaveTitle");
@@ -131,7 +132,19 @@ namespace relert_sharp.SubWindows
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Utils.File f = new Utils.File(dlg.FileName, FileMode.OpenOrCreate, FileAccess.Write);
-                ////////
+                string result = "";
+                foreach (string entName in log.DictEntry.Keys)
+                {
+                    result += Trans.Ds(entName) + ":\n";
+                    foreach (DiffLog.LogEntry ent in log.DictEntry[entName])
+                    {
+                        result += "\t" + ent.Result + "\n";
+                    }
+                    result += "\n";
+                }
+                f.Write(result);
+                f.Close();
+                MessageBox.Show(Trans.Ds("CMPResultSaveSuccessText"), Trans.Ds("CMPTitle"), MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
         private void Set_Language()
@@ -143,6 +156,7 @@ namespace relert_sharp.SubWindows
                     c.Text = Trans.Ds(c.Text);
                 }
             }
+            Text = Trans.Ds(Text);
         }
         public class DiffLog
         {
@@ -160,15 +174,14 @@ namespace relert_sharp.SubWindows
                     statedNames.Add(entName);
                     logs[entName] = new List<LogEntry>();
                 }
-                logs[entName].Add(new LogEntry(pOlder.Name, pOlder.Value, pNewer.Value, language));
+                string pName = pOlder.Name;
+                if (pName == "" || pName == null) pName = pNewer.Name;
+                logs[entName].Add(new LogEntry(pName, pOlder.Value, pNewer.Value, language));
             }
             public void AddLog(INIEntity entOlder, INIEntity entNewer)
             {
-                if (!statedNames.Contains(entOlder.Name))
-                {
-                    statedNames.Add(entOlder.Name);
-                }
-
+                //unfinished
+                //entOlder, entNewer is item list and has differences
             }
             public void Translate(Lang Trans)
             {
@@ -180,22 +193,93 @@ namespace relert_sharp.SubWindows
                     {
                         foreach (string s in ent.Description)
                         {
-                            ent.Result += Trans.Ds(s);
+                            ent.Result += Trans.Ds(s) + " ";
                         }
                     }
                     buffer[newkey] = logs[key];
                 }
                 logs = buffer;
             }
-            private class LogEntry
+            public void RemoveEmpty()
+            {
+                Dictionary<string, List<LogEntry>> buffer = new Dictionary<string, List<LogEntry>>();
+                List<string> namesBuffer = new List<string>();
+                foreach (string name in statedNames)
+                {
+                    List<LogEntry> entryBuffer = new List<LogEntry>();
+                    foreach (LogEntry entry in logs[name])
+                    {
+                        if (!entry.IsEmpty)
+                        {
+                            entryBuffer.Add(entry);
+                        }
+                    }
+                    if (entryBuffer.Count != 0)
+                    {
+                        buffer[name] = entryBuffer;
+                        namesBuffer.Add(name);
+                    }
+                }
+                statedNames = namesBuffer;
+                logs = buffer;
+            }
+            public class LogEntry
             {
                 private string itemName;
                 private List<string> describ;
                 private string result = "";
+                private bool isEmpty = false;
                 public LogEntry(string name, object older, object newer, Cons.Language language)
                 {
                     itemName = name;
+                    if ((older == null || older.ToString() == "") &&
+                        (newer == null || newer.ToString() == ""))
+                    {
+                        isEmpty = true;
+                        return;
+                    }
                     if (Cons.Interpreter.SightLike.Contains(itemName))
+                    {
+                        describ = SightLike(older, newer, language);
+                    }
+                    else if (Cons.Interpreter.ActiveBoolLike.Contains(itemName))
+                    {
+                        describ = ActiveBoolLike(older, newer, language);
+                    }
+                    else if (Cons.Interpreter.PassiveBoolLike.Contains(itemName))
+                    {
+                        describ = PassiveBoolLike(older, newer, language);
+                    }
+                    else if (Cons.Interpreter.AcquireBoolLike.Contains(itemName))
+                    {
+                        describ = AcquireBoolLike(older, newer, language);
+                    }
+                    else if (Cons.Interpreter.NameLike.Contains(itemName))
+                    {
+                        describ = NameLike(older, newer, language);
+                    }
+                    else
+                    {
+                        describ = DefaultStringLike(older, newer, language);
+                        describ.Insert(0, "----");
+                    }
+
+                }
+                public bool IsEmpty
+                {
+                    get { return isEmpty; }
+                }
+                private List<string> SightLike(object older, object newer, Cons.Language language)
+                {
+                    if (older == null || older.ToString() == "")
+                    {
+                        return new List<string>() { itemName, "SetAs", newer.ToString() };
+                    }
+                    else if (newer == null || newer.ToString() == "")
+                    {
+                        return new List<string>() { itemName, "SetAs", "DefaultValue" };
+                    }
+                    else
                     {
                         string modify = "Increased";
                         if (older.GetType() == typeof(int))
@@ -215,39 +299,172 @@ namespace relert_sharp.SubWindows
                         switch (language)
                         {
                             case Cons.Language.EnglishUS:
-                                describ = new List<string>() { itemName, modify, "From", older.ToString(), "Into", newer.ToString() };
-                                break;
+                                return new List<string>() { itemName, modify, "From", older.ToString(), "To", newer.ToString() };
                             case Cons.Language.Chinese:
-                                describ = new List<string>() { itemName, "From", older.ToString(), modify, "Into", newer.ToString() };
-                                break;
+                                return new List<string>() { itemName, "From", older.ToString(), modify, "To", newer.ToString() };
+                            default:
+                                return null;
                         }
                     }
-                    else if (Cons.Interpreter.ActiveBoolLike.Contains(itemName))
+
+                }
+                private List<string> ActiveBoolLike(object older, object newer, Cons.Language language)
+                {
+                    if (older == null || older.ToString() == "")
+                    {
+                        string modify = "Wont";
+                        if ((bool)newer)
+                        {
+                            modify = "Will";
+                        }
+                        return new List<string>() { "Now", modify, itemName, "(NewDefine)" };
+                    }
+                    else if (newer == null || newer.ToString() == "")
+                    {
+                        switch (language)
+                        {
+                            case Cons.Language.EnglishUS:
+                                return new List<string>() { "Wont", "Define", "Whether", "Can", itemName, "OrNot", "(SetDefault)" };
+                            case Cons.Language.Chinese:
+                                return new List<string>() { "Wont", "Define", "Whether", "Can", itemName, "(SetDefault)" };
+                            default:
+                                return null;
+                        }
+                    }
+                    else
                     {
                         string modify = "Unable";
                         if ((bool)newer)
                         {
                             modify = "Able";
                         }
-                        describ = new List<string>() { "Is_Now", modify, itemName };
+                        return new List<string>() { "Now", modify, "To", itemName };
                     }
-                    else if (Cons.Interpreter.PassiveBoolLike.Contains(itemName))
+                }
+                private List<string> PassiveBoolLike(object older, object newer, Cons.Language language)
+                {
+                    string modify = "Cant";
+                    if (older == null || older.ToString() == "")
                     {
-                        string modify = "Cant";
                         if ((bool)newer)
                         {
                             modify = "Can";
                         }
-                        describ = new List<string>() { "Now", modify, itemName };
+                        return new List<string>() { "Now", modify, ItemName, "(NewDefine)" };
                     }
-                    else if (Cons.Interpreter.AcquireBoolLike.Contains(itemName))
+                    else if (newer == null || newer.ToString() == "")
                     {
-                        string modify = "Lost";
+                        switch (language)
+                        {
+                            case Cons.Language.EnglishUS:
+                                return new List<string>() { "Wont", "Define", "Whether", itemName, "OrNot", "(SetDefault)" };
+                            case Cons.Language.Chinese:
+                                return new List<string>() { "Wont", "Define", "Whether", itemName, "(SetDefault)" };
+                            default:
+                                return null;
+                        }
+                    }
+                    else
+                    {
+                        if ((bool)newer)
+                        {
+                            modify = "Can";
+                        }
+                        return new List<string>() { "Now", modify, itemName };
+                    }
+                }
+                private List<string> AcquireBoolLike(object older, object newer, Cons.Language language)
+                {
+                    string modify = "Lost";
+                    if (older == null || older.ToString() == "")
+                    {
                         if ((bool)newer)
                         {
                             modify = "Gain";
                         }
-                        describ = new List<string>() { "Now", modify, itemName };
+                        switch (language)
+                        {
+                            case Cons.Language.EnglishUS:
+                                return new List<string>() { "Now", modify, "Abil", "Of", ItemName, "(NewDefine)" };
+                            case Cons.Language.Chinese:
+                                return new List<string>() { "Now", modify, ItemName, "Of", "Abil", "(NewDefine)" };
+                            default:
+                                return null;
+                        }
+                    }
+                    else if (newer == null || newer.ToString() == "")
+                    {
+                        switch (language)
+                        {
+                            case Cons.Language.EnglishUS:
+                                return new List<string>() { "Now", "Wont", "Define", "Whether", "Have", "Abil", "Of", itemName, "OrNot", "(SetDefault)" };
+                            case Cons.Language.Chinese:
+                                return new List<string>() { "Now", "Wont", "Define", "Whether", "Have", itemName, "Of", "Abil", "(SetDefault)" };
+                            default:
+                                return null;
+                        }
+                    }
+                    else
+                    {
+                        if ((bool)newer)
+                        {
+                            modify = "Gain";
+                        }
+                        switch (language)
+                        {
+                            case Cons.Language.EnglishUS:
+                                return new List<string>() { "Now", modify, "Abil", "Of", ItemName };
+                            case Cons.Language.Chinese:
+                                return new List<string>() { "Now", modify, ItemName, "Of", "Abil" };
+                            default:
+                                return null;
+                        }
+                    }
+                }
+                private List<string> NameLike(object older, object newer, Cons.Language language)
+                {
+                    if (older == null || older.ToString() == "")
+                    {
+                        return new List<string>() { "New", itemName, ":", "\""+newer.ToString()+"\"" };
+                    }
+                    else if (newer == null || newer.ToString() == "")
+                    {
+                        return new List<string>() { itemName, "Removed" };
+                    }
+                    else
+                    {
+                        switch (language)
+                        {
+                            case Cons.Language.EnglishUS:
+                                return new List<string>() { itemName, "Changed", "From", "\""+older.ToString()+ "\"", "To", "\""+newer.ToString()+ "\"" };
+                            case Cons.Language.Chinese:
+                                return new List<string>() { itemName, "From", "\""+older.ToString()+ "\"", "Changed", "To", "\""+newer.ToString()+ "\"" };
+                            default:
+                                return null;
+                        }
+                    }
+                }
+                private List<string> DefaultStringLike(object older, object newer, Cons.Language language)
+                {
+                    if (older == null || older.ToString() == "")
+                    {
+                        return new List<string>() { "Attribute", itemName, "Now", "Define", "As", newer.ToString() };
+                    }
+                    else if (newer == null || newer.ToString() == "")
+                    {
+                        return new List<string>() { "Attribute", itemName, "Removed", "(SetDefault)" };
+                    }
+                    else
+                    {
+                        switch (language)
+                        {
+                            case Cons.Language.EnglishUS:
+                                return new List<string>() { "Attribute", itemName, "Changed", "From", older.ToString(), "To", newer.ToString() };
+                            case Cons.Language.Chinese:
+                                return new List<string>() { "Attribute", itemName, "From", older.ToString(), "Changed", "To", newer.ToString() };
+                            default:
+                                return null;
+                        }
                     }
                 }
                 #region Public Calls
@@ -266,6 +483,16 @@ namespace relert_sharp.SubWindows
                 }
                 #endregion
             }
+            #region Public Calls
+            public Dictionary<string, List<LogEntry>> DictEntry
+            {
+                get { return logs; }
+            }
+            public List<string> EntryNames
+            {
+                get { return statedNames; }
+            }
+            #endregion
         }
     }
 }
