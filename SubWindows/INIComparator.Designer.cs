@@ -57,7 +57,7 @@
             this.btnSelectPath1.Name = "btnSelectPath1";
             this.btnSelectPath1.Size = new System.Drawing.Size(74, 21);
             this.btnSelectPath1.TabIndex = 1;
-            this.btnSelectPath1.Text = "Set Path";
+            this.btnSelectPath1.Text = "CMPbtnSetPath";
             this.btnSelectPath1.UseVisualStyleBackColor = true;
             this.btnSelectPath1.Click += new System.EventHandler(this.btnSelectPath1_Click);
             // 
@@ -67,7 +67,7 @@
             this.btnSelectPath2.Name = "btnSelectPath2";
             this.btnSelectPath2.Size = new System.Drawing.Size(74, 21);
             this.btnSelectPath2.TabIndex = 1;
-            this.btnSelectPath2.Text = "Set Path";
+            this.btnSelectPath2.Text = "CMPbtnSetPath";
             this.btnSelectPath2.UseVisualStyleBackColor = true;
             this.btnSelectPath2.Click += new System.EventHandler(this.btnSelectPath2_Click);
             // 
@@ -76,18 +76,18 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(105, 29);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(131, 12);
+            this.label1.Size = new System.Drawing.Size(89, 12);
             this.label1.TabIndex = 2;
-            this.label1.Text = "INI Path A (Previous)";
+            this.label1.Text = "CMPlblPrevious";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(105, 79);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(125, 12);
+            this.label2.Size = new System.Drawing.Size(83, 12);
             this.label2.TabIndex = 2;
-            this.label2.Text = "INI Path B (Updated)";
+            this.label2.Text = "CMPlblUpdated";
             // 
             // btnRunCompare
             // 
@@ -95,7 +95,7 @@
             this.btnRunCompare.Name = "btnRunCompare";
             this.btnRunCompare.Size = new System.Drawing.Size(76, 21);
             this.btnRunCompare.TabIndex = 3;
-            this.btnRunCompare.Text = "Compare";
+            this.btnRunCompare.Text = "CMPbtnRunCompare";
             this.btnRunCompare.UseVisualStyleBackColor = true;
             this.btnRunCompare.Click += new System.EventHandler(this.btnRunCompare_Click);
             // 
@@ -113,8 +113,10 @@
             this.Controls.Add(this.txbINIAPath);
             this.MaximizeBox = false;
             this.Name = "INIComparator";
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "INI Comparator";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "CMPTitle";
             this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
