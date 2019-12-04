@@ -14,7 +14,7 @@ namespace relert_sharp.Utils
         private string fullname;
         private string filepath;
         private string nameext;
-        private Cons.FileExtension extension = Cons.FileExtension.Undefined;
+        private Constant.FileExtension extension = Constant.FileExtension.Undefined;
         public File(string path, FileMode m, FileAccess a)
         {
             fs = new FileStream(path, m, a);
@@ -34,31 +34,31 @@ namespace relert_sharp.Utils
             switch (nameext.ToLower())
             {
                 case "ini":
-                    extension = Cons.FileExtension.INI;
+                    extension = Constant.FileExtension.INI;
                     break;
                 case "csv":
-                    extension = Cons.FileExtension.CSV;
+                    extension = Constant.FileExtension.CSV;
                     break;
                 case "map":
-                    extension = Cons.FileExtension.MAP;
+                    extension = Constant.FileExtension.MAP;
                     break;
                 case "yrm":
-                    extension = Cons.FileExtension.YRM;
+                    extension = Constant.FileExtension.YRM;
                     break;
                 case "txt":
-                    extension = Cons.FileExtension.TXT;
+                    extension = Constant.FileExtension.TXT;
                     break;
                 case "lang":
-                    extension = Cons.FileExtension.LANG;
+                    extension = Constant.FileExtension.LANG;
                     break;
                 default:
-                    extension = Cons.FileExtension.Undefined;
+                    extension = Constant.FileExtension.Undefined;
                     break;
             }
         }
-        private Cons.FileExtension Get_File_Ext()
+        private Constant.FileExtension Get_File_Ext()
         {
-            return Cons.FileExtension.UnknownBinary;
+            return Constant.FileExtension.UnknownBinary;
         }
         #region Public Methods
         public List<string> readlines()
@@ -87,11 +87,11 @@ namespace relert_sharp.Utils
         }
         #endregion
         #region Public Calls
-        public Cons.FileExtension FileExt
+        public Constant.FileExtension FileExt
         {
             get
             {
-                if (extension == Cons.FileExtension.Undefined)
+                if (extension == Constant.FileExtension.Undefined)
                 {
                     return Get_File_Ext();
                 }

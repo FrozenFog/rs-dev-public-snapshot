@@ -19,6 +19,7 @@ namespace relert_sharp
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+                Utils.Misc.Init_Language();
                 Application.Run(new Main());
             }
             else

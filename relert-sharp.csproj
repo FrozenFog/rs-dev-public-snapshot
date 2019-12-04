@@ -64,7 +64,9 @@
     <Compile Include="SubWindows\INIComparator.Designer.cs">
       <DependentUpon>INIComparator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Constant.cs" />
     <Compile Include="Utils\File.cs" />
+    <Compile Include="Utils\Interpreter.cs" />
     <Compile Include="Utils\Lang.cs" />
     <Compile Include="Utils\Misc.cs" />
     <Compile Include="_run.cs" />

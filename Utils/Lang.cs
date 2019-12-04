@@ -10,30 +10,14 @@ namespace relert_sharp.Utils
     public class Lang
     {
         private Dictionary<string, string> dict = new Dictionary<string, string>();
-        private Cons.Language language;
-        public Lang(Cons.Language l)
+        public Lang(Dictionary<string, string> src)
         {
-            language = l;
-            LangFile f = null;
-            if (l == Cons.Language.EnglishUS) f = new LangFile("en-us.lang", false);
-            else if (l == Cons.Language.Chinese) f = new LangFile("chs.lang", false);
-            foreach (INIEntity ent in f.IniData)
-            {
-                foreach (INIPair p in ent.DataList)
-                {
-                    dict[p.Name] = p.Value;
-                }
-            }
-            
+            dict = src;
         }
-        public Cons.Language Lg
-        {
-            get { return language; }
-        }
-        public string Ds(string key)
+        public string K(string key)
         {
             if (dict.Keys.Contains(key)) return dict[key];
-            else return key;
+            return key;
         }
     }
 }

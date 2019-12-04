@@ -3,129 +3,136 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using relert_sharp.FileSystem;
 
 namespace relert_sharp.Utils
 {
     public class Misc
     {
-        public static bool IsList(string s)
+        public static void Init_Language()
         {
-            return s.Contains(",");
-        }
-        public static bool IsPercentFloat(string s)
-        {
-            return s.Contains("%");
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            LangFile f = null;
+            switch (Constant.CurrentLanguage)
+            {
+                case Constant.Language.EnglishUS:
+                    f = new LangFile("en-us.lang", false);
+                    break;
+                case Constant.Language.Chinese:
+                    f = new LangFile("chs.lang", false);
+                    break;
+            }
+            foreach (INIEntity ent in f.IniData)
+            {
+                foreach (INIPair p in ent.DataList)
+                {
+                    dict[p.Name] = p.Value;
+                }
+            }
+            Constant.Trans = dict;
         }
         public static string[] Split(string s, char c, int t = 1)
         {
-            string[] tmp = s.Split(new char[1] { c }, t+1);
+            string[] tmp = s.Split(new char[1] { c }, t + 1);
             return tmp;
         }
-    }
-    public static class Cons
-    {
-        public static class EntName
+        /// <summary>
+        /// Get Ini key type
+        /// </summary>
+        /// <param name="keyname"></param>
+        /// <returns></returns>
+        public static Constant.INIKeyType GetKeyType(string keyname)
         {
-            public static readonly string[] SystemEntity =
+            if (Constant.Interpreter.SightLike.Contains(keyname))
             {
-                "General","JumpjetControls","SpecialWeapons","GenericPrerequisites","AudioVisual","CrateRules","Powerups","CombatDamage","Radiation","ElevationModel",
-                "WallModel","GlobalControls","MultiplayerDialogSettings","Maximums","AI","IQ","Easy","Normal","Difficult","MouseCursors","Colors","ColorAdd","ArmorTypes",
-                "Sides","GDI","Nod","ThirdSide","FourthSide","UnitedStates","Europeans","Pacific","USSR","Latin","Chinese","PsiCorps","ScorpionCell","Headquaters","Guild1",
-                "Guild2","Guild3","Special","Neutral","Defaults"
-            };
-            public static readonly string[] DictionaryList =
+                return Constant.INIKeyType.SightLike;
+            }
+            else if (Constant.Interpreter.ActiveBoolLike.Contains(keyname))
             {
-                "InfantryTypes","VehicleTypes","BuildingTypes","TerrainTypes","SmudgeTypes","OverlayTypes","Animations","VoxelAnims","Particles","ParticleSystems",
-                "SuperWeaponTypes","Warheads","WeaponTypes","Projectiles","Countries","VariableNames","Movies","SoundList","Themes","PreviewPack","Houses","IsoMapPack5",
-                "OverlayDataPack","OverlayPack","Digest"
-            };
+                return Constant.INIKeyType.ActiveLike;
+            }
+            else if (Constant.Interpreter.PassiveBoolLike.Contains(keyname))
+            {
+                return Constant.INIKeyType.PassiveLike;
+            }
+            else if (Constant.Interpreter.AcquireBoolLike.Contains(keyname))
+            {
+                return Constant.INIKeyType.AcquireLike;
+            }
+            else if (Constant.Interpreter.MultiplierLike.Contains(keyname))
+            {
+                return Constant.INIKeyType.MultiplierLike;
+            }
+            else if (Constant.Interpreter.NameLike.Contains(keyname))
+            {
+                return Constant.INIKeyType.NameLike;
+            }
+            else if (Constant.Interpreter.NameListLike.Contains(keyname))
+            {
+                return Constant.INIKeyType.NameListLike;
+            }
+            else if (Constant.Interpreter.NumListLike.Contains(keyname))
+            {
+                return Constant.INIKeyType.NumListLike;
+            }
+            else if (keyname.Contains("Versus.") && !keyname.Contains("Retaliate") && !keyname.Contains("PassiveAcquire"))
+            {
+                return Constant.INIKeyType.VersusLike;
+            }
+            else if (keyname == "Verses")
+            {
+                return Constant.INIKeyType.VersesListLike;
+            }
+            else if (keyname == "Armor")
+            {
+                return Constant.INIKeyType.Armor;
+            }
+            else if (keyname == "")
+            {
+                return Constant.INIKeyType.Null;
+            }
+            else
+            {
+                return Constant.INIKeyType.DefaultString;
+            }
         }
-        public static readonly string[] BoolTrue = { "yes", "True", "true" };
-        public static readonly string[] BoolFalse = { "no", "False", "false" };
-        public static readonly string[] NullString = { "<none>", "None", "none" };
-        public static class KeyName
+        public static dynamic GetNonNull(object obj1, object obj2)
         {
-            public static readonly string[] IntKey =
+            if (obj1.GetType() == typeof(Constant.INIKeyType))
             {
-                "Bounty.Value","Cost","PhysicalSize","Points","Sight","Size","Soylent","Speed","Strength","ThreatPosed","GuardRange","DetectDisguiseRange",
-                "Adjacent","TechLevel","Ammo","Reload","UndeployDelay","AirRangeBonus","JumpjetSpeed","JumpjetClimb","JumpJetAccel","BuildLimit","SensorsSight",
-                "Passengers","AttachEffect.Duration","MaxDebris","ROT","Power","MinDebris","FireAngle","TurretCount","WeaponCount",
-                "Damage","ROF","LaserDuration","EMP.Duration","EMP.Cap","AmbientDamage","Burst","DisableWeapons.Duration","EmptyReload","MaxNumberOccupants",
-                "Money.Amount","SizeLimit","Sonar.Duration","TurretROT"
-            };
-            public static readonly string[] FloatKey =
+                if ((Constant.INIKeyType)obj1 == Constant.INIKeyType.Null) return obj2;
+                return obj1;
+            }
+            if (obj1 == null || obj1.ToString() == "")
             {
-                "BuildTimeMultiplier","Range","MinimumRange","CellSpread","PercentAtMax","AttachEffect.SpeedMultiplier","AttachEffect.ArmorMultiplier",
-                "AttachEffect.FirepowerMultiplier","BallisticScatter.Max","BallisticScatter.Min","DeathWeaponDamageModifier","IronCurtain.Modifier",
-                "Weight"
-            };
-            public static readonly string[] PercentListKey =
-            {
-                "Verses"
-            };
-            public static readonly string[] PercentKey =
-            {
-                "ProneDamage","Survivor.VeteranPassengerChance","Survivor.RookiePassengerChance","Survivor.ElitePassengerChance"
-            };
-            public static readonly string[] SpaceListKey =
-            {
-                "Sounds","Control","FShift","Priority","Type","Delay"
-            };
-        }
-        public static class Interpreter
-        {
-            public static readonly string[] SightLike =
-            {
-                "Sight","Size","AirRangeBonus","ThreatPosed","Soylent","Bounty.Value","JumpjetSpeed","JumpjetClimb","AmbientDamage","Ammo","AttachEffect.Duration",
-                "BuildLimit","Burst","CellSpread","Cost","Damage","DisableWeapons.Duration","EMP.Cap","EMP.Duration","EmptyReload","Fearless","GuardRange",
-                "LaserDuration","MaxDebris","MaxNumberOccupants","MinDebris","MinimumRange","Money.Amount","Passengers","PercentAtMax","Points","Power","Range",
-                "Reload","ROF","ROT","SizeLimit","Sonar.Duration","Speed","Strength","TurretROT","UndeployDelay","Weight","SpecialThreatValue","TurretCount",
-                "WeaponCount","Survivor.RookiePassengerChance","Survivor.VeteranPassengerChance","Survivor.ElitePassengerChance"
-            };
-            public static readonly string[] ActiveBoolLike =
-            {
-                "AffectsAllies","AffectsOwner","Bounty.Display","Bright","Deployer","DeployFire","ImmuneToPsionics","ImmuneToRadiation","Malicious","OmniFire","OpportunityFire",
-                "RadarInvisible","Rocker","Selectable","Trainable","Wall","Wood","Bounty","CanBeReversed","DefaultToGuardArea","IsSelectableCombatant","OpenTopped","NoManualUnload",
-                "NoManualEnter","DontScore","Insignificant","ProtectedDriver","Turret","Crusher","Accelerates","ImmuneToPsionicWeapons","VehicleThief.Allowed","IsSimpleDeployer",
-                "Arcing","SubjectToCliffs","SubjectToElevation","SubjectToWalls","SubjectToBuildings","Shadow","AA","AG","ImmuneToEMP","Capturable"
-            };
-            public static readonly string[] PassiveBoolLike =
-            {
+                if (obj2 == null || obj2.ToString() == "")
+                {
+                    return null;
+                }
+                return obj2;
+            }
                 
-            };
-            public static readonly string[] AcquireBoolLike =
-            {
-                "Fearless"
-            };
-            public static readonly string[] ListLike =
-            {
-                "DebrisMaximums","Anim","Prerequisite","Prerequisite.StolenTechs","InitialPayload.Nums","Owner","AnimList","SW.Inhibitors","RequiredHouses"
-            };
-            public static readonly string[] NameLike =
-            {
-                "Name", "VoiceSecondaryWeaponAttack","ElitePrimary","EliteSecondary","Armor","VoiceDeploy","Promote.VeteranSound","Promote.EliteSound","Secondary","Primary",
-                "UIName","DeathWeapon","Passengers.Allowed","InitialPayload.Types","Image","AttachEffect.Animation","Locomotor","Parachute.Anim","Convert.Deploy","Category",
-                "CrushSound","DamageSound","Insignia.Rookie","Insignia.Veteran","Insignia.Elite","Projectile","Warhead","Report","OccupantAnim","AssaultAnim",
-                "PreImpactAnim","OpenTransportWeapon","VoiceSpecialAttack","IFVMode","ReversedAs","Cursor.Deploy","GroupAs","OpenToppedAnim","SW.AITargeting","InfDeathAnim",
-                "InfDeath","TechLevel"
-            };
-            public static readonly string[] MultiplierLike =
-            {
-                "BuildTimeMultiplier","DeathWeaponDamageModifier","IronCurtain.Modifier","ForceShield.Modifier","EMP.Modifier","LightningRod.Modifier",
-                "Experience.MindControlSelfModifier","Experience.SpawnOwnerModifier","BallisticScatter.Max","BallisticScatter.Min"
-            };
+            return obj1;
         }
-
-
-
-        public enum Language
+        public static List<string> Trim(string[] obj)
         {
-            EnglishUS, Chinese
+            for (int i = 0; i < obj.Count(); i++)
+            {
+                obj[i] = obj[i].Trim();
+            }
+            return obj.ToList();
         }
-        public enum FileExtension
+        public static string Join(List<string> sl, string joint)
         {
-            Undefined,CSV,TXT,YRM,MAP,INI,LANG,
-            UnknownBinary
+            if (sl.Count == 0) return "";
+            int i = 0;
+            string result = sl[i];
+            i++;
+            for (; i < sl.Count(); i++)
+            {
+                result += joint + sl[i];
+            }
+            return result;
         }
     }
 }

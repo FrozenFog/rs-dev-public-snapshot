@@ -14,7 +14,7 @@ namespace relert_sharp
 {
     public partial class Main : Form
     {
-        public Cons.Language lang = Cons.Language.Chinese;
+        
         public Main()
         {
             InitializeComponent();
@@ -22,7 +22,7 @@ namespace relert_sharp
 
         private void btnOpenINIComp_Click(object sender, EventArgs e)
         {
-            INIComparator c = new INIComparator(lang);
+            INIComparator c = new INIComparator();
             c.ShowDialog();
         }
     }

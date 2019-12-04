@@ -181,20 +181,25 @@ namespace relert_sharp.FileSystem
         private string name;
         private dynamic value;
         private string comment;
+        private Constant.INIKeyType keytype;
         public INIPair(string n, string val, string com)
         {
             name = n;
             comment = com;
             value = val;
+            keytype = Misc.GetKeyType(n);
         }
         public void ConvValue()
         {
-            if (Cons.BoolFalse.Contains((string)value)) value = false;
-            else if (Cons.BoolTrue.Contains((string)value)) value = true;
-            else if (Cons.NullString.Contains((string)value)) value = null;
-            if (Cons.KeyName.IntKey.Contains(name)) value = int.Parse(value);
-            else if (Cons.KeyName.FloatKey.Contains(name)) value = float.Parse(value);
-            else if (Cons.KeyName.PercentKey.Contains(name)) value = float.Parse(value.Replace("%", string.Empty)) / 100;
+            if (Constant.BoolFalse.Contains((string)value)) value = false;
+            else if (Constant.BoolTrue.Contains((string)value)) value = true;
+            else if (Constant.NullString.Contains((string)value) && keytype != Constant.INIKeyType.Armor)
+            {
+                value = null;
+            }
+            if (Constant.KeyName.IntKey.Contains(name)) value = int.Parse(value);
+            else if (Constant.KeyName.FloatKey.Contains(name)) value = float.Parse(value);
+            else if (Constant.KeyName.PercentKey.Contains(name)) value = float.Parse(value.Replace("%", string.Empty)) / 100;
         }
         #region Public Calls
         public string Name
@@ -208,6 +213,10 @@ namespace relert_sharp.FileSystem
         public string Comment
         {
             get { return comment; }
+        }
+        public Constant.INIKeyType KeyType
+        {
+            get { return keytype; }
         }
         public static INIPair NullPair
         {
