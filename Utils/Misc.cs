@@ -80,14 +80,14 @@ namespace relert_sharp.Utils
                 "BuildLimit","Burst","CellSpread","Cost","Damage","DisableWeapons.Duration","EMP.Cap","EMP.Duration","EmptyReload","Fearless","GuardRange",
                 "LaserDuration","MaxDebris","MaxNumberOccupants","MinDebris","MinimumRange","Money.Amount","Passengers","PercentAtMax","Points","Power","Range",
                 "Reload","ROF","ROT","SizeLimit","Sonar.Duration","Speed","Strength","TurretROT","UndeployDelay","Weight","SpecialThreatValue","TurretCount",
-                "WeaponCount","Survivor.RookiePassengerChance","Survivor.VeteranPassengerChance","Survivor.ElitePassengerChance","TechLevel"
+                "WeaponCount","Survivor.RookiePassengerChance","Survivor.VeteranPassengerChance","Survivor.ElitePassengerChance"
             };
             public static readonly string[] ActiveBoolLike =
             {
                 "AffectsAllies","AffectsOwner","Bounty.Display","Bright","Deployer","DeployFire","ImmuneToPsionics","ImmuneToRadiation","Malicious","OmniFire","OpportunityFire",
                 "RadarInvisible","Rocker","Selectable","Trainable","Wall","Wood","Bounty","CanBeReversed","DefaultToGuardArea","IsSelectableCombatant","OpenTopped","NoManualUnload",
                 "NoManualEnter","DontScore","Insignificant","ProtectedDriver","Turret","Crusher","Accelerates","ImmuneToPsionicWeapons","VehicleThief.Allowed","IsSimpleDeployer",
-                "Arcing","SubjectToCliffs","SubjectToElevation","SubjectToWalls","SubjectToBuildings","Shadow","AA","AG"
+                "Arcing","SubjectToCliffs","SubjectToElevation","SubjectToWalls","SubjectToBuildings","Shadow","AA","AG","ImmuneToEMP","Capturable"
             };
             public static readonly string[] PassiveBoolLike =
             {
@@ -99,7 +99,7 @@ namespace relert_sharp.Utils
             };
             public static readonly string[] ListLike =
             {
-                "DebrisMaximums","Anim","Prerequisite","Prerequisite.StolenTechs","InitialPayload.Nums","Owner","AnimList"
+                "DebrisMaximums","Anim","Prerequisite","Prerequisite.StolenTechs","InitialPayload.Nums","Owner","AnimList","SW.Inhibitors","RequiredHouses"
             };
             public static readonly string[] NameLike =
             {
@@ -107,7 +107,7 @@ namespace relert_sharp.Utils
                 "UIName","DeathWeapon","Passengers.Allowed","InitialPayload.Types","Image","AttachEffect.Animation","Locomotor","Parachute.Anim","Convert.Deploy","Category",
                 "CrushSound","DamageSound","Insignia.Rookie","Insignia.Veteran","Insignia.Elite","Projectile","Warhead","Report","OccupantAnim","AssaultAnim",
                 "PreImpactAnim","OpenTransportWeapon","VoiceSpecialAttack","IFVMode","ReversedAs","Cursor.Deploy","GroupAs","OpenToppedAnim","SW.AITargeting","InfDeathAnim",
-                "InfDeath"
+                "InfDeath","TechLevel"
             };
             public static readonly string[] MultiplierLike =
             {

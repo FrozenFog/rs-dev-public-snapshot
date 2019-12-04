@@ -13,9 +13,17 @@ namespace relert_sharp.FileSystem
         private Dictionary<string, string> comment = new Dictionary<string, string>();
         private List<INIEntity> inidata = new List<INIEntity>();
         private List<string> entityNameList = new List<string>();
+        private string filename;
+        private string fullname;
+        private string filepath;
+        private string nameext;
         public INIFile(string path, bool removeSpace = false)
         {
             Utils.File f = new Utils.File(path, FileMode.Open, FileAccess.Read);
+            filename = f.FileName;
+            fullname = f.FullName;
+            filepath = f.FilePath;
+            nameext = f.NameExt;
             List<string> data = f.readlines();
             List<INIPair> buffer = new List<INIPair>();
             List<string> keyItems = new List<string>();
@@ -103,6 +111,22 @@ namespace relert_sharp.FileSystem
         public List<INIEntity> IniData
         {
             get { return inidata; }
+        }
+        public string FileName
+        {
+            get { return filename; }
+        }
+        public string FullName
+        {
+            get { return fullname; }
+        }
+        public string FilePath
+        {
+            get { return filepath; }
+        }
+        public string NameExt
+        {
+            get { return nameext; }
         }
         #endregion
     }

@@ -35,6 +35,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnRunCompare = new System.Windows.Forms.Button();
+            this.ckbIgnoreRemoved = new System.Windows.Forms.CheckBox();
+            this.ckbIgnoreNew = new System.Windows.Forms.CheckBox();
+            this.ckbCalculateR = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // txbINIAPath
@@ -91,7 +94,7 @@
             // 
             // btnRunCompare
             // 
-            this.btnRunCompare.Location = new System.Drawing.Point(84, 143);
+            this.btnRunCompare.Location = new System.Drawing.Point(375, 174);
             this.btnRunCompare.Name = "btnRunCompare";
             this.btnRunCompare.Size = new System.Drawing.Size(76, 21);
             this.btnRunCompare.TabIndex = 3;
@@ -99,11 +102,44 @@
             this.btnRunCompare.UseVisualStyleBackColor = true;
             this.btnRunCompare.Click += new System.EventHandler(this.btnRunCompare_Click);
             // 
+            // ckbIgnoreRemoved
+            // 
+            this.ckbIgnoreRemoved.AutoSize = true;
+            this.ckbIgnoreRemoved.Location = new System.Drawing.Point(107, 121);
+            this.ckbIgnoreRemoved.Name = "ckbIgnoreRemoved";
+            this.ckbIgnoreRemoved.Size = new System.Drawing.Size(138, 16);
+            this.ckbIgnoreRemoved.TabIndex = 4;
+            this.ckbIgnoreRemoved.Text = "CMPckbIgnoreRemoved";
+            this.ckbIgnoreRemoved.UseVisualStyleBackColor = true;
+            // 
+            // ckbIgnoreNew
+            // 
+            this.ckbIgnoreNew.AutoSize = true;
+            this.ckbIgnoreNew.Location = new System.Drawing.Point(107, 143);
+            this.ckbIgnoreNew.Name = "ckbIgnoreNew";
+            this.ckbIgnoreNew.Size = new System.Drawing.Size(114, 16);
+            this.ckbIgnoreNew.TabIndex = 4;
+            this.ckbIgnoreNew.Text = "CMPckbIgnoreNew";
+            this.ckbIgnoreNew.UseVisualStyleBackColor = true;
+            // 
+            // ckbCalculateR
+            // 
+            this.ckbCalculateR.AutoSize = true;
+            this.ckbCalculateR.Location = new System.Drawing.Point(107, 165);
+            this.ckbCalculateR.Name = "ckbCalculateR";
+            this.ckbCalculateR.Size = new System.Drawing.Size(132, 16);
+            this.ckbCalculateR.TabIndex = 4;
+            this.ckbCalculateR.Text = "CMPckbCalcRelative";
+            this.ckbCalculateR.UseVisualStyleBackColor = true;
+            // 
             // INIComparator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(472, 218);
+            this.Controls.Add(this.ckbIgnoreNew);
+            this.Controls.Add(this.ckbCalculateR);
+            this.Controls.Add(this.ckbIgnoreRemoved);
             this.Controls.Add(this.btnRunCompare);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -117,7 +153,6 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "CMPTitle";
-            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -132,5 +167,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnRunCompare;
+        private System.Windows.Forms.CheckBox ckbIgnoreRemoved;
+        private System.Windows.Forms.CheckBox ckbIgnoreNew;
+        private System.Windows.Forms.CheckBox ckbCalculateR;
     }
 }

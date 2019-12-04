@@ -30,7 +30,7 @@ namespace relert_sharp.SubWindows
         {
             OpenFileDialog o = new OpenFileDialog();
             o.Title = Trans.Ds("CMPSelectINITitle");
-            o.Filter = Trans.Ds("CMPSelectINIini") + "| *.ini|" + Trans.Ds("CMPSelectINImap") + " | *.map,*.yrm,*.mpr";
+            o.Filter = Trans.Ds("CMPSelectINIini") + "| *.ini|" + Trans.Ds("CMPSelectINImap") + "|*.map;*.yrm;*.mpr";
             o.InitialDirectory = Application.StartupPath;
             if (DialogResult.OK == o.ShowDialog())
             {
@@ -42,7 +42,7 @@ namespace relert_sharp.SubWindows
         {
             OpenFileDialog o = new OpenFileDialog();
             o.Title = Trans.Ds("CMPSelectINITitle");
-            o.Filter = Trans.Ds("CMPSelectINIini") + "| *.ini|" + Trans.Ds("CMPSelectINImap") + " | *.map,*.yrm,*.mpr";
+            o.Filter = Trans.Ds("CMPSelectINIini") + "| *.ini|" + Trans.Ds("CMPSelectINImap") + "|*.map;*.yrm;*.mpr";
             o.InitialDirectory = Application.StartupPath;
             if (DialogResult.OK == o.ShowDialog())
             {
@@ -52,8 +52,17 @@ namespace relert_sharp.SubWindows
 
         private void btnRunCompare_Click(object sender, EventArgs e)
         {
-            INIFile f1 = new INIFile(txbINIAPath.Text);
-            INIFile f2 = new INIFile(txbINIBPath.Text);
+            INIFile f1 = null, f2 = null;
+            try
+            {
+                f1 = new INIFile(txbINIAPath.Text);
+                f2 = new INIFile(txbINIBPath.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Trans.Ds("CMOSelectInvalidPath"), Trans.Ds("CMPTitle"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             DiffLog log = new DiffLog(language);
             foreach (INIEntity entF2 in f2.IniData)
             {
@@ -86,53 +95,74 @@ namespace relert_sharp.SubWindows
                             INIPair p1 = entF1.GetPair(p2.Name);
                             if (p1.Value != p2.Value)
                             {
-                                log.AddLog(entF1.Name, p1, p2);
+                                log.AddLog(entF1.Name, p1, p2, ckbCalculateR.Checked);
                             }
                             entF1.RemovePair(p1);
                         }
                         // ent1 dont have p2, this item was newly added
                         else
                         {
-                            log.AddLog(entF1.Name, INIPair.NullPair, p2);
+                            if (!ckbIgnoreNew.Checked)
+                            {
+                                log.AddLog(entF1.Name, INIPair.NullPair, p2);
+                            }
                         }
                     }
                     // ent2 is empty now, what remains in ent1 is removed in current version
-                    foreach (INIPair p1 in entF1.DataList)
+                    if (!ckbIgnoreRemoved.Checked)
                     {
-                        log.AddLog(entF1.Name, p1, INIPair.NullPair);
+                        foreach (INIPair p1 in entF1.DataList)
+                        {
+                            log.AddLog(entF1.Name, p1, INIPair.NullPair);
+                        }
                     }
                 }
                 // f1 dont have ent2, this entity was newly added
                 else
                 {
-                    entF2.ConvPairs();
-                    foreach (INIPair p2 in entF2.DataList)
+                    if (!ckbIgnoreNew.Checked)
                     {
-                        log.AddLog(entF2.Name, INIPair.NullPair, p2);
+                        if (!Cons.EntName.SystemEntity.Contains(entF2.Name))
+                        {
+                            entF2.ConvPairs();
+                        }
+                        foreach (INIPair p2 in entF2.DataList)
+                        {
+                            log.AddLog(entF2.Name, INIPair.NullPair, p2);
+                        }
                     }
                 }
             }
             // ini2 is empty now, what remains in ini1 is removed in current version
-            foreach (INIEntity ent in f1.IniData)
+            if (!ckbIgnoreRemoved.Checked)
             {
-                ent.ConvPairs();
-                foreach (INIPair p1 in ent.DataList)
+                foreach (INIEntity ent in f1.IniData)
                 {
-                    log.AddLog(ent.Name, p1, INIPair.NullPair);
+                    ent.ConvPairs();
+                    foreach (INIPair p1 in ent.DataList)
+                    {
+                        log.AddLog(ent.Name, p1, INIPair.NullPair);
+                    }
                 }
             }
             log.RemoveEmpty();
             log.Translate(Trans);
             SaveFileDialog dlg = new SaveFileDialog();
-            dlg.Title = Trans.Ds("ResultSaveTitle");
+            dlg.Title = Trans.Ds("CMPResultSaveTitle");
             dlg.FileName = "CompareResult.txt";
             dlg.Filter = Trans.Ds("CMPResultSaveText") + "|*.txt|" + Trans.Ds("CMPResultSaveCSV") + "|*.csv";
             dlg.AddExtension = true;
             dlg.InitialDirectory = Application.StartupPath;
+            string result = ";Report Generated by Relert-Sharp INI Comparator.\n";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Utils.File f = new Utils.File(dlg.FileName, FileMode.OpenOrCreate, FileAccess.Write);
-                string result = "";
+                result += Trans.Ds("RTatic") + "\n" +
+                    Trans.Ds(ckbIgnoreRemoved.Checked ? "RIgnore" : "RInclude") + Trans.Ds("RRemoved") + "\n" +
+                    Trans.Ds(ckbIgnoreNew.Checked ? "RIgnore" : "RInclude") + Trans.Ds("RNew") + "\n" +
+                    Trans.Ds(ckbCalculateR.Checked ? "RDo" : "RDont") + Trans.Ds("RCalc") + "\n";
+                result += Trans.Ds("ROrg") + f1.FullName + "\n" +
+                    Trans.Ds("RDst") + f2.FullName + "\n\n";
                 foreach (string entName in log.DictEntry.Keys)
                 {
                     result += Trans.Ds(entName) + ":\n";
@@ -167,7 +197,7 @@ namespace relert_sharp.SubWindows
             {
                 language = l;
             }
-            public void AddLog(string entName, INIPair pOlder, INIPair pNewer)
+            public void AddLog(string entName, INIPair pOlder, INIPair pNewer, bool CalculateRelative = false)
             {
                 if (!statedNames.Contains(entName))
                 {
@@ -176,7 +206,7 @@ namespace relert_sharp.SubWindows
                 }
                 string pName = pOlder.Name;
                 if (pName == "" || pName == null) pName = pNewer.Name;
-                logs[entName].Add(new LogEntry(pName, pOlder.Value, pNewer.Value, language));
+                logs[entName].Add(new LogEntry(pName, pOlder.Value, pNewer.Value, language, CalculateRelative));
             }
             public void AddLog(INIEntity entOlder, INIEntity entNewer)
             {
@@ -193,7 +223,14 @@ namespace relert_sharp.SubWindows
                     {
                         foreach (string s in ent.Description)
                         {
-                            ent.Result += Trans.Ds(s) + " ";
+                            if (Trans.Lg == Cons.Language.Chinese)
+                            {
+                                ent.Result += Trans.Ds(s);
+                            }
+                            else
+                            {
+                                ent.Result += Trans.Ds(s) + " ";
+                            }
                         }
                     }
                     buffer[newkey] = logs[key];
@@ -229,9 +266,11 @@ namespace relert_sharp.SubWindows
                 private List<string> describ;
                 private string result = "";
                 private bool isEmpty = false;
-                public LogEntry(string name, object older, object newer, Cons.Language language)
+                private bool calcPercent;
+                public LogEntry(string name, object older, object newer, Cons.Language language, bool needCalc = false)
                 {
                     itemName = name;
+                    calcPercent = needCalc;
                     if ((older == null || older.ToString() == "") &&
                         (newer == null || newer.ToString() == ""))
                     {
@@ -241,6 +280,19 @@ namespace relert_sharp.SubWindows
                     if (Cons.Interpreter.SightLike.Contains(itemName))
                     {
                         describ = SightLike(older, newer, language);
+                        if (calcPercent)
+                        {
+                            double percent;
+                            if (newer.GetType() == typeof(int))
+                            {
+                                percent = (double)((int)newer) / (double)(int)older * 100;
+                            }
+                            else
+                            {
+                                percent = (float)newer / (float)older * 100;
+                            }
+                            describ.Add("(" + percent.ToString("0.00") + "%)");
+                        }
                     }
                     else if (Cons.Interpreter.ActiveBoolLike.Contains(itemName))
                     {

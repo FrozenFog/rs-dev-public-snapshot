@@ -13,24 +13,25 @@ namespace relert_sharp.Utils
         private string filename;
         private string fullname;
         private string filepath;
+        private string nameext;
         private Cons.FileExtension extension = Cons.FileExtension.Undefined;
         public File(string path, FileMode m, FileAccess a)
         {
             fs = new FileStream(path, m, a);
-            filepath = path;
-            string ext = "";
-            if (fs.Name.Contains("."))
+            filepath = fs.Name;
+            string[] sl = filepath.Split(new char[] { '\\' });
+            fullname = sl[sl.Count() - 1];
+            if (fullname.Contains("."))
             {
-                string[] sl = path.Split(new char[] { '.' });
+                sl = fullname.Split(new char[] { '.' });
                 filename = sl[0];
-                ext = sl[1];
-                fullname = filename + "." + ext;
+                nameext = sl[1];
             }
             else
             {
                 filename = fs.Name;
             }
-            switch (ext.ToLower())
+            switch (nameext.ToLower())
             {
                 case "ini":
                     extension = Cons.FileExtension.INI;
@@ -49,6 +50,9 @@ namespace relert_sharp.Utils
                     break;
                 case "lang":
                     extension = Cons.FileExtension.LANG;
+                    break;
+                default:
+                    extension = Cons.FileExtension.Undefined;
                     break;
             }
         }
@@ -96,6 +100,22 @@ namespace relert_sharp.Utils
                     return extension;
                 }
             }
+        }
+        public string FullName
+        {
+            get { return fullname; }
+        }
+        public string FileName
+        {
+            get { return filename; }
+        }
+        public string FilePath
+        {
+            get { return filepath; }
+        }
+        public string NameExt
+        {
+            get { return nameext; }
         }
         #endregion
     }

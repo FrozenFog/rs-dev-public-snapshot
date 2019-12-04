@@ -14,7 +14,7 @@ namespace relert_sharp
 {
     public partial class Main : Form
     {
-        public Cons.Language lang = Cons.Language.EnglishUS;
+        public Cons.Language lang = Cons.Language.Chinese;
         public Main()
         {
             InitializeComponent();
