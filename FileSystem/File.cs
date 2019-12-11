@@ -10,14 +10,22 @@ namespace relert_sharp.Utils
     public class File
     {
         private FileStream fs;
+        private BinaryReader br;
+        private BinaryWriter bw;
+        private MemoryStream ms = new MemoryStream();
+        private StreamReader sr;
+        private StreamWriter sw;
         private string filename;
         private string fullname;
         private string filepath;
         private string nameext;
         private Constant.FileExtension extension = Constant.FileExtension.Undefined;
+        private FileAccess access;
         public File(string path, FileMode m, FileAccess a)
         {
             fs = new FileStream(path, m, a);
+            access = a;
+            InitStream();
             filepath = fs.Name;
             string[] sl = filepath.Split(new char[] { '\\' });
             fullname = sl[sl.Count() - 1];
@@ -56,6 +64,19 @@ namespace relert_sharp.Utils
                     break;
             }
         }
+        private void InitStream()
+        {
+            if (fs.CanRead)
+            {
+                sr = new StreamReader(fs);
+                br = new BinaryReader(fs);
+            }
+            if (fs.CanWrite)
+            {
+                sw = new StreamWriter(ms);
+                bw = new BinaryWriter(ms);
+            }
+        }
         private Constant.FileExtension Get_File_Ext()
         {
             return Constant.FileExtension.UnknownBinary;
@@ -63,7 +84,6 @@ namespace relert_sharp.Utils
         #region Public Methods
         public List<string> readlines()
         {
-            StreamReader sr = new StreamReader(fs);
             var result = new List<string>();
             string line;
             while ((line = sr.ReadLine()) != null)
@@ -74,16 +94,16 @@ namespace relert_sharp.Utils
         }
         public void Write(string s)
         {
-            Close();
-            StreamWriter sw = new StreamWriter(filepath);
             sw.Write(s);
-            sw.Close();
-            sw.Dispose();
+        }
+        public void Dump()
+        {
+            ms.WriteTo(fs);
         }
         public void Close()
         {
-            fs.Close();
             fs.Dispose();
+            ms.Dispose();
         }
         #endregion
         #region Public Calls

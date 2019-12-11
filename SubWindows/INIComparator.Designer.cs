@@ -42,6 +42,7 @@
             // 
             // txbINIAPath
             // 
+            this.txbINIAPath.AllowDrop = true;
             this.txbINIAPath.Location = new System.Drawing.Point(107, 44);
             this.txbINIAPath.Name = "txbINIAPath";
             this.txbINIAPath.Size = new System.Drawing.Size(344, 21);

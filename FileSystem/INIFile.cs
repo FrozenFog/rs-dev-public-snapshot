@@ -13,12 +13,15 @@ namespace relert_sharp.FileSystem
         private Dictionary<string, string> comment = new Dictionary<string, string>();
         private List<INIEntity> inidata = new List<INIEntity>();
         private List<string> entityNameList = new List<string>();
+        private Constant.INIFileType initype;
         private string filename;
         private string fullname;
         private string filepath;
         private string nameext;
-        public INIFile(string path, bool removeSpace = false)
+        public INIFile(string path,  Constant.INIFileType itype = Constant.INIFileType.DefaultINI)
         {
+            bool init = true;
+            initype = itype;
             Utils.File f = new Utils.File(path, FileMode.Open, FileAccess.Read);
             filename = f.FileName;
             fullname = f.FullName;
@@ -36,7 +39,7 @@ namespace relert_sharp.FileSystem
                 string combuf = "";
                 if (line.Contains(";"))
                 {
-                    string[] ls = Misc.Split(line, ';');
+                    string[] ls = line.Split(new char[] { ';' }, 2);
                     if (ls[0] == "")
                     {
                         comment[j.ToString()] = ls[1];
@@ -46,14 +49,15 @@ namespace relert_sharp.FileSystem
                     else combuf = ls[1];
                     line = ls[0];
                 }
-                line = line.Replace("\t", string.Empty).Replace("\n", string.Empty).Replace("\r", string.Empty);
+                line = line.Replace("\t", string.Empty).Replace("\r\n", string.Empty).Replace("\r", string.Empty);
                 line = line.Trim();
-                if (removeSpace) line = line.Replace(" ", string.Empty);
+                //if (removeSpace) line = line.Replace(" ", string.Empty);
                 if (line == "") continue;
                 if (line.StartsWith("["))
                 {
-                    if (buffer.Count == 0)
+                    if (init)
                     {
+                        init = false;
                         rootname = line.Replace("[", string.Empty).Replace("]", string.Empty);
                         rootcom = combuf;
                         entityNameList.Add(rootname);
@@ -69,7 +73,7 @@ namespace relert_sharp.FileSystem
                 }
                 else
                 {
-                    string[] tmp = Misc.Split(line, '=');
+                    string[] tmp = line.Split(new char[] { '=' }, 2);
                     INIPair p = new INIPair(tmp[0], tmp[1], combuf);
                     if (!keyItems.Contains(p.Name))
                     {
@@ -84,14 +88,11 @@ namespace relert_sharp.FileSystem
         }
         public void RemoveEnt(INIEntity ent)
         {
-            foreach (INIEntity e in inidata)
+            if (entityNameList.Contains(ent.Name))
             {
-                if (e.Name == ent.Name)
-                {
-                    inidata.Remove(e);
-                    entityNameList.Remove(e.Name);
-                    return;
-                }
+                int index = entityNameList.IndexOf(ent.Name);
+                inidata.RemoveAt(index);
+                entityNameList.Remove(ent.Name);
             }
         }
         public bool HasIniEnt(INIEntity ent)
@@ -100,10 +101,16 @@ namespace relert_sharp.FileSystem
         }
         public INIEntity GetEnt(string entName)
         {
-            foreach (INIEntity ent in inidata) if (ent.Name == entName) return ent;
-            return null;
+            if (entityNameList.Contains(entName)) return inidata[entityNameList.IndexOf(entName)];
+            throw new RSException.EntityNotFoundException(entName, fullname);
         }
-        #region Public Calls
+        public INIEntity PopEnt(string entName)
+        {
+            INIEntity result = GetEnt(entName);
+            RemoveEnt(result);
+            return result;
+        }
+        #region Public Calls - INIFile
         public Dictionary<string, string> Comment
         {
             get { return comment; }
@@ -128,6 +135,11 @@ namespace relert_sharp.FileSystem
         {
             get { return nameext; }
         }
+        public Constant.INIFileType INIType
+        {
+            get { return initype; }
+            set { initype = value; }
+        }
         #endregion
     }
     public class INIEntity
@@ -136,6 +148,7 @@ namespace relert_sharp.FileSystem
         private string comment;
         private List<INIPair> data = new List<INIPair>();
         private List<string> pairNameList = new List<string>();
+        private Constant.INIEntType entitytype;
 
         public INIEntity(List<INIPair> pairs, string n, string com = "")
         {
@@ -143,11 +156,15 @@ namespace relert_sharp.FileSystem
             name = n;
             comment = com;
             foreach (INIPair p in data) pairNameList.Add(p.Name);
+            if (Constant.EntName.SystemEntity.Contains(n)) entitytype = Constant.INIEntType.SystemType;
+            else if (Constant.EntName.DictionaryList.Contains(n)) entitytype = Constant.INIEntType.ListType;
+            else if (Constant.EntName.MapList.Contains(n)) entitytype = Constant.INIEntType.MapType;
+            else entitytype = Constant.INIEntType.DefaultType;
         }
         public INIPair GetPair(string pairName)
         {
-            foreach (INIPair p in data) if (p.Name == pairName) return p;
-            return null;
+            if (pairNameList.Contains(pairName)) return data[pairNameList.IndexOf(pairName)];
+            return INIPair.NullPair;
         }
         public bool HasPair(INIPair p)
         {
@@ -155,11 +172,22 @@ namespace relert_sharp.FileSystem
         }
         public void ConvPairs()
         {
+            if (entitytype != Constant.INIEntType.SystemType || entitytype != Constant.INIEntType.MapType)
             foreach (INIPair p in data) p.ConvValue();
         }
         public void RemovePair(INIPair p)
         {
             data.Remove(p);
+            pairNameList.Remove(p.Name);
+        }
+        public string JoinString()
+        {
+            string result = "";
+            foreach (INIPair p in data)
+            {
+                result += p.Value.ToString();
+            }
+            return result;
         }
         #region Public Calls
         public string Name
@@ -189,6 +217,7 @@ namespace relert_sharp.FileSystem
             value = val;
             keytype = Misc.GetKeyType(n);
         }
+        #region Public Methods - INIPair
         public void ConvValue()
         {
             if (Constant.BoolFalse.Contains((string)value)) value = false;
@@ -201,7 +230,45 @@ namespace relert_sharp.FileSystem
             else if (Constant.KeyName.FloatKey.Contains(name)) value = float.Parse(value);
             else if (Constant.KeyName.PercentKey.Contains(name)) value = float.Parse(value.Replace("%", string.Empty)) / 100;
         }
-        #region Public Calls
+        public bool ParseBool(bool def = false)
+        {
+            if ((string)value != "")
+            {
+                if (Constant.BoolTrue.Contains((string)value)) return true;
+                else if (Constant.BoolFalse.Contains((string)value)) return false;
+                else if (int.Parse(value) == 1) return true;
+                else if (int.Parse(value) == 0) return false;
+            }
+            return def;
+        }
+        public int ParseInt(int def = 0)
+        {
+            if ((string)value != "")
+            {
+                return int.Parse(value);
+            }
+            return def;
+        }
+        public float ParseFloat(float def = 0F)
+        {
+            if ((string)value != "")
+            {
+                return float.Parse(value);
+            }
+            return def;
+        }
+        public string[] ParseStringList()
+        {
+            return ((string)value).Split(new char[] { ',' });
+        }
+        public int[] ParseIntList()
+        {
+            List<int> result = new List<int>();
+            foreach(string s in ParseStringList()) result.Add(int.Parse(s));
+            return result.ToArray();
+        }
+        #endregion
+        #region Public Calls - INIPair
         public string Name
         {
             get { return name; }

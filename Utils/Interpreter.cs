@@ -208,11 +208,11 @@ namespace relert_sharp.Utils
             removeditems = sl1;
             string resultRemoved = Misc.Join(removeditems, "\",\"");
             string resultNew = Misc.Join(newitems, "\",\"");
-            List<string> result = new List<string>() { itemName, ":\n\t\t\t-"};
+            List<string> result = new List<string>() { itemName, ":\r\n\t\t\t-" };
             if (resultRemoved != "")
             {
                 result = result.Concat(new List<string>() { "ItemsRemoved", ":\"" + resultRemoved + "\"" }).ToList();
-                if (resultNew != "") result.Add("\n\t\t\t-");
+                if (resultNew != "") result.Add("\r\n\t\t\t-");
             }
             if (resultNew != "")
             {
@@ -231,7 +231,7 @@ namespace relert_sharp.Utils
             {
                 if (sl1[i] != sl2[i])
                 {
-                    result.Add("\n\t\t\t-");
+                    result.Add("\r\n\t\t\t-");
                     result = result.Concat(VersusLike(sl1[i], sl2[i], Constant.GenericArmorType[i])).ToList();
                 }
             }

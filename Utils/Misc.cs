@@ -16,10 +16,10 @@ namespace relert_sharp.Utils
             switch (Constant.CurrentLanguage)
             {
                 case Constant.Language.EnglishUS:
-                    f = new LangFile("en-us.lang", false);
+                    f = new LangFile("en-us.lang");
                     break;
                 case Constant.Language.Chinese:
-                    f = new LangFile("chs.lang", false);
+                    f = new LangFile("chs.lang");
                     break;
             }
             foreach (INIEntity ent in f.IniData)

@@ -7,12 +7,11 @@ using relert_sharp.Utils;
 
 namespace relert_sharp.FileSystem
 {
-    public class LangFile : INIFile
+    public class MapFile : INIFile
     {
-        public LangFile(string path) : base(path)
+        public MapFile(string path) : base(path)
         {
-            
+            INIType = Constant.INIFileType.MapFile;
         }
-        
     }
 }

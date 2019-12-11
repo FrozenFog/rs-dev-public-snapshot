@@ -14,7 +14,7 @@ namespace relert_sharp
         [STAThread]
         static void Main()
         {
-            bool debug = false;
+            bool debug = true;
             if (!debug)
             {
                 Application.EnableVisualStyles();

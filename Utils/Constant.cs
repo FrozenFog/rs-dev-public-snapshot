@@ -131,11 +131,13 @@ namespace relert_sharp.Utils
         }
         public enum INIEntType
         {
-            MapType, SystemType, ListType, EntType,
+            DefaultType,
+            MapType, SystemType, ListType,
             UnknownType
         }
         public enum INIFileType
         {
+            DefaultINI,
             MapFile, RulesINI, ThemeINI, AIINI, SoundINI, ArtINI,
             UnknownINI
         }
