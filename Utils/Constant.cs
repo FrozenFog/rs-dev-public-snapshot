@@ -121,30 +121,36 @@ namespace relert_sharp.Utils
         }
         public enum FileExtension
         {
-            Undefined, CSV, TXT, YRM, MAP, INI, LANG,
-            UnknownBinary
+            Undefined, CSV, TXT, YRM, MAP, INI, LANG, MIX,
+            UnknownBinary = -1
         }
         public enum INIKeyType
         {
             SightLike, ActiveLike, PassiveLike, AcquireLike, NameListLike, MultiplierLike, NameLike, VersusLike, VersesListLike, NumListLike, Armor,
-            DefaultString, Null
+            DefaultString,
+            Null = -1
         }
         public enum INIEntType
         {
             DefaultType,
             MapType, SystemType, ListType,
-            UnknownType
+            UnknownType = -1
         }
         public enum INIFileType
         {
             DefaultINI,
             MapFile, RulesINI, ThemeINI, AIINI, SoundINI, ArtINI, Language,
-            UnknownINI
+            UnknownINI = -1
         }
         public enum TheaterType
         {
             Template, Snow, Desert, Urban, NewUrban, Lunar,
-            Unknown
+            Unknown = -1
+        }
+        public enum MixTatics
+        {
+            Ciphed, Plain, 
+            Unknown = -1
         }
         private static Language currentlanguage = Language.EnglishUS;
         public static Language CurrentLanguage

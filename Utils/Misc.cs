@@ -137,6 +137,24 @@ namespace relert_sharp.Utils
         {
             return (x * 1000 + y).ToString();
         }
+        public static uint[] ToUintArray(byte[] data)
+        {
+            uint[] result = new uint[data.Length / 4];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = BitConverter.ToUInt32(data, 4 * i);
+            }
+            return result;
+        }
+        public static byte[] ToByteArray(uint[] data)
+        {
+            List<byte> result = new List<byte>();
+            foreach(uint i in data)
+            {
+                result = result.Concat(BitConverter.GetBytes(i)).ToList();
+            }
+            return result.ToArray();
+        }
     }
 
 }

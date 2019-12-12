@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using relert_sharp.Utils;
 
-namespace relert_sharp.Utils
+namespace relert_sharp.FileSystem
 {
     public class File
     {
@@ -29,11 +30,24 @@ namespace relert_sharp.Utils
             filepath = fs.Name;
             string[] sl = filepath.Split(new char[] { '\\' });
             fullname = sl[sl.Count() - 1];
+            GetNames();
+        }
+        public File(byte[] rawData, string fileName)
+        {
+            MemoryStream buffer = new MemoryStream(rawData);
+            buffer.CopyTo(fs);
+            access = FileAccess.Read;
+            fullname = filename;
+            GetNames();
+            buffer.Dispose();
+        }
+        private void GetNames()
+        {
             if (fullname.Contains("."))
             {
-                sl = fullname.Split(new char[] { '.' });
-                filename = sl[0];
-                nameext = sl[1];
+                string[] namesl = fullname.Split(new char[] { '.' });
+                filename = namesl[0];
+                nameext = namesl[1];
             }
             else
             {
@@ -58,6 +72,9 @@ namespace relert_sharp.Utils
                     break;
                 case "lang":
                     extension = Constant.FileExtension.LANG;
+                    break;
+                case "mix":
+                    extension = Constant.FileExtension.MIX;
                     break;
                 default:
                     extension = Constant.FileExtension.Undefined;

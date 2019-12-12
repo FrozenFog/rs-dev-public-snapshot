@@ -18,7 +18,7 @@ namespace relert_sharp.FileSystem
 
         public TMPFile(string path)
         {
-            Utils.File f = new Utils.File(path, FileMode.Open, FileAccess.Read);
+            File f = new File(path, FileMode.Open, FileAccess.Read);
             fileName = f.FullName;
             BinaryReader br = new BinaryReader(f.ReadStream);
             Read(br);

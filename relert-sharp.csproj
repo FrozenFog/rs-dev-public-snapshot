@@ -49,11 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Encoding\Blowfish.cs" />
+    <Compile Include="Encoding\CRC.cs" />
     <Compile Include="Encoding\MiniLZO.cs" />
     <Compile Include="Encoding\PackEncoding.cs" />
+    <Compile Include="Encoding\WSKeyCalc.cs" />
     <Compile Include="FileSystem\INIFile.cs" />
     <Compile Include="FileSystem\LangFile.cs" />
     <Compile Include="FileSystem\MapFile.cs" />
+    <Compile Include="FileSystem\MixFile.cs" />
     <Compile Include="FileSystem\TmpFile.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>

@@ -1,0 +1,129 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using relert_sharp.Utils;
+using relert_sharp.Encoding;
+
+namespace relert_sharp.FileSystem
+{
+    public class MixFile : File
+    {
+        private int bodyPos;
+        private ushort numOfFiles;
+        private MixHeader index;
+        private BinaryReader reader;
+        public MixFile(string path, Constant.MixTatics tatics) : base(path, FileMode.Open, FileAccess.Read)
+        {
+            Initialize(tatics);
+        }
+        public MixFile(byte[] rawData, string fileName, Constant.MixTatics tatics):base(rawData,fileName)
+        {
+            Initialize(tatics);
+        }
+        private void Initialize(Constant.MixTatics tatics)
+        {
+            reader = new BinaryReader(ReadStream);
+            reader.BaseStream.Seek(4, SeekOrigin.Begin);
+            switch (tatics)
+            {
+                case Constant.MixTatics.Plain:
+                    numOfFiles = reader.ReadUInt16();
+                    reader.BaseStream.Seek(4, SeekOrigin.Current);
+                    index = new MixHeader(reader.ReadBytes(numOfFiles * 12), numOfFiles);
+                    bodyPos = 10 + numOfFiles * 12;
+                    break;
+                case Constant.MixTatics.Ciphed:
+                    byte[] keySource = reader.ReadBytes(80);
+                    byte[] header = DecryptHeader(keySource);
+                    index = new MixHeader(header.Skip(6).ToArray(), numOfFiles);
+                    break;
+                default:
+                    break;
+            }
+            reader.BaseStream.Seek(bodyPos, SeekOrigin.Begin);
+        }
+        public MemoryStream GetMemFile(string filefullname)
+        {
+            uint fileID = CRC.GetCRC(filefullname);
+            if (index.Entries.Keys.Contains(fileID))
+            {
+                reader.BaseStream.Seek(index.GetOffset(fileID), SeekOrigin.Current);
+                byte[] buffer = reader.ReadBytes(index.GetSize(fileID));
+                reader.BaseStream.Seek(bodyPos, SeekOrigin.Begin);
+                return new MemoryStream(buffer);
+            }
+            else
+            {
+                throw new RSException.MixEntityNotFoundException(FullName, filefullname);
+            }
+        }
+        public bool HasFile(string fileName)
+        {
+            return index.Entries.Keys.Contains(CRC.GetCRC(fileName));
+        }
+        private byte[] DecryptHeader(byte[] keySource)
+        {
+            List<uint> buffer = new List<uint>();
+            byte[] blowfishKey = new WSKeyCalc().DecryptKey(keySource);
+            Blowfish b = new Blowfish(blowfishKey);
+            byte[] headerBlock = reader.ReadBytes(8);
+            uint[] firstBlock = b.Decrypt(Misc.ToUintArray(headerBlock));
+            buffer = buffer.Concat(firstBlock).ToList();
+            numOfFiles = (ushort)firstBlock[0];
+            double indexSize = numOfFiles * 12 + 6;
+            int i = (int)Math.Ceiling(indexSize / 8F) - 1;
+            bodyPos = (i + 1) * 8 + 84;
+            for (; i > 0; i--)
+            {
+                uint[] block = b.Decrypt(Misc.ToUintArray(reader.ReadBytes(8)));
+                buffer = buffer.Concat(block).ToList();
+            }
+            return Misc.ToByteArray(buffer.ToArray());
+        }
+    }
+    public class MixHeader
+    {
+        private ushort numOfFiles;
+        private Dictionary<uint, MixEntry> entries = new Dictionary<uint, MixEntry>();
+        public MixHeader(byte[] rawData, ushort num)
+        {
+            numOfFiles = num;
+            BinaryReader br = new BinaryReader(new MemoryStream(rawData));
+            for(int i = 0; i < num; i++)
+            {
+                uint id = br.ReadUInt32();
+                entries[id] = new MixEntry(id, br.ReadInt32(), br.ReadInt32());
+            }
+            br.Dispose();
+        }
+        public int GetOffset(uint fileID)
+        {
+            return entries[fileID].offset;
+        }
+        public int GetSize(uint fileID)
+        {
+            return entries[fileID].size;
+        }
+        #region Public Calls - MixHeader
+        public Dictionary<uint, MixEntry> Entries
+        {
+            get { return entries; }
+        }
+        #endregion
+    }
+    public class MixEntry
+    {
+        public uint fileID;
+        public int offset, size;
+        
+        public MixEntry(uint id, int _offset, int _size)
+        {
+            fileID = id;
+            offset = _offset;
+            size = _size;
+        }
+    }
+}

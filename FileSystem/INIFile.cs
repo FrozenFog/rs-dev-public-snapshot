@@ -22,7 +22,7 @@ namespace relert_sharp.FileSystem
         {
             bool init = true;
             initype = itype;
-            Utils.File f = new Utils.File(path, FileMode.Open, FileAccess.Read);
+            File f = new File(path, FileMode.Open, FileAccess.Read);
             filename = f.FileName;
             fullname = f.FullName;
             filepath = f.FilePath;

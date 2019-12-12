@@ -25,6 +25,23 @@ namespace relert_sharp.Utils
                 get { return parent; }
             }
         }
+        public class MixEntityNotFoundException : ApplicationException
+        {
+            private string mixName, fileName;
+            public MixEntityNotFoundException(string mixname, string filename)
+            {
+                mixName = mixname;
+                fileName = filename;
+            }
+            public string MixName
+            {
+                get { return mixName; }
+            }
+            public string FileName
+            {
+                get { return fileName; }
+            }
+        }
         private string error;
         private Exception innerException;
 
