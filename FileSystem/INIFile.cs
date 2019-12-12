@@ -83,9 +83,9 @@ namespace relert_sharp.FileSystem
                 }
             }
             inidata.Add(new INIEntity(buffer, rootname));
-            entityNameList.Add(rootname);
             f.Close();
         }
+        #region Public Methods - INIFile
         public void RemoveEnt(INIEntity ent)
         {
             if (entityNameList.Contains(ent.Name))
@@ -110,6 +110,13 @@ namespace relert_sharp.FileSystem
             RemoveEnt(result);
             return result;
         }
+        public void Dispose()
+        {
+            inidata.Clear();
+            comment.Clear();
+            entityNameList.Clear();
+        }
+        #endregion
         #region Public Calls - INIFile
         public Dictionary<string, string> Comment
         {
@@ -161,6 +168,7 @@ namespace relert_sharp.FileSystem
             else if (Constant.EntName.MapList.Contains(n)) entitytype = Constant.INIEntType.MapType;
             else entitytype = Constant.INIEntType.DefaultType;
         }
+        #region Public Methods - INIEntity
         public INIPair GetPair(string pairName)
         {
             if (pairNameList.Contains(pairName)) return data[pairNameList.IndexOf(pairName)];
@@ -189,6 +197,7 @@ namespace relert_sharp.FileSystem
             }
             return result;
         }
+        #endregion
         #region Public Calls
         public string Name
         {

@@ -72,5 +72,9 @@ namespace relert_sharp.MapStructure
             buf = MapSize.GetPair("LocalSize").ParseIntList();
             LocalSize = new Rectangle(buf[0], buf[1], buf[2], buf[3]);
         }
+        public int INIFormat
+        {
+            get { return iniformat; }
+        }
     }
 }

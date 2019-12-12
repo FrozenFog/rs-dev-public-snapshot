@@ -29,7 +29,7 @@ namespace relert_sharp.Utils
                     dict[p.Name] = p.Value;
                 }
             }
-            Constant.Trans = dict;
+            Language.DICT = new Lang(dict);
         }
         public static string[] Split(string s, char c, int t = 1)
         {
@@ -111,7 +111,6 @@ namespace relert_sharp.Utils
                 }
                 return obj2;
             }
-                
             return obj1;
         }
         public static List<string> Trim(string[] obj)
@@ -134,5 +133,10 @@ namespace relert_sharp.Utils
             }
             return result;
         }
+        public static string CoordString(int x, int y)
+        {
+            return (x * 1000 + y).ToString();
+        }
     }
+
 }

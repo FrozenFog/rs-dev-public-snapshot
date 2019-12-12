@@ -79,9 +79,10 @@ namespace relert_sharp.Utils
         }
         private Constant.FileExtension Get_File_Ext()
         {
+            ////unfinished
             return Constant.FileExtension.UnknownBinary;
         }
-        #region Public Methods
+        #region Public Methods - File
         public List<string> readlines()
         {
             var result = new List<string>();
@@ -106,7 +107,16 @@ namespace relert_sharp.Utils
             ms.Dispose();
         }
         #endregion
-        #region Public Calls
+        #region Public Calls - File
+        public Stream ReadStream
+        {
+            get
+            {
+                MemoryStream mem = new MemoryStream();
+                fs.CopyTo(mem);
+                return mem;
+            }
+        }
         public Constant.FileExtension FileExt
         {
             get

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace relert_sharp.MapStructure.LogicLayer
+namespace relert_sharp.MapStructure.Logic
 {
     public class Trigger
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using relert_sharp.Utils;
 
 namespace relert_sharp
 {
@@ -19,7 +20,7 @@ namespace relert_sharp
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Utils.Misc.Init_Language();
+                Misc.Init_Language();
                 Application.Run(new Main());
             }
             else

@@ -14,10 +14,25 @@ namespace relert_sharp.Utils
         {
             dict = src;
         }
-        public string K(string key)
+        public string this[string key]
         {
-            if (dict.Keys.Contains(key)) return dict[key];
-            return key;
+            get
+            {
+                if (dict.Keys.Contains(key)) return dict[key];
+                return key;
+            }
+        }
+    }
+}
+namespace relert_sharp
+{
+    public static class Language
+    {
+        private static Utils.Lang translate;
+        public static Utils.Lang DICT
+        {
+            get { return translate; }
+            set { translate = value; }
         }
     }
 }

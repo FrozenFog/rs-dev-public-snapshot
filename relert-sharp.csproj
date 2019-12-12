@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,9 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Encoding\MiniLZO.cs" />
+    <Compile Include="Encoding\PackEncoding.cs" />
     <Compile Include="FileSystem\INIFile.cs" />
     <Compile Include="FileSystem\LangFile.cs" />
     <Compile Include="FileSystem\MapFile.cs" />
+    <Compile Include="FileSystem\TmpFile.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,7 +62,7 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="MapStructure\InfantryLayer.cs" />
-    <Compile Include="MapStructure\LogicLayer\Trigger.cs" />
+    <Compile Include="MapStructure\Logic\Trigger.cs" />
     <Compile Include="MapStructure\Map.cs" />
     <Compile Include="MapStructure\MapInfo.cs" />
     <Compile Include="MapStructure\OverlayLayer.cs" />
@@ -72,6 +76,7 @@
     <Compile Include="SubWindows\INIComparator.Designer.cs">
       <DependentUpon>INIComparator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Colors.cs" />
     <Compile Include="Utils\Constant.cs" />
     <Compile Include="FileSystem\File.cs" />
     <Compile Include="Utils\RSException.cs" />
@@ -108,8 +113,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Encoding\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

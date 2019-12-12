@@ -138,14 +138,13 @@ namespace relert_sharp.Utils
         public enum INIFileType
         {
             DefaultINI,
-            MapFile, RulesINI, ThemeINI, AIINI, SoundINI, ArtINI,
+            MapFile, RulesINI, ThemeINI, AIINI, SoundINI, ArtINI, Language,
             UnknownINI
         }
-        private static Dictionary<string, string> translate = new Dictionary<string, string>();
-        public static Dictionary<string, string> Trans
+        public enum TheaterType
         {
-            get { return translate; }
-            set { translate = value; }
+            Template, Snow, Desert, Urban, NewUrban, Lunar,
+            Unknown
         }
         private static Language currentlanguage = Language.EnglishUS;
         public static Language CurrentLanguage
@@ -153,5 +152,6 @@ namespace relert_sharp.Utils
             get { return currentlanguage; }
             set { currentlanguage = value; }
         }
+
     }
 }
