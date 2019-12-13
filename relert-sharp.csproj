@@ -60,6 +60,7 @@
     <Compile Include="FileSystem\LangFile.cs" />
     <Compile Include="FileSystem\MapFile.cs" />
     <Compile Include="FileSystem\MixFile.cs" />
+    <Compile Include="FileSystem\PalFile.cs" />
     <Compile Include="FileSystem\TmpFile.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>

@@ -11,6 +11,7 @@ namespace relert_sharp.Utils
     {
         public static void Init_Language()
         {
+            Constant.CurrentLanguage = Constant.Language.Chinese;
             Dictionary<string, string> dict = new Dictionary<string, string>();
             LangFile f = null;
             switch (Constant.CurrentLanguage)

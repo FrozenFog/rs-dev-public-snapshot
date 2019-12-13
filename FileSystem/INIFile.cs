@@ -71,7 +71,7 @@ namespace relert_sharp.FileSystem
                 else
                 {
                     string[] tmp = line.Split(new char[] { '=' }, 2);
-                    INIPair p = new INIPair(tmp[0], tmp[1], combuf);
+                    INIPair p = new INIPair(tmp[0].Trim(), tmp[1].Trim(), combuf);
                     if (!keyItems.Contains(p.Name))
                     {
                         buffer.Add(p);

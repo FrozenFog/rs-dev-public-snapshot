@@ -205,8 +205,28 @@ namespace relert_sharp.SubWindows
             }
             public void AddLog(INIEntity entOlder, INIEntity entNewer)
             {
-                //unfinished
-                //entOlder, entNewer is item list and has differences
+                string _entName = Misc.GetNonNull(entOlder.Name, entNewer.Name);
+                logs[_entName] = new List<LogEntry>();
+                statedNames.Add(_entName);
+                List<string> _olderList = entOlder.TakeValuesToList();
+                List<string> _newerList = entNewer.TakeValuesToList();
+                foreach (string _new in _newerList)
+                {
+                    if (_olderList.Contains(_new))
+                    {
+                        _olderList.Remove(_new);
+                    }
+                    else//if not, _new is new item
+                    {
+                        logs[_entName].Add(new LogEntry(_new, "NewItems"));
+                    }
+                }
+                // new list is empty, what remains in old were removed in current version
+                foreach(string _old in _olderList)
+                {
+                    logs[_entName].Add(new LogEntry(_old, "ItemsRemoved"));
+                }
+
             }
             public void Translate()
             {
@@ -330,6 +350,19 @@ namespace relert_sharp.SubWindows
                             break;
                     }
 
+                }
+                public LogEntry(string item, string stat)
+                {
+                    if (stat == "NewItems")
+                    {
+                        changeStatus = Constant.Interpreter.ChangeStatus.New;
+                        describ = new List<string>() { "NewItems", item };
+                    }
+                    else
+                    {
+                        changeStatus = Constant.Interpreter.ChangeStatus.Removed;
+                        describ = new List<string>() { item, "Removed" };
+                    }
                 }
                 #region Public Calls
                 public string ItemName

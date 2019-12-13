@@ -38,6 +38,12 @@ namespace relert_sharp.FileSystem
             entitytype = Constant.INIEntType.ListType;
         }
         #region Public Methods - INIEntity
+        public List<string> TakeValuesToList()
+        {
+            List<string> result = new List<string>();
+            foreach(INIPair p in data) if(!result.Contains(p.Value)) result.Add(p.Value);
+            return result;
+        }
         public INIPair GetPair(string pairName)
         {
             if (pairNameList.Contains(pairName)) return data[pairNameList.IndexOf(pairName)];

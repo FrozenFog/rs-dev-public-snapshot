@@ -34,7 +34,7 @@ namespace relert_sharp.MapStructure
             GetPreview(f);
             info = new MapInfo(f.PopEnt("Basic"), f.PopEnt("Map"), f.PopEnt("SpecialFlags"));
             Tiles = new TileLayer(isomappack5String, info.Size);
-            residue = f.IniDict;
+            residue = new Dictionary<string, INIEntity>(f.IniDict);
         }
         #region Public Methods - Map
         public void CompressTile()

@@ -16,12 +16,9 @@ namespace relert_sharp
 {
     public partial class Main : Form
     {
-        Map map;
         public Main()
         {
             InitializeComponent();
-            Map m = new Map(new MapFile(@"a22.mpr"));
-            map = m;
         }
 
         private void btnOpenINIComp_Click(object sender, EventArgs e)
