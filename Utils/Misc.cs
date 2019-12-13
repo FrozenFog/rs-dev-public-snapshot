@@ -137,6 +137,10 @@ namespace relert_sharp.Utils
         {
             return (x * 1000 + y).ToString();
         }
+        public static int CoordInt(int x, int y)
+        {
+            return 1000 * x + y;
+        }
         public static uint[] ToUintArray(byte[] data)
         {
             uint[] result = new uint[data.Length / 4];
@@ -148,12 +152,19 @@ namespace relert_sharp.Utils
         }
         public static byte[] ToByteArray(uint[] data)
         {
-            List<byte> result = new List<byte>();
-            foreach(uint i in data)
+            byte[] result = new byte[data.Length * 4];
+            for (int i = 0; i < data.Length; i++)
             {
-                result = result.Concat(BitConverter.GetBytes(i)).ToList();
+                WriteToArray(result, BitConverter.GetBytes(data[i]), 4 * i);
             }
-            return result.ToArray();
+            return result;
+        }
+        public static void WriteToArray(byte[] dest, byte[] src, int offset)
+        {
+            for (int i = 0; i < src.Length; i++)
+            {
+                dest[i + offset] = src[i];
+            }
         }
     }
 

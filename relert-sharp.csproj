@@ -54,7 +54,9 @@
     <Compile Include="Encoding\MiniLZO.cs" />
     <Compile Include="Encoding\PackEncoding.cs" />
     <Compile Include="Encoding\WSKeyCalc.cs" />
+    <Compile Include="FileSystem\INIEntity.cs" />
     <Compile Include="FileSystem\INIFile.cs" />
+    <Compile Include="FileSystem\INIPair.cs" />
     <Compile Include="FileSystem\LangFile.cs" />
     <Compile Include="FileSystem\MapFile.cs" />
     <Compile Include="FileSystem\MixFile.cs" />

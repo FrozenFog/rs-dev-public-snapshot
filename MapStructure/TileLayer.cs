@@ -13,12 +13,14 @@ namespace relert_sharp.MapStructure
 {
     public class TileLayer
     {
-        private Dictionary<string, Tile> data = new Dictionary<string, Tile>();
+        private Dictionary<int, Tile> data = new Dictionary<int, Tile>();
+        private List<int> indexs = new List<int>();
+        private byte bottomLevel = 255;
         public TileLayer(string stringPack, Rectangle Size)
         {
             byte[] fromBase64 = Convert.FromBase64String(stringPack);
             int tileNum = (Size.Width * 2 - 1) * Size.Height;
-            byte[] tileData = PackEncoding.DecodePack(fromBase64);
+            byte[] tileData = PackEncoding.DecodePack(fromBase64, tileNum);
             BinaryReader br = new BinaryReader(new MemoryStream(tileData));
             for (; tileNum > 0; tileNum--)
             {
@@ -28,28 +30,126 @@ namespace relert_sharp.MapStructure
                 byte tileSubIndex = br.ReadByte();
                 byte level = br.ReadByte();
                 byte iceGrowth = br.ReadByte();
-                data[Misc.CoordString(x, y)] = new Tile(x, y, tileIndex, level, iceGrowth);
+                bottomLevel = Math.Min(level, bottomLevel);
+                int coord = Misc.CoordInt(x, y);
+                data[coord] = new Tile(x, y, tileIndex, tileSubIndex, level, iceGrowth);
+                indexs.Add(coord);
             }
         }
+        #region Private Methods - TileLayer
+        private void Sort()
+        {
+            int[] result = new int[indexs.Count];
+            Dictionary<int, List<int>> byX = new Dictionary<int, List<int>>();
+            foreach (int coord in indexs)
+            {
+                int x = data[coord].X;
+                if (!byX.Keys.Contains(x))
+                {
+                    byX[x] = new List<int>();
+                }
+                byX[x].Add(coord);
+            }
+            byX = byX.OrderBy(p => p.Key).ToDictionary(p => p.Key, o => o.Value);
+            int i = 0;
+            foreach (List<int> sameX in byX.Values)
+            {
+                Dictionary<int, List<int>> byHeight = new Dictionary<int, List<int>>();
+                foreach (int coord in sameX)
+                {
+                    int height = data[coord].Height;
+                    if (!byHeight.Keys.Contains(height))
+                    {
+                        byHeight[height] = new List<int>();
+                    }
+                    byHeight[height].Add(coord);
+                }
+                byHeight = byHeight.OrderBy(p => p.Key).ToDictionary(p => p.Key, o => o.Value);
+                foreach(List<int> sameHeight in byHeight.Values)
+                {
+                    Dictionary<int, List<int>> byTileIndex = new Dictionary<int, List<int>>();
+                    foreach (int coord in sameHeight)
+                    {
+                        int tileIndex = data[coord].TileIndex;
+                        if (!byTileIndex.Keys.Contains(tileIndex))
+                        {
+                            byTileIndex[tileIndex] = new List<int>();
+                        }
+                        byTileIndex[tileIndex].Add(coord);
+                    }
+                    byTileIndex = byTileIndex.OrderBy(p => p.Key).ToDictionary(p => p.Key, o => o.Value);
+                    foreach (List<int> li in byTileIndex.Values)
+                    {
+                        foreach (int coord in li)
+                        {
+                            result[i] = coord;
+                            i++;
+                        }
+                    }
+                }
+            }
+            indexs = result.ToList();
+        }
+        #endregion
+        #region Public Methods - TileLayer
+        public void RemoveEmptyTiles()
+        {
+            int[] keys = data.Keys.ToArray();
+            foreach (int key in keys)
+            {
+                if (data[key].IsRemoveable)
+                {
+                    data.Remove(key);
+                    indexs.Remove(key);
+                }
+            }
+        }
+        public string CompressToString()
+        {
+            Sort();
+            byte[] preCompress = new byte[indexs.Count * 11];
+            for (int i = 0; i < indexs.Count; i++)
+            {
+                byte[] tileData = data[indexs[i]].GetBytes();
+                Misc.WriteToArray(preCompress, tileData, i * 11);
+            }
+            byte[] lzoPack = MiniLZO.Compress(preCompress.ToArray());
+            return Convert.ToBase64String(lzoPack);
+        }
+        #endregion
         #region Public Calls - TileLayer
         public Tile this[int x, int y]
         {
             get
             {
-                string coord = Misc.CoordString(x, y);
+                int coord = Misc.CoordInt(x, y);
                 if (data.Keys.Contains(coord)) return data[coord];
                 return null;
             }
-            set { data[Misc.CoordString(x, y)] = value; }
+            set
+            {
+                data[Misc.CoordInt(x, y)] = value;
+            }
         }
-        public Tile this[string coord]
+        public Tile this[int coord]
         {
             get
             {
                 if (data.Keys.Contains(coord)) return data[coord];
                 return null;
             }
-            set { data[coord] = value; }
+            set
+            {
+                data[coord] = value;
+            }
+        }
+        public Dictionary<int, Tile> Data
+        {
+            get { return data; }
+        }
+        public byte BottomLevel
+        {
+            get { return bottomLevel; }
         }
         #endregion
     }
@@ -57,19 +157,35 @@ namespace relert_sharp.MapStructure
     {
         private short x, y;
         private int tileIndex;
-        private byte level, iceGrowth;
-        public Tile(short _x, short _y, int _TileIndex, byte _Level, byte _IceGrowth)
+        private byte subIndex, level, iceGrowth;
+        public Tile(short _x, short _y, int _TileIndex, byte _TileSubIndex,  byte _Level, byte _IceGrowth)
         {
             x = _x;
             y = _y;
             tileIndex = _TileIndex;
+            subIndex = _TileSubIndex;
             level = _Level;
             iceGrowth = _IceGrowth;
         }
+        public byte[] GetBytes()
+        {
+            byte[] result = new byte[11];
+            Misc.WriteToArray(result, BitConverter.GetBytes(x), 0);
+            Misc.WriteToArray(result, BitConverter.GetBytes(y), 2);
+            Misc.WriteToArray(result, BitConverter.GetBytes(tileIndex), 4);
+            result[8] = subIndex;
+            result[9] = level;
+            result[10] = iceGrowth;
+            return result;
+        }
         #region Public Calls - Tile
+        public dynamic[] Attributes
+        {
+            get { return new dynamic[] { x, y, tileIndex, subIndex, level, iceGrowth }; }
+        }
         public bool IsDefault
         {
-            get { return tileIndex == 0 && level == 0; }
+            get { return (tileIndex == 65535 || tileIndex == 0) && level == 0 && subIndex == 0; }
         }
         public bool IsRemoveable
         {
@@ -77,7 +193,7 @@ namespace relert_sharp.MapStructure
         }
         public static Tile EmptyTile
         {
-            get { return new Tile(0, 0, 0, 0, 0); }
+            get { return new Tile(0, 0, 65535,0 , 0, 0); }
         }
         public short X
         {
@@ -93,6 +209,11 @@ namespace relert_sharp.MapStructure
         {
             get { return tileIndex; }
             set { tileIndex = value; }
+        }
+        public byte SubIndex
+        {
+            get { return subIndex; }
+            set { subIndex = value; }
         }
         public byte Height
         {
