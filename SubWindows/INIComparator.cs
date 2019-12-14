@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using relert_sharp.Utils;
 using relert_sharp.FileSystem;
+using relert_sharp.Common;
 using static relert_sharp.Language;
 
 namespace relert_sharp.SubWindows
@@ -238,7 +239,7 @@ namespace relert_sharp.SubWindows
                     {
                         foreach (string s in ent.Description)
                         {
-                            if (Constant.CurrentLanguage == Constant.Language.Chinese)
+                            if (GlobalVar.CurrentLanguage == ELanguage.Chinese)
                             {
                                 ent.Result += DICT[s];
                             }
@@ -282,7 +283,7 @@ namespace relert_sharp.SubWindows
                 private string result = "";
                 private bool isEmpty = false;
                 private bool calcPercent;
-                private Constant.Interpreter.ChangeStatus changeStatus;
+                private ChangeStatus changeStatus;
                 public LogEntry(string name, INIPair polder, INIPair pnewer, bool needCalc = false)
                 {
                     itemName = name;
@@ -294,13 +295,13 @@ namespace relert_sharp.SubWindows
                         isEmpty = true;
                         return;
                     }
-                    if (older == null || older.ToString() == "") changeStatus = Constant.Interpreter.ChangeStatus.New;
-                    else if (newer == null || newer.ToString() == "") changeStatus = Constant.Interpreter.ChangeStatus.Removed;
-                    else changeStatus = Constant.Interpreter.ChangeStatus.Changed;
-                    Constant.INIKeyType keytype = Misc.GetNonNull(polder.KeyType, pnewer.KeyType);
+                    if (older == null || older.ToString() == "") changeStatus = ChangeStatus.New;
+                    else if (newer == null || newer.ToString() == "") changeStatus = ChangeStatus.Removed;
+                    else changeStatus = ChangeStatus.Changed;
+                    INIKeyType keytype = Misc.GetNonNull(polder.KeyType, pnewer.KeyType);
                     switch (keytype)
                     {
-                        case Constant.INIKeyType.SightLike:
+                        case INIKeyType.SightLike:
                             describ = SightLike(older, newer, itemName);
                             if (calcPercent)
                             {
@@ -316,32 +317,32 @@ namespace relert_sharp.SubWindows
                                 describ.Add("(" + percent.ToString("0.00") + "%)");
                             }
                             break;
-                        case Constant.INIKeyType.ActiveLike:
+                        case INIKeyType.ActiveLike:
                             describ = ActiveBoolLike(older, newer, itemName);
                             break;
-                        case Constant.INIKeyType.PassiveLike:
+                        case INIKeyType.PassiveLike:
                             describ = PassiveBoolLike(older, newer, itemName);
                             break;
-                        case Constant.INIKeyType.AcquireLike:
+                        case INIKeyType.AcquireLike:
                             describ = AcquireBoolLike(older, newer, itemName);
                             break;
-                        case Constant.INIKeyType.NameLike:
-                        case Constant.INIKeyType.Armor:
+                        case INIKeyType.NameLike:
+                        case INIKeyType.Armor:
                             describ = NameLike(older, newer, itemName);
                             break;
-                        case Constant.INIKeyType.NameListLike:
+                        case INIKeyType.NameListLike:
                             describ = NameListLike(older, newer, itemName);
                             break;
-                        case Constant.INIKeyType.NumListLike:
+                        case INIKeyType.NumListLike:
                             describ = NameLike(older, newer, itemName);
                             break;
-                        case Constant.INIKeyType.VersesListLike:
+                        case INIKeyType.VersesListLike:
                             describ = VersesListLike(older, newer, itemName);
                             break;
-                        case Constant.INIKeyType.VersusLike:
+                        case INIKeyType.VersusLike:
                             describ = VersusLike(older.ToString(), newer.ToString(), itemName);
                             break;
-                        case Constant.INIKeyType.MultiplierLike:
+                        case INIKeyType.MultiplierLike:
                             describ = SightLike(older, newer, itemName);
                             break;
                         default:
@@ -355,12 +356,12 @@ namespace relert_sharp.SubWindows
                 {
                     if (stat == "NewItems")
                     {
-                        changeStatus = Constant.Interpreter.ChangeStatus.New;
+                        changeStatus = ChangeStatus.New;
                         describ = new List<string>() { "NewItems", item };
                     }
                     else
                     {
-                        changeStatus = Constant.Interpreter.ChangeStatus.Removed;
+                        changeStatus = ChangeStatus.Removed;
                         describ = new List<string>() { item, "Removed" };
                     }
                 }
@@ -382,7 +383,7 @@ namespace relert_sharp.SubWindows
                 {
                     get { return isEmpty; }
                 }
-                public Constant.Interpreter.ChangeStatus ChangeStatus
+                public ChangeStatus ChangeStatus
                 {
                     get { return changeStatus; }
                 }

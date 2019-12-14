@@ -5,17 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using relert_sharp.FileSystem;
-using relert_sharp.Utils;
+using relert_sharp.Common;
 
 namespace relert_sharp.MapStructure
 {
     public class Map
     {
-        public enum MapType
-        {
-            MissionMap, MultiplayerMap
-        }
-
         private string mapFileName;
         private string mapPath;
         private string isomappack5String, overlayString, overlaydataString, previewString;

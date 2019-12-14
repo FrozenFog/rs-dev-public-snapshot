@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace relert_sharp.Utils
+namespace relert_sharp.Common
 {
     public class RSException : ApplicationException
     {

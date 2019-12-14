@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using relert_sharp.Utils;
+using relert_sharp.Common;
 
 namespace relert_sharp.FileSystem
 {
@@ -20,7 +20,7 @@ namespace relert_sharp.FileSystem
         private string fullname;
         private string filepath;
         private string nameext;
-        private Constant.FileExtension extension = Constant.FileExtension.Undefined;
+        private FileExtension extension = FileExtension.Undefined;
         private FileAccess access;
         public File(string path, FileMode m, FileAccess a)
         {
@@ -56,28 +56,28 @@ namespace relert_sharp.FileSystem
             switch (nameext.ToLower())
             {
                 case "ini":
-                    extension = Constant.FileExtension.INI;
+                    extension = FileExtension.INI;
                     break;
                 case "csv":
-                    extension = Constant.FileExtension.CSV;
+                    extension = FileExtension.CSV;
                     break;
                 case "map":
-                    extension = Constant.FileExtension.MAP;
+                    extension = FileExtension.MAP;
                     break;
                 case "yrm":
-                    extension = Constant.FileExtension.YRM;
+                    extension = FileExtension.YRM;
                     break;
                 case "txt":
-                    extension = Constant.FileExtension.TXT;
+                    extension = FileExtension.TXT;
                     break;
                 case "lang":
-                    extension = Constant.FileExtension.LANG;
+                    extension = FileExtension.LANG;
                     break;
                 case "mix":
-                    extension = Constant.FileExtension.MIX;
+                    extension = FileExtension.MIX;
                     break;
                 default:
-                    extension = Constant.FileExtension.Undefined;
+                    extension = FileExtension.Undefined;
                     break;
             }
         }
@@ -94,10 +94,10 @@ namespace relert_sharp.FileSystem
                 bw = new BinaryWriter(ms);
             }
         }
-        private Constant.FileExtension Get_File_Ext()
+        private FileExtension Get_File_Ext()
         {
             ////unfinished
-            return Constant.FileExtension.UnknownBinary;
+            return FileExtension.UnknownBinary;
         }
         #region Public Methods - File
         public List<string> readlines()
@@ -134,11 +134,11 @@ namespace relert_sharp.FileSystem
                 return mem;
             }
         }
-        public Constant.FileExtension FileExt
+        public FileExtension FileExt
         {
             get
             {
-                if (extension == Constant.FileExtension.Undefined)
+                if (extension == FileExtension.Undefined)
                 {
                     return Get_File_Ext();
                 }

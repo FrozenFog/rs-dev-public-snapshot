@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using relert_sharp.Utils;
+using relert_sharp.Common;
 
 namespace relert_sharp.FileSystem
 {
@@ -14,7 +15,7 @@ namespace relert_sharp.FileSystem
         private string fileName;
         private int WidthCount, HeightCount, blockWidthPX, blockHeightPX;
         private List<TmpImage> Images;
-        private Constant.TheaterType theaterType;
+        private TheaterType theaterType;
 
         public TMPFile(string path)
         {
@@ -38,25 +39,25 @@ namespace relert_sharp.FileSystem
             switch (fileName.Split(new char[] { '.' })[1].ToLower())
             {
                 case "tem":
-                    theaterType = Constant.TheaterType.Template;
+                    theaterType = TheaterType.Template;
                     break;
                 case "des":
-                    theaterType = Constant.TheaterType.Desert;
+                    theaterType = TheaterType.Desert;
                     break;
                 case "sno":
-                    theaterType = Constant.TheaterType.Snow;
+                    theaterType = TheaterType.Snow;
                     break;
                 case "lun":
-                    theaterType = Constant.TheaterType.Lunar;
+                    theaterType = TheaterType.Lunar;
                     break;
                 case "urb":
-                    theaterType = Constant.TheaterType.Urban;
+                    theaterType = TheaterType.Urban;
                     break;
                 case "ubn":
-                    theaterType = Constant.TheaterType.NewUrban;
+                    theaterType = TheaterType.NewUrban;
                     break;
                 default:
-                    theaterType = Constant.TheaterType.Unknown;
+                    theaterType = TheaterType.Unknown;
                     break;
             }
         }

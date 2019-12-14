@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using relert_sharp.Utils;
+using relert_sharp.Common;
 using relert_sharp.Encoding;
+using relert_sharp.Utils;
 
 namespace relert_sharp.FileSystem
 {
@@ -15,27 +16,27 @@ namespace relert_sharp.FileSystem
         private ushort numOfFiles;
         private MixHeader index;
         private BinaryReader reader;
-        public MixFile(string path, Constant.MixTatics tatics) : base(path, FileMode.Open, FileAccess.Read)
+        public MixFile(string path, MixTatics tatics) : base(path, FileMode.Open, FileAccess.Read)
         {
             Initialize(tatics);
         }
-        public MixFile(byte[] rawData, string fileName, Constant.MixTatics tatics):base(rawData,fileName)
+        public MixFile(byte[] rawData, string fileName, MixTatics tatics):base(rawData,fileName)
         {
             Initialize(tatics);
         }
-        private void Initialize(Constant.MixTatics tatics)
+        private void Initialize(MixTatics tatics)
         {
             reader = new BinaryReader(ReadStream);
             reader.BaseStream.Seek(4, SeekOrigin.Begin);
             switch (tatics)
             {
-                case Constant.MixTatics.Plain:
+                case MixTatics.Plain:
                     numOfFiles = reader.ReadUInt16();
                     reader.BaseStream.Seek(4, SeekOrigin.Current);
                     index = new MixHeader(reader.ReadBytes(numOfFiles * 12), numOfFiles);
                     bodyPos = 10 + numOfFiles * 12;
                     break;
-                case Constant.MixTatics.Ciphed:
+                case MixTatics.Ciphed:
                     byte[] keySource = reader.ReadBytes(80);
                     byte[] header = DecryptHeader(keySource);
                     index = new MixHeader(header.Skip(6).ToArray(), numOfFiles);

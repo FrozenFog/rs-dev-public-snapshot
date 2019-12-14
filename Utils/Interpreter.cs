@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using relert_sharp.Common;
 
 namespace relert_sharp.Utils
 {
@@ -35,11 +36,11 @@ namespace relert_sharp.Utils
                         modify = "Decreased";
                     }
                 }
-                switch (Constant.CurrentLanguage)
+                switch (GlobalVar.CurrentLanguage)
                 {
-                    case Constant.Language.EnglishUS:
+                    case ELanguage.EnglishUS:
                         return new List<string>() { itemName, modify, "From", older.ToString(), "To", newer.ToString() };
-                    case Constant.Language.Chinese:
+                    case ELanguage.Chinese:
                         return new List<string>() { itemName, "From", older.ToString(), modify, "To", newer.ToString() };
                     default:
                         return null;
@@ -60,11 +61,11 @@ namespace relert_sharp.Utils
             }
             else if (newer == null || newer.ToString() == "")
             {
-                switch (Constant.CurrentLanguage)
+                switch (GlobalVar.CurrentLanguage)
                 {
-                    case Constant.Language.EnglishUS:
+                    case ELanguage.EnglishUS:
                         return new List<string>() { "Wont", "Define", "Whether", "Can", itemName, "OrNot", "(SetDefault)" };
-                    case Constant.Language.Chinese:
+                    case ELanguage.Chinese:
                         return new List<string>() { "Wont", "Define", "Whether", "Can", itemName, "(SetDefault)" };
                     default:
                         return null;
@@ -93,11 +94,11 @@ namespace relert_sharp.Utils
             }
             else if (newer == null || newer.ToString() == "")
             {
-                switch (Constant.CurrentLanguage)
+                switch (GlobalVar.CurrentLanguage)
                 {
-                    case Constant.Language.EnglishUS:
+                    case ELanguage.EnglishUS:
                         return new List<string>() { "Wont", "Define", "Whether", itemName, "OrNot", "(SetDefault)" };
-                    case Constant.Language.Chinese:
+                    case ELanguage.Chinese:
                         return new List<string>() { "Wont", "Define", "Whether", itemName, "(SetDefault)" };
                     default:
                         return null;
@@ -121,11 +122,11 @@ namespace relert_sharp.Utils
                 {
                     modify = "Gain";
                 }
-                switch (Constant.CurrentLanguage)
+                switch (GlobalVar.CurrentLanguage)
                 {
-                    case Constant.Language.EnglishUS:
+                    case ELanguage.EnglishUS:
                         return new List<string>() { "Now", modify, "Abil", "Of", itemName, "(NewDefine)" };
-                    case Constant.Language.Chinese:
+                    case ELanguage.Chinese:
                         return new List<string>() { "Now", modify, itemName, "Of", "Abil", "(NewDefine)" };
                     default:
                         return null;
@@ -133,11 +134,11 @@ namespace relert_sharp.Utils
             }
             else if (newer == null || newer.ToString() == "")
             {
-                switch (Constant.CurrentLanguage)
+                switch (GlobalVar.CurrentLanguage)
                 {
-                    case Constant.Language.EnglishUS:
+                    case ELanguage.EnglishUS:
                         return new List<string>() { "Now", "Wont", "Define", "Whether", "Have", "Abil", "Of", itemName, "OrNot", "(SetDefault)" };
-                    case Constant.Language.Chinese:
+                    case ELanguage.Chinese:
                         return new List<string>() { "Now", "Wont", "Define", "Whether", "Have", itemName, "Of", "Abil", "(SetDefault)" };
                     default:
                         return null;
@@ -149,11 +150,11 @@ namespace relert_sharp.Utils
                 {
                     modify = "Gain";
                 }
-                switch (Constant.CurrentLanguage)
+                switch (GlobalVar.CurrentLanguage)
                 {
-                    case Constant.Language.EnglishUS:
+                    case ELanguage.EnglishUS:
                         return new List<string>() { "Now", modify, "Abil", "Of", itemName };
-                    case Constant.Language.Chinese:
+                    case ELanguage.Chinese:
                         return new List<string>() { "Now", modify, itemName, "Of", "Abil" };
                     default:
                         return null;
@@ -172,11 +173,11 @@ namespace relert_sharp.Utils
             }
             else
             {
-                switch (Constant.CurrentLanguage)
+                switch (GlobalVar.CurrentLanguage)
                 {
-                    case Constant.Language.EnglishUS:
+                    case ELanguage.EnglishUS:
                         return new List<string>() { itemName, "Changed", "From", "\"" + older.ToString() + "\"", "To", "\"" + newer.ToString() + "\"" };
-                    case Constant.Language.Chinese:
+                    case ELanguage.Chinese:
                         return new List<string>() { itemName, "From", "\"" + older.ToString() + "\"", "Changed", "To", "\"" + newer.ToString() + "\"" };
                     default:
                         return null;
@@ -242,11 +243,11 @@ namespace relert_sharp.Utils
             if (itemName.Contains(".")) itemName = itemName.Split(new char[] { '.' })[1];
             if (older == "")
             {
-                switch (Constant.CurrentLanguage)
+                switch (GlobalVar.CurrentLanguage)
                 {
-                    case Constant.Language.EnglishUS:
+                    case ELanguage.EnglishUS:
                         return new List<string>() { "DamageMulti", "Against", itemName, "SetAs", newer };
-                    case Constant.Language.Chinese:
+                    case ELanguage.Chinese:
                         return new List<string>() { "Against", itemName, "Of", "DamageMulti", "SetAs", newer };
                     default:
                         return null;
@@ -254,11 +255,11 @@ namespace relert_sharp.Utils
             }
             if (newer == "")
             {
-                switch (Constant.CurrentLanguage)
+                switch (GlobalVar.CurrentLanguage)
                 {
-                    case Constant.Language.EnglishUS:
+                    case ELanguage.EnglishUS:
                         return new List<string>() { "DamageMulti", "Against", itemName, "SetAs", "DefaultValue" };
-                    case Constant.Language.Chinese:
+                    case ELanguage.Chinese:
                         return new List<string>() { "Against", itemName, "Of", "DamageMulti", "SetAs", "DefaultValue" };
                 }
             }
@@ -266,11 +267,11 @@ namespace relert_sharp.Utils
             int versusNew = int.Parse(newer.Replace("%", string.Empty));
             string modify = "Increased";
             if (versusNew < versusOld) modify = "Decreased";
-            switch (Constant.CurrentLanguage)
+            switch (GlobalVar.CurrentLanguage)
             {
-                case Constant.Language.EnglishUS:
+                case ELanguage.EnglishUS:
                     return new List<string>() { "DamageMulti", "Against", itemName, modify, "From", older, "To", newer };
-                case Constant.Language.Chinese:
+                case ELanguage.Chinese:
                     return new List<string>() { "Against", itemName, "Of", "DamageMulti", modify, "From", older, "To", newer };
                 default:
                     return null;
@@ -288,11 +289,11 @@ namespace relert_sharp.Utils
             }
             else
             {
-                switch (Constant.CurrentLanguage)
+                switch (GlobalVar.CurrentLanguage)
                 {
-                    case Constant.Language.EnglishUS:
+                    case ELanguage.EnglishUS:
                         return new List<string>() { "Attribute", itemName, "Changed", "From", older.ToString(), "To", newer.ToString() };
-                    case Constant.Language.Chinese:
+                    case ELanguage.Chinese:
                         return new List<string>() { "Attribute", itemName, "From", older.ToString(), "Changed", "To", newer.ToString() };
                     default:
                         return null;

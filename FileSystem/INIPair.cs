@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.Utils;
+using relert_sharp.Common;
 
 namespace relert_sharp.FileSystem
 {
@@ -12,20 +12,20 @@ namespace relert_sharp.FileSystem
         private string name;
         private dynamic value;
         private string comment;
-        private Constant.INIKeyType keytype;
+        private INIKeyType keytype;
         public INIPair(string n, string val, string com)
         {
             name = n;
             comment = com;
             value = val;
-            keytype = Misc.GetKeyType(n);
+            keytype = Utils.Misc.GetKeyType(n);
         }
         #region Public Methods - INIPair
         public void ConvValue()
         {
             if (Constant.BoolFalse.Contains((string)value)) value = false;
             else if (Constant.BoolTrue.Contains((string)value)) value = true;
-            else if (Constant.NullString.Contains((string)value) && keytype != Constant.INIKeyType.Armor)
+            else if (Constant.NullString.Contains((string)value) && keytype != INIKeyType.Armor)
             {
                 value = null;
             }
@@ -84,7 +84,7 @@ namespace relert_sharp.FileSystem
         {
             get { return comment; }
         }
-        public Constant.INIKeyType KeyType
+        public INIKeyType KeyType
         {
             get { return keytype; }
         }

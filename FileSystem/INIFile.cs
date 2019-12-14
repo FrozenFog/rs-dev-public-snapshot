@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using relert_sharp.Utils;
+using relert_sharp.Common;
 
 namespace relert_sharp.FileSystem
 {
@@ -12,12 +12,12 @@ namespace relert_sharp.FileSystem
     {
         private Dictionary<string, string> comment = new Dictionary<string, string>();
         private Dictionary<string, INIEntity> inidata = new Dictionary<string, INIEntity>();
-        private Constant.INIFileType initype;
+        private INIFileType initype;
         private string filename;
         private string fullname;
         private string filepath;
         private string nameext;
-        public INIFile(string path,  Constant.INIFileType itype = Constant.INIFileType.DefaultINI)
+        public INIFile(string path,  INIFileType itype = INIFileType.DefaultINI)
         {
             bool init = true;
             initype = itype;
@@ -151,7 +151,7 @@ namespace relert_sharp.FileSystem
         {
             get { return nameext; }
         }
-        public Constant.INIFileType INIType
+        public INIFileType INIType
         {
             get { return initype; }
             set { initype = value; }

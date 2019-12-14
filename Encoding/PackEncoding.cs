@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using static relert_sharp.Common.Misc;
 
 namespace relert_sharp.Encoding
 {
@@ -23,7 +22,7 @@ namespace relert_sharp.Encoding
                 byte[] buffer = br.ReadBytes(inputSize);
                 byte[] result = new byte[outputSize];
                 result = MiniLZO.Decompress(buffer, result);
-                WriteToArray(output, result, i);
+                Utils.Misc.WriteToArray(output, result, i);
                 i += result.Length;
             }
             br.Dispose();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.Utils;
+using relert_sharp.Common;
 
 namespace relert_sharp.FileSystem
 {
@@ -11,7 +11,7 @@ namespace relert_sharp.FileSystem
     {
         public LangFile(string path) : base(path)
         {
-            INIType = Constant.INIFileType.Language;
+            INIType = INIFileType.Language;
         }
         
     }

@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Constant.cs" />
+    <Compile Include="Common\Enums.cs" />
+    <Compile Include="Common\GlobalVar.cs" />
     <Compile Include="Encoding\Blowfish.cs" />
     <Compile Include="Encoding\CRC.cs" />
     <Compile Include="Encoding\MiniLZO.cs" />
@@ -84,9 +87,8 @@
       <DependentUpon>INIComparator.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\Colors.cs" />
-    <Compile Include="Utils\Constant.cs" />
     <Compile Include="FileSystem\File.cs" />
-    <Compile Include="Utils\RSException.cs" />
+    <Compile Include="Common\RSException.cs" />
     <Compile Include="Utils\Interpreter.cs" />
     <Compile Include="Utils\Lang.cs" />
     <Compile Include="Utils\Misc.cs" />
@@ -120,6 +122,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="UtilLib\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

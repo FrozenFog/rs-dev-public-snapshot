@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace relert_sharp.Utils
+namespace relert_sharp.Common
 {
     public static class Constant
     {
@@ -110,54 +110,6 @@ namespace relert_sharp.Utils
                 "BuildTimeMultiplier","DeathWeaponDamageModifier","IronCurtain.Modifier","ForceShield.Modifier","EMP.Modifier","LightningRod.Modifier",
                 "Experience.MindControlSelfModifier","Experience.SpawnOwnerModifier","BallisticScatter.Max","BallisticScatter.Min"
             };
-            public enum ChangeStatus { Changed, New, Removed}
         }
-
-
-
-        public enum Language
-        {
-            EnglishUS, Chinese
-        }
-        public enum FileExtension
-        {
-            Undefined, CSV, TXT, YRM, MAP, INI, LANG, MIX,
-            UnknownBinary = -1
-        }
-        public enum INIKeyType
-        {
-            SightLike, ActiveLike, PassiveLike, AcquireLike, NameListLike, MultiplierLike, NameLike, VersusLike, VersesListLike, NumListLike, Armor,
-            DefaultString,
-            Null = -1
-        }
-        public enum INIEntType
-        {
-            DefaultType,
-            MapType, SystemType, ListType,
-            UnknownType = -1
-        }
-        public enum INIFileType
-        {
-            DefaultINI,
-            MapFile, RulesINI, ThemeINI, AIINI, SoundINI, ArtINI, Language,
-            UnknownINI = -1
-        }
-        public enum TheaterType
-        {
-            Template, Snow, Desert, Urban, NewUrban, Lunar,
-            Unknown = -1
-        }
-        public enum MixTatics
-        {
-            Ciphed, Plain, 
-            Unknown = -1
-        }
-        private static Language currentlanguage = Language.EnglishUS;
-        public static Language CurrentLanguage
-        {
-            get { return currentlanguage; }
-            set { currentlanguage = value; }
-        }
-
     }
 }

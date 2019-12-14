@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using relert_sharp.FileSystem;
+using relert_sharp.Common;
 
 namespace relert_sharp.Utils
 {
@@ -11,15 +12,15 @@ namespace relert_sharp.Utils
     {
         public static void Init_Language()
         {
-            Constant.CurrentLanguage = Constant.Language.Chinese;
+            GlobalVar.CurrentLanguage = ELanguage.Chinese;
             Dictionary<string, string> dict = new Dictionary<string, string>();
             LangFile f = null;
-            switch (Constant.CurrentLanguage)
+            switch (GlobalVar.CurrentLanguage)
             {
-                case Constant.Language.EnglishUS:
+                case ELanguage.EnglishUS:
                     f = new LangFile("en-us.lang");
                     break;
-                case Constant.Language.Chinese:
+                case ELanguage.Chinese:
                     f = new LangFile("chs.lang");
                     break;
             }
@@ -32,76 +33,66 @@ namespace relert_sharp.Utils
             }
             Language.DICT = new Lang(dict);
         }
-        public static string[] Split(string s, char c, int t = 1)
-        {
-            string[] tmp = s.Split(new char[1] { c }, t + 1);
-            return tmp;
-        }
-        /// <summary>
-        /// Get Ini key type
-        /// </summary>
-        /// <param name="keyname"></param>
-        /// <returns></returns>
-        public static Constant.INIKeyType GetKeyType(string keyname)
+        public static INIKeyType GetKeyType(string keyname)
         {
             if (Constant.Interpreter.SightLike.Contains(keyname))
             {
-                return Constant.INIKeyType.SightLike;
+                return INIKeyType.SightLike;
             }
             else if (Constant.Interpreter.ActiveBoolLike.Contains(keyname))
             {
-                return Constant.INIKeyType.ActiveLike;
+                return INIKeyType.ActiveLike;
             }
             else if (Constant.Interpreter.PassiveBoolLike.Contains(keyname))
             {
-                return Constant.INIKeyType.PassiveLike;
+                return INIKeyType.PassiveLike;
             }
             else if (Constant.Interpreter.AcquireBoolLike.Contains(keyname))
             {
-                return Constant.INIKeyType.AcquireLike;
+                return INIKeyType.AcquireLike;
             }
             else if (Constant.Interpreter.MultiplierLike.Contains(keyname))
             {
-                return Constant.INIKeyType.MultiplierLike;
+                return INIKeyType.MultiplierLike;
             }
             else if (Constant.Interpreter.NameLike.Contains(keyname))
             {
-                return Constant.INIKeyType.NameLike;
+                return INIKeyType.NameLike;
             }
             else if (Constant.Interpreter.NameListLike.Contains(keyname))
             {
-                return Constant.INIKeyType.NameListLike;
+                return INIKeyType.NameListLike;
             }
             else if (Constant.Interpreter.NumListLike.Contains(keyname))
             {
-                return Constant.INIKeyType.NumListLike;
+                return INIKeyType.NumListLike;
             }
             else if (keyname.Contains("Versus.") && !keyname.Contains("Retaliate") && !keyname.Contains("PassiveAcquire"))
             {
-                return Constant.INIKeyType.VersusLike;
+                return INIKeyType.VersusLike;
             }
             else if (keyname == "Verses")
             {
-                return Constant.INIKeyType.VersesListLike;
+                return INIKeyType.VersesListLike;
             }
             else if (keyname == "Armor")
             {
-                return Constant.INIKeyType.Armor;
+                return INIKeyType.Armor;
             }
             else if (keyname == "")
             {
-                return Constant.INIKeyType.Null;
+                return INIKeyType.Null;
             }
             else
             {
-                return Constant.INIKeyType.DefaultString;
+                return INIKeyType.DefaultString;
             }
         }
         public static dynamic GetNonNull(object obj1, object obj2)
         {
-            if (obj1.GetType() == typeof(Constant.INIKeyType))
+            if (obj1.GetType() == typeof(INIKeyType))
             {
-                if ((Constant.INIKeyType)obj1 == Constant.INIKeyType.Null) return obj2;
+                if ((INIKeyType)obj1 == INIKeyType.Null) return obj2;
                 return obj1;
             }
             if (obj1 == null || obj1.ToString() == "")

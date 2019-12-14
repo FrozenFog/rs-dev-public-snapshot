@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.Utils;
+using relert_sharp.Common;
 
 namespace relert_sharp.FileSystem
 {
@@ -13,7 +13,7 @@ namespace relert_sharp.FileSystem
         private string comment;
         private List<INIPair> data = new List<INIPair>();
         private List<string> pairNameList = new List<string>();
-        private Constant.INIEntType entitytype;
+        private INIEntType entitytype;
 
         public INIEntity(List<INIPair> pairs, string n, string com = "")
         {
@@ -21,10 +21,10 @@ namespace relert_sharp.FileSystem
             name = n;
             comment = com;
             foreach (INIPair p in data) pairNameList.Add(p.Name);
-            if (Constant.EntName.SystemEntity.Contains(n)) entitytype = Constant.INIEntType.SystemType;
-            else if (Constant.EntName.DictionaryList.Contains(n)) entitytype = Constant.INIEntType.ListType;
-            else if (Constant.EntName.MapList.Contains(n)) entitytype = Constant.INIEntType.MapType;
-            else entitytype = Constant.INIEntType.DefaultType;
+            if (Constant.EntName.SystemEntity.Contains(n)) entitytype = INIEntType.SystemType;
+            else if (Constant.EntName.DictionaryList.Contains(n)) entitytype = INIEntType.ListType;
+            else if (Constant.EntName.MapList.Contains(n)) entitytype = INIEntType.MapType;
+            else entitytype = INIEntType.DefaultType;
         }
         public INIEntity(string _name, string packString, int startIndex)
         {
@@ -35,7 +35,7 @@ namespace relert_sharp.FileSystem
                 pairNameList.Add(startIndex.ToString());
                 startIndex++;
             }
-            entitytype = Constant.INIEntType.ListType;
+            entitytype = INIEntType.ListType;
         }
         #region Public Methods - INIEntity
         public List<string> TakeValuesToList()
@@ -55,7 +55,7 @@ namespace relert_sharp.FileSystem
         }
         public void ConvPairs()
         {
-            if (entitytype != Constant.INIEntType.SystemType || entitytype != Constant.INIEntType.MapType)
+            if (entitytype != INIEntType.SystemType || entitytype != INIEntType.MapType)
                 foreach (INIPair p in data) p.ConvValue();
         }
         public void RemovePair(INIPair p)
