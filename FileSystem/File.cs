@@ -100,15 +100,13 @@ namespace relert_sharp.FileSystem
             return FileExtension.UnknownBinary;
         }
         #region Public Methods - File
-        public List<string> readlines()
+        public string Readline()
         {
-            var result = new List<string>();
-            string line;
-            while ((line = sr.ReadLine()) != null)
-            {
-                result.Add(line);
-            }
-            return result;
+            return sr.ReadLine();
+        }
+        public bool CanRead()
+        {
+            return !sr.EndOfStream;
         }
         public void Write(string s)
         {

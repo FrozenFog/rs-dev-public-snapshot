@@ -11,12 +11,13 @@ namespace relert_sharp.FileSystem
     {
         private string name;
         private dynamic value;
-        private string comment;
+        private string comment, preComment;
         private INIKeyType keytype;
-        public INIPair(string n, string val, string com)
+        public INIPair(string n, string val, string com, string _preComment)
         {
             name = n;
             comment = com;
+            preComment = _preComment;
             value = val;
             keytype = Utils.Misc.GetKeyType(n);
         }
@@ -90,7 +91,7 @@ namespace relert_sharp.FileSystem
         }
         public static INIPair NullPair
         {
-            get { return new INIPair("", "", ""); }
+            get { return new INIPair("", "", "", ""); }
         }
         #endregion
     }

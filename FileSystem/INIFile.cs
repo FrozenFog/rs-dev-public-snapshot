@@ -8,41 +8,30 @@ using relert_sharp.Common;
 
 namespace relert_sharp.FileSystem
 {
-    public class INIFile
+    public class INIFile : File
     {
-        private Dictionary<string, string> comment = new Dictionary<string, string>();
         private Dictionary<string, INIEntity> inidata = new Dictionary<string, INIEntity>();
         private INIFileType initype;
-        private string filename;
-        private string fullname;
-        private string filepath;
-        private string nameext;
-        public INIFile(string path,  INIFileType itype = INIFileType.DefaultINI)
+        private bool keepAlive;
+        public INIFile(string path,  INIFileType itype = INIFileType.DefaultINI, bool _keepAlive = false) : base(path, FileMode.Open, FileAccess.Read)
         {
             bool init = true;
+            keepAlive = _keepAlive;
             initype = itype;
-            File f = new File(path, FileMode.Open, FileAccess.Read);
-            filename = f.FileName;
-            fullname = f.FullName;
-            filepath = f.FilePath;
-            nameext = f.NameExt;
-            List<string> data = f.readlines();
-            List<INIPair> buffer = new List<INIPair>();
-            List<string> keyItems = new List<string>();
-            int j = 0;
+            string preCommentBuffer = "";
+            INIEntity ent = new INIEntity();
             string rootname = "";
             string rootcom = "";
-            foreach (string l in data)
+            while (CanRead())
             {
-                string line = l;
+                string line = Readline();
                 string combuf = "";
                 if (line.Contains(";"))
                 {
                     string[] ls = line.Split(new char[] { ';' }, 2);
                     if (ls[0] == "")
                     {
-                        comment[j.ToString()] = ls[1];
-                        j += 1;
+                        preCommentBuffer += ";" + ls[1] + "\r\n";
                         continue;
                     }
                     else combuf = ls[1];
@@ -50,7 +39,6 @@ namespace relert_sharp.FileSystem
                 }
                 line = line.Replace("\t", string.Empty).Replace("\r\n", string.Empty).Replace("\r", string.Empty);
                 line = line.Trim();
-                //if (removeSpace) line = line.Replace(" ", string.Empty);
                 if (line == "") continue;
                 if (line.StartsWith("["))
                 {
@@ -58,38 +46,38 @@ namespace relert_sharp.FileSystem
                     {
                         init = false;
                         rootname = line.Replace("[", string.Empty).Replace("]", string.Empty);
-                        rootcom = combuf;
+                        ent = new INIEntity(rootname, preCommentBuffer, combuf);
+                        preCommentBuffer = "";
                         continue;
                     }
-                    INIEntity ent = new INIEntity(buffer, rootname);
-                    buffer = new List<INIPair>();
-                    keyItems = new List<string>();
-                    inidata[rootname] = ent;
+                    AddEnt(ent);
                     rootname = line.Replace("[", string.Empty).Replace("]", string.Empty);
+                    ent = new INIEntity(rootname, preCommentBuffer, combuf);
                     rootcom = combuf;
                 }
                 else
                 {
                     string[] tmp = line.Split(new char[] { '=' }, 2);
-                    INIPair p = new INIPair(tmp[0].Trim(), tmp[1].Trim(), combuf);
-                    if (!keyItems.Contains(p.Name))
-                    {
-                        buffer.Add(p);
-                        keyItems.Add(p.Name);
-                    }
+                    INIPair p = new INIPair(tmp[0].Trim(), tmp[1].Trim(), combuf, preCommentBuffer);
+                    ent.AddPair(p);
+                    preCommentBuffer = "";
                 }
             }
-            inidata[rootname] = new INIEntity(buffer, rootname);
-            f.Close();
+            AddEnt(ent);
+            if (!keepAlive) Close();
         }
 
         #region Public Methods - INIFile
         public void SaveIni(bool ignoreComment = false)
         {
-            if (System.IO.File.Exists(filepath)) System.IO.File.Delete(filepath);
-            FileStream fs = new FileStream(filepath, FileMode.CreateNew, FileAccess.Write);
+            if (System.IO.File.Exists(FilePath)) System.IO.File.Delete(FilePath);
+            FileStream fs = new FileStream(FilePath, FileMode.CreateNew, FileAccess.Write);
             MemoryStream msbuffer = new MemoryStream();
-            
+            //unfinished
+        }
+        public void AddEnt(INIEntity ent)
+        {
+            if (!inidata.Keys.Contains(ent.Name)) inidata[ent.Name] = ent;
         }
         public void RemoveEnt(INIEntity ent)
         {
@@ -102,7 +90,7 @@ namespace relert_sharp.FileSystem
         public INIEntity GetEnt(string entName)
         {
             if (inidata.Keys.Contains(entName)) return inidata[entName];
-            throw new RSException.EntityNotFoundException(entName, fullname);
+            throw new RSException.EntityNotFoundException(entName, FullName);
         }
         public INIEntity PopEnt(string entName)
         {
@@ -113,7 +101,6 @@ namespace relert_sharp.FileSystem
         public void Dispose()
         {
             inidata.Clear();
-            comment.Clear();
         }
         #endregion
         #region Public Calls - INIFile
@@ -127,29 +114,9 @@ namespace relert_sharp.FileSystem
             get { return GetEnt(name); }
             set { inidata[name] = value; }
         }
-        public Dictionary<string, string> Comment
-        {
-            get { return comment; }
-        }
         public List<INIEntity> IniData
         {
             get { return inidata.Values.ToList(); }
-        }
-        public string FileName
-        {
-            get { return filename; }
-        }
-        public string FullName
-        {
-            get { return fullname; }
-        }
-        public string FilePath
-        {
-            get { return filepath; }
-        }
-        public string NameExt
-        {
-            get { return nameext; }
         }
         public INIFileType INIType
         {
