@@ -1,4 +1,8 @@
-obj/
-bin/
-_*.cs
+*.suo
+*.user
+bin
+obj
 *.exe
+*.cache
+packges
+*_.*
