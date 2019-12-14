@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 *.suo
 *.user
 bin
@@ -8,6 +9,12 @@ obj
 *.dll
 packages
 *_.*
+=======
+obj/
+bin/
+_*.cs
+*.exe
+>>>>>>> parent of 9b60ae7... Update .gitignore
 =======
 obj/
 bin/
