@@ -29,13 +29,11 @@ namespace relert_sharp.FileSystem
         public INIEntity(string _name, string packString, int startIndex)
         {
             name = _name;
-            int length = packString.Length;
-            for (int i = 0; i < packString.Length; i += 70)
+            for (int i = 0; i < packString.Length; i++)
             {
-                data.Add(new INIPair(startIndex.ToString(), packString.Substring(i, Math.Min(70,length)), ""));
+                data.Add(new INIPair(startIndex.ToString(), packString.Substring(i * 70, 70), ""));
                 pairNameList.Add(startIndex.ToString());
                 startIndex++;
-                length -= 70;
             }
             entitytype = Constant.INIEntType.ListType;
         }

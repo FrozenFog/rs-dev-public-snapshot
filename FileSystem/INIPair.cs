@@ -12,7 +12,7 @@ namespace relert_sharp.FileSystem
         private string name;
         private dynamic value;
         private string comment;
-        private INIKeyType keytype;
+        private Constant.INIKeyType keytype;
         public INIPair(string n, string val, string com)
         {
             name = n;
@@ -25,7 +25,7 @@ namespace relert_sharp.FileSystem
         {
             if (Constant.BoolFalse.Contains((string)value)) value = false;
             else if (Constant.BoolTrue.Contains((string)value)) value = true;
-            else if (Constant.NullString.Contains((string)value) && keytype != INIKeyType.Armor)
+            else if (Constant.NullString.Contains((string)value) && keytype != Constant.INIKeyType.Armor)
             {
                 value = null;
             }
@@ -84,7 +84,7 @@ namespace relert_sharp.FileSystem
         {
             get { return comment; }
         }
-        public INIKeyType KeyType
+        public Constant.INIKeyType KeyType
         {
             get { return keytype; }
         }

@@ -1,4 +1,15 @@
+<<<<<<< HEAD
 obj/
 bin/
 _*.cs
 *.exe
+=======
+*.suo
+*.user
+bin
+obj
+*.exe
+*.cache
+packges
+*_.*
+>>>>>>> parent of a960912... Reorganized

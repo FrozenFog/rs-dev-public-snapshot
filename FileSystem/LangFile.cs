@@ -11,7 +11,7 @@ namespace relert_sharp.FileSystem
     {
         public LangFile(string path) : base(path)
         {
-            INIType = INIFileType.Language;
+            INIType = Constant.INIFileType.Language;
         }
         
     }

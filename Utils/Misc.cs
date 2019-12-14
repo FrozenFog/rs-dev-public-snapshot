@@ -32,6 +32,11 @@ namespace relert_sharp.Utils
             }
             Language.DICT = new Lang(dict);
         }
+        public static string[] Split(string s, char c, int t = 1)
+        {
+            string[] tmp = s.Split(new char[1] { c }, t + 1);
+            return tmp;
+        }
         /// <summary>
         /// Get Ini key type
         /// </summary>
