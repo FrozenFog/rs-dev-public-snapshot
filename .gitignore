@@ -4,5 +4,6 @@ bin
 obj
 *.exe
 *.cache
-packges
+*.dll
+packages
 *_.*
