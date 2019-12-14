@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using static relert_sharp.Utils.Misc;
+using static relert_sharp.Common.Misc;
 
 namespace relert_sharp.Encoding
 {

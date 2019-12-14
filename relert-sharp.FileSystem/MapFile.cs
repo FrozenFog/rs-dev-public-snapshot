@@ -13,7 +13,7 @@ namespace relert_sharp.FileSystem
         public Map Map;
         public MapFile(string path) : base(path)
         {
-            INIType = Constant.INIFileType.MapFile;
+            INIType = INIFileType.MapFile;
             Map = new Map(this);
             Dispose();
         }
