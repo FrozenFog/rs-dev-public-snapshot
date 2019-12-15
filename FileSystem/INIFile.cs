@@ -8,7 +8,7 @@ using relert_sharp.Common;
 
 namespace relert_sharp.FileSystem
 {
-    public class INIFile : File
+    public class INIFile : BaseFile
     {
         private Dictionary<string, INIEntity> inidata = new Dictionary<string, INIEntity>();
         private INIFileType initype;

@@ -10,12 +10,12 @@ using relert_sharp.Utils;
 
 namespace relert_sharp.FileSystem
 {
-    public class MixFile : File
+    public class MixFile : BaseFile
     {
         private int bodyPos;
         private ushort numOfFiles;
         private MixHeader index;
-        private BinaryReader reader;
+        //private BinaryReader reader;
         public MixFile(string path, MixTatics tatics) : base(path, FileMode.Open, FileAccess.Read)
         {
             Initialize(tatics);
@@ -26,34 +26,33 @@ namespace relert_sharp.FileSystem
         }
         private void Initialize(MixTatics tatics)
         {
-            reader = new BinaryReader(ReadStream);
-            reader.BaseStream.Seek(4, SeekOrigin.Begin);
+            BReader.BaseStream.Seek(4, SeekOrigin.Begin);
             switch (tatics)
             {
                 case MixTatics.Plain:
-                    numOfFiles = reader.ReadUInt16();
-                    reader.BaseStream.Seek(4, SeekOrigin.Current);
-                    index = new MixHeader(reader.ReadBytes(numOfFiles * 12), numOfFiles);
+                    numOfFiles = ReadUInt16();
+                    ReadSeek(4, SeekOrigin.Current);
+                    index = new MixHeader(ReadBytes(numOfFiles * 12), numOfFiles);
                     bodyPos = 10 + numOfFiles * 12;
                     break;
                 case MixTatics.Ciphed:
-                    byte[] keySource = reader.ReadBytes(80);
+                    byte[] keySource = ReadBytes(80);
                     byte[] header = DecryptHeader(keySource);
                     index = new MixHeader(header.Skip(6).ToArray(), numOfFiles);
                     break;
                 default:
                     break;
             }
-            reader.BaseStream.Seek(bodyPos, SeekOrigin.Begin);
+            ReadSeek(bodyPos, SeekOrigin.Begin);
         }
         public MemoryStream GetMemFile(string filefullname)
         {
             uint fileID = CRC.GetCRC(filefullname);
             if (index.Entries.Keys.Contains(fileID))
             {
-                reader.BaseStream.Seek(index.GetOffset(fileID), SeekOrigin.Current);
-                byte[] buffer = reader.ReadBytes(index.GetSize(fileID));
-                reader.BaseStream.Seek(bodyPos, SeekOrigin.Begin);
+                ReadSeek(index.GetOffset(fileID), SeekOrigin.Current);
+                byte[] buffer = ReadBytes(index.GetSize(fileID));
+                ReadSeek(bodyPos, SeekOrigin.Begin);
                 return new MemoryStream(buffer);
             }
             else
@@ -70,7 +69,7 @@ namespace relert_sharp.FileSystem
             List<uint> buffer = new List<uint>();
             byte[] blowfishKey = new WSKeyCalc().DecryptKey(keySource);
             Blowfish b = new Blowfish(blowfishKey);
-            byte[] headerBlock = reader.ReadBytes(8);
+            byte[] headerBlock = ReadBytes(8);
             uint[] firstBlock = b.Decrypt(Misc.ToUintArray(headerBlock));
             buffer = buffer.Concat(firstBlock).ToList();
             numOfFiles = (ushort)firstBlock[0];
@@ -79,7 +78,7 @@ namespace relert_sharp.FileSystem
             bodyPos = (i + 1) * 8 + 84;
             for (; i > 0; i--)
             {
-                uint[] block = b.Decrypt(Misc.ToUintArray(reader.ReadBytes(8)));
+                uint[] block = b.Decrypt(Misc.ToUintArray(ReadBytes(8)));
                 buffer = buffer.Concat(block).ToList();
             }
             return Misc.ToByteArray(buffer.ToArray());

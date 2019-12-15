@@ -8,7 +8,7 @@ using relert_sharp.Common;
 
 namespace relert_sharp.FileSystem
 {
-    public class File
+    public abstract class BaseFile
     {
         private FileStream fs;
         private BinaryReader br;
@@ -22,8 +22,9 @@ namespace relert_sharp.FileSystem
         private string nameext;
         private FileExtension extension = FileExtension.Undefined;
         private FileAccess access;
-        public File(string path, FileMode m, FileAccess a)
+        public BaseFile(string path, FileMode m, FileAccess a, bool _keepAlive = true)
         {
+            if (m == FileMode.Create && File.Exists(path)) File.Delete(path);
             fs = new FileStream(path, m, a);
             access = a;
             InitStream();
@@ -32,7 +33,7 @@ namespace relert_sharp.FileSystem
             fullname = sl[sl.Count() - 1];
             GetNames();
         }
-        public File(byte[] rawData, string fileName)
+        public BaseFile(byte[] rawData, string fileName)
         {
             MemoryStream buffer = new MemoryStream(rawData);
             buffer.CopyTo(fs);
@@ -40,6 +41,13 @@ namespace relert_sharp.FileSystem
             fullname = filename;
             GetNames();
             buffer.Dispose();
+        }
+        public BaseFile(Stream stream, string fileName)
+        {
+            stream.CopyTo(fs);
+            access = FileAccess.Read;
+            fullname = filename;
+            GetNames();
         }
         private void GetNames()
         {
@@ -99,30 +107,39 @@ namespace relert_sharp.FileSystem
             ////unfinished
             return FileExtension.UnknownBinary;
         }
-        #region Public Methods - File
-        public string Readline()
-        {
-            return sr.ReadLine();
-        }
-        public bool CanRead()
-        {
-            return !sr.EndOfStream;
-        }
-        public void Write(string s)
-        {
-            sw.Write(s);
-        }
-        public void Dump()
-        {
-            ms.WriteTo(fs);
-        }
+
+
+        #region Protected - BaseFile
+        protected BinaryReader BReader { get { return br; } }
+        protected int ReadInt32() { return br.ReadInt32(); }
+        protected ushort ReadUInt16() { return br.ReadUInt16(); }
+        protected byte[] ReadBytes(int count) { return br.ReadBytes(count); }
+        protected string Readline() { return sr.ReadLine(); }
+        protected bool CanRead() { return !sr.EndOfStream; }
+        protected bool CanWrite() { return ms.CanWrite; }
+        protected void Write(string s) { sw.Write(s);sw.Flush(); }
+        protected void ReadSeek(int offset, SeekOrigin origin) { fs.Seek(offset, origin); }
+        protected void WriteSeek(int offset, SeekOrigin origin) { ms.Seek(offset, origin); }
+        #endregion
+        #region Public Methods - BaseFile
+        public void Dump() { ms.WriteTo(fs); ms = new MemoryStream(); }
         public void Close()
         {
+            if (access == FileAccess.Read)
+            {
+                sr.Dispose();
+                br.Dispose();
+            }
+            if (access == FileAccess.Write)
+            {
+                sw.Dispose();
+                bw.Dispose();
+            }
             fs.Dispose();
             ms.Dispose();
         }
         #endregion
-        #region Public Calls - File
+        #region Public Calls - BaseFile
         public Stream ReadStream
         {
             get

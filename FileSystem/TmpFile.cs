@@ -10,33 +10,24 @@ using relert_sharp.Common;
 namespace relert_sharp.FileSystem
 {
 
-    public class TMPFile
+    public class TMPFile : BaseFile
     {
-        private string fileName;
         private int WidthCount, HeightCount, blockWidthPX, blockHeightPX;
         private List<TmpImage> Images;
         private TheaterType theaterType;
 
-        public TMPFile(string path)
+        public TMPFile(string path) : base(path, FileMode.Open, FileAccess.Read)
         {
-            File f = new File(path, FileMode.Open, FileAccess.Read);
-            fileName = f.FullName;
-            BinaryReader br = new BinaryReader(f.ReadStream);
-            Read(br);
+            Read();
             GetTheater();
-            br.Dispose();
-            f.Close();
         }
-        public TMPFile(Stream baseStream, string fullName)
+        public TMPFile(Stream stream, string fileName) : base(stream, fileName)
         {
-            fileName = fullName;
-            BinaryReader br = new BinaryReader(baseStream);
-            Read(br);
-            br.Dispose();
+            Read();
         }
         private void GetTheater()
         {
-            switch (fileName.Split(new char[] { '.' })[1].ToLower())
+            switch (NameExt.ToLower())
             {
                 case "tem":
                     theaterType = TheaterType.Template;
@@ -61,29 +52,25 @@ namespace relert_sharp.FileSystem
                     break;
             }
         }
-        private void Read(BinaryReader br)
+        private void Read()
         {
-            WidthCount = br.ReadInt32();
-            HeightCount = br.ReadInt32();
-            blockWidthPX = br.ReadInt32();
-            blockHeightPX = br.ReadInt32();
-            byte[] indexs = br.ReadBytes(WidthCount * HeightCount * 4);
+            WidthCount = ReadInt32();
+            HeightCount = ReadInt32();
+            blockWidthPX = ReadInt32();
+            blockHeightPX = ReadInt32();
+            byte[] indexs = ReadBytes(WidthCount * HeightCount * 4);
             Images = new List<TmpImage>(WidthCount * HeightCount);
             for (int i = 0; i < WidthCount * HeightCount; i++)
             {
                 int imageData = BitConverter.ToInt32(indexs, i * 4);
-                br.BaseStream.Seek(imageData, SeekOrigin.Begin);
+                ReadSeek(imageData, SeekOrigin.Begin);
                 TmpImage img = new TmpImage();
-                img.Read(br, blockWidthPX, blockHeightPX);
+                img.Read(BReader, blockWidthPX, blockHeightPX);
                 Images.Add(img);
             }
-            br.Dispose();
+            Close();
         }
         #region Public Calls - TMPFile
-        public string FullName
-        {
-            get { return fileName; }
-        }
         public List<TmpImage> Imgs
         {
             get { return Images; }
