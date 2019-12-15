@@ -27,13 +27,16 @@ namespace relert_sharp.FileSystem
         public INIEntity(string _name, string packString, int startIndex)
         {
             name = _name;
-            for (int i = 0; i < packString.Length; i++)
+            for (int i = 0; i < packString.Length; i+=70)
             {
-                AddPair(new INIPair(startIndex.ToString(), packString.Substring(i * 70, 70), "", ""));
+                int remain = packString.Length - i;
+                AddPair(new INIPair(startIndex.ToString(), packString.Substring(i, Math.Min(70, remain)), "", ""));
                 startIndex++;
             }
             entitytype = INIEntType.ListType;
         }
+
+
         #region Public Methods - INIEntity
         public void AddPair(INIPair p)
         {
@@ -73,19 +76,15 @@ namespace relert_sharp.FileSystem
             return result;
         }
         #endregion
+
+
         #region Public Calls
-        public string Name
-        {
-            get { return name; }
-        }
-        public List<INIPair> DataList
-        {
-            get { return data.Values.ToList(); }
-        }
-        public static INIEntity NullEntity
-        {
-            get { return new INIEntity(); }
-        }
+        public string Comment { get { return comment; } }
+        public string PreComment { get { return preComment; } }
+        public string Name { get { return name; } }
+        public bool HasComment { get { return !string.IsNullOrEmpty(comment); } }
+        public List<INIPair> DataList { get { return data.Values.ToList(); } }
+        public static INIEntity NullEntity { get { return new INIEntity("","",""); } }
         #endregion
     }
 }

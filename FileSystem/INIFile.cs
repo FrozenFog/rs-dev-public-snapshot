@@ -31,7 +31,7 @@ namespace relert_sharp.FileSystem
                     string[] ls = line.Split(new char[] { ';' }, 2);
                     if (ls[0] == "")
                     {
-                        preCommentBuffer += ";" + ls[1] + "\r\n";
+                        preCommentBuffer += ";" + ls[1] + "\n";
                         continue;
                     }
                     else combuf = ls[1];
@@ -70,13 +70,35 @@ namespace relert_sharp.FileSystem
         #region Public Methods - INIFile
         public void SaveIni(bool ignoreComment = false)
         {
-            if (System.IO.File.Exists(FilePath)) System.IO.File.Delete(FilePath);
-            FileStream fs = new FileStream(FilePath, FileMode.CreateNew, FileAccess.Write);
+            //if (File.Exists(FilePath)) File.Delete(FilePath);
+            FileStream fs = new FileStream(FilePath, FileMode.Create, FileAccess.Write);
             MemoryStream msbuffer = new MemoryStream();
-            //unfinished
+            StreamWriter sw = new StreamWriter(msbuffer);
+            foreach (INIEntity ent in IniData)
+            {
+                if (!ignoreComment) sw.Write(ent.PreComment);
+                sw.Write("[" + ent.Name + "]");
+                if (!ignoreComment && ent.HasComment) sw.Write(";" + ent.Comment);
+                sw.Write("\n");
+                foreach (INIPair p in ent.DataList)
+                {
+                    if (!ignoreComment) sw.Write(p.PreComment);
+                    sw.Write(p.Name + "=" + p.Value.ToString());
+                    if (!ignoreComment && p.HasComment) sw.Write(";" + p.Comment);
+                    sw.Write("\n");
+                }
+                sw.Write("\n");
+                sw.Flush();
+            }
+            msbuffer.WriteTo(fs);
+            sw.Dispose();
+            fs.Dispose();
+            msbuffer.Dispose();
+            Close();
         }
         public void AddEnt(INIEntity ent)
         {
+            if (string.IsNullOrEmpty(ent.Name)) return;
             if (!inidata.Keys.Contains(ent.Name)) inidata[ent.Name] = ent;
         }
         public void RemoveEnt(INIEntity ent)
@@ -90,7 +112,8 @@ namespace relert_sharp.FileSystem
         public INIEntity GetEnt(string entName)
         {
             if (inidata.Keys.Contains(entName)) return inidata[entName];
-            throw new RSException.EntityNotFoundException(entName, FullName);
+            return INIEntity.NullEntity;
+            //throw new RSException.EntityNotFoundException(entName, FullName);
         }
         public INIEntity PopEnt(string entName)
         {

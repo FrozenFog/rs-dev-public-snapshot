@@ -27,6 +27,7 @@ namespace relert_sharp.FileSystem
             IniDict["Basic"] = Map.Info.Basic;
             IniDict["Map"] = Map.Info.Map;
             IniDict["SpecialFlags"] = Map.Info.SpecialFlags;
+            SaveIni();
         }
         #endregion
     }

@@ -13,14 +13,77 @@ namespace relert_sharp.FileSystem
         private dynamic value;
         private string comment, preComment;
         private INIKeyType keytype;
+
+
         public INIPair(string n, string val, string com, string _preComment)
         {
             name = n;
             comment = com;
             preComment = _preComment;
             value = val;
-            keytype = Utils.Misc.GetKeyType(n);
+            keytype = GetKeyType(n);
         }
+
+
+        #region Private Methods - INIPair
+        private INIKeyType GetKeyType(string keyname)
+        {
+            if (Constant.Interpreter.SightLike.Contains(keyname))
+            {
+                return INIKeyType.SightLike;
+            }
+            else if (Constant.Interpreter.ActiveBoolLike.Contains(keyname))
+            {
+                return INIKeyType.ActiveLike;
+            }
+            else if (Constant.Interpreter.PassiveBoolLike.Contains(keyname))
+            {
+                return INIKeyType.PassiveLike;
+            }
+            else if (Constant.Interpreter.AcquireBoolLike.Contains(keyname))
+            {
+                return INIKeyType.AcquireLike;
+            }
+            else if (Constant.Interpreter.MultiplierLike.Contains(keyname))
+            {
+                return INIKeyType.MultiplierLike;
+            }
+            else if (Constant.Interpreter.NameLike.Contains(keyname))
+            {
+                return INIKeyType.NameLike;
+            }
+            else if (Constant.Interpreter.NameListLike.Contains(keyname))
+            {
+                return INIKeyType.NameListLike;
+            }
+            else if (Constant.Interpreter.NumListLike.Contains(keyname))
+            {
+                return INIKeyType.NumListLike;
+            }
+            else if (keyname.Contains("Versus.") && !keyname.Contains("Retaliate") && !keyname.Contains("PassiveAcquire"))
+            {
+                return INIKeyType.VersusLike;
+            }
+            else if (keyname == "Verses")
+            {
+                return INIKeyType.VersesListLike;
+            }
+            else if (keyname == "Armor")
+            {
+                return INIKeyType.Armor;
+            }
+            else if (keyname == "")
+            {
+                return INIKeyType.Null;
+            }
+            else
+            {
+                return INIKeyType.DefaultString;
+            }
+        }
+        #endregion
+
+
         #region Public Methods - INIPair
         public void ConvValue()
         {
@@ -72,27 +135,16 @@ namespace relert_sharp.FileSystem
             return result.ToArray();
         }
         #endregion
+
+
         #region Public Calls - INIPair
-        public string Name
-        {
-            get { return name; }
-        }
-        public dynamic Value
-        {
-            get { return value; }
-        }
-        public string Comment
-        {
-            get { return comment; }
-        }
-        public INIKeyType KeyType
-        {
-            get { return keytype; }
-        }
-        public static INIPair NullPair
-        {
-            get { return new INIPair("", "", "", ""); }
-        }
+        public string Name { get { return name; } }
+        public dynamic Value { get { return value; } }
+        public string Comment { get { return comment; } }
+        public string PreComment { get { return preComment; } }
+        public bool HasComment { get { return !string.IsNullOrEmpty(comment); } }
+        public INIKeyType KeyType { get { return keytype; } }
+        public static INIPair NullPair { get { return new INIPair("", "", "", ""); } }
         #endregion
     }
 }

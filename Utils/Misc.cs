@@ -33,61 +33,6 @@ namespace relert_sharp.Utils
             }
             Language.DICT = new Lang(dict);
         }
-        public static INIKeyType GetKeyType(string keyname)
-        {
-            if (Constant.Interpreter.SightLike.Contains(keyname))
-            {
-                return INIKeyType.SightLike;
-            }
-            else if (Constant.Interpreter.ActiveBoolLike.Contains(keyname))
-            {
-                return INIKeyType.ActiveLike;
-            }
-            else if (Constant.Interpreter.PassiveBoolLike.Contains(keyname))
-            {
-                return INIKeyType.PassiveLike;
-            }
-            else if (Constant.Interpreter.AcquireBoolLike.Contains(keyname))
-            {
-                return INIKeyType.AcquireLike;
-            }
-            else if (Constant.Interpreter.MultiplierLike.Contains(keyname))
-            {
-                return INIKeyType.MultiplierLike;
-            }
-            else if (Constant.Interpreter.NameLike.Contains(keyname))
-            {
-                return INIKeyType.NameLike;
-            }
-            else if (Constant.Interpreter.NameListLike.Contains(keyname))
-            {
-                return INIKeyType.NameListLike;
-            }
-            else if (Constant.Interpreter.NumListLike.Contains(keyname))
-            {
-                return INIKeyType.NumListLike;
-            }
-            else if (keyname.Contains("Versus.") && !keyname.Contains("Retaliate") && !keyname.Contains("PassiveAcquire"))
-            {
-                return INIKeyType.VersusLike;
-            }
-            else if (keyname == "Verses")
-            {
-                return INIKeyType.VersesListLike;
-            }
-            else if (keyname == "Armor")
-            {
-                return INIKeyType.Armor;
-            }
-            else if (keyname == "")
-            {
-                return INIKeyType.Null;
-            }
-            else
-            {
-                return INIKeyType.DefaultString;
-            }
-        }
         public static dynamic GetNonNull(object obj1, object obj2)
         {
             if (obj1.GetType() == typeof(INIKeyType))
@@ -153,7 +98,7 @@ namespace relert_sharp.Utils
         }
         public static void WriteToArray(byte[] dest, byte[] src, int offset)
         {
-            for (int i = 0; i < src.Length; i++)
+            for (int i = 0; i < src.Length && i + offset < dest.Length; i++)
             {
                 dest[i + offset] = src[i];
             }

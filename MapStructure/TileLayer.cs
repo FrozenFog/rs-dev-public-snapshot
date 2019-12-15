@@ -32,12 +32,20 @@ namespace relert_sharp.MapStructure
                 byte iceGrowth = br.ReadByte();
                 bottomLevel = Math.Min(level, bottomLevel);
                 int coord = Misc.CoordInt(x, y);
+                if ((x | y | tileIndex | tileSubIndex | level | iceGrowth) == 0) continue;
                 data[coord] = new Tile(x, y, tileIndex, tileSubIndex, level, iceGrowth);
                 indexs.Add(coord);
             }
         }
+
+
         #region Private Methods - TileLayer
-        private void Sort()
+
+        #endregion
+
+
+        #region Public Methods - TileLayer
+        public void Sort()
         {
             int[] result = new int[indexs.Count];
             Dictionary<int, List<int>> byX = new Dictionary<int, List<int>>();
@@ -65,7 +73,7 @@ namespace relert_sharp.MapStructure
                     byHeight[height].Add(coord);
                 }
                 byHeight = byHeight.OrderBy(p => p.Key).ToDictionary(p => p.Key, o => o.Value);
-                foreach(List<int> sameHeight in byHeight.Values)
+                foreach (List<int> sameHeight in byHeight.Values)
                 {
                     Dictionary<int, List<int>> byTileIndex = new Dictionary<int, List<int>>();
                     foreach (int coord in sameHeight)
@@ -90,8 +98,6 @@ namespace relert_sharp.MapStructure
             }
             indexs = result.ToList();
         }
-        #endregion
-        #region Public Methods - TileLayer
         public void RemoveEmptyTiles()
         {
             int[] keys = data.Keys.ToArray();
@@ -106,17 +112,18 @@ namespace relert_sharp.MapStructure
         }
         public string CompressToString()
         {
-            Sort();
             byte[] preCompress = new byte[indexs.Count * 11];
             for (int i = 0; i < indexs.Count; i++)
             {
                 byte[] tileData = data[indexs[i]].GetBytes();
                 Misc.WriteToArray(preCompress, tileData, i * 11);
             }
-            byte[] lzoPack = MiniLZO.Compress(preCompress.ToArray());
+            byte[] lzoPack = PackEncoding.EncodeToPack(preCompress);
             return Convert.ToBase64String(lzoPack);
         }
         #endregion
+
+
         #region Public Calls - TileLayer
         public Tile this[int x, int y]
         {
