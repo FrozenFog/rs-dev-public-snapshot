@@ -51,8 +51,13 @@ namespace relert_sharp.MapStructure
             Dictionary<int, List<int>> byTileIndex = new Dictionary<int, List<int>>();
             foreach (int coord in indexs)
             {
+<<<<<<< HEAD
                 int tileindex = data[coord].TileIndex;
                 if (!byTileIndex.Keys.Contains(tileindex))
+=======
+                int x = data[coord].TileIndex;
+                if (!byX.Keys.Contains(x))
+>>>>>>> 8546b3dfda037f3cf8b1468012da80b07e19d184
                 {
                     byTileIndex[tileindex] = new List<int>();
                 }
@@ -65,8 +70,13 @@ namespace relert_sharp.MapStructure
                 Dictionary<int, List<int>> bySubIndex = new Dictionary<int, List<int>>();
                 foreach (int coord in sameTileIndex)
                 {
+<<<<<<< HEAD
                     int subindex = data[coord].SubIndex;
                     if (!bySubIndex.Keys.Contains(subindex))
+=======
+                    int height = data[coord].SubIndex;
+                    if (!byHeight.Keys.Contains(height))
+>>>>>>> 8546b3dfda037f3cf8b1468012da80b07e19d184
                     {
                         bySubIndex[subindex] = new List<int>();
                     }
@@ -78,8 +88,13 @@ namespace relert_sharp.MapStructure
                     Dictionary<int, List<int>> byHeight = new Dictionary<int, List<int>>();
                     foreach (int coord in sameSubIndex)
                     {
+<<<<<<< HEAD
                         int height = data[coord].Height;
                         if (!byHeight.Keys.Contains(height))
+=======
+                        int tileIndex = data[coord].Height;
+                        if (!byTileIndex.Keys.Contains(tileIndex))
+>>>>>>> 8546b3dfda037f3cf8b1468012da80b07e19d184
                         {
                             byHeight[height] = new List<int>();
                         }
