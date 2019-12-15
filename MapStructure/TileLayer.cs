@@ -51,7 +51,7 @@ namespace relert_sharp.MapStructure
             Dictionary<int, List<int>> byX = new Dictionary<int, List<int>>();
             foreach (int coord in indexs)
             {
-                int x = data[coord].X;
+                int x = data[coord].TileIndex;
                 if (!byX.Keys.Contains(x))
                 {
                     byX[x] = new List<int>();
@@ -65,7 +65,7 @@ namespace relert_sharp.MapStructure
                 Dictionary<int, List<int>> byHeight = new Dictionary<int, List<int>>();
                 foreach (int coord in sameX)
                 {
-                    int height = data[coord].Height;
+                    int height = data[coord].SubIndex;
                     if (!byHeight.Keys.Contains(height))
                     {
                         byHeight[height] = new List<int>();
@@ -78,7 +78,7 @@ namespace relert_sharp.MapStructure
                     Dictionary<int, List<int>> byTileIndex = new Dictionary<int, List<int>>();
                     foreach (int coord in sameHeight)
                     {
-                        int tileIndex = data[coord].TileIndex;
+                        int tileIndex = data[coord].Height;
                         if (!byTileIndex.Keys.Contains(tileIndex))
                         {
                             byTileIndex[tileIndex] = new List<int>();
@@ -112,6 +112,7 @@ namespace relert_sharp.MapStructure
         }
         public string CompressToString()
         {
+            Sort();
             byte[] preCompress = new byte[indexs.Count * 11];
             for (int i = 0; i < indexs.Count; i++)
             {
