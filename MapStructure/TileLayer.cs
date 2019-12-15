@@ -48,45 +48,45 @@ namespace relert_sharp.MapStructure
         public void Sort()
         {
             int[] result = new int[indexs.Count];
-            Dictionary<int, List<int>> byX = new Dictionary<int, List<int>>();
+            Dictionary<int, List<int>> byTileIndex = new Dictionary<int, List<int>>();
             foreach (int coord in indexs)
             {
-                int x = data[coord].X;
-                if (!byX.Keys.Contains(x))
+                int tileindex = data[coord].TileIndex;
+                if (!byTileIndex.Keys.Contains(tileindex))
                 {
-                    byX[x] = new List<int>();
+                    byTileIndex[tileindex] = new List<int>();
                 }
-                byX[x].Add(coord);
+                byTileIndex[tileindex].Add(coord);
             }
-            byX = byX.OrderBy(p => p.Key).ToDictionary(p => p.Key, o => o.Value);
+            byTileIndex = byTileIndex.OrderBy(p => p.Key).ToDictionary(p => p.Key, o => o.Value);
             int i = 0;
-            foreach (List<int> sameX in byX.Values)
+            foreach (List<int> sameTileIndex in byTileIndex.Values)
             {
-                Dictionary<int, List<int>> byHeight = new Dictionary<int, List<int>>();
-                foreach (int coord in sameX)
+                Dictionary<int, List<int>> bySubIndex = new Dictionary<int, List<int>>();
+                foreach (int coord in sameTileIndex)
                 {
-                    int height = data[coord].Height;
-                    if (!byHeight.Keys.Contains(height))
+                    int subindex = data[coord].SubIndex;
+                    if (!bySubIndex.Keys.Contains(subindex))
                     {
-                        byHeight[height] = new List<int>();
+                        bySubIndex[subindex] = new List<int>();
                     }
-                    byHeight[height].Add(coord);
+                    bySubIndex[subindex].Add(coord);
                 }
-                byHeight = byHeight.OrderBy(p => p.Key).ToDictionary(p => p.Key, o => o.Value);
-                foreach (List<int> sameHeight in byHeight.Values)
+                bySubIndex = bySubIndex.OrderBy(p => p.Key).ToDictionary(p => p.Key, o => o.Value);
+                foreach (List<int> sameSubIndex in bySubIndex.Values)
                 {
-                    Dictionary<int, List<int>> byTileIndex = new Dictionary<int, List<int>>();
-                    foreach (int coord in sameHeight)
+                    Dictionary<int, List<int>> byHeight = new Dictionary<int, List<int>>();
+                    foreach (int coord in sameSubIndex)
                     {
-                        int tileIndex = data[coord].TileIndex;
-                        if (!byTileIndex.Keys.Contains(tileIndex))
+                        int height = data[coord].Height;
+                        if (!byHeight.Keys.Contains(height))
                         {
-                            byTileIndex[tileIndex] = new List<int>();
+                            byHeight[height] = new List<int>();
                         }
-                        byTileIndex[tileIndex].Add(coord);
+                        byHeight[height].Add(coord);
                     }
-                    byTileIndex = byTileIndex.OrderBy(p => p.Key).ToDictionary(p => p.Key, o => o.Value);
-                    foreach (List<int> li in byTileIndex.Values)
+                    byHeight = byHeight.OrderBy(p => p.Key).ToDictionary(p => p.Key, o => o.Value);
+                    foreach (List<int> li in byHeight.Values)
                     {
                         foreach (int coord in li)
                         {
@@ -112,6 +112,7 @@ namespace relert_sharp.MapStructure
         }
         public string CompressToString()
         {
+            Sort();
             byte[] preCompress = new byte[indexs.Count * 11];
             for (int i = 0; i < indexs.Count; i++)
             {
