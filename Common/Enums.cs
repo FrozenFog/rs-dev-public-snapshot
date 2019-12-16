@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace relert_sharp.Common
 {
+    public enum PackType
+    {
+        OverlayPack, IsoMapPack
+    }
     public enum MapType
     {
         MissionMap, MultiplayerMap

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 using relert_sharp.FileSystem;
 using relert_sharp.Common;
 
@@ -102,6 +103,10 @@ namespace relert_sharp.Utils
             {
                 dest[i + offset] = src[i];
             }
+        }
+        public static string FromRectangle(Rectangle rect)
+        {
+            return rect.X.ToString() + "," + rect.Y.ToString() + "," + rect.Width.ToString() + "," + rect.Height.ToString();
         }
     }
 

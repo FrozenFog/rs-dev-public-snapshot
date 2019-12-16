@@ -53,6 +53,8 @@
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\GlobalVar.cs" />
     <Compile Include="Encoding\Blowfish.cs" />
+    <Compile Include="Encoding\Format5.cs" />
+    <Compile Include="Encoding\Format80.cs" />
     <Compile Include="Encoding\CRC.cs" />
     <Compile Include="Encoding\MiniLZO.cs" />
     <Compile Include="Encoding\PackEncoding.cs" />

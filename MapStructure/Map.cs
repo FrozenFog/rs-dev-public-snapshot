@@ -18,7 +18,8 @@ namespace relert_sharp.MapStructure
         private MapInfo info;
         private Rectangle previewSize;
         private TileLayer Tiles;
-        private Dictionary<string, INIEntity> residue;
+        private OverlayLayer Overlays;
+        private Dictionary<string, INIEntity> residual;
         public Map(MapFile f)
         {
             mapFileName = f.FileName;
@@ -29,8 +30,11 @@ namespace relert_sharp.MapStructure
             GetPreview(f);
             info = new MapInfo(f.PopEnt("Basic"), f.PopEnt("Map"), f.PopEnt("SpecialFlags"));
             Tiles = new TileLayer(isomappack5String, info.Size);
-            residue = new Dictionary<string, INIEntity>(f.IniDict);
+            Overlays = new OverlayLayer(overlayString, overlaydataString);
+            residual = new Dictionary<string, INIEntity>(f.IniDict);
         }
+
+
         #region Public Methods - Map
         public void CompressTile()
         {
@@ -42,16 +46,24 @@ namespace relert_sharp.MapStructure
             isomappack5String = Tiles.CompressToString();
         }
         #endregion
+
+
         #region Private Methods - Map
         private void GetPreview(MapFile f)
         {
             INIEntity preview = f.PopEnt("Preview");
-            if (preview.DataList.Count == 0) return;
+            if (preview.DataList.Count == 0)
+            {
+                f.PopEnt("PreviewPack");
+                return;
+            }
             int[] buf = preview.GetPair("Size").ParseIntList();
             previewSize = new Rectangle(buf[0], buf[1], buf[2], buf[3]);
             previewString = f.PopEnt("PreviewPack").JoinString();
         }
-        #endregion
+        #endregion 
+
+
         #region Public Calls - Map
         public MapInfo Info
         {
@@ -63,8 +75,13 @@ namespace relert_sharp.MapStructure
         }
         public Dictionary<string, INIEntity> IniResidue
         {
-            get { return residue; }
-            set { residue = value; }
+            get { return residual; }
+            set { residual = value; }
+        }
+        public Rectangle PreviewSize
+        {
+            get { return previewSize; }
+            set { previewSize = value; }
         }
         public TileLayer TilesData
         {
@@ -85,6 +102,11 @@ namespace relert_sharp.MapStructure
         {
             get { return overlayString; }
             set { overlayString = value; }
+        }
+        public string PreviewPack
+        {
+            get { return previewString; }
+            set { previewString = value; }
         }
         #endregion
     }

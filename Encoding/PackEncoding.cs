@@ -47,9 +47,9 @@ namespace relert_sharp.Encoding
                 ushort resultSize = (ushort)lzoResult.Length;
                 outputSize += resultSize + 4;
                 bwOut.Write(resultSize);
-                bwOut.Write((ushort)8192);
+                bwOut.Write((ushort)buffer.Length);
                 bwOut.Write(lzoResult);
-                remain -= 8192;
+                remain -= buffer.Length;
                 bwOut.Flush();
             }
             bwOut.Close();

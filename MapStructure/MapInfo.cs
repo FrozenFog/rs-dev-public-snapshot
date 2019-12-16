@@ -12,6 +12,7 @@ namespace relert_sharp.MapStructure
     {
         private static int iniformat = 4;
         private INIEntity _basic, _map, _specialFlags;
+        private Dictionary<string, INIEntity> _residual = new Dictionary<string, INIEntity>();
         public string MapName, ThemeName, PostScoreFilmName, AltNextScene, TheaterName, PlayerHouseName;
         public string[] GameModes;
         //public bool Official, IceGrowth, VeinGrowth, TibGrowth, IgnoreGlobalAI, DeathToVisc, FreeRadar, EndOfGame, SkipScore, OneTime, SkipSelect,
@@ -75,6 +76,11 @@ namespace relert_sharp.MapStructure
             Size = new Rectangle(buf[0], buf[1], buf[2], buf[3]);
             buf = MapSize.GetPair("LocalSize").ParseIntList();
             LocalSize = new Rectangle(buf[0], buf[1], buf[2], buf[3]);
+        }
+        public void AddInfo(INIEntity ent)
+        {
+            if (_residual.Keys.Contains(ent.Name)) return;
+            _residual[ent.Name] = ent;
         }
         public INIEntity Basic
         {
