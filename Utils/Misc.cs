@@ -34,6 +34,17 @@ namespace relert_sharp.Utils
             }
             Language.DICT = new Lang(dict);
         }
+        public static bool ParseBool(string s, bool def = false)
+        {
+            if (s != "")
+            {
+                if (Constant.BoolTrue.Contains(s)) return true;
+                else if (Constant.BoolFalse.Contains(s)) return false;
+                else if (int.Parse(s) == 1) return true;
+                else if (int.Parse(s) == 0) return false;
+            }
+            return def;
+        }
         public static dynamic GetNonNull(object obj1, object obj2)
         {
             if (obj1.GetType() == typeof(INIKeyType))
@@ -79,6 +90,14 @@ namespace relert_sharp.Utils
         {
             return 1000 * x + y;
         }
+        public static int CoordByteX(int crd)
+        {
+            return crd % 512;
+        }
+        public static int CoordByteY(int crd)
+        {
+            return crd / 512;
+        }
         public static uint[] ToUintArray(byte[] data)
         {
             uint[] result = new uint[data.Length / 4];
@@ -97,6 +116,12 @@ namespace relert_sharp.Utils
             }
             return result;
         }
+        /// <summary>
+        /// Write src into dest from [offset]
+        /// </summary>
+        /// <param name="dest"></param>
+        /// <param name="src"></param>
+        /// <param name="offset"></param>
         public static void WriteToArray(byte[] dest, byte[] src, int offset)
         {
             for (int i = 0; i < src.Length && i + offset < dest.Length; i++)
@@ -104,6 +129,11 @@ namespace relert_sharp.Utils
                 dest[i + offset] = src[i];
             }
         }
+        /// <summary>
+        /// Return x,y,w,h string for ini key-value
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <returns></returns>
         public static string FromRectangle(Rectangle rect)
         {
             return rect.X.ToString() + "," + rect.Y.ToString() + "," + rect.Width.ToString() + "," + rect.Height.ToString();

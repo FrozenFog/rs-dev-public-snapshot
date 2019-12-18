@@ -121,7 +121,7 @@ namespace relert_sharp.FileSystem
             RemoveEnt(result);
             return result;
         }
-        public void Dispose()
+        public void ClearAllIniEnt()
         {
             inidata.Clear();
         }

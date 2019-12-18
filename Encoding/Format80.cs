@@ -48,7 +48,7 @@ namespace relert_sharp.Encoding
             while (true)
             {
                 byte i = br.ReadByte();
-                if ((i & 0x80) == 0)//bit 1 is 0
+                if ((i & 0x80) == 0)
                 {
                     // case 2
                     byte secondByte = br.ReadByte();
@@ -57,8 +57,8 @@ namespace relert_sharp.Encoding
 
                     ReplicatePrevious(dest, destIndex, destIndex - rpos, count);
                     destIndex += count;
-                }//bit 1 is 1
-                else if ((i & 0x40) == 0)//bit 2 is 0
+                }
+                else if ((i & 0x40) == 0)
                 {
                     // case 1
                     int count = i & 0x3F;
@@ -67,7 +67,7 @@ namespace relert_sharp.Encoding
 
                     br.Read(dest, destIndex, count);
                     destIndex += count;
-                }//bit 2 is 1
+                }
                 else
                 {
                     int count3 = i & 0x3F;
@@ -95,7 +95,7 @@ namespace relert_sharp.Encoding
                     {
                         // case 3
                         int count = count3 + 3;
-                        ushort srcIndex = br.ReadUInt16();
+                        int srcIndex = br.ReadInt16();
                         if (srcIndex >= destIndex)
                             throw new NotImplementedException(string.Format("srcIndex >= destIndex  {0}  {1}", srcIndex, destIndex));
 
@@ -105,77 +105,76 @@ namespace relert_sharp.Encoding
                 }
             }
         }
-        public static unsafe uint DecodeInto(byte* src, byte* dest)
+        #region Encode Methods Rewrite by FrozenFog
+        public static byte[] Encode(byte[] src)
         {
-            byte* pdest = dest;
-            byte* readp = src;
-            byte* writep = dest;
-
-            while (true)
+            MemoryStream dest = new MemoryStream();
+            BinaryWriter bw = new BinaryWriter(dest);
+            byte[] buffer = new byte[63];
+            int wBuffer = 0;
+            for(int i = 0; i < src.Length - 1; i++)
             {
-                byte code = *readp++;
-                byte* copyp;
-                int count;
-                if ((~code & 0x80) != 0)
+                if (src[i] == src[i + 1]) // single byte repeating, type 4
                 {
-                    //bit 7 = 0
-                    //command 0 (0cccpppp p): copy
-                    count = (code >> 4) + 3;
-                    copyp = writep - (((code & 0xf) << 8) + *readp++);
-                    while (count-- != 0)
-                        *writep++ = *copyp++;
+                    byte[] type1Buffer = buffer.Take(wBuffer).ToArray();
+                    if (type1Buffer.Length > 0)
+                    {
+                        byte flag = (byte)((byte)type1Buffer.Length + 0x80);
+                        bw.Write(flag);         // flag and count
+                        bw.Write(type1Buffer);  // content
+                        wBuffer = 0;
+                        buffer = new byte[63];
+                    }
+                    byte _savedByte = src[i++];
+                    ushort count = 2;
+                    while (i < src.Length - 1 && src[i+1] == _savedByte)
+                    {
+                        count++;
+                        i++;
+                    }
+                    bw.Write((byte)0xFE); // flag
+                    bw.Write(count); // count
+                    bw.Write(_savedByte); // repeating byte
+                    bw.Flush();
                 }
-                else
+                else // not single byte repeating, treat as type 1
                 {
-                    //bit 7 = 1
-                    count = code & 0x3f;
-                    if ((~code & 0x40) != 0)
+                    if (wBuffer > 63)
                     {
-                        //bit 6 = 0
-                        if (count == 0)
-                            //end of image
-                            break;
-                        //command 1 (10cccccc): copy
-                        while (count-- != 0)
-                            *writep++ = *readp++;
+                        bw.Write((byte)0xBF);   // flag
+                        bw.Write(buffer);       // content
+                        buffer = new byte[63];
+                        wBuffer = 0;
+                        bw.Flush();
                     }
-                    else
-                    {
-                        //bit 6 = 1
-                        if (count < 0x3e)
-                        {
-                            //command 2 (11cccccc p p): copy
-                            count += 3;
-                            copyp = &pdest[*(ushort*)readp];
-
-                            readp += 2;
-                            while (count-- != 0)
-                                *writep++ = *copyp++;
-                        }
-                        else if (count == 0x3e)
-                        {
-                            //command 3 (11111110 c c v): fill
-                            count = *(ushort*)readp;
-                            readp += 2;
-                            code = *readp++;
-                            while (count-- != 0)
-                                *writep++ = code;
-                        }
-                        else
-                        {
-                            //command 4 (copy 11111111 c c p p): copy
-                            count = *(ushort*)readp;
-                            readp += 2;
-                            copyp = &pdest[*(ushort*)readp];
-                            readp += 2;
-                            while (count-- != 0)
-                                *writep++ = *copyp++;
-                        }
-                    }
+                    buffer[wBuffer++] = src[i];
                 }
             }
-
-            return (uint)(dest - pdest);
+            bw.Write((byte)0x80);
+            bw.Flush();
+            return dest.ToArray();
         }
+        #region Original
+        //public static byte[] Encode(byte[] src)
+        //{
+        //    /* quick & dirty format80 encoder -- only uses raw copy operator, terminated with a zero-run. */
+        //    /* this does not produce good compression, but it's valid format80 */
+        //    BinaryReader br = new BinaryReader(new MemoryStream(src));
+        //    var ms = new MemoryStream();
+
+        //    do
+        //    {
+        //        var len = Math.Min(br.BaseStream.Position, 0x3F);
+        //        ms.WriteByte((byte)(0x80 | len));
+        //        while (len-- > 0)
+        //            ms.WriteByte(br.ReadByte());
+        //    } while (br.BaseStream.CanRead);
+
+        //    ms.WriteByte(0x80); // terminator -- 0-length run.
+        //    br.Close();
+        //    return ms.ToArray();
+        //}
+        #endregion
+        #endregion
     }
 }

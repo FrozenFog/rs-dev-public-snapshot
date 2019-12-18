@@ -16,7 +16,7 @@ namespace relert_sharp.FileSystem
         {
             INIType = INIFileType.MapFile;
             Map = new Map(this);
-            Dispose();
+            ClearAllIniEnt();
         }
         #region Public Methods - MapFile
         public void SaveMap()

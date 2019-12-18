@@ -53,7 +53,6 @@
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\GlobalVar.cs" />
     <Compile Include="Encoding\Blowfish.cs" />
-    <Compile Include="Encoding\Format5.cs" />
     <Compile Include="Encoding\Format80.cs" />
     <Compile Include="Encoding\CRC.cs" />
     <Compile Include="Encoding\MiniLZO.cs" />
@@ -75,6 +74,10 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="MapStructure\InfantryLayer.cs" />
+    <Compile Include="MapStructure\Logic\Action.cs" />
+    <Compile Include="MapStructure\Logic\Event.cs" />
+    <Compile Include="MapStructure\Logic\LocalVar.cs" />
+    <Compile Include="MapStructure\Logic\Tag.cs" />
     <Compile Include="MapStructure\Logic\Trigger.cs" />
     <Compile Include="MapStructure\Map.cs" />
     <Compile Include="MapStructure\MapInfo.cs" />

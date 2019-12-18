@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace relert_sharp.Common
 {
+    public enum TriggerRepeatingType
+    {
+        NoRepeating = 0,
+        OneTimeLogicAND = 1,
+        RepeatLogicOR = 2
+    }
     public enum PackType
     {
         OverlayPack, IsoMapPack

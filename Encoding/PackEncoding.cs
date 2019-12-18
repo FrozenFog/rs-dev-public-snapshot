@@ -4,15 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using relert_sharp.Common;
 using static relert_sharp.Utils.Misc;
 
 namespace relert_sharp.Encoding
 {
     public static class PackEncoding
     {
-        public static byte[] DecodePack(byte[] source, int maxTileNum)
+        public static byte[] DecodePack(byte[] source, int maxTileNum, PackType type)
         {
-            byte[] output = new byte[maxTileNum * 11];
+            byte[] output;
+            if (type == PackType.IsoMapPack) output = new byte[maxTileNum * 11];
+            else output = new byte[262144];
             MemoryStream ms = new MemoryStream(source);
             BinaryReader br = new BinaryReader(ms);
             int i = 0;
@@ -22,7 +25,8 @@ namespace relert_sharp.Encoding
                 ushort outputSize = br.ReadUInt16();
                 byte[] buffer = br.ReadBytes(inputSize);
                 byte[] result = new byte[outputSize];
-                result = MiniLZO.Decompress(buffer, result);
+                if (type == PackType.IsoMapPack) result = MiniLZO.Decompress(buffer, result);
+                else Format80.DecodeInto(buffer, result);
                 WriteToArray(output, result, i);
                 i += result.Length;
             }
@@ -30,12 +34,12 @@ namespace relert_sharp.Encoding
             ms.Dispose();
             return output;
         }
-        public static byte[] EncodeToPack(byte[] source)
+        public static byte[] EncodeToPack(byte[] source, PackType type)
         {
-            //return MiniLZO.Compress(source);
             int remain = source.Length;
             int outputSize = 0;
             byte[] output = new byte[source.Length];
+            byte[] compressResult;
             MemoryStream msOut = new MemoryStream(output);
             BinaryWriter bwOut = new BinaryWriter(msOut);
             MemoryStream msIn = new MemoryStream(source);
@@ -43,12 +47,13 @@ namespace relert_sharp.Encoding
             while (remain > 0)
             {
                 byte[] buffer = brIn.ReadBytes(Math.Min(8192, remain));
-                byte[] lzoResult = MiniLZO.Compress(buffer);
-                ushort resultSize = (ushort)lzoResult.Length;
+                if (type == PackType.IsoMapPack) compressResult = MiniLZO.Compress(buffer);
+                else compressResult = Format80.Encode(buffer);
+                ushort resultSize = (ushort)compressResult.Length;
                 outputSize += resultSize + 4;
                 bwOut.Write(resultSize);
                 bwOut.Write((ushort)buffer.Length);
-                bwOut.Write(lzoResult);
+                bwOut.Write(compressResult);
                 remain -= buffer.Length;
                 bwOut.Flush();
             }

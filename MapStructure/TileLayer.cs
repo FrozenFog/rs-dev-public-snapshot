@@ -8,6 +8,7 @@ using System.IO;
 using relert_sharp.Encoding;
 using System.Collections;
 using relert_sharp.Utils;
+using relert_sharp.Common;
 
 namespace relert_sharp.MapStructure
 {
@@ -20,7 +21,7 @@ namespace relert_sharp.MapStructure
         {
             byte[] fromBase64 = Convert.FromBase64String(stringPack);
             int tileNum = (Size.Width * 2 - 1) * Size.Height;
-            byte[] tileData = PackEncoding.DecodePack(fromBase64, tileNum);
+            byte[] tileData = PackEncoding.DecodePack(fromBase64, tileNum, PackType.IsoMapPack);
             BinaryReader br = new BinaryReader(new MemoryStream(tileData));
             for (; tileNum > 0; tileNum--)
             {
@@ -119,7 +120,7 @@ namespace relert_sharp.MapStructure
                 byte[] tileData = data[indexs[i]].GetBytes();
                 Misc.WriteToArray(preCompress, tileData, i * 11);
             }
-            byte[] lzoPack = PackEncoding.EncodeToPack(preCompress);
+            byte[] lzoPack = PackEncoding.EncodeToPack(preCompress, PackType.IsoMapPack);
             return Convert.ToBase64String(lzoPack);
         }
         #endregion

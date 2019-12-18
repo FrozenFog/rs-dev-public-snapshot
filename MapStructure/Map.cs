@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using relert_sharp.FileSystem;
 using relert_sharp.Common;
+using relert_sharp.MapStructure.Logic;
 
 namespace relert_sharp.MapStructure
 {
@@ -15,10 +16,18 @@ namespace relert_sharp.MapStructure
         private string mapPath;
         private string isomappack5String, overlayString, overlaydataString, previewString;
         private MapType maptype;
+
         private MapInfo info;
         private Rectangle previewSize;
+
+        private TriggerCollection triggers;
+        private ActionCollection actions;
+        private EventCollection events;
+        private TagCollection tags;
+        private LocalVarCollection localvariables;
         private TileLayer Tiles;
         private OverlayLayer Overlays;
+
         private Dictionary<string, INIEntity> residual;
         public Map(MapFile f)
         {
@@ -27,11 +36,16 @@ namespace relert_sharp.MapStructure
             isomappack5String = f.PopEnt("IsoMapPack5").JoinString();
             overlayString = f.PopEnt("OverlayPack").JoinString();
             overlaydataString = f.PopEnt("OverlayDataPack").JoinString();
-            GetPreview(f);
             info = new MapInfo(f.PopEnt("Basic"), f.PopEnt("Map"), f.PopEnt("SpecialFlags"));
+            GetPreview(f);
+            GetLogic(f);
             Tiles = new TileLayer(isomappack5String, info.Size);
             Overlays = new OverlayLayer(overlayString, overlaydataString);
             residual = new Dictionary<string, INIEntity>(f.IniDict);
+
+            isomappack5String = "";
+            overlayString = "";
+            overlaydataString = "";
         }
 
 
@@ -45,10 +59,23 @@ namespace relert_sharp.MapStructure
             Tiles.RemoveEmptyTiles();
             isomappack5String = Tiles.CompressToString();
         }
+        public void CompressOverlay()
+        {
+            overlayString = Overlays.CompressIndex();
+            overlaydataString = Overlays.CompressFrame();
+        }
         #endregion
 
 
         #region Private Methods - Map
+        private void GetLogic(MapFile f)
+        {
+            INIEntity entEvent = f.PopEnt("Events");
+            INIEntity entAction = f.PopEnt("Actions");
+            INIEntity entTrigger = f.PopEnt("Triggers");
+            INIEntity entTag = f.PopEnt("Tags");
+            triggers = new TriggerCollection(entTrigger);
+        }
         private void GetPreview(MapFile f)
         {
             INIEntity preview = f.PopEnt("Preview");
