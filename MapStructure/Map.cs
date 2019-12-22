@@ -29,6 +29,7 @@ namespace relert_sharp.MapStructure
         private LocalVarCollection localvariables = new LocalVarCollection();
         private TeamCollection teams = new TeamCollection();
         private TaskforceCollection taskforces = new TaskforceCollection();
+        private TeamScriptCollection scripts = new TeamScriptCollection();
 
         private TileLayer Tiles;
         private OverlayLayer Overlays;
@@ -78,6 +79,7 @@ namespace relert_sharp.MapStructure
         {
             List<string> _teamList = f.PopEnt("TeamTypes").TakeValuesToList();
             List<string> _taskforceList = f.PopEnt("TaskForces").TakeValuesToList();
+            List<string> _scriptList = f.PopEnt("ScriptTypes").TakeValuesToList();
 
             foreach (string teamID in _teamList)
             {
@@ -86,6 +88,10 @@ namespace relert_sharp.MapStructure
             foreach (string tfID in _taskforceList)
             {
                 taskforces[tfID] = new TaskforceItem(f.PopEnt(tfID));
+            }
+            foreach (string scptID in _scriptList)
+            {
+                scripts[scptID] = new TeamScriptGroup(f.PopEnt(scptID));
             }
         }
         private void GetAbstractLogics(MapFile f)

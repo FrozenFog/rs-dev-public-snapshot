@@ -82,6 +82,7 @@
     <Compile Include="MapStructure\Logic\Taskforce.cs" />
     <Compile Include="MapStructure\Logic\Team.cs" />
     <Compile Include="MapStructure\Logic\TeamLogicCollection.cs" />
+    <Compile Include="MapStructure\Logic\TeamScript.cs" />
     <Compile Include="MapStructure\Logic\Trigger.cs" />
     <Compile Include="MapStructure\Map.cs" />
     <Compile Include="MapStructure\MapInfo.cs" />
