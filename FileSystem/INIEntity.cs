@@ -41,6 +41,19 @@ namespace relert_sharp.FileSystem
 
 
         #region Public Methods - INIEntity
+        public INIPair PopPair(string pairKey)
+        {
+            if (data.Keys.Contains(pairKey))
+            {
+                INIPair p = data[pairKey];
+                data.Remove(pairKey);
+                return p;
+            }
+            else
+            {
+                return INIPair.NullPair;
+            }
+        }
         public void AddPair(INIPair p)
         {
             if (!data.Keys.Contains(p.Name)) data[p.Name] = p;
@@ -82,10 +95,15 @@ namespace relert_sharp.FileSystem
 
 
         #region Public Calls
+        public Dictionary<string, INIPair> DictData { get { return data; } }
         public string Comment { get { return comment; } }
         public string PreComment { get { return preComment; } }
         public string Name { get { return name; } }
         public bool HasComment { get { return !string.IsNullOrEmpty(comment); } }
+        public dynamic this[string key]
+        {
+            get { return data[key].Value; }
+        }
         public List<INIPair> DataList { get { return data.Values.ToList(); } }
         public static INIEntity NullEntity { get { return new INIEntity("","",""); } }
         #endregion

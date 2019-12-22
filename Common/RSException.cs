@@ -29,6 +29,11 @@ namespace relert_sharp.Common
             public string X { get { return x; } }
             public string Y { get { return y; } }
         }
+        public class InvalidWaypointException : ApplicationException
+        {
+            public InvalidWaypointException(int waypoint) { Waypoint = waypoint; }
+            public int Waypoint { get; set; }
+        }
         //private string error;
         //private Exception innerException;
 

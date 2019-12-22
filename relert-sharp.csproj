@@ -77,7 +77,11 @@
     <Compile Include="MapStructure\Logic\Action.cs" />
     <Compile Include="MapStructure\Logic\Event.cs" />
     <Compile Include="MapStructure\Logic\LocalVar.cs" />
+    <Compile Include="MapStructure\Logic\LogicCollection.cs" />
     <Compile Include="MapStructure\Logic\Tag.cs" />
+    <Compile Include="MapStructure\Logic\Taskforce.cs" />
+    <Compile Include="MapStructure\Logic\Team.cs" />
+    <Compile Include="MapStructure\Logic\TeamLogicCollection.cs" />
     <Compile Include="MapStructure\Logic\Trigger.cs" />
     <Compile Include="MapStructure\Map.cs" />
     <Compile Include="MapStructure\MapInfo.cs" />

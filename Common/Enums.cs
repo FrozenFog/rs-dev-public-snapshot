@@ -6,6 +6,26 @@ using System.Threading.Tasks;
 
 namespace relert_sharp.Common
 {
+    public enum TeamMCDecision
+    {
+        Default = 0,
+        AddToTeam = 1,
+        Grinder = 2,
+        BioReactor = 3,
+        GoHunt = 4,
+        Nothing = 5
+    }
+    public enum TeamVeteranLevel
+    {
+        Rookie = 1,
+        Veteran = 2,
+        Elite = 3
+    }
+    public enum LogicType
+    {
+        ActionLogic,
+        EventLogic
+    }
     public enum TriggerRepeatingType
     {
         NoRepeating = 0,

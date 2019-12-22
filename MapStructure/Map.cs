@@ -7,6 +7,7 @@ using System.Drawing;
 using relert_sharp.FileSystem;
 using relert_sharp.Common;
 using relert_sharp.MapStructure.Logic;
+using static relert_sharp.Utils.Misc;
 
 namespace relert_sharp.MapStructure
 {
@@ -24,7 +25,11 @@ namespace relert_sharp.MapStructure
         private ActionCollection actions;
         private EventCollection events;
         private TagCollection tags;
-        private LocalVarCollection localvariables;
+
+        private LocalVarCollection localvariables = new LocalVarCollection();
+        private TeamCollection teams = new TeamCollection();
+        private TaskforceCollection taskforces = new TaskforceCollection();
+
         private TileLayer Tiles;
         private OverlayLayer Overlays;
 
@@ -38,7 +43,8 @@ namespace relert_sharp.MapStructure
             overlaydataString = f.PopEnt("OverlayDataPack").JoinString();
             info = new MapInfo(f.PopEnt("Basic"), f.PopEnt("Map"), f.PopEnt("SpecialFlags"));
             GetPreview(f);
-            GetLogic(f);
+            GetAbstractLogics(f);
+            GetTeam(f);
             Tiles = new TileLayer(isomappack5String, info.Size);
             Overlays = new OverlayLayer(overlayString, overlaydataString);
             residual = new Dictionary<string, INIEntity>(f.IniDict);
@@ -68,13 +74,38 @@ namespace relert_sharp.MapStructure
 
 
         #region Private Methods - Map
-        private void GetLogic(MapFile f)
+        private void GetTeam(MapFile f)
+        {
+            List<string> _teamList = f.PopEnt("TeamTypes").TakeValuesToList();
+            List<string> _taskforceList = f.PopEnt("TaskForces").TakeValuesToList();
+
+            foreach (string teamID in _teamList)
+            {
+                teams[teamID] = new TeamItem(f.PopEnt(teamID));
+            }
+            foreach (string tfID in _taskforceList)
+            {
+                taskforces[tfID] = new TaskforceItem(f.PopEnt(tfID));
+            }
+        }
+        private void GetAbstractLogics(MapFile f)
         {
             INIEntity entEvent = f.PopEnt("Events");
             INIEntity entAction = f.PopEnt("Actions");
             INIEntity entTrigger = f.PopEnt("Triggers");
             INIEntity entTag = f.PopEnt("Tags");
+            INIEntity entVar = f.PopEnt("VariableNames");
+
             triggers = new TriggerCollection(entTrigger);
+            actions = new ActionCollection(entAction);
+            events = new EventCollection(entEvent);
+            tags = new TagCollection(entTag);
+            
+            foreach (INIPair p in entVar.DataList)
+            {
+                string[] tmp = p.ParseStringList();
+                localvariables[tmp[0]] = ParseBool(tmp[1]);
+            }
         }
         private void GetPreview(MapFile f)
         {

@@ -138,6 +138,51 @@ namespace relert_sharp.Utils
         {
             return rect.X.ToString() + "," + rect.Y.ToString() + "," + rect.Width.ToString() + "," + rect.Height.ToString();
         }
+        /// <summary>
+        /// Return waypoint in int, must between A - ZZ
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static int WaypointInt(string s)
+        {
+            s = s.ToUpper();
+            if (s == "") return 0;
+            char c1 = (char)64, c2 = (char)64;
+            if (s.Length == 1)
+            {
+                c2 = s[0];
+            }
+            else
+            {
+                c1 = s[0];
+                c2 = s[1];
+            }
+            int result = (c1 - 64) * 26 + (c2 - 64);
+            if (result < 1 || result > 702) throw new RSException.InvalidWaypointException(result);
+            return result - 1;
+        }
+        /// <summary>
+        /// Return waypoint in alphabet format, [0, 701]
+        /// </summary>
+        /// <param name="waypoint"></param>
+        /// <returns></returns>
+        public static string WaypointString(int waypoint)
+        {
+            if (waypoint < 0 || waypoint > 701) throw new RSException.InvalidWaypointException(waypoint);
+            int c1, c2;
+            if (waypoint < 26)
+            {
+                c1 = waypoint % 26 + 65;
+                return ((char)c1).ToString();
+            }
+            else
+            {
+                c1 = waypoint / 26 + 64;
+                c2 = waypoint % 26 + 65;
+                string result = ((char)c1).ToString() + ((char)c2).ToString();
+                return result;
+            }
+        }
     }
 
 }
