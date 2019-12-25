@@ -74,6 +74,8 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="MapStructure\Logic\AITrigger.cs" />
+    <Compile Include="MapStructure\Logic\Country.cs" />
+    <Compile Include="MapStructure\Logic\House.cs" />
     <Compile Include="MapStructure\Objects\AircraftLayer.cs" />
     <Compile Include="MapStructure\Objects\InfantryLayer.cs" />
     <Compile Include="MapStructure\Logic\Action.cs" />
@@ -91,9 +93,12 @@
     <Compile Include="MapStructure\Objects\ObjectBase.cs" />
     <Compile Include="MapStructure\OverlayLayer.cs" />
     <Compile Include="MapStructure\Objects\StructureLayer.cs" />
+    <Compile Include="MapStructure\Points\BaseNode.cs" />
     <Compile Include="MapStructure\Points\CellTag.cs" />
     <Compile Include="MapStructure\Points\PointBase.cs" />
+    <Compile Include="MapStructure\Points\Smudge.cs" />
     <Compile Include="MapStructure\Points\Waypoint.cs" />
+    <Compile Include="MapStructure\Points\TerrainLayer.cs" />
     <Compile Include="MapStructure\TileLayer.cs" />
     <Compile Include="MapStructure\Objects\UnitLayer.cs" />
     <Compile Include="Program.cs" />
@@ -107,6 +112,7 @@
     <Compile Include="Utils\Colors.cs" />
     <Compile Include="FileSystem\BaseFile.cs" />
     <Compile Include="Common\RSException.cs" />
+    <Compile Include="Common\CSFString.cs" />
     <Compile Include="Utils\Interpreter.cs" />
     <Compile Include="Utils\Lang.cs" />
     <Compile Include="Utils\Misc.cs" />

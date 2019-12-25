@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using relert_sharp.FileSystem;
+using relert_sharp.Common;
+using static relert_sharp.Utils.Misc;
 
 namespace relert_sharp.MapStructure
 {
@@ -15,11 +17,6 @@ namespace relert_sharp.MapStructure
         private Dictionary<string, INIEntity> _residual = new Dictionary<string, INIEntity>();
         public string MapName, ThemeName, PostScoreFilmName, AltNextScene, TheaterName, PlayerHouseName;
         public string[] GameModes;
-        //public bool Official, IceGrowth, VeinGrowth, TibGrowth, IgnoreGlobalAI, DeathToVisc, FreeRadar, EndOfGame, SkipScore, OneTime, SkipSelect,
-        //    TruckCrate, TrainCrate, MultiOnly, Inert, FogOfWar, IonStorms, MCVDeploy, Meteories, Visc, FixAlliance, InitVeteran, HarvesterImmune, TibSpread, TibExplode,
-        //    DestroyableBridge, SP_TibGrowth;
-        //public int MaxPlayer, MinPlayer, InitTime, AltHomeCell, CarryOverCap, Percent, HomeCell;
-        //public float CarryOverMoney;
         public Rectangle Size, LocalSize;
         public MapInfo(INIEntity Basic, INIEntity MapSize, INIEntity SpecialFlags)
         {
@@ -34,44 +31,7 @@ namespace relert_sharp.MapStructure
             TheaterName = MapSize.GetPair("Theater").Value;
             PlayerHouseName = Basic.GetPair("Player").Value;
             GameModes = Basic.GetPair("GameMode").ParseStringList();
-            ////bool value
-            //Official = Basic.GetPair("Official").ParseBool();
-            //IceGrowth = Basic.GetPair("IceGrowthEnabled").ParseBool();
-            //VeinGrowth = Basic.GetPair("VeinGrowthEnabled").ParseBool();
-            //TibGrowth = Basic.GetPair("TiberiumGrowthEnabled").ParseBool(true);
-            //IgnoreGlobalAI = Basic.GetPair("IgnoreGlobalAITriggers").ParseBool();
-            //DeathToVisc = Basic.GetPair("TiberiumDeathToVisceroid").ParseBool();
-            //FreeRadar = Basic.GetPair("FreeRadar").ParseBool();
-            //EndOfGame = Basic.GetPair("EndOfGame").ParseBool();
-            //SkipScore = Basic.GetPair("SkipScore").ParseBool();
-            //OneTime = Basic.GetPair("OneTimeOnly").ParseBool();
-            //SkipSelect = Basic.GetPair("SkipMapSelect").ParseBool();
-            //TruckCrate = Basic.GetPair("TruckCrate").ParseBool(true);
-            //TrainCrate = Basic.GetPair("TrainCrate").ParseBool(true);
-            //MultiOnly = Basic.GetPair("MultiplayerOnly").ParseBool(true);
-            //Inert = SpecialFlags.GetPair("Inert").ParseBool();
-            //FogOfWar = SpecialFlags.GetPair("FogOfWar").ParseBool();
-            //IonStorms = SpecialFlags.GetPair("IonStorms").ParseBool();
-            //MCVDeploy = SpecialFlags.GetPair("MCVDeploy").ParseBool();
-            //Meteories = SpecialFlags.GetPair("Meteorites").ParseBool();
-            //Visc = SpecialFlags.GetPair("Visceroids").ParseBool();
-            //FixAlliance = SpecialFlags.GetPair("FixedAlliance").ParseBool();
-            //SP_TibGrowth = SpecialFlags.GetPair("TiberiumGrows").ParseBool(true);
-            //InitVeteran = SpecialFlags.GetPair("InitialVeteran").ParseBool();
-            //HarvesterImmune = SpecialFlags.GetPair("HarvesterImmune").ParseBool();
-            //TibSpread = SpecialFlags.GetPair("TiberiumSpreads").ParseBool(true);
-            //TibExplode = SpecialFlags.GetPair("TiberiumExplosive").ParseBool();
-            //DestroyableBridge = SpecialFlags.GetPair("DestroyableBridges").ParseBool(true);
-            ////int value
-            //AltHomeCell = Basic.GetPair("AltHomeCell").ParseInt(99);
-            //HomeCell = Basic.GetPair("HomeCell").ParseInt(98);
-            //Percent = Basic.GetPair("Percent").ParseInt();
-            //InitTime = Basic.GetPair("InitTime").ParseInt(10000);
-            //MaxPlayer = Basic.GetPair("MaxPlayer").ParseInt(2);
-            //MinPlayer = Basic.GetPair("MinPlayer").ParseInt(2);
-            //CarryOverCap = Basic.GetPair("CarryOverCap").ParseInt();
-            //CarryOverMoney = Basic.GetPair("CarryOverMoney").ParseFloat();
-            //size data
+
             int[] buf = MapSize.GetPair("Size").ParseIntList();
             Size = new Rectangle(buf[0], buf[1], buf[2], buf[3]);
             buf = MapSize.GetPair("LocalSize").ParseIntList();
@@ -148,5 +108,40 @@ namespace relert_sharp.MapStructure
         public double Ground { get; set; }
         public double Ambient { get; set; }
         #endregion
+    }
+
+
+    public class RankInfo
+    {
+        public RankInfo(INIEntity rankEnt)
+        {
+            ETime = TimeInt(rankEnt["ParTimeEasy"]);
+            MTime = TimeInt(rankEnt["ParTimeMedium"]);
+            HTime = TimeInt(rankEnt["ParTimeHard"]);
+            TitleUnder = new CSFString(rankEnt["UnderParTitle"]);
+            TitleOver = new CSFString(rankEnt["OverParTitle"]);
+            MsgUnder = new CSFString(rankEnt["UnderParMessage"]);
+            MsgOver = new CSFString(rankEnt["OverParMessage"]);
+        }
+
+
+        #region Public Calls - RankInfo
+        public int ETime { get; set; }
+        public int MTime { get; set; }
+        public int HTime { get; set; }
+        public CSFString TitleUnder { get; set; }
+        public CSFString TitleOver { get; set; }
+        public CSFString MsgUnder { get; set; }
+        public CSFString MsgOver { get; set; }
+        #endregion
+    }
+
+
+    public class HeaderInfo
+    {
+        public HeaderInfo(INIEntity entHeader)
+        {
+
+        }
     }
 }

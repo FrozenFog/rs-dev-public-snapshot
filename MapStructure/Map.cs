@@ -18,9 +18,12 @@ namespace relert_sharp.MapStructure
         private string mapFileName;
         private string mapPath;
         private string isomappack5String, overlayString, overlaydataString, previewString;
+        private string digest;
         private MapType maptype;
 
         private MapInfo info;
+        private RankInfo ranks;
+        private HeaderInfo headers;
         private Lightning lightning;
         private Rectangle previewSize;
 
@@ -36,11 +39,15 @@ namespace relert_sharp.MapStructure
         private AITriggerCollection aitriggers = new AITriggerCollection();
         private WaypointCollection waypoints = new WaypointCollection();
         private CellTagCollection celltags = new CellTagCollection();
+        private HouseCollection houses = new HouseCollection();
+        private CountryCollection countries = new CountryCollection();
 
         private UnitLayer units = new UnitLayer();
         private InfantryLayer infantries = new InfantryLayer();
         private StructureLayer structures = new StructureLayer();
         private AircraftLayer aircrafts = new AircraftLayer();
+        private TerrainLayer terrains = new TerrainLayer();
+        private SmudgeLayer smudges = new SmudgeLayer();
 
         private TileLayer Tiles;
         private OverlayLayer Overlays;
@@ -53,8 +60,7 @@ namespace relert_sharp.MapStructure
             isomappack5String = f.PopEnt("IsoMapPack5").JoinString();
             overlayString = f.PopEnt("OverlayPack").JoinString();
             overlaydataString = f.PopEnt("OverlayDataPack").JoinString();
-            info = new MapInfo(f.PopEnt("Basic"), f.PopEnt("Map"), f.PopEnt("SpecialFlags"));
-            lightning = new Lightning(f.PopEnt("Lighting"));
+            GetGeneralInfo(f);
             GetPreview(f);
             GetAbstractLogics(f);
             GetTeam(f);
@@ -88,13 +94,29 @@ namespace relert_sharp.MapStructure
 
 
         #region Private Methods - Map
+        private void GetGeneralInfo(MapFile f)
+        {
+            info = new MapInfo(f.PopEnt("Basic"), f.PopEnt("Map"), f.PopEnt("SpecialFlags"));
+            lightning = new Lightning(f.PopEnt("Lighting"));
+            if (f.IniDict.Keys.Contains("Header")) headers = new HeaderInfo(f.PopEnt("Header"));
+            if (f.IniDict.Keys.Contains("Ranking")) ranks = new RankInfo(f.PopEnt("Ranking"));
+            digest = f.PopEnt("Digest").JoinString();
+        }
         private void GetObjects(MapFile f)
         {
             INIEntity entUnit = f.PopEnt("Units");
             INIEntity entInf = f.PopEnt("Infantry");
             INIEntity entStructure = f.PopEnt("Structures");
             INIEntity entAircraft = f.PopEnt("Aircraft");
+            INIEntity entTerrain = f.PopEnt("Terrain");
+            INIEntity entSmudge = f.PopEnt("Smudge");
 
+            foreach (INIPair p in entSmudge.DataList)
+            {
+                string[] tmp = p.ParseStringList();
+                string coord = CoordString(int.Parse(tmp[1]), int.Parse(tmp[2]));
+                smudges[coord] = new SmudgeItem(tmp[0], coord, ParseBool(tmp[3]));
+            }
             foreach (INIPair p in entUnit.DataList)
             {
                 units[p.Name] = new UnitItem(p.Name, p.ParseStringList());
@@ -110,6 +132,10 @@ namespace relert_sharp.MapStructure
             foreach (INIPair p in entAircraft.DataList)
             {
                 aircrafts[p.Name] = new AircraftItem(p.Name, p.ParseStringList());
+            }
+            foreach (INIPair p in entTerrain.DataList)
+            {
+                terrains[p.Name] = new TerrainItem(p.Name, p.Value);
             }
         }
         private void GetTeam(MapFile f)
@@ -130,6 +156,18 @@ namespace relert_sharp.MapStructure
             {
                 scripts[scptID] = new TeamScriptGroup(f.PopEnt(scptID));
             }
+
+            List<string> _houseList = f.PopEnt("Houses").TakeValuesToList();
+            List<string> _countryList = f.PopEnt("Countries").TakeValuesToList();
+
+            foreach (string houseName in _houseList)
+            {
+                houses[houseName] = new HouseItem(f.PopEnt(houseName));
+            }
+            foreach (string countryName in _countryList)
+            {
+                countries[countryName] = new CountryItem(f.PopEnt(countryName));
+            }
         }
         private void GetAbstractLogics(MapFile f)
         {
@@ -139,6 +177,7 @@ namespace relert_sharp.MapStructure
             INIEntity entTag = f.PopEnt("Tags");
             INIEntity entVar = f.PopEnt("VariableNames");
             INIEntity entAITrigger = f.PopEnt("AITriggerTypes");
+            INIEntity entAITriggerEnable = f.PopEnt("AITriggerTypesEnable");
             INIEntity entCelltags = f.PopEnt("CellTags");
             INIEntity entWaypoints = f.PopEnt("Waypoints");
 
@@ -155,6 +194,11 @@ namespace relert_sharp.MapStructure
             foreach (INIPair p in entAITrigger.DataList)
             {
                 aitriggers[p.Name] = new AITriggerItem(p.Name, p.ParseStringList());
+            }
+            foreach (INIPair p in entAITriggerEnable.DataList)
+            {
+                if (aitriggers[p.Name] != null) aitriggers[p.Name].Enabled = ParseBool(p.Value);
+                else aitriggers.GlobalEnables[p.Name] = ParseBool(p.Value);
             }
             foreach (INIPair p in entCelltags.DataList)
             {

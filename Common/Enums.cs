@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace relert_sharp.Common
 {
+    public enum HouseEdges
+    {
+        North = 1,
+        West = 2,
+        South = 3,
+        East = 4
+    }
     public enum AITriggerConditionOperator
     {
         LessThan = 0,

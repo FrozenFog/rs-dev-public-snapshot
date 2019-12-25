@@ -46,17 +46,26 @@ namespace relert_sharp.MapStructure.Points
 
     public class PointItemBase
     {
+        private int x, y;
         public PointItemBase() { }
         public PointItemBase(string _coord)
         {
             Coord = _coord;
+            x = CoordByteX(int.Parse(Coord));
+            y = CoordByteY(int.Parse(Coord));
+        }
+        public PointItemBase(int _x, int _y)
+        {
+            Coord = CoordString(x, y);
+            x = _x;
+            y = _y;
         }
 
 
         #region Public Calls - PointItemBase
         public string Coord { get; set; }
-        public int CoordX { get { return CoordByteX(int.Parse(Coord)); } }
-        public int CoordY { get { return CoordByteY(int.Parse(Coord)); } }
+        public int CoordX { get { return x; } set { x = value; } }
+        public int CoordY { get { return y; } set { y = value; } }
         #endregion;
     }
 }

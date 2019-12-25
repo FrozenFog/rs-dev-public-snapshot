@@ -11,6 +11,9 @@ namespace relert_sharp.MapStructure.Logic
     {
         private Dictionary<string, TeamLogicItem> data = new Dictionary<string, TeamLogicItem>();
         public TeamLogicCollection() { }
+
+
+        #region Public Calls - TeamLogicCollection
         public TeamLogicItem this[string _ID]
         {
             get
@@ -23,6 +26,7 @@ namespace relert_sharp.MapStructure.Logic
                 data[_ID] = value;
             }
         }
+        #endregion
     }
     public class TeamLogicItem
     {

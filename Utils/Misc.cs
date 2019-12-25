@@ -197,6 +197,19 @@ namespace relert_sharp.Utils
             }
             return result;
         }
+        public static int TimeInt(string s)
+        {
+            string[] tmp = s.Split(new char[] { ':' });
+            int result = int.Parse(tmp[2]);
+            return result + int.Parse(tmp[1]) * 60 + int.Parse(tmp[0]) * 3600;
+        }
+        public static string TimeString(int seconds)
+        {
+            int h = seconds / 3600;
+            int m = seconds % 3600 / 60;
+            int s = seconds % 60;
+            return string.Format("{0:D2}:{0:D2}:{0:D2}", h, m, s);
+        }
     }
 
 }

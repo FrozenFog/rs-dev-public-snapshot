@@ -11,6 +11,7 @@ namespace relert_sharp.MapStructure.Logic
     public class AITriggerCollection
     {
         private Dictionary<string, AITriggerItem> localTriggers = new Dictionary<string, AITriggerItem>();
+        private Dictionary<string, bool> globalEnables = new Dictionary<string, bool>();
         public AITriggerCollection() { }
 
 
@@ -20,9 +21,14 @@ namespace relert_sharp.MapStructure.Logic
             get
             {
                 if (localTriggers.Keys.Contains(id)) return localTriggers[id];
-                return new AITriggerItem();
+                return null;
             }
             set { localTriggers[id] = value; }
+        }
+        public Dictionary<string, bool> GlobalEnables
+        {
+            get { return globalEnables; }
+            set { globalEnables = value; }
         }
         #endregion
     }
@@ -93,7 +99,7 @@ namespace relert_sharp.MapStructure.Logic
         #region Public Calls - AITriggerComparator
         public int Num1 { get; set; }
         public AITriggerConditionOperator Operator { get; set; }
-        public static string Zeros { get { return "000000000000000000000000000000000000000000000000"; } }
+        public static string Zeros { get { return @"000000000000000000000000000000000000000000000000"; } }
         #endregion
     }
 }
