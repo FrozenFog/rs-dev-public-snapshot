@@ -73,7 +73,9 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="MapStructure\InfantryLayer.cs" />
+    <Compile Include="MapStructure\Logic\AITrigger.cs" />
+    <Compile Include="MapStructure\Objects\AircraftLayer.cs" />
+    <Compile Include="MapStructure\Objects\InfantryLayer.cs" />
     <Compile Include="MapStructure\Logic\Action.cs" />
     <Compile Include="MapStructure\Logic\Event.cs" />
     <Compile Include="MapStructure\Logic\LocalVar.cs" />
@@ -86,9 +88,14 @@
     <Compile Include="MapStructure\Logic\Trigger.cs" />
     <Compile Include="MapStructure\Map.cs" />
     <Compile Include="MapStructure\MapInfo.cs" />
+    <Compile Include="MapStructure\Objects\ObjectBase.cs" />
     <Compile Include="MapStructure\OverlayLayer.cs" />
+    <Compile Include="MapStructure\Objects\StructureLayer.cs" />
+    <Compile Include="MapStructure\Points\CellTag.cs" />
+    <Compile Include="MapStructure\Points\PointBase.cs" />
+    <Compile Include="MapStructure\Points\Waypoint.cs" />
     <Compile Include="MapStructure\TileLayer.cs" />
-    <Compile Include="MapStructure\UnitLayer.cs" />
+    <Compile Include="MapStructure\Objects\UnitLayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubWindows\INIComparator.cs">

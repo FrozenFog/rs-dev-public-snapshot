@@ -183,6 +183,20 @@ namespace relert_sharp.Utils
                 return result;
             }
         }
+        /// <summary>
+        /// Return int of Little-Endian byte string, using for ai-trigger condition
+        /// </summary>
+        /// <param name="byteString"></param>
+        /// <returns></returns>
+        public static int FromLEByteString(string byteString)
+        {
+            int result = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                result += Convert.ToInt32("0x" + byteString.Substring(i * 2, 2), 16) << (i * 8);
+            }
+            return result;
+        }
     }
 
 }

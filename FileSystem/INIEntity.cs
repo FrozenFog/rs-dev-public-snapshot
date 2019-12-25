@@ -84,12 +84,13 @@ namespace relert_sharp.FileSystem
         }
         public string JoinString()
         {
-            string result = "";
+            int num = data.Count * 70;
+            StringBuilder sb = new StringBuilder(num);
             foreach (INIPair p in data.Values)
             {
-                result += p.Value.ToString();
+               sb.Append(p.Value.ToString());
             }
-            return result;
+            return sb.ToString();
         }
         #endregion
 

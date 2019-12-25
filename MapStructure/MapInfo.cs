@@ -102,4 +102,51 @@ namespace relert_sharp.MapStructure
             get { return iniformat; }
         }
     }
+
+
+    public class Lightning
+    {
+        public Lightning(INIEntity ent)
+        {
+            Normal = new LightningItem(ent["Red"], ent["Green"], ent["Blue"], 
+                ent["Level"], ent["Ground"], ent["Ambient"]);
+            Ion = new LightningItem(ent["IonRed"], ent["IonGreen"], ent["IonBlue"], 
+                ent["IonLevel"], ent["IonGround"], ent["IonAmbient"]);
+            Dominator = new LightningItem(ent["DominatorRed"], ent["DominatorGreen"], ent["DominatorBlue"],
+                ent["DominatorLevel"], ent["DominatorGround"], ent["DominatorAmbient"]);
+            DominatorChangeRate = double.Parse(ent["DominatorAmbientChangeRate"]);
+        }
+
+
+        #region Public Calls - Lightning
+        public LightningItem Normal { get; set; }
+        public LightningItem Ion { get; set; }
+        public LightningItem Dominator { get; set; }
+        public double DominatorChangeRate { get; set; }
+        #endregion
+    }
+
+
+    public class LightningItem
+    {
+        public LightningItem(string _R, string _G, string _B, string _level, string _ground, string _ambient)
+        {
+            Red = double.Parse(_R);
+            Green = double.Parse(_G);
+            Blue = double.Parse(_B);
+            Level = double.Parse(_level);
+            Ground = double.Parse(_ground);
+            Ambient = double.Parse(_ambient);
+        }
+
+
+        #region Public Calls - LightningItem
+        public double Red { get; set; }
+        public double Green { get; set; }
+        public double Blue { get; set; }
+        public double Level { get; set; }
+        public double Ground { get; set; }
+        public double Ambient { get; set; }
+        #endregion
+    }
 }

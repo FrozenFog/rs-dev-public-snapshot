@@ -7,6 +7,8 @@ using System.Drawing;
 using relert_sharp.FileSystem;
 using relert_sharp.Common;
 using relert_sharp.MapStructure.Logic;
+using relert_sharp.MapStructure.Objects;
+using relert_sharp.MapStructure.Points;
 using static relert_sharp.Utils.Misc;
 
 namespace relert_sharp.MapStructure
@@ -19,6 +21,7 @@ namespace relert_sharp.MapStructure
         private MapType maptype;
 
         private MapInfo info;
+        private Lightning lightning;
         private Rectangle previewSize;
 
         private TriggerCollection triggers;
@@ -30,6 +33,14 @@ namespace relert_sharp.MapStructure
         private TeamCollection teams = new TeamCollection();
         private TaskforceCollection taskforces = new TaskforceCollection();
         private TeamScriptCollection scripts = new TeamScriptCollection();
+        private AITriggerCollection aitriggers = new AITriggerCollection();
+        private WaypointCollection waypoints = new WaypointCollection();
+        private CellTagCollection celltags = new CellTagCollection();
+
+        private UnitLayer units = new UnitLayer();
+        private InfantryLayer infantries = new InfantryLayer();
+        private StructureLayer structures = new StructureLayer();
+        private AircraftLayer aircrafts = new AircraftLayer();
 
         private TileLayer Tiles;
         private OverlayLayer Overlays;
@@ -43,9 +54,11 @@ namespace relert_sharp.MapStructure
             overlayString = f.PopEnt("OverlayPack").JoinString();
             overlaydataString = f.PopEnt("OverlayDataPack").JoinString();
             info = new MapInfo(f.PopEnt("Basic"), f.PopEnt("Map"), f.PopEnt("SpecialFlags"));
+            lightning = new Lightning(f.PopEnt("Lighting"));
             GetPreview(f);
             GetAbstractLogics(f);
             GetTeam(f);
+            GetObjects(f);
             Tiles = new TileLayer(isomappack5String, info.Size);
             Overlays = new OverlayLayer(overlayString, overlaydataString);
             residual = new Dictionary<string, INIEntity>(f.IniDict);
@@ -75,6 +88,30 @@ namespace relert_sharp.MapStructure
 
 
         #region Private Methods - Map
+        private void GetObjects(MapFile f)
+        {
+            INIEntity entUnit = f.PopEnt("Units");
+            INIEntity entInf = f.PopEnt("Infantry");
+            INIEntity entStructure = f.PopEnt("Structures");
+            INIEntity entAircraft = f.PopEnt("Aircraft");
+
+            foreach (INIPair p in entUnit.DataList)
+            {
+                units[p.Name] = new UnitItem(p.Name, p.ParseStringList());
+            }
+            foreach (INIPair p in entInf.DataList)
+            {
+                infantries[p.Name] = new InfantryItem(p.Name, p.ParseStringList());
+            }
+            foreach (INIPair p in entStructure.DataList)
+            {
+                structures[p.Name] = new StructureItem(p.Name, p.ParseStringList());
+            }
+            foreach (INIPair p in entAircraft.DataList)
+            {
+                aircrafts[p.Name] = new AircraftItem(p.Name, p.ParseStringList());
+            }
+        }
         private void GetTeam(MapFile f)
         {
             List<string> _teamList = f.PopEnt("TeamTypes").TakeValuesToList();
@@ -101,6 +138,9 @@ namespace relert_sharp.MapStructure
             INIEntity entTrigger = f.PopEnt("Triggers");
             INIEntity entTag = f.PopEnt("Tags");
             INIEntity entVar = f.PopEnt("VariableNames");
+            INIEntity entAITrigger = f.PopEnt("AITriggerTypes");
+            INIEntity entCelltags = f.PopEnt("CellTags");
+            INIEntity entWaypoints = f.PopEnt("Waypoints");
 
             triggers = new TriggerCollection(entTrigger);
             actions = new ActionCollection(entAction);
@@ -111,6 +151,18 @@ namespace relert_sharp.MapStructure
             {
                 string[] tmp = p.ParseStringList();
                 localvariables[tmp[0]] = ParseBool(tmp[1]);
+            }
+            foreach (INIPair p in entAITrigger.DataList)
+            {
+                aitriggers[p.Name] = new AITriggerItem(p.Name, p.ParseStringList());
+            }
+            foreach (INIPair p in entCelltags.DataList)
+            {
+                celltags[p.Name] = new CellTagItem(p.Name, p.Value);
+            }
+            foreach (INIPair p in entWaypoints.DataList)
+            {
+                waypoints[p.Value] = new WaypointItem(p.Value, p.Name);
             }
         }
         private void GetPreview(MapFile f)

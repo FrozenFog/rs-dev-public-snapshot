@@ -6,6 +6,33 @@ using System.Threading.Tasks;
 
 namespace relert_sharp.Common
 {
+    public enum AITriggerConditionOperator
+    {
+        LessThan = 0,
+        LessOrEqual = 1,
+        Equal = 2,
+        GreaterOrEqual = 3,
+        GreaterThan = 4,
+        NotEqual = 5
+    }
+    public enum AITriggerConditionType
+    {
+        ConditionTrue = -1,
+        EnemyHouseOwnsObj = 0,
+        OwningHouseOwnsObj = 1,
+        EnemyHouseLowPower = 2,
+        EnemyHouseNoPower = 3,
+        EnemyHouseHasMoneyOf = 4,
+        OwnerHouseIronCurtainChargeInPercentage = 5,
+        OwnerHouseChronoChargeInPercentage = 6,
+        NeutralOrCivOwnsObj = 7
+    }
+    public enum BuildingSpotlightType
+    {
+        None = 0,
+        Arcing = 1,
+        Circular = 2
+    }
     public enum TeamMCDecision
     {
         Default = 0,
