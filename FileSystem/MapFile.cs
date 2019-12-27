@@ -18,6 +18,8 @@ namespace relert_sharp.FileSystem
             Map = new Map(this);
             ClearAllIniEnt();
         }
+
+
         #region Public Methods - MapFile
         public void SaveMap()
         {
@@ -26,6 +28,8 @@ namespace relert_sharp.FileSystem
             SaveIni(true);
         }
         #endregion
+
+
         #region Private Methods - MapFile
         private void DumpGeneralInfo()
         {
