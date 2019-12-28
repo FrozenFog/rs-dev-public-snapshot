@@ -15,13 +15,13 @@ namespace relert_sharp
         [STAThread]
         static void Main()
         {
-            bool debug = false;
+            bool debug = true;
             if (!debug)
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Misc.Init_Language();
-                Application.Run(new MainWindow());
+                Application.Run(new Main());
             }
             else
             {

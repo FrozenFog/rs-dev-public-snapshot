@@ -33,7 +33,7 @@
             // 
             // btnOpenINIComp
             // 
-            this.btnOpenINIComp.Location = new System.Drawing.Point(198, 137);
+            this.btnOpenINIComp.Location = new System.Drawing.Point(42, 26);
             this.btnOpenINIComp.Name = "btnOpenINIComp";
             this.btnOpenINIComp.Size = new System.Drawing.Size(110, 24);
             this.btnOpenINIComp.TabIndex = 0;
