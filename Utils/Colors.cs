@@ -8,76 +8,79 @@ namespace relert_sharp.Utils
 {
     public class RGBColor
     {
-        private byte _R, _G, _B;
+
+
+
+        #region Constructor - RGBColor
         public RGBColor(byte red, byte green, byte blue)
         {
-            _R = red;
-            _G = green;
-            _B = blue;
+            R = red;
+            G = green;
+            B = blue;
+        }
+        public RGBColor(int red, int green, int blue)
+        {
+            R = (byte)red;
+            G = (byte)green;
+            B = (byte)blue;
         }
         public RGBColor(string[] rgbStringArray)
         {
-            _R = byte.Parse(rgbStringArray[0]);
-            _G = byte.Parse(rgbStringArray[1]);
-            _B = byte.Parse(rgbStringArray[2]);
+            R = byte.Parse(rgbStringArray[0]);
+            G = byte.Parse(rgbStringArray[1]);
+            B = byte.Parse(rgbStringArray[2]);
         }
         public RGBColor(HSBColor hsb)
         {
             ////unfinished
         }
+        #endregion
+
+
         #region Public Calls - RGBColor
-        public byte R
-        {
-            get { return _R; }
-            set { _R = value; }
-        }
-        public byte G
-        {
-            get { return _G; }
-            set { _G = value; }
-        }
-        public byte B
-        {
-            get { return _B; }
-            set { _B = value; }
-        }
+        public byte R { get; set; }
+        public byte G { get; set; }
+        public byte B { get; set; }
+        public byte A { get; set; }
         #endregion
     }
+
+
     public class HSBColor
     {
-        private byte _h, _s, _b;
+
+
+
+        #region Constructor - HSBColor
         public HSBColor(byte h, byte s, byte b)
         {
-            _h = h;
-            _s = s;
-            _b = b;
+            H = h;
+            S = s;
+            B = b;
+        }
+        public HSBColor(int h, int s, int b)
+        {
+            H = (byte)h;
+            S = (byte)s;
+            B = (byte)b;
         }
         public HSBColor(string[] hsbStringArray)
         {
-            _h = byte.Parse(hsbStringArray[0]);
-            _s = byte.Parse(hsbStringArray[1]);
-            _b = byte.Parse(hsbStringArray[2]);
+            H = byte.Parse(hsbStringArray[0]);
+            S = byte.Parse(hsbStringArray[1]);
+            B = byte.Parse(hsbStringArray[2]);
         }
         public HSBColor(RGBColor rgb)
         {
             ////unfinished
         }
+        #endregion
+
+
         #region Public Calls - HSBColor
-        public byte H
-        {
-            get { return _h; }
-            set { _h = value; }
-        }
-        public byte S
-        {
-            get { return _s; }
-            set { _s = value; }
-        }
-        public byte B
-        {
-            get { return _b; }
-            set { _b = value; }
-        }
+        public byte H { get; set; }
+        public byte S { get; set; }
+        public byte B { get; set; }
         #endregion
     }
 }

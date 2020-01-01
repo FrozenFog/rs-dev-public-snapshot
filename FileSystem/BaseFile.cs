@@ -8,7 +8,7 @@ using relert_sharp.Common;
 
 namespace relert_sharp.FileSystem
 {
-    public abstract class BaseFile
+    public abstract class BaseFile : IDisposable
     {
         private FileStream fs;
         private BinaryReader br;
@@ -22,6 +22,9 @@ namespace relert_sharp.FileSystem
         private string nameext;
         private FileExtension extension = FileExtension.Undefined;
         private FileAccess access;
+
+
+        #region Constructor - BaseFile
         public BaseFile(string path, FileMode m, FileAccess a, bool _keepAlive = true)
         {
             if (m == FileMode.Create && File.Exists(path)) File.Delete(path);
@@ -49,6 +52,10 @@ namespace relert_sharp.FileSystem
             fullname = filename;
             GetNames();
         }
+        #endregion
+
+
+        #region Private Methods
         private void GetNames()
         {
             if (fullname.Contains("."))
@@ -107,6 +114,7 @@ namespace relert_sharp.FileSystem
             ////unfinished
             return FileExtension.UnknownBinary;
         }
+        #endregion
 
 
         #region Protected - BaseFile
@@ -114,6 +122,7 @@ namespace relert_sharp.FileSystem
         protected int ReadInt32() { return br.ReadInt32(); }
         protected ushort ReadUInt16() { return br.ReadUInt16(); }
         protected byte[] ReadBytes(int count) { return br.ReadBytes(count); }
+        protected byte ReadByte() { return br.ReadByte(); }
         protected string Readline() { return sr.ReadLine(); }
         protected bool CanRead() { return !sr.EndOfStream; }
         protected bool CanWrite() { return ms.CanWrite; }
@@ -121,9 +130,11 @@ namespace relert_sharp.FileSystem
         protected void ReadSeek(int offset, SeekOrigin origin) { fs.Seek(offset, origin); }
         protected void WriteSeek(int offset, SeekOrigin origin) { ms.Seek(offset, origin); }
         #endregion
+
+
         #region Public Methods - BaseFile
         public void Dump() { ms.WriteTo(fs); ms = new MemoryStream(); }
-        public void Close()
+        public void Dispose()
         {
             if (access == FileAccess.Read)
             {
@@ -139,6 +150,8 @@ namespace relert_sharp.FileSystem
             ms.Dispose();
         }
         #endregion
+
+
         #region Public Calls - BaseFile
         public Stream ReadStream
         {

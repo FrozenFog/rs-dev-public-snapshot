@@ -8,10 +8,15 @@ namespace relert_sharp.Common
 {
     public class CSFString
     {
+
+
+
+        #region Constructor - CSFString
         public CSFString(string _uiTag)
         {
             UIName = _uiTag;
         }
+        #endregion
 
 
         #region Public Calls - CSFString

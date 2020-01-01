@@ -20,6 +20,9 @@ namespace relert_sharp.MapStructure.Logic
         private List<string> alliesWith;
         private List<BaseNode> baseNodes = new List<BaseNode>();
         private Dictionary<string, INIPair> residual;
+
+
+        #region Constructor - HouseItem
         public HouseItem(INIEntity ent) : base(ent)
         {
             IQ = ent.PopPair("IQ").ParseInt();
@@ -40,6 +43,7 @@ namespace relert_sharp.MapStructure.Logic
             }
             residual = ent.DictData;
         }
+        #endregion
 
 
         #region Public Calls - HouseItem

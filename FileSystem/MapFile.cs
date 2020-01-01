@@ -12,12 +12,16 @@ namespace relert_sharp.FileSystem
     public class MapFile : INIFile
     {
         public Map Map;
+
+
+        #region Constructor - MapFile
         public MapFile(string path) : base(path)
         {
             INIType = INIFileType.MapFile;
             Map = new Map(this);
             ClearAllIniEnt();
         }
+        #endregion
 
 
         #region Public Methods - MapFile

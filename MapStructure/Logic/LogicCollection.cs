@@ -11,6 +11,9 @@ namespace relert_sharp.MapStructure.Logic
     public class LogicCollection
     {
         private Dictionary<string, LogicGroup> data = new Dictionary<string, LogicGroup>();
+
+
+        #region Constructor - LogicCollection
         public LogicCollection(INIEntity ent, LogicType type)
         {
             foreach (INIPair p in ent.DataList)
@@ -22,10 +25,14 @@ namespace relert_sharp.MapStructure.Logic
                 }
             }
         }
+        #endregion
     }
     public class LogicGroup
     {
         private List<LogicItem> data = new List<LogicItem>();
+
+
+        #region Constructor - LogicGroup
         public LogicGroup(string _id, int _num, string[] _paramData, LogicType type)
         {
             ID = _id;
@@ -42,6 +49,10 @@ namespace relert_sharp.MapStructure.Logic
                 Add(new LogicItem(logicID, _paramData.Skip(i + 1).Take(window - 1).ToArray(), type));
             }
         }
+        #endregion
+
+
+        #region Public Methods - LogicGroup
         public void Add(LogicItem item)
         {
             data.Add(item);
@@ -54,12 +65,22 @@ namespace relert_sharp.MapStructure.Logic
         {
             data.Remove(item);
         }
+        #endregion
+
+
+        #region Public Calls - LogicGroup
         public string ID { get; set; }
+        #endregion
     }
+
+
     public class LogicItem
     {
         private LogicType type;
         private string[] parameters;
+
+
+        #region Constructor - LogicItem
         public LogicItem(int _typeID, string[] _param, LogicType _type, string _comment = "")
         {
             ID = _typeID;
@@ -67,7 +88,12 @@ namespace relert_sharp.MapStructure.Logic
             parameters = _param;
             Comment = _comment;
         }
+        #endregion
+
+
+        #region Public Calls - LogicItem
         public int ID { get; set; }
         public string Comment { get; set; }
+        #endregion
     }
 }

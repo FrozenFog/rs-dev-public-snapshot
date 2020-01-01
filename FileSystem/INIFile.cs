@@ -64,7 +64,7 @@ namespace relert_sharp.FileSystem
                 }
             }
             AddEnt(ent);
-            if (!keepAlive) Close();
+            if (!keepAlive) Dispose();
         }
 
         #region Public Methods - INIFile
@@ -94,7 +94,7 @@ namespace relert_sharp.FileSystem
             sw.Dispose();
             fs.Dispose();
             msbuffer.Dispose();
-            Close();
+            Dispose();
         }
         public void AddEnt(INIEntity ent)
         {

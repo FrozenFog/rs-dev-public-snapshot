@@ -36,8 +36,13 @@ namespace relert_sharp.MapStructure.Logic
             }
         }
     }
+
+
     public class TriggerItem
     {
+
+
+        #region Constructor - TriggerItem
         public TriggerItem(string id, string house, string linkedTriggerID, string name, bool disabled, bool e, bool n, bool h, int repeating)
         {
             ID = id;
@@ -50,6 +55,10 @@ namespace relert_sharp.MapStructure.Logic
             HardOn = h;
             Repeating = (TriggerRepeatingType)repeating;
         }
+        #endregion
+
+
+        #region Public Calls - TriggerItem
         public string ID { get; set; }
         public string House { get; set; }
         public string LinkedWith { get; set; }
@@ -59,5 +68,6 @@ namespace relert_sharp.MapStructure.Logic
         public bool NormalOn { get; set; }
         public bool HardOn { get; set; }
         public TriggerRepeatingType Repeating { get; set; }
+        #endregion
     }
 }

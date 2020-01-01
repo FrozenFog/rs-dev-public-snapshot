@@ -12,7 +12,10 @@ namespace relert_sharp.MapStructure
 {
     public class OverlayLayer
     {
-        Dictionary<int, OverlayUnit> data = new Dictionary<int, OverlayUnit>();
+        private Dictionary<int, OverlayUnit> data = new Dictionary<int, OverlayUnit>();
+
+
+        #region Constructor - OverlayLayer
         public OverlayLayer(string _overlayPackString, string _overlayDataPackString)
         {
             byte[] _ovlOut = new byte[262144];
@@ -26,6 +29,9 @@ namespace relert_sharp.MapStructure
                 if (_ovlOut[i] != 0xFF) data[i] = new OverlayUnit(i, _ovlOut[i], _ovldOut[i]);
             }
         }
+        #endregion
+
+
         #region Public Methods - OverlayLayer
         public string CompressIndex()
         {
@@ -50,6 +56,8 @@ namespace relert_sharp.MapStructure
             return Convert.ToBase64String(format80Pack);
         }
         #endregion
+
+
         #region Public Calls - OverlayLayer
         public OverlayUnit this[int x, int y]
         {
@@ -68,8 +76,14 @@ namespace relert_sharp.MapStructure
         public Dictionary<int, OverlayUnit> Data { get { return data; } }
     #endregion
     }
+
+
     public class OverlayUnit
     {
+
+
+
+        #region Constructor - OverlayUnit
         public OverlayUnit(int _coord, byte _overlayIndex, byte _frameIndex)
         {
             X = Misc.CoordByteX(_coord);
@@ -77,9 +91,14 @@ namespace relert_sharp.MapStructure
             Index = _overlayIndex;
             Frame = _frameIndex;
         }
+        #endregion
+
+
+        #region Public Calls - OverlayUnit
         public byte Index { get; set; }
         public byte Frame { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+        #endregion
     }
 }

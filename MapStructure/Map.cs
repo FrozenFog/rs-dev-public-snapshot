@@ -53,6 +53,9 @@ namespace relert_sharp.MapStructure
         private OverlayLayer Overlays;
 
         private Dictionary<string, INIEntity> residual;
+
+
+        #region Constructor - Map
         public Map(MapFile f)
         {
             mapFileName = f.FileName;
@@ -73,6 +76,7 @@ namespace relert_sharp.MapStructure
             overlayString = "";
             overlaydataString = "";
         }
+        #endregion
 
 
         #region Public Methods - Map

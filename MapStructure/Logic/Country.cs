@@ -16,6 +16,9 @@ namespace relert_sharp.MapStructure.Logic
     public class CountryItem : TeamLogicItem
     {
         private Dictionary<string, INIPair> residual = new Dictionary<string, INIPair>();
+
+
+        #region Constructor - CountryItem
         public CountryItem(INIEntity ent) : base(ent)
         {
             Name = ent.PopPair("Name").Value;
@@ -27,6 +30,7 @@ namespace relert_sharp.MapStructure.Logic
             ParentCountryName = ent.PopPair("ParentCountry").Value;
             residual = ent.DictData;
         }
+        #endregion
 
 
         #region Public Calls - CountryItem

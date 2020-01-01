@@ -15,6 +15,7 @@ namespace relert_sharp.FileSystem
         private INIKeyType keytype;
 
 
+        #region Constructor - INIPair
         public INIPair(string n, string val, string com, string _preComment)
         {
             name = n;
@@ -23,6 +24,7 @@ namespace relert_sharp.FileSystem
             value = val;
             keytype = GetKeyType(n);
         }
+        #endregion
 
 
         #region Private Methods - INIPair

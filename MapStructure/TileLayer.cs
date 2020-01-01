@@ -17,6 +17,9 @@ namespace relert_sharp.MapStructure
         private Dictionary<int, Tile> data = new Dictionary<int, Tile>();
         private List<int> indexs = new List<int>();
         private byte bottomLevel = 255;
+
+
+        #region Constructor - TileLayer
         public TileLayer(string stringPack, Rectangle Size)
         {
             byte[] fromBase64 = Convert.FromBase64String(stringPack);
@@ -38,6 +41,7 @@ namespace relert_sharp.MapStructure
                 indexs.Add(coord);
             }
         }
+        #endregion
 
 
         #region Private Methods - TileLayer
@@ -162,11 +166,16 @@ namespace relert_sharp.MapStructure
         }
         #endregion
     }
+
+
     public class Tile
     {
         private short x, y;
         private int tileIndex;
         private byte subIndex, level, iceGrowth;
+
+
+        #region Constructor - Tile
         public Tile(short _x, short _y, int _TileIndex, byte _TileSubIndex,  byte _Level, byte _IceGrowth)
         {
             x = _x;
@@ -176,6 +185,10 @@ namespace relert_sharp.MapStructure
             level = _Level;
             iceGrowth = _IceGrowth;
         }
+        #endregion
+
+
+        #region Public Methods - Tile
         public byte[] GetBytes()
         {
             byte[] result = new byte[11];
@@ -187,6 +200,9 @@ namespace relert_sharp.MapStructure
             result[10] = iceGrowth;
             return result;
         }
+        #endregion
+
+
         #region Public Calls - Tile
         public dynamic[] Attributes
         {

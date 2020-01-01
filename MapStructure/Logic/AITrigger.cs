@@ -12,7 +12,11 @@ namespace relert_sharp.MapStructure.Logic
     {
         private Dictionary<string, AITriggerItem> localTriggers = new Dictionary<string, AITriggerItem>();
         private Dictionary<string, bool> globalEnables = new Dictionary<string, bool>();
+
+
+        #region Constructor - AITriggerCollection
         public AITriggerCollection() { }
+        #endregion
 
 
         #region Public Calls - AITriggerCollection
@@ -36,6 +40,9 @@ namespace relert_sharp.MapStructure.Logic
 
     public class AITriggerItem
     {
+
+
+        #region Constructor - AITriggerItem
         public AITriggerItem() { }
         public AITriggerItem(string _id, string[] _args)
         {
@@ -60,6 +67,7 @@ namespace relert_sharp.MapStructure.Logic
             HardOn = ParseBool(_args[17]);
             Enabled = false;
         }
+        #endregion
 
 
         #region Public Calls - AITriggerItem
@@ -89,11 +97,15 @@ namespace relert_sharp.MapStructure.Logic
 
     public class AITriggerComparator
     {
+
+
+        #region Constructor AITriggerComparator
         public AITriggerComparator(string cmpString)
         {
             Num1 = FromLEByteString(cmpString.Substring(0, 8));
             Operator = (AITriggerConditionOperator)(FromLEByteString(cmpString.Substring(8, 8)));
         }
+        #endregion
 
 
         #region Public Calls - AITriggerComparator

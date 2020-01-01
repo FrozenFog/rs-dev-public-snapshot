@@ -13,6 +13,8 @@ namespace relert_sharp.FileSystem
         private Dictionary<string, INIPair> data = new Dictionary<string, INIPair>();
         private INIEntType entitytype;
 
+
+        #region Constructor - INIEntity
         public INIEntity() { }
         public INIEntity(string _name, string _preComment, string _comment)
         {
@@ -38,6 +40,7 @@ namespace relert_sharp.FileSystem
             }
             entitytype = INIEntType.ListType;
         }
+        #endregion
 
 
         #region Public Methods - INIEntity

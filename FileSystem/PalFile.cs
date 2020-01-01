@@ -8,20 +8,27 @@ using relert_sharp.Utils;
 
 namespace relert_sharp.FileSystem
 {
-    public class PalFile
+    public class PalFile : BaseFile
     {
-        private string fileName;
-        private Dictionary<byte, RGBColor> palDict = new Dictionary<byte, RGBColor>();
-        public PalFile(Stream baseStream, string _fullName)
+        private List<RGBColor> data = new List<RGBColor>();
+
+
+        #region Constructor - PalFile
+        public PalFile(Stream baseStream, string _fullName) : base(baseStream, _fullName)
         {
-            fileName = _fullName;
-            BinaryReader br = new BinaryReader(baseStream);
-            byte index = 0;
-            for (; !palDict.Keys.Contains(index); index++)
+            for(int i = 0; i < 256; i++)
             {
-                palDict[index] = new RGBColor((byte)(br.ReadByte() << 2), (byte)(br.ReadByte() << 2), (byte)(br.ReadByte() << 2));
+                data.Add(new RGBColor(ReadByte() << 2, ReadByte() << 2, ReadByte() << 2));
             }
-            br.Dispose();
         }
+        #endregion
+
+
+        #region Public Calls - PalFile
+        public RGBColor this[byte index]
+        {
+            get { return data[index]; }
+        }
+        #endregion
     }
 }

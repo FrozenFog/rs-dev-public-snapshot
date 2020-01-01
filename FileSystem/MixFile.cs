@@ -15,7 +15,9 @@ namespace relert_sharp.FileSystem
         private int bodyPos;
         private ushort numOfFiles;
         private MixHeader index;
-        //private BinaryReader reader;
+
+
+        #region Constructor - MixFile
         public MixFile(string path, MixTatics tatics) : base(path, FileMode.Open, FileAccess.Read)
         {
             Initialize(tatics);
@@ -24,6 +26,10 @@ namespace relert_sharp.FileSystem
         {
             Initialize(tatics);
         }
+        #endregion
+
+
+        #region Private Methods - MixFile
         private void Initialize(MixTatics tatics)
         {
             BReader.BaseStream.Seek(4, SeekOrigin.Begin);
@@ -45,25 +51,6 @@ namespace relert_sharp.FileSystem
             }
             ReadSeek(bodyPos, SeekOrigin.Begin);
         }
-        public MemoryStream GetMemFile(string filefullname)
-        {
-            uint fileID = CRC.GetCRC(filefullname);
-            if (index.Entries.Keys.Contains(fileID))
-            {
-                ReadSeek(index.GetOffset(fileID), SeekOrigin.Current);
-                byte[] buffer = ReadBytes(index.GetSize(fileID));
-                ReadSeek(bodyPos, SeekOrigin.Begin);
-                return new MemoryStream(buffer);
-            }
-            else
-            {
-                throw new RSException.MixEntityNotFoundException(FullName, filefullname);
-            }
-        }
-        public bool HasFile(string fileName)
-        {
-            return index.Entries.Keys.Contains(CRC.GetCRC(fileName));
-        }
         private byte[] DecryptHeader(byte[] keySource)
         {
             List<uint> buffer = new List<uint>();
@@ -83,11 +70,40 @@ namespace relert_sharp.FileSystem
             }
             return Misc.ToByteArray(buffer.ToArray());
         }
+        #endregion
+
+
+        #region Public Methods - MixFile
+        public MemoryStream GetMemFile(string filefullname)
+        {
+            uint fileID = CRC.GetCRC(filefullname);
+            if (index.Entries.Keys.Contains(fileID))
+            {
+                ReadSeek(index.GetOffset(fileID), SeekOrigin.Current);
+                byte[] buffer = ReadBytes(index.GetSize(fileID));
+                ReadSeek(bodyPos, SeekOrigin.Begin);
+                return new MemoryStream(buffer);
+            }
+            else
+            {
+                throw new RSException.MixEntityNotFoundException(FullName, filefullname);
+            }
+        }
+        public bool HasFile(string fileName)
+        {
+            return index.Entries.Keys.Contains(CRC.GetCRC(fileName));
+        }
+        #endregion
     }
+
+
     public class MixHeader
     {
         private ushort numOfFiles;
         private Dictionary<uint, MixEntry> entries = new Dictionary<uint, MixEntry>();
+
+
+        #region Constructor - MixHeader
         public MixHeader(byte[] rawData, ushort num)
         {
             numOfFiles = num;
@@ -99,6 +115,10 @@ namespace relert_sharp.FileSystem
             }
             br.Dispose();
         }
+        #endregion
+
+
+        #region Public Methods - MixHeader
         public int GetOffset(uint fileID)
         {
             return entries[fileID].offset;
@@ -107,23 +127,35 @@ namespace relert_sharp.FileSystem
         {
             return entries[fileID].size;
         }
+        #endregion
+
+
         #region Public Calls - MixHeader
         public Dictionary<uint, MixEntry> Entries
         {
             get { return entries; }
         }
+        public MixEntry this[uint crcID]
+        {
+            get { return entries[crcID]; }
+        }
         #endregion
     }
+
+
     public class MixEntry
     {
         public uint fileID;
         public int offset, size;
-        
+
+
+        #region Constructor - MixEntry
         public MixEntry(uint id, int _offset, int _size)
         {
             fileID = id;
             offset = _offset;
             size = _size;
         }
+        #endregion
     }
 }

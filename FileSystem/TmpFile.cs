@@ -10,21 +10,27 @@ using relert_sharp.Common;
 namespace relert_sharp.FileSystem
 {
 
-    public class TMPFile : BaseFile
+    public class TmpFile : BaseFile
     {
         private int WidthCount, HeightCount, blockWidthPX, blockHeightPX;
         private List<TmpImage> Images;
         private TheaterType theaterType;
 
-        public TMPFile(string path) : base(path, FileMode.Open, FileAccess.Read)
+
+        #region Constructor - TmpFile
+        public TmpFile(string path) : base(path, FileMode.Open, FileAccess.Read)
         {
             Read();
             GetTheater();
         }
-        public TMPFile(Stream stream, string fileName) : base(stream, fileName)
+        public TmpFile(Stream stream, string fileName) : base(stream, fileName)
         {
             Read();
         }
+        #endregion
+
+
+        #region Private Methods - TmpFile
         private void GetTheater()
         {
             switch (NameExt.ToLower())
@@ -68,28 +74,44 @@ namespace relert_sharp.FileSystem
                 img.Read(BReader, blockWidthPX, blockHeightPX);
                 Images.Add(img);
             }
-            Close();
+            Dispose();
         }
-        #region Public Calls - TMPFile
-        public List<TmpImage> Imgs
+        #endregion
+
+
+        #region Public Calls - TmpFile
+        public TmpImage this[int index]
         {
-            get { return Images; }
+            get { return Images[index]; }
+            set { Images[index] = value; }
         }
         #endregion
     }
+
+
     public class TmpImage
     {
-        public int X, Y, Height, exX, exY;
+        private enum StatusFlag : uint
+        {
+            ExtraData = 0x01,
+            ZData = 0x02,
+            DamagedData = 0x04,
+        }
         private int exOffset, zOffset, exzOffset;
         private int exWidth, exHeight;
         private StatusFlag _flag;
+        public int X, Y, Height, exX, exY;
         public byte TerrainType, RampType;
         public RGBColor ColorRadarLeft, ColorRadarRight;
-        public byte[] TileData;
-        public byte[] ExtraData;
-        public byte[] ZData;
-        public byte[] ExtraZData;
+        public byte[] TileData, ExtraData, ZData, ExtraZData;
 
+
+        #region Constructor - TmpImage
+        public TmpImage() { }
+        #endregion
+
+
+        #region Public Methods - TmpImage
         public void Read(BinaryReader br, int width, int height)
         {
             X = br.ReadInt32();
@@ -119,13 +141,10 @@ namespace relert_sharp.FileSystem
             if (HasZData && HasExtraData && 0 < exzOffset && exzOffset < br.BaseStream.Length)
                 ExtraZData = br.ReadBytes(Math.Abs(exWidth * exHeight));
         }
-        private enum StatusFlag : uint
-        {
-            ExtraData = 0x01,
-            ZData = 0x02,
-            DamagedData = 0x04,
-        }
+        #endregion
 
+
+        #region Public Calls - TmpImage
         public bool HasExtraData
         {
             get { return (_flag & StatusFlag.ExtraData) == StatusFlag.ExtraData; }
@@ -138,5 +157,6 @@ namespace relert_sharp.FileSystem
         {
             get { return (_flag & StatusFlag.DamagedData) == StatusFlag.DamagedData; }
         }
+        #endregion
     }
 }

@@ -18,6 +18,9 @@ namespace relert_sharp.MapStructure
         public string MapName, ThemeName, PostScoreFilmName, AltNextScene, TheaterName, PlayerHouseName;
         public string[] GameModes;
         public Rectangle Size, LocalSize;
+
+
+        #region Constructor - MapInfo
         public MapInfo(INIEntity Basic, INIEntity MapSize, INIEntity SpecialFlags)
         {
             _basic = Basic;
@@ -37,11 +40,19 @@ namespace relert_sharp.MapStructure
             buf = MapSize.GetPair("LocalSize").ParseIntList();
             LocalSize = new Rectangle(buf[0], buf[1], buf[2], buf[3]);
         }
+        #endregion
+
+
+        #region Public Methods - MapInfo
         public void AddInfo(INIEntity ent)
         {
             if (_residual.Keys.Contains(ent.Name)) return;
             _residual[ent.Name] = ent;
         }
+        #endregion
+
+
+        #region Public Calls - MapInfo
         public INIEntity Basic
         {
             get { return _basic; }
@@ -61,11 +72,16 @@ namespace relert_sharp.MapStructure
         {
             get { return iniformat; }
         }
+        #endregion
     }
 
 
     public class Lightning
     {
+
+
+
+        #region Constructor - Lightning
         public Lightning(INIEntity ent)
         {
             Normal = new LightningItem(ent["Red"], ent["Green"], ent["Blue"], 
@@ -76,6 +92,7 @@ namespace relert_sharp.MapStructure
                 ent["DominatorLevel"], ent["DominatorGround"], ent["DominatorAmbient"]);
             DominatorChangeRate = double.Parse(ent["DominatorAmbientChangeRate"]);
         }
+        #endregion
 
 
         #region Public Calls - Lightning
@@ -89,6 +106,10 @@ namespace relert_sharp.MapStructure
 
     public class LightningItem
     {
+
+
+
+        #region Constructor - LightningItem
         public LightningItem(string _R, string _G, string _B, string _level, string _ground, string _ambient)
         {
             Red = double.Parse(_R);
@@ -98,6 +119,7 @@ namespace relert_sharp.MapStructure
             Ground = double.Parse(_ground);
             Ambient = double.Parse(_ambient);
         }
+        #endregion
 
 
         #region Public Calls - LightningItem
@@ -113,6 +135,10 @@ namespace relert_sharp.MapStructure
 
     public class RankInfo
     {
+
+
+
+        #region Constructor - RankInfo
         public RankInfo(INIEntity rankEnt)
         {
             ETime = TimeInt(rankEnt["ParTimeEasy"]);
@@ -123,6 +149,7 @@ namespace relert_sharp.MapStructure
             MsgUnder = new CSFString(rankEnt["UnderParMessage"]);
             MsgOver = new CSFString(rankEnt["OverParMessage"]);
         }
+        #endregion
 
 
         #region Public Calls - RankInfo
