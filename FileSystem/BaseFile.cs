@@ -10,10 +10,11 @@ namespace relert_sharp.FileSystem
 {
     public abstract class BaseFile : IDisposable
     {
-        private FileStream fs;
+        private FileStream _fs;
         private BinaryReader br;
         private BinaryWriter bw;
         private MemoryStream ms = new MemoryStream();
+        private MemoryStream memoryRead = new MemoryStream();
         private StreamReader sr;
         private StreamWriter sw;
         private string filename;
@@ -28,29 +29,33 @@ namespace relert_sharp.FileSystem
         public BaseFile(string path, FileMode m, FileAccess a, bool _keepAlive = true)
         {
             if (m == FileMode.Create && File.Exists(path)) File.Delete(path);
-            fs = new FileStream(path, m, a);
+            _fs = new FileStream(path, m, a);
+            _fs.CopyTo(memoryRead);
             access = a;
             InitStream();
-            filepath = fs.Name;
+            filepath = _fs.Name;
             string[] sl = filepath.Split(new char[] { '\\' });
             fullname = sl[sl.Count() - 1];
             GetNames();
+            if (!_keepAlive) _fs.Dispose();
         }
-        public BaseFile(byte[] rawData, string fileName)
+        public BaseFile(byte[] _rawData, string _fileName, FileAccess _acc = FileAccess.Read)
         {
-            MemoryStream buffer = new MemoryStream(rawData);
-            buffer.CopyTo(fs);
-            access = FileAccess.Read;
-            fullname = filename;
+            memoryRead = new MemoryStream(_rawData);
+            memoryRead.Seek(0, SeekOrigin.Begin);
+            access = _acc;
+            fullname = _fileName;
             GetNames();
-            buffer.Dispose();
+            InitStream();
         }
-        public BaseFile(Stream stream, string fileName)
+        public BaseFile(Stream stream, string _fileName)
         {
-            stream.CopyTo(fs);
+            stream.CopyTo(memoryRead);
+            memoryRead.Seek(0, SeekOrigin.Begin);
             access = FileAccess.Read;
-            fullname = filename;
+            fullname = _fileName;
             GetNames();
+            InitStream();
         }
         #endregion
 
@@ -66,7 +71,7 @@ namespace relert_sharp.FileSystem
             }
             else
             {
-                filename = fs.Name;
+                filename = _fs.Name;
             }
             switch (nameext.ToLower())
             {
@@ -91,6 +96,9 @@ namespace relert_sharp.FileSystem
                 case "mix":
                     extension = FileExtension.MIX;
                     break;
+                case "pal":
+                    extension = FileExtension.PAL;
+                    break;
                 default:
                     extension = FileExtension.Undefined;
                     break;
@@ -98,12 +106,12 @@ namespace relert_sharp.FileSystem
         }
         private void InitStream()
         {
-            if (fs.CanRead)
+            if (memoryRead.CanRead)
             {
-                sr = new StreamReader(fs);
-                br = new BinaryReader(fs);
+                sr = new StreamReader(memoryRead);
+                br = new BinaryReader(memoryRead);
             }
-            if (fs.CanWrite)
+            if (memoryRead.CanWrite)
             {
                 sw = new StreamWriter(ms);
                 bw = new BinaryWriter(ms);
@@ -127,13 +135,13 @@ namespace relert_sharp.FileSystem
         protected bool CanRead() { return !sr.EndOfStream; }
         protected bool CanWrite() { return ms.CanWrite; }
         protected void Write(string s) { sw.Write(s);sw.Flush(); }
-        protected void ReadSeek(int offset, SeekOrigin origin) { fs.Seek(offset, origin); }
+        protected void ReadSeek(int offset, SeekOrigin origin) { memoryRead.Seek(offset, origin); }
         protected void WriteSeek(int offset, SeekOrigin origin) { ms.Seek(offset, origin); }
         #endregion
 
 
         #region Public Methods - BaseFile
-        public void Dump() { ms.WriteTo(fs); ms = new MemoryStream(); }
+        public void Dump() { ms.WriteTo(_fs); ms = new MemoryStream(); }
         public void Dispose()
         {
             if (access == FileAccess.Read)
@@ -146,22 +154,15 @@ namespace relert_sharp.FileSystem
                 sw.Dispose();
                 bw.Dispose();
             }
-            fs.Dispose();
+            if(_fs != null)_fs.Dispose();
             ms.Dispose();
+            memoryRead.Dispose();
         }
         #endregion
 
 
         #region Public Calls - BaseFile
-        public Stream ReadStream
-        {
-            get
-            {
-                MemoryStream mem = new MemoryStream();
-                fs.CopyTo(mem);
-                return mem;
-            }
-        }
+        public Stream ReadStream { get { return memoryRead; } }
         public FileExtension FileExt
         {
             get

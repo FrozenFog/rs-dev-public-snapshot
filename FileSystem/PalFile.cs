@@ -10,7 +10,7 @@ namespace relert_sharp.FileSystem
 {
     public class PalFile : BaseFile
     {
-        private List<RGBColor> data = new List<RGBColor>();
+        private List<int> data = new List<int>();
 
 
         #region Constructor - PalFile
@@ -18,17 +18,19 @@ namespace relert_sharp.FileSystem
         {
             for(int i = 0; i < 256; i++)
             {
-                data.Add(new RGBColor(ReadByte() << 2, ReadByte() << 2, ReadByte() << 2));
+                int tmp = (ReadByte() << 18) + (ReadByte() << 10) + (ReadByte() << 2);
+                data.Add(tmp);
             }
         }
         #endregion
 
 
         #region Public Calls - PalFile
-        public RGBColor this[byte index]
+        public int this[byte index]
         {
             get { return data[index]; }
         }
+        public int TransparentColor { get { return data[0]; } }
         #endregion
     }
 }

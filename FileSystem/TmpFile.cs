@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Drawing;
 using relert_sharp.Utils;
 using relert_sharp.Common;
 
@@ -13,7 +14,7 @@ namespace relert_sharp.FileSystem
     public class TmpFile : BaseFile
     {
         private int WidthCount, HeightCount, blockWidthPX, blockHeightPX;
-        private List<TmpImage> Images;
+        private List<TmpImage> images;
         private TheaterType theaterType;
 
 
@@ -65,16 +66,54 @@ namespace relert_sharp.FileSystem
             blockWidthPX = ReadInt32();
             blockHeightPX = ReadInt32();
             byte[] indexs = ReadBytes(WidthCount * HeightCount * 4);
-            Images = new List<TmpImage>(WidthCount * HeightCount);
+            images = new List<TmpImage>();
             for (int i = 0; i < WidthCount * HeightCount; i++)
             {
-                int imageData = BitConverter.ToInt32(indexs, i * 4);
-                ReadSeek(imageData, SeekOrigin.Begin);
+                int imageOffset = BitConverter.ToInt32(indexs, i * 4);
+                if (imageOffset == 0) continue;
+                ReadSeek(imageOffset, SeekOrigin.Begin);
                 TmpImage img = new TmpImage();
                 img.Read(BReader, blockWidthPX, blockHeightPX);
-                Images.Add(img);
+                images.Add(img);
             }
             Dispose();
+        }
+        #endregion
+
+
+        #region Public Methods - TmpFile
+        public void LoadColor(PalFile _pal)
+        {
+            foreach (TmpImage img in images)
+            {
+                Bitmap bmp = new Bitmap(blockWidthPX, blockHeightPX, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                int count = 0;
+                for (int j = 0; j < blockHeightPX - 1; j++)
+                {
+                    int len_line = blockWidthPX - Math.Abs(blockHeightPX / 2 - j - 1) * 4;
+                    int x_start = (blockWidthPX - len_line) / 2;
+                    for (int i = x_start; i < len_line + x_start; i++)
+                    {
+                        if (img.TileByte(count) != 0) bmp.SetPixel(i, j, Color.FromArgb(_pal[img.TileByte(count)]));
+                        count++;
+                    }
+                }
+                img.TileBitmap = bmp;
+                if (img.HasExtraData)
+                {
+                    Bitmap extra = new Bitmap(img.ExtraWidth, img.ExtraHeight, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                    int excount = 0;
+                    for (int j = 0; j < img.ExtraHeight; j++)
+                    {
+                        for(int i = 0; i < img.ExtraWidth; i++)
+                        {
+                            if (img.ExtraByte(excount) != 0) extra.SetPixel(i, j, Color.FromArgb(_pal[img.ExtraByte(excount)]));
+                            excount++;
+                        }
+                    }
+                    img.ExtraBitmap = extra;
+                }
+            }
         }
         #endregion
 
@@ -82,9 +121,10 @@ namespace relert_sharp.FileSystem
         #region Public Calls - TmpFile
         public TmpImage this[int index]
         {
-            get { return Images[index]; }
-            set { Images[index] = value; }
+            get { return images[index]; }
+            set { images[index] = value; }
         }
+        public List<TmpImage> Images { get { return images; } }
         #endregion
     }
 
@@ -98,13 +138,12 @@ namespace relert_sharp.FileSystem
             DamagedData = 0x04,
         }
         private int exOffset, zOffset, exzOffset;
-        private int exWidth, exHeight;
         private StatusFlag _flag;
+        private Bitmap tileImg, extraImg;
+        private byte[] TileData, ExtraData, ZData, ExtraZData;
         public int X, Y, Height, exX, exY;
         public byte TerrainType, RampType;
         public RGBColor ColorRadarLeft, ColorRadarRight;
-        public byte[] TileData, ExtraData, ZData, ExtraZData;
-
 
         #region Constructor - TmpImage
         public TmpImage() { }
@@ -121,8 +160,8 @@ namespace relert_sharp.FileSystem
             exzOffset = br.ReadInt32();
             exX = br.ReadInt32();
             exY = br.ReadInt32();
-            exWidth = br.ReadInt32();
-            exHeight = br.ReadInt32();
+            ExtraWidth = br.ReadInt32();
+            ExtraHeight = br.ReadInt32();
             _flag = (StatusFlag)br.ReadUInt32();
             Height = br.ReadByte();
             TerrainType = br.ReadByte();
@@ -130,16 +169,33 @@ namespace relert_sharp.FileSystem
             ColorRadarLeft = new RGBColor(br.ReadByte(), br.ReadByte(), br.ReadByte());
             ColorRadarRight = new RGBColor(br.ReadByte(), br.ReadByte(), br.ReadByte());
             br.ReadBytes(3);//cdcd
-            
-            TileData = br.ReadBytes(width * height / 2);
+
+            TileByteCount = width * height / 2;
+            TileData = br.ReadBytes(TileByteCount);
             if (HasZData)
-                ZData = br.ReadBytes(width * height / 2);
+                ZData = br.ReadBytes(TileByteCount);
 
             if (HasExtraData)
-                ExtraData = br.ReadBytes(Math.Abs(exWidth * exHeight));
+                ExtraData = br.ReadBytes(Math.Abs(ExtraWidth * ExtraHeight));
 
             if (HasZData && HasExtraData && 0 < exzOffset && exzOffset < br.BaseStream.Length)
-                ExtraZData = br.ReadBytes(Math.Abs(exWidth * exHeight));
+                ExtraZData = br.ReadBytes(Math.Abs(ExtraWidth * ExtraHeight));
+        }
+        public byte TileByte(int _index)
+        {
+            return TileData[_index];
+        }
+        public byte ExtraByte(int _index)
+        {
+            return ExtraData[_index];
+        }
+        public byte ZByte(int _index)
+        {
+            return ZData[_index];
+        }
+        public byte ExtraZByte(int _index)
+        {
+            return ExtraZData[_index];
         }
         #endregion
 
@@ -157,6 +213,11 @@ namespace relert_sharp.FileSystem
         {
             get { return (_flag & StatusFlag.DamagedData) == StatusFlag.DamagedData; }
         }
+        public Bitmap TileBitmap { get { return tileImg; } set { tileImg = value; } }
+        public Bitmap ExtraBitmap { get { return extraImg; } set { extraImg = value; } }
+        public int TileByteCount { get; private set; }
+        public int ExtraWidth { get; set; }
+        public int ExtraHeight { get; set; }
         #endregion
     }
 }

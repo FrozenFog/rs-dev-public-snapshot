@@ -171,7 +171,7 @@ namespace relert_sharp.SubWindows
                     f.WriteString("\r\n");
                 }
                 f.Dump();
-                f.Close();
+                f.Dispose();
                 MessageBox.Show(DICT["CMPResultSaveSuccessText"], DICT["CMPTitle"], MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
