@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace relert_sharp.Common
 {
+    public enum VirtualDirType
+    {
+        GeneralMix = 1,
+        TheaterMix = 2
+    }
     public enum HouseEdges
     {
         North = 1,

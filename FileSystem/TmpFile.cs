@@ -28,6 +28,10 @@ namespace relert_sharp.FileSystem
         {
             Read();
         }
+        public TmpFile(byte[] _rawbyte, string _filename) : base(_rawbyte, _filename)
+        {
+            Read();
+        }
         #endregion
 
 

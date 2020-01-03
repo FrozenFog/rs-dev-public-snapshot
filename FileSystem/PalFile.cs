@@ -16,7 +16,19 @@ namespace relert_sharp.FileSystem
         #region Constructor - PalFile
         public PalFile(Stream baseStream, string _fullName) : base(baseStream, _fullName)
         {
-            for(int i = 0; i < 256; i++)
+            Load();
+        }
+        public PalFile(byte[] _rawData, string _fullName) : base(_rawData, _fullName)
+        {
+            Load();
+        }
+        #endregion
+
+
+        #region Private Methods - PalFile
+        private void Load()
+        {
+            for (int i = 0; i < 256; i++)
             {
                 int tmp = (ReadByte() << 18) + (ReadByte() << 10) + (ReadByte() << 2);
                 data.Add(tmp);

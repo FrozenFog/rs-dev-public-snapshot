@@ -15,18 +15,23 @@ namespace relert_sharp
         [STAThread]
         static void Main()
         {
+            Initialization();
             bool debug = true;
             if (!debug)
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Misc.Init_Language();
                 Application.Run(new MainWindow());
             }
             else
             {
                 _run.M();
             }
+        }
+        static void Initialization()
+        {
+            Misc.Init_Language();
+            Common.GlobalVar.GlobalConfig = new Common.RSConfig();
         }
     }
 }

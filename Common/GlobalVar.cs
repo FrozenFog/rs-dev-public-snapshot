@@ -14,6 +14,11 @@ namespace relert_sharp.Common
             get { return currentlanguage; }
             set { currentlanguage = value; }
         }
-
+        private static RSConfig config;
+        public static RSConfig GlobalConfig
+        {
+            get { return config; }
+            set { config = value; }
+        }
     }
 }

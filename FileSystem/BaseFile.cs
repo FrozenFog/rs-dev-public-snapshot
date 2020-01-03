@@ -30,14 +30,15 @@ namespace relert_sharp.FileSystem
         {
             if (m == FileMode.Create && File.Exists(path)) File.Delete(path);
             _fs = new FileStream(path, m, a);
-            _fs.CopyTo(memoryRead);
+            if (!_keepAlive) _fs.CopyTo(memoryRead);
+            memoryRead.Seek(0, SeekOrigin.Begin);
             access = a;
-            InitStream();
             filepath = _fs.Name;
             string[] sl = filepath.Split(new char[] { '\\' });
             fullname = sl[sl.Count() - 1];
             GetNames();
             if (!_keepAlive) _fs.Dispose();
+            InitStream();
         }
         public BaseFile(byte[] _rawData, string _fileName, FileAccess _acc = FileAccess.Read)
         {
@@ -106,12 +107,20 @@ namespace relert_sharp.FileSystem
         }
         private void InitStream()
         {
-            if (memoryRead.CanRead)
+            if (access == FileAccess.Read)
             {
-                sr = new StreamReader(memoryRead);
-                br = new BinaryReader(memoryRead);
+                if (_fs == null || !_fs.CanRead)
+                {
+                    sr = new StreamReader(memoryRead);
+                    br = new BinaryReader(memoryRead);
+                }
+                else
+                {
+                    sr = new StreamReader(_fs);
+                    br = new BinaryReader(_fs);
+                }
             }
-            if (memoryRead.CanWrite)
+            if (access == FileAccess.Write)
             {
                 sw = new StreamWriter(ms);
                 bw = new BinaryWriter(ms);
@@ -135,7 +144,7 @@ namespace relert_sharp.FileSystem
         protected bool CanRead() { return !sr.EndOfStream; }
         protected bool CanWrite() { return ms.CanWrite; }
         protected void Write(string s) { sw.Write(s);sw.Flush(); }
-        protected void ReadSeek(int offset, SeekOrigin origin) { memoryRead.Seek(offset, origin); }
+        protected void ReadSeek(int offset, SeekOrigin origin) { br.BaseStream.Seek(offset, origin); }
         protected void WriteSeek(int offset, SeekOrigin origin) { ms.Seek(offset, origin); }
         #endregion
 

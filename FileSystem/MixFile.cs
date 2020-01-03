@@ -12,17 +12,15 @@ namespace relert_sharp.FileSystem
 {
     public class MixFile : BaseFile
     {
-        private int bodyPos;
-        private ushort numOfFiles;
         private MixHeader index;
 
 
         #region Constructor - MixFile
-        public MixFile(string path, MixTatics tatics) : base(path, FileMode.Open, FileAccess.Read)
+        public MixFile(string path, MixTatics tatics) : base(path, FileMode.Open, FileAccess.Read, true)
         {
             Initialize(tatics);
         }
-        public MixFile(byte[] rawData, string fileName, MixTatics tatics):base(rawData,fileName)
+        public MixFile(byte[] rawData, string fileName, MixTatics tatics) :base(rawData,fileName)
         {
             Initialize(tatics);
         }
@@ -32,24 +30,25 @@ namespace relert_sharp.FileSystem
         #region Private Methods - MixFile
         private void Initialize(MixTatics tatics)
         {
+            Tatics = tatics;
             BReader.BaseStream.Seek(4, SeekOrigin.Begin);
             switch (tatics)
             {
                 case MixTatics.Plain:
-                    numOfFiles = ReadUInt16();
+                    NumOfFiles = ReadUInt16();
                     ReadSeek(4, SeekOrigin.Current);
-                    index = new MixHeader(ReadBytes(numOfFiles * 12), numOfFiles);
-                    bodyPos = 10 + numOfFiles * 12;
+                    index = new MixHeader(ReadBytes(NumOfFiles * 12), NumOfFiles);
+                    BodyPos = 10 + NumOfFiles * 12;
                     break;
                 case MixTatics.Ciphed:
                     byte[] keySource = ReadBytes(80);
                     byte[] header = DecryptHeader(keySource);
-                    index = new MixHeader(header.Skip(6).ToArray(), numOfFiles);
+                    index = new MixHeader(header.Skip(6).ToArray(), NumOfFiles);
                     break;
                 default:
                     break;
             }
-            ReadSeek(bodyPos, SeekOrigin.Begin);
+            ReadSeek(BodyPos, SeekOrigin.Begin);
         }
         private byte[] DecryptHeader(byte[] keySource)
         {
@@ -59,10 +58,10 @@ namespace relert_sharp.FileSystem
             byte[] headerBlock = ReadBytes(8);
             uint[] firstBlock = b.Decrypt(Misc.ToUintArray(headerBlock));
             buffer = buffer.Concat(firstBlock).ToList();
-            numOfFiles = (ushort)firstBlock[0];
-            double indexSize = numOfFiles * 12 + 6;
+            NumOfFiles = (ushort)firstBlock[0];
+            double indexSize = NumOfFiles * 12 + 6;
             int i = (int)Math.Ceiling(indexSize / 8F) - 1;
-            bodyPos = (i + 1) * 8 + 84;
+            BodyPos = (i + 1) * 8 + 84;
             for (; i > 0; i--)
             {
                 uint[] block = b.Decrypt(Misc.ToUintArray(ReadBytes(8)));
@@ -81,7 +80,7 @@ namespace relert_sharp.FileSystem
             {
                 ReadSeek(index.GetOffset(fileID), SeekOrigin.Current);
                 byte[] buffer = ReadBytes(index.GetSize(fileID));
-                ReadSeek(bodyPos, SeekOrigin.Begin);
+                ReadSeek(BodyPos, SeekOrigin.Begin);
                 return new MemoryStream(buffer);
             }
             else
@@ -93,6 +92,14 @@ namespace relert_sharp.FileSystem
         {
             return index.Entries.Keys.Contains(CRC.GetCRC(fileName));
         }
+        #endregion
+
+
+        #region Public Calls - MixFile
+        public MixHeader Index { get { return index; } }
+        public int BodyPos { get; private set; }
+        public ushort NumOfFiles { get; private set; }
+        public MixTatics Tatics { get; private set; }
         #endregion
     }
 

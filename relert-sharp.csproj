@@ -55,6 +55,7 @@
     <Compile Include="Common\Constant.cs" />
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\GlobalVar.cs" />
+    <Compile Include="Common\RSConfig.cs" />
     <Compile Include="DrawingEngine\DisplayingControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -74,6 +75,7 @@
     <Compile Include="FileSystem\PalFile.cs" />
     <Compile Include="FileSystem\TextFile.cs" />
     <Compile Include="FileSystem\TmpFile.cs" />
+    <Compile Include="FileSystem\VirtualDir.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

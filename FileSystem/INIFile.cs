@@ -12,12 +12,25 @@ namespace relert_sharp.FileSystem
     {
         private Dictionary<string, INIEntity> inidata = new Dictionary<string, INIEntity>();
         private INIFileType initype;
-        private bool keepAlive;
-        public INIFile(string path,  INIFileType itype = INIFileType.DefaultINI, bool _keepAlive = false) : base(path, FileMode.Open, FileAccess.Read)
+
+
+        #region Constructor - INIFile
+        public INIFile(string path,  INIFileType itype = INIFileType.DefaultINI) : base(path, FileMode.Open, FileAccess.Read, false)
+        {
+            initype = itype;
+            Load();
+        }
+        public INIFile(byte[] _data, string _filename, INIFileType _type = INIFileType.DefaultINI) : base(_data, _filename)
+        {
+            initype = _type;
+            Load();
+        }
+        #endregion
+
+        #region Private Methods - INIFile
+        private void Load()
         {
             bool init = true;
-            keepAlive = _keepAlive;
-            initype = itype;
             string preCommentBuffer = "";
             INIEntity ent = new INIEntity();
             string rootname = "";
@@ -64,8 +77,8 @@ namespace relert_sharp.FileSystem
                 }
             }
             AddEnt(ent);
-            if (!keepAlive) Dispose();
         }
+        #endregion
 
         #region Public Methods - INIFile
         public void SaveIni(bool ignoreComment = false)
@@ -126,6 +139,8 @@ namespace relert_sharp.FileSystem
             inidata.Clear();
         }
         #endregion
+
+
         #region Public Calls - INIFile
         public Dictionary<string, INIEntity> IniDict
         {
