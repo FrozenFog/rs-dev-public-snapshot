@@ -154,6 +154,10 @@ namespace relert_sharp.FileSystem
         #endregion
 
 
+        #region Private Methods - TmpImage
+        #endregion
+
+
         #region Public Methods - TmpImage
         public void Read(BinaryReader br, int width, int height)
         {

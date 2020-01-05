@@ -65,6 +65,7 @@
     <Compile Include="Encoding\CRC.cs" />
     <Compile Include="Encoding\MiniLZO.cs" />
     <Compile Include="Encoding\PackEncoding.cs" />
+    <Compile Include="Encoding\ShpEncoding.cs" />
     <Compile Include="Encoding\WSKeyCalc.cs" />
     <Compile Include="FileSystem\INIEntity.cs" />
     <Compile Include="FileSystem\INIFile.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="FileSystem\MapFile.cs" />
     <Compile Include="FileSystem\MixFile.cs" />
     <Compile Include="FileSystem\PalFile.cs" />
+    <Compile Include="FileSystem\ShpFile.cs" />
     <Compile Include="FileSystem\TextFile.cs" />
     <Compile Include="FileSystem\TmpFile.cs" />
     <Compile Include="FileSystem\VirtualDir.cs" />

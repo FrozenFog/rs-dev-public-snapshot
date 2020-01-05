@@ -135,10 +135,13 @@ namespace relert_sharp.FileSystem
 
 
         #region Protected - BaseFile
+        protected int GetPos() { return (int)br.BaseStream.Position; }
         protected BinaryReader BReader { get { return br; } }
         protected int ReadInt32() { return br.ReadInt32(); }
+        protected uint ReadUInt32() { return br.ReadUInt32(); }
         protected ushort ReadUInt16() { return br.ReadUInt16(); }
         protected byte[] ReadBytes(int count) { return br.ReadBytes(count); }
+        protected byte[] ReadBytes(byte[] _dest, int _offset, int _count) { br.Read(_dest, _offset, _count);return new byte[0]; }
         protected byte ReadByte() { return br.ReadByte(); }
         protected string Readline() { return sr.ReadLine(); }
         protected bool CanRead() { return !sr.EndOfStream; }
@@ -202,6 +205,7 @@ namespace relert_sharp.FileSystem
         {
             get { return nameext; }
         }
+        public long FileLength { get { return br.BaseStream.Length; } }
         #endregion
     }
 }

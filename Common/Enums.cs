@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace relert_sharp.Common
 {
-    public enum VirtualDirType
+    public enum ShpFrameCompressionType
     {
-        GeneralMix = 1,
-        TheaterMix = 2
+        RawData = 1,
+        ScanLineRaw = 2,
+        Compressed = 3
     }
     public enum HouseEdges
     {
