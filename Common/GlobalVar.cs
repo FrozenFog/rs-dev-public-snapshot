@@ -20,5 +20,11 @@ namespace relert_sharp.Common
             get { return config; }
             set { config = value; }
         }
+        private static FileSystem.VirtualDir globaldir;
+        public static FileSystem.VirtualDir GlobalDir
+        {
+            get { return globaldir; }
+            set { globaldir = value; }
+        }
     }
 }

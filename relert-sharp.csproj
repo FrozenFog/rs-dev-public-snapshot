@@ -98,6 +98,7 @@
     <Compile Include="MapStructure\Logic\AITrigger.cs" />
     <Compile Include="MapStructure\Logic\Country.cs" />
     <Compile Include="MapStructure\Logic\House.cs" />
+    <Compile Include="MapStructure\MapTheater.cs" />
     <Compile Include="MapStructure\Objects\AircraftLayer.cs" />
     <Compile Include="MapStructure\Objects\InfantryLayer.cs" />
     <Compile Include="MapStructure\Logic\Action.cs" />

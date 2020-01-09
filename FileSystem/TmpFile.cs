@@ -90,33 +90,7 @@ namespace relert_sharp.FileSystem
         {
             foreach (TmpImage img in images)
             {
-                Bitmap bmp = new Bitmap(blockWidthPX, blockHeightPX, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-                int count = 0;
-                for (int j = 0; j < blockHeightPX - 1; j++)
-                {
-                    int len_line = blockWidthPX - Math.Abs(blockHeightPX / 2 - j - 1) * 4;
-                    int x_start = (blockWidthPX - len_line) / 2;
-                    for (int i = x_start; i < len_line + x_start; i++)
-                    {
-                        if (img.TileByte(count) != 0) bmp.SetPixel(i, j, Color.FromArgb(_pal[img.TileByte(count)]));
-                        count++;
-                    }
-                }
-                img.TileBitmap = bmp;
-                if (img.HasExtraData)
-                {
-                    Bitmap extra = new Bitmap(img.ExtraWidth, img.ExtraHeight, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-                    int excount = 0;
-                    for (int j = 0; j < img.ExtraHeight; j++)
-                    {
-                        for(int i = 0; i < img.ExtraWidth; i++)
-                        {
-                            if (img.ExtraByte(excount) != 0) extra.SetPixel(i, j, Color.FromArgb(_pal[img.ExtraByte(excount)]));
-                            excount++;
-                        }
-                    }
-                    img.ExtraBitmap = extra;
-                }
+                img.LoadColor(_pal, blockWidthPX, blockHeightPX);
             }
         }
         #endregion
@@ -188,6 +162,36 @@ namespace relert_sharp.FileSystem
 
             if (HasZData && HasExtraData && 0 < exzOffset && exzOffset < br.BaseStream.Length)
                 ExtraZData = br.ReadBytes(Math.Abs(ExtraWidth * ExtraHeight));
+        }
+        public void LoadColor(PalFile _pal, int blockWidthPX = 60, int blockHeightPX = 30)
+        {
+            Bitmap bmp = new Bitmap(blockWidthPX, blockHeightPX, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            int count = 0;
+            for (int j = 0; j < blockHeightPX - 1; j++)
+            {
+                int len_line = blockWidthPX - Math.Abs(blockHeightPX / 2 - j - 1) * 4;
+                int x_start = (blockWidthPX - len_line) / 2;
+                for (int i = x_start; i < len_line + x_start; i++)
+                {
+                    if (TileByte(count) != 0) bmp.SetPixel(i, j, Color.FromArgb(_pal[TileByte(count)]));
+                    count++;
+                }
+            }
+            TileBitmap = bmp;
+            if (HasExtraData)
+            {
+                Bitmap extra = new Bitmap(ExtraWidth, ExtraHeight, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                int excount = 0;
+                for (int j = 0; j < ExtraHeight; j++)
+                {
+                    for (int i = 0; i < ExtraWidth; i++)
+                    {
+                        if (ExtraByte(excount) != 0) extra.SetPixel(i, j, Color.FromArgb(_pal[ExtraByte(excount)]));
+                        excount++;
+                    }
+                }
+                ExtraBitmap = extra;
+            }
         }
         public byte TileByte(int _index)
         {

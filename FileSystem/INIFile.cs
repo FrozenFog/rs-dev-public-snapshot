@@ -68,6 +68,7 @@ namespace relert_sharp.FileSystem
                     ent = new INIEntity(rootname, preCommentBuffer, combuf);
                     rootcom = combuf;
                 }
+                else if (line.StartsWith("*")) continue;
                 else
                 {
                     string[] tmp = line.Split(new char[] { '=' }, 2);

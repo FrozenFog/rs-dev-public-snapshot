@@ -125,6 +125,7 @@ namespace relert_sharp.Common
     public enum TheaterType
     {
         Template, Snow, Desert, Urban, NewUrban, Lunar,
+        Custom1, Custom2, Custom3,
         Unknown = -1
     }
     public enum MixTatics

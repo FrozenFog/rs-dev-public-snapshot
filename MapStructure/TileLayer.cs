@@ -218,7 +218,7 @@ namespace relert_sharp.MapStructure
         }
         public static Tile EmptyTile
         {
-            get { return new Tile(0, 0, 65535,0 , 0, 0); }
+            get { return new Tile(0, 0, 65535, 0, 0, 0); }
         }
         public short X
         {

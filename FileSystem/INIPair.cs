@@ -112,19 +112,27 @@ namespace relert_sharp.FileSystem
         }
         public int ParseInt(int def = 0)
         {
-            if ((string)value != "")
+            try
             {
-                return int.Parse(value);
+                if ((string)value != "")
+                {
+                    return int.Parse(value);
+                }
+                return def;
             }
-            return def;
+            catch { return 0; }
         }
-        public float ParseFloat(float def = 0F)
+        public float ParseFloat(float def = 0.0F)
         {
-            if ((string)value != "")
+            try
             {
-                return float.Parse(value);
+                if ((string)value != "")
+                {
+                    return float.Parse(value);
+                }
+                return def;
             }
-            return def;
+            catch { return 0.0F; }
         }
         public string[] ParseStringList()
         {

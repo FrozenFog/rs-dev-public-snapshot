@@ -32,6 +32,7 @@ namespace relert_sharp
         {
             Misc.Init_Language();
             Common.GlobalVar.GlobalConfig = new Common.RSConfig();
+            Common.GlobalVar.GlobalDir = new FileSystem.VirtualDir();
         }
     }
 }
