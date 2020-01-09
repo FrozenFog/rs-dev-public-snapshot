@@ -144,10 +144,10 @@ namespace relert_sharp.MapStructure
             ETime = TimeInt(rankEnt["ParTimeEasy"]);
             MTime = TimeInt(rankEnt["ParTimeMedium"]);
             HTime = TimeInt(rankEnt["ParTimeHard"]);
-            TitleUnder = new CSFString(rankEnt["UnderParTitle"]);
-            TitleOver = new CSFString(rankEnt["OverParTitle"]);
-            MsgUnder = new CSFString(rankEnt["UnderParMessage"]);
-            MsgOver = new CSFString(rankEnt["OverParMessage"]);
+            TitleUnder = new CsfString(rankEnt["UnderParTitle"]);
+            TitleOver = new CsfString(rankEnt["OverParTitle"]);
+            MsgUnder = new CsfString(rankEnt["UnderParMessage"]);
+            MsgOver = new CsfString(rankEnt["OverParMessage"]);
         }
         #endregion
 
@@ -156,10 +156,10 @@ namespace relert_sharp.MapStructure
         public int ETime { get; set; }
         public int MTime { get; set; }
         public int HTime { get; set; }
-        public CSFString TitleUnder { get; set; }
-        public CSFString TitleOver { get; set; }
-        public CSFString MsgUnder { get; set; }
-        public CSFString MsgOver { get; set; }
+        public CsfString TitleUnder { get; set; }
+        public CsfString TitleOver { get; set; }
+        public CsfString MsgUnder { get; set; }
+        public CsfString MsgOver { get; set; }
         #endregion
     }
 

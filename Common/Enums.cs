@@ -6,6 +6,20 @@ using System.Threading.Tasks;
 
 namespace relert_sharp.Common
 {
+    public enum CsfLanguage
+    {
+        EnUs = 0,
+        EnUk = 1,
+        German = 2,
+        French = 3,
+        Spanish = 4,
+        Italian = 5, 
+        Japanese = 6,
+        Jabberwockie = 7,
+        Korean = 8,
+        Chinese = 9,
+        Unknown = -1
+    }
     public enum ShpFrameCompressionType
     {
         RawData = 1,

@@ -61,12 +61,14 @@
     </Compile>
     <Compile Include="DrawingEngine\DrawingDevice.cs" />
     <Compile Include="Encoding\Blowfish.cs" />
+    <Compile Include="Encoding\CsfEncoding.cs" />
     <Compile Include="Encoding\Format80.cs" />
     <Compile Include="Encoding\CRC.cs" />
     <Compile Include="Encoding\MiniLZO.cs" />
     <Compile Include="Encoding\PackEncoding.cs" />
     <Compile Include="Encoding\ShpEncoding.cs" />
     <Compile Include="Encoding\WSKeyCalc.cs" />
+    <Compile Include="FileSystem\CsfFile.cs" />
     <Compile Include="FileSystem\INIEntity.cs" />
     <Compile Include="FileSystem\INIFile.cs" />
     <Compile Include="FileSystem\INIPair.cs" />
@@ -132,7 +134,6 @@
     <Compile Include="Utils\Colors.cs" />
     <Compile Include="FileSystem\BaseFile.cs" />
     <Compile Include="Common\RSException.cs" />
-    <Compile Include="Common\CSFString.cs" />
     <Compile Include="Utils\Interpreter.cs" />
     <Compile Include="Utils\Lang.cs" />
     <Compile Include="Utils\Misc.cs" />

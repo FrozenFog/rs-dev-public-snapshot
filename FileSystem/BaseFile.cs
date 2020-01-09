@@ -144,6 +144,7 @@ namespace relert_sharp.FileSystem
         protected byte[] ReadBytes(byte[] _dest, int _offset, int _count) { br.Read(_dest, _offset, _count);return new byte[0]; }
         protected byte ReadByte() { return br.ReadByte(); }
         protected string Readline() { return sr.ReadLine(); }
+        protected string ReadString(int _count) { return new string(br.ReadChars(_count)); }
         protected bool CanRead() { return !sr.EndOfStream; }
         protected bool CanWrite() { return ms.CanWrite; }
         protected void Write(string s) { sw.Write(s);sw.Flush(); }
