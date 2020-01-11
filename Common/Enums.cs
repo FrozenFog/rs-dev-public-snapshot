@@ -101,7 +101,7 @@ namespace relert_sharp.Common
     }
     public enum FileExtension
     {
-        Undefined, CSV, TXT, YRM, MAP, INI, LANG, MIX, PAL,
+        Undefined, CSV, TXT, YRM, MAP, INI, LANG, MIX, PAL, SHP, VXL, HVA, CSF,
         UnknownBinary = -1
     }
     public enum INIKeyType

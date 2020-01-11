@@ -118,7 +118,7 @@ namespace relert_sharp.FileSystem
         }
         private int exOffset, zOffset, exzOffset;
         private StatusFlag _flag;
-        private Bitmap tileImg, extraImg;
+        private Bitmap tileImg;
         private byte[] TileData, ExtraData, ZData, ExtraZData;
         public int X, Y, Height, exX, exY;
         public byte TerrainType, RampType;

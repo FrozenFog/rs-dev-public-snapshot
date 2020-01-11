@@ -138,17 +138,31 @@ namespace relert_sharp.FileSystem
         protected int GetPos() { return (int)br.BaseStream.Position; }
         protected BinaryReader BReader { get { return br; } }
         protected int ReadInt32() { return br.ReadInt32(); }
+        protected int[] ReadInt32s(int _count)
+        {
+            int[] result = new int[_count];
+            for (int i = 0; i < _count; i++) result[i] = br.ReadInt32();
+            return result;
+        }
         protected uint ReadUInt32() { return br.ReadUInt32(); }
         protected ushort ReadUInt16() { return br.ReadUInt16(); }
         protected byte[] ReadBytes(int count) { return br.ReadBytes(count); }
         protected byte[] ReadBytes(byte[] _dest, int _offset, int _count) { br.Read(_dest, _offset, _count);return new byte[0]; }
         protected byte ReadByte() { return br.ReadByte(); }
+        protected float ReadFloat() { return br.ReadSingle(); }
+        protected float[] ReadFloats(int _count)
+        {
+            float[] result = new float[_count];
+            for (int i = 0; i < _count; i++) result[i] = br.ReadSingle();
+            return result;
+        }
         protected string Readline() { return sr.ReadLine(); }
         protected string ReadString(int _count) { return new string(br.ReadChars(_count)); }
         protected bool CanRead() { return !sr.EndOfStream; }
         protected bool CanWrite() { return ms.CanWrite; }
         protected void Write(string s) { sw.Write(s);sw.Flush(); }
-        protected void ReadSeek(int offset, SeekOrigin origin) { br.BaseStream.Seek(offset, origin); }
+        protected void ReadSeek(uint offset, SeekOrigin origin) { br.BaseStream.Seek(offset, origin); }
+        protected void ReadSeek(int _offset, SeekOrigin _origin) { br.BaseStream.Seek(_offset, _origin); }
         protected void WriteSeek(int offset, SeekOrigin origin) { ms.Seek(offset, origin); }
         #endregion
 
@@ -175,7 +189,6 @@ namespace relert_sharp.FileSystem
 
 
         #region Public Calls - BaseFile
-        public Stream ReadStream { get { return memoryRead; } }
         public FileExtension FileExt
         {
             get
@@ -188,6 +201,10 @@ namespace relert_sharp.FileSystem
                 {
                     return extension;
                 }
+            }
+            protected set
+            {
+                extension = value;
             }
         }
         public string FullName

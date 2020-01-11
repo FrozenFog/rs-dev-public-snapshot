@@ -19,7 +19,6 @@ namespace relert_sharp.MapStructure
         private string mapPath;
         private string isomappack5String, overlayString, overlaydataString, previewString;
         private string digest;
-        private MapType maptype;
 
         private MapInfo info;
         private RankInfo ranks;

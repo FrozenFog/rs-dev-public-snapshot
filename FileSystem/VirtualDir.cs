@@ -99,6 +99,67 @@ namespace relert_sharp.FileSystem
                 return result;
             }
         }
+        public dynamic GetFile(string _fileName, FileExtension _fileType)
+        {
+            switch (_fileType)
+            {
+                case FileExtension.PAL:
+                    _fileName += ".pal";
+                    return new PalFile(GetRawByte(_fileName), _fileName);
+                case FileExtension.INI:
+                    _fileName += ".ini";
+                    return new INIFile(GetRawByte(_fileName), _fileName);
+                case FileExtension.VXL:
+                    _fileName += ".vxl";
+                    return new VxlFile(GetRawByte(_fileName), _fileName);
+                case FileExtension.SHP:
+                    _fileName += ".shp";
+                    return new ShpFile(GetRawByte(_fileName), _fileName);
+                case FileExtension.HVA:
+                    _fileName += ".hva";
+                    return new HvaFile(GetRawByte(_fileName), _fileName);
+                case FileExtension.CSF:
+                    _fileName += ".csf";
+                    return new CsfFile(GetRawByte(_fileName), _fileName);
+                default:
+                    return GetRawByte(_fileName);
+            }
+        }
+        public dynamic GetTheaterTmpFile(string _fileName, TheaterType _type)
+        {
+            switch (_type)
+            {
+                case TheaterType.Template:
+                    _fileName += ".tem";
+                    return new TmpFile(GetRawByte(_fileName), _fileName);
+                case TheaterType.Snow:
+                    _fileName += ".sno";
+                    return new TmpFile(GetRawByte(_fileName), _fileName);
+                case TheaterType.Urban:
+                    _fileName += ".urb";
+                    return new TmpFile(GetRawByte(_fileName), _fileName);
+                case TheaterType.Desert:
+                    _fileName += ".des";
+                    return new TmpFile(GetRawByte(_fileName), _fileName);
+                case TheaterType.NewUrban:
+                    _fileName += ".ubn";
+                    return new TmpFile(GetRawByte(_fileName), _fileName);
+                case TheaterType.Lunar:
+                    _fileName += ".lun";
+                    return new TmpFile(GetRawByte(_fileName), _fileName);
+                case TheaterType.Custom1:
+                    _fileName += "." + GlobalConfig["CustomThearer"]["Custom1Sub"];
+                    return new TmpFile(GetRawByte(_fileName), _fileName);
+                case TheaterType.Custom2:
+                    _fileName += "." + GlobalConfig["CustomThearer"]["Custom2Sub"];
+                    return new TmpFile(GetRawByte(_fileName), _fileName);
+                case TheaterType.Custom3:
+                    _fileName += "." + GlobalConfig["CustomThearer"]["Custom3Sub"];
+                    return new TmpFile(GetRawByte(_fileName), _fileName);
+                default:
+                    return GetRawByte(_fileName);
+            }
+        }
         #endregion
     }
 

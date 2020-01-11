@@ -47,8 +47,7 @@ namespace relert_sharp.MapStructure
                 default:
                     return;
             }
-            _theater += ".ini";
-            INIFile _theaterIni = new INIFile(GlobalDir.GetRawByte(_theater), _theater);
+            INIFile _theaterIni = GlobalDir.GetFile(_theater, FileExtension.INI);
             int _cap = _theaterIni.IniData.Count;
             for (int i = 0; i < _cap; i++)
             {

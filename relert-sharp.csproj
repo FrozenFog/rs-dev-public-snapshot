@@ -69,6 +69,7 @@
     <Compile Include="Encoding\ShpEncoding.cs" />
     <Compile Include="Encoding\WSKeyCalc.cs" />
     <Compile Include="FileSystem\CsfFile.cs" />
+    <Compile Include="FileSystem\HvaFile.cs" />
     <Compile Include="FileSystem\INIEntity.cs" />
     <Compile Include="FileSystem\INIFile.cs" />
     <Compile Include="FileSystem\INIPair.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="FileSystem\TextFile.cs" />
     <Compile Include="FileSystem\TmpFile.cs" />
     <Compile Include="FileSystem\VirtualDir.cs" />
+    <Compile Include="FileSystem\VxlFile.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,7 +100,7 @@
     <Compile Include="MapStructure\Logic\AITrigger.cs" />
     <Compile Include="MapStructure\Logic\Country.cs" />
     <Compile Include="MapStructure\Logic\House.cs" />
-    <Compile Include="MapStructure\MapTheater.cs" />
+    <Compile Include="MapStructure\MapTheaterTileSet.cs" />
     <Compile Include="MapStructure\Objects\AircraftLayer.cs" />
     <Compile Include="MapStructure\Objects\InfantryLayer.cs" />
     <Compile Include="MapStructure\Logic\Action.cs" />
