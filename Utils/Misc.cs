@@ -197,6 +197,17 @@ namespace relert_sharp.Utils
             }
             return result;
         }
+        public static Rectangle UnionRectangle(ref Rectangle rectA, ref Rectangle rectB)
+        {
+            Rectangle result = Rectangle.Union(rectA, rectB);
+            int aX = rectA.Location.X - result.Location.X;
+            int aY = rectA.Location.Y - result.Location.Y;
+            int bX = rectB.Location.X - result.Location.X;
+            int bY = rectB.Location.Y - result.Location.Y;
+            rectA.Location = new Point(aX, aY);
+            rectB.Location = new Point(bX, bY);
+            return result;
+        }
         public static int TimeInt(string s)
         {
             string[] tmp = s.Split(new char[] { ':' });

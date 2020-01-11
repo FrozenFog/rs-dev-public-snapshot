@@ -69,7 +69,14 @@ namespace relert_sharp.MapStructure
 
         #region Public Calls - MapTheaterTileSet
         public string TheaterSub { get; private set; }
-        public string this[int _TileIndex] { get { return tileNameIndex[_TileIndex]; } }
+        public string this[int _TileIndex]
+        {
+            get
+            {
+                if (_TileIndex == 65535) return tileNameIndex[0];
+                return tileNameIndex[_TileIndex];
+            }
+        }
         #endregion
     }
 }

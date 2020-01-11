@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
+using System.Windows.Forms;
 using relert_sharp.Utils;
 using relert_sharp.Common;
 
@@ -165,7 +166,7 @@ namespace relert_sharp.FileSystem
         }
         public void LoadColor(PalFile _pal, int blockWidthPX = 60, int blockHeightPX = 30)
         {
-            Bitmap bmp = new Bitmap(blockWidthPX, blockHeightPX, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            Bitmap bmp = new Bitmap(blockWidthPX, blockHeightPX, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             int count = 0;
             for (int j = 0; j < blockHeightPX - 1; j++)
             {
@@ -178,9 +179,10 @@ namespace relert_sharp.FileSystem
                 }
             }
             TileBitmap = bmp;
+            DrawingPos = new Point(0, 0);
             if (HasExtraData)
             {
-                Bitmap extra = new Bitmap(ExtraWidth, ExtraHeight, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                Bitmap extra = new Bitmap(ExtraWidth, ExtraHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
                 int excount = 0;
                 for (int j = 0; j < ExtraHeight; j++)
                 {
@@ -190,7 +192,16 @@ namespace relert_sharp.FileSystem
                         excount++;
                     }
                 }
-                ExtraBitmap = extra;
+                Rectangle _rctTile = new Rectangle(0, 0, blockWidthPX, blockHeightPX);
+                Rectangle _rctEx = new Rectangle(exX - X, exY - Y, ExtraWidth, ExtraHeight);
+                Rectangle _region = Misc.UnionRectangle(ref _rctTile, ref _rctEx);
+                DrawingPos = _rctTile.Location;
+                TileBitmap = new Bitmap(_region.Width, _region.Height);
+                Graphics g = Graphics.FromImage(TileBitmap);
+                g.DrawImage(bmp, _rctTile.Location);
+                g.DrawImage(extra, _rctEx.Location);
+                g.Dispose();
+                extra.Dispose();
             }
         }
         public byte TileByte(int _index)
@@ -226,10 +237,10 @@ namespace relert_sharp.FileSystem
             get { return (_flag & StatusFlag.DamagedData) == StatusFlag.DamagedData; }
         }
         public Bitmap TileBitmap { get { return tileImg; } set { tileImg = value; } }
-        public Bitmap ExtraBitmap { get { return extraImg; } set { extraImg = value; } }
         public int TileByteCount { get; private set; }
         public int ExtraWidth { get; set; }
         public int ExtraHeight { get; set; }
+        public Point DrawingPos { get; private set; }
         #endregion
     }
 }

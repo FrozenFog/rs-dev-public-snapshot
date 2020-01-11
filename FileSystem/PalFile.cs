@@ -30,7 +30,7 @@ namespace relert_sharp.FileSystem
         {
             for (int i = 0; i < 256; i++)
             {
-                int tmp = (ReadByte() << 18) + (ReadByte() << 10) + (ReadByte() << 2);
+                int tmp = (ReadByte() << 18) + (ReadByte() << 10) + (ReadByte() << 2) + (0xFF << 26);
                 data.Add(tmp);
             }
         }
