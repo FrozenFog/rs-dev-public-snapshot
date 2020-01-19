@@ -34,6 +34,17 @@ namespace relert_sharp.Common
             public InvalidWaypointException(int waypoint) { Waypoint = waypoint; }
             public int Waypoint { get; set; }
         }
+        public class InvalidFileException : ApplicationException
+        {
+            public InvalidFileException(string filename) { FileName = filename; }
+            public string FileName { get; set; }
+
+
+            public class InvalidIdx : ApplicationException
+            {
+                public InvalidIdx() { }
+            }
+        }
         //private string error;
         //private Exception innerException;
 

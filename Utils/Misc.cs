@@ -221,6 +221,16 @@ namespace relert_sharp.Utils
             int s = seconds % 60;
             return string.Format("{0:D2}:{0:D2}:{0:D2}", h, m, s);
         }
+        public static byte[] GetBytes(short[] data)
+        {
+            byte[] result = new byte[sizeof(short) * data.Length];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i++] = (byte)data[i / sizeof(short)];
+                result[i] = (byte)(data[i / sizeof(short)] >> 4);
+            }
+            return result;
+        }
     }
 
 }

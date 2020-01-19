@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace relert_sharp.Common
 {
+    [Flags]
+    public enum AudType
+    {
+        None = 0,
+        Stereo = 1,
+        Bit16 = 2
+    }
     public enum CsfLanguage
     {
         EnUs = 0,

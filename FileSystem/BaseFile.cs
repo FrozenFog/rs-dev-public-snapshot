@@ -58,6 +58,12 @@ namespace relert_sharp.FileSystem
             GetNames();
             InitStream();
         }
+        public BaseFile(string _fileName)
+        {
+            fullname = _fileName;
+            GetNames();
+        }
+        public BaseFile() { }
         #endregion
 
 
