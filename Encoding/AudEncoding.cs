@@ -88,8 +88,7 @@ namespace relert_sharp.Encoding
                 index += tb_adjust[code];
                 index = Region(0, 88, index);
                 int predictDelta = (tb_step[index] * code) / 4 + (tb_step[index] / 8);
-                previousSample += predictDelta;
-                previousSample = Region(-32768, 32767, previousSample);
+                previousSample = Region(-32768, 32767, previousSample + predictDelta);
                 Write4Bit(code + signingBit << 3, ref result, ref low, ref i);
             }
             br.Dispose();

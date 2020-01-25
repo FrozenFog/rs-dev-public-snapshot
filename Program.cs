@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using relert_sharp.Utils;
 
 namespace relert_sharp
 {
@@ -30,7 +29,7 @@ namespace relert_sharp
         }
         static void Initialization()
         {
-            Misc.Init_Language();
+            Utils.Misc.Init_Language();
             Common.GlobalVar.GlobalConfig = new Common.RSConfig();
             Common.GlobalVar.GlobalDir = new FileSystem.VirtualDir();
         }

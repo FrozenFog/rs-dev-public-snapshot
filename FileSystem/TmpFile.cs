@@ -118,8 +118,7 @@ namespace relert_sharp.FileSystem
         }
         private int exOffset, zOffset, exzOffset;
         private StatusFlag _flag;
-        private Bitmap tileImg;
-        private byte[] TileData, ExtraData, ZData, ExtraZData;
+        private byte[] TileData, ExtraData, ZData, ExtraZData, pixelData;
         public int X, Y, Height, exX, exY;
         public byte TerrainType, RampType;
         public RGBColor ColorRadarLeft, ColorRadarRight;
@@ -204,6 +203,32 @@ namespace relert_sharp.FileSystem
                 extra.Dispose();
             }
         }
+        /// <summary>
+        /// byte list, RGBA, start from bottom-left
+        /// </summary>
+        /// <param name="pal"></param>
+        /// <returns></returns>
+        public void LoadPixelData(PalFile pal)
+        {
+            if (!PixelByteLoaded)
+            {
+                if (!IsLoaded) LoadColor(pal);
+                byte[] result = new byte[TileBitmap.Width * TileBitmap.Height * 4];
+                int c = 0;
+                for (int j = TileBitmap.Height - 1; j >= 0; j--)
+                {
+                    for (int i = 0; i < TileBitmap.Width; i++)
+                    {
+                        Color px = TileBitmap.GetPixel(i, j);
+                        result[c++] = px.R;
+                        result[c++] = px.G;
+                        result[c++] = px.B;
+                        result[c++] = px.A;
+                    }
+                }
+                pixelData = result;
+            }
+        }
         public byte TileByte(int _index)
         {
             return TileData[_index];
@@ -236,11 +261,16 @@ namespace relert_sharp.FileSystem
         {
             get { return (_flag & StatusFlag.DamagedData) == StatusFlag.DamagedData; }
         }
-        public Bitmap TileBitmap { get { return tileImg; } set { tileImg = value; } }
+        public bool IsLoaded { get { return TileBitmap != null; } }
+        public bool PixelByteLoaded { get { return pixelData != null; } }
+        public byte[] PixelRGBA { get { return pixelData; } }
+        public Bitmap TileBitmap { get; set; }
         public int TileByteCount { get; private set; }
         public int ExtraWidth { get; set; }
         public int ExtraHeight { get; set; }
         public Point DrawingPos { get; private set; }
+        public int WidthPX { get { return TileBitmap.Width; } }
+        public int HeightPX { get { return TileBitmap.Height; } }
         #endregion
     }
 }
