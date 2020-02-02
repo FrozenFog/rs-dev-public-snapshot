@@ -13,7 +13,7 @@ namespace relert_sharp.Utils
     {
         public static void Init_Language()
         {
-            GlobalVar.CurrentLanguage = ELanguage.Chinese;
+            GlobalVar.CurrentLanguage = ELanguage.EnglishUS;
             Dictionary<string, string> dict = new Dictionary<string, string>();
             LangFile f = null;
             switch (GlobalVar.CurrentLanguage)

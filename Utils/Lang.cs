@@ -18,7 +18,16 @@ namespace relert_sharp.Utils
         {
             get
             {
-                if (dict.Keys.Contains(key)) return dict[key];
+                if (dict.Keys.Contains(key))
+                {
+                    string result = dict[key];
+                    if (result.Contains("\\"))
+                    {
+                        result = result.Replace("\\n", "\n");
+                        result = result.Replace("\\r", "\r");
+                    }
+                    return result;
+                }
                 return key;
             }
         }
