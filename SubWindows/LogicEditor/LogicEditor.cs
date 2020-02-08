@@ -55,16 +55,16 @@ namespace relert_sharp.SubWindows.LogicEditor
         }
         private void LoadEventComboBox()
         {
-            Utils.Misc.LoadToObjectCollection(ref cbbEventAbst, descriptCollection.Events);
+            StaticHelper.LoadToObjectCollection(ref cbbEventAbst, descriptCollection.Events);
         }
         private void LoadActionComboBox()
         {
-            Utils.Misc.LoadToObjectCollection(ref cbbActionAbst, descriptCollection.Actions);
+            StaticHelper.LoadToObjectCollection(ref cbbActionAbst, descriptCollection.Actions);
         }
         private void LoadHouseList()
         {
             map.Countries.AscendingSort();
-            Utils.Misc.LoadToObjectCollection(ref lbxTriggerHouses, map.Countries);
+            StaticHelper.LoadToObjectCollection(ref lbxTriggerHouses, map.Countries);
         }
         private void UpdateTrgList(TriggerItem.DisplayingType type = TriggerItem.DisplayingType.Remain)
         {
@@ -80,11 +80,11 @@ namespace relert_sharp.SubWindows.LogicEditor
         }
         private void UpdateEventList(LogicGroup eg)
         {
-            Utils.Misc.LoadToObjectCollection(ref lbxEventList, eg);
+            StaticHelper.LoadToObjectCollection(ref lbxEventList, eg);
         }
         private void UpdateActionList(LogicGroup ag)
         {
-            Utils.Misc.LoadToObjectCollection(ref lbxActionList, ag);
+            StaticHelper.LoadToObjectCollection(ref lbxActionList, ag);
         }
         private void UpdateTags(string triggerID)
         {

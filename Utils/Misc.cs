@@ -5,28 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using relert_sharp.FileSystem;
+using relert_sharp.IniSystem;
 using relert_sharp.Common;
 
 namespace relert_sharp.Utils
 {
     public class Misc
     {
-        public static void LoadToObjectCollection(ref System.Windows.Forms.ComboBox dest, IEnumerable<object> src)
-        {
-            dest.Items.Clear();
-            foreach (object item in src)
-            {
-                dest.Items.Add(item);
-            }
-        }
-        public static void LoadToObjectCollection(ref System.Windows.Forms.ListBox dest, IEnumerable<object> src)
-        {
-            dest.Items.Clear();
-            foreach (object item in src)
-            {
-                dest.Items.Add(item);
-            }
-        }
         public static void Init_Language()
         {
             GlobalVar.CurrentLanguage = ELanguage.EnglishUS;
