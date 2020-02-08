@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.IO;
 using relert_sharp.Common;
 
-namespace relert_sharp.FileSystem
+namespace relert_sharp.IniSystem
 {
-    public class INIFile : BaseFile
+    public class INIFile : FileSystem.BaseFile
     {
         private Dictionary<string, INIEntity> inidata = new Dictionary<string, INIEntity>();
         private INIFileType initype;

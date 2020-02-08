@@ -26,11 +26,6 @@ namespace relert_sharp.MapStructure
         private Lightning lightning;
         private Rectangle previewSize;
 
-        private TriggerCollection triggers;
-        private ActionCollection actions;
-        private EventCollection events;
-        private TagCollection tags;
-
         private LocalVarCollection localvariables = new LocalVarCollection();
         private TeamCollection teams = new TeamCollection();
         private TaskforceCollection taskforces = new TaskforceCollection();
@@ -39,7 +34,6 @@ namespace relert_sharp.MapStructure
         private WaypointCollection waypoints = new WaypointCollection();
         private CellTagCollection celltags = new CellTagCollection();
         private HouseCollection houses = new HouseCollection();
-        private CountryCollection countries = new CountryCollection();
 
         private UnitLayer units = new UnitLayer();
         private InfantryLayer infantries = new InfantryLayer();
@@ -167,9 +161,12 @@ namespace relert_sharp.MapStructure
             {
                 houses[houseName] = new HouseItem(f.PopEnt(houseName));
             }
+            Countries = new CountryCollection();
             foreach (string countryName in _countryList)
             {
-                countries[countryName] = new CountryItem(f.PopEnt(countryName));
+                CountryItem item = new CountryItem(f.PopEnt(countryName));
+                if (string.IsNullOrEmpty(item.Name)) item.Name = countryName;
+                Countries[countryName] = item;
             }
         }
         private void GetAbstractLogics(MapFile f)
@@ -184,10 +181,10 @@ namespace relert_sharp.MapStructure
             INIEntity entCelltags = f.PopEnt("CellTags");
             INIEntity entWaypoints = f.PopEnt("Waypoints");
 
-            triggers = new TriggerCollection(entTrigger);
-            actions = new ActionCollection(entAction);
-            events = new EventCollection(entEvent);
-            tags = new TagCollection(entTag);
+            Triggers = new TriggerCollection(entTrigger);
+            Actions = new ActionCollection(entAction);
+            Events = new EventCollection(entEvent);
+            Tags = new TagCollection(entTag);
             
             foreach (INIPair p in entVar.DataList)
             {
@@ -228,6 +225,11 @@ namespace relert_sharp.MapStructure
 
 
         #region Public Calls - Map
+        public CountryCollection Countries { get; private set; }
+        public TriggerCollection Triggers { get; private set; }
+        public TagCollection Tags { get; private set; }
+        public ActionCollection Actions { get; private set; }
+        public EventCollection Events { get; private set; }
         public MapInfo Info
         {
             get { return info; }

@@ -12,6 +12,8 @@ namespace relert_sharp.FileSystem
     public class CsfFile : BaseFile
     {
         private Dictionary<string, CsfString> data = new Dictionary<string, CsfString>();
+
+
         #region Constructor - CsfFile
         public CsfFile(byte[] _rawData, string _fullName) : base(_rawData, _fullName)
         {
@@ -75,7 +77,7 @@ namespace relert_sharp.FileSystem
         public int LabelCount { get; private set; }
         public int StringCount { get; private set; }
         public CsfLanguage Language { get; private set; }
-        public CsfString this[string _uiTag] { get { return data[_uiTag]; } }
+        public CsfString this[string _uiTag] { get { return data[_uiTag.ToLower()]; } }
         #endregion
     }
 
@@ -94,9 +96,10 @@ namespace relert_sharp.FileSystem
 
 
         #region Public Calls - CSFString
-        public string UIName { get; set; }
-        public string ContentString { get; set; }
-        public string ExtraString { get; set; }
+        public string UIName { get; set; } = "";
+        public string ContentString { get; set; } = "";
+        public string ExtraString { get; set; } = "";
+        public bool HasExtra { get { return !string.IsNullOrEmpty(ExtraString); } }
         #endregion
     }
 }

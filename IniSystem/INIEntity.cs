@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using relert_sharp.Common;
 
-namespace relert_sharp.FileSystem
+namespace relert_sharp.IniSystem
 {
-    public class INIEntity
+    public class INIEntity : IEnumerable<INIPair>
     {
         private string name, comment, preComment;
         private Dictionary<string, INIPair> data = new Dictionary<string, INIPair>();
@@ -95,6 +96,17 @@ namespace relert_sharp.FileSystem
             }
             return sb.ToString();
         }
+        #region Enumerator
+        public IEnumerator<INIPair> GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+        #endregion
         #endregion
 
 

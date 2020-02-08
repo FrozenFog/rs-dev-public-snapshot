@@ -1,4 +1,4 @@
-﻿namespace relert_sharp.SubWindows
+﻿namespace relert_sharp.SubWindows.LogicEditor
 {
     partial class LogicEditor
     {
@@ -31,39 +31,40 @@
             this.components = new System.ComponentModel.Container();
             this.tbcMain = new System.Windows.Forms.TabControl();
             this.tbpTriggers = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.gpbActions = new System.Windows.Forms.GroupBox();
+            this.mtxbActionID = new System.Windows.Forms.MaskedTextBox();
+            this.gpbActionParam = new System.Windows.Forms.GroupBox();
             this.lklAP4 = new System.Windows.Forms.LinkLabel();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.txbAP4 = new System.Windows.Forms.TextBox();
             this.lklAP3 = new System.Windows.Forms.LinkLabel();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.txbAP3 = new System.Windows.Forms.TextBox();
             this.lklAP2 = new System.Windows.Forms.LinkLabel();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.txbAP2 = new System.Windows.Forms.TextBox();
             this.lklAP1 = new System.Windows.Forms.LinkLabel();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.listBox2 = new System.Windows.Forms.ListBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.txbAP1 = new System.Windows.Forms.TextBox();
+            this.ckbAP4 = new System.Windows.Forms.CheckBox();
+            this.ckbAP3 = new System.Windows.Forms.CheckBox();
+            this.ckbAP2 = new System.Windows.Forms.CheckBox();
+            this.ckbAP1 = new System.Windows.Forms.CheckBox();
+            this.cbbAP4 = new System.Windows.Forms.ComboBox();
+            this.cbbAP3 = new System.Windows.Forms.ComboBox();
+            this.cbbAP2 = new System.Windows.Forms.ComboBox();
+            this.cbbAP1 = new System.Windows.Forms.ComboBox();
+            this.lblNoParamA = new System.Windows.Forms.Label();
+            this.lbxActionList = new System.Windows.Forms.ListBox();
+            this.rtxbActionDetail = new System.Windows.Forms.RichTextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.button5 = new System.Windows.Forms.Button();
+            this.cbbActionAbst = new System.Windows.Forms.ComboBox();
+            this.btnCopyAction = new System.Windows.Forms.Button();
+            this.txbActionAnno = new System.Windows.Forms.TextBox();
+            this.btnNewAction = new System.Windows.Forms.Button();
+            this.btnDeleteAction = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gpbEvents = new System.Windows.Forms.GroupBox();
+            this.mtxbEventID = new System.Windows.Forms.MaskedTextBox();
             this.gpbEventParam = new System.Windows.Forms.GroupBox();
             this.lklEP4 = new System.Windows.Forms.LinkLabel();
             this.lklEP3 = new System.Windows.Forms.LinkLabel();
@@ -71,8 +72,8 @@
             this.lklEP1 = new System.Windows.Forms.LinkLabel();
             this.txbEP4 = new System.Windows.Forms.TextBox();
             this.txbEP3 = new System.Windows.Forms.TextBox();
-            this.txbEP2 = new System.Windows.Forms.TextBox();
             this.txbEP1 = new System.Windows.Forms.TextBox();
+            this.txbEP2 = new System.Windows.Forms.TextBox();
             this.ckbEP4 = new System.Windows.Forms.CheckBox();
             this.ckbEP3 = new System.Windows.Forms.CheckBox();
             this.ckbEP2 = new System.Windows.Forms.CheckBox();
@@ -81,11 +82,9 @@
             this.cbbEP3 = new System.Windows.Forms.ComboBox();
             this.cbbEP2 = new System.Windows.Forms.ComboBox();
             this.cbbEP1 = new System.Windows.Forms.ComboBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.rtxbEventDetail = new System.Windows.Forms.RichTextBox();
+            this.lblNoParamE = new System.Windows.Forms.Label();
             this.cbbEventAbst = new System.Windows.Forms.ComboBox();
             this.txbEventAnno = new System.Windows.Forms.TextBox();
-            this.txbEventID = new System.Windows.Forms.TextBox();
             this.lbxEventList = new System.Windows.Forms.ListBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -95,7 +94,12 @@
             this.btnCopyEvent = new System.Windows.Forms.Button();
             this.btnDeleteEvent = new System.Windows.Forms.Button();
             this.btnNewEvent = new System.Windows.Forms.Button();
+            this.rtxbEventDetail = new System.Windows.Forms.RichTextBox();
             this.gpbTag = new System.Windows.Forms.GroupBox();
+            this.lklTraceTrigger = new System.Windows.Forms.LinkLabel();
+            this.ckbHard = new System.Windows.Forms.CheckBox();
+            this.ckbNormal = new System.Windows.Forms.CheckBox();
+            this.ckbEasy = new System.Windows.Forms.CheckBox();
             this.cbbCustomGroup = new System.Windows.Forms.ComboBox();
             this.cbbAttatchedTrg = new System.Windows.Forms.ComboBox();
             this.ckbDisabled = new System.Windows.Forms.CheckBox();
@@ -113,11 +117,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txbTagID = new System.Windows.Forms.TextBox();
+            this.txbTrgID = new System.Windows.Forms.TextBox();
+            this.txbTagName = new System.Windows.Forms.TextBox();
+            this.txbTrgName = new System.Windows.Forms.TextBox();
             this.btnNewTrigger = new System.Windows.Forms.Button();
+            this.cmsEditTemplate = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.lGCtsmiEditTempToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSaveTemp = new System.Windows.Forms.Button();
             this.btnCopyTrigger = new System.Windows.Forms.Button();
             this.btnDelTrigger = new System.Windows.Forms.Button();
@@ -128,24 +134,23 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiTrgLstID = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiTrgLstName = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiTrgLstIDName = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.ttTrg = new System.Windows.Forms.ToolTip(this.components);
-            this.cmsEditTemplate = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.lGCtsmiEditTempToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbcMain.SuspendLayout();
             this.tbpTriggers.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.gpbActions.SuspendLayout();
+            this.gpbActionParam.SuspendLayout();
+            this.gpbEvents.SuspendLayout();
             this.gpbEventParam.SuspendLayout();
             this.gpbTag.SuspendLayout();
             this.gpbRepeat.SuspendLayout();
-            this.cmsTriggerList.SuspendLayout();
             this.cmsEditTemplate.SuspendLayout();
+            this.cmsTriggerList.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -158,77 +163,91 @@
             this.tbcMain.Location = new System.Drawing.Point(12, 12);
             this.tbcMain.Name = "tbcMain";
             this.tbcMain.SelectedIndex = 0;
-            this.tbcMain.Size = new System.Drawing.Size(994, 513);
+            this.tbcMain.Size = new System.Drawing.Size(1198, 591);
             this.tbcMain.TabIndex = 0;
             // 
             // tbpTriggers
             // 
             this.tbpTriggers.BackColor = System.Drawing.Color.Transparent;
-            this.tbpTriggers.Controls.Add(this.groupBox2);
-            this.tbpTriggers.Controls.Add(this.groupBox1);
+            this.tbpTriggers.Controls.Add(this.gpbActions);
+            this.tbpTriggers.Controls.Add(this.gpbEvents);
             this.tbpTriggers.Controls.Add(this.gpbTag);
             this.tbpTriggers.Controls.Add(this.lbxTriggerList);
             this.tbpTriggers.Controls.Add(this.label1);
             this.tbpTriggers.Location = new System.Drawing.Point(4, 22);
             this.tbpTriggers.Name = "tbpTriggers";
             this.tbpTriggers.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpTriggers.Size = new System.Drawing.Size(986, 487);
+            this.tbpTriggers.Size = new System.Drawing.Size(1190, 565);
             this.tbpTriggers.TabIndex = 0;
             this.tbpTriggers.Text = "LGCtbpTrgPage";
             // 
-            // groupBox2
+            // gpbActions
             // 
-            this.groupBox2.Controls.Add(this.groupBox3);
-            this.groupBox2.Controls.Add(this.listBox2);
-            this.groupBox2.Controls.Add(this.richTextBox1);
-            this.groupBox2.Controls.Add(this.label12);
-            this.groupBox2.Controls.Add(this.comboBox1);
-            this.groupBox2.Controls.Add(this.button6);
-            this.groupBox2.Controls.Add(this.textBox6);
-            this.groupBox2.Controls.Add(this.button4);
-            this.groupBox2.Controls.Add(this.textBox5);
-            this.groupBox2.Controls.Add(this.button5);
-            this.groupBox2.Controls.Add(this.label21);
-            this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.Controls.Add(this.label20);
-            this.groupBox2.Controls.Add(this.label19);
-            this.groupBox2.Location = new System.Drawing.Point(587, 146);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(389, 328);
-            this.groupBox2.TabIndex = 5;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "LGCgpbTrgActions";
+            this.gpbActions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.gpbActions.Controls.Add(this.mtxbActionID);
+            this.gpbActions.Controls.Add(this.gpbActionParam);
+            this.gpbActions.Controls.Add(this.lbxActionList);
+            this.gpbActions.Controls.Add(this.rtxbActionDetail);
+            this.gpbActions.Controls.Add(this.label12);
+            this.gpbActions.Controls.Add(this.cbbActionAbst);
+            this.gpbActions.Controls.Add(this.btnCopyAction);
+            this.gpbActions.Controls.Add(this.txbActionAnno);
+            this.gpbActions.Controls.Add(this.btnNewAction);
+            this.gpbActions.Controls.Add(this.btnDeleteAction);
+            this.gpbActions.Controls.Add(this.label21);
+            this.gpbActions.Controls.Add(this.label17);
+            this.gpbActions.Controls.Add(this.label20);
+            this.gpbActions.Controls.Add(this.label19);
+            this.gpbActions.Location = new System.Drawing.Point(731, 200);
+            this.gpbActions.Name = "gpbActions";
+            this.gpbActions.Size = new System.Drawing.Size(453, 358);
+            this.gpbActions.TabIndex = 6;
+            this.gpbActions.TabStop = false;
+            this.gpbActions.Text = "LGCgpbTrgActions";
             // 
-            // groupBox3
+            // mtxbActionID
             // 
-            this.groupBox3.Controls.Add(this.lklAP4);
-            this.groupBox3.Controls.Add(this.textBox7);
-            this.groupBox3.Controls.Add(this.lklAP3);
-            this.groupBox3.Controls.Add(this.textBox8);
-            this.groupBox3.Controls.Add(this.lklAP2);
-            this.groupBox3.Controls.Add(this.textBox9);
-            this.groupBox3.Controls.Add(this.lklAP1);
-            this.groupBox3.Controls.Add(this.textBox10);
-            this.groupBox3.Controls.Add(this.checkBox1);
-            this.groupBox3.Controls.Add(this.checkBox2);
-            this.groupBox3.Controls.Add(this.checkBox3);
-            this.groupBox3.Controls.Add(this.checkBox4);
-            this.groupBox3.Controls.Add(this.comboBox2);
-            this.groupBox3.Controls.Add(this.comboBox3);
-            this.groupBox3.Controls.Add(this.comboBox4);
-            this.groupBox3.Controls.Add(this.comboBox5);
-            this.groupBox3.Controls.Add(this.label26);
-            this.groupBox3.Location = new System.Drawing.Point(152, 189);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(231, 133);
-            this.groupBox3.TabIndex = 11;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "LGCgpbActionParam";
+            this.mtxbActionID.Location = new System.Drawing.Point(152, 36);
+            this.mtxbActionID.Mask = "000";
+            this.mtxbActionID.Name = "mtxbActionID";
+            this.mtxbActionID.PromptChar = ' ';
+            this.mtxbActionID.Size = new System.Drawing.Size(32, 21);
+            this.mtxbActionID.TabIndex = 0;
+            this.mtxbActionID.ValidatingType = typeof(int);
+            this.mtxbActionID.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SelectTextboxContent_MouseClicked);
+            this.mtxbActionID.Validated += new System.EventHandler(this.mtxbActionID_Validated);
+            // 
+            // gpbActionParam
+            // 
+            this.gpbActionParam.Controls.Add(this.lklAP4);
+            this.gpbActionParam.Controls.Add(this.txbAP4);
+            this.gpbActionParam.Controls.Add(this.lklAP3);
+            this.gpbActionParam.Controls.Add(this.txbAP3);
+            this.gpbActionParam.Controls.Add(this.lklAP2);
+            this.gpbActionParam.Controls.Add(this.txbAP2);
+            this.gpbActionParam.Controls.Add(this.lklAP1);
+            this.gpbActionParam.Controls.Add(this.txbAP1);
+            this.gpbActionParam.Controls.Add(this.ckbAP4);
+            this.gpbActionParam.Controls.Add(this.ckbAP3);
+            this.gpbActionParam.Controls.Add(this.ckbAP2);
+            this.gpbActionParam.Controls.Add(this.ckbAP1);
+            this.gpbActionParam.Controls.Add(this.cbbAP4);
+            this.gpbActionParam.Controls.Add(this.cbbAP3);
+            this.gpbActionParam.Controls.Add(this.cbbAP2);
+            this.gpbActionParam.Controls.Add(this.cbbAP1);
+            this.gpbActionParam.Controls.Add(this.lblNoParamA);
+            this.gpbActionParam.Location = new System.Drawing.Point(152, 219);
+            this.gpbActionParam.Name = "gpbActionParam";
+            this.gpbActionParam.Size = new System.Drawing.Size(294, 133);
+            this.gpbActionParam.TabIndex = 1;
+            this.gpbActionParam.TabStop = false;
+            this.gpbActionParam.Text = "LGCgpbActionParam";
             // 
             // lklAP4
             // 
+            this.lklAP4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklAP4.AutoSize = true;
-            this.lklAP4.Location = new System.Drawing.Point(6, 100);
+            this.lklAP4.Location = new System.Drawing.Point(12, 100);
             this.lklAP4.Name = "lklAP4";
             this.lklAP4.Size = new System.Drawing.Size(23, 12);
             this.lklAP4.TabIndex = 9;
@@ -236,18 +255,20 @@
             this.lklAP4.Text = "AP4";
             this.lklAP4.Visible = false;
             // 
-            // textBox7
+            // txbAP4
             // 
-            this.textBox7.Location = new System.Drawing.Point(114, 97);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(89, 21);
-            this.textBox7.TabIndex = 8;
-            this.textBox7.Visible = false;
+            this.txbAP4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txbAP4.Location = new System.Drawing.Point(135, 97);
+            this.txbAP4.Name = "txbAP4";
+            this.txbAP4.Size = new System.Drawing.Size(153, 21);
+            this.txbAP4.TabIndex = 4;
+            this.txbAP4.Visible = false;
             // 
             // lklAP3
             // 
+            this.lklAP3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklAP3.AutoSize = true;
-            this.lklAP3.Location = new System.Drawing.Point(6, 74);
+            this.lklAP3.Location = new System.Drawing.Point(12, 74);
             this.lklAP3.Name = "lklAP3";
             this.lklAP3.Size = new System.Drawing.Size(23, 12);
             this.lklAP3.TabIndex = 9;
@@ -255,18 +276,20 @@
             this.lklAP3.Text = "AP3";
             this.lklAP3.Visible = false;
             // 
-            // textBox8
+            // txbAP3
             // 
-            this.textBox8.Location = new System.Drawing.Point(114, 71);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(89, 21);
-            this.textBox8.TabIndex = 8;
-            this.textBox8.Visible = false;
+            this.txbAP3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txbAP3.Location = new System.Drawing.Point(135, 70);
+            this.txbAP3.Name = "txbAP3";
+            this.txbAP3.Size = new System.Drawing.Size(153, 21);
+            this.txbAP3.TabIndex = 3;
+            this.txbAP3.Visible = false;
             // 
             // lklAP2
             // 
+            this.lklAP2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklAP2.AutoSize = true;
-            this.lklAP2.Location = new System.Drawing.Point(6, 48);
+            this.lklAP2.Location = new System.Drawing.Point(12, 48);
             this.lklAP2.Name = "lklAP2";
             this.lklAP2.Size = new System.Drawing.Size(23, 12);
             this.lklAP2.TabIndex = 9;
@@ -274,18 +297,20 @@
             this.lklAP2.Text = "AP2";
             this.lklAP2.Visible = false;
             // 
-            // textBox9
+            // txbAP2
             // 
-            this.textBox9.Location = new System.Drawing.Point(114, 45);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(89, 21);
-            this.textBox9.TabIndex = 8;
-            this.textBox9.Visible = false;
+            this.txbAP2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txbAP2.Location = new System.Drawing.Point(135, 45);
+            this.txbAP2.Name = "txbAP2";
+            this.txbAP2.Size = new System.Drawing.Size(153, 21);
+            this.txbAP2.TabIndex = 2;
+            this.txbAP2.Visible = false;
             // 
             // lklAP1
             // 
+            this.lklAP1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklAP1.AutoSize = true;
-            this.lklAP1.Location = new System.Drawing.Point(6, 22);
+            this.lklAP1.Location = new System.Drawing.Point(12, 22);
             this.lklAP1.Name = "lklAP1";
             this.lklAP1.Size = new System.Drawing.Size(23, 12);
             this.lklAP1.TabIndex = 9;
@@ -293,117 +318,128 @@
             this.lklAP1.Text = "AP1";
             this.lklAP1.Visible = false;
             // 
-            // textBox10
+            // txbAP1
             // 
-            this.textBox10.Location = new System.Drawing.Point(114, 19);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(89, 21);
-            this.textBox10.TabIndex = 8;
-            this.textBox10.Visible = false;
+            this.txbAP1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txbAP1.Location = new System.Drawing.Point(135, 19);
+            this.txbAP1.Name = "txbAP1";
+            this.txbAP1.Size = new System.Drawing.Size(153, 21);
+            this.txbAP1.TabIndex = 1;
+            this.txbAP1.Visible = false;
             // 
-            // checkBox1
+            // ckbAP4
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(93, 100);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(15, 14);
-            this.checkBox1.TabIndex = 3;
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.Visible = false;
+            this.ckbAP4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.ckbAP4.AutoSize = true;
+            this.ckbAP4.Location = new System.Drawing.Point(273, 100);
+            this.ckbAP4.Name = "ckbAP4";
+            this.ckbAP4.Size = new System.Drawing.Size(15, 14);
+            this.ckbAP4.TabIndex = 4;
+            this.ckbAP4.UseVisualStyleBackColor = true;
+            this.ckbAP4.Visible = false;
             // 
-            // checkBox2
+            // ckbAP3
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(93, 74);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(15, 14);
-            this.checkBox2.TabIndex = 3;
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.Visible = false;
+            this.ckbAP3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.ckbAP3.AutoSize = true;
+            this.ckbAP3.Location = new System.Drawing.Point(273, 74);
+            this.ckbAP3.Name = "ckbAP3";
+            this.ckbAP3.Size = new System.Drawing.Size(15, 14);
+            this.ckbAP3.TabIndex = 3;
+            this.ckbAP3.UseVisualStyleBackColor = true;
+            this.ckbAP3.Visible = false;
             // 
-            // checkBox3
+            // ckbAP2
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(93, 48);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(15, 14);
-            this.checkBox3.TabIndex = 3;
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.Visible = false;
+            this.ckbAP2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.ckbAP2.AutoSize = true;
+            this.ckbAP2.Location = new System.Drawing.Point(273, 48);
+            this.ckbAP2.Name = "ckbAP2";
+            this.ckbAP2.Size = new System.Drawing.Size(15, 14);
+            this.ckbAP2.TabIndex = 2;
+            this.ckbAP2.UseVisualStyleBackColor = true;
+            this.ckbAP2.Visible = false;
             // 
-            // checkBox4
+            // ckbAP1
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(93, 22);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(15, 14);
-            this.checkBox4.TabIndex = 3;
-            this.checkBox4.UseVisualStyleBackColor = true;
-            this.checkBox4.Visible = false;
+            this.ckbAP1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.ckbAP1.AutoSize = true;
+            this.ckbAP1.Location = new System.Drawing.Point(273, 22);
+            this.ckbAP1.Name = "ckbAP1";
+            this.ckbAP1.Size = new System.Drawing.Size(15, 14);
+            this.ckbAP1.TabIndex = 1;
+            this.ckbAP1.UseVisualStyleBackColor = true;
+            this.ckbAP1.Visible = false;
             // 
-            // comboBox2
+            // cbbAP4
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(114, 97);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(111, 20);
-            this.comboBox2.TabIndex = 2;
-            this.comboBox2.Visible = false;
+            this.cbbAP4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.cbbAP4.FormattingEnabled = true;
+            this.cbbAP4.Location = new System.Drawing.Point(135, 97);
+            this.cbbAP4.Name = "cbbAP4";
+            this.cbbAP4.Size = new System.Drawing.Size(153, 20);
+            this.cbbAP4.TabIndex = 4;
+            this.cbbAP4.Visible = false;
             // 
-            // comboBox3
+            // cbbAP3
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(114, 71);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(111, 20);
-            this.comboBox3.TabIndex = 2;
-            this.comboBox3.Visible = false;
+            this.cbbAP3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.cbbAP3.FormattingEnabled = true;
+            this.cbbAP3.Location = new System.Drawing.Point(135, 71);
+            this.cbbAP3.Name = "cbbAP3";
+            this.cbbAP3.Size = new System.Drawing.Size(153, 20);
+            this.cbbAP3.TabIndex = 3;
+            this.cbbAP3.Visible = false;
             // 
-            // comboBox4
+            // cbbAP2
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(114, 45);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(111, 20);
-            this.comboBox4.TabIndex = 2;
-            this.comboBox4.Visible = false;
+            this.cbbAP2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.cbbAP2.FormattingEnabled = true;
+            this.cbbAP2.Location = new System.Drawing.Point(135, 45);
+            this.cbbAP2.Name = "cbbAP2";
+            this.cbbAP2.Size = new System.Drawing.Size(153, 20);
+            this.cbbAP2.TabIndex = 2;
+            this.cbbAP2.Visible = false;
             // 
-            // comboBox5
+            // cbbAP1
             // 
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(114, 19);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(111, 20);
-            this.comboBox5.TabIndex = 2;
-            this.comboBox5.Visible = false;
+            this.cbbAP1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.cbbAP1.FormattingEnabled = true;
+            this.cbbAP1.Location = new System.Drawing.Point(135, 19);
+            this.cbbAP1.Name = "cbbAP1";
+            this.cbbAP1.Size = new System.Drawing.Size(153, 20);
+            this.cbbAP1.TabIndex = 1;
+            this.cbbAP1.Visible = false;
             // 
-            // label26
+            // lblNoParamA
             // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(142, 118);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(83, 12);
-            this.label26.TabIndex = 0;
-            this.label26.Text = "LGClblNoParam";
-            this.label26.Visible = false;
+            this.lblNoParamA.AutoSize = true;
+            this.lblNoParamA.Location = new System.Drawing.Point(71, 62);
+            this.lblNoParamA.Name = "lblNoParamA";
+            this.lblNoParamA.Size = new System.Drawing.Size(83, 12);
+            this.lblNoParamA.TabIndex = 0;
+            this.lblNoParamA.Text = "LGClblNoParam";
+            this.lblNoParamA.Visible = false;
             // 
-            // listBox2
+            // lbxActionList
             // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 12;
-            this.listBox2.Location = new System.Drawing.Point(8, 38);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(138, 196);
-            this.listBox2.TabIndex = 0;
+            this.lbxActionList.FormattingEnabled = true;
+            this.lbxActionList.ItemHeight = 12;
+            this.lbxActionList.Location = new System.Drawing.Point(8, 38);
+            this.lbxActionList.Name = "lbxActionList";
+            this.lbxActionList.Size = new System.Drawing.Size(138, 232);
+            this.lbxActionList.TabIndex = 9;
+            this.lbxActionList.SelectedValueChanged += new System.EventHandler(this.lbxActionList_SelectedValueChanged);
             // 
-            // richTextBox1
+            // rtxbActionDetail
             // 
-            this.richTextBox1.Enabled = false;
-            this.richTextBox1.Location = new System.Drawing.Point(152, 116);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(231, 67);
-            this.richTextBox1.TabIndex = 10;
-            this.richTextBox1.Text = "";
+            this.rtxbActionDetail.Font = new System.Drawing.Font("Verdana", 9F);
+            this.rtxbActionDetail.Location = new System.Drawing.Point(152, 116);
+            this.rtxbActionDetail.Name = "rtxbActionDetail";
+            this.rtxbActionDetail.ReadOnly = true;
+            this.rtxbActionDetail.Size = new System.Drawing.Size(294, 97);
+            this.rtxbActionDetail.TabIndex = 11;
+            this.rtxbActionDetail.Text = "";
             // 
             // label12
             // 
@@ -414,54 +450,50 @@
             this.label12.TabIndex = 7;
             this.label12.Text = "LGClblActionList";
             // 
-            // comboBox1
+            // cbbActionAbst
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(190, 38);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(193, 20);
-            this.comboBox1.TabIndex = 9;
+            this.cbbActionAbst.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbActionAbst.Font = new System.Drawing.Font("Verdana", 9F);
+            this.cbbActionAbst.FormattingEnabled = true;
+            this.cbbActionAbst.Location = new System.Drawing.Point(190, 36);
+            this.cbbActionAbst.Name = "cbbActionAbst";
+            this.cbbActionAbst.Size = new System.Drawing.Size(256, 22);
+            this.cbbActionAbst.TabIndex = 10;
+            this.cbbActionAbst.SelectedIndexChanged += new System.EventHandler(this.cbbActionAbst_SelectedIndexChanged);
             // 
-            // button6
+            // btnCopyAction
             // 
-            this.button6.Location = new System.Drawing.Point(8, 298);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(138, 23);
-            this.button6.TabIndex = 3;
-            this.button6.Text = "LGCbtnCopyAction";
-            this.button6.UseVisualStyleBackColor = true;
+            this.btnCopyAction.Location = new System.Drawing.Point(8, 329);
+            this.btnCopyAction.Name = "btnCopyAction";
+            this.btnCopyAction.Size = new System.Drawing.Size(138, 23);
+            this.btnCopyAction.TabIndex = 8;
+            this.btnCopyAction.Text = "LGCbtnCopyAction";
+            this.btnCopyAction.UseVisualStyleBackColor = true;
             // 
-            // textBox6
+            // txbActionAnno
             // 
-            this.textBox6.Location = new System.Drawing.Point(152, 77);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(231, 21);
-            this.textBox6.TabIndex = 8;
+            this.txbActionAnno.Location = new System.Drawing.Point(152, 77);
+            this.txbActionAnno.Name = "txbActionAnno";
+            this.txbActionAnno.Size = new System.Drawing.Size(295, 21);
+            this.txbActionAnno.TabIndex = 5;
             // 
-            // button4
+            // btnNewAction
             // 
-            this.button4.Location = new System.Drawing.Point(8, 240);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(138, 23);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "LGCbtnNewAction";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnNewAction.Location = new System.Drawing.Point(8, 271);
+            this.btnNewAction.Name = "btnNewAction";
+            this.btnNewAction.Size = new System.Drawing.Size(138, 23);
+            this.btnNewAction.TabIndex = 6;
+            this.btnNewAction.Text = "LGCbtnNewAction";
+            this.btnNewAction.UseVisualStyleBackColor = true;
             // 
-            // textBox5
+            // btnDeleteAction
             // 
-            this.textBox5.Location = new System.Drawing.Point(152, 38);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(32, 21);
-            this.textBox5.TabIndex = 8;
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(8, 269);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(138, 23);
-            this.button5.TabIndex = 3;
-            this.button5.Text = "LGCbtnDelAction";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnDeleteAction.Location = new System.Drawing.Point(8, 300);
+            this.btnDeleteAction.Name = "btnDeleteAction";
+            this.btnDeleteAction.Size = new System.Drawing.Size(138, 23);
+            this.btnDeleteAction.TabIndex = 7;
+            this.btnDeleteAction.Text = "LGCbtnDelAction";
+            this.btnDeleteAction.UseVisualStyleBackColor = true;
             // 
             // label21
             // 
@@ -499,28 +531,41 @@
             this.label19.TabIndex = 7;
             this.label19.Text = "LGClblActionAnno";
             // 
-            // groupBox1
+            // gpbEvents
             // 
-            this.groupBox1.Controls.Add(this.gpbEventParam);
-            this.groupBox1.Controls.Add(this.rtxbEventDetail);
-            this.groupBox1.Controls.Add(this.cbbEventAbst);
-            this.groupBox1.Controls.Add(this.txbEventAnno);
-            this.groupBox1.Controls.Add(this.txbEventID);
-            this.groupBox1.Controls.Add(this.lbxEventList);
-            this.groupBox1.Controls.Add(this.label14);
-            this.groupBox1.Controls.Add(this.label15);
-            this.groupBox1.Controls.Add(this.label18);
-            this.groupBox1.Controls.Add(this.label13);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.btnCopyEvent);
-            this.groupBox1.Controls.Add(this.btnDeleteEvent);
-            this.groupBox1.Controls.Add(this.btnNewEvent);
-            this.groupBox1.Location = new System.Drawing.Point(186, 146);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(389, 328);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "LGCgpbTrgEvents";
+            this.gpbEvents.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.gpbEvents.Controls.Add(this.mtxbEventID);
+            this.gpbEvents.Controls.Add(this.gpbEventParam);
+            this.gpbEvents.Controls.Add(this.cbbEventAbst);
+            this.gpbEvents.Controls.Add(this.txbEventAnno);
+            this.gpbEvents.Controls.Add(this.lbxEventList);
+            this.gpbEvents.Controls.Add(this.label14);
+            this.gpbEvents.Controls.Add(this.label15);
+            this.gpbEvents.Controls.Add(this.label18);
+            this.gpbEvents.Controls.Add(this.label13);
+            this.gpbEvents.Controls.Add(this.label11);
+            this.gpbEvents.Controls.Add(this.btnCopyEvent);
+            this.gpbEvents.Controls.Add(this.btnDeleteEvent);
+            this.gpbEvents.Controls.Add(this.btnNewEvent);
+            this.gpbEvents.Controls.Add(this.rtxbEventDetail);
+            this.gpbEvents.Location = new System.Drawing.Point(267, 200);
+            this.gpbEvents.Name = "gpbEvents";
+            this.gpbEvents.Size = new System.Drawing.Size(453, 358);
+            this.gpbEvents.TabIndex = 5;
+            this.gpbEvents.TabStop = false;
+            this.gpbEvents.Text = "LGCgpbTrgEvents";
+            // 
+            // mtxbEventID
+            // 
+            this.mtxbEventID.Location = new System.Drawing.Point(152, 36);
+            this.mtxbEventID.Mask = "00";
+            this.mtxbEventID.Name = "mtxbEventID";
+            this.mtxbEventID.PromptChar = ' ';
+            this.mtxbEventID.Size = new System.Drawing.Size(32, 21);
+            this.mtxbEventID.TabIndex = 0;
+            this.mtxbEventID.ValidatingType = typeof(int);
+            this.mtxbEventID.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SelectTextboxContent_MouseClicked);
+            this.mtxbEventID.Validated += new System.EventHandler(this.mtxbEventID_Validated);
             // 
             // gpbEventParam
             // 
@@ -530,8 +575,8 @@
             this.gpbEventParam.Controls.Add(this.lklEP1);
             this.gpbEventParam.Controls.Add(this.txbEP4);
             this.gpbEventParam.Controls.Add(this.txbEP3);
-            this.gpbEventParam.Controls.Add(this.txbEP2);
             this.gpbEventParam.Controls.Add(this.txbEP1);
+            this.gpbEventParam.Controls.Add(this.txbEP2);
             this.gpbEventParam.Controls.Add(this.ckbEP4);
             this.gpbEventParam.Controls.Add(this.ckbEP3);
             this.gpbEventParam.Controls.Add(this.ckbEP2);
@@ -540,18 +585,19 @@
             this.gpbEventParam.Controls.Add(this.cbbEP3);
             this.gpbEventParam.Controls.Add(this.cbbEP2);
             this.gpbEventParam.Controls.Add(this.cbbEP1);
-            this.gpbEventParam.Controls.Add(this.label16);
-            this.gpbEventParam.Location = new System.Drawing.Point(152, 189);
+            this.gpbEventParam.Controls.Add(this.lblNoParamE);
+            this.gpbEventParam.Location = new System.Drawing.Point(152, 219);
             this.gpbEventParam.Name = "gpbEventParam";
-            this.gpbEventParam.Size = new System.Drawing.Size(231, 133);
-            this.gpbEventParam.TabIndex = 11;
+            this.gpbEventParam.Size = new System.Drawing.Size(295, 133);
+            this.gpbEventParam.TabIndex = 1;
             this.gpbEventParam.TabStop = false;
             this.gpbEventParam.Text = "LGCgpbEventParam";
             // 
             // lklEP4
             // 
+            this.lklEP4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklEP4.AutoSize = true;
-            this.lklEP4.Location = new System.Drawing.Point(6, 100);
+            this.lklEP4.Location = new System.Drawing.Point(12, 100);
             this.lklEP4.Name = "lklEP4";
             this.lklEP4.Size = new System.Drawing.Size(23, 12);
             this.lklEP4.TabIndex = 9;
@@ -561,8 +607,9 @@
             // 
             // lklEP3
             // 
+            this.lklEP3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklEP3.AutoSize = true;
-            this.lklEP3.Location = new System.Drawing.Point(6, 74);
+            this.lklEP3.Location = new System.Drawing.Point(12, 74);
             this.lklEP3.Name = "lklEP3";
             this.lklEP3.Size = new System.Drawing.Size(23, 12);
             this.lklEP3.TabIndex = 9;
@@ -572,8 +619,9 @@
             // 
             // lklEP2
             // 
+            this.lklEP2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklEP2.AutoSize = true;
-            this.lklEP2.Location = new System.Drawing.Point(6, 48);
+            this.lklEP2.Location = new System.Drawing.Point(12, 48);
             this.lklEP2.Name = "lklEP2";
             this.lklEP2.Size = new System.Drawing.Size(23, 12);
             this.lklEP2.TabIndex = 9;
@@ -583,8 +631,9 @@
             // 
             // lklEP1
             // 
+            this.lklEP1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklEP1.AutoSize = true;
-            this.lklEP1.Location = new System.Drawing.Point(6, 22);
+            this.lklEP1.Location = new System.Drawing.Point(12, 22);
             this.lklEP1.Name = "lklEP1";
             this.lklEP1.Size = new System.Drawing.Size(23, 12);
             this.lklEP1.TabIndex = 9;
@@ -594,50 +643,56 @@
             // 
             // txbEP4
             // 
-            this.txbEP4.Location = new System.Drawing.Point(114, 97);
+            this.txbEP4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txbEP4.Location = new System.Drawing.Point(136, 97);
             this.txbEP4.Name = "txbEP4";
-            this.txbEP4.Size = new System.Drawing.Size(89, 21);
-            this.txbEP4.TabIndex = 8;
+            this.txbEP4.Size = new System.Drawing.Size(153, 21);
+            this.txbEP4.TabIndex = 4;
             this.txbEP4.Visible = false;
             // 
             // txbEP3
             // 
-            this.txbEP3.Location = new System.Drawing.Point(114, 71);
+            this.txbEP3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txbEP3.Location = new System.Drawing.Point(136, 70);
             this.txbEP3.Name = "txbEP3";
-            this.txbEP3.Size = new System.Drawing.Size(89, 21);
-            this.txbEP3.TabIndex = 8;
+            this.txbEP3.Size = new System.Drawing.Size(153, 21);
+            this.txbEP3.TabIndex = 3;
             this.txbEP3.Visible = false;
-            // 
-            // txbEP2
-            // 
-            this.txbEP2.Location = new System.Drawing.Point(114, 45);
-            this.txbEP2.Name = "txbEP2";
-            this.txbEP2.Size = new System.Drawing.Size(89, 21);
-            this.txbEP2.TabIndex = 8;
-            this.txbEP2.Visible = false;
             // 
             // txbEP1
             // 
-            this.txbEP1.Location = new System.Drawing.Point(114, 19);
+            this.txbEP1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txbEP1.Location = new System.Drawing.Point(136, 19);
             this.txbEP1.Name = "txbEP1";
-            this.txbEP1.Size = new System.Drawing.Size(89, 21);
-            this.txbEP1.TabIndex = 8;
+            this.txbEP1.Size = new System.Drawing.Size(153, 21);
+            this.txbEP1.TabIndex = 1;
             this.txbEP1.Visible = false;
+            // 
+            // txbEP2
+            // 
+            this.txbEP2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txbEP2.Location = new System.Drawing.Point(136, 45);
+            this.txbEP2.Name = "txbEP2";
+            this.txbEP2.Size = new System.Drawing.Size(153, 21);
+            this.txbEP2.TabIndex = 2;
+            this.txbEP2.Visible = false;
             // 
             // ckbEP4
             // 
+            this.ckbEP4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.ckbEP4.AutoSize = true;
-            this.ckbEP4.Location = new System.Drawing.Point(93, 100);
+            this.ckbEP4.Location = new System.Drawing.Point(274, 100);
             this.ckbEP4.Name = "ckbEP4";
             this.ckbEP4.Size = new System.Drawing.Size(15, 14);
-            this.ckbEP4.TabIndex = 3;
+            this.ckbEP4.TabIndex = 4;
             this.ckbEP4.UseVisualStyleBackColor = true;
             this.ckbEP4.Visible = false;
             // 
             // ckbEP3
             // 
+            this.ckbEP3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.ckbEP3.AutoSize = true;
-            this.ckbEP3.Location = new System.Drawing.Point(93, 74);
+            this.ckbEP3.Location = new System.Drawing.Point(274, 74);
             this.ckbEP3.Name = "ckbEP3";
             this.ckbEP3.Size = new System.Drawing.Size(15, 14);
             this.ckbEP3.TabIndex = 3;
@@ -646,100 +701,93 @@
             // 
             // ckbEP2
             // 
+            this.ckbEP2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.ckbEP2.AutoSize = true;
-            this.ckbEP2.Location = new System.Drawing.Point(93, 48);
+            this.ckbEP2.Location = new System.Drawing.Point(274, 48);
             this.ckbEP2.Name = "ckbEP2";
             this.ckbEP2.Size = new System.Drawing.Size(15, 14);
-            this.ckbEP2.TabIndex = 3;
+            this.ckbEP2.TabIndex = 2;
             this.ckbEP2.UseVisualStyleBackColor = true;
             this.ckbEP2.Visible = false;
             // 
             // ckbEP1
             // 
+            this.ckbEP1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.ckbEP1.AutoSize = true;
-            this.ckbEP1.Location = new System.Drawing.Point(93, 22);
+            this.ckbEP1.Location = new System.Drawing.Point(274, 22);
             this.ckbEP1.Name = "ckbEP1";
             this.ckbEP1.Size = new System.Drawing.Size(15, 14);
-            this.ckbEP1.TabIndex = 3;
+            this.ckbEP1.TabIndex = 1;
             this.ckbEP1.UseVisualStyleBackColor = true;
             this.ckbEP1.Visible = false;
             // 
             // cbbEP4
             // 
+            this.cbbEP4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cbbEP4.FormattingEnabled = true;
-            this.cbbEP4.Location = new System.Drawing.Point(114, 97);
+            this.cbbEP4.Location = new System.Drawing.Point(136, 97);
             this.cbbEP4.Name = "cbbEP4";
-            this.cbbEP4.Size = new System.Drawing.Size(111, 20);
-            this.cbbEP4.TabIndex = 2;
+            this.cbbEP4.Size = new System.Drawing.Size(153, 20);
+            this.cbbEP4.TabIndex = 4;
             this.cbbEP4.Visible = false;
             // 
             // cbbEP3
             // 
+            this.cbbEP3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cbbEP3.FormattingEnabled = true;
-            this.cbbEP3.Location = new System.Drawing.Point(114, 71);
+            this.cbbEP3.Location = new System.Drawing.Point(136, 71);
             this.cbbEP3.Name = "cbbEP3";
-            this.cbbEP3.Size = new System.Drawing.Size(111, 20);
-            this.cbbEP3.TabIndex = 2;
+            this.cbbEP3.Size = new System.Drawing.Size(153, 20);
+            this.cbbEP3.TabIndex = 3;
             this.cbbEP3.Visible = false;
             // 
             // cbbEP2
             // 
+            this.cbbEP2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cbbEP2.FormattingEnabled = true;
-            this.cbbEP2.Location = new System.Drawing.Point(114, 45);
+            this.cbbEP2.Location = new System.Drawing.Point(136, 45);
             this.cbbEP2.Name = "cbbEP2";
-            this.cbbEP2.Size = new System.Drawing.Size(111, 20);
+            this.cbbEP2.Size = new System.Drawing.Size(153, 20);
             this.cbbEP2.TabIndex = 2;
             this.cbbEP2.Visible = false;
             // 
             // cbbEP1
             // 
+            this.cbbEP1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cbbEP1.FormattingEnabled = true;
-            this.cbbEP1.Location = new System.Drawing.Point(114, 19);
+            this.cbbEP1.Location = new System.Drawing.Point(136, 19);
             this.cbbEP1.Name = "cbbEP1";
-            this.cbbEP1.Size = new System.Drawing.Size(111, 20);
-            this.cbbEP1.TabIndex = 2;
+            this.cbbEP1.Size = new System.Drawing.Size(153, 20);
+            this.cbbEP1.TabIndex = 1;
             this.cbbEP1.Visible = false;
             // 
-            // label16
+            // lblNoParamE
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(142, 118);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(83, 12);
-            this.label16.TabIndex = 0;
-            this.label16.Text = "LGClblNoParam";
-            this.label16.Visible = false;
-            // 
-            // rtxbEventDetail
-            // 
-            this.rtxbEventDetail.Enabled = false;
-            this.rtxbEventDetail.Location = new System.Drawing.Point(152, 116);
-            this.rtxbEventDetail.Name = "rtxbEventDetail";
-            this.rtxbEventDetail.Size = new System.Drawing.Size(231, 67);
-            this.rtxbEventDetail.TabIndex = 10;
-            this.rtxbEventDetail.Text = "";
+            this.lblNoParamE.AutoSize = true;
+            this.lblNoParamE.Location = new System.Drawing.Point(71, 62);
+            this.lblNoParamE.Name = "lblNoParamE";
+            this.lblNoParamE.Size = new System.Drawing.Size(83, 12);
+            this.lblNoParamE.TabIndex = 0;
+            this.lblNoParamE.Text = "LGClblNoParam";
+            this.lblNoParamE.Visible = false;
             // 
             // cbbEventAbst
             // 
+            this.cbbEventAbst.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbEventAbst.Font = new System.Drawing.Font("Verdana", 9F);
             this.cbbEventAbst.FormattingEnabled = true;
-            this.cbbEventAbst.Location = new System.Drawing.Point(190, 38);
+            this.cbbEventAbst.Location = new System.Drawing.Point(190, 36);
             this.cbbEventAbst.Name = "cbbEventAbst";
-            this.cbbEventAbst.Size = new System.Drawing.Size(193, 20);
-            this.cbbEventAbst.TabIndex = 9;
+            this.cbbEventAbst.Size = new System.Drawing.Size(257, 22);
+            this.cbbEventAbst.TabIndex = 10;
+            this.cbbEventAbst.SelectedIndexChanged += new System.EventHandler(this.cbbEventAbst_SelectedIndexChanged);
             // 
             // txbEventAnno
             // 
             this.txbEventAnno.Location = new System.Drawing.Point(152, 77);
             this.txbEventAnno.Name = "txbEventAnno";
-            this.txbEventAnno.Size = new System.Drawing.Size(231, 21);
-            this.txbEventAnno.TabIndex = 8;
-            // 
-            // txbEventID
-            // 
-            this.txbEventID.Location = new System.Drawing.Point(152, 38);
-            this.txbEventID.Name = "txbEventID";
-            this.txbEventID.Size = new System.Drawing.Size(32, 21);
-            this.txbEventID.TabIndex = 8;
+            this.txbEventAnno.Size = new System.Drawing.Size(295, 21);
+            this.txbEventAnno.TabIndex = 5;
             // 
             // lbxEventList
             // 
@@ -747,8 +795,9 @@
             this.lbxEventList.ItemHeight = 12;
             this.lbxEventList.Location = new System.Drawing.Point(8, 38);
             this.lbxEventList.Name = "lbxEventList";
-            this.lbxEventList.Size = new System.Drawing.Size(138, 196);
-            this.lbxEventList.TabIndex = 0;
+            this.lbxEventList.Size = new System.Drawing.Size(138, 232);
+            this.lbxEventList.TabIndex = 9;
+            this.lbxEventList.SelectedValueChanged += new System.EventHandler(this.lbxEventList_SelectedValueChanged);
             // 
             // label14
             // 
@@ -797,33 +846,47 @@
             // 
             // btnCopyEvent
             // 
-            this.btnCopyEvent.Location = new System.Drawing.Point(8, 298);
+            this.btnCopyEvent.Location = new System.Drawing.Point(8, 329);
             this.btnCopyEvent.Name = "btnCopyEvent";
             this.btnCopyEvent.Size = new System.Drawing.Size(138, 23);
-            this.btnCopyEvent.TabIndex = 3;
+            this.btnCopyEvent.TabIndex = 8;
             this.btnCopyEvent.Text = "LGCbtnCopyEvent";
             this.btnCopyEvent.UseVisualStyleBackColor = true;
             // 
             // btnDeleteEvent
             // 
-            this.btnDeleteEvent.Location = new System.Drawing.Point(8, 269);
+            this.btnDeleteEvent.Location = new System.Drawing.Point(8, 300);
             this.btnDeleteEvent.Name = "btnDeleteEvent";
             this.btnDeleteEvent.Size = new System.Drawing.Size(138, 23);
-            this.btnDeleteEvent.TabIndex = 3;
+            this.btnDeleteEvent.TabIndex = 7;
             this.btnDeleteEvent.Text = "LGCbtnDelEvent";
             this.btnDeleteEvent.UseVisualStyleBackColor = true;
             // 
             // btnNewEvent
             // 
-            this.btnNewEvent.Location = new System.Drawing.Point(8, 240);
+            this.btnNewEvent.Location = new System.Drawing.Point(8, 271);
             this.btnNewEvent.Name = "btnNewEvent";
             this.btnNewEvent.Size = new System.Drawing.Size(138, 23);
-            this.btnNewEvent.TabIndex = 3;
+            this.btnNewEvent.TabIndex = 6;
             this.btnNewEvent.Text = "LGCbtnNewEvent";
             this.btnNewEvent.UseVisualStyleBackColor = true;
             // 
+            // rtxbEventDetail
+            // 
+            this.rtxbEventDetail.Font = new System.Drawing.Font("Verdana", 9F);
+            this.rtxbEventDetail.Location = new System.Drawing.Point(152, 116);
+            this.rtxbEventDetail.Name = "rtxbEventDetail";
+            this.rtxbEventDetail.ReadOnly = true;
+            this.rtxbEventDetail.Size = new System.Drawing.Size(295, 97);
+            this.rtxbEventDetail.TabIndex = 11;
+            this.rtxbEventDetail.Text = "";
+            // 
             // gpbTag
             // 
+            this.gpbTag.Controls.Add(this.lklTraceTrigger);
+            this.gpbTag.Controls.Add(this.ckbHard);
+            this.gpbTag.Controls.Add(this.ckbNormal);
+            this.gpbTag.Controls.Add(this.ckbEasy);
             this.gpbTag.Controls.Add(this.cbbCustomGroup);
             this.gpbTag.Controls.Add(this.cbbAttatchedTrg);
             this.gpbTag.Controls.Add(this.ckbDisabled);
@@ -838,41 +901,87 @@
             this.gpbTag.Controls.Add(this.label3);
             this.gpbTag.Controls.Add(this.label5);
             this.gpbTag.Controls.Add(this.label2);
-            this.gpbTag.Controls.Add(this.textBox3);
-            this.gpbTag.Controls.Add(this.textBox2);
-            this.gpbTag.Controls.Add(this.textBox4);
-            this.gpbTag.Controls.Add(this.textBox1);
+            this.gpbTag.Controls.Add(this.txbTagID);
+            this.gpbTag.Controls.Add(this.txbTrgID);
+            this.gpbTag.Controls.Add(this.txbTagName);
+            this.gpbTag.Controls.Add(this.txbTrgName);
             this.gpbTag.Controls.Add(this.btnNewTrigger);
             this.gpbTag.Controls.Add(this.btnSaveTemp);
             this.gpbTag.Controls.Add(this.btnCopyTrigger);
             this.gpbTag.Controls.Add(this.btnDelTrigger);
-            this.gpbTag.Location = new System.Drawing.Point(186, 11);
+            this.gpbTag.Location = new System.Drawing.Point(267, 11);
             this.gpbTag.Name = "gpbTag";
-            this.gpbTag.Size = new System.Drawing.Size(790, 129);
+            this.gpbTag.Size = new System.Drawing.Size(917, 183);
             this.gpbTag.TabIndex = 4;
             this.gpbTag.TabStop = false;
             this.gpbTag.Text = "LGCgpbTrgTag";
             // 
+            // lklTraceTrigger
+            // 
+            this.lklTraceTrigger.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lklTraceTrigger.AutoSize = true;
+            this.lklTraceTrigger.Location = new System.Drawing.Point(840, 20);
+            this.lklTraceTrigger.Name = "lklTraceTrigger";
+            this.lklTraceTrigger.Size = new System.Drawing.Size(71, 12);
+            this.lklTraceTrigger.TabIndex = 16;
+            this.lklTraceTrigger.TabStop = true;
+            this.lklTraceTrigger.Text = "LGClklTrace";
+            this.lklTraceTrigger.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lklTraceTrigger.Visible = false;
+            this.lklTraceTrigger.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklTraceTrigger_LinkClicked);
+            // 
+            // ckbHard
+            // 
+            this.ckbHard.AutoSize = true;
+            this.ckbHard.Location = new System.Drawing.Point(153, 155);
+            this.ckbHard.Name = "ckbHard";
+            this.ckbHard.Size = new System.Drawing.Size(84, 16);
+            this.ckbHard.TabIndex = 15;
+            this.ckbHard.Text = "LGCckbHard";
+            this.ckbHard.UseVisualStyleBackColor = true;
+            // 
+            // ckbNormal
+            // 
+            this.ckbNormal.AutoSize = true;
+            this.ckbNormal.Location = new System.Drawing.Point(83, 155);
+            this.ckbNormal.Name = "ckbNormal";
+            this.ckbNormal.Size = new System.Drawing.Size(96, 16);
+            this.ckbNormal.TabIndex = 15;
+            this.ckbNormal.Text = "LGCckbNormal";
+            this.ckbNormal.UseVisualStyleBackColor = true;
+            // 
+            // ckbEasy
+            // 
+            this.ckbEasy.AutoSize = true;
+            this.ckbEasy.Location = new System.Drawing.Point(13, 155);
+            this.ckbEasy.Name = "ckbEasy";
+            this.ckbEasy.Size = new System.Drawing.Size(84, 16);
+            this.ckbEasy.TabIndex = 15;
+            this.ckbEasy.Text = "LGCckbEasy";
+            this.ckbEasy.UseVisualStyleBackColor = true;
+            // 
             // cbbCustomGroup
             // 
+            this.cbbCustomGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbbCustomGroup.FormattingEnabled = true;
-            this.cbbCustomGroup.Location = new System.Drawing.Point(563, 102);
+            this.cbbCustomGroup.Location = new System.Drawing.Point(654, 84);
             this.cbbCustomGroup.Name = "cbbCustomGroup";
-            this.cbbCustomGroup.Size = new System.Drawing.Size(105, 20);
+            this.cbbCustomGroup.Size = new System.Drawing.Size(256, 20);
             this.cbbCustomGroup.TabIndex = 14;
             // 
             // cbbAttatchedTrg
             // 
+            this.cbbAttatchedTrg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbbAttatchedTrg.FormattingEnabled = true;
-            this.cbbAttatchedTrg.Location = new System.Drawing.Point(563, 43);
+            this.cbbAttatchedTrg.Location = new System.Drawing.Point(654, 35);
             this.cbbAttatchedTrg.Name = "cbbAttatchedTrg";
-            this.cbbAttatchedTrg.Size = new System.Drawing.Size(221, 20);
+            this.cbbAttatchedTrg.Size = new System.Drawing.Size(257, 20);
             this.cbbAttatchedTrg.TabIndex = 13;
             // 
             // ckbDisabled
             // 
             this.ckbDisabled.AutoSize = true;
-            this.ckbDisabled.Location = new System.Drawing.Point(339, 105);
+            this.ckbDisabled.Location = new System.Drawing.Point(288, 155);
             this.ckbDisabled.Name = "ckbDisabled";
             this.ckbDisabled.Size = new System.Drawing.Size(108, 16);
             this.ckbDisabled.TabIndex = 12;
@@ -883,15 +992,15 @@
             // 
             this.lbxTriggerHouses.FormattingEnabled = true;
             this.lbxTriggerHouses.ItemHeight = 12;
-            this.lbxTriggerHouses.Location = new System.Drawing.Point(441, 35);
+            this.lbxTriggerHouses.Location = new System.Drawing.Point(492, 35);
             this.lbxTriggerHouses.Name = "lbxTriggerHouses";
-            this.lbxTriggerHouses.Size = new System.Drawing.Size(108, 88);
+            this.lbxTriggerHouses.Size = new System.Drawing.Size(156, 136);
             this.lbxTriggerHouses.TabIndex = 11;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(561, 79);
+            this.label10.Location = new System.Drawing.Point(652, 72);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(107, 12);
             this.label10.TabIndex = 10;
@@ -900,7 +1009,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(561, 20);
+            this.label9.Location = new System.Drawing.Point(652, 20);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(77, 12);
             this.label9.TabIndex = 10;
@@ -909,7 +1018,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(439, 20);
+            this.label8.Location = new System.Drawing.Point(490, 20);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(95, 12);
             this.label8.TabIndex = 10;
@@ -920,9 +1029,9 @@
             this.gpbRepeat.Controls.Add(this.rdbRepeat2);
             this.gpbRepeat.Controls.Add(this.rdbRepeat1);
             this.gpbRepeat.Controls.Add(this.rdbRepeat0);
-            this.gpbRepeat.Location = new System.Drawing.Point(331, 20);
+            this.gpbRepeat.Location = new System.Drawing.Point(371, 20);
             this.gpbRepeat.Name = "gpbRepeat";
-            this.gpbRepeat.Size = new System.Drawing.Size(100, 79);
+            this.gpbRepeat.Size = new System.Drawing.Size(115, 151);
             this.gpbRepeat.TabIndex = 9;
             this.gpbRepeat.TabStop = false;
             this.gpbRepeat.Text = "LGCgpbRepeat";
@@ -931,7 +1040,7 @@
             // rdbRepeat2
             // 
             this.rdbRepeat2.AutoSize = true;
-            this.rdbRepeat2.Location = new System.Drawing.Point(8, 59);
+            this.rdbRepeat2.Location = new System.Drawing.Point(8, 112);
             this.rdbRepeat2.Name = "rdbRepeat2";
             this.rdbRepeat2.Size = new System.Drawing.Size(83, 16);
             this.rdbRepeat2.TabIndex = 0;
@@ -942,7 +1051,7 @@
             // rdbRepeat1
             // 
             this.rdbRepeat1.AutoSize = true;
-            this.rdbRepeat1.Location = new System.Drawing.Point(8, 37);
+            this.rdbRepeat1.Location = new System.Drawing.Point(8, 71);
             this.rdbRepeat1.Name = "rdbRepeat1";
             this.rdbRepeat1.Size = new System.Drawing.Size(83, 16);
             this.rdbRepeat1.TabIndex = 0;
@@ -954,7 +1063,7 @@
             // 
             this.rdbRepeat0.AutoSize = true;
             this.rdbRepeat0.Checked = true;
-            this.rdbRepeat0.Location = new System.Drawing.Point(8, 15);
+            this.rdbRepeat0.Location = new System.Drawing.Point(8, 30);
             this.rdbRepeat0.Name = "rdbRepeat0";
             this.rdbRepeat0.Size = new System.Drawing.Size(83, 16);
             this.rdbRepeat0.TabIndex = 0;
@@ -966,7 +1075,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(105, 105);
+            this.label6.Location = new System.Drawing.Point(77, 124);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(11, 12);
             this.label6.TabIndex = 8;
@@ -975,7 +1084,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(105, 64);
+            this.label4.Location = new System.Drawing.Point(77, 75);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(11, 12);
             this.label4.TabIndex = 8;
@@ -984,16 +1093,17 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(120, 85);
+            this.label7.Location = new System.Drawing.Point(92, 104);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(83, 12);
             this.label7.TabIndex = 7;
             this.label7.Text = "LGClblTagName";
+            this.ttTrg.SetToolTip(this.label7, "LGCDescTagName");
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(120, 46);
+            this.label3.Location = new System.Drawing.Point(92, 54);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(83, 12);
             this.label3.TabIndex = 7;
@@ -1002,7 +1112,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 85);
+            this.label5.Location = new System.Drawing.Point(13, 104);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 12);
             this.label5.TabIndex = 7;
@@ -1011,55 +1121,70 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 46);
+            this.label2.Location = new System.Drawing.Point(13, 54);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(71, 12);
             this.label2.TabIndex = 7;
             this.label2.Text = "LGClblTrgID";
             // 
-            // textBox3
+            // txbTagID
             // 
-            this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(13, 102);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(86, 21);
-            this.textBox3.TabIndex = 6;
+            this.txbTagID.Location = new System.Drawing.Point(13, 121);
+            this.txbTagID.Name = "txbTagID";
+            this.txbTagID.ReadOnly = true;
+            this.txbTagID.Size = new System.Drawing.Size(58, 21);
+            this.txbTagID.TabIndex = 6;
             // 
-            // textBox2
+            // txbTrgID
             // 
-            this.textBox2.Location = new System.Drawing.Point(13, 61);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(86, 21);
-            this.textBox2.TabIndex = 6;
+            this.txbTrgID.Location = new System.Drawing.Point(13, 69);
+            this.txbTrgID.Name = "txbTrgID";
+            this.txbTrgID.ReadOnly = true;
+            this.txbTrgID.Size = new System.Drawing.Size(58, 21);
+            this.txbTrgID.TabIndex = 6;
             // 
-            // textBox4
+            // txbTagName
             // 
-            this.textBox4.Enabled = false;
-            this.textBox4.Location = new System.Drawing.Point(122, 102);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(203, 21);
-            this.textBox4.TabIndex = 5;
+            this.txbTagName.Location = new System.Drawing.Point(94, 121);
+            this.txbTagName.Name = "txbTagName";
+            this.txbTagName.ReadOnly = true;
+            this.txbTagName.Size = new System.Drawing.Size(271, 21);
+            this.txbTagName.TabIndex = 5;
             // 
-            // textBox1
+            // txbTrgName
             // 
-            this.textBox1.Location = new System.Drawing.Point(122, 61);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(203, 21);
-            this.textBox1.TabIndex = 5;
+            this.txbTrgName.Location = new System.Drawing.Point(94, 69);
+            this.txbTrgName.Name = "txbTrgName";
+            this.txbTrgName.Size = new System.Drawing.Size(271, 21);
+            this.txbTrgName.TabIndex = 5;
             // 
             // btnNewTrigger
             // 
             this.btnNewTrigger.ContextMenuStrip = this.cmsEditTemplate;
             this.btnNewTrigger.Location = new System.Drawing.Point(13, 20);
             this.btnNewTrigger.Name = "btnNewTrigger";
-            this.btnNewTrigger.Size = new System.Drawing.Size(100, 23);
+            this.btnNewTrigger.Size = new System.Drawing.Size(107, 23);
             this.btnNewTrigger.TabIndex = 3;
             this.btnNewTrigger.Text = "LGCbtnNewTrg";
             this.btnNewTrigger.UseVisualStyleBackColor = true;
             // 
+            // cmsEditTemplate
+            // 
+            this.cmsEditTemplate.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lGCtsmiEditTempToolStripMenuItem});
+            this.cmsEditTemplate.Name = "cmsEditTemplate";
+            this.cmsEditTemplate.Size = new System.Drawing.Size(179, 26);
+            // 
+            // lGCtsmiEditTempToolStripMenuItem
+            // 
+            this.lGCtsmiEditTempToolStripMenuItem.Name = "lGCtsmiEditTempToolStripMenuItem";
+            this.lGCtsmiEditTempToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.lGCtsmiEditTempToolStripMenuItem.Text = "LGCtsmiEditTemp";
+            // 
             // btnSaveTemp
             // 
-            this.btnSaveTemp.Location = new System.Drawing.Point(684, 98);
+            this.btnSaveTemp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveTemp.Location = new System.Drawing.Point(654, 132);
             this.btnSaveTemp.Name = "btnSaveTemp";
             this.btnSaveTemp.Size = new System.Drawing.Size(100, 23);
             this.btnSaveTemp.TabIndex = 3;
@@ -1069,18 +1194,18 @@
             // 
             // btnCopyTrigger
             // 
-            this.btnCopyTrigger.Location = new System.Drawing.Point(225, 20);
+            this.btnCopyTrigger.Location = new System.Drawing.Point(258, 20);
             this.btnCopyTrigger.Name = "btnCopyTrigger";
-            this.btnCopyTrigger.Size = new System.Drawing.Size(100, 23);
+            this.btnCopyTrigger.Size = new System.Drawing.Size(107, 23);
             this.btnCopyTrigger.TabIndex = 3;
             this.btnCopyTrigger.Text = "LGCbtnCopyTrg";
             this.btnCopyTrigger.UseVisualStyleBackColor = true;
             // 
             // btnDelTrigger
             // 
-            this.btnDelTrigger.Location = new System.Drawing.Point(119, 20);
+            this.btnDelTrigger.Location = new System.Drawing.Point(138, 20);
             this.btnDelTrigger.Name = "btnDelTrigger";
-            this.btnDelTrigger.Size = new System.Drawing.Size(100, 23);
+            this.btnDelTrigger.Size = new System.Drawing.Size(107, 23);
             this.btnDelTrigger.TabIndex = 3;
             this.btnDelTrigger.Text = "LGCbtnDelTrg";
             this.btnDelTrigger.UseVisualStyleBackColor = true;
@@ -1088,12 +1213,15 @@
             // lbxTriggerList
             // 
             this.lbxTriggerList.ContextMenuStrip = this.cmsTriggerList;
+            this.lbxTriggerList.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxTriggerList.FormattingEnabled = true;
-            this.lbxTriggerList.ItemHeight = 12;
+            this.lbxTriggerList.HorizontalScrollbar = true;
+            this.lbxTriggerList.ItemHeight = 14;
             this.lbxTriggerList.Location = new System.Drawing.Point(8, 26);
             this.lbxTriggerList.Name = "lbxTriggerList";
-            this.lbxTriggerList.Size = new System.Drawing.Size(172, 448);
+            this.lbxTriggerList.Size = new System.Drawing.Size(253, 522);
             this.lbxTriggerList.TabIndex = 2;
+            this.lbxTriggerList.SelectedValueChanged += new System.EventHandler(this.lbxTriggerList_SelectedValueChanged);
             // 
             // cmsTriggerList
             // 
@@ -1102,38 +1230,50 @@
             this.tsmiTrgLstDecending,
             this.toolStripSeparator1,
             this.tsmiTrgLstID,
-            this.tsmiTrgLstName});
+            this.tsmiTrgLstName,
+            this.tsmiTrgLstIDName});
             this.cmsTriggerList.Name = "cmsTriggerList";
-            this.cmsTriggerList.Size = new System.Drawing.Size(190, 98);
+            this.cmsTriggerList.Size = new System.Drawing.Size(225, 120);
             // 
             // tsmiTrgLstAscending
             // 
             this.tsmiTrgLstAscending.Name = "tsmiTrgLstAscending";
-            this.tsmiTrgLstAscending.Size = new System.Drawing.Size(189, 22);
+            this.tsmiTrgLstAscending.Size = new System.Drawing.Size(224, 22);
             this.tsmiTrgLstAscending.Text = "LGCtsmiAscend";
+            this.tsmiTrgLstAscending.Click += new System.EventHandler(this.tsmiTrgLstAscending_Click);
             // 
             // tsmiTrgLstDecending
             // 
             this.tsmiTrgLstDecending.Name = "tsmiTrgLstDecending";
-            this.tsmiTrgLstDecending.Size = new System.Drawing.Size(189, 22);
+            this.tsmiTrgLstDecending.Size = new System.Drawing.Size(224, 22);
             this.tsmiTrgLstDecending.Text = "LGCtsmiDecend";
+            this.tsmiTrgLstDecending.Click += new System.EventHandler(this.tsmiTrgLstDecending_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(186, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
             // 
             // tsmiTrgLstID
             // 
             this.tsmiTrgLstID.Name = "tsmiTrgLstID";
-            this.tsmiTrgLstID.Size = new System.Drawing.Size(189, 22);
+            this.tsmiTrgLstID.Size = new System.Drawing.Size(224, 22);
             this.tsmiTrgLstID.Text = "LGCtsmiShowID";
+            this.tsmiTrgLstID.Click += new System.EventHandler(this.tsmiTrgLstID_Click);
             // 
             // tsmiTrgLstName
             // 
             this.tsmiTrgLstName.Name = "tsmiTrgLstName";
-            this.tsmiTrgLstName.Size = new System.Drawing.Size(189, 22);
+            this.tsmiTrgLstName.Size = new System.Drawing.Size(224, 22);
             this.tsmiTrgLstName.Text = "LGCtsmiShowName";
+            this.tsmiTrgLstName.Click += new System.EventHandler(this.tsmiTrgLstName_Click);
+            // 
+            // tsmiTrgLstIDName
+            // 
+            this.tsmiTrgLstIDName.Name = "tsmiTrgLstIDName";
+            this.tsmiTrgLstIDName.Size = new System.Drawing.Size(224, 22);
+            this.tsmiTrgLstIDName.Text = "LGCtsmiShowIDandName";
+            this.tsmiTrgLstIDName.Click += new System.EventHandler(this.tsmiTrgLstIDName_Click);
             // 
             // label1
             // 
@@ -1150,7 +1290,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(986, 487);
+            this.tabPage2.Size = new System.Drawing.Size(1190, 565);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             // 
@@ -1160,7 +1300,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(986, 487);
+            this.tabPage3.Size = new System.Drawing.Size(1190, 565);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             // 
@@ -1170,7 +1310,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(986, 487);
+            this.tabPage4.Size = new System.Drawing.Size(1190, 565);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "tabPage4";
             // 
@@ -1180,28 +1320,15 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(986, 487);
+            this.tabPage5.Size = new System.Drawing.Size(1190, 565);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "tabPage5";
-            // 
-            // cmsEditTemplate
-            // 
-            this.cmsEditTemplate.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lGCtsmiEditTempToolStripMenuItem});
-            this.cmsEditTemplate.Name = "cmsEditTemplate";
-            this.cmsEditTemplate.Size = new System.Drawing.Size(179, 26);
-            // 
-            // lGCtsmiEditTempToolStripMenuItem
-            // 
-            this.lGCtsmiEditTempToolStripMenuItem.Name = "lGCtsmiEditTempToolStripMenuItem";
-            this.lGCtsmiEditTempToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
-            this.lGCtsmiEditTempToolStripMenuItem.Text = "LGCtsmiEditTemp";
             // 
             // LogicEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1014, 537);
+            this.ClientSize = new System.Drawing.Size(1222, 627);
             this.Controls.Add(this.tbcMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -1214,20 +1341,20 @@
             this.tbcMain.ResumeLayout(false);
             this.tbpTriggers.ResumeLayout(false);
             this.tbpTriggers.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gpbActions.ResumeLayout(false);
+            this.gpbActions.PerformLayout();
+            this.gpbActionParam.ResumeLayout(false);
+            this.gpbActionParam.PerformLayout();
+            this.gpbEvents.ResumeLayout(false);
+            this.gpbEvents.PerformLayout();
             this.gpbEventParam.ResumeLayout(false);
             this.gpbEventParam.PerformLayout();
             this.gpbTag.ResumeLayout(false);
             this.gpbTag.PerformLayout();
             this.gpbRepeat.ResumeLayout(false);
             this.gpbRepeat.PerformLayout();
-            this.cmsTriggerList.ResumeLayout(false);
             this.cmsEditTemplate.ResumeLayout(false);
+            this.cmsTriggerList.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1258,10 +1385,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txbTagID;
+        private System.Windows.Forms.TextBox txbTrgID;
+        private System.Windows.Forms.TextBox txbTagName;
+        private System.Windows.Forms.TextBox txbTrgName;
         private System.Windows.Forms.GroupBox gpbRepeat;
         private System.Windows.Forms.RadioButton rdbRepeat0;
         private System.Windows.Forms.ToolTip ttTrg;
@@ -1275,25 +1402,24 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnSaveTemp;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.GroupBox gpbActions;
+        private System.Windows.Forms.GroupBox gpbEvents;
+        private System.Windows.Forms.ListBox lbxActionList;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ListBox lbxEventList;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnCopyAction;
+        private System.Windows.Forms.Button btnNewAction;
+        private System.Windows.Forms.Button btnDeleteAction;
         private System.Windows.Forms.Button btnCopyEvent;
         private System.Windows.Forms.Button btnDeleteEvent;
         private System.Windows.Forms.Button btnNewEvent;
         private System.Windows.Forms.RichTextBox rtxbEventDetail;
         private System.Windows.Forms.ComboBox cbbEventAbst;
-        private System.Windows.Forms.TextBox txbEventID;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.GroupBox gpbEventParam;
-        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label lblNoParamE;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox cbbEP4;
         private System.Windows.Forms.ComboBox cbbEP3;
@@ -1302,24 +1428,23 @@
         private System.Windows.Forms.TextBox txbEventAnno;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.CheckBox ckbEP1;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox5;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.GroupBox gpbActionParam;
+        private System.Windows.Forms.TextBox txbAP4;
+        private System.Windows.Forms.TextBox txbAP3;
+        private System.Windows.Forms.TextBox txbAP2;
+        private System.Windows.Forms.TextBox txbAP1;
+        private System.Windows.Forms.CheckBox ckbAP4;
+        private System.Windows.Forms.CheckBox ckbAP3;
+        private System.Windows.Forms.CheckBox ckbAP2;
+        private System.Windows.Forms.CheckBox ckbAP1;
+        private System.Windows.Forms.ComboBox cbbAP4;
+        private System.Windows.Forms.ComboBox cbbAP3;
+        private System.Windows.Forms.ComboBox cbbAP2;
+        private System.Windows.Forms.ComboBox cbbAP1;
+        private System.Windows.Forms.Label lblNoParamA;
+        private System.Windows.Forms.RichTextBox rtxbActionDetail;
+        private System.Windows.Forms.ComboBox cbbActionAbst;
+        private System.Windows.Forms.TextBox txbActionAnno;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label20;
@@ -1341,5 +1466,12 @@
         private System.Windows.Forms.LinkLabel lklEP1;
         private System.Windows.Forms.ContextMenuStrip cmsEditTemplate;
         private System.Windows.Forms.ToolStripMenuItem lGCtsmiEditTempToolStripMenuItem;
+        private System.Windows.Forms.CheckBox ckbHard;
+        private System.Windows.Forms.CheckBox ckbNormal;
+        private System.Windows.Forms.CheckBox ckbEasy;
+        private System.Windows.Forms.ToolStripMenuItem tsmiTrgLstIDName;
+        private System.Windows.Forms.LinkLabel lklTraceTrigger;
+        private System.Windows.Forms.MaskedTextBox mtxbEventID;
+        private System.Windows.Forms.MaskedTextBox mtxbActionID;
     }
 }

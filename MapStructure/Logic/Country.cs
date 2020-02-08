@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.FileSystem;
+using relert_sharp.IniSystem;
 
 namespace relert_sharp.MapStructure.Logic
 {
     public class CountryCollection : TeamLogicCollection
     {
         public CountryCollection() { }
+
+
+        #region Public Methods - CountryCollection
+        #endregion
     }
 
 
@@ -29,6 +33,14 @@ namespace relert_sharp.MapStructure.Logic
             SmartAI = ent.PopPair("SmartAI").ParseBool();
             ParentCountryName = ent.PopPair("ParentCountry").Value;
             residual = ent.DictData;
+        }
+        #endregion
+
+
+        #region Public Methods - CountryItem
+        public override string ToString()
+        {
+            return Name;
         }
         #endregion
 

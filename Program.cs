@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using relert_sharp.FileSystem;
 using relert_sharp.SubWindows;
 
 namespace relert_sharp
@@ -16,17 +17,13 @@ namespace relert_sharp
         static void Main()
         {
             Initialization();
-            bool debug = false;
-            if (!debug)
-            {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new LogicEditor());
-            }
-            else
-            {
-                _run.M();
-            }
+#if DEBUG
+            _run.M();
+#else
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new LogicEditor());
+#endif
         }
         static void Initialization()
         {

@@ -27,7 +27,6 @@ namespace relert_sharp.MapStructure.Objects
             Rotation = int.Parse(_args[5]);
             TaggedTrigger = _args[6];
             AISellable = ParseBool(_args[7]);
-            AIRebuildable = false;
             BuildingOnline = ParseBool(_args[9]);
             UpgradeNum = int.Parse(_args[10]);
             SpotlightType = (BuildingSpotlightType)(int.Parse(_args[11]));
@@ -35,11 +34,10 @@ namespace relert_sharp.MapStructure.Objects
             Upgrade2 = _args[13];
             Upgrade3 = _args[14];
             AIRepairable = ParseBool(_args[15]);
-            Nominal = false;
         }
         #region Public Calls - StructureItem
         public bool AISellable { get; set; }
-        public bool AIRebuildable { get; private set; }
+        public bool AIRebuildable { get; private set; } = false;
         public bool BuildingOnline { get; set; }
         public int UpgradeNum { get; set; }
         public BuildingSpotlightType SpotlightType { get; set; }
@@ -47,7 +45,7 @@ namespace relert_sharp.MapStructure.Objects
         public string Upgrade2 { get; set; }
         public string Upgrade3 { get; set; }
         public bool AIRepairable { get; set; }
-        public bool Nominal { get; private set; }
+        public bool Nominal { get; private set; } = false;
         #endregion
 
     }

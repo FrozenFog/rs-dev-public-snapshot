@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using relert_sharp.Common;
 
-namespace relert_sharp.FileSystem
+namespace relert_sharp.IniSystem
 {
     public class INIPair
     {

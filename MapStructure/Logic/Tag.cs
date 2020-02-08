@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.FileSystem;
+using relert_sharp.IniSystem;
 using relert_sharp.Common;
 
 namespace relert_sharp.MapStructure.Logic
@@ -11,13 +11,42 @@ namespace relert_sharp.MapStructure.Logic
     public class TagCollection
     {
         private Dictionary<string, TagItem> data = new Dictionary<string, TagItem>();
+        private Dictionary<string, string> trigger_tag = new Dictionary<string, string>();
+
+
+        #region Constructor - TagCollection
         public TagCollection(INIEntity entTag)
         {
             foreach (INIPair p in entTag.DataList)
             {
-                if (!data.Keys.Contains(p.Name)) data[p.Name] = new TagItem(p.Name, p.ParseStringList());
+                if (!data.Keys.Contains(p.Name))
+                {
+                    data[p.Name] = new TagItem(p.Name, p.ParseStringList());
+                    trigger_tag[data[p.Name].AssoTrigger] = p.Name;
+                }
             }
         }
+        #endregion
+
+
+        #region Public Methods - TagCollection
+        /// <summary>
+        /// return a tag with certain trigger id, return null if not found
+        /// </summary>
+        /// <param name="triggerID"></param>
+        /// <returns></returns>
+        public TagItem GetTagFromTrigger(string triggerID)
+        {
+            if (trigger_tag.Keys.Contains(triggerID))
+            {
+                return data[trigger_tag[triggerID]];
+            }
+            return null;
+        }
+        #endregion
+
+
+        #region Public Calls - TagCollection
         public TagItem this[string _id]
         {
             get
@@ -30,7 +59,10 @@ namespace relert_sharp.MapStructure.Logic
                 data[_id] = value;
             }
         }
+        #endregion
     }
+
+
     public class TagItem
     {
         public TagItem(string _id, string[] dataList)

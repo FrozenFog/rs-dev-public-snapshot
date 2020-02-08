@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.FileSystem;
+using relert_sharp.IniSystem;
 using relert_sharp.Common;
 using static relert_sharp.Utils.Misc;
+using System.Collections;
 
 namespace relert_sharp.MapStructure.Logic
 {
-    public class TriggerCollection
+    public class TriggerCollection : IEnumerable<TriggerItem>
     {
         private Dictionary<string, TriggerItem> data = new Dictionary<string, TriggerItem>();
+
+
+        #region Constructor - TriggerCollection
         public TriggerCollection(INIEntity entTrigger)
         {
             foreach (INIPair p in entTrigger.DataList)
@@ -23,6 +27,47 @@ namespace relert_sharp.MapStructure.Logic
                 }
             }
         }
+        #endregion
+
+
+        #region Private Methods - TriggerCollection
+
+        #endregion
+
+
+        #region Public Methods - TriggerCollection
+        public void AscendingSort()
+        {
+            Dictionary<string, TriggerItem> tmp = new Dictionary<string, TriggerItem>();
+            foreach (TriggerItem item in data.Values)
+            {
+                tmp[item.ToString()] = item;
+            }
+            data.Clear();
+            tmp = tmp.OrderBy(x => x.Key).ToDictionary(x => x.Key, y => y.Value);
+            foreach (TriggerItem item in tmp.Values)
+            {
+                data[item.ID] = item;
+            }
+        }
+        public void DecendingSort()
+        {
+            Dictionary<string, TriggerItem> tmp = new Dictionary<string, TriggerItem>();
+            foreach (TriggerItem item in data.Values)
+            {
+                tmp[item.ToString()] = item;
+            }
+            data.Clear();
+            tmp = tmp.OrderByDescending(x => x.Key).ToDictionary(x => x.Key, y => y.Value);
+            foreach (TriggerItem item in tmp.Values)
+            {
+                data[item.ID] = item;
+            }
+        }
+        #endregion
+
+
+        #region Public Calls - TriggerCollection
         public TriggerItem this[string _id]
         {
             get
@@ -35,11 +80,29 @@ namespace relert_sharp.MapStructure.Logic
                 data[_id] = value;
             }
         }
+        public Dictionary<string, TriggerItem>.KeyCollection Keys { get { return data.Keys; } }
+        #endregion
+
+
+        #region Enumerator
+        public IEnumerator<TriggerItem> GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+        #endregion
     }
 
 
     public class TriggerItem
     {
+        private string innerString;
+        [Flags]
+        public enum DisplayingType { OnlyID = 0x1, OnlyName = 0x2, IDandName = OnlyID | OnlyName, Remain = 0x4 }
 
 
         #region Constructor - TriggerItem
@@ -54,11 +117,46 @@ namespace relert_sharp.MapStructure.Logic
             NormalOn = n;
             HardOn = h;
             Repeating = (TriggerRepeatingType)repeating;
+            SetDisplayingString(DisplayingType.IDandName);
+        }
+        #endregion
+
+
+        #region Public Methods - TriggerItem
+        public override string ToString()
+        {
+            return innerString;
+        }
+        public void SetDisplayingString(DisplayingType type)
+        {
+            switch (type)
+            {
+                case DisplayingType.OnlyID:
+                    innerString = ID;
+                    break;
+                case DisplayingType.OnlyName:
+                    innerString = Name;
+                    break;
+                case DisplayingType.IDandName:
+                    innerString = ID + ":" + Name;
+                    break;
+                case DisplayingType.Remain:
+                    break;
+            }
         }
         #endregion
 
 
         #region Public Calls - TriggerItem
+        public static TriggerItem NullTrigger
+        {
+            get
+            {
+                TriggerItem item = new TriggerItem("<none>", "", "", "<none>", true, false, false, false, 0);
+                item.SetDisplayingString(DisplayingType.OnlyID);
+                return item;
+            }
+        }
         public string ID { get; set; }
         public string House { get; set; }
         public string LinkedWith { get; set; }
@@ -68,6 +166,7 @@ namespace relert_sharp.MapStructure.Logic
         public bool NormalOn { get; set; }
         public bool HardOn { get; set; }
         public TriggerRepeatingType Repeating { get; set; }
+        public string IDName { get { return ID + ":" + Name; } }
         #endregion
     }
 }

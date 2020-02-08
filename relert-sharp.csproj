@@ -69,9 +69,9 @@
     <Compile Include="FileSystem\CsfFile.cs" />
     <Compile Include="FileSystem\HvaFile.cs" />
     <Compile Include="FileSystem\IdxBagFile.cs" />
-    <Compile Include="FileSystem\INIEntity.cs" />
-    <Compile Include="FileSystem\INIFile.cs" />
-    <Compile Include="FileSystem\INIPair.cs" />
+    <Compile Include="IniSystem\INIEntity.cs" />
+    <Compile Include="IniSystem\INIFile.cs" />
+    <Compile Include="IniSystem\INIPair.cs" />
     <Compile Include="FileSystem\LangFile.cs" />
     <Compile Include="FileSystem\MapFile.cs" />
     <Compile Include="FileSystem\MixFile.cs" />
@@ -100,6 +100,7 @@
     <Compile Include="MapStructure\Logic\AITrigger.cs" />
     <Compile Include="MapStructure\Logic\Country.cs" />
     <Compile Include="MapStructure\Logic\House.cs" />
+    <Compile Include="MapStructure\Logic\TriggerDescription.cs" />
     <Compile Include="MapStructure\MapTheaterTileSet.cs" />
     <Compile Include="MapStructure\Objects\AircraftLayer.cs" />
     <Compile Include="MapStructure\Objects\InfantryLayer.cs" />
@@ -128,18 +129,22 @@
     <Compile Include="MapStructure\Objects\UnitLayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubWindows\LogicEditor\EventHandler.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SubWindows\INIComparator.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SubWindows\INIComparator.Designer.cs">
       <DependentUpon>INIComparator.cs</DependentUpon>
     </Compile>
-    <Compile Include="SubWindows\LogicEditor.cs">
+    <Compile Include="SubWindows\LogicEditor\LogicEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubWindows\LogicEditor.Designer.cs">
+    <Compile Include="SubWindows\LogicEditor\LogicEditor.Designer.cs">
       <DependentUpon>LogicEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\LogicEditor\StaticHelper.cs" />
     <Compile Include="Utils\Colors.cs" />
     <Compile Include="FileSystem\BaseFile.cs" />
     <Compile Include="Common\RSException.cs" />
@@ -165,7 +170,7 @@
     <EmbeddedResource Include="SubWindows\INIComparator.resx">
       <DependentUpon>INIComparator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubWindows\LogicEditor.resx">
+    <EmbeddedResource Include="SubWindows\LogicEditor\LogicEditor.resx">
       <DependentUpon>LogicEditor.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="OpenTK.dll.config" />
