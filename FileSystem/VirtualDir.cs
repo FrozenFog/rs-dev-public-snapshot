@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using relert_sharp.Encoding;
 using relert_sharp.Common;
+using relert_sharp.IniSystem;
 using static relert_sharp.Common.GlobalVar;
 
 namespace relert_sharp.FileSystem

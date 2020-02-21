@@ -45,6 +45,11 @@ namespace relert_sharp.IniSystem
 
 
         #region Public Methods - INIEntity
+        public TechnoPair ToTechno(string index, TechnoPair.AbstractType type = TechnoPair.AbstractType.RegName)
+        {
+            TechnoPair tp = new TechnoPair(this, index, type);
+            return tp;
+        }
         public INIPair PopPair(string pairKey)
         {
             if (data.Keys.Contains(pairKey))

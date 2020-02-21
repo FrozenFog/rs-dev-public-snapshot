@@ -12,6 +12,7 @@ namespace relert_sharp.SubWindows.LogicEditor
     public partial class LogicEditor
     {
         #region Trigger Page
+
         #region MenuStrip
         private void tsmiTrgLstAscending_Click(object sender, EventArgs e)
         {
@@ -36,6 +37,7 @@ namespace relert_sharp.SubWindows.LogicEditor
             UpdateTrgList(TriggerItem.DisplayingType.IDandName);
         }
         #endregion
+
         private void SelectTextboxContent_MouseClicked(object sender, MouseEventArgs e)
         {
             ((TextBoxBase)sender).SelectAll();

@@ -83,6 +83,7 @@
     <Compile Include="FileSystem\VxlFile.cs" />
     <Compile Include="FileSystem\WavFile.cs" />
     <Compile Include="IniSystem\Rules.cs" />
+    <Compile Include="IniSystem\TechnoPair.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using relert_sharp.Common;
-using relert_sharp.FileSystem;
+using relert_sharp.IniSystem;
 using static relert_sharp.Common.GlobalVar;
 
 namespace relert_sharp.MapStructure

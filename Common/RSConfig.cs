@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.FileSystem;
+using relert_sharp.IniSystem;
 
 namespace relert_sharp.Common
 {

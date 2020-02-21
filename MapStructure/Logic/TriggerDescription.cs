@@ -170,7 +170,7 @@ namespace relert_sharp.MapStructure.Logic
             if (isBool) return paramSrc[ParamPos] == "1";
             else
             {
-                if (ParamPos == 6) return Utils.Misc.WaypointInt(paramSrc[ParamPos]).ToString();
+                if (ParamPos == 6 && Traceable) return Utils.Misc.WaypointInt(paramSrc[ParamPos]).ToString();
                 return paramSrc[ParamPos];
             }
         }

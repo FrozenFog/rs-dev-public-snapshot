@@ -62,10 +62,13 @@ namespace relert_sharp.MapStructure.Logic
                 if (type == LogicType.ActionLogic) window = 8;
                 else if (type == LogicType.EventLogic)
                 {
-                    if (logicID == 60 || logicID == 61) window = 4;
+                    if (logicID == 60 || logicID == 61)
+                        window = 4;
                     else window = 3;
                 }
-                Add(new LogicItem(logicID, _paramData.Skip(i + 1).Take(window - 1).ToArray(), type, count++));
+                List<string> parameters = _paramData.Skip(i + 1).Take(window - 1).ToList();
+                if (type == LogicType.EventLogic && parameters.Count != 3) parameters.Add("0");
+                Add(new LogicItem(logicID, parameters.ToArray(), type, count++));
             }
         }
         public LogicGroup() { }
