@@ -193,11 +193,5 @@
   <ItemGroup>
     <Folder Include="UtilLib\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\OpenTKIntro\OpenTKIntro.csproj">
-      <Project>{75c9394b-772d-4240-827c-729ff2535f5e}</Project>
-      <Name>OpenTKIntro</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
