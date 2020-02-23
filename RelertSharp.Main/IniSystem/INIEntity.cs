@@ -45,6 +45,13 @@ namespace relert_sharp.IniSystem
 
 
         #region Public Methods - INIEntity
+        public void JoinWith(INIEntity newEnt)
+        {
+            foreach (INIPair p in newEnt)
+            {
+                data[p.Name] = p;
+            }
+        }
         public TechnoPair ToTechno(string index, TechnoPair.AbstractType type = TechnoPair.AbstractType.RegName)
         {
             TechnoPair tp = new TechnoPair(this, index, type);

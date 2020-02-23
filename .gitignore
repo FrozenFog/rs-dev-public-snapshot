@@ -4,6 +4,12 @@ bin
 obj
 *.exe
 *.cache
-packges
+packages
 _*.*
 *.dll
+.vs
+Debug
+OpenTKIntro
+RelertSharp.Main/obj
+RelertSharp.Main/bin
+RelertSharp.Main/_*.*

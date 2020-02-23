@@ -26,5 +26,11 @@ namespace relert_sharp.Common
             get { return globaldir; }
             set { globaldir = value; }
         }
+        private static IniSystem.Rules globalrules;
+        public static IniSystem.Rules GlobalRules
+        {
+            get { return globalrules; }
+            set { globalrules = value; }
+        }
     }
 }

@@ -69,6 +69,12 @@ namespace relert_sharp.Common
 
 
         #region Public Calls - RSConfig
+        public string RulesName { get { return this["INI"]["RulesFileName"]; } }
+        public string ArtName { get { return this["INI"]["ArtFileName"]; } }
+        public string SoundName { get { return this["INI"]["SoundFileName"]; } }
+        public string ThemeName { get { return this["INI"]["ThemeFileName"]; } }
+        public string AiName { get { return this["INI"]["AIFileName"]; } }
+        public string EvaName { get { return this["INI"]["EvaFileName"]; } }
         public string GamePath { get { return this["General"]["GamePath"]; } }
         public string ConfigName { get { return this["General"]["ConfigName"]; } }
         public List<string> MixNameList { get; private set; }

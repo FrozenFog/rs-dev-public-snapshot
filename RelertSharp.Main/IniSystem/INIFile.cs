@@ -82,6 +82,20 @@ namespace relert_sharp.IniSystem
         #endregion
 
         #region Public Methods - INIFile
+        public void Override(List<INIEntity> src)
+        {
+            foreach (INIEntity newent in src)
+            {
+                if (HasIniEnt(newent))
+                {
+                    IniDict[newent.Name].JoinWith(newent);
+                }
+                else
+                {
+                    AddEnt(newent);
+                }
+            }
+        }
         public void SaveIni(bool ignoreComment = false)
         {
             //if (File.Exists(FilePath)) File.Delete(FilePath);

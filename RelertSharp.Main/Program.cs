@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using relert_sharp.FileSystem;
+using relert_sharp.Common;
 using relert_sharp.SubWindows;
 
 namespace relert_sharp
@@ -28,8 +29,9 @@ namespace relert_sharp
         static void Initialization()
         {
             Utils.Misc.Init_Language();
-            Common.GlobalVar.GlobalConfig = new Common.RSConfig();
-            Common.GlobalVar.GlobalDir = new FileSystem.VirtualDir();
+            GlobalVar.GlobalConfig = new RSConfig();
+            GlobalVar.GlobalDir = new VirtualDir();
+            GlobalVar.GlobalRules = new IniSystem.Rules(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.RulesName), GlobalVar.GlobalConfig.RulesName);
         }
     }
 }
