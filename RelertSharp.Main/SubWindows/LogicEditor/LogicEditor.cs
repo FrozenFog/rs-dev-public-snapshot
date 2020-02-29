@@ -6,11 +6,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Media;
 using System.Windows.Forms;
 using relert_sharp.MapStructure;
 using relert_sharp.MapStructure.Logic;
 using relert_sharp.FileSystem;
 using relert_sharp.Common;
+using relert_sharp.IniSystem;
 using static relert_sharp.Language;
 
 namespace relert_sharp.SubWindows.LogicEditor
@@ -23,6 +25,7 @@ namespace relert_sharp.SubWindows.LogicEditor
         private TextBox[] txbEP, txbAP;
         private CheckBox[] ckbEP, ckbAP;
         private ComboBox[] cbbEP, cbbAP;
+        private SoundManager soundPlayer = new SoundManager();
 
 
         #region Constructor - LogicEditor
@@ -55,16 +58,16 @@ namespace relert_sharp.SubWindows.LogicEditor
         }
         private void LoadEventComboBox()
         {
-            StaticHelper.LoadToObjectCollection(ref cbbEventAbst, descriptCollection.Events);
+            StaticHelper.LoadToObjectCollection(cbbEventAbst, descriptCollection.Events);
         }
         private void LoadActionComboBox()
         {
-            StaticHelper.LoadToObjectCollection(ref cbbActionAbst, descriptCollection.Actions);
+            StaticHelper.LoadToObjectCollection(cbbActionAbst, descriptCollection.Actions);
         }
         private void LoadHouseList()
         {
             map.Countries.AscendingSort();
-            StaticHelper.LoadToObjectCollection(ref lbxTriggerHouses, map.Countries);
+            StaticHelper.LoadToObjectCollection(lbxTriggerHouses, map.Countries);
         }
         private void UpdateTrgList(TriggerItem.DisplayingType type = TriggerItem.DisplayingType.Remain)
         {
@@ -80,11 +83,11 @@ namespace relert_sharp.SubWindows.LogicEditor
         }
         private void UpdateEventList(LogicGroup eg)
         {
-            StaticHelper.LoadToObjectCollection(ref lbxEventList, eg);
+            StaticHelper.LoadToObjectCollection(lbxEventList, eg);
         }
         private void UpdateActionList(LogicGroup ag)
         {
-            StaticHelper.LoadToObjectCollection(ref lbxActionList, ag);
+            StaticHelper.LoadToObjectCollection(lbxActionList, ag);
         }
         private void UpdateTags(string triggerID)
         {
@@ -172,6 +175,22 @@ namespace relert_sharp.SubWindows.LogicEditor
                 }
             }
         }
+        private IEnumerable<object> GetComboCollections(TriggerParam param)
+        {
+            switch (param.ComboType)
+            {
+                case TriggerParam.ComboContent.Aircrafts:
+                    return GlobalVar.GlobalRules.AircraftList;
+                case TriggerParam.ComboContent.Buildings:
+                    return GlobalVar.GlobalRules.BuildingList;
+                case TriggerParam.ComboContent.Infantries:
+                    return GlobalVar.GlobalRules.InfantryList;
+                case TriggerParam.ComboContent.SoundNames:
+                    return GlobalVar.GlobalSound.
+                default:
+                    return null;
+            }
+        }
         private void UpdateActionParams(TriggerDescription description, string[] actionParams)
         {
             rtxbActionDetail.Refresh();
@@ -215,6 +234,10 @@ namespace relert_sharp.SubWindows.LogicEditor
                 ((LinkLabel)controls[controlIndex]).Visible = true;
                 if (!param.Traceable) ((LinkLabel)controls[controlIndex]).Enabled = false;
             }
+            else if (controls.GetType() == typeof(ComboBox[]))
+            {
+                StaticHelper.LoadToObjectCollection((ComboBox)controls[controlIndex] , GetComboCollections(param));
+            }
             else
             {
                 if (param.Type == TriggerParam.ParamType.Bool)
@@ -242,6 +265,7 @@ namespace relert_sharp.SubWindows.LogicEditor
             LogicGroup ag = map.Actions[triggerID] as LogicGroup;
             UpdateActionList(ag);
         }
+
         private void ClearContent(GroupBox gpb)
         {
             foreach (Control c in gpb.Controls)

@@ -17,6 +17,9 @@ namespace relert_sharp.FileSystem
         {
             MemoryStream ms = new MemoryStream();
             BinaryWriter bw = new BinaryWriter(ms);
+            SampleRate = _sampleRate;
+            Chanel = _chanel;
+            SampleSize = _sample.Length;
             bw.Write(0x46464952);//RIFF
             bw.Write(_sample.Length + 36);//4+24+4+4
             bw.Write(0x45564157);//WAVE
@@ -36,6 +39,19 @@ namespace relert_sharp.FileSystem
             ms.Dispose();
             bw.Dispose();
         }
+        public WavFile(byte[] fulldata)
+        {
+            MemoryStream ms = new MemoryStream(fulldata);
+            BinaryReader br = new BinaryReader(ms);
+            br.ReadInt32();
+            SampleSize = br.ReadInt32() - 36;
+            br.ReadBytes(14);
+            Chanel = br.ReadUInt16();
+            br.ReadInt32();
+            SampleRate = br.ReadInt32();
+            data = fulldata;
+        }
+        public WavFile() { }
         #endregion
 
 
@@ -49,6 +65,11 @@ namespace relert_sharp.FileSystem
 
         #region Public Calls - WavFile
         public byte[] ByteArray { get { return data; } }
+        public bool IsEmpty { get { return ByteArray.Length == 0; } }
+        public int SampleRate { get; set; }
+        public int SampleSize { get; set; }
+        public int Chanel { get; set; }
+        public int TimeMilSec { get { return SampleSize * 1000 / Chanel / SampleRate; } }
         #endregion
     }
 }

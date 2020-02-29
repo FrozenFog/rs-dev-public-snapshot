@@ -10,11 +10,15 @@ namespace relert_sharp.FileSystem
 {
     public class IdxBagFile
     {
-        private IdxIndex toc;
         private BinaryReader bagReader;
 
         #region Constructor - IdxBagFile
         public IdxBagFile() { }
+        public IdxBagFile(IdxIndex index, byte[] bagfile)
+        {
+            Index = index;
+            bagReader = new BinaryReader(new MemoryStream(bagfile));
+        }
         #endregion
 
 
@@ -23,7 +27,6 @@ namespace relert_sharp.FileSystem
         {
             BinaryReader br = new BinaryReader(new MemoryStream(_data));
             if (br.ReadInt32() != 0x41424147) throw new RSException.InvalidFileException.InvalidIdx();
-            toc = new IdxIndex();
             br.ReadInt32();//2
             int num = br.ReadInt32();
             for (; num > 0; num--)
@@ -37,23 +40,26 @@ namespace relert_sharp.FileSystem
                 item.SampleRate = br.ReadUInt32();
                 item.Flag = br.ReadUInt32();
                 item.ChunkSize = br.ReadUInt32();
-                toc.Items[item.Name] = item;
+                Index.Items[item.Name] = item;
             }
         }
         #endregion
 
 
         #region Public Methods - IdxBagFile
-        public void Load(byte[] _idxData, byte[] _bagData)
+        public void Load(byte[] _idxData)
         {
             ReadIndex(_idxData);
+        }
+        public void LoadBag(byte[] _bagData)
+        {
             MemoryStream ms = new MemoryStream(_bagData);
             bagReader = new BinaryReader(ms);
         }
         public AudFile ReadAudFile(string _filename)
         {
-            if (!toc.Keys.Contains(_filename)) return new AudFile(_filename, 0);
-            IdxIndex.IdxItem target = toc[_filename];
+            if (!Index.Keys.Contains(_filename)) return new AudFile(_filename, 0);
+            IdxIndex.IdxItem target = Index[_filename];
             bagReader.BaseStream.Seek(target.Offset, SeekOrigin.Begin);
             return new AudFile(bagReader.ReadBytes((int)target.Length), _filename + ".aud", target);
         }
@@ -61,6 +67,7 @@ namespace relert_sharp.FileSystem
 
 
         #region Public Calls - IdxBagFile
+        public IdxIndex Index { get; set; } = new IdxIndex();
         #endregion
     }
 
@@ -85,6 +92,10 @@ namespace relert_sharp.FileSystem
 
 
         #region Public Methods - IdxIndex
+        public bool HasFile(string name)
+        {
+            return items.Keys.Contains(name);
+        }
         #endregion
 
 

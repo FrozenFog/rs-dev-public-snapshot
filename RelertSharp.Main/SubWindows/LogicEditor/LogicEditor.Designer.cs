@@ -252,8 +252,10 @@
             this.lklAP4.Size = new System.Drawing.Size(23, 12);
             this.lklAP4.TabIndex = 9;
             this.lklAP4.TabStop = true;
+            this.lklAP4.Tag = "3";
             this.lklAP4.Text = "AP4";
             this.lklAP4.Visible = false;
+            this.lklAP4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
             // txbAP4
             // 
@@ -273,8 +275,10 @@
             this.lklAP3.Size = new System.Drawing.Size(23, 12);
             this.lklAP3.TabIndex = 9;
             this.lklAP3.TabStop = true;
+            this.lklAP3.Tag = "2";
             this.lklAP3.Text = "AP3";
             this.lklAP3.Visible = false;
+            this.lklAP3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
             // txbAP3
             // 
@@ -294,8 +298,10 @@
             this.lklAP2.Size = new System.Drawing.Size(23, 12);
             this.lklAP2.TabIndex = 9;
             this.lklAP2.TabStop = true;
+            this.lklAP2.Tag = "1";
             this.lklAP2.Text = "AP2";
             this.lklAP2.Visible = false;
+            this.lklAP2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
             // txbAP2
             // 
@@ -315,8 +321,10 @@
             this.lklAP1.Size = new System.Drawing.Size(23, 12);
             this.lklAP1.TabIndex = 9;
             this.lklAP1.TabStop = true;
+            this.lklAP1.Tag = "0";
             this.lklAP1.Text = "AP1";
             this.lklAP1.Visible = false;
+            this.lklAP1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
             // txbAP1
             // 
@@ -602,8 +610,10 @@
             this.lklEP4.Size = new System.Drawing.Size(23, 12);
             this.lklEP4.TabIndex = 9;
             this.lklEP4.TabStop = true;
+            this.lklEP4.Tag = "3";
             this.lklEP4.Text = "EP4";
             this.lklEP4.Visible = false;
+            this.lklEP4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
             // lklEP3
             // 
@@ -614,8 +624,10 @@
             this.lklEP3.Size = new System.Drawing.Size(23, 12);
             this.lklEP3.TabIndex = 9;
             this.lklEP3.TabStop = true;
+            this.lklEP3.Tag = "2";
             this.lklEP3.Text = "EP3";
             this.lklEP3.Visible = false;
+            this.lklEP3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
             // lklEP2
             // 
@@ -626,8 +638,10 @@
             this.lklEP2.Size = new System.Drawing.Size(23, 12);
             this.lklEP2.TabIndex = 9;
             this.lklEP2.TabStop = true;
+            this.lklEP2.Tag = "1";
             this.lklEP2.Text = "EP2";
             this.lklEP2.Visible = false;
+            this.lklEP2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
             // lklEP1
             // 
@@ -638,8 +652,10 @@
             this.lklEP1.Size = new System.Drawing.Size(23, 12);
             this.lklEP1.TabIndex = 9;
             this.lklEP1.TabStop = true;
+            this.lklEP1.Tag = "0";
             this.lklEP1.Text = "EP1";
             this.lklEP1.Visible = false;
+            this.lklEP1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
             // txbEP4
             // 
@@ -648,6 +664,7 @@
             this.txbEP4.Name = "txbEP4";
             this.txbEP4.Size = new System.Drawing.Size(153, 21);
             this.txbEP4.TabIndex = 4;
+            this.txbEP4.Tag = "3";
             this.txbEP4.Visible = false;
             // 
             // txbEP3
@@ -657,6 +674,7 @@
             this.txbEP3.Name = "txbEP3";
             this.txbEP3.Size = new System.Drawing.Size(153, 21);
             this.txbEP3.TabIndex = 3;
+            this.txbEP3.Tag = "2";
             this.txbEP3.Visible = false;
             // 
             // txbEP1
@@ -666,6 +684,7 @@
             this.txbEP1.Name = "txbEP1";
             this.txbEP1.Size = new System.Drawing.Size(153, 21);
             this.txbEP1.TabIndex = 1;
+            this.txbEP1.Tag = "0";
             this.txbEP1.Visible = false;
             // 
             // txbEP2
@@ -675,6 +694,7 @@
             this.txbEP2.Name = "txbEP2";
             this.txbEP2.Size = new System.Drawing.Size(153, 21);
             this.txbEP2.TabIndex = 2;
+            this.txbEP2.Tag = "1";
             this.txbEP2.Visible = false;
             // 
             // ckbEP4

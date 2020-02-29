@@ -134,7 +134,7 @@ namespace relert_sharp.FileSystem
         }
         private FileExtension Get_File_Ext()
         {
-            ////unfinished
+            //TODO: Auto file extension
             return FileExtension.UnknownBinary;
         }
         #endregion

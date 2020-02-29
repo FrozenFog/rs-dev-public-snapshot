@@ -32,5 +32,23 @@ namespace relert_sharp.Common
             get { return globalrules; }
             set { globalrules = value; }
         }
+        private static IniSystem.SoundRules globalsound;
+        public static IniSystem.SoundRules GlobalSound
+        {
+            get { return globalsound; }
+            set { globalsound = value; }
+        }
+        private static FileSystem.SoundBank globalsoundbank;
+        public static FileSystem.SoundBank GlobalSoundBank
+        {
+            get { return globalsoundbank; }
+            set { globalsoundbank = value; }
+        }
+        private static string playerside;
+        public static string PlayerSide
+        {
+            get { return playerside; }
+            set { playerside = value; }
+        }
     }
 }

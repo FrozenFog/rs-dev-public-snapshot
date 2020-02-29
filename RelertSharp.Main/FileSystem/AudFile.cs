@@ -96,6 +96,12 @@ namespace relert_sharp.FileSystem
                 else b.Decode(flag, (short)(b.ID & 0xFFFF), (int)(b.ID & 0xFFFF0000) >> 16);
             }
         }
+        public WavFile ToWav()
+        {
+            DecodeBlocks();
+            WavFile wavFile = new WavFile(AudioBytes, SampleRate, 1);
+            return wavFile;
+        }
         #endregion
 
 

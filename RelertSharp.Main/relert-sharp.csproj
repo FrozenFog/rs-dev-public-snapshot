@@ -31,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
@@ -52,6 +53,7 @@
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\GlobalVar.cs" />
     <Compile Include="Common\RSConfig.cs" />
+    <Compile Include="Common\SoundManager.cs" />
     <Compile Include="DrawingEngine\DisplayingControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -69,6 +71,7 @@
     <Compile Include="FileSystem\CsfFile.cs" />
     <Compile Include="FileSystem\HvaFile.cs" />
     <Compile Include="FileSystem\IdxBagFile.cs" />
+    <Compile Include="FileSystem\SoundBank.cs" />
     <Compile Include="IniSystem\INIEntity.cs" />
     <Compile Include="IniSystem\INIFile.cs" />
     <Compile Include="IniSystem\INIPair.cs" />
@@ -83,6 +86,7 @@
     <Compile Include="FileSystem\VxlFile.cs" />
     <Compile Include="FileSystem\WavFile.cs" />
     <Compile Include="IniSystem\Rules.cs" />
+    <Compile Include="IniSystem\SoundRules.cs" />
     <Compile Include="IniSystem\TechnoPair.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>

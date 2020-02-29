@@ -32,6 +32,8 @@ namespace relert_sharp
             GlobalVar.GlobalConfig = new RSConfig();
             GlobalVar.GlobalDir = new VirtualDir();
             GlobalVar.GlobalRules = new IniSystem.Rules(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.RulesName), GlobalVar.GlobalConfig.RulesName);
+            GlobalVar.GlobalSound = new IniSystem.SoundRules(GlobalVar.GlobalConfig.SoundName, GlobalVar.GlobalConfig.EvaName, GlobalVar.GlobalConfig.ThemeName);
+            GlobalVar.GlobalSoundBank = new SoundBank(GlobalVar.GlobalConfig.BagNameList);
         }
     }
 }

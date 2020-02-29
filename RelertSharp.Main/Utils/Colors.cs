@@ -32,7 +32,7 @@ namespace relert_sharp.Utils
         }
         public RGBColor(HSBColor hsb)
         {
-            ////unfinished
+            //TODO:HSB to RGB
         }
         #endregion
 
@@ -72,7 +72,7 @@ namespace relert_sharp.Utils
         }
         public HSBColor(RGBColor rgb)
         {
-            ////unfinished
+            //TODO: RGB to HSB
         }
         #endregion
 

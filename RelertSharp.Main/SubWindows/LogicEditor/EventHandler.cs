@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using relert_sharp.MapStructure.Logic;
-using relert_sharp.MapStructure;
+using relert_sharp.FileSystem;
+using relert_sharp.Common;
+using relert_sharp.IniSystem;
 
 namespace relert_sharp.SubWindows.LogicEditor
 {
-    public partial class LogicEditor
+    public partial class LogicEditor : Form
     {
         #region Trigger Page
 
@@ -38,6 +40,44 @@ namespace relert_sharp.SubWindows.LogicEditor
         }
         #endregion
 
+        private void lklParams_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            int tagid = int.Parse(((LinkLabel)sender).Tag.ToString());
+            TechnoPair p;
+            TriggerDescription desc;
+            if (((LinkLabel)sender).Parent == gpbEventParam)
+            {
+                p = cbbEP[tagid].SelectedItem as TechnoPair;
+                desc = cbbEventAbst.SelectedItem as TriggerDescription;
+            }
+            else
+            {
+                p = cbbAP[tagid].SelectedItem as TechnoPair;
+                desc = cbbActionAbst.SelectedItem as TriggerDescription;
+            }
+            TriggerParam param = desc.Parameters[tagid];
+            switch (param.ComboType)
+            {
+                case TriggerParam.ComboContent.SoundNames:
+                case TriggerParam.ComboContent.ThemeNames:
+                case TriggerParam.ComboContent.EvaNames:
+
+                    if (soundPlayer.IsPlaying)
+                    {
+                        soundPlayer.Stop();
+                    }
+                    else
+                    {
+                        string name = soundPlayer.GetSoundName(p, (SoundType)param.ComboType);
+                        soundPlayer.LoadWav(GlobalVar.GlobalSoundBank.GetSound(name));
+                        soundPlayer.Play();
+                    }
+                    break;
+                case TriggerParam.ComboContent.Triggers:
+                    //TODO: Convert TechnoPair into trigger item
+                    break;
+            }
+        }
         private void SelectTextboxContent_MouseClicked(object sender, MouseEventArgs e)
         {
             ((TextBoxBase)sender).SelectAll();

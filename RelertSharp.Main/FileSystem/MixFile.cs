@@ -45,6 +45,13 @@ namespace relert_sharp.FileSystem
                     byte[] header = DecryptHeader(keySource);
                     index = new MixHeader(header.Skip(6).ToArray(), NumOfFiles);
                     break;
+                case MixTatics.Old:
+                    ReadSeek(0, SeekOrigin.Begin);
+                    NumOfFiles = ReadUInt16();
+                    ReadSeek(4, SeekOrigin.Current);
+                    index = new MixHeader(ReadBytes(NumOfFiles * 12), NumOfFiles);
+                    BodyPos = 6 + NumOfFiles * 12;
+                    break;
                 default:
                     break;
             }

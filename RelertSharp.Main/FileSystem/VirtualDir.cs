@@ -44,6 +44,7 @@ namespace relert_sharp.FileSystem
                     if (HasFile(mixname + ".mix"))
                     {
                         if (GlobalConfig.CiphedMix.Contains(mixname)) mx = new MixFile(GetRawByte(mixname + ".mix"), mixname + ".mix", MixTatics.Ciphed);
+                        else if (GlobalConfig.OldMix.Contains(mixname)) mx = new MixFile(GetRawByte(mixname + ".mix"), mixname + ".mix", MixTatics.Old);
                         else mx = new MixFile(GetRawByte(mixname + ".mix"), mixname + ".mix", MixTatics.Plain);
                         AddMixDir(mx, true, GetParentPath(mixname + ".mix"));
                         mx.Dispose();

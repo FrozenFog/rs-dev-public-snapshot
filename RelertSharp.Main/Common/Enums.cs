@@ -13,6 +13,12 @@ namespace relert_sharp.Common
         Stereo = 1,
         Bit16 = 2
     }
+    public enum SoundType
+    {
+        SoundBankRnd = 14,
+        Eva = 15,
+        Theme = 20
+    }
     public enum CsfLanguage
     {
         EnUs = 0,
@@ -126,7 +132,7 @@ namespace relert_sharp.Common
     public enum INIFileType
     {
         DefaultINI,
-        MapFile, RulesINI, ThemeINI, AIINI, SoundINI, ArtINI, Language,
+        MapFile, RulesINI, ThemeINI, AIINI, SoundINI, ArtINI, EvaINI, Language,
         UnknownINI = -1
     }
     public enum TheaterType
@@ -137,7 +143,7 @@ namespace relert_sharp.Common
     }
     public enum MixTatics
     {
-        Ciphed, Plain,
+        Ciphed, Plain, Old,
         Unknown = -1
     }
 }
