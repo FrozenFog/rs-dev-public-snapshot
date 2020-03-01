@@ -8,11 +8,15 @@ namespace relert_sharp.IniSystem
 {
     public class TechnoPair
     {
+        private string abst = "";
         public enum AbstractType
         {
             Default = 0,
             Name, RegName, UIName, IndexOnly
         }
+
+
+        #region Constructor - TechnoPair
         public TechnoPair(INIEntity ent, string index, AbstractType abstractType = AbstractType.RegName)
         {
             Index = index;
@@ -36,14 +40,28 @@ namespace relert_sharp.IniSystem
                     break;
             }
         }
+        public TechnoPair(string index, string regname)
+        {
+            Index = index;
+            RegName = regname;
+            abst = regname;
+        }
+        #endregion
+
+
+        #region Public Methods - TechnoPair
         public override string ToString()
         {
             return Index + " " + abst;
         }
-        private string abst = "";
+        #endregion
+
+
+        #region Public Calls - TechnoPair
         public string Index { get; set; } = "";
         public string Name { get; set; } = "";
         public string RegName { get; set; } = "";
         public string UIName { get; set; } = "";
+        #endregion
     }
 }

@@ -8,7 +8,7 @@ using relert_sharp.Common;
 
 namespace relert_sharp.MapStructure.Logic
 {
-    public class TeamScriptCollection : TeamLogicCollection
+    public class TeamScriptCollection : TeamLogicCollection<TeamScriptGroup>
     {
         public TeamScriptCollection() : base() { }
     }

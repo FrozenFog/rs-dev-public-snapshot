@@ -7,7 +7,7 @@ using relert_sharp.IniSystem;
 
 namespace relert_sharp.MapStructure.Logic
 {
-    public class TaskforceCollection : TeamLogicCollection
+    public class TaskforceCollection : TeamLogicCollection<TaskforceItem>
     {
         public TaskforceCollection() : base() { }
     }

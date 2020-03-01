@@ -8,9 +8,9 @@ using relert_sharp.IniSystem;
 
 namespace relert_sharp.MapStructure.Logic
 {
-    public class TeamLogicCollection : IEnumerable<TeamLogicItem>
+    public class TeamLogicCollection<T> : IEnumerable<T>
     {
-        private Dictionary<string, TeamLogicItem> data = new Dictionary<string, TeamLogicItem>();
+        private Dictionary<string, T> data = new Dictionary<string, T>();
 
 
         #region Constructor - TeamLogicCollection
@@ -28,7 +28,7 @@ namespace relert_sharp.MapStructure.Logic
             data = data.OrderByDescending(x => x.Key).ToDictionary(x => x.Key, y => y.Value);
         }
         #region Enumerator
-        public IEnumerator<TeamLogicItem> GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
             return data.Values.GetEnumerator();
         }
@@ -42,19 +42,19 @@ namespace relert_sharp.MapStructure.Logic
 
 
         #region Public Calls - TeamLogicCollection
-        public TeamLogicItem this[string _ID]
+        public T this[string _ID]
         {
             get
             {
                 if (data.Keys.Contains(_ID)) return data[_ID];
-                return TeamLogicItem.Empty;
+                return default(T);
             }
             set
             {
                 data[_ID] = value;
             }
         }
-        public Dictionary<string, TeamLogicItem>.KeyCollection Keys { get { return data.Keys; } }
+        public Dictionary<string, T>.KeyCollection Keys { get { return data.Keys; } }
         #endregion
     }
     public class TeamLogicItem

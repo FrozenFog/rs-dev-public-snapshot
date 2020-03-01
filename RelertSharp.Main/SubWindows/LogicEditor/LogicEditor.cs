@@ -48,13 +48,14 @@ namespace relert_sharp.SubWindows.LogicEditor
         #region Private Methods - LogicEditor
         private void SetGlobal()
         {
-            //foreach (HouseItem house in map.Houses)
-            //{
-            //    if (house.PlayerControl)
-            //    {
-            //        CountryItem country = map.Countries[house.Country];
-            //    }
-            //}
+            foreach (HouseItem house in map.Houses)
+            {
+                if (house.PlayerControl)
+                {
+                    CountryItem country = map.Countries[house.Country];
+                    GlobalVar.PlayerSide = country.Side;
+                }
+            }
         }
         private void SetGroup()
         {
@@ -196,8 +197,16 @@ namespace relert_sharp.SubWindows.LogicEditor
                     return GlobalVar.GlobalRules.BuildingList;
                 case TriggerParam.ComboContent.Infantries:
                     return GlobalVar.GlobalRules.InfantryList;
-                //case TriggerParam.ComboContent.SoundNames:
-                //    return GlobalVar.GlobalSound.
+                case TriggerParam.ComboContent.SoundNames:
+                    return GlobalVar.GlobalSound.SoundList;
+                case TriggerParam.ComboContent.EvaNames:
+                    return GlobalVar.GlobalSound.EvaList;
+                case TriggerParam.ComboContent.ThemeNames:
+                    return GlobalVar.GlobalSound.ThemeList;
+                case TriggerParam.ComboContent.LocalVar:
+                    return map.LocalVariables.ToTechno();
+                case TriggerParam.ComboContent.SuperWeapons:
+                    return GlobalVar.GlobalRules.SuperWeaponList;
                 default:
                     return null;
             }

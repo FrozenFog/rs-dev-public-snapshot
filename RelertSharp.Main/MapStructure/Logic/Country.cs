@@ -7,7 +7,7 @@ using relert_sharp.IniSystem;
 
 namespace relert_sharp.MapStructure.Logic
 {
-    public class CountryCollection : TeamLogicCollection
+    public class CountryCollection : TeamLogicCollection<CountryItem>
     {
         public CountryCollection() { }
 

@@ -9,7 +9,7 @@ using static relert_sharp.Utils.Misc;
 
 namespace relert_sharp.MapStructure.Logic
 {
-    public class TeamCollection : TeamLogicCollection
+    public class TeamCollection : TeamLogicCollection<TeamItem>
     {
         public TeamCollection() : base() { }
 

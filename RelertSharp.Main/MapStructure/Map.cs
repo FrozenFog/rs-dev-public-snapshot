@@ -27,7 +27,6 @@ namespace relert_sharp.MapStructure
         private Lightning lightning;
         private Rectangle previewSize;
 
-        private LocalVarCollection localvariables = new LocalVarCollection();
         private TeamCollection teams = new TeamCollection();
         private TaskforceCollection taskforces = new TaskforceCollection();
         private TeamScriptCollection scripts = new TeamScriptCollection();
@@ -189,7 +188,7 @@ namespace relert_sharp.MapStructure
             foreach (INIPair p in entVar.DataList)
             {
                 string[] tmp = p.ParseStringList();
-                localvariables[tmp[0]] = ParseBool(tmp[1]);
+                LocalVariables[p.Name + "," + tmp[0]] = ParseBool(tmp[1]);
             }
             foreach (INIPair p in entAITrigger.DataList)
             {
@@ -226,6 +225,7 @@ namespace relert_sharp.MapStructure
 
         #region Public Calls - Map
         public HouseCollection Houses { get; private set; } = new HouseCollection();
+        public LocalVarCollection LocalVariables { get; private set; } = new LocalVarCollection();
         public CountryCollection Countries { get; private set; }
         public TriggerCollection Triggers { get; private set; }
         public TagCollection Tags { get; private set; }

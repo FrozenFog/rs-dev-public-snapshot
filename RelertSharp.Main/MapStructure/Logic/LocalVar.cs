@@ -9,7 +9,34 @@ namespace relert_sharp.MapStructure.Logic
     public class LocalVarCollection
     {
         private Dictionary<string, bool> data = new Dictionary<string, bool>();
+
+
+        #region Constructor - LocalVarCollection
         public LocalVarCollection() { }
+        #endregion
+
+
+        #region Public Methods - LocalVarCollection
+        public List<IniSystem.TechnoPair> ToTechno()
+        {
+            List<IniSystem.TechnoPair> result = new List<IniSystem.TechnoPair>();
+            foreach (string name in data.Keys)
+            {
+                string[] tmp = name.Split(new char[] { ',' });
+                IniSystem.TechnoPair p = new IniSystem.TechnoPair(tmp[0], tmp[1]);
+                result.Add(p);
+            }
+            return result;
+        }
+        #endregion
+
+
+        #region Public Calls - LocalValCollection
+        /// <summary>
+        /// index,name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public bool this[string name]
         {
             get
@@ -22,5 +49,6 @@ namespace relert_sharp.MapStructure.Logic
                 data[name] = value;
             }
         }
+        #endregion
     }
 }

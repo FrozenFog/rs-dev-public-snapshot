@@ -9,7 +9,7 @@ using relert_sharp.MapStructure.Points;
 
 namespace relert_sharp.MapStructure.Logic
 {
-    public class HouseCollection : TeamLogicCollection
+    public class HouseCollection : TeamLogicCollection<HouseItem>
     {
         public HouseCollection() { }
     }
