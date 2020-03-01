@@ -34,7 +34,6 @@ namespace relert_sharp.MapStructure
         private AITriggerCollection aitriggers = new AITriggerCollection();
         private WaypointCollection waypoints = new WaypointCollection();
         private CellTagCollection celltags = new CellTagCollection();
-        private HouseCollection houses = new HouseCollection();
 
         private UnitLayer units = new UnitLayer();
         private InfantryLayer infantries = new InfantryLayer();
@@ -160,7 +159,7 @@ namespace relert_sharp.MapStructure
 
             foreach (string houseName in _houseList)
             {
-                houses[houseName] = new HouseItem(f.PopEnt(houseName));
+                Houses[houseName] = new HouseItem(f.PopEnt(houseName));
             }
             Countries = new CountryCollection();
             foreach (string countryName in _countryList)
@@ -226,6 +225,7 @@ namespace relert_sharp.MapStructure
 
 
         #region Public Calls - Map
+        public HouseCollection Houses { get; private set; } = new HouseCollection();
         public CountryCollection Countries { get; private set; }
         public TriggerCollection Triggers { get; private set; }
         public TagCollection Tags { get; private set; }

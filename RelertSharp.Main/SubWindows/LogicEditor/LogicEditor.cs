@@ -39,12 +39,23 @@ namespace relert_sharp.SubWindows.LogicEditor
             LoadHouseList();
             LoadEventComboBox();
             LoadActionComboBox();
+            SetGlobal();
             lbxTriggerList.SelectedIndex = 0;
         }
         #endregion
 
 
         #region Private Methods - LogicEditor
+        private void SetGlobal()
+        {
+            //foreach (HouseItem house in map.Houses)
+            //{
+            //    if (house.PlayerControl)
+            //    {
+            //        CountryItem country = map.Countries[house.Country];
+            //    }
+            //}
+        }
         private void SetGroup()
         {
             lklEP = new LinkLabel[4] { lklEP1, lklEP2, lklEP3, lklEP4 };
@@ -185,8 +196,8 @@ namespace relert_sharp.SubWindows.LogicEditor
                     return GlobalVar.GlobalRules.BuildingList;
                 case TriggerParam.ComboContent.Infantries:
                     return GlobalVar.GlobalRules.InfantryList;
-                case TriggerParam.ComboContent.SoundNames:
-                    return GlobalVar.GlobalSound.
+                //case TriggerParam.ComboContent.SoundNames:
+                //    return GlobalVar.GlobalSound.
                 default:
                     return null;
             }
