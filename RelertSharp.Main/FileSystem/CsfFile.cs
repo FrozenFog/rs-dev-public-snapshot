@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Collections;
 using relert_sharp.Common;
 using relert_sharp.Encoding;
+using relert_sharp.IniSystem;
 
 namespace relert_sharp.FileSystem
 {
-    public class CsfFile : BaseFile
+    public class CsfFile : BaseFile, IEnumerable<CsfString>
     {
         private Dictionary<string, CsfString> data = new Dictionary<string, CsfString>();
 
@@ -68,16 +70,56 @@ namespace relert_sharp.FileSystem
 
 
         #region Public Methods - CsfFile
+        public void ToTechno()
+        {
+            TechnoPairs.Clear();
+            foreach (CsfString csf in this)
+            {
+                TechnoPair p = new TechnoPair(csf.UIName, "");
+                TechnoPairs.Add(p);
+            }
+        }
         public bool HasString(string _uiTag) { return data.Keys.Contains(_uiTag); }
+        public void AddCsfLib(CsfFile csf)
+        {
+            foreach (CsfString s in csf)
+            {
+                data[s.UIName] = s;
+            }
+        }
+        #region Enumerator
+        public IEnumerator<CsfString> GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+        #endregion
         #endregion
 
 
         #region Public Calls - CsfFile
+        public List<TechnoPair> TechnoPairs { get; set; } = new List<TechnoPair>();
         public int CsfVersion { get; private set; }
         public int LabelCount { get; private set; }
         public int StringCount { get; private set; }
         public CsfLanguage Language { get; private set; }
-        public CsfString this[string _uiTag] { get { return data[_uiTag.ToLower()]; } }
+        public CsfString this[string _uiTag]
+        {
+            get
+            {
+                if (HasString(_uiTag)) return data[_uiTag.ToLower()];
+                else
+                {
+                    CsfString csf = new CsfString(_uiTag);
+                    csf.ContentString = "MISSING:" + _uiTag;
+                    return csf;
+                }
+            }
+        }
         #endregion
     }
 
@@ -91,6 +133,14 @@ namespace relert_sharp.FileSystem
         public CsfString(string _uiTag)
         {
             UIName = _uiTag;
+        }
+        #endregion
+
+
+        #region Public Methods - CsfString
+        public override string ToString()
+        {
+            return UIName;
         }
         #endregion
 

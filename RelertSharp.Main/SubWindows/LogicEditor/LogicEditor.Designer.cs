@@ -260,10 +260,11 @@
             // txbAP4
             // 
             this.txbAP4.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbAP4.Location = new System.Drawing.Point(135, 97);
+            this.txbAP4.Location = new System.Drawing.Point(135, 96);
             this.txbAP4.Name = "txbAP4";
             this.txbAP4.Size = new System.Drawing.Size(153, 21);
             this.txbAP4.TabIndex = 4;
+            this.txbAP4.Tag = "3";
             this.txbAP4.Visible = false;
             // 
             // lklAP3
@@ -283,10 +284,11 @@
             // txbAP3
             // 
             this.txbAP3.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbAP3.Location = new System.Drawing.Point(135, 70);
+            this.txbAP3.Location = new System.Drawing.Point(135, 71);
             this.txbAP3.Name = "txbAP3";
             this.txbAP3.Size = new System.Drawing.Size(153, 21);
             this.txbAP3.TabIndex = 3;
+            this.txbAP3.Tag = "2";
             this.txbAP3.Visible = false;
             // 
             // lklAP2
@@ -306,10 +308,11 @@
             // txbAP2
             // 
             this.txbAP2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbAP2.Location = new System.Drawing.Point(135, 45);
+            this.txbAP2.Location = new System.Drawing.Point(135, 44);
             this.txbAP2.Name = "txbAP2";
             this.txbAP2.Size = new System.Drawing.Size(153, 21);
             this.txbAP2.TabIndex = 2;
+            this.txbAP2.Tag = "1";
             this.txbAP2.Visible = false;
             // 
             // lklAP1
@@ -333,6 +336,7 @@
             this.txbAP1.Name = "txbAP1";
             this.txbAP1.Size = new System.Drawing.Size(153, 21);
             this.txbAP1.TabIndex = 1;
+            this.txbAP1.Tag = "0";
             this.txbAP1.Visible = false;
             // 
             // ckbAP4
@@ -343,6 +347,7 @@
             this.ckbAP4.Name = "ckbAP4";
             this.ckbAP4.Size = new System.Drawing.Size(15, 14);
             this.ckbAP4.TabIndex = 4;
+            this.ckbAP4.Tag = "3";
             this.ckbAP4.UseVisualStyleBackColor = true;
             this.ckbAP4.Visible = false;
             // 
@@ -354,6 +359,7 @@
             this.ckbAP3.Name = "ckbAP3";
             this.ckbAP3.Size = new System.Drawing.Size(15, 14);
             this.ckbAP3.TabIndex = 3;
+            this.ckbAP3.Tag = "2";
             this.ckbAP3.UseVisualStyleBackColor = true;
             this.ckbAP3.Visible = false;
             // 
@@ -365,6 +371,7 @@
             this.ckbAP2.Name = "ckbAP2";
             this.ckbAP2.Size = new System.Drawing.Size(15, 14);
             this.ckbAP2.TabIndex = 2;
+            this.ckbAP2.Tag = "1";
             this.ckbAP2.UseVisualStyleBackColor = true;
             this.ckbAP2.Visible = false;
             // 
@@ -376,6 +383,7 @@
             this.ckbAP1.Name = "ckbAP1";
             this.ckbAP1.Size = new System.Drawing.Size(15, 14);
             this.ckbAP1.TabIndex = 1;
+            this.ckbAP1.Tag = "0";
             this.ckbAP1.UseVisualStyleBackColor = true;
             this.ckbAP1.Visible = false;
             // 
@@ -387,6 +395,7 @@
             this.cbbAP4.Name = "cbbAP4";
             this.cbbAP4.Size = new System.Drawing.Size(153, 20);
             this.cbbAP4.TabIndex = 4;
+            this.cbbAP4.Tag = "3";
             this.cbbAP4.Visible = false;
             // 
             // cbbAP3
@@ -397,6 +406,7 @@
             this.cbbAP3.Name = "cbbAP3";
             this.cbbAP3.Size = new System.Drawing.Size(153, 20);
             this.cbbAP3.TabIndex = 3;
+            this.cbbAP3.Tag = "2";
             this.cbbAP3.Visible = false;
             // 
             // cbbAP2
@@ -407,6 +417,7 @@
             this.cbbAP2.Name = "cbbAP2";
             this.cbbAP2.Size = new System.Drawing.Size(153, 20);
             this.cbbAP2.TabIndex = 2;
+            this.cbbAP2.Tag = "1";
             this.cbbAP2.Visible = false;
             // 
             // cbbAP1
@@ -417,6 +428,7 @@
             this.cbbAP1.Name = "cbbAP1";
             this.cbbAP1.Size = new System.Drawing.Size(153, 20);
             this.cbbAP1.TabIndex = 1;
+            this.cbbAP1.Tag = "0";
             this.cbbAP1.Visible = false;
             // 
             // lblNoParamA
@@ -660,7 +672,7 @@
             // txbEP4
             // 
             this.txbEP4.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbEP4.Location = new System.Drawing.Point(136, 97);
+            this.txbEP4.Location = new System.Drawing.Point(136, 96);
             this.txbEP4.Name = "txbEP4";
             this.txbEP4.Size = new System.Drawing.Size(153, 21);
             this.txbEP4.TabIndex = 4;
@@ -670,7 +682,7 @@
             // txbEP3
             // 
             this.txbEP3.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbEP3.Location = new System.Drawing.Point(136, 70);
+            this.txbEP3.Location = new System.Drawing.Point(136, 71);
             this.txbEP3.Name = "txbEP3";
             this.txbEP3.Size = new System.Drawing.Size(153, 21);
             this.txbEP3.TabIndex = 3;
@@ -705,6 +717,7 @@
             this.ckbEP4.Name = "ckbEP4";
             this.ckbEP4.Size = new System.Drawing.Size(15, 14);
             this.ckbEP4.TabIndex = 4;
+            this.ckbEP4.Tag = "3";
             this.ckbEP4.UseVisualStyleBackColor = true;
             this.ckbEP4.Visible = false;
             // 
@@ -716,6 +729,7 @@
             this.ckbEP3.Name = "ckbEP3";
             this.ckbEP3.Size = new System.Drawing.Size(15, 14);
             this.ckbEP3.TabIndex = 3;
+            this.ckbEP3.Tag = "2";
             this.ckbEP3.UseVisualStyleBackColor = true;
             this.ckbEP3.Visible = false;
             // 
@@ -727,6 +741,7 @@
             this.ckbEP2.Name = "ckbEP2";
             this.ckbEP2.Size = new System.Drawing.Size(15, 14);
             this.ckbEP2.TabIndex = 2;
+            this.ckbEP2.Tag = "1";
             this.ckbEP2.UseVisualStyleBackColor = true;
             this.ckbEP2.Visible = false;
             // 
@@ -738,6 +753,7 @@
             this.ckbEP1.Name = "ckbEP1";
             this.ckbEP1.Size = new System.Drawing.Size(15, 14);
             this.ckbEP1.TabIndex = 1;
+            this.ckbEP1.Tag = "0";
             this.ckbEP1.UseVisualStyleBackColor = true;
             this.ckbEP1.Visible = false;
             // 
@@ -749,6 +765,7 @@
             this.cbbEP4.Name = "cbbEP4";
             this.cbbEP4.Size = new System.Drawing.Size(153, 20);
             this.cbbEP4.TabIndex = 4;
+            this.cbbEP4.Tag = "3";
             this.cbbEP4.Visible = false;
             // 
             // cbbEP3
@@ -759,6 +776,7 @@
             this.cbbEP3.Name = "cbbEP3";
             this.cbbEP3.Size = new System.Drawing.Size(153, 20);
             this.cbbEP3.TabIndex = 3;
+            this.cbbEP3.Tag = "2";
             this.cbbEP3.Visible = false;
             // 
             // cbbEP2
@@ -769,6 +787,7 @@
             this.cbbEP2.Name = "cbbEP2";
             this.cbbEP2.Size = new System.Drawing.Size(153, 20);
             this.cbbEP2.TabIndex = 2;
+            this.cbbEP2.Tag = "1";
             this.cbbEP2.Visible = false;
             // 
             // cbbEP1
@@ -779,6 +798,7 @@
             this.cbbEP1.Name = "cbbEP1";
             this.cbbEP1.Size = new System.Drawing.Size(153, 20);
             this.cbbEP1.TabIndex = 1;
+            this.cbbEP1.Tag = "0";
             this.cbbEP1.Visible = false;
             // 
             // lblNoParamE

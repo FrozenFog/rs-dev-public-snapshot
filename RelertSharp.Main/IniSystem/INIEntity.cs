@@ -130,7 +130,11 @@ namespace relert_sharp.IniSystem
         public bool HasComment { get { return !string.IsNullOrEmpty(comment); } }
         public dynamic this[string key]
         {
-            get { return data[key].Value; }
+            get
+            {
+                if (data.Keys.Contains(key)) return data[key].Value;
+                else return "";
+            }
         }
         public List<INIPair> DataList { get { return data.Values.ToList(); } }
         public static INIEntity NullEntity { get { return new INIEntity("","",""); } }

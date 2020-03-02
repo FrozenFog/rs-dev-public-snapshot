@@ -63,7 +63,7 @@ namespace relert_sharp.SubWindows.LogicEditor
             lklAP = new LinkLabel[4] { lklAP1, lklAP2, lklAP3, lklAP4 };
             txbEP = new TextBox[4] { txbEP1, txbEP2, txbEP3, txbEP4 };
             txbAP = new TextBox[4] { txbAP1, txbAP2, txbAP3, txbAP4 };
-            ckbEP = new CheckBox[4] { ckbAP1, ckbAP2, ckbAP3, ckbAP4 };
+            ckbEP = new CheckBox[4] { ckbEP1, ckbEP2, ckbEP3, ckbEP4 };
             ckbAP = new CheckBox[4] { ckbAP1, ckbAP2, ckbAP3, ckbAP4 };
             cbbEP = new ComboBox[4] { cbbEP1, cbbEP2, cbbEP3, cbbEP4 };
             cbbAP = new ComboBox[4] { cbbAP1, cbbAP2, cbbAP3, cbbAP4 };
@@ -207,6 +207,8 @@ namespace relert_sharp.SubWindows.LogicEditor
                     return map.LocalVariables.ToTechno();
                 case TriggerParam.ComboContent.SuperWeapons:
                     return GlobalVar.GlobalRules.SuperWeaponList;
+                case TriggerParam.ComboContent.CsfLabel:
+                    return GlobalVar.GlobalCsf.TechnoPairs;
                 default:
                     return null;
             }
@@ -251,28 +253,27 @@ namespace relert_sharp.SubWindows.LogicEditor
             if (controls.GetType() == typeof(LinkLabel[]))
             {
                 ((LinkLabel)controls[controlIndex]).Text = param.Name;
-                ((LinkLabel)controls[controlIndex]).Visible = true;
                 if (!param.Traceable) ((LinkLabel)controls[controlIndex]).Enabled = false;
             }
             else if (controls.GetType() == typeof(ComboBox[]))
             {
                 StaticHelper.LoadToObjectCollection((ComboBox)controls[controlIndex] , GetComboCollections(param));
+                StaticHelper.SelectCombo((ComboBox)controls[controlIndex], param.GetParameter(paramData));
             }
             else
             {
                 if (param.Type == TriggerParam.ParamType.Bool)
                 {
-                    controls[controlIndex].Visible = true;
                     ((CheckBox)controls[controlIndex]).Checked = param.GetParameter(paramData, true);
                     controls[controlIndex].Tag = param.ParamPos;
                 }
                 else
                 {
-                    controls[controlIndex].Visible = true;
                     controls[controlIndex].Text = param.GetParameter(paramData);
                     controls[controlIndex].Tag = param.ParamPos;
                 }
             }
+            controls[controlIndex].Visible = true;
         }
         private void UpdateActionContent(LogicItem item)
         {

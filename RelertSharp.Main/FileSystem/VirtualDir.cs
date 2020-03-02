@@ -101,6 +101,11 @@ namespace relert_sharp.FileSystem
                 return result;
             }
         }
+        public T GetFile<T>(string name, Func<byte[], string, T> func) where T : BaseFile
+        {
+            byte[] data = GetRawByte(name);
+            return func(data, name);
+        }
         public dynamic GetFile(string _fileName, FileExtension _fileType)
         {
             switch (_fileType)

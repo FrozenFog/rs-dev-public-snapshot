@@ -29,11 +29,24 @@ namespace relert_sharp
         static void Initialization()
         {
             Utils.Misc.Init_Language();
+            SetGlobalVar();
+        }
+        static void SetGlobalVar()
+        {
             GlobalVar.GlobalConfig = new RSConfig();
             GlobalVar.GlobalDir = new VirtualDir();
-            GlobalVar.GlobalRules = new IniSystem.Rules(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.RulesName), GlobalVar.GlobalConfig.RulesName);
+            GlobalVar.GlobalRules = new IniSystem.Rules(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.RulesName + ".ini"), GlobalVar.GlobalConfig.RulesName + ".ini");
             GlobalVar.GlobalSound = new IniSystem.SoundRules(GlobalVar.GlobalConfig.SoundName, GlobalVar.GlobalConfig.EvaName, GlobalVar.GlobalConfig.ThemeName);
             GlobalVar.GlobalSoundBank = new SoundBank(GlobalVar.GlobalConfig.BagNameList);
+            GlobalVar.GlobalCsf = GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.StringtableList[0], FileExtension.CSF);
+            if (GlobalVar.GlobalConfig.StringtableList.Count > 1)
+            {
+                foreach (string name in GlobalVar.GlobalConfig.StringtableList.Skip(1))
+                {
+                    GlobalVar.GlobalCsf.AddCsfLib(GlobalVar.GlobalDir.GetFile(name, FileExtension.CSF));
+                }
+            }
+            GlobalVar.GlobalCsf.ToTechno();
         }
     }
 }

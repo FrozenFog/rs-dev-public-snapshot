@@ -14,17 +14,18 @@ namespace relert_sharp.SubWindows.LogicEditor
         public static void LoadToObjectCollection(ComboBox dest, IEnumerable<object> src)
         {
             dest.Items.Clear();
-            foreach (object item in src)
-            {
-                dest.Items.Add(item);
-            }
+            dest.Items.AddRange(src.ToArray());
         }
         public static void LoadToObjectCollection(ListBox dest, IEnumerable<object> src)
         {
             dest.Items.Clear();
-            foreach (object item in src)
+            dest.Items.AddRange(src.ToArray());
+        }
+        public static void SelectCombo(ComboBox dest, string param)
+        {
+            foreach (TechnoPair p in dest.Items)
             {
-                dest.Items.Add(item);
+                if (p.Index == param) dest.SelectedItem = p;
             }
         }
     }

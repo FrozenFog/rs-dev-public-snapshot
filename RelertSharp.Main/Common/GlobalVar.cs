@@ -44,6 +44,12 @@ namespace relert_sharp.Common
             get { return globalsoundbank; }
             set { globalsoundbank = value; }
         }
+        private static FileSystem.CsfFile globalcsf;
+        public static FileSystem.CsfFile GlobalCsf
+        {
+            get { return globalcsf; }
+            set { globalcsf = value; }
+        }
         private static string playerside;
         public static string PlayerSide
         {

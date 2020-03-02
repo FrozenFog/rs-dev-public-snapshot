@@ -16,9 +16,9 @@ namespace relert_sharp.IniSystem
         #region Constructor - SoundRules
         public SoundRules(string soundname, string evaname, string themename)
         {
-            sound = new INIFile(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.SoundName), GlobalVar.GlobalConfig.SoundName, INIFileType.SoundINI);
-            eva = new INIFile(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.EvaName), GlobalVar.GlobalConfig.EvaName, INIFileType.EvaINI);
-            theme = new INIFile(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.ThemeName), GlobalVar.GlobalConfig.ThemeName, INIFileType.ThemeINI);
+            sound = GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.SoundName, FileExtension.INI);
+            eva = GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.EvaName, FileExtension.INI);
+            theme = GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.ThemeName, FileExtension.INI);
             GetPairs();
         }
         #endregion

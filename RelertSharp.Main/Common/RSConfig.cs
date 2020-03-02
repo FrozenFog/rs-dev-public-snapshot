@@ -19,6 +19,7 @@ namespace relert_sharp.Common
             GetTheaterMixList();
             GetCiphedMixNameList();
             GetOldMixList();
+            GetStringtable();
         }
         #endregion
 
@@ -72,6 +73,11 @@ namespace relert_sharp.Common
                 }
             }
         }
+        private void GetStringtable()
+        {
+            StringtableList = new List<string>();
+            foreach (string stb in this["StringTable"].TakeValuesToList()) StringtableList.Add(stb);
+        }
         #endregion
 
 
@@ -85,6 +91,7 @@ namespace relert_sharp.Common
         public string GamePath { get { return this["General"]["GamePath"]; } }
         public string ConfigName { get { return this["General"]["ConfigName"]; } }
         public string[] BagNameList { get { return this["SoundConfigs"].GetPair("Bags").ParseStringList(); } }
+        public List<string> StringtableList { get; private set; }
         public List<string> MixNameList { get; private set; }
         public List<string> CiphedMix { get; private set; }
         public List<string> OldMix { get; private set; }
