@@ -10,6 +10,8 @@ namespace relert_sharp.FileSystem
     public class WavFile
     {
         private byte[] data;
+        private int samplePos = 44;
+        private bool acmDecoded = true;
 
 
         #region Constructor - WavFile
@@ -17,7 +19,7 @@ namespace relert_sharp.FileSystem
         {
             MemoryStream ms = new MemoryStream();
             BinaryWriter bw = new BinaryWriter(ms);
-            SampleRate = _sampleRate;
+            SamplesPerSec = _sampleRate;
             Chanel = _chanel;
             SampleSize = _sample.Length;
             bw.Write(0x46464952);//RIFF
@@ -27,9 +29,9 @@ namespace relert_sharp.FileSystem
             bw.Write(16);//chunksize
             bw.Write((short)1);//formatTag
             bw.Write((ushort)_chanel);//chanel
-            bw.Write(_sampleRate);//samples per sec
-            bw.Write(44100);//sample rate
-            bw.Write((ushort)2);//block align
+            bw.Write(SamplesPerSec);//samples per sec
+            bw.Write(2 * SamplesPerSec);//sample rate
+            bw.Write((ushort)(2 * Chanel));//block align
             bw.Write((ushort)16);//bits per sec
             bw.Write(0x61746164);//data
             bw.Write(_sample.Length);
@@ -43,13 +45,41 @@ namespace relert_sharp.FileSystem
         {
             MemoryStream ms = new MemoryStream(fulldata);
             BinaryReader br = new BinaryReader(ms);
-            br.ReadInt32();
-            SampleSize = br.ReadInt32() - 36;
-            br.ReadBytes(14);
+            br.ReadInt32(); // RIFF
+            uint remainSize = br.ReadUInt32() - 4;
+            br.ReadBytes(8);//WAVE, fmt ;
+
+            int fmtSize = br.ReadInt32();
+            WavTypeFlag = br.ReadInt16();
+            if (WavTypeFlag != 1) acmDecoded = false;
             Chanel = br.ReadUInt16();
-            br.ReadInt32();
-            SampleRate = br.ReadInt32();
-            data = fulldata;
+            SamplesPerSec = br.ReadInt32();
+            AverageSampleRate = br.ReadUInt32();
+            BlockAlign = br.ReadInt16();
+            BitsPerSample = br.ReadInt16();
+            fmtSize -= 16;
+            if (fmtSize > 0)
+            {
+                br.ReadBytes(fmtSize);
+                samplePos += 4;
+            }
+
+            while (br.BaseStream.CanRead)
+            {
+                int chunkname = br.ReadInt32();
+                if (chunkname == 0x61746164) // data
+                {
+                    SampleSize = br.ReadInt32();
+                    data = fulldata;
+                    break;
+                }
+                else
+                {
+                    int size = br.ReadInt32();
+                    samplePos += 8 + size;
+                    br.ReadBytes(size);
+                }
+            }
         }
         public WavFile() { }
         #endregion
@@ -64,12 +94,17 @@ namespace relert_sharp.FileSystem
 
 
         #region Public Calls - WavFile
+        public byte[] SampleBytes { get { return ByteArray.Skip(samplePos).Take(SampleSize).ToArray(); } }
+        public short BitsPerSample { get; private set; }
+        public short BlockAlign { get; private set; }
+        public uint AverageSampleRate { get; private set; }
+        public int SamplesPerSec { get; private set; }
+        public short WavTypeFlag { get; private set; }
         public byte[] ByteArray { get { return data; } }
         public bool IsEmpty { get { return ByteArray.Length == 0; } }
-        public int SampleRate { get; set; }
         public int SampleSize { get; set; }
         public int Chanel { get; set; }
-        public int TimeMilSec { get { return SampleSize * 1000 / Chanel / SampleRate; } }
+        public int TimeMilSec { get { return SampleSize / Chanel / SamplesPerSec * 1000; } }
         #endregion
     }
 }

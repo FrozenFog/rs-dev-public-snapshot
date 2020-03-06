@@ -51,6 +51,8 @@ namespace relert_sharp.FileSystem
                     byte[] bag = GlobalVar.GlobalDir.GetRawByte(bagname + ".bag");
                     IdxBagFile f = new IdxBagFile(indexs[bagname], bag);
                     wav = f.ReadAudFile(name).ToWav();
+                    f.Dispose();
+                    GC.Collect();
                     return wav;
                 }
             }

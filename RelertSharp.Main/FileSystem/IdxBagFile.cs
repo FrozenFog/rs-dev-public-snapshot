@@ -8,7 +8,7 @@ using relert_sharp.Common;
 
 namespace relert_sharp.FileSystem
 {
-    public class IdxBagFile
+    public class IdxBagFile : IDisposable
     {
         private BinaryReader bagReader;
 
@@ -61,7 +61,12 @@ namespace relert_sharp.FileSystem
             if (!Index.Keys.Contains(_filename)) return new AudFile(_filename, 0);
             IdxIndex.IdxItem target = Index[_filename];
             bagReader.BaseStream.Seek(target.Offset, SeekOrigin.Begin);
-            return new AudFile(bagReader.ReadBytes((int)target.Length), _filename + ".aud", target);
+            return new AudFile(bagReader.ReadBytes((int)target.Length), _filename + ".aud", (ushort)target.SampleRate, target.Flag, (int)target.ChunkSize);
+        }
+
+        public void Dispose()
+        {
+            bagReader.Dispose();
         }
         #endregion
 
@@ -94,6 +99,7 @@ namespace relert_sharp.FileSystem
         #region Public Methods - IdxIndex
         public bool HasFile(string name)
         {
+            if (name.StartsWith("$")) name = name.Substring(1);
             return items.Keys.Contains(name);
         }
         #endregion

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using relert_sharp.Encoding;
 using relert_sharp.Common;
 using relert_sharp.Utils;
@@ -34,14 +35,18 @@ namespace relert_sharp.FileSystem
         {
             sampleRate = _sampleRate;
         }
-        public AudFile(byte[] _compressedData, string _filename, IdxIndex.IdxItem _info) : base(_compressedData,_filename)
+        public AudFile(byte[] _compressedData, string _filename, ushort _sampleRate, uint _flag, int _chunkSize) : base(_compressedData,_filename)
         {
-            sampleRate = (ushort)_info.SampleRate;
+            sampleRate = _sampleRate;
             //dataSize = _compressedData.Length;
             outputSize = 0;
             dataSize = 0;
-            flag = AudType.Bit16;
+            flag = (AudType)_flag;
             compressionType = CompressionType.ImaAdpcmCompression;
+            if (_flag == 13)
+            {
+                return;
+            }
             for (int i = _compressedData.Length; i > 0;)
             {
                 ushort num = (ushort)Math.Min(508, i);
@@ -82,6 +87,11 @@ namespace relert_sharp.FileSystem
             flag = (AudType)ReadByte();
             compressionType = (CompressionType)ReadByte();
         }
+        private void DecodeStrero()
+        {
+            ReadSeek(0, SeekOrigin.Begin);
+            AudioBytes = AudEncoding.DecodeAcmWav(ReadAll(), 1024, false, true);
+        }
         #endregion
 
 
@@ -98,9 +108,18 @@ namespace relert_sharp.FileSystem
         }
         public WavFile ToWav()
         {
-            DecodeBlocks();
-            WavFile wavFile = new WavFile(AudioBytes, SampleRate, 1);
-            return wavFile;
+            WavFile wav;
+            if ((int)flag == 13)
+            {
+                DecodeStrero();
+                wav = new WavFile(AudioBytes, SampleRate, 2);
+            }
+            else
+            {
+                DecodeBlocks();
+                wav = new WavFile(AudioBytes, SampleRate, 1);
+            }
+            return wav;
         }
         #endregion
 
@@ -122,6 +141,10 @@ namespace relert_sharp.FileSystem
                     fullData = result;
                 }
                 return fullData;
+            }
+            set
+            {
+                fullData = value;
             }
         }
         public int SampleRate { get { return sampleRate; } }
@@ -156,10 +179,7 @@ namespace relert_sharp.FileSystem
         public void Decode(AudType type, ref short _sample, ref int _index)
         {
             if (IsDecoded) return;
-            Type T;
-            if (type == AudType.Bit16) T = typeof(short);
-            else T = typeof(byte);
-            decompressedData = AudEncoding.DecodeBlock(compressedData, T, ref _sample, ref _index);
+            decompressedData = AudEncoding.DecodeBlock(compressedData, ref _sample, ref _index);
             //short[] cmp = new short[1024];
             //unsafe
             //{
@@ -174,10 +194,7 @@ namespace relert_sharp.FileSystem
         public void Decode(AudType type, short _sample, int _index)
         {
             if (IsDecoded) return;
-            Type T;
-            if (type == AudType.Bit16) T = typeof(short);
-            else T = typeof(byte);
-            decompressedData = AudEncoding.DecodeBlock(compressedData, T, ref _sample, ref _index);
+            decompressedData = AudEncoding.DecodeBlock(compressedData, ref _sample, ref _index);
         }
         #endregion
 

@@ -42,6 +42,7 @@ namespace relert_sharp.SubWindows.LogicEditor
 
         private void lklParams_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            ((LinkLabel)sender).UseWaitCursor = true;
             int tagid = int.Parse(((LinkLabel)sender).Tag.ToString());
             TechnoPair p;
             TriggerDescription desc;
@@ -61,7 +62,6 @@ namespace relert_sharp.SubWindows.LogicEditor
                 case TriggerParam.ComboContent.SoundNames:
                 case TriggerParam.ComboContent.ThemeNames:
                 case TriggerParam.ComboContent.EvaNames:
-
                     if (soundPlayer.IsPlaying)
                     {
                         soundPlayer.Stop();

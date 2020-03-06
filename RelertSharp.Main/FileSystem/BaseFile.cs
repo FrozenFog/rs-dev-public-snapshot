@@ -164,6 +164,7 @@ namespace relert_sharp.FileSystem
         }
         protected string Readline() { return sr.ReadLine(); }
         protected string ReadString(int _count) { return new string(br.ReadChars(_count)); }
+        protected byte[] ReadAll() { return br.ReadBytes((int)br.BaseStream.Length); }
         protected bool CanRead() { return !sr.EndOfStream; }
         protected bool CanWrite() { return ms.CanWrite; }
         protected void Write(string s) { sw.Write(s);sw.Flush(); }

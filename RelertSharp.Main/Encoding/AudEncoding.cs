@@ -22,32 +22,111 @@ namespace relert_sharp.Encoding
             -1, -1, -1, -1, 2, 4, 6, 8
         };
 
-
-        public static byte[] DecodeBlock(byte[] _compressedData, Type T, ref short _sample, ref int _index)
+        public static byte[] DecodeAcmWav(byte[] src, int chunkSize, bool isMono, bool isWW = false)
+        {
+            MemoryStream ms = new MemoryStream(src);
+            BinaryReader br = new BinaryReader(ms);
+            MemoryStream result = new MemoryStream();
+            BinaryWriter bw = new BinaryWriter(result);
+            for (int i = src.Length; i > 0;)
+            {
+                if (isMono)
+                {
+                    short predict = br.ReadInt16();
+                    int index = br.ReadByte();
+                    br.ReadByte();
+                    int num = Math.Min(chunkSize - 4, i);
+                    byte[] block = br.ReadBytes(num);
+                    bw.Write(DecodeBlock(block, ref predict, ref index));
+                    bw.Flush();
+                    i -= (num + 4);
+                }
+                else
+                {
+                    short spL = br.ReadInt16();
+                    int idL = br.ReadByte(); br.ReadByte();
+                    short spR = br.ReadInt16();
+                    int idR = br.ReadByte(); br.ReadByte();
+                    int num = Math.Min(chunkSize - 8, i);
+                    byte[] block = br.ReadBytes(num);
+                    bw.Write(DecodeStrero(block, 8, ref spL, ref idL, ref spR, ref idR));
+                    bw.Flush();
+                    i -= (num + 8);
+                }
+            }
+            byte[] arr = result.ToArray();
+            result.Dispose();
+            br.Dispose();
+            ms.Dispose();
+            bw.Dispose();
+            return arr;
+        }
+        public static byte[] DecodeBlock(byte[] _compressedData, ref short _sample, ref int _index)
         {
             int code;
             bool _low = true;
-            byte signingBit;
             MemoryStream ms = new MemoryStream();
             BinaryWriter bw = new BinaryWriter(ms);
             int j = _compressedData.Length * 2;
             for (int i = 0; i < j; i++)
             {
                 code = GetCode(_compressedData[i / 2], ref _low);
-                signingBit = (byte)(code >> 3);
-                code &= 0x7;
-                short delta = (short)(tb_step[_index] * code / 4 + (tb_step[_index] / 8));
-                if (signingBit == 1) delta *= -1;
-                _sample = (short)Region(-32768, 32767, _sample + delta);
-                _index = Region(0, 88, _index + tb_adjust[code]);
-                if (T == typeof(short)) bw.Write(_sample);
-                else bw.Write((byte)_sample);
+                DecodeCode(code, ref _sample, ref _index);
+                bw.Write(_sample);
             }
             bw.Flush();
             byte[] result = ms.ToArray();
             bw.Dispose();
             ms.Dispose();
             return result;
+        }
+        public static byte[] DecodeStrero(byte[] _compressedData, int switchSize, ref short _sampleL, ref int _indexL, ref short _sampleR, ref int _indexR)
+        {
+            int code;
+            bool _low = true;
+            MemoryStream ms = new MemoryStream();
+            BinaryWriter bw = new BinaryWriter(ms);
+            int j = _compressedData.Length * 2;
+            for (int i = 0; i < j;)
+            {
+                short[] left = new short[switchSize];
+                short[] right = new short[switchSize];
+                for (int l = 0; l < switchSize; l++)
+                {
+                    code = GetCode(_compressedData[i++ / 2], ref _low);
+                    DecodeCode(code, ref _sampleL, ref _indexL);
+                    left[l] = _sampleL;
+                }
+                for (int r = 0; r < switchSize; r++)
+                {
+                    code = GetCode(_compressedData[i++ / 2], ref _low);
+                    DecodeCode(code, ref _sampleR, ref _indexR);
+                    right[r] = _sampleR;
+                }
+                WriteStrero(left, right, bw);
+            }
+            byte[] result = ms.ToArray();
+            bw.Dispose();
+            ms.Dispose();
+            return result;
+        }
+        private static void WriteStrero(short[] left, short[] right, BinaryWriter dest)
+        {
+            for (int i = 0; i < left.Length; i++)
+            {
+                dest.Write(left[i]);
+                dest.Write(right[i]);
+            }
+            dest.Flush();
+        }
+        private static void DecodeCode(int code, ref short sample, ref int index)
+        {
+            byte signingbit = (byte)(code >> 3);
+            code &= 0x7;
+            short delta = (short)(tb_step[index] * code / 4 + (tb_step[index] / 8));
+            if (signingbit == 1) delta *= -1;
+            sample = (short)Region(-32768, 32767, sample + delta);
+            index = Region(0, 88, index + tb_adjust[code]);
         }
         private static int GetCode(byte _src, ref bool _isLow)
         {
@@ -58,7 +137,6 @@ namespace relert_sharp.Encoding
             }
             else
             {
-                result &= 0xF0;
                 result >>= 4;
             }
             _isLow = !_isLow;
