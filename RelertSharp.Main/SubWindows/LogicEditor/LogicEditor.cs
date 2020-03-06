@@ -213,6 +213,24 @@ namespace relert_sharp.SubWindows.LogicEditor
                     return null;
             }
         }
+        private async void ManageSound(TriggerParam param, TechnoPair p)
+        {
+            if (soundPlayer.IsPlaying)
+            {
+                soundPlayer.Stop();
+                UseWaitCursor = false;
+            }
+            else
+            {
+                string name = soundPlayer.GetSoundName(p, (SoundType)param.ComboType);
+                await Task.Run(() =>
+                {
+                    soundPlayer.LoadWav(GlobalVar.GlobalSoundBank.GetSound(name));
+                });
+                soundPlayer.Play();
+                UseWaitCursor = false;
+            }
+        }
         private void UpdateActionParams(TriggerDescription description, string[] actionParams)
         {
             rtxbActionDetail.Refresh();

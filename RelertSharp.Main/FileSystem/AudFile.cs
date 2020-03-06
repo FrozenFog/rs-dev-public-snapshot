@@ -90,7 +90,7 @@ namespace relert_sharp.FileSystem
         private void DecodeStrero()
         {
             ReadSeek(0, SeekOrigin.Begin);
-            AudioBytes = AudEncoding.DecodeAcmWav(ReadAll(), 1024, false, true);
+            AudioBytes = AudEncoding.DecodeAcmWav(ReadAll(), 1024, false);
         }
         #endregion
 

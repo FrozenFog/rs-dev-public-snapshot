@@ -62,16 +62,8 @@ namespace relert_sharp.SubWindows.LogicEditor
                 case TriggerParam.ComboContent.SoundNames:
                 case TriggerParam.ComboContent.ThemeNames:
                 case TriggerParam.ComboContent.EvaNames:
-                    if (soundPlayer.IsPlaying)
-                    {
-                        soundPlayer.Stop();
-                    }
-                    else
-                    {
-                        string name = soundPlayer.GetSoundName(p, (SoundType)param.ComboType);
-                        soundPlayer.LoadWav(GlobalVar.GlobalSoundBank.GetSound(name));
-                        soundPlayer.Play();
-                    }
+                    UseWaitCursor = true;
+                    ManageSound(param, p);
                     break;
                 case TriggerParam.ComboContent.Triggers:
                     //TODO: Convert TechnoPair into trigger item

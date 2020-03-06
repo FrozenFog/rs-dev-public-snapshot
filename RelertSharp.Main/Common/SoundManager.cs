@@ -33,6 +33,7 @@ namespace relert_sharp.Common
         {
             player.Stop();
             player.Dispose();
+            ms.Dispose();
             watch.Reset();
             CurrentLength = -1;
             GC.Collect();

@@ -21,8 +21,7 @@ namespace relert_sharp.Encoding
         {
             -1, -1, -1, -1, 2, 4, 6, 8
         };
-
-        public static byte[] DecodeAcmWav(byte[] src, int chunkSize, bool isMono, bool isWW = false)
+        public static byte[] DecodeAcmWav(byte[] src, int chunkSize, bool isMono)
         {
             MemoryStream ms = new MemoryStream(src);
             BinaryReader br = new BinaryReader(ms);
