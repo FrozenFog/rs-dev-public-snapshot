@@ -27,7 +27,6 @@ namespace relert_sharp.MapStructure
         private Lightning lightning;
         private Rectangle previewSize;
 
-        private TeamCollection teams = new TeamCollection();
         private TaskforceCollection taskforces = new TaskforceCollection();
         private TeamScriptCollection scripts = new TeamScriptCollection();
         private AITriggerCollection aitriggers = new AITriggerCollection();
@@ -142,7 +141,7 @@ namespace relert_sharp.MapStructure
 
             foreach (string teamID in _teamList)
             {
-                teams[teamID] = new TeamItem(f.PopEnt(teamID));
+                Teams[teamID] = new TeamItem(f.PopEnt(teamID));
             }
             foreach (string tfID in _taskforceList)
             {
@@ -153,19 +152,20 @@ namespace relert_sharp.MapStructure
                 scripts[scptID] = new TeamScriptGroup(f.PopEnt(scptID));
             }
 
-            List<string> _houseList = f.PopEnt("Houses").TakeValuesToList();
-            List<string> _countryList = f.PopEnt("Countries").TakeValuesToList();
+            INIEntity _houseList = f.PopEnt("Houses");
+            INIEntity _countryList = f.PopEnt("Countries");
 
-            foreach (string houseName in _houseList)
+            foreach (INIPair p in _houseList)
             {
-                Houses[houseName] = new HouseItem(f.PopEnt(houseName));
+                Houses[p.Name] = new HouseItem(f.PopEnt(p.Value));
             }
             Countries = new CountryCollection();
-            foreach (string countryName in _countryList)
+            foreach (INIPair p in _countryList)
             {
-                CountryItem item = new CountryItem(f.PopEnt(countryName));
-                if (string.IsNullOrEmpty(item.Name)) item.Name = countryName;
-                Countries[countryName] = item;
+                CountryItem item = new CountryItem(f.PopEnt(p.Value));
+                if (string.IsNullOrEmpty(item.Name)) item.Name = p.Value;
+                item.Index = p.Name;
+                Countries[p.Name] = item;
             }
         }
         private void GetAbstractLogics(MapFile f)
@@ -226,6 +226,7 @@ namespace relert_sharp.MapStructure
         #region Public Calls - Map
         public HouseCollection Houses { get; private set; } = new HouseCollection();
         public LocalVarCollection LocalVariables { get; private set; } = new LocalVarCollection();
+        public TeamCollection Teams { get; private set; } = new TeamCollection();
         public CountryCollection Countries { get; private set; }
         public TriggerCollection Triggers { get; private set; }
         public TagCollection Tags { get; private set; }

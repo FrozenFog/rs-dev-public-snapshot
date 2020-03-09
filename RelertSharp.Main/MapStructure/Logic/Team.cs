@@ -11,7 +11,22 @@ namespace relert_sharp.MapStructure.Logic
 {
     public class TeamCollection : TeamLogicCollection<TeamItem>
     {
+        #region Constructor - TeamCollection
         public TeamCollection() : base() { }
+        #endregion
+
+
+        #region Public Methods - TeamCollection
+        public IEnumerable<TechnoPair> ToTechno()
+        {
+            List<TechnoPair> result = new List<TechnoPair>();
+            foreach (TeamItem team in this)
+            {
+                result.Add(new TechnoPair(team.ID, team.TeamName));
+            }
+            return result;
+        }
+        #endregion
 
     }
     public class TeamItem : TeamLogicItem

@@ -16,14 +16,23 @@ namespace relert_sharp.IniSystem
 
 
         #region Private Methods - Rules
-        private List<TechnoPair> GetTechnoPairs(string entName, TechnoPair.AbstractType type)
+        private List<TechnoPair> GetTechnoPairs(string entName, TechnoPair.AbstractType type, TechnoPair.IndexType indexType = TechnoPair.IndexType.Index)
         {
             INIEntity entLs = this[entName];
             List<TechnoPair> result = new List<TechnoPair>();
             foreach (INIPair p in entLs)
             {
                 INIEntity ent = this[p.Value.ToString()];
-                result.Add(ent.ToTechno(p.Name, type));
+                result.Add(ent.ToTechno(p.Name, type, indexType));
+            }
+            return result;
+        }
+        private List<TechnoPair> GetTechnoPairs(INIEntity entlist)
+        {
+            List<TechnoPair> result = new List<TechnoPair>();
+            foreach (INIPair p in entlist)
+            {
+                result.Add(new TechnoPair(p.Name, p.Value));
             }
             return result;
         }
@@ -56,7 +65,7 @@ namespace relert_sharp.IniSystem
         {
             get
             {
-                return GetTechnoPairs("BuildingTypes", TechnoPair.AbstractType.RegName);
+                return GetTechnoPairs("BuildingTypes", TechnoPair.AbstractType.Name);
             }
         }
         public List<TechnoPair> SuperWeaponList
@@ -71,6 +80,52 @@ namespace relert_sharp.IniSystem
             get
             {
                 return GetTechnoPairs("WeaponTypes", TechnoPair.AbstractType.RegName);
+            }
+        }
+        public List<TechnoPair> AnimationList
+        {
+            get
+            {
+                return GetTechnoPairs(this["Animations"]);
+            }
+        }
+        public List<TechnoPair> ParticalList
+        {
+            get
+            {
+                return GetTechnoPairs(this["Particles"]);
+            }
+        }
+        public List<TechnoPair> VoxAnimList
+        {
+            get
+            {
+                return GetTechnoPairs(this["VoxelAnims"]);
+            }
+        }
+        public List<TechnoPair> TechnoList
+        {
+            get
+            {
+                List<TechnoPair> result = new List<TechnoPair>();
+                result.AddRange(GetTechnoPairs("InfantryTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
+                result.AddRange(GetTechnoPairs("VehicleTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
+                result.AddRange(GetTechnoPairs("AircraftTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
+                result.AddRange(GetTechnoPairs("BuildingTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
+                return result;
+            }
+        }
+        public List<TechnoPair> GlobalVar
+        {
+            get
+            {
+                List<TechnoPair> result = new List<TechnoPair>();
+                INIEntity ent = this["VariableNames"];
+                foreach (INIPair p in ent)
+                {
+                    result.Add(new TechnoPair(p.Name, p.Value));
+                }
+                return result;
             }
         }
         #endregion

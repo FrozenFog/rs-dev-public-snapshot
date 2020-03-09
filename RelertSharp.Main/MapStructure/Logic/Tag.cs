@@ -41,7 +41,8 @@ namespace relert_sharp.MapStructure.Logic
             {
                 return data[trigger_tag[triggerID]];
             }
-            return null;
+            TagItem nullitem = new TagItem("xxxxxxxx", new string[3]{ "0","!NO AVAIABLE TAG!","<none>"});
+            return nullitem;
         }
         #endregion
 

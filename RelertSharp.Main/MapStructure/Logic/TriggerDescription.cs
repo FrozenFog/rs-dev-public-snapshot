@@ -150,7 +150,8 @@ namespace relert_sharp.MapStructure.Logic
             SuperWeapons = 16,
             Animations = 17,
             Weapons = 18,
-            ParticalAnim = 19
+            ParticalAnim = 19,
+            VoxelAnim = 21
         }
         #region Constructor - TriggerParam
         public TriggerParam(int paramType, bool traceable, int pos, string name, int comboType)

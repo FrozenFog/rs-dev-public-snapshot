@@ -165,7 +165,6 @@
             this.tbcMain.SelectedIndex = 0;
             this.tbcMain.Size = new System.Drawing.Size(1198, 591);
             this.tbcMain.TabIndex = 0;
-            this.tbcMain.UseWaitCursor = false;
             // 
             // tbpTriggers
             // 
@@ -181,7 +180,6 @@
             this.tbpTriggers.Size = new System.Drawing.Size(1190, 565);
             this.tbpTriggers.TabIndex = 0;
             this.tbpTriggers.Text = "LGCtbpTrgPage";
-            this.tbpTriggers.UseWaitCursor = false;
             // 
             // gpbActions
             // 
@@ -206,7 +204,6 @@
             this.gpbActions.TabIndex = 6;
             this.gpbActions.TabStop = false;
             this.gpbActions.Text = "LGCgpbTrgActions";
-            this.gpbActions.UseWaitCursor = false;
             // 
             // mtxbActionID
             // 
@@ -216,7 +213,6 @@
             this.mtxbActionID.PromptChar = ' ';
             this.mtxbActionID.Size = new System.Drawing.Size(32, 21);
             this.mtxbActionID.TabIndex = 0;
-            this.mtxbActionID.UseWaitCursor = false;
             this.mtxbActionID.ValidatingType = typeof(int);
             this.mtxbActionID.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SelectTextboxContent_MouseClicked);
             this.mtxbActionID.Validated += new System.EventHandler(this.mtxbActionID_Validated);
@@ -246,7 +242,6 @@
             this.gpbActionParam.TabIndex = 1;
             this.gpbActionParam.TabStop = false;
             this.gpbActionParam.Text = "LGCgpbActionParam";
-            this.gpbActionParam.UseWaitCursor = false;
             // 
             // lklAP4
             // 
@@ -259,7 +254,6 @@
             this.lklAP4.TabStop = true;
             this.lklAP4.Tag = "3";
             this.lklAP4.Text = "AP4";
-            this.lklAP4.UseWaitCursor = false;
             this.lklAP4.Visible = false;
             this.lklAP4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
@@ -271,7 +265,6 @@
             this.txbAP4.Size = new System.Drawing.Size(153, 21);
             this.txbAP4.TabIndex = 4;
             this.txbAP4.Tag = "3";
-            this.txbAP4.UseWaitCursor = false;
             this.txbAP4.Visible = false;
             // 
             // lklAP3
@@ -285,7 +278,6 @@
             this.lklAP3.TabStop = true;
             this.lklAP3.Tag = "2";
             this.lklAP3.Text = "AP3";
-            this.lklAP3.UseWaitCursor = false;
             this.lklAP3.Visible = false;
             this.lklAP3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
@@ -297,7 +289,6 @@
             this.txbAP3.Size = new System.Drawing.Size(153, 21);
             this.txbAP3.TabIndex = 3;
             this.txbAP3.Tag = "2";
-            this.txbAP3.UseWaitCursor = false;
             this.txbAP3.Visible = false;
             // 
             // lklAP2
@@ -311,7 +302,6 @@
             this.lklAP2.TabStop = true;
             this.lklAP2.Tag = "1";
             this.lklAP2.Text = "AP2";
-            this.lklAP2.UseWaitCursor = false;
             this.lklAP2.Visible = false;
             this.lklAP2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
@@ -323,7 +313,6 @@
             this.txbAP2.Size = new System.Drawing.Size(153, 21);
             this.txbAP2.TabIndex = 2;
             this.txbAP2.Tag = "1";
-            this.txbAP2.UseWaitCursor = false;
             this.txbAP2.Visible = false;
             // 
             // lklAP1
@@ -337,7 +326,6 @@
             this.lklAP1.TabStop = true;
             this.lklAP1.Tag = "0";
             this.lklAP1.Text = "AP1";
-            this.lklAP1.UseWaitCursor = false;
             this.lklAP1.Visible = false;
             this.lklAP1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
@@ -349,7 +337,6 @@
             this.txbAP1.Size = new System.Drawing.Size(153, 21);
             this.txbAP1.TabIndex = 1;
             this.txbAP1.Tag = "0";
-            this.txbAP1.UseWaitCursor = false;
             this.txbAP1.Visible = false;
             // 
             // ckbAP4
@@ -362,7 +349,6 @@
             this.ckbAP4.TabIndex = 4;
             this.ckbAP4.Tag = "3";
             this.ckbAP4.UseVisualStyleBackColor = true;
-            this.ckbAP4.UseWaitCursor = false;
             this.ckbAP4.Visible = false;
             // 
             // ckbAP3
@@ -375,7 +361,6 @@
             this.ckbAP3.TabIndex = 3;
             this.ckbAP3.Tag = "2";
             this.ckbAP3.UseVisualStyleBackColor = true;
-            this.ckbAP3.UseWaitCursor = false;
             this.ckbAP3.Visible = false;
             // 
             // ckbAP2
@@ -388,7 +373,6 @@
             this.ckbAP2.TabIndex = 2;
             this.ckbAP2.Tag = "1";
             this.ckbAP2.UseVisualStyleBackColor = true;
-            this.ckbAP2.UseWaitCursor = false;
             this.ckbAP2.Visible = false;
             // 
             // ckbAP1
@@ -401,7 +385,6 @@
             this.ckbAP1.TabIndex = 1;
             this.ckbAP1.Tag = "0";
             this.ckbAP1.UseVisualStyleBackColor = true;
-            this.ckbAP1.UseWaitCursor = false;
             this.ckbAP1.Visible = false;
             // 
             // cbbAP4
@@ -413,7 +396,6 @@
             this.cbbAP4.Size = new System.Drawing.Size(153, 20);
             this.cbbAP4.TabIndex = 4;
             this.cbbAP4.Tag = "3";
-            this.cbbAP4.UseWaitCursor = false;
             this.cbbAP4.Visible = false;
             // 
             // cbbAP3
@@ -425,7 +407,6 @@
             this.cbbAP3.Size = new System.Drawing.Size(153, 20);
             this.cbbAP3.TabIndex = 3;
             this.cbbAP3.Tag = "2";
-            this.cbbAP3.UseWaitCursor = false;
             this.cbbAP3.Visible = false;
             // 
             // cbbAP2
@@ -437,7 +418,6 @@
             this.cbbAP2.Size = new System.Drawing.Size(153, 20);
             this.cbbAP2.TabIndex = 2;
             this.cbbAP2.Tag = "1";
-            this.cbbAP2.UseWaitCursor = false;
             this.cbbAP2.Visible = false;
             // 
             // cbbAP1
@@ -449,7 +429,6 @@
             this.cbbAP1.Size = new System.Drawing.Size(153, 20);
             this.cbbAP1.TabIndex = 1;
             this.cbbAP1.Tag = "0";
-            this.cbbAP1.UseWaitCursor = false;
             this.cbbAP1.Visible = false;
             // 
             // lblNoParamA
@@ -460,7 +439,6 @@
             this.lblNoParamA.Size = new System.Drawing.Size(83, 12);
             this.lblNoParamA.TabIndex = 0;
             this.lblNoParamA.Text = "LGClblNoParam";
-            this.lblNoParamA.UseWaitCursor = false;
             this.lblNoParamA.Visible = false;
             // 
             // lbxActionList
@@ -471,7 +449,6 @@
             this.lbxActionList.Name = "lbxActionList";
             this.lbxActionList.Size = new System.Drawing.Size(138, 232);
             this.lbxActionList.TabIndex = 9;
-            this.lbxActionList.UseWaitCursor = false;
             this.lbxActionList.SelectedValueChanged += new System.EventHandler(this.lbxActionList_SelectedValueChanged);
             // 
             // rtxbActionDetail
@@ -483,7 +460,6 @@
             this.rtxbActionDetail.Size = new System.Drawing.Size(294, 97);
             this.rtxbActionDetail.TabIndex = 11;
             this.rtxbActionDetail.Text = "";
-            this.rtxbActionDetail.UseWaitCursor = false;
             // 
             // label12
             // 
@@ -493,18 +469,17 @@
             this.label12.Size = new System.Drawing.Size(101, 12);
             this.label12.TabIndex = 7;
             this.label12.Text = "LGClblActionList";
-            this.label12.UseWaitCursor = false;
             // 
             // cbbActionAbst
             // 
             this.cbbActionAbst.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbActionAbst.DropDownWidth = 300;
             this.cbbActionAbst.Font = new System.Drawing.Font("Verdana", 9F);
             this.cbbActionAbst.FormattingEnabled = true;
             this.cbbActionAbst.Location = new System.Drawing.Point(190, 36);
             this.cbbActionAbst.Name = "cbbActionAbst";
             this.cbbActionAbst.Size = new System.Drawing.Size(256, 22);
             this.cbbActionAbst.TabIndex = 10;
-            this.cbbActionAbst.UseWaitCursor = false;
             this.cbbActionAbst.SelectedIndexChanged += new System.EventHandler(this.cbbActionAbst_SelectedIndexChanged);
             // 
             // btnCopyAction
@@ -515,7 +490,6 @@
             this.btnCopyAction.TabIndex = 8;
             this.btnCopyAction.Text = "LGCbtnCopyAction";
             this.btnCopyAction.UseVisualStyleBackColor = true;
-            this.btnCopyAction.UseWaitCursor = false;
             // 
             // txbActionAnno
             // 
@@ -523,7 +497,6 @@
             this.txbActionAnno.Name = "txbActionAnno";
             this.txbActionAnno.Size = new System.Drawing.Size(295, 21);
             this.txbActionAnno.TabIndex = 5;
-            this.txbActionAnno.UseWaitCursor = false;
             // 
             // btnNewAction
             // 
@@ -533,7 +506,6 @@
             this.btnNewAction.TabIndex = 6;
             this.btnNewAction.Text = "LGCbtnNewAction";
             this.btnNewAction.UseVisualStyleBackColor = true;
-            this.btnNewAction.UseWaitCursor = false;
             // 
             // btnDeleteAction
             // 
@@ -543,7 +515,6 @@
             this.btnDeleteAction.TabIndex = 7;
             this.btnDeleteAction.Text = "LGCbtnDelAction";
             this.btnDeleteAction.UseVisualStyleBackColor = true;
-            this.btnDeleteAction.UseWaitCursor = false;
             // 
             // label21
             // 
@@ -553,7 +524,6 @@
             this.label21.Size = new System.Drawing.Size(101, 12);
             this.label21.TabIndex = 7;
             this.label21.Text = "LGClblActionAbst";
-            this.label21.UseWaitCursor = false;
             // 
             // label17
             // 
@@ -563,7 +533,6 @@
             this.label17.Size = new System.Drawing.Size(89, 12);
             this.label17.TabIndex = 7;
             this.label17.Text = "LGClblActionID";
-            this.label17.UseWaitCursor = false;
             // 
             // label20
             // 
@@ -573,7 +542,6 @@
             this.label20.Size = new System.Drawing.Size(113, 12);
             this.label20.TabIndex = 7;
             this.label20.Text = "LGClblActionDetail";
-            this.label20.UseWaitCursor = false;
             // 
             // label19
             // 
@@ -583,7 +551,6 @@
             this.label19.Size = new System.Drawing.Size(101, 12);
             this.label19.TabIndex = 7;
             this.label19.Text = "LGClblActionAnno";
-            this.label19.UseWaitCursor = false;
             // 
             // gpbEvents
             // 
@@ -608,7 +575,6 @@
             this.gpbEvents.TabIndex = 5;
             this.gpbEvents.TabStop = false;
             this.gpbEvents.Text = "LGCgpbTrgEvents";
-            this.gpbEvents.UseWaitCursor = false;
             // 
             // mtxbEventID
             // 
@@ -618,7 +584,6 @@
             this.mtxbEventID.PromptChar = ' ';
             this.mtxbEventID.Size = new System.Drawing.Size(32, 21);
             this.mtxbEventID.TabIndex = 0;
-            this.mtxbEventID.UseWaitCursor = false;
             this.mtxbEventID.ValidatingType = typeof(int);
             this.mtxbEventID.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SelectTextboxContent_MouseClicked);
             this.mtxbEventID.Validated += new System.EventHandler(this.mtxbEventID_Validated);
@@ -648,7 +613,6 @@
             this.gpbEventParam.TabIndex = 1;
             this.gpbEventParam.TabStop = false;
             this.gpbEventParam.Text = "LGCgpbEventParam";
-            this.gpbEventParam.UseWaitCursor = false;
             // 
             // lklEP4
             // 
@@ -661,7 +625,6 @@
             this.lklEP4.TabStop = true;
             this.lklEP4.Tag = "3";
             this.lklEP4.Text = "EP4";
-            this.lklEP4.UseWaitCursor = false;
             this.lklEP4.Visible = false;
             this.lklEP4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
@@ -676,7 +639,6 @@
             this.lklEP3.TabStop = true;
             this.lklEP3.Tag = "2";
             this.lklEP3.Text = "EP3";
-            this.lklEP3.UseWaitCursor = false;
             this.lklEP3.Visible = false;
             this.lklEP3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
@@ -691,7 +653,6 @@
             this.lklEP2.TabStop = true;
             this.lklEP2.Tag = "1";
             this.lklEP2.Text = "EP2";
-            this.lklEP2.UseWaitCursor = false;
             this.lklEP2.Visible = false;
             this.lklEP2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
@@ -706,7 +667,6 @@
             this.lklEP1.TabStop = true;
             this.lklEP1.Tag = "0";
             this.lklEP1.Text = "EP1";
-            this.lklEP1.UseWaitCursor = false;
             this.lklEP1.Visible = false;
             this.lklEP1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParams_LinkClicked);
             // 
@@ -718,7 +678,6 @@
             this.txbEP4.Size = new System.Drawing.Size(153, 21);
             this.txbEP4.TabIndex = 4;
             this.txbEP4.Tag = "3";
-            this.txbEP4.UseWaitCursor = false;
             this.txbEP4.Visible = false;
             // 
             // txbEP3
@@ -729,7 +688,6 @@
             this.txbEP3.Size = new System.Drawing.Size(153, 21);
             this.txbEP3.TabIndex = 3;
             this.txbEP3.Tag = "2";
-            this.txbEP3.UseWaitCursor = false;
             this.txbEP3.Visible = false;
             // 
             // txbEP1
@@ -740,7 +698,6 @@
             this.txbEP1.Size = new System.Drawing.Size(153, 21);
             this.txbEP1.TabIndex = 1;
             this.txbEP1.Tag = "0";
-            this.txbEP1.UseWaitCursor = false;
             this.txbEP1.Visible = false;
             // 
             // txbEP2
@@ -751,7 +708,6 @@
             this.txbEP2.Size = new System.Drawing.Size(153, 21);
             this.txbEP2.TabIndex = 2;
             this.txbEP2.Tag = "1";
-            this.txbEP2.UseWaitCursor = false;
             this.txbEP2.Visible = false;
             // 
             // ckbEP4
@@ -764,7 +720,6 @@
             this.ckbEP4.TabIndex = 4;
             this.ckbEP4.Tag = "3";
             this.ckbEP4.UseVisualStyleBackColor = true;
-            this.ckbEP4.UseWaitCursor = false;
             this.ckbEP4.Visible = false;
             // 
             // ckbEP3
@@ -777,7 +732,6 @@
             this.ckbEP3.TabIndex = 3;
             this.ckbEP3.Tag = "2";
             this.ckbEP3.UseVisualStyleBackColor = true;
-            this.ckbEP3.UseWaitCursor = false;
             this.ckbEP3.Visible = false;
             // 
             // ckbEP2
@@ -790,7 +744,6 @@
             this.ckbEP2.TabIndex = 2;
             this.ckbEP2.Tag = "1";
             this.ckbEP2.UseVisualStyleBackColor = true;
-            this.ckbEP2.UseWaitCursor = false;
             this.ckbEP2.Visible = false;
             // 
             // ckbEP1
@@ -803,7 +756,6 @@
             this.ckbEP1.TabIndex = 1;
             this.ckbEP1.Tag = "0";
             this.ckbEP1.UseVisualStyleBackColor = true;
-            this.ckbEP1.UseWaitCursor = false;
             this.ckbEP1.Visible = false;
             // 
             // cbbEP4
@@ -815,7 +767,6 @@
             this.cbbEP4.Size = new System.Drawing.Size(153, 20);
             this.cbbEP4.TabIndex = 4;
             this.cbbEP4.Tag = "3";
-            this.cbbEP4.UseWaitCursor = false;
             this.cbbEP4.Visible = false;
             // 
             // cbbEP3
@@ -827,7 +778,6 @@
             this.cbbEP3.Size = new System.Drawing.Size(153, 20);
             this.cbbEP3.TabIndex = 3;
             this.cbbEP3.Tag = "2";
-            this.cbbEP3.UseWaitCursor = false;
             this.cbbEP3.Visible = false;
             // 
             // cbbEP2
@@ -839,7 +789,6 @@
             this.cbbEP2.Size = new System.Drawing.Size(153, 20);
             this.cbbEP2.TabIndex = 2;
             this.cbbEP2.Tag = "1";
-            this.cbbEP2.UseWaitCursor = false;
             this.cbbEP2.Visible = false;
             // 
             // cbbEP1
@@ -851,7 +800,6 @@
             this.cbbEP1.Size = new System.Drawing.Size(153, 20);
             this.cbbEP1.TabIndex = 1;
             this.cbbEP1.Tag = "0";
-            this.cbbEP1.UseWaitCursor = false;
             this.cbbEP1.Visible = false;
             // 
             // lblNoParamE
@@ -862,19 +810,18 @@
             this.lblNoParamE.Size = new System.Drawing.Size(83, 12);
             this.lblNoParamE.TabIndex = 0;
             this.lblNoParamE.Text = "LGClblNoParam";
-            this.lblNoParamE.UseWaitCursor = false;
             this.lblNoParamE.Visible = false;
             // 
             // cbbEventAbst
             // 
             this.cbbEventAbst.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbEventAbst.DropDownWidth = 300;
             this.cbbEventAbst.Font = new System.Drawing.Font("Verdana", 9F);
             this.cbbEventAbst.FormattingEnabled = true;
             this.cbbEventAbst.Location = new System.Drawing.Point(190, 36);
             this.cbbEventAbst.Name = "cbbEventAbst";
             this.cbbEventAbst.Size = new System.Drawing.Size(257, 22);
             this.cbbEventAbst.TabIndex = 10;
-            this.cbbEventAbst.UseWaitCursor = false;
             this.cbbEventAbst.SelectedIndexChanged += new System.EventHandler(this.cbbEventAbst_SelectedIndexChanged);
             // 
             // txbEventAnno
@@ -883,7 +830,6 @@
             this.txbEventAnno.Name = "txbEventAnno";
             this.txbEventAnno.Size = new System.Drawing.Size(295, 21);
             this.txbEventAnno.TabIndex = 5;
-            this.txbEventAnno.UseWaitCursor = false;
             // 
             // lbxEventList
             // 
@@ -893,7 +839,6 @@
             this.lbxEventList.Name = "lbxEventList";
             this.lbxEventList.Size = new System.Drawing.Size(138, 232);
             this.lbxEventList.TabIndex = 9;
-            this.lbxEventList.UseWaitCursor = false;
             this.lbxEventList.SelectedValueChanged += new System.EventHandler(this.lbxEventList_SelectedValueChanged);
             // 
             // label14
@@ -904,7 +849,6 @@
             this.label14.Size = new System.Drawing.Size(95, 12);
             this.label14.TabIndex = 7;
             this.label14.Text = "LGClblEventAbst";
-            this.label14.UseWaitCursor = false;
             // 
             // label15
             // 
@@ -914,7 +858,6 @@
             this.label15.Size = new System.Drawing.Size(107, 12);
             this.label15.TabIndex = 7;
             this.label15.Text = "LGClblEventDetail";
-            this.label15.UseWaitCursor = false;
             // 
             // label18
             // 
@@ -924,7 +867,6 @@
             this.label18.Size = new System.Drawing.Size(95, 12);
             this.label18.TabIndex = 7;
             this.label18.Text = "LGClblEventAnno";
-            this.label18.UseWaitCursor = false;
             // 
             // label13
             // 
@@ -934,7 +876,6 @@
             this.label13.Size = new System.Drawing.Size(83, 12);
             this.label13.TabIndex = 7;
             this.label13.Text = "LGClblEventID";
-            this.label13.UseWaitCursor = false;
             // 
             // label11
             // 
@@ -944,7 +885,6 @@
             this.label11.Size = new System.Drawing.Size(95, 12);
             this.label11.TabIndex = 7;
             this.label11.Text = "LGClblEventList";
-            this.label11.UseWaitCursor = false;
             // 
             // btnCopyEvent
             // 
@@ -954,7 +894,6 @@
             this.btnCopyEvent.TabIndex = 8;
             this.btnCopyEvent.Text = "LGCbtnCopyEvent";
             this.btnCopyEvent.UseVisualStyleBackColor = true;
-            this.btnCopyEvent.UseWaitCursor = false;
             // 
             // btnDeleteEvent
             // 
@@ -964,7 +903,6 @@
             this.btnDeleteEvent.TabIndex = 7;
             this.btnDeleteEvent.Text = "LGCbtnDelEvent";
             this.btnDeleteEvent.UseVisualStyleBackColor = true;
-            this.btnDeleteEvent.UseWaitCursor = false;
             // 
             // btnNewEvent
             // 
@@ -974,7 +912,6 @@
             this.btnNewEvent.TabIndex = 6;
             this.btnNewEvent.Text = "LGCbtnNewEvent";
             this.btnNewEvent.UseVisualStyleBackColor = true;
-            this.btnNewEvent.UseWaitCursor = false;
             // 
             // rtxbEventDetail
             // 
@@ -985,7 +922,6 @@
             this.rtxbEventDetail.Size = new System.Drawing.Size(295, 97);
             this.rtxbEventDetail.TabIndex = 11;
             this.rtxbEventDetail.Text = "";
-            this.rtxbEventDetail.UseWaitCursor = false;
             // 
             // gpbTag
             // 
@@ -1021,7 +957,6 @@
             this.gpbTag.TabIndex = 4;
             this.gpbTag.TabStop = false;
             this.gpbTag.Text = "LGCgpbTrgTag";
-            this.gpbTag.UseWaitCursor = false;
             // 
             // lklTraceTrigger
             // 
@@ -1034,7 +969,6 @@
             this.lklTraceTrigger.TabStop = true;
             this.lklTraceTrigger.Text = "LGClklTrace";
             this.lklTraceTrigger.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lklTraceTrigger.UseWaitCursor = false;
             this.lklTraceTrigger.Visible = false;
             this.lklTraceTrigger.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklTraceTrigger_LinkClicked);
             // 
@@ -1047,7 +981,6 @@
             this.ckbHard.TabIndex = 15;
             this.ckbHard.Text = "LGCckbHard";
             this.ckbHard.UseVisualStyleBackColor = true;
-            this.ckbHard.UseWaitCursor = false;
             // 
             // ckbNormal
             // 
@@ -1058,7 +991,6 @@
             this.ckbNormal.TabIndex = 15;
             this.ckbNormal.Text = "LGCckbNormal";
             this.ckbNormal.UseVisualStyleBackColor = true;
-            this.ckbNormal.UseWaitCursor = false;
             // 
             // ckbEasy
             // 
@@ -1069,7 +1001,6 @@
             this.ckbEasy.TabIndex = 15;
             this.ckbEasy.Text = "LGCckbEasy";
             this.ckbEasy.UseVisualStyleBackColor = true;
-            this.ckbEasy.UseWaitCursor = false;
             // 
             // cbbCustomGroup
             // 
@@ -1079,7 +1010,6 @@
             this.cbbCustomGroup.Name = "cbbCustomGroup";
             this.cbbCustomGroup.Size = new System.Drawing.Size(256, 20);
             this.cbbCustomGroup.TabIndex = 14;
-            this.cbbCustomGroup.UseWaitCursor = false;
             // 
             // cbbAttatchedTrg
             // 
@@ -1089,7 +1019,6 @@
             this.cbbAttatchedTrg.Name = "cbbAttatchedTrg";
             this.cbbAttatchedTrg.Size = new System.Drawing.Size(257, 20);
             this.cbbAttatchedTrg.TabIndex = 13;
-            this.cbbAttatchedTrg.UseWaitCursor = false;
             // 
             // ckbDisabled
             // 
@@ -1100,7 +1029,6 @@
             this.ckbDisabled.TabIndex = 12;
             this.ckbDisabled.Text = "LGCckbDisabled";
             this.ckbDisabled.UseVisualStyleBackColor = true;
-            this.ckbDisabled.UseWaitCursor = false;
             // 
             // lbxTriggerHouses
             // 
@@ -1110,7 +1038,6 @@
             this.lbxTriggerHouses.Name = "lbxTriggerHouses";
             this.lbxTriggerHouses.Size = new System.Drawing.Size(156, 136);
             this.lbxTriggerHouses.TabIndex = 11;
-            this.lbxTriggerHouses.UseWaitCursor = false;
             // 
             // label10
             // 
@@ -1120,7 +1047,6 @@
             this.label10.Size = new System.Drawing.Size(107, 12);
             this.label10.TabIndex = 10;
             this.label10.Text = "LGClblCustomGroup";
-            this.label10.UseWaitCursor = false;
             // 
             // label9
             // 
@@ -1130,7 +1056,6 @@
             this.label9.Size = new System.Drawing.Size(77, 12);
             this.label9.TabIndex = 10;
             this.label9.Text = "LGClblAttTrg";
-            this.label9.UseWaitCursor = false;
             // 
             // label8
             // 
@@ -1140,7 +1065,6 @@
             this.label8.Size = new System.Drawing.Size(95, 12);
             this.label8.TabIndex = 10;
             this.label8.Text = "LGClblTrgHouses";
-            this.label8.UseWaitCursor = false;
             // 
             // gpbRepeat
             // 
@@ -1154,7 +1078,6 @@
             this.gpbRepeat.TabStop = false;
             this.gpbRepeat.Text = "LGCgpbRepeat";
             this.ttTrg.SetToolTip(this.gpbRepeat, "LGCDescRepeatGpb");
-            this.gpbRepeat.UseWaitCursor = false;
             // 
             // rdbRepeat2
             // 
@@ -1166,7 +1089,6 @@
             this.rdbRepeat2.Text = "LGCrdbRep2";
             this.ttTrg.SetToolTip(this.rdbRepeat2, "LGCDescRepeat2");
             this.rdbRepeat2.UseVisualStyleBackColor = true;
-            this.rdbRepeat2.UseWaitCursor = false;
             // 
             // rdbRepeat1
             // 
@@ -1178,7 +1100,6 @@
             this.rdbRepeat1.Text = "LGCrdbRep1";
             this.ttTrg.SetToolTip(this.rdbRepeat1, "LGCDescRepeat1");
             this.rdbRepeat1.UseVisualStyleBackColor = true;
-            this.rdbRepeat1.UseWaitCursor = false;
             // 
             // rdbRepeat0
             // 
@@ -1192,7 +1113,6 @@
             this.rdbRepeat0.Text = "LGCrdbRep0";
             this.ttTrg.SetToolTip(this.rdbRepeat0, "LGCDescRepeat0");
             this.rdbRepeat0.UseVisualStyleBackColor = true;
-            this.rdbRepeat0.UseWaitCursor = false;
             // 
             // label6
             // 
@@ -1202,7 +1122,6 @@
             this.label6.Size = new System.Drawing.Size(11, 12);
             this.label6.TabIndex = 8;
             this.label6.Text = "-";
-            this.label6.UseWaitCursor = false;
             // 
             // label4
             // 
@@ -1212,7 +1131,6 @@
             this.label4.Size = new System.Drawing.Size(11, 12);
             this.label4.TabIndex = 8;
             this.label4.Text = "-";
-            this.label4.UseWaitCursor = false;
             // 
             // label7
             // 
@@ -1223,7 +1141,6 @@
             this.label7.TabIndex = 7;
             this.label7.Text = "LGClblTagName";
             this.ttTrg.SetToolTip(this.label7, "LGCDescTagName");
-            this.label7.UseWaitCursor = false;
             // 
             // label3
             // 
@@ -1233,7 +1150,6 @@
             this.label3.Size = new System.Drawing.Size(83, 12);
             this.label3.TabIndex = 7;
             this.label3.Text = "LGClblTrgName";
-            this.label3.UseWaitCursor = false;
             // 
             // label5
             // 
@@ -1243,7 +1159,6 @@
             this.label5.Size = new System.Drawing.Size(71, 12);
             this.label5.TabIndex = 7;
             this.label5.Text = "LGClblTagID";
-            this.label5.UseWaitCursor = false;
             // 
             // label2
             // 
@@ -1253,7 +1168,6 @@
             this.label2.Size = new System.Drawing.Size(71, 12);
             this.label2.TabIndex = 7;
             this.label2.Text = "LGClblTrgID";
-            this.label2.UseWaitCursor = false;
             // 
             // txbTagID
             // 
@@ -1262,7 +1176,6 @@
             this.txbTagID.ReadOnly = true;
             this.txbTagID.Size = new System.Drawing.Size(58, 21);
             this.txbTagID.TabIndex = 6;
-            this.txbTagID.UseWaitCursor = false;
             // 
             // txbTrgID
             // 
@@ -1271,7 +1184,6 @@
             this.txbTrgID.ReadOnly = true;
             this.txbTrgID.Size = new System.Drawing.Size(58, 21);
             this.txbTrgID.TabIndex = 6;
-            this.txbTrgID.UseWaitCursor = false;
             // 
             // txbTagName
             // 
@@ -1280,7 +1192,6 @@
             this.txbTagName.ReadOnly = true;
             this.txbTagName.Size = new System.Drawing.Size(271, 21);
             this.txbTagName.TabIndex = 5;
-            this.txbTagName.UseWaitCursor = false;
             // 
             // txbTrgName
             // 
@@ -1288,7 +1199,6 @@
             this.txbTrgName.Name = "txbTrgName";
             this.txbTrgName.Size = new System.Drawing.Size(271, 21);
             this.txbTrgName.TabIndex = 5;
-            this.txbTrgName.UseWaitCursor = false;
             // 
             // btnNewTrigger
             // 
@@ -1322,7 +1232,6 @@
             this.btnSaveTemp.TabIndex = 3;
             this.btnSaveTemp.Text = "LGCbtnSaveTemplate";
             this.btnSaveTemp.UseVisualStyleBackColor = true;
-            this.btnSaveTemp.UseWaitCursor = false;
             this.btnSaveTemp.Visible = false;
             // 
             // btnCopyTrigger
@@ -1333,7 +1242,6 @@
             this.btnCopyTrigger.TabIndex = 3;
             this.btnCopyTrigger.Text = "LGCbtnCopyTrg";
             this.btnCopyTrigger.UseVisualStyleBackColor = true;
-            this.btnCopyTrigger.UseWaitCursor = false;
             // 
             // btnDelTrigger
             // 
@@ -1343,7 +1251,6 @@
             this.btnDelTrigger.TabIndex = 3;
             this.btnDelTrigger.Text = "LGCbtnDelTrg";
             this.btnDelTrigger.UseVisualStyleBackColor = true;
-            this.btnDelTrigger.UseWaitCursor = false;
             // 
             // lbxTriggerList
             // 
@@ -1418,7 +1325,6 @@
             this.label1.Size = new System.Drawing.Size(83, 12);
             this.label1.TabIndex = 1;
             this.label1.Text = "LGClblTrgList";
-            this.label1.UseWaitCursor = false;
             // 
             // tabPage2
             // 
@@ -1429,7 +1335,6 @@
             this.tabPage2.Size = new System.Drawing.Size(1190, 565);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseWaitCursor = false;
             // 
             // tabPage3
             // 
@@ -1440,7 +1345,6 @@
             this.tabPage3.Size = new System.Drawing.Size(1190, 565);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
-            this.tabPage3.UseWaitCursor = false;
             // 
             // tabPage4
             // 
@@ -1451,7 +1355,6 @@
             this.tabPage4.Size = new System.Drawing.Size(1190, 565);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "tabPage4";
-            this.tabPage4.UseWaitCursor = false;
             // 
             // tabPage5
             // 
@@ -1462,7 +1365,6 @@
             this.tabPage5.Size = new System.Drawing.Size(1190, 565);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "tabPage5";
-            this.tabPage5.UseWaitCursor = false;
             // 
             // LogicEditor
             // 
@@ -1475,7 +1377,6 @@
             this.MinimizeBox = false;
             this.Name = "LogicEditor";
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LGCTitle";
             this.tbcMain.ResumeLayout(false);

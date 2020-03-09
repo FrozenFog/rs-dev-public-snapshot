@@ -52,7 +52,7 @@ namespace relert_sharp.SubWindows.LogicEditor
             {
                 if (house.PlayerControl)
                 {
-                    CountryItem country = map.Countries[house.Country];
+                    CountryItem country = map.Countries.GetCountry(house.Country);
                     GlobalVar.PlayerSide = country.Side;
                 }
             }
@@ -126,7 +126,7 @@ namespace relert_sharp.SubWindows.LogicEditor
                     break;
             }
             ckbDisabled.Checked = trg.Disabled;
-            lbxTriggerHouses.SelectedItem = map.Countries[trg.House];
+            lbxTriggerHouses.SelectedItem = map.Countries.GetCountry(trg.House);
             if (trg.LinkedWith != "<none>")
             {
                 cbbAttatchedTrg.SelectedItem = map.Triggers[trg.LinkedWith];
@@ -186,6 +186,7 @@ namespace relert_sharp.SubWindows.LogicEditor
                     i++;
                 }
             }
+            UseWaitCursor = false;
         }
         private IEnumerable<object> GetComboCollections(TriggerParam param)
         {
@@ -209,6 +210,19 @@ namespace relert_sharp.SubWindows.LogicEditor
                     return GlobalVar.GlobalRules.SuperWeaponList;
                 case TriggerParam.ComboContent.CsfLabel:
                     return GlobalVar.GlobalCsf.TechnoPairs;
+                case TriggerParam.ComboContent.Triggers:
+                    return map.Triggers.ToTechno();
+                case TriggerParam.ComboContent.TechnoType:
+                    return GlobalVar.GlobalRules.TechnoList;
+                case TriggerParam.ComboContent.GlobalVar:
+                    return GlobalVar.GlobalRules.GlobalVar;
+                case TriggerParam.ComboContent.Teams:
+                    return map.Teams.ToTechno();
+                case TriggerParam.ComboContent.Houses:
+                    return map.Countries.ToTechno();
+                case TriggerParam.ComboContent.Animations:
+                    return GlobalVar.GlobalRules.AnimationList;
+                //TODO: Implement cases
                 default:
                     return null;
             }
@@ -265,9 +279,11 @@ namespace relert_sharp.SubWindows.LogicEditor
                     i++;
                 }
             }
+            UseWaitCursor = false;
         }
         private void SetParamControls(Control[] controls, TriggerParam param, string[] paramData, int controlIndex)
         {
+            UseWaitCursor = true;
             if (controls.GetType() == typeof(LinkLabel[]))
             {
                 ((LinkLabel)controls[controlIndex]).Text = param.Name;
@@ -275,8 +291,8 @@ namespace relert_sharp.SubWindows.LogicEditor
             }
             else if (controls.GetType() == typeof(ComboBox[]))
             {
-                StaticHelper.LoadToObjectCollection((ComboBox)controls[controlIndex] , GetComboCollections(param));
-                StaticHelper.SelectCombo((ComboBox)controls[controlIndex], param.GetParameter(paramData));
+                StaticHelper.LoadToObjectCollection((ComboBox)controls[controlIndex], GetComboCollections(param));
+                StaticHelper.SelectCombo((ComboBox)controls[controlIndex], param.GetParameter(paramData), param);
             }
             else
             {
@@ -292,6 +308,7 @@ namespace relert_sharp.SubWindows.LogicEditor
                 }
             }
             controls[controlIndex].Visible = true;
+            UseWaitCursor = false;
         }
         private void UpdateActionContent(LogicItem item)
         {

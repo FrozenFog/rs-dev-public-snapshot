@@ -21,7 +21,7 @@ namespace relert_sharp.MapStructure.Logic
         #region Public Methods - TeamLogicCollection
         public void AscendingSort()
         {
-            data = data.OrderBy(x => x.Key).ToDictionary(x => x.Key, y => y.Value);
+            data = data.OrderBy(x => int.Parse(x.Key)).ToDictionary(x => x.Key, y => y.Value);
         }
         public void DescendingSort()
         {

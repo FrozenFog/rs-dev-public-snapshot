@@ -66,7 +66,9 @@ namespace relert_sharp.SubWindows.LogicEditor
                     ManageSound(param, p);
                     break;
                 case TriggerParam.ComboContent.Triggers:
-                    //TODO: Convert TechnoPair into trigger item
+                    string triggerid = p.Index;
+                    TriggerItem trigger = map.Triggers[triggerid];
+                    lbxTriggerList.SelectedItem = trigger;
                     break;
             }
         }
@@ -88,6 +90,7 @@ namespace relert_sharp.SubWindows.LogicEditor
         }
         private void cbbEventAbst_SelectedIndexChanged(object sender, EventArgs e)
         {
+            UseWaitCursor = true;
             if (int.Parse(mtxbEventID.Text) != cbbEventAbst.SelectedIndex) mtxbEventID.Text = cbbEventAbst.SelectedIndex.ToString();
             TriggerDescription description = cbbEventAbst.SelectedItem as TriggerDescription;
             LogicItem eventItem = lbxEventList.SelectedItem as LogicItem;
@@ -95,6 +98,7 @@ namespace relert_sharp.SubWindows.LogicEditor
         }
         private void cbbActionAbst_SelectedIndexChanged(object sender, EventArgs e)
         {
+            UseWaitCursor = true;
             if (int.Parse(mtxbActionID.Text) != cbbActionAbst.SelectedIndex) mtxbActionID.Text = cbbActionAbst.SelectedIndex.ToString();
             TriggerDescription description = cbbActionAbst.SelectedItem as TriggerDescription;
             LogicItem actionItem = lbxActionList.SelectedItem as LogicItem;

@@ -36,6 +36,16 @@ namespace relert_sharp.MapStructure.Logic
 
 
         #region Public Methods - TriggerCollection
+        public IEnumerable<TechnoPair> ToTechno()
+        {
+            List<TechnoPair> result = new List<TechnoPair>();
+            foreach (TriggerItem trigger in data.Values)
+            {
+                TechnoPair p = new TechnoPair(trigger.ID, trigger.Name);
+                result.Add(p);
+            }
+            return result;
+        }
         public void AscendingSort()
         {
             Dictionary<string, TriggerItem> tmp = new Dictionary<string, TriggerItem>();

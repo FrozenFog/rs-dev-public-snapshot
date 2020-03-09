@@ -14,29 +14,47 @@ namespace relert_sharp.IniSystem
             Default = 0,
             Name, RegName, UIName, IndexOnly
         }
+        public enum IndexType
+        {
+            Default = 0,
+            Index, RegName, Name
+        }
 
 
         #region Constructor - TechnoPair
-        public TechnoPair(INIEntity ent, string index, AbstractType abstractType = AbstractType.RegName)
+        public TechnoPair(INIEntity ent, string index, AbstractType abstractType = AbstractType.RegName, IndexType indexType = IndexType.Index)
         {
             Index = index;
             Name = ent["Name"];
             RegName = ent.Name;
             UIName = ent["UIName"];
+            switch (indexType)
+            {
+                default:
+                case IndexType.Index:
+                    abst = Index;
+                    break;
+                case IndexType.Name:
+                    abst = Name;
+                    break;
+                case IndexType.RegName:
+                    abst = RegName;
+                    break;
+            }
             switch (abstractType)
             {
                 default:
                 case AbstractType.RegName:
-                    abst = RegName;
+                    abst += " " + RegName;
                     break;
                 case AbstractType.Name:
-                    abst = Name;
+                    abst += " " + Name;
                     break;
                 case AbstractType.UIName:
-                    abst = UIName;
+                    abst += " " + UIName;
                     break;
                 case AbstractType.IndexOnly:
-                    abst = "";
+                    abst += "";
                     break;
             }
         }
@@ -44,7 +62,7 @@ namespace relert_sharp.IniSystem
         {
             Index = index;
             RegName = regname;
-            abst = regname;
+            abst = index + " " + regname;
         }
         #endregion
 
@@ -52,7 +70,7 @@ namespace relert_sharp.IniSystem
         #region Public Methods - TechnoPair
         public override string ToString()
         {
-            return Index + " " + abst;
+            return abst;
         }
         #endregion
 

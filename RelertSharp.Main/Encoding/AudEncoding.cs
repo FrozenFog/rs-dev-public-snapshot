@@ -48,7 +48,7 @@ namespace relert_sharp.Encoding
                     int idR = br.ReadByte(); br.ReadByte();
                     int num = Math.Min(chunkSize - 8, i);
                     byte[] block = br.ReadBytes(num);
-                    bw.Write(DecodeStrero(block, 8, ref spL, ref idL, ref spR, ref idR));
+                    bw.Write(DecodeStereo(block, 8, ref spL, ref idL, ref spR, ref idR));
                     bw.Flush();
                     i -= (num + 8);
                 }
@@ -79,7 +79,7 @@ namespace relert_sharp.Encoding
             ms.Dispose();
             return result;
         }
-        public static byte[] DecodeStrero(byte[] _compressedData, int switchSize, ref short _sampleL, ref int _indexL, ref short _sampleR, ref int _indexR)
+        public static byte[] DecodeStereo(byte[] _compressedData, int switchSize, ref short _sampleL, ref int _indexL, ref short _sampleR, ref int _indexR)
         {
             int code;
             bool _low = true;
@@ -102,14 +102,14 @@ namespace relert_sharp.Encoding
                     DecodeCode(code, ref _sampleR, ref _indexR);
                     right[r] = _sampleR;
                 }
-                WriteStrero(left, right, bw);
+                WriteStereo(left, right, bw);
             }
             byte[] result = ms.ToArray();
             bw.Dispose();
             ms.Dispose();
             return result;
         }
-        private static void WriteStrero(short[] left, short[] right, BinaryWriter dest)
+        private static void WriteStereo(short[] left, short[] right, BinaryWriter dest)
         {
             for (int i = 0; i < left.Length; i++)
             {

@@ -52,9 +52,9 @@ namespace relert_sharp.IniSystem
                 data[p.Name] = p;
             }
         }
-        public TechnoPair ToTechno(string index, TechnoPair.AbstractType type = TechnoPair.AbstractType.RegName)
+        public TechnoPair ToTechno(string index, TechnoPair.AbstractType type = TechnoPair.AbstractType.RegName, TechnoPair.IndexType indexType = TechnoPair.IndexType.Index)
         {
-            TechnoPair tp = new TechnoPair(this, index, type);
+            TechnoPair tp = new TechnoPair(this, index, type, indexType);
             return tp;
         }
         public INIPair PopPair(string pairKey)

@@ -11,7 +11,22 @@ namespace relert_sharp.MapStructure.Logic
 {
     public class HouseCollection : TeamLogicCollection<HouseItem>
     {
+        #region Constructor - HouseCollection
         public HouseCollection() { }
+        #endregion
+
+
+        #region Public Methods - HouseCollection
+        public IEnumerable<TechnoPair> ToTechno()
+        {
+            List<TechnoPair> result = new List<TechnoPair>();
+            foreach (string id in Keys)
+            {
+                result.Add(new TechnoPair(id, this[id].ID));
+            }
+            return result;
+        }
+        #endregion
     }
 
 
