@@ -624,6 +624,8 @@ void VxlFile::MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, int idxFrame, float
 
 		if (ScreenPos.z < ZBuffer[y][x] && ScreenPos.z > 0.0)
 		{
+			ZBuffer[y][x] = ScreenPos.z;
+
 			if (pTextureColors[y][x] == dwBaseColor) {
 				pTextureColors[y][x] = vertex.dwColor;
 				continue;

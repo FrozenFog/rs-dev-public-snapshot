@@ -96,6 +96,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	return 0;
 }
 
+bool WINAPI DllMain(HANDLE hInstance, DWORD dwReason, LPVOID v)
+{
+	//PrepareConsole();
+	return true;
+}
+
 LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	POINTS Position;
