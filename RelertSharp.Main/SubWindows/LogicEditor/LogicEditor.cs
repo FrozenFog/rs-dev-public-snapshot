@@ -222,6 +222,10 @@ namespace relert_sharp.SubWindows.LogicEditor
                     return map.Countries.ToTechno();
                 case TriggerParam.ComboContent.Animations:
                     return GlobalVar.GlobalRules.AnimationList;
+                case TriggerParam.ComboContent.ParticalAnim:
+                    return GlobalVar.GlobalRules.ParticalList;
+                case TriggerParam.ComboContent.VoxelAnim:
+                    return GlobalVar.GlobalRules.VoxAnimList;
                 //TODO: Implement cases
                 default:
                     return null;
