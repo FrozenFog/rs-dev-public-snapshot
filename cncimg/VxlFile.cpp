@@ -1,4 +1,5 @@
 #include "VertexFormats.h"
+#include "normals.h"
 #include "VxlFile.h"
 #include "ColorScheme.h"
 
@@ -404,14 +405,12 @@ int VxlFile::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
 
 					if (Buffer.nColor)
 					{
-						ColorStruct Normal;
+						auto pNormalTable = NormalTableDirectory[static_cast<int>(TailerInfo.nNormalType)];
 
-						if (TailerInfo.nNormalType == NORMALTYPE_TS)
-							Normal = VxlFile::TSNormals[Buffer.nNormal];
-						if (TailerInfo.nNormalType == NORMALTYPE_RA)
-							Normal = VxlFile::RANormals[Buffer.nNormal];
+						if (!pNormalTable)
+							continue;
 
-						D3DXVECTOR3 NormalVec = { (float)Normal.R - 128.0f,(float)Normal.G - 128.0f,(float)Normal.B - 128.0f };
+						D3DXVECTOR3 NormalVec = pNormalTable[Buffer.nNormal];//{ (float)Normal.R - 128.0f,(float)Normal.G - 128.0f,(float)Normal.B - 128.0f };
 						D3DCOLOR dwColor;
 						NormalVec *= NormalMatrix;
 
@@ -539,14 +538,12 @@ void VxlFile::MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, int idxFrame, float
 
 					if (Buffer.nColor)
 					{
-						ColorStruct Normal;
+						auto pNormalTable = NormalTableDirectory[static_cast<int>(TailerInfo.nNormalType)];
 
-						if (TailerInfo.nNormalType == NORMALTYPE_TS)
-							Normal = VxlFile::TSNormals[Buffer.nNormal];
-						if (TailerInfo.nNormalType == NORMALTYPE_RA)
-							Normal = VxlFile::RANormals[Buffer.nNormal];
+						if (!pNormalTable)
+							continue;
 
-						D3DXVECTOR3 NormalVec = { (float)Normal.R - 128.0f,(float)Normal.G - 128.0f,(float)Normal.B - 128.0f };
+						D3DXVECTOR3 NormalVec = pNormalTable[Buffer.nNormal];//{ (float)Normal.R - 128.0f,(float)Normal.G - 128.0f,(float)Normal.B - 128.0f };
 						D3DCOLOR dwColor;
 						NormalVec *= NormalMatrix;
 
@@ -617,7 +614,7 @@ void VxlFile::MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, int idxFrame, float
 
 	for (auto vertex : UsedVertecies)
 	{
-		auto ScreenPos = SceneClass::Instance.FructumTransformation(FrameRect, vertex.Vector);
+		auto ScreenPos = SceneClass::FructumTransformation(FrameRect, vertex.Vector);
 
 		int x = ScreenPos.x, y = ScreenPos.y;
 		float sx = ScreenPos.x, sy = ScreenPos.y;

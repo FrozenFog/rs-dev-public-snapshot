@@ -172,6 +172,7 @@
     <ClInclude Include="ColorScheme.h" />
     <ClInclude Include="D3dPrepare.h" />
     <ClInclude Include="DrawObject.h" />
+    <ClInclude Include="normals.h" />
     <ClInclude Include="Palette.h" />
     <ClInclude Include="SceneClass.h" />
     <ClInclude Include="ShpFileClass.h" />
