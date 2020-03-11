@@ -12,13 +12,17 @@ namespace relert_sharp.SubWindows.LogicEditor
 {
     internal static class StaticHelper
     {
+        public static void LoadToObjectCollection<T>(ComboBox dest, IList<T> src)
+        {
+            dest.DataSource = src;
+            int max = src.Max(x => x.ToString().Length) * 7;
+            dest.DropDownWidth = max;
+            
+        }
         public static void LoadToObjectCollection(ComboBox dest, IEnumerable<object> src)
         {
             dest.Items.Clear();
             dest.Items.AddRange(src.ToArray());
-            int max = src.Max(x => x.ToString().Length) * 6;
-            dest.DropDownWidth = max;
-            
         }
         public static void LoadToObjectCollection(ListBox dest, IEnumerable<object> src)
         {

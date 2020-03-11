@@ -295,7 +295,7 @@ namespace relert_sharp.SubWindows.LogicEditor
             }
             else if (controls.GetType() == typeof(ComboBox[]))
             {
-                StaticHelper.LoadToObjectCollection((ComboBox)controls[controlIndex], GetComboCollections(param));
+                StaticHelper.LoadToObjectCollection((ComboBox)controls[controlIndex], GetComboCollections(param).ToList());
                 StaticHelper.SelectCombo((ComboBox)controls[controlIndex], param.GetParameter(paramData), param);
             }
             else

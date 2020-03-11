@@ -47,6 +47,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Constant.cs" />
@@ -158,6 +159,12 @@
     <Compile Include="Utils\Lang.cs" />
     <Compile Include="Utils\Misc.cs" />
     <Compile Include="_run.cs" />
+    <Compile Include="_test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="_test.Designer.cs">
+      <DependentUpon>_test.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -178,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\LogicEditor\LogicEditor.resx">
       <DependentUpon>LogicEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="_test.resx">
+      <DependentUpon>_test.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
