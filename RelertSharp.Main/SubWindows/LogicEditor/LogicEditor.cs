@@ -54,8 +54,10 @@ namespace relert_sharp.SubWindows.LogicEditor
                 {
                     CountryItem country = map.Countries.GetCountry(house.Country);
                     GlobalVar.PlayerSide = country.Side;
+                    break;
                 }
             }
+            GlobalVar.GlobalRules.Override(map.IniResidue.Values);
         }
         private void SetGroup()
         {
@@ -186,7 +188,6 @@ namespace relert_sharp.SubWindows.LogicEditor
                     i++;
                 }
             }
-            UseWaitCursor = false;
         }
         private IEnumerable<object> GetComboCollections(TriggerParam param)
         {
@@ -198,6 +199,8 @@ namespace relert_sharp.SubWindows.LogicEditor
                     return GlobalVar.GlobalRules.BuildingList;
                 case TriggerParam.ComboContent.Infantries:
                     return GlobalVar.GlobalRules.InfantryList;
+                case TriggerParam.ComboContent.Units:
+                    return GlobalVar.GlobalRules.VehicleList;
                 case TriggerParam.ComboContent.SoundNames:
                     return GlobalVar.GlobalSound.SoundList;
                 case TriggerParam.ComboContent.EvaNames:
@@ -212,6 +215,8 @@ namespace relert_sharp.SubWindows.LogicEditor
                     return GlobalVar.GlobalCsf.TechnoPairs;
                 case TriggerParam.ComboContent.Triggers:
                     return map.Triggers.ToTechno();
+                case TriggerParam.ComboContent.Tags:
+                    return map.Tags.ToTechno();
                 case TriggerParam.ComboContent.TechnoType:
                     return GlobalVar.GlobalRules.TechnoList;
                 case TriggerParam.ComboContent.GlobalVar:
@@ -226,6 +231,12 @@ namespace relert_sharp.SubWindows.LogicEditor
                     return GlobalVar.GlobalRules.ParticalList;
                 case TriggerParam.ComboContent.VoxelAnim:
                     return GlobalVar.GlobalRules.VoxAnimList;
+                case TriggerParam.ComboContent.BuildingID:
+                    return GlobalVar.GlobalRules.BuildingIDList;
+                case TriggerParam.ComboContent.Movies:
+                    return GlobalVar.GlobalRules.MovieList;
+                case TriggerParam.ComboContent.Warhead:
+                    return GlobalVar.GlobalRules.WarheadList;
                 //TODO: Implement cases
                 default:
                     return null;
@@ -283,11 +294,9 @@ namespace relert_sharp.SubWindows.LogicEditor
                     i++;
                 }
             }
-            UseWaitCursor = false;
         }
         private void SetParamControls(Control[] controls, TriggerParam param, string[] paramData, int controlIndex)
         {
-            UseWaitCursor = true;
             if (controls.GetType() == typeof(LinkLabel[]))
             {
                 ((LinkLabel)controls[controlIndex]).Text = param.Name;
@@ -295,8 +304,11 @@ namespace relert_sharp.SubWindows.LogicEditor
             }
             else if (controls.GetType() == typeof(ComboBox[]))
             {
-                StaticHelper.LoadToObjectCollection((ComboBox)controls[controlIndex], GetComboCollections(param).ToList());
+                Cursor = Cursors.WaitCursor;
+                IList<object> data = GetComboCollections(param).ToList();
+                StaticHelper.LoadToObjectCollection((ComboBox)controls[controlIndex], data);
                 StaticHelper.SelectCombo((ComboBox)controls[controlIndex], param.GetParameter(paramData), param);
+                Cursor = Cursors.Arrow;
             }
             else
             {
@@ -312,7 +324,6 @@ namespace relert_sharp.SubWindows.LogicEditor
                 }
             }
             controls[controlIndex].Visible = true;
-            UseWaitCursor = false;
         }
         private void UpdateActionContent(LogicItem item)
         {

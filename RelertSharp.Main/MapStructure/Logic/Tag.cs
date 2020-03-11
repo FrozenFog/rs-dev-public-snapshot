@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using relert_sharp.IniSystem;
 using relert_sharp.Common;
+using System.Collections;
 
 namespace relert_sharp.MapStructure.Logic
 {
-    public class TagCollection
+    public class TagCollection : IEnumerable<TagItem>
     {
         private Dictionary<string, TagItem> data = new Dictionary<string, TagItem>();
         private Dictionary<string, string> trigger_tag = new Dictionary<string, string>();
@@ -31,7 +32,7 @@ namespace relert_sharp.MapStructure.Logic
 
         #region Public Methods - TagCollection
         /// <summary>
-        /// return a tag with certain trigger id, return null if not found
+        /// return a tag with certain trigger id, return null tag if not found
         /// </summary>
         /// <param name="triggerID"></param>
         /// <returns></returns>
@@ -44,6 +45,27 @@ namespace relert_sharp.MapStructure.Logic
             TagItem nullitem = new TagItem("xxxxxxxx", new string[3]{ "0","!NO AVAIABLE TAG!","<none>"});
             return nullitem;
         }
+        public IEnumerable<TechnoPair> ToTechno()
+        {
+            List<TechnoPair> result = new List<TechnoPair>();
+            foreach (TagItem tag in this)
+            {
+                result.Add(new TechnoPair(tag.ID, tag.Name));
+            }
+            return result;
+        }
+
+        #region Enumerator
+        public IEnumerator<TagItem> GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+        #endregion
         #endregion
 
 

@@ -14,10 +14,9 @@ namespace relert_sharp.SubWindows.LogicEditor
     {
         public static void LoadToObjectCollection<T>(ComboBox dest, IList<T> src)
         {
-            dest.DataSource = src;
             int max = src.Max(x => x.ToString().Length) * 7;
+            dest.DataSource = src;
             dest.DropDownWidth = max;
-            
         }
         public static void LoadToObjectCollection(ComboBox dest, IEnumerable<object> src)
         {
@@ -41,6 +40,7 @@ namespace relert_sharp.SubWindows.LogicEditor
                 case TriggerParam.ComboContent.EvaNames:
                 case TriggerParam.ComboContent.ThemeNames:
                 case TriggerParam.ComboContent.TechnoType:
+                case TriggerParam.ComboContent.BuildingID:
                     Select(dest, param, false);
                     break;
                 default:

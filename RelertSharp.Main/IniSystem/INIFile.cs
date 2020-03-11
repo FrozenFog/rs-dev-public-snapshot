@@ -82,7 +82,7 @@ namespace relert_sharp.IniSystem
         #endregion
 
         #region Public Methods - INIFile
-        public void Override(List<INIEntity> src)
+        public void Override(IEnumerable<INIEntity> src)
         {
             foreach (INIEntity newent in src)
             {

@@ -39,6 +39,14 @@ namespace relert_sharp.IniSystem
         #endregion
 
 
+        #region Public Methods - Rules
+        public void LoadArt(INIFile f)
+        {
+            Override(f.IniData);
+        }
+        #endregion
+
+
         #region Public Calls - Rules
         public List<TechnoPair> VehicleList
         {
@@ -68,6 +76,13 @@ namespace relert_sharp.IniSystem
                 return GetTechnoPairs("BuildingTypes", TechnoPair.AbstractType.Name);
             }
         }
+        public List<TechnoPair> BuildingIDList
+        {
+            get
+            {
+                return GetTechnoPairs("BuildingTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName);
+            }
+        }
         public List<TechnoPair> SuperWeaponList
         {
             get
@@ -75,11 +90,11 @@ namespace relert_sharp.IniSystem
                 return GetTechnoPairs("SuperWeaponTypes", TechnoPair.AbstractType.RegName);
             }
         }
-        public List<TechnoPair> WeaponList
+        public List<TechnoPair> WarheadList
         {
             get
             {
-                return GetTechnoPairs("WeaponTypes", TechnoPair.AbstractType.RegName);
+                return GetTechnoPairs("Warheads", TechnoPair.AbstractType.RegName);
             }
         }
         public List<TechnoPair> AnimationList
@@ -101,6 +116,13 @@ namespace relert_sharp.IniSystem
             get
             {
                 return GetTechnoPairs(this["VoxelAnims"]);
+            }
+        }
+        public List<TechnoPair> MovieList
+        {
+            get
+            {
+                return GetTechnoPairs(this["Movies"]);
             }
         }
         public List<TechnoPair> TechnoList
