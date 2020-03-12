@@ -11,7 +11,7 @@ namespace relert_sharp.Common
     {
 
 
-        #region Contructor - RSConfig
+        #region ContruCtor - RSConfig
         public RSConfig() : base("config.rsc", INIFileType.DefaultINI)
         {
             GetMixNameList();

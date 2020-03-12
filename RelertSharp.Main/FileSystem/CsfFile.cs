@@ -16,7 +16,7 @@ namespace relert_sharp.FileSystem
         private Dictionary<string, CsfString> data = new Dictionary<string, CsfString>();
 
 
-        #region Constructor - CsfFile
+        #region Ctor - CsfFile
         public CsfFile(byte[] _rawData, string _fullName) : base(_rawData, _fullName)
         {
             Read();
@@ -129,7 +129,7 @@ namespace relert_sharp.FileSystem
 
 
 
-        #region Constructor - CSFString
+        #region Ctor - CSFString
         public CsfString(string _uiTag)
         {
             UIName = _uiTag;

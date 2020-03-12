@@ -21,7 +21,7 @@ namespace relert_sharp.IniSystem
         }
 
 
-        #region Constructor - TechnoPair
+        #region Ctor - TechnoPair
         public TechnoPair(INIEntity ent, string index, AbstractType abstractType = AbstractType.RegName, IndexType indexType = IndexType.Index)
         {
             Index = index;

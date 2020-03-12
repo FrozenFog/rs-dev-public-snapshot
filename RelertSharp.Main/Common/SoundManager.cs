@@ -20,7 +20,7 @@ namespace relert_sharp.Common
         private bool isValid = false;
 
 
-        #region Constructor SoundManager
+        #region ConstruCtor SoundManager
         public SoundManager()
         {
             watch.Start();

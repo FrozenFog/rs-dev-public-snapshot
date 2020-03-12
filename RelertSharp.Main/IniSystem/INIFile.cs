@@ -14,7 +14,7 @@ namespace relert_sharp.IniSystem
         private INIFileType initype;
 
 
-        #region Constructor - INIFile
+        #region Ctor - INIFile
         public INIFile(string path,  INIFileType itype = INIFileType.DefaultINI) : base(path, FileMode.Open, FileAccess.Read, false)
         {
             initype = itype;

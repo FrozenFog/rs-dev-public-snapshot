@@ -14,7 +14,7 @@ namespace relert_sharp.FileSystem
         private bool acmDecoded = true;
 
 
-        #region Constructor - WavFile
+        #region Ctor - WavFile
         public WavFile(byte[] _sample, int _sampleRate, int _chanel)
         {
             MemoryStream ms = new MemoryStream();

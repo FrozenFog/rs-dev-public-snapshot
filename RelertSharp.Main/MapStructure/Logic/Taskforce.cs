@@ -15,6 +15,11 @@ namespace relert_sharp.MapStructure.Logic
     public class TaskforceItem : TeamLogicItem
     {
         private Dictionary<string, int> memberData = new Dictionary<string, int>();
+        private int group;
+        private string name;
+
+
+        #region Ctor - TaskforceItem
         public TaskforceItem(INIEntity ent) : base(ent)
         {
             Name = ent.PopPair("Name").Value;
@@ -26,12 +31,21 @@ namespace relert_sharp.MapStructure.Logic
             }
         }
         public TaskforceItem() : base() { }
+        #endregion
 
 
         #region Public Calls - TaskforceItem
         public Dictionary<string, int> MemberData { get { return memberData; } set { memberData = value; } }
-        public int Group { get; set; }
-        public string Name { get; set; }
+        public int Group
+        {
+            get { return group; }
+            set { SetProperty(ref group, value); }
+        }
+        public string Name
+        {
+            get { return name; }
+            set { SetProperty(ref name, value); }
+        }
         #endregion
     }
 }

@@ -14,7 +14,7 @@ namespace relert_sharp.FileSystem
         private Dictionary<string, IdxIndex> indexs = new Dictionary<string, IdxIndex>();
 
 
-        #region Constructor - SoundBank
+        #region Ctor - SoundBank
         public SoundBank(string[] bagnames)
         {
             foreach (string name in bagnames)

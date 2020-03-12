@@ -12,7 +12,7 @@ namespace relert_sharp.FileSystem
     {
         private BinaryReader bagReader;
 
-        #region Constructor - IdxBagFile
+        #region Ctor - IdxBagFile
         public IdxBagFile() { }
         public IdxBagFile(IdxIndex index, byte[] bagfile)
         {
@@ -80,7 +80,7 @@ namespace relert_sharp.FileSystem
     public class IdxIndex
     {
         private Dictionary<string, IdxItem> items;
-        #region Constructor - IdxIndex
+        #region Ctor - IdxIndex
         public IdxIndex()
         {
             items = new Dictionary<string, IdxItem>();

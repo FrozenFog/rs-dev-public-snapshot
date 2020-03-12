@@ -15,7 +15,7 @@ namespace relert_sharp.FileSystem
         public Map Map;
 
 
-        #region Constructor - MapFile
+        #region Ctor - MapFile
         public MapFile(string path) : base(path)
         {
             INIType = INIFileType.MapFile;

@@ -78,7 +78,7 @@ namespace relert_sharp.Common
         Default = 0,
         AddToTeam = 1,
         Grinder = 2,
-        BioReactor = 3,
+        BioReaCtor = 3,
         GoHunt = 4,
         Nothing = 5
     }

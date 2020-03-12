@@ -15,7 +15,7 @@ namespace relert_sharp.FileSystem
         private MixHeader index;
 
 
-        #region Constructor - MixFile
+        #region Ctor - MixFile
         public MixFile(string path, MixTatics tatics) : base(path, FileMode.Open, FileAccess.Read, true)
         {
             Initialize(tatics);
@@ -117,7 +117,7 @@ namespace relert_sharp.FileSystem
         private Dictionary<uint, MixEntry> entries = new Dictionary<uint, MixEntry>();
 
 
-        #region Constructor - MixHeader
+        #region Ctor - MixHeader
         public MixHeader(byte[] rawData, ushort num)
         {
             numOfFiles = num;
@@ -163,7 +163,7 @@ namespace relert_sharp.FileSystem
         public int offset, size;
 
 
-        #region Constructor - MixEntry
+        #region Ctor - MixEntry
         public MixEntry(uint id, int _offset, int _size)
         {
             fileID = id;

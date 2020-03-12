@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using relert_sharp.Model;
 using relert_sharp.IniSystem;
 
 namespace relert_sharp.MapStructure.Logic
@@ -13,7 +14,7 @@ namespace relert_sharp.MapStructure.Logic
         private Dictionary<string, T> data = new Dictionary<string, T>();
 
 
-        #region Constructor - TeamLogicCollection
+        #region Ctor - TeamLogicCollection
         public TeamLogicCollection() { }
         #endregion
 
@@ -57,17 +58,30 @@ namespace relert_sharp.MapStructure.Logic
         public Dictionary<string, T>.KeyCollection Keys { get { return data.Keys; } }
         #endregion
     }
-    public class TeamLogicItem
+    public class TeamLogicItem : BindableBase
     {
+        private string id;
+
+
+        #region Ctor - TeamLogicItem
         public TeamLogicItem(INIEntity ent)
         {
             ID = ent.Name;
         }
         public TeamLogicItem() { }
-        public string ID { get; set; }
+        #endregion
+
+
+        #region Public Calls - TeamLogicItem
+        public string ID
+        {
+            get { return id; }
+            set { SetProperty(ref id, value); }
+        }
         public static TeamLogicItem Empty
         {
             get { return new TeamLogicItem(); }
         }
+        #endregion
     }
 }

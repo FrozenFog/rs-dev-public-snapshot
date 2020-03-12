@@ -46,7 +46,7 @@ namespace relert_sharp.MapStructure
         private Dictionary<string, INIEntity> residual;
 
 
-        #region Constructor - Map
+        #region Ctor - Map
         public Map(MapFile f)
         {
             mapFileName = f.FileName;

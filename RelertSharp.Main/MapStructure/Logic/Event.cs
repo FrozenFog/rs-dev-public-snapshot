@@ -19,7 +19,7 @@ namespace relert_sharp.MapStructure.Logic
 
     //public class EventGroup : LogicGroup
     //{
-    //    #region Constructor - EventGroup
+    //    #region Ctor - EventGroup
     //    public EventGroup(string _id, int _num, string[] _paramData) : base(_id, _num, _paramData, LogicType.EventLogic)
     //    {
 
@@ -31,7 +31,7 @@ namespace relert_sharp.MapStructure.Logic
 
     //public class EventItem : LogicItem
     //{
-    //    #region Constructor - EventItem
+    //    #region Ctor - EventItem
     //    public EventItem(int _id, string[] _param, string _comment = "") : base(_id, _param, LogicType.EventLogic, _comment)
     //    {
 

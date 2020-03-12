@@ -11,7 +11,7 @@ namespace relert_sharp.MapStructure.Logic
 {
     public class ActionCollection : LogicCollection
     {
-        #region Constructor - ActionCollection
+        #region Ctor - ActionCollection
         public ActionCollection(INIEntity entAction) : base(entAction, LogicType.ActionLogic)
         {
 
@@ -20,7 +20,7 @@ namespace relert_sharp.MapStructure.Logic
     }
     //public class ActionGroup : LogicGroup
     //{
-    //    #region Constructor - ActionGroup
+    //    #region Ctor - ActionGroup
     //    public ActionGroup(string _id, int _num, string[] _paramData) : base(_id, _num, _paramData, LogicType.ActionLogic)
     //    {
 
@@ -30,7 +30,7 @@ namespace relert_sharp.MapStructure.Logic
     //}
     //public class ActionItem : LogicItem
     //{
-    //    #region Constructor - ActionItem
+    //    #region Ctor - ActionItem
     //    public ActionItem(int _id, string[] _param, string _comment = "") : base(_id, _param, LogicType.ActionLogic, _comment)
     //    {
 

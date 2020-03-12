@@ -14,7 +14,7 @@ namespace relert_sharp.MapStructure
         private List<string> tileNameIndex = new List<string>();
 
 
-        #region Constructor - MapTheaterTileSet
+        #region Ctor - MapTheaterTileSet
         public MapTheaterTileSet(TheaterType _type)
         {
             string _theater = "";
