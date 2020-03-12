@@ -13,7 +13,7 @@ namespace relert_sharp.FileSystem
         private List<int> data = new List<int>();
 
 
-        #region Constructor - PalFile
+        #region Ctor - PalFile
         public PalFile(Stream baseStream, string _fullName) : base(baseStream, _fullName)
         {
             Load();

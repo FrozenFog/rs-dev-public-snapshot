@@ -11,7 +11,7 @@ namespace relert_sharp.MapStructure.Logic
         private Dictionary<string, bool> data = new Dictionary<string, bool>();
 
 
-        #region Constructor - LocalVarCollection
+        #region Ctor - LocalVarCollection
         public LocalVarCollection() { }
         #endregion
 

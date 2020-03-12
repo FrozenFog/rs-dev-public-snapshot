@@ -13,7 +13,7 @@ namespace relert_sharp.IniSystem
         //private string eva1key, eva2key, eva3key, eva4key, eva5key, eva6key;
 
 
-        #region Constructor - SoundRules
+        #region Ctor - SoundRules
         public SoundRules(string soundname, string evaname, string themename)
         {
             sound = GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.SoundName, FileExtension.INI);

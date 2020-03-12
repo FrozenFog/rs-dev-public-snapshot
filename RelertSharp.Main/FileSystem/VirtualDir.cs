@@ -15,7 +15,7 @@ namespace relert_sharp.FileSystem
     {
         private Dictionary<uint, VirtualFileInfo> fileOrigin = new Dictionary<uint, VirtualFileInfo>();
         private Dictionary<string, MixTatics> mixTatics = new Dictionary<string, MixTatics>();
-        #region Constructor - VirtualDir
+        #region Ctor - VirtualDir
         public VirtualDir()
         {
             LoadMixIndex(GlobalConfig.MixNameList);
@@ -173,7 +173,7 @@ namespace relert_sharp.FileSystem
 
     public class VirtualFileInfo
     {
-        #region Constructor - VirtualFileInfo
+        #region Ctor - VirtualFileInfo
         public VirtualFileInfo(string _mixpath, string _mixName, MixEntry _ent, int _bodyPos, string _parentMixPath = "")
         {
             MixPath = _mixpath;

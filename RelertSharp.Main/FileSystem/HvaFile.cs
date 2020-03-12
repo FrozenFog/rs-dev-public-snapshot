@@ -12,7 +12,7 @@ namespace relert_sharp.FileSystem
         private List<HvaFrame> frames = new List<HvaFrame>();
 
 
-        #region Constructor - HvaFile
+        #region Ctor - HvaFile
         public HvaFile(byte[] _data, string _fullName) : base(_data, _fullName)
         {
             Read();
@@ -62,7 +62,7 @@ namespace relert_sharp.FileSystem
         private List<float[]> matrixs = new List<float[]>();
 
 
-        #region Constructor - HvaFrame
+        #region Ctor - HvaFrame
         public HvaFrame() { }
         #endregion
 

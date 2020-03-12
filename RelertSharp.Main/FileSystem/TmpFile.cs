@@ -19,7 +19,7 @@ namespace relert_sharp.FileSystem
         private TheaterType theaterType;
 
 
-        #region Constructor - TmpFile
+        #region Ctor - TmpFile
         public TmpFile(string path) : base(path, FileMode.Open, FileAccess.Read)
         {
             Read();
@@ -123,7 +123,7 @@ namespace relert_sharp.FileSystem
         public byte TerrainType, RampType;
         public RGBColor ColorRadarLeft, ColorRadarRight;
 
-        #region Constructor - TmpImage
+        #region Ctor - TmpImage
         public TmpImage() { }
         #endregion
 

@@ -13,7 +13,7 @@ namespace relert_sharp.FileSystem
 
 
 
-        #region Constructor - LangFile
+        #region Ctor - LangFile
         public LangFile(string path) : base(path)
         {
             INIType = INIFileType.Language;

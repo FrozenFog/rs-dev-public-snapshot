@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using relert_sharp.Common;
+using relert_sharp.Model;
 using static relert_sharp.Utils.Misc;
 
 namespace relert_sharp.MapStructure.Logic
@@ -14,7 +15,7 @@ namespace relert_sharp.MapStructure.Logic
         private Dictionary<string, bool> globalEnables = new Dictionary<string, bool>();
 
 
-        #region Constructor - AITriggerCollection
+        #region Ctor - AITriggerCollection
         public AITriggerCollection() { }
         #endregion
 
@@ -38,11 +39,17 @@ namespace relert_sharp.MapStructure.Logic
     }
 
 
-    public class AITriggerItem
+    public class AITriggerItem : BindableBase
     {
+        private string name, id, team1id, team2id, ownerhouse, condObjID;
+        private int tech, sideindex;
+        private double startwg, minwg, maxwg;
+        private bool enabled, skirmish, ez, nm, hd;
+        private AITriggerComparator comparator;
+        private AITriggerConditionType condtype;
 
 
-        #region Constructor - AITriggerItem
+        #region Ctor - AITriggerItem
         public AITriggerItem() { }
         public AITriggerItem(string _id, string[] _args)
         {
@@ -58,7 +65,7 @@ namespace relert_sharp.MapStructure.Logic
             MinimumWeight = double.Parse(_args[8]);
             MaximumWeight = double.Parse(_args[9]);
             IsForSkirmish = ParseBool(_args[10]);
-            residual = "0";
+            Residual = "0";
             SideIndex = int.Parse(_args[12]);
             IsBaseDefense = false;
             Team2ID = _args[14];
@@ -71,35 +78,109 @@ namespace relert_sharp.MapStructure.Logic
 
 
         #region Public Calls - AITriggerItem
-        public bool Enabled { get; set; }
-        public string Name { get; set; }
-        public string ID { get; set; }
-        public string Team1ID { get; set; }
-        public string OwnerHouse { get; set; }
-        public int TechLevel { get; set; }
-        public AITriggerConditionType ConditionType { get; set; }
-        public string ConditionObjID { get; set; }
-        public AITriggerComparator Comparator { get; set; }
-        public double StartingWeight { get; set; }
-        public double MinimumWeight { get; set; }
-        public double MaximumWeight { get; set; }
-        public bool IsForSkirmish { get; set; }
-        public string residual { get; private set; }
-        public int SideIndex { get; set; }
+        public bool Enabled
+        {
+            get { return enabled; }
+            set { SetProperty(ref enabled, value); }
+        }
+        public string Name
+        {
+            get { return name; }
+            set { SetProperty(ref name, value); }
+        }
+        public string ID
+        {
+            get { return id; }
+            set { SetProperty(ref id, value); }
+        }
+        public string Team1ID
+        {
+            get { return team1id; }
+            set { SetProperty(ref team1id, value); }
+        }
+        public string OwnerHouse
+        {
+            get { return ownerhouse; }
+            set { SetProperty(ref ownerhouse, value); }
+        }
+        public int TechLevel
+        {
+            get { return tech; }
+            set { SetProperty(ref tech, value); }
+        }
+        public AITriggerConditionType ConditionType
+        {
+            get { return condtype; }
+            set { SetProperty(ref condtype, value); }
+        }
+        public string ConditionObjID
+        {
+            get { return condObjID; }
+            set { SetProperty(ref condObjID, value); }
+        }
+        public AITriggerComparator Comparator
+        {
+            get { return comparator; }
+            set { SetProperty(ref comparator, value); }
+        }
+        public double StartingWeight
+        {
+            get { return startwg; }
+            set { SetProperty(ref startwg, value); }
+        }
+        public double MinimumWeight
+        {
+            get { return minwg; }
+            set { SetProperty(ref minwg, value); }
+        }
+        public double MaximumWeight
+        {
+            get { return maxwg; }
+            set { SetProperty(ref maxwg, value); }
+        }
+        public bool IsForSkirmish
+        {
+            get { return skirmish; }
+            set { SetProperty(ref skirmish, value); }
+        }
+        public string Residual { get; private set; }
+        public int SideIndex
+        {
+            get { return sideindex; }
+            set { SetProperty(ref sideindex, value); }
+        }
         public bool IsBaseDefense { get; private set; }
-        public string Team2ID { get; set; }
-        public bool EasyOn { get; set; }
-        public bool NormalOn { get; set; }
-        public bool HardOn { get; set; }
+        public string Team2ID
+        {
+            get { return team2id; }
+            set { SetProperty(ref team2id, value); }
+        }
+        public bool EasyOn
+        {
+            get { return ez; }
+            set { SetProperty(ref ez, value); }
+        }
+        public bool NormalOn
+        {
+            get { return nm; }
+            set { SetProperty(ref nm, value); }
+        }
+        public bool HardOn
+        {
+            get { return hd; }
+            set { SetProperty(ref hd, value); }
+        }
         #endregion
     }
 
 
-    public class AITriggerComparator
+    public class AITriggerComparator : BindableBase
     {
+        private int num1;
+        private AITriggerConditionOperator oper;
 
 
-        #region Constructor AITriggerComparator
+        #region Ctor AITriggerComparator
         public AITriggerComparator(string cmpString)
         {
             Num1 = FromLEByteString(cmpString.Substring(0, 8));
@@ -109,8 +190,16 @@ namespace relert_sharp.MapStructure.Logic
 
 
         #region Public Calls - AITriggerComparator
-        public int Num1 { get; set; }
-        public AITriggerConditionOperator Operator { get; set; }
+        public int Num1
+        {
+            get { return num1; }
+            set { SetProperty(ref num1, value); }
+        }
+        public AITriggerConditionOperator Operator
+        {
+            get { return oper; }
+            set { SetProperty(ref oper, value); }
+        }
         public static string Zeros { get { return @"000000000000000000000000000000000000000000000000"; } }
         #endregion
     }

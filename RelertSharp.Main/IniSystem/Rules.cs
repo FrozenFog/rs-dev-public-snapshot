@@ -9,7 +9,7 @@ namespace relert_sharp.IniSystem
 {
     public class Rules : INIFile
     {
-        #region Constructor - Rules
+        #region Ctor - Rules
         public Rules(string path, INIFileType itype = INIFileType.RulesINI) : base(path, INIFileType.RulesINI) { }
         public Rules(byte[] _data, string _filename) : base(_data, _filename, INIFileType.RulesINI) { }
         #endregion

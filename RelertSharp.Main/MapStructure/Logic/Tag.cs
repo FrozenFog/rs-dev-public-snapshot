@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using relert_sharp.IniSystem;
 using relert_sharp.Common;
+using relert_sharp.Model;
 using System.Collections;
 
 namespace relert_sharp.MapStructure.Logic
@@ -15,7 +16,7 @@ namespace relert_sharp.MapStructure.Logic
         private Dictionary<string, string> trigger_tag = new Dictionary<string, string>();
 
 
-        #region Constructor - TagCollection
+        #region Ctor - TagCollection
         public TagCollection(INIEntity entTag)
         {
             foreach (INIPair p in entTag.DataList)
@@ -86,8 +87,13 @@ namespace relert_sharp.MapStructure.Logic
     }
 
 
-    public class TagItem
+    public class TagItem : BindableBase
     {
+        private string name, asso, id;
+        private TriggerRepeatingType repeatingType;
+
+
+        #region Ctor - TagItem
         public TagItem(string _id, string[] dataList)
         {
             ID = _id;
@@ -95,9 +101,30 @@ namespace relert_sharp.MapStructure.Logic
             Name = dataList[1];
             AssoTrigger = dataList[2];
         }
-        public TriggerRepeatingType Repeating { get; set; }
-        public string Name { get; set; }
-        public string AssoTrigger { get; set; }
-        public string ID { get; set; }
+        #endregion
+
+
+        #region Public Calls - TagItem
+        public TriggerRepeatingType Repeating
+        {
+            get { return repeatingType; }
+            set { SetProperty(ref repeatingType, value); }
+        }
+        public string Name
+        {
+            get { return name; }
+            set { SetProperty(ref name, value); }
+        }
+        public string AssoTrigger
+        {
+            get { return asso; }
+            set { SetProperty(ref asso, value); }
+        }
+        public string ID
+        {
+            get { return id; }
+            set { SetProperty(ref id, value); }
+        }
+        #endregion
     }
 }

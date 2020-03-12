@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using relert_sharp.IniSystem;
 using relert_sharp.Common;
+using relert_sharp.Model;
 using System.Collections;
 
 namespace relert_sharp.MapStructure.Logic
@@ -14,7 +15,7 @@ namespace relert_sharp.MapStructure.Logic
         private Dictionary<string, LogicGroup> data = new Dictionary<string, LogicGroup>();
 
 
-        #region Constructor - LogicCollection
+        #region Ctor - LogicCollection
         public LogicCollection(INIEntity ent, LogicType type)
         {
             foreach (INIPair p in ent.DataList)
@@ -47,7 +48,7 @@ namespace relert_sharp.MapStructure.Logic
         private List<LogicItem> data = new List<LogicItem>();
 
 
-        #region Constructor - LogicGroup
+        #region Ctor - LogicGroup
         public LogicGroup(string _id, int _num, string[] _paramData, LogicType type)
         {
             ID = _id;
@@ -114,13 +115,16 @@ namespace relert_sharp.MapStructure.Logic
     }
 
 
-    public class LogicItem
+    public class LogicItem : BindableBase
     {
         private LogicType type;
         private int count;
+        private int id;
+        private string comment;
+        private string[] parameters;
 
 
-        #region Constructor - LogicItem
+        #region Ctor - LogicItem
         public LogicItem(int _typeID, string[] _param, LogicType _type, int num, string _comment = "")
         {
             ID = _typeID;
@@ -147,9 +151,21 @@ namespace relert_sharp.MapStructure.Logic
 
 
         #region Public Calls - LogicItem
-        public int ID { get; set; }
-        public string Comment { get; set; }
-        public string[] Parameters { get; set; }
+        public int ID
+        {
+            get { return id; }
+            set { SetProperty(ref id, value); }
+        }
+        public string Comment
+        {
+            get { return comment; }
+            set { SetProperty(ref comment, value); }
+        }
+        public string[] Parameters
+        {
+            get { return parameters; }
+            set { SetProperty(ref parameters, value); }
+        }
         #endregion
     }
 }

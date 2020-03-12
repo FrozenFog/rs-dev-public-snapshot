@@ -25,7 +25,7 @@ namespace relert_sharp.FileSystem
         private FileAccess access;
 
 
-        #region Constructor - BaseFile
+        #region Ctor - BaseFile
         public BaseFile(string path, FileMode m, FileAccess a, bool _keepAlive = true)
         {
             if (m == FileMode.Create && File.Exists(path)) File.Delete(path);

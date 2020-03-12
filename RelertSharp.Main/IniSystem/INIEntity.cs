@@ -15,7 +15,7 @@ namespace relert_sharp.IniSystem
         private INIEntType entitytype;
 
 
-        #region Constructor - INIEntity
+        #region Ctor - INIEntity
         public INIEntity() { }
         public INIEntity(string _name, string _preComment, string _comment)
         {

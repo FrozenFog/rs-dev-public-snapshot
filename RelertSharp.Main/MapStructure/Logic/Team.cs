@@ -11,7 +11,7 @@ namespace relert_sharp.MapStructure.Logic
 {
     public class TeamCollection : TeamLogicCollection<TeamItem>
     {
-        #region Constructor - TeamCollection
+        #region Ctor - TeamCollection
         public TeamCollection() : base() { }
         #endregion
 

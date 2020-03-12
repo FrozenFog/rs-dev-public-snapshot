@@ -15,7 +15,7 @@ namespace relert_sharp.IniSystem
         private INIKeyType keytype;
 
 
-        #region Constructor - INIPair
+        #region Ctor - INIPair
         public INIPair(string n, string val, string com, string _preComment)
         {
             name = n;

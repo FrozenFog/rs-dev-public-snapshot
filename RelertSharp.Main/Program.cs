@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using relert_sharp.FileSystem;
 using relert_sharp.Common;
-using relert_sharp.SubWindows;
+using relert_sharp.SubWindows.LogicEditor;
 
 namespace relert_sharp
 {
@@ -15,15 +15,33 @@ namespace relert_sharp
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            Initialization();
 #if DEBUG
+            Initialization();
             _run.M();
 #else
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new LogicEditor());
+            if (args.Length < 1) return;
+            try
+            {
+                Initialization();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Initialization failed!\nTrace:\n" + e.StackTrace, "RelertSharp", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            try
+            {
+                MapFile map = new MapFile(args[0]);
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new LogicEditor(map.Map));
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Unhandled error!\nTrace:\n" + e.StackTrace, "Fatal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 #endif
         }
         static void Initialization()

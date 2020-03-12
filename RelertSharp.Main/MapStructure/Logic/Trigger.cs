@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using relert_sharp.IniSystem;
 using relert_sharp.Common;
+using relert_sharp.Model;
 using static relert_sharp.Utils.Misc;
 using System.Collections;
 
@@ -15,7 +16,7 @@ namespace relert_sharp.MapStructure.Logic
         private Dictionary<string, TriggerItem> data = new Dictionary<string, TriggerItem>();
 
 
-        #region Constructor - TriggerCollection
+        #region Ctor - TriggerCollection
         public TriggerCollection(INIEntity entTrigger)
         {
             foreach (INIPair p in entTrigger.DataList)
@@ -108,14 +109,17 @@ namespace relert_sharp.MapStructure.Logic
     }
 
 
-    public class TriggerItem
+    public class TriggerItem : BindableBase
     {
         private string innerString;
+        private string id, house, linkedwith, name;
+        private bool disabled, ez, nm, hd;
+        private TriggerRepeatingType repeattype;
         [Flags]
         public enum DisplayingType { OnlyID = 0x1, OnlyName = 0x2, IDandName = OnlyID | OnlyName, Remain = 0x4 }
 
 
-        #region Constructor - TriggerItem
+        #region Ctor - TriggerItem
         public TriggerItem(string id, string house, string linkedTriggerID, string name, bool disabled, bool e, bool n, bool h, int repeating)
         {
             ID = id;
@@ -167,15 +171,51 @@ namespace relert_sharp.MapStructure.Logic
                 return item;
             }
         }
-        public string ID { get; set; }
-        public string House { get; set; }
-        public string LinkedWith { get; set; }
-        public string Name { get; set; }
-        public bool Disabled { get; set; }
-        public bool EasyOn { get; set; }
-        public bool NormalOn { get; set; }
-        public bool HardOn { get; set; }
-        public TriggerRepeatingType Repeating { get; set; }
+        public string ID
+        {
+            get { return id; }
+            set { SetProperty(ref id, value); }
+        }
+        public string House
+        {
+            get { return house; }
+            set { SetProperty(ref house, value); }
+        }
+        public string LinkedWith
+        {
+            get { return linkedwith; }
+            set { SetProperty(ref linkedwith, value); }
+        }
+        public string Name
+        {
+            get { return name; }
+            set { SetProperty(ref name, value); }
+        }
+        public bool Disabled
+        {
+            get { return disabled; }
+            set { SetProperty(ref disabled, value); }
+        }
+        public bool EasyOn
+        {
+            get { return ez; }
+            set { SetProperty(ref ez, value); }
+        }
+        public bool NormalOn
+        {
+            get { return nm; }
+            set { SetProperty(ref nm, value); }
+        }
+        public bool HardOn
+        {
+            get { return hd; }
+            set { SetProperty(ref hd, value); }
+        }
+        public TriggerRepeatingType Repeating
+        {
+            get { return repeattype; }
+            set { SetProperty(ref repeattype, value); }
+        }
         public string IDName { get { return ID + ":" + Name; } }
         #endregion
     }

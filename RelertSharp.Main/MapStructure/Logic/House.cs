@@ -11,7 +11,7 @@ namespace relert_sharp.MapStructure.Logic
 {
     public class HouseCollection : TeamLogicCollection<HouseItem>
     {
-        #region Constructor - HouseCollection
+        #region Ctor - HouseCollection
         public HouseCollection() { }
         #endregion
 
@@ -37,7 +37,7 @@ namespace relert_sharp.MapStructure.Logic
         private Dictionary<string, INIPair> residual;
 
 
-        #region Constructor - HouseItem
+        #region Ctor - HouseItem
         public HouseItem(INIEntity ent) : base(ent)
         {
             IQ = ent.PopPair("IQ").ParseInt();

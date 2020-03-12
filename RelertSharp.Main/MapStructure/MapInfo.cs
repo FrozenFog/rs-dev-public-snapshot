@@ -21,7 +21,7 @@ namespace relert_sharp.MapStructure
         public Rectangle Size, LocalSize;
 
 
-        #region Constructor - MapInfo
+        #region Ctor - MapInfo
         public MapInfo(INIEntity Basic, INIEntity MapSize, INIEntity SpecialFlags)
         {
             _basic = Basic;
@@ -82,7 +82,7 @@ namespace relert_sharp.MapStructure
 
 
 
-        #region Constructor - Lightning
+        #region Ctor - Lightning
         public Lightning(INIEntity ent)
         {
             Normal = new LightningItem(ent["Red"], ent["Green"], ent["Blue"], 
@@ -110,7 +110,7 @@ namespace relert_sharp.MapStructure
 
 
 
-        #region Constructor - LightningItem
+        #region Ctor - LightningItem
         public LightningItem(string _R, string _G, string _B, string _level, string _ground, string _ambient)
         {
             Red = double.Parse(_R);
@@ -139,7 +139,7 @@ namespace relert_sharp.MapStructure
 
 
 
-        #region Constructor - RankInfo
+        #region Ctor - RankInfo
         public RankInfo(INIEntity rankEnt)
         {
             ETime = TimeInt(rankEnt["ParTimeEasy"]);

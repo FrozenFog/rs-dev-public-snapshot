@@ -15,7 +15,7 @@ namespace relert_sharp.MapStructure
         private Dictionary<int, OverlayUnit> data = new Dictionary<int, OverlayUnit>();
 
 
-        #region Constructor - OverlayLayer
+        #region Ctor - OverlayLayer
         public OverlayLayer(string _overlayPackString, string _overlayDataPackString)
         {
             byte[] _ovlOut = new byte[262144];
@@ -83,7 +83,7 @@ namespace relert_sharp.MapStructure
 
 
 
-        #region Constructor - OverlayUnit
+        #region Ctor - OverlayUnit
         public OverlayUnit(int _coord, byte _overlayIndex, byte _frameIndex)
         {
             X = Misc.CoordByteX(_coord);

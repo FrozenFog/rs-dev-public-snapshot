@@ -28,7 +28,14 @@ namespace relert_sharp.SubWindows.LogicEditor
         private SoundManager soundPlayer = new SoundManager();
 
 
-        #region Constructor - LogicEditor
+        #region selector
+        private TriggerItem sltTrigger;
+        private LogicItem sltEvent, sltAction;
+        private TagItem sltTag;
+        #endregion
+
+
+        #region Ctor - LogicEditor
         public LogicEditor(Map m)
         {
             InitializeComponent();
