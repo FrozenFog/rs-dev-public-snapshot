@@ -137,11 +137,11 @@
             this.tsmiTrgLstIDName = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.txbTest = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.ttTrg = new System.Windows.Forms.ToolTip(this.components);
-            this.txbTest = new System.Windows.Forms.TextBox();
             this.tbcMain.SuspendLayout();
             this.tbpTriggers.SuspendLayout();
             this.gpbActions.SuspendLayout();
@@ -508,6 +508,7 @@
             this.btnNewAction.TabIndex = 6;
             this.btnNewAction.Text = "LGCbtnNewAction";
             this.btnNewAction.UseVisualStyleBackColor = true;
+            this.btnNewAction.Click += new System.EventHandler(this.btnNewAction_Click);
             // 
             // btnDeleteAction
             // 
@@ -914,6 +915,7 @@
             this.btnNewEvent.TabIndex = 6;
             this.btnNewEvent.Text = "LGCbtnNewEvent";
             this.btnNewEvent.UseVisualStyleBackColor = true;
+            this.btnNewEvent.Click += new System.EventHandler(this.btnNewEvent_Click);
             // 
             // rtxbEventDetail
             // 
@@ -981,8 +983,10 @@
             this.ckbHard.Name = "ckbHard";
             this.ckbHard.Size = new System.Drawing.Size(84, 16);
             this.ckbHard.TabIndex = 15;
+            this.ckbHard.Tag = "h";
             this.ckbHard.Text = "LGCckbHard";
             this.ckbHard.UseVisualStyleBackColor = true;
+            this.ckbHard.CheckedChanged += new System.EventHandler(this.ckb_CheckedChanged);
             // 
             // ckbNormal
             // 
@@ -991,8 +995,10 @@
             this.ckbNormal.Name = "ckbNormal";
             this.ckbNormal.Size = new System.Drawing.Size(96, 16);
             this.ckbNormal.TabIndex = 15;
+            this.ckbNormal.Tag = "n";
             this.ckbNormal.Text = "LGCckbNormal";
             this.ckbNormal.UseVisualStyleBackColor = true;
+            this.ckbNormal.CheckedChanged += new System.EventHandler(this.ckb_CheckedChanged);
             // 
             // ckbEasy
             // 
@@ -1001,8 +1007,10 @@
             this.ckbEasy.Name = "ckbEasy";
             this.ckbEasy.Size = new System.Drawing.Size(84, 16);
             this.ckbEasy.TabIndex = 15;
+            this.ckbEasy.Tag = "e";
             this.ckbEasy.Text = "LGCckbEasy";
             this.ckbEasy.UseVisualStyleBackColor = true;
+            this.ckbEasy.CheckedChanged += new System.EventHandler(this.ckb_CheckedChanged);
             // 
             // cbbCustomGroup
             // 
@@ -1029,8 +1037,10 @@
             this.ckbDisabled.Name = "ckbDisabled";
             this.ckbDisabled.Size = new System.Drawing.Size(108, 16);
             this.ckbDisabled.TabIndex = 12;
+            this.ckbDisabled.Tag = "d";
             this.ckbDisabled.Text = "LGCckbDisabled";
             this.ckbDisabled.UseVisualStyleBackColor = true;
+            this.ckbDisabled.CheckedChanged += new System.EventHandler(this.ckb_CheckedChanged);
             // 
             // lbxTriggerHouses
             // 
@@ -1040,6 +1050,7 @@
             this.lbxTriggerHouses.Name = "lbxTriggerHouses";
             this.lbxTriggerHouses.Size = new System.Drawing.Size(156, 136);
             this.lbxTriggerHouses.TabIndex = 11;
+            this.lbxTriggerHouses.SelectedIndexChanged += new System.EventHandler(this.lbxTriggerHouses_SelectedIndexChanged);
             // 
             // label10
             // 
@@ -1088,9 +1099,11 @@
             this.rdbRepeat2.Name = "rdbRepeat2";
             this.rdbRepeat2.Size = new System.Drawing.Size(83, 16);
             this.rdbRepeat2.TabIndex = 0;
+            this.rdbRepeat2.Tag = "2";
             this.rdbRepeat2.Text = "LGCrdbRep2";
             this.ttTrg.SetToolTip(this.rdbRepeat2, "LGCDescRepeat2");
             this.rdbRepeat2.UseVisualStyleBackColor = true;
+            this.rdbRepeat2.CheckedChanged += new System.EventHandler(this.ckb_CheckedChanged);
             // 
             // rdbRepeat1
             // 
@@ -1099,9 +1112,11 @@
             this.rdbRepeat1.Name = "rdbRepeat1";
             this.rdbRepeat1.Size = new System.Drawing.Size(83, 16);
             this.rdbRepeat1.TabIndex = 0;
+            this.rdbRepeat1.Tag = "1";
             this.rdbRepeat1.Text = "LGCrdbRep1";
             this.ttTrg.SetToolTip(this.rdbRepeat1, "LGCDescRepeat1");
             this.rdbRepeat1.UseVisualStyleBackColor = true;
+            this.rdbRepeat1.CheckedChanged += new System.EventHandler(this.ckb_CheckedChanged);
             // 
             // rdbRepeat0
             // 
@@ -1112,9 +1127,11 @@
             this.rdbRepeat0.Size = new System.Drawing.Size(83, 16);
             this.rdbRepeat0.TabIndex = 0;
             this.rdbRepeat0.TabStop = true;
+            this.rdbRepeat0.Tag = "0";
             this.rdbRepeat0.Text = "LGCrdbRep0";
             this.ttTrg.SetToolTip(this.rdbRepeat0, "LGCDescRepeat0");
             this.rdbRepeat0.UseVisualStyleBackColor = true;
+            this.rdbRepeat0.CheckedChanged += new System.EventHandler(this.ckb_CheckedChanged);
             // 
             // label6
             // 
@@ -1201,6 +1218,7 @@
             this.txbTrgName.Name = "txbTrgName";
             this.txbTrgName.Size = new System.Drawing.Size(271, 21);
             this.txbTrgName.TabIndex = 5;
+            this.txbTrgName.Validated += new System.EventHandler(this.txbTrgName_Validated);
             // 
             // btnNewTrigger
             // 
@@ -1211,6 +1229,7 @@
             this.btnNewTrigger.TabIndex = 3;
             this.btnNewTrigger.Text = "LGCbtnNewTrg";
             this.btnNewTrigger.UseVisualStyleBackColor = true;
+            this.btnNewTrigger.Click += new System.EventHandler(this.btnNewTrigger_Click);
             // 
             // cmsEditTemplate
             // 
@@ -1224,6 +1243,7 @@
             this.lGCtsmiEditTempToolStripMenuItem.Name = "lGCtsmiEditTempToolStripMenuItem";
             this.lGCtsmiEditTempToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
             this.lGCtsmiEditTempToolStripMenuItem.Text = "LGCtsmiEditTemp";
+            this.lGCtsmiEditTempToolStripMenuItem.Click += new System.EventHandler(this.lGCtsmiEditTempToolStripMenuItem_Click);
             // 
             // btnSaveTemp
             // 
@@ -1235,6 +1255,7 @@
             this.btnSaveTemp.Text = "LGCbtnSaveTemplate";
             this.btnSaveTemp.UseVisualStyleBackColor = true;
             this.btnSaveTemp.Visible = false;
+            this.btnSaveTemp.Click += new System.EventHandler(this.btnSaveTemp_Click);
             // 
             // btnCopyTrigger
             // 
@@ -1253,6 +1274,7 @@
             this.btnDelTrigger.TabIndex = 3;
             this.btnDelTrigger.Text = "LGCbtnDelTrg";
             this.btnDelTrigger.UseVisualStyleBackColor = true;
+            this.btnDelTrigger.Click += new System.EventHandler(this.btnDelTrigger_Click);
             // 
             // lbxTriggerList
             // 
@@ -1265,7 +1287,7 @@
             this.lbxTriggerList.Name = "lbxTriggerList";
             this.lbxTriggerList.Size = new System.Drawing.Size(253, 522);
             this.lbxTriggerList.TabIndex = 2;
-            this.lbxTriggerList.SelectedValueChanged += new System.EventHandler(this.lbxTriggerList_SelectedValueChanged);
+            this.lbxTriggerList.SelectedIndexChanged += new System.EventHandler(this.lbxTriggerList_SelectedIndexChanged);
             // 
             // cmsTriggerList
             // 
@@ -1339,6 +1361,13 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             // 
+            // txbTest
+            // 
+            this.txbTest.Location = new System.Drawing.Point(112, 67);
+            this.txbTest.Name = "txbTest";
+            this.txbTest.Size = new System.Drawing.Size(100, 21);
+            this.txbTest.TabIndex = 0;
+            // 
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.Transparent;
@@ -1368,13 +1397,6 @@
             this.tabPage5.Size = new System.Drawing.Size(1190, 565);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "tabPage5";
-            // 
-            // txbTest
-            // 
-            this.txbTest.Location = new System.Drawing.Point(112, 67);
-            this.txbTest.Name = "txbTest";
-            this.txbTest.Size = new System.Drawing.Size(100, 21);
-            this.txbTest.TabIndex = 0;
             // 
             // LogicEditor
             // 

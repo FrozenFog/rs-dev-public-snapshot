@@ -9,15 +9,15 @@ using System.Collections;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class ActionCollection : LogicCollection
-    {
-        #region Ctor - ActionCollection
-        public ActionCollection(INIEntity entAction) : base(entAction, LogicType.ActionLogic)
-        {
+    //public class ActionCollection : LogicCollection
+    //{
+    //    #region Ctor - ActionCollection
+    //    public ActionCollection(INIEntity entAction) : base(entAction, LogicType.ActionLogic)
+    //    {
 
-        }
-        #endregion
-    }
+    //    }
+    //    #endregion
+    //}
     //public class ActionGroup : LogicGroup
     //{
     //    #region Ctor - ActionGroup

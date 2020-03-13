@@ -6,11 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Media;
 using System.Windows.Forms;
 using RelertSharp.MapStructure;
 using RelertSharp.MapStructure.Logic;
-using RelertSharp.FileSystem;
 using RelertSharp.Common;
 using RelertSharp.IniSystem;
 using static RelertSharp.Language;
@@ -26,11 +24,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         private CheckBox[] ckbEP, ckbAP;
         private ComboBox[] cbbEP, cbbAP;
         private SoundManager soundPlayer = new SoundManager();
-
-
-        #region selector
-
-        #endregion
+        private bool updateEvent = false, updateAction = false;
 
 
         #region Ctor - LogicEditor
@@ -40,29 +34,17 @@ namespace RelertSharp.SubWindows.LogicEditor
             SetLanguage();
             SetGroup();
             map = m;
+            StaticHelper.LoadToObjectCollection(cbbEventAbst, descriptCollection.Events);
+            StaticHelper.LoadToObjectCollection(cbbActionAbst, descriptCollection.Actions);
             UpdateTrgList(TriggerItem.DisplayingType.IDandName);
             LoadHouseList();
-            LoadEventComboBox();
-            LoadActionComboBox();
             SetGlobal();
             lbxTriggerList.SelectedIndex = 0;
-            SetTriggerBinding(lbxTriggerList.SelectedItem as TriggerItem, (lbxTriggerList.SelectedItem as TriggerItem).ID);
         }
         #endregion
 
 
         #region Private Methods - LogicEditor
-        private void SetTriggerBinding(TriggerItem trigger, string tagID)
-        {
-            TagItem tag = map.Tags.GetTagFromTrigger(tagID);
-            txbTrgID.DataBindings.Add("Text", trigger, "ID", false, DataSourceUpdateMode.OnPropertyChanged);
-            txbTrgName.DataBindings.Add("Text", trigger, "Name", false, DataSourceUpdateMode.OnPropertyChanged);
-            txbTagID.DataBindings.Add("Text", tag, "ID", false, DataSourceUpdateMode.OnPropertyChanged);
-            txbTagName.DataBindings.Add("Text", tag, "Name", false, DataSourceUpdateMode.OnPropertyChanged);
-            ckbEasy.DataBindings.Add("Checked", trigger, "EasyOn", false, DataSourceUpdateMode.OnPropertyChanged);
-            ckbNormal.DataBindings.Add("Checked", trigger, "NormalOn", false, DataSourceUpdateMode.OnPropertyChanged);
-            ckbHard.DataBindings.Add("Checked", trigger, "NormalOn", false, DataSourceUpdateMode.OnPropertyChanged);
-        }
         private void SetGlobal()
         {
             foreach (HouseItem house in map.Houses)
@@ -87,14 +69,6 @@ namespace RelertSharp.SubWindows.LogicEditor
             cbbEP = new ComboBox[4] { cbbEP1, cbbEP2, cbbEP3, cbbEP4 };
             cbbAP = new ComboBox[4] { cbbAP1, cbbAP2, cbbAP3, cbbAP4 };
         }
-        private void LoadEventComboBox()
-        {
-            StaticHelper.LoadToObjectCollection(cbbEventAbst, descriptCollection.Events);
-        }
-        private void LoadActionComboBox()
-        {
-            StaticHelper.LoadToObjectCollection(cbbActionAbst, descriptCollection.Actions);
-        }
         private void LoadHouseList()
         {
             map.Countries.AscendingSort();
@@ -102,28 +76,20 @@ namespace RelertSharp.SubWindows.LogicEditor
         }
         private void UpdateTrgList(TriggerItem.DisplayingType type = TriggerItem.DisplayingType.Remain)
         {
-            lbxTriggerList.Items.Clear();
+            lbxTriggerList.Tag = (int)type;
+            map.Triggers.SetToString(type);
+            StaticHelper.LoadToObjectCollection(lbxTriggerList, map.Triggers);
             cbbAttatchedTrg.Items.Clear();
             cbbAttatchedTrg.Items.Add(TriggerItem.NullTrigger);
-            foreach(TriggerItem trigger in map.Triggers)
+            foreach (TriggerItem trigger in map.Triggers)
             {
-                trigger.SetDisplayingString(type);
-                lbxTriggerList.Items.Add(trigger);
                 cbbAttatchedTrg.Items.Add(trigger);
             }
-        }
-        private void UpdateEventList(LogicGroup eg)
-        {
-            StaticHelper.LoadToObjectCollection(lbxEventList, eg);
-        }
-        private void UpdateActionList(LogicGroup ag)
-        {
-            StaticHelper.LoadToObjectCollection(lbxActionList, ag);
         }
         private void UpdateTags(string triggerID)
         {
             TriggerItem trg = map.Triggers[triggerID];
-            TagItem tg = map.Tags.GetTagFromTrigger(triggerID);
+            TagItem tg = map.Tags.GetTagFromTrigger(triggerID, trg);
 
             txbTrgID.Text = triggerID;
             txbTrgName.Text = trg.Name;
@@ -159,11 +125,6 @@ namespace RelertSharp.SubWindows.LogicEditor
             ckbEasy.Checked = trg.EasyOn;
             ckbNormal.Checked = trg.NormalOn;
             ckbHard.Checked = trg.HardOn;
-        }
-        private void UpdateEvents(string triggerID)
-        {
-            LogicGroup lg = map.Events[triggerID];
-            UpdateEventList(lg);
         }
         private void UpdateEventContent(LogicItem item)
         {
@@ -254,7 +215,6 @@ namespace RelertSharp.SubWindows.LogicEditor
                     return GlobalVar.GlobalRules.MovieList;
                 case TriggerParam.ComboContent.Warhead:
                     return GlobalVar.GlobalRules.WarheadList;
-                //TODO: Implement cases
                 default:
                     return null;
             }
@@ -348,11 +308,6 @@ namespace RelertSharp.SubWindows.LogicEditor
             txbActionAnno.Text = item.Comment;
             cbbActionAbst.SelectedIndex = item.ID;
         }
-        private void UpdateActions(string triggerID)
-        {
-            LogicGroup ag = map.Actions[triggerID] as LogicGroup;
-            UpdateActionList(ag);
-        }
 
         private void ClearContent(GroupBox gpb)
         {
@@ -366,17 +321,17 @@ namespace RelertSharp.SubWindows.LogicEditor
                 if (t == typeof(GroupBox)) ClearContent(c as GroupBox);
             }
         }
-        private void UpdateContent(string triggerID)
+        private void UpdateContent(TriggerItem trg)
         {
-            UpdateTags(triggerID);
-            UpdateEvents(triggerID);
+            UpdateTags(trg.ID);
+            StaticHelper.LoadToObjectCollection(lbxEventList, trg.Events);
             if (lbxEventList.Items.Count > 0) lbxEventList.SelectedIndex = 0;
             else
             {
                 ClearContent(gpbEvents);
                 mtxbEventID.Text = "00";
             }
-            UpdateActions(triggerID);
+            StaticHelper.LoadToObjectCollection(lbxActionList, trg.Actions);
             if (lbxActionList.Items.Count > 0) lbxActionList.SelectedIndex = 0;
             else
             {
@@ -428,6 +383,13 @@ namespace RelertSharp.SubWindows.LogicEditor
 
         #endregion
 
+        #endregion
+
+
+        #region Private Calls - LogicEditor
+        private TriggerItem _CurrentTrigger { get { return map.Triggers[txbTrgID.Text]; } }
+        private LogicItem _CurrentEvent { get { return _CurrentTrigger.Events[lbxEventList.SelectedIndex]; } }
+        private LogicItem _CurrentAction { get { return _CurrentTrigger.Actions[lbxActionList.SelectedIndex]; } }
         #endregion
     }
 }

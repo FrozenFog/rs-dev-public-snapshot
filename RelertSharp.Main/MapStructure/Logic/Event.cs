@@ -8,13 +8,13 @@ using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class EventCollection : LogicCollection
-    {
-        public EventCollection(INIEntity entEvent) : base(entEvent, LogicType.EventLogic)
-        {
+    //public class EventCollection : LogicCollection
+    //{
+    //    public EventCollection(INIEntity entEvent) : base(entEvent, LogicType.EventLogic)
+    //    {
 
-        }
-    }
+    //    }
+    //}
 
 
     //public class EventGroup : LogicGroup

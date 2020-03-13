@@ -20,6 +20,8 @@ namespace RelertSharp.MapStructure
         private string mapPath;
         private string isomappack5String, overlayString, overlaydataString, previewString;
         private string digest;
+        private List<string> globalid = new List<string>();
+        private int genID = 1000000;
 
         private MapInfo info;
         private RankInfo ranks;
@@ -27,7 +29,6 @@ namespace RelertSharp.MapStructure
         private Lightning lightning;
         private Rectangle previewSize;
 
-        private TaskforceCollection taskforces = new TaskforceCollection();
         private TeamScriptCollection scripts = new TeamScriptCollection();
         private AITriggerCollection aitriggers = new AITriggerCollection();
         private WaypointCollection waypoints = new WaypointCollection();
@@ -63,6 +64,11 @@ namespace RelertSharp.MapStructure
             Overlays = new OverlayLayer(overlayString, overlaydataString);
             residual = new Dictionary<string, INIEntity>(f.IniDict);
 
+            globalid.AddRange(Triggers.Keys);
+            globalid.AddRange(Teams.Keys);
+            globalid.AddRange(TaskForces.Keys);
+            globalid.AddRange(Tags.Keys);
+
             isomappack5String = "";
             overlayString = "";
             overlaydataString = "";
@@ -84,6 +90,13 @@ namespace RelertSharp.MapStructure
         {
             overlayString = Overlays.CompressIndex();
             overlaydataString = Overlays.CompressFrame();
+        }
+        public TriggerItem NewTrigger()
+        {
+            TriggerItem t = Triggers.NewTrigger(NewID);
+            TagItem tag = new TagItem(t, NewID);
+            Tags[tag.ID] = tag;
+            return t;
         }
         #endregion
 
@@ -145,7 +158,7 @@ namespace RelertSharp.MapStructure
             }
             foreach (string tfID in _taskforceList)
             {
-                taskforces[tfID] = new TaskforceItem(f.PopEnt(tfID));
+                TaskForces[tfID] = new TaskforceItem(f.PopEnt(tfID));
             }
             foreach (string scptID in _scriptList)
             {
@@ -180,11 +193,20 @@ namespace RelertSharp.MapStructure
             INIEntity entCelltags = f.PopEnt("CellTags");
             INIEntity entWaypoints = f.PopEnt("Waypoints");
 
-            Triggers = new TriggerCollection(entTrigger);
-            Actions = new ActionCollection(entAction);
-            Events = new EventCollection(entEvent);
             Tags = new TagCollection(entTag);
-            
+
+            foreach (INIPair p in entTrigger.DataList)
+            {
+                Triggers.LoadTriggerCommand(p);
+                if (entEvent.DictData.Keys.Contains(p.Name))
+                {
+                    Triggers[p.Name].Events = new LogicGroup(entEvent.GetPair(p.Name), LogicType.EventLogic);
+                }
+                if (entAction.DictData.Keys.Contains(p.Name))
+                {
+                    Triggers[p.Name].Actions = new LogicGroup(entAction.GetPair(p.Name), LogicType.ActionLogic);
+                }
+            }
             foreach (INIPair p in entVar.DataList)
             {
                 string[] tmp = p.ParseStringList();
@@ -224,14 +246,15 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Calls - Map
+        public TaskforceCollection TaskForces { get; private set; } = new TaskforceCollection();
         public HouseCollection Houses { get; private set; } = new HouseCollection();
         public LocalVarCollection LocalVariables { get; private set; } = new LocalVarCollection();
         public TeamCollection Teams { get; private set; } = new TeamCollection();
         public CountryCollection Countries { get; private set; }
-        public TriggerCollection Triggers { get; private set; }
+        public TriggerCollection Triggers { get; private set; } = new TriggerCollection();
         public TagCollection Tags { get; private set; }
-        public ActionCollection Actions { get; private set; }
-        public EventCollection Events { get; private set; }
+        //public ActionCollection Actions { get; private set; }
+        //public EventCollection Events { get; private set; }
         public MapInfo Info
         {
             get { return info; }
@@ -274,6 +297,22 @@ namespace RelertSharp.MapStructure
         {
             get { return previewString; }
             set { previewString = value; }
+        }
+        public string NewID
+        {
+            get
+            {
+                for (; genID < 99999999; genID++)
+                {
+                    string id = string.Format("{0:D8}", genID);
+                    if (!globalid.Contains(id))
+                    {
+                        globalid.Add(id);
+                        return id;
+                    }
+                }
+                return "";
+            }
         }
         #endregion
     }

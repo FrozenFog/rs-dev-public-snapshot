@@ -23,8 +23,7 @@ namespace RelertSharp.MapStructure.Logic
             {
                 if (!data.Keys.Contains(p.Name))
                 {
-                    data[p.Name] = new TagItem(p.Name, p.ParseStringList());
-                    trigger_tag[data[p.Name].AssoTrigger] = p.Name;
+                    this[p.Name] = new TagItem(p.Name, p.ParseStringList());
                 }
             }
         }
@@ -32,13 +31,19 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - TagCollection
+        public void Remove(TagItem t, string triggerid)
+        {
+            if (data.Keys.Contains(t.ID)) data.Remove(t.ID);
+            if (trigger_tag.Keys.Contains(triggerid)) trigger_tag.Remove(triggerid);
+        }
         /// <summary>
         /// return a tag with certain trigger id, return null tag if not found
         /// </summary>
         /// <param name="triggerID"></param>
         /// <returns></returns>
-        public TagItem GetTagFromTrigger(string triggerID)
+        public TagItem GetTagFromTrigger(string triggerID, TriggerItem item = null)
         {
+            if (triggerID == "TEMPLATE") return new TagItem(item, "TGMPLAGE");
             if (trigger_tag.Keys.Contains(triggerID))
             {
                 return data[trigger_tag[triggerID]];
@@ -81,8 +86,11 @@ namespace RelertSharp.MapStructure.Logic
             set
             {
                 data[_id] = value;
+                trigger_tag[value.AssoTrigger] = value.ID;
             }
         }
+        public IEnumerable<string> Keys { get { return data.Keys; } }
+        public TagItem TemplateTag { get; set; }
         #endregion
     }
 
@@ -100,6 +108,13 @@ namespace RelertSharp.MapStructure.Logic
             Repeating = (TriggerRepeatingType)(int.Parse(dataList[0]));
             Name = dataList[1];
             AssoTrigger = dataList[2];
+        }
+        public TagItem(TriggerItem trg, string _id)
+        {
+            ID = _id;
+            Repeating = trg.Repeating;
+            Name = trg.Name + " - Tag";
+            AssoTrigger = trg.ID;
         }
         #endregion
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 using RelertSharp.IniSystem;
 using RelertSharp.Common;
 using RelertSharp.Model;
@@ -11,22 +12,17 @@ using System.Collections;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class TriggerCollection : IEnumerable<TriggerItem>
+    public class TriggerCollection : IEnumerable<TriggerItem>, IListSource
     {
         private Dictionary<string, TriggerItem> data = new Dictionary<string, TriggerItem>();
 
 
         #region Ctor - TriggerCollection
-        public TriggerCollection(INIEntity entTrigger)
+        public TriggerCollection()
         {
-            foreach (INIPair p in entTrigger.DataList)
-            {
-                if (!data.Keys.Contains(p.Name))
-                {
-                    string[] l = p.ParseStringList();
-                    data[p.Name] = new TriggerItem(p.Name, l[0], l[1], l[2], ParseBool(l[3]), ParseBool(l[4]), ParseBool(l[5]), ParseBool(l[6]), int.Parse(l[7]));
-                }
-            }
+            TemplateTrigger = new TriggerItem("TEMPLATE", "<none>", "<none>", "DefaultTrigger", true, false, false, false, 0);
+            TemplateTrigger.Events = new LogicGroup();
+            TemplateTrigger.Actions = new LogicGroup();
         }
         #endregion
 
@@ -37,6 +33,33 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - TriggerCollection
+        public void SetToString(TriggerItem.DisplayingType type)
+        {
+            foreach(TriggerItem t in this)
+            {
+                t.SetDisplayingString(type);
+            }
+        }
+        public void LoadTriggerCommand(INIPair p)
+        {
+            if (!data.Keys.Contains(p.Name))
+            {
+                string[] l = p.ParseStringList();
+                data[p.Name] = new TriggerItem(p.Name, l[0], l[1], l[2], ParseBool(l[3]), ParseBool(l[4]), ParseBool(l[5]), ParseBool(l[6]), int.Parse(l[7]));
+            }
+        }
+        public void Remove(TriggerItem trigger)
+        {
+            if (!data.Keys.Contains(trigger.ID)) data.Remove(trigger.ID);
+        }
+        public TriggerItem NewTrigger(string id, TriggerItem.DisplayingType _type = TriggerItem.DisplayingType.IDandName)
+        {
+            TriggerItem t = MemCpy(TemplateTrigger);
+            t.ID = id;
+            t.SetDisplayingString(_type);
+            this[id] = t;
+            return t;
+        }
         public IEnumerable<TechnoPair> ToTechno()
         {
             List<TechnoPair> result = new List<TechnoPair>();
@@ -79,11 +102,13 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TriggerCollection
+        public TriggerItem TemplateTrigger { get; set; }
         public TriggerItem this[string _id]
         {
             get
             {
                 if (data.Keys.Contains(_id)) return data[_id];
+                if (_id == "TEMPLATE") return TemplateTrigger;
                 return null;
             }
             set
@@ -92,10 +117,13 @@ namespace RelertSharp.MapStructure.Logic
             }
         }
         public Dictionary<string, TriggerItem>.KeyCollection Keys { get { return data.Keys; } }
+
+
         #endregion
 
 
         #region Enumerator
+        public bool ContainsListCollection => data.Values.Count > 0;
         public IEnumerator<TriggerItem> GetEnumerator()
         {
             return data.Values.GetEnumerator();
@@ -104,6 +132,11 @@ namespace RelertSharp.MapStructure.Logic
         IEnumerator IEnumerable.GetEnumerator()
         {
             return data.Values.GetEnumerator();
+        }
+
+        public IList GetList()
+        {
+            return data.Values.ToList();
         }
         #endregion
     }
@@ -115,6 +148,8 @@ namespace RelertSharp.MapStructure.Logic
         private string id, house, linkedwith, name;
         private bool disabled, ez, nm, hd;
         private TriggerRepeatingType repeattype;
+        private LogicGroup events, actions;
+
         [Flags]
         public enum DisplayingType { OnlyID = 0x1, OnlyName = 0x2, IDandName = OnlyID | OnlyName, Remain = 0x4 }
 
@@ -133,6 +168,7 @@ namespace RelertSharp.MapStructure.Logic
             Repeating = (TriggerRepeatingType)repeating;
             SetDisplayingString(DisplayingType.IDandName);
         }
+        public TriggerItem() { }
         #endregion
 
 
@@ -162,6 +198,16 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TriggerItem
+        public LogicGroup Events
+        {
+            get { return events; }
+            set { SetProperty(ref events, value); }
+        }
+        public LogicGroup Actions
+        {
+            get { return actions; }
+            set { SetProperty(ref actions, value); }
+        }
         public static TriggerItem NullTrigger
         {
             get

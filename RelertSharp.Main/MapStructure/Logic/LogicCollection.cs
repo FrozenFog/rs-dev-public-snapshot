@@ -10,56 +10,57 @@ using System.Collections;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class LogicCollection
-    {
-        private Dictionary<string, LogicGroup> data = new Dictionary<string, LogicGroup>();
+    //public class LogicCollection
+    //{
+    //    private Dictionary<string, LogicGroup> data = new Dictionary<string, LogicGroup>();
 
 
-        #region Ctor - LogicCollection
-        public LogicCollection(INIEntity ent, LogicType type)
-        {
-            foreach (INIPair p in ent.DataList)
-            {
-                if (!data.Keys.Contains(p.Name))
-                {
-                    string[] l = p.ParseStringList();
-                    data[p.Name] = new LogicGroup(p.Name, int.Parse(l[0]), l.Skip(1).ToArray(), type);
-                }
-            }
-        }
-        #endregion
+    //    #region Ctor - LogicCollection
+    //    public LogicCollection(INIEntity ent, LogicType type)
+    //    {
+    //        foreach (INIPair p in ent.DataList)
+    //        {
+    //            if (!data.Keys.Contains(p.Name))
+    //            {
+    //                string[] l = p.ParseStringList();
+    //                data[p.Name] = new LogicGroup(p.Name, int.Parse(l[0]), l.Skip(1).ToArray(), type);
+    //            }
+    //        }
+    //    }
+    //    #endregion
 
 
-        #region Public Calls - LogicCollection
-        public LogicGroup this[string _id]
-        {
-            get
-            {
-                if (data.Keys.Contains(_id)) return data[_id];
-                return null;
-            }
-        }
-        #endregion
-    }
+    //    #region Public Calls - LogicCollection
+    //    public LogicGroup this[string _id]
+    //    {
+    //        get
+    //        {
+    //            if (data.Keys.Contains(_id)) return data[_id];
+    //            return null;
+    //        }
+    //    }
+    //    #endregion
+    //}
 
 
     public class LogicGroup : IEnumerable<LogicItem>
     {
         private List<LogicItem> data = new List<LogicItem>();
+        private int count = 1;
 
 
         #region Ctor - LogicGroup
-        public LogicGroup(string _id, int _num, string[] _paramData, LogicType type)
+        public LogicGroup(INIPair p, LogicType type)
         {
-            ID = _id;
-            Num = _num;
-            Params = _paramData;
+            string[] l = p.ParseStringList();
+            ID = p.Name;
+            Num = int.Parse(l[0]);
+            Params = l.Skip(1).ToArray();
             LogicType = type;
             int window = 0;
-            int count = 1;
-            for (int i = 0; i < _paramData.Length; i += window)
+            for (int i = 0; i < Params.Length; i += window)
             {
-                int logicID = int.Parse(_paramData[i]);
+                int logicID = int.Parse(Params[i]);
                 if (type == LogicType.ActionLogic) window = 8;
                 else if (type == LogicType.EventLogic)
                 {
@@ -67,7 +68,7 @@ namespace RelertSharp.MapStructure.Logic
                         window = 4;
                     else window = 3;
                 }
-                List<string> parameters = _paramData.Skip(i + 1).Take(window - 1).ToList();
+                List<string> parameters = Params.Skip(i + 1).Take(window - 1).ToList();
                 if (type == LogicType.EventLogic && parameters.Count != 3) parameters.Add("0");
                 Add(new LogicItem(logicID, parameters.ToArray(), type, count++));
             }
@@ -77,6 +78,18 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - LogicGroup
+        public LogicItem NewEvent()
+        {
+            LogicItem item = new LogicItem(LogicType.EventLogic, count++);
+            data.Add(item);
+            return item;
+        }
+        public LogicItem NewAction()
+        {
+            LogicItem item = new LogicItem(LogicType.ActionLogic, count++);
+            data.Add(item);
+            return item;
+        }
         public void Add(LogicItem item)
         {
             data.Add(item);
@@ -111,6 +124,7 @@ namespace RelertSharp.MapStructure.Logic
 
         #region Public Calls - LogicGroup
         public string ID { get; set; }
+        public LogicItem this[int index] { get { return data[index]; } set { data[index] = value; } }
         #endregion
     }
 
@@ -132,6 +146,14 @@ namespace RelertSharp.MapStructure.Logic
             Parameters = _param;
             Comment = _comment;
             count = num;
+        }
+        public LogicItem(LogicType _type, int num)
+        {
+            ID = 0;
+            type = _type;
+            count = num;
+            if (_type == LogicType.EventLogic) Parameters = new string[] { "0", "0", "0" };
+            else Parameters = new string[] { "0", "0", "0", "0", "0", "0", "A" };
         }
         #endregion
 

@@ -98,7 +98,7 @@ namespace RelertSharp.Common
 
 
         #region Public Calls - SoundManager
-        public int CurrentLength { get; private set; } = 0;
+        public int CurrentLength { get; private set; } = -1;
         public bool IsPlaying { get { return watch.ElapsedMilliseconds <= CurrentLength; } }
         #endregion
     }

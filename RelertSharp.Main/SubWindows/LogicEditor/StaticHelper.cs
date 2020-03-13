@@ -12,6 +12,13 @@ namespace RelertSharp.SubWindows.LogicEditor
 {
     internal static class StaticHelper
     {
+        public static void UpdateAt(ListBox dest, object updatevalue)
+        {
+            int index = dest.SelectedIndex;
+            dest.Items.RemoveAt(index);
+            dest.Items.Insert(index, updatevalue);
+            dest.SelectedIndex = index;
+        }
         public static void LoadToObjectCollection<T>(ComboBox dest, IList<T> src)
         {
             int max = src.Max(x => x.ToString().Length) * 7;
@@ -21,11 +28,13 @@ namespace RelertSharp.SubWindows.LogicEditor
         public static void LoadToObjectCollection(ComboBox dest, IEnumerable<object> src)
         {
             dest.Items.Clear();
+            if (src == null) return;
             dest.Items.AddRange(src.ToArray());
         }
         public static void LoadToObjectCollection(ListBox dest, IEnumerable<object> src)
         {
             dest.Items.Clear();
+            if (src == null) return;
             dest.Items.AddRange(src.ToArray());
         }
         public static void SelectCombo(ComboBox dest, string param, TriggerParam lookup)
