@@ -12,9 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RelertSharp.Model;
+using RelertSharp.FileSystem;
 using RelertSharp.MapStructure;
 using RelertSharp.MapStructure.Logic;
-using RelertSharp.FileSystem;
 
 namespace RelertSharp.GUI.WPF
 {

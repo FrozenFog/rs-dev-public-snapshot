@@ -110,7 +110,8 @@ namespace RelertSharp.SubWindows.LogicEditor
         private void lbxTriggerList_SelectedValueChanged(object sender, EventArgs e)
         {
             TriggerItem item = ((ListBox)sender).SelectedItem as TriggerItem;
-            UpdateContent(item.ID);
+            SetTriggerBinding(item, item.ID);
+            //UpdateContent(item.ID);
         }
         private void lbxEventList_SelectedValueChanged(object sender, EventArgs e)
         {

@@ -29,9 +29,7 @@ namespace RelertSharp.SubWindows.LogicEditor
 
 
         #region selector
-        private TriggerItem sltTrigger;
-        private LogicItem sltEvent, sltAction;
-        private TagItem sltTag;
+
         #endregion
 
 
@@ -48,11 +46,23 @@ namespace RelertSharp.SubWindows.LogicEditor
             LoadActionComboBox();
             SetGlobal();
             lbxTriggerList.SelectedIndex = 0;
+            SetTriggerBinding(lbxTriggerList.SelectedItem as TriggerItem, (lbxTriggerList.SelectedItem as TriggerItem).ID);
         }
         #endregion
 
 
         #region Private Methods - LogicEditor
+        private void SetTriggerBinding(TriggerItem trigger, string tagID)
+        {
+            TagItem tag = map.Tags.GetTagFromTrigger(tagID);
+            txbTrgID.DataBindings.Add("Text", trigger, "ID", false, DataSourceUpdateMode.OnPropertyChanged);
+            txbTrgName.DataBindings.Add("Text", trigger, "Name", false, DataSourceUpdateMode.OnPropertyChanged);
+            txbTagID.DataBindings.Add("Text", tag, "ID", false, DataSourceUpdateMode.OnPropertyChanged);
+            txbTagName.DataBindings.Add("Text", tag, "Name", false, DataSourceUpdateMode.OnPropertyChanged);
+            ckbEasy.DataBindings.Add("Checked", trigger, "EasyOn", false, DataSourceUpdateMode.OnPropertyChanged);
+            ckbNormal.DataBindings.Add("Checked", trigger, "NormalOn", false, DataSourceUpdateMode.OnPropertyChanged);
+            ckbHard.DataBindings.Add("Checked", trigger, "NormalOn", false, DataSourceUpdateMode.OnPropertyChanged);
+        }
         private void SetGlobal()
         {
             foreach (HouseItem house in map.Houses)
