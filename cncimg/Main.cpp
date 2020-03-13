@@ -61,13 +61,28 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return 0;
 	}
 
-	if (!Graphic::Direct3DInitialize(hWnd))
+	if (!strlen(lpCmdLine) && !Graphic::Direct3DInitialize(hWnd))
 	{
 		printf_s("d3d creation failed.\n");
 		DestroyWindow(hWnd);
 		UnregisterClass("D3DWIN", hInstance);
 		return 0;
 	}
+	else if (strlen(lpCmdLine)) {
+		char szFileName[MAX_PATH]{ 0 };
+		int nDirections;
+		int nTurretOff;
+
+		sscanf_s(lpCmdLine, "%d %d %s", &nDirections, &nTurretOff, szFileName, sizeof szFileName);
+		if (!Graphic::Direct3DInitialize(hWnd, szFileName, nDirections, nTurretOff))
+		{
+			printf_s("d3d creation failed.\n");
+			DestroyWindow(hWnd);
+			UnregisterClass("D3DWIN", hInstance);
+			return 0;
+		}
+	}
+
 
 	MSG Msg;
 	ZeroMemory(&Msg, sizeof Msg);

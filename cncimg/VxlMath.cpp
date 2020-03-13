@@ -30,9 +30,9 @@ D3DXMATRIX CoordStruct::AsTranslationMatrix()
 	return Identity*Translation;
 }
 
-D3DXMATRIX TransformationMatrix::AsD3dMatrix()
+D3DXMATRIX TransformationMatrix::AsD3dMatrix(float Scale)
 {
-	return this->GetScaleRotationMatrix()*this->GetTranslationMatrix();
+	return this->GetScaleRotationMatrix()*this->GetTranslationMatrix(Scale);
 }
 
 D3DXMATRIX TransformationMatrix::AsD3dMatrixWithMove(D3DXVECTOR3 & Move)
@@ -51,15 +51,15 @@ D3DXMATRIX TransformationMatrix::AsD3dMatrixWithMove(D3DXVECTOR3&& Move)
 	return this->AsD3dMatrixWithMove(Mve);
 }
 
-D3DXMATRIX TransformationMatrix::GetTranslationMatrix()
+D3DXMATRIX TransformationMatrix::GetTranslationMatrix(float Scale)
 {
-	const FLOAT TranslationFactor = 30.0f*sqrt(2.0) / 512.0;
+	//const FLOAT TranslationFactor = 1.0 / Scale;
 	D3DXMATRIX Matrix;
 
 	D3DXMatrixIdentity(&Matrix);
-	Matrix.m[3][0] = this->Data[0][3] * TranslationFactor;
-	Matrix.m[3][1] = -this->Data[1][3] * TranslationFactor;
-	Matrix.m[3][2] = this->Data[2][3] * TranslationFactor;
+	Matrix.m[3][0] = this->Data[0][3] * Scale;
+	Matrix.m[3][1] = -this->Data[1][3] * Scale;
+	Matrix.m[3][2] = this->Data[2][3] * Scale;
 
 	return Matrix;
 }

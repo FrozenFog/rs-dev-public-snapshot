@@ -16,9 +16,9 @@ namespace Graphic
 	int ShpFile;
 }
 
-bool Graphic::Direct3DInitialize(HWND hWnd)
+bool Graphic::Direct3DInitialize(HWND hWnd, const char* pShotFileName, int nDirections, int TurretOff)
 {
-	return SetUpScene(hWnd) && PrepareVertexBuffer();
+	return SetUpScene(hWnd) && PrepareVertexBuffer(pShotFileName, nDirections, TurretOff);
 }
 
 void Graphic::Direct3DUninitialize()
@@ -26,7 +26,7 @@ void Graphic::Direct3DUninitialize()
 	return ClearSceneObjects();
 }
 
-bool Graphic::PrepareVertexBuffer()
+bool Graphic::PrepareVertexBuffer(const char* pShotFileName, int nDirections, int TurretOff)
 {
 	const float TileLength = 30.0f*sqrt(2.0);
 	const float CellHeight = 30.0f / sqrt(3.0);
@@ -36,6 +36,11 @@ bool Graphic::PrepareVertexBuffer()
 
 	if (!UnitPalette || !TmpPalette)
 		return false;
+
+	//MakeVxlFrameShot(VxlFiles[0], "Shot.png", 0, 0.0, 0.0, 0.0, UnitPalette, INVALID_COLOR_VALUE);
+	if (pShotFileName) {
+		MakeShots(pShotFileName, 0.0, UnitPalette, nDirections, INVALID_COLOR_VALUE, TurretOff);
+	}
 
 	if (auto id = CreateVxlFile("flata.vxl")) {
 		VxlFiles.push_back(id);
@@ -77,15 +82,17 @@ bool Graphic::PrepareVertexBuffer()
 	}
 
 	//SetColorScheme(GetCurrentTheater(), 8848, RGB(0, 252, 0));
-	if (auto vxlid = CreateVxlObjectAtScene(VxlFiles[0], { 0.0,0.0,0.0 }, 0.0, 0.0, 0.0, UnitPalette,RGB(0,252,0))) {
-		SceneObjects.push_back(vxlid);
+	if (VxlFiles.size() >= 2)
+	{
+		if (auto vxlid = CreateVxlObjectAtScene(VxlFiles[0], { 0.0,0.0,0.0 }, 0.0, 0.0, 0.0, UnitPalette, RGB(0, 252, 0))) {
+			SceneObjects.push_back(vxlid);
+		}
+
+		if (auto vxlid = CreateVxlObjectAtScene(VxlFiles[1], { 0.0,0.0,0.0 }, 0.0, 0.0, D3DX_PI / 2.0f, UnitPalette, RGB(0, 0, 252))) {
+			SceneObjects.push_back(vxlid);
+		}
 	}
 
-	if (auto vxlid = CreateVxlObjectAtScene(VxlFiles[1], { 0.0,0.0,0.0 }, 0.0, 0.0, D3DX_PI / 2.0f, UnitPalette,RGB(0,0,252))) {
-		SceneObjects.push_back(vxlid);
-	}
-
-	MakeVxlFrameShot(VxlFiles[0], 0, 0.0, 0.0, 0.0, UnitPalette, RGB(0, 252, 252));
 /*
 	if (auto vxlid = CreateVxlObjectAtScene(VxlFiles[0], { 0.0,0.0,0.0 }, 0.0, 0.0, 0.0, UnitPalette,RGB(252,0,0))) {
 		MouseObject = vxlid;

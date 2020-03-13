@@ -28,10 +28,10 @@ struct TransformationMatrix
 		float Data[3][4];
 	};
 
-	D3DXMATRIX AsD3dMatrix();
+	D3DXMATRIX AsD3dMatrix(float Scale = 1.0);
 	D3DXMATRIX AsD3dMatrixWithMove(D3DXVECTOR3& Move);
 	D3DXMATRIX AsD3dMatrixWithMove(D3DXVECTOR3&& Move);
-	D3DXMATRIX GetTranslationMatrix();
+	D3DXMATRIX GetTranslationMatrix(float Scale = 1.0);
 	D3DXMATRIX GetScaleRotationMatrix();
 
 	void Print();
