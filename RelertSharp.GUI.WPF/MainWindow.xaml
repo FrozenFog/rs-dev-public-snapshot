@@ -5,11 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RelertSharp.GUI.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="784.943" Width="1439.204" Background="#FF252525" Foreground="White">
+        Title="MainWindow" Height="869.318" Width="1607.954" Background="#FF252525" Foreground="White">
     <Window.Effect>
         <DropShadowEffect/>
     </Window.Effect>
     <Grid>
+        <TextBox x:Name="txbName" HorizontalAlignment="Left" Height="23" Margin="263,128,0,0" TextWrapping="Wrap" Text="{Binding Path=Name, Mode=TwoWay}" VerticalAlignment="Top" Width="459">
+        </TextBox>
+        <Button x:Name="btnTest" Content="Button" HorizontalAlignment="Left" Margin="263,156,0,0" VerticalAlignment="Top" Width="75" Click="BtnTest_Click"/>
 
     </Grid>
 </Window>

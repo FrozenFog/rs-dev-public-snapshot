@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.IniSystem;
-using relert_sharp.Common;
+using RelertSharp.IniSystem;
+using RelertSharp.Common;
 
-namespace relert_sharp.MapStructure.Logic
+namespace RelertSharp.MapStructure.Logic
 {
     public class TeamScriptCollection : TeamLogicCollection<TeamScriptGroup>
     {

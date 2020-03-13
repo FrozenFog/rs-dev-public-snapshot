@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using relert_sharp.FileSystem;
-using relert_sharp.IniSystem;
-using relert_sharp.Common;
+using RelertSharp.FileSystem;
+using RelertSharp.IniSystem;
+using RelertSharp.Common;
 
-namespace relert_sharp.Utils
+namespace RelertSharp.Utils
 {
     public class Misc
     {

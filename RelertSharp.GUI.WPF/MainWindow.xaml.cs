@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RelertSharp.MapStructure;
+using RelertSharp.MapStructure.Logic;
+using RelertSharp.FileSystem;
 
 namespace RelertSharp.GUI.WPF
 {
@@ -20,9 +23,23 @@ namespace RelertSharp.GUI.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Map map;
+        private TriggerItem[] triggers;
+        private int i = 0;
+
+
         public MainWindow()
         {
             InitializeComponent();
+            MapFile mf = new MapFile("ESURV.map");
+            map = mf.Map;
+            triggers = map.Triggers.ToArray();
+            txbName.DataContext = triggers[i];
+        }
+
+        private void BtnTest_Click(object sender, RoutedEventArgs e)
+        {
+            txbName.DataContext = triggers[i++];
         }
     }
 }

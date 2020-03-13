@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using relert_sharp.FileSystem;
-using relert_sharp.Common;
-using relert_sharp.SubWindows.LogicEditor;
+using RelertSharp.FileSystem;
+using RelertSharp.Common;
+using RelertSharp.SubWindows.LogicEditor;
 
-namespace relert_sharp
+namespace RelertSharp
 {
     static class Program
     {

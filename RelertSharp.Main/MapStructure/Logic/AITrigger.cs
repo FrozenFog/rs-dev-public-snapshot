@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.Common;
-using relert_sharp.Model;
-using static relert_sharp.Utils.Misc;
+using RelertSharp.Common;
+using RelertSharp.Model;
+using static RelertSharp.Utils.Misc;
 
-namespace relert_sharp.MapStructure.Logic
+namespace RelertSharp.MapStructure.Logic
 {
     public class AITriggerCollection
     {

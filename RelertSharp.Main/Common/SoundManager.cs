@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Media;
 using System.Diagnostics;
-using relert_sharp.IniSystem;
-using relert_sharp.FileSystem;
-using relert_sharp.Encoding;
+using RelertSharp.IniSystem;
+using RelertSharp.FileSystem;
+using RelertSharp.Encoding;
 
-namespace relert_sharp.Common
+namespace RelertSharp.Common
 {
     public class SoundManager
     {

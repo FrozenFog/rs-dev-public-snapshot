@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
-using relert_sharp.Utils;
-using relert_sharp.Common;
+using RelertSharp.Utils;
+using RelertSharp.Common;
 
-namespace relert_sharp.FileSystem
+namespace RelertSharp.FileSystem
 {
 
     public class TmpFile : BaseFile

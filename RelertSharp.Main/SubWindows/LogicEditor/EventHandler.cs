@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel;
-using relert_sharp.MapStructure.Logic;
-using relert_sharp.FileSystem;
-using relert_sharp.Common;
-using relert_sharp.IniSystem;
+using RelertSharp.MapStructure.Logic;
+using RelertSharp.FileSystem;
+using RelertSharp.Common;
+using RelertSharp.IniSystem;
 
-namespace relert_sharp.SubWindows.LogicEditor
+namespace RelertSharp.SubWindows.LogicEditor
 {
     public partial class LogicEditor : Form
     {

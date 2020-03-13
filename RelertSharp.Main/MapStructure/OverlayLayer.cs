@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using relert_sharp.Encoding;
-using relert_sharp.Common;
-using relert_sharp.Utils;
+using RelertSharp.Encoding;
+using RelertSharp.Common;
+using RelertSharp.Utils;
 
-namespace relert_sharp.MapStructure
+namespace RelertSharp.MapStructure
 {
     public class OverlayLayer
     {

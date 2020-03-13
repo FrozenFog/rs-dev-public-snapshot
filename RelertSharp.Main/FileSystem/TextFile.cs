@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace relert_sharp.FileSystem
+namespace RelertSharp.FileSystem
 {
     public class TextFile : BaseFile
     {

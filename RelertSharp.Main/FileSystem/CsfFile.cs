@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Collections;
-using relert_sharp.Common;
-using relert_sharp.Encoding;
-using relert_sharp.IniSystem;
+using RelertSharp.Common;
+using RelertSharp.Encoding;
+using RelertSharp.IniSystem;
 
-namespace relert_sharp.FileSystem
+namespace RelertSharp.FileSystem
 {
     public class CsfFile : BaseFile, IEnumerable<CsfString>
     {

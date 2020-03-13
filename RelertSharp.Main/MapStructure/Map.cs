@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using relert_sharp.FileSystem;
-using relert_sharp.IniSystem;
-using relert_sharp.Common;
-using relert_sharp.MapStructure.Logic;
-using relert_sharp.MapStructure.Objects;
-using relert_sharp.MapStructure.Points;
-using static relert_sharp.Utils.Misc;
+using RelertSharp.FileSystem;
+using RelertSharp.IniSystem;
+using RelertSharp.Common;
+using RelertSharp.MapStructure.Logic;
+using RelertSharp.MapStructure.Objects;
+using RelertSharp.MapStructure.Points;
+using static RelertSharp.Utils.Misc;
 
-namespace relert_sharp.MapStructure
+namespace RelertSharp.MapStructure
 {
     public class Map
     {

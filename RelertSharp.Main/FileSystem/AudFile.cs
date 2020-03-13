@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using relert_sharp.Encoding;
-using relert_sharp.Common;
-using relert_sharp.Utils;
+using RelertSharp.Encoding;
+using RelertSharp.Common;
+using RelertSharp.Utils;
 
-namespace relert_sharp.FileSystem
+namespace RelertSharp.FileSystem
 {
     public class AudFile : BaseFile
     {

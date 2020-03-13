@@ -1,4 +1,4 @@
-﻿namespace relert_sharp.SubWindows.LogicEditor
+﻿namespace RelertSharp.SubWindows.LogicEditor
 {
     partial class LogicEditor
     {

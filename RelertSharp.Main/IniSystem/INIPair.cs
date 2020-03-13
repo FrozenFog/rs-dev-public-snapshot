@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.Common;
+using RelertSharp.Common;
 
-namespace relert_sharp.IniSystem
+namespace RelertSharp.IniSystem
 {
     public class INIPair
     {

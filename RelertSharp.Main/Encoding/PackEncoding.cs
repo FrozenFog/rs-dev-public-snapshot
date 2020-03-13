@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
-using relert_sharp.Common;
-using static relert_sharp.Utils.Misc;
+using RelertSharp.Common;
+using static RelertSharp.Utils.Misc;
 
-namespace relert_sharp.Encoding
+namespace RelertSharp.Encoding
 {
     public static class PackEncoding
     {

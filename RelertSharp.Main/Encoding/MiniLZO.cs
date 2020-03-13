@@ -61,7 +61,7 @@
 
 using System;
 
-namespace relert_sharp.Encoding
+namespace RelertSharp.Encoding
 {
     public static class MiniLZO
     {

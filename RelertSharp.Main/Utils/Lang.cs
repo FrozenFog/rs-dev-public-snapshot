@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.FileSystem;
+using RelertSharp.FileSystem;
 
-namespace relert_sharp.Utils
+namespace RelertSharp.Utils
 {
     public class Lang
     {
@@ -33,7 +33,7 @@ namespace relert_sharp.Utils
         }
     }
 }
-namespace relert_sharp
+namespace RelertSharp
 {
     public static class Language
     {

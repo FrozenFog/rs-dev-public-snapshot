@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using relert_sharp.Common;
+using RelertSharp.Common;
 
-namespace relert_sharp.FileSystem
+namespace RelertSharp.FileSystem
 {
     public abstract class BaseFile : IDisposable
     {

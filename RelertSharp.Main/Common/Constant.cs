@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace relert_sharp.Common
+namespace RelertSharp.Common
 {
     public static class Constant
     {

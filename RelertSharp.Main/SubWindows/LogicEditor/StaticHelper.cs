@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using relert_sharp.IniSystem;
-using relert_sharp.MapStructure.Logic;
-using relert_sharp.Common;
+using RelertSharp.IniSystem;
+using RelertSharp.MapStructure.Logic;
+using RelertSharp.Common;
 
-namespace relert_sharp.SubWindows.LogicEditor
+namespace RelertSharp.SubWindows.LogicEditor
 {
     internal static class StaticHelper
     {

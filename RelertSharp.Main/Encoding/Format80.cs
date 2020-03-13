@@ -15,7 +15,7 @@ using System;
 using System.Linq;
 using System.IO;
 
-namespace relert_sharp.Encoding
+namespace RelertSharp.Encoding
 {
     public static class Format80
     {

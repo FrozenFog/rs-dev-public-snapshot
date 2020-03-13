@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using relert_sharp.Encoding;
+using RelertSharp.Encoding;
 using System.Collections;
-using relert_sharp.Utils;
-using relert_sharp.Common;
+using RelertSharp.Utils;
+using RelertSharp.Common;
 
-namespace relert_sharp.MapStructure
+namespace RelertSharp.MapStructure
 {
     public class TileLayer
     {

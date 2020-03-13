@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace relert_sharp.Encoding
+namespace RelertSharp.Encoding
 {
     public static class ShpEncoding
     {

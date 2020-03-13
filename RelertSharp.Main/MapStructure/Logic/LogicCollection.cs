@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.IniSystem;
-using relert_sharp.Common;
-using relert_sharp.Model;
+using RelertSharp.IniSystem;
+using RelertSharp.Common;
+using RelertSharp.Model;
 using System.Collections;
 
-namespace relert_sharp.MapStructure.Logic
+namespace RelertSharp.MapStructure.Logic
 {
     public class LogicCollection
     {

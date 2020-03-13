@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.IniSystem;
-using relert_sharp.Common;
-using relert_sharp.MapStructure.Points;
+using RelertSharp.IniSystem;
+using RelertSharp.Common;
+using RelertSharp.MapStructure.Points;
 
-namespace relert_sharp.MapStructure.Logic
+namespace RelertSharp.MapStructure.Logic
 {
     public class HouseCollection : TeamLogicCollection<HouseItem>
     {

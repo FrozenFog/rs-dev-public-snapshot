@@ -8,14 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Media;
 using System.Windows.Forms;
-using relert_sharp.MapStructure;
-using relert_sharp.MapStructure.Logic;
-using relert_sharp.FileSystem;
-using relert_sharp.Common;
-using relert_sharp.IniSystem;
-using static relert_sharp.Language;
+using RelertSharp.MapStructure;
+using RelertSharp.MapStructure.Logic;
+using RelertSharp.FileSystem;
+using RelertSharp.Common;
+using RelertSharp.IniSystem;
+using static RelertSharp.Language;
 
-namespace relert_sharp.SubWindows.LogicEditor
+namespace RelertSharp.SubWindows.LogicEditor
 {
     public partial class LogicEditor : Form
     {

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "relert-sharp", "RelertSharp.Main\relert-sharp.csproj", "{8597C2BD-5421-4A66-958E-240768EA8A9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RelertSharp.Main", "RelertSharp.Main\RelertSharp.Main.csproj", "{8597C2BD-5421-4A66-958E-240768EA8A9A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RelertSharp.GUI.WPF", "RelertSharp.GUI.WPF\RelertSharp.GUI.WPF.csproj", "{1FE1ED3A-FA93-4F16-9A2D-420CF1E17663}"
 EndProject

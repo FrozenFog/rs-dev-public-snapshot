@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace relert_sharp.Properties
+namespace RelertSharp.Properties
 {
 
 

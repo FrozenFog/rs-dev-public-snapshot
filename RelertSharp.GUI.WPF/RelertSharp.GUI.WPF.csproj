@@ -63,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BindItem.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -95,9 +96,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RelertSharp.Main\relert-sharp.csproj">
+    <ProjectReference Include="..\RelertSharp.Main\RelertSharp.Main.csproj">
       <Project>{8597c2bd-5421-4a66-958e-240768ea8a9a}</Project>
-      <Name>relert-sharp</Name>
+      <Name>RelertSharp.Main</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

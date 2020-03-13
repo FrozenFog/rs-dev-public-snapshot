@@ -1,4 +1,4 @@
-﻿namespace relert_sharp.SubWindows
+﻿namespace RelertSharp.SubWindows
 {
     partial class INIComparator
     {
