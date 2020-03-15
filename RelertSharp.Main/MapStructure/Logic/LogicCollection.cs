@@ -90,6 +90,21 @@ namespace RelertSharp.MapStructure.Logic
             data.Add(item);
             return item;
         }
+        public void Multiply(string[] command, LogicItem template, List<TriggerParam> lookups)
+        {
+            foreach(string s in command)
+            {
+                if (string.IsNullOrEmpty(s)) continue;
+                string[] sl = s.Split(new char[] { ',' });
+                if (sl.Length != lookups.Count) return;
+                LogicItem item = new LogicItem(template, count++);
+                for (int i = 0; i < sl.Length; i++)
+                {
+                    item.Parameters[lookups[i].ParamPos] = sl[i];
+                }
+                data.Add(item);
+            }
+        }
         public void Add(LogicItem item)
         {
             data.Add(item);
@@ -154,6 +169,16 @@ namespace RelertSharp.MapStructure.Logic
             count = num;
             if (_type == LogicType.EventLogic) Parameters = new string[] { "0", "0", "0" };
             else Parameters = new string[] { "0", "0", "0", "0", "0", "0", "A" };
+        }
+        public LogicItem(LogicItem src, int num)
+        {
+            id = src.id;
+            comment = src.comment;
+            type = src.type;
+            count = num;
+            if (src.type == LogicType.EventLogic) Parameters = new string[] { "0", "0", "0" };
+            else Parameters = new string[] { "0", "0", "0", "0", "0", "0", "A" };
+            Array.Copy(src.parameters, parameters, parameters.Length);
         }
         #endregion
 

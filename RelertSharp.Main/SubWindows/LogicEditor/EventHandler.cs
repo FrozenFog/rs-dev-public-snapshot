@@ -28,6 +28,26 @@ namespace RelertSharp.SubWindows.LogicEditor
             btnSaveTemp.Visible = true;
             UpdateContent(map.Triggers.TemplateTrigger);
         }
+        private void tsmiCopyEventAdv_Click(object sender, EventArgs e)
+        {
+            dlgCopy d = new dlgCopy();
+            if (d.ShowDialog() == DialogResult.OK)
+            {
+                _CurrentTrigger.Events.Multiply(d.Result.Split(new char[] { '\n' }), _CurrentEvent, _CurrentEventParameters);
+                UpdateAt(lbxTriggerList, _CurrentTrigger);
+                UpdateContent(_CurrentBoxTrigger);
+            }
+        }
+        private void tsmiCopyActionAdv_Click(object sender, EventArgs e)
+        {
+            dlgCopy d = new dlgCopy();
+            if (d.ShowDialog() == DialogResult.OK)
+            {
+                _CurrentTrigger.Actions.Multiply(d.Result.Split(new char[] { '\n' }), _CurrentAction, _CurrentActionParameters);
+                UpdateAt(lbxTriggerList, _CurrentTrigger);
+                UpdateContent(_CurrentBoxTrigger);
+            }
+        }
         private void tsmiTrgLstAscending_Click(object sender, EventArgs e)
         {
             map.Triggers.AscendingSort();
@@ -55,8 +75,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         #region btn
         private void btnNewEvent_Click(object sender, EventArgs e)
         {
-            string tid = txbTrgID.Text;
-            LogicItem ev = map.Triggers[tid].Events.NewEvent();
+            LogicItem ev = _CurrentTrigger.Events.NewEvent();
             lbxEventList.Items.Add(ev);
             lbxEventList.SelectedItem = ev;
             mtxbEventID.Focus();
@@ -93,15 +112,41 @@ namespace RelertSharp.SubWindows.LogicEditor
             lbxTriggerList.SelectedItem = newtrigger;
         }
 
+        private void btnCopyTrigger_Click(object sender, EventArgs e)
+        {
+            TriggerItem copytrigger = Utils.Misc.MemCpy(_CurrentTrigger);
+            copytrigger.ID = map.NewID;
+            copytrigger.Name += " - Copy";
+            copytrigger.SetDisplayingString(lbxTriggerList.Tag);
+            TagItem newtag = new TagItem(copytrigger, map.NewID);
+            map.Triggers[copytrigger.ID] = copytrigger;
+            map.Tags[newtag.ID] = newtag;
+            lbxTriggerList.Items.Add(copytrigger);
+            cbbAttatchedTrg.Items.Add(copytrigger);
+            lbxTriggerList.SelectedItem = copytrigger;
+        }
+
         private void btnDelTrigger_Click(object sender, EventArgs e)
         {
             int _i = lbxTriggerList.SelectedIndex;
-            TriggerItem t = lbxTriggerList.SelectedItem as TriggerItem;
+            TriggerItem t = _CurrentBoxTrigger;
             map.Triggers.Remove(t);
             map.Tags.Remove(map.Tags.GetTagFromTrigger(t.ID), t.ID);
             lbxTriggerList.Items.Remove(t);
             cbbAttatchedTrg.Items.Remove(t);
             lbxTriggerList.SelectedIndex = _i == 0 ? 0 : _i - 1;
+        }
+        private void btnDeleteEvent_Click(object sender, EventArgs e)
+        {
+            int _i = lbxEventList.SelectedIndex;
+            _CurrentTrigger.Events.Remove(_i);
+            RemoveAt(lbxEventList, _i);
+        }
+        private void btnDeleteAction_Click(object sender, EventArgs e)
+        {
+            int _i = lbxActionList.SelectedIndex;
+            _CurrentTrigger.Actions.Remove(_i);
+            RemoveAt(lbxActionList, _i);
         }
         #endregion
         #region txb
@@ -110,52 +155,84 @@ namespace RelertSharp.SubWindows.LogicEditor
             ((TextBoxBase)sender).SelectAll();
         }
 
-        private void mtxbEventID_Validated(object sender, EventArgs e)
+        private void mtxbEventID_TextChanged(object sender, EventArgs e)
         {
-            int id = int.Parse(mtxbEventID.Text);
-            if (id > cbbEventAbst.Items.Count) return;
-            if (id != cbbEventAbst.SelectedIndex) cbbEventAbst.SelectedIndex = id;
+            if (!cbbEventAbstChanging)
+            {
+                if (string.IsNullOrEmpty(mtxbEventID.Text)) return;
+                cbbEventAbst.SelectedIndex = int.Parse(mtxbEventID.Text);
+            }
         }
 
-        private void mtxbActionID_Validated(object sender, EventArgs e)
+        private void mtxbActionID_TextChanged(object sender, EventArgs e)
         {
-            int id = int.Parse(mtxbActionID.Text);
-            if (id > cbbActionAbst.Items.Count) return;
-            if (id != cbbActionAbst.SelectedIndex) cbbActionAbst.SelectedIndex = id;
+            if (!cbbActionAbstChanging)
+            {
+                if (string.IsNullOrEmpty(mtxbActionID.Text)) return;
+                cbbActionAbst.SelectedIndex = int.Parse(mtxbActionID.Text);
+            }
         }
 
         private void txbTrgName_Validated(object sender, EventArgs e)
         {
-            string tid = txbTrgID.Text;
-            map.Triggers[tid].Name = txbTrgName.Text;
+            _CurrentTrigger.Name = txbTrgName.Text;
             if (btnSaveTemp.Visible) return;
-            map.Triggers[tid].SetDisplayingString((TriggerItem.DisplayingType)int.Parse(lbxTriggerList.Tag.ToString()));
-            StaticHelper.UpdateAt(lbxTriggerList, map.Triggers[tid]);
+            _CurrentTrigger.SetDisplayingString(lbxTriggerList.Tag);
+            if (_CurrentTag != null && _CurrentTag.Binded)
+            {
+                _CurrentTag.Name = _CurrentTrigger.Name + " - Tag";
+                txbTagName.Text = _CurrentTag.Name;
+            }
+            UpdateAt(lbxTriggerList, _CurrentTrigger);
         }
         #endregion
         #region cbb
+        private void cbbAttatchedTrg_SelectedValueChanged(object sender, EventArgs e)
+        {
+            TriggerItem asso = cbbAttatchedTrg.SelectedItem as TriggerItem;
+            if (asso != null && asso.ID != _CurrentTrigger.LinkedWith)
+            {
+                _CurrentTrigger.LinkedWith = asso.ID;
+                UpdateAt(lbxTriggerList, _CurrentTrigger);
+            }
+        }
+
+        private bool cbbEventAbstChanging = false;
         private void cbbEventAbst_SelectedIndexChanged(object sender, EventArgs e)
         {
-            updateEvent = true;
-            if (int.Parse(mtxbEventID.Text) != cbbEventAbst.SelectedIndex) mtxbEventID.Text = cbbEventAbst.SelectedIndex.ToString();
+            if (lbxEventList.Items.Count == 0) return;
+            cbbEventAbstChanging = true;
+            int evid = cbbEventAbst.SelectedIndex;
+            if (evid != int.Parse(mtxbEventID.Text)) mtxbEventID.Text = cbbEventAbst.SelectedIndex.ToString();
             TriggerDescription description = cbbEventAbst.SelectedItem as TriggerDescription;
             LogicItem eventItem = lbxEventList.SelectedItem as LogicItem;
             if (eventItem != null) UpdateEventParams(description, eventItem.Parameters);
-            _CurrentEvent.ID = int.Parse(mtxbEventID.Text);
-            StaticHelper.UpdateAt(lbxEventList, _CurrentEvent);
-            updateEvent = false;
+            if (_CurrentEvent.ID != evid)
+            {
+                _CurrentEvent.ID = evid;
+                _CurrentEvent.Parameters = description.InitParams;
+                UpdateAt(lbxEventList, _CurrentEvent);
+            }
+            cbbEventAbstChanging = false;
         }
 
+        private bool cbbActionAbstChanging = false;
         private void cbbActionAbst_SelectedIndexChanged(object sender, EventArgs e)
         {
-            updateAction = true;
-            if (int.Parse(mtxbActionID.Text) != cbbActionAbst.SelectedIndex) mtxbActionID.Text = cbbActionAbst.SelectedIndex.ToString();
+            if (lbxActionList.Items.Count == 0) return;
+            cbbActionAbstChanging = true;
+            int acid = cbbActionAbst.SelectedIndex;
+            if (acid != int.Parse(mtxbActionID.Text)) mtxbActionID.Text = cbbActionAbst.SelectedIndex.ToString();
             TriggerDescription description = cbbActionAbst.SelectedItem as TriggerDescription;
             LogicItem actionItem = lbxActionList.SelectedItem as LogicItem;
             if (actionItem != null) UpdateActionParams(description, actionItem.Parameters);
-            _CurrentAction.ID = int.Parse(mtxbActionID.Text);
-            StaticHelper.UpdateAt(lbxActionList, _CurrentAction);
-            updateAction = false;
+            if (_CurrentAction.ID != acid)
+            {
+                _CurrentAction.ID = acid;
+                _CurrentAction.Parameters = description.InitParams;
+                UpdateAt(lbxActionList, _CurrentAction);
+            }
+            cbbActionAbstChanging = false;
         }
 
         #endregion
@@ -168,13 +245,16 @@ namespace RelertSharp.SubWindows.LogicEditor
 
         private void lbxTriggerList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            TriggerItem item = ((ListBox)sender).SelectedItem as TriggerItem;
-            if (item != null) UpdateContent(item);
+            if (!listUpdating)
+            {
+                TriggerItem item = ((ListBox)sender).SelectedItem as TriggerItem;
+                if (item != null) UpdateContent(item);
+            }
         }
 
         private void lbxEventList_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (!updateEvent)
+            if (!cbbEventAbstChanging && !listUpdating)
             {
                 LogicItem item = lbxEventList.SelectedItem as LogicItem;
                 UpdateEventContent(item);
@@ -184,7 +264,7 @@ namespace RelertSharp.SubWindows.LogicEditor
 
         private void lbxActionList_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (!updateAction)
+            if (!cbbActionAbstChanging && !listUpdating)
             {
                 LogicItem item = lbxActionList.SelectedItem as LogicItem;
                 UpdateActionContent(item);
@@ -192,6 +272,17 @@ namespace RelertSharp.SubWindows.LogicEditor
             }
         }
         #endregion
+        private void EventParamChanged(object sender, EventArgs e)
+        {
+            if (cbbEventAbstChanging) return;
+            ParamChanged(sender, LogicType.EventLogic);
+        }
+        private void ActionParamChanged(object sender, EventArgs e)
+        {
+            if (cbbActionAbstChanging) return;
+            ParamChanged(sender, LogicType.ActionLogic);
+        }
+
         private void ckb_CheckedChanged(object sender, EventArgs e)
         {
             bool stat = sender.GetType() == typeof(CheckBox) ? ((CheckBox)sender).Checked : ((RadioButton)sender).Checked;

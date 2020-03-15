@@ -24,7 +24,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         private CheckBox[] ckbEP, ckbAP;
         private ComboBox[] cbbEP, cbbAP;
         private SoundManager soundPlayer = new SoundManager();
-        private bool updateEvent = false, updateAction = false;
+        private bool listUpdating = false;
 
 
         #region Ctor - LogicEditor
@@ -45,6 +45,14 @@ namespace RelertSharp.SubWindows.LogicEditor
 
 
         #region Private Methods - LogicEditor
+        #region Initialization Utils
+        private void SetLanguage()
+        {
+            foreach (Control c in Controls) SetControlLanguage(c);
+            Text = DICT[Text];
+            lblNoParamE.Location = new Point(gpbEventParam.Size.Width / 2 - lblNoParamE.Size.Width / 2, gpbEventParam.Size.Height / 2 - lblNoParamE.Size.Height);
+            lblNoParamA.Location = new Point(gpbActionParam.Size.Width / 2 - lblNoParamA.Size.Width / 2, gpbActionParam.Size.Height / 2 - lblNoParamA.Size.Height);
+        }
         private void SetGlobal()
         {
             foreach (HouseItem house in map.Houses)
@@ -73,6 +81,80 @@ namespace RelertSharp.SubWindows.LogicEditor
         {
             map.Countries.AscendingSort();
             StaticHelper.LoadToObjectCollection(lbxTriggerHouses, map.Countries);
+        }
+        #endregion
+
+        #region General GUI Update Utils
+        private void ClearContent(GroupBox gpb)
+        {
+            foreach (Control c in gpb.Controls)
+            {
+                var t = c.GetType();
+                if (t == typeof(TextBox) ||
+                    t == typeof(ComboBox) ||
+                    t == typeof(MaskedTextBox) ||
+                    t == typeof(RichTextBox)) c.Text = "";
+                if (t == typeof(GroupBox)) ClearContent(c as GroupBox);
+            }
+        }
+        private void UpdateContent(TriggerItem trg)
+        {
+            UpdateTags(trg.ID);
+            StaticHelper.LoadToObjectCollection(lbxEventList, trg.Events);
+            if (lbxEventList.Items.Count > 0) lbxEventList.SelectedIndex = 0;
+            else
+            {
+                ClearContent(gpbEvents);
+                mtxbEventID.Text = "00";
+            }
+            StaticHelper.LoadToObjectCollection(lbxActionList, trg.Actions);
+            if (lbxActionList.Items.Count > 0) lbxActionList.SelectedIndex = 0;
+            else
+            {
+                ClearContent(gpbActions);
+                mtxbActionID.Text = "00";
+            }
+        }
+        private void UpdateActionContent(LogicItem item)
+        {
+            mtxbActionID.Text = item.ID.ToString();
+            txbActionAnno.Text = item.Comment;
+            cbbActionAbst.SelectedIndex = item.ID;
+        }
+        private void UpdateActionParams(TriggerDescription description, string[] actionParams)
+        {
+            rtxbActionDetail.Refresh();
+            rtxbActionDetail.Text = description.Description;
+            foreach (Control c in gpbActionParam.Controls)
+            {
+                c.Visible = false;
+                c.Enabled = true;
+            }
+            if (description.Parameters.Count == 0)
+            {
+                lblNoParamA.Visible = true;
+            }
+            else
+            {
+                int i = 0;
+                foreach (TriggerParam param in description.Parameters)
+                {
+                    switch (param.Type)
+                    {
+                        case TriggerParam.ParamType.PlainString:
+                            SetParamControls(txbAP, param, actionParams, i);
+                            break;
+                        case TriggerParam.ParamType.SelectableString:
+                            SetParamControls(cbbAP, param, actionParams, i);
+                            break;
+                        case TriggerParam.ParamType.Bool:
+                            SetParamControls(ckbAP, param, actionParams, i);
+                            break;
+                    }
+                    SetParamControls(lklAP, param, actionParams, i);
+                    i++;
+                }
+            }
         }
         private void UpdateTrgList(TriggerItem.DisplayingType type = TriggerItem.DisplayingType.Remain)
         {
@@ -167,6 +249,46 @@ namespace RelertSharp.SubWindows.LogicEditor
                 }
             }
         }
+        #endregion
+
+        #region Trace Utils
+        private async void ManageSound(TriggerParam param, TechnoPair p)
+        {
+            if (soundPlayer.IsPlaying)
+            {
+                soundPlayer.Stop();
+                UseWaitCursor = false;
+            }
+            else
+            {
+                string name = soundPlayer.GetSoundName(p, (SoundType)param.ComboType);
+                await Task.Run(() =>
+                {
+                    soundPlayer.LoadWav(GlobalVar.GlobalSoundBank.GetSound(name));
+                });
+                soundPlayer.Play();
+                UseWaitCursor = false;
+            }
+        }
+        #endregion
+
+        #region Misc Utils
+        private void UpdateAt(ListBox dest, object updatevalue)
+        {
+            listUpdating = true;
+            int index = dest.SelectedIndex;
+            dest.Items.RemoveAt(index);
+            dest.Items.Insert(index, updatevalue);
+            dest.SelectedIndex = index;
+            listUpdating = false;
+        }
+        private void RemoveAt(ListBox dest, int index)
+        {
+            listUpdating = true;
+            dest.Items.RemoveAt(index);
+            listUpdating = false;
+            if (index != 0) dest.SelectedIndex = index - 1;
+        }
         private IEnumerable<object> GetComboCollections(TriggerParam param)
         {
             switch (param.ComboType)
@@ -219,59 +341,9 @@ namespace RelertSharp.SubWindows.LogicEditor
                     return null;
             }
         }
-        private async void ManageSound(TriggerParam param, TechnoPair p)
-        {
-            if (soundPlayer.IsPlaying)
-            {
-                soundPlayer.Stop();
-                UseWaitCursor = false;
-            }
-            else
-            {
-                string name = soundPlayer.GetSoundName(p, (SoundType)param.ComboType);
-                await Task.Run(() =>
-                {
-                    soundPlayer.LoadWav(GlobalVar.GlobalSoundBank.GetSound(name));
-                });
-                soundPlayer.Play();
-                UseWaitCursor = false;
-            }
-        }
-        private void UpdateActionParams(TriggerDescription description, string[] actionParams)
-        {
-            rtxbActionDetail.Refresh();
-            rtxbActionDetail.Text = description.Description;
-            foreach (Control c in gpbActionParam.Controls)
-            {
-                c.Visible = false;
-                c.Enabled = true;
-            }
-            if (description.Parameters.Count == 0)
-            {
-                lblNoParamA.Visible = true;
-            }
-            else
-            {
-                int i = 0;
-                foreach (TriggerParam param in description.Parameters)
-                {
-                    switch (param.Type)
-                    {
-                        case TriggerParam.ParamType.PlainString:
-                            SetParamControls(txbAP, param, actionParams, i);
-                            break;
-                        case TriggerParam.ParamType.SelectableString:
-                            SetParamControls(cbbAP, param, actionParams, i);
-                            break;
-                        case TriggerParam.ParamType.Bool:
-                            SetParamControls(ckbAP, param, actionParams, i);
-                            break;
-                    }
-                    SetParamControls(lklAP, param, actionParams, i);
-                    i++;
-                }
-            }
-        }
+        #endregion
+
+        #region Parameter Utils
         private void SetParamControls(Control[] controls, TriggerParam param, string[] paramData, int controlIndex)
         {
             if (controls.GetType() == typeof(LinkLabel[]))
@@ -302,94 +374,69 @@ namespace RelertSharp.SubWindows.LogicEditor
             }
             controls[controlIndex].Visible = true;
         }
-        private void UpdateActionContent(LogicItem item)
+        private void WriteParam(string value, int pos, LogicType type)
         {
-            mtxbActionID.Text = item.ID.ToString();
-            txbActionAnno.Text = item.Comment;
-            cbbActionAbst.SelectedIndex = item.ID;
-        }
-
-        private void ClearContent(GroupBox gpb)
-        {
-            foreach (Control c in gpb.Controls)
+            if (type == LogicType.EventLogic)
             {
-                var t = c.GetType();
-                if (t == typeof(TextBox) ||
-                    t == typeof(ComboBox) ||
-                    t == typeof(MaskedTextBox) ||
-                    t == typeof(RichTextBox)) c.Text = "";
-                if (t == typeof(GroupBox)) ClearContent(c as GroupBox);
+                _CurrentEvent.Parameters[pos] = value;
+                UpdateAt(lbxEventList, _CurrentEvent);
             }
-        }
-        private void UpdateContent(TriggerItem trg)
-        {
-            UpdateTags(trg.ID);
-            StaticHelper.LoadToObjectCollection(lbxEventList, trg.Events);
-            if (lbxEventList.Items.Count > 0) lbxEventList.SelectedIndex = 0;
             else
             {
-                ClearContent(gpbEvents);
-                mtxbEventID.Text = "00";
+                _CurrentAction.Parameters[pos] = value;
+                UpdateAt(lbxActionList, _CurrentAction);
             }
-            StaticHelper.LoadToObjectCollection(lbxActionList, trg.Actions);
-            if (lbxActionList.Items.Count > 0) lbxActionList.SelectedIndex = 0;
+        }
+        private void WriteParam(TechnoPair value, int pos, LogicType type)
+        {
+            WriteParam(value.Index, pos, type);
+        }
+        private void WriteParam(bool value, int pos, LogicType type)
+        {
+            if (type == LogicType.EventLogic)
+            {
+                _CurrentEvent.Parameters[pos] = value ? "1" : "0";
+                UpdateAt(lbxEventList, _CurrentEvent);
+            }
             else
             {
-                ClearContent(gpbActions);
-                mtxbActionID.Text = "00";
+                _CurrentAction.Parameters[pos] = value ? "1" : "0";
+                UpdateAt(lbxActionList, _CurrentAction);
             }
         }
-
-        #region Languages
-        private void SetLanguage()
+        private void ParamChanged(object sender, LogicType type)
         {
-            foreach (TabPage p in tbcMain.TabPages)
+            Type t = sender.GetType();
+            int paramsindex = int.Parse(((Control)sender).Tag.ToString());
+            int i = (type == LogicType.EventLogic) ?
+                _CurrentEventParameters[paramsindex].ParamPos : _CurrentActionParameters[paramsindex].ParamPos;
+            if (t == typeof(TextBox))
             {
-                foreach (Control c in p.Controls)
-                {
-                    SetControlLanguage(c);
-                }
-                p.Text = DICT[p.Text];
+                WriteParam(((TextBox)sender).Text, i, type);
             }
-            Text = DICT[Text];
-            lblNoParamE.Location = new Point(gpbEventParam.Size.Width / 2 - lblNoParamE.Size.Width / 2, gpbEventParam.Size.Height / 2 - lblNoParamE.Size.Height);
-            lblNoParamA.Location = new Point(gpbActionParam.Size.Width / 2 - lblNoParamA.Size.Width / 2, gpbActionParam.Size.Height / 2 - lblNoParamA.Size.Height);
+            else if (t == typeof(ComboBox))
+            {
+                TechnoPair p = ((ComboBox)sender).SelectedItem as TechnoPair;
+                if (p == null) p = new TechnoPair(((ComboBox)sender).Text, "");
+                WriteParam(p, i, type);
+            }
+            else if (t == typeof(CheckBox))
+            {
+                WriteParam(((CheckBox)sender).Checked, i, type);
+            }
         }
-        private void SetControlLanguage(Control parent)
-        {
-            var t = parent.GetType();
-            if (t == typeof(TextBox)) return;
-            if (t == typeof(GroupBox))
-            {
-                foreach (Control c in ((GroupBox)parent).Controls)
-                {
-                    SetControlLanguage(c);
-                }
-            }
-            if (parent.ContextMenuStrip != null)
-            {
-                foreach (ToolStripItem item in parent.ContextMenuStrip.Items)
-                {
-                    item.Text = DICT[item.Text];
-                }
-            }
-            if (!string.IsNullOrEmpty(ttTrg.GetToolTip(parent)))
-            {
-                ttTrg.SetToolTip(parent, DICT[ttTrg.GetToolTip(parent)]);
-            }
-            parent.Text = DICT[parent.Text];
-        }
-
-
         #endregion
 
         #endregion
-
 
         #region Private Calls - LogicEditor
+        private List<TriggerParam> _CurrentEventParameters { get { return (cbbEventAbst.SelectedItem as TriggerDescription).Parameters; } }
+        private List<TriggerParam> _CurrentActionParameters { get { return (cbbActionAbst.SelectedItem as TriggerDescription).Parameters; } }
+        private TriggerItem _CurrentBoxTrigger { get { return lbxTriggerList.SelectedItem as TriggerItem; } }
         private TriggerItem _CurrentTrigger { get { return map.Triggers[txbTrgID.Text]; } }
         private LogicItem _CurrentEvent { get { return _CurrentTrigger.Events[lbxEventList.SelectedIndex]; } }
         private LogicItem _CurrentAction { get { return _CurrentTrigger.Actions[lbxActionList.SelectedIndex]; } }
+        private TagItem _CurrentTag { get { return map.Tags[txbTagID.Text]; } }
         #endregion
     }
 }

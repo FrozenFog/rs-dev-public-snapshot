@@ -56,6 +56,8 @@
             this.label12 = new System.Windows.Forms.Label();
             this.cbbActionAbst = new System.Windows.Forms.ComboBox();
             this.btnCopyAction = new System.Windows.Forms.Button();
+            this.cmsCopyAction = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiCopyActionAdv = new System.Windows.Forms.ToolStripMenuItem();
             this.txbActionAnno = new System.Windows.Forms.TextBox();
             this.btnNewAction = new System.Windows.Forms.Button();
             this.btnDeleteAction = new System.Windows.Forms.Button();
@@ -92,6 +94,8 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.btnCopyEvent = new System.Windows.Forms.Button();
+            this.cmsCopyEvent = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiCopyEventAdv = new System.Windows.Forms.ToolStripMenuItem();
             this.btnDeleteEvent = new System.Windows.Forms.Button();
             this.btnNewEvent = new System.Windows.Forms.Button();
             this.rtxbEventDetail = new System.Windows.Forms.RichTextBox();
@@ -146,8 +150,10 @@
             this.tbpTriggers.SuspendLayout();
             this.gpbActions.SuspendLayout();
             this.gpbActionParam.SuspendLayout();
+            this.cmsCopyAction.SuspendLayout();
             this.gpbEvents.SuspendLayout();
             this.gpbEventParam.SuspendLayout();
+            this.cmsCopyEvent.SuspendLayout();
             this.gpbTag.SuspendLayout();
             this.gpbRepeat.SuspendLayout();
             this.cmsEditTemplate.SuspendLayout();
@@ -217,7 +223,7 @@
             this.mtxbActionID.TabIndex = 0;
             this.mtxbActionID.ValidatingType = typeof(int);
             this.mtxbActionID.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SelectTextboxContent_MouseClicked);
-            this.mtxbActionID.Validated += new System.EventHandler(this.mtxbActionID_Validated);
+            this.mtxbActionID.TextChanged += new System.EventHandler(this.mtxbActionID_TextChanged);
             // 
             // gpbActionParam
             // 
@@ -262,12 +268,13 @@
             // txbAP4
             // 
             this.txbAP4.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbAP4.Location = new System.Drawing.Point(135, 96);
+            this.txbAP4.Location = new System.Drawing.Point(135, 97);
             this.txbAP4.Name = "txbAP4";
             this.txbAP4.Size = new System.Drawing.Size(153, 21);
             this.txbAP4.TabIndex = 4;
             this.txbAP4.Tag = "3";
             this.txbAP4.Visible = false;
+            this.txbAP4.Validated += new System.EventHandler(this.ActionParamChanged);
             // 
             // lklAP3
             // 
@@ -292,6 +299,7 @@
             this.txbAP3.TabIndex = 3;
             this.txbAP3.Tag = "2";
             this.txbAP3.Visible = false;
+            this.txbAP3.Validated += new System.EventHandler(this.ActionParamChanged);
             // 
             // lklAP2
             // 
@@ -316,6 +324,7 @@
             this.txbAP2.TabIndex = 2;
             this.txbAP2.Tag = "1";
             this.txbAP2.Visible = false;
+            this.txbAP2.Validated += new System.EventHandler(this.ActionParamChanged);
             // 
             // lklAP1
             // 
@@ -340,6 +349,7 @@
             this.txbAP1.TabIndex = 1;
             this.txbAP1.Tag = "0";
             this.txbAP1.Visible = false;
+            this.txbAP1.Validated += new System.EventHandler(this.ActionParamChanged);
             // 
             // ckbAP4
             // 
@@ -352,6 +362,7 @@
             this.ckbAP4.Tag = "3";
             this.ckbAP4.UseVisualStyleBackColor = true;
             this.ckbAP4.Visible = false;
+            this.ckbAP4.CheckedChanged += new System.EventHandler(this.ActionParamChanged);
             // 
             // ckbAP3
             // 
@@ -364,6 +375,7 @@
             this.ckbAP3.Tag = "2";
             this.ckbAP3.UseVisualStyleBackColor = true;
             this.ckbAP3.Visible = false;
+            this.ckbAP3.CheckedChanged += new System.EventHandler(this.ActionParamChanged);
             // 
             // ckbAP2
             // 
@@ -376,6 +388,7 @@
             this.ckbAP2.Tag = "1";
             this.ckbAP2.UseVisualStyleBackColor = true;
             this.ckbAP2.Visible = false;
+            this.ckbAP2.CheckedChanged += new System.EventHandler(this.ActionParamChanged);
             // 
             // ckbAP1
             // 
@@ -388,6 +401,7 @@
             this.ckbAP1.Tag = "0";
             this.ckbAP1.UseVisualStyleBackColor = true;
             this.ckbAP1.Visible = false;
+            this.ckbAP1.CheckedChanged += new System.EventHandler(this.ActionParamChanged);
             // 
             // cbbAP4
             // 
@@ -399,6 +413,7 @@
             this.cbbAP4.TabIndex = 4;
             this.cbbAP4.Tag = "3";
             this.cbbAP4.Visible = false;
+            this.cbbAP4.Validated += new System.EventHandler(this.ActionParamChanged);
             // 
             // cbbAP3
             // 
@@ -410,6 +425,7 @@
             this.cbbAP3.TabIndex = 3;
             this.cbbAP3.Tag = "2";
             this.cbbAP3.Visible = false;
+            this.cbbAP3.Validated += new System.EventHandler(this.ActionParamChanged);
             // 
             // cbbAP2
             // 
@@ -421,6 +437,7 @@
             this.cbbAP2.TabIndex = 2;
             this.cbbAP2.Tag = "1";
             this.cbbAP2.Visible = false;
+            this.cbbAP2.Validated += new System.EventHandler(this.ActionParamChanged);
             // 
             // cbbAP1
             // 
@@ -432,6 +449,7 @@
             this.cbbAP1.TabIndex = 1;
             this.cbbAP1.Tag = "0";
             this.cbbAP1.Visible = false;
+            this.cbbAP1.Validated += new System.EventHandler(this.ActionParamChanged);
             // 
             // lblNoParamA
             // 
@@ -486,12 +504,27 @@
             // 
             // btnCopyAction
             // 
+            this.btnCopyAction.ContextMenuStrip = this.cmsCopyAction;
             this.btnCopyAction.Location = new System.Drawing.Point(8, 329);
             this.btnCopyAction.Name = "btnCopyAction";
             this.btnCopyAction.Size = new System.Drawing.Size(138, 23);
             this.btnCopyAction.TabIndex = 8;
             this.btnCopyAction.Text = "LGCbtnCopyAction";
             this.btnCopyAction.UseVisualStyleBackColor = true;
+            // 
+            // cmsCopyAction
+            // 
+            this.cmsCopyAction.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiCopyActionAdv});
+            this.cmsCopyAction.Name = "cmsCopyAction";
+            this.cmsCopyAction.Size = new System.Drawing.Size(176, 26);
+            // 
+            // tsmiCopyActionAdv
+            // 
+            this.tsmiCopyActionAdv.Name = "tsmiCopyActionAdv";
+            this.tsmiCopyActionAdv.Size = new System.Drawing.Size(175, 22);
+            this.tsmiCopyActionAdv.Text = "LGCtsmiCopyAdv";
+            this.tsmiCopyActionAdv.Click += new System.EventHandler(this.tsmiCopyActionAdv_Click);
             // 
             // txbActionAnno
             // 
@@ -518,6 +551,7 @@
             this.btnDeleteAction.TabIndex = 7;
             this.btnDeleteAction.Text = "LGCbtnDelAction";
             this.btnDeleteAction.UseVisualStyleBackColor = true;
+            this.btnDeleteAction.Click += new System.EventHandler(this.btnDeleteAction_Click);
             // 
             // label21
             // 
@@ -589,7 +623,7 @@
             this.mtxbEventID.TabIndex = 0;
             this.mtxbEventID.ValidatingType = typeof(int);
             this.mtxbEventID.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SelectTextboxContent_MouseClicked);
-            this.mtxbEventID.Validated += new System.EventHandler(this.mtxbEventID_Validated);
+            this.mtxbEventID.TextChanged += new System.EventHandler(this.mtxbEventID_TextChanged);
             // 
             // gpbEventParam
             // 
@@ -682,6 +716,7 @@
             this.txbEP4.TabIndex = 4;
             this.txbEP4.Tag = "3";
             this.txbEP4.Visible = false;
+            this.txbEP4.Validated += new System.EventHandler(this.EventParamChanged);
             // 
             // txbEP3
             // 
@@ -692,6 +727,7 @@
             this.txbEP3.TabIndex = 3;
             this.txbEP3.Tag = "2";
             this.txbEP3.Visible = false;
+            this.txbEP3.Validated += new System.EventHandler(this.EventParamChanged);
             // 
             // txbEP1
             // 
@@ -702,16 +738,18 @@
             this.txbEP1.TabIndex = 1;
             this.txbEP1.Tag = "0";
             this.txbEP1.Visible = false;
+            this.txbEP1.Validated += new System.EventHandler(this.EventParamChanged);
             // 
             // txbEP2
             // 
             this.txbEP2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbEP2.Location = new System.Drawing.Point(136, 45);
+            this.txbEP2.Location = new System.Drawing.Point(136, 44);
             this.txbEP2.Name = "txbEP2";
             this.txbEP2.Size = new System.Drawing.Size(153, 21);
             this.txbEP2.TabIndex = 2;
             this.txbEP2.Tag = "1";
             this.txbEP2.Visible = false;
+            this.txbEP2.Validated += new System.EventHandler(this.EventParamChanged);
             // 
             // ckbEP4
             // 
@@ -724,6 +762,7 @@
             this.ckbEP4.Tag = "3";
             this.ckbEP4.UseVisualStyleBackColor = true;
             this.ckbEP4.Visible = false;
+            this.ckbEP4.CheckedChanged += new System.EventHandler(this.EventParamChanged);
             // 
             // ckbEP3
             // 
@@ -736,6 +775,7 @@
             this.ckbEP3.Tag = "2";
             this.ckbEP3.UseVisualStyleBackColor = true;
             this.ckbEP3.Visible = false;
+            this.ckbEP3.CheckedChanged += new System.EventHandler(this.EventParamChanged);
             // 
             // ckbEP2
             // 
@@ -748,6 +788,7 @@
             this.ckbEP2.Tag = "1";
             this.ckbEP2.UseVisualStyleBackColor = true;
             this.ckbEP2.Visible = false;
+            this.ckbEP2.CheckedChanged += new System.EventHandler(this.EventParamChanged);
             // 
             // ckbEP1
             // 
@@ -760,6 +801,7 @@
             this.ckbEP1.Tag = "0";
             this.ckbEP1.UseVisualStyleBackColor = true;
             this.ckbEP1.Visible = false;
+            this.ckbEP1.CheckedChanged += new System.EventHandler(this.EventParamChanged);
             // 
             // cbbEP4
             // 
@@ -771,6 +813,7 @@
             this.cbbEP4.TabIndex = 4;
             this.cbbEP4.Tag = "3";
             this.cbbEP4.Visible = false;
+            this.cbbEP4.Validated += new System.EventHandler(this.EventParamChanged);
             // 
             // cbbEP3
             // 
@@ -782,6 +825,7 @@
             this.cbbEP3.TabIndex = 3;
             this.cbbEP3.Tag = "2";
             this.cbbEP3.Visible = false;
+            this.cbbEP3.Validated += new System.EventHandler(this.EventParamChanged);
             // 
             // cbbEP2
             // 
@@ -793,6 +837,7 @@
             this.cbbEP2.TabIndex = 2;
             this.cbbEP2.Tag = "1";
             this.cbbEP2.Visible = false;
+            this.cbbEP2.Validated += new System.EventHandler(this.EventParamChanged);
             // 
             // cbbEP1
             // 
@@ -804,6 +849,7 @@
             this.cbbEP1.TabIndex = 1;
             this.cbbEP1.Tag = "0";
             this.cbbEP1.Visible = false;
+            this.cbbEP1.Validated += new System.EventHandler(this.EventParamChanged);
             // 
             // lblNoParamE
             // 
@@ -891,12 +937,27 @@
             // 
             // btnCopyEvent
             // 
+            this.btnCopyEvent.ContextMenuStrip = this.cmsCopyEvent;
             this.btnCopyEvent.Location = new System.Drawing.Point(8, 329);
             this.btnCopyEvent.Name = "btnCopyEvent";
             this.btnCopyEvent.Size = new System.Drawing.Size(138, 23);
             this.btnCopyEvent.TabIndex = 8;
             this.btnCopyEvent.Text = "LGCbtnCopyEvent";
             this.btnCopyEvent.UseVisualStyleBackColor = true;
+            // 
+            // cmsCopyEvent
+            // 
+            this.cmsCopyEvent.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiCopyEventAdv});
+            this.cmsCopyEvent.Name = "cmsCopyEvent";
+            this.cmsCopyEvent.Size = new System.Drawing.Size(176, 26);
+            // 
+            // tsmiCopyEventAdv
+            // 
+            this.tsmiCopyEventAdv.Name = "tsmiCopyEventAdv";
+            this.tsmiCopyEventAdv.Size = new System.Drawing.Size(175, 22);
+            this.tsmiCopyEventAdv.Text = "LGCtsmiCopyAdv";
+            this.tsmiCopyEventAdv.Click += new System.EventHandler(this.tsmiCopyEventAdv_Click);
             // 
             // btnDeleteEvent
             // 
@@ -906,6 +967,7 @@
             this.btnDeleteEvent.TabIndex = 7;
             this.btnDeleteEvent.Text = "LGCbtnDelEvent";
             this.btnDeleteEvent.UseVisualStyleBackColor = true;
+            this.btnDeleteEvent.Click += new System.EventHandler(this.btnDeleteEvent_Click);
             // 
             // btnNewEvent
             // 
@@ -1029,6 +1091,7 @@
             this.cbbAttatchedTrg.Name = "cbbAttatchedTrg";
             this.cbbAttatchedTrg.Size = new System.Drawing.Size(257, 20);
             this.cbbAttatchedTrg.TabIndex = 13;
+            this.cbbAttatchedTrg.SelectedValueChanged += new System.EventHandler(this.cbbAttatchedTrg_SelectedValueChanged);
             // 
             // ckbDisabled
             // 
@@ -1265,6 +1328,7 @@
             this.btnCopyTrigger.TabIndex = 3;
             this.btnCopyTrigger.Text = "LGCbtnCopyTrg";
             this.btnCopyTrigger.UseVisualStyleBackColor = true;
+            this.btnCopyTrigger.Click += new System.EventHandler(this.btnCopyTrigger_Click);
             // 
             // btnDelTrigger
             // 
@@ -1418,10 +1482,12 @@
             this.gpbActions.PerformLayout();
             this.gpbActionParam.ResumeLayout(false);
             this.gpbActionParam.PerformLayout();
+            this.cmsCopyAction.ResumeLayout(false);
             this.gpbEvents.ResumeLayout(false);
             this.gpbEvents.PerformLayout();
             this.gpbEventParam.ResumeLayout(false);
             this.gpbEventParam.PerformLayout();
+            this.cmsCopyEvent.ResumeLayout(false);
             this.gpbTag.ResumeLayout(false);
             this.gpbTag.PerformLayout();
             this.gpbRepeat.ResumeLayout(false);
@@ -1549,5 +1615,9 @@
         private System.Windows.Forms.MaskedTextBox mtxbEventID;
         private System.Windows.Forms.MaskedTextBox mtxbActionID;
         private System.Windows.Forms.TextBox txbTest;
+        private System.Windows.Forms.ContextMenuStrip cmsCopyAction;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCopyActionAdv;
+        private System.Windows.Forms.ContextMenuStrip cmsCopyEvent;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCopyEventAdv;
     }
 }

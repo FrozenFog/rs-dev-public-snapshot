@@ -12,13 +12,6 @@ namespace RelertSharp.SubWindows.LogicEditor
 {
     internal static class StaticHelper
     {
-        public static void UpdateAt(ListBox dest, object updatevalue)
-        {
-            int index = dest.SelectedIndex;
-            dest.Items.RemoveAt(index);
-            dest.Items.Insert(index, updatevalue);
-            dest.SelectedIndex = index;
-        }
         public static void LoadToObjectCollection<T>(ComboBox dest, IList<T> src)
         {
             int max = src.Max(x => x.ToString().Length) * 7;

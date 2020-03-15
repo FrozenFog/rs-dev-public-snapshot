@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8597C2BD-5421-4A66-958E-240768EA8A9A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>relert_sharp</RootNamespace>
+    <RootNamespace>RelertSharp</RootNamespace>
     <AssemblyName>relert-sharp</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -142,6 +142,12 @@
     <Compile Include="SubWindows\LogicEditor\LogicEditor.Designer.cs">
       <DependentUpon>LogicEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\LogicEditor\dlgCopy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\dlgCopy.Designer.cs">
+      <DependentUpon>dlgCopy.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\LogicEditor\StaticHelper.cs" />
     <Compile Include="Utils\Colors.cs" />
     <Compile Include="FileSystem\BaseFile.cs" />
@@ -167,12 +173,16 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="SubWindows\INIComparator.resx">
       <DependentUpon>INIComparator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\LogicEditor\LogicEditor.resx">
       <DependentUpon>LogicEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\dlgCopy.resx">
+      <DependentUpon>dlgCopy.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="_test.resx">
       <DependentUpon>_test.cs</DependentUpon>

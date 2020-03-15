@@ -177,6 +177,11 @@ namespace RelertSharp.MapStructure.Logic
         {
             return innerString;
         }
+        public void SetDisplayingString(object type)
+        {
+            int t = int.Parse(type.ToString());
+            SetDisplayingString((DisplayingType)t);
+        }
         public void SetDisplayingString(DisplayingType type)
         {
             switch (type)

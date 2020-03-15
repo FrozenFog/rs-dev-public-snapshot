@@ -43,7 +43,7 @@ namespace RelertSharp.MapStructure.Logic
         /// <returns></returns>
         public TagItem GetTagFromTrigger(string triggerID, TriggerItem item = null)
         {
-            if (triggerID == "TEMPLATE") return new TagItem(item, "TGMPLAGE");
+            if (triggerID == "TEMPLATE") return new TagItem(item, "TGMPLATE");
             if (trigger_tag.Keys.Contains(triggerID))
             {
                 return data[trigger_tag[triggerID]];
@@ -140,6 +140,7 @@ namespace RelertSharp.MapStructure.Logic
             get { return id; }
             set { SetProperty(ref id, value); }
         }
+        public bool Binded { get; set; } = true;
         #endregion
     }
 }

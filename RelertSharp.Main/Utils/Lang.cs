@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using RelertSharp.FileSystem;
 
 namespace RelertSharp.Utils
@@ -42,6 +43,40 @@ namespace RelertSharp
         {
             get { return translate; }
             set { translate = value; }
+        }
+        public static void SetControlLanguage(Control p)
+        {
+            var t = p.GetType();
+            if (t == typeof(TextBox) || t == typeof(RichTextBox)) return;
+            if (t == typeof(GroupBox))
+            {
+                foreach (Control c in ((GroupBox)p).Controls)
+                {
+                    SetControlLanguage(c);
+                }
+            }
+            if (t == typeof(TabPage))
+            {
+                foreach (Control c in ((TabPage)p).Controls)
+                {
+                    SetControlLanguage(c);
+                }
+            }
+            if (t == typeof(TabControl))
+            {
+                foreach (TabPage pg in ((TabControl)p).TabPages)
+                {
+                    SetControlLanguage(pg);
+                }
+            }
+            if (p.ContextMenuStrip != null)
+            {
+                foreach (ToolStripItem item in p.ContextMenuStrip.Items)
+                {
+                    item.Text = DICT[item.Text];
+                }
+            }
+            p.Text = DICT[p.Text];
         }
     }
 }

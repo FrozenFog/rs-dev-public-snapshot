@@ -83,6 +83,7 @@ namespace RelertSharp.MapStructure.Logic
             Abstract = abst;
             Description = desc;
             Parameters = new List<TriggerParam>();
+            if (param.Length < 3) param.Concat(new string[] { "0" });
             InitParams = param;
         }
         #endregion
