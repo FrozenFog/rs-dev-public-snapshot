@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class AITriggerCollection
+    public class AITriggerCollection : IEnumerable<AITriggerItem>
     {
         private Dictionary<string, AITriggerItem> localTriggers = new Dictionary<string, AITriggerItem>();
         private Dictionary<string, bool> globalEnables = new Dictionary<string, bool>();
@@ -35,11 +36,22 @@ namespace RelertSharp.MapStructure.Logic
             get { return globalEnables; }
             set { globalEnables = value; }
         }
+        #region Enumerator
+        public IEnumerator<AITriggerItem> GetEnumerator()
+        {
+            return localTriggers.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return localTriggers.Values.GetEnumerator();
+        }
+        #endregion
         #endregion
     }
 
 
-    public class AITriggerItem : BindableBase
+    public class AITriggerItem : BindableBase, IniSystem.IRegistable
     {
         private string name, id, team1id, team2id, ownerhouse, condObjID;
         private int tech, sideindex;

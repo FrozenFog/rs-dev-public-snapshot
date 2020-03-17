@@ -142,7 +142,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class TriggerItem : BindableBase
+    public class TriggerItem : BindableBase, IRegistable
     {
         private string innerString;
         private string id, house, linkedwith, name;

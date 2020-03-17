@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.IniSystem
 {
-    public class TechnoPair
+    public class TechnoPair : IRegistable
     {
         private string abst = "";
         public enum AbstractType
@@ -78,6 +78,7 @@ namespace RelertSharp.IniSystem
         #region Public Calls - TechnoPair
         public string Index { get; set; } = "";
         public string Name { get; set; } = "";
+        public string ID { get { return RegName; } }
         public string RegName { get; set; } = "";
         public string UIName { get; set; } = "";
         #endregion

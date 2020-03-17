@@ -36,7 +36,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class CountryItem : TeamLogicItem
+    public class CountryItem : TeamLogicItem, IRegistable
     {
         private Dictionary<string, INIPair> residual = new Dictionary<string, INIPair>();
 

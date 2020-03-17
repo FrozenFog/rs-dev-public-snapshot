@@ -127,7 +127,7 @@
             this.txbTrgName = new System.Windows.Forms.TextBox();
             this.btnNewTrigger = new System.Windows.Forms.Button();
             this.cmsEditTemplate = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.lGCtsmiEditTempToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiEditTemp = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSaveTemp = new System.Windows.Forms.Button();
             this.btnCopyTrigger = new System.Windows.Forms.Button();
             this.btnDelTrigger = new System.Windows.Forms.Button();
@@ -146,6 +146,33 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.ttTrg = new System.Windows.Forms.ToolTip(this.components);
+            this.gpbSearch = new System.Windows.Forms.GroupBox();
+            this.ckbSuper = new System.Windows.Forms.CheckBox();
+            this.ckbAnim = new System.Windows.Forms.CheckBox();
+            this.ckbTheme = new System.Windows.Forms.CheckBox();
+            this.ckbEva = new System.Windows.Forms.CheckBox();
+            this.ckbSound = new System.Windows.Forms.CheckBox();
+            this.ckbTechno = new System.Windows.Forms.CheckBox();
+            this.ckbCsf = new System.Windows.Forms.CheckBox();
+            this.ckbScript = new System.Windows.Forms.CheckBox();
+            this.ckbHouse = new System.Windows.Forms.CheckBox();
+            this.ckbGlobal = new System.Windows.Forms.CheckBox();
+            this.ckbAiTrigger = new System.Windows.Forms.CheckBox();
+            this.ckbTaskForce = new System.Windows.Forms.CheckBox();
+            this.ckbTeam = new System.Windows.Forms.CheckBox();
+            this.ckbLocal = new System.Windows.Forms.CheckBox();
+            this.ckbTag = new System.Windows.Forms.CheckBox();
+            this.ckbTrigger = new System.Windows.Forms.CheckBox();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.txbSearchName = new System.Windows.Forms.TextBox();
+            this.lblSearchResult = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.lvSearchResult = new System.Windows.Forms.ListView();
+            this.hdRegID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.hdType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.hdValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.hdExtraValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.rtxbSearchInspector = new System.Windows.Forms.RichTextBox();
             this.tbcMain.SuspendLayout();
             this.tbpTriggers.SuspendLayout();
             this.gpbActions.SuspendLayout();
@@ -159,6 +186,7 @@
             this.cmsEditTemplate.SuspendLayout();
             this.cmsTriggerList.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.gpbSearch.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -168,7 +196,7 @@
             this.tbcMain.Controls.Add(this.tabPage3);
             this.tbcMain.Controls.Add(this.tabPage4);
             this.tbcMain.Controls.Add(this.tabPage5);
-            this.tbcMain.Location = new System.Drawing.Point(12, 12);
+            this.tbcMain.Location = new System.Drawing.Point(12, 33);
             this.tbcMain.Name = "tbcMain";
             this.tbcMain.SelectedIndex = 0;
             this.tbcMain.Size = new System.Drawing.Size(1198, 591);
@@ -1297,16 +1325,16 @@
             // cmsEditTemplate
             // 
             this.cmsEditTemplate.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lGCtsmiEditTempToolStripMenuItem});
+            this.tsmiEditTemp});
             this.cmsEditTemplate.Name = "cmsEditTemplate";
             this.cmsEditTemplate.Size = new System.Drawing.Size(179, 26);
             // 
-            // lGCtsmiEditTempToolStripMenuItem
+            // tsmiEditTemp
             // 
-            this.lGCtsmiEditTempToolStripMenuItem.Name = "lGCtsmiEditTempToolStripMenuItem";
-            this.lGCtsmiEditTempToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
-            this.lGCtsmiEditTempToolStripMenuItem.Text = "LGCtsmiEditTemp";
-            this.lGCtsmiEditTempToolStripMenuItem.Click += new System.EventHandler(this.lGCtsmiEditTempToolStripMenuItem_Click);
+            this.tsmiEditTemp.Name = "tsmiEditTemp";
+            this.tsmiEditTemp.Size = new System.Drawing.Size(178, 22);
+            this.tsmiEditTemp.Text = "LGCtsmiEditTemp";
+            this.tsmiEditTemp.Click += new System.EventHandler(this.tsmiEditTemp_Click);
             // 
             // btnSaveTemp
             // 
@@ -1462,11 +1490,285 @@
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "tabPage5";
             // 
+            // gpbSearch
+            // 
+            this.gpbSearch.Controls.Add(this.ckbSuper);
+            this.gpbSearch.Controls.Add(this.ckbAnim);
+            this.gpbSearch.Controls.Add(this.ckbTheme);
+            this.gpbSearch.Controls.Add(this.ckbEva);
+            this.gpbSearch.Controls.Add(this.ckbSound);
+            this.gpbSearch.Controls.Add(this.ckbTechno);
+            this.gpbSearch.Controls.Add(this.ckbCsf);
+            this.gpbSearch.Controls.Add(this.ckbScript);
+            this.gpbSearch.Controls.Add(this.ckbHouse);
+            this.gpbSearch.Controls.Add(this.ckbGlobal);
+            this.gpbSearch.Controls.Add(this.ckbAiTrigger);
+            this.gpbSearch.Controls.Add(this.ckbTaskForce);
+            this.gpbSearch.Controls.Add(this.ckbTeam);
+            this.gpbSearch.Controls.Add(this.ckbLocal);
+            this.gpbSearch.Controls.Add(this.ckbTag);
+            this.gpbSearch.Controls.Add(this.ckbTrigger);
+            this.gpbSearch.Controls.Add(this.btnSearch);
+            this.gpbSearch.Controls.Add(this.txbSearchName);
+            this.gpbSearch.Controls.Add(this.lblSearchResult);
+            this.gpbSearch.Controls.Add(this.label16);
+            this.gpbSearch.Controls.Add(this.lvSearchResult);
+            this.gpbSearch.Controls.Add(this.rtxbSearchInspector);
+            this.gpbSearch.Location = new System.Drawing.Point(1216, 33);
+            this.gpbSearch.Name = "gpbSearch";
+            this.gpbSearch.Size = new System.Drawing.Size(286, 591);
+            this.gpbSearch.TabIndex = 4;
+            this.gpbSearch.TabStop = false;
+            this.gpbSearch.Text = "LGCgpbSearch";
+            // 
+            // ckbSuper
+            // 
+            this.ckbSuper.AutoSize = true;
+            this.ckbSuper.Location = new System.Drawing.Point(158, 179);
+            this.ckbSuper.Name = "ckbSuper";
+            this.ckbSuper.Size = new System.Drawing.Size(90, 16);
+            this.ckbSuper.TabIndex = 7;
+            this.ckbSuper.Text = "LGCckbSuper";
+            this.ckbSuper.UseVisualStyleBackColor = true;
+            // 
+            // ckbAnim
+            // 
+            this.ckbAnim.AutoSize = true;
+            this.ckbAnim.Location = new System.Drawing.Point(158, 157);
+            this.ckbAnim.Name = "ckbAnim";
+            this.ckbAnim.Size = new System.Drawing.Size(84, 16);
+            this.ckbAnim.TabIndex = 7;
+            this.ckbAnim.Text = "LGCckbAnim";
+            this.ckbAnim.UseVisualStyleBackColor = true;
+            // 
+            // ckbTheme
+            // 
+            this.ckbTheme.AutoSize = true;
+            this.ckbTheme.Location = new System.Drawing.Point(158, 135);
+            this.ckbTheme.Name = "ckbTheme";
+            this.ckbTheme.Size = new System.Drawing.Size(78, 16);
+            this.ckbTheme.TabIndex = 7;
+            this.ckbTheme.Text = "LGCckbMus";
+            this.ckbTheme.UseVisualStyleBackColor = true;
+            // 
+            // ckbEva
+            // 
+            this.ckbEva.AutoSize = true;
+            this.ckbEva.Location = new System.Drawing.Point(158, 113);
+            this.ckbEva.Name = "ckbEva";
+            this.ckbEva.Size = new System.Drawing.Size(78, 16);
+            this.ckbEva.TabIndex = 7;
+            this.ckbEva.Text = "LGCckbEva";
+            this.ckbEva.UseVisualStyleBackColor = true;
+            // 
+            // ckbSound
+            // 
+            this.ckbSound.AutoSize = true;
+            this.ckbSound.Location = new System.Drawing.Point(158, 91);
+            this.ckbSound.Name = "ckbSound";
+            this.ckbSound.Size = new System.Drawing.Size(78, 16);
+            this.ckbSound.TabIndex = 7;
+            this.ckbSound.Text = "LGCckbSnd";
+            this.ckbSound.UseVisualStyleBackColor = true;
+            // 
+            // ckbTechno
+            // 
+            this.ckbTechno.AutoSize = true;
+            this.ckbTechno.Location = new System.Drawing.Point(158, 69);
+            this.ckbTechno.Name = "ckbTechno";
+            this.ckbTechno.Size = new System.Drawing.Size(96, 16);
+            this.ckbTechno.TabIndex = 7;
+            this.ckbTechno.Text = "LGCckbTechno";
+            this.ckbTechno.UseVisualStyleBackColor = true;
+            // 
+            // ckbCsf
+            // 
+            this.ckbCsf.AutoSize = true;
+            this.ckbCsf.Location = new System.Drawing.Point(158, 47);
+            this.ckbCsf.Name = "ckbCsf";
+            this.ckbCsf.Size = new System.Drawing.Size(78, 16);
+            this.ckbCsf.TabIndex = 7;
+            this.ckbCsf.Text = "LGCckbCsf";
+            this.ckbCsf.UseVisualStyleBackColor = true;
+            // 
+            // ckbScript
+            // 
+            this.ckbScript.AutoSize = true;
+            this.ckbScript.Location = new System.Drawing.Point(8, 157);
+            this.ckbScript.Name = "ckbScript";
+            this.ckbScript.Size = new System.Drawing.Size(84, 16);
+            this.ckbScript.TabIndex = 6;
+            this.ckbScript.Text = "LGCckbTScp";
+            this.ckbScript.UseVisualStyleBackColor = true;
+            // 
+            // ckbHouse
+            // 
+            this.ckbHouse.AutoSize = true;
+            this.ckbHouse.Location = new System.Drawing.Point(8, 201);
+            this.ckbHouse.Name = "ckbHouse";
+            this.ckbHouse.Size = new System.Drawing.Size(90, 16);
+            this.ckbHouse.TabIndex = 6;
+            this.ckbHouse.Text = "LGCckbHouse";
+            this.ckbHouse.UseVisualStyleBackColor = true;
+            // 
+            // ckbGlobal
+            // 
+            this.ckbGlobal.AutoSize = true;
+            this.ckbGlobal.Location = new System.Drawing.Point(158, 201);
+            this.ckbGlobal.Name = "ckbGlobal";
+            this.ckbGlobal.Size = new System.Drawing.Size(96, 16);
+            this.ckbGlobal.TabIndex = 6;
+            this.ckbGlobal.Text = "LGCckbGlobal";
+            this.ckbGlobal.UseVisualStyleBackColor = true;
+            // 
+            // ckbAiTrigger
+            // 
+            this.ckbAiTrigger.AutoSize = true;
+            this.ckbAiTrigger.Location = new System.Drawing.Point(8, 179);
+            this.ckbAiTrigger.Name = "ckbAiTrigger";
+            this.ckbAiTrigger.Size = new System.Drawing.Size(90, 16);
+            this.ckbAiTrigger.TabIndex = 6;
+            this.ckbAiTrigger.Text = "LGCckbAiTrg";
+            this.ckbAiTrigger.UseVisualStyleBackColor = true;
+            // 
+            // ckbTaskForce
+            // 
+            this.ckbTaskForce.AutoSize = true;
+            this.ckbTaskForce.Location = new System.Drawing.Point(8, 135);
+            this.ckbTaskForce.Name = "ckbTaskForce";
+            this.ckbTaskForce.Size = new System.Drawing.Size(72, 16);
+            this.ckbTaskForce.TabIndex = 6;
+            this.ckbTaskForce.Text = "LGCckbTF";
+            this.ckbTaskForce.UseVisualStyleBackColor = true;
+            // 
+            // ckbTeam
+            // 
+            this.ckbTeam.AutoSize = true;
+            this.ckbTeam.Location = new System.Drawing.Point(8, 113);
+            this.ckbTeam.Name = "ckbTeam";
+            this.ckbTeam.Size = new System.Drawing.Size(84, 16);
+            this.ckbTeam.TabIndex = 6;
+            this.ckbTeam.Text = "LGCckbTeam";
+            this.ckbTeam.UseVisualStyleBackColor = true;
+            // 
+            // ckbLocal
+            // 
+            this.ckbLocal.AutoSize = true;
+            this.ckbLocal.Location = new System.Drawing.Point(8, 91);
+            this.ckbLocal.Name = "ckbLocal";
+            this.ckbLocal.Size = new System.Drawing.Size(90, 16);
+            this.ckbLocal.TabIndex = 6;
+            this.ckbLocal.Text = "LGCckbLocal";
+            this.ckbLocal.UseVisualStyleBackColor = true;
+            // 
+            // ckbTag
+            // 
+            this.ckbTag.AutoSize = true;
+            this.ckbTag.Location = new System.Drawing.Point(8, 69);
+            this.ckbTag.Name = "ckbTag";
+            this.ckbTag.Size = new System.Drawing.Size(78, 16);
+            this.ckbTag.TabIndex = 6;
+            this.ckbTag.Text = "LGCckbTag";
+            this.ckbTag.UseVisualStyleBackColor = true;
+            // 
+            // ckbTrigger
+            // 
+            this.ckbTrigger.AutoSize = true;
+            this.ckbTrigger.Location = new System.Drawing.Point(8, 47);
+            this.ckbTrigger.Name = "ckbTrigger";
+            this.ckbTrigger.Size = new System.Drawing.Size(84, 16);
+            this.ckbTrigger.TabIndex = 6;
+            this.ckbTrigger.Text = "LGCckbTrig";
+            this.ckbTrigger.UseVisualStyleBackColor = true;
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(197, 20);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(83, 21);
+            this.btnSearch.TabIndex = 5;
+            this.btnSearch.Text = "LGCbtnSearch";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // txbSearchName
+            // 
+            this.txbSearchName.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.txbSearchName.Location = new System.Drawing.Point(6, 20);
+            this.txbSearchName.Name = "txbSearchName";
+            this.txbSearchName.Size = new System.Drawing.Size(185, 21);
+            this.txbSearchName.TabIndex = 4;
+            this.txbSearchName.Text = "LGClblFakeSearch";
+            this.txbSearchName.Enter += new System.EventHandler(this.txbSearchName_Enter);
+            this.txbSearchName.Leave += new System.EventHandler(this.txbSearchName_Leave);
+            // 
+            // lblSearchResult
+            // 
+            this.lblSearchResult.AutoSize = true;
+            this.lblSearchResult.Location = new System.Drawing.Point(6, 222);
+            this.lblSearchResult.Name = "lblSearchResult";
+            this.lblSearchResult.Size = new System.Drawing.Size(113, 12);
+            this.lblSearchResult.TabIndex = 3;
+            this.lblSearchResult.Text = "LGClblSearchResult";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 423);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(95, 12);
+            this.label16.TabIndex = 2;
+            this.label16.Text = "LGClblInspector";
+            // 
+            // lvSearchResult
+            // 
+            this.lvSearchResult.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.hdRegID,
+            this.hdType,
+            this.hdValue,
+            this.hdExtraValue});
+            this.lvSearchResult.FullRowSelect = true;
+            this.lvSearchResult.HideSelection = false;
+            this.lvSearchResult.Location = new System.Drawing.Point(6, 237);
+            this.lvSearchResult.MultiSelect = false;
+            this.lvSearchResult.Name = "lvSearchResult";
+            this.lvSearchResult.Size = new System.Drawing.Size(274, 183);
+            this.lvSearchResult.TabIndex = 1;
+            this.lvSearchResult.UseCompatibleStateImageBehavior = false;
+            this.lvSearchResult.View = System.Windows.Forms.View.Details;
+            // 
+            // hdRegID
+            // 
+            this.hdRegID.Text = "LGCclhRegID";
+            // 
+            // hdType
+            // 
+            this.hdType.Text = "LGCclhType";
+            // 
+            // hdValue
+            // 
+            this.hdValue.Text = "LGCclhValue";
+            // 
+            // hdExtraValue
+            // 
+            this.hdExtraValue.Text = "LGCclhExVal";
+            // 
+            // rtxbSearchInspector
+            // 
+            this.rtxbSearchInspector.Font = new System.Drawing.Font("Verdana", 9F);
+            this.rtxbSearchInspector.Location = new System.Drawing.Point(6, 441);
+            this.rtxbSearchInspector.Name = "rtxbSearchInspector";
+            this.rtxbSearchInspector.ReadOnly = true;
+            this.rtxbSearchInspector.Size = new System.Drawing.Size(274, 144);
+            this.rtxbSearchInspector.TabIndex = 0;
+            this.rtxbSearchInspector.Text = "";
+            // 
             // LogicEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1222, 627);
+            this.ClientSize = new System.Drawing.Size(1514, 633);
+            this.Controls.Add(this.gpbSearch);
             this.Controls.Add(this.tbcMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -1496,6 +1798,8 @@
             this.cmsTriggerList.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.gpbSearch.ResumeLayout(false);
+            this.gpbSearch.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1606,7 +1910,7 @@
         private System.Windows.Forms.LinkLabel lklEP2;
         private System.Windows.Forms.LinkLabel lklEP1;
         private System.Windows.Forms.ContextMenuStrip cmsEditTemplate;
-        private System.Windows.Forms.ToolStripMenuItem lGCtsmiEditTempToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiEditTemp;
         private System.Windows.Forms.CheckBox ckbHard;
         private System.Windows.Forms.CheckBox ckbNormal;
         private System.Windows.Forms.CheckBox ckbEasy;
@@ -1619,5 +1923,32 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiCopyActionAdv;
         private System.Windows.Forms.ContextMenuStrip cmsCopyEvent;
         private System.Windows.Forms.ToolStripMenuItem tsmiCopyEventAdv;
+        private System.Windows.Forms.GroupBox gpbSearch;
+        private System.Windows.Forms.RichTextBox rtxbSearchInspector;
+        private System.Windows.Forms.TextBox txbSearchName;
+        private System.Windows.Forms.Label lblSearchResult;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ListView lvSearchResult;
+        private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.CheckBox ckbAiTrigger;
+        private System.Windows.Forms.CheckBox ckbTaskForce;
+        private System.Windows.Forms.CheckBox ckbTeam;
+        private System.Windows.Forms.CheckBox ckbLocal;
+        private System.Windows.Forms.CheckBox ckbTag;
+        private System.Windows.Forms.CheckBox ckbTrigger;
+        private System.Windows.Forms.CheckBox ckbAnim;
+        private System.Windows.Forms.CheckBox ckbTheme;
+        private System.Windows.Forms.CheckBox ckbEva;
+        private System.Windows.Forms.CheckBox ckbSound;
+        private System.Windows.Forms.CheckBox ckbTechno;
+        private System.Windows.Forms.CheckBox ckbCsf;
+        private System.Windows.Forms.CheckBox ckbScript;
+        private System.Windows.Forms.CheckBox ckbSuper;
+        private System.Windows.Forms.ColumnHeader hdRegID;
+        private System.Windows.Forms.ColumnHeader hdType;
+        private System.Windows.Forms.ColumnHeader hdValue;
+        private System.Windows.Forms.ColumnHeader hdExtraValue;
+        private System.Windows.Forms.CheckBox ckbGlobal;
+        private System.Windows.Forms.CheckBox ckbHouse;
     }
 }

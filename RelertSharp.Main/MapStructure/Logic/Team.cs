@@ -29,7 +29,7 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
 
     }
-    public class TeamItem : TeamLogicItem
+    public class TeamItem : TeamLogicItem, IRegistable
     {
         private Dictionary<string, INIPair> residual;
         public TeamItem(INIEntity ent) : base(ent)
@@ -63,6 +63,7 @@ namespace RelertSharp.MapStructure.Logic
         public TeamMCDecision MCDecision { get; set; }
         public TeamVeteranLevel VeteranLevel { get; set; }
         public string TeamName { get; set; }
+        public string Name { get { return TeamName; } }
         public string TaskforceID { get; set; }
         public string ScriptID { get; set; }
         public string House { get; set; }

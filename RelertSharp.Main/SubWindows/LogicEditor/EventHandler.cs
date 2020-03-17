@@ -5,10 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel;
+using System.Drawing;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.FileSystem;
 using RelertSharp.Common;
 using RelertSharp.IniSystem;
+using static RelertSharp.Language;
 
 namespace RelertSharp.SubWindows.LogicEditor
 {
@@ -17,7 +19,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         #region Trigger Page
 
         #region MenuStrip
-        private void lGCtsmiEditTempToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tsmiEditTemp_Click(object sender, EventArgs e)
         {
             lbxTriggerList.Enabled = false;
             btnNewTrigger.Enabled = false;
@@ -73,6 +75,36 @@ namespace RelertSharp.SubWindows.LogicEditor
         #endregion
 
         #region btn
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            string keyword = txbSearchName.Text;
+            lvSearchResult.Items.Clear();
+            if (keyword == DICT["LGClblFakeSearch"]) return;
+            _SearchResult.SetKeyword(keyword);
+
+            if (ckbTrigger.Checked) LoadSearch(map.Triggers, SearchItem.SearchType.LGCckbTrig);
+            if (ckbTag.Checked) LoadSearch(map.Tags, SearchItem.SearchType.LGCckbTag);
+            if (ckbLocal.Checked) LoadSearch(map.LocalVariables, SearchItem.SearchType.LGCckbLocal);
+            if (ckbTeam.Checked) LoadSearch(map.Teams, SearchItem.SearchType.LGCckbTeam);
+            if (ckbTaskForce.Checked) LoadSearch(map.TaskForces, SearchItem.SearchType.LGCckbTF);
+            if (ckbScript.Checked) LoadSearch(map.Scripts, SearchItem.SearchType.LGCckbTScp);
+            if (ckbAiTrigger.Checked) LoadSearch(map.AiTriggers, SearchItem.SearchType.LGCckbAiTrg);
+            if (ckbHouse.Checked) LoadSearch(map.Countries, SearchItem.SearchType.LGCckbHouse);
+            if (ckbCsf.Checked) LoadSearch(GlobalVar.GlobalCsf, SearchItem.SearchType.LGCckbCsf);
+            if (ckbTechno.Checked) LoadSearch(GlobalVar.GlobalRules.TechnoList, SearchItem.SearchType.LGCckbTechno);
+            if (ckbSound.Checked) LoadSearch(GlobalVar.GlobalSound.SoundList, SearchItem.SearchType.LGCckbSnd);
+            if (ckbEva.Checked) LoadSearch(GlobalVar.GlobalSound.EvaList, SearchItem.SearchType.LGCckbEva);
+            if (ckbTheme.Checked) LoadSearch(GlobalVar.GlobalSound.ThemeList, SearchItem.SearchType.LGCckbMus);
+            if (ckbAnim.Checked) LoadSearch(GlobalVar.GlobalRules.AnimationList, SearchItem.SearchType.LGCckbAnim);
+            if (ckbSuper.Checked) LoadSearch(GlobalVar.GlobalRules.SuperWeaponList, SearchItem.SearchType.LGCckbSuper);
+            if (ckbGlobal.Checked) LoadSearch(GlobalVar.GlobalRules.GlobalVar, SearchItem.SearchType.LGCckbGlobal);
+            lblSearchResult.Text = string.Format(DICT["LGClblSearchNum"], _SearchResult.Length);
+        }
+        private void LoadSearch(IEnumerable<IRegistable> src, SearchItem.SearchType type)
+        {
+            StaticHelper.LoadToObjectCollection(lvSearchResult, _SearchResult.SearchIn(src, type));
+        }
+
         private void btnNewEvent_Click(object sender, EventArgs e)
         {
             LogicItem ev = _CurrentTrigger.Events.NewEvent();
@@ -150,6 +182,24 @@ namespace RelertSharp.SubWindows.LogicEditor
         }
         #endregion
         #region txb
+        private void txbSearchName_Enter(object sender, EventArgs e)
+        {
+            if (txbSearchName.Text == DICT["LGClblFakeSearch"])
+            {
+                txbSearchName.Text = "";
+                txbSearchName.ForeColor = Color.Black;
+            }
+        }
+
+        private void txbSearchName_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txbSearchName.Text))
+            {
+                txbSearchName.Text = DICT["LGClblFakeSearch"];
+                txbSearchName.ForeColor = SystemColors.GrayText;
+            }
+        }
+
         private void SelectTextboxContent_MouseClicked(object sender, MouseEventArgs e)
         {
             ((TextBoxBase)sender).SelectAll();

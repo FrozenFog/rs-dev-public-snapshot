@@ -12,7 +12,7 @@ namespace RelertSharp.MapStructure.Logic
         public TaskforceCollection() : base() { }
     }
 
-    public class TaskforceItem : TeamLogicItem
+    public class TaskforceItem : TeamLogicItem, IRegistable
     {
         private Dictionary<string, int> memberData = new Dictionary<string, int>();
         private int group;

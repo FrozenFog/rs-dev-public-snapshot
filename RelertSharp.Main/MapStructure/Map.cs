@@ -29,8 +29,6 @@ namespace RelertSharp.MapStructure
         private Lightning lightning;
         private Rectangle previewSize;
 
-        private TeamScriptCollection scripts = new TeamScriptCollection();
-        private AITriggerCollection aitriggers = new AITriggerCollection();
         private WaypointCollection waypoints = new WaypointCollection();
         private CellTagCollection celltags = new CellTagCollection();
 
@@ -162,7 +160,7 @@ namespace RelertSharp.MapStructure
             }
             foreach (string scptID in _scriptList)
             {
-                scripts[scptID] = new TeamScriptGroup(f.PopEnt(scptID));
+                Scripts[scptID] = new TeamScriptGroup(f.PopEnt(scptID));
             }
 
             INIEntity _houseList = f.PopEnt("Houses");
@@ -210,16 +208,16 @@ namespace RelertSharp.MapStructure
             foreach (INIPair p in entVar.DataList)
             {
                 string[] tmp = p.ParseStringList();
-                LocalVariables[p.Name + "," + tmp[0]] = ParseBool(tmp[1]);
+                LocalVariables[tmp[0]] = new LocalVarItem(tmp[0], ParseBool(tmp[1]), p.Name);
             }
             foreach (INIPair p in entAITrigger.DataList)
             {
-                aitriggers[p.Name] = new AITriggerItem(p.Name, p.ParseStringList());
+                AiTriggers[p.Name] = new AITriggerItem(p.Name, p.ParseStringList());
             }
             foreach (INIPair p in entAITriggerEnable.DataList)
             {
-                if (aitriggers[p.Name] != null) aitriggers[p.Name].Enabled = ParseBool(p.Value);
-                else aitriggers.GlobalEnables[p.Name] = ParseBool(p.Value);
+                if (AiTriggers[p.Name] != null) AiTriggers[p.Name].Enabled = ParseBool(p.Value);
+                else AiTriggers.GlobalEnables[p.Name] = ParseBool(p.Value);
             }
             foreach (INIPair p in entCelltags.DataList)
             {
@@ -246,6 +244,8 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Calls - Map
+        public AITriggerCollection AiTriggers { get; private set; } = new AITriggerCollection();
+        public TeamScriptCollection Scripts { get; private set; } = new TeamScriptCollection();
         public TaskforceCollection TaskForces { get; private set; } = new TaskforceCollection();
         public HouseCollection Houses { get; private set; } = new HouseCollection();
         public LocalVarCollection LocalVariables { get; private set; } = new LocalVarCollection();

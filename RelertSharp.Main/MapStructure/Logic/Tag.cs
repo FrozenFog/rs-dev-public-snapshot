@@ -95,7 +95,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class TagItem : BindableBase
+    public class TagItem : BindableBase, IRegistable
     {
         private string name, asso, id;
         private TriggerRepeatingType repeatingType;

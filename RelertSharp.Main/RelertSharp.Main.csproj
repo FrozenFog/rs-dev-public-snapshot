@@ -84,6 +84,7 @@
     <Compile Include="FileSystem\VirtualDir.cs" />
     <Compile Include="FileSystem\VxlFile.cs" />
     <Compile Include="FileSystem\WavFile.cs" />
+    <Compile Include="IniSystem\IRegistable.cs" />
     <Compile Include="IniSystem\Rules.cs" />
     <Compile Include="IniSystem\SoundRules.cs" />
     <Compile Include="IniSystem\TechnoPair.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="SubWindows\LogicEditor\dlgCopy.Designer.cs">
       <DependentUpon>dlgCopy.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\LogicEditor\SearchCollection.cs" />
     <Compile Include="SubWindows\LogicEditor\StaticHelper.cs" />
     <Compile Include="Utils\Colors.cs" />
     <Compile Include="FileSystem\BaseFile.cs" />

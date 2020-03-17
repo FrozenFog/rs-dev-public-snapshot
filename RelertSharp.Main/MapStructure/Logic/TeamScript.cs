@@ -13,7 +13,7 @@ namespace RelertSharp.MapStructure.Logic
         public TeamScriptCollection() : base() { }
     }
 
-    public class TeamScriptGroup : TeamLogicItem
+    public class TeamScriptGroup : TeamLogicItem, IRegistable
     {
         private List<TeamScriptItem> data = new List<TeamScriptItem>();
 

@@ -32,7 +32,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         {
             InitializeComponent();
             SetLanguage();
-            SetGroup();
+            InitControls();
             map = m;
             StaticHelper.LoadToObjectCollection(cbbEventAbst, descriptCollection.Events);
             StaticHelper.LoadToObjectCollection(cbbActionAbst, descriptCollection.Actions);
@@ -50,8 +50,6 @@ namespace RelertSharp.SubWindows.LogicEditor
         {
             foreach (Control c in Controls) SetControlLanguage(c);
             Text = DICT[Text];
-            lblNoParamE.Location = new Point(gpbEventParam.Size.Width / 2 - lblNoParamE.Size.Width / 2, gpbEventParam.Size.Height / 2 - lblNoParamE.Size.Height);
-            lblNoParamA.Location = new Point(gpbActionParam.Size.Width / 2 - lblNoParamA.Size.Width / 2, gpbActionParam.Size.Height / 2 - lblNoParamA.Size.Height);
         }
         private void SetGlobal()
         {
@@ -66,7 +64,7 @@ namespace RelertSharp.SubWindows.LogicEditor
             }
             GlobalVar.GlobalRules.Override(map.IniResidue.Values);
         }
-        private void SetGroup()
+        private void InitControls()
         {
             lklEP = new LinkLabel[4] { lklEP1, lklEP2, lklEP3, lklEP4 };
             lklAP = new LinkLabel[4] { lklAP1, lklAP2, lklAP3, lklAP4 };
@@ -76,6 +74,8 @@ namespace RelertSharp.SubWindows.LogicEditor
             ckbAP = new CheckBox[4] { ckbAP1, ckbAP2, ckbAP3, ckbAP4 };
             cbbEP = new ComboBox[4] { cbbEP1, cbbEP2, cbbEP3, cbbEP4 };
             cbbAP = new ComboBox[4] { cbbAP1, cbbAP2, cbbAP3, cbbAP4 };
+            lblNoParamE.Location = new Point(gpbEventParam.Size.Width / 2 - lblNoParamE.Size.Width / 2, gpbEventParam.Size.Height / 2 - lblNoParamE.Size.Height);
+            lblNoParamA.Location = new Point(gpbActionParam.Size.Width / 2 - lblNoParamA.Size.Width / 2, gpbActionParam.Size.Height / 2 - lblNoParamA.Size.Height);
         }
         private void LoadHouseList()
         {
@@ -437,6 +437,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         private LogicItem _CurrentEvent { get { return _CurrentTrigger.Events[lbxEventList.SelectedIndex]; } }
         private LogicItem _CurrentAction { get { return _CurrentTrigger.Actions[lbxActionList.SelectedIndex]; } }
         private TagItem _CurrentTag { get { return map.Tags[txbTagID.Text]; } }
+        private SearchCollection _SearchResult { get; set; } = new SearchCollection();
         #endregion
     }
 }

@@ -12,6 +12,15 @@ namespace RelertSharp.SubWindows.LogicEditor
 {
     internal static class StaticHelper
     {
+        public static void LoadToObjectCollection(ListView dest, IEnumerable<ListViewItem> src)
+        {
+            dest.BeginUpdate();
+            if (src.Count() > 0)
+            {
+                dest.Items.AddRange(src.ToArray());
+            }
+            dest.EndUpdate();
+        }
         public static void LoadToObjectCollection<T>(ComboBox dest, IList<T> src)
         {
             int max = src.Max(x => x.ToString().Length) * 7;
@@ -62,7 +71,6 @@ namespace RelertSharp.SubWindows.LogicEditor
                         return;
                     }
                 }
-                dest.Text = "0";
             }
             else
             {
@@ -74,8 +82,8 @@ namespace RelertSharp.SubWindows.LogicEditor
                         return;
                     }
                 }
-                dest.Text = "0";
             }
+            dest.Text = param;
         }
     }
 }

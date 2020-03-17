@@ -47,7 +47,6 @@ namespace RelertSharp
         public static void SetControlLanguage(Control p)
         {
             var t = p.GetType();
-            if (t == typeof(TextBox) || t == typeof(RichTextBox)) return;
             if (t == typeof(GroupBox))
             {
                 foreach (Control c in ((GroupBox)p).Controls)
@@ -55,21 +54,28 @@ namespace RelertSharp
                     SetControlLanguage(c);
                 }
             }
-            if (t == typeof(TabPage))
+            else if (t == typeof(TabPage))
             {
                 foreach (Control c in ((TabPage)p).Controls)
                 {
                     SetControlLanguage(c);
                 }
             }
-            if (t == typeof(TabControl))
+            else if(t == typeof(TabControl))
             {
                 foreach (TabPage pg in ((TabControl)p).TabPages)
                 {
                     SetControlLanguage(pg);
                 }
             }
-            if (p.ContextMenuStrip != null)
+            else if (t == typeof(ListView))
+            {
+                foreach (ColumnHeader col in ((ListView)p).Columns)
+                {
+                    col.Text = DICT[col.Text];
+                }
+            }
+            if(p.ContextMenuStrip != null)
             {
                 foreach (ToolStripItem item in p.ContextMenuStrip.Items)
                 {
