@@ -191,6 +191,9 @@
             // 
             // tbcMain
             // 
+            this.tbcMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbcMain.Controls.Add(this.tbpTriggers);
             this.tbcMain.Controls.Add(this.tabPage2);
             this.tbcMain.Controls.Add(this.tabPage3);
@@ -219,7 +222,8 @@
             // 
             // gpbActions
             // 
-            this.gpbActions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.gpbActions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.gpbActions.Controls.Add(this.mtxbActionID);
             this.gpbActions.Controls.Add(this.gpbActionParam);
             this.gpbActions.Controls.Add(this.lbxActionList);
@@ -255,6 +259,7 @@
             // 
             // gpbActionParam
             // 
+            this.gpbActionParam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.gpbActionParam.Controls.Add(this.lklAP4);
             this.gpbActionParam.Controls.Add(this.txbAP4);
             this.gpbActionParam.Controls.Add(this.lklAP3);
@@ -371,7 +376,7 @@
             // txbAP1
             // 
             this.txbAP1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbAP1.Location = new System.Drawing.Point(135, 19);
+            this.txbAP1.Location = new System.Drawing.Point(135, 17);
             this.txbAP1.Name = "txbAP1";
             this.txbAP1.Size = new System.Drawing.Size(153, 21);
             this.txbAP1.TabIndex = 1;
@@ -491,6 +496,8 @@
             // 
             // lbxActionList
             // 
+            this.lbxActionList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.lbxActionList.FormattingEnabled = true;
             this.lbxActionList.ItemHeight = 12;
             this.lbxActionList.Location = new System.Drawing.Point(8, 38);
@@ -501,6 +508,8 @@
             // 
             // rtxbActionDetail
             // 
+            this.rtxbActionDetail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.rtxbActionDetail.Font = new System.Drawing.Font("Verdana", 9F);
             this.rtxbActionDetail.Location = new System.Drawing.Point(152, 116);
             this.rtxbActionDetail.Name = "rtxbActionDetail";
@@ -532,6 +541,7 @@
             // 
             // btnCopyAction
             // 
+            this.btnCopyAction.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnCopyAction.ContextMenuStrip = this.cmsCopyAction;
             this.btnCopyAction.Location = new System.Drawing.Point(8, 329);
             this.btnCopyAction.Name = "btnCopyAction";
@@ -563,6 +573,7 @@
             // 
             // btnNewAction
             // 
+            this.btnNewAction.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnNewAction.Location = new System.Drawing.Point(8, 271);
             this.btnNewAction.Name = "btnNewAction";
             this.btnNewAction.Size = new System.Drawing.Size(138, 23);
@@ -573,6 +584,7 @@
             // 
             // btnDeleteAction
             // 
+            this.btnDeleteAction.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnDeleteAction.Location = new System.Drawing.Point(8, 300);
             this.btnDeleteAction.Name = "btnDeleteAction";
             this.btnDeleteAction.Size = new System.Drawing.Size(138, 23);
@@ -619,7 +631,8 @@
             // 
             // gpbEvents
             // 
-            this.gpbEvents.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.gpbEvents.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.gpbEvents.Controls.Add(this.mtxbEventID);
             this.gpbEvents.Controls.Add(this.gpbEventParam);
             this.gpbEvents.Controls.Add(this.cbbEventAbst);
@@ -655,6 +668,7 @@
             // 
             // gpbEventParam
             // 
+            this.gpbEventParam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.gpbEventParam.Controls.Add(this.lklEP4);
             this.gpbEventParam.Controls.Add(this.lklEP3);
             this.gpbEventParam.Controls.Add(this.lklEP2);
@@ -891,6 +905,8 @@
             // 
             // cbbEventAbst
             // 
+            this.cbbEventAbst.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbbEventAbst.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbEventAbst.DropDownWidth = 300;
             this.cbbEventAbst.Font = new System.Drawing.Font("Verdana", 9F);
@@ -903,6 +919,8 @@
             // 
             // txbEventAnno
             // 
+            this.txbEventAnno.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txbEventAnno.Location = new System.Drawing.Point(152, 77);
             this.txbEventAnno.Name = "txbEventAnno";
             this.txbEventAnno.Size = new System.Drawing.Size(295, 21);
@@ -910,6 +928,8 @@
             // 
             // lbxEventList
             // 
+            this.lbxEventList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.lbxEventList.FormattingEnabled = true;
             this.lbxEventList.ItemHeight = 12;
             this.lbxEventList.Location = new System.Drawing.Point(8, 38);
@@ -965,6 +985,7 @@
             // 
             // btnCopyEvent
             // 
+            this.btnCopyEvent.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnCopyEvent.ContextMenuStrip = this.cmsCopyEvent;
             this.btnCopyEvent.Location = new System.Drawing.Point(8, 329);
             this.btnCopyEvent.Name = "btnCopyEvent";
@@ -989,6 +1010,7 @@
             // 
             // btnDeleteEvent
             // 
+            this.btnDeleteEvent.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnDeleteEvent.Location = new System.Drawing.Point(8, 300);
             this.btnDeleteEvent.Name = "btnDeleteEvent";
             this.btnDeleteEvent.Size = new System.Drawing.Size(138, 23);
@@ -999,6 +1021,7 @@
             // 
             // btnNewEvent
             // 
+            this.btnNewEvent.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnNewEvent.Location = new System.Drawing.Point(8, 271);
             this.btnNewEvent.Name = "btnNewEvent";
             this.btnNewEvent.Size = new System.Drawing.Size(138, 23);
@@ -1009,6 +1032,9 @@
             // 
             // rtxbEventDetail
             // 
+            this.rtxbEventDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtxbEventDetail.Font = new System.Drawing.Font("Verdana", 9F);
             this.rtxbEventDetail.Location = new System.Drawing.Point(152, 116);
             this.rtxbEventDetail.Name = "rtxbEventDetail";
@@ -1019,6 +1045,9 @@
             // 
             // gpbTag
             // 
+            this.gpbTag.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gpbTag.Controls.Add(this.lklTraceTrigger);
             this.gpbTag.Controls.Add(this.ckbHard);
             this.gpbTag.Controls.Add(this.ckbNormal);
@@ -1370,6 +1399,9 @@
             // 
             // lbxTriggerList
             // 
+            this.lbxTriggerList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbxTriggerList.ContextMenuStrip = this.cmsTriggerList;
             this.lbxTriggerList.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxTriggerList.FormattingEnabled = true;
@@ -1492,6 +1524,8 @@
             // 
             // gpbSearch
             // 
+            this.gpbSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gpbSearch.Controls.Add(this.ckbSuper);
             this.gpbSearch.Controls.Add(this.ckbAnim);
             this.gpbSearch.Controls.Add(this.ckbTheme);
@@ -1700,6 +1734,7 @@
             this.txbSearchName.TabIndex = 4;
             this.txbSearchName.Text = "LGClblFakeSearch";
             this.txbSearchName.Enter += new System.EventHandler(this.txbSearchName_Enter);
+            this.txbSearchName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbSearchName_KeyDown);
             this.txbSearchName.Leave += new System.EventHandler(this.txbSearchName_Leave);
             // 
             // lblSearchResult
@@ -1736,6 +1771,7 @@
             this.lvSearchResult.TabIndex = 1;
             this.lvSearchResult.UseCompatibleStateImageBehavior = false;
             this.lvSearchResult.View = System.Windows.Forms.View.Details;
+            this.lvSearchResult.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvSearchResult_ColumnClick);
             // 
             // hdRegID
             // 

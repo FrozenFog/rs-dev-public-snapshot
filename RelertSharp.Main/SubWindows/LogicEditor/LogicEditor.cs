@@ -341,6 +341,15 @@ namespace RelertSharp.SubWindows.LogicEditor
                     return null;
             }
         }
+        private void GoEnter(KeyEventArgs e, Action a)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                a.Invoke();
+            }
+        }
         #endregion
 
         #region Parameter Utils
@@ -428,6 +437,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         #endregion
 
         #endregion
+
 
         #region Private Calls - LogicEditor
         private List<TriggerParam> _CurrentEventParameters { get { return (cbbEventAbst.SelectedItem as TriggerDescription).Parameters; } }

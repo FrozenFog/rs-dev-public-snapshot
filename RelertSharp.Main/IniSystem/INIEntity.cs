@@ -45,11 +45,34 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Methods - INIEntity
+        public int Reorganize(int firstindex = 0)
+        {
+            Dictionary<string, INIPair> d = new Dictionary<string, INIPair>();
+            foreach (INIPair p in data.Values)
+            {
+                p.Name = firstindex++.ToString();
+                d[p.Name] = p;
+            }
+            data = d;
+            return firstindex;
+        }
         public void JoinWith(INIEntity newEnt)
         {
-            foreach (INIPair p in newEnt)
+            if (entitytype == INIEntType.ListType)
             {
-                data[p.Name] = p;
+                int maxindex = Reorganize();
+                foreach (INIPair p in newEnt)
+                {
+                    p.Name = maxindex++.ToString();
+                    data[p.Name] = p;
+                }
+            }
+            else
+            {
+                foreach (INIPair p in newEnt)
+                {
+                    data[p.Name] = p;
+                }
             }
         }
         public TechnoPair ToTechno(string index, TechnoPair.AbstractType type = TechnoPair.AbstractType.RegName, TechnoPair.IndexType indexType = TechnoPair.IndexType.Index)

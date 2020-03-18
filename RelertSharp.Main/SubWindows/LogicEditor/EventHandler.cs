@@ -182,6 +182,11 @@ namespace RelertSharp.SubWindows.LogicEditor
         }
         #endregion
         #region txb
+        private void txbSearchName_KeyDown(object sender, KeyEventArgs e)
+        {
+            GoEnter(e, () => { btnSearch_Click(null, null); });
+        }
+
         private void txbSearchName_Enter(object sender, EventArgs e)
         {
             if (txbSearchName.Text == DICT["LGClblFakeSearch"])
@@ -322,6 +327,13 @@ namespace RelertSharp.SubWindows.LogicEditor
             }
         }
         #endregion
+        private void lvSearchResult_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            lvSearchResult.BeginUpdate();
+            lvSearchResult.Items.Clear();
+            lvSearchResult.Items.AddRange(_SearchResult.SortBy(e.Column));
+            lvSearchResult.EndUpdate();
+        }
         private void EventParamChanged(object sender, EventArgs e)
         {
             if (cbbEventAbstChanging) return;

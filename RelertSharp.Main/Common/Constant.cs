@@ -34,6 +34,12 @@ namespace RelertSharp.Common
         public static readonly string[] BoolFalse = { "no", "False", "false" };
         public static readonly string[] NullString = { "<none>", "None", "none" };
         public static readonly string[] GenericArmorType = { "none", "flak", "plate", "light", "medium", "heavy", "wood", "steel", "concrete", "special_1", "special_2" };
+        public static readonly List<string> TeamBoolIndex = new List<string>
+        {
+            "Full", "Whiner", "Droppod", "Suicide", "Loadable", "Prebuild", "Annoyance", "IonImmune","Recruiter", "Reinforce",
+            "Aggressive", "Autocreate","GuardSlower","OnTransOnly","AvoidThreats","LooseRecruit","IsBaseDefense","UseTransportOrigin","OnlyTargetHouseEnemy",
+            "TransportsReturnOnUnload","AreTeamMembersRecruitable"
+        };
         public static class KeyName
         {
             public static readonly string[] IntKey =

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,9 +30,14 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
 
     }
+
+
     public class TeamItem : TeamLogicItem, IRegistable
     {
         private Dictionary<string, INIPair> residual;
+
+
+        #region Ctor - TeamItem
         public TeamItem(INIEntity ent) : base(ent)
         {
             TeamName = ent.PopPair("Name").Value;
@@ -46,8 +52,40 @@ namespace RelertSharp.MapStructure.Logic
             TechLevel = int.Parse(ent.PopPair("TechLevel").Value);
             Group = int.Parse(ent.PopPair("Group").Value);
             residual = ent.DictData;
+            LoadAttributes();
         }
         public TeamItem() : base() { }
+        #endregion
+
+
+        #region Private Methods - TeamItem
+        private void LoadAttributes()
+        {
+            Dictionary<string, INIPair> d = new Dictionary<string, INIPair>();
+            foreach (string key in residual.Keys)
+            {
+                if (Constant.TeamBoolIndex.Contains(key)) LoadAttribute(key);
+                else d[key] = residual[key];
+            }
+            residual = d;
+        }
+        private void LoadAttribute(string index)
+        {
+            SetAttribute(index, ParseBool(residual[index].Value));
+        }
+        #endregion
+
+
+        #region Public Methods - TeamItem
+        public void SetAttribute(string index, bool value)
+        {
+            Attributes.Set(Constant.TeamBoolIndex.IndexOf(index), value);
+        }
+        public bool GetAttribute(string index)
+        {
+            return Attributes.Get(Constant.TeamBoolIndex.IndexOf(index));
+        }
+        #endregion
 
         #region Public Calls - TeamItem
         public int Group { get; set; }
@@ -68,6 +106,7 @@ namespace RelertSharp.MapStructure.Logic
         public string ScriptID { get; set; }
         public string House { get; set; }
         public int Waypoint { get; set; }
+        public BitArray Attributes { get; set; } = new BitArray(21);
         #endregion
     }
 }

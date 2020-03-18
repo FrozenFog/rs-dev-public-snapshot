@@ -14,6 +14,8 @@ namespace RelertSharp.SubWindows.LogicEditor
     {
         private Dictionary<string, SearchItem> data = new Dictionary<string, SearchItem>();
         private string keyword = "";
+        private int previousIndex = -1;
+        private bool decend = false;
 
 
         #region Ctor - SearchCollection
@@ -25,7 +27,8 @@ namespace RelertSharp.SubWindows.LogicEditor
         public void SetKeyword(string kw)
         {
             data.Clear();
-            keyword = kw.ToLower();
+            keyword = kw.ToLower().TrimEnd(' ');
+            previousIndex = -1;
         }
         public IEnumerable<ListViewItem> SearchIn(IEnumerable<IRegistable> srcs, SearchItem.SearchType type)
         {
@@ -43,6 +46,41 @@ namespace RelertSharp.SubWindows.LogicEditor
             }
             return result;
         }
+        public ListViewItem[] SortBy(int index)
+        {
+            IEnumerable<SearchItem> result;
+            Func<SearchItem, string> sort;
+            switch (index)
+            {
+                case 0:
+                    sort = x => x.Regname;
+                    break;
+                case 1:
+                    sort = x => x.SType;
+                    break;
+                case 2:
+                    sort = x => x.Value;
+                    break;
+                case 3:
+                    sort = x => x.ExValue;
+                    break;
+                default:
+                    sort = null;
+                    break;
+            }
+            if (index != previousIndex || decend)
+            {
+                result = data.Values.OrderBy(sort);
+                decend = false;
+            }
+            else
+            {
+                result = data.Values.OrderByDescending(sort);
+                decend = true;
+            }
+            previousIndex = index;
+            return CastFrom(result);
+        }
         #region Enumerator
         public IEnumerator<SearchItem> GetEnumerator()
         {
@@ -54,6 +92,19 @@ namespace RelertSharp.SubWindows.LogicEditor
             return data.Values.GetEnumerator();
         }
         #endregion
+        #endregion
+
+
+        #region Private Methods - SearchCollection
+        private ListViewItem[] CastFrom(IEnumerable<SearchItem> src)
+        {
+            List<ListViewItem> result = new List<ListViewItem>();
+            foreach (SearchItem item in src)
+            {
+                result.Add((ListViewItem)item);
+            }
+            return result.ToArray(); ;
+        }
         #endregion
 
 
@@ -84,6 +135,14 @@ namespace RelertSharp.SubWindows.LogicEditor
         #region Public Methods - SearchItem
         public static explicit operator ListViewItem(SearchItem src)
         {
+            return Cast(src);
+        }
+        #endregion
+
+
+        #region Private Methods - SearchItem
+        private static ListViewItem Cast(SearchItem src)
+        {
             ListViewItem dest = new ListViewItem();
             dest.Text = src.Regname;
             dest.SubItems.Add(DICT[src.Type.ToString()]);
@@ -95,6 +154,7 @@ namespace RelertSharp.SubWindows.LogicEditor
 
 
         #region Public Calls - SearchItem
+        public string SType { get { return DICT[Type.ToString()]; } }
         public SearchType Type { get; set; }
         public string Regname { get; set; }
         public string Value { get; set; }

@@ -9,8 +9,6 @@ namespace RelertSharp.IniSystem
 {
     public class INIPair
     {
-        private string name;
-        private dynamic value;
         private string comment, preComment;
         private INIKeyType keytype;
 
@@ -18,10 +16,10 @@ namespace RelertSharp.IniSystem
         #region Ctor - INIPair
         public INIPair(string n, string val, string com, string _preComment)
         {
-            name = n;
+            Name = n;
             comment = com;
             preComment = _preComment;
-            value = val;
+            Value = val;
             keytype = GetKeyType(n);
         }
         #endregion
@@ -89,24 +87,24 @@ namespace RelertSharp.IniSystem
         #region Public Methods - INIPair
         public void ConvValue()
         {
-            if (Constant.BoolFalse.Contains((string)value)) value = false;
-            else if (Constant.BoolTrue.Contains((string)value)) value = true;
-            else if (Constant.NullString.Contains((string)value) && keytype != INIKeyType.Armor)
+            if (Constant.BoolFalse.Contains((string)Value)) Value = false;
+            else if (Constant.BoolTrue.Contains((string)Value)) Value = true;
+            else if (Constant.NullString.Contains((string)Value) && keytype != INIKeyType.Armor)
             {
-                value = null;
+                Value = null;
             }
-            if (Constant.KeyName.IntKey.Contains(name)) value = int.Parse(value);
-            else if (Constant.KeyName.FloatKey.Contains(name)) value = float.Parse(value);
-            else if (Constant.KeyName.PercentKey.Contains(name)) value = float.Parse(value.Replace("%", string.Empty)) / 100;
+            if (Constant.KeyName.IntKey.Contains(Name)) Value = int.Parse(Value);
+            else if (Constant.KeyName.FloatKey.Contains(Name)) Value = float.Parse(Value);
+            else if (Constant.KeyName.PercentKey.Contains(Name)) Value = float.Parse(Value.Replace("%", string.Empty)) / 100;
         }
         public bool ParseBool(bool def = false)
         {
-            if ((string)value != "")
+            if ((string)Value != "")
             {
-                if (Constant.BoolTrue.Contains((string)value)) return true;
-                else if (Constant.BoolFalse.Contains((string)value)) return false;
-                else if (int.Parse(value) == 1) return true;
-                else if (int.Parse(value) == 0) return false;
+                if (Constant.BoolTrue.Contains((string)Value)) return true;
+                else if (Constant.BoolFalse.Contains((string)Value)) return false;
+                else if (int.Parse(Value) == 1) return true;
+                else if (int.Parse(Value) == 0) return false;
             }
             return def;
         }
@@ -114,9 +112,9 @@ namespace RelertSharp.IniSystem
         {
             try
             {
-                if ((string)value != "")
+                if ((string)Value != "")
                 {
-                    return int.Parse(value);
+                    return int.Parse(Value);
                 }
                 return def;
             }
@@ -126,9 +124,9 @@ namespace RelertSharp.IniSystem
         {
             try
             {
-                if ((string)value != "")
+                if ((string)Value != "")
                 {
-                    return float.Parse(value);
+                    return float.Parse(Value);
                 }
                 return def;
             }
@@ -136,7 +134,7 @@ namespace RelertSharp.IniSystem
         }
         public string[] ParseStringList()
         {
-            return ((string)value).Split(new char[] { ',' });
+            return ((string)Value).Split(new char[] { ',' });
         }
         public int[] ParseIntList()
         {
@@ -148,8 +146,8 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Calls - INIPair
-        public string Name { get { return name; } }
-        public dynamic Value { get { return value; } }
+        public string Name { get; set; }
+        public dynamic Value { get; set; }
         public string Comment { get { return comment; } }
         public string PreComment { get { return preComment; } }
         public bool HasComment { get { return !string.IsNullOrEmpty(comment); } }
