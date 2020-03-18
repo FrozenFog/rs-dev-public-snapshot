@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Media;
 using System.Diagnostics;
-using relert_sharp.IniSystem;
-using relert_sharp.FileSystem;
-using relert_sharp.Encoding;
+using RelertSharp.IniSystem;
+using RelertSharp.FileSystem;
+using RelertSharp.Encoding;
 
-namespace relert_sharp.Common
+namespace RelertSharp.Common
 {
     public class SoundManager
     {
@@ -20,7 +20,7 @@ namespace relert_sharp.Common
         private bool isValid = false;
 
 
-        #region Constructor SoundManager
+        #region ConstruCtor SoundManager
         public SoundManager()
         {
             watch.Start();
@@ -98,7 +98,7 @@ namespace relert_sharp.Common
 
 
         #region Public Calls - SoundManager
-        public int CurrentLength { get; private set; } = 0;
+        public int CurrentLength { get; private set; } = -1;
         public bool IsPlaying { get { return watch.ElapsedMilliseconds <= CurrentLength; } }
         #endregion
     }

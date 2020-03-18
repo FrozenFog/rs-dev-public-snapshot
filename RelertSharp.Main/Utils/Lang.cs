@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.FileSystem;
+using System.Windows.Forms;
+using RelertSharp.FileSystem;
 
-namespace relert_sharp.Utils
+namespace RelertSharp.Utils
 {
     public class Lang
     {
@@ -33,7 +34,7 @@ namespace relert_sharp.Utils
         }
     }
 }
-namespace relert_sharp
+namespace RelertSharp
 {
     public static class Language
     {
@@ -42,6 +43,46 @@ namespace relert_sharp
         {
             get { return translate; }
             set { translate = value; }
+        }
+        public static void SetControlLanguage(Control p)
+        {
+            var t = p.GetType();
+            if (t == typeof(GroupBox))
+            {
+                foreach (Control c in ((GroupBox)p).Controls)
+                {
+                    SetControlLanguage(c);
+                }
+            }
+            else if (t == typeof(TabPage))
+            {
+                foreach (Control c in ((TabPage)p).Controls)
+                {
+                    SetControlLanguage(c);
+                }
+            }
+            else if(t == typeof(TabControl))
+            {
+                foreach (TabPage pg in ((TabControl)p).TabPages)
+                {
+                    SetControlLanguage(pg);
+                }
+            }
+            else if (t == typeof(ListView))
+            {
+                foreach (ColumnHeader col in ((ListView)p).Columns)
+                {
+                    col.Text = DICT[col.Text];
+                }
+            }
+            if(p.ContextMenuStrip != null)
+            {
+                foreach (ToolStripItem item in p.ContextMenuStrip.Items)
+                {
+                    item.Text = DICT[item.Text];
+                }
+            }
+            p.Text = DICT[p.Text];
         }
     }
 }

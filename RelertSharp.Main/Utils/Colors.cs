@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace relert_sharp.Utils
+namespace RelertSharp.Utils
 {
     public class RGBColor
     {
 
 
 
-        #region Constructor - RGBColor
+        #region Ctor - RGBColor
         public RGBColor(byte red, byte green, byte blue)
         {
             R = red;
@@ -51,7 +51,7 @@ namespace relert_sharp.Utils
 
 
 
-        #region Constructor - HSBColor
+        #region Ctor - HSBColor
         public HSBColor(byte h, byte s, byte b)
         {
             H = h;

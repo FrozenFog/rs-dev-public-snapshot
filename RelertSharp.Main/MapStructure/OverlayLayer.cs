@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using relert_sharp.Encoding;
-using relert_sharp.Common;
-using relert_sharp.Utils;
+using RelertSharp.Encoding;
+using RelertSharp.Common;
+using RelertSharp.Utils;
 
-namespace relert_sharp.MapStructure
+namespace RelertSharp.MapStructure
 {
     public class OverlayLayer
     {
         private Dictionary<int, OverlayUnit> data = new Dictionary<int, OverlayUnit>();
 
 
-        #region Constructor - OverlayLayer
+        #region Ctor - OverlayLayer
         public OverlayLayer(string _overlayPackString, string _overlayDataPackString)
         {
             byte[] _ovlOut = new byte[262144];
@@ -83,7 +83,7 @@ namespace relert_sharp.MapStructure
 
 
 
-        #region Constructor - OverlayUnit
+        #region Ctor - OverlayUnit
         public OverlayUnit(int _coord, byte _overlayIndex, byte _frameIndex)
         {
             X = Misc.CoordByteX(_coord);

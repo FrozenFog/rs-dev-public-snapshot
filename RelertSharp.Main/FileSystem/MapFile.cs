@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.IniSystem;
-using relert_sharp.Common;
-using relert_sharp.MapStructure;
-using relert_sharp.Utils;
+using RelertSharp.IniSystem;
+using RelertSharp.Common;
+using RelertSharp.MapStructure;
+using RelertSharp.Utils;
 
-namespace relert_sharp.FileSystem
+namespace RelertSharp.FileSystem
 {
     public class MapFile : INIFile
     {
         public Map Map;
 
 
-        #region Constructor - MapFile
+        #region Ctor - MapFile
         public MapFile(string path) : base(path)
         {
             INIType = INIFileType.MapFile;

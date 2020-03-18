@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.Common;
+using RelertSharp.Common;
 
-namespace relert_sharp.IniSystem
+namespace RelertSharp.IniSystem
 {
     public class INIEntity : IEnumerable<INIPair>
     {
@@ -15,7 +15,7 @@ namespace relert_sharp.IniSystem
         private INIEntType entitytype;
 
 
-        #region Constructor - INIEntity
+        #region Ctor - INIEntity
         public INIEntity() { }
         public INIEntity(string _name, string _preComment, string _comment)
         {
@@ -45,11 +45,34 @@ namespace relert_sharp.IniSystem
 
 
         #region Public Methods - INIEntity
+        public int Reorganize(int firstindex = 0)
+        {
+            Dictionary<string, INIPair> d = new Dictionary<string, INIPair>();
+            foreach (INIPair p in data.Values)
+            {
+                p.Name = firstindex++.ToString();
+                d[p.Name] = p;
+            }
+            data = d;
+            return firstindex;
+        }
         public void JoinWith(INIEntity newEnt)
         {
-            foreach (INIPair p in newEnt)
+            if (entitytype == INIEntType.ListType)
             {
-                data[p.Name] = p;
+                int maxindex = Reorganize();
+                foreach (INIPair p in newEnt)
+                {
+                    p.Name = maxindex++.ToString();
+                    data[p.Name] = p;
+                }
+            }
+            else
+            {
+                foreach (INIPair p in newEnt)
+                {
+                    data[p.Name] = p;
+                }
             }
         }
         public TechnoPair ToTechno(string index, TechnoPair.AbstractType type = TechnoPair.AbstractType.RegName, TechnoPair.IndexType indexType = TechnoPair.IndexType.Index)

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.Common;
+using RelertSharp.Common;
 
-namespace relert_sharp.IniSystem
+namespace RelertSharp.IniSystem
 {
     public class SoundRules
     {
@@ -13,7 +13,7 @@ namespace relert_sharp.IniSystem
         //private string eva1key, eva2key, eva3key, eva4key, eva5key, eva6key;
 
 
-        #region Constructor - SoundRules
+        #region Ctor - SoundRules
         public SoundRules(string soundname, string evaname, string themename)
         {
             sound = GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.SoundName, FileExtension.INI);

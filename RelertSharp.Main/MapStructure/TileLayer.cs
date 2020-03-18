@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using relert_sharp.Encoding;
+using RelertSharp.Encoding;
 using System.Collections;
-using relert_sharp.Utils;
-using relert_sharp.Common;
+using RelertSharp.Utils;
+using RelertSharp.Common;
 
-namespace relert_sharp.MapStructure
+namespace RelertSharp.MapStructure
 {
     public class TileLayer
     {
@@ -19,7 +19,7 @@ namespace relert_sharp.MapStructure
         private byte bottomLevel = 255;
 
 
-        #region Constructor - TileLayer
+        #region Ctor - TileLayer
         public TileLayer(string stringPack, Rectangle Size)
         {
             byte[] fromBase64 = Convert.FromBase64String(stringPack);
@@ -175,7 +175,7 @@ namespace relert_sharp.MapStructure
         private byte subIndex, level, iceGrowth;
 
 
-        #region Constructor - Tile
+        #region Ctor - Tile
         public Tile(short _x, short _y, int _TileIndex, byte _TileSubIndex,  byte _Level, byte _IceGrowth)
         {
             x = _x;

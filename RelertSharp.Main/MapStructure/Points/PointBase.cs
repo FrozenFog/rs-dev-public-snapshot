@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static relert_sharp.Utils.Misc;
+using static RelertSharp.Utils.Misc;
 
-namespace relert_sharp.MapStructure.Points
+namespace RelertSharp.MapStructure.Points
 {
     public class PointCollectionBase
     {

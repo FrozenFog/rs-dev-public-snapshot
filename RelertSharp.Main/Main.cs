@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using relert_sharp.SubWindows;
-using relert_sharp.MapStructure;
-using relert_sharp.FileSystem;
-using relert_sharp.Utils;
+using RelertSharp.SubWindows;
+using RelertSharp.MapStructure;
+using RelertSharp.FileSystem;
+using RelertSharp.Utils;
 
-namespace relert_sharp
+namespace RelertSharp
 {
     public partial class Main : Form
     {

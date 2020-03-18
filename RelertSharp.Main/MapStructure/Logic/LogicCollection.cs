@@ -3,62 +3,64 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.IniSystem;
-using relert_sharp.Common;
+using RelertSharp.IniSystem;
+using RelertSharp.Common;
+using RelertSharp.Model;
 using System.Collections;
 
-namespace relert_sharp.MapStructure.Logic
+namespace RelertSharp.MapStructure.Logic
 {
-    public class LogicCollection
-    {
-        private Dictionary<string, LogicGroup> data = new Dictionary<string, LogicGroup>();
+    //public class LogicCollection
+    //{
+    //    private Dictionary<string, LogicGroup> data = new Dictionary<string, LogicGroup>();
 
 
-        #region Constructor - LogicCollection
-        public LogicCollection(INIEntity ent, LogicType type)
-        {
-            foreach (INIPair p in ent.DataList)
-            {
-                if (!data.Keys.Contains(p.Name))
-                {
-                    string[] l = p.ParseStringList();
-                    data[p.Name] = new LogicGroup(p.Name, int.Parse(l[0]), l.Skip(1).ToArray(), type);
-                }
-            }
-        }
-        #endregion
+    //    #region Ctor - LogicCollection
+    //    public LogicCollection(INIEntity ent, LogicType type)
+    //    {
+    //        foreach (INIPair p in ent.DataList)
+    //        {
+    //            if (!data.Keys.Contains(p.Name))
+    //            {
+    //                string[] l = p.ParseStringList();
+    //                data[p.Name] = new LogicGroup(p.Name, int.Parse(l[0]), l.Skip(1).ToArray(), type);
+    //            }
+    //        }
+    //    }
+    //    #endregion
 
 
-        #region Public Calls - LogicCollection
-        public LogicGroup this[string _id]
-        {
-            get
-            {
-                if (data.Keys.Contains(_id)) return data[_id];
-                return null;
-            }
-        }
-        #endregion
-    }
+    //    #region Public Calls - LogicCollection
+    //    public LogicGroup this[string _id]
+    //    {
+    //        get
+    //        {
+    //            if (data.Keys.Contains(_id)) return data[_id];
+    //            return null;
+    //        }
+    //    }
+    //    #endregion
+    //}
 
 
     public class LogicGroup : IEnumerable<LogicItem>
     {
         private List<LogicItem> data = new List<LogicItem>();
+        private int count = 1;
 
 
-        #region Constructor - LogicGroup
-        public LogicGroup(string _id, int _num, string[] _paramData, LogicType type)
+        #region Ctor - LogicGroup
+        public LogicGroup(INIPair p, LogicType type)
         {
-            ID = _id;
-            Num = _num;
-            Params = _paramData;
+            string[] l = p.ParseStringList();
+            ID = p.Name;
+            Num = int.Parse(l[0]);
+            Params = l.Skip(1).ToArray();
             LogicType = type;
             int window = 0;
-            int count = 1;
-            for (int i = 0; i < _paramData.Length; i += window)
+            for (int i = 0; i < Params.Length; i += window)
             {
-                int logicID = int.Parse(_paramData[i]);
+                int logicID = int.Parse(Params[i]);
                 if (type == LogicType.ActionLogic) window = 8;
                 else if (type == LogicType.EventLogic)
                 {
@@ -66,7 +68,7 @@ namespace relert_sharp.MapStructure.Logic
                         window = 4;
                     else window = 3;
                 }
-                List<string> parameters = _paramData.Skip(i + 1).Take(window - 1).ToList();
+                List<string> parameters = Params.Skip(i + 1).Take(window - 1).ToList();
                 if (type == LogicType.EventLogic && parameters.Count != 3) parameters.Add("0");
                 Add(new LogicItem(logicID, parameters.ToArray(), type, count++));
             }
@@ -76,6 +78,33 @@ namespace relert_sharp.MapStructure.Logic
 
 
         #region Public Methods - LogicGroup
+        public LogicItem NewEvent()
+        {
+            LogicItem item = new LogicItem(LogicType.EventLogic, count++);
+            data.Add(item);
+            return item;
+        }
+        public LogicItem NewAction()
+        {
+            LogicItem item = new LogicItem(LogicType.ActionLogic, count++);
+            data.Add(item);
+            return item;
+        }
+        public void Multiply(string[] command, LogicItem template, List<TriggerParam> lookups)
+        {
+            foreach(string s in command)
+            {
+                if (string.IsNullOrEmpty(s)) continue;
+                string[] sl = s.Split(new char[] { ',' });
+                if (sl.Length != lookups.Count) return;
+                LogicItem item = new LogicItem(template, count++);
+                for (int i = 0; i < sl.Length; i++)
+                {
+                    item.Parameters[lookups[i].ParamPos] = sl[i];
+                }
+                data.Add(item);
+            }
+        }
         public void Add(LogicItem item)
         {
             data.Add(item);
@@ -110,17 +139,21 @@ namespace relert_sharp.MapStructure.Logic
 
         #region Public Calls - LogicGroup
         public string ID { get; set; }
+        public LogicItem this[int index] { get { return data[index]; } set { data[index] = value; } }
         #endregion
     }
 
 
-    public class LogicItem
+    public class LogicItem : BindableBase
     {
         private LogicType type;
         private int count;
+        private int id;
+        private string comment;
+        private string[] parameters;
 
 
-        #region Constructor - LogicItem
+        #region Ctor - LogicItem
         public LogicItem(int _typeID, string[] _param, LogicType _type, int num, string _comment = "")
         {
             ID = _typeID;
@@ -128,6 +161,24 @@ namespace relert_sharp.MapStructure.Logic
             Parameters = _param;
             Comment = _comment;
             count = num;
+        }
+        public LogicItem(LogicType _type, int num)
+        {
+            ID = 0;
+            type = _type;
+            count = num;
+            if (_type == LogicType.EventLogic) Parameters = new string[] { "0", "0", "0" };
+            else Parameters = new string[] { "0", "0", "0", "0", "0", "0", "A" };
+        }
+        public LogicItem(LogicItem src, int num)
+        {
+            id = src.id;
+            comment = src.comment;
+            type = src.type;
+            count = num;
+            if (src.type == LogicType.EventLogic) Parameters = new string[] { "0", "0", "0" };
+            else Parameters = new string[] { "0", "0", "0", "0", "0", "0", "A" };
+            Array.Copy(src.parameters, parameters, parameters.Length);
         }
         #endregion
 
@@ -147,9 +198,21 @@ namespace relert_sharp.MapStructure.Logic
 
 
         #region Public Calls - LogicItem
-        public int ID { get; set; }
-        public string Comment { get; set; }
-        public string[] Parameters { get; set; }
+        public int ID
+        {
+            get { return id; }
+            set { SetProperty(ref id, value); }
+        }
+        public string Comment
+        {
+            get { return comment; }
+            set { SetProperty(ref comment, value); }
+        }
+        public string[] Parameters
+        {
+            get { return parameters; }
+            set { SetProperty(ref parameters, value); }
+        }
         #endregion
     }
 }

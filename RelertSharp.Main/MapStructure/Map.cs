@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using relert_sharp.FileSystem;
-using relert_sharp.IniSystem;
-using relert_sharp.Common;
-using relert_sharp.MapStructure.Logic;
-using relert_sharp.MapStructure.Objects;
-using relert_sharp.MapStructure.Points;
-using static relert_sharp.Utils.Misc;
+using RelertSharp.FileSystem;
+using RelertSharp.IniSystem;
+using RelertSharp.Common;
+using RelertSharp.MapStructure.Logic;
+using RelertSharp.MapStructure.Objects;
+using RelertSharp.MapStructure.Points;
+using static RelertSharp.Utils.Misc;
 
-namespace relert_sharp.MapStructure
+namespace RelertSharp.MapStructure
 {
     public class Map
     {
@@ -20,6 +20,8 @@ namespace relert_sharp.MapStructure
         private string mapPath;
         private string isomappack5String, overlayString, overlaydataString, previewString;
         private string digest;
+        private List<string> globalid = new List<string>();
+        private int genID = 1000000;
 
         private MapInfo info;
         private RankInfo ranks;
@@ -27,9 +29,6 @@ namespace relert_sharp.MapStructure
         private Lightning lightning;
         private Rectangle previewSize;
 
-        private TaskforceCollection taskforces = new TaskforceCollection();
-        private TeamScriptCollection scripts = new TeamScriptCollection();
-        private AITriggerCollection aitriggers = new AITriggerCollection();
         private WaypointCollection waypoints = new WaypointCollection();
         private CellTagCollection celltags = new CellTagCollection();
 
@@ -46,7 +45,7 @@ namespace relert_sharp.MapStructure
         private Dictionary<string, INIEntity> residual;
 
 
-        #region Constructor - Map
+        #region Ctor - Map
         public Map(MapFile f)
         {
             mapFileName = f.FileName;
@@ -62,6 +61,11 @@ namespace relert_sharp.MapStructure
             Tiles = new TileLayer(isomappack5String, info.Size);
             Overlays = new OverlayLayer(overlayString, overlaydataString);
             residual = new Dictionary<string, INIEntity>(f.IniDict);
+
+            globalid.AddRange(Triggers.Keys);
+            globalid.AddRange(Teams.Keys);
+            globalid.AddRange(TaskForces.Keys);
+            globalid.AddRange(Tags.Keys);
 
             isomappack5String = "";
             overlayString = "";
@@ -84,6 +88,13 @@ namespace relert_sharp.MapStructure
         {
             overlayString = Overlays.CompressIndex();
             overlaydataString = Overlays.CompressFrame();
+        }
+        public TriggerItem NewTrigger()
+        {
+            TriggerItem t = Triggers.NewTrigger(NewID);
+            TagItem tag = new TagItem(t, NewID);
+            Tags[tag.ID] = tag;
+            return t;
         }
         #endregion
 
@@ -145,11 +156,11 @@ namespace relert_sharp.MapStructure
             }
             foreach (string tfID in _taskforceList)
             {
-                taskforces[tfID] = new TaskforceItem(f.PopEnt(tfID));
+                TaskForces[tfID] = new TaskforceItem(f.PopEnt(tfID));
             }
             foreach (string scptID in _scriptList)
             {
-                scripts[scptID] = new TeamScriptGroup(f.PopEnt(scptID));
+                Scripts[scptID] = new TeamScriptGroup(f.PopEnt(scptID));
             }
 
             INIEntity _houseList = f.PopEnt("Houses");
@@ -180,24 +191,33 @@ namespace relert_sharp.MapStructure
             INIEntity entCelltags = f.PopEnt("CellTags");
             INIEntity entWaypoints = f.PopEnt("Waypoints");
 
-            Triggers = new TriggerCollection(entTrigger);
-            Actions = new ActionCollection(entAction);
-            Events = new EventCollection(entEvent);
             Tags = new TagCollection(entTag);
-            
+
+            foreach (INIPair p in entTrigger.DataList)
+            {
+                Triggers.LoadTriggerCommand(p);
+                if (entEvent.DictData.Keys.Contains(p.Name))
+                {
+                    Triggers[p.Name].Events = new LogicGroup(entEvent.GetPair(p.Name), LogicType.EventLogic);
+                }
+                if (entAction.DictData.Keys.Contains(p.Name))
+                {
+                    Triggers[p.Name].Actions = new LogicGroup(entAction.GetPair(p.Name), LogicType.ActionLogic);
+                }
+            }
             foreach (INIPair p in entVar.DataList)
             {
                 string[] tmp = p.ParseStringList();
-                LocalVariables[p.Name + "," + tmp[0]] = ParseBool(tmp[1]);
+                LocalVariables[tmp[0]] = new LocalVarItem(tmp[0], ParseBool(tmp[1]), p.Name);
             }
             foreach (INIPair p in entAITrigger.DataList)
             {
-                aitriggers[p.Name] = new AITriggerItem(p.Name, p.ParseStringList());
+                AiTriggers[p.Name] = new AITriggerItem(p.Name, p.ParseStringList());
             }
             foreach (INIPair p in entAITriggerEnable.DataList)
             {
-                if (aitriggers[p.Name] != null) aitriggers[p.Name].Enabled = ParseBool(p.Value);
-                else aitriggers.GlobalEnables[p.Name] = ParseBool(p.Value);
+                if (AiTriggers[p.Name] != null) AiTriggers[p.Name].Enabled = ParseBool(p.Value);
+                else AiTriggers.GlobalEnables[p.Name] = ParseBool(p.Value);
             }
             foreach (INIPair p in entCelltags.DataList)
             {
@@ -224,14 +244,17 @@ namespace relert_sharp.MapStructure
 
 
         #region Public Calls - Map
+        public AITriggerCollection AiTriggers { get; private set; } = new AITriggerCollection();
+        public TeamScriptCollection Scripts { get; private set; } = new TeamScriptCollection();
+        public TaskforceCollection TaskForces { get; private set; } = new TaskforceCollection();
         public HouseCollection Houses { get; private set; } = new HouseCollection();
         public LocalVarCollection LocalVariables { get; private set; } = new LocalVarCollection();
         public TeamCollection Teams { get; private set; } = new TeamCollection();
         public CountryCollection Countries { get; private set; }
-        public TriggerCollection Triggers { get; private set; }
+        public TriggerCollection Triggers { get; private set; } = new TriggerCollection();
         public TagCollection Tags { get; private set; }
-        public ActionCollection Actions { get; private set; }
-        public EventCollection Events { get; private set; }
+        //public ActionCollection Actions { get; private set; }
+        //public EventCollection Events { get; private set; }
         public MapInfo Info
         {
             get { return info; }
@@ -274,6 +297,22 @@ namespace relert_sharp.MapStructure
         {
             get { return previewString; }
             set { previewString = value; }
+        }
+        public string NewID
+        {
+            get
+            {
+                for (; genID < 99999999; genID++)
+                {
+                    string id = string.Format("{0:D8}", genID);
+                    if (!globalid.Contains(id))
+                    {
+                        globalid.Add(id);
+                        return id;
+                    }
+                }
+                return "";
+            }
         }
         #endregion
     }

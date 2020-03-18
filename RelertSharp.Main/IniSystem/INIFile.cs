@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using relert_sharp.Common;
+using RelertSharp.Common;
 
-namespace relert_sharp.IniSystem
+namespace RelertSharp.IniSystem
 {
     public class INIFile : FileSystem.BaseFile
     {
@@ -14,7 +14,7 @@ namespace relert_sharp.IniSystem
         private INIFileType initype;
 
 
-        #region Constructor - INIFile
+        #region Ctor - INIFile
         public INIFile(string path,  INIFileType itype = INIFileType.DefaultINI) : base(path, FileMode.Open, FileAccess.Read, false)
         {
             initype = itype;
@@ -82,7 +82,7 @@ namespace relert_sharp.IniSystem
         #endregion
 
         #region Public Methods - INIFile
-        public void Override(List<INIEntity> src)
+        public void Override(IEnumerable<INIEntity> src)
         {
             foreach (INIEntity newent in src)
             {

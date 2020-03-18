@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
-using relert_sharp.Common;
-using relert_sharp.Encoding;
+using RelertSharp.Common;
+using RelertSharp.Encoding;
 
-namespace relert_sharp.FileSystem
+namespace RelertSharp.FileSystem
 {
     public class ShpFile : BaseFile
     {
         private List<ShpFrame> data = new List<ShpFrame>();
-        #region Constructor - ShpFile
+        #region Ctor - ShpFile
         public ShpFile(string _path) : base(_path, FileMode.Open, FileAccess.Read, false)
         {
             Read();
@@ -119,7 +119,7 @@ namespace relert_sharp.FileSystem
 
     public class ShpFrame
     {
-        #region Constructor - ShpFrame
+        #region Ctor - ShpFrame
         public ShpFrame(ushort _x, ushort _y, ushort _width, ushort _height, byte _flag, int _offset)
         {
             X = _x;

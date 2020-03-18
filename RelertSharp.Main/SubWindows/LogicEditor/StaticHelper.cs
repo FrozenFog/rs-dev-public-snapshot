@@ -4,25 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using relert_sharp.IniSystem;
-using relert_sharp.MapStructure.Logic;
-using relert_sharp.Common;
+using RelertSharp.IniSystem;
+using RelertSharp.MapStructure.Logic;
+using RelertSharp.Common;
 
-namespace relert_sharp.SubWindows.LogicEditor
+namespace RelertSharp.SubWindows.LogicEditor
 {
     internal static class StaticHelper
     {
+        public static void LoadToObjectCollection(ListView dest, IEnumerable<ListViewItem> src)
+        {
+            dest.BeginUpdate();
+            if (src.Count() > 0)
+            {
+                dest.Items.AddRange(src.ToArray());
+            }
+            dest.EndUpdate();
+        }
+        public static void LoadToObjectCollection<T>(ComboBox dest, IList<T> src)
+        {
+            int max = src.Max(x => x.ToString().Length) * 7;
+            dest.DataSource = src;
+            dest.DropDownWidth = max;
+        }
         public static void LoadToObjectCollection(ComboBox dest, IEnumerable<object> src)
         {
             dest.Items.Clear();
+            if (src == null) return;
             dest.Items.AddRange(src.ToArray());
-            int max = src.Max(x => x.ToString().Length) * 6;
-            dest.DropDownWidth = max;
-            
         }
         public static void LoadToObjectCollection(ListBox dest, IEnumerable<object> src)
         {
             dest.Items.Clear();
+            if (src == null) return;
             dest.Items.AddRange(src.ToArray());
         }
         public static void SelectCombo(ComboBox dest, string param, TriggerParam lookup)
@@ -37,6 +51,7 @@ namespace relert_sharp.SubWindows.LogicEditor
                 case TriggerParam.ComboContent.EvaNames:
                 case TriggerParam.ComboContent.ThemeNames:
                 case TriggerParam.ComboContent.TechnoType:
+                case TriggerParam.ComboContent.BuildingID:
                     Select(dest, param, false);
                     break;
                 default:
@@ -56,7 +71,6 @@ namespace relert_sharp.SubWindows.LogicEditor
                         return;
                     }
                 }
-                dest.Text = "0";
             }
             else
             {
@@ -68,8 +82,8 @@ namespace relert_sharp.SubWindows.LogicEditor
                         return;
                     }
                 }
-                dest.Text = "0";
             }
+            dest.Text = param;
         }
     }
 }

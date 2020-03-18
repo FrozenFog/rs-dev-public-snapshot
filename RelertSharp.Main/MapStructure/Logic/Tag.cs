@@ -3,26 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.IniSystem;
-using relert_sharp.Common;
+using RelertSharp.IniSystem;
+using RelertSharp.Common;
+using RelertSharp.Model;
+using System.Collections;
 
-namespace relert_sharp.MapStructure.Logic
+namespace RelertSharp.MapStructure.Logic
 {
-    public class TagCollection
+    public class TagCollection : IEnumerable<TagItem>
     {
         private Dictionary<string, TagItem> data = new Dictionary<string, TagItem>();
         private Dictionary<string, string> trigger_tag = new Dictionary<string, string>();
 
 
-        #region Constructor - TagCollection
+        #region Ctor - TagCollection
         public TagCollection(INIEntity entTag)
         {
             foreach (INIPair p in entTag.DataList)
             {
                 if (!data.Keys.Contains(p.Name))
                 {
-                    data[p.Name] = new TagItem(p.Name, p.ParseStringList());
-                    trigger_tag[data[p.Name].AssoTrigger] = p.Name;
+                    this[p.Name] = new TagItem(p.Name, p.ParseStringList());
                 }
             }
         }
@@ -30,13 +31,19 @@ namespace relert_sharp.MapStructure.Logic
 
 
         #region Public Methods - TagCollection
+        public void Remove(TagItem t, string triggerid)
+        {
+            if (data.Keys.Contains(t.ID)) data.Remove(t.ID);
+            if (trigger_tag.Keys.Contains(triggerid)) trigger_tag.Remove(triggerid);
+        }
         /// <summary>
-        /// return a tag with certain trigger id, return null if not found
+        /// return a tag with certain trigger id, return null tag if not found
         /// </summary>
         /// <param name="triggerID"></param>
         /// <returns></returns>
-        public TagItem GetTagFromTrigger(string triggerID)
+        public TagItem GetTagFromTrigger(string triggerID, TriggerItem item = null)
         {
+            if (triggerID == "TEMPLATE") return new TagItem(item, "TGMPLATE");
             if (trigger_tag.Keys.Contains(triggerID))
             {
                 return data[trigger_tag[triggerID]];
@@ -44,6 +51,27 @@ namespace relert_sharp.MapStructure.Logic
             TagItem nullitem = new TagItem("xxxxxxxx", new string[3]{ "0","!NO AVAIABLE TAG!","<none>"});
             return nullitem;
         }
+        public IEnumerable<TechnoPair> ToTechno()
+        {
+            List<TechnoPair> result = new List<TechnoPair>();
+            foreach (TagItem tag in this)
+            {
+                result.Add(new TechnoPair(tag.ID, tag.Name));
+            }
+            return result;
+        }
+
+        #region Enumerator
+        public IEnumerator<TagItem> GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+        #endregion
         #endregion
 
 
@@ -58,14 +86,22 @@ namespace relert_sharp.MapStructure.Logic
             set
             {
                 data[_id] = value;
+                trigger_tag[value.AssoTrigger] = value.ID;
             }
         }
+        public IEnumerable<string> Keys { get { return data.Keys; } }
+        public TagItem TemplateTag { get; set; }
         #endregion
     }
 
 
-    public class TagItem
+    public class TagItem : BindableBase, IRegistable
     {
+        private string name, asso, id;
+        private TriggerRepeatingType repeatingType;
+
+
+        #region Ctor - TagItem
         public TagItem(string _id, string[] dataList)
         {
             ID = _id;
@@ -73,9 +109,38 @@ namespace relert_sharp.MapStructure.Logic
             Name = dataList[1];
             AssoTrigger = dataList[2];
         }
-        public TriggerRepeatingType Repeating { get; set; }
-        public string Name { get; set; }
-        public string AssoTrigger { get; set; }
-        public string ID { get; set; }
+        public TagItem(TriggerItem trg, string _id)
+        {
+            ID = _id;
+            Repeating = trg.Repeating;
+            Name = trg.Name + " - Tag";
+            AssoTrigger = trg.ID;
+        }
+        #endregion
+
+
+        #region Public Calls - TagItem
+        public TriggerRepeatingType Repeating
+        {
+            get { return repeatingType; }
+            set { SetProperty(ref repeatingType, value); }
+        }
+        public string Name
+        {
+            get { return name; }
+            set { SetProperty(ref name, value); }
+        }
+        public string AssoTrigger
+        {
+            get { return asso; }
+            set { SetProperty(ref asso, value); }
+        }
+        public string ID
+        {
+            get { return id; }
+            set { SetProperty(ref id, value); }
+        }
+        public bool Binded { get; set; } = true;
+        #endregion
     }
 }

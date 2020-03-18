@@ -1,17 +1,19 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace relert_sharp.MapStructure.Logic
+namespace RelertSharp.MapStructure.Logic
 {
-    public class LocalVarCollection
+    public class LocalVarCollection : IEnumerable<LocalVarItem>
     {
-        private Dictionary<string, bool> data = new Dictionary<string, bool>();
+        //private Dictionary<string, bool> data = new Dictionary<string, bool>();
+        private Dictionary<string, LocalVarItem> data = new Dictionary<string, LocalVarItem>();
 
 
-        #region Constructor - LocalVarCollection
+        #region Ctor - LocalVarCollection
         public LocalVarCollection() { }
         #endregion
 
@@ -20,14 +22,24 @@ namespace relert_sharp.MapStructure.Logic
         public List<IniSystem.TechnoPair> ToTechno()
         {
             List<IniSystem.TechnoPair> result = new List<IniSystem.TechnoPair>();
-            foreach (string name in data.Keys)
+            foreach (LocalVarItem var in this)
             {
-                string[] tmp = name.Split(new char[] { ',' });
-                IniSystem.TechnoPair p = new IniSystem.TechnoPair(tmp[0], tmp[1]);
+                IniSystem.TechnoPair p = new IniSystem.TechnoPair(var.Index.ToString(), var.Name);
                 result.Add(p);
             }
             return result;
         }
+        #region Enumerator
+        public IEnumerator<LocalVarItem> GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+        #endregion
         #endregion
 
 
@@ -37,18 +49,40 @@ namespace relert_sharp.MapStructure.Logic
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public bool this[string name]
+        public LocalVarItem this[string name]
         {
             get
             {
                 if (data.Keys.Contains(name)) return data[name];
-                return false;
+                return null;
             }
             set
             {
                 data[name] = value;
             }
         }
+        #endregion
+    }
+
+
+    public class LocalVarItem : IniSystem.IRegistable
+    {
+        #region Ctor - LocalVarItem
+        public LocalVarItem(string name, bool init, string index) : this(name, init, int.Parse(index)) { }
+        public LocalVarItem(string name, bool init, int index)
+        {
+            Name = name;
+            InitState = init;
+            Index = index;
+        }
+        #endregion
+
+
+        #region Public Calls - LocalVarItem
+        public string Name { get; set; }
+        public bool InitState { get; set; }
+        public int Index { get; set; }
+        public string ID { get { return Index.ToString(); } }
         #endregion
     }
 }

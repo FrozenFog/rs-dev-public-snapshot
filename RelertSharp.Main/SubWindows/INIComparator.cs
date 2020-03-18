@@ -8,13 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using relert_sharp.Utils;
-using relert_sharp.FileSystem;
-using relert_sharp.IniSystem;
-using relert_sharp.Common;
-using static relert_sharp.Language;
+using RelertSharp.Utils;
+using RelertSharp.FileSystem;
+using RelertSharp.IniSystem;
+using RelertSharp.Common;
+using static RelertSharp.Language;
 
-namespace relert_sharp.SubWindows
+namespace RelertSharp.SubWindows
 {
     public partial class INIComparator : Form
     {

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.IniSystem;
-using relert_sharp.Common;
-using relert_sharp.MapStructure.Points;
+using RelertSharp.IniSystem;
+using RelertSharp.Common;
+using RelertSharp.MapStructure.Points;
 
-namespace relert_sharp.MapStructure.Logic
+namespace RelertSharp.MapStructure.Logic
 {
     public class HouseCollection : TeamLogicCollection<HouseItem>
     {
-        #region Constructor - HouseCollection
+        #region Ctor - HouseCollection
         public HouseCollection() { }
         #endregion
 
@@ -37,7 +37,7 @@ namespace relert_sharp.MapStructure.Logic
         private Dictionary<string, INIPair> residual;
 
 
-        #region Constructor - HouseItem
+        #region Ctor - HouseItem
         public HouseItem(INIEntity ent) : base(ent)
         {
             IQ = ent.PopPair("IQ").ParseInt();

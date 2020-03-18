@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.IniSystem;
+using RelertSharp.IniSystem;
 
-namespace relert_sharp.MapStructure.Logic
+namespace RelertSharp.MapStructure.Logic
 {
     public class CountryCollection : TeamLogicCollection<CountryItem>
     {
-        #region Constructor - CountryCollection
+        #region Ctor - CountryCollection
         public CountryCollection() { }
         #endregion
 
@@ -36,12 +36,12 @@ namespace relert_sharp.MapStructure.Logic
     }
 
 
-    public class CountryItem : TeamLogicItem
+    public class CountryItem : TeamLogicItem, IRegistable
     {
         private Dictionary<string, INIPair> residual = new Dictionary<string, INIPair>();
 
 
-        #region Constructor - CountryItem
+        #region Ctor - CountryItem
         public CountryItem(INIEntity ent) : base(ent)
         {
             Name = ent.PopPair("Name").Value;

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using relert_sharp.FileSystem;
-using relert_sharp.Common;
-using relert_sharp.SubWindows;
+using RelertSharp.FileSystem;
+using RelertSharp.Common;
+using RelertSharp.SubWindows.LogicEditor;
 
-namespace relert_sharp
+namespace RelertSharp
 {
     static class Program
     {
@@ -15,15 +15,33 @@ namespace relert_sharp
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            Initialization();
 #if DEBUG
+            Initialization();
             _run.M();
 #else
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new LogicEditor());
+            if (args.Length < 1) return;
+            try
+            {
+                Initialization();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Initialization failed!\nTrace:\n" + e.StackTrace, "RelertSharp", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            try
+            {
+                MapFile map = new MapFile(args[0]);
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new LogicEditor(map.Map));
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Unhandled error!\nTrace:\n" + e.StackTrace, "Fatal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 #endif
         }
         static void Initialization()
@@ -36,6 +54,7 @@ namespace relert_sharp
             GlobalVar.GlobalConfig = new RSConfig();
             GlobalVar.GlobalDir = new VirtualDir();
             GlobalVar.GlobalRules = new IniSystem.Rules(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.RulesName + ".ini"), GlobalVar.GlobalConfig.RulesName + ".ini");
+            GlobalVar.GlobalRules.LoadArt(GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.ArtName, FileExtension.INI));
             GlobalVar.GlobalSound = new IniSystem.SoundRules(GlobalVar.GlobalConfig.SoundName, GlobalVar.GlobalConfig.EvaName, GlobalVar.GlobalConfig.ThemeName);
             GlobalVar.GlobalSoundBank = new SoundBank(GlobalVar.GlobalConfig.BagNameList);
 

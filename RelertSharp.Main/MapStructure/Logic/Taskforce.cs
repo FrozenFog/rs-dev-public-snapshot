@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.IniSystem;
+using RelertSharp.IniSystem;
 
-namespace relert_sharp.MapStructure.Logic
+namespace RelertSharp.MapStructure.Logic
 {
     public class TaskforceCollection : TeamLogicCollection<TaskforceItem>
     {
         public TaskforceCollection() : base() { }
     }
 
-    public class TaskforceItem : TeamLogicItem
+    public class TaskforceItem : TeamLogicItem, IRegistable
     {
         private Dictionary<string, int> memberData = new Dictionary<string, int>();
+        private int group;
+        private string name;
+
+
+        #region Ctor - TaskforceItem
         public TaskforceItem(INIEntity ent) : base(ent)
         {
             Name = ent.PopPair("Name").Value;
@@ -26,12 +31,21 @@ namespace relert_sharp.MapStructure.Logic
             }
         }
         public TaskforceItem() : base() { }
+        #endregion
 
 
         #region Public Calls - TaskforceItem
         public Dictionary<string, int> MemberData { get { return memberData; } set { memberData = value; } }
-        public int Group { get; set; }
-        public string Name { get; set; }
+        public int Group
+        {
+            get { return group; }
+            set { SetProperty(ref group, value); }
+        }
+        public string Name
+        {
+            get { return name; }
+            set { SetProperty(ref name, value); }
+        }
         #endregion
     }
 }

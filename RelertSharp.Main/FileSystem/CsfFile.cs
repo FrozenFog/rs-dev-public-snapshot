@@ -5,18 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Collections;
-using relert_sharp.Common;
-using relert_sharp.Encoding;
-using relert_sharp.IniSystem;
+using RelertSharp.Common;
+using RelertSharp.Encoding;
+using RelertSharp.IniSystem;
 
-namespace relert_sharp.FileSystem
+namespace RelertSharp.FileSystem
 {
     public class CsfFile : BaseFile, IEnumerable<CsfString>
     {
         private Dictionary<string, CsfString> data = new Dictionary<string, CsfString>();
 
 
-        #region Constructor - CsfFile
+        #region Ctor - CsfFile
         public CsfFile(byte[] _rawData, string _fullName) : base(_rawData, _fullName)
         {
             Read();
@@ -124,12 +124,12 @@ namespace relert_sharp.FileSystem
     }
 
 
-    public class CsfString
+    public class CsfString : IRegistable
     {
 
 
 
-        #region Constructor - CSFString
+        #region Ctor - CSFString
         public CsfString(string _uiTag)
         {
             UIName = _uiTag;
@@ -146,6 +146,8 @@ namespace relert_sharp.FileSystem
 
 
         #region Public Calls - CSFString
+        public string ID { get { return UIName; } }
+        public string Name { get { return ContentString; } }
         public string UIName { get; set; } = "";
         public string ContentString { get; set; } = "";
         public string ExtraString { get; set; } = "";

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.Common;
-using static relert_sharp.Utils.Misc;
+using RelertSharp.Common;
+using static RelertSharp.Utils.Misc;
 
-namespace relert_sharp.MapStructure.Objects
+namespace RelertSharp.MapStructure.Objects
 {
     public class StructureLayer : ObjectBase
     {

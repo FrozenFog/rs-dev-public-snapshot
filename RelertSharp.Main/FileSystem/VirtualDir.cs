@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using relert_sharp.Encoding;
-using relert_sharp.Common;
-using relert_sharp.IniSystem;
-using static relert_sharp.Common.GlobalVar;
+using RelertSharp.Encoding;
+using RelertSharp.Common;
+using RelertSharp.IniSystem;
+using static RelertSharp.Common.GlobalVar;
 
-namespace relert_sharp.FileSystem
+namespace RelertSharp.FileSystem
 {
     public class VirtualDir
     {
         private Dictionary<uint, VirtualFileInfo> fileOrigin = new Dictionary<uint, VirtualFileInfo>();
         private Dictionary<string, MixTatics> mixTatics = new Dictionary<string, MixTatics>();
-        #region Constructor - VirtualDir
+        #region Ctor - VirtualDir
         public VirtualDir()
         {
             LoadMixIndex(GlobalConfig.MixNameList);
@@ -173,7 +173,7 @@ namespace relert_sharp.FileSystem
 
     public class VirtualFileInfo
     {
-        #region Constructor - VirtualFileInfo
+        #region Ctor - VirtualFileInfo
         public VirtualFileInfo(string _mixpath, string _mixName, MixEntry _ent, int _bodyPos, string _parentMixPath = "")
         {
             MixPath = _mixpath;

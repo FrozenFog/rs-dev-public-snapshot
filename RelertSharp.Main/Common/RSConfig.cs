@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.IniSystem;
+using RelertSharp.IniSystem;
 
-namespace relert_sharp.Common
+namespace RelertSharp.Common
 {
     public class RSConfig : INIFile
     {
 
 
-        #region Contructor - RSConfig
+        #region ContruCtor - RSConfig
         public RSConfig() : base("config.rsc", INIFileType.DefaultINI)
         {
             GetMixNameList();

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace relert_sharp.FileSystem
+namespace RelertSharp.FileSystem
 {
     public class VxlFile : BaseFile
     {
@@ -12,7 +12,7 @@ namespace relert_sharp.FileSystem
         private List<VoxelSection> data = new List<VoxelSection>();
 
 
-        #region Constructor - VxlFile
+        #region Ctor - VxlFile
         public VxlFile(byte[] _data, string _fullName) : base(_data, _fullName)
         {
             FileExt = Common.FileExtension.VXL;
@@ -128,7 +128,7 @@ namespace relert_sharp.FileSystem
         private List<VoxelSpanSeg> data = new List<VoxelSpanSeg>();
 
 
-        #region Constructor - VoxelSection
+        #region Ctor - VoxelSection
         public VoxelSection(string _name, int _index)
         {
             SectionName = _name;
@@ -168,7 +168,7 @@ namespace relert_sharp.FileSystem
     public class VoxelSpanSeg
     {
         private List<VoxelUnit> data = new List<VoxelUnit>();
-        #region Constructor - VoxelSpanSeg
+        #region Ctor - VoxelSpanSeg
         public VoxelSpanSeg(int _x, int _y)
         {
             SpanX = _x;
@@ -197,18 +197,18 @@ namespace relert_sharp.FileSystem
 
     public class VoxelUnit
     {
-        #region Constructor - VoxelUnit
-        public VoxelUnit(byte _colorIndex, byte _normalVector)
+        #region Ctor - VoxelUnit
+        public VoxelUnit(byte _colorIndex, byte _normalVeCtor)
         {
             ColorIndex = _colorIndex;
-            NormalVector = _normalVector;
+            NormalVeCtor = _normalVeCtor;
         }
         #endregion
 
 
         #region Public Calls - VoxelUnit
         public byte ColorIndex { get; set; }
-        public byte NormalVector { get; set; }
+        public byte NormalVeCtor { get; set; }
         public int VoxX { get; internal set; }
         public int VoxY { get; internal set; }
         public int VoxZ { get; internal set; }

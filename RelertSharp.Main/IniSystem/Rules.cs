@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.Common;
+using RelertSharp.Common;
 
-namespace relert_sharp.IniSystem
+namespace RelertSharp.IniSystem
 {
     public class Rules : INIFile
     {
-        #region Constructor - Rules
+        #region Ctor - Rules
         public Rules(string path, INIFileType itype = INIFileType.RulesINI) : base(path, INIFileType.RulesINI) { }
         public Rules(byte[] _data, string _filename) : base(_data, _filename, INIFileType.RulesINI) { }
         #endregion
@@ -35,6 +35,14 @@ namespace relert_sharp.IniSystem
                 result.Add(new TechnoPair(p.Name, p.Value));
             }
             return result;
+        }
+        #endregion
+
+
+        #region Public Methods - Rules
+        public void LoadArt(INIFile f)
+        {
+            Override(f.IniData);
         }
         #endregion
 
@@ -68,6 +76,13 @@ namespace relert_sharp.IniSystem
                 return GetTechnoPairs("BuildingTypes", TechnoPair.AbstractType.Name);
             }
         }
+        public List<TechnoPair> BuildingIDList
+        {
+            get
+            {
+                return GetTechnoPairs("BuildingTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName);
+            }
+        }
         public List<TechnoPair> SuperWeaponList
         {
             get
@@ -75,11 +90,11 @@ namespace relert_sharp.IniSystem
                 return GetTechnoPairs("SuperWeaponTypes", TechnoPair.AbstractType.RegName);
             }
         }
-        public List<TechnoPair> WeaponList
+        public List<TechnoPair> WarheadList
         {
             get
             {
-                return GetTechnoPairs("WeaponTypes", TechnoPair.AbstractType.RegName);
+                return GetTechnoPairs("Warheads", TechnoPair.AbstractType.RegName);
             }
         }
         public List<TechnoPair> AnimationList
@@ -101,6 +116,13 @@ namespace relert_sharp.IniSystem
             get
             {
                 return GetTechnoPairs(this["VoxelAnims"]);
+            }
+        }
+        public List<TechnoPair> MovieList
+        {
+            get
+            {
+                return GetTechnoPairs(this["Movies"]);
             }
         }
         public List<TechnoPair> TechnoList

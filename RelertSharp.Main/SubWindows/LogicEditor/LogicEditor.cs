@@ -6,16 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Media;
 using System.Windows.Forms;
-using relert_sharp.MapStructure;
-using relert_sharp.MapStructure.Logic;
-using relert_sharp.FileSystem;
-using relert_sharp.Common;
-using relert_sharp.IniSystem;
-using static relert_sharp.Language;
+using RelertSharp.MapStructure;
+using RelertSharp.MapStructure.Logic;
+using RelertSharp.Common;
+using RelertSharp.IniSystem;
+using static RelertSharp.Language;
 
-namespace relert_sharp.SubWindows.LogicEditor
+namespace RelertSharp.SubWindows.LogicEditor
 {
     public partial class LogicEditor : Form
     {
@@ -26,19 +24,20 @@ namespace relert_sharp.SubWindows.LogicEditor
         private CheckBox[] ckbEP, ckbAP;
         private ComboBox[] cbbEP, cbbAP;
         private SoundManager soundPlayer = new SoundManager();
+        private bool listUpdating = false;
 
 
-        #region Constructor - LogicEditor
+        #region Ctor - LogicEditor
         public LogicEditor(Map m)
         {
             InitializeComponent();
             SetLanguage();
-            SetGroup();
+            InitControls();
             map = m;
+            StaticHelper.LoadToObjectCollection(cbbEventAbst, descriptCollection.Events);
+            StaticHelper.LoadToObjectCollection(cbbActionAbst, descriptCollection.Actions);
             UpdateTrgList(TriggerItem.DisplayingType.IDandName);
             LoadHouseList();
-            LoadEventComboBox();
-            LoadActionComboBox();
             SetGlobal();
             lbxTriggerList.SelectedIndex = 0;
         }
@@ -46,6 +45,12 @@ namespace relert_sharp.SubWindows.LogicEditor
 
 
         #region Private Methods - LogicEditor
+        #region Initialization Utils
+        private void SetLanguage()
+        {
+            foreach (Control c in Controls) SetControlLanguage(c);
+            Text = DICT[Text];
+        }
         private void SetGlobal()
         {
             foreach (HouseItem house in map.Houses)
@@ -54,10 +59,12 @@ namespace relert_sharp.SubWindows.LogicEditor
                 {
                     CountryItem country = map.Countries.GetCountry(house.Country);
                     GlobalVar.PlayerSide = country.Side;
+                    break;
                 }
             }
+            GlobalVar.GlobalRules.Override(map.IniResidue.Values);
         }
-        private void SetGroup()
+        private void InitControls()
         {
             lklEP = new LinkLabel[4] { lklEP1, lklEP2, lklEP3, lklEP4 };
             lklAP = new LinkLabel[4] { lklAP1, lklAP2, lklAP3, lklAP4 };
@@ -67,44 +74,104 @@ namespace relert_sharp.SubWindows.LogicEditor
             ckbAP = new CheckBox[4] { ckbAP1, ckbAP2, ckbAP3, ckbAP4 };
             cbbEP = new ComboBox[4] { cbbEP1, cbbEP2, cbbEP3, cbbEP4 };
             cbbAP = new ComboBox[4] { cbbAP1, cbbAP2, cbbAP3, cbbAP4 };
-        }
-        private void LoadEventComboBox()
-        {
-            StaticHelper.LoadToObjectCollection(cbbEventAbst, descriptCollection.Events);
-        }
-        private void LoadActionComboBox()
-        {
-            StaticHelper.LoadToObjectCollection(cbbActionAbst, descriptCollection.Actions);
+            lblNoParamE.Location = new Point(gpbEventParam.Size.Width / 2 - lblNoParamE.Size.Width / 2, gpbEventParam.Size.Height / 2 - lblNoParamE.Size.Height);
+            lblNoParamA.Location = new Point(gpbActionParam.Size.Width / 2 - lblNoParamA.Size.Width / 2, gpbActionParam.Size.Height / 2 - lblNoParamA.Size.Height);
         }
         private void LoadHouseList()
         {
             map.Countries.AscendingSort();
             StaticHelper.LoadToObjectCollection(lbxTriggerHouses, map.Countries);
         }
-        private void UpdateTrgList(TriggerItem.DisplayingType type = TriggerItem.DisplayingType.Remain)
+        #endregion
+
+        #region General GUI Update Utils
+        private void ClearContent(GroupBox gpb)
         {
-            lbxTriggerList.Items.Clear();
-            cbbAttatchedTrg.Items.Clear();
-            cbbAttatchedTrg.Items.Add(TriggerItem.NullTrigger);
-            foreach(TriggerItem trigger in map.Triggers)
+            foreach (Control c in gpb.Controls)
             {
-                trigger.SetDisplayingString(type);
-                lbxTriggerList.Items.Add(trigger);
-                cbbAttatchedTrg.Items.Add(trigger);
+                var t = c.GetType();
+                if (t == typeof(TextBox) ||
+                    t == typeof(ComboBox) ||
+                    t == typeof(MaskedTextBox) ||
+                    t == typeof(RichTextBox)) c.Text = "";
+                if (t == typeof(GroupBox)) ClearContent(c as GroupBox);
             }
         }
-        private void UpdateEventList(LogicGroup eg)
+        private void UpdateContent(TriggerItem trg)
         {
-            StaticHelper.LoadToObjectCollection(lbxEventList, eg);
+            UpdateTags(trg.ID);
+            StaticHelper.LoadToObjectCollection(lbxEventList, trg.Events);
+            if (lbxEventList.Items.Count > 0) lbxEventList.SelectedIndex = 0;
+            else
+            {
+                ClearContent(gpbEvents);
+                mtxbEventID.Text = "00";
+            }
+            StaticHelper.LoadToObjectCollection(lbxActionList, trg.Actions);
+            if (lbxActionList.Items.Count > 0) lbxActionList.SelectedIndex = 0;
+            else
+            {
+                ClearContent(gpbActions);
+                mtxbActionID.Text = "00";
+            }
         }
-        private void UpdateActionList(LogicGroup ag)
+        private void UpdateActionContent(LogicItem item)
         {
-            StaticHelper.LoadToObjectCollection(lbxActionList, ag);
+            mtxbActionID.Text = item.ID.ToString();
+            txbActionAnno.Text = item.Comment;
+            cbbActionAbst.SelectedIndex = item.ID;
+        }
+        private void UpdateActionParams(TriggerDescription description, string[] actionParams)
+        {
+            rtxbActionDetail.Refresh();
+            rtxbActionDetail.Text = description.Description;
+            foreach (Control c in gpbActionParam.Controls)
+            {
+                c.Visible = false;
+                c.Enabled = true;
+            }
+            if (description.Parameters.Count == 0)
+            {
+                lblNoParamA.Visible = true;
+            }
+            else
+            {
+                int i = 0;
+                foreach (TriggerParam param in description.Parameters)
+                {
+                    switch (param.Type)
+                    {
+                        case TriggerParam.ParamType.PlainString:
+                            SetParamControls(txbAP, param, actionParams, i);
+                            break;
+                        case TriggerParam.ParamType.SelectableString:
+                            SetParamControls(cbbAP, param, actionParams, i);
+                            break;
+                        case TriggerParam.ParamType.Bool:
+                            SetParamControls(ckbAP, param, actionParams, i);
+                            break;
+                    }
+                    SetParamControls(lklAP, param, actionParams, i);
+                    i++;
+                }
+            }
+        }
+        private void UpdateTrgList(TriggerItem.DisplayingType type = TriggerItem.DisplayingType.Remain)
+        {
+            lbxTriggerList.Tag = (int)type;
+            map.Triggers.SetToString(type);
+            StaticHelper.LoadToObjectCollection(lbxTriggerList, map.Triggers);
+            cbbAttatchedTrg.Items.Clear();
+            cbbAttatchedTrg.Items.Add(TriggerItem.NullTrigger);
+            foreach (TriggerItem trigger in map.Triggers)
+            {
+                cbbAttatchedTrg.Items.Add(trigger);
+            }
         }
         private void UpdateTags(string triggerID)
         {
             TriggerItem trg = map.Triggers[triggerID];
-            TagItem tg = map.Tags.GetTagFromTrigger(triggerID);
+            TagItem tg = map.Tags.GetTagFromTrigger(triggerID, trg);
 
             txbTrgID.Text = triggerID;
             txbTrgName.Text = trg.Name;
@@ -140,11 +207,6 @@ namespace relert_sharp.SubWindows.LogicEditor
             ckbEasy.Checked = trg.EasyOn;
             ckbNormal.Checked = trg.NormalOn;
             ckbHard.Checked = trg.HardOn;
-        }
-        private void UpdateEvents(string triggerID)
-        {
-            LogicGroup lg = map.Events[triggerID];
-            UpdateEventList(lg);
         }
         private void UpdateEventContent(LogicItem item)
         {
@@ -186,51 +248,10 @@ namespace relert_sharp.SubWindows.LogicEditor
                     i++;
                 }
             }
-            UseWaitCursor = false;
         }
-        private IEnumerable<object> GetComboCollections(TriggerParam param)
-        {
-            switch (param.ComboType)
-            {
-                case TriggerParam.ComboContent.Aircrafts:
-                    return GlobalVar.GlobalRules.AircraftList;
-                case TriggerParam.ComboContent.Buildings:
-                    return GlobalVar.GlobalRules.BuildingList;
-                case TriggerParam.ComboContent.Infantries:
-                    return GlobalVar.GlobalRules.InfantryList;
-                case TriggerParam.ComboContent.SoundNames:
-                    return GlobalVar.GlobalSound.SoundList;
-                case TriggerParam.ComboContent.EvaNames:
-                    return GlobalVar.GlobalSound.EvaList;
-                case TriggerParam.ComboContent.ThemeNames:
-                    return GlobalVar.GlobalSound.ThemeList;
-                case TriggerParam.ComboContent.LocalVar:
-                    return map.LocalVariables.ToTechno();
-                case TriggerParam.ComboContent.SuperWeapons:
-                    return GlobalVar.GlobalRules.SuperWeaponList;
-                case TriggerParam.ComboContent.CsfLabel:
-                    return GlobalVar.GlobalCsf.TechnoPairs;
-                case TriggerParam.ComboContent.Triggers:
-                    return map.Triggers.ToTechno();
-                case TriggerParam.ComboContent.TechnoType:
-                    return GlobalVar.GlobalRules.TechnoList;
-                case TriggerParam.ComboContent.GlobalVar:
-                    return GlobalVar.GlobalRules.GlobalVar;
-                case TriggerParam.ComboContent.Teams:
-                    return map.Teams.ToTechno();
-                case TriggerParam.ComboContent.Houses:
-                    return map.Countries.ToTechno();
-                case TriggerParam.ComboContent.Animations:
-                    return GlobalVar.GlobalRules.AnimationList;
-                case TriggerParam.ComboContent.ParticalAnim:
-                    return GlobalVar.GlobalRules.ParticalList;
-                case TriggerParam.ComboContent.VoxelAnim:
-                    return GlobalVar.GlobalRules.VoxAnimList;
-                //TODO: Implement cases
-                default:
-                    return null;
-            }
-        }
+        #endregion
+
+        #region Trace Utils
         private async void ManageSound(TriggerParam param, TechnoPair p)
         {
             if (soundPlayer.IsPlaying)
@@ -249,45 +270,91 @@ namespace relert_sharp.SubWindows.LogicEditor
                 UseWaitCursor = false;
             }
         }
-        private void UpdateActionParams(TriggerDescription description, string[] actionParams)
+        #endregion
+
+        #region Misc Utils
+        private void UpdateAt(ListBox dest, object updatevalue)
         {
-            rtxbActionDetail.Refresh();
-            rtxbActionDetail.Text = description.Description;
-            foreach (Control c in gpbActionParam.Controls)
-            {
-                c.Visible = false;
-                c.Enabled = true;
-            }
-            if (description.Parameters.Count == 0)
-            {
-                lblNoParamA.Visible = true;
-            }
-            else
-            {
-                int i = 0;
-                foreach (TriggerParam param in description.Parameters)
-                {
-                    switch (param.Type)
-                    {
-                        case TriggerParam.ParamType.PlainString:
-                            SetParamControls(txbAP, param, actionParams, i);
-                            break;
-                        case TriggerParam.ParamType.SelectableString:
-                            SetParamControls(cbbAP, param, actionParams, i);
-                            break;
-                        case TriggerParam.ParamType.Bool:
-                            SetParamControls(ckbAP, param, actionParams, i);
-                            break;
-                    }
-                    SetParamControls(lklAP, param, actionParams, i);
-                    i++;
-                }
-            }
-            UseWaitCursor = false;
+            listUpdating = true;
+            int index = dest.SelectedIndex;
+            dest.Items.RemoveAt(index);
+            dest.Items.Insert(index, updatevalue);
+            dest.SelectedIndex = index;
+            listUpdating = false;
         }
+        private void RemoveAt(ListBox dest, int index)
+        {
+            listUpdating = true;
+            dest.Items.RemoveAt(index);
+            listUpdating = false;
+            if (index != 0) dest.SelectedIndex = index - 1;
+        }
+        private IEnumerable<object> GetComboCollections(TriggerParam param)
+        {
+            switch (param.ComboType)
+            {
+                case TriggerParam.ComboContent.Aircrafts:
+                    return GlobalVar.GlobalRules.AircraftList;
+                case TriggerParam.ComboContent.Buildings:
+                    return GlobalVar.GlobalRules.BuildingList;
+                case TriggerParam.ComboContent.Infantries:
+                    return GlobalVar.GlobalRules.InfantryList;
+                case TriggerParam.ComboContent.Units:
+                    return GlobalVar.GlobalRules.VehicleList;
+                case TriggerParam.ComboContent.SoundNames:
+                    return GlobalVar.GlobalSound.SoundList;
+                case TriggerParam.ComboContent.EvaNames:
+                    return GlobalVar.GlobalSound.EvaList;
+                case TriggerParam.ComboContent.ThemeNames:
+                    return GlobalVar.GlobalSound.ThemeList;
+                case TriggerParam.ComboContent.LocalVar:
+                    return map.LocalVariables.ToTechno();
+                case TriggerParam.ComboContent.SuperWeapons:
+                    return GlobalVar.GlobalRules.SuperWeaponList;
+                case TriggerParam.ComboContent.CsfLabel:
+                    return GlobalVar.GlobalCsf.TechnoPairs;
+                case TriggerParam.ComboContent.Triggers:
+                    return map.Triggers.ToTechno();
+                case TriggerParam.ComboContent.Tags:
+                    return map.Tags.ToTechno();
+                case TriggerParam.ComboContent.TechnoType:
+                    return GlobalVar.GlobalRules.TechnoList;
+                case TriggerParam.ComboContent.GlobalVar:
+                    return GlobalVar.GlobalRules.GlobalVar;
+                case TriggerParam.ComboContent.Teams:
+                    return map.Teams.ToTechno();
+                case TriggerParam.ComboContent.Houses:
+                    return map.Countries.ToTechno();
+                case TriggerParam.ComboContent.Animations:
+                    return GlobalVar.GlobalRules.AnimationList;
+                case TriggerParam.ComboContent.ParticalAnim:
+                    return GlobalVar.GlobalRules.ParticalList;
+                case TriggerParam.ComboContent.VoxelAnim:
+                    return GlobalVar.GlobalRules.VoxAnimList;
+                case TriggerParam.ComboContent.BuildingID:
+                    return GlobalVar.GlobalRules.BuildingIDList;
+                case TriggerParam.ComboContent.Movies:
+                    return GlobalVar.GlobalRules.MovieList;
+                case TriggerParam.ComboContent.Warhead:
+                    return GlobalVar.GlobalRules.WarheadList;
+                default:
+                    return null;
+            }
+        }
+        private void GoEnter(KeyEventArgs e, Action a)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                a.Invoke();
+            }
+        }
+        #endregion
+
+        #region Parameter Utils
         private void SetParamControls(Control[] controls, TriggerParam param, string[] paramData, int controlIndex)
         {
-            UseWaitCursor = true;
             if (controls.GetType() == typeof(LinkLabel[]))
             {
                 ((LinkLabel)controls[controlIndex]).Text = param.Name;
@@ -295,8 +362,11 @@ namespace relert_sharp.SubWindows.LogicEditor
             }
             else if (controls.GetType() == typeof(ComboBox[]))
             {
-                StaticHelper.LoadToObjectCollection((ComboBox)controls[controlIndex], GetComboCollections(param));
+                Cursor = Cursors.WaitCursor;
+                IList<object> data = GetComboCollections(param).ToList();
+                StaticHelper.LoadToObjectCollection((ComboBox)controls[controlIndex], data);
                 StaticHelper.SelectCombo((ComboBox)controls[controlIndex], param.GetParameter(paramData), param);
+                Cursor = Cursors.Arrow;
             }
             else
             {
@@ -312,94 +382,72 @@ namespace relert_sharp.SubWindows.LogicEditor
                 }
             }
             controls[controlIndex].Visible = true;
-            UseWaitCursor = false;
         }
-        private void UpdateActionContent(LogicItem item)
+        private void WriteParam(string value, int pos, LogicType type)
         {
-            mtxbActionID.Text = item.ID.ToString();
-            txbActionAnno.Text = item.Comment;
-            cbbActionAbst.SelectedIndex = item.ID;
-        }
-        private void UpdateActions(string triggerID)
-        {
-            LogicGroup ag = map.Actions[triggerID] as LogicGroup;
-            UpdateActionList(ag);
-        }
-
-        private void ClearContent(GroupBox gpb)
-        {
-            foreach (Control c in gpb.Controls)
+            if (type == LogicType.EventLogic)
             {
-                var t = c.GetType();
-                if (t == typeof(TextBox) ||
-                    t == typeof(ComboBox) ||
-                    t == typeof(MaskedTextBox) ||
-                    t == typeof(RichTextBox)) c.Text = "";
-                if (t == typeof(GroupBox)) ClearContent(c as GroupBox);
+                _CurrentEvent.Parameters[pos] = value;
+                UpdateAt(lbxEventList, _CurrentEvent);
             }
-        }
-        private void UpdateContent(string triggerID)
-        {
-            UpdateTags(triggerID);
-            UpdateEvents(triggerID);
-            if (lbxEventList.Items.Count > 0) lbxEventList.SelectedIndex = 0;
             else
             {
-                ClearContent(gpbEvents);
-                mtxbEventID.Text = "00";
+                _CurrentAction.Parameters[pos] = value;
+                UpdateAt(lbxActionList, _CurrentAction);
             }
-            UpdateActions(triggerID);
-            if (lbxActionList.Items.Count > 0) lbxActionList.SelectedIndex = 0;
+        }
+        private void WriteParam(TechnoPair value, int pos, LogicType type)
+        {
+            WriteParam(value.Index, pos, type);
+        }
+        private void WriteParam(bool value, int pos, LogicType type)
+        {
+            if (type == LogicType.EventLogic)
+            {
+                _CurrentEvent.Parameters[pos] = value ? "1" : "0";
+                UpdateAt(lbxEventList, _CurrentEvent);
+            }
             else
             {
-                ClearContent(gpbActions);
-                mtxbActionID.Text = "00";
+                _CurrentAction.Parameters[pos] = value ? "1" : "0";
+                UpdateAt(lbxActionList, _CurrentAction);
             }
         }
-
-        #region Languages
-        private void SetLanguage()
+        private void ParamChanged(object sender, LogicType type)
         {
-            foreach (TabPage p in tbcMain.TabPages)
+            Type t = sender.GetType();
+            int paramsindex = int.Parse(((Control)sender).Tag.ToString());
+            int i = (type == LogicType.EventLogic) ?
+                _CurrentEventParameters[paramsindex].ParamPos : _CurrentActionParameters[paramsindex].ParamPos;
+            if (t == typeof(TextBox))
             {
-                foreach (Control c in p.Controls)
-                {
-                    SetControlLanguage(c);
-                }
-                p.Text = DICT[p.Text];
+                WriteParam(((TextBox)sender).Text, i, type);
             }
-            Text = DICT[Text];
-            lblNoParamE.Location = new Point(gpbEventParam.Size.Width / 2 - lblNoParamE.Size.Width / 2, gpbEventParam.Size.Height / 2 - lblNoParamE.Size.Height);
-            lblNoParamA.Location = new Point(gpbActionParam.Size.Width / 2 - lblNoParamA.Size.Width / 2, gpbActionParam.Size.Height / 2 - lblNoParamA.Size.Height);
+            else if (t == typeof(ComboBox))
+            {
+                TechnoPair p = ((ComboBox)sender).SelectedItem as TechnoPair;
+                if (p == null) p = new TechnoPair(((ComboBox)sender).Text, "");
+                WriteParam(p, i, type);
+            }
+            else if (t == typeof(CheckBox))
+            {
+                WriteParam(((CheckBox)sender).Checked, i, type);
+            }
         }
-        private void SetControlLanguage(Control parent)
-        {
-            var t = parent.GetType();
-            if (t == typeof(TextBox)) return;
-            if (t == typeof(GroupBox))
-            {
-                foreach (Control c in ((GroupBox)parent).Controls)
-                {
-                    SetControlLanguage(c);
-                }
-            }
-            if (parent.ContextMenuStrip != null)
-            {
-                foreach (ToolStripItem item in parent.ContextMenuStrip.Items)
-                {
-                    item.Text = DICT[item.Text];
-                }
-            }
-            if (!string.IsNullOrEmpty(ttTrg.GetToolTip(parent)))
-            {
-                ttTrg.SetToolTip(parent, DICT[ttTrg.GetToolTip(parent)]);
-            }
-            parent.Text = DICT[parent.Text];
-        }
-
+        #endregion
 
         #endregion
 
+
+        #region Private Calls - LogicEditor
+        private List<TriggerParam> _CurrentEventParameters { get { return (cbbEventAbst.SelectedItem as TriggerDescription).Parameters; } }
+        private List<TriggerParam> _CurrentActionParameters { get { return (cbbActionAbst.SelectedItem as TriggerDescription).Parameters; } }
+        private TriggerItem _CurrentBoxTrigger { get { return lbxTriggerList.SelectedItem as TriggerItem; } }
+        private TriggerItem _CurrentTrigger { get { return map.Triggers[txbTrgID.Text]; } }
+        private LogicItem _CurrentEvent { get { return _CurrentTrigger.Events[lbxEventList.SelectedIndex]; } }
+        private LogicItem _CurrentAction { get { return _CurrentTrigger.Actions[lbxActionList.SelectedIndex]; } }
+        private TagItem _CurrentTag { get { return map.Tags[txbTagID.Text]; } }
+        private SearchCollection _SearchResult { get; set; } = new SearchCollection();
         #endregion
     }
 }

@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.Common;
-using relert_sharp.IniSystem;
-using static relert_sharp.Common.GlobalVar;
+using RelertSharp.Common;
+using RelertSharp.IniSystem;
+using static RelertSharp.Common.GlobalVar;
 
-namespace relert_sharp.MapStructure
+namespace RelertSharp.MapStructure
 {
     public class MapTheaterTileSet
     {
         private List<string> tileNameIndex = new List<string>();
 
 
-        #region Constructor - MapTheaterTileSet
+        #region Ctor - MapTheaterTileSet
         public MapTheaterTileSet(TheaterType _type)
         {
             string _theater = "";

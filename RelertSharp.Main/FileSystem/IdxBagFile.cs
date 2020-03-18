@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using relert_sharp.Common;
+using RelertSharp.Common;
 
-namespace relert_sharp.FileSystem
+namespace RelertSharp.FileSystem
 {
     public class IdxBagFile : IDisposable
     {
         private BinaryReader bagReader;
 
-        #region Constructor - IdxBagFile
+        #region Ctor - IdxBagFile
         public IdxBagFile() { }
         public IdxBagFile(IdxIndex index, byte[] bagfile)
         {
@@ -80,7 +80,7 @@ namespace relert_sharp.FileSystem
     public class IdxIndex
     {
         private Dictionary<string, IdxItem> items;
-        #region Constructor - IdxIndex
+        #region Ctor - IdxIndex
         public IdxIndex()
         {
             items = new Dictionary<string, IdxItem>();

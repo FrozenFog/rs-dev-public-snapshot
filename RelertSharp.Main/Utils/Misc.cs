@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using relert_sharp.FileSystem;
-using relert_sharp.IniSystem;
-using relert_sharp.Common;
+using RelertSharp.FileSystem;
+using RelertSharp.IniSystem;
+using RelertSharp.Common;
 
-namespace relert_sharp.Utils
+namespace RelertSharp.Utils
 {
     public class Misc
     {
@@ -34,6 +34,20 @@ namespace relert_sharp.Utils
                 }
             }
             Language.DICT = new Lang(dict);
+        }
+        public static T MemCpy<T>(T src)
+        {
+            T dest = Activator.CreateInstance<T>();
+            Type tIn = src.GetType();
+            foreach (var itemDest in dest.GetType().GetProperties())
+            {
+                var itemSrc = tIn.GetProperty(itemDest.Name);
+                if (itemSrc != null && itemDest.CanWrite)
+                {
+                    itemDest.SetValue(dest, itemSrc.GetValue(src));
+                }
+            }
+            return dest;
         }
         public static bool ParseBool(string s, bool def = false)
         {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace relert_sharp.MapStructure.Points
+namespace RelertSharp.MapStructure.Points
 {
     public class WaypointCollection : PointCollectionBase
     {

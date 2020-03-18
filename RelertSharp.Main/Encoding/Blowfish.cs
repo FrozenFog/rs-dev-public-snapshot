@@ -12,7 +12,7 @@
 #endregion
 
 
-namespace relert_sharp.Encoding
+namespace RelertSharp.Encoding
 {
     public class Blowfish
     {

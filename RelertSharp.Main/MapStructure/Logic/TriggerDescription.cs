@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using relert_sharp.IniSystem;
-using static relert_sharp.Language;
+using RelertSharp.IniSystem;
+using static RelertSharp.Language;
 
-namespace relert_sharp.MapStructure.Logic
+namespace RelertSharp.MapStructure.Logic
 {
     public class DescriptCollection
     {
@@ -83,6 +83,7 @@ namespace relert_sharp.MapStructure.Logic
             Abstract = abst;
             Description = desc;
             Parameters = new List<TriggerParam>();
+            if (param.Length < 3) param.Concat(new string[] { "0" });
             InitParams = param;
         }
         #endregion
@@ -149,9 +150,10 @@ namespace relert_sharp.MapStructure.Logic
             ThemeNames = 20,
             SuperWeapons = 16,
             Animations = 17,
-            Weapons = 18,
+            Warhead = 18,
             ParticalAnim = 19,
-            VoxelAnim = 21
+            VoxelAnim = 21,
+            BuildingID = 22
         }
         #region Constructor - TriggerParam
         public TriggerParam(int paramType, bool traceable, int pos, string name, int comboType)

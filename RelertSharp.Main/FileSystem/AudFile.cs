@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using relert_sharp.Encoding;
-using relert_sharp.Common;
-using relert_sharp.Utils;
+using RelertSharp.Encoding;
+using RelertSharp.Common;
+using RelertSharp.Utils;
 
-namespace relert_sharp.FileSystem
+namespace RelertSharp.FileSystem
 {
     public class AudFile : BaseFile
     {
@@ -25,7 +25,7 @@ namespace relert_sharp.FileSystem
         private List<AudBlock> data = new List<AudBlock>();
 
 
-        #region Constructor - AudFile
+        #region Ctor - AudFile
         public AudFile(byte[] _filedata, string _filename) : base(_filedata, _filename)
         {
             ReadHeader();
@@ -160,7 +160,7 @@ namespace relert_sharp.FileSystem
         private byte[] compressedData, decompressedData;
 
 
-        #region Constructor - AudBlock
+        #region Ctor - AudBlock
         public AudBlock(ushort _size, ushort _outSize, int _id, byte[] _data)
         {
             blockSize = _size;

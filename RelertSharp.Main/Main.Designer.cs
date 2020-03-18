@@ -1,4 +1,4 @@
-﻿namespace relert_sharp
+﻿namespace RelertSharp
 {
     partial class Main
     {

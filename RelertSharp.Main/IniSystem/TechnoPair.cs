@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace relert_sharp.IniSystem
+namespace RelertSharp.IniSystem
 {
-    public class TechnoPair
+    public class TechnoPair : IRegistable
     {
         private string abst = "";
         public enum AbstractType
@@ -21,7 +21,7 @@ namespace relert_sharp.IniSystem
         }
 
 
-        #region Constructor - TechnoPair
+        #region Ctor - TechnoPair
         public TechnoPair(INIEntity ent, string index, AbstractType abstractType = AbstractType.RegName, IndexType indexType = IndexType.Index)
         {
             Index = index;
@@ -78,6 +78,7 @@ namespace relert_sharp.IniSystem
         #region Public Calls - TechnoPair
         public string Index { get; set; } = "";
         public string Name { get; set; } = "";
+        public string ID { get { return RegName; } }
         public string RegName { get; set; } = "";
         public string UIName { get; set; } = "";
         #endregion
