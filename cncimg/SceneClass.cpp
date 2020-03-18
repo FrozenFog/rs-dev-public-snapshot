@@ -247,7 +247,7 @@ void SceneClass::InitializeDeviceState()
 
 	auto Tut = this->FructumTransformation(WindowRect, Test);
 
-	printf_s("%f\t%f\t%f.\n", Tut.x, Tut.y, Tut.z);
+	printf_s("tut = %f\t%f\t%f\n", Tut.x, Tut.y, Tut.z);
 	this->pDevice->SetTransform(D3DTS_PROJECTION, &Project);
 
 	this->pDevice->Clear(0, nullptr, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0, 0);

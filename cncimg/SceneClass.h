@@ -15,6 +15,8 @@ public:
 
 	static SceneClass Instance;
 
+	static D3DXVECTOR3 FructumTransformation(RECT Screen, D3DXVECTOR3 Coords);
+
 	SceneClass();
 	SceneClass(HWND hWnd);
 	~SceneClass();
@@ -41,7 +43,6 @@ public:
 	D3DXVECTOR3 ClientToCoords(POINT Point);
 	D3DXVECTOR3 ScreenToCoords(POINT Point);
 	FLOAT GetDistanceToScreen(D3DXVECTOR3 Position);
-	D3DXVECTOR3 FructumTransformation(RECT Screen, D3DXVECTOR3 Coords);
 	//device accessment
 	LPDIRECT3DDEVICE9 GetDevice();
 	LPDIRECT3DSURFACE9 GetBackSurface();

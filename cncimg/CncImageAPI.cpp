@@ -192,14 +192,14 @@ int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFram
 	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position, idxFrame, bFlat, nPaletteId, dwRemapColor);
 }
 
-void WINAPI MakeVxlFrameShot(int nFileId, int idxFrame, float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor)
+void WINAPI MakeVxlFrameShot(int nFileId, LPCSTR pFile, int idxFrame, float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor)
 {
 	auto find = VxlFile::FileObjectTable.find(nFileId);
 	if (find == VxlFile::FileObjectTable.end())
 		return;
 
 	auto pDevice = SceneClass::Instance.GetDevice();
-	find->second->MakeFrameScreenShot(pDevice,idxFrame,RotationX,RotationY,RotationZ,nPaletteID,dwRemapColor);
+	find->second->MakeFrameScreenShot(pDevice, pFile,"shadow.png", idxFrame,RotationX,RotationY,RotationZ,nPaletteID,dwRemapColor);
 }
 
 void WINAPI RemoveObjectFromScene(int nID)
@@ -266,6 +266,59 @@ void WINAPI ClientPositionToScenePosition(POINT Position, D3DXVECTOR3 & Out)
 void WINAPI ClearSceneObjects()
 {
 	SceneClass::Instance.ClearScene();
+}
+
+void MakeShots(const char * VxlFileName, int nTurretOffset, int nPaletteID, int nDirections, DWORD dwRemapColor, int TurretOff)
+{
+	if (!VxlFileName || nDirections % 8)
+		return;
+
+	char turName[MAX_PATH], barlName[MAX_PATH];
+
+	strcpy_s(turName, VxlFileName);
+	strcpy(turName + strlen(VxlFileName) - 4, "tur.vxl");
+
+	strcpy_s(barlName, VxlFileName);
+	strcpy(barlName + strlen(VxlFileName) - 4, "barl.vxl");
+
+	auto pVxl = std::make_unique<VxlFile>(VxlFileName);
+	auto pTur = std::make_unique<VxlFile>(turName);
+	auto pBarl = std::make_unique<VxlFile>(barlName);
+
+	char szTargetName[MAX_PATH]{ 0 };
+	char szShadowName[MAX_PATH]{ 0 };
+	int idxFile = 0;
+	if (pVxl && pVxl->IsLoaded() && pVxl->GetFrameCount())
+	{
+		auto anglesec = 2.0*D3DX_PI / nDirections;
+		auto angle = -0.75*D3DX_PI;
+
+		auto shadowStart = pVxl->GetFrameCount()*nDirections;
+		if (pTur->IsLoaded())
+			shadowStart += nDirections;
+
+		for (int i = 0; i < nDirections; i++)
+		{
+			for (int frame = 0; frame < pVxl->GetFrameCount(); frame++)
+			{
+				sprintf_s(szTargetName, "Output\\%06d.png", idxFile);
+				sprintf_s(szShadowName, "Output\\%06d.png", idxFile++ + shadowStart);
+				pVxl->MakeFrameScreenShot(SceneClass::Instance.GetDevice(), szTargetName, szShadowName, frame, 
+					0, 0, angle, nPaletteID, dwRemapColor);
+			}
+			angle += anglesec;
+		}
+
+		angle = -0.75*D3DX_PI;
+		for (int i = 0; pTur->IsLoaded() && i < nDirections; i++)
+		{
+			sprintf_s(szTargetName, "Output\\%06d.png", idxFile);
+			sprintf_s(szShadowName, "Output\\%06d.png", idxFile++ + shadowStart);
+			pTur->MakeBarlTurScreenShot(SceneClass::Instance.GetDevice(), pBarl.get(), szTargetName, szShadowName,
+				0, 0.0, 0.0, angle, nPaletteID, dwRemapColor, TurretOff);
+			angle += anglesec;
+		}
+	}
 }
 
 TheaterType GetCurrentTheater()

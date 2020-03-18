@@ -122,13 +122,18 @@ public:
 	void LoadFromFileInBuffer(LPVOID pFileBuffer, ULONG nSize, LPVOID pHVABuffer, ULONG nHVASize, bool bCopy = true, bool bHVACopy = true);
 	void PrintInfo();
 	bool IsLoaded();
+	int GetFrameCount();
 	bool GetVoxelRH(int nLimb, int x, int y, int z, Voxel& Voxel);
 	bool GetVoxelLH(int nLimb, int x, int y, int z, Voxel& Voxel);
 	void LoadPalette(const char* pPaletteName);
 	int DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
 		float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor, VPLFile& Vpl = VPLFile::GlobalVPL);
-	void MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, int idxFrame, float RotationX, float RotationY, float RotationZ, int nPaletteID,
-		DWORD dwRemapColor, VPLFile& Vpl = VPLFile::GlobalVPL);
+
+	void MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, const char* pDestFile, const char* pShadow, int idxFrame, float RotationX, float RotationY, 
+		float RotationZ, int nPaletteID, DWORD dwRemapColor, VPLFile& Vpl = VPLFile::GlobalVPL);
+
+	void MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile* Barl, const char* pDestFile, const char* pShadow, int idxFrame, float RotationX, float RotationY, 
+		float RotationZ, int nPaletteID, DWORD dwRemapColor, int TurretOff = 0, VPLFile&Vpl = VPLFile::GlobalVPL);
 
 #ifdef _DEBUG
 public:

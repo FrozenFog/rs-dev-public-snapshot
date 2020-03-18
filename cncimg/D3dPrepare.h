@@ -9,11 +9,11 @@
 
 namespace Graphic
 {
-	bool Direct3DInitialize(HWND hWnd);
+	bool Direct3DInitialize(HWND hWnd, const char* pShotFileName = nullptr, int nDirections = 8, int TurretOff = 0);
 
 	void Direct3DUninitialize();
 
-	bool PrepareVertexBuffer();
+	bool PrepareVertexBuffer(const char* pShotFileName=nullptr,int nDirections = 8, int TurretOff = 0);
 
 	void DrawScene();
 

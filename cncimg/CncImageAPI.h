@@ -40,7 +40,7 @@ EXPORT bool WINAPI CreateTmpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int
 
 EXPORT int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFrame, int nPaletteId, DWORD dwRemapColor, bool bFlat);
 
-EXPORT void WINAPI MakeVxlFrameShot(int nFileId, int idxFrame, float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor);
+EXPORT void WINAPI MakeVxlFrameShot(int nFileId, LPCSTR pFileName, int idxFrame, float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor);
 
 EXPORT void WINAPI RemoveObjectFromScene(int nID);
 
@@ -69,7 +69,8 @@ EXPORT void WINAPI ClearSceneObjects();
 Obsolete apis
 */
 
-
+void MakeShots(const char* VxlFileName, int nTurretOffset, int nPaletteID, int nDirections = 8, 
+	DWORD dwRemapColor = INVALID_COLOR_VALUE, int TurretOff = 0);
 
 
 

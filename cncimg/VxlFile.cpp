@@ -1,4 +1,5 @@
 #include "VertexFormats.h"
+#include "normals.h"
 #include "VxlFile.h"
 #include "ColorScheme.h"
 
@@ -305,6 +306,14 @@ bool VxlFile::IsLoaded()
 	return this->pFileBuffer != nullptr && this->AssociatedHVA.IsLoaded();
 }
 
+int VxlFile::GetFrameCount()
+{
+	if (!this->IsLoaded() || !this->AssociatedHVA.IsLoaded())
+		return 0;
+
+	return this->AssociatedHVA.GetFrameCount();
+}
+
 bool VxlFile::GetVoxelRH(int nLimb, int x, int y, int z, Voxel & Voxel)
 {
 	if (!this->IsLoaded())
@@ -384,8 +393,8 @@ int VxlFile::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
 
 		//Origin is multiplied before Hva
 		TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
-		Origin = TailerInfo.Matrix.AsD3dMatrix();
-		Matrix = this->AssociatedHVA.GetTransformMatrix(0, i)->AsD3dMatrix();
+		Origin = TailerInfo.Matrix.AsD3dMatrix(TailerInfo.fScale);
+		Matrix = this->AssociatedHVA.GetTransformMatrix(0, i)->AsD3dMatrix(TailerInfo.fScale);
 		Matrix = Identity*Scale*TranslationCenter*Origin*Matrix*RotateX*RotateY*RotateZ*Translation;
 		NormalMatrix = Matrix;
 		
@@ -404,14 +413,12 @@ int VxlFile::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
 
 					if (Buffer.nColor)
 					{
-						ColorStruct Normal;
+						auto pNormalTable = NormalTableDirectory[static_cast<int>(TailerInfo.nNormalType)];
 
-						if (TailerInfo.nNormalType == NORMALTYPE_TS)
-							Normal = VxlFile::TSNormals[Buffer.nNormal];
-						if (TailerInfo.nNormalType == NORMALTYPE_RA)
-							Normal = VxlFile::RANormals[Buffer.nNormal];
+						if (!pNormalTable)
+							continue;
 
-						D3DXVECTOR3 NormalVec = { (float)Normal.R - 128.0f,(float)Normal.G - 128.0f,(float)Normal.B - 128.0f };
+						D3DXVECTOR3 NormalVec = pNormalTable[Buffer.nNormal];//{ (float)Normal.R - 128.0f,(float)Normal.G - 128.0f,(float)Normal.B - 128.0f };
 						D3DCOLOR dwColor;
 						NormalVec *= NormalMatrix;
 
@@ -469,8 +476,8 @@ int VxlFile::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
 	return this->CommitOpaqueObject(PaintObject);
 }
 
-void VxlFile::MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, int idxFrame, float RotationX, float RotationY,
-	float RotationZ, int nPaletteID, DWORD dwRemapColor, VPLFile & Vpl)
+void VxlFile::MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, const char* pDestFile, const char* pShadow, int idxFrame, 
+	float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor, VPLFile & Vpl)
 {
 	if (!this->IsLoaded() || !pDevice)
 		return;
@@ -519,8 +526,8 @@ void VxlFile::MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, int idxFrame, float
 
 		//Origin is multiplied before Hva
 		TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
-		Origin = TailerInfo.Matrix.AsD3dMatrix();
-		Matrix = this->AssociatedHVA.GetTransformMatrix(idxFrame, i)->AsD3dMatrix();
+		Origin = TailerInfo.Matrix.AsD3dMatrix(TailerInfo.fScale);
+		Matrix = this->AssociatedHVA.GetTransformMatrix(idxFrame, i)->AsD3dMatrix(TailerInfo.fScale);
 		Matrix = Identity*Scale*TranslationCenter*Origin*Matrix*RotateX*RotateY*RotateZ;
 		NormalMatrix = Matrix;
 
@@ -539,14 +546,12 @@ void VxlFile::MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, int idxFrame, float
 
 					if (Buffer.nColor)
 					{
-						ColorStruct Normal;
+						auto pNormalTable = NormalTableDirectory[static_cast<int>(TailerInfo.nNormalType)];
 
-						if (TailerInfo.nNormalType == NORMALTYPE_TS)
-							Normal = VxlFile::TSNormals[Buffer.nNormal];
-						if (TailerInfo.nNormalType == NORMALTYPE_RA)
-							Normal = VxlFile::RANormals[Buffer.nNormal];
+						if (!pNormalTable)
+							continue;
 
-						D3DXVECTOR3 NormalVec = { (float)Normal.R - 128.0f,(float)Normal.G - 128.0f,(float)Normal.B - 128.0f };
+						D3DXVECTOR3 NormalVec = pNormalTable[Buffer.nNormal];//{ (float)Normal.R - 128.0f,(float)Normal.G - 128.0f,(float)Normal.B - 128.0f };
 						D3DCOLOR dwColor;
 						NormalVec *= NormalMatrix;
 
@@ -604,6 +609,7 @@ void VxlFile::MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, int idxFrame, float
 	auto pTextureColors = reinterpret_cast<DWORD(*)[256]>(LockedRect.pBits);
 	auto BaseColor = Entries[0];
 	auto dwBaseColor = D3DCOLOR_XRGB(BaseColor.R, BaseColor.G, BaseColor.B);
+	auto dwShadowColor = D3DCOLOR_XRGB(Entries[1].R, Entries[1].G, Entries[1].B);
 
 	for (int i = 0; i < 256; i++)
 		for (int j = 0; j < 256; j++)
@@ -617,7 +623,7 @@ void VxlFile::MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, int idxFrame, float
 
 	for (auto vertex : UsedVertecies)
 	{
-		auto ScreenPos = SceneClass::Instance.FructumTransformation(FrameRect, vertex.Vector);
+		auto ScreenPos = SceneClass::FructumTransformation(FrameRect, vertex.Vector);
 
 		int x = ScreenPos.x, y = ScreenPos.y;
 		float sx = ScreenPos.x, sy = ScreenPos.y;
@@ -665,7 +671,334 @@ void VxlFile::MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, int idxFrame, float
 	}
 
 	pTexture->UnlockRect(0);
-	D3DXSaveTextureToFile("VxlShot.png", D3DXIFF_PNG, pTexture, nullptr);
+	D3DXSaveTextureToFile(pDestFile, D3DXIFF_PNG, pTexture, nullptr);
+
+	if (FAILED(pTexture->LockRect(0, &LockedRect, &FrameRect, D3DLOCK_DISCARD)))
+		return;
+
+	pTextureColors = reinterpret_cast<DWORD(*)[256]>(LockedRect.pBits);
+	for (int i = 0; i < 256; i++)
+		for (int j = 0; j < 256; j++)
+			pTextureColors[i][j] = dwBaseColor;
+	for (auto vertex : UsedVertecies)
+	{
+		D3DXVECTOR3 ShadowPos = vertex.Vector;
+		ShadowPos.z = 0.0;
+
+		auto ScreenPos = SceneClass::FructumTransformation(FrameRect, ShadowPos);
+		int x = ScreenPos.x;
+		int y = ScreenPos.y;
+
+		pTextureColors[y][x] = dwShadowColor;
+	}
+
+	pTexture->UnlockRect(0);
+	D3DXSaveTextureToFile(pShadow, D3DXIFF_PNG, pTexture, nullptr);
+
+	pTexture->Release();
+	delete[] ZBuffer;
+}
+
+void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, const char * pDestFile, const char* pShadow, 
+	int idxFrame, float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor, int TurretOff, VPLFile & Vpl)
+{
+	if (!this->IsLoaded() || !pDevice)
+		return;
+
+	if (idxFrame >= this->AssociatedHVA.GetFrameCount())
+		return;
+
+	//this->RemoveFromScene(Position);
+
+	D3DXMATRIX Matrix, Offset, Scale, RotateX, RotateY, RotateZ, Identity, NormalMatrix, Origin, TranslationCenter;
+	//LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
+	LPDIRECT3DTEXTURE9 pTexture;
+	LPVOID pVertexData;
+
+	std::vector<Vertex> UsedVertecies;
+	std::vector<Voxel> BufferedVoxels;
+	std::vector<D3DXVECTOR3> BufferedNormals;
+	Voxel Buffer;
+	Palette Entries;
+
+	if (auto palette = Palette::FindPaletteByID(nPaletteID)) {
+		Entries = *palette;
+	}
+	else
+		return;
+
+	Entries.MakeRemapColor(dwRemapColor);
+	auto& Scene = SceneClass::Instance;
+
+	for (int i = 0; i < this->FileHeader.nNumberOfLimbs; i++)
+	{
+		auto&TailerInfo = this->LimbTailers[i];
+
+		D3DXMatrixTranslation(&Offset, TurretOff*30.0*sqrt(2.0) / 256.0, 0.0, 0.0);
+		D3DXMatrixRotationX(&RotateX, RotationX);
+		D3DXMatrixRotationY(&RotateY, RotationY);
+		D3DXMatrixRotationZ(&RotateZ, RotationZ);
+		D3DXMatrixIdentity(&Identity);
+
+		auto MinBounds = TailerInfo.MinBounds;
+		auto MaxBounds = TailerInfo.MaxBounds;
+
+		FLOAT xScale = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
+		FLOAT yScale = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
+		FLOAT zScale = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
+		D3DXMatrixScaling(&Scale, xScale, yScale, zScale);
+
+		//Origin is multiplied before Hva
+		TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
+		Origin = TailerInfo.Matrix.AsD3dMatrix(TailerInfo.fScale);
+		Matrix = this->AssociatedHVA.GetTransformMatrix(idxFrame, i)->AsD3dMatrix(TailerInfo.fScale);
+		Matrix = Identity*Scale*TranslationCenter*Origin*Matrix*Offset*RotateX*RotateY*RotateZ;
+		NormalMatrix = Matrix;
+
+		NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
+
+		//this->AssociatedHVA.GetTransformMatrix(0, i)->Print();
+
+		for (int x = 0; x < TailerInfo.nXSize; x++)
+		{
+			for (int y = 0; y < TailerInfo.nYSize; y++)
+			{
+				for (int z = 0; z < TailerInfo.nZSize; z++)
+				{
+					if (!this->GetVoxelRH(i, x, y, z, Buffer))
+						continue;
+
+					if (Buffer.nColor)
+					{
+						auto pNormalTable = NormalTableDirectory[static_cast<int>(TailerInfo.nNormalType)];
+
+						if (!pNormalTable)
+							continue;
+
+						D3DXVECTOR3 NormalVec = pNormalTable[Buffer.nNormal];//{ (float)Normal.R - 128.0f,(float)Normal.G - 128.0f,(float)Normal.B - 128.0f };
+						D3DCOLOR dwColor;
+						NormalVec *= NormalMatrix;
+
+						auto fAngle = std::acos((VxlFile::LightReversed * NormalVec) /
+							D3DXVec3Length(&VxlFile::LightReversed) / D3DXVec3Length(&NormalVec));
+
+						if (fAngle >= D3DX_PI / 2)
+						{
+							auto& Color = Entries[Vpl[0].Table[Buffer.nColor]];
+							dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+						}
+						else
+						{
+							int nIndex = 31 - int(fAngle / (D3DX_PI / 2)*32.0);
+							auto& Color = Entries[Vpl[nIndex].Table[Buffer.nColor]];
+							dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+						}
+
+						UsedVertecies.push_back({
+							(float)x,(float)y,(float)z,
+							//(float)Normal.R,(float)Normal.G,(float)Normal.B,
+							dwColor });
+
+						UsedVertecies.back().Vector *= Matrix;
+						BufferedNormals.push_back(NormalVec);
+						BufferedVoxels.push_back(Buffer);
+					}
+				}
+			}
+		}
+	}
+
+	if (Barl && Barl->IsLoaded())
+	{
+		for (int i = 0; i < Barl->FileHeader.nNumberOfLimbs; i++)
+		{
+			auto&TailerInfo = Barl->LimbTailers[i];
+
+			D3DXMatrixTranslation(&Offset, TurretOff*30.0*sqrt(2.0) / 256.0, 0.0, 0.0);
+			D3DXMatrixRotationX(&RotateX, RotationX);
+			D3DXMatrixRotationY(&RotateY, RotationY);
+			D3DXMatrixRotationZ(&RotateZ, RotationZ);
+			D3DXMatrixIdentity(&Identity);
+
+			auto MinBounds = TailerInfo.MinBounds;
+			auto MaxBounds = TailerInfo.MaxBounds;
+
+			FLOAT xScale = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
+			FLOAT yScale = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
+			FLOAT zScale = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
+			D3DXMatrixScaling(&Scale, xScale, yScale, zScale);
+
+			//Origin is multiplied before Hva
+			TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
+			Origin = TailerInfo.Matrix.AsD3dMatrix(TailerInfo.fScale);
+			Matrix = Barl->AssociatedHVA.GetTransformMatrix(0, i)->AsD3dMatrix(TailerInfo.fScale);
+			Matrix = Identity*Scale*TranslationCenter*Origin*Matrix*Offset*RotateX*RotateY*RotateZ;
+			NormalMatrix = Matrix;
+
+			NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
+
+			//this->AssociatedHVA.GetTransformMatrix(0, i)->Print();
+
+			for (int x = 0; x < TailerInfo.nXSize; x++)
+			{
+				for (int y = 0; y < TailerInfo.nYSize; y++)
+				{
+					for (int z = 0; z < TailerInfo.nZSize; z++)
+					{
+						if (!Barl->GetVoxelRH(i, x, y, z, Buffer))
+							continue;
+
+						if (Buffer.nColor)
+						{
+							auto pNormalTable = NormalTableDirectory[static_cast<int>(TailerInfo.nNormalType)];
+
+							if (!pNormalTable)
+								continue;
+
+							D3DXVECTOR3 NormalVec = pNormalTable[Buffer.nNormal];//{ (float)Normal.R - 128.0f,(float)Normal.G - 128.0f,(float)Normal.B - 128.0f };
+							D3DCOLOR dwColor;
+							NormalVec *= NormalMatrix;
+
+							auto fAngle = std::acos((VxlFile::LightReversed * NormalVec) /
+								D3DXVec3Length(&VxlFile::LightReversed) / D3DXVec3Length(&NormalVec));
+
+							if (fAngle >= D3DX_PI / 2)
+							{
+								auto& Color = Entries[Vpl[0].Table[Buffer.nColor]];
+								dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+							}
+							else
+							{
+								int nIndex = 31 - int(fAngle / (D3DX_PI / 2)*32.0);
+								auto& Color = Entries[Vpl[nIndex].Table[Buffer.nColor]];
+								dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+							}
+
+							UsedVertecies.push_back({
+								(float)x,(float)y,(float)z,
+								//(float)Normal.R,(float)Normal.G,(float)Normal.B,
+								dwColor });
+
+							UsedVertecies.back().Vector *= Matrix;
+							BufferedNormals.push_back(NormalVec);
+							BufferedVoxels.push_back(Buffer);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	RECT FrameRect{ 0,0,256,256 };
+	auto ZBuffer = new float[256][256];
+	D3DLOCKED_RECT LockedRect;
+
+	typedef union {
+		RGBQUAD Color;
+		DWORD dwColor;
+	}ColorUnion;
+
+	if (!ZBuffer)
+		return;
+
+	if (FAILED(pDevice->CreateTexture(256, 256, 1, NULL, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &pTexture, nullptr)))
+		return;
+
+	if (FAILED(pTexture->LockRect(0, &LockedRect, &FrameRect, D3DLOCK_DISCARD)))
+		return;
+
+	for (int i = 0; i < 256; i++)
+		for (int j = 0; j < 256; j++)
+			ZBuffer[i][j] = 1.0;
+
+	auto pTextureColors = reinterpret_cast<DWORD(*)[256]>(LockedRect.pBits);
+	auto BaseColor = Entries[0];
+	auto dwBaseColor = D3DCOLOR_XRGB(BaseColor.R, BaseColor.G, BaseColor.B);
+	auto dwShadowColor = D3DCOLOR_XRGB(Entries[1].R, Entries[1].G, Entries[1].B);
+
+	for (int i = 0; i < 256; i++)
+		for (int j = 0; j < 256; j++)
+			pTextureColors[i][j] = dwBaseColor;
+
+	auto AlphaBlend = [](ColorUnion& src, ColorUnion& dst, double a) {
+		dst.Color.rgbBlue = src.Color.rgbBlue*a + dst.Color.rgbBlue*(1.0 - a);
+		dst.Color.rgbGreen = src.Color.rgbGreen*a + dst.Color.rgbGreen*(1.0 - a);
+		dst.Color.rgbRed = src.Color.rgbRed*a + dst.Color.rgbRed*(1.0 - a);
+	};
+
+	for (auto vertex : UsedVertecies)
+	{
+		auto ScreenPos = SceneClass::FructumTransformation(FrameRect, vertex.Vector);
+
+		int x = ScreenPos.x, y = ScreenPos.y;
+		float sx = ScreenPos.x, sy = ScreenPos.y;
+
+		if (ScreenPos.z < ZBuffer[y][x] && ScreenPos.z > 0.0)
+		{
+			ZBuffer[y][x] = ScreenPos.z;
+
+			if (pTextureColors[y][x] == dwBaseColor) {
+				pTextureColors[y][x] = vertex.dwColor;
+				continue;
+			}
+
+			auto dx = sx - x, dy = sy - y;
+			auto lefttop = (1.0 - dx)*(1.0 - dy);
+			auto righttop = dx*(1.0 - dy);
+			auto leftbottom = dy*(1.0 - dx);
+			auto rightbottom = dx*dy;
+
+			ColorUnion src, dst;
+			src.dwColor = vertex.dwColor;
+
+			dst.dwColor = pTextureColors[y][x];
+			AlphaBlend(src, dst, lefttop);
+			pTextureColors[y][x] = dst.dwColor;
+
+			if (pTextureColors[y][x + 1] != dwBaseColor) {
+				dst.dwColor = pTextureColors[y][x + 1];
+				AlphaBlend(src, dst, righttop);
+				pTextureColors[y][x + 1] = dst.dwColor;
+			}
+
+			if (pTextureColors[y + 1][x] != dwBaseColor) {
+				dst.dwColor = pTextureColors[y + 1][x];
+				AlphaBlend(src, dst, leftbottom);
+				pTextureColors[y + 1][x] = dst.dwColor;
+			}
+
+			if (pTextureColors[y + 1][x + 1] != dwBaseColor) {
+				dst.dwColor = pTextureColors[y + 1][x + 1];
+				AlphaBlend(src, dst, rightbottom);
+				pTextureColors[y + 1][x + 1] = dst.dwColor;
+			}
+		}
+	}
+
+	pTexture->UnlockRect(0);
+	D3DXSaveTextureToFile(pDestFile, D3DXIFF_PNG, pTexture, nullptr);
+
+	if (FAILED(pTexture->LockRect(0, &LockedRect, &FrameRect, D3DLOCK_DISCARD)))
+		return;
+
+	pTextureColors = reinterpret_cast<DWORD(*)[256]>(LockedRect.pBits);
+	for (int i = 0; i < 256; i++)
+		for (int j = 0; j < 256; j++)
+			pTextureColors[i][j] = dwBaseColor;
+	for (auto vertex : UsedVertecies)
+	{
+		D3DXVECTOR3 ShadowPos = vertex.Vector;
+		ShadowPos.z = 0.0;
+
+		auto ScreenPos = SceneClass::FructumTransformation(FrameRect, ShadowPos);
+		int x = ScreenPos.x;
+		int y = ScreenPos.y;
+
+		pTextureColors[y][x] = dwShadowColor;
+	}
+
+	pTexture->UnlockRect(0);
+	D3DXSaveTextureToFile(pShadow, D3DXIFF_PNG, pTexture, nullptr);
 
 	pTexture->Release();
 	delete[] ZBuffer;
