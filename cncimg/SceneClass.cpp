@@ -12,6 +12,7 @@ SceneClass::SceneClass() :pResource(nullptr),
 	pBackBuffer(nullptr)
 {
 	ZeroMemory(this, sizeof *this);
+	dwBackgroundColor = D3DCOLOR_XRGB(0, 0, 252);
 }
 
 SceneClass::SceneClass(HWND hWnd) :SceneClass()
@@ -250,7 +251,7 @@ void SceneClass::InitializeDeviceState()
 	printf_s("tut = %f\t%f\t%f\n", Tut.x, Tut.y, Tut.z);
 	this->pDevice->SetTransform(D3DTS_PROJECTION, &Project);
 
-	this->pDevice->Clear(0, nullptr, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0, 0);
+	this->pDevice->Clear(0, nullptr, D3DCLEAR_ZBUFFER, this->dwBackgroundColor, 1.0, 0);
 
 	this->pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	this->pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
@@ -290,4 +291,14 @@ void SceneClass::SetUpCamera()
 	D3DXMatrixLookAtLH(&View, &Eye, &Target, &Up);
 
 	this->pDevice->SetTransform(D3DTS_VIEW, &View);
+}
+
+void SceneClass::SetBackgroundColor(DWORD dwColor)
+{
+	this->dwBackgroundColor = dwColor;
+}
+
+DWORD SceneClass::GetBackgroundColor()
+{
+	return this->dwBackgroundColor;
 }

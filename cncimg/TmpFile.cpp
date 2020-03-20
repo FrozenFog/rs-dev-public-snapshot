@@ -491,6 +491,7 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 	float PixelCellLength = this->GetFileData()->Header.nBlocksWidth / 2.0 * sqrt(2.0);
 	float PixelCellVisualHeight = this->GetFileData()->Header.nBlocksHeight;
 	float PixelCellVisualWidth = this->GetFileData()->Header.nBlocksWidth;
+	const float StretchAdjustment = 0.5f;
 
 	PaintingStruct PaintObject;
 	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer, pExtraVertexBuffer;
@@ -515,10 +516,10 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 
 	TexturedVertex CellVertecies[] =
 	{
-		{ {CellStartX - 1,CellStartY - 1,Position.z},0.50f,0.04f },
-		{ {CellStartX + PixelCellLength + 1,CellStartY - 1,Position.z},0.96f,0.48f },
-		{ {CellStartX - 1,CellStartY + PixelCellLength + 1,Position.z},0.04f,0.48f },
-		{ {CellStartX + PixelCellLength + 1,CellStartY + PixelCellLength + 1,Position.z},0.50f,0.96f },
+		{ {CellStartX - StretchAdjustment,CellStartY - StretchAdjustment,Position.z},0.50f,0.04f },
+		{ {CellStartX + PixelCellLength + StretchAdjustment,CellStartY - StretchAdjustment,Position.z},0.96f,0.48f },
+		{ {CellStartX - StretchAdjustment,CellStartY + PixelCellLength + StretchAdjustment,Position.z},0.04f,0.48f },
+		{ {CellStartX + PixelCellLength + StretchAdjustment,CellStartY + PixelCellLength + StretchAdjustment,Position.z},0.50f,0.96f },
 	};
 
 	if (FAILED(pDevice->CreateVertexBuffer(sizeof CellVertecies, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,
@@ -558,10 +559,10 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 			float ExtraStartY = Position.y + dx / sqrt(2.0) - dy*sqrt(2.0);
 			float ExtraStartZ = Position.z;
 
-			ExtraVertecies[0] = { { ExtraStartX - 1,ExtraStartY,ExtraStartZ },0.0,0.0 };
-			ExtraVertecies[1] = { { ExtraStartX + l, ExtraStartY - l - 1, ExtraStartZ }, 1.0, 0.0 };
-			ExtraVertecies[2] = { { ExtraStartX + h,ExtraStartY + h + 1,ExtraStartZ },0.0,1.0 };
-			ExtraVertecies[3] = { { ExtraStartX + l + h + 1,ExtraStartY - l + h,ExtraStartZ },1.0,1.0 };
+			ExtraVertecies[0] = { { ExtraStartX - StretchAdjustment,ExtraStartY,ExtraStartZ },0.0,0.0 };
+			ExtraVertecies[1] = { { ExtraStartX + l, ExtraStartY - l - StretchAdjustment, ExtraStartZ }, 1.0, 0.0 };
+			ExtraVertecies[2] = { { ExtraStartX + h,ExtraStartY + h + StretchAdjustment,ExtraStartZ },0.0,1.0 };
+			ExtraVertecies[3] = { { ExtraStartX + l + h + StretchAdjustment,ExtraStartY - l + h,ExtraStartZ },1.0,1.0 };
 		}
 		else
 		{
@@ -572,10 +573,10 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 			float ExtraStartY = Position.y + dx / sqrt(2.0);// -dy*sqrt(2.0);
 			float ExtraStartZ = Position.z + dy*2.0 / sqrt(3.0);
 
-			ExtraVertecies[0] = { { ExtraStartX - 1,ExtraStartY + 1,ExtraStartZ + 1 },0.0,0.0 };
-			ExtraVertecies[1] = { { ExtraStartX + l + 1, ExtraStartY - l - 1, ExtraStartZ + 1 }, 1.0, 0.0 };
-			ExtraVertecies[2] = { { ExtraStartX - 1,ExtraStartY + 1,ExtraStartZ - h - 1 },0.0,1.0 };
-			ExtraVertecies[3] = { { ExtraStartX + l + 1,ExtraStartY - l - 1,ExtraStartZ - h - 1},1.0,1.0 };
+			ExtraVertecies[0] = { { ExtraStartX - StretchAdjustment,ExtraStartY + StretchAdjustment,ExtraStartZ + 1 },0.0,0.0 };
+			ExtraVertecies[1] = { { ExtraStartX + l + StretchAdjustment, ExtraStartY - l - StretchAdjustment, ExtraStartZ + 1 }, 1.0, 0.0 };
+			ExtraVertecies[2] = { { ExtraStartX - StretchAdjustment,ExtraStartY + StretchAdjustment,ExtraStartZ - h - 1 },0.0,1.0 };
+			ExtraVertecies[3] = { { ExtraStartX + l + StretchAdjustment,ExtraStartY - l - StretchAdjustment,ExtraStartZ - h - 1},1.0,1.0 };
 		}
 
 		if (FAILED(pDevice->CreateVertexBuffer(sizeof ExtraVertecies, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,

@@ -52,6 +52,7 @@ EXPORT void WINAPI SetObjectLocation(int nID, D3DXVECTOR3 Position);
 
 //scene api
 EXPORT bool WINAPI SetUpScene(HWND hWnd);
+EXPORT void WINAPI SetBackgroundColor(BYTE R, BYTE G, BYTE B);
 EXPORT bool WINAPI ResetSceneView();
 
 EXPORT void WINAPI PresentAllObject();

@@ -228,6 +228,11 @@ bool WINAPI SetUpScene(HWND hWnd)
 	return SceneClass::Instance.SetUpScene(hWnd);
 }
 
+void WINAPI SetBackgroundColor(BYTE R, BYTE G, BYTE B)
+{
+	SceneClass::Instance.SetBackgroundColor(D3DCOLOR_XRGB(R, G, B));
+}
+
 bool WINAPI ResetSceneView()
 {
 	return SceneClass::Instance.ResetDevice();
@@ -235,7 +240,7 @@ bool WINAPI ResetSceneView()
 
 void WINAPI PresentAllObject()
 {
-	DrawObject::UpdaceScene(SceneClass::Instance.GetDevice());
+	DrawObject::UpdaceScene(SceneClass::Instance.GetDevice(), SceneClass::Instance.GetBackgroundColor());
 }
 
 void WINAPI MoveFocusOnScreen(float x, float y)

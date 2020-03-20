@@ -51,11 +51,14 @@ public:
 	void InitializeDeviceState();
 	bool ResetDevice();
 	void SetUpCamera();
+	void SetBackgroundColor(DWORD dwColor);
+	DWORD GetBackgroundColor();
 
 private:
 	//for color & calculation
 	TheaterType Theater;
 	D3DXVECTOR3 CurrentFocusLocation;
+	DWORD dwBackgroundColor;
 	//RECT CurrentViewPort;
 	
 	//for direct3d only
