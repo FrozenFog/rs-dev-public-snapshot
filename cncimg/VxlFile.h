@@ -132,7 +132,7 @@ public:
 	void MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, const char* pDestFile, const char* pShadow, int idxFrame, float RotationX, float RotationY, 
 		float RotationZ, int nPaletteID, DWORD dwRemapColor, VPLFile& Vpl = VPLFile::GlobalVPL);
 
-	void MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile* Barl, const char* pDestFile, const char* pShadow, int idxFrame, float RotationX, float RotationY, 
+	void MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile* Barl, VxlFile* Body, const char* pDestFile, const char* pShadow, int idxFrame, float RotationX, float RotationY, 
 		float RotationZ, int nPaletteID, DWORD dwRemapColor, int TurretOff = 0, VPLFile&Vpl = VPLFile::GlobalVPL);
 
 #ifdef _DEBUG

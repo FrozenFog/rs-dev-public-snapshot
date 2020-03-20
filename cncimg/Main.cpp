@@ -22,7 +22,6 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 //暂时只画第一个section
 //文件名flata.vxl / unittem.pals
-
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	PrepareConsole();
@@ -72,14 +71,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		char szFileName[MAX_PATH]{ 0 };
 		int nDirections;
 		int nTurretOff;
+		int bUnion;
 
-		sscanf_s(lpCmdLine, "%d %d %s", &nDirections, &nTurretOff, szFileName, sizeof szFileName);
-		if (!Graphic::Direct3DInitialize(hWnd, szFileName, nDirections, nTurretOff))
+		sscanf_s(lpCmdLine, "%d %d %d %s", &nDirections, &nTurretOff, &bUnion, szFileName, sizeof szFileName);
+		if (!Graphic::Direct3DInitialize(hWnd, szFileName, bUnion, nDirections, nTurretOff))
 		{
 			printf_s("d3d creation failed.\n");
 			DestroyWindow(hWnd);
 			UnregisterClass("D3DWIN", hInstance);
 			return 0;
+		}
+		else
+		{
+			DestroyWindow(hWnd);
 		}
 	}
 
@@ -106,7 +110,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Graphic::Direct3DUninitialize();
 
-	getchar();
+	//getchar();
 	UnregisterClass("D3DWIN", hInstance);
 	return 0;
 }
@@ -173,6 +177,9 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
+
+	case WM_ERASEBKGND:
+		return TRUE;
 
 	default:
 		return DefWindowProc(hWnd, uMsg, wParam, lParam);

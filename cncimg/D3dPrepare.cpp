@@ -6,7 +6,7 @@ namespace Graphic
 {
 	std::vector<int> VxlFiles;
 	std::vector<int> TmpFiles;
-	std::vector<int> SlopeFiles;
+	std::vector<int> SlopeFilesSW;
 
 	std::vector<int> SceneObjects;
 
@@ -16,9 +16,9 @@ namespace Graphic
 	int ShpFile;
 }
 
-bool Graphic::Direct3DInitialize(HWND hWnd, const char* pShotFileName, int nDirections, int TurretOff)
+bool Graphic::Direct3DInitialize(HWND hWnd, const char* pShotFileName, bool bUnion, int nDirections, int TurretOff)
 {
-	return SetUpScene(hWnd) && PrepareVertexBuffer(pShotFileName, nDirections, TurretOff);
+	return SetUpScene(hWnd) && PrepareVertexBuffer(pShotFileName, bUnion, nDirections, TurretOff);
 }
 
 void Graphic::Direct3DUninitialize()
@@ -26,10 +26,10 @@ void Graphic::Direct3DUninitialize()
 	return ClearSceneObjects();
 }
 
-bool Graphic::PrepareVertexBuffer(const char* pShotFileName, int nDirections, int TurretOff)
+bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nDirections, int TurretOff)
 {
 	const float TileLength = 30.0f*sqrt(2.0);
-	const float CellHeight = 30.0f / sqrt(3.0);
+	const float CellHeight = 10.0f * sqrt(3.0);
 
 	UnitPalette = CreatePaletteFile("palettes\\unittem.pal");
 	TmpPalette = CreatePaletteFile("palettes\\isotem.pal");
@@ -39,7 +39,7 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, int nDirections, in
 
 	//MakeVxlFrameShot(VxlFiles[0], "Shot.png", 0, 0.0, 0.0, 0.0, UnitPalette, INVALID_COLOR_VALUE);
 	if (pShotFileName) {
-		MakeShots(pShotFileName, 0.0, UnitPalette, nDirections, INVALID_COLOR_VALUE, TurretOff);
+		MakeShots(pShotFileName, 0.0, UnitPalette, bUnion, nDirections, INVALID_COLOR_VALUE, TurretOff);
 	}
 
 	if (auto id = CreateVxlFile("flata.vxl")) {
@@ -71,7 +71,7 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, int nDirections, in
 		sprintf_s(szFileName, "Tile\\rmpfx12%c.tem", cIndex + i);
 
 		if (auto id = CreateTmpFile(szFileName)) {
-			SlopeFiles.push_back(id);
+			SlopeFilesSW.push_back(id);
 			LoadTmpTextures(id, TmpPalette);
 		}
 	}
@@ -101,8 +101,8 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, int nDirections, in
 	int idxTile, idxExtra;
 
 	if (!TmpFiles.empty()) {
-		for (int x = -100; x < 100; x++) {
-			for (int y = -100; y < 100; y++) {
+		for (int x = -4; x < 6; x++) {
+			for (int y = -4; y < 6; y++) {
 				auto RamdomIndex = Randomizer::RandomRanged(0, TmpFiles.size());
 				if (CreateTmpObjectAtScene(TmpFiles[RamdomIndex],
 					D3DXVECTOR3((-0.5 + x)*TileLength, (-0.5 + y)*TileLength, 0.0f), 0, idxTile, idxExtra)) {
@@ -122,16 +122,16 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, int nDirections, in
 		LoadTmpTextures(tiles, TmpPalette);
 	}
 */
-	if (!TmpFiles.empty() && !SlopeFiles.empty())
+	if (!TmpFiles.empty() && !SlopeFilesSW.empty())
 	for (int x = 0; x < 10; x++) {
-		if (CreateTmpObjectAtScene(SlopeFiles[Randomizer::RandomRanged(0, SlopeFiles.size())],
+		if (CreateTmpObjectAtScene(SlopeFilesSW[Randomizer::RandomRanged(0, SlopeFilesSW.size())],
 		{ (-4.5f + x)*TileLength,-5.5f*TileLength,0.0 }, 0, idxTile, idxExtra)) {
 			if (idxTile)
 				SceneObjects.push_back(idxTile);
 			if (idxExtra)
 				SceneObjects.push_back(idxExtra);
 		}
-		if (CreateTmpObjectAtScene(TmpFiles[Randomizer::RandomRanged(0, TmpFiles.size())],
+		if (CreateTmpObjectAtScene(SlopeFilesSW[Randomizer::RandomRanged(0, SlopeFilesSW.size())],
 		{ (-4.5f + x)*TileLength,-6.5f*TileLength,CellHeight }, 0, idxTile, idxExtra)) {
 			if (idxTile)
 				SceneObjects.push_back(idxTile);
