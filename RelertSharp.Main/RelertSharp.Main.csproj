@@ -57,6 +57,9 @@
     <Compile Include="Common\GlobalVar.cs" />
     <Compile Include="Common\RSConfig.cs" />
     <Compile Include="Common\SoundManager.cs" />
+    <Compile Include="Common\Struct.cs" />
+    <Compile Include="DrawingEngine\Engine.cs" />
+    <Compile Include="DrawingEngine\Struct.cs" />
     <Compile Include="Encoding\AudEncoding.cs" />
     <Compile Include="Encoding\Blowfish.cs" />
     <Compile Include="Encoding\CsfEncoding.cs" />
@@ -128,6 +131,7 @@
     <Compile Include="Model\ViewModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DrawingEngine\CppExtern.cs" />
     <Compile Include="SubWindows\LogicEditor\EventHandler.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,7 +207,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DrawingEngine\" />
     <Folder Include="GUI\" />
     <Folder Include="MainEventHandler\" />
     <Folder Include="UtilLib\" />

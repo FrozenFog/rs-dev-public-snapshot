@@ -1,60 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RelertSharp.Common
+﻿namespace RelertSharp.Common
 {
     public static class GlobalVar
     {
-        private static ELanguage currentlanguage = ELanguage.EnglishUS;
-        public static ELanguage CurrentLanguage
-        {
-            get { return currentlanguage; }
-            set { currentlanguage = value; }
-        }
-        private static RSConfig config;
-        public static RSConfig GlobalConfig
-        {
-            get { return config; }
-            set { config = value; }
-        }
-        private static FileSystem.VirtualDir globaldir;
-        public static FileSystem.VirtualDir GlobalDir
-        {
-            get { return globaldir; }
-            set { globaldir = value; }
-        }
-        private static IniSystem.Rules globalrules;
-        public static IniSystem.Rules GlobalRules
-        {
-            get { return globalrules; }
-            set { globalrules = value; }
-        }
-        private static IniSystem.SoundRules globalsound;
-        public static IniSystem.SoundRules GlobalSound
-        {
-            get { return globalsound; }
-            set { globalsound = value; }
-        }
-        private static FileSystem.SoundBank globalsoundbank;
-        public static FileSystem.SoundBank GlobalSoundBank
-        {
-            get { return globalsoundbank; }
-            set { globalsoundbank = value; }
-        }
-        private static FileSystem.CsfFile globalcsf;
-        public static FileSystem.CsfFile GlobalCsf
-        {
-            get { return globalcsf; }
-            set { globalcsf = value; }
-        }
-        private static string playerside;
-        public static string PlayerSide
-        {
-            get { return playerside; }
-            set { playerside = value; }
-        }
+        public static ELanguage CurrentLanguage { get; set; } = ELanguage.EnglishUS;
+        public static RSConfig GlobalConfig { get; set; }
+        public static FileSystem.VirtualDir GlobalDir { get; set; }
+        public static IniSystem.Rules GlobalRules { get; set; }
+        public static IniSystem.SoundRules GlobalSound { get; set; }
+        public static FileSystem.SoundBank GlobalSoundBank { get; set; }
+        public static FileSystem.CsfFile GlobalCsf { get; set; }
+        public static string PlayerSide { get; set; }
+        public static MapStructure.MapTheaterTileSet TileDictionary { get; set; }
+        public static DrawingEngine.Engine Engine { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure
 {
-    public class TileLayer
+    public class TileLayer : IEnumerable<Tile>
     {
         private Dictionary<int, Tile> data = new Dictionary<int, Tile>();
         private List<int> indexs = new List<int>();
@@ -83,7 +83,7 @@ namespace RelertSharp.MapStructure
                     Dictionary<int, List<int>> byHeight = new Dictionary<int, List<int>>();
                     foreach (int coord in sameSubIndex)
                     {
-                        int height = data[coord].Height;
+                        int height = (int)data[coord].Height;
                         if (!byHeight.Keys.Contains(height))
                         {
                             byHeight[height] = new List<int>();
@@ -127,6 +127,17 @@ namespace RelertSharp.MapStructure
             byte[] lzoPack = PackEncoding.EncodeToPack(preCompress, PackType.IsoMapPack);
             return Convert.ToBase64String(lzoPack);
         }
+        #region Enumerator
+        public IEnumerator<Tile> GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+        #endregion
         #endregion
 
 
@@ -170,19 +181,18 @@ namespace RelertSharp.MapStructure
 
     public class Tile
     {
-        private short x, y;
         private int tileIndex;
-        private byte subIndex, level, iceGrowth;
+        private byte subIndex, iceGrowth;
 
 
         #region Ctor - Tile
         public Tile(short _x, short _y, int _TileIndex, byte _TileSubIndex,  byte _Level, byte _IceGrowth)
         {
-            x = _x;
-            y = _y;
+            X = _x;
+            Y = _y;
             tileIndex = _TileIndex;
             subIndex = _TileSubIndex;
-            level = _Level;
+            Height = _Level;
             iceGrowth = _IceGrowth;
         }
         #endregion
@@ -192,11 +202,11 @@ namespace RelertSharp.MapStructure
         public byte[] GetBytes()
         {
             byte[] result = new byte[11];
-            Misc.WriteToArray(result, BitConverter.GetBytes(x), 0);
-            Misc.WriteToArray(result, BitConverter.GetBytes(y), 2);
+            Misc.WriteToArray(result, BitConverter.GetBytes(X), 0);
+            Misc.WriteToArray(result, BitConverter.GetBytes(Y), 2);
             Misc.WriteToArray(result, BitConverter.GetBytes(tileIndex), 4);
             result[8] = subIndex;
-            result[9] = level;
+            result[9] = Height;
             result[10] = iceGrowth;
             return result;
         }
@@ -206,11 +216,11 @@ namespace RelertSharp.MapStructure
         #region Public Calls - Tile
         public dynamic[] Attributes
         {
-            get { return new dynamic[] { x, y, tileIndex, subIndex, level, iceGrowth }; }
+            get { return new dynamic[] { X, Y, tileIndex, subIndex, Height, iceGrowth }; }
         }
         public bool IsDefault
         {
-            get { return (tileIndex == 65535 || tileIndex == 0) && level == 0 && subIndex == 0; }
+            get { return (tileIndex == 65535 || tileIndex == 0) && Height == 0 && subIndex == 0; }
         }
         public bool IsRemoveable
         {
@@ -220,36 +230,36 @@ namespace RelertSharp.MapStructure
         {
             get { return new Tile(0, 0, 65535, 0, 0, 0); }
         }
-        public short X
-        {
-            get { return x; }
-            set { x = value; }
-        }
-        public short Y
-        {
-            get { return y; }
-            set { y = value; }
-        }
+        public short X { get; set; }
+        public short Y { get; set; }
+        public float fX { get { return X; } }
+        public float fY { get { return Y; } }
+        public float fHeight { get { return Height; } }
+        public byte Height { get; set; }
         public int TileIndex
         {
-            get { return tileIndex; }
-            set { tileIndex = value; }
+            get
+            {
+                if (tileIndex == -1) return 0;
+                else return tileIndex;
+            }
+            set
+            {
+                if (value == -1) tileIndex = 0;
+                else tileIndex = value;
+            }
         }
         public byte SubIndex
         {
             get { return subIndex; }
             set { subIndex = value; }
         }
-        public byte Height
-        {
-            get { return level; }
-            set { level = value; }
-        }
         public byte IceGrowth
         {
             get { return iceGrowth; }
             set { iceGrowth = value; }
         }
+        public int Coord { get { return Misc.CoordInt(X, Y); } }
         #endregion
     }
 }

@@ -16,14 +16,12 @@ namespace RelertSharp.FileSystem
     {
         private int WidthCount, HeightCount, blockWidthPX, blockHeightPX;
         private List<TmpImage> images;
-        private TheaterType theaterType;
 
 
         #region Ctor - TmpFile
         public TmpFile(string path) : base(path, FileMode.Open, FileAccess.Read)
         {
             Read();
-            GetTheater();
         }
         public TmpFile(Stream stream, string fileName) : base(stream, fileName)
         {
@@ -37,33 +35,6 @@ namespace RelertSharp.FileSystem
 
 
         #region Private Methods - TmpFile
-        private void GetTheater()
-        {
-            switch (NameExt.ToLower())
-            {
-                case "tem":
-                    theaterType = TheaterType.Template;
-                    break;
-                case "des":
-                    theaterType = TheaterType.Desert;
-                    break;
-                case "sno":
-                    theaterType = TheaterType.Snow;
-                    break;
-                case "lun":
-                    theaterType = TheaterType.Lunar;
-                    break;
-                case "urb":
-                    theaterType = TheaterType.Urban;
-                    break;
-                case "ubn":
-                    theaterType = TheaterType.NewUrban;
-                    break;
-                default:
-                    theaterType = TheaterType.Unknown;
-                    break;
-            }
-        }
         private void Read()
         {
             WidthCount = ReadInt32();

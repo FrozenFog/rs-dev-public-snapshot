@@ -105,6 +105,10 @@ namespace RelertSharp.Utils
         {
             return 1000 * x + y;
         }
+        public static int CoordInt(float x, float y)
+        {
+            return (int)(1000 * x + y);
+        }
         public static int CoordByteX(int crd)
         {
             return crd % 512;
@@ -245,6 +249,10 @@ namespace RelertSharp.Utils
                 result[i] = (byte)(data[i / sizeof(short)] >> 4);
             }
             return result;
+        }
+        public static Point DeltaPoint(Point pre, Point now)
+        {
+           return new Point(now.X - pre.X, now.Y - pre.Y);
         }
     }
 

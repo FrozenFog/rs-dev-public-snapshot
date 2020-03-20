@@ -81,6 +81,34 @@ namespace RelertSharp.Common
         #endregion
 
 
+        #region Public Methods - RSConfig
+        public TheaterType GetTheater(string theaterName)
+        {
+            theaterName = theaterName.ToLower();
+            if (theaterName == this["CustomTheater"]["Custom1Name"]) return TheaterType.Custom1;
+            else if (theaterName == this["CustomTheater"]["Custom2Name"]) return TheaterType.Custom2;
+            else if (theaterName == this["CustomTheater"]["Custom3Name"]) return TheaterType.Custom3;
+            switch (theaterName)
+            {
+                case "temperate":
+                    return TheaterType.Template;
+                case "desert":
+                    return TheaterType.Desert;
+                case "urban":
+                    return TheaterType.Urban;
+                case "newurban":
+                    return TheaterType.NewUrban;
+                case "lunar":
+                    return TheaterType.Lunar;
+                case "snow":
+                    return TheaterType.Snow;
+                default:
+                    return TheaterType.Unknown;
+            }
+        }
+        #endregion
+
+
         #region Public Calls - RSConfig
         public string RulesName { get { return this["INI"]["RulesFileName"]; } }
         public string ArtName { get { return this["INI"]["ArtFileName"]; } }

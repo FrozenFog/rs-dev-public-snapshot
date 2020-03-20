@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Runtime.InteropServices;
 using RelertSharp.Encoding;
 using RelertSharp.Common;
 using RelertSharp.IniSystem;
@@ -66,6 +67,15 @@ namespace RelertSharp.FileSystem
                 else info = new VirtualFileInfo(_mixfile.FilePath, _mixfile.FileName, ent, _mixfile.BodyPos);
                 fileOrigin[ent.fileID] = info;
             }
+        }
+        public VFileInfo GetFilePtr(string filename)
+        {
+            VFileInfo result = new VFileInfo();
+            byte[] buf = GetRawByte(filename);
+            result.ptr = Marshal.AllocHGlobal(buf.Length);
+            Marshal.Copy(buf, 0, result.ptr, buf.Length);
+            result.size = (uint)buf.Length;
+            return result;
         }
         public bool HasFile(string _fullName)
         {
@@ -155,13 +165,13 @@ namespace RelertSharp.FileSystem
                     _fileName += ".lun";
                     return new TmpFile(GetRawByte(_fileName), _fileName);
                 case TheaterType.Custom1:
-                    _fileName += "." + GlobalConfig["CustomThearer"]["Custom1Sub"];
+                    _fileName += "." + GlobalConfig["CustomTheater"]["Custom1Sub"];
                     return new TmpFile(GetRawByte(_fileName), _fileName);
                 case TheaterType.Custom2:
-                    _fileName += "." + GlobalConfig["CustomThearer"]["Custom2Sub"];
+                    _fileName += "." + GlobalConfig["CustomTheater"]["Custom2Sub"];
                     return new TmpFile(GetRawByte(_fileName), _fileName);
                 case TheaterType.Custom3:
-                    _fileName += "." + GlobalConfig["CustomThearer"]["Custom3Sub"];
+                    _fileName += "." + GlobalConfig["CustomTheater"]["Custom3Sub"];
                     return new TmpFile(GetRawByte(_fileName), _fileName);
                 default:
                     return GetRawByte(_fileName);
