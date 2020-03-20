@@ -91,7 +91,7 @@ namespace RelertSharp.Common
             switch (theaterName)
             {
                 case "temperate":
-                    return TheaterType.Template;
+                    return TheaterType.Temprate;
                 case "desert":
                     return TheaterType.Desert;
                 case "urban":
@@ -104,6 +104,32 @@ namespace RelertSharp.Common
                     return TheaterType.Snow;
                 default:
                     return TheaterType.Unknown;
+            }
+        }
+        public string GetTheaterPalName(TheaterType type)
+        {
+            switch (type)
+            {
+                case TheaterType.Custom1:
+                    return this["TheaterPals"]["Custom1"];
+                case TheaterType.Custom2:
+                    return this["TheaterPals"]["Custom2"];
+                case TheaterType.Custom3:
+                    return this["TheaterPals"]["Custom3"];
+                case TheaterType.Desert:
+                    return this["TheaterPals"]["Desert"];
+                case TheaterType.Lunar:
+                    return this["TheaterPals"]["Lunar"];
+                case TheaterType.NewUrban:
+                    return this["TheaterPals"]["NewUrban"];
+                case TheaterType.Snow:
+                    return this["TheaterPals"]["Snow"];
+                case TheaterType.Temprate:
+                    return this["TheaterPals"]["Temperate"];
+                case TheaterType.Urban:
+                    return this["TheaterPals"]["Urban"];
+                default:
+                    return null;
             }
         }
         #endregion

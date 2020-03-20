@@ -20,7 +20,7 @@ namespace RelertSharp.MapStructure
             string _theater = "";
             switch (_type)
             {
-                case TheaterType.Template:
+                case TheaterType.Temprate:
                     _theater = GlobalConfig["INI"]["TemperateTheme"];
                     TheaterSub = "tem";
                     break;
@@ -62,6 +62,14 @@ namespace RelertSharp.MapStructure
                     tileNameIndex.Add(_tileFileName.ToLower() + string.Format("{0:D2}", j) + "." + TheaterSub);
                 }
             }
+        }
+        #endregion
+
+
+        #region Public Methods - MapTheaterTileSet
+        public string NameAsTheater(string name)
+        {
+            return string.Format("{0}.{1}", name.ToLower(), TheaterSub);
         }
         #endregion
 

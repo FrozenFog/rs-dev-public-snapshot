@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.MapStructure.Points
 {
-    public class CellTagCollection : PointCollectionBase
+    public class CellTagCollection : PointCollectionBase<CellTagItem>
     {
         public CellTagCollection() { }
     }

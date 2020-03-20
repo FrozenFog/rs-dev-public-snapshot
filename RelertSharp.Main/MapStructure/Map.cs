@@ -36,11 +36,8 @@ namespace RelertSharp.MapStructure
         private InfantryLayer infantries = new InfantryLayer();
         private StructureLayer structures = new StructureLayer();
         private AircraftLayer aircrafts = new AircraftLayer();
-        private TerrainLayer terrains = new TerrainLayer();
-        private SmudgeLayer smudges = new SmudgeLayer();
 
         private TileLayer Tiles;
-        private OverlayLayer Overlays;
 
         private Dictionary<string, INIEntity> residual;
 
@@ -96,6 +93,11 @@ namespace RelertSharp.MapStructure
             Tags[tag.ID] = tag;
             return t;
         }
+        public int GetHeightFromTile(int x, int y)
+        {
+            Tile t = Tiles[CoordInt(x, y)];
+            return t == null ? 0 : t.Height;
+        }
         #endregion
 
 
@@ -120,8 +122,10 @@ namespace RelertSharp.MapStructure
             foreach (INIPair p in entSmudge.DataList)
             {
                 string[] tmp = p.ParseStringList();
-                string coord = CoordString(int.Parse(tmp[1]), int.Parse(tmp[2]));
-                smudges[coord] = new SmudgeItem(tmp[0], coord, ParseBool(tmp[3]));
+                int x = int.Parse(tmp[1]);
+                int y = int.Parse(tmp[2]);
+                string coord = CoordString(x, y);
+                Smudges[coord] = new SmudgeItem(tmp[0], x, y, ParseBool(tmp[3]));
             }
             foreach (INIPair p in entUnit.DataList)
             {
@@ -141,7 +145,7 @@ namespace RelertSharp.MapStructure
             }
             foreach (INIPair p in entTerrain.DataList)
             {
-                terrains[p.Name] = new TerrainItem(p.Name, p.Value);
+                Terrains[p.Name] = new TerrainItem(p.Name, p.Value);
             }
         }
         private void GetTeam(MapFile f)
@@ -244,6 +248,8 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Calls - Map
+        public TerrainLayer Terrains { get; private set; } = new TerrainLayer();
+        public SmudgeLayer Smudges { get; private set; } = new SmudgeLayer();
         public AITriggerCollection AiTriggers { get; private set; } = new AITriggerCollection();
         public TeamScriptCollection Scripts { get; private set; } = new TeamScriptCollection();
         public TaskforceCollection TaskForces { get; private set; } = new TaskforceCollection();
@@ -253,6 +259,7 @@ namespace RelertSharp.MapStructure
         public CountryCollection Countries { get; private set; }
         public TriggerCollection Triggers { get; private set; } = new TriggerCollection();
         public TagCollection Tags { get; private set; }
+        public OverlayLayer Overlays { get; private set; }
         //public ActionCollection Actions { get; private set; }
         //public EventCollection Events { get; private set; }
         public MapInfo Info

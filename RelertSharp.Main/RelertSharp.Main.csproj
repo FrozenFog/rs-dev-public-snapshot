@@ -55,6 +55,7 @@
     <Compile Include="Common\Constant.cs" />
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\GlobalVar.cs" />
+    <Compile Include="Common\ILocateable.cs" />
     <Compile Include="Common\RSConfig.cs" />
     <Compile Include="Common\SoundManager.cs" />
     <Compile Include="Common\Struct.cs" />

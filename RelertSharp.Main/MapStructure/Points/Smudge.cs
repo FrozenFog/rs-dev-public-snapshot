@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.MapStructure.Points
 {
-    public class SmudgeLayer : PointCollectionBase
+    public class SmudgeLayer : PointCollectionBase<SmudgeItem>
     {
         public SmudgeLayer() { }
     }
@@ -14,7 +14,7 @@ namespace RelertSharp.MapStructure.Points
 
     public class SmudgeItem : PointItemBase
     {
-        public SmudgeItem(string _name, string _coord, bool _ignore) : base(_coord)
+        public SmudgeItem(string _name, int x, int y, bool _ignore) : base(x, y)
         {
             Name = _name;
             IgnoreSmudge = _ignore;

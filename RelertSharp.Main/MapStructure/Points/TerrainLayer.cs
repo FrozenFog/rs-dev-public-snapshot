@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.MapStructure.Points
 {
-    public class TerrainLayer : PointCollectionBase
+    public class TerrainLayer : PointCollectionBase<TerrainItem>
     {
         public TerrainLayer() { }
     }

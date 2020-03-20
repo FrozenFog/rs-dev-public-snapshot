@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.MapStructure.Points
 {
-    public class WaypointCollection : PointCollectionBase
+    public class WaypointCollection : PointCollectionBase<WaypointItem>
     {
         public WaypointCollection() { }
     }

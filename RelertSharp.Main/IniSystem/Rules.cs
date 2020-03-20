@@ -44,6 +44,10 @@ namespace RelertSharp.IniSystem
         {
             Override(f.IniData);
         }
+        public string GetOverlayName(byte overlayid)
+        {
+            return this["OverlayTypes"][overlayid.ToString()];
+        }
         #endregion
 
 

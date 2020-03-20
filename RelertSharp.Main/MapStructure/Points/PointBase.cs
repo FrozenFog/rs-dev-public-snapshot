@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,37 +8,47 @@ using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Points
 {
-    public class PointCollectionBase
+    public class PointCollectionBase<T> : IEnumerable<T>
     {
-        private Dictionary<string, PointItemBase> data = new Dictionary<string, PointItemBase>();
+        private Dictionary<string, T> data = new Dictionary<string, T>();
         public PointCollectionBase() { }
 
 
         #region Public Calls - PointCollectionBase
-        public PointItemBase this[int x, int y]
+        public T this[int x, int y]
         {
             get
             {
                 string coord = CoordString(x, y);
                 if (data.Keys.Contains(coord)) return data[coord];
-                return new PointItemBase();
+                return default(T);
             }
             set
             {
                 data[CoordString(x, y)] = value;
             }
         }
-        public PointItemBase this[string coord]
+        public T this[string coord]
         {
             get
             {
                 if (data.Keys.Contains(coord)) return data[coord];
-                return new PointItemBase();
+                return default(T);
             }
             set
             {
                 data[coord] = value;
             }
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
         }
         #endregion
     }
@@ -51,8 +62,7 @@ namespace RelertSharp.MapStructure.Points
         public PointItemBase(string _coord)
         {
             Coord = _coord;
-            x = CoordByteX(int.Parse(Coord));
-            y = CoordByteY(int.Parse(Coord));
+            CoordInt = int.Parse(_coord);
         }
         public PointItemBase(int _x, int _y)
         {
@@ -66,6 +76,15 @@ namespace RelertSharp.MapStructure.Points
         public string Coord { get; set; }
         public int CoordX { get { return x; } set { x = value; } }
         public int CoordY { get { return y; } set { y = value; } }
+        public int CoordInt
+        {
+            get { return Utils.Misc.CoordInt(CoordX, CoordY); }
+            set
+            {
+                CoordX = CoordIntX(value);
+                CoordY = CoordIntY(value);
+            }
+        }
         #endregion;
     }
 }

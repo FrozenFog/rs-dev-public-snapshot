@@ -7,10 +7,11 @@ using System.Drawing;
 using RelertSharp.Encoding;
 using RelertSharp.Common;
 using RelertSharp.Utils;
+using System.Collections;
 
 namespace RelertSharp.MapStructure
 {
-    public class OverlayLayer
+    public class OverlayLayer : IEnumerable<OverlayUnit>
     {
         private Dictionary<int, OverlayUnit> data = new Dictionary<int, OverlayUnit>();
 
@@ -55,6 +56,17 @@ namespace RelertSharp.MapStructure
             byte[] format80Pack = PackEncoding.EncodeToPack(preCompress, PackType.OverlayPack);
             return Convert.ToBase64String(format80Pack);
         }
+        #region Enumerator
+        public IEnumerator<OverlayUnit> GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+        #endregion
         #endregion
 
 
@@ -78,7 +90,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class OverlayUnit
+    public class OverlayUnit : ILocateable
     {
 
 
@@ -99,6 +111,10 @@ namespace RelertSharp.MapStructure
         public byte Frame { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+        public float fX { get { return X; } }
+        public float fY { get { return Y; } }
+        public float fZ { get; set; }
+        public int Coord { get { return Misc.CoordInt(X, Y); } }
         #endregion
     }
 }

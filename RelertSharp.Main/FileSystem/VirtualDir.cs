@@ -146,7 +146,7 @@ namespace RelertSharp.FileSystem
         {
             switch (_type)
             {
-                case TheaterType.Template:
+                case TheaterType.Temprate:
                     _fileName += ".tem";
                     return new TmpFile(GetRawByte(_fileName), _fileName);
                 case TheaterType.Snow:

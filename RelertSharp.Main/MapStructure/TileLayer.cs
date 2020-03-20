@@ -179,7 +179,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class Tile
+    public class Tile : ILocateable
     {
         private int tileIndex;
         private byte subIndex, iceGrowth;
@@ -234,7 +234,7 @@ namespace RelertSharp.MapStructure
         public short Y { get; set; }
         public float fX { get { return X; } }
         public float fY { get { return Y; } }
-        public float fHeight { get { return Height; } }
+        public float fZ { get { return Height; } }
         public byte Height { get; set; }
         public int TileIndex
         {
