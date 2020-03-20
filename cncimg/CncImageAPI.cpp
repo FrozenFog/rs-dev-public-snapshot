@@ -278,13 +278,16 @@ void MakeShots(const char * VxlFileName, int nTurretOffset, int nPaletteID, bool
 	if (!VxlFileName || nDirections % 8)
 		return;
 
-	char turName[MAX_PATH], barlName[MAX_PATH];
+	char turName[MAX_PATH], barlName[MAX_PATH], vxlBody[MAX_PATH];
 
 	strcpy_s(turName, VxlFileName);
 	strcpy(turName + strlen(VxlFileName) - 4, "tur.vxl");
 
 	strcpy_s(barlName, VxlFileName);
 	strcpy(barlName + strlen(VxlFileName) - 4, "barl.vxl");
+
+	strcpy_s(vxlBody, VxlFileName);
+	strtok(vxlBody, ".");
 
 	auto pVxl = std::make_unique<VxlFile>(VxlFileName);
 	auto pTur = std::make_unique<VxlFile>(turName);
@@ -307,8 +310,8 @@ void MakeShots(const char * VxlFileName, int nTurretOffset, int nPaletteID, bool
 			{
 				for (int frame = 0; frame < pVxl->GetFrameCount(); frame++)
 				{
-					sprintf_s(szTargetName, "Output\\%06d.png", idxFile);
-					sprintf_s(szShadowName, "Output\\%06d.png", idxFile++ + shadowStart);
+					sprintf_s(szTargetName, "Output\\%s %04d.png", vxlBody, idxFile);
+					sprintf_s(szShadowName, "Output\\%s %04d.png", vxlBody, idxFile++ + shadowStart);
 					pVxl->MakeFrameScreenShot(SceneClass::Instance.GetDevice(), szTargetName, szShadowName, frame,
 						0, 0, angle, nPaletteID, dwRemapColor);
 				}
@@ -318,16 +321,16 @@ void MakeShots(const char * VxlFileName, int nTurretOffset, int nPaletteID, bool
 		angle = -0.75*D3DX_PI;
 		for (int i = 0; pTur->IsLoaded() && i < nDirections; i++)
 		{
-			sprintf_s(szTargetName, "Output\\%06d.png", idxFile);
+			sprintf_s(szTargetName, "Output\\%s %04d.png", vxlBody, idxFile);
 			if (!bUnion)
 			{
-				sprintf_s(szShadowName, "Output\\%06d.png", idxFile++ + shadowStart);
+				sprintf_s(szShadowName, "Output\\%s %04d.png", vxlBody, idxFile++ + shadowStart);
 				pTur->MakeBarlTurScreenShot(SceneClass::Instance.GetDevice(), pBarl.get(), nullptr, szTargetName, szShadowName,
 					0, 0.0, 0.0, angle, nPaletteID, dwRemapColor, TurretOff);
 			}
 			else
 			{
-				sprintf_s(szShadowName, "Output\\%06d.png", idxFile++ + shadowStart - nDirections);
+				sprintf_s(szShadowName, "Output\\%s %04d.png", vxlBody, idxFile++ + shadowStart - nDirections);
 				pTur->MakeBarlTurScreenShot(SceneClass::Instance.GetDevice(), pBarl.get(), pVxl.get(), szTargetName, szShadowName,
 					0, 0.0, 0.0, angle, nPaletteID, dwRemapColor, TurretOff);
 			}
