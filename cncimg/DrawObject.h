@@ -69,7 +69,7 @@ public:
 	static DWORD idTextureManagementThread;
 	static HANDLE hTextureManagementThread;
 
-	static void UpdaceScene(LPDIRECT3DDEVICE9 pDevice);
+	static void UpdaceScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground);
 	static void CommitIsotatedTexture(LPDIRECT3DTEXTURE9 pTexture);
 	static bool IsTextureIsolated(LPDIRECT3DTEXTURE9 pTexture);
 	static bool CanIsolatedTextureUnloadNow(LPDIRECT3DTEXTURE9 pTexture);

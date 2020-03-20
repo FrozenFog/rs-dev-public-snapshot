@@ -19,7 +19,7 @@ std::vector<LPDIRECT3DTEXTURE9> DrawObject::IsolatedTextures;
 DWORD DrawObject::idTextureManagementThread = 0;
 HANDLE DrawObject::hTextureManagementThread = INVALID_HANDLE_VALUE;
 
-void DrawObject::UpdaceScene(LPDIRECT3DDEVICE9 pDevice)
+void DrawObject::UpdaceScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 {
 	if (!pDevice)
 		return;
@@ -51,7 +51,7 @@ void DrawObject::UpdaceScene(LPDIRECT3DDEVICE9 pDevice)
 	std::sort(DrawingOpaqueObject.begin(), DrawingOpaqueObject.end(), DistanceCompairFunction);
 	std::sort(DrawingTransperantObject.begin(), DrawingTransperantObject.end(), DistanceCompairFunction);
 	
-	pDevice->Clear(0, nullptr, D3DCLEAR_ZBUFFER | D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 252), 1.0f, 0);
+	pDevice->Clear(0, nullptr, D3DCLEAR_ZBUFFER | D3DCLEAR_TARGET, dwBackground, 1.0f, 0);
 	if (SUCCEEDED(pDevice->BeginScene()))
 	{
 		for (auto paint : DrawingOpaqueObject) {
