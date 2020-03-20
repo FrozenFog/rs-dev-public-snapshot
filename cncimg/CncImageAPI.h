@@ -69,7 +69,7 @@ EXPORT void WINAPI ClearSceneObjects();
 Obsolete apis
 */
 
-void MakeShots(const char* VxlFileName, int nTurretOffset, int nPaletteID, int nDirections = 8, 
+void MakeShots(const char* VxlFileName, int nTurretOffset, int nPaletteID, bool bUnion = false, int nDirections = 8,
 	DWORD dwRemapColor = INVALID_COLOR_VALUE, int TurretOff = 0);
 
 

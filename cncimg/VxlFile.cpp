@@ -699,7 +699,7 @@ void VxlFile::MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, const char* pDestFi
 	delete[] ZBuffer;
 }
 
-void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, const char * pDestFile, const char* pShadow, 
+void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, VxlFile* Body, const char * pDestFile, const char* pShadow,
 	int idxFrame, float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor, int TurretOff, VPLFile & Vpl)
 {
 	if (!this->IsLoaded() || !pDevice)
@@ -846,6 +846,87 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, c
 					for (int z = 0; z < TailerInfo.nZSize; z++)
 					{
 						if (!Barl->GetVoxelRH(i, x, y, z, Buffer))
+							continue;
+
+						if (Buffer.nColor)
+						{
+							auto pNormalTable = NormalTableDirectory[static_cast<int>(TailerInfo.nNormalType)];
+
+							if (!pNormalTable)
+								continue;
+
+							D3DXVECTOR3 NormalVec = pNormalTable[Buffer.nNormal];//{ (float)Normal.R - 128.0f,(float)Normal.G - 128.0f,(float)Normal.B - 128.0f };
+							D3DCOLOR dwColor;
+							NormalVec *= NormalMatrix;
+
+							auto fAngle = std::acos((VxlFile::LightReversed * NormalVec) /
+								D3DXVec3Length(&VxlFile::LightReversed) / D3DXVec3Length(&NormalVec));
+
+							if (fAngle >= D3DX_PI / 2)
+							{
+								auto& Color = Entries[Vpl[0].Table[Buffer.nColor]];
+								dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+							}
+							else
+							{
+								int nIndex = 31 - int(fAngle / (D3DX_PI / 2)*32.0);
+								auto& Color = Entries[Vpl[nIndex].Table[Buffer.nColor]];
+								dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+							}
+
+							UsedVertecies.push_back({
+								(float)x,(float)y,(float)z,
+								//(float)Normal.R,(float)Normal.G,(float)Normal.B,
+								dwColor });
+
+							UsedVertecies.back().Vector *= Matrix;
+							BufferedNormals.push_back(NormalVec);
+							BufferedVoxels.push_back(Buffer);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (Body && Body->IsLoaded())
+	{
+		for (int i = 0; i < Body->FileHeader.nNumberOfLimbs; i++)
+		{
+			auto&TailerInfo = Body->LimbTailers[i];
+
+			D3DXMatrixTranslation(&Offset, TurretOff*30.0*sqrt(2.0) / 256.0, 0.0, 0.0);
+			D3DXMatrixRotationX(&RotateX, RotationX);
+			D3DXMatrixRotationY(&RotateY, RotationY);
+			D3DXMatrixRotationZ(&RotateZ, RotationZ);
+			D3DXMatrixIdentity(&Identity);
+
+			auto MinBounds = TailerInfo.MinBounds;
+			auto MaxBounds = TailerInfo.MaxBounds;
+
+			FLOAT xScale = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
+			FLOAT yScale = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
+			FLOAT zScale = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
+			D3DXMatrixScaling(&Scale, xScale, yScale, zScale);
+
+			//Origin is multiplied before Hva
+			TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
+			Origin = TailerInfo.Matrix.AsD3dMatrix(TailerInfo.fScale);
+			Matrix = Body->AssociatedHVA.GetTransformMatrix(0, i)->AsD3dMatrix(TailerInfo.fScale);
+			Matrix = Identity*Scale*TranslationCenter*Origin*Matrix*Offset*RotateX*RotateY*RotateZ;
+			NormalMatrix = Matrix;
+
+			NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
+
+			//this->AssociatedHVA.GetTransformMatrix(0, i)->Print();
+
+			for (int x = 0; x < TailerInfo.nXSize; x++)
+			{
+				for (int y = 0; y < TailerInfo.nYSize; y++)
+				{
+					for (int z = 0; z < TailerInfo.nZSize; z++)
+					{
+						if (!Body->GetVoxelRH(i, x, y, z, Buffer))
 							continue;
 
 						if (Buffer.nColor)
