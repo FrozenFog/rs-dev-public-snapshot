@@ -68,6 +68,7 @@ Palette::Palette(Palette & Right) : Palette()
 Palette::Palette(LPVOID pFileBuffer):Palette()
 {
 	this->LoadFromFileInBuffer(pFileBuffer);
+	this->ShiftColors();
 }
 
 ColorStruct& Palette::operator[](int nIndex)
