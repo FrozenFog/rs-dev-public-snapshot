@@ -173,6 +173,10 @@ namespace RelertSharp.DrawingEngine
             CppExtern.Scene.MoveFocusOnScreen(delta.X, delta.Y);
             Refresh();
         }
+        public void SetBackgroundColor(Color c)
+        {
+            CppExtern.Scene.SetBackgroundColor(c.R, c.G, c.B);
+        }
         #endregion
 
 

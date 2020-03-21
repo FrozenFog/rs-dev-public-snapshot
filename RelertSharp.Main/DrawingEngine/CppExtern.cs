@@ -33,6 +33,8 @@ namespace RelertSharp.DrawingEngine
             public static extern void ClearSceneObjects();
             [DllImport("CncVxlRenderText.dll")]
             public static extern bool SetUpScene(IntPtr hwnd);
+            [DllImport("CncVxlRenderText.dll")]
+            public static extern void SetBackgroundColor(byte r, byte g, byte b);
         }
 
 
