@@ -88,6 +88,7 @@ public:
 	bool ResetDevice();
 	void SetUpCamera();
 	void SetBackgroundColor(DWORD dwColor);
+	void ResetShaderMatrix();
 	DWORD GetBackgroundColor();
 
 private:

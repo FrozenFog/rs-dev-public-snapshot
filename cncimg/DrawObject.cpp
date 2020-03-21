@@ -24,6 +24,7 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	if (!pDevice)
 		return;
 
+	SceneClass::Instance.ResetShaderMatrix();
 	//integrate first, than sort by distance, finally;
 	//draw opaque first, transpetant objects then;
 	//should check if the object is within our sight

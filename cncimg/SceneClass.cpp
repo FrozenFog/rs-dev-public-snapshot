@@ -306,8 +306,7 @@ void SceneClass::InitializeDeviceState()
 	this->pDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_FLAT);
 
 	this->SetUpCamera();
-	this->pDevice->GetTransform(D3DTS_VIEW, &View); 
-	this->VertexShader.SetConstantMatrix(this->pDevice, View*Project);
+	this->ResetShaderMatrix();
 }
 
 bool SceneClass::ResetDevice()
@@ -315,15 +314,29 @@ bool SceneClass::ResetDevice()
 	if (!this->IsDeviceLoaded())
 		return false;
 
+	//minimize
+	if (this->GetWindowRect().right == 0)
+		return true;
+
 	SAFE_RELEASE(this->pBackBuffer);
+
+	this->GetDevice()->SetVertexShader(nullptr);
+	SAFE_RELEASE(this->VertexShader.pVertexShader);
+	SAFE_RELEASE(this->VoxelShader.pShaderObject);
+	SAFE_RELEASE(this->PlainArtShader.pShaderObject);
 	
 	this->SceneParas.BackBufferWidth = this->SceneParas.BackBufferHeight = 0;
 	auto hResult = this->pDevice->Reset(&this->SceneParas);
 
 	this->pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &this->pBackBuffer);
 
-	if (SUCCEEDED(hResult))
+	if (SUCCEEDED(hResult)) {
 		this->InitializeDeviceState();
+		this->VertexShader.CreateVertexShader(this->GetDevice());
+		this->VoxelShader.CreateShader(this->GetDevice());
+		this->PlainArtShader.CreateShader(this->GetDevice());
+		this->GetDevice()->SetVertexShader(this->VertexShader.GetVertexShader());
+	}
 
 	return SUCCEEDED(hResult);
 }
@@ -342,6 +355,20 @@ void SceneClass::SetUpCamera()
 void SceneClass::SetBackgroundColor(DWORD dwColor)
 {
 	this->dwBackgroundColor = dwColor;
+}
+
+void SceneClass::ResetShaderMatrix()
+{
+	D3DXMATRIX World, View, Project;
+
+	if (!this->IsDeviceLoaded())
+		return;
+
+	this->GetDevice()->GetTransform(D3DTS_WORLD, &World);
+	this->GetDevice()->GetTransform(D3DTS_VIEW, &View);
+	this->GetDevice()->GetTransform(D3DTS_PROJECTION, &Project);
+
+	this->VertexShader.SetConstantMatrix(this->GetDevice(), World*View*Project);
 }
 
 DWORD SceneClass::GetBackgroundColor()
