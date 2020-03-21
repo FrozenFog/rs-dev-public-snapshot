@@ -289,19 +289,10 @@ void SceneClass::InitializeDeviceState()
 
 	auto hWnd = this->SceneParas.hDeviceWindow;
 	RECT WindowRect;
-	D3DXVECTOR3 Test = { float(sqrt(2.0)*30.0f),float(sqrt(2.0)*30.0f),0.0 };
-
-	D3DXVECTOR3 Up{ 0.0,0.0,1.0 };
-	D3DXVECTOR3 Target = this->GetFocus();
-	D3DXVECTOR3 Eye = Target + D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f*sqrt(2.0) / sqrt(3.0));
-	D3DXMatrixLookAtLH(&View, &Eye, &Target, &Up);
 
 	GetClientRect(hWnd, &WindowRect);
 	D3DXMatrixOrthoLH(&Project, WindowRect.right, WindowRect.bottom, 0.0, 1000000.0);
 
-	auto Tut = this->FructumTransformation(WindowRect, Test);
-
-	printf_s("tut = %f\t%f\t%f\n", Tut.x, Tut.y, Tut.z);
 	this->pDevice->SetTransform(D3DTS_PROJECTION, &Project);
 
 	this->pDevice->Clear(0, nullptr, D3DCLEAR_ZBUFFER, this->dwBackgroundColor, 1.0, 0);
@@ -315,9 +306,8 @@ void SceneClass::InitializeDeviceState()
 	this->pDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_FLAT);
 
 	this->SetUpCamera();
-
-	if (!this->VertexShader.SetConstantMatrix(this->pDevice, View*Project))
-		printf_s("could not set transform.\n");
+	this->pDevice->GetTransform(D3DTS_VIEW, &View); 
+	this->VertexShader.SetConstantMatrix(this->pDevice, View*Project);
 }
 
 bool SceneClass::ResetDevice()
