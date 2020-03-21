@@ -50,6 +50,8 @@ EXPORT void WINAPI MoveObject(int nID, D3DXVECTOR3 Displacement);
 
 EXPORT void WINAPI SetObjectLocation(int nID, D3DXVECTOR3 Position);
 
+EXPORT void WINAPI SetObjectColorCoefficient(int nID, D3DXVECTOR3 Coefficient);
+
 //scene api
 EXPORT bool WINAPI SetUpScene(HWND hWnd);
 EXPORT void WINAPI SetBackgroundColor(BYTE R, BYTE G, BYTE B);

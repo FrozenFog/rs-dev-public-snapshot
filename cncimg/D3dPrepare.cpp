@@ -86,10 +86,12 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 	{
 		if (auto vxlid = CreateVxlObjectAtScene(VxlFiles[0], { 0.0,0.0,0.0 }, 0.0, 0.0, 0.0, UnitPalette, RGB(0, 252, 0))) {
 			SceneObjects.push_back(vxlid);
+			SetObjectColorCoefficient(vxlid, { 1.0f,0.6f,0.6f });
 		}
 
 		if (auto vxlid = CreateVxlObjectAtScene(VxlFiles[1], { 0.0,0.0,0.0 }, 0.0, 0.0, D3DX_PI / 2.0f, UnitPalette, RGB(0, 0, 252))) {
 			SceneObjects.push_back(vxlid);
+			SetObjectColorCoefficient(vxlid, { 0.6f,1.0f,0.6f });
 		}
 	}
 

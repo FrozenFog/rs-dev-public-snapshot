@@ -602,7 +602,7 @@ DrawScene:
 		//this->AddDrawnObject(pVertexBuffer, Position);
 		//this->AddTextureAtPosition(Position, pTexture);
 
-		PaintingStruct::InitializePaintingStruct(PaintObject, pVertexBuffer, Position - HeightPoint, pTexture);
+		PaintingStruct::InitializePaintingStruct(PaintObject, pVertexBuffer, Position, pTexture);
 		OutTileIndex =  this->CommitOpaqueObject(PaintObject);
 	}
 
@@ -610,7 +610,8 @@ DrawScene:
 	{
 		//this->AddDrawnExtraObject(pExtraVertexBuffer, Position);
 		//this->AddExtraTextureAtPosition(Position, pExtraTexture);
-		PaintingStruct::InitializePaintingStruct(PaintObject, pExtraVertexBuffer, Position - HeightPoint, pExtraTexture);
+		PaintingStruct::InitializePaintingStruct(PaintObject, pExtraVertexBuffer, Position/* - HeightPoint*/, pExtraTexture);
+		PaintObject.SetCompareOffset(-HeightPoint);
 		OutExtraIndex = this->CommitTransperantObject(PaintObject);
 	}
 	
