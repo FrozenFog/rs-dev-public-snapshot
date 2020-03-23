@@ -32,11 +32,6 @@ namespace RelertSharp.MapStructure
         private WaypointCollection waypoints = new WaypointCollection();
         private CellTagCollection celltags = new CellTagCollection();
 
-        private UnitLayer units = new UnitLayer();
-        private InfantryLayer infantries = new InfantryLayer();
-        private StructureLayer structures = new StructureLayer();
-        private AircraftLayer aircrafts = new AircraftLayer();
-
         private TileLayer Tiles;
 
         private Dictionary<string, INIEntity> residual;
@@ -129,19 +124,19 @@ namespace RelertSharp.MapStructure
             }
             foreach (INIPair p in entUnit.DataList)
             {
-                units[p.Name] = new UnitItem(p.Name, p.ParseStringList());
+                Units[p.Name] = new UnitItem(p.Name, p.ParseStringList());
             }
             foreach (INIPair p in entInf.DataList)
             {
-                infantries[p.Name] = new InfantryItem(p.Name, p.ParseStringList());
+                Infantries[p.Name] = new InfantryItem(p.Name, p.ParseStringList());
             }
             foreach (INIPair p in entStructure.DataList)
             {
-                structures[p.Name] = new StructureItem(p.Name, p.ParseStringList());
+                Buildings[p.Name] = new StructureItem(p.Name, p.ParseStringList());
             }
             foreach (INIPair p in entAircraft.DataList)
             {
-                aircrafts[p.Name] = new AircraftItem(p.Name, p.ParseStringList());
+                Aircrafts[p.Name] = new AircraftItem(p.Name, p.ParseStringList());
             }
             foreach (INIPair p in entTerrain.DataList)
             {
@@ -248,6 +243,10 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Calls - Map
+        public InfantryLayer Infantries { get; private set; } = new InfantryLayer();
+        public AircraftLayer Aircrafts { get; private set; } = new AircraftLayer();
+        public StructureLayer Buildings { get; private set; } = new StructureLayer();
+        public UnitLayer Units { get; private set; } = new UnitLayer();
         public TerrainLayer Terrains { get; private set; } = new TerrainLayer();
         public SmudgeLayer Smudges { get; private set; } = new SmudgeLayer();
         public AITriggerCollection AiTriggers { get; private set; } = new AITriggerCollection();

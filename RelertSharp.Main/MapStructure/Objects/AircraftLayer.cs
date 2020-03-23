@@ -7,7 +7,7 @@ using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Objects
 {
-    public class AircraftLayer : ObjectBase
+    public class AircraftLayer : ObjectBase<AircraftItem>
     {
         public AircraftLayer() { }
     }

@@ -7,7 +7,7 @@ using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Objects
 {
-    public class InfantryLayer : ObjectBase
+    public class InfantryLayer : ObjectBase<InfantryItem>
     {
         public InfantryLayer() { }
     }
@@ -15,6 +15,9 @@ namespace RelertSharp.MapStructure.Objects
     public class InfantryItem : ObjectItemBase
     {
         private int subcell;
+
+
+        #region Ctor - InfantryItem
         public InfantryItem(string _id, string[] _args) : base(_id, _args)
         {
             ID = _id;
@@ -33,6 +36,9 @@ namespace RelertSharp.MapStructure.Objects
             AutoNORecruitType = ParseBool(_args[12]);
             AutoYESRecruitType = ParseBool(_args[13]);
         }
+        #endregion
+
+
         #region Public Calls - InfantryItem
         public int SubCells
         {

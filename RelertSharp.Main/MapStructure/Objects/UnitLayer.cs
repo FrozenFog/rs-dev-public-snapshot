@@ -8,7 +8,7 @@ using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Objects
 {
-    public class UnitLayer : ObjectBase
+    public class UnitLayer : ObjectBase<UnitItem>
     {
         public UnitLayer() { }
 

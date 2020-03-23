@@ -1,43 +1,63 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.IniSystem;
 
 namespace RelertSharp.MapStructure.Objects
 {
-    public class ObjectBase
+    public class ObjectBase<T> : IEnumerable<T>
     {
-        private Dictionary<string, ObjectItemBase> data = new Dictionary<string, ObjectItemBase>();
+        private Dictionary<string, T> data = new Dictionary<string, T>();
         public ObjectBase() { }
 
 
         #region Public Calls - ObjectBase
-        public ObjectItemBase this[string _id]
+        public T this[string _id]
         {
             get
             {
                 if (data.Keys.Contains(_id)) return data[_id];
-                return new ObjectItemBase();
+                return default(T);
             }
             set
             {
                 data[_id] = value;
             }
         }
+        #region Enumerator
+        public IEnumerator<T> GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return data.Values.GetEnumerator();
+        }
+        #endregion
         #endregion
     }
 
     public class ObjectItemBase
     {
+        #region Ctor
         public ObjectItemBase(string _id, string[] _args)
         {
 
         }
         public ObjectItemBase() { }
+        #endregion
 
 
-        #region Public Calls - ObjectItemName
+        #region Public Methods - ObjectItemBase
+
+        #endregion
+
+
+        #region Public Calls - ObjectItemBase
         public string ID { get; set; }
         public string NameID { get; set; }
         public string OwnerHouse { get; set; }
@@ -46,6 +66,15 @@ namespace RelertSharp.MapStructure.Objects
         public string TaggedTrigger { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+        public int CoordInt
+        {
+            get { return Utils.Misc.CoordInt(X, Y); }
+            set
+            {
+                X = Utils.Misc.CoordIntX(value);
+                Y = Utils.Misc.CoordIntY(value);
+            }
+        }
         public int Rotation { get; set; }
         public int VeterancyPercentage { get; set; }
         public int Group { get; set; }
