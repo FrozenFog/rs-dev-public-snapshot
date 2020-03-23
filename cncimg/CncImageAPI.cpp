@@ -223,7 +223,7 @@ void WINAPI SetObjectLocation(int nID, D3DXVECTOR3 Position)
 	DrawObject::ObjectMove(nID, Position);
 }
 
-void WINAPI SetObjectColorCoefficient(int nID, D3DXVECTOR3 Coefficient)
+void WINAPI SetObjectColorCoefficient(int nID, D3DXVECTOR4 Coefficient)
 {
 	DrawObject::SetObjectColorCoefficient(nID, Coefficient);
 }

@@ -30,7 +30,7 @@ struct ShaderStruct
 	bool IsLoaded();
 	bool CompileFromFile(const char* pSource, const char* pEntry, bool bVertexShader = false);
 	bool LinkConstants(const char* pVarName);
-	bool SetConstantVector(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Vector);
+	bool SetConstantVector(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR4 Vector);
 	bool SetConstantMatrix(LPDIRECT3DDEVICE9 pDevice, D3DXMATRIX Matrix);
 	bool CreateShader(LPDIRECT3DDEVICE9 pDevice);
 	bool CreateVertexShader(LPDIRECT3DDEVICE9 pDevice);

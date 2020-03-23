@@ -599,7 +599,7 @@ void DrawObject::ObjectRotation(int nID, float RotationX, float RotationY, float
 	ObjectTransformation(nID, Transformation);
 }
 
-void DrawObject::SetObjectColorCoefficient(int nID, D3DXVECTOR3 Coefficient)
+void DrawObject::SetObjectColorCoefficient(int nID, D3DXVECTOR4 Coefficient)
 {
 	auto pFind = FindObjectById(nID);
 	if (!pFind)
@@ -631,7 +631,7 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 	if (BufferedNormals)
 		Object.BufferedNormals = *BufferedNormals;
 
-	Object.SetColorCoefficient(D3DXVECTOR3(1.0, 1.0, 1.0));
+	Object.SetColorCoefficient(D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
 	Object.SetCompareOffset(D3DXVECTOR3(0.0, 0.0, 0.0));
 	Object.InitializeVisualRect();
 }
@@ -759,7 +759,7 @@ void PaintingStruct::SetCompareOffset(D3DXVECTOR3 Offset)
 	this->CompareOffset = Offset;
 }
 
-void PaintingStruct::SetColorCoefficient(D3DXVECTOR3 Coefficient)
+void PaintingStruct::SetColorCoefficient(D3DXVECTOR4 Coefficient)
 {
 	this->ColorCoefficient = Coefficient;
 }

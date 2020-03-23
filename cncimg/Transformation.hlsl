@@ -1,34 +1,28 @@
-
-
 //mult color input from application
-uniform float3 vec;
+uniform vector vec;
 uniform matrix vpmatrix;
 
 sampler2D default_sampler;
 
-float FarDepth():DEPTH
+vector main(in float4 incolor :COLOR) :COLOR
 {
-	return 1.0f;
-}
-
-float4 main(in float4 incolor :COLOR) :COLOR
-{
-	float4 outcolor = {0.0,0.0,0.0,1.0};
+	float4 outcolor = {0.0,0.0,0.0,0.0};
 	outcolor.r = incolor.r*vec.r;
 	outcolor.g = incolor.g*vec.g;
 	outcolor.b = incolor.b*vec.b;
+	outcolor.a = incolor.a*vec.a;
 	return outcolor;
 }
 
-float4 pmain(in float2 texcoords : TEXCOORD) : COLOR
+vector pmain(in float2 texcoords : TEXCOORD) : COLOR
 {
-	float4 outcolor = { 0.0,0.0,0.0,0.0 };
-	float4 incolor = tex2D(default_sampler, texcoords);
+	vector outcolor = { 0.0,0.0,0.0,0.0 };
+	vector incolor = tex2D(default_sampler, texcoords);
 
 	outcolor.r = incolor.r*vec.r;
 	outcolor.g = incolor.g*vec.g;
 	outcolor.b = incolor.b*vec.b;
-	outcolor.a = incolor.a;
+	outcolor.a = incolor.a*vec.a;
 
 	if (outcolor.a == 0.0f)
 		discard;
@@ -38,12 +32,12 @@ float4 pmain(in float2 texcoords : TEXCOORD) : COLOR
 
 struct VSHandler
 {
-	float4 position:POSITION;
-	float4 texcoords:TEXCOORD;
-	float4 color : COLOR;
+	vector position:POSITION;
+	vector texcoords:TEXCOORD;
+	vector color : COLOR;
 };
 
-VSHandler vmain(in float4 position:POSITION, in float4 texcoord : TEXCOORD, in float4 color : COLOR)
+VSHandler vmain(in vector position:POSITION, in vector texcoord : TEXCOORD, in vector color : COLOR)
 {
 	VSHandler output_data = (VSHandler)0;
 

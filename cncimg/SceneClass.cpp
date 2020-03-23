@@ -414,12 +414,12 @@ bool ShaderStruct::LinkConstants(const char * pVarName)
 	return this->hConstant != NULL;
 }
 
-bool ShaderStruct::SetConstantVector(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Vector)
+bool ShaderStruct::SetConstantVector(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR4 Vector)
 {
 	if (!pDevice || !this->IsLoaded())
 		return false;
 
-	return SUCCEEDED(this->pConstantTable->SetFloatArray(pDevice, this->hConstant, &Vector.x, 3));
+	return SUCCEEDED(this->pConstantTable->SetVector(pDevice, this->hConstant, &Vector));
 }
 
 bool ShaderStruct::SetConstantMatrix(LPDIRECT3DDEVICE9 pDevice, D3DXMATRIX Matrix)
