@@ -49,7 +49,7 @@ bool SceneClass::SetUpScene(HWND hWnd)
 	Para.BackBufferFormat = D3DFMT_A8R8G8B8;
 	Para.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 	Para.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;
-	Para.SwapEffect = D3DSWAPEFFECT_COPY;
+	Para.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	Para.EnableAutoDepthStencil = TRUE;
 	Para.AutoDepthStencilFormat = D3DFMT_D24S8;
 	Para.Windowed = TRUE;

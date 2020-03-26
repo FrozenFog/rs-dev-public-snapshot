@@ -398,32 +398,31 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 		{
 			auto pTextureData = pData + y*LockedRect.Pitch;// +x * sizeof(D3DCOLOR_ARGB(0, 0, 0, 0));
 			auto nSize = this->GetFileData()->Header.nBlocksWidth - 2 * x;
+			bool bFirstEnter, bFirstEnd;
 
+			bFirstEnd = bFirstEnter = true;
 			RtlZeroMemory(pTextureData, this->GetFileData()->Header.nBlocksWidth * sizeof D3DCOLOR);
-			
-			if (*pFileData) {
-				for (int i = 0; i < x; i++) {
-					auto&LeftColor = Palette[*pFileData];
-					*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
-				}
-			}
-
 			pTextureData += x * sizeof D3DCOLOR;
+
 			for (int i = 0; i < nSize; i++)
 			{
-				if (auto nColor = *pFileData++)
-				{
-					auto& Color = Palette[nColor];
-					*reinterpret_cast<PDWORD>(pTextureData) = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+				auto pColorData = reinterpret_cast<PDWORD>(pTextureData);
+				auto nColor = *pFileData++;
+				auto& Color = Palette[nColor];
+				auto dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+
+				if (nColor) {
+					pColorData[0] = dwColor;
+					if (bFirstEnter && x >= 2) {
+						pColorData[-1] = pColorData[-2] = dwColor;
+						bFirstEnter = false;
+					}
+					if (!bFirstEnter && bFirstEnd && x >= 2 && *pFileData == 0) {
+						pColorData[1] = pColorData[2] = dwColor;
+						bFirstEnd = false;
+					}
 				}
 				pTextureData += sizeof D3DCOLOR;
-			}
-
-			if (*(pFileData - 1)) {
-				for (int i = 0; i < x; i++) {
-					auto&LeftColor = Palette[*(pFileData - 1)];
-					*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
-				}
 			}
 		}
 
@@ -431,32 +430,31 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 		{
 			auto pTextureData = pData + y*LockedRect.Pitch;
 			auto nSize = this->GetFileData()->Header.nBlocksWidth - 2 * x;
+			bool bFirstEnter, bFirstEnd;
 
+			bFirstEnd = bFirstEnter = true;
 			RtlZeroMemory(pTextureData, this->GetFileData()->Header.nBlocksWidth * sizeof D3DCOLOR);
-
-			if (*pFileData) {
-				for (int i = 0; i < x; i++) {
-					auto&LeftColor = Palette[*pFileData];
-					*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
-				}
-			}
-
 			pTextureData += x * sizeof D3DCOLOR;
+
 			for (int i = 0; i < nSize; i++)
 			{
-				if (auto nColor = *pFileData++)
-				{
-					auto& Color = Palette[nColor];
-					*reinterpret_cast<PDWORD>(pTextureData) = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+				auto pColorData = reinterpret_cast<PDWORD>(pTextureData);
+				auto nColor = *pFileData++;
+				auto& Color = Palette[nColor];
+				auto dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+
+				if (nColor) {
+					pColorData[0] = dwColor;
+					if (bFirstEnter && x >= 1) {
+						pColorData[-1] = /*pColorData[-2] = */dwColor;
+						bFirstEnter = false;
+					}
+					if (!bFirstEnter && bFirstEnd && x >= 1 && *pFileData == 0) {
+						pColorData[1] = /*pColorData[2] = */dwColor;
+						bFirstEnd = false;
+					}
 				}
 				pTextureData += sizeof D3DCOLOR;
-			}
-
-			if (*(pFileData - 1)) {
-				for (int i = 0; i < x; i++) {
-					auto&LeftColor = Palette[*(pFileData - 1)];
-					*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
-				}
 			}
 		}
 
@@ -487,12 +485,27 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 		for (int nLine = 0; nLine < ExtraSizeRect.bottom; nLine++)
 		{
 			RtlZeroMemory(pData, ExtraSizeRect.right * sizeof D3DCOLOR);
+			auto pColorData = reinterpret_cast<PDWORD>(pData);
+			bool bEnter, bEnd;
+
+			bEnter = bEnd = true;
 			for (int i = 0; i < ExtraSizeRect.right; i++)
 			{
 				if (auto nColor = *pFileData++)
 				{
 					auto& Color = Palette[nColor];
-					*reinterpret_cast<PDWORD>(pData + i*sizeof D3DCOLOR) = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+					auto dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+					pColorData[i] = dwColor;
+					if (bEnter && i >= 1) {
+						pColorData[i - 1] = dwColor;
+						bEnter = false;
+						bEnd = true;
+					}
+					if (!bEnter && bEnd && *pFileData == 0 && i < ExtraSizeRect.right - 1) {
+						pColorData[i + 1] = dwColor;
+						bEnd = false;
+						bEnter = true;
+					}
 				}
 			}
 			pData += LockedRect.Pitch;
