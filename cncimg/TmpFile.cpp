@@ -398,9 +398,9 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 		{
 			auto pTextureData = pData + y*LockedRect.Pitch;// +x * sizeof(D3DCOLOR_ARGB(0, 0, 0, 0));
 			auto nSize = this->GetFileData()->Header.nBlocksWidth - 2 * x;
-			bool bFirstEnter, bFirstEnd;
+			bool bFirstEnter;
 
-			bFirstEnd = bFirstEnter = true;
+			bFirstEnter = true;
 			RtlZeroMemory(pTextureData, this->GetFileData()->Header.nBlocksWidth * sizeof D3DCOLOR);
 			pTextureData += x * sizeof D3DCOLOR;
 
@@ -417,9 +417,9 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 						pColorData[-1] = pColorData[-2] = dwColor;
 						bFirstEnter = false;
 					}
-					if (!bFirstEnter && bFirstEnd && x >= 2 && *pFileData == 0) {
+					if (!bFirstEnter && x >= 2 && *pFileData == 0) {
 						pColorData[1] = pColorData[2] = dwColor;
-						bFirstEnd = false;
+						bFirstEnter = true;
 					}
 				}
 				pTextureData += sizeof D3DCOLOR;
@@ -430,9 +430,9 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 		{
 			auto pTextureData = pData + y*LockedRect.Pitch;
 			auto nSize = this->GetFileData()->Header.nBlocksWidth - 2 * x;
-			bool bFirstEnter, bFirstEnd;
+			bool bFirstEnter;
 
-			bFirstEnd = bFirstEnter = true;
+			bFirstEnter = true;
 			RtlZeroMemory(pTextureData, this->GetFileData()->Header.nBlocksWidth * sizeof D3DCOLOR);
 			pTextureData += x * sizeof D3DCOLOR;
 
@@ -449,9 +449,9 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 						pColorData[-1] = /*pColorData[-2] = */dwColor;
 						bFirstEnter = false;
 					}
-					if (!bFirstEnter && bFirstEnd && x >= 1 && *pFileData == 0) {
+					if (!bFirstEnter && x >= 1 && *pFileData == 0) {
 						pColorData[1] = /*pColorData[2] = */dwColor;
-						bFirstEnd = false;
+						bFirstEnter = true;
 					}
 				}
 				pTextureData += sizeof D3DCOLOR;
@@ -486,9 +486,9 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 		{
 			RtlZeroMemory(pData, ExtraSizeRect.right * sizeof D3DCOLOR);
 			auto pColorData = reinterpret_cast<PDWORD>(pData);
-			bool bEnter, bEnd;
+			bool bEnter;
 
-			bEnter = bEnd = true;
+			bEnter = true;
 			for (int i = 0; i < ExtraSizeRect.right; i++)
 			{
 				if (auto nColor = *pFileData++)
@@ -499,11 +499,9 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 					if (bEnter && i >= 1) {
 						pColorData[i - 1] = dwColor;
 						bEnter = false;
-						bEnd = true;
 					}
-					if (!bEnter && bEnd && *pFileData == 0 && i < ExtraSizeRect.right - 1) {
+					if (!bEnter && *pFileData == 0 && i < ExtraSizeRect.right - 1) {
 						pColorData[i + 1] = dwColor;
-						bEnd = false;
 						bEnter = true;
 					}
 				}
