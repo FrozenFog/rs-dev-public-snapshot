@@ -138,8 +138,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		else
 		{
 			//Graphic::ClearScene();
-			Graphic::DrawScene();
-			Graphic::WorldRotation();
+			//Graphic::DrawScene();
+			//Graphic::WorldRotation();
 		}
 	}
 
@@ -161,10 +161,11 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	POINTS Position;
 	switch (uMsg)
 	{
-	//case WM_PAINT:
-	//	Graphic::DrawScene();
-	//	Graphic::WorldRotation();
-	//	break;
+	case WM_PAINT:
+		Graphic::DrawScene();
+		Graphic::WorldRotation();
+		break;
+
 	case WM_LBUTTONDOWN:
 		Position = MAKEPOINTS(lParam);
 		Graphic::PlaceVXL(POINT{ Position.x,Position.y });

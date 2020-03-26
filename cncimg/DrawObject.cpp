@@ -66,7 +66,7 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	}
 
 	auto hResult = pDevice->Present(nullptr, nullptr, NULL, nullptr);
-	if (FAILED(pDevice->Present(nullptr, nullptr, NULL, nullptr))) {
+	if (hResult == D3DERR_DEVICELOST) {
 		while (!SceneClass::Instance.HandleDeviceLost());
 	}
 }
