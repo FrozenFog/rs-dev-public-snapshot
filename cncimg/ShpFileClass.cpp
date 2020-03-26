@@ -357,6 +357,7 @@ int ShpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, i
 	memcpy_s(pVertexData, sizeof VertexBuffer, VertexBuffer, sizeof VertexBuffer);
 	pVertexBuffer->Unlock();
 
-	PaintingStruct::InitializePaintingStruct(Object, pVertexBuffer, Position + HeightPosition, pTexture);
+	PaintingStruct::InitializePaintingStruct(Object, pVertexBuffer, Position /*+ HeightPosition*/, pTexture);
+	Object.SetCompareOffset(HeightPosition);
 	return this->CommitTransperantObject(Object);
 }

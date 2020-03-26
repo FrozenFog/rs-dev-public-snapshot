@@ -40,7 +40,7 @@ struct PaintingStruct
 	//general
 	RECT VisualRect;
 	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
-	D3DXVECTOR3 Position;
+	D3DXVECTOR3 Position, CompareOffset;
 
 	//for shps & tmps and should be released by class
 	LPDIRECT3DTEXTURE9 pTexture;
@@ -52,11 +52,14 @@ struct PaintingStruct
 	//for vxl color regeneration
 	int nPaletteID;
 	DWORD dwRemapColor;
+	D3DXVECTOR4 ColorCoefficient;
 
 	//should BeginScene() at first
 	bool Draw(LPDIRECT3DDEVICE9 pDevice);
 	void InitializeVisualRect();
 	bool IsWithinSight();
+	void SetCompareOffset(D3DXVECTOR3 Offset);
+	void SetColorCoefficient(D3DXVECTOR4 Coefficient);
 };
 
 class DrawObject
@@ -69,7 +72,7 @@ public:
 	static DWORD idTextureManagementThread;
 	static HANDLE hTextureManagementThread;
 
-	static void UpdaceScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground);
+	static void UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground);
 	static void CommitIsotatedTexture(LPDIRECT3DTEXTURE9 pTexture);
 	static bool IsTextureIsolated(LPDIRECT3DTEXTURE9 pTexture);
 	static bool CanIsolatedTextureUnloadNow(LPDIRECT3DTEXTURE9 pTexture);
@@ -111,6 +114,7 @@ public:
 	static void ObjectDisplacement(int nID, D3DXVECTOR3 Displacement);
 	static void ObjectMove(int nID, D3DXVECTOR3 Target);
 	static void ObjectRotation(int nID, float RotationX, float RotationY, float RotationZ);
+	static void SetObjectColorCoefficient(int nID, D3DXVECTOR4 Coefficient);
 	static void RemoveTmpObject(int nID);
 	static void RemoveVxlObject(int nID);
 

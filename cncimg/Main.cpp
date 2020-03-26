@@ -18,14 +18,48 @@ void PrepareConsole()
 	freopen("CONIN$", "r", stdin);
 }
 
+void CompileShader(const char* pSource, const char* pEntry)
+{
+	//
+	// Compile shader
+	//
+
+	ID3DXConstantTable* TransformConstantTable = 0;
+	ID3DXBuffer* shader = 0;
+	ID3DXBuffer* errorBuffer = 0;
+
+	auto hr = D3DXCompileShaderFromFile(pSource,
+		0,
+		0,
+		pEntry,             // entry point function name
+		"ps_1_1",           // HLSL shader name 
+		D3DXSHADER_DEBUG,
+		&shader,            // containing the created shader
+		&errorBuffer,       // containing a listing of errors and warnings
+		&TransformConstantTable);           // used to access shader constants
+							// output any error messages
+	if (errorBuffer)
+	{
+		MessageBox(0, (char*)errorBuffer->GetBufferPointer(), 0, 0);
+		errorBuffer->Release();
+	}
+
+	if (FAILED(hr))
+	{
+		::MessageBox(0, "D3DXCreateEffectFromFile() - FAILED", 0, 0);
+	}
+}
 LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 //暂时只画第一个section
 //文件名flata.vxl / unittem.pals
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	PrepareConsole();
-
+	PrepareConsole();/*
+	CompileShader("D:\\Documents\\Visual Studio 2015\\Projects\\ConsoleApplication2\\Release\\shaders\\Transformation.hlsl", "main");
+	CompileShader("D:\\Documents\\Visual Studio 2015\\Projects\\ConsoleApplication2\\Release\\shaders\\Transformation.hlsl", "pmain");
+*/
 	LPDIRECTSOUND3DBUFFER;
 	WNDCLASSEX WndClass;;
 	ZeroMemory(&WndClass, sizeof WndClass);
@@ -63,6 +97,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (!strlen(lpCmdLine) && !Graphic::Direct3DInitialize(hWnd))
 	{
 		printf_s("d3d creation failed.\n");
+		getchar();
 		DestroyWindow(hWnd);
 		UnregisterClass("D3DWIN", hInstance);
 		return 0;
@@ -103,14 +138,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		else
 		{
 			//Graphic::ClearScene();
-			Graphic::DrawScene();
-			Graphic::WorldRotation();
+			//Graphic::DrawScene();
+			//Graphic::WorldRotation();
 		}
 	}
 
 	Graphic::Direct3DUninitialize();
 
-	//getchar();
+	getchar();
 	UnregisterClass("D3DWIN", hInstance);
 	return 0;
 }
@@ -126,10 +161,11 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	POINTS Position;
 	switch (uMsg)
 	{
-	//case WM_PAINT:
-	//	Graphic::DrawScene();
-	//	Graphic::WorldRotation();
-	//	break;
+	case WM_PAINT:
+		Graphic::DrawScene();
+		Graphic::WorldRotation();
+		break;
+
 	case WM_LBUTTONDOWN:
 		Position = MAKEPOINTS(lParam);
 		Graphic::PlaceVXL(POINT{ Position.x,Position.y });

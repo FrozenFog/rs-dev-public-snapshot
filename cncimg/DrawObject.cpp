@@ -19,11 +19,12 @@ std::vector<LPDIRECT3DTEXTURE9> DrawObject::IsolatedTextures;
 DWORD DrawObject::idTextureManagementThread = 0;
 HANDLE DrawObject::hTextureManagementThread = INVALID_HANDLE_VALUE;
 
-void DrawObject::UpdaceScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
+void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 {
 	if (!pDevice)
 		return;
 
+	SceneClass::Instance.ResetShaderMatrix();
 	//integrate first, than sort by distance, finally;
 	//draw opaque first, transpetant objects then;
 	//should check if the object is within our sight
@@ -44,8 +45,8 @@ void DrawObject::UpdaceScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 
 	//the shorter the distance is , the later they will be painted
 	auto DistanceCompairFunction = [](PaintingStruct*& Left, PaintingStruct*& Right)->bool {
-		return SceneClass::Instance.GetDistanceToScreen(Left->Position) >
-			SceneClass::Instance.GetDistanceToScreen(Right->Position);
+		return SceneClass::Instance.GetDistanceToScreen(Left->Position + Left->CompareOffset) > 
+			SceneClass::Instance.GetDistanceToScreen(Right->Position + Right->CompareOffset);
 	};
 
 	std::sort(DrawingOpaqueObject.begin(), DrawingOpaqueObject.end(), DistanceCompairFunction);
@@ -65,7 +66,7 @@ void DrawObject::UpdaceScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	}
 
 	auto hResult = pDevice->Present(nullptr, nullptr, NULL, nullptr);
-	if (FAILED(pDevice->Present(nullptr, nullptr, NULL, nullptr))) {
+	if (hResult == D3DERR_DEVICELOST) {
 		while (!SceneClass::Instance.HandleDeviceLost());
 	}
 }
@@ -598,6 +599,15 @@ void DrawObject::ObjectRotation(int nID, float RotationX, float RotationY, float
 	ObjectTransformation(nID, Transformation);
 }
 
+void DrawObject::SetObjectColorCoefficient(int nID, D3DXVECTOR4 Coefficient)
+{
+	auto pFind = FindObjectById(nID);
+	if (!pFind)
+		return;
+
+	pFind->SetColorCoefficient(Coefficient);
+}
+
 
 void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object, 
 	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer, 
@@ -621,6 +631,8 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 	if (BufferedNormals)
 		Object.BufferedNormals = *BufferedNormals;
 
+	Object.SetColorCoefficient(D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
+	Object.SetCompareOffset(D3DXVECTOR3(0.0, 0.0, 0.0));
 	Object.InitializeVisualRect();
 }
 
@@ -633,27 +645,45 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 	bool Result = false;
 	D3DVERTEXBUFFER_DESC Desc;
 	LPDIRECT3DBASETEXTURE9 pFormerTexture;
+	LPDIRECT3DPIXELSHADER9 pFormerShader;
+
+	auto& VxlShader = SceneClass::Instance.GetVXLShader();
+	auto& PlainShader = SceneClass::Instance.GetPlainArtShader();
 
 	this->pVertexBuffer->GetDesc(&Desc);
 	if (Desc.FVF == Vertex::dwFVFType)
 	{
 		//is vxl, requires Voxels and Normals,count = Desc.size / sizeof Vertex
 		pDevice->GetTexture(0, &pFormerTexture);
+		pDevice->GetPixelShader(&pFormerShader);
+
 		pDevice->SetTexture(0, nullptr);
 		pDevice->SetFVF(Desc.FVF);
 		pDevice->SetStreamSource(0, this->pVertexBuffer, 0, sizeof Vertex);
+
+		VxlShader.SetConstantVector(pDevice, this->ColorCoefficient);
+		pDevice->SetPixelShader(VxlShader.GetShaderObject());
+
 		Result = SUCCEEDED(pDevice->DrawPrimitive(D3DPT_POINTLIST, 0, Desc.Size / sizeof Vertex));
 		pDevice->SetTexture(0, pFormerTexture);
+		pDevice->SetPixelShader(pFormerShader);
 	}
 	else // Textured vertex.fvf
 	{
 		//requires pTexture, always 2 rectangles
 		pDevice->GetTexture(0, &pFormerTexture);
+		pDevice->GetPixelShader(&pFormerShader);
+
 		pDevice->SetTexture(0, this->pTexture);
 		pDevice->SetFVF(Desc.FVF);
 		pDevice->SetStreamSource(0, this->pVertexBuffer, 0, sizeof TexturedVertex);
+
+		PlainShader.SetConstantVector(pDevice, this->ColorCoefficient);
+		pDevice->SetPixelShader(PlainShader.GetShaderObject());
+
 		Result = SUCCEEDED(pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2));
 		pDevice->SetTexture(0, pFormerTexture);
+		pDevice->SetPixelShader(pFormerShader);
 	}
 
 	return Result;
@@ -722,4 +752,14 @@ bool PaintingStruct::IsWithinSight()
 	RECT ObjectRect = this->VisualRect;
 
 	return IntersectRect(&ObjectRect, &ObjectRect, &SceneViewRect);
+}
+
+void PaintingStruct::SetCompareOffset(D3DXVECTOR3 Offset)
+{
+	this->CompareOffset = Offset;
+}
+
+void PaintingStruct::SetColorCoefficient(D3DXVECTOR4 Coefficient)
+{
+	this->ColorCoefficient = Coefficient;
 }

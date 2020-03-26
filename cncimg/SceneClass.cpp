@@ -9,7 +9,9 @@ SceneClass SceneClass::Instance;
 
 SceneClass::SceneClass() :pResource(nullptr),
 	pDevice(nullptr),
-	pBackBuffer(nullptr)
+	pBackBuffer(nullptr),
+	VoxelShader(),
+	PlainArtShader()
 {
 	ZeroMemory(this, sizeof *this);
 	dwBackgroundColor = D3DCOLOR_XRGB(0, 0, 252);
@@ -70,7 +72,15 @@ bool SceneClass::SetUpScene(HWND hWnd)
 		return false;
 	}
 
+	if (!this->LoadShaders())
+	{
+		printf_s("failed loading shader.\n");
+		this->ClearDevice();
+		return false;
+	}
+
 	this->InitializeDeviceState();
+	this->GetDevice()->SetVertexShader(this->VertexShader.GetVertexShader());
 
 	DrawObject::hTextureManagementThread =
 		CreateThread(nullptr, 0, DrawObject::TextureManagementThreadProc, nullptr, NULL, &DrawObject::idTextureManagementThread);
@@ -81,6 +91,34 @@ bool SceneClass::SetUpScene(HWND hWnd)
 bool SceneClass::IsDeviceLoaded()
 {
 	return this->pDevice != nullptr;// backbuffer is the last to be initialized
+}
+
+bool SceneClass::LoadShaders()
+{
+	const char* pShaderFile = ".\\shaders\\transformation.hlsl";
+	const char* pVoxelShaderMain = "main";
+	const char* pPlainShaderMain = "pmain";
+	const char* pVertexMain = "vmain";
+	const char* pVarName = "vec";
+	const char* pMatrixName = "vpmatrix";
+
+	if (this->VoxelShader.CompileFromFile(pShaderFile, pVoxelShaderMain) &&
+		this->PlainArtShader.CompileFromFile(pShaderFile, pPlainShaderMain) &&
+		this->VertexShader.CompileFromFile(pShaderFile, pVertexMain, true))
+	{
+		return
+			this->VoxelShader.CreateShader(this->GetDevice()) &&
+			this->PlainArtShader.CreateShader(this->GetDevice()) &&
+			this->VertexShader.CreateVertexShader(this->GetDevice()) &&
+			this->VoxelShader.LinkConstants(pVarName) &&
+			this->PlainArtShader.LinkConstants(pVarName) &&
+			this->VertexShader.LinkConstants(pMatrixName);
+	}
+	else
+	{
+		printf_s("compile error.\n");
+		return false;
+	}
 }
 
 void SceneClass::MoveFocus(FLOAT x, FLOAT y)
@@ -214,6 +252,16 @@ LPDIRECT3DSURFACE9 SceneClass::GetBackSurface()
 	return this->pBackBuffer;
 }
 
+ShaderStruct & SceneClass::GetVXLShader()
+{
+	return this->VoxelShader;
+}
+
+ShaderStruct & SceneClass::GetPlainArtShader()
+{
+	return this->PlainArtShader;
+}
+
 bool SceneClass::HandleDeviceLost()
 {
 	if (!this->IsDeviceLoaded())
@@ -237,18 +285,14 @@ void SceneClass::InitializeDeviceState()
 	if (!this->IsDeviceLoaded())
 		return;
 
-	D3DXMATRIX Project;
+	D3DXMATRIX Project, View;
 
 	auto hWnd = this->SceneParas.hDeviceWindow;
 	RECT WindowRect;
-	D3DXVECTOR3 Test = { float(sqrt(2.0)*30.0f),float(sqrt(2.0)*30.0f),0.0 };
 
 	GetClientRect(hWnd, &WindowRect);
 	D3DXMatrixOrthoLH(&Project, WindowRect.right, WindowRect.bottom, 0.0, 1000000.0);
 
-	auto Tut = this->FructumTransformation(WindowRect, Test);
-
-	printf_s("tut = %f\t%f\t%f\n", Tut.x, Tut.y, Tut.z);
 	this->pDevice->SetTransform(D3DTS_PROJECTION, &Project);
 
 	this->pDevice->Clear(0, nullptr, D3DCLEAR_ZBUFFER, this->dwBackgroundColor, 1.0, 0);
@@ -262,6 +306,7 @@ void SceneClass::InitializeDeviceState()
 	this->pDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_FLAT);
 
 	this->SetUpCamera();
+	this->ResetShaderMatrix();
 }
 
 bool SceneClass::ResetDevice()
@@ -269,15 +314,29 @@ bool SceneClass::ResetDevice()
 	if (!this->IsDeviceLoaded())
 		return false;
 
+	//minimize
+	if (this->GetWindowRect().right == 0)
+		return true;
+
 	SAFE_RELEASE(this->pBackBuffer);
+
+	this->GetDevice()->SetVertexShader(nullptr);
+	SAFE_RELEASE(this->VertexShader.pVertexShader);
+	SAFE_RELEASE(this->VoxelShader.pShaderObject);
+	SAFE_RELEASE(this->PlainArtShader.pShaderObject);
 	
 	this->SceneParas.BackBufferWidth = this->SceneParas.BackBufferHeight = 0;
 	auto hResult = this->pDevice->Reset(&this->SceneParas);
 
 	this->pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &this->pBackBuffer);
 
-	if (SUCCEEDED(hResult))
+	if (SUCCEEDED(hResult)) {
 		this->InitializeDeviceState();
+		this->VertexShader.CreateVertexShader(this->GetDevice());
+		this->VoxelShader.CreateShader(this->GetDevice());
+		this->PlainArtShader.CreateShader(this->GetDevice());
+		this->GetDevice()->SetVertexShader(this->VertexShader.GetVertexShader());
+	}
 
 	return SUCCEEDED(hResult);
 }
@@ -298,7 +357,127 @@ void SceneClass::SetBackgroundColor(DWORD dwColor)
 	this->dwBackgroundColor = dwColor;
 }
 
+void SceneClass::ResetShaderMatrix()
+{
+	D3DXMATRIX World, View, Project;
+
+	if (!this->IsDeviceLoaded())
+		return;
+
+	this->GetDevice()->GetTransform(D3DTS_WORLD, &World);
+	this->GetDevice()->GetTransform(D3DTS_VIEW, &View);
+	this->GetDevice()->GetTransform(D3DTS_PROJECTION, &Project);
+
+	this->VertexShader.SetConstantMatrix(this->GetDevice(), World*View*Project);
+}
+
 DWORD SceneClass::GetBackgroundColor()
 {
 	return this->dwBackgroundColor;
+}
+
+bool ShaderStruct::IsLoaded()
+{
+	return this->pShader && this->pConstantTable;
+}
+
+bool ShaderStruct::CompileFromFile(const char * pSource, const char * pEntry, bool bVertexShader)
+{
+	LPD3DXBUFFER pErrorBuffer;
+
+	const char* PixShaderName = "ps_3_0";
+	const char* VerShaderName = "vs_3_0";
+
+	auto hResult = D3DXCompileShaderFromFile(pSource, nullptr, nullptr, pEntry, bVertexShader ? VerShaderName : PixShaderName,
+		D3DXSHADER_DEBUG, &this->pShader, &pErrorBuffer, &this->pConstantTable);
+
+	if (pErrorBuffer) {
+		printf_s("compile error : %s\n", pErrorBuffer->GetBufferPointer());
+		pErrorBuffer->Release();
+	}
+
+	if (FAILED(hResult)) {
+		this->ReleaseResources();
+		return false;
+	}
+
+	return true;
+}
+
+bool ShaderStruct::LinkConstants(const char * pVarName)
+{
+	if (!this->IsLoaded())
+		return false;
+
+	this->hConstant = this->pConstantTable->GetConstantByName(NULL, pVarName);
+
+	if (!this->hConstant)
+		printf_s("failed to link constant %s.\n", pVarName);
+
+	return this->hConstant != NULL;
+}
+
+bool ShaderStruct::SetConstantVector(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR4 Vector)
+{
+	if (!pDevice || !this->IsLoaded())
+		return false;
+
+	return SUCCEEDED(this->pConstantTable->SetVector(pDevice, this->hConstant, &Vector));
+}
+
+bool ShaderStruct::SetConstantMatrix(LPDIRECT3DDEVICE9 pDevice, D3DXMATRIX Matrix)
+{
+	if (!pDevice || !this->IsLoaded())
+		return false;
+
+	return SUCCEEDED(this->pConstantTable->SetMatrix(pDevice, hConstant, &Matrix));
+}
+
+bool ShaderStruct::CreateShader(LPDIRECT3DDEVICE9 pDevice)
+{
+	if (!pDevice || !this->IsLoaded())
+		return false;
+
+	auto hResult = pDevice->CreatePixelShader(reinterpret_cast<PDWORD>(pShader->GetBufferPointer()), &this->pShaderObject);
+
+	if (FAILED(hResult)) {
+		this->ReleaseResources();
+		printf_s("failed to create pixel shader.\n");
+		return false;
+	}
+
+	return true;
+}
+
+bool ShaderStruct::CreateVertexShader(LPDIRECT3DDEVICE9 pDevice)
+{
+	if (!pDevice || !this->IsLoaded())
+		return false;
+
+	auto hResult = pDevice->CreateVertexShader(reinterpret_cast<PDWORD>(pShader->GetBufferPointer()), &this->pVertexShader);
+
+	if (FAILED(hResult)) {
+		this->ReleaseResources();
+		printf_s("failed to create vertex shader.\n");
+		return false;
+	}
+
+	return true;
+}
+
+LPDIRECT3DPIXELSHADER9 ShaderStruct::GetShaderObject()
+{
+	return this->pShaderObject;
+}
+
+LPDIRECT3DVERTEXSHADER9 ShaderStruct::GetVertexShader()
+{
+	return this->pVertexShader;
+}
+
+void ShaderStruct::ReleaseResources()
+{
+	SAFE_RELEASE(this->pShaderObject);
+	SAFE_RELEASE(this->pShader);
+	SAFE_RELEASE(this->pConstantTable);
 }

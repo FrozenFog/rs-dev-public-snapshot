@@ -14,6 +14,8 @@ namespace Graphic
 	int CliffObject, CliffExtraObject;
 	int UnitPalette, TmpPalette;
 	int ShpFile;
+	int roadTileFile;
+	int roadObject[3];
 }
 
 bool Graphic::Direct3DInitialize(HWND hWnd, const char* pShotFileName, bool bUnion, int nDirections, int TurretOff)
@@ -34,12 +36,18 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 	UnitPalette = CreatePaletteFile("palettes\\unittem.pal");
 	TmpPalette = CreatePaletteFile("palettes\\isotem.pal");
 
+	SetBackgroundColor(0, 0, 0);
+
 	if (!UnitPalette || !TmpPalette)
 		return false;
 
 	//MakeVxlFrameShot(VxlFiles[0], "Shot.png", 0, 0.0, 0.0, 0.0, UnitPalette, INVALID_COLOR_VALUE);
 	if (pShotFileName) {
 		MakeShots(pShotFileName, 0.0, UnitPalette, bUnion, nDirections, INVALID_COLOR_VALUE, TurretOff);
+	}
+
+	if (roadTileFile = CreateTmpFile("tile\\proad01a.tem")) {
+		LoadTmpTextures(roadTileFile, TmpPalette);
 	}
 
 	if (auto id = CreateVxlFile("flata.vxl")) {
@@ -53,6 +61,22 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 	if (ShpFile = CreateShpFile("images\\ggcnst.shp")) {
 		if (LoadShpTextures(ShpFile, UnitPalette, RGB(0, 252, 252)))
 			MouseObject = CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.0 }, 0, UnitPalette, RGB(0, 252, 252), false);
+	}
+
+	D3DXVECTOR3 Position{ 100.0f,0.0f,0.0f };
+	int baseid, turid, barlid;
+
+	if ((baseid = CreateShpFile("images\\ygggun.shp")) && 
+		(turid = CreateVxlFile("images\\yaggun.vxl")))
+	{
+		if (LoadShpTextures(baseid, UnitPalette, RGB(252,0,0)))
+			CreateShpObjectAtScene(baseid, Position, 0, UnitPalette, RGB(252, 0, 0), true);
+
+		D3DXVECTOR2 Displace = { 0.0f,15.0f };
+		Position.x += sqrt(2.0)*Displace.y - Displace.x / sqrt(2.0);
+		Position.y += sqrt(2.0)*Displace.y + Displace.x / sqrt(2.0);
+		CreateVxlObjectAtScene(turid, Position, 0.0, 0.0, 0.0, UnitPalette, RGB(252,0,0));
+		//CreateVxlObjectAtScene(barlid, Position, 0.0, 0.0, 0.0, UnitPalette, RGB(0, 0, 252));
 	}
 
 	char cIndex = 'a';
@@ -75,21 +99,24 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 			LoadTmpTextures(id, TmpPalette);
 		}
 	}
-
+/*
 	if (auto id = CreateTmpFile("cliff05.tem")) {
 		LoadTmpTextures(id, TmpPalette);
 		CreateTmpObjectAtScene(id, { 0.0,3.0f*TileLength,0.0 }, 2, CliffObject, CliffExtraObject);
+		SetObjectColorCoefficient(CliffExtraObject, { 1.0f,0.6f,1.0f,0.3f });
 	}
-
+*/
 	//SetColorScheme(GetCurrentTheater(), 8848, RGB(0, 252, 0));
 	if (VxlFiles.size() >= 2)
 	{
 		if (auto vxlid = CreateVxlObjectAtScene(VxlFiles[0], { 0.0,0.0,0.0 }, 0.0, 0.0, 0.0, UnitPalette, RGB(0, 252, 0))) {
 			SceneObjects.push_back(vxlid);
+			SetObjectColorCoefficient(vxlid, { 1.0f,0.6f,0.6f,1.0f });
 		}
 
 		if (auto vxlid = CreateVxlObjectAtScene(VxlFiles[1], { 0.0,0.0,0.0 }, 0.0, 0.0, D3DX_PI / 2.0f, UnitPalette, RGB(0, 0, 252))) {
 			SceneObjects.push_back(vxlid);
+			SetObjectColorCoefficient(vxlid, { 0.6f,1.0f,0.6f,0.2f });
 		}
 	}
 
@@ -104,8 +131,14 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 		for (int x = -4; x < 6; x++) {
 			for (int y = -4; y < 6; y++) {
 				auto RamdomIndex = Randomizer::RandomRanged(0, TmpFiles.size());
-				if (CreateTmpObjectAtScene(TmpFiles[RamdomIndex],
-					D3DXVECTOR3((-0.5 + x)*TileLength, (-0.5 + y)*TileLength, 0.0f), 0, idxTile, idxExtra)) {
+				auto Position = D3DXVECTOR3((-0.5 + x)*TileLength, (-0.5 + y)*TileLength, 0.0f);
+
+				if (y >= 0 && y < 3) {
+					roadObject[y] = CreateTmpObjectAtScene(roadTileFile, Position, y, idxTile, idxExtra);
+					continue;
+				}
+
+				if (CreateTmpObjectAtScene(TmpFiles[RamdomIndex], Position, 0, idxTile, idxExtra)) {
 					if (idxTile)
 						SceneObjects.push_back(idxTile);
 					if (idxExtra)

@@ -223,6 +223,11 @@ void WINAPI SetObjectLocation(int nID, D3DXVECTOR3 Position)
 	DrawObject::ObjectMove(nID, Position);
 }
 
+void WINAPI SetObjectColorCoefficient(int nID, D3DXVECTOR4 Coefficient)
+{
+	DrawObject::SetObjectColorCoefficient(nID, Coefficient);
+}
+
 bool WINAPI SetUpScene(HWND hWnd)
 {
 	return SceneClass::Instance.SetUpScene(hWnd);
@@ -240,7 +245,7 @@ bool WINAPI ResetSceneView()
 
 void WINAPI PresentAllObject()
 {
-	DrawObject::UpdaceScene(SceneClass::Instance.GetDevice(), SceneClass::Instance.GetBackgroundColor());
+	DrawObject::UpdateScene(SceneClass::Instance.GetDevice(), SceneClass::Instance.GetBackgroundColor());
 }
 
 void WINAPI MoveFocusOnScreen(float x, float y)

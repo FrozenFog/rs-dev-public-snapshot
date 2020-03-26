@@ -400,6 +400,14 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 			auto nSize = this->GetFileData()->Header.nBlocksWidth - 2 * x;
 
 			RtlZeroMemory(pTextureData, this->GetFileData()->Header.nBlocksWidth * sizeof D3DCOLOR);
+			
+			if (*pFileData) {
+				for (int i = 0; i < x; i++) {
+					auto&LeftColor = Palette[*pFileData];
+					*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
+				}
+			}
+
 			pTextureData += x * sizeof D3DCOLOR;
 			for (int i = 0; i < nSize; i++)
 			{
@@ -408,8 +416,14 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 					auto& Color = Palette[nColor];
 					*reinterpret_cast<PDWORD>(pTextureData) = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
 				}
-
 				pTextureData += sizeof D3DCOLOR;
+			}
+
+			if (*(pFileData - 1)) {
+				for (int i = 0; i < x; i++) {
+					auto&LeftColor = Palette[*(pFileData - 1)];
+					*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
+				}
 			}
 		}
 
@@ -419,6 +433,14 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 			auto nSize = this->GetFileData()->Header.nBlocksWidth - 2 * x;
 
 			RtlZeroMemory(pTextureData, this->GetFileData()->Header.nBlocksWidth * sizeof D3DCOLOR);
+
+			if (*pFileData) {
+				for (int i = 0; i < x; i++) {
+					auto&LeftColor = Palette[*pFileData];
+					*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
+				}
+			}
+
 			pTextureData += x * sizeof D3DCOLOR;
 			for (int i = 0; i < nSize; i++)
 			{
@@ -427,8 +449,14 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 					auto& Color = Palette[nColor];
 					*reinterpret_cast<PDWORD>(pTextureData) = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
 				}
-
 				pTextureData += sizeof D3DCOLOR;
+			}
+
+			if (*(pFileData - 1)) {
+				for (int i = 0; i < x; i++) {
+					auto&LeftColor = Palette[*(pFileData - 1)];
+					*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
+				}
 			}
 		}
 
@@ -491,7 +519,7 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 	float PixelCellLength = this->GetFileData()->Header.nBlocksWidth / 2.0 * sqrt(2.0);
 	float PixelCellVisualHeight = this->GetFileData()->Header.nBlocksHeight;
 	float PixelCellVisualWidth = this->GetFileData()->Header.nBlocksWidth;
-	const float StretchAdjustment = 0.5f;
+	const float StretchAdjustment = 0.0f;
 
 	PaintingStruct PaintObject;
 	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer, pExtraVertexBuffer;
@@ -516,10 +544,10 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 
 	TexturedVertex CellVertecies[] =
 	{
-		{ {CellStartX - StretchAdjustment,CellStartY - StretchAdjustment,Position.z},0.50f,0.04f },
-		{ {CellStartX + PixelCellLength + StretchAdjustment,CellStartY - StretchAdjustment,Position.z},0.96f,0.48f },
-		{ {CellStartX - StretchAdjustment,CellStartY + PixelCellLength + StretchAdjustment,Position.z},0.04f,0.48f },
-		{ {CellStartX + PixelCellLength + StretchAdjustment,CellStartY + PixelCellLength + StretchAdjustment,Position.z},0.50f,0.96f },
+		{ {CellStartX - StretchAdjustment,CellStartY - StretchAdjustment,Position.z},0.50f,0.00f },
+		{ {CellStartX + PixelCellLength + StretchAdjustment,CellStartY - StretchAdjustment,Position.z},1.0f,0.50f },
+		{ {CellStartX - StretchAdjustment,CellStartY + PixelCellLength + StretchAdjustment,Position.z},0.0f,0.5f },
+		{ {CellStartX + PixelCellLength + StretchAdjustment,CellStartY + PixelCellLength + StretchAdjustment,Position.z},0.50f,1.0f },
 	};
 
 	if (FAILED(pDevice->CreateVertexBuffer(sizeof CellVertecies, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,
@@ -602,7 +630,7 @@ DrawScene:
 		//this->AddDrawnObject(pVertexBuffer, Position);
 		//this->AddTextureAtPosition(Position, pTexture);
 
-		PaintingStruct::InitializePaintingStruct(PaintObject, pVertexBuffer, Position - HeightPoint, pTexture);
+		PaintingStruct::InitializePaintingStruct(PaintObject, pVertexBuffer, Position, pTexture);
 		OutTileIndex =  this->CommitOpaqueObject(PaintObject);
 	}
 
@@ -610,7 +638,8 @@ DrawScene:
 	{
 		//this->AddDrawnExtraObject(pExtraVertexBuffer, Position);
 		//this->AddExtraTextureAtPosition(Position, pExtraTexture);
-		PaintingStruct::InitializePaintingStruct(PaintObject, pExtraVertexBuffer, Position - HeightPoint, pExtraTexture);
+		PaintingStruct::InitializePaintingStruct(PaintObject, pExtraVertexBuffer, Position/* - HeightPoint*/, pExtraTexture);
+		PaintObject.SetCompareOffset(-HeightPoint);
 		OutExtraIndex = this->CommitTransperantObject(PaintObject);
 	}
 	

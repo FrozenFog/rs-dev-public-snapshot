@@ -7,6 +7,38 @@
 
 #include "ColorScheme.h"
 
+struct ShaderStruct
+{
+	LPD3DXBUFFER pShader;
+	LPD3DXCONSTANTTABLE pConstantTable;
+	D3DXHANDLE hConstant;
+
+	union {
+		LPDIRECT3DPIXELSHADER9 pShaderObject;
+		LPDIRECT3DVERTEXSHADER9 pVertexShader;
+	};
+
+	ShaderStruct() :pShader(nullptr),
+		pConstantTable(nullptr),
+		pShaderObject(nullptr),
+		hConstant(NULL)
+	{}
+
+	~ShaderStruct() 
+		{ this->ReleaseResources(); }
+
+	bool IsLoaded();
+	bool CompileFromFile(const char* pSource, const char* pEntry, bool bVertexShader = false);
+	bool LinkConstants(const char* pVarName);
+	bool SetConstantVector(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR4 Vector);
+	bool SetConstantMatrix(LPDIRECT3DDEVICE9 pDevice, D3DXMATRIX Matrix);
+	bool CreateShader(LPDIRECT3DDEVICE9 pDevice);
+	bool CreateVertexShader(LPDIRECT3DDEVICE9 pDevice);
+	LPDIRECT3DPIXELSHADER9 GetShaderObject();
+	LPDIRECT3DVERTEXSHADER9 GetVertexShader();
+	void ReleaseResources();
+};
+
 class SceneClass
 {
 public:
@@ -25,6 +57,7 @@ public:
 	void ClearDevice();
 	bool SetUpScene(HWND hWnd);
 	bool IsDeviceLoaded();
+	bool LoadShaders();
 
 	//focus
 	void MoveFocus(FLOAT x, FLOAT y);
@@ -46,12 +79,16 @@ public:
 	//device accessment
 	LPDIRECT3DDEVICE9 GetDevice();
 	LPDIRECT3DSURFACE9 GetBackSurface();
+
+	ShaderStruct& GetVXLShader();
+	ShaderStruct& GetPlainArtShader();
 	//other
 	bool HandleDeviceLost();
 	void InitializeDeviceState();
 	bool ResetDevice();
 	void SetUpCamera();
 	void SetBackgroundColor(DWORD dwColor);
+	void ResetShaderMatrix();
 	DWORD GetBackgroundColor();
 
 private:
@@ -66,4 +103,7 @@ private:
 	LPDIRECT3DDEVICE9 pDevice;
 	LPDIRECT3DSURFACE9 pBackBuffer;
 	D3DPRESENT_PARAMETERS SceneParas;
+
+	ShaderStruct VoxelShader, PlainArtShader;
+	ShaderStruct VertexShader;
 };
