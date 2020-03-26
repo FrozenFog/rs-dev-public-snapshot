@@ -401,9 +401,11 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 
 			RtlZeroMemory(pTextureData, this->GetFileData()->Header.nBlocksWidth * sizeof D3DCOLOR);
 			
-			for (int i = 0; i < x; i++) {
-				auto&LeftColor = Palette[*pFileData];
-				*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
+			if (*pFileData) {
+				for (int i = 0; i < x; i++) {
+					auto&LeftColor = Palette[*pFileData];
+					*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
+				}
 			}
 
 			pTextureData += x * sizeof D3DCOLOR;
@@ -417,9 +419,11 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 				pTextureData += sizeof D3DCOLOR;
 			}
 
-			for (int i = 0; i < x; i++) {
-				auto&LeftColor = Palette[*(pFileData - 1)];
-				*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
+			if (*(pFileData - 1)) {
+				for (int i = 0; i < x; i++) {
+					auto&LeftColor = Palette[*(pFileData - 1)];
+					*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
+				}
 			}
 		}
 
@@ -430,9 +434,11 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 
 			RtlZeroMemory(pTextureData, this->GetFileData()->Header.nBlocksWidth * sizeof D3DCOLOR);
 
-			for (int i = 0; i < x; i++) {
-				auto&LeftColor = Palette[*pFileData];
-				*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
+			if (*pFileData) {
+				for (int i = 0; i < x; i++) {
+					auto&LeftColor = Palette[*pFileData];
+					*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
+				}
 			}
 
 			pTextureData += x * sizeof D3DCOLOR;
@@ -446,9 +452,11 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 				pTextureData += sizeof D3DCOLOR;
 			}
 
-			for (int i = 0; i < x; i++) {
-				auto&LeftColor = Palette[*(pFileData - 1)];
-				*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
+			if (*(pFileData - 1)) {
+				for (int i = 0; i < x; i++) {
+					auto&LeftColor = Palette[*(pFileData - 1)];
+					*reinterpret_cast<PDWORD>(pTextureData + i * sizeof D3DCOLOR) = D3DCOLOR_XRGB(LeftColor.R, LeftColor.G, LeftColor.B);
+				}
 			}
 		}
 

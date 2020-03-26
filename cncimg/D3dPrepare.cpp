@@ -36,6 +36,8 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 	UnitPalette = CreatePaletteFile("palettes\\unittem.pal");
 	TmpPalette = CreatePaletteFile("palettes\\isotem.pal");
 
+	SetBackgroundColor(0, 0, 0);
+
 	if (!UnitPalette || !TmpPalette)
 		return false;
 
