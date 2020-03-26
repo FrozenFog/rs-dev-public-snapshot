@@ -411,6 +411,9 @@ bool ShaderStruct::LinkConstants(const char * pVarName)
 
 	this->hConstant = this->pConstantTable->GetConstantByName(NULL, pVarName);
 
+	if (!this->hConstant)
+		printf_s("failed to link constant %s.\n", pVarName);
+
 	return this->hConstant != NULL;
 }
 
@@ -439,6 +442,7 @@ bool ShaderStruct::CreateShader(LPDIRECT3DDEVICE9 pDevice)
 
 	if (FAILED(hResult)) {
 		this->ReleaseResources();
+		printf_s("failed to create pixel shader.\n");
 		return false;
 	}
 
@@ -454,6 +458,7 @@ bool ShaderStruct::CreateVertexShader(LPDIRECT3DDEVICE9 pDevice)
 
 	if (FAILED(hResult)) {
 		this->ReleaseResources();
+		printf_s("failed to create vertex shader.\n");
 		return false;
 	}
 

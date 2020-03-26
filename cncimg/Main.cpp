@@ -53,6 +53,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 //暂时只画第一个section
 //文件名flata.vxl / unittem.pals
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	PrepareConsole();/*
