@@ -70,7 +70,7 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 		(turid = CreateVxlFile("images\\yaggun.vxl")))
 	{
 		if (LoadShpTextures(baseid, UnitPalette, RGB(252,0,0)))
-			CreateShpObjectAtScene(baseid, Position, 0, UnitPalette, RGB(252, 0, 0), true);
+			CreateShpObjectAtScene(baseid, Position, 0, UnitPalette, RGB(252, 0, 0), false);
 
 		D3DXVECTOR2 Displace = { 0.0f,15.0f };
 		Position.x += sqrt(2.0)*Displace.y - Displace.x / sqrt(2.0);
@@ -159,6 +159,7 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 	for (int x = 0; x < 10; x++) {
 		if (CreateTmpObjectAtScene(SlopeFilesSW[Randomizer::RandomRanged(0, SlopeFilesSW.size())],
 		{ (-4.5f + x)*TileLength,-5.5f*TileLength,0.0 }, 0, idxTile, idxExtra)) {
+			printf_s("coords = %f, %f, %f.\n", (float)(-4.5f + x)*TileLength, (float)(-5.5f*TileLength), 0.0f);
 			if (idxTile)
 				SceneObjects.push_back(idxTile);
 			if (idxExtra)
@@ -270,4 +271,9 @@ void Graphic::RemoveLastTmp()
 	RemoveShpFile(ShpFile);
 	RemoveVxlFile(VxlFiles[1]);
 	//VxlFiles.erase(VxlFiles.begin() + 1);
+}
+
+void Graphic::SceneRotation()
+{
+	RotateWorld(0.05f);
 }

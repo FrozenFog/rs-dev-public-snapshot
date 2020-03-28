@@ -364,5 +364,10 @@ bool IsColorSchemeInitialized()
 	return ColorScheme::GlobalColorScheme.IsLoaded();
 }
 
+void RotateWorld(float Angle)
+{
+	SceneClass::Instance.RotateScene(Angle);
+}
+
 
 EXPORT_END

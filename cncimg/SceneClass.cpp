@@ -144,6 +144,20 @@ D3DXVECTOR3 SceneClass::GetFocus()
 	return this->CurrentFocusLocation;
 }
 
+void SceneClass::RotateScene(float Angle)
+{
+	if (!this->IsDeviceLoaded())
+		return;
+
+	D3DXMATRIX World, Rotation;
+
+	this->GetDevice()->GetTransform(D3DTS_WORLD, &World);
+	D3DXMatrixRotationZ(&Rotation, Angle);
+
+	World *= Rotation;
+	this->GetDevice()->SetTransform(D3DTS_WORLD, &World);
+}
+
 RECT SceneClass::GetCurrentViewPort()
 {
 	auto WndRect = this->GetWindowRect();

@@ -64,6 +64,7 @@ public:
 	void MoveFocus(D3DXVECTOR3 Displacement);
 	void SetFocus(D3DXVECTOR3 Location);
 	D3DXVECTOR3 GetFocus();
+	void RotateScene(float Angle);
 	//view port
 	RECT GetCurrentViewPort();
 	RECT GetWindowRect();

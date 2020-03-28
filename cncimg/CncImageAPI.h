@@ -84,5 +84,6 @@ void SetCurrentTheater(TheaterType Theater);
 void SetColorScheme(TheaterType Theater, int nColorSchemeID, COLORREF RemapColor);
 
 bool IsColorSchemeInitialized();
+void RotateWorld(float Angle);
 
 EXPORT_END

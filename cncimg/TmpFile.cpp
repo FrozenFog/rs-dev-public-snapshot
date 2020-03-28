@@ -414,11 +414,11 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 				if (nColor) {
 					pColorData[0] = dwColor;
 					if (bFirstEnter && x >= 1) {
-						pColorData[-1] = /*pColorData[-2] = */dwColor;
+						pColorData[-1] = pColorData[-2] = dwColor;
 						bFirstEnter = false;
 					}
 					if (!bFirstEnter && x >= 1 && *pFileData == 0) {
-						pColorData[1] = /*pColorData[2] = */dwColor;
+						pColorData[1] = pColorData[2] = dwColor;
 						bFirstEnter = true;
 					}
 				}
@@ -446,11 +446,11 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 				if (nColor) {
 					pColorData[0] = dwColor;
 					if (bFirstEnter && x >= 1) {
-						pColorData[-1] = /*pColorData[-2] = */dwColor;
+						pColorData[-1] = pColorData[-2] = dwColor;
 						bFirstEnter = false;
 					}
 					if (!bFirstEnter && x >= 1 && *pFileData == 0) {
-						pColorData[1] = /*pColorData[2] = */dwColor;
+						pColorData[1] = pColorData[2] = dwColor;
 						bFirstEnter = true;
 					}
 				}
@@ -530,7 +530,7 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 	float PixelCellLength = this->GetFileData()->Header.nBlocksWidth / 2.0 * sqrt(2.0);
 	float PixelCellVisualHeight = this->GetFileData()->Header.nBlocksHeight;
 	float PixelCellVisualWidth = this->GetFileData()->Header.nBlocksWidth;
-	const float StretchAdjustment = 0.0f;
+	const float StretchAdjustment = 0.2f;
 
 	PaintingStruct PaintObject;
 	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer, pExtraVertexBuffer;
