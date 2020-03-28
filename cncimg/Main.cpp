@@ -174,6 +174,10 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_MOUSEMOVE:
 		Position = MAKEPOINTS(lParam);
 		Graphic::MouseMove(POINT{ Position.x,Position.y });
+
+		if (wParam == MK_MBUTTON)
+			Graphic::SceneRotation();
+
 		break;
 
 	case WM_SIZE:

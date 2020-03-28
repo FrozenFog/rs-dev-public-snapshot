@@ -40,4 +40,6 @@ namespace Graphic
 	void MouseMove(POINT Position);
 
 	void RemoveLastTmp();
+
+	void SceneRotation();
 };
