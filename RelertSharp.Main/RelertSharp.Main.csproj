@@ -59,9 +59,13 @@
     <Compile Include="Common\RSConfig.cs" />
     <Compile Include="Common\SoundManager.cs" />
     <Compile Include="Common\Struct.cs" />
-    <Compile Include="DrawingEngine\DrawableStructure.cs" />
+    <Compile Include="DrawingEngine\Drawables\DrawableBase.cs" />
+    <Compile Include="DrawingEngine\Drawables\DrawableStructure.cs" />
+    <Compile Include="DrawingEngine\Drawables\DrawableUnit.cs" />
     <Compile Include="DrawingEngine\Engine.cs" />
-    <Compile Include="DrawingEngine\PresentStructure.cs" />
+    <Compile Include="DrawingEngine\Presenting\PresentBase.cs" />
+    <Compile Include="DrawingEngine\Presenting\PresentStructure.cs" />
+    <Compile Include="DrawingEngine\Presenting\PresentUnit.cs" />
     <Compile Include="DrawingEngine\Struct.cs" />
     <Compile Include="Encoding\AudEncoding.cs" />
     <Compile Include="Encoding\Blowfish.cs" />

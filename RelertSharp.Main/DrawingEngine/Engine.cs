@@ -8,6 +8,8 @@ using System.Runtime.InteropServices;
 using RelertSharp.MapStructure;
 using RelertSharp.MapStructure.Points;
 using RelertSharp.MapStructure.Objects;
+using RelertSharp.DrawingEngine.Drawables;
+using RelertSharp.DrawingEngine.Presenting;
 using RelertSharp.Common;
 using static RelertSharp.Utils.Misc;
 using static RelertSharp.Common.GlobalVar;
@@ -27,11 +29,13 @@ namespace RelertSharp.DrawingEngine
         private Dictionary<int, int> infData = new Dictionary<int, int>();
         private Dictionary<int, int> vehData = new Dictionary<int, int>();
         private Dictionary<int, PresentStructure> buildingData = new Dictionary<int, PresentStructure>();
+        private Dictionary<int, PresentUnit> unitData = new Dictionary<int, PresentUnit>();
         private Dictionary<int, int> airData = new Dictionary<int, int>();
         private Dictionary<string, int> tmpBuffer = new Dictionary<string, int>();
         private Dictionary<string, int> shpbuffer = new Dictionary<string, int>();
         private Dictionary<string, int> vxlBuffer = new Dictionary<string, int>();
         private Dictionary<string, DrawableStructure> buildingBuffer = new Dictionary<string, DrawableStructure>();
+        private Dictionary<string, DrawableUnit> unitBuffer = new Dictionary<string, DrawableUnit>();
         private int pPalIso = 0;
         private int pPalUnit = 0;
         private int pPalTheater = 0;
@@ -75,6 +79,15 @@ namespace RelertSharp.DrawingEngine
                 return Draw(pos, name, pPalUnit, shpbuffer, infData, DrawableType.Shp, frame, _colorIgnore, inf.CoordInt, ref id);
             }
         }
+        public bool DrawObject(UnitItem unit, int height)
+        {
+            if (unit.NameID == "RDROLLER") return false;
+            DrawableUnit du = CreateDrawableUnit(unit.NameID, _colorIgnore);
+            PresentUnit pu = new PresentUnit(unit, height);
+            Vec3 pos = ToVec3Iso(pu.X, pu.Y, pu.Z);
+            return DrawUnit(du, pu, pos, _colorIgnore, Vec3.Zero);
+        }
+
         public bool DrawObject(StructureItem structure, int height)
         {
             DrawableStructure ds = CreateDrawableStructure(structure.NameID, _colorIgnore);
@@ -214,6 +227,22 @@ namespace RelertSharp.DrawingEngine
             else id = vxlBuffer[name];
             return id;
         }
+        private DrawableUnit CreateDrawableUnit(string name, uint color)
+        {
+            DrawableUnit du;
+            if (!unitBuffer.Keys.Contains(name))
+            {
+                du = new DrawableUnit(name);
+                string self = "", turret = "", barl = "";
+                self = GlobalRules.GetVxlImgName(name, ref turret, ref barl);
+                if (!string.IsNullOrEmpty(self)) du.pSelf = CreateVxl(self, pPalUnit, color);
+                if (!string.IsNullOrEmpty(turret)) du.pTurret = CreateVxl(turret, pPalUnit, color);
+                if (!string.IsNullOrEmpty(barl)) du.pBarrel = CreateVxl(barl, pPalUnit, color);
+                unitBuffer[name] = du;
+            }
+            else du = unitBuffer[name];
+            return du;
+        }
         private DrawableStructure CreateDrawableStructure(string name, uint color)
         {
             DrawableStructure ds;
@@ -285,7 +314,14 @@ namespace RelertSharp.DrawingEngine
                 else dest.pTurretAnim = CppExtern.ObjectUtils.CreateShpObjectAtScene(src.pTurretAnim, pos + src.offsetTurret, 0, pPalUnit, color, false);
             }
 
-            return !(dest.pActivateAnim == 0 && dest.pBib == 0 && dest.pSelf == 0 && dest.pTurretAnim == 0);
+            return dest.IsValid;
+        }
+        private bool DrawUnit(DrawableUnit src, PresentUnit dest, Vec3 pos, uint color, Vec3 rotation)
+        {
+            if (src.pSelf != 0) dest.pSelf = CppExtern.ObjectUtils.CreateVxlObjectAtScene(src.pSelf, pos, rotation.X, rotation.Y, rotation.Z, pPalUnit, color);
+            if (src.pBarrel != 0) dest.pBarrel = CppExtern.ObjectUtils.CreateVxlObjectAtScene(src.pBarrel, pos, rotation.X, rotation.Y, rotation.Z, pPalUnit, color);
+            if (src.pTurret != 0) dest.pTurret = CppExtern.ObjectUtils.CreateVxlObjectAtScene(src.pTurret, pos, rotation.X, rotation.Y, rotation.Z, pPalUnit, color);
+            return dest.IsValid;
         }
         private bool Draw(Vec3 pos, string name, int pPal, Dictionary<string, int> lookup, Dictionary<int, int> dest,
 DrawableType type, int subIndex, uint remapColor, int coordIndexer, ref int id, bool _isFlat = false)

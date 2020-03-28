@@ -11,6 +11,10 @@ namespace RelertSharp.DrawingEngine
         public float X;
         public float Y;
         public float Z;
+        public static Vec3 Zero
+        {
+            get { return new Vec3() { X = 0, Y = 0, Z = 0 }; }
+        }
         public static Vec3 operator+(Vec3 a, Vec3 b)
         {
             return new Vec3() { X = a.X + b.X, Y = a.Y + b.Y, Z = a.Z + b.Z };

@@ -5,25 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.MapStructure.Objects;
 
-namespace RelertSharp.DrawingEngine
+namespace RelertSharp.DrawingEngine.Presenting
 {
-    internal class PresentStructure
+    internal class PresentStructure : PresentBase, IPresentBase
     {
         #region Ctor
-        public PresentStructure(StructureItem item, int z)
-        {
-            X = item.X;
-            Y = item.Y;
-            Z = z;
-        }
+        public PresentStructure(StructureItem item, int z) : base(item, z) { }
         #endregion
 
 
         #region Public Calls - PresentStructure
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Z { get; set; }
-        public int pSelf { get; set; }
         public int pActivateAnim { get; set; }
         public int pIdleAnim { get; set; }
         public int pActivateAnim2 { get; set; }
@@ -31,6 +22,7 @@ namespace RelertSharp.DrawingEngine
         public int pTurretAnim { get; set; }
         public int pBib { get; set; }
         public bool VoxelTurret { get; set; }
+        public bool IsValid { get { return !((pSelf | pActivateAnim | pActivateAnim2 | pActivateAnim3 | pBib | pTurretAnim | pIdleAnim) == 0); } }
         #endregion
     }
 }

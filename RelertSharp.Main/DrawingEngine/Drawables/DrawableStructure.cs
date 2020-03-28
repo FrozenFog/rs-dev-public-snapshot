@@ -4,21 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RelertSharp.DrawingEngine
+namespace RelertSharp.DrawingEngine.Drawables
 {
-    internal class DrawableStructure
+    internal class DrawableStructure : DrawableBase
     {
         #region Ctor
-        public DrawableStructure(string nameID)
-        {
-            NameID = nameID;
-        }
+        public DrawableStructure(string nameID) : base(nameID) { }
         #endregion
 
 
         #region Public Calls
-        public string NameID { get; set; }
-        public int pSelf { get; set; }
         public int pActivateAnim { get; set; }
         public int pIdleAnim { get; set; }
         public int pActivateAnim2 { get; set; }

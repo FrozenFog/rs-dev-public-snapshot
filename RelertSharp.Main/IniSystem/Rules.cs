@@ -114,6 +114,40 @@ namespace RelertSharp.IniSystem
                 Y = string.IsNullOrEmpty(y) ? 0 : int.Parse(y)
             };
         }
+        private void VxlFormating(string id, ref string name, ref string tur, ref string barl)
+        {
+            tur = id + "tur.vxl";
+            barl = id + "barl.vxl";
+            name  = id + ".vxl";
+        }
+        public string GetVxlImgName(string id, ref string tur, ref string barl)
+        {
+            string img = this[id]["Image"];
+            if (string.IsNullOrEmpty(img))
+            {
+                VxlFormating(id, ref img, ref tur, ref barl);
+            }
+            else
+            {
+                if (IniDict.Keys.Contains(img))
+                {
+                    string subimg = this[img]["Image"];
+                    if (string.IsNullOrEmpty(subimg))
+                    {
+                        VxlFormating(img, ref img, ref tur, ref barl);
+                    }
+                    else
+                    {
+                        VxlFormating(subimg, ref img, ref tur, ref barl);
+                    }
+                }
+                else
+                {
+                    VxlFormating(img, ref img, ref tur, ref barl);
+                }
+            }
+            return img;
+        }
         public string GetObjectImgName(string id, ref string anim, ref string turret, ref string bib, ref bool isVox, ref string idle, ref string anim2, ref string anim3)
         {
             string img = this[id]["Image"];
