@@ -34,10 +34,11 @@ namespace RelertSharp.DrawingEngine
         public static Vec3 operator+(Vec3 a, Pnt b)
         {
             float sq3 = (float)Math.Sqrt(3);
+            float sq2 = (float)Math.Sqrt(2);
             //float dz = b.Y * 2 / sq3;
-            //float dx = sq2 * b.Y + b.X / sq2;
-            //float dy = sq2 * b.Y - b.X / sq2;
-            return new Vec3() { X = a.X, Y = a.Y, Z = a.Z /*- dz*/ };
+            float dx = sq2 * b.Y + b.X / sq2;
+            float dy = sq2 * b.Y - b.X / sq2;
+            return new Vec3() { X = a.X + dx, Y = a.Y + dy, Z = a.Z /*- dz*/ };
         }
         public static Vec3 operator+(Pnt b, Vec3 a)
         {

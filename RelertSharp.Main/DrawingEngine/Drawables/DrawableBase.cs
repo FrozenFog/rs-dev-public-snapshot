@@ -20,6 +20,7 @@ namespace RelertSharp.DrawingEngine.Drawables
         #region Public Calls - DrawableBase
         public string NameID { get; set; }
         public int pSelf { get; set; }
+        public int pPalCustom { get; set; }
         #endregion
     }
 
@@ -28,5 +29,6 @@ namespace RelertSharp.DrawingEngine.Drawables
     {
         string NameID { get; set; }
         int pSelf { get; set; }
+        int pPalCustom { get; set; }
     }
 }

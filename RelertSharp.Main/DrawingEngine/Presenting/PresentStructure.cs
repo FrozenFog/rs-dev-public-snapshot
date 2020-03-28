@@ -20,6 +20,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         public int pActivateAnim2 { get; set; }
         public int pActivateAnim3 { get; set; }
         public int pTurretAnim { get; set; }
+        public int pTurretBarl { get; set; }
         public int pBib { get; set; }
         public bool VoxelTurret { get; set; }
         public bool IsValid { get { return !((pSelf | pActivateAnim | pActivateAnim2 | pActivateAnim3 | pBib | pTurretAnim | pIdleAnim) == 0); } }

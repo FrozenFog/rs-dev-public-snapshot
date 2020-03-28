@@ -90,6 +90,7 @@ namespace RelertSharp.IniSystem
             string img = GetObjectImgName(nameID);
             INIEntity sequence = this[this[img]["Sequence"]];
             direction = direction >> 5 % 8;
+            if (sequence.Name == "") return direction;
             int[] ready = sequence.GetPair("Ready").ParseIntList();
             int result = ready[0];
             return result + direction;
@@ -100,7 +101,7 @@ namespace RelertSharp.IniSystem
             if (string.IsNullOrEmpty(img)) img = nameID;
             if (ParseBool(this[nameID]["AlternateTheaterArt"]))
             {
-                img += _suff;
+                if (GlobalDir.HasFile(img + _suff + ".shp")) img += _suff;
             }
             return img;
         }
@@ -114,18 +115,23 @@ namespace RelertSharp.IniSystem
                 Y = string.IsNullOrEmpty(y) ? 0 : int.Parse(y)
             };
         }
-        private void VxlFormating(string id, ref string name, ref string tur, ref string barl)
+        private void VxlFormating(string id, bool vxl, ref string name, ref string tur, ref string barl)
         {
-            tur = id + "tur.vxl";
-            barl = id + "barl.vxl";
-            name  = id + ".vxl";
+            if (vxl)
+            {
+                tur = id + "tur.vxl";
+                barl = id + "barl.vxl";
+                name = id + ".vxl";
+            }
+            else name = id + ".shp";
         }
-        public string GetVxlImgName(string id, ref string tur, ref string barl)
+        public string GetUnitImgName(string id, ref string tur, ref string barl, ref bool vxl)
         {
             string img = this[id]["Image"];
             if (string.IsNullOrEmpty(img))
             {
-                VxlFormating(id, ref img, ref tur, ref barl);
+                vxl = IsVxl(id);
+                VxlFormating(id, vxl, ref img, ref tur, ref barl);
             }
             else
             {
@@ -134,21 +140,24 @@ namespace RelertSharp.IniSystem
                     string subimg = this[img]["Image"];
                     if (string.IsNullOrEmpty(subimg))
                     {
-                        VxlFormating(img, ref img, ref tur, ref barl);
+                        vxl = IsVxl(img);
+                        VxlFormating(img, vxl, ref img, ref tur, ref barl);
                     }
                     else
                     {
-                        VxlFormating(subimg, ref img, ref tur, ref barl);
+                        vxl = IsVxl(subimg);
+                        VxlFormating(subimg, vxl, ref img, ref tur, ref barl);
                     }
                 }
                 else
                 {
-                    VxlFormating(img, ref img, ref tur, ref barl);
+                    vxl = IsVxl(img);
+                    VxlFormating(img, vxl, ref img, ref tur, ref barl);
                 }
             }
             return img;
         }
-        public string GetObjectImgName(string id, ref string anim, ref string turret, ref string bib, ref bool isVox, ref string idle, ref string anim2, ref string anim3)
+        public string GetObjectImgName(string id, ref string anim, ref string turret, ref string bib, ref bool isVox, ref string idle, ref string anim2, ref string anim3, ref string barl)
         {
             string img = this[id]["Image"];
             INIEntity art;
@@ -179,7 +188,11 @@ namespace RelertSharp.IniSystem
             anim3 = GuessStructureName(this[art["ActiveAnimThree"]]);
             bib = GuessStructureName(art["BibShape"]);
             isVox = ParseBool(this[id]["TurretAnimIsVoxel"]);
-            if (isVox) turret = this[id]["TurretAnim"] + ".vxl";
+            if (isVox)
+            {
+                turret = this[id]["TurretAnim"] + ".vxl";
+                barl = turret.ToLower().Replace("tur", "barl");
+            }
             else turret = GuessStructureName(this[this[id]["TurretAnim"]]);
             return img;
         }
