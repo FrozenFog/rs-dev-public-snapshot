@@ -1,6 +1,7 @@
 #include "D3dPrepare.h"
 
 #include "CncImageAPI.h"
+#include "DemoCellClass.h"
 
 namespace Graphic
 {
@@ -58,9 +59,13 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 		VxlFiles.push_back(id);
 	}
 
+	if (auto id = CreateCommonTextureFile("images\\common_tex.png")) {
+		CreateCommonTextureObjectAtScene(id, { 0.0,0.0,0.0 });
+	}
+
 	if (ShpFile = CreateShpFile("images\\ggcnst.shp")) {
 		if (LoadShpTextures(ShpFile, UnitPalette, RGB(0, 252, 252)))
-			MouseObject = CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.0 }, 0, UnitPalette, RGB(0, 252, 252), false);
+			MouseObject = CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.0 }, 0, UnitPalette, RGB(0, 252, 252), true);
 	}
 
 	D3DXVECTOR3 Position{ 100.0f,0.0f,0.0f };
@@ -134,15 +139,11 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 				auto Position = D3DXVECTOR3((-0.5 + x)*TileLength, (-0.5 + y)*TileLength, 0.0f);
 
 				if (y >= 0 && y < 3) {
-					roadObject[y] = CreateTmpObjectAtScene(roadTileFile, Position, y, idxTile, idxExtra);
+					roadObject[y] = CellClass::CreateCellAt(Position, roadTileFile, y);
 					continue;
 				}
 
-				if (CreateTmpObjectAtScene(TmpFiles[RamdomIndex], Position, 0, idxTile, idxExtra)) {
-					if (idxTile)
-						SceneObjects.push_back(idxTile);
-					if (idxExtra)
-						SceneObjects.push_back(idxExtra);
+				if (CellClass::CreateCellAt(Position, TmpFiles[RamdomIndex], 0)) {
 				}
 				else {
 					printf_s("failed to draw.\n");
@@ -157,20 +158,14 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 */
 	if (!TmpFiles.empty() && !SlopeFilesSW.empty())
 	for (int x = 0; x < 10; x++) {
-		if (CreateTmpObjectAtScene(SlopeFilesSW[Randomizer::RandomRanged(0, SlopeFilesSW.size())],
-		{ (-4.5f + x)*TileLength,-5.5f*TileLength,0.0 }, 0, idxTile, idxExtra)) {
-			printf_s("coords = %f, %f, %f.\n", (float)(-4.5f + x)*TileLength, (float)(-5.5f*TileLength), 0.0f);
-			if (idxTile)
-				SceneObjects.push_back(idxTile);
-			if (idxExtra)
-				SceneObjects.push_back(idxExtra);
+		if (CellClass::CreateCellAt(
+			{ (-4.5f + x)*TileLength,-5.5f*TileLength,CellHeight },
+			TmpFiles[Randomizer::RandomRanged(0, TmpFiles.size())],
+			0)) {
 		}
-		if (CreateTmpObjectAtScene(SlopeFilesSW[Randomizer::RandomRanged(0, SlopeFilesSW.size())],
-		{ (-4.5f + x)*TileLength,-6.5f*TileLength,CellHeight }, 0, idxTile, idxExtra)) {
-			if (idxTile)
-				SceneObjects.push_back(idxTile);
-			if (idxExtra)
-				SceneObjects.push_back(idxExtra);
+		if (CellClass::CreateCellAt({ (-4.5f + x)*TileLength,-6.5f*TileLength,0.0 },
+			TmpFiles[Randomizer::RandomRanged(0, TmpFiles.size())],
+			0)) {
 		}
 	}
 
@@ -261,7 +256,9 @@ void Graphic::MouseMove(POINT Position)
 	D3DXVECTOR3 TargetPosition;
 
 	ClientPositionToScenePosition(Position, TargetPosition);
-	SetObjectLocation(MouseObject, TargetPosition);
+	//SetObjectLocation(MouseObject, TargetPosition);
+
+	CellClass::MarkCellByMousePosition(Position);
 }
 
 void Graphic::RemoveLastTmp()

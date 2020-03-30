@@ -54,6 +54,12 @@
     <ClCompile Include="ShpFileClass.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="DemoCellClass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonTextureFileClass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VxlFile.h">
@@ -96,6 +102,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="normals.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoCellClass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonTextureFileClass.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

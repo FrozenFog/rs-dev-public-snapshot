@@ -4,6 +4,7 @@
 #include "TmpFile.h"
 #include "VxlFile.h"
 #include "ShpFileClass.h"
+#include "CommonTextureFileClass.h"
 
 SceneClass SceneClass::Instance;
 
@@ -33,6 +34,7 @@ void SceneClass::ClearScene()
 	VxlFile::ClearAllObjectForAllFile();
 	TmpFileClass::ClearAllObjectForAllFile();
 	ShpFileClass::ClearAllObjectForAllFile();
+	CommonTextureFileClass::ClearAllObjectForAllFile();
 }
 
 void SceneClass::ClearDevice()
