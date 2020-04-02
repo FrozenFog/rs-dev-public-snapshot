@@ -50,6 +50,8 @@ namespace RelertSharp.MapStructure
             GetAbstractLogics(f);
             GetTeam(f);
             GetObjects(f);
+            LoadHouseColor();
+
             Tiles = new TileLayer(isomappack5String, info.Size);
             Overlays = new OverlayLayer(overlayString, overlaydataString);
             residual = new Dictionary<string, INIEntity>(f.IniDict);
@@ -67,6 +69,12 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - Map
+        public uint GetHouseColor(string housename)
+        {
+            HouseItem house = Houses.GetHouse(housename);
+            if (house == null) return 0;
+            return (uint)house.DrawingColor.ToArgb();
+        }
         public void CompressTile()
         {
             foreach (Tile t in Tiles.Data.Values)
@@ -97,6 +105,23 @@ namespace RelertSharp.MapStructure
 
 
         #region Private Methods - Map
+        private void LoadHouseColor()
+        {
+            foreach (HouseItem house in Houses)
+            {
+                if (string.IsNullOrEmpty(house.ColorName)) house.DrawingColor = Color.Red;
+                else
+                {
+                    INIPair p = GlobalVar.GlobalRules["Colors"].GetPair(house.ColorName);
+                    if (p.Name == "") house.DrawingColor = Color.Red;
+                    else
+                    {
+                        string[] hsb = p.ParseStringList();
+                        house.DrawingColor = Utils.HSBColor.FromHSB(hsb);
+                    }
+                }
+            }
+        }
         private void GetGeneralInfo(MapFile f)
         {
             info = new MapInfo(f.PopEnt("Basic"), f.PopEnt("Map"), f.PopEnt("SpecialFlags"));

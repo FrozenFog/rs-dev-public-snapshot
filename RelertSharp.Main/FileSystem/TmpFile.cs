@@ -92,7 +92,7 @@ namespace RelertSharp.FileSystem
         private byte[] TileData, ExtraData, ZData, ExtraZData, pixelData;
         public int X, Y, Height, exX, exY;
         public byte TerrainType, RampType;
-        public RGBColor ColorRadarLeft, ColorRadarRight;
+        public Color ColorRadarLeft, ColorRadarRight;
 
         #region Ctor - TmpImage
         public TmpImage() { }
@@ -119,8 +119,8 @@ namespace RelertSharp.FileSystem
             Height = br.ReadByte();
             TerrainType = br.ReadByte();
             RampType = br.ReadByte();
-            ColorRadarLeft = new RGBColor(br.ReadByte(), br.ReadByte(), br.ReadByte());
-            ColorRadarRight = new RGBColor(br.ReadByte(), br.ReadByte(), br.ReadByte());
+            ColorRadarLeft = Color.FromArgb(br.ReadByte(), br.ReadByte(), br.ReadByte());
+            ColorRadarRight = Color.FromArgb(br.ReadByte(), br.ReadByte(), br.ReadByte());
             br.ReadBytes(3);//cdcd
 
             TileByteCount = width * height / 2;

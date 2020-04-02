@@ -26,6 +26,14 @@ namespace RelertSharp.MapStructure.Logic
             }
             return result;
         }
+        public HouseItem GetHouse(string name)
+        {
+            foreach (HouseItem h in this)
+            {
+                if (h.Name == name) return h;
+            }
+            return null;
+        }
         #endregion
     }
 
@@ -61,6 +69,14 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
 
 
+        #region Public Methods - HouseItem
+        public override string ToString()
+        {
+            return Name;
+        }
+        #endregion
+
+
         #region Public Calls - HouseItem
         public int IQ { get; set; }
         public HouseEdges Edge { get; set; }
@@ -76,6 +92,8 @@ namespace RelertSharp.MapStructure.Logic
         public bool PlayerControl { get; set; }
         public int NodeCounts { get; set; }
         public double PercentBuilt { get; set; }
+        public System.Drawing.Color DrawingColor { get; set; }
+        public string Name { get { return ID; } set { ID = value; } }
         #endregion
     }
 }

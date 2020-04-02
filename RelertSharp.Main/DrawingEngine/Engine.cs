@@ -65,54 +65,46 @@ namespace RelertSharp.DrawingEngine
             Vec3 pos = ToVec3Iso(t.X, t.Y, t.fZ - 0.2F);
             return Draw(pos, name, pPalIso, tmpBuffer, tilesData, DrawableType.Tmp, t.SubIndex, _colorIgnore, t.Coord, ref id);
         }
-        public bool DrawObject(InfantryItem inf, int height)
+        public bool DrawObject(InfantryItem inf, int height, uint color)
         {
-            if (inf.NameID == "GHOST")
-            {
-                int i = 0;
-            }
             string name = GlobalRules.GetObjectImgName(inf);
             int id = 0;
             int frame = GlobalRules.GetFrameFromDirection(inf.Rotation, inf.NameID);
             Vec3 pos = ToVec3Iso(inf.X, inf.Y, height);
             if (GlobalRules.IsVxl(inf.NameID))
             {
-                return Draw(pos, name, pPalUnit, vxlBuffer, infData, DrawableType.Vxl, 0, _colorIgnore, inf.CoordInt, ref id);
+                return Draw(pos, name, pPalUnit, vxlBuffer, infData, DrawableType.Vxl, 0, color, inf.CoordInt, ref id);
             }
             else
             {
-                return Draw(pos, name, pPalUnit, shpbuffer, infData, DrawableType.Shp, frame, _colorIgnore, inf.CoordInt, ref id);
+                return Draw(pos, name, pPalUnit, shpbuffer, infData, DrawableType.Shp, frame, color, inf.CoordInt, ref id);
             }
         }
-        public bool DrawObject(UnitItem unit, int height)
+        public bool DrawObject(UnitItem unit, int height, uint color)
         {
             if (unit.NameID == "RDROLLER") return false;
-            DrawableUnit du = CreateDrawableUnit(unit.NameID, _colorIgnore);
+            DrawableUnit du = CreateDrawableUnit(unit.NameID, color);
             PresentUnit pu = new PresentUnit(unit, height, du.IsVxl);
             Vec3 pos = ToVec3Iso(pu.X, pu.Y, pu.Z);
             Vec3 ro = VxlRotation(unit.NameID, unit.Rotation, du.IsVxl);
-            return DrawUnit(du, pu, pos, _colorIgnore, ro);
+            return DrawUnit(du, pu, pos, color, ro);
         }
-        public bool DrawObject(AircraftItem air, int height)
+        public bool DrawObject(AircraftItem air, int height, uint color)
         {
-            DrawableUnit du = CreateDrawableUnit(air.NameID, _colorIgnore);
+            DrawableUnit du = CreateDrawableUnit(air.NameID, color);
             PresentUnit pu = new PresentUnit(air, height);
             Vec3 pos = ToVec3Iso(pu.X, pu.Y, pu.Z);
             Vec3 ro = VxlRotation(air.NameID, air.Rotation, true);
-            return DrawUnit(du, pu, pos, _colorIgnore, ro);
+            return DrawUnit(du, pu, pos, color, ro);
         }
 
-        public bool DrawObject(StructureItem structure, int height)
+        public bool DrawObject(StructureItem structure, int height, uint color)
         {
-            if (structure.NameID == "GTGCAN")
-            {
-                int i = 0;
-            }
-            DrawableStructure ds = CreateDrawableStructure(structure.NameID, _colorIgnore);
+            DrawableStructure ds = CreateDrawableStructure(structure.NameID, color);
             PresentStructure ps = new PresentStructure(structure, height);
             Vec3 pos = ToVec3Zero(ps.X, ps.Y, ps.Z);
             Vec3 ro = Vec3.Zero;
-            return DrawStructure(ds, _colorIgnore, pos, ps, ro);
+            return DrawStructure(ds, color, pos, ps, ro);
         }
         public bool DrawShp(TerrainItem terrain, int height)
         {
