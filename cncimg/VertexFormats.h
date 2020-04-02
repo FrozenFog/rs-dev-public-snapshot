@@ -4,6 +4,14 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+struct PlainVertex
+{
+	D3DXVECTOR3 Vector;
+	float Rhw, U, V;
+
+	static const DWORD dwFVFType = D3DFVF_XYZRHW | D3DFVF_TEX1;
+};
+
 struct TexturedVertex
 {
 	D3DXVECTOR3 Vector;
