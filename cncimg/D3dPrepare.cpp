@@ -62,34 +62,14 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 	//if (auto id = CreateCommonTextureFile("images\\common_tex.png")) {
 	//	CreateCommonTextureObjectAtScene(id, { 0.0,0.0,0.0 });
 	//}
-
-	if (auto id = CreateShpFile("images\\bridge.tem")) {
-		LoadShpTextures(id, TmpPalette, INVALID_COLOR_VALUE);
-		CreateShpObjectAtScene(id, { 0.0,0.0,0.0 }, 0, TmpPalette, INVALID_COLOR_VALUE, false);
-		CreateShpObjectAtScene(id, { 1.0f*TileLength,0.0,0.0 }, 1, TmpPalette, INVALID_COLOR_VALUE, false);
-		CreateShpObjectAtScene(id, { 2.0f*TileLength,0.0,0.0 }, 2, TmpPalette, INVALID_COLOR_VALUE, false);
-	}
 	
 	if (ShpFile = CreateShpFile("images\\ggcnst.shp")) {
 		if (LoadShpTextures(ShpFile, UnitPalette, RGB(0, 252, 252)))
-			MouseObject = CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.0 }, 0, UnitPalette, RGB(0, 252, 252), true);
+			MouseObject = CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 0, UnitPalette, RGB(0, 252, 252), 2, 4, 4, 8);
 	}
 
 	D3DXVECTOR3 Position{ 100.0f,0.0f,0.0f };
 	int baseid, turid, barlid;
-
-	if ((baseid = CreateShpFile("images\\ygggun.shp")) && 
-		(turid = CreateVxlFile("images\\yaggun.vxl")))
-	{
-		if (LoadShpTextures(baseid, UnitPalette, RGB(252,0,0)))
-			CreateShpObjectAtScene(baseid, Position, 0, UnitPalette, RGB(252, 0, 0), false);
-
-		D3DXVECTOR2 Displace = { 0.0f,15.0f };
-		Position.x += sqrt(2.0)*Displace.y - Displace.x / sqrt(2.0);
-		Position.y += sqrt(2.0)*Displace.y + Displace.x / sqrt(2.0);
-		CreateVxlObjectAtScene(turid, Position, 0.0, 0.0, 0.0, UnitPalette, RGB(252,0,0));
-		//CreateVxlObjectAtScene(barlid, Position, 0.0, 0.0, 0.0, UnitPalette, RGB(0, 0, 252));
-	}
 
 	char cIndex = 'a';
 	char szFileName[MAX_PATH];
@@ -263,7 +243,9 @@ void Graphic::MouseMove(POINT Position)
 	D3DXVECTOR3 TargetPosition;
 
 	ClientPositionToScenePosition(Position, TargetPosition);
-	//SetObjectLocation(MouseObject, TargetPosition);
+	TargetPosition.z += 0.1f;
+
+	SetObjectLocation(MouseObject, TargetPosition);
 
 	CellClass::MarkCellByMousePosition(Position);
 }

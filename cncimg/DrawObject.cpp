@@ -681,7 +681,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		PlainShader.SetConstantVector(pDevice, this->ColorCoefficient);
 		pDevice->SetPixelShader(PlainShader.GetShaderObject());
 
-		Result = SUCCEEDED(pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, Desc.Size / sizeof TexturedVertex - 2));
+		Result = SUCCEEDED(pDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, Desc.Size / sizeof TexturedVertex / 3));
 		pDevice->SetTexture(0, pFormerTexture);
 		pDevice->SetPixelShader(pFormerShader);
 	}
