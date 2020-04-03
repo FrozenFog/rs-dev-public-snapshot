@@ -59,10 +59,17 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 		VxlFiles.push_back(id);
 	}
 
-	if (auto id = CreateCommonTextureFile("images\\common_tex.png")) {
-		CreateCommonTextureObjectAtScene(id, { 0.0,0.0,0.0 });
-	}
+	//if (auto id = CreateCommonTextureFile("images\\common_tex.png")) {
+	//	CreateCommonTextureObjectAtScene(id, { 0.0,0.0,0.0 });
+	//}
 
+	if (auto id = CreateShpFile("images\\bridge.tem")) {
+		LoadShpTextures(id, TmpPalette, INVALID_COLOR_VALUE);
+		CreateShpObjectAtScene(id, { 0.0,0.0,0.0 }, 0, TmpPalette, INVALID_COLOR_VALUE, false);
+		CreateShpObjectAtScene(id, { 1.0f*TileLength,0.0,0.0 }, 1, TmpPalette, INVALID_COLOR_VALUE, false);
+		CreateShpObjectAtScene(id, { 2.0f*TileLength,0.0,0.0 }, 2, TmpPalette, INVALID_COLOR_VALUE, false);
+	}
+	
 	if (ShpFile = CreateShpFile("images\\ggcnst.shp")) {
 		if (LoadShpTextures(ShpFile, UnitPalette, RGB(0, 252, 252)))
 			MouseObject = CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.0 }, 0, UnitPalette, RGB(0, 252, 252), true);
