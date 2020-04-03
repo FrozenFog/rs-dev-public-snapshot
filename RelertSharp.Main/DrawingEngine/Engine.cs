@@ -135,24 +135,36 @@ namespace RelertSharp.DrawingEngine
         public bool DrawGeneralItem(OverlayUnit o, int height)
         {
             string name = GlobalRules.GetOverlayName(o.Index);
-            int pal = pPalUnit;
+            string img = GlobalRules[name]["Image"];
+            string filename = name;
+            if (!string.IsNullOrEmpty(img) && name != img) filename = img;
+
             Vec3 pos = ToVec3Zero(o.X, o.Y, height);
+            int pal = pPalUnit;
             bool flat = ParseBool(GlobalRules[name]["DrawFlat"], true);
+            bool overrides = ParseBool(GlobalRules[name]["Overrides"]);
+            bool isTiberium = ParseBool(GlobalRules[name]["Tiberium"]);
+
             if (!string.IsNullOrEmpty(GlobalRules[name]["Wall"])) flat = !ParseBool(GlobalRules[name]["Wall"]);
+            if (overrides)
+            {
+                flat = false;
+            }
             if (GlobalRules[name]["Land"] == "Road")
             {
                 flat = false;
                 pos = ToVec3Iso(pos);
             }
-            bool isTiberium = ParseBool(GlobalRules[name]["Tiberium"]);
-            if (GlobalDir.HasFile(name + ".shp")) name = name.ToLower() + ".shp";
+
+            if (GlobalDir.HasFile(filename + ".shp")) filename = filename.ToLower() + ".shp";
             else
             {
-                name = string.Format("{0}.{1}", name.ToLower(), TileDictionary.TheaterSub);
+                filename = string.Format("{0}.{1}", filename.ToLower(), TileDictionary.TheaterSub);
                 if (isTiberium) pal = pPalTheater;
                 else pal = pPalIso;
             }
-            int shp = CreateGroundShp(name, pal, _white);
+
+            int shp = CreateGroundShp(filename, pal, _white);
             if (DrawGroundShp(pos, o.Frame, pal, _white, shp, out int id, flat))
             {
                 Buffer.Scenes.Overlays[o.Coord] = id;
