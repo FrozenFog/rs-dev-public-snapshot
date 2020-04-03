@@ -43,7 +43,17 @@ namespace RelertSharp.MapStructure.Objects
         public int SubCells
         {
             get { return subcell; }
-            set { if (value >= 0 && value <= 2) subcell = value; }
+            set
+            {
+                if (value >= 1 && value <= 3)
+                {
+                    subcell = value;
+                }
+                else
+                {
+                    subcell = 1;
+                }
+            }
         }
         #endregion
     }

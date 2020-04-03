@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.DrawingEngine.Drawables
 {
-    public class DrawableUnit : DrawableBase
+    public class DrawableUnit : DrawableBase, IDrawableBase
     {
         public DrawableUnit(string nameid) : base(nameid) { }
 

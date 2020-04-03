@@ -73,7 +73,7 @@ namespace RelertSharp.MapStructure
         {
             HouseItem house = Houses.GetHouse(housename);
             if (house == null) return 0;
-            return (uint)house.DrawingColor.ToArgb();
+            return 0xFF000000 | (uint)(house.DrawingColor.B << 16 | house.DrawingColor.G << 8 | house.DrawingColor.R);
         }
         public void CompressTile()
         {

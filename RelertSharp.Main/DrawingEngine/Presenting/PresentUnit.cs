@@ -18,6 +18,16 @@ namespace RelertSharp.DrawingEngine.Presenting
         #endregion
 
 
+        #region Public Methods - PresentUnit
+        public void Dispose()
+        {
+            RemoveProp(pBarrel);
+            RemoveProp(pSelf);
+            RemoveProp(pTurret);
+        }
+        #endregion
+
+
         #region Public Calls - PresentUnit
         public int pBarrel { get; set; }
         public int pTurret { get; set; }

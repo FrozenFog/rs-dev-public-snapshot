@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.DrawingEngine.Drawables
 {
-    internal class DrawableStructure : DrawableBase
+    internal class DrawableStructure : DrawableBase, IDrawableBase
     {
         #region Ctor
         public DrawableStructure(string nameID) : base(nameID) { }
@@ -23,6 +23,7 @@ namespace RelertSharp.DrawingEngine.Drawables
         public Pnt offsetTurret { get; set; }
         public int pBib { get; set; }
         public bool VoxelTurret { get; set; }
+        public bool FlatSelf { get { return pTurretAnim != 0; } }
         #endregion
     }
 }

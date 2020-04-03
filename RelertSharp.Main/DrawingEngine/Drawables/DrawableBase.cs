@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine.Drawables
 {
@@ -17,10 +18,15 @@ namespace RelertSharp.DrawingEngine.Drawables
         #endregion
 
 
+        #region Public Methods - DrawableBase
+        #endregion
+
+
         #region Public Calls - DrawableBase
         public string NameID { get; set; }
         public int pSelf { get; set; }
         public int pPalCustom { get; set; }
+        public uint RemapColor { get; set; }
         #endregion
     }
 
@@ -30,5 +36,6 @@ namespace RelertSharp.DrawingEngine.Drawables
         string NameID { get; set; }
         int pSelf { get; set; }
         int pPalCustom { get; set; }
+        uint RemapColor { get; set; }
     }
 }

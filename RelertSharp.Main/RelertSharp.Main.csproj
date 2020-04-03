@@ -59,12 +59,16 @@
     <Compile Include="Common\RSConfig.cs" />
     <Compile Include="Common\SoundManager.cs" />
     <Compile Include="Common\Struct.cs" />
+    <Compile Include="DrawingEngine\BufferCollection.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableBase.cs" />
+    <Compile Include="DrawingEngine\Drawables\DrawableInfantry.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableStructure.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableUnit.cs" />
     <Compile Include="DrawingEngine\Engine.cs" />
     <Compile Include="DrawingEngine\Presenting\PresentBase.cs" />
+    <Compile Include="DrawingEngine\Presenting\PresentInfantry.cs" />
     <Compile Include="DrawingEngine\Presenting\PresentStructure.cs" />
+    <Compile Include="DrawingEngine\Presenting\PresentTile.cs" />
     <Compile Include="DrawingEngine\Presenting\PresentUnit.cs" />
     <Compile Include="DrawingEngine\Struct.cs" />
     <Compile Include="Encoding\AudEncoding.cs" />

@@ -196,10 +196,9 @@ namespace RelertSharp.IniSystem
             else turret = GuessStructureName(this[this[id]["TurretAnim"]]);
             return img;
         }
-        public string GetObjectImgName(InfantryItem inf)
+        public string GetObjectImgName(ObjectItemBase inf)
         {
             string img = GetObjectImgName(inf.NameID);
-            if (IsVxl(inf.NameID)) return img + ".vxl";
             return img + ".shp";
         }
         public void LoadArt(INIFile f)

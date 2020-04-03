@@ -14,7 +14,16 @@ namespace RelertSharp.DrawingEngine.Presenting
         #endregion
 
 
+        #region Public Methods - PresentStructure
+        public void Dispose()
+        {
+            foreach (int p in Pointers) RemoveProp(p);
+        }
+        #endregion
+
+
         #region Public Calls - PresentStructure
+        public int[] Pointers { get { return new int[] { pSelf, pActivateAnim, pActivateAnim2, pActivateAnim3, pTurretAnim, pTurretBarl, pBib, pIdleAnim }; } }
         public int pActivateAnim { get; set; }
         public int pIdleAnim { get; set; }
         public int pActivateAnim2 { get; set; }

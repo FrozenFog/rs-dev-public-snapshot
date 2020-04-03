@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.Common
 {
+    public enum DrawableType { Shp, Tmp, Vxl }
     [Flags]
     public enum AudType
     {

@@ -283,7 +283,7 @@ bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD
 			nValidFrames++;
 	}
 
-	//D3DXSaveTextureToFile("destfile.png", D3DXIFF_PNG, this->FrameTextures[nPaletteID][dwRemapColor][0], nullptr);
+	D3DXSaveTextureToFile("destfile.png", D3DXIFF_PNG, this->FrameTextures[nPaletteID][dwRemapColor][0], nullptr);
 	return this->GetFrameCount() == nValidFrames;
 }
 

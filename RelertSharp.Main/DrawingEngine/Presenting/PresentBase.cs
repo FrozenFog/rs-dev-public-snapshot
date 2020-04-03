@@ -20,7 +20,16 @@ namespace RelertSharp.DrawingEngine.Presenting
         #endregion
 
 
+        #region Protected - PresentBase
+        protected virtual void RemoveProp(int pointer)
+        {
+            if (pointer != 0) CppExtern.ObjectUtils.RemoveObjectAtScene(pointer);
+        }
+        #endregion
+
+
         #region Public Calls - PresentBase
+        public int Coord { get { return Utils.Misc.CoordInt(X, Y); } }
         public int X { get; set; }
         public int Y { get; set; }
         public int Z { get; set; }
@@ -36,5 +45,6 @@ namespace RelertSharp.DrawingEngine.Presenting
         int Z { get; set; }
         int pSelf { get; set; }
         bool IsValid { get; }
+        void Dispose();
     }
 }
