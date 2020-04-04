@@ -41,7 +41,8 @@ EXPORT int WINAPI CreateVxlObjectAtScene(int nFileId, D3DXVECTOR3 Position,
 
 EXPORT bool WINAPI CreateTmpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int nTileIndex, int& OutTileIndex, int& OutExtraIndex);
 
-EXPORT int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFrame, int nPaletteId, DWORD dwRemapColor, bool bFlat);
+EXPORT int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFrame, int nPaletteId, DWORD dwRemapColor, char bFlat,
+	int nFoundationX, int nFoundationY, int nHeight);
 
 EXPORT int WINAPI CreateCommonTextureObjectAtScene(int nFileId, D3DXVECTOR3 Position);
 

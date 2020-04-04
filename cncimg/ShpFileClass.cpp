@@ -294,7 +294,8 @@ bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD
 	return (this->GetFrameCount() - nNullFrames) == nValidFrames;
 }
 
-int ShpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, int idxFrame, bool bFlat, int nPaletteID, DWORD dwRemap)
+int ShpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, int idxFrame, char bFlat, int nPaletteID, DWORD dwRemap,
+	int nX, int nY, int nHeight)
 {
 	if (!pDevice || idxFrame < 0 || idxFrame >= this->GetFrameCount())
 		return 0;
@@ -315,8 +316,10 @@ int ShpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, i
 	auto ImageBounds = this->GetImageBounds();
 	auto FrameBounds = this->GetFrameBounds(idxFrame);
 
-	auto height = FrameBounds.bottom - FrameBounds.top;
-	auto width = FrameBounds.right - FrameBounds.left;
+	float height = FrameBounds.bottom - FrameBounds.top;
+	float width = FrameBounds.right - FrameBounds.left;
+	float W = ImageBounds.right - ImageBounds.left;
+	float H = ImageBounds.bottom - ImageBounds.top;
 
 	float dx = FrameBounds.left - ImageBounds.right / 2.0;
 	float dy = FrameBounds.bottom - ImageBounds.bottom / 2.0;
@@ -325,7 +328,11 @@ int ShpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, i
 	float startingY = dy*sqrt(2.0) - dx / sqrt(2.0) + Position.y;
 	float l = width / sqrt(2.0);
 
-	TexturedVertex VertexBuffer[4];
+	const float cL = 30.0*sqrt(2.0);
+	const float cH = 10.0*sqrt(3.0);
+
+	//TexturedVertex VertexBuffer[6];
+	std::vector<TexturedVertex> VertexBuffer;
 	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
 	LPVOID pVertexData;
 	PaintingStruct Object;
@@ -334,21 +341,65 @@ int ShpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, i
 	if(!bFlat)
 	{
 		float h = height*2.0f / sqrt(3.0);
+		VertexBuffer.resize(6);
 		VertexBuffer[0] = { {startingX,startingY,Position.z},0.0,1.0 };
 		VertexBuffer[1] = { {startingX + l,startingY - l,Position.z},1.0,1.0 };
 		VertexBuffer[2] = { {startingX,startingY,Position.z + h},0.0,0.0 };
-		VertexBuffer[3] = { {startingX + l,startingY - l,Position.z + h},1.0,0.0 };
+		VertexBuffer[3]= { { startingX + l,startingY - l,Position.z },1.0,1.0 };
+		VertexBuffer[4] = { { startingX,startingY,Position.z + h },0.0,0.0 };
+		VertexBuffer[5] = { {startingX + l,startingY - l,Position.z + h},1.0,0.0 };
 	}
-	else
+	else if (bFlat == 1)
 	{
 		float h = height*sqrt(2.0);
+		VertexBuffer.resize(6);
 		VertexBuffer[0] = { { startingX,startingY,Position.z },0.0,1.0 };
 		VertexBuffer[1] = { { startingX + l,startingY - l,Position.z },1.0,1.0 };
 		VertexBuffer[2] = { { startingX - h,startingY - h,Position.z },0.0,0.0 };
-		VertexBuffer[3] = { { startingX + l - h,startingY - l - h,Position.z },1.0,0.0 };
+		VertexBuffer[3] = { { startingX + l,startingY - l,Position.z },1.0,1.0 };
+		VertexBuffer[4] = { { startingX - h,startingY - h,Position.z },0.0,0.0 };
+		VertexBuffer[5] = { { startingX + l - h,startingY - l - h,Position.z },1.0,0.0 };
+	}
+	else if (bFlat == 2)
+	{
+		VertexBuffer.resize(18);
+		float Ou = (W / 2.0f - FrameBounds.left) / width;
+		float Ov = (H / 2.0f - FrameBounds.top) / height;
+
+		VertexBuffer[0] = { {nX*cL,0.0f,nHeight*cH},30.0f*nX / width,15.0f*(nX - nHeight) / height };
+		VertexBuffer[1] = { {nX*cL,0.0f,0.0f},30.0f*nX / width,15.0f*nX / height };
+		VertexBuffer[2] = { {0.0f,0.0f,nHeight*cH},0.0f,-15.0f*nHeight / height };
+
+		VertexBuffer[3] = { { nX*cL,0.0f,0.0f },30.0f*nX / width,15.0f*nX / height };
+		VertexBuffer[4] = { { 0.0f,0.0f,nHeight*cH },0.0f,-15.0f*nHeight / height };
+		VertexBuffer[5] = { {0.0f,0.0f,0.0f},0.0f,0.0f };
+
+		VertexBuffer[6] = { { 0.0f,0.0f,nHeight*cH },0.0f,-15.0f*nHeight / height };
+		VertexBuffer[7] = { { 0.0f,0.0f,0.0f },0.0f,0.0f };
+		VertexBuffer[8] = { {0.0f,nY*cL,nHeight*cH},-30.0f*nY / width,15.0f*(nY - nHeight) / height };
+
+		VertexBuffer[9] = { { 0.0f,0.0f,0.0f },0.0f,0.0f };
+		VertexBuffer[10] = { { 0.0f,nY*cL,nHeight*cH },-30.0f*nY / width,15.0f*(nY - nHeight) / height };
+		VertexBuffer[11] = { {0.0f,nY*cL,0.0f},-30.0f*nY / width,15.0f*nY / height };
+
+		VertexBuffer[12] = { { 0.0f,nY*cL,0.0f },-30.0f*nY / width,15.0f*nY / height };
+		VertexBuffer[13] = { { 0.0f,0.0f,0.0f },0.0f,0.0f };
+		VertexBuffer[14] = { {nX*cL,nY*cL,0.0},30.0f*(nX - nY) / width,15.0f*(nX + nY) / height };
+
+		VertexBuffer[15] = { { 0.0f,0.0f,0.0f },0.0f,0.0f };
+		VertexBuffer[16] = { { nX*cL,nY*cL,0.0 },30.0f*(nX - nY) / width,15.0f*(nX + nY) / height };
+		VertexBuffer[17] = { { nX*cL,0.0f,0.0f },30.0f*nX / width,15.0f*nX / height };
+
+		for (auto &vertex : VertexBuffer)
+		{
+			vertex.Vector += Position;
+			vertex.U += Ou;
+			vertex.V += Ov;
+		}
 	}
 
-	if (FAILED(pDevice->CreateVertexBuffer(sizeof VertexBuffer, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,
+	auto nBufferSize = VertexBuffer.size() * sizeof TexturedVertex;
+	if (FAILED(pDevice->CreateVertexBuffer(nBufferSize, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,
 		D3DPOOL_SYSTEMMEM, &pVertexBuffer, nullptr)))
 	{
 		SAFE_RELEASE(pVertexBuffer);
@@ -361,10 +412,13 @@ int ShpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, i
 		return 0;
 	}
 	
-	memcpy_s(pVertexData, sizeof VertexBuffer, VertexBuffer, sizeof VertexBuffer);
+	memcpy_s(pVertexData, nBufferSize, VertexBuffer.data(), nBufferSize);
 	pVertexBuffer->Unlock();
 
 	PaintingStruct::InitializePaintingStruct(Object, pVertexBuffer, Position /*+ HeightPosition*/, pTexture);
-	Object.SetCompareOffset(HeightPosition);
+
+	if (VertexBuffer.size() == 6)
+		Object.SetCompareOffset(HeightPosition);
+
 	return this->CommitTransperantObject(Object);
 }

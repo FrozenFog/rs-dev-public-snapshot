@@ -558,6 +558,8 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 		{ {CellStartX - StretchAdjustment,CellStartY - StretchAdjustment,Position.z},0.50f,0.00f },
 		{ {CellStartX + PixelCellLength + StretchAdjustment,CellStartY - StretchAdjustment,Position.z},1.0f,0.50f },
 		{ {CellStartX - StretchAdjustment,CellStartY + PixelCellLength + StretchAdjustment,Position.z},0.0f,0.5f },
+		{ { CellStartX + PixelCellLength + StretchAdjustment,CellStartY - StretchAdjustment,Position.z },1.0f,0.50f },
+		{ { CellStartX - StretchAdjustment,CellStartY + PixelCellLength + StretchAdjustment,Position.z },0.0f,0.5f },
 		{ {CellStartX + PixelCellLength + StretchAdjustment,CellStartY + PixelCellLength + StretchAdjustment,Position.z},0.50f,1.0f },
 	};
 
@@ -568,7 +570,7 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 		return false;
 	}
 
-	if (FAILED(pVertexBuffer->Lock(0, sizeof CellVertecies, &pVertexData, D3DLOCK_DISCARD)))
+	if (FAILED(pVertexBuffer->Lock(0, 0, &pVertexData, D3DLOCK_DISCARD)))
 	{
 		SAFE_RELEASE(pVertexBuffer);
 		return false;
@@ -587,7 +589,7 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 
 		float dx = CellRect.left - ExtraRect.left + PixelCellVisualWidth / 2.0;
 		float dy = CellRect.top - ExtraRect.top + PixelCellVisualHeight / 2.0;
-		TexturedVertex ExtraVertecies[4];
+		TexturedVertex ExtraVertecies[6];
 
 		if (this->GetRampType(nTileIndex) != RampType::Plane)
 		{
@@ -601,7 +603,9 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 			ExtraVertecies[0] = { { ExtraStartX - StretchAdjustment,ExtraStartY,ExtraStartZ },0.0,0.0 };
 			ExtraVertecies[1] = { { ExtraStartX + l, ExtraStartY - l - StretchAdjustment, ExtraStartZ }, 1.0, 0.0 };
 			ExtraVertecies[2] = { { ExtraStartX + h,ExtraStartY + h + StretchAdjustment,ExtraStartZ },0.0,1.0 };
-			ExtraVertecies[3] = { { ExtraStartX + l + h + StretchAdjustment,ExtraStartY - l + h,ExtraStartZ },1.0,1.0 };
+			ExtraVertecies[3] = { { ExtraStartX + l, ExtraStartY - l - StretchAdjustment, ExtraStartZ }, 1.0, 0.0 };
+			ExtraVertecies[4] = { { ExtraStartX + h,ExtraStartY + h + StretchAdjustment,ExtraStartZ },0.0,1.0 };
+			ExtraVertecies[5] = { { ExtraStartX + l + h + StretchAdjustment,ExtraStartY - l + h,ExtraStartZ },1.0,1.0 };
 		}
 		else
 		{
@@ -615,7 +619,9 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 			ExtraVertecies[0] = { { ExtraStartX - StretchAdjustment,ExtraStartY + StretchAdjustment,ExtraStartZ + 1 },0.0,0.0 };
 			ExtraVertecies[1] = { { ExtraStartX + l + StretchAdjustment, ExtraStartY - l - StretchAdjustment, ExtraStartZ + 1 }, 1.0, 0.0 };
 			ExtraVertecies[2] = { { ExtraStartX - StretchAdjustment,ExtraStartY + StretchAdjustment,ExtraStartZ - h - 1 },0.0,1.0 };
-			ExtraVertecies[3] = { { ExtraStartX + l + StretchAdjustment,ExtraStartY - l - StretchAdjustment,ExtraStartZ - h - 1},1.0,1.0 };
+			ExtraVertecies[3] = { { ExtraStartX + l + StretchAdjustment, ExtraStartY - l - StretchAdjustment, ExtraStartZ + 1 }, 1.0, 0.0 };
+			ExtraVertecies[4] = { { ExtraStartX - StretchAdjustment,ExtraStartY + StretchAdjustment,ExtraStartZ - h - 1 },0.0,1.0 };
+			ExtraVertecies[5] = { { ExtraStartX + l + StretchAdjustment,ExtraStartY - l - StretchAdjustment,ExtraStartZ - h - 1},1.0,1.0 };
 		}
 
 		if (FAILED(pDevice->CreateVertexBuffer(sizeof ExtraVertecies, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,

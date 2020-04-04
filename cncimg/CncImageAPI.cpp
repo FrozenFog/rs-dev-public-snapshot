@@ -211,12 +211,14 @@ bool WINAPI CreateTmpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int nTileI
 	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position, nTileIndex, OutTileIndex, OutExtraIndex);
 }
 
-int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFrame, int nPaletteId, DWORD dwRemapColor, bool bFlat)
+int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFrame, int nPaletteId, DWORD dwRemapColor, char bFlat,
+	int nFoundationX, int nFoundationY, int nHeight)
 {
 	auto find = ShpFileClass::FileObjectTable.find(nFileId);
 	if (find == ShpFileClass::FileObjectTable.end())
 		return false;
-	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position, idxFrame, bFlat, nPaletteId, dwRemapColor);
+	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position, idxFrame, bFlat, nPaletteId, dwRemapColor,
+		nFoundationX, nFoundationY, nHeight);
 }
 
 int WINAPI CreateCommonTextureObjectAtScene(int nFileId, D3DXVECTOR3 Position)
