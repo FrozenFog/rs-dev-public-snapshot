@@ -40,11 +40,11 @@ TmpFileClass::~TmpFileClass()
 void TmpFileClass::Clear()
 {
 	for (auto& Pair : this->CellTextures)
-		Pair.second->Release();
+		CommitIsotatedTexture(Pair.second);
 	this->CellTextures.clear();
 
 	for (auto& Pair : this->ExtraTextures)
-		Pair.second->Release();
+		CommitIsotatedTexture(Pair.second);
 	this->ExtraTextures.clear();
 
 	if (pFileData)
@@ -417,7 +417,7 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 						pColorData[-1] = pColorData[-2] = dwColor;
 						bFirstEnter = false;
 					}
-					if (!bFirstEnter && x >= 1 && *pFileData == 0) {
+					if (!bFirstEnter && x >= 1 && (*pFileData == 0 || i == nSize - 1)) {
 						pColorData[1] = pColorData[2] = dwColor;
 						bFirstEnter = true;
 					}
@@ -436,6 +436,20 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 			RtlZeroMemory(pTextureData, this->GetFileData()->Header.nBlocksWidth * sizeof D3DCOLOR);
 			pTextureData += x * sizeof D3DCOLOR;
 
+			if (!nSize)
+			{
+				auto pColorData = reinterpret_cast<PDWORD>(pTextureData);
+				BYTE nColor = 0;
+				int i = 0;
+				while (!nColor)
+				{
+					i++;
+					nColor = *(pFileData - i);
+				}
+				auto& Color = Palette[nColor];
+				auto dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+				pColorData[-2] = pColorData[-1] = pColorData[0] = pColorData[1] = dwColor;
+			}
 			for (int i = 0; i < nSize; i++)
 			{
 				auto pColorData = reinterpret_cast<PDWORD>(pTextureData);
@@ -449,7 +463,7 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 						pColorData[-1] = pColorData[-2] = dwColor;
 						bFirstEnter = false;
 					}
-					if (!bFirstEnter && x >= 1 && *pFileData == 0) {
+					if (!bFirstEnter && x >= 1 && (*pFileData == 0 || i == nSize - 1)) {
 						pColorData[1] = pColorData[2] = dwColor;
 						bFirstEnter = true;
 					}
@@ -460,6 +474,10 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 
 		pTexture->UnlockRect(0);
 		this->AddTexture(i, pTexture);
+
+		//char szFileName[MAX_PATH];
+		//sprintf_s(szFileName, "dump\\tile_%p_%d.png", this, i);
+		//D3DXSaveTextureToFile(szFileName, D3DXIFF_PNG, pTexture, nullptr);
 
 		if (!this->HasExtraData(i))
 			continue;
@@ -530,7 +548,7 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 	float PixelCellLength = this->GetFileData()->Header.nBlocksWidth / 2.0 * sqrt(2.0);
 	float PixelCellVisualHeight = this->GetFileData()->Header.nBlocksHeight;
 	float PixelCellVisualWidth = this->GetFileData()->Header.nBlocksWidth;
-	const float StretchAdjustment = 0.2f;
+	const float StretchAdjustment = 0.0f;
 
 	PaintingStruct PaintObject;
 	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer, pExtraVertexBuffer;

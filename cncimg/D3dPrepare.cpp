@@ -83,6 +83,18 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 		}
 	}
 
+	if (auto vid = CreateShpFile("images\\ygggun.shp")) {
+		LoadShpTextures(vid, UnitPalette, INVALID_COLOR_VALUE);
+		if (auto tid = CreateVxlFile("images\\yaggun.vxl")) {
+			float turretY = 15.0f;
+			float delta = turretY*2.0f / sqrt(3.0);
+			CreateShpObjectAtScene(vid, Position, 0, UnitPalette, INVALID_COLOR_VALUE, 1, 1, 1, 4);
+			Position.z -= delta;
+			CreateVxlObjectAtScene(tid, Position, 0, 0, D3DX_PI, UnitPalette, INVALID_COLOR_VALUE);
+			
+		}
+	}
+
 	for (int i = 0; i < 4; i++) {
 		sprintf_s(szFileName, "Tile\\rmpfx12%c.tem", cIndex + i);
 
