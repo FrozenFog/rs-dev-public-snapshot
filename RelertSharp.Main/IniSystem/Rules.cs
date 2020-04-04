@@ -209,8 +209,10 @@ namespace RelertSharp.IniSystem
         }
         public INIEntity GetBuildingTurret(string nameid)
         {
-            INIEntity art;
+            INIEntity art = this[nameid];
             string img = this[nameid]["Image"];
+            string turretAnim = art["TurretAnim"];
+            if (!string.IsNullOrEmpty(turretAnim)) return this[turretAnim];
             if (string.IsNullOrEmpty(img)) art = this[nameid];
             else
             {
@@ -275,6 +277,7 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Calls - Rules
+        public Dictionary<string, INIEntity> MapIniData { get; set; }
         public List<TechnoPair> VehicleList
         {
             get
