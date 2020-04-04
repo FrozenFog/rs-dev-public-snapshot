@@ -45,6 +45,11 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Methods - INIEntity
+        /// <summary>
+        /// Rename the key of each item as indexer, start from 0(def). Similar with IsoMapPack5.
+        /// </summary>
+        /// <param name="firstindex">Key num for first item</param>
+        /// <returns></returns>
         public int Reorganize(int firstindex = 0)
         {
             Dictionary<string, INIPair> d = new Dictionary<string, INIPair>();
@@ -56,6 +61,10 @@ namespace RelertSharp.IniSystem
             data = d;
             return firstindex;
         }
+        /// <summary>
+        /// Merge two IniEnt, items with same key will be overwrite by new one.
+        /// </summary>
+        /// <param name="newEnt">New Ent</param>
         public void JoinWith(INIEntity newEnt)
         {
             if (entitytype == INIEntType.ListType)
@@ -75,11 +84,25 @@ namespace RelertSharp.IniSystem
                 }
             }
         }
+        /// <summary>
+        /// Transform entire IniEnt into an abstract struct, see TechnoPair. 
+        /// Result Eg: "index value". Value depends on two types.
+        /// Use along with LogicEditor.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="type"></param>
+        /// <param name="indexType"></param>
+        /// <returns></returns>
         public TechnoPair ToTechno(string index, TechnoPair.AbstractType type = TechnoPair.AbstractType.RegName, TechnoPair.IndexType indexType = TechnoPair.IndexType.Index)
         {
             TechnoPair tp = new TechnoPair(this, index, type, indexType);
             return tp;
         }
+        /// <summary>
+        /// Find and delete a specified Pair, return a NullPair(not null) if not found.
+        /// </summary>
+        /// <param name="pairKey"></param>
+        /// <returns></returns>
         public INIPair PopPair(string pairKey)
         {
             if (data.Keys.Contains(pairKey))
@@ -93,16 +116,31 @@ namespace RelertSharp.IniSystem
                 return INIPair.NullPair;
             }
         }
+        /// <summary>
+        /// Add a Pair.
+        /// </summary>
+        /// <param name="p"></param>
         public void AddPair(INIPair p)
         {
             if (!data.Keys.Contains(p.Name)) data[p.Name] = p;
         }
+        /// <summary>
+        /// Discard all item index and merge the value into a list, works well with List-like Ent.
+        /// Any repeated value will be discarded.
+        /// Eg: [InfantryTypes]
+        /// </summary>
+        /// <returns></returns>
         public List<string> TakeValuesToList()
         {
             List<string> result = new List<string>();
             foreach(INIPair p in data.Values) if(!result.Contains(p.Value)) result.Add(p.Value);
             return result;
         }
+        /// <summary>
+        /// Find and return specified IniPair, return NullPair(not null) if not found.
+        /// </summary>
+        /// <param name="pairName"></param>
+        /// <returns></returns>
         public INIPair GetPair(string pairName)
         {
             if (data.Keys.Contains(pairName)) return data[pairName];
@@ -112,15 +150,28 @@ namespace RelertSharp.IniSystem
         {
             return data.Keys.Contains(p.Name);
         }
+        /// <summary>
+        /// Try convert all Pair value into destinate type.
+        /// Eg: string to bool, int, etc.
+        /// Works well with IniInterpreter, not recommended using elsewhere
+        /// </summary>
         public void ConvPairs()
         {
             if (entitytype != INIEntType.SystemType || entitytype != INIEntType.MapType)
                 foreach (INIPair p in data.Values) p.ConvValue();
         }
+        /// <summary>
+        /// Remove a specified IniPair
+        /// </summary>
+        /// <param name="p"></param>
         public void RemovePair(INIPair p)
         {
             data.Remove(p.Name);
         }
+        /// <summary>
+        /// Discard all item index and merge all value into a single string, dedicated for IsoMapPack-like Ent
+        /// </summary>
+        /// <returns></returns>
         public string JoinString()
         {
             int num = data.Count * 70;
@@ -151,6 +202,11 @@ namespace RelertSharp.IniSystem
         public string PreComment { get { return preComment; } }
         public string Name { get { return name; } }
         public bool HasComment { get { return !string.IsNullOrEmpty(comment); } }
+        /// <summary>
+        /// Before converting, every value is string-type
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public dynamic this[string key]
         {
             get
