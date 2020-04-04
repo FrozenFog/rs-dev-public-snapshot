@@ -137,6 +137,10 @@ namespace RelertSharp.IniSystem
         {
             return inidata.Keys.Contains(ent.Name);
         }
+        public bool HasIniEnt(string name)
+        {
+            return inidata.Keys.Contains(name);
+        }
         public INIEntity GetEnt(string entName)
         {
             if (inidata.Keys.Contains(entName)) return inidata[entName];

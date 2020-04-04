@@ -14,6 +14,9 @@ namespace RelertSharp.DrawingEngine.Drawables
 
 
         #region Public Calls
+        public int Height { get; set; }
+        public int FoundationX { get; set; }
+        public int FoundationY { get; set; }
         public int pActivateAnim { get; set; }
         public int pIdleAnim { get; set; }
         public int pActivateAnim2 { get; set; }

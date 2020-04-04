@@ -44,6 +44,18 @@ namespace RelertSharp.MapStructure
                     _theater = GlobalConfig["INI"]["LunarTheme"];
                     TheaterSub = "lun";
                     break;
+                case TheaterType.Custom1:
+                    _theater = GlobalConfig["INI"]["Custom1Theater"];
+                    TheaterSub = GlobalConfig["CustomTheater"]["Custom1Sub"];
+                    break;
+                case TheaterType.Custom2:
+                    _theater = GlobalConfig["INI"]["Custom2Theater"];
+                    TheaterSub = GlobalConfig["CustomTheater"]["Custom2Sub"];
+                    break;
+                case TheaterType.Custom3:
+                    _theater = GlobalConfig["INI"]["Custom3Theater"];
+                    TheaterSub = GlobalConfig["CustomTheater"]["Custom3Sub"];
+                    break;
                 default:
                     return;
             }

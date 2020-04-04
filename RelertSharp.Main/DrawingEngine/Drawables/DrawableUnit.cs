@@ -14,6 +14,7 @@ namespace RelertSharp.DrawingEngine.Drawables
         #region Public Calls - DrawableUnit
         public int pTurret { get; set; }
         public int pBarrel { get; set; }
+        public Vec3 TurretOffset { get; set; }
         public bool IsVxl { get; set; } = true;
         #endregion
     }

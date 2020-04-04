@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using RelertSharp.IniSystem;
 using RelertSharp.MapStructure;
 using RelertSharp.MapStructure.Points;
 using RelertSharp.MapStructure.Objects;
@@ -23,20 +24,6 @@ namespace RelertSharp.DrawingEngine
         private const uint _white = 0xFFFFFFFF;
         private readonly Vec3 _generalOffset = new Vec3() { X = 1, Y = 1, Z = (float)Math.Sqrt(1.5) };
         private BufferCollection Buffer = new BufferCollection();
-        //private Dictionary<int, int> tilesData = new Dictionary<int, int>();
-        //private Dictionary<int, int> overlayData = new Dictionary<int, int>();
-        //private Dictionary<int, int> smudgeData = new Dictionary<int, int>();
-        //private Dictionary<int, int> terrainData = new Dictionary<int, int>();
-        //private Dictionary<int, int> infData = new Dictionary<int, int>();
-        //private Dictionary<int, int> vehData = new Dictionary<int, int>();
-        //private Dictionary<int, PresentStructure> buildingData = new Dictionary<int, PresentStructure>();
-        //private Dictionary<int, PresentUnit> unitData = new Dictionary<int, PresentUnit>();
-        //private Dictionary<int, int> airData = new Dictionary<int, int>();
-        //private Dictionary<string, int> tmpBuffer = new Dictionary<string, int>();
-        //private Dictionary<string, int> shpbuffer = new Dictionary<string, int>();
-        //private Dictionary<string, int> vxlBuffer = new Dictionary<string, int>();
-        //private Dictionary<string, DrawableStructure> buildingBuffer = new Dictionary<string, DrawableStructure>();
-        //private Dictionary<string, DrawableUnit> unitBuffer = new Dictionary<string, DrawableUnit>();
         private int pPalIso = 0;
         private int pPalUnit = 0;
         private int pPalTheater = 0;
@@ -89,8 +76,11 @@ namespace RelertSharp.DrawingEngine
         {
             DrawableStructure src = CreateDrawableStructure(structure.NameID, color, pPalUnit);
             PresentStructure dest = new PresentStructure(structure, height);
+            Vec3 ro;
+            if (src.pTurretAnim != 0) ro = BuildingRotation(structure.NameID, structure.Rotation, src.VoxelTurret);
+            else ro = Vec3.Zero;
             Vec3 pos = ToVec3Zero(dest);
-            Vec3 ro = Vec3.Zero;
+            pos.Z += 0.1F;
             return DrawStructure(src, pos, dest, ro, pPalUnit);
         }
         public bool DrawGeneralItem(Tile t)
@@ -113,7 +103,7 @@ namespace RelertSharp.DrawingEngine
             int pal = pPalIso;
             if (ParseBool(GlobalRules[terrain.TerrainName]["SpawnsTiberium"])) pal = pPalUnit;
             int shp = CreateGroundShp(terrname, pal, _white);
-            if (DrawGroundShp(pos, 0, pal, _white, shp, out int id))
+            if (DrawGroundShp(pos, 0, pal, _white, shp, out int id, ShpFlatType.Vertical))
             {
                 Buffer.Scenes.Terrains[terrain.CoordInt] = id;
                 return true;
@@ -124,8 +114,9 @@ namespace RelertSharp.DrawingEngine
         {
             string name = TileDictionary.NameAsTheater(smg.Name);
             Vec3 pos = ToVec3Zero(smg, height);
+            pos.Z += 0.01F;
             int shp = CreateGroundShp(name, pPalIso, _white);
-            if (DrawGroundShp(pos, 0, pPalIso, _white, shp, out int id, true))
+            if (DrawGroundShp(pos, 0, pPalIso, _white, shp, out int id, ShpFlatType.FlatGround))
             {
                 Buffer.Scenes.Smudges[smg.CoordInt] = id;
                 return true;
@@ -136,6 +127,7 @@ namespace RelertSharp.DrawingEngine
         {
             Vec3 pos = ToVec3Zero(o.X, o.Y, height);
             int pal = pPalUnit;
+            ShpFlatType flatType = ShpFlatType.Vertical;
 
             string name = GlobalRules.GetOverlayName(o.Index);
             string img = GlobalRules[name]["Image"];
@@ -145,7 +137,6 @@ namespace RelertSharp.DrawingEngine
             bool isTiberium = ParseBool(GlobalRules[name]["Tiberium"]);
 
             if (!string.IsNullOrEmpty(img) && name != img) filename = img;
-            if (!string.IsNullOrEmpty(GlobalRules[name]["Wall"])) flat = !ParseBool(GlobalRules[name]["Wall"]);
             if (overrides)
             {
                 flat = false;
@@ -165,7 +156,9 @@ namespace RelertSharp.DrawingEngine
             }
 
             int shp = CreateGroundShp(filename, pal, _white);
-            if (DrawGroundShp(pos, o.Frame, pal, _white, shp, out int id, flat))
+            if (flat) flatType = ShpFlatType.FlatGround;
+            if (!string.IsNullOrEmpty(GlobalRules[name]["Wall"])) flatType = ShpFlatType.Box1;
+            if (DrawGroundShp(pos, o.Frame, pal, _white, shp, out int id, flatType))
             {
                 Buffer.Scenes.Overlays[o.Coord] = id;
                 return true;
@@ -250,6 +243,12 @@ namespace RelertSharp.DrawingEngine
             {
                 d = new DrawableInfantry();
                 string nameid = GlobalRules.GetObjectImgName(inf);
+                string customPalName = GlobalRules.GetCustomPaletteName(inf.NameID);
+                if (!string.IsNullOrEmpty(customPalName))
+                {
+                    pPal = CreatePalette(customPalName);
+                    d.pPalCustom = pPal;
+                }
                 d.NameID = nameid;
                 d.RemapColor = color;
                 d.pSelf = CreateFile(nameid, DrawableType.Shp, color, pPal);
@@ -270,6 +269,12 @@ namespace RelertSharp.DrawingEngine
                 self = GlobalRules.GetUnitImgName(name, ref turret, ref barl, ref vxl);
                 d.IsVxl = vxl;
                 d.RemapColor = color;
+                string customPalName = GlobalRules.GetCustomPaletteName(name);
+                if (!string.IsNullOrEmpty(customPalName))
+                {
+                    pPal = CreatePalette(customPalName);
+                    d.pPalCustom = pPal;
+                }
                 DrawableType t;
                 if (d.IsVxl) t = DrawableType.Vxl;
                 else t = DrawableType.Shp;
@@ -291,8 +296,16 @@ namespace RelertSharp.DrawingEngine
                 string self = "", turret = "", anim = "", bib = "", idle = "", anim2 = "", anim3 = "", barl = "";
                 bool vox = false;
                 self = GlobalRules.GetObjectImgName(name, ref anim, ref turret, ref bib, ref vox, ref idle, ref anim2, ref anim3, ref barl);
+                GlobalRules.GetBuildingShapeData(name, out int height, out int foundx, out int foundy);
+                d.Height = height; d.FoundationX = foundx; d.FoundationY = foundy;
                 d.VoxelTurret = vox;
                 d.RemapColor = color;
+                string customPalName = GlobalRules.GetCustomPaletteName(name);
+                if (!string.IsNullOrEmpty(customPalName))
+                {
+                    pPal = CreatePalette(customPalName);
+                    d.pPalCustom = pPal;
+                }
                 if (!string.IsNullOrEmpty(self)) d.pSelf = CreateFile(self, DrawableType.Shp, color, pPal);
                 if (!string.IsNullOrEmpty(anim)) d.pActivateAnim = CreateFile(anim, DrawableType.Shp, color, pPal);
                 if (!string.IsNullOrEmpty(anim2)) d.pActivateAnim2 = CreateFile(anim2, DrawableType.Shp, color, pPal);
@@ -335,25 +348,41 @@ namespace RelertSharp.DrawingEngine
                     return 0;
             }
         }
+        private int CreatePalette(string filename)
+        {
+            if (!GlobalDir.HasFile(filename)) return 0;
+            int id;
+            if (!Buffer.Files.Pal.Keys.Contains(filename))
+            {
+                VFileInfo info = GlobalDir.GetFilePtr(filename);
+                id = CppExtern.Files.CreatePaletteFromFileInBuffer(info.ptr);
+                Buffer.Files.Pal[filename] = id;
+            }
+            else id = Buffer.Files.Pal[filename];
+            return id;
+        }
         #endregion
 
 
         #region Drawing
         private bool DrawInfantry(DrawableInfantry src, Vec3 pos, PresentInfantry dest, int frame, int pPal, int subcell)
         {
-            if (src.pSelf != 0) dest.pSelf = RenderAndPresent(src.pSelf, pos, frame, src.RemapColor, pPal, false);
+            if (src.pPalCustom != 0) pPal = src.pPalCustom;
+            if (src.pSelf != 0) dest.pSelf = RenderAndPresent(src.pSelf, pos, frame, src.RemapColor, pPal, ShpFlatType.Vertical);
 
             Buffer.Scenes.Infantries[dest.Coord << 2 + subcell] = dest;
             return dest.IsValid;
         }
         private bool DrawStructure(DrawableStructure src, Vec3 pos, PresentStructure dest, Vec3 turRotation, int pPal)
         {
-            if (src.pSelf != 0) dest.pSelf = RenderAndPresent(src.pSelf, pos, 0, src.RemapColor, pPal, src.FlatSelf);
-            if (src.pActivateAnim != 0) dest.pActivateAnim = RenderAndPresent(src.pActivateAnim, pos + _generalOffset, 0, src.RemapColor, pPal, false);
-            if (src.pIdleAnim != 0) dest.pIdleAnim = RenderAndPresent(src.pIdleAnim, _generalOffset + pos, 0, src.RemapColor, pPal, false);
-            if (src.pActivateAnim2 != 0) dest.pActivateAnim2 = RenderAndPresent(src.pActivateAnim2, 2 * _generalOffset + pos, 0, src.RemapColor, pPal, false);
-            if (src.pActivateAnim3 != 0) dest.pActivateAnim3 = RenderAndPresent(src.pActivateAnim3, 3 * _generalOffset + pos, 0, src.RemapColor, pPal, false);
-            if (src.pBib != 0) dest.pBib = RenderAndPresent(src.pBib, pos, 0, src.RemapColor, pPal, false);
+            ShpFlatType flat = ShpFlatType.Box1;
+            if (src.pPalCustom != 0) pPal = src.pPalCustom;
+            if (src.pSelf != 0) dest.pSelf = RenderAndPresent(src, src.pSelf, pos, pPal, flat);
+            if (src.pActivateAnim != 0) dest.pActivateAnim = RenderAndPresent(src, src.pActivateAnim, pos + _generalOffset, pPal, flat);
+            if (src.pIdleAnim != 0) dest.pIdleAnim = RenderAndPresent(src, src.pIdleAnim, _generalOffset + pos, pPal, flat);
+            if (src.pActivateAnim2 != 0) dest.pActivateAnim2 = RenderAndPresent(src, src.pActivateAnim2, 2 * _generalOffset + pos, pPal, flat);
+            if (src.pActivateAnim3 != 0) dest.pActivateAnim3 = RenderAndPresent(src, src.pActivateAnim3, 3 * _generalOffset + pos, pPal, ShpFlatType.Vertical);
+            if (src.pBib != 0) dest.pBib = RenderAndPresent(src, src.pBib, pos, pPal, flat);
             if (src.pTurretAnim != 0)
             {
                 if (src.VoxelTurret)
@@ -361,13 +390,14 @@ namespace RelertSharp.DrawingEngine
                     dest.pTurretAnim = RenderAndPresent(src.pTurretAnim, pos + src.offsetTurret, turRotation, src.RemapColor, pPal);
                     if (src.pTurretBarl != 0) dest.pTurretBarl = RenderAndPresent(src.pTurretBarl, pos + src.offsetTurret, turRotation, src.RemapColor, pPal);
                 }
-                else dest.pTurretAnim = RenderAndPresent(src.pTurretAnim, pos + src.offsetTurret, (int)turRotation.X, src.RemapColor, pPal, false);
+                else dest.pTurretAnim = RenderAndPresent(src.pTurretAnim, pos + src.offsetTurret, (int)turRotation.X, src.RemapColor, pPal, ShpFlatType.Vertical);
             }
             Buffer.Scenes.Structures[dest.Coord] = dest;
             return dest.IsValid;
         }
         private bool DrawUnit(DrawableUnit src, PresentUnit dest, Vec3 pos, Vec3 rotation, int pPal)
         {
+            if (src.pPalCustom != 0) pPal = src.pPalCustom;
             if (src.IsVxl)
             {
                 if (src.pSelf != 0) dest.pSelf = RenderAndPresent(src.pSelf, pos, rotation, src.RemapColor, pPal);
@@ -376,7 +406,7 @@ namespace RelertSharp.DrawingEngine
             }
             else
             {
-                if (src.pSelf != 0) dest.pSelf = RenderAndPresent(src.pSelf, pos, (int)rotation.X, src.RemapColor, pPal, false);
+                if (src.pSelf != 0) dest.pSelf = RenderAndPresent(src.pSelf, pos, (int)rotation.X, src.RemapColor, pPal, ShpFlatType.Vertical);
             }
             Buffer.Scenes.Units[dest.Coord] = dest;
             return dest.IsValid;
@@ -386,23 +416,50 @@ namespace RelertSharp.DrawingEngine
             idSelf = 0;idExtra = 0;
             return CppExtern.ObjectUtils.CreateTmpObjectAtScene(idTmp, pos, subindex, ref idSelf, ref idExtra);
         }
-        private bool DrawGroundShp(Vec3 pos, int frame, int pPal, uint color, int idShp, out int id, bool isflat = false)
+        private bool DrawGroundShp(Vec3 pos, int frame, int pPal, uint color, int idShp, out int id, ShpFlatType flat = ShpFlatType.Vertical)
         {
             id = 0;
-            if (idShp != 0) id = RenderAndPresent(idShp, pos, frame, color, pPal, isflat);
+            if (idShp != 0) id = RenderAndPresent(idShp, pos, frame, color, pPal, flat);
             return id != 0;
         }
         #endregion
 
 
         #region Etc
-        private int RenderAndPresent(int shpID, Vec3 pos, int frame, uint color, int pPal, bool isflat)
+        private int RenderAndPresent(int shpID, Vec3 pos, int frame, uint color, int pPal, ShpFlatType flat)
         {
-            return CppExtern.ObjectUtils.CreateShpObjectAtScene(shpID, pos, frame, pPal, color, isflat);
+            if (flat == ShpFlatType.Box1)
+            {
+                pos.Z += 0.1F;
+                return CppExtern.ObjectUtils.CreateShpObjectAtScene(shpID, pos, frame, pPal, color, (int)flat, 1, 1, 5);
+            }
+            else return CppExtern.ObjectUtils.CreateShpObjectAtScene(shpID, pos, frame, pPal, color, (int)flat, 0, 0, 0);
+        }
+        private int RenderAndPresent(DrawableStructure src, int id, Vec3 pos, int pPal, ShpFlatType flat)
+        {
+            return CppExtern.ObjectUtils.CreateShpObjectAtScene(id, pos, 0, pPal, src.RemapColor, (int)flat, src.FoundationX, src.FoundationY, src.Height);
         }
         private int RenderAndPresent(int vxlID, Vec3 pos, Vec3 ro, uint color, int pPal)
         {
             return CppExtern.ObjectUtils.CreateVxlObjectAtScene(vxlID, pos, ro.X, ro.Y, ro.Z, pPal, color);
+        }
+        private Vec3 BuildingRotation(string nameid, int facing, bool isVxl)
+        {
+            facing >>= 5;
+            if (isVxl)
+            {
+                return new Vec3() { X = 0, Y = 0, Z = (facing - 2) * _rad45 };
+            }
+            else
+            {
+                if (facing == 7) facing = 0;
+                else facing = 7 - facing;
+                INIEntity turret = GlobalRules.GetBuildingTurret(nameid);
+                int maxnum = turret.GetPair("LoopEnd").ParseInt() - turret.GetPair("LoopStart").ParseInt() + 1;
+                if (maxnum < 8) return Vec3.Zero;
+                int increse = maxnum >> 3;
+                return new Vec3() { X = facing * increse, Y = 0, Z = 0 };
+            }
         }
         private Vec3 VxlRotation(string nameID, int facing, bool isVxl)
         {
@@ -414,11 +471,13 @@ namespace RelertSharp.DrawingEngine
             else
             {
                 int facingBase = 256 / GlobalRules[nameID].GetPair("Facings").ParseInt(8);
+                int direction = facing / facingBase;
+                if (direction == 7) direction = 0;
+                else direction++;
                 int startFrame = GlobalRules[nameID].GetPair("StartWalkFrame").ParseInt(-1);
                 int walkFrame = GlobalRules[nameID].GetPair("WalkFrames").ParseInt(12);
                 int offset = walkFrame -1;
-                facing /= facingBase;
-                return new Vec3() { X = startFrame + facing * walkFrame + offset, Y = 0, Z = 0 };
+                return new Vec3() { X = startFrame + direction * walkFrame + offset, Y = 0, Z = 0 };
             }
         }
         private Vec3 ToVec3Iso(PresentBase p)
