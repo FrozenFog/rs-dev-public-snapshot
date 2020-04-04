@@ -413,12 +413,18 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 
 				if (nColor) {
 					pColorData[0] = dwColor;
-					if (bFirstEnter && x >= 1) {
-						pColorData[-1] = pColorData[-2] = dwColor;
+					if (bFirstEnter && x + i >= 1) {
+						pColorData[-1] = dwColor;
+						if (x + i >= 2)
+							pColorData[-2] = dwColor;
+
 						bFirstEnter = false;
 					}
-					if (!bFirstEnter && x >= 1 && (*pFileData == 0 || i == nSize - 1)) {
-						pColorData[1] = pColorData[2] = dwColor;
+					if (!bFirstEnter && x + i <= this->GetFileData()->Header.nBlocksWidth - 1 && (*pFileData == 0 || i == nSize - 1)) {
+						pColorData[1] = dwColor;
+						if (x + i <= this->GetFileData()->Header.nBlocksWidth - 2)
+							pColorData[2] = dwColor;
+
 						bFirstEnter = true;
 					}
 				}
@@ -459,12 +465,16 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 
 				if (nColor) {
 					pColorData[0] = dwColor;
-					if (bFirstEnter && x >= 1) {
-						pColorData[-1] = pColorData[-2] = dwColor;
+					if (bFirstEnter && x + i >= 1) {
+						pColorData[-1] = dwColor;
+						if (x + i >= 2)
+							pColorData[-2] = dwColor;
 						bFirstEnter = false;
 					}
-					if (!bFirstEnter && x >= 1 && (*pFileData == 0 || i == nSize - 1)) {
-						pColorData[1] = pColorData[2] = dwColor;
+					if (!bFirstEnter && x + i <= this->GetFileData()->Header.nBlocksWidth - 1 && (*pFileData == 0 || i == nSize - 1)) {
+						pColorData[1] = dwColor;
+						if (x + i <= this->GetFileData()->Header.nBlocksWidth - 2)
+							pColorData[2] = dwColor;
 						bFirstEnter = true;
 					}
 				}
@@ -475,9 +485,9 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 		pTexture->UnlockRect(0);
 		this->AddTexture(i, pTexture);
 
-		//char szFileName[MAX_PATH];
-		//sprintf_s(szFileName, "dump\\tile_%p_%d.png", this, i);
-		//D3DXSaveTextureToFile(szFileName, D3DXIFF_PNG, pTexture, nullptr);
+		char szFileName[MAX_PATH];
+		sprintf_s(szFileName, "dump\\Otile_%p_%d.png", this, i);
+		D3DXSaveTextureToFile(szFileName, D3DXIFF_PNG, pTexture, nullptr);
 
 		if (!this->HasExtraData(i))
 			continue;
@@ -514,12 +524,17 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 					auto& Color = Palette[nColor];
 					auto dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
 					pColorData[i] = dwColor;
-					if (bEnter && i >= 1) {
-						pColorData[i - 1] = dwColor;
+					if (bEnter) {
+						if (i >= 1)
+							pColorData[i - 1] = dwColor;
+						if (i >= 2)
+							pColorData[i - 2] = dwColor;
 						bEnter = false;
 					}
 					if (!bEnter && *pFileData == 0 && i < ExtraSizeRect.right - 1) {
 						pColorData[i + 1] = dwColor;
+						if (i < ExtraSizeRect.right - 2)
+							pColorData[i + 2] = dwColor;
 						bEnter = true;
 					}
 				}
@@ -529,6 +544,9 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 
 		pExtraTexture->UnlockRect(0);
 		this->AddExtraTexture(i, pExtraTexture);
+
+		sprintf_s(szFileName, "dump\\tile_%p_%d.png", this, i);
+		D3DXSaveTextureToFile(szFileName, D3DXIFF_PNG, pExtraTexture, nullptr);
 	}
 
 	return this->CellTextures.size() == this->GetValidBlockCount();

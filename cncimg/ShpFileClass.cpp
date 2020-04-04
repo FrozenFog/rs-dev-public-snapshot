@@ -37,7 +37,8 @@ void ShpFileClass::Clear()
 	for (auto textures : this->FrameTextures) {
 		for (auto texture : textures.second) {
 			for (auto item : texture.second)
-				SAFE_RELEASE(item);
+				//SAFE_RELEASE(item);
+				CommitIsotatedTexture(item);
 		}
 	}
 	this->FrameTextures.clear();

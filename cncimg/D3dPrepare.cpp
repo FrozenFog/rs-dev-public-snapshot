@@ -158,12 +158,12 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 	if (!TmpFiles.empty() && !SlopeFilesSW.empty())
 	for (int x = 0; x < 10; x++) {
 		if (CellClass::CreateCellAt(
-			{ (-4.5f + x)*TileLength,-5.5f*TileLength,CellHeight },
-			TmpFiles[Randomizer::RandomRanged(0, TmpFiles.size())],
+			{ (-4.5f + x)*TileLength,-6.5f*TileLength,CellHeight },
+			SlopeFilesSW[Randomizer::RandomRanged(0, SlopeFilesSW.size())],
 			0)) {
 		}
-		if (CellClass::CreateCellAt({ (-4.5f + x)*TileLength,-6.5f*TileLength,0.0 },
-			TmpFiles[Randomizer::RandomRanged(0, TmpFiles.size())],
+		if (CellClass::CreateCellAt({ (-4.5f + x)*TileLength,-5.5f*TileLength,0.0 },
+			SlopeFilesSW[Randomizer::RandomRanged(0, SlopeFilesSW.size())],
 			0)) {
 		}
 	}
@@ -255,9 +255,9 @@ void Graphic::MouseMove(POINT Position)
 	D3DXVECTOR3 TargetPosition;
 
 	ClientPositionToScenePosition(Position, TargetPosition);
-	TargetPosition.z += 0.1f;
+	//TargetPosition.z += 0.1f;
 
-	SetObjectLocation(MouseObject, TargetPosition);
+	//SetObjectLocation(MouseObject, TargetPosition);
 
 	CellClass::MarkCellByMousePosition(Position);
 }
