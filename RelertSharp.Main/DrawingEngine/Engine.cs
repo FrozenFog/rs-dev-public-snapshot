@@ -134,17 +134,17 @@ namespace RelertSharp.DrawingEngine
         }
         public bool DrawGeneralItem(OverlayUnit o, int height)
         {
+            Vec3 pos = ToVec3Zero(o.X, o.Y, height);
+            int pal = pPalUnit;
+
             string name = GlobalRules.GetOverlayName(o.Index);
             string img = GlobalRules[name]["Image"];
             string filename = name;
-            if (!string.IsNullOrEmpty(img) && name != img) filename = img;
-
-            Vec3 pos = ToVec3Zero(o.X, o.Y, height);
-            int pal = pPalUnit;
             bool flat = ParseBool(GlobalRules[name]["DrawFlat"], true);
             bool overrides = ParseBool(GlobalRules[name]["Overrides"]);
             bool isTiberium = ParseBool(GlobalRules[name]["Tiberium"]);
 
+            if (!string.IsNullOrEmpty(img) && name != img) filename = img;
             if (!string.IsNullOrEmpty(GlobalRules[name]["Wall"])) flat = !ParseBool(GlobalRules[name]["Wall"]);
             if (overrides)
             {
