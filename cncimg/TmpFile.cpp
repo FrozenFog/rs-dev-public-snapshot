@@ -484,10 +484,10 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 
 		pTexture->UnlockRect(0);
 		this->AddTexture(i, pTexture);
-
+/*
 		char szFileName[MAX_PATH];
 		sprintf_s(szFileName, "dump\\Otile_%p_%d.png", this, i);
-		D3DXSaveTextureToFile(szFileName, D3DXIFF_PNG, pTexture, nullptr);
+		D3DXSaveTextureToFile(szFileName, D3DXIFF_PNG, pTexture, nullptr);*/
 
 		if (!this->HasExtraData(i))
 			continue;
@@ -544,9 +544,9 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 
 		pExtraTexture->UnlockRect(0);
 		this->AddExtraTexture(i, pExtraTexture);
-
+/*
 		sprintf_s(szFileName, "dump\\tile_%p_%d.png", this, i);
-		D3DXSaveTextureToFile(szFileName, D3DXIFF_PNG, pExtraTexture, nullptr);
+		D3DXSaveTextureToFile(szFileName, D3DXIFF_PNG, pExtraTexture, nullptr);*/
 	}
 
 	return this->CellTextures.size() == this->GetValidBlockCount();
