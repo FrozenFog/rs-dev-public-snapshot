@@ -141,7 +141,7 @@ namespace RelertSharp.DrawingEngine
             {
                 flat = false;
             }
-            if (GlobalRules[name]["Land"] == "Road")
+            if (GlobalRules[name]["Land"] == "Road" || ParseBool(GlobalRules[name]["IsARock"]))
             {
                 flat = false;
                 pos = ToVec3Iso(pos);
