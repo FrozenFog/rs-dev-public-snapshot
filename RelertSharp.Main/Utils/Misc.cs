@@ -49,6 +49,10 @@ namespace RelertSharp.Utils
             }
             return dest;
         }
+        public static string Replace(string src, int pos, char c)
+        {
+            return src.Remove(pos, 1).Insert(pos, c.ToString());
+        }
         public static bool ParseBool(string s, bool def = false)
         {
             if (s != "")

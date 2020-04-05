@@ -142,7 +142,15 @@ namespace RelertSharp.Common
         public string ThemeName { get { return this["INI"]["ThemeFileName"]; } }
         public string AiName { get { return this["INI"]["AIFileName"]; } }
         public string EvaName { get { return this["INI"]["EvaFileName"]; } }
-        public string GamePath { get { return this["General"]["GamePath"]; } }
+        public string GamePath
+        {
+            get
+            {
+                string path = this["General"]["GamePath"];
+                if (path.EndsWith("\\")) return path;
+                else return path + "\\";
+            }
+        }
         public string ConfigName { get { return this["General"]["ConfigName"]; } }
         public string[] BagNameList { get { return this["SoundConfigs"].GetPair("Bags").ParseStringList(); } }
         public List<string> StringtableList { get; private set; }

@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\Program Files\Microsoft DirectX SDK\Include;$(IncludePath)</IncludePath>
+    <IncludePath>D:\Program Files\Microsoft DirectX SDK %28February 2010%29\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -156,7 +156,9 @@
     <ClCompile Include="BitmapExtractClass.cpp" />
     <ClCompile Include="CncImageAPI.cpp" />
     <ClCompile Include="ColorScheme.cpp" />
+    <ClCompile Include="CommonTextureFileClass.cpp" />
     <ClCompile Include="D3dPrepare.cpp" />
+    <ClCompile Include="DemoCellClass.cpp" />
     <ClCompile Include="DrawObject.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Palette.cpp" />
@@ -171,7 +173,9 @@
     <ClInclude Include="BitmapExtractClass.h" />
     <ClInclude Include="CncImageAPI.h" />
     <ClInclude Include="ColorScheme.h" />
+    <ClInclude Include="CommonTextureFileClass.h" />
     <ClInclude Include="D3dPrepare.h" />
+    <ClInclude Include="DemoCellClass.h" />
     <ClInclude Include="DrawObject.h" />
     <ClInclude Include="normals.h" />
     <ClInclude Include="Palette.h" />

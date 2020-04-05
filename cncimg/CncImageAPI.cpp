@@ -166,6 +166,33 @@ bool WINAPI LoadShpTextures(int nFileId, int nPaletteId, DWORD dwRemapColor)
 	return find->second->MakeTextures(SceneClass::Instance.GetDevice(), nPaletteId, dwRemapColor);
 }
 
+int WINAPI CreateCommonTextureFile(const char * pFileName)
+{
+	if (!SceneClass::Instance.IsDeviceLoaded())
+		return 0;
+
+	auto pFile = std::make_unique<CommonTextureFileClass>(SceneClass::Instance.GetDevice(), pFileName);
+	if (pFile && pFile->IsLoaded())
+	{
+		auto id = reinterpret_cast<int>(pFile.get());
+
+		CommonTextureFileClass::FileObjectTable[id] = std::move(pFile);
+		return id;
+	}
+	return 0;
+}
+
+bool WINAPI RemoveCommonTextureFile(int nFileId)
+{
+	auto find = CommonTextureFileClass::FileObjectTable.find(nFileId);
+	if (find == CommonTextureFileClass::FileObjectTable.end())
+		return false;
+
+	//find->second->ClearAllObjects();
+	CommonTextureFileClass::FileObjectTable.erase(find);
+	return true;
+}
+
 int WINAPI CreateVxlObjectAtScene(int nFileId, D3DXVECTOR3 Position, float RotationX, float RotationY, float RotationZ, int nColorSchemeID, DWORD dwRemap)
 {
 	auto find = VxlFile::FileObjectTable.find(nFileId);
@@ -184,12 +211,22 @@ bool WINAPI CreateTmpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int nTileI
 	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position, nTileIndex, OutTileIndex, OutExtraIndex);
 }
 
-int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFrame, int nPaletteId, DWORD dwRemapColor, bool bFlat)
+int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFrame, int nPaletteId, DWORD dwRemapColor, char bFlat,
+	int nFoundationX, int nFoundationY, int nHeight)
 {
 	auto find = ShpFileClass::FileObjectTable.find(nFileId);
 	if (find == ShpFileClass::FileObjectTable.end())
 		return false;
-	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position, idxFrame, bFlat, nPaletteId, dwRemapColor);
+	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position, idxFrame, bFlat, nPaletteId, dwRemapColor,
+		nFoundationX, nFoundationY, nHeight);
+}
+
+int WINAPI CreateCommonTextureObjectAtScene(int nFileId, D3DXVECTOR3 Position)
+{
+	auto find = CommonTextureFileClass::FileObjectTable.find(nFileId);
+	if (find == CommonTextureFileClass::FileObjectTable.end())
+		return false;
+	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position);
 }
 
 void WINAPI MakeVxlFrameShot(int nFileId, LPCSTR pFile, int idxFrame, float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor)
@@ -223,6 +260,11 @@ void WINAPI SetObjectLocation(int nID, D3DXVECTOR3 Position)
 	DrawObject::ObjectMove(nID, Position);
 }
 
+void WINAPI SetObjectColorCoefficient(int nID, D3DXVECTOR4 Coefficient)
+{
+	DrawObject::SetObjectColorCoefficient(nID, Coefficient);
+}
+
 bool WINAPI SetUpScene(HWND hWnd)
 {
 	return SceneClass::Instance.SetUpScene(hWnd);
@@ -240,7 +282,7 @@ bool WINAPI ResetSceneView()
 
 void WINAPI PresentAllObject()
 {
-	DrawObject::UpdaceScene(SceneClass::Instance.GetDevice(), SceneClass::Instance.GetBackgroundColor());
+	DrawObject::UpdateScene(SceneClass::Instance.GetDevice(), SceneClass::Instance.GetBackgroundColor());
 }
 
 void WINAPI MoveFocusOnScreen(float x, float y)
@@ -357,6 +399,11 @@ void SetColorScheme(TheaterType Theater, int nColorSchemeID, COLORREF RemapColor
 bool IsColorSchemeInitialized()
 {
 	return ColorScheme::GlobalColorScheme.IsLoaded();
+}
+
+void RotateWorld(float Angle)
+{
+	SceneClass::Instance.RotateScene(Angle);
 }
 
 

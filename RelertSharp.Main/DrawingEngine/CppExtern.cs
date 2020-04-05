@@ -14,7 +14,7 @@ namespace RelertSharp.DrawingEngine
             [DllImport("CncVxlRenderText.dll")]
             public static extern void ScenePositionToClientPosition(Vec3 pos, ref Pnt result);
             [DllImport("CncVxlRenderText.dll")]
-            public static extern void ClientPositionToClientPosition(Pnt pos, ref Vec3 result);
+            public static extern void ClientPositionToScenePosition(Pnt pos, ref Vec3 result);
 
 
             [DllImport("CncVxlRenderText.dll")]
@@ -48,7 +48,7 @@ namespace RelertSharp.DrawingEngine
 
             // vxl
             [DllImport("CncVxlRenderText.dll")]
-            public static extern int CreateTmpFileFromFileInMemory(IntPtr pVxl, uint szVxl, IntPtr pHva, uint szHva);
+            public static extern int CreateVxlFileFromFileInMemory(IntPtr pVxl, uint szVxl, IntPtr pHva, uint szHva);
             [DllImport("CncVxlRenderText.dll")]
             public static extern bool RemoveVxlFile(int id);
 
@@ -77,7 +77,7 @@ namespace RelertSharp.DrawingEngine
             [DllImport("CncVxlRenderText.dll")]
             public static extern bool CreateTmpObjectAtScene(int idTmp, Vec3 pos, int tileIndex, ref int outTileIndex, ref int outExIndex);
             [DllImport("CncVxlRenderText.dll")]
-            public static extern int CreateShpObjectAtScene(int idShp, Vec3 pos, int idFrame, int idPal, uint dwRemapColor, bool isFlat);
+            public static extern int CreateShpObjectAtScene(int idShp, Vec3 pos, int idFrame, int idPal, uint dwRemapColor, int flatType, int foundationX, int foundationY, int height);
             [DllImport("CncVxlRenderText.dll")]
             public static extern void RemoveObjectAtScene(int id);
             [DllImport("CncVxlRenderText.dll")]

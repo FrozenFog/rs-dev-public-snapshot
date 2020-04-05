@@ -1,6 +1,7 @@
 #include "D3dPrepare.h"
 
 #include "CncImageAPI.h"
+#include "DemoCellClass.h"
 
 namespace Graphic
 {
@@ -14,6 +15,8 @@ namespace Graphic
 	int CliffObject, CliffExtraObject;
 	int UnitPalette, TmpPalette;
 	int ShpFile;
+	int roadTileFile;
+	int roadObject[3];
 }
 
 bool Graphic::Direct3DInitialize(HWND hWnd, const char* pShotFileName, bool bUnion, int nDirections, int TurretOff)
@@ -34,12 +37,18 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 	UnitPalette = CreatePaletteFile("palettes\\unittem.pal");
 	TmpPalette = CreatePaletteFile("palettes\\isotem.pal");
 
+	SetBackgroundColor(0, 0, 0);
+
 	if (!UnitPalette || !TmpPalette)
 		return false;
 
 	//MakeVxlFrameShot(VxlFiles[0], "Shot.png", 0, 0.0, 0.0, 0.0, UnitPalette, INVALID_COLOR_VALUE);
 	if (pShotFileName) {
 		MakeShots(pShotFileName, 0.0, UnitPalette, bUnion, nDirections, INVALID_COLOR_VALUE, TurretOff);
+	}
+
+	if (roadTileFile = CreateTmpFile("tile\\proad01a.tem")) {
+		LoadTmpTextures(roadTileFile, TmpPalette);
 	}
 
 	if (auto id = CreateVxlFile("flata.vxl")) {
@@ -50,10 +59,17 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 		VxlFiles.push_back(id);
 	}
 
+	//if (auto id = CreateCommonTextureFile("images\\common_tex.png")) {
+	//	CreateCommonTextureObjectAtScene(id, { 0.0,0.0,0.0 });
+	//}
+	
 	if (ShpFile = CreateShpFile("images\\ggcnst.shp")) {
 		if (LoadShpTextures(ShpFile, UnitPalette, RGB(0, 252, 252)))
-			MouseObject = CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.0 }, 0, UnitPalette, RGB(0, 252, 252), false);
+			MouseObject = CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 0, UnitPalette, RGB(0, 252, 252), 2, 4, 4, 8);
 	}
+
+	D3DXVECTOR3 Position{ 100.0f,0.0f,0.0f };
+	int baseid, turid, barlid;
 
 	char cIndex = 'a';
 	char szFileName[MAX_PATH];
@@ -75,21 +91,24 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 			LoadTmpTextures(id, TmpPalette);
 		}
 	}
-
+/*
 	if (auto id = CreateTmpFile("cliff05.tem")) {
 		LoadTmpTextures(id, TmpPalette);
 		CreateTmpObjectAtScene(id, { 0.0,3.0f*TileLength,0.0 }, 2, CliffObject, CliffExtraObject);
+		SetObjectColorCoefficient(CliffExtraObject, { 1.0f,0.6f,1.0f,0.3f });
 	}
-
+*/
 	//SetColorScheme(GetCurrentTheater(), 8848, RGB(0, 252, 0));
 	if (VxlFiles.size() >= 2)
 	{
 		if (auto vxlid = CreateVxlObjectAtScene(VxlFiles[0], { 0.0,0.0,0.0 }, 0.0, 0.0, 0.0, UnitPalette, RGB(0, 252, 0))) {
 			SceneObjects.push_back(vxlid);
+			SetObjectColorCoefficient(vxlid, { 1.0f,0.6f,0.6f,1.0f });
 		}
 
 		if (auto vxlid = CreateVxlObjectAtScene(VxlFiles[1], { 0.0,0.0,0.0 }, 0.0, 0.0, D3DX_PI / 2.0f, UnitPalette, RGB(0, 0, 252))) {
 			SceneObjects.push_back(vxlid);
+			SetObjectColorCoefficient(vxlid, { 0.6f,1.0f,0.6f,0.2f });
 		}
 	}
 
@@ -104,12 +123,14 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 		for (int x = -4; x < 6; x++) {
 			for (int y = -4; y < 6; y++) {
 				auto RamdomIndex = Randomizer::RandomRanged(0, TmpFiles.size());
-				if (CreateTmpObjectAtScene(TmpFiles[RamdomIndex],
-					D3DXVECTOR3((-0.5 + x)*TileLength, (-0.5 + y)*TileLength, 0.0f), 0, idxTile, idxExtra)) {
-					if (idxTile)
-						SceneObjects.push_back(idxTile);
-					if (idxExtra)
-						SceneObjects.push_back(idxExtra);
+				auto Position = D3DXVECTOR3((-0.5 + x)*TileLength, (-0.5 + y)*TileLength, 0.0f);
+
+				if (y >= 0 && y < 3) {
+					roadObject[y] = CellClass::CreateCellAt(Position, roadTileFile, y);
+					continue;
+				}
+
+				if (CellClass::CreateCellAt(Position, TmpFiles[RamdomIndex], 0)) {
 				}
 				else {
 					printf_s("failed to draw.\n");
@@ -124,19 +145,14 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 */
 	if (!TmpFiles.empty() && !SlopeFilesSW.empty())
 	for (int x = 0; x < 10; x++) {
-		if (CreateTmpObjectAtScene(SlopeFilesSW[Randomizer::RandomRanged(0, SlopeFilesSW.size())],
-		{ (-4.5f + x)*TileLength,-5.5f*TileLength,0.0 }, 0, idxTile, idxExtra)) {
-			if (idxTile)
-				SceneObjects.push_back(idxTile);
-			if (idxExtra)
-				SceneObjects.push_back(idxExtra);
+		if (CellClass::CreateCellAt(
+			{ (-4.5f + x)*TileLength,-5.5f*TileLength,CellHeight },
+			TmpFiles[Randomizer::RandomRanged(0, TmpFiles.size())],
+			0)) {
 		}
-		if (CreateTmpObjectAtScene(SlopeFilesSW[Randomizer::RandomRanged(0, SlopeFilesSW.size())],
-		{ (-4.5f + x)*TileLength,-6.5f*TileLength,CellHeight }, 0, idxTile, idxExtra)) {
-			if (idxTile)
-				SceneObjects.push_back(idxTile);
-			if (idxExtra)
-				SceneObjects.push_back(idxExtra);
+		if (CellClass::CreateCellAt({ (-4.5f + x)*TileLength,-6.5f*TileLength,0.0 },
+			TmpFiles[Randomizer::RandomRanged(0, TmpFiles.size())],
+			0)) {
 		}
 	}
 
@@ -227,7 +243,11 @@ void Graphic::MouseMove(POINT Position)
 	D3DXVECTOR3 TargetPosition;
 
 	ClientPositionToScenePosition(Position, TargetPosition);
+	TargetPosition.z += 0.1f;
+
 	SetObjectLocation(MouseObject, TargetPosition);
+
+	CellClass::MarkCellByMousePosition(Position);
 }
 
 void Graphic::RemoveLastTmp()
@@ -237,4 +257,9 @@ void Graphic::RemoveLastTmp()
 	RemoveShpFile(ShpFile);
 	RemoveVxlFile(VxlFiles[1]);
 	//VxlFiles.erase(VxlFiles.begin() + 1);
+}
+
+void Graphic::SceneRotation()
+{
+	RotateWorld(0.05f);
 }

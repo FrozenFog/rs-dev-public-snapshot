@@ -82,6 +82,10 @@ namespace RelertSharp.IniSystem
         #endregion
 
         #region Public Methods - INIFile
+        /// <summary>
+        /// Merge two IniFile, Entity with same name will be merged, IniPair with same key will be overwrite by new one
+        /// </summary>
+        /// <param name="newEnt">New Ent</param>
         public void Override(IEnumerable<INIEntity> src)
         {
             foreach (INIEntity newent in src)
@@ -96,6 +100,10 @@ namespace RelertSharp.IniSystem
                 }
             }
         }
+        /// <summary>
+        /// Save current IniFile structure into a file
+        /// </summary>
+        /// <param name="ignoreComment"></param>
         public void SaveIni(bool ignoreComment = false)
         {
             //if (File.Exists(FilePath)) File.Delete(FilePath);
@@ -124,31 +132,61 @@ namespace RelertSharp.IniSystem
             msbuffer.Dispose();
             Dispose();
         }
+        /// <summary>
+        /// Add an IniEnt, if there is an IniEnt with same name, it will do nothing
+        /// </summary>
+        /// <param name="ent"></param>
         public void AddEnt(INIEntity ent)
         {
             if (string.IsNullOrEmpty(ent.Name)) return;
             if (!inidata.Keys.Contains(ent.Name)) inidata[ent.Name] = ent;
         }
+        /// <summary>
+        /// Remove an IniEnt with a specified name, will do nothing if not found
+        /// </summary>
+        /// <param name="ent"></param>
         public void RemoveEnt(INIEntity ent)
         {
             if (inidata.Keys.Contains(ent.Name)) inidata.Remove(ent.Name);
         }
+        /// <summary>
+        /// Only check the name
+        /// </summary>
+        /// <param name="ent"></param>
+        /// <returns></returns>
         public bool HasIniEnt(INIEntity ent)
         {
             return inidata.Keys.Contains(ent.Name);
         }
+        public bool HasIniEnt(string name)
+        {
+            return inidata.Keys.Contains(name);
+        }
+        /// <summary>
+        /// Find an IniEnt with specified name, return a NullEntity(not null) if not found
+        /// </summary>
+        /// <param name="entName"></param>
+        /// <returns></returns>
         public INIEntity GetEnt(string entName)
         {
             if (inidata.Keys.Contains(entName)) return inidata[entName];
             return INIEntity.NullEntity;
             //throw new RSException.EntityNotFoundException(entName, FullName);
         }
+        /// <summary>
+        /// Find an IniEnt with specified name and remove it from file, return a NullEntity(not null) if not found
+        /// </summary>
+        /// <param name="entName"></param>
+        /// <returns></returns>
         public INIEntity PopEnt(string entName)
         {
             INIEntity result = GetEnt(entName);
             RemoveEnt(result);
             return result;
         }
+        /// <summary>
+        /// Remove every item in this file
+        /// </summary>
         public void ClearAllIniEnt()
         {
             inidata.Clear();

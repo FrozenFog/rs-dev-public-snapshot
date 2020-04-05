@@ -27,6 +27,11 @@ namespace RelertSharp.IniSystem
 
 
         #region Private Methods - INIPair
+        /// <summary>
+        /// Interpreter only
+        /// </summary>
+        /// <param name="keyname"></param>
+        /// <returns></returns>
         private INIKeyType GetKeyType(string keyname)
         {
             if (Constant.Interpreter.SightLike.Contains(keyname))
@@ -86,6 +91,11 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Methods - INIPair
+        /// <summary>
+        /// Try convert Pair value into destinate type.
+        /// Eg: string to bool, int, etc.
+        /// Works well with IniInterpreter, not recommended using elsewhere
+        /// </summary>
         public void ConvValue()
         {
             if (Constant.BoolFalse.Contains((string)Value)) Value = false;
@@ -98,6 +108,11 @@ namespace RelertSharp.IniSystem
             else if (Constant.KeyName.FloatKey.Contains(Name)) Value = float.Parse(Value);
             else if (Constant.KeyName.PercentKey.Contains(Name)) Value = float.Parse(Value.Replace("%", string.Empty)) / 100;
         }
+        /// <summary>
+        /// Try parse the value as bool
+        /// </summary>
+        /// <param name="def"></param>
+        /// <returns></returns>
         public bool ParseBool(bool def = false)
         {
             if ((string)Value != "")
@@ -109,6 +124,11 @@ namespace RelertSharp.IniSystem
             }
             return def;
         }
+        /// <summary>
+        /// Try parse the value as int
+        /// </summary>
+        /// <param name="def"></param>
+        /// <returns></returns>
         public int ParseInt(int def = 0)
         {
             try
@@ -121,6 +141,11 @@ namespace RelertSharp.IniSystem
             }
             catch { return 0; }
         }
+        /// <summary>
+        /// Try parse the value as float
+        /// </summary>
+        /// <param name="def"></param>
+        /// <returns></returns>
         public float ParseFloat(float def = 0.0F)
         {
             try
@@ -133,10 +158,18 @@ namespace RelertSharp.IniSystem
             }
             catch { return 0.0F; }
         }
+        /// <summary>
+        /// Try parse the value as string list, default seperator is ","
+        /// </summary>
+        /// <returns></returns>
         public string[] ParseStringList()
         {
             return ((string)Value).Split(new char[] { ',' });
         }
+        /// <summary>
+        /// Try parse the value as int list, default seperator is ","
+        /// </summary>
+        /// <returns></returns>
         public int[] ParseIntList()
         {
             List<int> result = new List<int>();

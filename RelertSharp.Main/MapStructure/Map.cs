@@ -32,11 +32,6 @@ namespace RelertSharp.MapStructure
         private WaypointCollection waypoints = new WaypointCollection();
         private CellTagCollection celltags = new CellTagCollection();
 
-        private UnitLayer units = new UnitLayer();
-        private InfantryLayer infantries = new InfantryLayer();
-        private StructureLayer structures = new StructureLayer();
-        private AircraftLayer aircrafts = new AircraftLayer();
-
         private TileLayer Tiles;
 
         private Dictionary<string, INIEntity> residual;
@@ -54,6 +49,8 @@ namespace RelertSharp.MapStructure
             GetAbstractLogics(f);
             GetTeam(f);
             GetObjects(f);
+            LoadHouseColor();
+
             Tiles = new TileLayer(isomappack5String, info.Size);
             Overlays = new OverlayLayer(overlayString, overlaydataString);
             residual = new Dictionary<string, INIEntity>(f.IniDict);
@@ -71,6 +68,12 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - Map
+        public uint GetHouseColor(string housename)
+        {
+            HouseItem house = Houses.GetHouse(housename);
+            if (house == null) return 0;
+            return 0xFF000000 | (uint)(house.DrawingColor.B << 16 | house.DrawingColor.G << 8 | house.DrawingColor.R);
+        }
         public void CompressTile()
         {
             foreach (Tile t in Tiles.Data.Values)
@@ -101,6 +104,23 @@ namespace RelertSharp.MapStructure
 
 
         #region Private Methods - Map
+        private void LoadHouseColor()
+        {
+            foreach (HouseItem house in Houses)
+            {
+                if (string.IsNullOrEmpty(house.ColorName)) house.DrawingColor = Color.Red;
+                else
+                {
+                    INIPair p = GlobalVar.GlobalRules["Colors"].GetPair(house.ColorName);
+                    if (p.Name == "") house.DrawingColor = Color.Red;
+                    else
+                    {
+                        string[] hsb = p.ParseStringList();
+                        house.DrawingColor = Utils.HSBColor.FromHSB(hsb);
+                    }
+                }
+            }
+        }
         private void GetGeneralInfo(MapFile f)
         {
             info = new MapInfo(f.PopEnt("Basic"), f.PopEnt("Map"), f.PopEnt("SpecialFlags"));
@@ -128,19 +148,19 @@ namespace RelertSharp.MapStructure
             }
             foreach (INIPair p in entUnit.DataList)
             {
-                units[p.Name] = new UnitItem(p.Name, p.ParseStringList());
+                Units[p.Name] = new UnitItem(p.Name, p.ParseStringList());
             }
             foreach (INIPair p in entInf.DataList)
             {
-                infantries[p.Name] = new InfantryItem(p.Name, p.ParseStringList());
+                Infantries[p.Name] = new InfantryItem(p.Name, p.ParseStringList());
             }
             foreach (INIPair p in entStructure.DataList)
             {
-                structures[p.Name] = new StructureItem(p.Name, p.ParseStringList());
+                Buildings[p.Name] = new StructureItem(p.Name, p.ParseStringList());
             }
             foreach (INIPair p in entAircraft.DataList)
             {
-                aircrafts[p.Name] = new AircraftItem(p.Name, p.ParseStringList());
+                Aircrafts[p.Name] = new AircraftItem(p.Name, p.ParseStringList());
             }
             foreach (INIPair p in entTerrain.DataList)
             {
@@ -247,6 +267,10 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Calls - Map
+        public InfantryLayer Infantries { get; private set; } = new InfantryLayer();
+        public AircraftLayer Aircrafts { get; private set; } = new AircraftLayer();
+        public StructureLayer Buildings { get; private set; } = new StructureLayer();
+        public UnitLayer Units { get; private set; } = new UnitLayer();
         public TerrainLayer Terrains { get; private set; } = new TerrainLayer();
         public SmudgeLayer Smudges { get; private set; } = new SmudgeLayer();
         public AITriggerCollection AiTriggers { get; private set; } = new AITriggerCollection();

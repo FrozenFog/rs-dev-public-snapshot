@@ -4,6 +4,7 @@
 #include "VxlFile.h"
 #include "ShpFileClass.h"
 #include "SceneClass.h"
+#include"CommonTextureFileClass.h"
 
 #define EXPORT_START extern "C" {
 #define EXPORT_END }
@@ -32,13 +33,18 @@ EXPORT int WINAPI CreateShpFileFromFileInMemory(LPVOID pFileBuffer, ULONG nSize)
 EXPORT bool WINAPI RemoveShpFile(int nFileId);
 EXPORT bool WINAPI LoadShpTextures(int nFileId, int nPaletteId, DWORD dwRemapColor);
 
+EXPORT int WINAPI CreateCommonTextureFile(const char* pFileName);
+EXPORT bool WINAPI RemoveCommonTextureFile(int nFileId);
 //image object
 EXPORT int WINAPI CreateVxlObjectAtScene(int nFileId, D3DXVECTOR3 Position,
 	float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor);
 
 EXPORT bool WINAPI CreateTmpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int nTileIndex, int& OutTileIndex, int& OutExtraIndex);
 
-EXPORT int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFrame, int nPaletteId, DWORD dwRemapColor, bool bFlat);
+EXPORT int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFrame, int nPaletteId, DWORD dwRemapColor, char bFlat,
+	int nFoundationX, int nFoundationY, int nHeight);
+
+EXPORT int WINAPI CreateCommonTextureObjectAtScene(int nFileId, D3DXVECTOR3 Position);
 
 EXPORT void WINAPI MakeVxlFrameShot(int nFileId, LPCSTR pFileName, int idxFrame, float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor);
 
@@ -49,6 +55,8 @@ EXPORT void WINAPI RotateObject(int nID, float RotationX, float RotationY, float
 EXPORT void WINAPI MoveObject(int nID, D3DXVECTOR3 Displacement);
 
 EXPORT void WINAPI SetObjectLocation(int nID, D3DXVECTOR3 Position);
+
+EXPORT void WINAPI SetObjectColorCoefficient(int nID, D3DXVECTOR4 Coefficient);
 
 //scene api
 EXPORT bool WINAPI SetUpScene(HWND hWnd);
@@ -82,5 +90,6 @@ void SetCurrentTheater(TheaterType Theater);
 void SetColorScheme(TheaterType Theater, int nColorSchemeID, COLORREF RemapColor);
 
 bool IsColorSchemeInitialized();
+void RotateWorld(float Angle);
 
 EXPORT_END

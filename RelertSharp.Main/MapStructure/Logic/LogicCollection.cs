@@ -55,7 +55,9 @@ namespace RelertSharp.MapStructure.Logic
             string[] l = p.ParseStringList();
             ID = p.Name;
             Num = int.Parse(l[0]);
-            Params = l.Skip(1).ToArray();
+            IEnumerable<string> paramEnm = l.Skip(1);
+            int end = paramEnm.ToList().IndexOf("");
+            Params = paramEnm.Take(end).ToArray();
             LogicType = type;
             int window = 0;
             for (int i = 0; i < Params.Length; i += window)
