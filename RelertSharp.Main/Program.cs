@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using RelertSharp.FileSystem;
 using RelertSharp.Common;
 using RelertSharp.SubWindows.LogicEditor;
+using RelertSharp.SubWindows.INIEditor;
 
 namespace RelertSharp
 {
@@ -19,7 +20,7 @@ namespace RelertSharp
         {
 #if DEBUG
             Initialization();
-            _run.M();
+            _Test.Run();
 #else
             if (args.Length < 1) return;
             try
