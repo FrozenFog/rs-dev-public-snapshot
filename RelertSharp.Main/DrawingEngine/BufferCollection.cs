@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.DrawingEngine.Drawables;
 using RelertSharp.DrawingEngine.Presenting;
+using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine
 {
@@ -48,6 +49,8 @@ namespace RelertSharp.DrawingEngine
         public CScene Scenes { get; private set; } = new CScene();
         public CBuffer Buffers { get; private set; } = new CBuffer();
         public CFile Files { get; private set; } = new CFile();
+        public int pCelltag { get; set; }
+        public int pWaypoint { get; set; }
         #endregion
 
 
@@ -67,6 +70,15 @@ namespace RelertSharp.DrawingEngine
 
 
             #region Public Methods - CScene
+            public void ColoringTile(int coord, Vec4 color, Vec4 exColor)
+            {
+                if (Tiles.Keys.Contains(coord))
+                {
+                    PresentTile t = Tiles[coord];
+                    CppExtern.ObjectUtils.SetObjectColorCoefficient(t.pSelf, color);
+                    if (t.pExtra != 0) CppExtern.ObjectUtils.SetObjectColorCoefficient(t.pExtra, exColor);
+                }
+            }
             public void RemoveInfantries()
             {
                 foreach (PresentInfantry infantry in Infantries.Values) infantry.Dispose();

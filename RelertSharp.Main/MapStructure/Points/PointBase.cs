@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.Common;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Points
@@ -55,9 +56,8 @@ namespace RelertSharp.MapStructure.Points
 
 
 
-    public class PointItemBase
+    public class PointItemBase : I2dLocateable
     {
-        private int x, y;
         public PointItemBase() { }
         public PointItemBase(string _coord)
         {
@@ -66,23 +66,23 @@ namespace RelertSharp.MapStructure.Points
         }
         public PointItemBase(int _x, int _y)
         {
-            Coord = CoordString(x, y);
-            x = _x;
-            y = _y;
+            X = _x;
+            Y = _y;
+            Coord = CoordString(X, Y);
         }
 
 
         #region Public Calls - PointItemBase
         public string Coord { get; set; }
-        public int CoordX { get { return x; } set { x = value; } }
-        public int CoordY { get { return y; } set { y = value; } }
+        public int X { get; set; }
+        public int Y { get; set; }
         public int CoordInt
         {
-            get { return Utils.Misc.CoordInt(CoordX, CoordY); }
+            get { return Utils.Misc.CoordInt(X, Y); }
             set
             {
-                CoordX = CoordIntX(value);
-                CoordY = CoordIntY(value);
+                X = CoordIntX(value);
+                Y = CoordIntY(value);
             }
         }
         #endregion;

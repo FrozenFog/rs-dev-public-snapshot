@@ -20,10 +20,16 @@ namespace RelertSharp.DrawingEngine
     public class Engine : IDisposable
     {
         private readonly float _30SQ2, _10SQ3, _15SQ2, _rad45;
+        private readonly string[] _zeroLandType = new string[] { "Water", "Clear", "" };
+        private float _width { get { return _30SQ2; } }
+        private Vec3 _NormTileVec { get { return new Vec3(_15SQ2, _15SQ2, _10SQ3); } }
+        private float _height { get { return _10SQ3; } }
         private const uint _colorIgnore = 0x000000FF;
         private const uint _white = 0xFFFFFFFF;
         private readonly Vec3 _generalOffset = new Vec3() { X = 1, Y = 1, Z = (float)Math.Sqrt(1.5) };
         private BufferCollection Buffer = new BufferCollection();
+        private GdipSurface surface;
+        private Vec3 previousTile = Vec3.Zero;
         private int pPalIso = 0;
         private int pPalUnit = 0;
         private int pPalTheater = 0;
@@ -36,6 +42,7 @@ namespace RelertSharp.DrawingEngine
             _10SQ3 = (float)(10F * Math.Sqrt(3));
             _15SQ2 = _30SQ2 / 2;
             _rad45 = (float)Math.PI / 4;
+            surface = new GdipSurface(60, 54);
         }
         #endregion
 
@@ -71,17 +78,33 @@ namespace RelertSharp.DrawingEngine
             Vec3 ro = VxlRotation(air.NameID, air.Rotation, true);
             return DrawUnit(src, dest, pos, ro, pPalUnit);
         }
-
         public bool DrawObject(StructureItem structure, int height, uint color)
         {
             DrawableStructure src = CreateDrawableStructure(structure.NameID, color, pPalUnit);
-            PresentStructure dest = new PresentStructure(structure, height);
+            PresentStructure dest = new PresentStructure(structure, height, src.VoxelTurret);
             Vec3 ro;
             if (src.pTurretAnim != 0) ro = BuildingRotation(structure.NameID, structure.Rotation, src.VoxelTurret);
             else ro = Vec3.Zero;
             Vec3 pos = ToVec3Zero(dest);
             pos.Z += 0.1F;
             return DrawStructure(src, pos, dest, ro, pPalUnit);
+        }
+        public bool DrawObject(BaseNode node, int height, uint color)
+        {
+            DrawableStructure src = CreateDrawableStructure(node.Name, color, pPalUnit, true);
+            PresentStructure dest = new PresentStructure(node, height, src.VoxelTurret);
+            Vec3 ro;
+            if (src.pTurretAnim != 0) ro = BuildingRotation(node.Name, 0, src.VoxelTurret);
+            else ro = Vec3.Zero;
+            Vec3 pos = ToVec3Zero(dest);
+            pos.Z += 0.2F;
+            bool draw = DrawStructure(src, pos, dest, ro, pPalUnit);
+            if (draw)
+            {
+                dest.SetTransparency(true);
+                return true;
+            }
+            return false;
         }
         public bool DrawGeneralItem(Tile t)
         {
@@ -135,17 +158,22 @@ namespace RelertSharp.DrawingEngine
             bool flat = ParseBool(GlobalRules[name]["DrawFlat"], true);
             bool overrides = ParseBool(GlobalRules[name]["Overrides"]);
             bool isTiberium = ParseBool(GlobalRules[name]["Tiberium"]);
+            bool rubble = ParseBool(GlobalRules[name]["IsRubble"]);
 
             if (!string.IsNullOrEmpty(img) && name != img) filename = img;
             if (overrides)
             {
                 flat = false;
             }
-            if (GlobalRules[name]["Land"] == "Road" || ParseBool(GlobalRules[name]["IsARock"]))
+            if (!rubble)
             {
-                flat = false;
-                pos = ToVec3Iso(pos);
+                if (!_zeroLandType.Contains((string)GlobalRules[name]["Land"]))
+                {
+                    flat = false;
+                    pos = ToVec3Iso(pos);
+                }
             }
+
 
             if (GlobalDir.HasFile(filename + ".shp")) filename = filename.ToLower() + ".shp";
             else
@@ -166,6 +194,37 @@ namespace RelertSharp.DrawingEngine
             return false;
         }
         #endregion
+        public Vec3 ClientPointToCellPos(Point src, TileLayer referance)
+        {
+            Pnt p = Pnt.FromPoint(src);
+            Vec3 pos = new Vec3();
+            CppExtern.Scene.ClientPositionToScenePosition(p, ref pos);
+            //pos = ToVec3Iso(pos);
+            pos += _NormTileVec * 12;
+            for (int height = 0; height < 12; height++)
+            {
+                Vec3 tilepos = ScenePosToCoord(pos);
+                if (referance.HasTileOn(tilepos)) return tilepos;
+                pos -= _NormTileVec;
+            }
+            return Vec3.Zero;
+        }
+        /// <summary>
+        /// Return true if pos changed
+        /// </summary>
+        /// <param name="newpos"></param>
+        /// <returns></returns>
+        public bool SelectTile(Vec3 newpos)
+        {
+            if (newpos != previousTile)
+            {
+                Buffer.Scenes.ColoringTile(newpos.ToCoord(), Vec4.TileIndicator, Vec4.TileExIndi);
+                Buffer.Scenes.ColoringTile(previousTile.ToCoord(), Vec4.TileDeselect, Vec4.TileDeselect);
+                previousTile = newpos;
+                return true;
+            }
+            return false;
+        }
         public void SetTheater(TheaterType type)
         {
             TileDictionary = new MapTheaterTileSet(type);
@@ -286,16 +345,17 @@ namespace RelertSharp.DrawingEngine
             else d = Buffer.Buffers.Units[lookup];
             return d;
         }
-        private DrawableStructure CreateDrawableStructure(string name, uint color, int pPal)
+        private DrawableStructure CreateDrawableStructure(string name, uint color, int pPal, bool isBaseNode = false)
         {
             DrawableStructure d;
             string lookup = name + color.ToString();
+            if (isBaseNode) lookup += "n";
             if (!Buffer.Buffers.Structures.Keys.Contains(lookup))
             {
                 d = new DrawableStructure(name);
-                string self = "", turret = "", anim = "", bib = "", idle = "", anim2 = "", anim3 = "", barl = "";
+                string self = "", turret = "", anim = "", bib = "", idle = "", anim2 = "", anim3 = "", barl = "", super = "";
                 bool vox = false;
-                self = GlobalRules.GetObjectImgName(name, ref anim, ref turret, ref bib, ref vox, ref idle, ref anim2, ref anim3, ref barl);
+                self = GlobalRules.GetObjectImgName(name, ref anim, ref turret, ref bib, ref vox, ref idle, ref anim2, ref anim3, ref barl, ref super);
                 GlobalRules.GetBuildingShapeData(name, out int height, out int foundx, out int foundy);
                 d.Height = height; d.FoundationX = foundx; d.FoundationY = foundy;
                 d.VoxelTurret = vox;
@@ -310,6 +370,7 @@ namespace RelertSharp.DrawingEngine
                 if (!string.IsNullOrEmpty(anim)) d.pActivateAnim = CreateFile(anim, DrawableType.Shp, color, pPal);
                 if (!string.IsNullOrEmpty(anim2)) d.pActivateAnim2 = CreateFile(anim2, DrawableType.Shp, color, pPal);
                 if (!string.IsNullOrEmpty(anim3)) d.pActivateAnim3 = CreateFile(anim3, DrawableType.Shp, color, pPal);
+                if (!string.IsNullOrEmpty(super)) d.pSuperAnim = CreateFile(super, DrawableType.Shp, color, pPal);
                 if (!string.IsNullOrEmpty(idle)) d.pIdleAnim = CreateFile(idle, DrawableType.Shp, color, pPal);
                 if (!string.IsNullOrEmpty(bib)) d.pBib = CreateFile(bib, DrawableType.Shp, color, pPal);
                 if (!string.IsNullOrEmpty(turret))
@@ -382,6 +443,7 @@ namespace RelertSharp.DrawingEngine
             if (src.pIdleAnim != 0) dest.pIdleAnim = RenderAndPresent(src, src.pIdleAnim, _generalOffset + pos, pPal, flat);
             if (src.pActivateAnim2 != 0) dest.pActivateAnim2 = RenderAndPresent(src, src.pActivateAnim2, 2 * _generalOffset + pos, pPal, flat);
             if (src.pActivateAnim3 != 0) dest.pActivateAnim3 = RenderAndPresent(src, src.pActivateAnim3, 3 * _generalOffset + pos, pPal, ShpFlatType.Vertical);
+            if (src.pSuperAnim != 0) dest.pSuperAnim = RenderAndPresent(src, src.pSuperAnim, 3 * _generalOffset + pos, pPal, flat);
             if (src.pBib != 0) dest.pBib = RenderAndPresent(src, src.pBib, pos, pPal, flat);
             if (src.pTurretAnim != 0)
             {
@@ -422,10 +484,6 @@ namespace RelertSharp.DrawingEngine
             if (idShp != 0) id = RenderAndPresent(idShp, pos, frame, color, pPal, flat);
             return id != 0;
         }
-        #endregion
-
-
-        #region Etc
         private int RenderAndPresent(int shpID, Vec3 pos, int frame, uint color, int pPal, ShpFlatType flat)
         {
             if (flat == ShpFlatType.Box1)
@@ -442,6 +500,17 @@ namespace RelertSharp.DrawingEngine
         private int RenderAndPresent(int vxlID, Vec3 pos, Vec3 ro, uint color, int pPal)
         {
             return CppExtern.ObjectUtils.CreateVxlObjectAtScene(vxlID, pos, ro.X, ro.Y, ro.Z, pPal, color);
+        }
+        #endregion
+
+
+        #region Etc
+        private Vec3 ScenePosToCoord(Vec3 px)
+        {
+            return new Vec3
+                ((int)Math.Floor(px.X / _width),
+                (int)Math.Floor(px.Y / _width),
+                (int)Math.Floor(px.Z / _height));
         }
         private Vec3 BuildingRotation(string nameid, int facing, bool isVxl)
         {
@@ -486,18 +555,18 @@ namespace RelertSharp.DrawingEngine
         }
         private Vec3 ToVec3Iso(PresentInfantry inf, int subcell)
         {
-            float x = inf.X, y = inf.Y, z = inf.Z;
+            float x = inf.X + 0.25f, y = inf.Y + 0.25f, z = inf.Z;
             if (subcell == 2) x -= 0.5f;
             if (subcell == 3) y -= 0.5f;
             return ToVec3Iso(x, y, z);
         }
         private Vec3 ToVec3Iso(PointItemBase p, int height)
         {
-            return ToVec3Iso(p.CoordX, p.CoordY, height);
+            return ToVec3Iso(p.X, p.Y, height);
         }
-        private Vec3 ToVec3Iso(ILocateable loc)
+        private Vec3 ToVec3Iso(I3dLocateable loc)
         {
-            return new Vec3() { X = loc.fX * _30SQ2, Y = loc.fY * _30SQ2, Z = loc.fZ * _10SQ3 };
+            return new Vec3() { X = loc.X * _30SQ2, Y = loc.Y * _30SQ2, Z = loc.Z * _10SQ3 };
         }
         private Vec3 ToVec3Iso(float x, float y, float z)
         {
@@ -513,7 +582,7 @@ namespace RelertSharp.DrawingEngine
         }
         private Vec3 ToVec3Zero(PointItemBase p, int height)
         {
-            return ToVec3Zero(p.CoordX, p.CoordY, height);
+            return ToVec3Zero(p.X, p.Y, height);
         }
         private Vec3 ToVec3Zero(PresentBase p)
         {

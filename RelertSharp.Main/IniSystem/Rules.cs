@@ -155,11 +155,11 @@ namespace RelertSharp.IniSystem
             }
             return img;
         }
-        public DrawingEngine.Pnt GetVoxTurOffset(string id)
+        public Pnt GetVoxTurOffset(string id)
         {
             string x = this[id]["TurretAnimX"];
             string y = this[id]["TurretAnimY"];
-            return new DrawingEngine.Pnt()
+            return new Pnt()
             {
                 X = string.IsNullOrEmpty(x) ? 0 : int.Parse(x),
                 Y = string.IsNullOrEmpty(y) ? 0 : int.Parse(y)
@@ -221,7 +221,7 @@ namespace RelertSharp.IniSystem
             }
             return this[art["TurretAnim"]];
         }
-        public string GetObjectImgName(string id, ref string anim, ref string turret, ref string bib, ref bool isVox, ref string idle, ref string anim2, ref string anim3, ref string barl)
+        public string GetObjectImgName(string id, ref string anim, ref string turret, ref string bib, ref bool isVox, ref string idle, ref string anim2, ref string anim3, ref string barl, ref string super)
         {
             string img = this[id]["Image"];
             INIEntity art;
@@ -250,6 +250,7 @@ namespace RelertSharp.IniSystem
             idle = GuessStructureName(this[art["IdleAnim"]]);
             anim2 = GuessStructureName(this[art["ActiveAnimTwo"]]);
             anim3 = GuessStructureName(this[art["ActiveAnimThree"]]);
+            super = GuessStructureName(this[art["SuperAnim"]]);
             bib = GuessStructureName(art["BibShape"]);
             isVox = ParseBool(this[id]["TurretAnimIsVoxel"]);
             if (isVox)

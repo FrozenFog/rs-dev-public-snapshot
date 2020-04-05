@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure.Points
 {
-    public class BaseNode
+    public class BaseNode : I2dLocateable
     {
         public BaseNode(string _name, int _x, int _y)
         {

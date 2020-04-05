@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.IniSystem;
+using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure.Objects
 {
@@ -41,7 +42,7 @@ namespace RelertSharp.MapStructure.Objects
         #endregion
     }
 
-    public class ObjectItemBase
+    public class ObjectItemBase : I2dLocateable
     {
         #region Ctor
         public ObjectItemBase(string _id, string[] _args)

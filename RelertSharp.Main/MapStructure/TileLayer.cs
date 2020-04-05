@@ -50,6 +50,19 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - TileLayer
+
+        public bool HasTileOn(I3dLocateable pos)
+        {
+            Tile t = this[pos.X, pos.Y];
+            if (t != null) return t.Z == pos.Z;
+            return false;
+        }
+        public bool HasTileOn(Vec3 pos)
+        {
+            Tile t = this[pos.ToCoord()];
+            if (t != null) return t.Z == pos.Z;
+            return false;
+        }
         public void Sort()
         {
             int[] result = new int[indexs.Count];
@@ -179,21 +192,20 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class Tile : ILocateable
+    public class Tile : I3dLocateable
     {
         private int tileIndex;
-        private byte subIndex, iceGrowth;
 
 
         #region Ctor - Tile
         public Tile(short _x, short _y, int _TileIndex, byte _TileSubIndex,  byte _Level, byte _IceGrowth)
         {
-            X = _x;
-            Y = _y;
+            X16 = _x;
+            Y16 = _y;
             tileIndex = _TileIndex;
-            subIndex = _TileSubIndex;
+            SubIndex = _TileSubIndex;
             Height = _Level;
-            iceGrowth = _IceGrowth;
+            IceGrowth = _IceGrowth;
         }
         #endregion
 
@@ -205,9 +217,9 @@ namespace RelertSharp.MapStructure
             Misc.WriteToArray(result, BitConverter.GetBytes(X), 0);
             Misc.WriteToArray(result, BitConverter.GetBytes(Y), 2);
             Misc.WriteToArray(result, BitConverter.GetBytes(tileIndex), 4);
-            result[8] = subIndex;
+            result[8] = SubIndex;
             result[9] = Height;
-            result[10] = iceGrowth;
+            result[10] = IceGrowth;
             return result;
         }
         #endregion
@@ -216,25 +228,25 @@ namespace RelertSharp.MapStructure
         #region Public Calls - Tile
         public dynamic[] Attributes
         {
-            get { return new dynamic[] { X, Y, tileIndex, subIndex, Height, iceGrowth }; }
+            get { return new dynamic[] { X16, Y16, tileIndex, SubIndex, Height, IceGrowth }; }
         }
         public bool IsDefault
         {
-            get { return (tileIndex == 65535 || tileIndex == 0) && Height == 0 && subIndex == 0; }
+            get { return (tileIndex == 65535 || tileIndex == 0) && Height == 0 && SubIndex == 0; }
         }
         public bool IsRemoveable
         {
-            get { return IsDefault && iceGrowth == 0; }
+            get { return IsDefault && IceGrowth == 0; }
         }
         public static Tile EmptyTile
         {
             get { return new Tile(0, 0, 65535, 0, 0, 0); }
         }
-        public short X { get; set; }
-        public short Y { get; set; }
-        public float fX { get { return X; } }
-        public float fY { get { return Y; } }
-        public float fZ { get { return Height; } }
+        public short X16 { get; set; }
+        public short Y16 { get; set; }
+        public int X { get { return X16; } set { X16 = (short)value; } }
+        public int Y { get { return Y16; } set { Y16 = (short)value; } }
+        public int Z { get { return Height; } set { Height = (byte)value; } }
         public byte Height { get; set; }
         public int TileIndex
         {
@@ -249,16 +261,8 @@ namespace RelertSharp.MapStructure
                 else tileIndex = value;
             }
         }
-        public byte SubIndex
-        {
-            get { return subIndex; }
-            set { subIndex = value; }
-        }
-        public byte IceGrowth
-        {
-            get { return iceGrowth; }
-            set { iceGrowth = value; }
-        }
+        public byte SubIndex { get; set; }
+        public byte IceGrowth { get; set; }
         public int Coord { get { return Misc.CoordInt(X, Y); } }
         #endregion
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine
 {
@@ -86,6 +87,8 @@ namespace RelertSharp.DrawingEngine
             public static extern void MoveObject(int id, Vec3 Displacement);
             [DllImport("CncVxlRenderText.dll")]
             public static extern void SetObjectLocation(int id, Vec3 Pos);
+            [DllImport("CncVxlRenderText.dll")]
+            public static extern void SetObjectColorCoefficient(int id, Vec4 color);
         }
     }
 }

@@ -90,7 +90,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class OverlayUnit : ILocateable
+    public class OverlayUnit : I2dLocateable
     {
 
 
@@ -111,9 +111,6 @@ namespace RelertSharp.MapStructure
         public byte Frame { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public float fX { get { return X; } }
-        public float fY { get { return Y; } }
-        public float fZ { get; set; }
         public int Coord { get { return Misc.CoordInt(X, Y); } }
         #endregion
     }

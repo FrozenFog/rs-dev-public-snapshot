@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine.Drawables
 {
@@ -21,6 +22,7 @@ namespace RelertSharp.DrawingEngine.Drawables
         public int pIdleAnim { get; set; }
         public int pActivateAnim2 { get; set; }
         public int pActivateAnim3 { get; set; }
+        public int pSuperAnim { get; set; }
         public int pTurretAnim { get; set; }
         public int pTurretBarl { get; set; }
         public Pnt offsetTurret { get; set; }

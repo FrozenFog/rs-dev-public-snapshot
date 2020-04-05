@@ -96,9 +96,9 @@ namespace RelertSharp.MapStructure
             Tags[tag.ID] = tag;
             return t;
         }
-        public int GetHeightFromTile(int x, int y)
+        public int GetHeightFromTile(I2dLocateable obj)
         {
-            Tile t = Tiles[CoordInt(x, y)];
+            Tile t = Tiles[CoordInt(obj.X, obj.Y)];
             return t == null ? 0 : t.Height;
         }
         #endregion

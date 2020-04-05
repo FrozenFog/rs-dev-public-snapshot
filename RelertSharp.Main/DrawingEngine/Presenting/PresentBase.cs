@@ -4,18 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.MapStructure.Objects;
+using RelertSharp.MapStructure.Points;
+using RelertSharp.MapStructure;
+using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine.Presenting
 {
-    public class PresentBase
+    public class PresentBase : I3dLocateable
     {
         #region Ctor - PresentBase
         public PresentBase() { }
-        public PresentBase(ObjectItemBase obj, int height)
+        public PresentBase(I2dLocateable obj, int height)
         {
             X = obj.X;
             Y = obj.Y;
             Z = height;
+        }
+        public PresentBase(I3dLocateable obj)
+        {
+            X = obj.X;
+            Y = obj.Y;
+            Z = obj.Z;
         }
         #endregion
 

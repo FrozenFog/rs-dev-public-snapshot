@@ -41,7 +41,6 @@ namespace RelertSharp.MapStructure.Logic
     public class HouseItem : TeamLogicItem
     {
         private List<string> alliesWith;
-        private List<BaseNode> baseNodes = new List<BaseNode>();
         private Dictionary<string, INIPair> residual;
 
 
@@ -62,7 +61,7 @@ namespace RelertSharp.MapStructure.Logic
             {
                 string num = string.Format("{0:D3}", i);
                 string[] tmp = ent.PopPair(num).ParseStringList();
-                baseNodes.Add(new BaseNode(tmp[0], int.Parse(tmp[1]), int.Parse(tmp[2])));
+                BaseNodes.Add(new BaseNode(tmp[0], int.Parse(tmp[1]), int.Parse(tmp[2])));
             }
             residual = ent.DictData;
         }
@@ -78,6 +77,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - HouseItem
+        public List<BaseNode> BaseNodes { get; private set; } = new List<BaseNode>();
         public int IQ { get; set; }
         public HouseEdges Edge { get; set; }
         public string ColorName { get; set; }
