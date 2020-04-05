@@ -15,7 +15,6 @@ namespace RelertSharp.MapStructure
     {
         private static int iniformat = 4;
         private INIEntity _basic, _map, _specialFlags;
-        private Dictionary<string, INIEntity> _residual = new Dictionary<string, INIEntity>();
         public string MapName, ThemeName, PostScoreFilmName, AltNextScene, TheaterName, PlayerHouseName;
         public string[] GameModes;
         public Rectangle Size, LocalSize;
@@ -28,28 +27,30 @@ namespace RelertSharp.MapStructure
             _map = MapSize;
             _specialFlags = SpecialFlags;
             //string value
-            MapName = Basic.GetPair("Name").Value;
-            ThemeName = Basic.GetPair("Theme").Value;
-            PostScoreFilmName = Basic.GetPair("PostScore").Value;
-            AltNextScene = Basic.GetPair("AltNextScenario").Value;
-            TheaterName = MapSize.GetPair("Theater").Value;
-            PlayerHouseName = Basic.GetPair("Player").Value;
-            GameModes = Basic.GetPair("GameMode").ParseStringList();
+            MapName = Basic.PopPair("Name").Value;
+            ThemeName = Basic.PopPair("Theme").Value;
+            PostScoreFilmName = Basic.PopPair("PostScore").Value;
+            AltNextScene = Basic.PopPair("AltNextScenario").Value;
+            TheaterName = MapSize.PopPair("Theater").Value;
+            PlayerHouseName = Basic.PopPair("Player").Value;
+            GameModes = Basic.PopPair("GameMode").ParseStringList();
 
-            int[] buf = MapSize.GetPair("Size").ParseIntList();
+            int[] buf = MapSize.PopPair("Size").ParseIntList();
             Size = new Rectangle(buf[0], buf[1], buf[2], buf[3]);
-            buf = MapSize.GetPair("LocalSize").ParseIntList();
+            buf = MapSize.PopPair("LocalSize").ParseIntList();
             LocalSize = new Rectangle(buf[0], buf[1], buf[2], buf[3]);
+            BasicResidue = Basic;
+            SpecialFlagsResidue = SpecialFlags;
         }
         #endregion
 
 
         #region Public Methods - MapInfo
-        public void AddInfo(INIEntity ent)
-        {
-            if (_residual.Keys.Contains(ent.Name)) return;
-            _residual[ent.Name] = ent;
-        }
+        //public void AddInfo(INIEntity ent)
+        //{
+        //    if (InfoResidue.Keys.Contains(ent.Name)) return;
+        //    InfoResidue[ent.Name] = ent;
+        //}
         #endregion
 
 
@@ -73,6 +74,8 @@ namespace RelertSharp.MapStructure
         {
             get { return iniformat; }
         }
+        public INIEntity BasicResidue { get; private set; }
+        public INIEntity SpecialFlagsResidue { get; private set; }
         #endregion
     }
 
