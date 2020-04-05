@@ -75,6 +75,13 @@ namespace RelertSharp
                     col.Text = DICT[col.Text];
                 }
             }
+            else if (t == typeof(DataGridView))
+            {
+                foreach(DataGridViewTextBoxColumn col in ((DataGridView)p).Columns)
+                {
+                    col.HeaderText = DICT[col.HeaderText];
+                }
+            }
             if(p.ContextMenuStrip != null)
             {
                 foreach (ToolStripItem item in p.ContextMenuStrip.Items)

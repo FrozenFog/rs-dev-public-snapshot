@@ -8,6 +8,7 @@ using RelertSharp.Common;
 
 namespace RelertSharp.IniSystem
 {
+    [Serializable]
     public class INIEntity : IEnumerable<INIPair>
     {
         private string name, comment, preComment;
