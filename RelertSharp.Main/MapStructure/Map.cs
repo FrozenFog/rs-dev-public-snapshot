@@ -36,7 +36,6 @@ namespace RelertSharp.MapStructure
 
         private Dictionary<string, INIEntity> residual;
 
-
         #region Ctor - Map
         public Map(MapFile f)
         {
