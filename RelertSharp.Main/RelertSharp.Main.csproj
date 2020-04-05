@@ -190,7 +190,12 @@
     <Compile Include="Utils\Interpreter.cs" />
     <Compile Include="Utils\Lang.cs" />
     <Compile Include="Utils\Misc.cs" />
-    <Compile Include="_Test.cs" />
+    <Compile Include="_Test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="_test.Designer.cs">
+      <DependentUpon>_Test.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -218,6 +223,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\LogicEditor\dlgCopy.resx">
       <DependentUpon>dlgCopy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="_test.resx">
+      <DependentUpon>_Test.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
