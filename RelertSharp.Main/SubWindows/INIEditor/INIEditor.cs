@@ -27,16 +27,18 @@ namespace RelertSharp.SubWindows.INIEditor
         public string NewSectionName;
         private BindingSource bdsKey = new BindingSource();
         private BindingSource bdsSection = new BindingSource();
-        private MapFile file;
+        private Map file;
 
 
         #region Ctor - INIEditor
-        public INIEditor(MapFile m)
+        public INIEditor(Map m)
         {
             InitializeComponent();
             SetLanguage();
             file = m;
-            sections = m.Map.IniResidue;
+            sections = m.IniResidue;
+            sections.Add("Basic", m.Info.BasicResidue);
+            sections.Add("SpecialFlags", m.Info.SpecialFlagsResidue);
             osections = DeepCopy(sections) as Dictionary<string, INIEntity>;
             
             bdsSectionL = sections.Keys.ToList();

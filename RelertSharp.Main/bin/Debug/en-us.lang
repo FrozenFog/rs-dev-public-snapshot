@@ -135,6 +135,27 @@ LGCdlgCopylblCustomParam=Custom Parameters
 LGCdlgCopylblCustomParam2=One line per action/event
 LGCdlgCopylblCustomParam3=Seperate the parameter with comma(,):
 
+[Dialog-INI]
+INITitle=INI Editor
+INIdlgNewSection=INI Editor - New Section
+INImsgSave=Are you sure to save the changes?
+INIgpbSections=Sections
+INIgpbKeys=Existing Keys
+INIdgvKeyKey=Key
+INIdgvKeyValue=Section
+INIlblSectionSearch=Find Section
+INIlblKeyUseable=Available Keys
+INIlblKeyDesc=Description
+INIlblFakeSearch=Search sections...
+INIlblNewSection=Enter the section you want to create below...
+INIbtnSearch=Search
+INIbtnNewSection=New Section
+INIbtnDelSection=Delete Section
+INIbtnNewKey=New Key
+INIbtnDelKey=Delete Key
+INIbtnNewSectionC=Confirm
+INIrtxbNodesc=No description
+
 [Dialog-CMP]
 CMPResultName=CompareResult
 CMPResultSaveTitle=Save the result as

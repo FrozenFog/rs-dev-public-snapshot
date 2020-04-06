@@ -201,7 +201,7 @@ namespace RelertSharp.SubWindows.INIEditor
                     }
                 case DialogResult.No:
                     {
-                        file.Map.IniResidue = DeepCopy(osections) as Dictionary<string, INIEntity>;
+                        file.IniResidue = DeepCopy(osections) as Dictionary<string, INIEntity>;
                         break;
                     }
                 case DialogResult.Cancel:
