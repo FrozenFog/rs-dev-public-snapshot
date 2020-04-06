@@ -32,7 +32,7 @@ namespace RelertSharp.GUI.WPF
         public MainWindow()
         {
             InitializeComponent();
-            MapFile mf = new MapFile("ESURV.map");
+            MapFile mf = new MapFile(@"D:\Games\Mental Omega\Mental Omega 3.3.4 Dissolving\MFBOUND.map");
             map = mf.Map;
             triggers = map.Triggers.ToArray();
             txbName.DataContext = triggers[i];

@@ -143,10 +143,10 @@
             this.tbpTeams = new System.Windows.Forms.TabPage();
             this.gpbTeamTeam = new System.Windows.Forms.GroupBox();
             this.btnCopyTeam = new System.Windows.Forms.Button();
-            this.btnDelTeam = new System.Windows.Forms.Button();
             this.btnNewTeam = new System.Windows.Forms.Button();
             this.gpbTeamTeamCur = new System.Windows.Forms.GroupBox();
             this.olvTeamConfig = new BrightIdeasSoftware.ObjectListView();
+            this.btnDelTeam = new System.Windows.Forms.Button();
             this.label28 = new System.Windows.Forms.Label();
             this.olvTeamList = new BrightIdeasSoftware.ObjectListView();
             this.gpbTeamScript = new System.Windows.Forms.GroupBox();
@@ -154,6 +154,7 @@
             this.btnNewScript = new System.Windows.Forms.Button();
             this.btnCopyScript = new System.Windows.Forms.Button();
             this.gpbTeamScriptCur = new System.Windows.Forms.GroupBox();
+            this.label34 = new System.Windows.Forms.Label();
             this.ckbInsert = new System.Windows.Forms.CheckBox();
             this.rtxbScriptDesc = new System.Windows.Forms.RichTextBox();
             this.cbbScriptCurPara = new System.Windows.Forms.ComboBox();
@@ -189,7 +190,7 @@
             this.lbxTaskMemList = new System.Windows.Forms.ListBox();
             this.label22 = new System.Windows.Forms.Label();
             this.lbxTaskList = new System.Windows.Forms.ListBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tbpMiscs = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.ttTrg = new System.Windows.Forms.ToolTip(this.components);
@@ -220,7 +221,16 @@
             this.hdValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.hdExtraValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rtxbSearchInspector = new System.Windows.Forms.RichTextBox();
-            this.label34 = new System.Windows.Forms.Label();
+            this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
+            this.gpbLocalVar = new System.Windows.Forms.GroupBox();
+            this.chklbxLocalVar = new System.Windows.Forms.CheckedListBox();
+            this.btnNewLocalVar = new System.Windows.Forms.Button();
+            this.btnDelLocalVar = new System.Windows.Forms.Button();
+            this.label35 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.olvColumnSection = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumnKey = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumnValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.tbcMain.SuspendLayout();
             this.tbpTriggers.SuspendLayout();
             this.gpbActions.SuspendLayout();
@@ -242,7 +252,10 @@
             this.gpbTeamScriptCur.SuspendLayout();
             this.gpbTeamTask.SuspendLayout();
             this.gpbTeamTaskCur.SuspendLayout();
+            this.tbpMiscs.SuspendLayout();
             this.gpbSearch.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
+            this.gpbLocalVar.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -252,7 +265,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbcMain.Controls.Add(this.tbpTriggers);
             this.tbcMain.Controls.Add(this.tbpTeams);
-            this.tbcMain.Controls.Add(this.tabPage3);
+            this.tbcMain.Controls.Add(this.tbpMiscs);
             this.tbcMain.Controls.Add(this.tabPage4);
             this.tbcMain.Controls.Add(this.tabPage5);
             this.tbcMain.Location = new System.Drawing.Point(12, 33);
@@ -271,7 +284,7 @@
             this.tbpTriggers.Controls.Add(this.label1);
             this.tbpTriggers.Location = new System.Drawing.Point(4, 22);
             this.tbpTriggers.Name = "tbpTriggers";
-            this.tbpTriggers.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpTriggers.Padding = new System.Windows.Forms.Padding(3);
             this.tbpTriggers.Size = new System.Drawing.Size(1192, 565);
             this.tbpTriggers.TabIndex = 0;
             this.tbpTriggers.Text = "LGCtbpTrgPage";
@@ -1542,7 +1555,7 @@
             this.tbpTeams.Controls.Add(this.gpbTeamTask);
             this.tbpTeams.Location = new System.Drawing.Point(4, 22);
             this.tbpTeams.Name = "tbpTeams";
-            this.tbpTeams.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpTeams.Padding = new System.Windows.Forms.Padding(3);
             this.tbpTeams.Size = new System.Drawing.Size(1192, 565);
             this.tbpTeams.TabIndex = 1;
             this.tbpTeams.Text = "LGCtbpTeamPage";
@@ -1556,9 +1569,9 @@
             this.gpbTeamTeam.Controls.Add(this.label28);
             this.gpbTeamTeam.Controls.Add(this.olvTeamList);
             this.gpbTeamTeam.Location = new System.Drawing.Point(569, 6);
-            this.gpbTeamTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamTeam.Margin = new System.Windows.Forms.Padding(2);
             this.gpbTeamTeam.Name = "gpbTeamTeam";
-            this.gpbTeamTeam.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamTeam.Padding = new System.Windows.Forms.Padding(2);
             this.gpbTeamTeam.Size = new System.Drawing.Size(618, 557);
             this.gpbTeamTeam.TabIndex = 2;
             this.gpbTeamTeam.TabStop = false;
@@ -1567,27 +1580,17 @@
             // btnCopyTeam
             // 
             this.btnCopyTeam.Location = new System.Drawing.Point(171, 530);
-            this.btnCopyTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCopyTeam.Margin = new System.Windows.Forms.Padding(2);
             this.btnCopyTeam.Name = "btnCopyTeam";
             this.btnCopyTeam.Size = new System.Drawing.Size(78, 24);
             this.btnCopyTeam.TabIndex = 5;
             this.btnCopyTeam.Text = "LGCbtnCopyTeam";
             this.btnCopyTeam.UseVisualStyleBackColor = true;
             // 
-            // btnDelTeam
-            // 
-            this.btnDelTeam.Location = new System.Drawing.Point(87, 530);
-            this.btnDelTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.btnDelTeam.Name = "btnDelTeam";
-            this.btnDelTeam.Size = new System.Drawing.Size(80, 24);
-            this.btnDelTeam.TabIndex = 4;
-            this.btnDelTeam.Text = "LGCbtnDelTeam";
-            this.btnDelTeam.UseVisualStyleBackColor = true;
-            // 
             // btnNewTeam
             // 
             this.btnNewTeam.Location = new System.Drawing.Point(6, 530);
-            this.btnNewTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnNewTeam.Margin = new System.Windows.Forms.Padding(2);
             this.btnNewTeam.Name = "btnNewTeam";
             this.btnNewTeam.Size = new System.Drawing.Size(77, 23);
             this.btnNewTeam.TabIndex = 3;
@@ -1598,9 +1601,9 @@
             // 
             this.gpbTeamTeamCur.Controls.Add(this.olvTeamConfig);
             this.gpbTeamTeamCur.Location = new System.Drawing.Point(253, 14);
-            this.gpbTeamTeamCur.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamTeamCur.Margin = new System.Windows.Forms.Padding(2);
             this.gpbTeamTeamCur.Name = "gpbTeamTeamCur";
-            this.gpbTeamTeamCur.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamTeamCur.Padding = new System.Windows.Forms.Padding(2);
             this.gpbTeamTeamCur.Size = new System.Drawing.Size(361, 540);
             this.gpbTeamTeamCur.TabIndex = 2;
             this.gpbTeamTeamCur.TabStop = false;
@@ -1612,12 +1615,22 @@
             this.olvTeamConfig.Cursor = System.Windows.Forms.Cursors.Default;
             this.olvTeamConfig.HideSelection = false;
             this.olvTeamConfig.Location = new System.Drawing.Point(4, 14);
-            this.olvTeamConfig.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.olvTeamConfig.Margin = new System.Windows.Forms.Padding(2);
             this.olvTeamConfig.Name = "olvTeamConfig";
             this.olvTeamConfig.Size = new System.Drawing.Size(353, 525);
             this.olvTeamConfig.TabIndex = 0;
             this.olvTeamConfig.UseCompatibleStateImageBehavior = false;
             this.olvTeamConfig.View = System.Windows.Forms.View.Details;
+            // 
+            // btnDelTeam
+            // 
+            this.btnDelTeam.Location = new System.Drawing.Point(87, 530);
+            this.btnDelTeam.Margin = new System.Windows.Forms.Padding(2);
+            this.btnDelTeam.Name = "btnDelTeam";
+            this.btnDelTeam.Size = new System.Drawing.Size(80, 24);
+            this.btnDelTeam.TabIndex = 4;
+            this.btnDelTeam.Text = "LGCbtnDelTeam";
+            this.btnDelTeam.UseVisualStyleBackColor = true;
             // 
             // label28
             // 
@@ -1635,7 +1648,7 @@
             this.olvTeamList.Cursor = System.Windows.Forms.Cursors.Default;
             this.olvTeamList.HideSelection = false;
             this.olvTeamList.Location = new System.Drawing.Point(4, 28);
-            this.olvTeamList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.olvTeamList.Margin = new System.Windows.Forms.Padding(2);
             this.olvTeamList.Name = "olvTeamList";
             this.olvTeamList.Size = new System.Drawing.Size(245, 498);
             this.olvTeamList.TabIndex = 0;
@@ -1651,9 +1664,9 @@
             this.gpbTeamScript.Controls.Add(this.label33);
             this.gpbTeamScript.Controls.Add(this.lbxScriptList);
             this.gpbTeamScript.Location = new System.Drawing.Point(5, 271);
-            this.gpbTeamScript.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamScript.Margin = new System.Windows.Forms.Padding(2);
             this.gpbTeamScript.Name = "gpbTeamScript";
-            this.gpbTeamScript.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamScript.Padding = new System.Windows.Forms.Padding(2);
             this.gpbTeamScript.Size = new System.Drawing.Size(560, 288);
             this.gpbTeamScript.TabIndex = 1;
             this.gpbTeamScript.TabStop = false;
@@ -1662,7 +1675,7 @@
             // btnDelScript
             // 
             this.btnDelScript.Location = new System.Drawing.Point(96, 265);
-            this.btnDelScript.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDelScript.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelScript.Name = "btnDelScript";
             this.btnDelScript.Size = new System.Drawing.Size(88, 23);
             this.btnDelScript.TabIndex = 8;
@@ -1672,7 +1685,7 @@
             // btnNewScript
             // 
             this.btnNewScript.Location = new System.Drawing.Point(6, 265);
-            this.btnNewScript.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnNewScript.Margin = new System.Windows.Forms.Padding(2);
             this.btnNewScript.Name = "btnNewScript";
             this.btnNewScript.Size = new System.Drawing.Size(86, 23);
             this.btnNewScript.TabIndex = 7;
@@ -1682,7 +1695,7 @@
             // btnCopyScript
             // 
             this.btnCopyScript.Location = new System.Drawing.Point(188, 265);
-            this.btnCopyScript.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCopyScript.Margin = new System.Windows.Forms.Padding(2);
             this.btnCopyScript.Name = "btnCopyScript";
             this.btnCopyScript.Size = new System.Drawing.Size(86, 23);
             this.btnCopyScript.TabIndex = 6;
@@ -1706,19 +1719,29 @@
             this.gpbTeamScriptCur.Controls.Add(this.label32);
             this.gpbTeamScriptCur.Controls.Add(this.lbxScriptMemList);
             this.gpbTeamScriptCur.Location = new System.Drawing.Point(278, 14);
-            this.gpbTeamScriptCur.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamScriptCur.Margin = new System.Windows.Forms.Padding(2);
             this.gpbTeamScriptCur.Name = "gpbTeamScriptCur";
-            this.gpbTeamScriptCur.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamScriptCur.Padding = new System.Windows.Forms.Padding(2);
             this.gpbTeamScriptCur.Size = new System.Drawing.Size(278, 270);
             this.gpbTeamScriptCur.TabIndex = 2;
             this.gpbTeamScriptCur.TabStop = false;
             this.gpbTeamScriptCur.Text = "LGCgpbTeamScriptCur";
             // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(4, 130);
+            this.label34.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(101, 12);
+            this.label34.TabIndex = 17;
+            this.label34.Text = "LGClblScriptDesc";
+            // 
             // ckbInsert
             // 
             this.ckbInsert.AutoSize = true;
             this.ckbInsert.Location = new System.Drawing.Point(178, 39);
-            this.ckbInsert.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ckbInsert.Margin = new System.Windows.Forms.Padding(2);
             this.ckbInsert.Name = "ckbInsert";
             this.ckbInsert.Size = new System.Drawing.Size(96, 16);
             this.ckbInsert.TabIndex = 16;
@@ -1728,7 +1751,7 @@
             // rtxbScriptDesc
             // 
             this.rtxbScriptDesc.Location = new System.Drawing.Point(4, 144);
-            this.rtxbScriptDesc.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rtxbScriptDesc.Margin = new System.Windows.Forms.Padding(2);
             this.rtxbScriptDesc.Name = "rtxbScriptDesc";
             this.rtxbScriptDesc.ReadOnly = true;
             this.rtxbScriptDesc.Size = new System.Drawing.Size(270, 46);
@@ -1739,7 +1762,7 @@
             // 
             this.cbbScriptCurPara.FormattingEnabled = true;
             this.cbbScriptCurPara.Location = new System.Drawing.Point(133, 218);
-            this.cbbScriptCurPara.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbbScriptCurPara.Margin = new System.Windows.Forms.Padding(2);
             this.cbbScriptCurPara.Name = "cbbScriptCurPara";
             this.cbbScriptCurPara.Size = new System.Drawing.Size(141, 20);
             this.cbbScriptCurPara.TabIndex = 14;
@@ -1747,7 +1770,7 @@
             // btnDelScriptMem
             // 
             this.btnDelScriptMem.Location = new System.Drawing.Point(93, 242);
-            this.btnDelScriptMem.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDelScriptMem.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelScriptMem.Name = "btnDelScriptMem";
             this.btnDelScriptMem.Size = new System.Drawing.Size(86, 24);
             this.btnDelScriptMem.TabIndex = 13;
@@ -1757,7 +1780,7 @@
             // btnCopyScriptMem
             // 
             this.btnCopyScriptMem.Location = new System.Drawing.Point(183, 242);
-            this.btnCopyScriptMem.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCopyScriptMem.Margin = new System.Windows.Forms.Padding(2);
             this.btnCopyScriptMem.Name = "btnCopyScriptMem";
             this.btnCopyScriptMem.Size = new System.Drawing.Size(91, 24);
             this.btnCopyScriptMem.TabIndex = 12;
@@ -1767,7 +1790,7 @@
             // txbScriptName
             // 
             this.txbScriptName.Location = new System.Drawing.Point(133, 14);
-            this.txbScriptName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txbScriptName.Margin = new System.Windows.Forms.Padding(2);
             this.txbScriptName.Name = "txbScriptName";
             this.txbScriptName.Size = new System.Drawing.Size(141, 21);
             this.txbScriptName.TabIndex = 9;
@@ -1796,7 +1819,7 @@
             // 
             this.cbbScriptCurType.FormattingEnabled = true;
             this.cbbScriptCurType.Location = new System.Drawing.Point(133, 194);
-            this.cbbScriptCurType.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbbScriptCurType.Margin = new System.Windows.Forms.Padding(2);
             this.cbbScriptCurType.Name = "cbbScriptCurType";
             this.cbbScriptCurType.Size = new System.Drawing.Size(141, 20);
             this.cbbScriptCurType.TabIndex = 5;
@@ -1814,7 +1837,7 @@
             // btnAddScriptMem
             // 
             this.btnAddScriptMem.Location = new System.Drawing.Point(4, 242);
-            this.btnAddScriptMem.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAddScriptMem.Margin = new System.Windows.Forms.Padding(2);
             this.btnAddScriptMem.Name = "btnAddScriptMem";
             this.btnAddScriptMem.Size = new System.Drawing.Size(85, 24);
             this.btnAddScriptMem.TabIndex = 2;
@@ -1836,7 +1859,7 @@
             this.lbxScriptMemList.FormattingEnabled = true;
             this.lbxScriptMemList.ItemHeight = 12;
             this.lbxScriptMemList.Location = new System.Drawing.Point(4, 59);
-            this.lbxScriptMemList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lbxScriptMemList.Margin = new System.Windows.Forms.Padding(2);
             this.lbxScriptMemList.Name = "lbxScriptMemList";
             this.lbxScriptMemList.Size = new System.Drawing.Size(270, 64);
             this.lbxScriptMemList.TabIndex = 0;
@@ -1856,7 +1879,7 @@
             this.lbxScriptList.FormattingEnabled = true;
             this.lbxScriptList.ItemHeight = 12;
             this.lbxScriptList.Location = new System.Drawing.Point(4, 26);
-            this.lbxScriptList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lbxScriptList.Margin = new System.Windows.Forms.Padding(2);
             this.lbxScriptList.Name = "lbxScriptList";
             this.lbxScriptList.Size = new System.Drawing.Size(270, 232);
             this.lbxScriptList.TabIndex = 0;
@@ -1870,9 +1893,9 @@
             this.gpbTeamTask.Controls.Add(this.label22);
             this.gpbTeamTask.Controls.Add(this.lbxTaskList);
             this.gpbTeamTask.Location = new System.Drawing.Point(4, 6);
-            this.gpbTeamTask.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamTask.Margin = new System.Windows.Forms.Padding(2);
             this.gpbTeamTask.Name = "gpbTeamTask";
-            this.gpbTeamTask.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamTask.Padding = new System.Windows.Forms.Padding(2);
             this.gpbTeamTask.Size = new System.Drawing.Size(561, 261);
             this.gpbTeamTask.TabIndex = 0;
             this.gpbTeamTask.TabStop = false;
@@ -1881,7 +1904,7 @@
             // btnDelTask
             // 
             this.btnDelTask.Location = new System.Drawing.Point(97, 237);
-            this.btnDelTask.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDelTask.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelTask.Name = "btnDelTask";
             this.btnDelTask.Size = new System.Drawing.Size(88, 24);
             this.btnDelTask.TabIndex = 8;
@@ -1891,7 +1914,7 @@
             // btnNewTask
             // 
             this.btnNewTask.Location = new System.Drawing.Point(6, 237);
-            this.btnNewTask.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnNewTask.Margin = new System.Windows.Forms.Padding(2);
             this.btnNewTask.Name = "btnNewTask";
             this.btnNewTask.Size = new System.Drawing.Size(86, 24);
             this.btnNewTask.TabIndex = 7;
@@ -1901,7 +1924,7 @@
             // btnCopyTask
             // 
             this.btnCopyTask.Location = new System.Drawing.Point(189, 237);
-            this.btnCopyTask.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCopyTask.Margin = new System.Windows.Forms.Padding(2);
             this.btnCopyTask.Name = "btnCopyTask";
             this.btnCopyTask.Size = new System.Drawing.Size(86, 24);
             this.btnCopyTask.TabIndex = 6;
@@ -1924,9 +1947,9 @@
             this.gpbTeamTaskCur.Controls.Add(this.label23);
             this.gpbTeamTaskCur.Controls.Add(this.lbxTaskMemList);
             this.gpbTeamTaskCur.Location = new System.Drawing.Point(279, 14);
-            this.gpbTeamTaskCur.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamTaskCur.Margin = new System.Windows.Forms.Padding(2);
             this.gpbTeamTaskCur.Name = "gpbTeamTaskCur";
-            this.gpbTeamTaskCur.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamTaskCur.Padding = new System.Windows.Forms.Padding(2);
             this.gpbTeamTaskCur.Size = new System.Drawing.Size(274, 243);
             this.gpbTeamTaskCur.TabIndex = 2;
             this.gpbTeamTaskCur.TabStop = false;
@@ -1935,7 +1958,7 @@
             // btnDelTaskMem
             // 
             this.btnDelTaskMem.Location = new System.Drawing.Point(93, 215);
-            this.btnDelTaskMem.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDelTaskMem.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelTaskMem.Name = "btnDelTaskMem";
             this.btnDelTaskMem.Size = new System.Drawing.Size(86, 24);
             this.btnDelTaskMem.TabIndex = 13;
@@ -1945,7 +1968,7 @@
             // btnCopyTaskMem
             // 
             this.btnCopyTaskMem.Location = new System.Drawing.Point(183, 215);
-            this.btnCopyTaskMem.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCopyTaskMem.Margin = new System.Windows.Forms.Padding(2);
             this.btnCopyTaskMem.Name = "btnCopyTaskMem";
             this.btnCopyTaskMem.Size = new System.Drawing.Size(87, 24);
             this.btnCopyTaskMem.TabIndex = 12;
@@ -1955,7 +1978,7 @@
             // txbTaskGroup
             // 
             this.txbTaskGroup.Location = new System.Drawing.Point(144, 43);
-            this.txbTaskGroup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txbTaskGroup.Margin = new System.Windows.Forms.Padding(2);
             this.txbTaskGroup.Name = "txbTaskGroup";
             this.txbTaskGroup.Size = new System.Drawing.Size(126, 21);
             this.txbTaskGroup.TabIndex = 11;
@@ -1973,7 +1996,7 @@
             // txbTaskName
             // 
             this.txbTaskName.Location = new System.Drawing.Point(144, 18);
-            this.txbTaskName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txbTaskName.Margin = new System.Windows.Forms.Padding(2);
             this.txbTaskName.Name = "txbTaskName";
             this.txbTaskName.Size = new System.Drawing.Size(126, 21);
             this.txbTaskName.TabIndex = 9;
@@ -2001,7 +2024,7 @@
             // tbxTaskCurNum
             // 
             this.tbxTaskCurNum.Location = new System.Drawing.Point(109, 190);
-            this.tbxTaskCurNum.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbxTaskCurNum.Margin = new System.Windows.Forms.Padding(2);
             this.tbxTaskCurNum.Name = "tbxTaskCurNum";
             this.tbxTaskCurNum.Size = new System.Drawing.Size(161, 21);
             this.tbxTaskCurNum.TabIndex = 6;
@@ -2010,7 +2033,7 @@
             // 
             this.cbbTaskCurType.FormattingEnabled = true;
             this.cbbTaskCurType.Location = new System.Drawing.Point(109, 166);
-            this.cbbTaskCurType.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbbTaskCurType.Margin = new System.Windows.Forms.Padding(2);
             this.cbbTaskCurType.Name = "cbbTaskCurType";
             this.cbbTaskCurType.Size = new System.Drawing.Size(161, 20);
             this.cbbTaskCurType.TabIndex = 5;
@@ -2028,7 +2051,7 @@
             // btnAddTaskMem
             // 
             this.btnAddTaskMem.Location = new System.Drawing.Point(4, 215);
-            this.btnAddTaskMem.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAddTaskMem.Margin = new System.Windows.Forms.Padding(2);
             this.btnAddTaskMem.Name = "btnAddTaskMem";
             this.btnAddTaskMem.Size = new System.Drawing.Size(85, 24);
             this.btnAddTaskMem.TabIndex = 2;
@@ -2050,7 +2073,7 @@
             this.lbxTaskMemList.FormattingEnabled = true;
             this.lbxTaskMemList.ItemHeight = 12;
             this.lbxTaskMemList.Location = new System.Drawing.Point(4, 86);
-            this.lbxTaskMemList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lbxTaskMemList.Margin = new System.Windows.Forms.Padding(2);
             this.lbxTaskMemList.Name = "lbxTaskMemList";
             this.lbxTaskMemList.Size = new System.Drawing.Size(266, 76);
             this.lbxTaskMemList.TabIndex = 0;
@@ -2070,28 +2093,30 @@
             this.lbxTaskList.FormattingEnabled = true;
             this.lbxTaskList.ItemHeight = 12;
             this.lbxTaskList.Location = new System.Drawing.Point(4, 26);
-            this.lbxTaskList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lbxTaskList.Margin = new System.Windows.Forms.Padding(2);
             this.lbxTaskList.Name = "lbxTaskList";
             this.lbxTaskList.Size = new System.Drawing.Size(271, 208);
             this.lbxTaskList.TabIndex = 0;
             // 
-            // tabPage3
+            // tbpMiscs
             // 
-            this.tabPage3.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage3.Size = new System.Drawing.Size(1190, 565);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "tabPage3";
+            this.tbpMiscs.BackColor = System.Drawing.Color.Transparent;
+            this.tbpMiscs.Controls.Add(this.gpbLocalVar);
+            this.tbpMiscs.Controls.Add(this.objectListView1);
+            this.tbpMiscs.Location = new System.Drawing.Point(4, 22);
+            this.tbpMiscs.Name = "tbpMiscs";
+            this.tbpMiscs.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpMiscs.Size = new System.Drawing.Size(1192, 565);
+            this.tbpMiscs.TabIndex = 2;
+            this.tbpMiscs.Text = "LGCtbpMiscPage";
             // 
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.Color.Transparent;
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage4.Size = new System.Drawing.Size(1190, 565);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(1192, 565);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "tabPage4";
             // 
@@ -2100,8 +2125,8 @@
             this.tabPage5.BackColor = System.Drawing.Color.Transparent;
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage5.Size = new System.Drawing.Size(1190, 565);
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(1192, 565);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "tabPage5";
             // 
@@ -2382,15 +2407,98 @@
             this.rtxbSearchInspector.TabIndex = 0;
             this.rtxbSearchInspector.Text = "";
             // 
-            // label34
+            // objectListView1
             // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(4, 130);
-            this.label34.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(101, 12);
-            this.label34.TabIndex = 17;
-            this.label34.Text = "LGClblScriptDesc";
+            this.objectListView1.AllColumns.Add(this.olvColumnSection);
+            this.objectListView1.AllColumns.Add(this.olvColumnKey);
+            this.objectListView1.AllColumns.Add(this.olvColumnValue);
+            this.objectListView1.CellEditUseWholeCell = false;
+            this.objectListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColumnSection,
+            this.olvColumnKey,
+            this.olvColumnValue});
+            this.objectListView1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.objectListView1.HideSelection = false;
+            this.objectListView1.Location = new System.Drawing.Point(592, 10);
+            this.objectListView1.Name = "objectListView1";
+            this.objectListView1.Size = new System.Drawing.Size(594, 549);
+            this.objectListView1.TabIndex = 0;
+            this.objectListView1.UseCompatibleStateImageBehavior = false;
+            this.objectListView1.View = System.Windows.Forms.View.Details;
+            // 
+            // gpbLocalVar
+            // 
+            this.gpbLocalVar.Controls.Add(this.textBox1);
+            this.gpbLocalVar.Controls.Add(this.label35);
+            this.gpbLocalVar.Controls.Add(this.btnDelLocalVar);
+            this.gpbLocalVar.Controls.Add(this.btnNewLocalVar);
+            this.gpbLocalVar.Controls.Add(this.chklbxLocalVar);
+            this.gpbLocalVar.Location = new System.Drawing.Point(6, 391);
+            this.gpbLocalVar.Name = "gpbLocalVar";
+            this.gpbLocalVar.Size = new System.Drawing.Size(580, 168);
+            this.gpbLocalVar.TabIndex = 1;
+            this.gpbLocalVar.TabStop = false;
+            this.gpbLocalVar.Text = "LGCgpbLocalVar";
+            // 
+            // chklbxLocalVar
+            // 
+            this.chklbxLocalVar.FormattingEnabled = true;
+            this.chklbxLocalVar.Location = new System.Drawing.Point(6, 20);
+            this.chklbxLocalVar.Name = "chklbxLocalVar";
+            this.chklbxLocalVar.Size = new System.Drawing.Size(568, 116);
+            this.chklbxLocalVar.TabIndex = 0;
+            // 
+            // btnNewLocalVar
+            // 
+            this.btnNewLocalVar.Location = new System.Drawing.Point(6, 142);
+            this.btnNewLocalVar.Name = "btnNewLocalVar";
+            this.btnNewLocalVar.Size = new System.Drawing.Size(75, 23);
+            this.btnNewLocalVar.TabIndex = 1;
+            this.btnNewLocalVar.Text = "LGCbtnNewLocalVar";
+            this.btnNewLocalVar.UseVisualStyleBackColor = true;
+            // 
+            // btnDelLocalVar
+            // 
+            this.btnDelLocalVar.Location = new System.Drawing.Point(87, 142);
+            this.btnDelLocalVar.Name = "btnDelLocalVar";
+            this.btnDelLocalVar.Size = new System.Drawing.Size(75, 23);
+            this.btnDelLocalVar.TabIndex = 2;
+            this.btnDelLocalVar.Text = "LGCbtnDelLocalVar";
+            this.btnDelLocalVar.UseVisualStyleBackColor = true;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(188, 147);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(113, 12);
+            this.label35.TabIndex = 3;
+            this.label35.Text = "LGClblLocalVarName";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(307, 142);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(267, 21);
+            this.textBox1.TabIndex = 4;
+            // 
+            // olvColumnSection
+            // 
+            this.olvColumnSection.Text = "LGColvColumnSection";
+            this.olvColumnSection.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColumnSection.Width = 194;
+            // 
+            // olvColumnKey
+            // 
+            this.olvColumnKey.Text = "LGColvColumnKey";
+            this.olvColumnKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColumnKey.Width = 200;
+            // 
+            // olvColumnValue
+            // 
+            this.olvColumnValue.Text = "LGColvColumnValue";
+            this.olvColumnValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColumnValue.Width = 200;
             // 
             // LogicEditor
             // 
@@ -2439,8 +2547,12 @@
             this.gpbTeamTask.PerformLayout();
             this.gpbTeamTaskCur.ResumeLayout(false);
             this.gpbTeamTaskCur.PerformLayout();
+            this.tbpMiscs.ResumeLayout(false);
             this.gpbSearch.ResumeLayout(false);
             this.gpbSearch.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
+            this.gpbLocalVar.ResumeLayout(false);
+            this.gpbLocalVar.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2450,7 +2562,7 @@
         private System.Windows.Forms.TabControl tbcMain;
         private System.Windows.Forms.TabPage tbpTriggers;
         private System.Windows.Forms.TabPage tbpTeams;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tbpMiscs;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.GroupBox gpbTag;
@@ -2639,5 +2751,15 @@
         private System.Windows.Forms.Button btnDelTeam;
         private System.Windows.Forms.Button btnNewTeam;
         private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.GroupBox gpbLocalVar;
+        private BrightIdeasSoftware.ObjectListView objectListView1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Button btnDelLocalVar;
+        private System.Windows.Forms.Button btnNewLocalVar;
+        private System.Windows.Forms.CheckedListBox chklbxLocalVar;
+        private BrightIdeasSoftware.OLVColumn olvColumnSection;
+        private BrightIdeasSoftware.OLVColumn olvColumnKey;
+        private BrightIdeasSoftware.OLVColumn olvColumnValue;
     }
 }
