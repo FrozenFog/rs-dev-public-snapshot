@@ -53,6 +53,11 @@ namespace RelertSharp.MapStructure.Logic
         public LogicGroup(INIPair p, LogicType type)
         {
             string[] l = p.ParseStringList();
+            if (l.Contains(""))
+            {
+                int end = l.ToList().IndexOf("");
+                l = l.Take(end).ToArray();
+            }
             ID = p.Name;
             Num = int.Parse(l[0]);
             int steplen = 0, llen = l.Length;

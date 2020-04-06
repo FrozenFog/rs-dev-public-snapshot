@@ -141,6 +141,20 @@
             this.tsmiTrgLstIDName = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.tbpTeams = new System.Windows.Forms.TabPage();
+            this.gpbTeamTask = new System.Windows.Forms.GroupBox();
+            this.btnDelTask = new System.Windows.Forms.Button();
+            this.btnNewTask = new System.Windows.Forms.Button();
+            this.gpbTeamTaskCur = new System.Windows.Forms.GroupBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.btnDelTaskMem = new System.Windows.Forms.Button();
+            this.btnAddTaskMem = new System.Windows.Forms.Button();
+            this.label23 = new System.Windows.Forms.Label();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
@@ -172,20 +186,6 @@
             this.hdValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.hdExtraValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rtxbSearchInspector = new System.Windows.Forms.RichTextBox();
-            this.gpbTeamTask = new System.Windows.Forms.GroupBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.gpbTeamTaskCur = new System.Windows.Forms.GroupBox();
-            this.listBox2 = new System.Windows.Forms.ListBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.btnNewTask = new System.Windows.Forms.Button();
-            this.btnDelTask = new System.Windows.Forms.Button();
-            this.btnAddTaskMem = new System.Windows.Forms.Button();
-            this.btnDelTaskMem = new System.Windows.Forms.Button();
-            this.label24 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
             this.tbcMain.SuspendLayout();
             this.tbpTriggers.SuspendLayout();
             this.gpbActions.SuspendLayout();
@@ -199,9 +199,9 @@
             this.cmsEditTemplate.SuspendLayout();
             this.cmsTriggerList.SuspendLayout();
             this.tbpTeams.SuspendLayout();
-            this.gpbSearch.SuspendLayout();
             this.gpbTeamTask.SuspendLayout();
             this.gpbTeamTaskCur.SuspendLayout();
+            this.gpbSearch.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -214,10 +214,11 @@
             this.tbcMain.Controls.Add(this.tabPage3);
             this.tbcMain.Controls.Add(this.tabPage4);
             this.tbcMain.Controls.Add(this.tabPage5);
-            this.tbcMain.Location = new System.Drawing.Point(12, 33);
+            this.tbcMain.Location = new System.Drawing.Point(16, 41);
+            this.tbcMain.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbcMain.Name = "tbcMain";
             this.tbcMain.SelectedIndex = 0;
-            this.tbcMain.Size = new System.Drawing.Size(1198, 591);
+            this.tbcMain.Size = new System.Drawing.Size(1597, 739);
             this.tbcMain.TabIndex = 0;
             // 
             // tbpTriggers
@@ -228,10 +229,11 @@
             this.tbpTriggers.Controls.Add(this.gpbTag);
             this.tbpTriggers.Controls.Add(this.lbxTriggerList);
             this.tbpTriggers.Controls.Add(this.label1);
-            this.tbpTriggers.Location = new System.Drawing.Point(4, 22);
+            this.tbpTriggers.Location = new System.Drawing.Point(4, 25);
+            this.tbpTriggers.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbpTriggers.Name = "tbpTriggers";
-            this.tbpTriggers.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpTriggers.Size = new System.Drawing.Size(1190, 565);
+            this.tbpTriggers.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbpTriggers.Size = new System.Drawing.Size(1589, 710);
             this.tbpTriggers.TabIndex = 0;
             this.tbpTriggers.Text = "LGCtbpTrgPage";
             // 
@@ -253,20 +255,23 @@
             this.gpbActions.Controls.Add(this.label17);
             this.gpbActions.Controls.Add(this.label20);
             this.gpbActions.Controls.Add(this.label19);
-            this.gpbActions.Location = new System.Drawing.Point(731, 200);
+            this.gpbActions.Location = new System.Drawing.Point(975, 250);
+            this.gpbActions.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gpbActions.Name = "gpbActions";
-            this.gpbActions.Size = new System.Drawing.Size(453, 358);
+            this.gpbActions.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbActions.Size = new System.Drawing.Size(604, 448);
             this.gpbActions.TabIndex = 6;
             this.gpbActions.TabStop = false;
             this.gpbActions.Text = "LGCgpbTrgActions";
             // 
             // mtxbActionID
             // 
-            this.mtxbActionID.Location = new System.Drawing.Point(152, 36);
+            this.mtxbActionID.Location = new System.Drawing.Point(203, 45);
+            this.mtxbActionID.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mtxbActionID.Mask = "000";
             this.mtxbActionID.Name = "mtxbActionID";
             this.mtxbActionID.PromptChar = ' ';
-            this.mtxbActionID.Size = new System.Drawing.Size(32, 21);
+            this.mtxbActionID.Size = new System.Drawing.Size(41, 25);
             this.mtxbActionID.TabIndex = 0;
             this.mtxbActionID.ValidatingType = typeof(int);
             this.mtxbActionID.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SelectTextboxContent_MouseClicked);
@@ -292,9 +297,11 @@
             this.gpbActionParam.Controls.Add(this.cbbAP2);
             this.gpbActionParam.Controls.Add(this.cbbAP1);
             this.gpbActionParam.Controls.Add(this.lblNoParamA);
-            this.gpbActionParam.Location = new System.Drawing.Point(152, 219);
+            this.gpbActionParam.Location = new System.Drawing.Point(203, 274);
+            this.gpbActionParam.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gpbActionParam.Name = "gpbActionParam";
-            this.gpbActionParam.Size = new System.Drawing.Size(294, 133);
+            this.gpbActionParam.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbActionParam.Size = new System.Drawing.Size(392, 166);
             this.gpbActionParam.TabIndex = 1;
             this.gpbActionParam.TabStop = false;
             this.gpbActionParam.Text = "LGCgpbActionParam";
@@ -303,9 +310,10 @@
             // 
             this.lklAP4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklAP4.AutoSize = true;
-            this.lklAP4.Location = new System.Drawing.Point(12, 100);
+            this.lklAP4.Location = new System.Drawing.Point(16, 125);
+            this.lklAP4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lklAP4.Name = "lklAP4";
-            this.lklAP4.Size = new System.Drawing.Size(23, 12);
+            this.lklAP4.Size = new System.Drawing.Size(31, 15);
             this.lklAP4.TabIndex = 9;
             this.lklAP4.TabStop = true;
             this.lklAP4.Tag = "3";
@@ -316,9 +324,10 @@
             // txbAP4
             // 
             this.txbAP4.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbAP4.Location = new System.Drawing.Point(135, 97);
+            this.txbAP4.Location = new System.Drawing.Point(180, 120);
+            this.txbAP4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbAP4.Name = "txbAP4";
-            this.txbAP4.Size = new System.Drawing.Size(153, 21);
+            this.txbAP4.Size = new System.Drawing.Size(203, 25);
             this.txbAP4.TabIndex = 4;
             this.txbAP4.Tag = "3";
             this.txbAP4.Visible = false;
@@ -328,9 +337,10 @@
             // 
             this.lklAP3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklAP3.AutoSize = true;
-            this.lklAP3.Location = new System.Drawing.Point(12, 74);
+            this.lklAP3.Location = new System.Drawing.Point(16, 92);
+            this.lklAP3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lklAP3.Name = "lklAP3";
-            this.lklAP3.Size = new System.Drawing.Size(23, 12);
+            this.lklAP3.Size = new System.Drawing.Size(31, 15);
             this.lklAP3.TabIndex = 9;
             this.lklAP3.TabStop = true;
             this.lklAP3.Tag = "2";
@@ -341,9 +351,10 @@
             // txbAP3
             // 
             this.txbAP3.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbAP3.Location = new System.Drawing.Point(135, 71);
+            this.txbAP3.Location = new System.Drawing.Point(180, 89);
+            this.txbAP3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbAP3.Name = "txbAP3";
-            this.txbAP3.Size = new System.Drawing.Size(153, 21);
+            this.txbAP3.Size = new System.Drawing.Size(203, 25);
             this.txbAP3.TabIndex = 3;
             this.txbAP3.Tag = "2";
             this.txbAP3.Visible = false;
@@ -353,9 +364,10 @@
             // 
             this.lklAP2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklAP2.AutoSize = true;
-            this.lklAP2.Location = new System.Drawing.Point(12, 48);
+            this.lklAP2.Location = new System.Drawing.Point(16, 60);
+            this.lklAP2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lklAP2.Name = "lklAP2";
-            this.lklAP2.Size = new System.Drawing.Size(23, 12);
+            this.lklAP2.Size = new System.Drawing.Size(31, 15);
             this.lklAP2.TabIndex = 9;
             this.lklAP2.TabStop = true;
             this.lklAP2.Tag = "1";
@@ -366,9 +378,10 @@
             // txbAP2
             // 
             this.txbAP2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbAP2.Location = new System.Drawing.Point(135, 44);
+            this.txbAP2.Location = new System.Drawing.Point(180, 55);
+            this.txbAP2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbAP2.Name = "txbAP2";
-            this.txbAP2.Size = new System.Drawing.Size(153, 21);
+            this.txbAP2.Size = new System.Drawing.Size(203, 25);
             this.txbAP2.TabIndex = 2;
             this.txbAP2.Tag = "1";
             this.txbAP2.Visible = false;
@@ -378,9 +391,10 @@
             // 
             this.lklAP1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklAP1.AutoSize = true;
-            this.lklAP1.Location = new System.Drawing.Point(12, 22);
+            this.lklAP1.Location = new System.Drawing.Point(16, 28);
+            this.lklAP1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lklAP1.Name = "lklAP1";
-            this.lklAP1.Size = new System.Drawing.Size(23, 12);
+            this.lklAP1.Size = new System.Drawing.Size(31, 15);
             this.lklAP1.TabIndex = 9;
             this.lklAP1.TabStop = true;
             this.lklAP1.Tag = "0";
@@ -391,9 +405,10 @@
             // txbAP1
             // 
             this.txbAP1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbAP1.Location = new System.Drawing.Point(135, 17);
+            this.txbAP1.Location = new System.Drawing.Point(180, 21);
+            this.txbAP1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbAP1.Name = "txbAP1";
-            this.txbAP1.Size = new System.Drawing.Size(153, 21);
+            this.txbAP1.Size = new System.Drawing.Size(203, 25);
             this.txbAP1.TabIndex = 1;
             this.txbAP1.Tag = "0";
             this.txbAP1.Visible = false;
@@ -403,9 +418,10 @@
             // 
             this.ckbAP4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.ckbAP4.AutoSize = true;
-            this.ckbAP4.Location = new System.Drawing.Point(273, 100);
+            this.ckbAP4.Location = new System.Drawing.Point(366, 125);
+            this.ckbAP4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbAP4.Name = "ckbAP4";
-            this.ckbAP4.Size = new System.Drawing.Size(15, 14);
+            this.ckbAP4.Size = new System.Drawing.Size(18, 17);
             this.ckbAP4.TabIndex = 4;
             this.ckbAP4.Tag = "3";
             this.ckbAP4.UseVisualStyleBackColor = true;
@@ -416,9 +432,10 @@
             // 
             this.ckbAP3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.ckbAP3.AutoSize = true;
-            this.ckbAP3.Location = new System.Drawing.Point(273, 74);
+            this.ckbAP3.Location = new System.Drawing.Point(366, 92);
+            this.ckbAP3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbAP3.Name = "ckbAP3";
-            this.ckbAP3.Size = new System.Drawing.Size(15, 14);
+            this.ckbAP3.Size = new System.Drawing.Size(18, 17);
             this.ckbAP3.TabIndex = 3;
             this.ckbAP3.Tag = "2";
             this.ckbAP3.UseVisualStyleBackColor = true;
@@ -429,9 +446,10 @@
             // 
             this.ckbAP2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.ckbAP2.AutoSize = true;
-            this.ckbAP2.Location = new System.Drawing.Point(273, 48);
+            this.ckbAP2.Location = new System.Drawing.Point(366, 60);
+            this.ckbAP2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbAP2.Name = "ckbAP2";
-            this.ckbAP2.Size = new System.Drawing.Size(15, 14);
+            this.ckbAP2.Size = new System.Drawing.Size(18, 17);
             this.ckbAP2.TabIndex = 2;
             this.ckbAP2.Tag = "1";
             this.ckbAP2.UseVisualStyleBackColor = true;
@@ -442,9 +460,10 @@
             // 
             this.ckbAP1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.ckbAP1.AutoSize = true;
-            this.ckbAP1.Location = new System.Drawing.Point(273, 22);
+            this.ckbAP1.Location = new System.Drawing.Point(366, 28);
+            this.ckbAP1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbAP1.Name = "ckbAP1";
-            this.ckbAP1.Size = new System.Drawing.Size(15, 14);
+            this.ckbAP1.Size = new System.Drawing.Size(18, 17);
             this.ckbAP1.TabIndex = 1;
             this.ckbAP1.Tag = "0";
             this.ckbAP1.UseVisualStyleBackColor = true;
@@ -455,9 +474,10 @@
             // 
             this.cbbAP4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cbbAP4.FormattingEnabled = true;
-            this.cbbAP4.Location = new System.Drawing.Point(135, 97);
+            this.cbbAP4.Location = new System.Drawing.Point(180, 121);
+            this.cbbAP4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbbAP4.Name = "cbbAP4";
-            this.cbbAP4.Size = new System.Drawing.Size(153, 20);
+            this.cbbAP4.Size = new System.Drawing.Size(203, 23);
             this.cbbAP4.TabIndex = 4;
             this.cbbAP4.Tag = "3";
             this.cbbAP4.Visible = false;
@@ -467,9 +487,10 @@
             // 
             this.cbbAP3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cbbAP3.FormattingEnabled = true;
-            this.cbbAP3.Location = new System.Drawing.Point(135, 71);
+            this.cbbAP3.Location = new System.Drawing.Point(180, 89);
+            this.cbbAP3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbbAP3.Name = "cbbAP3";
-            this.cbbAP3.Size = new System.Drawing.Size(153, 20);
+            this.cbbAP3.Size = new System.Drawing.Size(203, 23);
             this.cbbAP3.TabIndex = 3;
             this.cbbAP3.Tag = "2";
             this.cbbAP3.Visible = false;
@@ -479,9 +500,10 @@
             // 
             this.cbbAP2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cbbAP2.FormattingEnabled = true;
-            this.cbbAP2.Location = new System.Drawing.Point(135, 45);
+            this.cbbAP2.Location = new System.Drawing.Point(180, 56);
+            this.cbbAP2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbbAP2.Name = "cbbAP2";
-            this.cbbAP2.Size = new System.Drawing.Size(153, 20);
+            this.cbbAP2.Size = new System.Drawing.Size(203, 23);
             this.cbbAP2.TabIndex = 2;
             this.cbbAP2.Tag = "1";
             this.cbbAP2.Visible = false;
@@ -491,9 +513,10 @@
             // 
             this.cbbAP1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cbbAP1.FormattingEnabled = true;
-            this.cbbAP1.Location = new System.Drawing.Point(135, 19);
+            this.cbbAP1.Location = new System.Drawing.Point(180, 24);
+            this.cbbAP1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbbAP1.Name = "cbbAP1";
-            this.cbbAP1.Size = new System.Drawing.Size(153, 20);
+            this.cbbAP1.Size = new System.Drawing.Size(203, 23);
             this.cbbAP1.TabIndex = 1;
             this.cbbAP1.Tag = "0";
             this.cbbAP1.Visible = false;
@@ -502,9 +525,10 @@
             // lblNoParamA
             // 
             this.lblNoParamA.AutoSize = true;
-            this.lblNoParamA.Location = new System.Drawing.Point(71, 62);
+            this.lblNoParamA.Location = new System.Drawing.Point(95, 78);
+            this.lblNoParamA.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNoParamA.Name = "lblNoParamA";
-            this.lblNoParamA.Size = new System.Drawing.Size(83, 12);
+            this.lblNoParamA.Size = new System.Drawing.Size(111, 15);
             this.lblNoParamA.TabIndex = 0;
             this.lblNoParamA.Text = "LGClblNoParam";
             this.lblNoParamA.Visible = false;
@@ -514,10 +538,11 @@
             this.lbxActionList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lbxActionList.FormattingEnabled = true;
-            this.lbxActionList.ItemHeight = 12;
-            this.lbxActionList.Location = new System.Drawing.Point(8, 38);
+            this.lbxActionList.ItemHeight = 15;
+            this.lbxActionList.Location = new System.Drawing.Point(11, 48);
+            this.lbxActionList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lbxActionList.Name = "lbxActionList";
-            this.lbxActionList.Size = new System.Drawing.Size(138, 232);
+            this.lbxActionList.Size = new System.Drawing.Size(183, 289);
             this.lbxActionList.TabIndex = 9;
             this.lbxActionList.SelectedValueChanged += new System.EventHandler(this.lbxActionList_SelectedValueChanged);
             // 
@@ -526,19 +551,21 @@
             this.rtxbActionDetail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.rtxbActionDetail.Font = new System.Drawing.Font("Verdana", 9F);
-            this.rtxbActionDetail.Location = new System.Drawing.Point(152, 116);
+            this.rtxbActionDetail.Location = new System.Drawing.Point(203, 145);
+            this.rtxbActionDetail.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rtxbActionDetail.Name = "rtxbActionDetail";
             this.rtxbActionDetail.ReadOnly = true;
-            this.rtxbActionDetail.Size = new System.Drawing.Size(294, 97);
+            this.rtxbActionDetail.Size = new System.Drawing.Size(391, 120);
             this.rtxbActionDetail.TabIndex = 11;
             this.rtxbActionDetail.Text = "";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 23);
+            this.label12.Location = new System.Drawing.Point(8, 29);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(101, 12);
+            this.label12.Size = new System.Drawing.Size(135, 15);
             this.label12.TabIndex = 7;
             this.label12.Text = "LGClblActionList";
             // 
@@ -548,9 +575,10 @@
             this.cbbActionAbst.DropDownWidth = 300;
             this.cbbActionAbst.Font = new System.Drawing.Font("Verdana", 9F);
             this.cbbActionAbst.FormattingEnabled = true;
-            this.cbbActionAbst.Location = new System.Drawing.Point(190, 36);
+            this.cbbActionAbst.Location = new System.Drawing.Point(253, 45);
+            this.cbbActionAbst.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbbActionAbst.Name = "cbbActionAbst";
-            this.cbbActionAbst.Size = new System.Drawing.Size(256, 22);
+            this.cbbActionAbst.Size = new System.Drawing.Size(340, 26);
             this.cbbActionAbst.TabIndex = 10;
             this.cbbActionAbst.SelectedIndexChanged += new System.EventHandler(this.cbbActionAbst_SelectedIndexChanged);
             // 
@@ -558,40 +586,44 @@
             // 
             this.btnCopyAction.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnCopyAction.ContextMenuStrip = this.cmsCopyAction;
-            this.btnCopyAction.Location = new System.Drawing.Point(8, 329);
+            this.btnCopyAction.Location = new System.Drawing.Point(11, 411);
+            this.btnCopyAction.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCopyAction.Name = "btnCopyAction";
-            this.btnCopyAction.Size = new System.Drawing.Size(138, 23);
+            this.btnCopyAction.Size = new System.Drawing.Size(184, 29);
             this.btnCopyAction.TabIndex = 8;
             this.btnCopyAction.Text = "LGCbtnCopyAction";
             this.btnCopyAction.UseVisualStyleBackColor = true;
             // 
             // cmsCopyAction
             // 
+            this.cmsCopyAction.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cmsCopyAction.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiCopyActionAdv});
             this.cmsCopyAction.Name = "cmsCopyAction";
-            this.cmsCopyAction.Size = new System.Drawing.Size(176, 26);
+            this.cmsCopyAction.Size = new System.Drawing.Size(206, 28);
             // 
             // tsmiCopyActionAdv
             // 
             this.tsmiCopyActionAdv.Name = "tsmiCopyActionAdv";
-            this.tsmiCopyActionAdv.Size = new System.Drawing.Size(175, 22);
+            this.tsmiCopyActionAdv.Size = new System.Drawing.Size(205, 24);
             this.tsmiCopyActionAdv.Text = "LGCtsmiCopyAdv";
             this.tsmiCopyActionAdv.Click += new System.EventHandler(this.tsmiCopyActionAdv_Click);
             // 
             // txbActionAnno
             // 
-            this.txbActionAnno.Location = new System.Drawing.Point(152, 77);
+            this.txbActionAnno.Location = new System.Drawing.Point(203, 96);
+            this.txbActionAnno.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbActionAnno.Name = "txbActionAnno";
-            this.txbActionAnno.Size = new System.Drawing.Size(295, 21);
+            this.txbActionAnno.Size = new System.Drawing.Size(392, 25);
             this.txbActionAnno.TabIndex = 5;
             // 
             // btnNewAction
             // 
             this.btnNewAction.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnNewAction.Location = new System.Drawing.Point(8, 271);
+            this.btnNewAction.Location = new System.Drawing.Point(11, 339);
+            this.btnNewAction.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnNewAction.Name = "btnNewAction";
-            this.btnNewAction.Size = new System.Drawing.Size(138, 23);
+            this.btnNewAction.Size = new System.Drawing.Size(184, 29);
             this.btnNewAction.TabIndex = 6;
             this.btnNewAction.Text = "LGCbtnNewAction";
             this.btnNewAction.UseVisualStyleBackColor = true;
@@ -600,9 +632,10 @@
             // btnDeleteAction
             // 
             this.btnDeleteAction.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnDeleteAction.Location = new System.Drawing.Point(8, 300);
+            this.btnDeleteAction.Location = new System.Drawing.Point(11, 375);
+            this.btnDeleteAction.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDeleteAction.Name = "btnDeleteAction";
-            this.btnDeleteAction.Size = new System.Drawing.Size(138, 23);
+            this.btnDeleteAction.Size = new System.Drawing.Size(184, 29);
             this.btnDeleteAction.TabIndex = 7;
             this.btnDeleteAction.Text = "LGCbtnDelAction";
             this.btnDeleteAction.UseVisualStyleBackColor = true;
@@ -611,36 +644,40 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(188, 23);
+            this.label21.Location = new System.Drawing.Point(251, 29);
+            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(101, 12);
+            this.label21.Size = new System.Drawing.Size(135, 15);
             this.label21.TabIndex = 7;
             this.label21.Text = "LGClblActionAbst";
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(150, 23);
+            this.label17.Location = new System.Drawing.Point(200, 29);
+            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(89, 12);
+            this.label17.Size = new System.Drawing.Size(119, 15);
             this.label17.TabIndex = 7;
             this.label17.Text = "LGClblActionID";
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(152, 101);
+            this.label20.Location = new System.Drawing.Point(203, 126);
+            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(113, 12);
+            this.label20.Size = new System.Drawing.Size(151, 15);
             this.label20.TabIndex = 7;
             this.label20.Text = "LGClblActionDetail";
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(150, 62);
+            this.label19.Location = new System.Drawing.Point(200, 78);
+            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(101, 12);
+            this.label19.Size = new System.Drawing.Size(135, 15);
             this.label19.TabIndex = 7;
             this.label19.Text = "LGClblActionAnno";
             // 
@@ -662,20 +699,23 @@
             this.gpbEvents.Controls.Add(this.btnDeleteEvent);
             this.gpbEvents.Controls.Add(this.btnNewEvent);
             this.gpbEvents.Controls.Add(this.rtxbEventDetail);
-            this.gpbEvents.Location = new System.Drawing.Point(267, 200);
+            this.gpbEvents.Location = new System.Drawing.Point(356, 250);
+            this.gpbEvents.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gpbEvents.Name = "gpbEvents";
-            this.gpbEvents.Size = new System.Drawing.Size(453, 358);
+            this.gpbEvents.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbEvents.Size = new System.Drawing.Size(604, 448);
             this.gpbEvents.TabIndex = 5;
             this.gpbEvents.TabStop = false;
             this.gpbEvents.Text = "LGCgpbTrgEvents";
             // 
             // mtxbEventID
             // 
-            this.mtxbEventID.Location = new System.Drawing.Point(152, 36);
+            this.mtxbEventID.Location = new System.Drawing.Point(203, 45);
+            this.mtxbEventID.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mtxbEventID.Mask = "00";
             this.mtxbEventID.Name = "mtxbEventID";
             this.mtxbEventID.PromptChar = ' ';
-            this.mtxbEventID.Size = new System.Drawing.Size(32, 21);
+            this.mtxbEventID.Size = new System.Drawing.Size(41, 25);
             this.mtxbEventID.TabIndex = 0;
             this.mtxbEventID.ValidatingType = typeof(int);
             this.mtxbEventID.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SelectTextboxContent_MouseClicked);
@@ -701,9 +741,11 @@
             this.gpbEventParam.Controls.Add(this.cbbEP2);
             this.gpbEventParam.Controls.Add(this.cbbEP1);
             this.gpbEventParam.Controls.Add(this.lblNoParamE);
-            this.gpbEventParam.Location = new System.Drawing.Point(152, 219);
+            this.gpbEventParam.Location = new System.Drawing.Point(203, 274);
+            this.gpbEventParam.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gpbEventParam.Name = "gpbEventParam";
-            this.gpbEventParam.Size = new System.Drawing.Size(295, 133);
+            this.gpbEventParam.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbEventParam.Size = new System.Drawing.Size(393, 166);
             this.gpbEventParam.TabIndex = 1;
             this.gpbEventParam.TabStop = false;
             this.gpbEventParam.Text = "LGCgpbEventParam";
@@ -712,9 +754,10 @@
             // 
             this.lklEP4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklEP4.AutoSize = true;
-            this.lklEP4.Location = new System.Drawing.Point(12, 100);
+            this.lklEP4.Location = new System.Drawing.Point(16, 125);
+            this.lklEP4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lklEP4.Name = "lklEP4";
-            this.lklEP4.Size = new System.Drawing.Size(23, 12);
+            this.lklEP4.Size = new System.Drawing.Size(31, 15);
             this.lklEP4.TabIndex = 9;
             this.lklEP4.TabStop = true;
             this.lklEP4.Tag = "3";
@@ -726,9 +769,10 @@
             // 
             this.lklEP3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklEP3.AutoSize = true;
-            this.lklEP3.Location = new System.Drawing.Point(12, 74);
+            this.lklEP3.Location = new System.Drawing.Point(16, 92);
+            this.lklEP3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lklEP3.Name = "lklEP3";
-            this.lklEP3.Size = new System.Drawing.Size(23, 12);
+            this.lklEP3.Size = new System.Drawing.Size(31, 15);
             this.lklEP3.TabIndex = 9;
             this.lklEP3.TabStop = true;
             this.lklEP3.Tag = "2";
@@ -740,9 +784,10 @@
             // 
             this.lklEP2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklEP2.AutoSize = true;
-            this.lklEP2.Location = new System.Drawing.Point(12, 48);
+            this.lklEP2.Location = new System.Drawing.Point(16, 60);
+            this.lklEP2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lklEP2.Name = "lklEP2";
-            this.lklEP2.Size = new System.Drawing.Size(23, 12);
+            this.lklEP2.Size = new System.Drawing.Size(31, 15);
             this.lklEP2.TabIndex = 9;
             this.lklEP2.TabStop = true;
             this.lklEP2.Tag = "1";
@@ -754,9 +799,10 @@
             // 
             this.lklEP1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lklEP1.AutoSize = true;
-            this.lklEP1.Location = new System.Drawing.Point(12, 22);
+            this.lklEP1.Location = new System.Drawing.Point(16, 28);
+            this.lklEP1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lklEP1.Name = "lklEP1";
-            this.lklEP1.Size = new System.Drawing.Size(23, 12);
+            this.lklEP1.Size = new System.Drawing.Size(31, 15);
             this.lklEP1.TabIndex = 9;
             this.lklEP1.TabStop = true;
             this.lklEP1.Tag = "0";
@@ -767,9 +813,10 @@
             // txbEP4
             // 
             this.txbEP4.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbEP4.Location = new System.Drawing.Point(136, 96);
+            this.txbEP4.Location = new System.Drawing.Point(181, 120);
+            this.txbEP4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbEP4.Name = "txbEP4";
-            this.txbEP4.Size = new System.Drawing.Size(153, 21);
+            this.txbEP4.Size = new System.Drawing.Size(203, 25);
             this.txbEP4.TabIndex = 4;
             this.txbEP4.Tag = "3";
             this.txbEP4.Visible = false;
@@ -778,9 +825,10 @@
             // txbEP3
             // 
             this.txbEP3.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbEP3.Location = new System.Drawing.Point(136, 71);
+            this.txbEP3.Location = new System.Drawing.Point(181, 89);
+            this.txbEP3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbEP3.Name = "txbEP3";
-            this.txbEP3.Size = new System.Drawing.Size(153, 21);
+            this.txbEP3.Size = new System.Drawing.Size(203, 25);
             this.txbEP3.TabIndex = 3;
             this.txbEP3.Tag = "2";
             this.txbEP3.Visible = false;
@@ -789,9 +837,10 @@
             // txbEP1
             // 
             this.txbEP1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbEP1.Location = new System.Drawing.Point(136, 19);
+            this.txbEP1.Location = new System.Drawing.Point(181, 24);
+            this.txbEP1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbEP1.Name = "txbEP1";
-            this.txbEP1.Size = new System.Drawing.Size(153, 21);
+            this.txbEP1.Size = new System.Drawing.Size(203, 25);
             this.txbEP1.TabIndex = 1;
             this.txbEP1.Tag = "0";
             this.txbEP1.Visible = false;
@@ -800,9 +849,10 @@
             // txbEP2
             // 
             this.txbEP2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txbEP2.Location = new System.Drawing.Point(136, 44);
+            this.txbEP2.Location = new System.Drawing.Point(181, 55);
+            this.txbEP2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbEP2.Name = "txbEP2";
-            this.txbEP2.Size = new System.Drawing.Size(153, 21);
+            this.txbEP2.Size = new System.Drawing.Size(203, 25);
             this.txbEP2.TabIndex = 2;
             this.txbEP2.Tag = "1";
             this.txbEP2.Visible = false;
@@ -812,9 +862,10 @@
             // 
             this.ckbEP4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.ckbEP4.AutoSize = true;
-            this.ckbEP4.Location = new System.Drawing.Point(274, 100);
+            this.ckbEP4.Location = new System.Drawing.Point(367, 125);
+            this.ckbEP4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbEP4.Name = "ckbEP4";
-            this.ckbEP4.Size = new System.Drawing.Size(15, 14);
+            this.ckbEP4.Size = new System.Drawing.Size(18, 17);
             this.ckbEP4.TabIndex = 4;
             this.ckbEP4.Tag = "3";
             this.ckbEP4.UseVisualStyleBackColor = true;
@@ -825,9 +876,10 @@
             // 
             this.ckbEP3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.ckbEP3.AutoSize = true;
-            this.ckbEP3.Location = new System.Drawing.Point(274, 74);
+            this.ckbEP3.Location = new System.Drawing.Point(367, 92);
+            this.ckbEP3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbEP3.Name = "ckbEP3";
-            this.ckbEP3.Size = new System.Drawing.Size(15, 14);
+            this.ckbEP3.Size = new System.Drawing.Size(18, 17);
             this.ckbEP3.TabIndex = 3;
             this.ckbEP3.Tag = "2";
             this.ckbEP3.UseVisualStyleBackColor = true;
@@ -838,9 +890,10 @@
             // 
             this.ckbEP2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.ckbEP2.AutoSize = true;
-            this.ckbEP2.Location = new System.Drawing.Point(274, 48);
+            this.ckbEP2.Location = new System.Drawing.Point(367, 60);
+            this.ckbEP2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbEP2.Name = "ckbEP2";
-            this.ckbEP2.Size = new System.Drawing.Size(15, 14);
+            this.ckbEP2.Size = new System.Drawing.Size(18, 17);
             this.ckbEP2.TabIndex = 2;
             this.ckbEP2.Tag = "1";
             this.ckbEP2.UseVisualStyleBackColor = true;
@@ -851,9 +904,10 @@
             // 
             this.ckbEP1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.ckbEP1.AutoSize = true;
-            this.ckbEP1.Location = new System.Drawing.Point(274, 22);
+            this.ckbEP1.Location = new System.Drawing.Point(367, 28);
+            this.ckbEP1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbEP1.Name = "ckbEP1";
-            this.ckbEP1.Size = new System.Drawing.Size(15, 14);
+            this.ckbEP1.Size = new System.Drawing.Size(18, 17);
             this.ckbEP1.TabIndex = 1;
             this.ckbEP1.Tag = "0";
             this.ckbEP1.UseVisualStyleBackColor = true;
@@ -864,9 +918,10 @@
             // 
             this.cbbEP4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cbbEP4.FormattingEnabled = true;
-            this.cbbEP4.Location = new System.Drawing.Point(136, 97);
+            this.cbbEP4.Location = new System.Drawing.Point(181, 121);
+            this.cbbEP4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbbEP4.Name = "cbbEP4";
-            this.cbbEP4.Size = new System.Drawing.Size(153, 20);
+            this.cbbEP4.Size = new System.Drawing.Size(203, 23);
             this.cbbEP4.TabIndex = 4;
             this.cbbEP4.Tag = "3";
             this.cbbEP4.Visible = false;
@@ -876,9 +931,10 @@
             // 
             this.cbbEP3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cbbEP3.FormattingEnabled = true;
-            this.cbbEP3.Location = new System.Drawing.Point(136, 71);
+            this.cbbEP3.Location = new System.Drawing.Point(181, 89);
+            this.cbbEP3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbbEP3.Name = "cbbEP3";
-            this.cbbEP3.Size = new System.Drawing.Size(153, 20);
+            this.cbbEP3.Size = new System.Drawing.Size(203, 23);
             this.cbbEP3.TabIndex = 3;
             this.cbbEP3.Tag = "2";
             this.cbbEP3.Visible = false;
@@ -888,9 +944,10 @@
             // 
             this.cbbEP2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cbbEP2.FormattingEnabled = true;
-            this.cbbEP2.Location = new System.Drawing.Point(136, 45);
+            this.cbbEP2.Location = new System.Drawing.Point(181, 56);
+            this.cbbEP2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbbEP2.Name = "cbbEP2";
-            this.cbbEP2.Size = new System.Drawing.Size(153, 20);
+            this.cbbEP2.Size = new System.Drawing.Size(203, 23);
             this.cbbEP2.TabIndex = 2;
             this.cbbEP2.Tag = "1";
             this.cbbEP2.Visible = false;
@@ -900,9 +957,10 @@
             // 
             this.cbbEP1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cbbEP1.FormattingEnabled = true;
-            this.cbbEP1.Location = new System.Drawing.Point(136, 19);
+            this.cbbEP1.Location = new System.Drawing.Point(181, 24);
+            this.cbbEP1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbbEP1.Name = "cbbEP1";
-            this.cbbEP1.Size = new System.Drawing.Size(153, 20);
+            this.cbbEP1.Size = new System.Drawing.Size(203, 23);
             this.cbbEP1.TabIndex = 1;
             this.cbbEP1.Tag = "0";
             this.cbbEP1.Visible = false;
@@ -911,9 +969,10 @@
             // lblNoParamE
             // 
             this.lblNoParamE.AutoSize = true;
-            this.lblNoParamE.Location = new System.Drawing.Point(71, 62);
+            this.lblNoParamE.Location = new System.Drawing.Point(95, 78);
+            this.lblNoParamE.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNoParamE.Name = "lblNoParamE";
-            this.lblNoParamE.Size = new System.Drawing.Size(83, 12);
+            this.lblNoParamE.Size = new System.Drawing.Size(111, 15);
             this.lblNoParamE.TabIndex = 0;
             this.lblNoParamE.Text = "LGClblNoParam";
             this.lblNoParamE.Visible = false;
@@ -926,9 +985,10 @@
             this.cbbEventAbst.DropDownWidth = 300;
             this.cbbEventAbst.Font = new System.Drawing.Font("Verdana", 9F);
             this.cbbEventAbst.FormattingEnabled = true;
-            this.cbbEventAbst.Location = new System.Drawing.Point(190, 36);
+            this.cbbEventAbst.Location = new System.Drawing.Point(253, 45);
+            this.cbbEventAbst.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbbEventAbst.Name = "cbbEventAbst";
-            this.cbbEventAbst.Size = new System.Drawing.Size(257, 22);
+            this.cbbEventAbst.Size = new System.Drawing.Size(341, 26);
             this.cbbEventAbst.TabIndex = 10;
             this.cbbEventAbst.SelectedIndexChanged += new System.EventHandler(this.cbbEventAbst_SelectedIndexChanged);
             // 
@@ -936,9 +996,10 @@
             // 
             this.txbEventAnno.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txbEventAnno.Location = new System.Drawing.Point(152, 77);
+            this.txbEventAnno.Location = new System.Drawing.Point(203, 96);
+            this.txbEventAnno.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbEventAnno.Name = "txbEventAnno";
-            this.txbEventAnno.Size = new System.Drawing.Size(295, 21);
+            this.txbEventAnno.Size = new System.Drawing.Size(392, 25);
             this.txbEventAnno.TabIndex = 5;
             // 
             // lbxEventList
@@ -946,55 +1007,61 @@
             this.lbxEventList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lbxEventList.FormattingEnabled = true;
-            this.lbxEventList.ItemHeight = 12;
-            this.lbxEventList.Location = new System.Drawing.Point(8, 38);
+            this.lbxEventList.ItemHeight = 15;
+            this.lbxEventList.Location = new System.Drawing.Point(11, 48);
+            this.lbxEventList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lbxEventList.Name = "lbxEventList";
-            this.lbxEventList.Size = new System.Drawing.Size(138, 232);
+            this.lbxEventList.Size = new System.Drawing.Size(183, 289);
             this.lbxEventList.TabIndex = 9;
             this.lbxEventList.SelectedValueChanged += new System.EventHandler(this.lbxEventList_SelectedValueChanged);
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(188, 23);
+            this.label14.Location = new System.Drawing.Point(251, 29);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(95, 12);
+            this.label14.Size = new System.Drawing.Size(127, 15);
             this.label14.TabIndex = 7;
             this.label14.Text = "LGClblEventAbst";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(152, 101);
+            this.label15.Location = new System.Drawing.Point(203, 126);
+            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(107, 12);
+            this.label15.Size = new System.Drawing.Size(143, 15);
             this.label15.TabIndex = 7;
             this.label15.Text = "LGClblEventDetail";
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(150, 62);
+            this.label18.Location = new System.Drawing.Point(200, 78);
+            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(95, 12);
+            this.label18.Size = new System.Drawing.Size(127, 15);
             this.label18.TabIndex = 7;
             this.label18.Text = "LGClblEventAnno";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(150, 23);
+            this.label13.Location = new System.Drawing.Point(200, 29);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(83, 12);
+            this.label13.Size = new System.Drawing.Size(111, 15);
             this.label13.TabIndex = 7;
             this.label13.Text = "LGClblEventID";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 23);
+            this.label11.Location = new System.Drawing.Point(8, 29);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(95, 12);
+            this.label11.Size = new System.Drawing.Size(127, 15);
             this.label11.TabIndex = 7;
             this.label11.Text = "LGClblEventList";
             // 
@@ -1002,33 +1069,36 @@
             // 
             this.btnCopyEvent.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnCopyEvent.ContextMenuStrip = this.cmsCopyEvent;
-            this.btnCopyEvent.Location = new System.Drawing.Point(8, 329);
+            this.btnCopyEvent.Location = new System.Drawing.Point(11, 411);
+            this.btnCopyEvent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCopyEvent.Name = "btnCopyEvent";
-            this.btnCopyEvent.Size = new System.Drawing.Size(138, 23);
+            this.btnCopyEvent.Size = new System.Drawing.Size(184, 29);
             this.btnCopyEvent.TabIndex = 8;
             this.btnCopyEvent.Text = "LGCbtnCopyEvent";
             this.btnCopyEvent.UseVisualStyleBackColor = true;
             // 
             // cmsCopyEvent
             // 
+            this.cmsCopyEvent.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cmsCopyEvent.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiCopyEventAdv});
             this.cmsCopyEvent.Name = "cmsCopyEvent";
-            this.cmsCopyEvent.Size = new System.Drawing.Size(176, 26);
+            this.cmsCopyEvent.Size = new System.Drawing.Size(206, 28);
             // 
             // tsmiCopyEventAdv
             // 
             this.tsmiCopyEventAdv.Name = "tsmiCopyEventAdv";
-            this.tsmiCopyEventAdv.Size = new System.Drawing.Size(175, 22);
+            this.tsmiCopyEventAdv.Size = new System.Drawing.Size(205, 24);
             this.tsmiCopyEventAdv.Text = "LGCtsmiCopyAdv";
             this.tsmiCopyEventAdv.Click += new System.EventHandler(this.tsmiCopyEventAdv_Click);
             // 
             // btnDeleteEvent
             // 
             this.btnDeleteEvent.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnDeleteEvent.Location = new System.Drawing.Point(8, 300);
+            this.btnDeleteEvent.Location = new System.Drawing.Point(11, 375);
+            this.btnDeleteEvent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDeleteEvent.Name = "btnDeleteEvent";
-            this.btnDeleteEvent.Size = new System.Drawing.Size(138, 23);
+            this.btnDeleteEvent.Size = new System.Drawing.Size(184, 29);
             this.btnDeleteEvent.TabIndex = 7;
             this.btnDeleteEvent.Text = "LGCbtnDelEvent";
             this.btnDeleteEvent.UseVisualStyleBackColor = true;
@@ -1037,9 +1107,10 @@
             // btnNewEvent
             // 
             this.btnNewEvent.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnNewEvent.Location = new System.Drawing.Point(8, 271);
+            this.btnNewEvent.Location = new System.Drawing.Point(11, 339);
+            this.btnNewEvent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnNewEvent.Name = "btnNewEvent";
-            this.btnNewEvent.Size = new System.Drawing.Size(138, 23);
+            this.btnNewEvent.Size = new System.Drawing.Size(184, 29);
             this.btnNewEvent.TabIndex = 6;
             this.btnNewEvent.Text = "LGCbtnNewEvent";
             this.btnNewEvent.UseVisualStyleBackColor = true;
@@ -1051,10 +1122,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtxbEventDetail.Font = new System.Drawing.Font("Verdana", 9F);
-            this.rtxbEventDetail.Location = new System.Drawing.Point(152, 116);
+            this.rtxbEventDetail.Location = new System.Drawing.Point(203, 145);
+            this.rtxbEventDetail.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rtxbEventDetail.Name = "rtxbEventDetail";
             this.rtxbEventDetail.ReadOnly = true;
-            this.rtxbEventDetail.Size = new System.Drawing.Size(295, 97);
+            this.rtxbEventDetail.Size = new System.Drawing.Size(392, 120);
             this.rtxbEventDetail.TabIndex = 11;
             this.rtxbEventDetail.Text = "";
             // 
@@ -1089,9 +1161,11 @@
             this.gpbTag.Controls.Add(this.btnSaveTemp);
             this.gpbTag.Controls.Add(this.btnCopyTrigger);
             this.gpbTag.Controls.Add(this.btnDelTrigger);
-            this.gpbTag.Location = new System.Drawing.Point(267, 11);
+            this.gpbTag.Location = new System.Drawing.Point(356, 14);
+            this.gpbTag.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gpbTag.Name = "gpbTag";
-            this.gpbTag.Size = new System.Drawing.Size(917, 183);
+            this.gpbTag.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbTag.Size = new System.Drawing.Size(1223, 229);
             this.gpbTag.TabIndex = 4;
             this.gpbTag.TabStop = false;
             this.gpbTag.Text = "LGCgpbTrgTag";
@@ -1100,9 +1174,10 @@
             // 
             this.lklTraceTrigger.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lklTraceTrigger.AutoSize = true;
-            this.lklTraceTrigger.Location = new System.Drawing.Point(840, 20);
+            this.lklTraceTrigger.Location = new System.Drawing.Point(1120, 25);
+            this.lklTraceTrigger.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lklTraceTrigger.Name = "lklTraceTrigger";
-            this.lklTraceTrigger.Size = new System.Drawing.Size(71, 12);
+            this.lklTraceTrigger.Size = new System.Drawing.Size(95, 15);
             this.lklTraceTrigger.TabIndex = 16;
             this.lklTraceTrigger.TabStop = true;
             this.lklTraceTrigger.Text = "LGClklTrace";
@@ -1113,9 +1188,10 @@
             // ckbHard
             // 
             this.ckbHard.AutoSize = true;
-            this.ckbHard.Location = new System.Drawing.Point(153, 155);
+            this.ckbHard.Location = new System.Drawing.Point(204, 194);
+            this.ckbHard.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbHard.Name = "ckbHard";
-            this.ckbHard.Size = new System.Drawing.Size(84, 16);
+            this.ckbHard.Size = new System.Drawing.Size(109, 19);
             this.ckbHard.TabIndex = 15;
             this.ckbHard.Tag = "h";
             this.ckbHard.Text = "LGCckbHard";
@@ -1125,9 +1201,10 @@
             // ckbNormal
             // 
             this.ckbNormal.AutoSize = true;
-            this.ckbNormal.Location = new System.Drawing.Point(83, 155);
+            this.ckbNormal.Location = new System.Drawing.Point(111, 194);
+            this.ckbNormal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbNormal.Name = "ckbNormal";
-            this.ckbNormal.Size = new System.Drawing.Size(96, 16);
+            this.ckbNormal.Size = new System.Drawing.Size(125, 19);
             this.ckbNormal.TabIndex = 15;
             this.ckbNormal.Tag = "n";
             this.ckbNormal.Text = "LGCckbNormal";
@@ -1137,9 +1214,10 @@
             // ckbEasy
             // 
             this.ckbEasy.AutoSize = true;
-            this.ckbEasy.Location = new System.Drawing.Point(13, 155);
+            this.ckbEasy.Location = new System.Drawing.Point(17, 194);
+            this.ckbEasy.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbEasy.Name = "ckbEasy";
-            this.ckbEasy.Size = new System.Drawing.Size(84, 16);
+            this.ckbEasy.Size = new System.Drawing.Size(109, 19);
             this.ckbEasy.TabIndex = 15;
             this.ckbEasy.Tag = "e";
             this.ckbEasy.Text = "LGCckbEasy";
@@ -1150,27 +1228,30 @@
             // 
             this.cbbCustomGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbbCustomGroup.FormattingEnabled = true;
-            this.cbbCustomGroup.Location = new System.Drawing.Point(654, 84);
+            this.cbbCustomGroup.Location = new System.Drawing.Point(872, 105);
+            this.cbbCustomGroup.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbbCustomGroup.Name = "cbbCustomGroup";
-            this.cbbCustomGroup.Size = new System.Drawing.Size(256, 20);
+            this.cbbCustomGroup.Size = new System.Drawing.Size(340, 23);
             this.cbbCustomGroup.TabIndex = 14;
             // 
             // cbbAttatchedTrg
             // 
             this.cbbAttatchedTrg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbbAttatchedTrg.FormattingEnabled = true;
-            this.cbbAttatchedTrg.Location = new System.Drawing.Point(654, 35);
+            this.cbbAttatchedTrg.Location = new System.Drawing.Point(872, 44);
+            this.cbbAttatchedTrg.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbbAttatchedTrg.Name = "cbbAttatchedTrg";
-            this.cbbAttatchedTrg.Size = new System.Drawing.Size(257, 20);
+            this.cbbAttatchedTrg.Size = new System.Drawing.Size(341, 23);
             this.cbbAttatchedTrg.TabIndex = 13;
             this.cbbAttatchedTrg.SelectedValueChanged += new System.EventHandler(this.cbbAttatchedTrg_SelectedValueChanged);
             // 
             // ckbDisabled
             // 
             this.ckbDisabled.AutoSize = true;
-            this.ckbDisabled.Location = new System.Drawing.Point(288, 155);
+            this.ckbDisabled.Location = new System.Drawing.Point(384, 194);
+            this.ckbDisabled.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbDisabled.Name = "ckbDisabled";
-            this.ckbDisabled.Size = new System.Drawing.Size(108, 16);
+            this.ckbDisabled.Size = new System.Drawing.Size(141, 19);
             this.ckbDisabled.TabIndex = 12;
             this.ckbDisabled.Tag = "d";
             this.ckbDisabled.Text = "LGCckbDisabled";
@@ -1180,37 +1261,41 @@
             // lbxTriggerHouses
             // 
             this.lbxTriggerHouses.FormattingEnabled = true;
-            this.lbxTriggerHouses.ItemHeight = 12;
-            this.lbxTriggerHouses.Location = new System.Drawing.Point(492, 35);
+            this.lbxTriggerHouses.ItemHeight = 15;
+            this.lbxTriggerHouses.Location = new System.Drawing.Point(656, 44);
+            this.lbxTriggerHouses.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lbxTriggerHouses.Name = "lbxTriggerHouses";
-            this.lbxTriggerHouses.Size = new System.Drawing.Size(156, 136);
+            this.lbxTriggerHouses.Size = new System.Drawing.Size(207, 169);
             this.lbxTriggerHouses.TabIndex = 11;
             this.lbxTriggerHouses.SelectedIndexChanged += new System.EventHandler(this.lbxTriggerHouses_SelectedIndexChanged);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(652, 72);
+            this.label10.Location = new System.Drawing.Point(869, 90);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(107, 12);
+            this.label10.Size = new System.Drawing.Size(143, 15);
             this.label10.TabIndex = 10;
             this.label10.Text = "LGClblCustomGroup";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(652, 20);
+            this.label9.Location = new System.Drawing.Point(869, 25);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(77, 12);
+            this.label9.Size = new System.Drawing.Size(103, 15);
             this.label9.TabIndex = 10;
             this.label9.Text = "LGClblAttTrg";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(490, 20);
+            this.label8.Location = new System.Drawing.Point(653, 25);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(95, 12);
+            this.label8.Size = new System.Drawing.Size(127, 15);
             this.label8.TabIndex = 10;
             this.label8.Text = "LGClblTrgHouses";
             // 
@@ -1219,9 +1304,11 @@
             this.gpbRepeat.Controls.Add(this.rdbRepeat2);
             this.gpbRepeat.Controls.Add(this.rdbRepeat1);
             this.gpbRepeat.Controls.Add(this.rdbRepeat0);
-            this.gpbRepeat.Location = new System.Drawing.Point(371, 20);
+            this.gpbRepeat.Location = new System.Drawing.Point(495, 25);
+            this.gpbRepeat.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gpbRepeat.Name = "gpbRepeat";
-            this.gpbRepeat.Size = new System.Drawing.Size(115, 151);
+            this.gpbRepeat.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbRepeat.Size = new System.Drawing.Size(153, 189);
             this.gpbRepeat.TabIndex = 9;
             this.gpbRepeat.TabStop = false;
             this.gpbRepeat.Text = "LGCgpbRepeat";
@@ -1230,9 +1317,10 @@
             // rdbRepeat2
             // 
             this.rdbRepeat2.AutoSize = true;
-            this.rdbRepeat2.Location = new System.Drawing.Point(8, 112);
+            this.rdbRepeat2.Location = new System.Drawing.Point(11, 140);
+            this.rdbRepeat2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rdbRepeat2.Name = "rdbRepeat2";
-            this.rdbRepeat2.Size = new System.Drawing.Size(83, 16);
+            this.rdbRepeat2.Size = new System.Drawing.Size(108, 19);
             this.rdbRepeat2.TabIndex = 0;
             this.rdbRepeat2.Tag = "2";
             this.rdbRepeat2.Text = "LGCrdbRep2";
@@ -1243,9 +1331,10 @@
             // rdbRepeat1
             // 
             this.rdbRepeat1.AutoSize = true;
-            this.rdbRepeat1.Location = new System.Drawing.Point(8, 71);
+            this.rdbRepeat1.Location = new System.Drawing.Point(11, 89);
+            this.rdbRepeat1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rdbRepeat1.Name = "rdbRepeat1";
-            this.rdbRepeat1.Size = new System.Drawing.Size(83, 16);
+            this.rdbRepeat1.Size = new System.Drawing.Size(108, 19);
             this.rdbRepeat1.TabIndex = 0;
             this.rdbRepeat1.Tag = "1";
             this.rdbRepeat1.Text = "LGCrdbRep1";
@@ -1257,9 +1346,10 @@
             // 
             this.rdbRepeat0.AutoSize = true;
             this.rdbRepeat0.Checked = true;
-            this.rdbRepeat0.Location = new System.Drawing.Point(8, 30);
+            this.rdbRepeat0.Location = new System.Drawing.Point(11, 38);
+            this.rdbRepeat0.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rdbRepeat0.Name = "rdbRepeat0";
-            this.rdbRepeat0.Size = new System.Drawing.Size(83, 16);
+            this.rdbRepeat0.Size = new System.Drawing.Size(108, 19);
             this.rdbRepeat0.TabIndex = 0;
             this.rdbRepeat0.TabStop = true;
             this.rdbRepeat0.Tag = "0";
@@ -1271,27 +1361,30 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(77, 124);
+            this.label6.Location = new System.Drawing.Point(103, 155);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(11, 12);
+            this.label6.Size = new System.Drawing.Size(15, 15);
             this.label6.TabIndex = 8;
             this.label6.Text = "-";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(77, 75);
+            this.label4.Location = new System.Drawing.Point(103, 94);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(11, 12);
+            this.label4.Size = new System.Drawing.Size(15, 15);
             this.label4.TabIndex = 8;
             this.label4.Text = "-";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(92, 104);
+            this.label7.Location = new System.Drawing.Point(123, 130);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(83, 12);
+            this.label7.Size = new System.Drawing.Size(111, 15);
             this.label7.TabIndex = 7;
             this.label7.Text = "LGClblTagName";
             this.ttTrg.SetToolTip(this.label7, "LGCDescTagName");
@@ -1299,68 +1392,76 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(92, 54);
+            this.label3.Location = new System.Drawing.Point(123, 68);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(83, 12);
+            this.label3.Size = new System.Drawing.Size(111, 15);
             this.label3.TabIndex = 7;
             this.label3.Text = "LGClblTrgName";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 104);
+            this.label5.Location = new System.Drawing.Point(17, 130);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(71, 12);
+            this.label5.Size = new System.Drawing.Size(95, 15);
             this.label5.TabIndex = 7;
             this.label5.Text = "LGClblTagID";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 54);
+            this.label2.Location = new System.Drawing.Point(17, 68);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 12);
+            this.label2.Size = new System.Drawing.Size(95, 15);
             this.label2.TabIndex = 7;
             this.label2.Text = "LGClblTrgID";
             // 
             // txbTagID
             // 
-            this.txbTagID.Location = new System.Drawing.Point(13, 121);
+            this.txbTagID.Location = new System.Drawing.Point(17, 151);
+            this.txbTagID.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbTagID.Name = "txbTagID";
             this.txbTagID.ReadOnly = true;
-            this.txbTagID.Size = new System.Drawing.Size(58, 21);
+            this.txbTagID.Size = new System.Drawing.Size(76, 25);
             this.txbTagID.TabIndex = 6;
             // 
             // txbTrgID
             // 
-            this.txbTrgID.Location = new System.Drawing.Point(13, 69);
+            this.txbTrgID.Location = new System.Drawing.Point(17, 86);
+            this.txbTrgID.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbTrgID.Name = "txbTrgID";
             this.txbTrgID.ReadOnly = true;
-            this.txbTrgID.Size = new System.Drawing.Size(58, 21);
+            this.txbTrgID.Size = new System.Drawing.Size(76, 25);
             this.txbTrgID.TabIndex = 6;
             // 
             // txbTagName
             // 
-            this.txbTagName.Location = new System.Drawing.Point(94, 121);
+            this.txbTagName.Location = new System.Drawing.Point(125, 151);
+            this.txbTagName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbTagName.Name = "txbTagName";
             this.txbTagName.ReadOnly = true;
-            this.txbTagName.Size = new System.Drawing.Size(271, 21);
+            this.txbTagName.Size = new System.Drawing.Size(360, 25);
             this.txbTagName.TabIndex = 5;
             // 
             // txbTrgName
             // 
-            this.txbTrgName.Location = new System.Drawing.Point(94, 69);
+            this.txbTrgName.Location = new System.Drawing.Point(125, 86);
+            this.txbTrgName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbTrgName.Name = "txbTrgName";
-            this.txbTrgName.Size = new System.Drawing.Size(271, 21);
+            this.txbTrgName.Size = new System.Drawing.Size(360, 25);
             this.txbTrgName.TabIndex = 5;
             this.txbTrgName.Validated += new System.EventHandler(this.txbTrgName_Validated);
             // 
             // btnNewTrigger
             // 
             this.btnNewTrigger.ContextMenuStrip = this.cmsEditTemplate;
-            this.btnNewTrigger.Location = new System.Drawing.Point(13, 20);
+            this.btnNewTrigger.Location = new System.Drawing.Point(17, 25);
+            this.btnNewTrigger.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnNewTrigger.Name = "btnNewTrigger";
-            this.btnNewTrigger.Size = new System.Drawing.Size(107, 23);
+            this.btnNewTrigger.Size = new System.Drawing.Size(143, 29);
             this.btnNewTrigger.TabIndex = 3;
             this.btnNewTrigger.Text = "LGCbtnNewTrg";
             this.btnNewTrigger.UseVisualStyleBackColor = true;
@@ -1368,24 +1469,26 @@
             // 
             // cmsEditTemplate
             // 
+            this.cmsEditTemplate.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cmsEditTemplate.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiEditTemp});
             this.cmsEditTemplate.Name = "cmsEditTemplate";
-            this.cmsEditTemplate.Size = new System.Drawing.Size(179, 26);
+            this.cmsEditTemplate.Size = new System.Drawing.Size(209, 28);
             // 
             // tsmiEditTemp
             // 
             this.tsmiEditTemp.Name = "tsmiEditTemp";
-            this.tsmiEditTemp.Size = new System.Drawing.Size(178, 22);
+            this.tsmiEditTemp.Size = new System.Drawing.Size(208, 24);
             this.tsmiEditTemp.Text = "LGCtsmiEditTemp";
             this.tsmiEditTemp.Click += new System.EventHandler(this.tsmiEditTemp_Click);
             // 
             // btnSaveTemp
             // 
             this.btnSaveTemp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveTemp.Location = new System.Drawing.Point(654, 132);
+            this.btnSaveTemp.Location = new System.Drawing.Point(872, 165);
+            this.btnSaveTemp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSaveTemp.Name = "btnSaveTemp";
-            this.btnSaveTemp.Size = new System.Drawing.Size(100, 23);
+            this.btnSaveTemp.Size = new System.Drawing.Size(133, 29);
             this.btnSaveTemp.TabIndex = 3;
             this.btnSaveTemp.Text = "LGCbtnSaveTemplate";
             this.btnSaveTemp.UseVisualStyleBackColor = true;
@@ -1394,9 +1497,10 @@
             // 
             // btnCopyTrigger
             // 
-            this.btnCopyTrigger.Location = new System.Drawing.Point(258, 20);
+            this.btnCopyTrigger.Location = new System.Drawing.Point(344, 25);
+            this.btnCopyTrigger.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCopyTrigger.Name = "btnCopyTrigger";
-            this.btnCopyTrigger.Size = new System.Drawing.Size(107, 23);
+            this.btnCopyTrigger.Size = new System.Drawing.Size(143, 29);
             this.btnCopyTrigger.TabIndex = 3;
             this.btnCopyTrigger.Text = "LGCbtnCopyTrg";
             this.btnCopyTrigger.UseVisualStyleBackColor = true;
@@ -1404,9 +1508,10 @@
             // 
             // btnDelTrigger
             // 
-            this.btnDelTrigger.Location = new System.Drawing.Point(138, 20);
+            this.btnDelTrigger.Location = new System.Drawing.Point(184, 25);
+            this.btnDelTrigger.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDelTrigger.Name = "btnDelTrigger";
-            this.btnDelTrigger.Size = new System.Drawing.Size(107, 23);
+            this.btnDelTrigger.Size = new System.Drawing.Size(143, 29);
             this.btnDelTrigger.TabIndex = 3;
             this.btnDelTrigger.Text = "LGCbtnDelTrg";
             this.btnDelTrigger.UseVisualStyleBackColor = true;
@@ -1421,15 +1526,17 @@
             this.lbxTriggerList.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxTriggerList.FormattingEnabled = true;
             this.lbxTriggerList.HorizontalScrollbar = true;
-            this.lbxTriggerList.ItemHeight = 14;
-            this.lbxTriggerList.Location = new System.Drawing.Point(8, 26);
+            this.lbxTriggerList.ItemHeight = 18;
+            this.lbxTriggerList.Location = new System.Drawing.Point(11, 32);
+            this.lbxTriggerList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lbxTriggerList.Name = "lbxTriggerList";
-            this.lbxTriggerList.Size = new System.Drawing.Size(253, 522);
+            this.lbxTriggerList.Size = new System.Drawing.Size(336, 652);
             this.lbxTriggerList.TabIndex = 2;
             this.lbxTriggerList.SelectedIndexChanged += new System.EventHandler(this.lbxTriggerList_SelectedIndexChanged);
             // 
             // cmsTriggerList
             // 
+            this.cmsTriggerList.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cmsTriggerList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiTrgLstAscending,
             this.tsmiTrgLstDecending,
@@ -1438,54 +1545,55 @@
             this.tsmiTrgLstName,
             this.tsmiTrgLstIDName});
             this.cmsTriggerList.Name = "cmsTriggerList";
-            this.cmsTriggerList.Size = new System.Drawing.Size(225, 120);
+            this.cmsTriggerList.Size = new System.Drawing.Size(264, 130);
             // 
             // tsmiTrgLstAscending
             // 
             this.tsmiTrgLstAscending.Name = "tsmiTrgLstAscending";
-            this.tsmiTrgLstAscending.Size = new System.Drawing.Size(224, 22);
+            this.tsmiTrgLstAscending.Size = new System.Drawing.Size(263, 24);
             this.tsmiTrgLstAscending.Text = "LGCtsmiAscend";
             this.tsmiTrgLstAscending.Click += new System.EventHandler(this.tsmiTrgLstAscending_Click);
             // 
             // tsmiTrgLstDecending
             // 
             this.tsmiTrgLstDecending.Name = "tsmiTrgLstDecending";
-            this.tsmiTrgLstDecending.Size = new System.Drawing.Size(224, 22);
+            this.tsmiTrgLstDecending.Size = new System.Drawing.Size(263, 24);
             this.tsmiTrgLstDecending.Text = "LGCtsmiDecend";
             this.tsmiTrgLstDecending.Click += new System.EventHandler(this.tsmiTrgLstDecending_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(260, 6);
             // 
             // tsmiTrgLstID
             // 
             this.tsmiTrgLstID.Name = "tsmiTrgLstID";
-            this.tsmiTrgLstID.Size = new System.Drawing.Size(224, 22);
+            this.tsmiTrgLstID.Size = new System.Drawing.Size(263, 24);
             this.tsmiTrgLstID.Text = "LGCtsmiShowID";
             this.tsmiTrgLstID.Click += new System.EventHandler(this.tsmiTrgLstID_Click);
             // 
             // tsmiTrgLstName
             // 
             this.tsmiTrgLstName.Name = "tsmiTrgLstName";
-            this.tsmiTrgLstName.Size = new System.Drawing.Size(224, 22);
+            this.tsmiTrgLstName.Size = new System.Drawing.Size(263, 24);
             this.tsmiTrgLstName.Text = "LGCtsmiShowName";
             this.tsmiTrgLstName.Click += new System.EventHandler(this.tsmiTrgLstName_Click);
             // 
             // tsmiTrgLstIDName
             // 
             this.tsmiTrgLstIDName.Name = "tsmiTrgLstIDName";
-            this.tsmiTrgLstIDName.Size = new System.Drawing.Size(224, 22);
+            this.tsmiTrgLstIDName.Size = new System.Drawing.Size(263, 24);
             this.tsmiTrgLstIDName.Text = "LGCtsmiShowIDandName";
             this.tsmiTrgLstIDName.Click += new System.EventHandler(this.tsmiTrgLstIDName_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 11);
+            this.label1.Location = new System.Drawing.Point(8, 14);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 12);
+            this.label1.Size = new System.Drawing.Size(111, 15);
             this.label1.TabIndex = 1;
             this.label1.Text = "LGClblTrgList";
             // 
@@ -1493,40 +1601,196 @@
             // 
             this.tbpTeams.BackColor = System.Drawing.Color.Transparent;
             this.tbpTeams.Controls.Add(this.gpbTeamTask);
-            this.tbpTeams.Location = new System.Drawing.Point(4, 22);
+            this.tbpTeams.Location = new System.Drawing.Point(4, 25);
+            this.tbpTeams.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbpTeams.Name = "tbpTeams";
-            this.tbpTeams.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpTeams.Size = new System.Drawing.Size(1190, 565);
+            this.tbpTeams.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbpTeams.Size = new System.Drawing.Size(1589, 710);
             this.tbpTeams.TabIndex = 1;
             this.tbpTeams.Text = "LGCtbpTeamPage";
+            // 
+            // gpbTeamTask
+            // 
+            this.gpbTeamTask.Controls.Add(this.btnDelTask);
+            this.gpbTeamTask.Controls.Add(this.btnNewTask);
+            this.gpbTeamTask.Controls.Add(this.gpbTeamTaskCur);
+            this.gpbTeamTask.Controls.Add(this.label22);
+            this.gpbTeamTask.Controls.Add(this.listBox1);
+            this.gpbTeamTask.Location = new System.Drawing.Point(8, 9);
+            this.gpbTeamTask.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbTeamTask.Name = "gpbTeamTask";
+            this.gpbTeamTask.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbTeamTask.Size = new System.Drawing.Size(620, 359);
+            this.gpbTeamTask.TabIndex = 0;
+            this.gpbTeamTask.TabStop = false;
+            this.gpbTeamTask.Text = "LGCgpbTeamTask";
+            // 
+            // btnDelTask
+            // 
+            this.btnDelTask.Location = new System.Drawing.Point(147, 321);
+            this.btnDelTask.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDelTask.Name = "btnDelTask";
+            this.btnDelTask.Size = new System.Drawing.Size(133, 29);
+            this.btnDelTask.TabIndex = 3;
+            this.btnDelTask.Text = "LGCbtnDelTask";
+            this.btnDelTask.UseVisualStyleBackColor = true;
+            // 
+            // btnNewTask
+            // 
+            this.btnNewTask.Location = new System.Drawing.Point(8, 321);
+            this.btnNewTask.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnNewTask.Name = "btnNewTask";
+            this.btnNewTask.Size = new System.Drawing.Size(131, 29);
+            this.btnNewTask.TabIndex = 2;
+            this.btnNewTask.Text = "LGCbtnNewTask";
+            this.btnNewTask.UseVisualStyleBackColor = true;
+            // 
+            // gpbTeamTaskCur
+            // 
+            this.gpbTeamTaskCur.Controls.Add(this.label25);
+            this.gpbTeamTaskCur.Controls.Add(this.textBox1);
+            this.gpbTeamTaskCur.Controls.Add(this.comboBox1);
+            this.gpbTeamTaskCur.Controls.Add(this.label24);
+            this.gpbTeamTaskCur.Controls.Add(this.btnDelTaskMem);
+            this.gpbTeamTaskCur.Controls.Add(this.btnAddTaskMem);
+            this.gpbTeamTaskCur.Controls.Add(this.label23);
+            this.gpbTeamTaskCur.Controls.Add(this.listBox2);
+            this.gpbTeamTaskCur.Location = new System.Drawing.Point(288, 22);
+            this.gpbTeamTaskCur.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbTeamTaskCur.Name = "gpbTeamTaskCur";
+            this.gpbTeamTaskCur.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbTeamTaskCur.Size = new System.Drawing.Size(324, 328);
+            this.gpbTeamTaskCur.TabIndex = 2;
+            this.gpbTeamTaskCur.TabStop = false;
+            this.gpbTeamTaskCur.Text = "LGCgpbTeamTaskCur";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(8, 255);
+            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(135, 15);
+            this.label25.TabIndex = 7;
+            this.label25.Text = "LGClblTaskCurNum";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(101, 251);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(213, 25);
+            this.textBox1.TabIndex = 6;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(101, 219);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(213, 23);
+            this.comboBox1.TabIndex = 5;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(8, 222);
+            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(143, 15);
+            this.label24.TabIndex = 4;
+            this.label24.Text = "LGClblTaskCurType";
+            // 
+            // btnDelTaskMem
+            // 
+            this.btnDelTaskMem.Location = new System.Drawing.Point(176, 285);
+            this.btnDelTaskMem.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDelTaskMem.Name = "btnDelTaskMem";
+            this.btnDelTaskMem.Size = new System.Drawing.Size(140, 29);
+            this.btnDelTaskMem.TabIndex = 3;
+            this.btnDelTaskMem.Text = "LGCbtnDelTaskMem";
+            this.btnDelTaskMem.UseVisualStyleBackColor = true;
+            // 
+            // btnAddTaskMem
+            // 
+            this.btnAddTaskMem.Location = new System.Drawing.Point(8, 285);
+            this.btnAddTaskMem.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddTaskMem.Name = "btnAddTaskMem";
+            this.btnAddTaskMem.Size = new System.Drawing.Size(140, 29);
+            this.btnAddTaskMem.TabIndex = 2;
+            this.btnAddTaskMem.Text = "LGCbtnAddTaskMem";
+            this.btnAddTaskMem.UseVisualStyleBackColor = true;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(8, 21);
+            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(167, 15);
+            this.label23.TabIndex = 1;
+            this.label23.Text = "LGClblTaskMemberList";
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.ItemHeight = 15;
+            this.listBox2.Location = new System.Drawing.Point(8, 40);
+            this.listBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(307, 169);
+            this.listBox2.TabIndex = 0;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(8, 24);
+            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(119, 15);
+            this.label22.TabIndex = 1;
+            this.label22.Text = "LGClblTaskList";
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 15;
+            this.listBox1.Location = new System.Drawing.Point(8, 40);
+            this.listBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(271, 274);
+            this.listBox1.TabIndex = 0;
             // 
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1190, 565);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage3.Size = new System.Drawing.Size(1589, 710);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             // 
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1190, 565);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage4.Size = new System.Drawing.Size(1589, 710);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "tabPage4";
             // 
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Location = new System.Drawing.Point(4, 25);
+            this.tabPage5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1190, 565);
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage5.Size = new System.Drawing.Size(1589, 710);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "tabPage5";
             // 
@@ -1556,9 +1820,11 @@
             this.gpbSearch.Controls.Add(this.label16);
             this.gpbSearch.Controls.Add(this.lvSearchResult);
             this.gpbSearch.Controls.Add(this.rtxbSearchInspector);
-            this.gpbSearch.Location = new System.Drawing.Point(1216, 33);
+            this.gpbSearch.Location = new System.Drawing.Point(1621, 41);
+            this.gpbSearch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gpbSearch.Name = "gpbSearch";
-            this.gpbSearch.Size = new System.Drawing.Size(286, 591);
+            this.gpbSearch.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbSearch.Size = new System.Drawing.Size(381, 739);
             this.gpbSearch.TabIndex = 4;
             this.gpbSearch.TabStop = false;
             this.gpbSearch.Text = "LGCgpbSearch";
@@ -1566,9 +1832,10 @@
             // ckbSuper
             // 
             this.ckbSuper.AutoSize = true;
-            this.ckbSuper.Location = new System.Drawing.Point(158, 179);
+            this.ckbSuper.Location = new System.Drawing.Point(211, 224);
+            this.ckbSuper.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbSuper.Name = "ckbSuper";
-            this.ckbSuper.Size = new System.Drawing.Size(90, 16);
+            this.ckbSuper.Size = new System.Drawing.Size(117, 19);
             this.ckbSuper.TabIndex = 7;
             this.ckbSuper.Text = "LGCckbSuper";
             this.ckbSuper.UseVisualStyleBackColor = true;
@@ -1576,9 +1843,10 @@
             // ckbAnim
             // 
             this.ckbAnim.AutoSize = true;
-            this.ckbAnim.Location = new System.Drawing.Point(158, 157);
+            this.ckbAnim.Location = new System.Drawing.Point(211, 196);
+            this.ckbAnim.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbAnim.Name = "ckbAnim";
-            this.ckbAnim.Size = new System.Drawing.Size(84, 16);
+            this.ckbAnim.Size = new System.Drawing.Size(109, 19);
             this.ckbAnim.TabIndex = 7;
             this.ckbAnim.Text = "LGCckbAnim";
             this.ckbAnim.UseVisualStyleBackColor = true;
@@ -1586,9 +1854,10 @@
             // ckbTheme
             // 
             this.ckbTheme.AutoSize = true;
-            this.ckbTheme.Location = new System.Drawing.Point(158, 135);
+            this.ckbTheme.Location = new System.Drawing.Point(211, 169);
+            this.ckbTheme.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbTheme.Name = "ckbTheme";
-            this.ckbTheme.Size = new System.Drawing.Size(78, 16);
+            this.ckbTheme.Size = new System.Drawing.Size(101, 19);
             this.ckbTheme.TabIndex = 7;
             this.ckbTheme.Text = "LGCckbMus";
             this.ckbTheme.UseVisualStyleBackColor = true;
@@ -1596,9 +1865,10 @@
             // ckbEva
             // 
             this.ckbEva.AutoSize = true;
-            this.ckbEva.Location = new System.Drawing.Point(158, 113);
+            this.ckbEva.Location = new System.Drawing.Point(211, 141);
+            this.ckbEva.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbEva.Name = "ckbEva";
-            this.ckbEva.Size = new System.Drawing.Size(78, 16);
+            this.ckbEva.Size = new System.Drawing.Size(101, 19);
             this.ckbEva.TabIndex = 7;
             this.ckbEva.Text = "LGCckbEva";
             this.ckbEva.UseVisualStyleBackColor = true;
@@ -1606,9 +1876,10 @@
             // ckbSound
             // 
             this.ckbSound.AutoSize = true;
-            this.ckbSound.Location = new System.Drawing.Point(158, 91);
+            this.ckbSound.Location = new System.Drawing.Point(211, 114);
+            this.ckbSound.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbSound.Name = "ckbSound";
-            this.ckbSound.Size = new System.Drawing.Size(78, 16);
+            this.ckbSound.Size = new System.Drawing.Size(101, 19);
             this.ckbSound.TabIndex = 7;
             this.ckbSound.Text = "LGCckbSnd";
             this.ckbSound.UseVisualStyleBackColor = true;
@@ -1616,9 +1887,10 @@
             // ckbTechno
             // 
             this.ckbTechno.AutoSize = true;
-            this.ckbTechno.Location = new System.Drawing.Point(158, 69);
+            this.ckbTechno.Location = new System.Drawing.Point(211, 86);
+            this.ckbTechno.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbTechno.Name = "ckbTechno";
-            this.ckbTechno.Size = new System.Drawing.Size(96, 16);
+            this.ckbTechno.Size = new System.Drawing.Size(125, 19);
             this.ckbTechno.TabIndex = 7;
             this.ckbTechno.Text = "LGCckbTechno";
             this.ckbTechno.UseVisualStyleBackColor = true;
@@ -1626,9 +1898,10 @@
             // ckbCsf
             // 
             this.ckbCsf.AutoSize = true;
-            this.ckbCsf.Location = new System.Drawing.Point(158, 47);
+            this.ckbCsf.Location = new System.Drawing.Point(211, 59);
+            this.ckbCsf.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbCsf.Name = "ckbCsf";
-            this.ckbCsf.Size = new System.Drawing.Size(78, 16);
+            this.ckbCsf.Size = new System.Drawing.Size(101, 19);
             this.ckbCsf.TabIndex = 7;
             this.ckbCsf.Text = "LGCckbCsf";
             this.ckbCsf.UseVisualStyleBackColor = true;
@@ -1636,9 +1909,10 @@
             // ckbScript
             // 
             this.ckbScript.AutoSize = true;
-            this.ckbScript.Location = new System.Drawing.Point(8, 157);
+            this.ckbScript.Location = new System.Drawing.Point(11, 196);
+            this.ckbScript.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbScript.Name = "ckbScript";
-            this.ckbScript.Size = new System.Drawing.Size(84, 16);
+            this.ckbScript.Size = new System.Drawing.Size(109, 19);
             this.ckbScript.TabIndex = 6;
             this.ckbScript.Text = "LGCckbTScp";
             this.ckbScript.UseVisualStyleBackColor = true;
@@ -1646,9 +1920,10 @@
             // ckbHouse
             // 
             this.ckbHouse.AutoSize = true;
-            this.ckbHouse.Location = new System.Drawing.Point(8, 201);
+            this.ckbHouse.Location = new System.Drawing.Point(11, 251);
+            this.ckbHouse.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbHouse.Name = "ckbHouse";
-            this.ckbHouse.Size = new System.Drawing.Size(90, 16);
+            this.ckbHouse.Size = new System.Drawing.Size(117, 19);
             this.ckbHouse.TabIndex = 6;
             this.ckbHouse.Text = "LGCckbHouse";
             this.ckbHouse.UseVisualStyleBackColor = true;
@@ -1656,9 +1931,10 @@
             // ckbGlobal
             // 
             this.ckbGlobal.AutoSize = true;
-            this.ckbGlobal.Location = new System.Drawing.Point(158, 201);
+            this.ckbGlobal.Location = new System.Drawing.Point(211, 251);
+            this.ckbGlobal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbGlobal.Name = "ckbGlobal";
-            this.ckbGlobal.Size = new System.Drawing.Size(96, 16);
+            this.ckbGlobal.Size = new System.Drawing.Size(125, 19);
             this.ckbGlobal.TabIndex = 6;
             this.ckbGlobal.Text = "LGCckbGlobal";
             this.ckbGlobal.UseVisualStyleBackColor = true;
@@ -1666,9 +1942,10 @@
             // ckbAiTrigger
             // 
             this.ckbAiTrigger.AutoSize = true;
-            this.ckbAiTrigger.Location = new System.Drawing.Point(8, 179);
+            this.ckbAiTrigger.Location = new System.Drawing.Point(11, 224);
+            this.ckbAiTrigger.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbAiTrigger.Name = "ckbAiTrigger";
-            this.ckbAiTrigger.Size = new System.Drawing.Size(90, 16);
+            this.ckbAiTrigger.Size = new System.Drawing.Size(117, 19);
             this.ckbAiTrigger.TabIndex = 6;
             this.ckbAiTrigger.Text = "LGCckbAiTrg";
             this.ckbAiTrigger.UseVisualStyleBackColor = true;
@@ -1676,9 +1953,10 @@
             // ckbTaskForce
             // 
             this.ckbTaskForce.AutoSize = true;
-            this.ckbTaskForce.Location = new System.Drawing.Point(8, 135);
+            this.ckbTaskForce.Location = new System.Drawing.Point(11, 169);
+            this.ckbTaskForce.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbTaskForce.Name = "ckbTaskForce";
-            this.ckbTaskForce.Size = new System.Drawing.Size(72, 16);
+            this.ckbTaskForce.Size = new System.Drawing.Size(93, 19);
             this.ckbTaskForce.TabIndex = 6;
             this.ckbTaskForce.Text = "LGCckbTF";
             this.ckbTaskForce.UseVisualStyleBackColor = true;
@@ -1686,9 +1964,10 @@
             // ckbTeam
             // 
             this.ckbTeam.AutoSize = true;
-            this.ckbTeam.Location = new System.Drawing.Point(8, 113);
+            this.ckbTeam.Location = new System.Drawing.Point(11, 141);
+            this.ckbTeam.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbTeam.Name = "ckbTeam";
-            this.ckbTeam.Size = new System.Drawing.Size(84, 16);
+            this.ckbTeam.Size = new System.Drawing.Size(109, 19);
             this.ckbTeam.TabIndex = 6;
             this.ckbTeam.Text = "LGCckbTeam";
             this.ckbTeam.UseVisualStyleBackColor = true;
@@ -1696,9 +1975,10 @@
             // ckbLocal
             // 
             this.ckbLocal.AutoSize = true;
-            this.ckbLocal.Location = new System.Drawing.Point(8, 91);
+            this.ckbLocal.Location = new System.Drawing.Point(11, 114);
+            this.ckbLocal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbLocal.Name = "ckbLocal";
-            this.ckbLocal.Size = new System.Drawing.Size(90, 16);
+            this.ckbLocal.Size = new System.Drawing.Size(117, 19);
             this.ckbLocal.TabIndex = 6;
             this.ckbLocal.Text = "LGCckbLocal";
             this.ckbLocal.UseVisualStyleBackColor = true;
@@ -1706,9 +1986,10 @@
             // ckbTag
             // 
             this.ckbTag.AutoSize = true;
-            this.ckbTag.Location = new System.Drawing.Point(8, 69);
+            this.ckbTag.Location = new System.Drawing.Point(11, 86);
+            this.ckbTag.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbTag.Name = "ckbTag";
-            this.ckbTag.Size = new System.Drawing.Size(78, 16);
+            this.ckbTag.Size = new System.Drawing.Size(101, 19);
             this.ckbTag.TabIndex = 6;
             this.ckbTag.Text = "LGCckbTag";
             this.ckbTag.UseVisualStyleBackColor = true;
@@ -1716,18 +1997,20 @@
             // ckbTrigger
             // 
             this.ckbTrigger.AutoSize = true;
-            this.ckbTrigger.Location = new System.Drawing.Point(8, 47);
+            this.ckbTrigger.Location = new System.Drawing.Point(11, 59);
+            this.ckbTrigger.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ckbTrigger.Name = "ckbTrigger";
-            this.ckbTrigger.Size = new System.Drawing.Size(84, 16);
+            this.ckbTrigger.Size = new System.Drawing.Size(109, 19);
             this.ckbTrigger.TabIndex = 6;
             this.ckbTrigger.Text = "LGCckbTrig";
             this.ckbTrigger.UseVisualStyleBackColor = true;
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(197, 20);
+            this.btnSearch.Location = new System.Drawing.Point(263, 25);
+            this.btnSearch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(83, 21);
+            this.btnSearch.Size = new System.Drawing.Size(111, 26);
             this.btnSearch.TabIndex = 5;
             this.btnSearch.Text = "LGCbtnSearch";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -1736,9 +2019,10 @@
             // txbSearchName
             // 
             this.txbSearchName.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.txbSearchName.Location = new System.Drawing.Point(6, 20);
+            this.txbSearchName.Location = new System.Drawing.Point(8, 25);
+            this.txbSearchName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbSearchName.Name = "txbSearchName";
-            this.txbSearchName.Size = new System.Drawing.Size(185, 21);
+            this.txbSearchName.Size = new System.Drawing.Size(245, 25);
             this.txbSearchName.TabIndex = 4;
             this.txbSearchName.Text = "LGClblFakeSearch";
             this.txbSearchName.Enter += new System.EventHandler(this.txbSearchName_Enter);
@@ -1748,18 +2032,20 @@
             // lblSearchResult
             // 
             this.lblSearchResult.AutoSize = true;
-            this.lblSearchResult.Location = new System.Drawing.Point(6, 222);
+            this.lblSearchResult.Location = new System.Drawing.Point(8, 278);
+            this.lblSearchResult.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSearchResult.Name = "lblSearchResult";
-            this.lblSearchResult.Size = new System.Drawing.Size(113, 12);
+            this.lblSearchResult.Size = new System.Drawing.Size(151, 15);
             this.lblSearchResult.TabIndex = 3;
             this.lblSearchResult.Text = "LGClblSearchResult";
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(6, 423);
+            this.label16.Location = new System.Drawing.Point(8, 529);
+            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(95, 12);
+            this.label16.Size = new System.Drawing.Size(127, 15);
             this.label16.TabIndex = 2;
             this.label16.Text = "LGClblInspector";
             // 
@@ -1772,10 +2058,11 @@
             this.hdExtraValue});
             this.lvSearchResult.FullRowSelect = true;
             this.lvSearchResult.HideSelection = false;
-            this.lvSearchResult.Location = new System.Drawing.Point(6, 237);
+            this.lvSearchResult.Location = new System.Drawing.Point(8, 296);
+            this.lvSearchResult.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lvSearchResult.MultiSelect = false;
             this.lvSearchResult.Name = "lvSearchResult";
-            this.lvSearchResult.Size = new System.Drawing.Size(274, 183);
+            this.lvSearchResult.Size = new System.Drawing.Size(364, 228);
             this.lvSearchResult.TabIndex = 1;
             this.lvSearchResult.UseCompatibleStateImageBehavior = false;
             this.lvSearchResult.View = System.Windows.Forms.View.Details;
@@ -1800,157 +2087,23 @@
             // rtxbSearchInspector
             // 
             this.rtxbSearchInspector.Font = new System.Drawing.Font("Verdana", 9F);
-            this.rtxbSearchInspector.Location = new System.Drawing.Point(6, 441);
+            this.rtxbSearchInspector.Location = new System.Drawing.Point(8, 551);
+            this.rtxbSearchInspector.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rtxbSearchInspector.Name = "rtxbSearchInspector";
             this.rtxbSearchInspector.ReadOnly = true;
-            this.rtxbSearchInspector.Size = new System.Drawing.Size(274, 144);
+            this.rtxbSearchInspector.Size = new System.Drawing.Size(364, 179);
             this.rtxbSearchInspector.TabIndex = 0;
             this.rtxbSearchInspector.Text = "";
             // 
-            // gpbTeamTask
-            // 
-            this.gpbTeamTask.Controls.Add(this.btnDelTask);
-            this.gpbTeamTask.Controls.Add(this.btnNewTask);
-            this.gpbTeamTask.Controls.Add(this.gpbTeamTaskCur);
-            this.gpbTeamTask.Controls.Add(this.label22);
-            this.gpbTeamTask.Controls.Add(this.listBox1);
-            this.gpbTeamTask.Location = new System.Drawing.Point(6, 7);
-            this.gpbTeamTask.Name = "gpbTeamTask";
-            this.gpbTeamTask.Size = new System.Drawing.Size(465, 287);
-            this.gpbTeamTask.TabIndex = 0;
-            this.gpbTeamTask.TabStop = false;
-            this.gpbTeamTask.Text = "LGCgpbTeamTask";
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(6, 32);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(204, 220);
-            this.listBox1.TabIndex = 0;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(6, 19);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(89, 12);
-            this.label22.TabIndex = 1;
-            this.label22.Text = "LGClblTaskList";
-            // 
-            // gpbTeamTaskCur
-            // 
-            this.gpbTeamTaskCur.Controls.Add(this.label25);
-            this.gpbTeamTaskCur.Controls.Add(this.textBox1);
-            this.gpbTeamTaskCur.Controls.Add(this.comboBox1);
-            this.gpbTeamTaskCur.Controls.Add(this.label24);
-            this.gpbTeamTaskCur.Controls.Add(this.btnDelTaskMem);
-            this.gpbTeamTaskCur.Controls.Add(this.btnAddTaskMem);
-            this.gpbTeamTaskCur.Controls.Add(this.label23);
-            this.gpbTeamTaskCur.Controls.Add(this.listBox2);
-            this.gpbTeamTaskCur.Location = new System.Drawing.Point(216, 18);
-            this.gpbTeamTaskCur.Name = "gpbTeamTaskCur";
-            this.gpbTeamTaskCur.Size = new System.Drawing.Size(243, 262);
-            this.gpbTeamTaskCur.TabIndex = 2;
-            this.gpbTeamTaskCur.TabStop = false;
-            this.gpbTeamTaskCur.Text = "LGCgpbTeamTaskCur";
-            // 
-            // listBox2
-            // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 12;
-            this.listBox2.Location = new System.Drawing.Point(6, 32);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(231, 136);
-            this.listBox2.TabIndex = 0;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(6, 17);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(125, 12);
-            this.label23.TabIndex = 1;
-            this.label23.Text = "LGClblTaskMemberList";
-            // 
-            // btnNewTask
-            // 
-            this.btnNewTask.Location = new System.Drawing.Point(6, 257);
-            this.btnNewTask.Name = "btnNewTask";
-            this.btnNewTask.Size = new System.Drawing.Size(98, 23);
-            this.btnNewTask.TabIndex = 2;
-            this.btnNewTask.Text = "LGCbtnNewTask";
-            this.btnNewTask.UseVisualStyleBackColor = true;
-            // 
-            // btnDelTask
-            // 
-            this.btnDelTask.Location = new System.Drawing.Point(110, 257);
-            this.btnDelTask.Name = "btnDelTask";
-            this.btnDelTask.Size = new System.Drawing.Size(100, 23);
-            this.btnDelTask.TabIndex = 3;
-            this.btnDelTask.Text = "LGCbtnDelTask";
-            this.btnDelTask.UseVisualStyleBackColor = true;
-            // 
-            // btnAddTaskMem
-            // 
-            this.btnAddTaskMem.Location = new System.Drawing.Point(6, 228);
-            this.btnAddTaskMem.Name = "btnAddTaskMem";
-            this.btnAddTaskMem.Size = new System.Drawing.Size(105, 23);
-            this.btnAddTaskMem.TabIndex = 2;
-            this.btnAddTaskMem.Text = "LGCbtnAddTaskMem";
-            this.btnAddTaskMem.UseVisualStyleBackColor = true;
-            // 
-            // btnDelTaskMem
-            // 
-            this.btnDelTaskMem.Location = new System.Drawing.Point(132, 228);
-            this.btnDelTaskMem.Name = "btnDelTaskMem";
-            this.btnDelTaskMem.Size = new System.Drawing.Size(105, 23);
-            this.btnDelTaskMem.TabIndex = 3;
-            this.btnDelTaskMem.Text = "LGCbtnDelTaskMem";
-            this.btnDelTaskMem.UseVisualStyleBackColor = true;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(6, 178);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(107, 12);
-            this.label24.TabIndex = 4;
-            this.label24.Text = "LGClblTaskCurType";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(76, 175);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(161, 20);
-            this.comboBox1.TabIndex = 5;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(76, 201);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(161, 21);
-            this.textBox1.TabIndex = 6;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(6, 204);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(101, 12);
-            this.label25.TabIndex = 7;
-            this.label25.Text = "LGClblTaskCurNum";
-            // 
             // LogicEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1514, 633);
+            this.ClientSize = new System.Drawing.Size(2019, 791);
             this.Controls.Add(this.gpbSearch);
             this.Controls.Add(this.tbcMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "LogicEditor";
@@ -1977,12 +2130,12 @@
             this.cmsEditTemplate.ResumeLayout(false);
             this.cmsTriggerList.ResumeLayout(false);
             this.tbpTeams.ResumeLayout(false);
-            this.gpbSearch.ResumeLayout(false);
-            this.gpbSearch.PerformLayout();
             this.gpbTeamTask.ResumeLayout(false);
             this.gpbTeamTask.PerformLayout();
             this.gpbTeamTaskCur.ResumeLayout(false);
             this.gpbTeamTaskCur.PerformLayout();
+            this.gpbSearch.ResumeLayout(false);
+            this.gpbSearch.PerformLayout();
             this.ResumeLayout(false);
 
         }

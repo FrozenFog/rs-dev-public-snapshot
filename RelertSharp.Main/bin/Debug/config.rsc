@@ -1,7 +1,7 @@
 [General]
 ConfigName=Relert Sharp Config for Mental Omega 3.3.4
 ConfigVersion=1.0
-GamePath=D:\Games\Mental Omega\Mental Omega 3.3.4 Dissolving
+GamePath=E:\Program Files\RedAlert2\
 CustomTheater=false
 AutosaveTime=60
 
