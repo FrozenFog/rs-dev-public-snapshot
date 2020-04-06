@@ -146,7 +146,7 @@ namespace RelertSharp.SubWindows.INIEditor
         #region ListBox & DataGridView
         private void lbxSectionList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (SectionName != null)
+            if (!string.IsNullOrWhiteSpace(SectionName))
             {
                 INIEntity tmp = new INIEntity();
                 if (sections.TryGetValue(SectionName, out tmp))
