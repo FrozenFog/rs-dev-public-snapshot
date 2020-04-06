@@ -177,7 +177,7 @@ int TmpFileClass::GetValidBlockCount()
 bool TmpFileClass::HasExtraData(int nIndex)
 {
 	auto pImageHeader = this->GetImageHeader(nIndex);
-	return pImageHeader ? pImageHeader->nExtraHeight > 0 && pImageHeader->nExtraWidth > 0 : false;
+	return pImageHeader ? pImageHeader->dwExtraFlag & 1 : false;
 }
 
 RampType TmpFileClass::GetRampType(int nIndex)
