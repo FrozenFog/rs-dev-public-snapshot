@@ -59,9 +59,9 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 		VxlFiles.push_back(id);
 	}
 
-	//if (auto id = CreateCommonTextureFile("images\\common_tex.png")) {
-	//	CreateCommonTextureObjectAtScene(id, { 0.0,0.0,0.0 });
-	//}
+	if (auto id = CreateCircularCommonTextureFile(280.0,4.0,D3DCOLOR_XRGB(242,0,242))) {
+		CreateCommonTextureObjectAtScene(id, { 0.0,0.0,0.0 });
+	}
 	
 	if (ShpFile = CreateShpFile("images\\ggcnst.shp")) {
 		if (LoadShpTextures(ShpFile, UnitPalette, RGB(0, 252, 252)))

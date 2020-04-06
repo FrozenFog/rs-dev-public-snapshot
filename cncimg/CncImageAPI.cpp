@@ -182,6 +182,22 @@ int WINAPI CreateCommonTextureFile(const char * pFileName)
 	return 0;
 }
 
+int WINAPI CreateCircularCommonTextureFile(float Radius, float Thickness, DWORD dwD3DColor)
+{
+	if (!SceneClass::Instance.IsDeviceLoaded())
+		return 0;
+
+	auto pFile = std::make_unique<CommonTextureFileClass>(SceneClass::Instance.GetDevice(), Radius, Thickness, dwD3DColor);
+	if (pFile && pFile->IsLoaded())
+	{
+		auto id = reinterpret_cast<int>(pFile.get());
+
+		CommonTextureFileClass::FileObjectTable[id] = std::move(pFile);
+		return id;
+	}
+	return 0;
+}
+
 bool WINAPI RemoveCommonTextureFile(int nFileId)
 {
 	auto find = CommonTextureFileClass::FileObjectTable.find(nFileId);
@@ -221,12 +237,12 @@ int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFram
 		nFoundationX, nFoundationY, nHeight);
 }
 
-int WINAPI CreateCommonTextureObjectAtScene(int nFileId, D3DXVECTOR3 Position)
+int WINAPI CreateCommonTextureObjectAtScene(int nFileId, D3DXVECTOR3 Position, bool bFlat)
 {
 	auto find = CommonTextureFileClass::FileObjectTable.find(nFileId);
 	if (find == CommonTextureFileClass::FileObjectTable.end())
 		return false;
-	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position);
+	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position, bFlat);
 }
 
 void WINAPI MakeVxlFrameShot(int nFileId, LPCSTR pFile, int idxFrame, float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor)

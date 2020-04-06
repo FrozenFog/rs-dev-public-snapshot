@@ -20,6 +20,11 @@ CommonTextureFileClass::CommonTextureFileClass(LPDIRECT3DDEVICE9 pDevice, const 
 	LoadFromFile(pDevice, pFileName);
 }
 
+CommonTextureFileClass::CommonTextureFileClass(LPDIRECT3DDEVICE9 pDevice, float Radius, float Thickness, DWORD dwColor)
+{
+	CreateCircle(pDevice, Radius, Thickness, dwColor);
+}
+
 CommonTextureFileClass::~CommonTextureFileClass()
 {
 	RemoveTexture();
@@ -33,6 +38,81 @@ bool CommonTextureFileClass::LoadFromFile(LPDIRECT3DDEVICE9 pDevice, const char 
 	return SUCCEEDED(D3DXCreateTextureFromFile(pDevice, pFileName, &pTexture));
 }
 
+bool CommonTextureFileClass::CreateCircle(LPDIRECT3DDEVICE9 pDevice, float Radius, float Thickness, DWORD dwColor)
+{
+	const float BorderSafeRange = 3.0f;
+
+	auto GetCenterY = [Radius](float x)->float {
+		return sqrt(Radius*Radius - x*x) / 2.0f;
+	};
+	
+	if (!pDevice)
+		return false;
+
+	if (this->IsLoaded())
+		return false;
+
+	int TextureDimension = (Radius + BorderSafeRange + Thickness / 2.0f)*2.0f;
+	
+	if (FAILED(pDevice->CreateTexture(TextureDimension, TextureDimension, 1, NULL, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED,
+		&this->pTexture, nullptr)))
+		return false;
+
+	D3DLOCKED_RECT LockedRect;
+	if (FAILED(pTexture->LockRect(0, &LockedRect, nullptr, NULL)))
+	{
+		SAFE_RELEASE(pTexture);
+		return false;
+	}
+
+	auto pTextureData = reinterpret_cast<PBYTE>(LockedRect.pBits);
+	for (int i = 0; i < TextureDimension; i++)
+	{
+		ZeroMemory(pTextureData + LockedRect.Pitch*i, TextureDimension * sizeof D3DCOLOR);
+	}
+
+	auto GetTexturePixel = [&LockedRect](int x, int y)->PDWORD {
+		auto pTextureData = reinterpret_cast<PBYTE>(LockedRect.pBits);
+		auto pPixel = reinterpret_cast<PDWORD>(pTextureData + LockedRect.Pitch*y);
+		return pPixel + x;
+	};
+
+	auto FillThicknessRectWithColor = [&](int x, int y)->void {
+		int startX = x - Thickness / sqrt(2.0);
+		int startY = y - Thickness / sqrt(2.0);
+
+		for (int y = 0; y < static_cast<int>(Thickness); y++)
+		{
+			auto pPixel = GetTexturePixel(startX, y + startY);
+			for (int x = 0; x < static_cast<int>(Thickness); x++)
+				pPixel[x] = dwColor;
+		}
+	};
+
+	for (int x = 0; x <= static_cast<int>(2.0f*Radius); x++)
+	{
+		int y = GetCenterY(x - Radius);
+		int nexty = GetCenterY(x + (x < static_cast<int>(2.0f*Radius) ? 1 : -1) - Radius);
+
+		FillThicknessRectWithColor(x + BorderSafeRange + Thickness / 2.0f, Radius + BorderSafeRange + Thickness / 2.0f + y);
+		FillThicknessRectWithColor(x + BorderSafeRange + Thickness / 2.0f, Radius + BorderSafeRange + Thickness / 2.0f - y);
+
+		if (std::abs(y - nexty) >= Thickness)
+		{
+			int deltay = nexty > y ? Thickness : -Thickness;
+			do
+			{
+				y += deltay / 2.0f;
+				FillThicknessRectWithColor(x + BorderSafeRange + Thickness / 2.0f, Radius + BorderSafeRange + Thickness / 2.0f + y);
+				FillThicknessRectWithColor(x + BorderSafeRange + Thickness / 2.0f, Radius + BorderSafeRange + Thickness / 2.0f - y);
+			} while (std::abs(y - nexty) >= Thickness);
+		}
+	}
+
+	pTexture->UnlockRect(0);
+	return true;
+}
+
 void CommonTextureFileClass::RemoveTexture()
 {
 	if (pTexture) {
@@ -41,7 +121,7 @@ void CommonTextureFileClass::RemoveTexture()
 	}
 }
 
-int CommonTextureFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position)
+int CommonTextureFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,bool bFlat)
 {
 	if (!pDevice || !this->IsLoaded())
 		return 0;
@@ -59,16 +139,32 @@ int CommonTextureFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 P
 	float l = width / sqrt(2.0);
 	float h = height * 2.0 / sqrt(3.0);
 
-	TexturedVertex VertexBuffer[4];
+	TexturedVertex VertexBuffer[6];
 	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
 	LPVOID pVertexData;
 	PaintingStruct Object;
 	D3DXVECTOR3 HeightPosition(height / sqrt(2.0), height / sqrt(2.0), 0.0);
 
-	VertexBuffer[0] = { { startingX,startingY,Position.z },0.0,1.0 };
-	VertexBuffer[1] = { { startingX + l,startingY - l,Position.z },1.0,1.0 };
-	VertexBuffer[2] = { { startingX,startingY,Position.z + h },0.0,0.0 };
-	VertexBuffer[3] = { { startingX + l,startingY - l,Position.z + h },1.0,0.0 };
+	if (!bFlat)
+	{
+		VertexBuffer[0] = { { startingX,startingY,Position.z },0.0,1.0 };
+		VertexBuffer[1] = { { startingX + l,startingY - l,Position.z },1.0,1.0 };
+		VertexBuffer[2] = { { startingX,startingY,Position.z + h },0.0,0.0 };
+
+		VertexBuffer[3] = { { startingX + l,startingY - l,Position.z },1.0,1.0 };
+		VertexBuffer[4] = { { startingX,startingY,Position.z + h },0.0,0.0 };
+		VertexBuffer[5] = { { startingX + l,startingY - l,Position.z + h },1.0,0.0 };
+	}
+	else
+	{
+		VertexBuffer[0] = { { startingX,startingY,Position.z },0.0,1.0 };
+		VertexBuffer[1] = { { startingX + l,startingY - l,Position.z },1.0,1.0 };
+		VertexBuffer[2] = { { startingX - h,startingY - h,Position.z },0.0,0.0 };
+
+		VertexBuffer[3] = { { startingX + l,startingY - l,Position.z },1.0,1.0 };
+		VertexBuffer[4] = { { startingX - h,startingY - h,Position.z },0.0,0.0 };
+		VertexBuffer[5] = { { startingX + l - h,startingY - l - h,Position.z },1.0,0.0 };
+	}
 
 	if (FAILED(pDevice->CreateVertexBuffer(sizeof VertexBuffer, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,
 		D3DPOOL_SYSTEMMEM, &pVertexBuffer, nullptr)))

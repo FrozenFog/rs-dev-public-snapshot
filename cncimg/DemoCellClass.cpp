@@ -28,7 +28,7 @@ bool CellClass::CreateCellAt(D3DXVECTOR3 Position, int nTileFileID, int nTileInd
 
 void CellClass::MarkCellByMousePosition(POINT MousePosition)
 {
-	const int nMaxHeight = 12;
+	const int nMaxHeight = 14;
 	const float Len = 30.0*sqrt(2.0);
 	const float Hi = 20.0*sqrt(3.0);
 
@@ -68,13 +68,8 @@ DWORD CellClass::TransformCoords(D3DXVECTOR3 Position)
 {
 	const FLOAT TileLength = 30 * sqrt(2.0);
 
-	short xCoords = (Position.x + 1.0) / TileLength;
-	short yCoords = (Position.y + 1.0) / TileLength;
-
-	if (Position.x < 0.0)
-		xCoords--;
-	if (Position.y < 0.0)
-		yCoords--;
+	short xCoords = std::floor((Position.x + 1.0) / TileLength);
+	short yCoords = std::floor((Position.y + 1.0) / TileLength);
 
 	return MAKELONG(xCoords, yCoords);
 }
