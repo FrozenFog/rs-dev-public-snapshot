@@ -383,9 +383,9 @@ namespace RelertSharp.SubWindows.LogicEditor
             }
             controls[controlIndex].Visible = true;
         }
-        private void WriteParam(string value, int pos, LogicType type)
+        private void WriteParam(string value, int pos, LogicType type, bool base26 = false)
         {
-            if (pos == 6)
+            if (base26)
             {
                 try
                 {
@@ -429,12 +429,15 @@ namespace RelertSharp.SubWindows.LogicEditor
         {
             Type t = sender.GetType();
             int paramsindex = int.Parse(((Control)sender).Tag.ToString());
-            int i = (type == LogicType.EventLogic) ?
-                _CurrentEventParameters[paramsindex].ParamPos : _CurrentActionParameters[paramsindex].ParamPos;
+            TriggerParam param;
+            if (type == LogicType.EventLogic) param = _CurrentEventParameters[paramsindex];
+            else param = _CurrentActionParameters[paramsindex];
+            int i = param.ParamPos;
+            bool isBase26 = param.Type == TriggerParam.ParamType.Waypoint;
             if (t == typeof(TextBox))
             {
                 string text = ((TextBox)sender).Text;
-                WriteParam(text, i, type);
+                WriteParam(text, i, type, isBase26);
             }
             else if (t == typeof(ComboBox))
             {

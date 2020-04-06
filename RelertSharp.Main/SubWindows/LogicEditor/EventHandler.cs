@@ -261,13 +261,13 @@ namespace RelertSharp.SubWindows.LogicEditor
             if (evid != int.Parse(mtxbEventID.Text)) mtxbEventID.Text = cbbEventAbst.SelectedIndex.ToString();
             TriggerDescription description = cbbEventAbst.SelectedItem as TriggerDescription;
             LogicItem eventItem = lbxEventList.SelectedItem as LogicItem;
-            if (eventItem != null) UpdateEventParams(description, eventItem.Parameters);
             if (_CurrentEvent.ID != evid)
             {
                 _CurrentEvent.ID = evid;
                 _CurrentEvent.Parameters = description.InitParams;
                 UpdateAt(lbxEventList, _CurrentEvent);
             }
+            if (eventItem != null) UpdateEventParams(description, eventItem.Parameters);
             cbbEventAbstChanging = false;
         }
 
@@ -280,13 +280,13 @@ namespace RelertSharp.SubWindows.LogicEditor
             if (acid != int.Parse(mtxbActionID.Text)) mtxbActionID.Text = cbbActionAbst.SelectedIndex.ToString();
             TriggerDescription description = cbbActionAbst.SelectedItem as TriggerDescription;
             LogicItem actionItem = lbxActionList.SelectedItem as LogicItem;
-            if (actionItem != null) UpdateActionParams(description, actionItem.Parameters);
             if (_CurrentAction.ID != acid)
             {
                 _CurrentAction.ID = acid;
                 _CurrentAction.Parameters = description.InitParams;
                 UpdateAt(lbxActionList, _CurrentAction);
             }
+            if (actionItem != null) UpdateActionParams(description, actionItem.Parameters);
             cbbActionAbstChanging = false;
         }
 

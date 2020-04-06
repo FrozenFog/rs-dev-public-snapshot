@@ -124,7 +124,11 @@ namespace RelertSharp.DrawingEngine
             string terrname = TileDictionary.NameAsTheater(terrain.TerrainName);
             Vec3 pos = ToVec3Iso(terrain, height);
             int pal = pPalIso;
-            if (ParseBool(GlobalRules[terrain.TerrainName]["SpawnsTiberium"])) pal = pPalUnit;
+            if (ParseBool(GlobalRules[terrain.TerrainName]["SpawnsTiberium"]))
+            {
+                pal = pPalUnit;
+                pos = ToVec3Zero(pos);
+            }
             int shp = CreateGroundShp(terrname, pal, _white);
             if (DrawGroundShp(pos, 0, pal, _white, shp, out int id, ShpFlatType.Vertical))
             {
