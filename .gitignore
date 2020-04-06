@@ -23,6 +23,7 @@ RelertSharp.Main/bin/Debug/shader
 RelertSharp.Main/_*.*
 
 #resource and test required
+local.rsc
 *.tem
 *.sno
 *.des
@@ -44,4 +45,3 @@ RelertSharp.Main/_*.*
 *.ini
 *.vpl
 *.xml
-/RelertSharp.Main/bin/Debug/local.rsc
