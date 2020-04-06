@@ -55,6 +55,34 @@ namespace RelertSharp.MapStructure.Logic
             string[] l = p.ParseStringList();
             ID = p.Name;
             Num = int.Parse(l[0]);
+            int steplen = 0, llen = l.Length;
+            for(int i = 1; i < llen; i += steplen)
+            {
+                int logicID = int.Parse(l[i]);
+                switch (type)
+                {
+                    case LogicType.ActionLogic:
+                        steplen = 8;
+                        Add(new LogicItem(
+                            logicID,
+                            new string[] { l[i + 1], l[i + 2], l[i + 3], l[i + 4], l[i + 5], l[i + 6], l[i + 7] },
+                            type,
+                            count++
+                        ));
+                        break;
+                    case LogicType.EventLogic:
+                        steplen = (logicID == 60 || logicID == 61) ? 4 : 3;
+                        Add(new LogicItem(
+                            logicID,
+                            new string[] { l[i + 1], l[i + 2], steplen == 4 ? l[i + 3] : "0" },
+                            type,
+                            count++
+                            ));
+                        break;
+                }
+            }
+
+            /*
             IEnumerable<string> paramEnm = l.Skip(1);
             int end = paramEnm.ToList().IndexOf("");
             Params = paramEnm.Take(end).ToArray();
@@ -74,6 +102,7 @@ namespace RelertSharp.MapStructure.Logic
                 if (type == LogicType.EventLogic && parameters.Count != 3) parameters.Add("0");
                 Add(new LogicItem(logicID, parameters.ToArray(), type, count++));
             }
+            */
         }
         public LogicGroup() { }
         #endregion

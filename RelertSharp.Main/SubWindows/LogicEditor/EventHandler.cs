@@ -411,9 +411,5 @@ namespace RelertSharp.SubWindows.LogicEditor
         }
 
         #endregion
-
-        #region Team Page
-
-        #endregion
     }
 }
