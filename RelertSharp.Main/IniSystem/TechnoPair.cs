@@ -36,9 +36,11 @@ namespace RelertSharp.IniSystem
                     break;
                 case IndexType.Name:
                     abst = Name;
+                    Index = Name;
                     break;
                 case IndexType.RegName:
                     abst = RegName;
+                    Index = RegName;
                     break;
             }
             switch (abstractType)

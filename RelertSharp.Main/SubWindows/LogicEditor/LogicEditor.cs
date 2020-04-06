@@ -142,6 +142,7 @@ namespace RelertSharp.SubWindows.LogicEditor
                     switch (param.Type)
                     {
                         case TriggerParam.ParamType.PlainString:
+                        case TriggerParam.ParamType.Waypoint:
                             SetParamControls(txbAP, param, actionParams, i);
                             break;
                         case TriggerParam.ParamType.SelectableString:
@@ -235,6 +236,7 @@ namespace RelertSharp.SubWindows.LogicEditor
                     switch (param.Type)
                     {
                         case TriggerParam.ParamType.PlainString:
+                        case TriggerParam.ParamType.Waypoint:
                             SetParamControls(txbEP, param, eventParams, i);
                             break;
                         case TriggerParam.ParamType.SelectableString:
@@ -373,18 +375,28 @@ namespace RelertSharp.SubWindows.LogicEditor
                 if (param.Type == TriggerParam.ParamType.Bool)
                 {
                     ((CheckBox)controls[controlIndex]).Checked = param.GetParameter(paramData, true);
-                    controls[controlIndex].Tag = param.ParamPos;
                 }
                 else
                 {
                     controls[controlIndex].Text = param.GetParameter(paramData);
-                    controls[controlIndex].Tag = param.ParamPos;
                 }
             }
             controls[controlIndex].Visible = true;
         }
         private void WriteParam(string value, int pos, LogicType type)
         {
+            if (pos == 6)
+            {
+                try
+                {
+                    int v = int.Parse(value);
+                    value = Utils.Misc.WaypointString(v);
+                }
+                catch
+                {
+                    value = "A";
+                }
+            }
             if (type == LogicType.EventLogic)
             {
                 _CurrentEvent.Parameters[pos] = value;
@@ -421,7 +433,8 @@ namespace RelertSharp.SubWindows.LogicEditor
                 _CurrentEventParameters[paramsindex].ParamPos : _CurrentActionParameters[paramsindex].ParamPos;
             if (t == typeof(TextBox))
             {
-                WriteParam(((TextBox)sender).Text, i, type);
+                string text = ((TextBox)sender).Text;
+                WriteParam(text, i, type);
             }
             else if (t == typeof(ComboBox))
             {
@@ -440,8 +453,10 @@ namespace RelertSharp.SubWindows.LogicEditor
 
 
         #region Private Calls - LogicEditor
-        private List<TriggerParam> _CurrentEventParameters { get { return (cbbEventAbst.SelectedItem as TriggerDescription).Parameters; } }
-        private List<TriggerParam> _CurrentActionParameters { get { return (cbbActionAbst.SelectedItem as TriggerDescription).Parameters; } }
+        private TriggerDescription _CurrentEventDesc { get { return cbbEventAbst.SelectedItem as TriggerDescription; } }
+        private TriggerDescription _CurrentActionDesc { get { return cbbActionAbst.SelectedItem as TriggerDescription; } }
+        private List<TriggerParam> _CurrentEventParameters { get { return _CurrentEventDesc.Parameters; } }
+        private List<TriggerParam> _CurrentActionParameters { get { return _CurrentActionDesc.Parameters; } }
         private TriggerItem _CurrentBoxTrigger { get { return lbxTriggerList.SelectedItem as TriggerItem; } }
         private TriggerItem _CurrentTrigger { get { return map.Triggers[txbTrgID.Text]; } }
         private LogicItem _CurrentEvent { get { return _CurrentTrigger.Events[lbxEventList.SelectedIndex]; } }

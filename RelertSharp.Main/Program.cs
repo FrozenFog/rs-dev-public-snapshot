@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RelertSharp.FileSystem;
+using RelertSharp.IniSystem;
 using RelertSharp.Common;
 using RelertSharp.SubWindows.LogicEditor;
 using RelertSharp.SubWindows.INIEditor;
@@ -53,10 +54,12 @@ namespace RelertSharp
         static void SetGlobalVar()
         {
             GlobalVar.GlobalConfig = new RSConfig();
+            INIFile local = new INIFile("local.rsc");
+            GlobalVar.GlobalConfig.Override(local.IniData);
             GlobalVar.GlobalDir = new VirtualDir();
-            GlobalVar.GlobalRules = new IniSystem.Rules(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.RulesName + ".ini"), GlobalVar.GlobalConfig.RulesName + ".ini");
+            GlobalVar.GlobalRules = new Rules(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.RulesName + ".ini"), GlobalVar.GlobalConfig.RulesName + ".ini");
             GlobalVar.GlobalRules.LoadArt(GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.ArtName, FileExtension.INI));
-            GlobalVar.GlobalSound = new IniSystem.SoundRules(GlobalVar.GlobalConfig.SoundName, GlobalVar.GlobalConfig.EvaName, GlobalVar.GlobalConfig.ThemeName);
+            GlobalVar.GlobalSound = new SoundRules(GlobalVar.GlobalConfig.SoundName, GlobalVar.GlobalConfig.EvaName, GlobalVar.GlobalConfig.ThemeName);
             GlobalVar.GlobalSoundBank = new SoundBank(GlobalVar.GlobalConfig.BagNameList);
 
             //csf

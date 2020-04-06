@@ -189,7 +189,17 @@ namespace RelertSharp.Utils
                 c2 = s[1];
             }
             int result = (c1 - 64) * 26 + (c2 - 64);
-            if (result < 1 || result > 702) throw new RSException.InvalidWaypointException(result);
+            if (result < 1 || result > 702)
+            {
+                try
+                {
+                    return int.Parse(s);
+                }
+                catch
+                {
+                    throw new RSException.InvalidWaypointException(result);
+                }
+            }
             return result - 1;
         }
         /// <summary>
@@ -199,7 +209,11 @@ namespace RelertSharp.Utils
         /// <returns></returns>
         public static string WaypointString(int waypoint)
         {
-            if (waypoint < 0 || waypoint > 701) throw new RSException.InvalidWaypointException(waypoint);
+            if (waypoint < 0 || waypoint > 701)
+            {
+                return waypoint.ToString();
+                //throw new RSException.InvalidWaypointException(waypoint);
+            }
             int c1, c2;
             if (waypoint < 26)
             {

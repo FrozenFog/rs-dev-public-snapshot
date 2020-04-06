@@ -127,7 +127,8 @@ namespace RelertSharp.MapStructure.Logic
         {
             PlainString = 0,
             SelectableString = 1,
-            Bool = 2
+            Bool = 2,
+            Waypoint = 3
         }
         public enum ComboContent
         {
@@ -170,10 +171,11 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Methods - TriggerParam
         public dynamic GetParameter(string[] paramSrc, bool isBool = false)
         {
+            if (ParamPos + 1 > paramSrc.Length) return "0";
             if (isBool) return paramSrc[ParamPos] == "1";
             else
             {
-                if (ParamPos == 6 && Traceable) return Utils.Misc.WaypointInt(paramSrc[ParamPos]).ToString();
+                if (Type == ParamType.Waypoint) return Utils.Misc.WaypointInt(paramSrc[ParamPos]).ToString();
                 return paramSrc[ParamPos];
             }
         }
