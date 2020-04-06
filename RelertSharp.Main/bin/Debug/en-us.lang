@@ -96,6 +96,7 @@ LGClblScriptName=Name:
 LGClblScriptMemberList=Taskforce members list
 LGClblScriptCurType=Type:
 LGClblScriptCurPara=Parameter:
+LGClblScriptDesc=Parameter description
 LGClblTeamList=Team list
 
 LGClklTrace=Trace...
