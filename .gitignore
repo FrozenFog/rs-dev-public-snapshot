@@ -23,6 +23,7 @@ RelertSharp.Main/bin/Debug/shader
 RelertSharp.Main/_*.*
 
 #resource and test required
+local.rsc
 *.tem
 *.sno
 *.des
