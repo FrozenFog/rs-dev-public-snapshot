@@ -44,3 +44,4 @@ RelertSharp.Main/_*.*
 *.ini
 *.vpl
 *.xml
+/RelertSharp.Main/bin/Debug/local.rsc

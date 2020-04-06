@@ -212,26 +212,14 @@
             this.cbbScriptCurPara = new System.Windows.Forms.ComboBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.ckbInsert = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lbxTeamList = new System.Windows.Forms.ListBox();
-            this.btnNewTeam = new System.Windows.Forms.Button();
+            this.gpbTeamTeam = new System.Windows.Forms.GroupBox();
+            this.olvTeamList = new BrightIdeasSoftware.ObjectListView();
             this.label28 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.gpbTeamTeamCur = new System.Windows.Forms.GroupBox();
+            this.olvTeamConfig = new BrightIdeasSoftware.ObjectListView();
+            this.btnNewTeam = new System.Windows.Forms.Button();
             this.btnDelTeam = new System.Windows.Forms.Button();
-            this.LGCbtnCopyTeam = new System.Windows.Forms.Button();
-            this.LGCbtnTeamAdvanced = new System.Windows.Forms.Button();
-            this.label34 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label35 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.label37 = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
-            this.label39 = new System.Windows.Forms.Label();
+            this.btnCopyTeam = new System.Windows.Forms.Button();
             this.tbcMain.SuspendLayout();
             this.tbpTriggers.SuspendLayout();
             this.gpbActions.SuspendLayout();
@@ -250,8 +238,10 @@
             this.gpbSearch.SuspendLayout();
             this.gpbTeamScript.SuspendLayout();
             this.gpbTeamScriptCur.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.gpbTeamTeam.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.olvTeamList)).BeginInit();
+            this.gpbTeamTeamCur.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.olvTeamConfig)).BeginInit();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -1542,7 +1532,7 @@
             // tbpTeams
             // 
             this.tbpTeams.BackColor = System.Drawing.Color.Transparent;
-            this.tbpTeams.Controls.Add(this.groupBox1);
+            this.tbpTeams.Controls.Add(this.gpbTeamTeam);
             this.tbpTeams.Controls.Add(this.gpbTeamScript);
             this.tbpTeams.Controls.Add(this.gpbTeamTask);
             this.tbpTeams.Location = new System.Drawing.Point(4, 22);
@@ -2247,197 +2237,88 @@
             this.ckbInsert.Text = "LGCckbInsert";
             this.ckbInsert.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // gpbTeamTeam
             // 
-            this.groupBox1.Controls.Add(this.LGCbtnTeamAdvanced);
-            this.groupBox1.Controls.Add(this.LGCbtnCopyTeam);
-            this.groupBox1.Controls.Add(this.btnDelTeam);
-            this.groupBox1.Controls.Add(this.btnNewTeam);
-            this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Controls.Add(this.label28);
-            this.groupBox1.Controls.Add(this.lbxTeamList);
-            this.groupBox1.Location = new System.Drawing.Point(598, 7);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(586, 244);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "LGCgpbTeamTeam";
+            this.gpbTeamTeam.Controls.Add(this.btnCopyTeam);
+            this.gpbTeamTeam.Controls.Add(this.btnDelTeam);
+            this.gpbTeamTeam.Controls.Add(this.btnNewTeam);
+            this.gpbTeamTeam.Controls.Add(this.gpbTeamTeamCur);
+            this.gpbTeamTeam.Controls.Add(this.label28);
+            this.gpbTeamTeam.Controls.Add(this.olvTeamList);
+            this.gpbTeamTeam.Location = new System.Drawing.Point(598, 7);
+            this.gpbTeamTeam.Name = "gpbTeamTeam";
+            this.gpbTeamTeam.Size = new System.Drawing.Size(586, 555);
+            this.gpbTeamTeam.TabIndex = 2;
+            this.gpbTeamTeam.TabStop = false;
+            this.gpbTeamTeam.Text = "LGCgpbTeamTeam";
             // 
-            // lbxTeamList
+            // olvTeamList
             // 
-            this.lbxTeamList.FormattingEnabled = true;
-            this.lbxTeamList.ItemHeight = 12;
-            this.lbxTeamList.Location = new System.Drawing.Point(6, 39);
-            this.lbxTeamList.Name = "lbxTeamList";
-            this.lbxTeamList.Size = new System.Drawing.Size(211, 148);
-            this.lbxTeamList.TabIndex = 0;
-            // 
-            // btnNewTeam
-            // 
-            this.btnNewTeam.Location = new System.Drawing.Point(223, 12);
-            this.btnNewTeam.Name = "btnNewTeam";
-            this.btnNewTeam.Size = new System.Drawing.Size(75, 23);
-            this.btnNewTeam.TabIndex = 1;
-            this.btnNewTeam.Text = "LGCbtnNewTeam";
-            this.btnNewTeam.UseVisualStyleBackColor = true;
+            this.olvTeamList.CellEditUseWholeCell = false;
+            this.olvTeamList.HideSelection = false;
+            this.olvTeamList.Location = new System.Drawing.Point(6, 35);
+            this.olvTeamList.Name = "olvTeamList";
+            this.olvTeamList.Size = new System.Drawing.Size(237, 468);
+            this.olvTeamList.TabIndex = 0;
+            this.olvTeamList.UseCompatibleStateImageBehavior = false;
+            this.olvTeamList.View = System.Windows.Forms.View.Details;
             // 
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(6, 17);
+            this.label28.Location = new System.Drawing.Point(6, 18);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(89, 12);
-            this.label28.TabIndex = 2;
+            this.label28.TabIndex = 1;
             this.label28.Text = "LGClblTeamList";
             // 
-            // groupBox2
+            // gpbTeamTeamCur
             // 
-            this.groupBox2.Controls.Add(this.label39);
-            this.groupBox2.Controls.Add(this.label38);
-            this.groupBox2.Controls.Add(this.label37);
-            this.groupBox2.Controls.Add(this.comboBox5);
-            this.groupBox2.Controls.Add(this.comboBox4);
-            this.groupBox2.Controls.Add(this.comboBox3);
-            this.groupBox2.Controls.Add(this.comboBox2);
-            this.groupBox2.Controls.Add(this.label36);
-            this.groupBox2.Controls.Add(this.label35);
-            this.groupBox2.Controls.Add(this.comboBox1);
-            this.groupBox2.Controls.Add(this.textBox1);
-            this.groupBox2.Controls.Add(this.label34);
-            this.groupBox2.Location = new System.Drawing.Point(223, 40);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(357, 148);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "LGCgpbTeamTeamCur";
+            this.gpbTeamTeamCur.Controls.Add(this.olvTeamConfig);
+            this.gpbTeamTeamCur.Location = new System.Drawing.Point(249, 18);
+            this.gpbTeamTeamCur.Name = "gpbTeamTeamCur";
+            this.gpbTeamTeamCur.Size = new System.Drawing.Size(331, 531);
+            this.gpbTeamTeamCur.TabIndex = 2;
+            this.gpbTeamTeamCur.TabStop = false;
+            this.gpbTeamTeamCur.Text = "LGCgpbTeamTeamCur";
+            // 
+            // olvTeamConfig
+            // 
+            this.olvTeamConfig.CellEditUseWholeCell = false;
+            this.olvTeamConfig.HideSelection = false;
+            this.olvTeamConfig.Location = new System.Drawing.Point(6, 17);
+            this.olvTeamConfig.Name = "olvTeamConfig";
+            this.olvTeamConfig.Size = new System.Drawing.Size(319, 508);
+            this.olvTeamConfig.TabIndex = 0;
+            this.olvTeamConfig.UseCompatibleStateImageBehavior = false;
+            this.olvTeamConfig.View = System.Windows.Forms.View.Details;
+            // 
+            // btnNewTeam
+            // 
+            this.btnNewTeam.Location = new System.Drawing.Point(6, 515);
+            this.btnNewTeam.Name = "btnNewTeam";
+            this.btnNewTeam.Size = new System.Drawing.Size(75, 23);
+            this.btnNewTeam.TabIndex = 3;
+            this.btnNewTeam.Text = "LGCbtnNewTeam";
+            this.btnNewTeam.UseVisualStyleBackColor = true;
             // 
             // btnDelTeam
             // 
-            this.btnDelTeam.Location = new System.Drawing.Point(304, 12);
+            this.btnDelTeam.Location = new System.Drawing.Point(87, 515);
             this.btnDelTeam.Name = "btnDelTeam";
             this.btnDelTeam.Size = new System.Drawing.Size(75, 23);
             this.btnDelTeam.TabIndex = 4;
             this.btnDelTeam.Text = "LGCbtnDelTeam";
             this.btnDelTeam.UseVisualStyleBackColor = true;
             // 
-            // LGCbtnCopyTeam
+            // btnCopyTeam
             // 
-            this.LGCbtnCopyTeam.Location = new System.Drawing.Point(385, 12);
-            this.LGCbtnCopyTeam.Name = "LGCbtnCopyTeam";
-            this.LGCbtnCopyTeam.Size = new System.Drawing.Size(75, 23);
-            this.LGCbtnCopyTeam.TabIndex = 5;
-            this.LGCbtnCopyTeam.Text = "LGCbtnCopyTeam";
-            this.LGCbtnCopyTeam.UseVisualStyleBackColor = true;
-            // 
-            // LGCbtnTeamAdvanced
-            // 
-            this.LGCbtnTeamAdvanced.Location = new System.Drawing.Point(505, 13);
-            this.LGCbtnTeamAdvanced.Name = "LGCbtnTeamAdvanced";
-            this.LGCbtnTeamAdvanced.Size = new System.Drawing.Size(75, 23);
-            this.LGCbtnTeamAdvanced.TabIndex = 6;
-            this.LGCbtnTeamAdvanced.Text = "LGCbtnTeamAdvanced";
-            this.LGCbtnTeamAdvanced.UseVisualStyleBackColor = true;
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(6, 20);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(89, 12);
-            this.label34.TabIndex = 0;
-            this.label34.Text = "LGClblTeamName";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(56, 17);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(295, 21);
-            this.textBox1.TabIndex = 1;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(56, 44);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 20);
-            this.comboBox1.TabIndex = 2;
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(6, 48);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(95, 12);
-            this.label35.TabIndex = 3;
-            this.label35.Text = "LGClblTeamHouse";
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(183, 48);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(95, 12);
-            this.label36.TabIndex = 4;
-            this.label36.Text = "LGClblTeamLevel";
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(230, 45);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 20);
-            this.comboBox2.TabIndex = 5;
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(56, 70);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(295, 20);
-            this.comboBox3.TabIndex = 6;
-            // 
-            // comboBox4
-            // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(56, 96);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(295, 20);
-            this.comboBox4.TabIndex = 7;
-            // 
-            // comboBox5
-            // 
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(56, 122);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(295, 20);
-            this.comboBox5.TabIndex = 8;
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(6, 73);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(89, 12);
-            this.label37.TabIndex = 9;
-            this.label37.Text = "LGClblTeamTask";
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(6, 99);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(101, 12);
-            this.label38.TabIndex = 10;
-            this.label38.Text = "LGClblTeamScript";
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(6, 125);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(83, 12);
-            this.label39.TabIndex = 11;
-            this.label39.Text = "LGClblTeamTag";
+            this.btnCopyTeam.Location = new System.Drawing.Point(168, 515);
+            this.btnCopyTeam.Name = "btnCopyTeam";
+            this.btnCopyTeam.Size = new System.Drawing.Size(75, 23);
+            this.btnCopyTeam.TabIndex = 5;
+            this.btnCopyTeam.Text = "LGCbtnCopyTeam";
+            this.btnCopyTeam.UseVisualStyleBackColor = true;
             // 
             // LogicEditor
             // 
@@ -2483,10 +2364,11 @@
             this.gpbTeamScript.PerformLayout();
             this.gpbTeamScriptCur.ResumeLayout(false);
             this.gpbTeamScriptCur.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.gpbTeamTeam.ResumeLayout(false);
+            this.gpbTeamTeam.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.olvTeamList)).EndInit();
+            this.gpbTeamTeamCur.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.olvTeamConfig)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2676,25 +2558,13 @@
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.ListBox lbxScriptList;
         private System.Windows.Forms.CheckBox ckbInsert;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button LGCbtnTeamAdvanced;
-        private System.Windows.Forms.Button LGCbtnCopyTeam;
+        private System.Windows.Forms.GroupBox gpbTeamTeam;
+        private System.Windows.Forms.GroupBox gpbTeamTeamCur;
+        private BrightIdeasSoftware.ObjectListView olvTeamConfig;
+        private System.Windows.Forms.Label label28;
+        private BrightIdeasSoftware.ObjectListView olvTeamList;
+        private System.Windows.Forms.Button btnCopyTeam;
         private System.Windows.Forms.Button btnDelTeam;
         private System.Windows.Forms.Button btnNewTeam;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.ListBox lbxTeamList;
-        private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.Label label38;
-        private System.Windows.Forms.Label label37;
-        private System.Windows.Forms.ComboBox comboBox5;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label34;
     }
 }
