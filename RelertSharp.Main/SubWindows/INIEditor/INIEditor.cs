@@ -24,7 +24,6 @@ namespace RelertSharp.SubWindows.INIEditor
         private List<string> bdsSectionL, searchList;
         private List<INIPair> iniPairs = new List<INIPair>();
         private string SectionName;
-        public string NewSectionName;
         private BindingSource bdsKey = new BindingSource();
         private BindingSource bdsSection = new BindingSource();
         private Map file;
@@ -42,6 +41,7 @@ namespace RelertSharp.SubWindows.INIEditor
             osections = DeepCopy(sections) as Dictionary<string, INIEntity>;
             
             bdsSectionL = sections.Keys.ToList();
+            bdsSectionL.Sort();
             bdsSection.DataSource = bdsSectionL;
             dgvKeys.DataSource = bdsKey;
             lbxSectionList.DataSource = bdsSection;
@@ -64,6 +64,20 @@ namespace RelertSharp.SubWindows.INIEditor
             formatter.Serialize(memoryStream, obj);
             memoryStream.Position = 0;
             return formatter.Deserialize(memoryStream);
+        }
+        #endregion
+
+
+        #region Private Comparer - INIEditor
+        private class INIPairNameComparer : IComparer<INIPair>
+        {
+            public int Compare(INIPair x, INIPair y)
+            {
+                if (x == null && y == null) return 0;
+                if (x == null) return -1;
+                if (y == null) return 1;
+                return x.Name.CompareTo(y.Name);
+            }
         }
         #endregion
     }

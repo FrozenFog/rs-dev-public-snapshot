@@ -56,7 +56,7 @@ namespace RelertSharp.SubWindows.INIEditor
             dlgNewSection dlgNew = new dlgNewSection();
             if (dlgNew.ShowDialog() == DialogResult.OK)
             {
-                NewSectionName = dlgNew.retSectionName;
+                string NewSectionName = dlgNew.retSectionName;
                 if (!string.IsNullOrEmpty(NewSectionName)){
                     int findIndex = bdsSectionL.FindIndex(s => s.Equals(NewSectionName));
                     if (findIndex >= 0)
@@ -66,6 +66,7 @@ namespace RelertSharp.SubWindows.INIEditor
                     }
                     bdsSectionL.Add(NewSectionName);
                     sections[NewSectionName] = new INIEntity();
+                    bdsSectionL.Sort();
                     bdsSection.DataSource = null;
                     bdsSection.DataSource = bdsSectionL;
                 }
@@ -97,6 +98,7 @@ namespace RelertSharp.SubWindows.INIEditor
                         }
                     }
                     iniPairs.Add(new INIPair(txbKey.Text, txbValue.Text, string.Empty, string.Empty));
+                    iniPairs.Sort(new INIPairNameComparer());
                     bdsKey.DataSource = null;
                     bdsKey.DataSource = iniPairs;
                     dgvKeys.Columns[0].HeaderText = DICT["INIdgvKeyKey"];
@@ -156,9 +158,10 @@ namespace RelertSharp.SubWindows.INIEditor
                         sections[SectionName].AddPair(iNIPair);
                     }
             }
-            if (string.IsNullOrEmpty(lbxSectionList.Text)) dgvKeys.Rows.Clear();
+            if (string.IsNullOrWhiteSpace(lbxSectionList.Text)) dgvKeys.Rows.Clear();
             SectionName = lbxSectionList.Text;
             iniPairs = sections[SectionName].DataList;
+            iniPairs.Sort(new INIPairNameComparer());
             bdsKey.DataSource = null;
             bdsKey.DataSource = iniPairs;
             dgvKeys.Columns[0].HeaderText = DICT["INIdgvKeyKey"];
@@ -179,7 +182,7 @@ namespace RelertSharp.SubWindows.INIEditor
                 if (dgvKeys.SelectedRows[0].Cells.Count > 0)
                 {
                     string curDesc = DICT[dgvKeys.SelectedRows[0].Cells[0].Value.ToString()];
-                    if (!string.IsNullOrEmpty(curDesc))
+                    if (!string.IsNullOrWhiteSpace(curDesc))
                     {
                         rtxbKeyDesc.Text = curDesc;
                         return;
