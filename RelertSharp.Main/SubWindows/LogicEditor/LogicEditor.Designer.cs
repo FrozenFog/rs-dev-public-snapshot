@@ -142,21 +142,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbpTeams = new System.Windows.Forms.TabPage();
             this.gpbTeamTask = new System.Windows.Forms.GroupBox();
-<<<<<<< HEAD
-            this.btnDelTask = new System.Windows.Forms.Button();
-            this.btnNewTask = new System.Windows.Forms.Button();
-            this.gpbTeamTaskCur = new System.Windows.Forms.GroupBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.btnDelTaskMem = new System.Windows.Forms.Button();
-            this.btnAddTaskMem = new System.Windows.Forms.Button();
-            this.label23 = new System.Windows.Forms.Label();
-            this.listBox2 = new System.Windows.Forms.ListBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-=======
             this.gpbTeamTaskCur = new System.Windows.Forms.GroupBox();
             this.label25 = new System.Windows.Forms.Label();
             this.tbxTaskCurNum = new System.Windows.Forms.TextBox();
@@ -167,7 +152,6 @@
             this.lbxTaskMemList = new System.Windows.Forms.ListBox();
             this.label22 = new System.Windows.Forms.Label();
             this.lbxTaskList = new System.Windows.Forms.ListBox();
->>>>>>> 064fde6e406bec5dafc10be802ec55bdbe3c477f
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
@@ -199,8 +183,6 @@
             this.hdValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.hdExtraValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rtxbSearchInspector = new System.Windows.Forms.RichTextBox();
-<<<<<<< HEAD
-=======
             this.label26 = new System.Windows.Forms.Label();
             this.txbTaskName = new System.Windows.Forms.TextBox();
             this.txbTaskGroup = new System.Windows.Forms.TextBox();
@@ -250,7 +232,6 @@
             this.label37 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
->>>>>>> 064fde6e406bec5dafc10be802ec55bdbe3c477f
             this.tbcMain.SuspendLayout();
             this.tbpTriggers.SuspendLayout();
             this.gpbActions.SuspendLayout();
@@ -267,13 +248,10 @@
             this.gpbTeamTask.SuspendLayout();
             this.gpbTeamTaskCur.SuspendLayout();
             this.gpbSearch.SuspendLayout();
-<<<<<<< HEAD
-=======
             this.gpbTeamScript.SuspendLayout();
             this.gpbTeamScriptCur.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
->>>>>>> 064fde6e406bec5dafc10be802ec55bdbe3c477f
             this.SuspendLayout();
             // 
             // tbcMain
@@ -1687,16 +1665,6 @@
             // 
             this.gpbTeamTask.Controls.Add(this.btnDelTask);
             this.gpbTeamTask.Controls.Add(this.btnNewTask);
-<<<<<<< HEAD
-            this.gpbTeamTask.Controls.Add(this.gpbTeamTaskCur);
-            this.gpbTeamTask.Controls.Add(this.label22);
-            this.gpbTeamTask.Controls.Add(this.listBox1);
-            this.gpbTeamTask.Location = new System.Drawing.Point(8, 9);
-            this.gpbTeamTask.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.gpbTeamTask.Name = "gpbTeamTask";
-            this.gpbTeamTask.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.gpbTeamTask.Size = new System.Drawing.Size(620, 359);
-=======
             this.gpbTeamTask.Controls.Add(this.btnCopyTask);
             this.gpbTeamTask.Controls.Add(this.gpbTeamTaskCur);
             this.gpbTeamTask.Controls.Add(this.label22);
@@ -1704,48 +1672,10 @@
             this.gpbTeamTask.Location = new System.Drawing.Point(6, 7);
             this.gpbTeamTask.Name = "gpbTeamTask";
             this.gpbTeamTask.Size = new System.Drawing.Size(586, 266);
->>>>>>> 064fde6e406bec5dafc10be802ec55bdbe3c477f
             this.gpbTeamTask.TabIndex = 0;
             this.gpbTeamTask.TabStop = false;
             this.gpbTeamTask.Text = "LGCgpbTeamTask";
             // 
-<<<<<<< HEAD
-            // btnDelTask
-            // 
-            this.btnDelTask.Location = new System.Drawing.Point(147, 321);
-            this.btnDelTask.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnDelTask.Name = "btnDelTask";
-            this.btnDelTask.Size = new System.Drawing.Size(133, 29);
-            this.btnDelTask.TabIndex = 3;
-            this.btnDelTask.Text = "LGCbtnDelTask";
-            this.btnDelTask.UseVisualStyleBackColor = true;
-            // 
-            // btnNewTask
-            // 
-            this.btnNewTask.Location = new System.Drawing.Point(8, 321);
-            this.btnNewTask.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnNewTask.Name = "btnNewTask";
-            this.btnNewTask.Size = new System.Drawing.Size(131, 29);
-            this.btnNewTask.TabIndex = 2;
-            this.btnNewTask.Text = "LGCbtnNewTask";
-            this.btnNewTask.UseVisualStyleBackColor = true;
-            // 
-            // gpbTeamTaskCur
-            // 
-            this.gpbTeamTaskCur.Controls.Add(this.label25);
-            this.gpbTeamTaskCur.Controls.Add(this.textBox1);
-            this.gpbTeamTaskCur.Controls.Add(this.comboBox1);
-            this.gpbTeamTaskCur.Controls.Add(this.label24);
-            this.gpbTeamTaskCur.Controls.Add(this.btnDelTaskMem);
-            this.gpbTeamTaskCur.Controls.Add(this.btnAddTaskMem);
-            this.gpbTeamTaskCur.Controls.Add(this.label23);
-            this.gpbTeamTaskCur.Controls.Add(this.listBox2);
-            this.gpbTeamTaskCur.Location = new System.Drawing.Point(288, 22);
-            this.gpbTeamTaskCur.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.gpbTeamTaskCur.Name = "gpbTeamTaskCur";
-            this.gpbTeamTaskCur.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.gpbTeamTaskCur.Size = new System.Drawing.Size(324, 328);
-=======
             // gpbTeamTaskCur
             // 
             this.gpbTeamTaskCur.Controls.Add(this.btnDelTaskMem);
@@ -1764,7 +1694,6 @@
             this.gpbTeamTaskCur.Location = new System.Drawing.Point(301, 18);
             this.gpbTeamTaskCur.Name = "gpbTeamTaskCur";
             this.gpbTeamTaskCur.Size = new System.Drawing.Size(279, 239);
->>>>>>> 064fde6e406bec5dafc10be802ec55bdbe3c477f
             this.gpbTeamTaskCur.TabIndex = 2;
             this.gpbTeamTaskCur.TabStop = false;
             this.gpbTeamTaskCur.Text = "LGCgpbTeamTaskCur";
@@ -1772,31 +1701,6 @@
             // label25
             // 
             this.label25.AutoSize = true;
-<<<<<<< HEAD
-            this.label25.Location = new System.Drawing.Point(8, 255);
-            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(135, 15);
-            this.label25.TabIndex = 7;
-            this.label25.Text = "LGClblTaskCurNum";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(101, 251);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(213, 25);
-            this.textBox1.TabIndex = 6;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(101, 219);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(213, 23);
-            this.comboBox1.TabIndex = 5;
-=======
             this.label25.Location = new System.Drawing.Point(6, 179);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(101, 12);
@@ -1817,36 +1721,10 @@
             this.cbbTaskCurType.Name = "cbbTaskCurType";
             this.cbbTaskCurType.Size = new System.Drawing.Size(161, 20);
             this.cbbTaskCurType.TabIndex = 5;
->>>>>>> 064fde6e406bec5dafc10be802ec55bdbe3c477f
             // 
             // label24
             // 
             this.label24.AutoSize = true;
-<<<<<<< HEAD
-            this.label24.Location = new System.Drawing.Point(8, 222);
-            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(143, 15);
-            this.label24.TabIndex = 4;
-            this.label24.Text = "LGClblTaskCurType";
-            // 
-            // btnDelTaskMem
-            // 
-            this.btnDelTaskMem.Location = new System.Drawing.Point(176, 285);
-            this.btnDelTaskMem.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnDelTaskMem.Name = "btnDelTaskMem";
-            this.btnDelTaskMem.Size = new System.Drawing.Size(140, 29);
-            this.btnDelTaskMem.TabIndex = 3;
-            this.btnDelTaskMem.Text = "LGCbtnDelTaskMem";
-            this.btnDelTaskMem.UseVisualStyleBackColor = true;
-            // 
-            // btnAddTaskMem
-            // 
-            this.btnAddTaskMem.Location = new System.Drawing.Point(8, 285);
-            this.btnAddTaskMem.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnAddTaskMem.Name = "btnAddTaskMem";
-            this.btnAddTaskMem.Size = new System.Drawing.Size(140, 29);
-=======
             this.label24.Location = new System.Drawing.Point(6, 153);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(107, 12);
@@ -1858,7 +1736,6 @@
             this.btnAddTaskMem.Location = new System.Drawing.Point(6, 203);
             this.btnAddTaskMem.Name = "btnAddTaskMem";
             this.btnAddTaskMem.Size = new System.Drawing.Size(81, 23);
->>>>>>> 064fde6e406bec5dafc10be802ec55bdbe3c477f
             this.btnAddTaskMem.TabIndex = 2;
             this.btnAddTaskMem.Text = "LGCbtnAddTaskMem";
             this.btnAddTaskMem.UseVisualStyleBackColor = true;
@@ -1866,24 +1743,6 @@
             // label23
             // 
             this.label23.AutoSize = true;
-<<<<<<< HEAD
-            this.label23.Location = new System.Drawing.Point(8, 21);
-            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(167, 15);
-            this.label23.TabIndex = 1;
-            this.label23.Text = "LGClblTaskMemberList";
-            // 
-            // listBox2
-            // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 15;
-            this.listBox2.Location = new System.Drawing.Point(8, 40);
-            this.listBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(307, 169);
-            this.listBox2.TabIndex = 0;
-=======
             this.label23.Location = new System.Drawing.Point(6, 65);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(125, 12);
@@ -1898,29 +1757,10 @@
             this.lbxTaskMemList.Name = "lbxTaskMemList";
             this.lbxTaskMemList.Size = new System.Drawing.Size(267, 64);
             this.lbxTaskMemList.TabIndex = 0;
->>>>>>> 064fde6e406bec5dafc10be802ec55bdbe3c477f
             // 
             // label22
             // 
             this.label22.AutoSize = true;
-<<<<<<< HEAD
-            this.label22.Location = new System.Drawing.Point(8, 24);
-            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(119, 15);
-            this.label22.TabIndex = 1;
-            this.label22.Text = "LGClblTaskList";
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(8, 40);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(271, 274);
-            this.listBox1.TabIndex = 0;
-=======
             this.label22.Location = new System.Drawing.Point(6, 19);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(89, 12);
@@ -1935,7 +1775,6 @@
             this.lbxTaskList.Name = "lbxTaskList";
             this.lbxTaskList.Size = new System.Drawing.Size(289, 196);
             this.lbxTaskList.TabIndex = 0;
->>>>>>> 064fde6e406bec5dafc10be802ec55bdbe3c477f
             // 
             // tabPage3
             // 
@@ -2271,8 +2110,6 @@
             this.rtxbSearchInspector.TabIndex = 0;
             this.rtxbSearchInspector.Text = "";
             // 
-<<<<<<< HEAD
-=======
             // label26
             // 
             this.label26.AutoSize = true;
@@ -2738,7 +2575,6 @@
             this.label39.TabIndex = 11;
             this.label39.Text = "LGClblTeamTag";
             // 
->>>>>>> 064fde6e406bec5dafc10be802ec55bdbe3c477f
             // LogicEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -2780,8 +2616,6 @@
             this.gpbTeamTaskCur.PerformLayout();
             this.gpbSearch.ResumeLayout(false);
             this.gpbSearch.PerformLayout();
-<<<<<<< HEAD
-=======
             this.gpbTeamScript.ResumeLayout(false);
             this.gpbTeamScript.PerformLayout();
             this.gpbTeamScriptCur.ResumeLayout(false);
@@ -2790,7 +2624,6 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
->>>>>>> 064fde6e406bec5dafc10be802ec55bdbe3c477f
             this.ResumeLayout(false);
 
         }
