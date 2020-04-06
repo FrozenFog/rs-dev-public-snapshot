@@ -38,6 +38,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\assembly\GAC\Microsoft.DirectX.DirectSound\1.0.2902.0__31bf3856ad364e35\Microsoft.DirectX.DirectSound.dll</HintPath>
     </Reference>
+    <Reference Include="ObjectListView, Version=2.9.1.40222, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ObjectListView.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -190,13 +194,7 @@
     <Compile Include="Utils\Interpreter.cs" />
     <Compile Include="Utils\Lang.cs" />
     <Compile Include="Utils\Misc.cs" />
-    <Compile Include="_fm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="_fm.Designer.cs">
-      <DependentUpon>_fm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="_test.cs" />
+    <Compile Include="_Test.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -224,9 +222,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\LogicEditor\dlgCopy.resx">
       <DependentUpon>dlgCopy.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="_fm.resx">
-      <DependentUpon>_fm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

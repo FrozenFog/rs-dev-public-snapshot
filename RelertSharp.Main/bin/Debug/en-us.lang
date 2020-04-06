@@ -96,6 +96,7 @@ LGClblScriptName=Name:
 LGClblScriptMemberList=Taskforce members list
 LGClblScriptCurType=Type:
 LGClblScriptCurPara=Parameter:
+LGClblScriptDesc=Parameter description
 LGClblTeamList=Team list
 
 LGClklTrace=Trace...
@@ -125,7 +126,6 @@ LGCbtnCopyScriptMem=Copy
 LGCbtnNewTeam=New
 LGCbtnDelTeam=Del
 LGCbtnCopyTeam=Copy
-LGCbtnTeamAdvanced=Advanced
 LGCbtnSearch=Search
 
 LGCckbDisabled=Disabled
@@ -161,6 +161,7 @@ LGCgpbTeamTaskCur=Current Taskforce
 LGCgpbTeamScript=Scripts
 LGCgpbTeamScriptCur=Current Script
 LGCgpbTeamTeam=Teams
+LGCgpbTeamTeamCur=Current Team
 LGCgpbSearch=Global search
 
 LGCrdbRep0=One time AND
