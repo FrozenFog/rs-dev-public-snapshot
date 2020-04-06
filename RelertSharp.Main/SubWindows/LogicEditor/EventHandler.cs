@@ -409,7 +409,11 @@ namespace RelertSharp.SubWindows.LogicEditor
         {
             lbxTriggerList.SelectedItem = cbbAttatchedTrg.SelectedItem;
         }
- 
+
+        #endregion
+
+        #region Team Page
+
         #endregion
     }
 }

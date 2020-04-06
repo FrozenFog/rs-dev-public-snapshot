@@ -140,8 +140,7 @@
             this.tsmiTrgLstName = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiTrgLstIDName = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.txbTest = new System.Windows.Forms.TextBox();
+            this.tbpTeams = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
@@ -173,6 +172,20 @@
             this.hdValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.hdExtraValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rtxbSearchInspector = new System.Windows.Forms.RichTextBox();
+            this.gpbTeamTask = new System.Windows.Forms.GroupBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.gpbTeamTaskCur = new System.Windows.Forms.GroupBox();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.btnNewTask = new System.Windows.Forms.Button();
+            this.btnDelTask = new System.Windows.Forms.Button();
+            this.btnAddTaskMem = new System.Windows.Forms.Button();
+            this.btnDelTaskMem = new System.Windows.Forms.Button();
+            this.label24 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
             this.tbcMain.SuspendLayout();
             this.tbpTriggers.SuspendLayout();
             this.gpbActions.SuspendLayout();
@@ -185,8 +198,10 @@
             this.gpbRepeat.SuspendLayout();
             this.cmsEditTemplate.SuspendLayout();
             this.cmsTriggerList.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tbpTeams.SuspendLayout();
             this.gpbSearch.SuspendLayout();
+            this.gpbTeamTask.SuspendLayout();
+            this.gpbTeamTaskCur.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -195,7 +210,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbcMain.Controls.Add(this.tbpTriggers);
-            this.tbcMain.Controls.Add(this.tabPage2);
+            this.tbcMain.Controls.Add(this.tbpTeams);
             this.tbcMain.Controls.Add(this.tabPage3);
             this.tbcMain.Controls.Add(this.tabPage4);
             this.tbcMain.Controls.Add(this.tabPage5);
@@ -1474,23 +1489,16 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "LGClblTrgList";
             // 
-            // tabPage2
+            // tbpTeams
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage2.Controls.Add(this.txbTest);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1190, 565);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            // 
-            // txbTest
-            // 
-            this.txbTest.Location = new System.Drawing.Point(112, 67);
-            this.txbTest.Name = "txbTest";
-            this.txbTest.Size = new System.Drawing.Size(100, 21);
-            this.txbTest.TabIndex = 0;
+            this.tbpTeams.BackColor = System.Drawing.Color.Transparent;
+            this.tbpTeams.Controls.Add(this.gpbTeamTask);
+            this.tbpTeams.Location = new System.Drawing.Point(4, 22);
+            this.tbpTeams.Name = "tbpTeams";
+            this.tbpTeams.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpTeams.Size = new System.Drawing.Size(1190, 565);
+            this.tbpTeams.TabIndex = 1;
+            this.tbpTeams.Text = "LGCtbpTeamPage";
             // 
             // tabPage3
             // 
@@ -1799,6 +1807,142 @@
             this.rtxbSearchInspector.TabIndex = 0;
             this.rtxbSearchInspector.Text = "";
             // 
+            // gpbTeamTask
+            // 
+            this.gpbTeamTask.Controls.Add(this.btnDelTask);
+            this.gpbTeamTask.Controls.Add(this.btnNewTask);
+            this.gpbTeamTask.Controls.Add(this.gpbTeamTaskCur);
+            this.gpbTeamTask.Controls.Add(this.label22);
+            this.gpbTeamTask.Controls.Add(this.listBox1);
+            this.gpbTeamTask.Location = new System.Drawing.Point(6, 7);
+            this.gpbTeamTask.Name = "gpbTeamTask";
+            this.gpbTeamTask.Size = new System.Drawing.Size(465, 287);
+            this.gpbTeamTask.TabIndex = 0;
+            this.gpbTeamTask.TabStop = false;
+            this.gpbTeamTask.Text = "LGCgpbTeamTask";
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 12;
+            this.listBox1.Location = new System.Drawing.Point(6, 32);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(204, 220);
+            this.listBox1.TabIndex = 0;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(6, 19);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(89, 12);
+            this.label22.TabIndex = 1;
+            this.label22.Text = "LGClblTaskList";
+            // 
+            // gpbTeamTaskCur
+            // 
+            this.gpbTeamTaskCur.Controls.Add(this.label25);
+            this.gpbTeamTaskCur.Controls.Add(this.textBox1);
+            this.gpbTeamTaskCur.Controls.Add(this.comboBox1);
+            this.gpbTeamTaskCur.Controls.Add(this.label24);
+            this.gpbTeamTaskCur.Controls.Add(this.btnDelTaskMem);
+            this.gpbTeamTaskCur.Controls.Add(this.btnAddTaskMem);
+            this.gpbTeamTaskCur.Controls.Add(this.label23);
+            this.gpbTeamTaskCur.Controls.Add(this.listBox2);
+            this.gpbTeamTaskCur.Location = new System.Drawing.Point(216, 18);
+            this.gpbTeamTaskCur.Name = "gpbTeamTaskCur";
+            this.gpbTeamTaskCur.Size = new System.Drawing.Size(243, 262);
+            this.gpbTeamTaskCur.TabIndex = 2;
+            this.gpbTeamTaskCur.TabStop = false;
+            this.gpbTeamTaskCur.Text = "LGCgpbTeamTaskCur";
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.ItemHeight = 12;
+            this.listBox2.Location = new System.Drawing.Point(6, 32);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(231, 136);
+            this.listBox2.TabIndex = 0;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(6, 17);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(125, 12);
+            this.label23.TabIndex = 1;
+            this.label23.Text = "LGClblTaskMemberList";
+            // 
+            // btnNewTask
+            // 
+            this.btnNewTask.Location = new System.Drawing.Point(6, 257);
+            this.btnNewTask.Name = "btnNewTask";
+            this.btnNewTask.Size = new System.Drawing.Size(98, 23);
+            this.btnNewTask.TabIndex = 2;
+            this.btnNewTask.Text = "LGCbtnNewTask";
+            this.btnNewTask.UseVisualStyleBackColor = true;
+            // 
+            // btnDelTask
+            // 
+            this.btnDelTask.Location = new System.Drawing.Point(110, 257);
+            this.btnDelTask.Name = "btnDelTask";
+            this.btnDelTask.Size = new System.Drawing.Size(100, 23);
+            this.btnDelTask.TabIndex = 3;
+            this.btnDelTask.Text = "LGCbtnDelTask";
+            this.btnDelTask.UseVisualStyleBackColor = true;
+            // 
+            // btnAddTaskMem
+            // 
+            this.btnAddTaskMem.Location = new System.Drawing.Point(6, 228);
+            this.btnAddTaskMem.Name = "btnAddTaskMem";
+            this.btnAddTaskMem.Size = new System.Drawing.Size(105, 23);
+            this.btnAddTaskMem.TabIndex = 2;
+            this.btnAddTaskMem.Text = "LGCbtnAddTaskMem";
+            this.btnAddTaskMem.UseVisualStyleBackColor = true;
+            // 
+            // btnDelTaskMem
+            // 
+            this.btnDelTaskMem.Location = new System.Drawing.Point(132, 228);
+            this.btnDelTaskMem.Name = "btnDelTaskMem";
+            this.btnDelTaskMem.Size = new System.Drawing.Size(105, 23);
+            this.btnDelTaskMem.TabIndex = 3;
+            this.btnDelTaskMem.Text = "LGCbtnDelTaskMem";
+            this.btnDelTaskMem.UseVisualStyleBackColor = true;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(6, 178);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(107, 12);
+            this.label24.TabIndex = 4;
+            this.label24.Text = "LGClblTaskCurType";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(76, 175);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(161, 20);
+            this.comboBox1.TabIndex = 5;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(76, 201);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(161, 21);
+            this.textBox1.TabIndex = 6;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(6, 204);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(101, 12);
+            this.label25.TabIndex = 7;
+            this.label25.Text = "LGClblTaskCurNum";
+            // 
             // LogicEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1832,10 +1976,13 @@
             this.gpbRepeat.PerformLayout();
             this.cmsEditTemplate.ResumeLayout(false);
             this.cmsTriggerList.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.tbpTeams.ResumeLayout(false);
             this.gpbSearch.ResumeLayout(false);
             this.gpbSearch.PerformLayout();
+            this.gpbTeamTask.ResumeLayout(false);
+            this.gpbTeamTask.PerformLayout();
+            this.gpbTeamTaskCur.ResumeLayout(false);
+            this.gpbTeamTaskCur.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1844,7 +1991,7 @@
 
         private System.Windows.Forms.TabControl tbcMain;
         private System.Windows.Forms.TabPage tbpTriggers;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tbpTeams;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabPage tabPage5;
@@ -1954,7 +2101,6 @@
         private System.Windows.Forms.LinkLabel lklTraceTrigger;
         private System.Windows.Forms.MaskedTextBox mtxbEventID;
         private System.Windows.Forms.MaskedTextBox mtxbActionID;
-        private System.Windows.Forms.TextBox txbTest;
         private System.Windows.Forms.ContextMenuStrip cmsCopyAction;
         private System.Windows.Forms.ToolStripMenuItem tsmiCopyActionAdv;
         private System.Windows.Forms.ContextMenuStrip cmsCopyEvent;
@@ -1986,5 +2132,19 @@
         private System.Windows.Forms.ColumnHeader hdExtraValue;
         private System.Windows.Forms.CheckBox ckbGlobal;
         private System.Windows.Forms.CheckBox ckbHouse;
+        private System.Windows.Forms.GroupBox gpbTeamTask;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button btnDelTask;
+        private System.Windows.Forms.Button btnNewTask;
+        private System.Windows.Forms.GroupBox gpbTeamTaskCur;
+        private System.Windows.Forms.Button btnDelTaskMem;
+        private System.Windows.Forms.Button btnAddTaskMem;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label24;
     }
 }

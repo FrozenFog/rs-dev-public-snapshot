@@ -53,11 +53,15 @@ LGCDescRepeat1=Runs only one time, no repeating.\r\nIf multiple trigger(objects 
 LGCDescRepeat2=Trigger will repeating.\r\nIf multiple trigger(objects attached this trigger) exist, trigger will fire as long as one of these objects meet their condition.
 LGCDescRepeatGpb=Modifies all attached tags.
 LGCDescTagName=Right click to view all tags that applies this trigger.
+
 LGCtbpTrgPage=Triggers
+LGCtbpTeamPage=Teams
+
 LGCclhRegID=UID
 LGCclhType=Type
 LGCclhValue=Value
 LGCclhExVal=Extra Value
+
 LGClblTrgList=Trigger list
 LGClblTrgID=Trigger ID
 LGClblTrgHouses=Trigger house
@@ -81,7 +85,13 @@ LGClblInspector=Result inspector
 LGClblSearchResult=Global search result
 LGClblFakeSearch=Search keyword...
 LGClblSearchNum=Global search result: {0} matches
+LGClblTaskList=Taskforce list
+LGClblTaskMemberList=Taskforce members list
+LGClblTaskCurType=Unit type:
+LGClblTaskCurNum=Unit num:
+
 LGClklTrace=Trace...
+
 LGCbtnNewTrg=New Trigger
 LGCbtnDelTrg=Del Trigger
 LGCbtnCopyTrg=Copy Trigger
@@ -92,7 +102,12 @@ LGCbtnCopyEvent=Copy Event
 LGCbtnNewAction=New Action
 LGCbtnDelAction=Del Action
 LGCbtnCopyAction=Copy Action
+LGCbtnNewTask=New Taskforce
+LGCbtnDelTask=Del Taskforce
+LGCbtnAddTaskMem=New Member
+LGCbtnDelTaskMem=Del Member
 LGCbtnSearch=Search
+
 LGCckbDisabled=Disabled
 LGCckbEasy=Easy
 LGCckbNormal=Normal
@@ -113,6 +128,7 @@ LGCckbAnim=Animations
 LGCckbSuper=Superweapons
 LGCckbHouse=Houses
 LGCckbGlobal=Global Variables
+
 LGCgpbTrgTag=Trigger and tags
 LGCgpbTrgEvents=Trigger events
 LGCgpbTrgActions=Trigger actions
@@ -120,9 +136,14 @@ LGCgpbRepeat=Repeat type
 LGCgpbEventParam=Event parameters
 LGCgpbActionParam=Action parameters
 LGCgpbSearch=Global search
+LGCgpbTeamTask=Taskforces
+LGCgpbTeamTaskCur=Current Taskforce
+
 LGCrdbRep0=One time AND
 LGCrdbRep1=One time OR
 LGCrdbRep2=Repeating OR
+
+
 LGCtsmiAscend=Ascending sort
 LGCtsmiDecend=Decending sort
 LGCtsmiShowID=Show trigger ID
@@ -130,6 +151,7 @@ LGCtsmiShowName=Show trigger name
 LGCtsmiShowIDandName=Show trigger ID and name
 LGCtsmiEditTemp=Edit template trigger
 LGCtsmiCopyAdv=Advance Copy
+
 LGCdlgCopyTitle=Set Parameters
 LGCdlgCopylblCustomParam=Custom Parameters
 LGCdlgCopylblCustomParam2=One line per action/event
