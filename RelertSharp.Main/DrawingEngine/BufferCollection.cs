@@ -125,6 +125,7 @@ namespace RelertSharp.DrawingEngine
             public Dictionary<int, int> Overlays { get; private set; } = new Dictionary<int, int>();
             public Dictionary<int, int> Terrains { get; private set; } = new Dictionary<int, int>();
             public Dictionary<int, int> Smudges { get; private set; } = new Dictionary<int, int>();
+            public IEnumerable<IPresentBase> MapObjects { get { return Structures.Values.Concat<IPresentBase>(Units.Values).Concat(Infantries.Values); } }
             #endregion
         }
 

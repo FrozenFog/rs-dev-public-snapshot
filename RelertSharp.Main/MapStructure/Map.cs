@@ -26,7 +26,6 @@ namespace RelertSharp.MapStructure
         private MapInfo info;
         private RankInfo ranks;
         private HeaderInfo headers;
-        private Lightning lightning;
         private Rectangle previewSize;
 
         private WaypointCollection waypoints = new WaypointCollection();
@@ -124,7 +123,7 @@ namespace RelertSharp.MapStructure
         private void GetGeneralInfo(MapFile f)
         {
             info = new MapInfo(f.PopEnt("Basic"), f.PopEnt("Map"), f.PopEnt("SpecialFlags"));
-            lightning = new Lightning(f.PopEnt("Lighting"));
+            LightningCollection = new Lightning(f.PopEnt("Lighting"));
             if (f.IniDict.Keys.Contains("Header")) headers = new HeaderInfo(f.PopEnt("Header"));
             if (f.IniDict.Keys.Contains("Ranking")) ranks = new RankInfo(f.PopEnt("Ranking"));
             digest = f.PopEnt("Digest").JoinString();
@@ -267,6 +266,7 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Calls - Map
+        public Lightning LightningCollection { get; private set; }
         public InfantryLayer Infantries { get; private set; } = new InfantryLayer();
         public AircraftLayer Aircrafts { get; private set; } = new AircraftLayer();
         public StructureLayer Buildings { get; private set; } = new StructureLayer();

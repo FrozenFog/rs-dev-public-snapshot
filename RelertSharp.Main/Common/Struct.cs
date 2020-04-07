@@ -25,6 +25,14 @@ namespace RelertSharp.Common
         {
             X = r; Y = g; Z = b; V = a;
         }
+        public static Vec4 Unit3(float num)
+        {
+            return new Vec4(num, num, num, 1);
+        }
+        public static Vec4 Unit4(float num)
+        {
+            return new Vec4(num, num, num, num);
+        }
         public static Vec4 Zero
         {
             get { return new Vec4(0, 0, 0, 0); }
@@ -36,10 +44,6 @@ namespace RelertSharp.Common
         public static Vec4 TileExIndi
         {
             get { return new Vec4(0, 1, 0, 1); }
-        }
-        public static Vec4 TileDeselect
-        {
-            get { return new Vec4(1, 1, 1, 1); }
         }
         public static Vec4 Transparency
         {
@@ -56,6 +60,10 @@ namespace RelertSharp.Common
         public static Vec4 operator -(Vec4 a, Vec4 b)
         {
             return new Vec4(a.X - b.X, a.Y - b.Y, a.Z - b.Z, a.V - b.V);
+        }
+        public static Vec4 operator*(Vec4 a, Vec4 b)
+        {
+            return new Vec4(a.X * b.X, a.Y * b.Y, a.Z * b.Z, a.V * b.V);
         }
     }
     public struct Vec3

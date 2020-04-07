@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.DrawingEngine.Presenting
@@ -24,6 +25,12 @@ namespace RelertSharp.DrawingEngine.Presenting
             RemoveProp(pBarrel);
             RemoveProp(pSelf);
             RemoveProp(pTurret);
+        }
+        public void SetColor(Vec4 color)
+        {
+            SetColor(pSelf, color);
+            SetColor(pTurret, color);
+            SetColor(pBarrel, color);
         }
         #endregion
 

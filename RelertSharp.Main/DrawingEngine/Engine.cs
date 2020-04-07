@@ -23,6 +23,7 @@ namespace RelertSharp.DrawingEngine
         private readonly string[] _zeroLandType = new string[] { "Water", "Clear", "" };
         private float _width { get { return _30SQ2; } }
         private Vec3 _NormTileVec { get { return new Vec3(_15SQ2, _15SQ2, _10SQ3); } }
+        private Vec4 _TileColor { get; set; }
         private float _height { get { return _10SQ3; } }
         private const uint _colorIgnore = 0x000000FF;
         private const uint _white = 0xFFFFFFFF;
@@ -43,6 +44,7 @@ namespace RelertSharp.DrawingEngine
             _15SQ2 = _30SQ2 / 2;
             _rad45 = (float)Math.PI / 4;
             surface = new GdipSurface(60, 54);
+            _TileColor = Vec4.Unit4(1);
         }
         #endregion
 
@@ -198,12 +200,21 @@ namespace RelertSharp.DrawingEngine
             return false;
         }
         #endregion
+        public void SetObjectLightning(LightningItem light)
+        {
+            Vec4 color = new Vec4(light.Red, light.Green, light.Blue, 1);
+            Vec4 amb = Vec4.Unit3(light.Ambient);
+            color *= amb;
+            _TileColor = color;
+            foreach (PresentTile t in Buffer.Scenes.Tiles.Values) t.SetColor(color);
+            foreach (IPresentBase obj in Buffer.Scenes.MapObjects) obj.SetColor(color);
+
+        }
         public Vec3 ClientPointToCellPos(Point src, TileLayer referance)
         {
             Pnt p = Pnt.FromPoint(src);
             Vec3 pos = new Vec3();
             CppExtern.Scene.ClientPositionToScenePosition(p, ref pos);
-            //pos = ToVec3Iso(pos);
             pos += _NormTileVec * 12;
             for (int height = 0; height < 12; height++)
             {
@@ -223,7 +234,7 @@ namespace RelertSharp.DrawingEngine
             if (newpos != previousTile)
             {
                 Buffer.Scenes.ColoringTile(newpos.ToCoord(), Vec4.TileIndicator, Vec4.TileExIndi);
-                Buffer.Scenes.ColoringTile(previousTile.ToCoord(), Vec4.TileDeselect, Vec4.TileDeselect);
+                Buffer.Scenes.ColoringTile(previousTile.ToCoord(), _TileColor, _TileColor);
                 previousTile = newpos;
                 return true;
             }

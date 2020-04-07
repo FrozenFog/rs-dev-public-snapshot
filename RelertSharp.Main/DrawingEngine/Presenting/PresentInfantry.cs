@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.DrawingEngine.Presenting
@@ -18,6 +19,10 @@ namespace RelertSharp.DrawingEngine.Presenting
         public void Dispose()
         {
             RemoveProp(pSelf);
+        }
+        public void SetColor(Vec4 color)
+        {
+            SetColor(pSelf, color);
         }
         #endregion
 

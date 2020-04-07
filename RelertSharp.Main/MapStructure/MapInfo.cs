@@ -116,23 +116,23 @@ namespace RelertSharp.MapStructure
         #region Ctor - LightningItem
         public LightningItem(string _R, string _G, string _B, string _level, string _ground, string _ambient)
         {
-            Red = double.Parse(_R);
-            Green = double.Parse(_G);
-            Blue = double.Parse(_B);
-            Level = double.Parse(_level);
-            Ground = double.Parse(_ground);
-            Ambient = double.Parse(_ambient);
+            Red = float.Parse(_R);
+            Green = float.Parse(_G);
+            Blue = float.Parse(_B);
+            Level = float.Parse(_level);
+            Ground = float.Parse(_ground);
+            Ambient = float.Parse(_ambient);
         }
         #endregion
 
 
         #region Public Calls - LightningItem
-        public double Red { get; set; }
-        public double Green { get; set; }
-        public double Blue { get; set; }
-        public double Level { get; set; }
-        public double Ground { get; set; }
-        public double Ambient { get; set; }
+        public float Red { get; set; }
+        public float Green { get; set; }
+        public float Blue { get; set; }
+        public float Level { get; set; }
+        public float Ground { get; set; }
+        public float Ambient { get; set; }
         #endregion
     }
 

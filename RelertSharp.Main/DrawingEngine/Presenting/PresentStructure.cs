@@ -34,6 +34,20 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             foreach (int p in Pointers) RemoveProp(p);
         }
+        public void SetColor(Vec4 color)
+        {
+            if (!IsBaseNode)
+            {
+                SetColor(pSelf, color);
+                SetColor(pActivateAnim, color);
+                SetColor(pActivateAnim2, color);
+                SetColor(pActivateAnim3, color);
+                SetColor(pIdleAnim, color);
+                SetColor(pSuperAnim, color);
+                SetColor(pTurretAnim, color);
+                SetColor(pTurretBarl, color);
+            }
+        }
         #endregion
 
 

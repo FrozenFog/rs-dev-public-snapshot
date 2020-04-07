@@ -34,6 +34,10 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             if (pointer != 0) CppExtern.ObjectUtils.RemoveObjectAtScene(pointer);
         }
+        protected virtual void SetColor(int pointer, Vec4 color)
+        {
+            if (pointer != 0) CppExtern.ObjectUtils.SetObjectColorCoefficient(pointer, color);
+        }
         #endregion
 
 
@@ -55,5 +59,6 @@ namespace RelertSharp.DrawingEngine.Presenting
         int pSelf { get; set; }
         bool IsValid { get; }
         void Dispose();
+        void SetColor(Vec4 color);
     }
 }
