@@ -411,5 +411,38 @@ namespace RelertSharp.SubWindows.LogicEditor
         }
 
         #endregion
+
+        #region Misc Page
+
+        #region Button
+        private void btnNewLocalVar_Click(object sender, EventArgs e)
+        {
+            LocalVarItem localVar = new LocalVarItem("New Local Variable", false, localVarList.Count);
+            localVarList.Add(localVar);
+            localVarSource.DataSource = null;
+            localVarSource.DataSource = localVarList;
+            chklbxLocalVar.SelectedIndex = chklbxLocalVar.Items.Count - 1;
+            return;
+        }
+        #endregion
+
+        private void chklbxLocalVar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txbLocalName.Text = localVarList[chklbxLocalVar.SelectedIndex].Name;
+            return;
+        }
+
+        private void txbLocalName_TextChanged(object sender, EventArgs e)
+        {
+            localVarList[chklbxLocalVar.SelectedIndex].Name = txbLocalName.Text;
+            return;
+        }
+
+        private void chklbxLocalVar_Leave(object sender, EventArgs e)
+        {
+            //TODO:Save the changes
+        }
+
+        #endregion
     }
 }

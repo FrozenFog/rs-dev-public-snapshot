@@ -19,6 +19,8 @@ namespace RelertSharp.SubWindows.LogicEditor
     {
         private Map map;
         private DescriptCollection descriptCollection = new DescriptCollection();
+        private List<LocalVarItem> localVarList = new List<LocalVarItem>();
+        private BindingSource localVarSource = new BindingSource();
         private LinkLabel[] lklEP, lklAP;
         private TextBox[] txbEP, txbAP;
         private CheckBox[] ckbEP, ckbAP;
@@ -38,6 +40,7 @@ namespace RelertSharp.SubWindows.LogicEditor
             StaticHelper.LoadToObjectCollection(cbbActionAbst, descriptCollection.Actions);
             UpdateTrgList(TriggerItem.DisplayingType.IDandName);
             LoadHouseList();
+            LoadLocalVariables();
             SetGlobal();
             lbxTriggerList.SelectedIndex = 0;
         }
@@ -81,6 +84,16 @@ namespace RelertSharp.SubWindows.LogicEditor
         {
             map.Countries.AscendingSort();
             StaticHelper.LoadToObjectCollection(lbxTriggerHouses, map.Countries);
+        }
+        private void LoadLocalVariables()
+        {
+            chklbxLocalVar.Items.Clear();
+            chklbxLocalVar.DataSource = localVarSource;
+            localVarList = new List<LocalVarItem>(map.LocalVariables.ToList());
+            if (localVarList == null) return;
+            localVarSource.DataSource = localVarList;
+            for (int idx = 0, count = localVarList.Count; idx < count; ++idx)
+                chklbxLocalVar.SetItemChecked(idx, localVarList[idx].InitState);
         }
         #endregion
 

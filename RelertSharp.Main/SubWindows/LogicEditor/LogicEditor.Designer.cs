@@ -191,6 +191,12 @@
             this.label22 = new System.Windows.Forms.Label();
             this.lbxTaskList = new System.Windows.Forms.ListBox();
             this.tbpMiscs = new System.Windows.Forms.TabPage();
+            this.dtlvMiscs = new BrightIdeasSoftware.DataTreeListView();
+            this.gpbLocalVar = new System.Windows.Forms.GroupBox();
+            this.txbLocalName = new System.Windows.Forms.TextBox();
+            this.label35 = new System.Windows.Forms.Label();
+            this.btnNewLocalVar = new System.Windows.Forms.Button();
+            this.chklbxLocalVar = new System.Windows.Forms.CheckedListBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.ttTrg = new System.Windows.Forms.ToolTip(this.components);
@@ -221,16 +227,6 @@
             this.hdValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.hdExtraValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rtxbSearchInspector = new System.Windows.Forms.RichTextBox();
-            this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
-            this.gpbLocalVar = new System.Windows.Forms.GroupBox();
-            this.chklbxLocalVar = new System.Windows.Forms.CheckedListBox();
-            this.btnNewLocalVar = new System.Windows.Forms.Button();
-            this.btnDelLocalVar = new System.Windows.Forms.Button();
-            this.label35 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.olvColumnSection = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumnKey = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumnValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.tbcMain.SuspendLayout();
             this.tbpTriggers.SuspendLayout();
             this.gpbActions.SuspendLayout();
@@ -253,9 +249,9 @@
             this.gpbTeamTask.SuspendLayout();
             this.gpbTeamTaskCur.SuspendLayout();
             this.tbpMiscs.SuspendLayout();
-            this.gpbSearch.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtlvMiscs)).BeginInit();
             this.gpbLocalVar.SuspendLayout();
+            this.gpbSearch.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -2101,14 +2097,79 @@
             // tbpMiscs
             // 
             this.tbpMiscs.BackColor = System.Drawing.Color.Transparent;
+            this.tbpMiscs.Controls.Add(this.dtlvMiscs);
             this.tbpMiscs.Controls.Add(this.gpbLocalVar);
-            this.tbpMiscs.Controls.Add(this.objectListView1);
             this.tbpMiscs.Location = new System.Drawing.Point(4, 22);
             this.tbpMiscs.Name = "tbpMiscs";
             this.tbpMiscs.Padding = new System.Windows.Forms.Padding(3);
             this.tbpMiscs.Size = new System.Drawing.Size(1192, 565);
             this.tbpMiscs.TabIndex = 2;
             this.tbpMiscs.Text = "LGCtbpMiscPage";
+            // 
+            // dtlvMiscs
+            // 
+            this.dtlvMiscs.CellEditUseWholeCell = false;
+            this.dtlvMiscs.DataSource = null;
+            this.dtlvMiscs.HideSelection = false;
+            this.dtlvMiscs.Location = new System.Drawing.Point(592, 6);
+            this.dtlvMiscs.Name = "dtlvMiscs";
+            this.dtlvMiscs.RootKeyValueString = "";
+            this.dtlvMiscs.ShowGroups = false;
+            this.dtlvMiscs.Size = new System.Drawing.Size(594, 553);
+            this.dtlvMiscs.TabIndex = 2;
+            this.dtlvMiscs.UseCompatibleStateImageBehavior = false;
+            this.dtlvMiscs.View = System.Windows.Forms.View.Details;
+            this.dtlvMiscs.VirtualMode = true;
+            // 
+            // gpbLocalVar
+            // 
+            this.gpbLocalVar.Controls.Add(this.txbLocalName);
+            this.gpbLocalVar.Controls.Add(this.label35);
+            this.gpbLocalVar.Controls.Add(this.btnNewLocalVar);
+            this.gpbLocalVar.Controls.Add(this.chklbxLocalVar);
+            this.gpbLocalVar.Location = new System.Drawing.Point(6, 391);
+            this.gpbLocalVar.Name = "gpbLocalVar";
+            this.gpbLocalVar.Size = new System.Drawing.Size(580, 168);
+            this.gpbLocalVar.TabIndex = 1;
+            this.gpbLocalVar.TabStop = false;
+            this.gpbLocalVar.Text = "LGCgpbLocalVar";
+            // 
+            // txbLocalName
+            // 
+            this.txbLocalName.Location = new System.Drawing.Point(254, 142);
+            this.txbLocalName.Name = "txbLocalName";
+            this.txbLocalName.Size = new System.Drawing.Size(320, 21);
+            this.txbLocalName.TabIndex = 4;
+            this.txbLocalName.TextChanged += new System.EventHandler(this.txbLocalName_TextChanged);
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(135, 147);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(113, 12);
+            this.label35.TabIndex = 3;
+            this.label35.Text = "LGClblLocalVarName";
+            // 
+            // btnNewLocalVar
+            // 
+            this.btnNewLocalVar.Location = new System.Drawing.Point(6, 142);
+            this.btnNewLocalVar.Name = "btnNewLocalVar";
+            this.btnNewLocalVar.Size = new System.Drawing.Size(123, 23);
+            this.btnNewLocalVar.TabIndex = 1;
+            this.btnNewLocalVar.Text = "LGCbtnNewLocalVar";
+            this.btnNewLocalVar.UseVisualStyleBackColor = true;
+            this.btnNewLocalVar.Click += new System.EventHandler(this.btnNewLocalVar_Click);
+            // 
+            // chklbxLocalVar
+            // 
+            this.chklbxLocalVar.FormattingEnabled = true;
+            this.chklbxLocalVar.Location = new System.Drawing.Point(6, 20);
+            this.chklbxLocalVar.Name = "chklbxLocalVar";
+            this.chklbxLocalVar.Size = new System.Drawing.Size(568, 116);
+            this.chklbxLocalVar.TabIndex = 0;
+            this.chklbxLocalVar.SelectedIndexChanged += new System.EventHandler(this.chklbxLocalVar_SelectedIndexChanged);
+            this.chklbxLocalVar.Leave += new System.EventHandler(this.chklbxLocalVar_Leave);
             // 
             // tabPage4
             // 
@@ -2407,99 +2468,6 @@
             this.rtxbSearchInspector.TabIndex = 0;
             this.rtxbSearchInspector.Text = "";
             // 
-            // objectListView1
-            // 
-            this.objectListView1.AllColumns.Add(this.olvColumnSection);
-            this.objectListView1.AllColumns.Add(this.olvColumnKey);
-            this.objectListView1.AllColumns.Add(this.olvColumnValue);
-            this.objectListView1.CellEditUseWholeCell = false;
-            this.objectListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.olvColumnSection,
-            this.olvColumnKey,
-            this.olvColumnValue});
-            this.objectListView1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.objectListView1.HideSelection = false;
-            this.objectListView1.Location = new System.Drawing.Point(592, 10);
-            this.objectListView1.Name = "objectListView1";
-            this.objectListView1.Size = new System.Drawing.Size(594, 549);
-            this.objectListView1.TabIndex = 0;
-            this.objectListView1.UseCompatibleStateImageBehavior = false;
-            this.objectListView1.View = System.Windows.Forms.View.Details;
-            // 
-            // gpbLocalVar
-            // 
-            this.gpbLocalVar.Controls.Add(this.textBox1);
-            this.gpbLocalVar.Controls.Add(this.label35);
-            this.gpbLocalVar.Controls.Add(this.btnDelLocalVar);
-            this.gpbLocalVar.Controls.Add(this.btnNewLocalVar);
-            this.gpbLocalVar.Controls.Add(this.chklbxLocalVar);
-            this.gpbLocalVar.Location = new System.Drawing.Point(6, 391);
-            this.gpbLocalVar.Name = "gpbLocalVar";
-            this.gpbLocalVar.Size = new System.Drawing.Size(580, 168);
-            this.gpbLocalVar.TabIndex = 1;
-            this.gpbLocalVar.TabStop = false;
-            this.gpbLocalVar.Text = "LGCgpbLocalVar";
-            // 
-            // chklbxLocalVar
-            // 
-            this.chklbxLocalVar.FormattingEnabled = true;
-            this.chklbxLocalVar.Location = new System.Drawing.Point(6, 20);
-            this.chklbxLocalVar.Name = "chklbxLocalVar";
-            this.chklbxLocalVar.Size = new System.Drawing.Size(568, 116);
-            this.chklbxLocalVar.TabIndex = 0;
-            // 
-            // btnNewLocalVar
-            // 
-            this.btnNewLocalVar.Location = new System.Drawing.Point(6, 142);
-            this.btnNewLocalVar.Name = "btnNewLocalVar";
-            this.btnNewLocalVar.Size = new System.Drawing.Size(75, 23);
-            this.btnNewLocalVar.TabIndex = 1;
-            this.btnNewLocalVar.Text = "LGCbtnNewLocalVar";
-            this.btnNewLocalVar.UseVisualStyleBackColor = true;
-            // 
-            // btnDelLocalVar
-            // 
-            this.btnDelLocalVar.Location = new System.Drawing.Point(87, 142);
-            this.btnDelLocalVar.Name = "btnDelLocalVar";
-            this.btnDelLocalVar.Size = new System.Drawing.Size(75, 23);
-            this.btnDelLocalVar.TabIndex = 2;
-            this.btnDelLocalVar.Text = "LGCbtnDelLocalVar";
-            this.btnDelLocalVar.UseVisualStyleBackColor = true;
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(188, 147);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(113, 12);
-            this.label35.TabIndex = 3;
-            this.label35.Text = "LGClblLocalVarName";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(307, 142);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(267, 21);
-            this.textBox1.TabIndex = 4;
-            // 
-            // olvColumnSection
-            // 
-            this.olvColumnSection.Text = "LGColvColumnSection";
-            this.olvColumnSection.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.olvColumnSection.Width = 194;
-            // 
-            // olvColumnKey
-            // 
-            this.olvColumnKey.Text = "LGColvColumnKey";
-            this.olvColumnKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.olvColumnKey.Width = 200;
-            // 
-            // olvColumnValue
-            // 
-            this.olvColumnValue.Text = "LGColvColumnValue";
-            this.olvColumnValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.olvColumnValue.Width = 200;
-            // 
             // LogicEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2548,11 +2516,11 @@
             this.gpbTeamTaskCur.ResumeLayout(false);
             this.gpbTeamTaskCur.PerformLayout();
             this.tbpMiscs.ResumeLayout(false);
-            this.gpbSearch.ResumeLayout(false);
-            this.gpbSearch.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtlvMiscs)).EndInit();
             this.gpbLocalVar.ResumeLayout(false);
             this.gpbLocalVar.PerformLayout();
+            this.gpbSearch.ResumeLayout(false);
+            this.gpbSearch.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2752,14 +2720,10 @@
         private System.Windows.Forms.Button btnNewTeam;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.GroupBox gpbLocalVar;
-        private BrightIdeasSoftware.ObjectListView objectListView1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txbLocalName;
         private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.Button btnDelLocalVar;
         private System.Windows.Forms.Button btnNewLocalVar;
         private System.Windows.Forms.CheckedListBox chklbxLocalVar;
-        private BrightIdeasSoftware.OLVColumn olvColumnSection;
-        private BrightIdeasSoftware.OLVColumn olvColumnKey;
-        private BrightIdeasSoftware.OLVColumn olvColumnValue;
+        private BrightIdeasSoftware.DataTreeListView dtlvMiscs;
     }
 }

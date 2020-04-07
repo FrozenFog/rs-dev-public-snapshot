@@ -79,6 +79,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - LocalVarItem
+        public override string ToString() { return ID + ' ' + Name; }
         public string Name { get; set; }
         public bool InitState { get; set; }
         public int Index { get; set; }
