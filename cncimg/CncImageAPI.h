@@ -34,6 +34,8 @@ EXPORT bool WINAPI RemoveShpFile(int nFileId);
 EXPORT bool WINAPI LoadShpTextures(int nFileId, int nPaletteId, DWORD dwRemapColor);
 
 EXPORT int WINAPI CreateCommonTextureFile(const char* pFileName);
+EXPORT int WINAPI CreateCircularCommonTextureFile(float Radius, float Thickness, DWORD dwD3DColor);
+
 EXPORT bool WINAPI RemoveCommonTextureFile(int nFileId);
 //image object
 EXPORT int WINAPI CreateVxlObjectAtScene(int nFileId, D3DXVECTOR3 Position,
@@ -44,7 +46,7 @@ EXPORT bool WINAPI CreateTmpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int
 EXPORT int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFrame, int nPaletteId, DWORD dwRemapColor, char bFlat,
 	int nFoundationX, int nFoundationY, int nHeight);
 
-EXPORT int WINAPI CreateCommonTextureObjectAtScene(int nFileId, D3DXVECTOR3 Position);
+EXPORT int WINAPI CreateCommonTextureObjectAtScene(int nFileId, D3DXVECTOR3 Position, bool bFlat = false);
 
 EXPORT void WINAPI MakeVxlFrameShot(int nFileId, LPCSTR pFileName, int idxFrame, float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor);
 

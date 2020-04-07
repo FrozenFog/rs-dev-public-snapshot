@@ -13,7 +13,7 @@ vector main(in vector incolor :COLOR) :COLOR
 	outcolor.b = incolor.b*vec.b;
 	outcolor.a = incolor.a*vec.a;
 
-	return outcolor;
+	return saturate(outcolor);
 }
 
 vector pmain(in float2 texcoords : TEXCOORD) : COLOR
@@ -32,7 +32,7 @@ vector pmain(in float2 texcoords : TEXCOORD) : COLOR
 	if (outcolor.a == 0.0f)
 		discard;
 
-	return outcolor;
+	return saturate(outcolor);
 }
 
 struct VSHandler

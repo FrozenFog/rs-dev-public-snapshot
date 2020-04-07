@@ -50,7 +50,7 @@ struct TmpImageHeader
 	PROTECTED(int, unused_3[3]);
 	int nExtraX, nExtraY;
 	int nExtraWidth, nExtraHeight;
-	int unused_1;
+	DWORD dwExtraFlag;
 	BYTE nHeight;
 	BYTE TerrainType;
 	RampType RampType;

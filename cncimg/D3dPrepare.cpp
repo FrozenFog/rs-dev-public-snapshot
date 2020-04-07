@@ -13,7 +13,7 @@ namespace Graphic
 
 	int MouseObject;
 	int CliffObject, CliffExtraObject;
-	int UnitPalette, TmpPalette;
+	int UnitPalette, TmpPalette, SnoPalette, DesPalette;
 	int ShpFile;
 	int roadTileFile;
 	int roadObject[3];
@@ -36,10 +36,12 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 
 	UnitPalette = CreatePaletteFile("palettes\\unittem.pal");
 	TmpPalette = CreatePaletteFile("palettes\\isotem.pal");
+	SnoPalette = CreatePaletteFile("palettes\\isosno.pal");
+	DesPalette = CreatePaletteFile("palettes\\isodes.pal");
 
 	SetBackgroundColor(0, 0, 0);
 
-	if (!UnitPalette || !TmpPalette)
+	if (!UnitPalette || !TmpPalette || !SnoPalette || !DesPalette)
 		return false;
 
 	//MakeVxlFrameShot(VxlFiles[0], "Shot.png", 0, 0.0, 0.0, 0.0, UnitPalette, INVALID_COLOR_VALUE);
@@ -58,11 +60,11 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 	if (auto id = CreateVxlFile("flata___.vxl")) {
 		VxlFiles.push_back(id);
 	}
-
-	//if (auto id = CreateCommonTextureFile("images\\common_tex.png")) {
-	//	CreateCommonTextureObjectAtScene(id, { 0.0,0.0,0.0 });
-	//}
-	
+/*
+	if (auto id = CreateCircularCommonTextureFile(280.0,4.0,D3DCOLOR_XRGB(242,0,242))) {
+		CreateCommonTextureObjectAtScene(id, { 0.0,0.0,0.0 });
+	}
+	*/
 	if (ShpFile = CreateShpFile("images\\ggcnst.shp")) {
 		if (LoadShpTextures(ShpFile, UnitPalette, RGB(0, 252, 252)))
 			MouseObject = CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 0, UnitPalette, RGB(0, 252, 252), 2, 4, 4, 8);
@@ -155,6 +157,19 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 		LoadTmpTextures(tiles, TmpPalette);
 	}
 */
+	int out;
+	if (auto fid = CreateTmpFile("tile\\grdrl10.des"))
+	{
+		LoadTmpTextures(fid, DesPalette);
+		CreateTmpObjectAtScene(fid, { 0.0f,7.5f*TileLength,0.0f }, 0, out, out);
+	}
+
+	if (auto fid = CreateTmpFile("tile\\cliffz04.sno"))
+	{
+		LoadTmpTextures(fid, SnoPalette);
+		CreateTmpObjectAtScene(fid, { 0.0f,8.5f*TileLength,0.0f }, 2, out, out);
+	}
+
 	if (!TmpFiles.empty() && !SlopeFilesSW.empty())
 	for (int x = 0; x < 10; x++) {
 		if (CellClass::CreateCellAt(
