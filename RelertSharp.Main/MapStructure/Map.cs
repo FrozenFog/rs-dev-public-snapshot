@@ -227,7 +227,7 @@ namespace RelertSharp.MapStructure
             foreach (INIPair p in entVar.DataList)
             {
                 string[] tmp = p.ParseStringList();
-                LocalVariables[tmp[0]] = new LocalVarItem(tmp[0], ParseBool(tmp[1]), p.Name);
+                LocalVariables[p.Name] = new LocalVarItem(tmp[0], ParseBool(tmp[1]), p.Name);
             }
             foreach (INIPair p in entAITrigger.DataList)
             {

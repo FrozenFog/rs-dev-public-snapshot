@@ -420,14 +420,16 @@ namespace RelertSharp.SubWindows.LogicEditor
             LocalVarItem localVar = new LocalVarItem("New Local Variable", false, localVarList.Count);
             localVarList.Add(localVar);
             localVarSource.DataSource = null;
-            localVarSource.DataSource = localVarList;
+            localVarSource.DataSource = localVarList; 
             chklbxLocalVar.SelectedIndex = chklbxLocalVar.Items.Count - 1;
-            return;
+            for (int idx = 0, count = localVarList.Count; idx < count; ++idx)
+                chklbxLocalVar.SetItemChecked(idx, localVarList[idx].InitState);
         }
         #endregion
 
         private void chklbxLocalVar_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (localVarList == null) return;
             txbLocalName.Text = localVarList[chklbxLocalVar.SelectedIndex].Name;
             return;
         }
@@ -440,7 +442,10 @@ namespace RelertSharp.SubWindows.LogicEditor
 
         private void chklbxLocalVar_Leave(object sender, EventArgs e)
         {
-            //TODO:Save the changes
+            for (int idx = 0, count = localVarList.Count; idx < count; ++idx)
+                localVarList[idx].InitState = chklbxLocalVar.GetItemChecked(idx);
+            map.LocalVariables.UpdateData(localVarList);
+            ;
         }
 
         #endregion

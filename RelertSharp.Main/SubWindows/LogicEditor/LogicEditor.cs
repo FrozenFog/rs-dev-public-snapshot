@@ -19,14 +19,15 @@ namespace RelertSharp.SubWindows.LogicEditor
     {
         private Map map;
         private DescriptCollection descriptCollection = new DescriptCollection();
-        private List<LocalVarItem> localVarList = new List<LocalVarItem>();
-        private BindingSource localVarSource = new BindingSource();
         private LinkLabel[] lklEP, lklAP;
         private TextBox[] txbEP, txbAP;
         private CheckBox[] ckbEP, ckbAP;
         private ComboBox[] cbbEP, cbbAP;
         private SoundManager soundPlayer = new SoundManager();
         private bool listUpdating = false;
+
+        private List<LocalVarItem> localVarList = new List<LocalVarItem>();
+        private BindingSource localVarSource = new BindingSource();
 
 
         #region Ctor - LogicEditor
@@ -89,7 +90,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         {
             chklbxLocalVar.Items.Clear();
             chklbxLocalVar.DataSource = localVarSource;
-            localVarList = new List<LocalVarItem>(map.LocalVariables.ToList());
+            localVarList = map.LocalVariables.ToList();
             if (localVarList == null) return;
             localVarSource.DataSource = localVarList;
             for (int idx = 0, count = localVarList.Count; idx < count; ++idx)
