@@ -296,7 +296,7 @@ bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD
 }
 
 int ShpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, int idxFrame, char bFlat, int nPaletteID, DWORD dwRemap,
-	int nX, int nY, int nHeight)
+	int nX, int nY, int nHeight, bool bDrawAsShadow)
 {
 	if (!pDevice || idxFrame < 0 || idxFrame >= this->GetFrameCount())
 		return 0;
@@ -416,7 +416,7 @@ int ShpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, i
 	memcpy_s(pVertexData, nBufferSize, VertexBuffer.data(), nBufferSize);
 	pVertexBuffer->Unlock();
 
-	PaintingStruct::InitializePaintingStruct(Object, pVertexBuffer, Position /*+ HeightPosition*/, pTexture);
+	PaintingStruct::InitializePaintingStruct(Object, pVertexBuffer, Position /*+ HeightPosition*/, pTexture, bDrawAsShadow);
 
 	if (VertexBuffer.size() == 6)
 		Object.SetCompareOffset(HeightPosition);

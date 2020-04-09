@@ -66,8 +66,10 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 	}
 	*/
 	if (ShpFile = CreateShpFile("images\\ggcnst.shp")) {
-		if (LoadShpTextures(ShpFile, UnitPalette, RGB(0, 252, 252)))
-			MouseObject = CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 0, UnitPalette, RGB(0, 252, 252), 2, 4, 4, 8);
+		if (LoadShpTextures(ShpFile, UnitPalette, RGB(0, 252, 252))) {
+			MouseObject = CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 0, UnitPalette, RGB(0, 252, 252), 2, 4, 4, 8, false);
+			CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 4, UnitPalette, RGB(0, 252, 252), 1, 4, 4, 8, true);
+		}
 	}
 
 	D3DXVECTOR3 Position{ 100.0f,0.0f,0.0f };
@@ -90,7 +92,7 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 		if (auto tid = CreateVxlFile("images\\yaggun.vxl")) {
 			float turretY = 15.0f;
 			float delta = turretY*2.0f / sqrt(3.0);
-			CreateShpObjectAtScene(vid, Position, 0, UnitPalette, INVALID_COLOR_VALUE, 1, 1, 1, 4);
+			CreateShpObjectAtScene(vid, Position, 0, UnitPalette, INVALID_COLOR_VALUE, 1, 1, 1, 4, false);
 			Position.z -= delta;
 			CreateVxlObjectAtScene(tid, Position, 0, 0, D3DX_PI, UnitPalette, INVALID_COLOR_VALUE);
 			

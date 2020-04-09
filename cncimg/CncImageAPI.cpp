@@ -228,13 +228,13 @@ bool WINAPI CreateTmpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int nTileI
 }
 
 int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFrame, int nPaletteId, DWORD dwRemapColor, char bFlat,
-	int nFoundationX, int nFoundationY, int nHeight)
+	int nFoundationX, int nFoundationY, int nHeight, bool bDrawAsShadow)
 {
 	auto find = ShpFileClass::FileObjectTable.find(nFileId);
 	if (find == ShpFileClass::FileObjectTable.end())
 		return false;
 	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position, idxFrame, bFlat, nPaletteId, dwRemapColor,
-		nFoundationX, nFoundationY, nHeight);
+		nFoundationX, nFoundationY, nHeight, bDrawAsShadow);
 }
 
 int WINAPI CreateCommonTextureObjectAtScene(int nFileId, D3DXVECTOR3 Position, bool bFlat)

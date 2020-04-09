@@ -471,7 +471,7 @@ int VxlFile::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
 
 	//this->AddDrawnObject(pVertexBuffer, Position);
 
-	PaintingStruct::InitializePaintingStruct(PaintObject, pVertexBuffer, Position, nullptr, &BufferedVoxels, &BufferedNormals,
+	PaintingStruct::InitializePaintingStruct(PaintObject, pVertexBuffer, Position, nullptr, false, &BufferedVoxels, &BufferedNormals,
 		nPaletteID, dwRemapColor);
 	return this->CommitOpaqueObject(PaintObject);
 }

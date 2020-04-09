@@ -103,18 +103,22 @@ bool SceneClass::LoadShaders()
 	const char* pVertexMain = "vmain";
 	const char* pVarName = "vec";
 	const char* pMatrixName = "vpmatrix";
+	const char* pShadowMain = "smain";
 
 	if (this->VoxelShader.CompileFromFile(pShaderFile, pVoxelShaderMain) &&
 		this->PlainArtShader.CompileFromFile(pShaderFile, pPlainShaderMain) &&
-		this->VertexShader.CompileFromFile(pShaderFile, pVertexMain, true))
+		this->VertexShader.CompileFromFile(pShaderFile, pVertexMain, true) &&
+		this->ShadowShader.CompileFromFile(pShaderFile, pShadowMain))
 	{
 		return
 			this->VoxelShader.CreateShader(this->GetDevice()) &&
 			this->PlainArtShader.CreateShader(this->GetDevice()) &&
 			this->VertexShader.CreateVertexShader(this->GetDevice()) &&
+			this->ShadowShader.CreateShader(this->GetDevice()) &&
 			this->VoxelShader.LinkConstants(pVarName) &&
 			this->PlainArtShader.LinkConstants(pVarName) &&
-			this->VertexShader.LinkConstants(pMatrixName);
+			this->VertexShader.LinkConstants(pMatrixName) &&
+			this->ShadowShader.LinkConstants(pVarName);
 	}
 	else
 	{
@@ -276,6 +280,12 @@ ShaderStruct & SceneClass::GetVXLShader()
 ShaderStruct & SceneClass::GetPlainArtShader()
 {
 	return this->PlainArtShader;
+}
+
+ShaderStruct & SceneClass::GetShadowShader()
+{
+	// TODO: 在此处插入 return 语句
+	return this->ShadowShader;
 }
 
 bool SceneClass::HandleDeviceLost()

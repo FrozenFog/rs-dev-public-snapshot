@@ -28,6 +28,7 @@ struct PaintingStruct
 		LPDIRECT3DVERTEXBUFFER9 pVertexBuffer,
 		D3DXVECTOR3 Position,
 		LPDIRECT3DTEXTURE9 pTexture = nullptr,
+		bool bIsShadow = false,
 		std::vector<Voxel>* BufferedVoxels = nullptr,
 		std::vector<D3DXVECTOR3>* BufferedNormals = nullptr,
 		int nPalettID = -1,
@@ -44,6 +45,7 @@ struct PaintingStruct
 
 	//for shps & tmps and should be released by class
 	LPDIRECT3DTEXTURE9 pTexture;
+	bool bIsShadow;
 
 	//for vxl colorbuffer only
 	std::vector<Voxel> BufferedVoxels;

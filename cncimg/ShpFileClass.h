@@ -60,7 +60,7 @@ public:
 	void RemoveAllTextures(int nPaletteId, DWORD dwRemapColor);
 	bool MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD dwRemapColor);
 	int DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, int idxFrame, char bFlatType, int nPaletteID,
-		DWORD dwRemapColor, int nX, int nY, int nHeight);
+		DWORD dwRemapColor, int nX, int nY, int nHeight, bool bDrawAsShadow);
 
 private:
 	ShpFile* FileData;

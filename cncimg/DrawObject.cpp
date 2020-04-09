@@ -612,7 +612,8 @@ void DrawObject::SetObjectColorCoefficient(int nID, D3DXVECTOR4 Coefficient)
 void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object, 
 	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer, 
 	D3DXVECTOR3 Position, 
-	LPDIRECT3DTEXTURE9 pTexture, 
+	LPDIRECT3DTEXTURE9 pTexture,
+	bool bIsShadow,
 	std::vector<Voxel>* BufferedVoxels, 
 	std::vector<D3DXVECTOR3>* BufferedNormals,
 	int nPaletteID,
@@ -624,6 +625,7 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 	Object.pTexture = pTexture;
 	Object.nPaletteID = nPaletteID;
 	Object.dwRemapColor = dwRemapColor;
+	Object.bIsShadow = bIsShadow;
 
 	if (BufferedVoxels)
 		Object.BufferedVoxels = *BufferedVoxels;
@@ -649,6 +651,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 
 	auto& VxlShader = SceneClass::Instance.GetVXLShader();
 	auto& PlainShader = SceneClass::Instance.GetPlainArtShader();
+	auto& ShadowShader = SceneClass::Instance.GetShadowShader();
 
 	this->pVertexBuffer->GetDesc(&Desc);
 	if (Desc.FVF == Vertex::dwFVFType)
@@ -679,7 +682,12 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->SetStreamSource(0, this->pVertexBuffer, 0, sizeof TexturedVertex);
 
 		PlainShader.SetConstantVector(pDevice, this->ColorCoefficient);
-		pDevice->SetPixelShader(PlainShader.GetShaderObject());
+		ShadowShader.SetConstantVector(pDevice, this->ColorCoefficient);
+
+		if (this->bIsShadow)
+			pDevice->SetPixelShader(ShadowShader.GetShaderObject());
+		else
+			pDevice->SetPixelShader(PlainShader.GetShaderObject());
 
 		Result = SUCCEEDED(pDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, Desc.Size / sizeof TexturedVertex / 3));
 		pDevice->SetTexture(0, pFormerTexture);
