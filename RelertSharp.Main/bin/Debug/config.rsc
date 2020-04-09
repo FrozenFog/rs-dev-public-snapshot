@@ -102,3 +102,6 @@ Custom3Theater=
 
 [Triggers]
 UselessEvents=3
+
+[DrawingConfig]
+DeactivateAnim=YAPOWR

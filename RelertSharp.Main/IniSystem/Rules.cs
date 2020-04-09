@@ -248,10 +248,13 @@ namespace RelertSharp.IniSystem
                     art = this[id];
                 }
             }
-            anim = GuessStructureName(this[art["ActiveAnim"]]);
+            if (!GlobalConfig.DeactiveAnimList.Contains(art.Name))
+            {
+                anim = GuessStructureName(this[art["ActiveAnim"]]);
+                anim2 = GuessStructureName(this[art["ActiveAnimTwo"]]);
+                anim3 = GuessStructureName(this[art["ActiveAnimThree"]]);
+            }
             idle = GuessStructureName(this[art["IdleAnim"]]);
-            anim2 = GuessStructureName(this[art["ActiveAnimTwo"]]);
-            anim3 = GuessStructureName(this[art["ActiveAnimThree"]]);
             super = GuessStructureName(this[art["SuperAnim"]]);
             bib = GuessStructureName(art["BibShape"]);
             isVox = ParseBool(this[id]["TurretAnimIsVoxel"]);
