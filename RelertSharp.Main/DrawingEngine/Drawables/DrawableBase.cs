@@ -27,6 +27,7 @@ namespace RelertSharp.DrawingEngine.Drawables
         public int pSelf { get; set; }
         public int pPalCustom { get; set; }
         public uint RemapColor { get; set; }
+        public short Framecount { get; set; }
         #endregion
     }
 

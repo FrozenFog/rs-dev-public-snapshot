@@ -85,6 +85,10 @@ namespace RelertSharp.Common
         {
             return Utils.Misc.CoordInt(X, Y);
         }
+        public Vec3 Rise()
+        {
+            return new Vec3(X, Y, Z + 0.1f);
+        }
         public static Vec3 FromXYZ(I3dLocateable src)
         {
             return new Vec3() { X = src.X, Y = src.Y, Z = src.Z };

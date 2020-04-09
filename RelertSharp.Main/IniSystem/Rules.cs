@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
+using RelertSharp.FileSystem;
 using static RelertSharp.Utils.Misc;
 using static RelertSharp.Common.GlobalVar;
 
@@ -221,7 +222,8 @@ namespace RelertSharp.IniSystem
             }
             return this[art["TurretAnim"]];
         }
-        public string GetObjectImgName(string id, ref string anim, ref string turret, ref string bib, ref bool isVox, ref string idle, ref string anim2, ref string anim3, ref string barl, ref string super)
+        public string GetObjectImgName(string id, ref string anim, ref string turret, ref string bib, ref bool isVox, ref string idle, ref string anim2, ref string anim3, ref string barl, ref string super,
+            out short nSelf, out short nAnim, out short nTurret, out short nBib, out short nIdle, out short nAnim2, out short nAnim3, out short nSuper)
         {
             string img = this[id]["Image"];
             INIEntity art;
@@ -259,12 +261,24 @@ namespace RelertSharp.IniSystem
                 barl = turret.ToLower().Replace("tur", "barl");
             }
             else turret = GuessStructureName(this[this[id]["TurretAnim"]]);
+
+            nSelf = GlobalDir.GetShpFrameCount(img);
+            if (!isVox) nTurret = GlobalDir.GetShpFrameCount(turret);
+            else nTurret = 0;
+            nAnim = GlobalDir.GetShpFrameCount(anim);
+            nAnim2 = GlobalDir.GetShpFrameCount(anim2);
+            nAnim3 = GlobalDir.GetShpFrameCount(anim3);
+            nIdle = GlobalDir.GetShpFrameCount(idle);
+            nSuper = GlobalDir.GetShpFrameCount(super);
+            nBib = GlobalDir.GetShpFrameCount(bib);
             return img;
         }
-        public string GetObjectImgName(ObjectItemBase inf)
+        public string GetObjectImgName(ObjectItemBase inf, out short frame)
         {
-            string img = GetObjectImgName(inf.NameID);
-            return img + ".shp";
+            frame = 0;
+            string img = GetObjectImgName(inf.NameID) + ".shp";
+            frame = GlobalDir.GetShpFrameCount(img);
+            return img;
         }
         public void LoadArt(INIFile f)
         {

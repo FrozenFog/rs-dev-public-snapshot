@@ -71,15 +71,29 @@ namespace RelertSharp.DrawingEngine.Presenting
 
 
         #region Public Calls - PresentStructure
-        public int[] Pointers { get { return new int[] { pSelf, pActivateAnim, pActivateAnim2, pActivateAnim3, pBib, pIdleAnim }; } }
+        public int[] Pointers
+        {
+            get
+            {
+                return new int[] { pSelf, pActivateAnim, pActivateAnim2, pActivateAnim3, pBib, pIdleAnim,
+                pSelfShadow, pActivateAnimShadow, pActivateAnim2Shadow, pActivateAnim3Shadow, pBibShadow, pIdleAnimShadow};
+            }
+        }
         public int pActivateAnim { get; set; }
+        public int pActivateAnimShadow { get; set; }
         public int pIdleAnim { get; set; }
+        public int pIdleAnimShadow { get; set; }
         public int pActivateAnim2 { get; set; }
+        public int pActivateAnim2Shadow { get; set; }
         public int pActivateAnim3 { get; set; }
+        public int pActivateAnim3Shadow { get; set; }
         public int pSuperAnim { get; set; }
+        public int pSuperAnimShadow { get; set; }
         public int pTurretAnim { get; set; }
+        public int pTurretAnimShadow { get; set; }
         public int pTurretBarl { get; set; }
         public int pBib { get; set; }
+        public int pBibShadow { get; set; }
         public bool VoxelTurret { get; set; }
         public bool IsValid { get { return !((pSelf | pActivateAnim | pActivateAnim2 | pActivateAnim3 | pBib | pTurretAnim | pIdleAnim) == 0); } }
         public bool IsBaseNode { get; set; }

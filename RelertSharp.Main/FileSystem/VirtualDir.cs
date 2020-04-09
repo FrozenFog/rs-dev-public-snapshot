@@ -116,6 +116,13 @@ namespace RelertSharp.FileSystem
             byte[] data = GetRawByte(name);
             return func(data, name);
         }
+        public short GetShpFrameCount(string filename)
+        {
+            if (string.IsNullOrEmpty(filename)) return 0;
+            if (!HasFile(filename)) return 0;
+            ShpFile shp = GetFile(filename, FileExtension.SHP);
+            return (short)shp.Count;
+        }
         public dynamic GetFile(string _fileName, FileExtension _fileType)
         {
             switch (_fileType)
@@ -130,7 +137,6 @@ namespace RelertSharp.FileSystem
                     _fileName += ".vxl";
                     return new VxlFile(GetRawByte(_fileName), _fileName);
                 case FileExtension.SHP:
-                    _fileName += ".shp";
                     return new ShpFile(GetRawByte(_fileName), _fileName);
                 case FileExtension.HVA:
                     _fileName += ".hva";
