@@ -50,7 +50,7 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 		printf_s("print success.\n");
 	}
 
-	if (auto id = CreateLineObjectAtScene({ 0.0,0.0,0.1f }, { 0.0,-300.0f,0.1f }, D3DCOLOR_XRGB(242, 0, 0), D3DCOLOR_XRGB(242, 0, 0)))
+	if (MouseObject = CreateLineObjectAtScene({ 0.0,0.0,0.1f }, { 0.0,-300.0f,0.1f }, D3DCOLOR_XRGB(242, 0, 0), D3DCOLOR_XRGB(242, 0, 0)))
 	{
 		printf_s("Line success.\n");
 	}
@@ -299,7 +299,7 @@ void Graphic::MouseMove(POINT Position)
 	ClientPositionToScenePosition(Position, TargetPosition);
 	//TargetPosition.z += 0.1f;
 
-	//SetObjectLocation(MouseObject, TargetPosition);
+	SetObjectLocation(MouseObject, TargetPosition);
 
 	CellClass::MarkCellByMousePosition(Position);
 }

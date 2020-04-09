@@ -548,75 +548,96 @@ void DrawObject::ObjectTransformation(int nID, D3DXMATRIX & Matrix)
 	TexturedVertex* pTexturedVertexData;
 	auto pFind = FindObjectById(nID);
 
-	if (!pFind || !pFind->pVertexBuffer)
+	if (!pFind)
 		return;
 
 	auto &Vpl = VPLFile::GlobalVPL;
-	pFind->pVertexBuffer->GetDesc(&Desc);
-	if (Desc.FVF == Vertex::dwFVFType)
+	if (!pFind->String.empty())
 	{
-		//is vxl vertices
-		if (pFind->BufferedNormals.empty() || pFind->BufferedVoxels.empty() ||
-			pFind->BufferedVoxels.size() != pFind->BufferedNormals.size() ||
-			pFind->BufferedVoxels.size() != Desc.Size / sizeof Vertex)
-			return;
-
-		Palette Palette;
-		if (auto palette = Palette::FindPaletteByID(pFind->nPaletteID))
-			Palette = *palette;
-		else
-			return;
-
-		Palette.MakeRemapColor(pFind->dwRemapColor);
-		if (FAILED(pFind->pVertexBuffer->Lock(0, 0, (void**)&pVertexData, D3DLOCK_DISCARD)))
-			return;
-
-		D3DXMATRIX NormalMatrix = Matrix;
-		NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;// no translation
-
 		pFind->Position *= Matrix;
-		//process vertecies and position
-		for (int i = 0; i < Desc.Size / sizeof Vertex; i++)
+	}
+	else if (pFind->pVertexBuffer)
+	{
+		pFind->pVertexBuffer->GetDesc(&Desc);
+		if (Desc.FVF == Vertex::dwFVFType)
 		{
-			pVertexData[i].Vector *= Matrix;
-
-			DWORD dwColor;
-			auto& OriginalNormalVec = pFind->BufferedNormals[i];
-			auto OriginalVoxelData = pFind->BufferedVoxels[i];
-
-			OriginalNormalVec *= NormalMatrix;
-			auto fAngle = std::acos((VxlFile::LightReversed * OriginalNormalVec) /
-				D3DXVec3Length(&VxlFile::LightReversed) / D3DXVec3Length(&OriginalNormalVec));
-
-			if (fAngle >= D3DX_PI / 2)
+			if (pFind->BufferedVoxels.empty() && Desc.Size / sizeof Vertex == 2)
 			{
-				auto& Color = Palette[Vpl[0].Table[OriginalVoxelData.nColor]];
-				dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+				if (FAILED(pFind->pVertexBuffer->Lock(0, 0, (void**)&pVertexData, D3DLOCK_DISCARD)))
+					return;
+
+				pFind->Position *= Matrix;
+				pVertexData[0].Vector *= Matrix;
+				pVertexData[1].Vector *= Matrix;
+
+				pFind->pVertexBuffer->Unlock();
 			}
 			else
 			{
-				int nIndex = 31 - int(fAngle / (D3DX_PI / 2)*32.0);
-				if (nIndex > 31 || nIndex < 0) nIndex = 31; // FzF: fix 0.0f = 0x80000000h
-				auto& Color = Palette[Vpl[nIndex].Table[OriginalVoxelData.nColor]];
-				dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+				//is vxl vertices
+				if (pFind->BufferedNormals.empty() || pFind->BufferedVoxels.empty() ||
+					pFind->BufferedVoxels.size() != pFind->BufferedNormals.size() ||
+					pFind->BufferedVoxels.size() != Desc.Size / sizeof Vertex)
+					return;
+
+				Palette Palette;
+				if (auto palette = Palette::FindPaletteByID(pFind->nPaletteID))
+					Palette = *palette;
+				else
+					return;
+
+				Palette.MakeRemapColor(pFind->dwRemapColor);
+				if (FAILED(pFind->pVertexBuffer->Lock(0, 0, (void**)&pVertexData, D3DLOCK_DISCARD)))
+					return;
+
+				pFind->Position *= Matrix;
+				D3DXMATRIX NormalMatrix = Matrix;
+				NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;// no translation
+
+				//process vertecies and position
+				for (int i = 0; i < Desc.Size / sizeof Vertex; i++)
+				{
+					pVertexData[i].Vector *= Matrix;
+
+					DWORD dwColor;
+					auto& OriginalNormalVec = pFind->BufferedNormals[i];
+					auto OriginalVoxelData = pFind->BufferedVoxels[i];
+
+					OriginalNormalVec *= NormalMatrix;
+					auto fAngle = std::acos((VxlFile::LightReversed * OriginalNormalVec) /
+						D3DXVec3Length(&VxlFile::LightReversed) / D3DXVec3Length(&OriginalNormalVec));
+
+					if (fAngle >= D3DX_PI / 2)
+					{
+						auto& Color = Palette[Vpl[0].Table[OriginalVoxelData.nColor]];
+						dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+					}
+					else
+					{
+						int nIndex = 31 - int(fAngle / (D3DX_PI / 2)*32.0);
+						if (nIndex > 31 || nIndex < 0) nIndex = 31; // FzF: fix 0.0f = 0x80000000h
+						auto& Color = Palette[Vpl[nIndex].Table[OriginalVoxelData.nColor]];
+						dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+					}
+
+					pVertexData[i].dwColor = dwColor;
+				}
+				pFind->pVertexBuffer->Unlock();
 			}
-
-			pVertexData[i].dwColor = dwColor;
 		}
-		pFind->pVertexBuffer->Unlock();
-	}
-	else
-	{
-		//is plane art
-		if (FAILED(pFind->pVertexBuffer->Lock(0, 0, (void**)&pTexturedVertexData, D3DLOCK_DISCARD)))
-			return;
+		else
+		{
+			//is plane art
+			if (FAILED(pFind->pVertexBuffer->Lock(0, 0, (void**)&pTexturedVertexData, D3DLOCK_DISCARD)))
+				return;
 
-		pFind->Position *= Matrix;
-		//process coords only
-		for (int i = 0; i < Desc.Size / sizeof TexturedVertex; i++)
-			pTexturedVertexData[i].Vector *= Matrix;
+			pFind->Position *= Matrix;
+			//process coords only
+			for (int i = 0; i < Desc.Size / sizeof TexturedVertex; i++)
+				pTexturedVertexData[i].Vector *= Matrix;
 
-		pFind->pVertexBuffer->Unlock();
+			pFind->pVertexBuffer->Unlock();
+		}
 	}
 	pFind->InitializeVisualRect();
 }
@@ -624,8 +645,8 @@ void DrawObject::ObjectTransformation(int nID, D3DXMATRIX & Matrix)
 void DrawObject::ObjectDisplacement(int nID, D3DXVECTOR3 Displacement)
 {
 	D3DXMATRIX Translation;
-
 	D3DXMatrixTranslation(&Translation, Displacement.x, Displacement.y, Displacement.z);
+	
 	ObjectTransformation(nID, Translation);
 }
 

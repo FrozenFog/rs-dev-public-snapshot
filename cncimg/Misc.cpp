@@ -90,6 +90,5 @@ int FontClass::DrawAtScene(D3DXVECTOR3 Position, DWORD dwColor, const char * pSt
 
 	PaintingStruct::InitializePaintingStruct(Object, nullptr, Position, nullptr, false, nullptr, nullptr, -1, dwColor, pString);
 
-	printf_s("string = %s.\n", Object.String.c_str());
 	return this->CommitTopObject(Object);
 }
