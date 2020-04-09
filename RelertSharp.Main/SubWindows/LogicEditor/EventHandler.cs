@@ -412,6 +412,114 @@ namespace RelertSharp.SubWindows.LogicEditor
 
         #endregion
 
+        #region Team Page
+        #region btn
+        private void btnAddTaskMem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDelTaskMem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCopyTaskMem_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+        #region cbb
+        private void cbbTaskCurType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbxTaskList.SelectedItem == null || cbbTaskCurType.SelectedItem == null) return;
+            if (lbxTaskList.SelectedItem == null || lbxTaskMemList.SelectedItem == null) return;
+            TaskforceShowItem showItem = lbxTaskMemList.SelectedItem as TaskforceShowItem;
+            TaskforceItem taskforce = lbxTaskList.SelectedItem as TaskforceItem;
+            TechnoPair techno = cbbTaskCurType.SelectedItem as TechnoPair;
+            int index = lbxTaskMemList.SelectedIndex;
+            taskforce.MemberData[index] = new Tuple<string, int>(techno.RegName, showItem.Number);
+            lbxTaskList.BeginUpdate();
+            List<TaskforceShowItem> memList = new List<TaskforceShowItem>();
+            foreach (var i in taskforce.MemberData) memList.Add(new TaskforceShowItem(i));
+            StaticHelper.LoadToObjectCollection(lbxTaskMemList, memList);
+            lbxTaskMemList.SelectedIndex = index;
+            lbxTaskList.EndUpdate();
+        }
+        #endregion
+        #region txb
+        private void txbTaskGroup_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex
+                (
+                    txbTaskGroup.SelectionStart==0&&txbTaskGroup.SelectionLength>0
+                    ? @"^[0-9-\b]*$" 
+                    : @"^[0-9\b]*$"
+                );
+            e.Handled = !re.IsMatch(e.KeyChar.ToString());
+        }
+        private void txbTaskCurNum_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex(@"^[0-9-\b]*$");
+            e.Handled = !re.IsMatch(e.KeyChar.ToString());
+        }
+        private void txbTaskCurNum_TextChanged(object sender, EventArgs e)
+        {
+            if (lbxTaskList.SelectedItem == null || lbxTaskMemList.SelectedItem == null) return;
+            TaskforceShowItem showItem = lbxTaskMemList.SelectedItem as TaskforceShowItem;
+            TaskforceItem taskforce = lbxTaskList.SelectedItem as TaskforceItem;
+            int findIndex = taskforce.MemberData.FindIndex(s => s.Item1 == showItem.RegName);
+            taskforce.MemberData[findIndex]
+                = new Tuple<string, int>(taskforce.MemberData[findIndex].Item1, int.Parse(txbTaskCurNum.Text));
+            lbxTaskList.BeginUpdate();
+            int index = lbxTaskMemList.SelectedIndex;
+            List<TaskforceShowItem> memList = new List<TaskforceShowItem>();
+            foreach (var i in taskforce.MemberData) memList.Add(new TaskforceShowItem(i));
+            StaticHelper.LoadToObjectCollection(lbxTaskMemList, memList);
+            lbxTaskMemList.SelectedIndex = index;
+            lbxTaskList.EndUpdate();
+        }
+
+        private void txbTaskName_TextChanged(object sender, EventArgs e)
+        {
+            if (lbxTaskList.SelectedItem == null) return;
+            TaskforceItem taskforce = lbxTaskList.SelectedItem as TaskforceItem;
+            if (!string.IsNullOrEmpty(txbTaskGroup.Text))
+            {
+                taskforce.Name = txbTaskName.Text;
+                lbxTaskList.BeginUpdate();
+                int index = lbxTaskList.SelectedIndex;
+                StaticHelper.LoadToObjectCollection(lbxTaskList, map.TaskForces);
+                lbxTaskList.SelectedIndex = index;
+                lbxTaskList.EndUpdate();
+            }
+                
+        }
+
+        private void txbTaskGroup_TextChanged(object sender, EventArgs e)
+        {
+            if (lbxTaskList.SelectedItem == null) return;
+            TaskforceItem taskforce = lbxTaskList.SelectedItem as TaskforceItem;
+            if (!string.IsNullOrEmpty(txbTaskGroup.Text) && txbTaskGroup.Text.Trim() != "-") 
+                taskforce.Group = int.Parse(txbTaskGroup.Text);
+        }
+        #endregion
+        #region lbx
+        private void lbxTaskList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbxTaskList.SelectedItem == null) return;
+            UpdateTaskforceContent();
+        }
+        private void lbxTaskMemList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((lbxTaskList.SelectedItem == null || lbxTaskMemList.SelectedItem == null)) return;
+            TaskforceShowItem curItem = lbxTaskMemList.SelectedItem as TaskforceShowItem;
+            cbbTaskCurType.Text = curItem.RegName;
+            txbTaskCurNum.Text = curItem.Number.ToString();
+        }
+        #endregion
+        #endregion
+
         #region Misc Page
 
         #region Button

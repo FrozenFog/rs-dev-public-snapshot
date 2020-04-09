@@ -12,7 +12,7 @@ namespace RelertSharp.IniSystem
         public enum AbstractType
         {
             Default = 0,
-            Name, RegName, UIName, IndexOnly
+            Name, RegName, UIName, IndexOnly, CsfName
         }
         public enum IndexType
         {
@@ -73,6 +73,44 @@ namespace RelertSharp.IniSystem
         public override string ToString()
         {
             return abst;
+        }
+
+        public void ResetAbst(AbstractType abstractType = AbstractType.RegName, IndexType indexType = IndexType.Index)
+        {
+            switch (indexType)
+            {
+                default:
+                case IndexType.Index:
+                    abst = Index;
+                    break;
+                case IndexType.Name:
+                    abst = Name;
+                    Index = Name;
+                    break;
+                case IndexType.RegName:
+                    abst = RegName;
+                    Index = RegName;
+                    break;
+            }
+            switch (abstractType)
+            {
+                default:
+                case AbstractType.RegName:
+                    abst += " " + RegName;
+                    break;
+                case AbstractType.Name:
+                    abst += " " + Name;
+                    break;
+                case AbstractType.UIName:
+                    abst += " " + UIName;
+                    break;
+                case AbstractType.IndexOnly:
+                    abst += "";
+                    break;
+                case AbstractType.CsfName:
+                    abst += " " + Utils.Misc.FindUIName(RegName);
+                    break;
+            }
         }
         #endregion
 

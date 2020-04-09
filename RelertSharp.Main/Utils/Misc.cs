@@ -280,6 +280,29 @@ namespace RelertSharp.Utils
         {
            return new Point(now.X - pre.X, now.Y - pre.Y);
         }
+
+        public static INIEntity FindINIEnt(string section)
+        {
+            return GlobalVar.GlobalRules.IniDict.ContainsKey(section) ? GlobalVar.GlobalRules.IniDict[section] : null;
+        }
+
+        public static string FindINIValue(INIEntity ent,string key)
+        {
+            return ent.DictData.ContainsKey(key) ? ent.DictData[key].Value : string.Empty;
+        }
+
+        public static string FindUIName(INIEntity ent)
+        {
+            if (ent == null) return string.Empty;
+            if (!ent.DictData.ContainsKey("UIName"))
+                return ent.DictData.ContainsKey("Name") ? ent.DictData["Name"].Value : ent.Name;
+            return GlobalVar.GlobalCsf[ent.DictData["UIName"].Value.ToLower()].Name;
+        }
+
+        public static string FindUIName(string section)
+        {
+            return FindUIName(FindINIEnt(section));
+        }
     }
 
 }

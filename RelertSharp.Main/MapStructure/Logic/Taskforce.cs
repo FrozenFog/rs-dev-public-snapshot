@@ -4,9 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.IniSystem;
+using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure.Logic
 {
+    public class TaskforceShowItem
+    {
+        public override string ToString() { return Number + " " + Name; }
+        public TaskforceShowItem(Tuple<string,int> pair)
+        {
+            Number = pair.Item2;
+            RegName= pair.Item1;
+            Name = Utils.Misc.FindUIName(RegName);
+        }
+        public int Number { get; set; }
+        public string RegName { get; set; }
+        public string Name { get; set; }
+    }
+
     public class TaskforceCollection : TeamLogicCollection<TaskforceItem>
     {
         public TaskforceCollection() : base() { }
@@ -14,7 +29,8 @@ namespace RelertSharp.MapStructure.Logic
 
     public class TaskforceItem : TeamLogicItem, IRegistable
     {
-        private Dictionary<string, int> memberData = new Dictionary<string, int>();
+        //private Dictionary<string, int> memberData = new Dictionary<string, int>();
+        private List<Tuple<string, int>> memberData = new List<Tuple<string, int>>();
         private int group;
         private string name;
 
@@ -27,7 +43,7 @@ namespace RelertSharp.MapStructure.Logic
             foreach (INIPair p in ent.DataList)
             {
                 string[] tmp = p.ParseStringList();
-                memberData[tmp[1]] = int.Parse(tmp[0]);
+                memberData.Add(new Tuple<string, int>(tmp[1], int.Parse(tmp[0])));
             }
         }
         public TaskforceItem() : base() { }
@@ -35,7 +51,9 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TaskforceItem
-        public Dictionary<string, int> MemberData { get { return memberData; } set { memberData = value; } }
+        public override string ToString() { return Name; }
+        public  List<Tuple<string, int>> MemberData { get { return memberData; } set { memberData = value; } }
+        //public Dictionary<string, int> MemberData { get { return memberData; } set { memberData = value; } }
         public int Group
         {
             get { return group; }

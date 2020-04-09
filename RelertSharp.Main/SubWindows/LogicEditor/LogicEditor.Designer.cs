@@ -182,7 +182,7 @@
             this.txbTaskName = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
-            this.tbxTaskCurNum = new System.Windows.Forms.TextBox();
+            this.txbTaskCurNum = new System.Windows.Forms.TextBox();
             this.cbbTaskCurType = new System.Windows.Forms.ComboBox();
             this.label24 = new System.Windows.Forms.Label();
             this.btnAddTaskMem = new System.Windows.Forms.Button();
@@ -1936,7 +1936,7 @@
             this.gpbTeamTaskCur.Controls.Add(this.txbTaskName);
             this.gpbTeamTaskCur.Controls.Add(this.label26);
             this.gpbTeamTaskCur.Controls.Add(this.label25);
-            this.gpbTeamTaskCur.Controls.Add(this.tbxTaskCurNum);
+            this.gpbTeamTaskCur.Controls.Add(this.txbTaskCurNum);
             this.gpbTeamTaskCur.Controls.Add(this.cbbTaskCurType);
             this.gpbTeamTaskCur.Controls.Add(this.label24);
             this.gpbTeamTaskCur.Controls.Add(this.btnAddTaskMem);
@@ -1960,6 +1960,7 @@
             this.btnDelTaskMem.TabIndex = 13;
             this.btnDelTaskMem.Text = "LGCbtnDelTaskMem";
             this.btnDelTaskMem.UseVisualStyleBackColor = true;
+            this.btnDelTaskMem.Click += new System.EventHandler(this.btnDelTaskMem_Click);
             // 
             // btnCopyTaskMem
             // 
@@ -1970,14 +1971,18 @@
             this.btnCopyTaskMem.TabIndex = 12;
             this.btnCopyTaskMem.Text = "LGCbtnCopyTaskMem";
             this.btnCopyTaskMem.UseVisualStyleBackColor = true;
+            this.btnCopyTaskMem.Click += new System.EventHandler(this.btnCopyTaskMem_Click);
             // 
             // txbTaskGroup
             // 
             this.txbTaskGroup.Location = new System.Drawing.Point(144, 43);
             this.txbTaskGroup.Margin = new System.Windows.Forms.Padding(2);
+            this.txbTaskGroup.MaxLength = 5;
             this.txbTaskGroup.Name = "txbTaskGroup";
             this.txbTaskGroup.Size = new System.Drawing.Size(126, 21);
             this.txbTaskGroup.TabIndex = 11;
+            this.txbTaskGroup.TextChanged += new System.EventHandler(this.txbTaskGroup_TextChanged);
+            this.txbTaskGroup.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbTaskGroup_KeyPress);
             // 
             // label27
             // 
@@ -1996,6 +2001,7 @@
             this.txbTaskName.Name = "txbTaskName";
             this.txbTaskName.Size = new System.Drawing.Size(126, 21);
             this.txbTaskName.TabIndex = 9;
+            this.txbTaskName.TextChanged += new System.EventHandler(this.txbTaskName_TextChanged);
             // 
             // label26
             // 
@@ -2017,13 +2023,16 @@
             this.label25.TabIndex = 7;
             this.label25.Text = "LGClblTaskCurNum";
             // 
-            // tbxTaskCurNum
+            // txbTaskCurNum
             // 
-            this.tbxTaskCurNum.Location = new System.Drawing.Point(109, 190);
-            this.tbxTaskCurNum.Margin = new System.Windows.Forms.Padding(2);
-            this.tbxTaskCurNum.Name = "tbxTaskCurNum";
-            this.tbxTaskCurNum.Size = new System.Drawing.Size(161, 21);
-            this.tbxTaskCurNum.TabIndex = 6;
+            this.txbTaskCurNum.Location = new System.Drawing.Point(109, 190);
+            this.txbTaskCurNum.Margin = new System.Windows.Forms.Padding(2);
+            this.txbTaskCurNum.MaxLength = 3;
+            this.txbTaskCurNum.Name = "txbTaskCurNum";
+            this.txbTaskCurNum.Size = new System.Drawing.Size(161, 21);
+            this.txbTaskCurNum.TabIndex = 6;
+            this.txbTaskCurNum.TextChanged += new System.EventHandler(this.txbTaskCurNum_TextChanged);
+            this.txbTaskCurNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbTaskCurNum_KeyPress);
             // 
             // cbbTaskCurType
             // 
@@ -2033,6 +2042,7 @@
             this.cbbTaskCurType.Name = "cbbTaskCurType";
             this.cbbTaskCurType.Size = new System.Drawing.Size(161, 20);
             this.cbbTaskCurType.TabIndex = 5;
+            this.cbbTaskCurType.SelectedIndexChanged += new System.EventHandler(this.cbbTaskCurType_SelectedIndexChanged);
             // 
             // label24
             // 
@@ -2053,6 +2063,7 @@
             this.btnAddTaskMem.TabIndex = 2;
             this.btnAddTaskMem.Text = "LGCbtnAddTaskMem";
             this.btnAddTaskMem.UseVisualStyleBackColor = true;
+            this.btnAddTaskMem.Click += new System.EventHandler(this.btnAddTaskMem_Click);
             // 
             // label23
             // 
@@ -2073,6 +2084,7 @@
             this.lbxTaskMemList.Name = "lbxTaskMemList";
             this.lbxTaskMemList.Size = new System.Drawing.Size(266, 76);
             this.lbxTaskMemList.TabIndex = 0;
+            this.lbxTaskMemList.SelectedIndexChanged += new System.EventHandler(this.lbxTaskMemList_SelectedIndexChanged);
             // 
             // label22
             // 
@@ -2093,6 +2105,7 @@
             this.lbxTaskList.Name = "lbxTaskList";
             this.lbxTaskList.Size = new System.Drawing.Size(271, 208);
             this.lbxTaskList.TabIndex = 0;
+            this.lbxTaskList.SelectedIndexChanged += new System.EventHandler(this.lbxTaskList_SelectedIndexChanged);
             // 
             // tbpMiscs
             // 
@@ -2678,7 +2691,7 @@
         private System.Windows.Forms.ListBox lbxTaskMemList;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.TextBox tbxTaskCurNum;
+        private System.Windows.Forms.TextBox txbTaskCurNum;
         private System.Windows.Forms.ComboBox cbbTaskCurType;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Button btnDelTask;

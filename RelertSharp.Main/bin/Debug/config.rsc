@@ -99,9 +99,9 @@ Custom3Theater=
 [StringTable]
 0=stringtable10
 1=stringtable11
+2=ra2md
 
 [Triggers]
 UselessEvents=3
-
 [DrawingConfig]
 DeactivateAnim=YAPOWR
