@@ -72,6 +72,15 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 		}
 	}
 
+	if (auto vid = CreateVxlFile("images\\ytnk.vxl"))
+	{
+		if (auto tid = CreateVxlFile("images\\ytnktur.vxl"))
+		{
+			auto Position = D3DXVECTOR3(200.0, 0, 0);
+			CreateVxlObjectAtScene(vid, Position, 0, 0, 0, UnitPalette, INVALID_COLOR_VALUE);
+			CreateVxlObjectAtScene(tid, Position, 0, 0, 0, UnitPalette, INVALID_COLOR_VALUE);
+		}
+	}
 	D3DXVECTOR3 Position{ 100.0f,0.0f,0.0f };
 	int baseid, turid, barlid;
 
