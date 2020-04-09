@@ -4,7 +4,8 @@
 #include "VxlFile.h"
 #include "ShpFileClass.h"
 #include "SceneClass.h"
-#include"CommonTextureFileClass.h"
+#include "CommonTextureFileClass.h"
+#include "Misc.h"
 
 #define EXPORT_START extern "C" {
 #define EXPORT_END }
@@ -80,6 +81,10 @@ EXPORT void WINAPI ScenePositionToClientPosition(D3DXVECTOR3 Position, POINT& Ou
 EXPORT void WINAPI ClientPositionToScenePosition(POINT Position, D3DXVECTOR3& Out);
 
 EXPORT void WINAPI ClearSceneObjects();
+
+EXPORT int WINAPI CreateLineObjectAtScene(D3DXVECTOR3 Start, D3DXVECTOR3 End, DWORD dwStartColor, DWORD dwEndColor);
+EXPORT bool WINAPI SetSceneFont(const char* pFontName, int nSize);
+EXPORT int WINAPI CreateStringObjectAtScene(D3DXVECTOR3 Position, DWORD dwColor, const char* pString);
 
 /*
 Obsolete apis

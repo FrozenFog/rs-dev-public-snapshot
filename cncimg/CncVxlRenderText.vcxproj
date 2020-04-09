@@ -162,6 +162,7 @@
     <ClCompile Include="DemoCellClass.cpp" />
     <ClCompile Include="DrawObject.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Misc.cpp" />
     <ClCompile Include="Palette.cpp" />
     <ClCompile Include="SceneClass.cpp" />
     <ClCompile Include="ShpFileClass.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="D3dPrepare.h" />
     <ClInclude Include="DemoCellClass.h" />
     <ClInclude Include="DrawObject.h" />
+    <ClInclude Include="Misc.h" />
     <ClInclude Include="normals.h" />
     <ClInclude Include="Palette.h" />
     <ClInclude Include="SceneClass.h" />

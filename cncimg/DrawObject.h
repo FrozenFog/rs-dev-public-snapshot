@@ -32,7 +32,8 @@ struct PaintingStruct
 		std::vector<Voxel>* BufferedVoxels = nullptr,
 		std::vector<D3DXVECTOR3>* BufferedNormals = nullptr,
 		int nPalettID = -1,
-		DWORD dwRemapColor = INVALID_COLOR_VALUE
+		DWORD dwRemapColor = INVALID_COLOR_VALUE,
+		std::string String = std::string()
 	);
 
 	//static ID counter;
@@ -56,6 +57,9 @@ struct PaintingStruct
 	DWORD dwRemapColor;
 	D3DXVECTOR4 ColorCoefficient;
 
+	//for fonts
+	std::string String;
+
 	//should BeginScene() at first
 	bool Draw(LPDIRECT3DDEVICE9 pDevice);
 	void InitializeVisualRect();
@@ -70,6 +74,8 @@ public:
 	//can be used as reference
 	static std::unordered_map<int, PaintingStruct*> GlobalTransperantObjects;
 	static std::unordered_map<int, PaintingStruct*> GlobalOpaqueObjects;
+	static std::unordered_map<int, PaintingStruct*> GlobalTopObjects;
+
 	static std::vector<LPDIRECT3DTEXTURE9> IsolatedTextures;
 	static DWORD idTextureManagementThread;
 	static HANDLE hTextureManagementThread;
@@ -106,9 +112,11 @@ public:
 	//will be used
 	int CommitTransperantObject(PaintingStruct& Object);
 	int CommitOpaqueObject(PaintingStruct& Object);
+	int CommitTopObject(PaintingStruct& Object);
 	void ClearAllObjects();
 	void RemoveTransperantObject(int nID);
 	void RemoveOpaqueObject(int nID);
+	void RemoveTopObject(int nID);
 
 	//static methods for object transformation
 	static PaintingStruct* FindObjectById(int nID);
@@ -119,6 +127,8 @@ public:
 	static void SetObjectColorCoefficient(int nID, D3DXVECTOR4 Coefficient);
 	static void RemoveTmpObject(int nID);
 	static void RemoveVxlObject(int nID);
+	static void RemoveShpObject(int nID);
+	static void RemoveCommonObject(int nID);
 
 private:
 	//the texture here cannot be released
@@ -134,4 +144,5 @@ private:
 	std::unordered_map<int, PaintingStruct> OpaqueImageTable;
 	//shps & tmp extras
 	std::unordered_map<int, PaintingStruct> TransperantImageTable;
+	std::unordered_map<int, PaintingStruct> TopObjectTable;
 };

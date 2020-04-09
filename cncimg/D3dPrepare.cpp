@@ -39,6 +39,22 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 	SnoPalette = CreatePaletteFile("palettes\\isosno.pal");
 	DesPalette = CreatePaletteFile("palettes\\isodes.pal");
 
+	if (!SetSceneFont("RussellSquare", 14))
+	{
+		printf_s("failed to set font.\n");
+		return false;
+	}
+
+	if (auto id = CreateStringObjectAtScene({ 0.0,-100.0,0.0 }, RGB(242, 0, 242), "702"))
+	{
+		printf_s("print success.\n");
+	}
+
+	if (auto id = CreateLineObjectAtScene({ 0.0,0.0,0.1f }, { 0.0,-300.0f,0.1f }, D3DCOLOR_XRGB(242, 0, 0), D3DCOLOR_XRGB(242, 0, 0)))
+	{
+		printf_s("Line success.\n");
+	}
+
 	SetBackgroundColor(0, 0, 0);
 
 	if (!UnitPalette || !TmpPalette || !SnoPalette || !DesPalette)

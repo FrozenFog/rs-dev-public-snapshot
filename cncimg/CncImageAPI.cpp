@@ -259,6 +259,8 @@ void WINAPI RemoveObjectFromScene(int nID)
 {
 	DrawObject::RemoveTmpObject(nID);
 	DrawObject::RemoveVxlObject(nID);
+	DrawObject::RemoveShpObject(nID);
+	DrawObject::RemoveCommonObject(nID);
 }
 
 void WINAPI RotateObject(int nID, float RotationX, float RotationY, float RotationZ)
@@ -329,6 +331,37 @@ void WINAPI ClientPositionToScenePosition(POINT Position, D3DXVECTOR3 & Out)
 void WINAPI ClearSceneObjects()
 {
 	SceneClass::Instance.ClearScene();
+}
+
+int WINAPI CreateLineObjectAtScene(D3DXVECTOR3 Start, D3DXVECTOR3 End, DWORD dwStartColor, DWORD dwEndColor)
+{
+	auto pDevice = SceneClass::Instance.GetDevice();
+	if (!pDevice)
+		return false;
+
+	return LineClass::GlobalLineGenerator.DrawAtScene(pDevice, Start, End, dwStartColor, dwEndColor);
+}
+
+bool WINAPI SetSceneFont(const char * pFontName, int nSize)
+{
+	auto pBackSurface = SceneClass::Instance.GetBackSurface();
+	HDC hDC;
+
+	if (!pBackSurface)
+		return false;
+
+	if (FAILED(pBackSurface->GetDC(&hDC)))
+		return false;
+
+	auto Result = FontClass::GlobalFont.LoadFont(hDC, pFontName, nSize);
+
+	pBackSurface->ReleaseDC(hDC);
+	return Result;
+}
+
+int WINAPI CreateStringObjectAtScene(D3DXVECTOR3 Position, DWORD dwColor, const char * pString)
+{
+	return FontClass::GlobalFont.DrawAtScene(Position, dwColor, pString);
 }
 
 void MakeShots(const char * VxlFileName, int nTurretOffset, int nPaletteID, bool bUnion, int nDirections, DWORD dwRemapColor, int TurretOff)
