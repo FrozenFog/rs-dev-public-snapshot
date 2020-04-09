@@ -28,9 +28,6 @@ namespace RelertSharp.MapStructure
         private HeaderInfo headers;
         private Rectangle previewSize;
 
-        private WaypointCollection waypoints = new WaypointCollection();
-        private CellTagCollection celltags = new CellTagCollection();
-
         private TileLayer Tiles;
 
         private Dictionary<string, INIEntity> residual;
@@ -243,11 +240,11 @@ namespace RelertSharp.MapStructure
             }
             foreach (INIPair p in entCelltags.DataList)
             {
-                celltags[p.Name] = new CellTagItem(p.Name, p.Value);
+                Celltags[p.Name] = new CellTagItem(p.Name, p.Value);
             }
             foreach (INIPair p in entWaypoints.DataList)
             {
-                waypoints[p.Value] = new WaypointItem(p.Value, p.Name);
+                Waypoints[p.Value] = new WaypointItem(p.Value, p.Name);
             }
         }
         private void GetPreview(MapFile f)
@@ -266,6 +263,8 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Calls - Map
+        public WaypointCollection Waypoints { get; private set; } = new WaypointCollection();
+        public CellTagCollection Celltags { get; private set; } = new CellTagCollection();
         public Lightning LightningCollection { get; private set; }
         public InfantryLayer Infantries { get; private set; } = new InfantryLayer();
         public AircraftLayer Aircrafts { get; private set; } = new AircraftLayer();

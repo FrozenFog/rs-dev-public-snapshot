@@ -14,7 +14,7 @@ namespace RelertSharp.MapStructure.Points
 
     public class WaypointItem : PointItemBase
     {
-        public WaypointItem(string _coord, string _index)
+        public WaypointItem(string _coord, string _index) : base(_coord)
         {
             Num = _index;
         }

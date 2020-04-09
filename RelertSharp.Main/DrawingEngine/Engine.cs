@@ -34,6 +34,7 @@ namespace RelertSharp.DrawingEngine
         private int pPalIso = 0;
         private int pPalUnit = 0;
         private int pPalTheater = 0;
+        private int pPalSystem = 0;
 
 
         #region Ctor - Engine
@@ -142,7 +143,7 @@ namespace RelertSharp.DrawingEngine
             DrawableMisc src = CreateDrawableMisc(smg);
             PresentMisc dest = new PresentMisc(MapObjectType.Smudge, smg, height);
             Vec3 pos = ToVec3Zero(smg, height);
-            pos.Z += 0.01F;
+            pos.Z += 0.02F;
             if (DrawMisc(src, dest, pos, pPalIso, 0, _white, ShpFlatType.FlatGround))
             {
                 Buffer.Scenes.Smudges[smg.CoordInt] = dest;
@@ -163,6 +164,32 @@ namespace RelertSharp.DrawingEngine
             if (DrawMisc(src, dest, pos, src.pPal, o.Frame, _white, type, src.Framecount))
             {
                 Buffer.Scenes.Overlays[o.Coord] = dest;
+                return true;
+            }
+            return false;
+        }
+        public bool DrawWaypoint(WaypointItem waypoint, int height)
+        {
+            DrawableMisc src = new DrawableMisc(MapObjectType.Waypoint, "");
+            src.pSelf = Buffer.Files.WaypointBase;
+            PresentMisc dest = new PresentMisc(MapObjectType.Waypoint, waypoint, height);
+            Vec3 pos = ToVec3Iso(dest).Rise() + 100 * _generalOffset;
+            if (DrawMisc(src, dest, pos, pPalSystem, 0, _white, ShpFlatType.Vertical))
+            {
+                Buffer.Scenes.Waypoints[dest.Coord] = dest;
+                return true;
+            }
+            return false;
+        }
+        public bool DrawCelltag(CellTagItem cell, int height)
+        {
+            DrawableMisc src = new DrawableMisc(MapObjectType.Celltag, "");
+            src.pSelf = Buffer.Files.CelltagBase;
+            PresentMisc dest = new PresentMisc(MapObjectType.Celltag, cell, height);
+            Vec3 pos = ToVec3Iso(dest).Rise();
+            if (DrawMisc(src,dest,pos,pPalSystem, 0, _white, ShpFlatType.FlatGround))
+            {
+                Buffer.Scenes.Celltags[dest.Coord] = dest;
                 return true;
             }
             return false;
@@ -215,12 +242,17 @@ namespace RelertSharp.DrawingEngine
             VFileInfo pal = GlobalDir.GetFilePtr(string.Format("iso{0}.pal", TileDictionary.TheaterSub));
             VFileInfo upal = GlobalDir.GetFilePtr(string.Format("unit{0}.pal", TileDictionary.TheaterSub));
             VFileInfo thpal = GlobalDir.GetFilePtr(string.Format("{0}.pal", GlobalConfig.GetTheaterPalName(type)));
+            VFileInfo syspal = GlobalDir.GetFilePtr("rs.pal");
             if (pPalIso != 0) CppExtern.Files.RemovePalette(pPalIso);
             if (pPalUnit != 0) CppExtern.Files.RemovePalette(pPalUnit);
             if (pPalTheater != 0) CppExtern.Files.RemovePalette(pPalTheater);
             pPalIso = CppExtern.Files.CreatePaletteFromFileInBuffer(pal.ptr);
             pPalUnit = CppExtern.Files.CreatePaletteFromFileInBuffer(upal.ptr);
             pPalTheater = CppExtern.Files.CreatePaletteFromFileInBuffer(thpal.ptr);
+            pPalSystem = CppExtern.Files.CreatePaletteFromFileInBuffer(syspal.ptr);
+
+            Buffer.Files.CelltagBase = CreateFile("celltag.shp", DrawableType.Shp, _white, pPalSystem);
+            Buffer.Files.WaypointBase = CreateFile("waypoint.shp", DrawableType.Shp, _white, pPalSystem);
         }
         public void Refresh()
         {
@@ -514,7 +546,9 @@ namespace RelertSharp.DrawingEngine
             if (src.pSelf != 0)
             {
                 dest.pSelf = RenderAndPresent(src.pSelf, pos, frame, color, pPal, type);
-                if (!src.IsTiberiumOverlay && src.MiscType != MapObjectType.Smudge) dest.pSelfShadow = RenderAndPresent(src.pSelf, pos.Rise(), frame + shadow / 2, color, pPal, ShpFlatType.FlatGround, true);
+                if (!src.IsTiberiumOverlay && 
+                    src.MiscType != MapObjectType.Smudge &&
+                    src.MiscType != MapObjectType.Celltag) dest.pSelfShadow = RenderAndPresent(src.pSelf, pos.Rise(), frame + shadow / 2, color, pPal, ShpFlatType.FlatGround, true);
             }
 
             return dest.IsValid;

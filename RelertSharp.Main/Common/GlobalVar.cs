@@ -13,5 +13,6 @@
         public static MapStructure.MapTheaterTileSet TileDictionary { get; set; }
         public static DrawingEngine.Engine Engine { get; set; }
         public static TheaterType CurrentTheater { get; set; }
+        public static string RunPath { get { return System.Windows.Forms.Application.StartupPath + "\\"; } }
     }
 }

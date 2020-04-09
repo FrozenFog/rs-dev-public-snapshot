@@ -22,6 +22,9 @@ namespace RelertSharp.FileSystem
             LoadMixIndex(GlobalConfig.MixNameList);
             LoadMixIndex(GlobalConfig.TheaterMixList);
             LoadMixIndex(GlobalConfig.ExpandMixList);
+            if (!File.Exists(RunPath + "data.mix")) System.Windows.Forms.MessageBox.Show("Critical File Missing!");
+            MixFile mx = new MixFile(RunPath + "data.mix", MixTatics.Plain);
+            AddMixDir(mx);
         }
         #endregion
 

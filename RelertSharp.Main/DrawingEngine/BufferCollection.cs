@@ -49,8 +49,6 @@ namespace RelertSharp.DrawingEngine
         public CScene Scenes { get; private set; } = new CScene();
         public CBuffer Buffers { get; private set; } = new CBuffer();
         public CFile Files { get; private set; } = new CFile();
-        public int pCelltag { get; set; }
-        public int pWaypoint { get; set; }
         #endregion
 
 
@@ -125,8 +123,11 @@ namespace RelertSharp.DrawingEngine
             public Dictionary<int, PresentMisc> Overlays { get; private set; } = new Dictionary<int, PresentMisc>();
             public Dictionary<int, PresentMisc> Terrains { get; private set; } = new Dictionary<int, PresentMisc>();
             public Dictionary<int, PresentMisc> Smudges { get; private set; } = new Dictionary<int, PresentMisc>();
+            public Dictionary<int, PresentMisc> Celltags { get; private set; } = new Dictionary<int, PresentMisc>();
+            public Dictionary<int, PresentMisc> Waypoints { get; private set; } = new Dictionary<int, PresentMisc>();
             public IEnumerable<IPresentBase> MapObjects { get { return Structures.Values.Concat<IPresentBase>(Units.Values).Concat(Infantries.Values); } }
             public IEnumerable<PresentMisc> MapMiscs { get { return Overlays.Values.Concat(Terrains.Values).Concat(Smudges.Values); } }
+            public IEnumerable<PresentMisc> LogicObjects { get { return Celltags.Values.Concat(Waypoints.Values); } }
             #endregion
         }
 
@@ -139,6 +140,8 @@ namespace RelertSharp.DrawingEngine
 
 
             #region Public Calls - CBuffer
+            public int Celltag { get; set; }
+            public int WaypointBase { get; set; }
             public Dictionary<string, DrawableStructure> Structures { get; private set; } = new Dictionary<string, DrawableStructure>();
             public Dictionary<string, DrawableUnit> Units { get; private set; } = new Dictionary<string, DrawableUnit>();
             public Dictionary<string, DrawableInfantry> Infantries { get; private set; } = new Dictionary<string, DrawableInfantry>();
@@ -159,6 +162,8 @@ namespace RelertSharp.DrawingEngine
             public Dictionary<string, int> Vxl { get; private set; } = new Dictionary<string, int>();
             public Dictionary<string, int> Tmp { get; private set; } = new Dictionary<string, int>();
             public Dictionary<string, int> Pal { get; private set; } = new Dictionary<string, int>();
+            public int WaypointBase { get; set; }
+            public int CelltagBase { get; set; }
             #endregion
         }
     }

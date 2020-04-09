@@ -24,6 +24,7 @@ RelertSharp.Main/_*.*
 
 #resource and test required
 local.rsc
+*.bmp
 *.tem
 *.sno
 *.des
