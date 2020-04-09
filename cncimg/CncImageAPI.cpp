@@ -85,7 +85,7 @@ int WINAPI CreateTmpFile(const char * pFileName)
 	return 0;
 }
 
-int WINAPI CreateTmpFileFromFilenMemory(LPVOID pFileBuffer, ULONG nSize)
+int WINAPI CreateTmpFileFromFileInMemory(LPVOID pFileBuffer, ULONG nSize)
 {
 	auto pFile = std::make_unique<TmpFileClass>(pFileBuffer, nSize, true);
 	if (pFile && pFile->IsLoaded())

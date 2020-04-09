@@ -30,7 +30,7 @@ EXPORT int WINAPI CreateVxlFileFromFileInMemory(LPVOID pFileBuffer, ULONG nSize,
 EXPORT bool WINAPI RemoveVxlFile(int nFileId);
 
 EXPORT int WINAPI CreateTmpFile(const char* pFileName);
-EXPORT int WINAPI CreateTmpFileFromFilenMemory(LPVOID pFileBuffer, ULONG nSize);
+EXPORT int WINAPI CreateTmpFileFromFileInMemory(LPVOID pFileBuffer, ULONG nSize);
 EXPORT bool WINAPI RemoveTmpFile(int nFileId);
 EXPORT bool WINAPI LoadTmpTextures(int nFileId, int nPaletteId);
 
