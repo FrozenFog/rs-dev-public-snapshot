@@ -13,6 +13,11 @@
 
 EXPORT_START
 
+namespace GlobalID
+{
+	static int AllocatedGlobalId = 1;
+}
+
 //palette api
 EXPORT int WINAPI CreatePaletteFile(const char* pFileName);
 EXPORT int WINAPI CreatePaletteFromFileInBuffer(LPVOID pFileBuffer);

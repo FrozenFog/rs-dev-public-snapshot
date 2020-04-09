@@ -409,13 +409,13 @@ bool ShaderStruct::IsLoaded()
 
 bool ShaderStruct::CompileFromFile(const char * pSource, const char * pEntry, bool bVertexShader)
 {
-	LPD3DXBUFFER pErrorBuffer;
+	LPD3DXBUFFER pErrorBuffer = nullptr;
 
 	const char* PixShaderName = "ps_3_0";
 	const char* VerShaderName = "vs_3_0";
 
 	auto hResult = D3DXCompileShaderFromFile(pSource, nullptr, nullptr, pEntry, bVertexShader ? VerShaderName : PixShaderName,
-		D3DXSHADER_DEBUG, &this->pShader, &pErrorBuffer, &this->pConstantTable);
+		NULL, &this->pShader, &pErrorBuffer, &this->pConstantTable);
 
 	if (pErrorBuffer) {
 		printf_s("compile error : %s\n", pErrorBuffer->GetBufferPointer());

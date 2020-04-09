@@ -174,7 +174,7 @@ bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD
 
 	D3DLOCKED_RECT LockedRect;
 	D3DCOLOR* pTextureData;
-	DWORD dwPointerBuffer;
+	PBYTE dwPointerBuffer;
 	LPDIRECT3DTEXTURE9 pTexture;
 	int nValidFrames, nNullFrames;
 
@@ -254,7 +254,7 @@ bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD
 					}
 				}
 				pData += size;
-				dwPointerBuffer = reinterpret_cast<DWORD>(pTextureData);
+				dwPointerBuffer = reinterpret_cast<PBYTE>(pTextureData);
 				dwPointerBuffer += LockedRect.Pitch;
 				pTextureData = reinterpret_cast<D3DCOLOR*>(dwPointerBuffer);
 			}
@@ -275,7 +275,7 @@ bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD
 					dest++;
 				}
 				pData += width;
-				dwPointerBuffer = reinterpret_cast<DWORD>(pTextureData);
+				dwPointerBuffer = reinterpret_cast<PBYTE>(pTextureData);
 				dwPointerBuffer += LockedRect.Pitch;
 				pTextureData = reinterpret_cast<D3DCOLOR*>(dwPointerBuffer);
 			}

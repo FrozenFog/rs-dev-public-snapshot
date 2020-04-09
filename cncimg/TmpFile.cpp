@@ -88,7 +88,13 @@ EndProc:
 void TmpFileClass::LoadFromFileInBuffer(LPVOID pFileBuffer, ULONG nSize, bool bCopy)
 {
 	TmpFile* pFileData;
-	DWORD dwPointerBuffer;
+
+#ifdef _WIN64
+	ULONGLONG dwPointerBuffer;
+#else
+	PBYTE dwPointerBuffer;
+#endif
+
 	int nBlocks;
 
 	if (bCopy)
@@ -103,22 +109,39 @@ void TmpFileClass::LoadFromFileInBuffer(LPVOID pFileBuffer, ULONG nSize, bool bC
 	//count block counts
 	nBlocks = pFileData->Header.nXBlocks*pFileData->Header.nYBlocks;
 	//correct address
+
+#ifdef _WIN64
+	auto ImageHeaders = new DWORD[nBlocks];
+	RtlCopyMemory(ImageHeaders, pFileData->ImageHeaders, nBlocks * sizeof DWORD);
+#endif
+
 	for (int i = 0; i < nBlocks; i++)
 	{
+#ifdef _WIN64
+		dwPointerBuffer = ImageHeaders[i];
+		if (dwPointerBuffer)
+		{
+			dwPointerBuffer += reinterpret_cast<ULONGLONG>(pFileData);
+			pFileData->ImageHeaders[i] = reinterpret_cast<TmpImageHeader*>(dwPointerBuffer);
+		}
+#else
 		//PointerBuffer is an RVA or a correct address
-		dwPointerBuffer = reinterpret_cast<DWORD>(pFileData->ImageHeaders[i]);
+		dwPointerBuffer = reinterpret_cast<decltype(dwPointerBuffer)>(pFileData->ImageHeaders[i]);
 		//the PointerBuffer is a valid offset
 		if (dwPointerBuffer)
 		{
 			//check if the PointerBuffer is an RVA rather than a correct address
-			if (dwPointerBuffer<reinterpret_cast<DWORD>(pFileData))
+			if (dwPointerBuffer<reinterpret_cast<decltype(dwPointerBuffer)>(pFileData))
 				//if it's an RVA ,add an ImageBase to it to make it a correct address;
-				dwPointerBuffer += reinterpret_cast<DWORD>(pFileData);
+				dwPointerBuffer += reinterpret_cast<ULONGLONG>(pFileData);
 			pFileData->ImageHeaders[i] = reinterpret_cast<TmpImageHeader*>(dwPointerBuffer);
 		}
+#endif
 	}
 	//set it to the class
-
+#ifdef _WIN64
+	delete[] ImageHeaders;
+#endif
 	this->pFileData = pFileData;
 }
 

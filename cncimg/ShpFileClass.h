@@ -65,6 +65,7 @@ public:
 private:
 	ShpFile* FileData;
 	//std::vector<LPDIRECT3DTEXTURE9> FrameTextures;
+	//std""vector<LPDIRECT3DTEXTURE9> RemapTextures;
 	//std::unordered_map<int, std::vector<LPDIRECT3DTEXTURE9>> FrameTextures;
 	//frames = f(Palette, Remap)
 	std::unordered_map<int, std::unordered_map<DWORD, std::vector<LPDIRECT3DTEXTURE9>>> FrameTextures;
