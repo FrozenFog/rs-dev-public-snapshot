@@ -274,10 +274,10 @@ void Graphic::PlaceVXL(POINT Position)
 }
 
 void Graphic::MouseMove(POINT Position)
-{
+{/*
 	if (!MouseObject)
 		return;
-
+*/
 	D3DXVECTOR3 TargetPosition;
 
 	ClientPositionToScenePosition(Position, TargetPosition);

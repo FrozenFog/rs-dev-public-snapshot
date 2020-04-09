@@ -533,6 +533,7 @@ void DrawObject::ObjectTransformation(int nID, D3DXMATRIX & Matrix)
 			else
 			{
 				int nIndex = 31 - int(fAngle / (D3DX_PI / 2)*32.0);
+				if (nIndex > 31 || nIndex < 0) nIndex = 31; // FzF: fix 0.0f = 0x80000000h
 				auto& Color = Palette[Vpl[nIndex].Table[OriginalVoxelData.nColor]];
 				dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
 			}

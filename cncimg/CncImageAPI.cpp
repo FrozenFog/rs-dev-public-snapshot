@@ -8,7 +8,7 @@ int WINAPI CreatePaletteFile(const char * pFileName)
 	auto pal = std::make_unique<Palette>(pFileName);
 	if (pal)
 	{
-		auto id = reinterpret_cast<int>(pal.get());
+		auto id = GlobalID::AllocatedGlobalId++;
 
 		Palette::PaletteTable[id] = std::move(pal);
 		return id;
@@ -21,7 +21,7 @@ int WINAPI CreatePaletteFromFileInBuffer(LPVOID pFileBuffer)
 	auto pal = std::make_unique<Palette>(pFileBuffer);
 	if (pal)
 	{
-		auto id = reinterpret_cast<int>(pal.get());
+		auto id = GlobalID::AllocatedGlobalId++;
 
 		Palette::PaletteTable[id] = std::move(pal);
 		return id;
@@ -40,7 +40,7 @@ int WINAPI CreateVxlFile(const char * pFileName)
 	auto pFile = std::make_unique<VxlFile>(pFileName);
 	if (pFile && pFile->IsLoaded()) 
 	{
-		auto id = reinterpret_cast<int>(pFile.get());
+		auto id = GlobalID::AllocatedGlobalId++;
 
 		VxlFile::FileObjectTable[id] = std::move(pFile);
 		return id;
@@ -53,7 +53,7 @@ int WINAPI CreateVxlFileFromFileInMemory(LPVOID pFileBuffer, ULONG nSize, LPVOID
 	auto pFile = std::make_unique<VxlFile>(pFileBuffer, nSize, pHvaBuffer, nHvaSize, true, true);
 	if (pFile && pFile->IsLoaded())
 	{
-		auto id = reinterpret_cast<int>(pFile.get());
+		auto id = GlobalID::AllocatedGlobalId++;
 
 		VxlFile::FileObjectTable[id] = std::move(pFile);
 		return id;
@@ -77,7 +77,7 @@ int WINAPI CreateTmpFile(const char * pFileName)
 	auto pFile = std::make_unique<TmpFileClass>(pFileName);
 	if (pFile && pFile->IsLoaded())
 	{
-		auto id = reinterpret_cast<int>(pFile.get());
+		auto id = GlobalID::AllocatedGlobalId++;
 
 		TmpFileClass::FileObjectTable[id] = std::move(pFile);
 		return id;
@@ -90,7 +90,7 @@ int WINAPI CreateTmpFileFromFilenMemory(LPVOID pFileBuffer, ULONG nSize)
 	auto pFile = std::make_unique<TmpFileClass>(pFileBuffer, nSize, true);
 	if (pFile && pFile->IsLoaded())
 	{
-		auto id = reinterpret_cast<int>(pFile.get());
+		auto id = GlobalID::AllocatedGlobalId++;
 
 		TmpFileClass::FileObjectTable[id] = std::move(pFile);
 		return id;
@@ -125,7 +125,7 @@ int WINAPI CreateShpFile(const char * pFileName)
 	auto pFile = std::make_unique<ShpFileClass>(pFileName);
 	if (pFile && pFile->IsLoaded())
 	{
-		auto id = reinterpret_cast<int>(pFile.get());
+		auto id = GlobalID::AllocatedGlobalId++;
 
 		ShpFileClass::FileObjectTable[id] = std::move(pFile);
 		return id;
@@ -138,7 +138,7 @@ int WINAPI CreateShpFileFromFileInMemory(LPVOID pFileBuffer, ULONG nSize)
 	auto pFile = std::make_unique<ShpFileClass>(pFileBuffer, nSize, true);
 	if (pFile && pFile->IsLoaded())
 	{
-		auto id = reinterpret_cast<int>(pFile.get());
+		auto id = GlobalID::AllocatedGlobalId++;
 
 		ShpFileClass::FileObjectTable[id] = std::move(pFile);
 		return id;
@@ -174,7 +174,7 @@ int WINAPI CreateCommonTextureFile(const char * pFileName)
 	auto pFile = std::make_unique<CommonTextureFileClass>(SceneClass::Instance.GetDevice(), pFileName);
 	if (pFile && pFile->IsLoaded())
 	{
-		auto id = reinterpret_cast<int>(pFile.get());
+		auto id = GlobalID::AllocatedGlobalId++;
 
 		CommonTextureFileClass::FileObjectTable[id] = std::move(pFile);
 		return id;
@@ -190,7 +190,7 @@ int WINAPI CreateCircularCommonTextureFile(float Radius, float Thickness, DWORD 
 	auto pFile = std::make_unique<CommonTextureFileClass>(SceneClass::Instance.GetDevice(), Radius, Thickness, dwD3DColor);
 	if (pFile && pFile->IsLoaded())
 	{
-		auto id = reinterpret_cast<int>(pFile.get());
+		auto id = GlobalID::AllocatedGlobalId++;
 
 		CommonTextureFileClass::FileObjectTable[id] = std::move(pFile);
 		return id;
