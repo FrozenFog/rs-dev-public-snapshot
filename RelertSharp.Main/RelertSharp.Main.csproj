@@ -66,6 +66,7 @@
     <Compile Include="DrawingEngine\BufferCollection.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableBase.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableInfantry.cs" />
+    <Compile Include="DrawingEngine\Drawables\DrawableMisc.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableStructure.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableUnit.cs" />
     <Compile Include="DrawingEngine\Engine.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="DrawingEngine\GdipSurface.cs" />
     <Compile Include="DrawingEngine\Presenting\PresentBase.cs" />
     <Compile Include="DrawingEngine\Presenting\PresentInfantry.cs" />
+    <Compile Include="DrawingEngine\Presenting\PresentMisc.cs" />
     <Compile Include="DrawingEngine\Presenting\PresentStructure.cs" />
     <Compile Include="DrawingEngine\Presenting\PresentTile.cs" />
     <Compile Include="DrawingEngine\Presenting\PresentUnit.cs" />

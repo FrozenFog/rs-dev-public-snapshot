@@ -4,30 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.Common;
-using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.DrawingEngine.Presenting
 {
-    internal class PresentInfantry : PresentBase, IPresentBase
+    internal class PresentMisc : PresentBase, IPresentBase
     {
-        #region Ctor - PresentInfantry
-        public PresentInfantry(InfantryItem inf, int height) : base(inf, height) { }
+        #region Ctor - PresentMisc
+        public PresentMisc(MapObjectType type, I2dLocateable xy, int z) : base(xy, z)
+        {
+            MiscType = type;
+        }
         #endregion
 
 
-        #region Public Methods - PresentInfantry
+        #region Public Methods - PresentMisc
+
         public void Dispose()
         {
             RemoveProp(pSelf, pSelfShadow);
         }
+
         public void SetColor(Vec4 color)
         {
+            if (IsTiberiumOverlay) return;
             SetColor(pSelf, color);
         }
         #endregion
 
 
-        #region Public Calls - PresentInfantry
+        #region Public Calls - PresentMisc
+        public MapObjectType MiscType { get; private set; }
+        public bool IsTiberiumOverlay { get; set; }
         public bool IsValid { get { return pSelf != 0; } }
         #endregion
     }

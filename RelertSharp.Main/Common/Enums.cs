@@ -7,6 +7,25 @@ using System.Threading.Tasks;
 namespace RelertSharp.Common
 {
     [Flags]
+    public enum MapObjectType
+    {
+        Building = 1,
+        Vehicle = 2,
+        Infantry = 4,
+        Aircraft = 8,
+        Unit = Vehicle | Aircraft,
+        Tile = 16,
+        Overlay = 32,
+        Terrain = 64,
+        Smudge = 128,
+        BaseNode = 256,
+        MiscObject = Overlay | Terrain | Smudge,
+        AllBuilding = Building | BaseNode,
+        Celltag = 512,
+        Waypoint = 1024,
+        LogicObject = Celltag | Waypoint
+    }
+    [Flags]
     public enum AudType
     {
         None = 0,

@@ -107,10 +107,10 @@ namespace RelertSharp.IniSystem
                 }
             }
 
-            string foundation = this[nameid]["Foundation"];
+            string foundation = (string)this[nameid]["Foundation"].ToLower();
             if (!string.IsNullOrEmpty(foundation))
             {
-                if (foundation == "Custom")
+                if (foundation == "custom")
                 {
                     foundX = this[nameid].GetPair("Foundation.X").ParseInt(1);
                     foundY = this[nameid].GetPair("Foundation.Y").ParseInt(1);

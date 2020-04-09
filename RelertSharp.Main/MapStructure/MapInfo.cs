@@ -123,6 +123,15 @@ namespace RelertSharp.MapStructure
             Ground = float.Parse(_ground);
             Ambient = float.Parse(_ambient);
         }
+        public LightningItem(float r, float g, float b, float level, float ground, float ambient)
+        {
+            Red = r;
+            Green = g;
+            Blue = b;
+            Level = level;
+            Ground = ground;
+            Ambient = ambient;
+        }
         #endregion
 
 

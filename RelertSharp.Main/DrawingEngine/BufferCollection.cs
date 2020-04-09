@@ -101,17 +101,17 @@ namespace RelertSharp.DrawingEngine
             }
             public void RemoveOverlays()
             {
-                foreach (int id in Overlays.Values) DeleteFromScene(id);
+                foreach (PresentMisc o in Overlays.Values) o.Dispose();
                 Overlays.Clear();
             }
             public void RemoveTerrains()
             {
-                foreach (int id in Terrains.Values) DeleteFromScene(id);
+                foreach (PresentMisc terr in Terrains.Values) terr.Dispose();
                 Terrains.Clear();
             }
             public void RemoveSmudges()
             {
-                foreach (int id in Smudges.Values) DeleteFromScene(id);
+                foreach (PresentMisc smg in Smudges.Values) smg.Dispose();
                 Smudges.Clear();
             }
             #endregion
@@ -122,10 +122,11 @@ namespace RelertSharp.DrawingEngine
             public Dictionary<int, PresentUnit> Units { get; private set; } = new Dictionary<int, PresentUnit>();
             public Dictionary<int, PresentInfantry> Infantries { get; private set; } = new Dictionary<int, PresentInfantry>();
             public Dictionary<int, PresentTile> Tiles { get; private set; } = new Dictionary<int, PresentTile>();
-            public Dictionary<int, int> Overlays { get; private set; } = new Dictionary<int, int>();
-            public Dictionary<int, int> Terrains { get; private set; } = new Dictionary<int, int>();
-            public Dictionary<int, int> Smudges { get; private set; } = new Dictionary<int, int>();
+            public Dictionary<int, PresentMisc> Overlays { get; private set; } = new Dictionary<int, PresentMisc>();
+            public Dictionary<int, PresentMisc> Terrains { get; private set; } = new Dictionary<int, PresentMisc>();
+            public Dictionary<int, PresentMisc> Smudges { get; private set; } = new Dictionary<int, PresentMisc>();
             public IEnumerable<IPresentBase> MapObjects { get { return Structures.Values.Concat<IPresentBase>(Units.Values).Concat(Infantries.Values); } }
+            public IEnumerable<PresentMisc> MapMiscs { get { return Overlays.Values.Concat(Terrains.Values).Concat(Smudges.Values); } }
             #endregion
         }
 
@@ -141,6 +142,7 @@ namespace RelertSharp.DrawingEngine
             public Dictionary<string, DrawableStructure> Structures { get; private set; } = new Dictionary<string, DrawableStructure>();
             public Dictionary<string, DrawableUnit> Units { get; private set; } = new Dictionary<string, DrawableUnit>();
             public Dictionary<string, DrawableInfantry> Infantries { get; private set; } = new Dictionary<string, DrawableInfantry>();
+            public Dictionary<string, DrawableMisc> Miscs { get; private set; } = new Dictionary<string, DrawableMisc>();
             #endregion
         }
 

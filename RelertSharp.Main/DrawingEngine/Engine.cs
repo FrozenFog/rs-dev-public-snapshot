@@ -123,78 +123,44 @@ namespace RelertSharp.DrawingEngine
         }
         public bool DrawGeneralItem(TerrainItem terrain, int height)
         {
-            string terrname = TileDictionary.NameAsTheater(terrain.TerrainName);
-            Vec3 pos = ToVec3Iso(terrain, height);
-            int pal = pPalIso;
-            if (ParseBool(GlobalRules[terrain.TerrainName]["SpawnsTiberium"]))
+            DrawableMisc src = CreateDrawableMisc(terrain);
+            PresentMisc dest = new PresentMisc(MapObjectType.Terrain, terrain, height);
+            Vec3 pos;
+            if (src.IsZeroVec) pos = ToVec3Zero(terrain, height);
+            else pos = ToVec3Iso(terrain, height);
+            if (DrawMisc(src, dest, pos, src.pPal, 0, _white))
             {
-                pal = pPalUnit;
-                pos = ToVec3Zero(pos);
-            }
-            int shp = CreateGroundShp(terrname, pal, _white);
-            if (DrawGroundShp(pos, 0, pal, _white, shp, out int id, ShpFlatType.Vertical))
-            {
-                Buffer.Scenes.Terrains[terrain.CoordInt] = id;
+                Buffer.Scenes.Terrains[terrain.CoordInt] = dest;
                 return true;
             }
             return false;
         }
         public bool DrawGeneralItem(SmudgeItem smg, int height)
         {
-            string name = TileDictionary.NameAsTheater(smg.Name);
+            DrawableMisc src = CreateDrawableMisc(smg);
+            PresentMisc dest = new PresentMisc(MapObjectType.Smudge, smg, height);
             Vec3 pos = ToVec3Zero(smg, height);
             pos.Z += 0.01F;
-            int shp = CreateGroundShp(name, pPalIso, _white);
-            if (DrawGroundShp(pos, 0, pPalIso, _white, shp, out int id, ShpFlatType.FlatGround))
+            if (DrawMisc(src, dest, pos, pPalIso, 0, _white, ShpFlatType.FlatGround))
             {
-                Buffer.Scenes.Smudges[smg.CoordInt] = id;
+                Buffer.Scenes.Smudges[smg.CoordInt] = dest;
                 return true;
             }
             return false;
         }
         public bool DrawGeneralItem(OverlayUnit o, int height)
         {
-            Vec3 pos = ToVec3Zero(o.X, o.Y, height);
-            int pal = pPalUnit;
-            ShpFlatType flatType = ShpFlatType.Vertical;
-
-            string name = GlobalRules.GetOverlayName(o.Index);
-            string img = GlobalRules[name]["Image"];
-            string filename = name;
-            bool flat = ParseBool(GlobalRules[name]["DrawFlat"], true);
-            bool overrides = ParseBool(GlobalRules[name]["Overrides"]);
-            bool isTiberium = ParseBool(GlobalRules[name]["Tiberium"]);
-            bool rubble = ParseBool(GlobalRules[name]["IsRubble"]);
-
-            if (!string.IsNullOrEmpty(img) && name != img) filename = img;
-            if (overrides)
+            DrawableMisc src = CreateDrawableMisc(o, _white);
+            PresentMisc dest = new PresentMisc(MapObjectType.Overlay, o, height);
+            dest.IsTiberiumOverlay = src.IsTiberiumOverlay;
+            Vec3 pos;
+            if (src.IsZeroVec) pos = ToVec3Zero(o, height);
+            else pos = ToVec3Iso(o, height);
+            int pal = src.pPal;
+            ShpFlatType type = src.FlatType;
+            if (DrawMisc(src, dest, pos, src.pPal, o.Frame, _white, type))
             {
-                flat = false;
-            }
-            if (!rubble)
-            {
-                if (!_zeroLandType.Contains((string)GlobalRules[name]["Land"]))
-                {
-                    flat = false;
-                    pos = ToVec3Iso(pos);
-                }
-            }
-
-
-            if (GlobalDir.HasFile(filename + ".shp")) filename = filename.ToLower() + ".shp";
-            else
-            {
-                filename = string.Format("{0}.{1}", filename.ToLower(), TileDictionary.TheaterSub);
-                if (isTiberium) pal = pPalTheater;
-                else pal = pPalIso;
-            }
-
-            int shp = CreateGroundShp(filename, pal, _white);
-            if (flat) flatType = ShpFlatType.FlatGround;
-            if (!string.IsNullOrEmpty(GlobalRules[name]["Wall"])) flatType = ShpFlatType.Box1;
-            if (DrawGroundShp(pos, o.Frame, pal, _white, shp, out int id, flatType))
-            {
-                Buffer.Scenes.Overlays[o.Coord] = id;
+                Buffer.Scenes.Overlays[o.Coord] = dest;
                 return true;
             }
             return false;
@@ -207,8 +173,8 @@ namespace RelertSharp.DrawingEngine
             color *= amb;
             _TileColor = color;
             foreach (PresentTile t in Buffer.Scenes.Tiles.Values) t.SetColor(color);
-            foreach (IPresentBase obj in Buffer.Scenes.MapObjects) obj.SetColor(color);
-
+            foreach (IPresentBase obj in Buffer.Scenes.MapObjects) obj.SetColor(amb);
+            foreach (PresentMisc misc in Buffer.Scenes.MapMiscs) misc.SetColor(color);
         }
         public Vec3 ClientPointToCellPos(Point src, TileLayer referance)
         {
@@ -360,6 +326,91 @@ namespace RelertSharp.DrawingEngine
             else d = Buffer.Buffers.Units[lookup];
             return d;
         }
+        private DrawableMisc CreateDrawableMisc(TerrainItem terrain)
+        {
+            DrawableMisc d;
+            string name = TileDictionary.NameAsTheater(terrain.TerrainName);
+            if (!Buffer.Buffers.Miscs.Keys.Contains(name))
+            {
+                d = new DrawableMisc(MapObjectType.Terrain, name);
+                bool isTibTree = ParseBool(GlobalRules[terrain.TerrainName]["SpawnsTiberium"]);
+                d.pPal = pPalIso;
+                d.IsZeroVec = false;
+                if (isTibTree)
+                {
+                    d.pPal = pPalUnit;
+                    d.IsZeroVec = true;
+                }
+                d.pSelf = CreateGroundShp(name, d.pPal, _white);
+                Buffer.Buffers.Miscs[name] = d;
+            }
+            else d = Buffer.Buffers.Miscs[name];
+            return d;
+
+        }
+        private DrawableMisc CreateDrawableMisc(SmudgeItem smudge)
+        {
+            DrawableMisc d;
+            string name = TileDictionary.NameAsTheater(smudge.Name);
+            if (!Buffer.Buffers.Miscs.Keys.Contains(name))
+            {
+                d = new DrawableMisc(MapObjectType.Smudge, name);
+                d.pSelf = CreateGroundShp(name, pPalIso, _white);
+                Buffer.Buffers.Miscs[name] = d;
+            }
+            else d = Buffer.Buffers.Miscs[name];
+            return d;
+        }
+        private DrawableMisc CreateDrawableMisc(OverlayUnit overlay, uint color)
+        {
+            DrawableMisc d;
+            string name = GlobalRules.GetOverlayName(overlay.Index);
+            string lookup = name + color.ToString();
+            if (!Buffer.Buffers.Miscs.Keys.Contains(lookup))
+            {
+                d = new DrawableMisc(MapObjectType.Overlay, name);
+                d.IsZeroVec = true;
+                d.pPal = pPalUnit;
+                string filename = name;
+                bool flat = ParseBool(GlobalRules[name]["DrawFlat"], true);
+                bool overrides = ParseBool(GlobalRules[name]["Overrides"]);
+                bool isTiberium = ParseBool(GlobalRules[name]["Tiberium"]);
+                bool rubble = ParseBool(GlobalRules[name]["IsRubble"]);
+                bool wall = ParseBool(GlobalRules[name]["Wall"]);
+                string img = GlobalRules[name]["Image"];
+
+                if (!string.IsNullOrEmpty(img) && name != img) filename = img;
+                if (overrides) flat = false;
+                if (!rubble)
+                {
+                    if (!_zeroLandType.Contains((string)GlobalRules[name]["Land"]))
+                    {
+                        flat = false;
+                        d.IsZeroVec = false;
+                    }
+                }
+                if (flat) d.FlatType = ShpFlatType.FlatGround;
+                else d.FlatType = ShpFlatType.Box1;
+                if (wall) d.FlatType = ShpFlatType.Box1;
+
+                if (GlobalDir.HasFile(filename + ".shp")) filename = filename.ToLower() + ".shp";
+                else
+                {
+                    filename = string.Format("{0}.{1}", filename.ToLower(), TileDictionary.TheaterSub);
+                    if (isTiberium)
+                    {
+                        d.pPal = pPalTheater;
+                        d.IsTiberiumOverlay = true;
+                    }
+                    else d.pPal = pPalIso;
+                }
+
+                d.pSelf = CreateGroundShp(filename, d.pPal, color);
+                Buffer.Buffers.Miscs[lookup] = d;
+            }
+            else d = Buffer.Buffers.Miscs[lookup];
+            return d;
+        }
         private DrawableStructure CreateDrawableStructure(string name, uint color, int pPal, bool isBaseNode = false)
         {
             DrawableStructure d;
@@ -441,6 +492,12 @@ namespace RelertSharp.DrawingEngine
 
 
         #region Drawing
+        private bool DrawMisc(DrawableMisc src, PresentMisc dest, Vec3 pos, int pPal, int frame, uint color, ShpFlatType type = ShpFlatType.Vertical)
+        {
+            if (src.pSelf != 0) dest.pSelf = RenderAndPresent(src.pSelf, pos, frame, color, pPal, type);
+
+            return dest.IsValid;
+        }
         private bool DrawInfantry(DrawableInfantry src, Vec3 pos, PresentInfantry dest, int frame, int pPal, int subcell)
         {
             if (src.pPalCustom != 0) pPal = src.pPalCustom;
@@ -564,10 +621,6 @@ namespace RelertSharp.DrawingEngine
                 return new Vec3() { X = startFrame + direction * walkFrame + offset, Y = 0, Z = 0 };
             }
         }
-        private Vec3 ToVec3Iso(PresentBase p)
-        {
-            return ToVec3Iso(p.X, p.Y, p.Z);
-        }
         private Vec3 ToVec3Iso(PresentInfantry inf, int subcell)
         {
             float x = inf.X + 0.25f, y = inf.Y + 0.25f, z = inf.Z;
@@ -575,13 +628,21 @@ namespace RelertSharp.DrawingEngine
             if (subcell == 3) y -= 0.5f;
             return ToVec3Iso(x, y, z);
         }
-        private Vec3 ToVec3Iso(PointItemBase p, int height)
+        private Vec3 ToVec3Iso(I3dLocateable d3)
         {
-            return ToVec3Iso(p.X, p.Y, height);
+            return ToVec3Iso(d3.X, d3.Y, d3.Z);
         }
-        private Vec3 ToVec3Iso(I3dLocateable loc)
+        private Vec3 ToVec3Zero(I3dLocateable d3)
         {
-            return new Vec3() { X = loc.X * _30SQ2, Y = loc.Y * _30SQ2, Z = loc.Z * _10SQ3 };
+            return ToVec3Zero(d3.X, d3.Y, d3.Z);
+        }
+        private Vec3 ToVec3Iso(I2dLocateable d2, int height)
+        {
+            return ToVec3Iso(d2.X, d2.Y, height);
+        }
+        private Vec3 ToVec3Zero(I2dLocateable d2, int height)
+        {
+            return ToVec3Zero(d2.X, d2.Y, height);
         }
         private Vec3 ToVec3Iso(float x, float y, float z)
         {
@@ -594,14 +655,6 @@ namespace RelertSharp.DrawingEngine
         private Vec3 ToVec3Zero(Vec3 iso)
         {
             return new Vec3() { X = iso.X - _15SQ2, Y = iso.Y - _15SQ2, Z = iso.Z };
-        }
-        private Vec3 ToVec3Zero(PointItemBase p, int height)
-        {
-            return ToVec3Zero(p.X, p.Y, height);
-        }
-        private Vec3 ToVec3Zero(PresentBase p)
-        {
-            return ToVec3Zero(p.X, p.Y, p.Z);
         }
         private Vec3 ToVec3Zero(int x, int y, int z)
         {
