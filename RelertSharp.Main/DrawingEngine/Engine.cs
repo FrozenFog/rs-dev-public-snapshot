@@ -27,7 +27,7 @@ namespace RelertSharp.DrawingEngine
         private float _height { get { return _10SQ3; } }
         private const uint _colorIgnore = 0x000000FF;
         private const uint _white = 0xFFFFFFFF;
-        private static Vec3 _generalOffset = new Vec3() { X = 1, Y = 1, Z = (float)Math.Sqrt(1.5) };
+        private static Vec3 _generalOffset = new Vec3() { X = 1, Y = 1, Z = (float)Math.Sqrt(2f/3f) };
         private BufferCollection Buffer = new BufferCollection();
         private GdipSurface surface;
         private Vec3 previousTile = Vec3.Zero;
@@ -66,10 +66,6 @@ namespace RelertSharp.DrawingEngine
         }
         public bool DrawObject(UnitItem unit, int height, uint color)
         {
-            if (unit.NameID == "RDROLLER")
-            {
-                int i = 0;
-            }
             DrawableUnit src = CreateDrawableUnit(unit.NameID, color, pPalUnit);
             PresentUnit dest = new PresentUnit(unit, height, src.IsVxl);
             Vec3 pos = ToVec3Iso(dest);
@@ -181,12 +177,13 @@ namespace RelertSharp.DrawingEngine
             }
             return false;
         }
-        public bool DrawCelltag(CellTagItem cell, int height)
+        public bool DrawCelltag(CellTagItem cell, int height, bool topmost = false)
         {
             DrawableMisc src = new DrawableMisc(MapObjectType.Celltag, "");
             src.pSelf = Buffer.Files.CelltagBase;
             PresentMisc dest = new PresentMisc(MapObjectType.Celltag, cell, height);
             Vec3 pos = ToVec3Iso(dest).Rise();
+            if (topmost) pos += 99 * _generalOffset;
             if (DrawMisc(src,dest,pos,pPalSystem, 0, _white, ShpFlatType.FlatGround))
             {
                 Buffer.Scenes.Celltags[dest.Coord] = dest;
