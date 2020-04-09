@@ -390,10 +390,10 @@ int VxlFile::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
 		FLOAT yScale = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
 		FLOAT zScale = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
 		D3DXMatrixScaling(&Scale, xScale, yScale, zScale);
-
+		
 		//Origin is multiplied before Hva
 		TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
-		Origin = TailerInfo.Matrix.AsD3dMatrix(TailerInfo.fScale);
+		Origin = TailerInfo.Matrix.GetScaleRotationMatrix();
 		Matrix = this->AssociatedHVA.GetTransformMatrix(0, i)->AsD3dMatrix(TailerInfo.fScale);
 		Matrix = Identity*Scale*TranslationCenter*Origin*Matrix*RotateX*RotateY*RotateZ*Translation;
 		NormalMatrix = Matrix;

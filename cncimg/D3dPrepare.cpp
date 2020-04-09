@@ -64,21 +64,21 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 	if (auto id = CreateCircularCommonTextureFile(280.0,4.0,D3DCOLOR_XRGB(242,0,242))) {
 		CreateCommonTextureObjectAtScene(id, { 0.0,0.0,0.0 });
 	}
-	*/
+	*//*
 	if (ShpFile = CreateShpFile("images\\ggcnst.shp")) {
 		if (LoadShpTextures(ShpFile, UnitPalette, RGB(0, 252, 252))) {
 			MouseObject = CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 0, UnitPalette, RGB(0, 252, 252), 2, 4, 4, 8, false);
 			CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 4, UnitPalette, RGB(0, 252, 252), 1, 4, 4, 8, true);
 		}
 	}
-
+*/
 	if (auto vid = CreateVxlFile("images\\ytnk.vxl"))
 	{
 		if (auto tid = CreateVxlFile("images\\ytnktur.vxl"))
 		{
 			auto Position = D3DXVECTOR3(200.0, 0, 0);
 			CreateVxlObjectAtScene(vid, Position, 0, 0, 0, UnitPalette, INVALID_COLOR_VALUE);
-			CreateVxlObjectAtScene(tid, Position, 0, 0, 0, UnitPalette, INVALID_COLOR_VALUE);
+			CreateVxlObjectAtScene(tid, Position, 0, 0, -D3DX_PI / 4.0f , UnitPalette, INVALID_COLOR_VALUE);
 		}
 	}
 	D3DXVECTOR3 Position{ 100.0f,0.0f,0.0f };
