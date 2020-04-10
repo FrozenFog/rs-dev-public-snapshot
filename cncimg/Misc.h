@@ -41,3 +41,15 @@ public:
 private:
 	HFONT hFont;
 };
+
+class RectangleClass : public DrawObject
+{
+public:
+	static RectangleClass GlobalRectangleGenerator;
+	static void ClearAllSceneObject();
+
+	RectangleClass() = default;
+	~RectangleClass() = default;
+
+	int DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Positon, float X, float Y, DWORD dwColor);
+};

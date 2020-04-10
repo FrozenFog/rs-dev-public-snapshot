@@ -4,6 +4,7 @@
 
 LineClass LineClass::GlobalLineGenerator;
 FontClass FontClass::GlobalFont;
+RectangleClass RectangleClass::GlobalRectangleGenerator;
 
 void LineClass::ClearAllSceneObject()
 {
@@ -91,4 +92,45 @@ int FontClass::DrawAtScene(D3DXVECTOR3 Position, DWORD dwColor, const char * pSt
 	PaintingStruct::InitializePaintingStruct(Object, nullptr, Position, nullptr, false, nullptr, nullptr, -1, dwColor, pString);
 
 	return this->CommitTopObject(Object);
+}
+
+void RectangleClass::ClearAllSceneObject()
+{
+	RectangleClass::GlobalRectangleGenerator.ClearAllObjects();
+}
+
+int RectangleClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, float X, float Y, DWORD dwColor)
+{
+	if (!pDevice)
+		return false;
+
+	PaintingStruct Object;
+	std::vector<Vertex> VertexBuffer;
+	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
+	LPVOID pVertexData;
+
+	VertexBuffer.push_back({ {Position.x,Position.y,Position.z},dwColor });
+	VertexBuffer.push_back({ { Position.x + X,Position.y,Position.z },dwColor });
+	VertexBuffer.push_back({ { Position.x,Position.y + Y,Position.z },dwColor });
+	VertexBuffer.push_back({ { Position.x + X,Position.y + Y,Position.z },dwColor });
+
+	if (FAILED(pDevice->CreateVertexBuffer(VertexBuffer.size() * sizeof Vertex, D3DUSAGE_DYNAMIC, Vertex::dwFVFType,
+		D3DPOOL_SYSTEMMEM, &pVertexBuffer, nullptr)))
+	{
+		SAFE_RELEASE(pVertexBuffer);
+		return 0;
+	}
+
+	if (FAILED(pVertexBuffer->Lock(0, 0, &pVertexData, D3DLOCK_DISCARD)))
+	{
+		SAFE_RELEASE(pVertexBuffer);
+		return 0;
+	}
+
+	RtlCopyMemory(pVertexData, VertexBuffer.data(), VertexBuffer.size() * sizeof Vertex);
+
+	pVertexBuffer->Unlock();
+
+	PaintingStruct::InitializePaintingStruct(Object, pVertexBuffer, Position);
+	return this->CommitOpaqueObject(Object);
 }

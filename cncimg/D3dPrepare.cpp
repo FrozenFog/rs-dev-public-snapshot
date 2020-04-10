@@ -50,9 +50,14 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 		printf_s("print success.\n");
 	}
 
-	if (MouseObject = CreateLineObjectAtScene({ 0.0,0.0,0.1f }, { 0.0,-300.0f,0.1f }, D3DCOLOR_XRGB(242, 0, 0), D3DCOLOR_XRGB(242, 0, 0)))
+	if (auto id = CreateLineObjectAtScene({ 0.0,0.0,0.1f }, { 0.0,-300.0f,0.1f }, D3DCOLOR_XRGB(242, 0, 0), D3DCOLOR_XRGB(242, 0, 0)))
 	{
 		printf_s("Line success.\n");
+	}
+
+	if (MouseObject = CreateRectangleObjectAtScene({ 0.0,0.0,0.1f },88,88,D3DCOLOR_XRGB(111,222,111)))
+	{
+		printf_s("Rect success.\n");
 	}
 
 	SetBackgroundColor(0, 0, 0);
@@ -113,14 +118,17 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 	}
 
 	if (auto vid = CreateShpFile("images\\ygggun.shp")) {
-		LoadShpTextures(vid, UnitPalette, INVALID_COLOR_VALUE);
+		if (!LoadShpTextures(vid, 0, UnitPalette, INVALID_COLOR_VALUE))
+			printf_s("failed to load as texture.\n");
 		if (auto tid = CreateVxlFile("images\\yaggun.vxl")) {
+
 			float turretY = 15.0f;
 			float delta = turretY*2.0f / sqrt(3.0);
+
 			CreateShpObjectAtScene(vid, Position, 0, UnitPalette, INVALID_COLOR_VALUE, 1, 1, 1, 4, false);
 			Position.z -= delta;
-			CreateVxlObjectAtScene(tid, Position, 0, 0, D3DX_PI, UnitPalette, INVALID_COLOR_VALUE);
-			
+			if (!CreateVxlObjectAtScene(tid, Position, 0, 0, D3DX_PI, UnitPalette, INVALID_COLOR_VALUE))
+				printf_s("failed to put vxl.\n");
 		}
 	}
 
@@ -297,7 +305,7 @@ void Graphic::MouseMove(POINT Position)
 	D3DXVECTOR3 TargetPosition;
 
 	ClientPositionToScenePosition(Position, TargetPosition);
-	//TargetPosition.z += 0.1f;
+	TargetPosition.z += 0.1f;
 
 	SetObjectLocation(MouseObject, TargetPosition);
 

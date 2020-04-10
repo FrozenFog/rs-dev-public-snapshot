@@ -522,6 +522,7 @@ void DrawObject::RemoveCommonObject(int nID)
 {
 	LineClass::GlobalLineGenerator.RemoveOpaqueObject(nID);
 	FontClass::GlobalFont.RemoveTopObject(nID);
+	RectangleClass::GlobalRectangleGenerator.RemoveOpaqueObject(nID);
 }
 
 PaintingStruct * DrawObject::FindObjectById(int nID)
@@ -569,6 +570,19 @@ void DrawObject::ObjectTransformation(int nID, D3DXMATRIX & Matrix)
 				pFind->Position *= Matrix;
 				pVertexData[0].Vector *= Matrix;
 				pVertexData[1].Vector *= Matrix;
+
+				pFind->pVertexBuffer->Unlock();
+			}
+			else if (pFind->BufferedVoxels.empty() && Desc.Size / sizeof Vertex == 4)
+			{
+				if (FAILED(pFind->pVertexBuffer->Lock(0, 0, (void**)&pVertexData, D3DLOCK_DISCARD)))
+					return;
+
+				pFind->Position *= Matrix;
+				pVertexData[0].Vector *= Matrix;
+				pVertexData[1].Vector *= Matrix;
+				pVertexData[2].Vector *= Matrix;
+				pVertexData[3].Vector *= Matrix;
 
 				pFind->pVertexBuffer->Unlock();
 			}
@@ -777,14 +791,19 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->SetStreamSource(0, this->pVertexBuffer, 0, sizeof Vertex);
 
 		VxlShader.SetConstantVector(pDevice, this->ColorCoefficient);
-		pDevice->SetPixelShader(VxlShader.GetShaderObject());
 
-		if (this->BufferedVoxels.empty() && Desc.Size / sizeof Vertex == 2)
-			PrimitiveType = D3DPT_LINELIST;
-		else
-			PrimitiveType = D3DPT_POINTLIST;
+		if(this->BufferedVoxels.empty())
+		{
+			if (Desc.Size / sizeof Vertex == 2)
+				PrimitiveType = D3DPT_LINELIST;
+			else if (Desc.Size / sizeof Vertex == 4)
+				PrimitiveType = D3DPT_TRIANGLESTRIP;
+			else
+				PrimitiveType = D3DPT_POINTLIST;
+		}
 
-		nPrimitiveCount = PrimitiveType == D3DPT_LINELIST ? 1 : Desc.Size / sizeof Vertex;
+		pDevice->SetPixelShader(PrimitiveType == D3DPT_POINTLIST ? VxlShader.GetShaderObject() : nullptr);
+		nPrimitiveCount = PrimitiveType == D3DPT_LINELIST ? 1 : PrimitiveType == D3DPT_TRIANGLESTRIP ? 2 : Desc.Size / sizeof Vertex;
 		Result = SUCCEEDED(pDevice->DrawPrimitive(PrimitiveType, 0, nPrimitiveCount));
 		pDevice->SetTexture(0, pFormerTexture);
 		pDevice->SetPixelShader(pFormerShader);

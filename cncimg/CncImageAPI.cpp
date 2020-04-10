@@ -157,13 +157,22 @@ bool WINAPI RemoveShpFile(int nFileId)
 	return true;
 }
 
-bool WINAPI LoadShpTextures(int nFileId, int nPaletteId, DWORD dwRemapColor)
+bool WINAPI LoadShpTextures(int nFileId, int idxFrame, int nPaletteId, DWORD dwRemapColor)
 {
 	auto find = ShpFileClass::FileObjectTable.find(nFileId);
 	if (find == ShpFileClass::FileObjectTable.end())
 		return false;
 
-	return find->second->MakeTextures(SceneClass::Instance.GetDevice(), nPaletteId, dwRemapColor);
+	return find->second->MakeTextures(SceneClass::Instance.GetDevice(), nPaletteId, dwRemapColor, idxFrame);
+}
+
+bool WINAPI IsShpFrameLoadedAsTexture(int nFileID, int idxFrame, int nPaletteID, DWORD dwRemapColor)
+{
+	auto find = ShpFileClass::FileObjectTable.find(nFileID);
+	if (find == ShpFileClass::FileObjectTable.end())
+		return false;
+
+	return find->second->IsFrameTextureLoaded(idxFrame, nPaletteID, dwRemapColor);
 }
 
 int WINAPI CreateCommonTextureFile(const char * pFileName)
@@ -340,6 +349,15 @@ int WINAPI CreateLineObjectAtScene(D3DXVECTOR3 Start, D3DXVECTOR3 End, DWORD dwS
 		return false;
 
 	return LineClass::GlobalLineGenerator.DrawAtScene(pDevice, Start, End, dwStartColor, dwEndColor);
+}
+
+int WINAPI CreateRectangleObjectAtScene(D3DXVECTOR3 Position, float XLength, float YLength, DWORD dwColor)
+{
+	auto pDevice = SceneClass::Instance.GetDevice();
+	if (!pDevice)
+		return false;
+
+	return RectangleClass::GlobalRectangleGenerator.DrawAtScene(pDevice, Position, XLength, YLength, dwColor);
 }
 
 bool WINAPI SetSceneFont(const char * pFontName, int nSize)

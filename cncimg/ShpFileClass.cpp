@@ -122,6 +122,16 @@ bool ShpFileClass::HasCompression(int idxFrame)
 	return false;
 }
 
+bool ShpFileClass::IsFrameTextureLoaded(int idxFrame, int nPaletteID, int dwRemapColor)
+{
+	auto& Frames = this->FrameTextures[nPaletteID][dwRemapColor];
+
+	if (Frames.empty() || Frames.size() <= idxFrame)
+		return false;
+
+	return Frames[idxFrame] != nullptr;
+}
+
 RECT ShpFileClass::GetImageBounds()
 {
 	if (auto header = this->GetFileHeader()) {
@@ -167,7 +177,7 @@ void ShpFileClass::RemoveAllTextures(int nPaletteId, DWORD dwRemapColor)
 	this->FrameTextures[nPaletteId][dwRemapColor].clear();
 }
 
-bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD dwRemapColor)
+bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD dwRemapColor, int idxFrame)
 {
 	if (!this->IsLoaded() || !pDevice)
 		return false;
@@ -178,12 +188,12 @@ bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD
 	LPDIRECT3DTEXTURE9 pTexture;
 	int nValidFrames, nNullFrames;
 
-	for (auto item : this->FrameTextures[nPaletteID][dwRemapColor]) {
-		DrawObject::CommitIsotatedTexture(item);
-	}
+	auto& Frames = this->FrameTextures[nPaletteID][dwRemapColor];
 
-	this->RemoveAllTextures(nPaletteID, dwRemapColor);
-	this->FrameTextures[nPaletteID][dwRemapColor].resize(this->GetFrameCount());
+	if (Frames.empty()) {
+		Frames.resize(this->GetFrameCount());
+		ZeroMemory(Frames.data(), Frames.size() * sizeof LPDIRECT3DTEXTURE9);
+	}
 
 	Palette NewPalette;
 	if (auto palette = Palette::FindPaletteByID(nPaletteID)) {
@@ -192,14 +202,16 @@ bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD
 	else 
 		return false;
 
+	if (auto pExistTexture = Frames[idxFrame]) {
+		DrawObject::CommitIsotatedTexture(pExistTexture);
+		Frames[idxFrame] = nullptr;
+	}
+
 	NewPalette.MakeRemapColor(dwRemapColor);
 
-	ZeroMemory(this->FrameTextures[nPaletteID][dwRemapColor].data(), 
-		this->FrameTextures[nPaletteID][dwRemapColor].size() * sizeof LPDIRECT3DTEXTURE9);
-
-	nNullFrames = 0;
-	for (int i = 0; i < this->GetFrameCount(); i++)
+	if (idxFrame < this->GetFrameCount() && idxFrame >= 0)
 	{
+		auto i = idxFrame;
 		auto bCompressed = this->HasCompression(i);
 		auto pData = this->GetFrameData(i);
 		auto Bounds = this->GetFrameBounds(i);
@@ -208,25 +220,24 @@ bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD
 		auto height = Bounds.bottom - Bounds.top;
 		
 		if (!pData)
-			continue;
+			return false;
 
 		if (!width || !height)
 		{
-			nNullFrames++;
-			continue;
+			return true;
 		}
 
 		if (FAILED(pDevice->CreateTexture(width, height, 0, NULL, D3DFMT_A8R8G8B8,
 			D3DPOOL_MANAGED, &pTexture, nullptr))) 
 		{
 			SAFE_RELEASE(pTexture);
-			continue;
+			return false;
 		}
 
 		if (FAILED(pTexture->LockRect(0, &LockedRect, nullptr, NULL))) 
 		{
 			SAFE_RELEASE(pTexture);
-			continue;
+			return false;
 		}
 
 		pTextureData = reinterpret_cast<D3DCOLOR*>(LockedRect.pBits);
@@ -282,17 +293,11 @@ bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD
 		}
 
 		pTexture->UnlockRect(0);
-		this->FrameTextures[nPaletteID][dwRemapColor][i] = pTexture;
-	}
-
-	nValidFrames = 0;
-	for (auto item : this->FrameTextures[nPaletteID][dwRemapColor]) {
-		if (item)
-			nValidFrames++;
+		Frames[i] = pTexture;
 	}
 
 	//D3DXSaveTextureToFile("destfile.png", D3DXIFF_PNG, this->FrameTextures[nPaletteID][dwRemapColor][0], nullptr);
-	return (this->GetFrameCount() - nNullFrames) == nValidFrames;
+	return IsFrameTextureLoaded(idxFrame, nPaletteID, dwRemapColor);
 }
 
 int ShpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, int idxFrame, char bFlat, int nPaletteID, DWORD dwRemap,

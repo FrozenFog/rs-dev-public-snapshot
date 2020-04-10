@@ -37,7 +37,8 @@ EXPORT bool WINAPI LoadTmpTextures(int nFileId, int nPaletteId);
 EXPORT int WINAPI CreateShpFile(const char* pFileName);
 EXPORT int WINAPI CreateShpFileFromFileInMemory(LPVOID pFileBuffer, ULONG nSize);
 EXPORT bool WINAPI RemoveShpFile(int nFileId);
-EXPORT bool WINAPI LoadShpTextures(int nFileId, int nPaletteId, DWORD dwRemapColor);
+EXPORT bool WINAPI LoadShpTextures(int nFileId, int idxFrame, int nPaletteId, DWORD dwRemapColor);
+EXPORT bool WINAPI IsShpFrameLoadedAsTexture(int nFileID, int idxFrame, int nPaletteID, DWORD dwRemapColor);
 
 EXPORT int WINAPI CreateCommonTextureFile(const char* pFileName);
 EXPORT int WINAPI CreateCircularCommonTextureFile(float Radius, float Thickness, DWORD dwD3DColor);
@@ -83,6 +84,8 @@ EXPORT void WINAPI ClientPositionToScenePosition(POINT Position, D3DXVECTOR3& Ou
 EXPORT void WINAPI ClearSceneObjects();
 
 EXPORT int WINAPI CreateLineObjectAtScene(D3DXVECTOR3 Start, D3DXVECTOR3 End, DWORD dwStartColor, DWORD dwEndColor);
+EXPORT int WINAPI CreateRectangleObjectAtScene(D3DXVECTOR3 Position, float XLength, float YLength, DWORD dwColor);
+
 EXPORT bool WINAPI SetSceneFont(const char* pFontName, int nSize);
 EXPORT int WINAPI CreateStringObjectAtScene(D3DXVECTOR3 Position, DWORD dwColor, const char* pString);
 

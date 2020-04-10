@@ -38,6 +38,7 @@ void SceneClass::ClearScene()
 	CommonTextureFileClass::ClearAllObjectForAllFile();
 	LineClass::ClearAllSceneObject();
 	FontClass::ClearAllSceneObject();
+	RectangleClass::ClearAllSceneObject();
 }
 
 void SceneClass::ClearDevice()
