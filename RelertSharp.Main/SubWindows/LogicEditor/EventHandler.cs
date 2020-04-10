@@ -148,7 +148,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         {
             TriggerItem copytrigger = Utils.Misc.MemCpy(_CurrentTrigger);
             copytrigger.ID = map.NewID;
-            copytrigger.Name += " - Copy";
+            copytrigger.Name += " Clone";
             copytrigger.SetDisplayingString(lbxTriggerList.Tag);
             TagItem newtag = new TagItem(copytrigger, map.NewID);
             map.Triggers[copytrigger.ID] = copytrigger;
@@ -162,6 +162,8 @@ namespace RelertSharp.SubWindows.LogicEditor
         {
             int _i = lbxTriggerList.SelectedIndex;
             TriggerItem t = _CurrentBoxTrigger;
+            map.DelID(t.ID);
+            map.DelID(map.Tags.GetTagFromTrigger(t.ID).ID);
             map.Triggers.Remove(t);
             map.Tags.Remove(map.Tags.GetTagFromTrigger(t.ID), t.ID);
             lbxTriggerList.Items.Remove(t);
@@ -413,20 +415,68 @@ namespace RelertSharp.SubWindows.LogicEditor
         #endregion
 
         #region Team Page
+        #region Taskforce
         #region btn
+        private void btnNewTask_Click(object sender, EventArgs e)
+        {
+            TaskforceItem item = new TaskforceItem();
+            item.ID = map.NewID;
+            item.Group = -1;
+            item.Name = "New Taskforce";
+            map.TaskForces[item.ID] = item;
+            map.TaskForces.AscendingSort();
+            StaticHelper.LoadToObjectCollection(lbxTaskList, map.TaskForces);
+            lbxTaskList.SelectedIndex = lbxTaskList.Items.IndexOf(item);
+        }
+
+        private void btnDelTask_Click(object sender, EventArgs e)
+        {
+            if (lbxTaskList.SelectedItem == null) return;
+            TaskforceItem item = lbxTaskList.SelectedItem as TaskforceItem;
+            map.DelID(item.ID);
+            map.TaskForces.Remove(item.ID);
+            StaticHelper.LoadToObjectCollection(lbxTaskList, map.TaskForces);
+        }
+
+        private void btnCopyTask_Click(object sender, EventArgs e)
+        {
+            if (lbxTaskList.SelectedItem == null) return;
+            TaskforceItem copyItem = lbxTaskList.SelectedItem as TaskforceItem;
+            TaskforceItem item = new TaskforceItem();
+            item.ID = map.NewID;
+            item.Group = copyItem.Group;
+            item.Name = copyItem.Name + " Clone";
+            item.MemberData = copyItem.MemberData;
+            map.TaskForces[item.ID] = item;
+            map.TaskForces.AscendingSort();
+            StaticHelper.LoadToObjectCollection(lbxTaskList, map.TaskForces);
+            lbxTaskList.SelectedIndex = lbxTaskList.Items.IndexOf(item);
+        }
+
         private void btnAddTaskMem_Click(object sender, EventArgs e)
         {
-
+            if (lbxTaskList.SelectedItem == null) return;
+            TaskforceItem item = lbxTaskList.SelectedItem as TaskforceItem;
+            item.MemberData.Add(new Tuple<string, int>("E1", 1));
+            UpdateTaskforceContent();
         }
 
         private void btnDelTaskMem_Click(object sender, EventArgs e)
         {
-
+            if (lbxTaskList.SelectedItem == null || lbxTaskMemList.SelectedItem == null) return;
+            TaskforceItem item = lbxTaskList.SelectedItem as TaskforceItem;
+            item.MemberData.RemoveAt(lbxTaskMemList.SelectedIndex);
+            UpdateTaskforceContent();
         }
 
         private void btnCopyTaskMem_Click(object sender, EventArgs e)
         {
-
+            if (lbxTaskList.SelectedItem == null || lbxTaskMemList.SelectedItem == null) return;
+            TaskforceItem item = lbxTaskList.SelectedItem as TaskforceItem;
+            TaskforceShowItem showItem = lbxTaskMemList.SelectedItem as TaskforceShowItem;
+            Tuple<string, int> copyitem = new Tuple<string, int>(showItem.RegName, showItem.Number);
+            item.MemberData.Add(copyitem);
+            UpdateTaskforceContent();
         }
         #endregion
         #region cbb
@@ -460,7 +510,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         }
         private void txbTaskCurNum_KeyPress(object sender, KeyPressEventArgs e)
         {
-            System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex(@"^[0-9-\b]*$");
+            System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex(@"^[0-9\b]*$");
             e.Handled = !re.IsMatch(e.KeyChar.ToString());
         }
         private void txbTaskCurNum_TextChanged(object sender, EventArgs e)
@@ -468,11 +518,10 @@ namespace RelertSharp.SubWindows.LogicEditor
             if (lbxTaskList.SelectedItem == null || lbxTaskMemList.SelectedItem == null) return;
             TaskforceShowItem showItem = lbxTaskMemList.SelectedItem as TaskforceShowItem;
             TaskforceItem taskforce = lbxTaskList.SelectedItem as TaskforceItem;
-            int findIndex = taskforce.MemberData.FindIndex(s => s.Item1 == showItem.RegName);
-            taskforce.MemberData[findIndex]
-                = new Tuple<string, int>(taskforce.MemberData[findIndex].Item1, int.Parse(txbTaskCurNum.Text));
-            lbxTaskList.BeginUpdate();
             int index = lbxTaskMemList.SelectedIndex;
+            taskforce.MemberData[index]
+                = new Tuple<string, int>(taskforce.MemberData[index].Item1, int.Parse(txbTaskCurNum.Text));
+            lbxTaskList.BeginUpdate();
             List<TaskforceShowItem> memList = new List<TaskforceShowItem>();
             foreach (var i in taskforce.MemberData) memList.Add(new TaskforceShowItem(i));
             StaticHelper.LoadToObjectCollection(lbxTaskMemList, memList);
@@ -514,10 +563,20 @@ namespace RelertSharp.SubWindows.LogicEditor
         {
             if ((lbxTaskList.SelectedItem == null || lbxTaskMemList.SelectedItem == null)) return;
             TaskforceShowItem curItem = lbxTaskMemList.SelectedItem as TaskforceShowItem;
-            cbbTaskCurType.Text = curItem.RegName;
+            int index = -1;
+            foreach(TechnoPair pair in cbbTaskCurType.Items)
+                if (pair.RegName == curItem.RegName)
+                {
+                    index = cbbTaskCurType.Items.IndexOf(pair);
+                    break;
+                }
+            if (index >= 0) cbbTaskCurType.SelectedIndex = index;
+            else cbbTaskCurType.Text = curItem.RegName;
             txbTaskCurNum.Text = curItem.Number.ToString();
         }
         #endregion
+        #endregion
+
         #endregion
 
         #region Misc Page

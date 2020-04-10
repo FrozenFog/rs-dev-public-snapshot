@@ -96,6 +96,12 @@ namespace RelertSharp.MapStructure
             Tile t = Tiles[CoordInt(obj.X, obj.Y)];
             return t == null ? 0 : t.Height;
         }
+        public bool DelID(string ID)
+        {
+            if (!globalid.Contains(ID)) return false;
+            globalid.Remove(ID);
+            return true;
+        }
         #endregion
 
 
@@ -331,7 +337,7 @@ namespace RelertSharp.MapStructure
         {
             get
             {
-                for (; genID < 99999999; genID++)
+                for (genID = 1000000; genID < 99999999; genID++)
                 {
                     string id = string.Format("{0:D8}", genID);
                     if (!globalid.Contains(id))

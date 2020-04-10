@@ -25,6 +25,7 @@ namespace RelertSharp.MapStructure.Logic
     public class TaskforceCollection : TeamLogicCollection<TaskforceItem>
     {
         public TaskforceCollection() : base() { }
+ 
     }
 
     public class TaskforceItem : TeamLogicItem, IRegistable
@@ -51,7 +52,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TaskforceItem
-        public override string ToString() { return Name; }
+        public override string ToString() { return ID + " " + Name; }
         public  List<Tuple<string, int>> MemberData { get { return memberData; } set { memberData = value; } }
         //public Dictionary<string, int> MemberData { get { return memberData; } set { memberData = value; } }
         public int Group

@@ -1906,6 +1906,7 @@
             this.btnDelTask.TabIndex = 8;
             this.btnDelTask.Text = "LGCbtnDelTask";
             this.btnDelTask.UseVisualStyleBackColor = true;
+            this.btnDelTask.Click += new System.EventHandler(this.btnDelTask_Click);
             // 
             // btnNewTask
             // 
@@ -1916,6 +1917,7 @@
             this.btnNewTask.TabIndex = 7;
             this.btnNewTask.Text = "LGCbtnNewTask";
             this.btnNewTask.UseVisualStyleBackColor = true;
+            this.btnNewTask.Click += new System.EventHandler(this.btnNewTask_Click);
             // 
             // btnCopyTask
             // 
@@ -1926,6 +1928,7 @@
             this.btnCopyTask.TabIndex = 6;
             this.btnCopyTask.Text = "LGCbtnCopyTask";
             this.btnCopyTask.UseVisualStyleBackColor = true;
+            this.btnCopyTask.Click += new System.EventHandler(this.btnCopyTask_Click);
             // 
             // gpbTeamTaskCur
             // 
