@@ -88,6 +88,7 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
 
         #region Public Calls - TeamItem
+        public override string ToString() { return ID + " " + Name; }
         public int Group { get; set; }
         public int TechLevel { get; set; }
         /// <summary>

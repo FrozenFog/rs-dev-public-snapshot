@@ -598,6 +598,22 @@ namespace RelertSharp.SubWindows.LogicEditor
         }
         #endregion
         #endregion
+        #region Script
+        #region lbx
+        private void lbxScriptList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbxScriptList.SelectedItem == null) return;
+            TeamScriptGroup scriptGroup = lbxScriptList.SelectedItem as TeamScriptGroup;
+            txbScriptName.Text = scriptGroup.Name;
+            StaticHelper.LoadToObjectCollection(lbxScriptMemList, scriptGroup.Data);
+        }
+
+        private void lbxScriptMemList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+        #endregion
 
         #endregion
 

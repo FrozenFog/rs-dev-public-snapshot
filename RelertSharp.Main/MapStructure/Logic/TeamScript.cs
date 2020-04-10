@@ -31,6 +31,8 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TeamScriptGroup
+        public List<TeamScriptItem> Data { get { return data; } set { data = value; } }
+        public override string ToString() { return ID + " " + Name; }
         public string Name { get; set; }
         #endregion
     }
@@ -44,6 +46,7 @@ namespace RelertSharp.MapStructure.Logic
         }
 
         #region Public Calls - TeamScriptItem
+        public override string ToString() { return string.Format("{0:D2}", ScriptActionIndex) + " " + ActionValue; }
         public int ScriptActionIndex { get; set; }
         public string ActionValue { get; set; }
         #endregion

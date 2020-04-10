@@ -142,13 +142,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbpTeams = new System.Windows.Forms.TabPage();
             this.gpbTeamTeam = new System.Windows.Forms.GroupBox();
+            this.lbxTeamList = new System.Windows.Forms.ListBox();
             this.btnCopyTeam = new System.Windows.Forms.Button();
             this.btnNewTeam = new System.Windows.Forms.Button();
             this.gpbTeamTeamCur = new System.Windows.Forms.GroupBox();
             this.olvTeamConfig = new BrightIdeasSoftware.ObjectListView();
             this.btnDelTeam = new System.Windows.Forms.Button();
             this.label28 = new System.Windows.Forms.Label();
-            this.olvTeamList = new BrightIdeasSoftware.ObjectListView();
             this.gpbTeamScript = new System.Windows.Forms.GroupBox();
             this.btnDelScript = new System.Windows.Forms.Button();
             this.btnNewScript = new System.Windows.Forms.Button();
@@ -243,7 +243,6 @@
             this.gpbTeamTeam.SuspendLayout();
             this.gpbTeamTeamCur.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvTeamConfig)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.olvTeamList)).BeginInit();
             this.gpbTeamScript.SuspendLayout();
             this.gpbTeamScriptCur.SuspendLayout();
             this.gpbTeamTask.SuspendLayout();
@@ -1473,13 +1472,13 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbxTriggerList.ContextMenuStrip = this.cmsTriggerList;
-            this.lbxTriggerList.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbxTriggerList.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxTriggerList.FormattingEnabled = true;
             this.lbxTriggerList.HorizontalScrollbar = true;
-            this.lbxTriggerList.ItemHeight = 14;
+            this.lbxTriggerList.ItemHeight = 12;
             this.lbxTriggerList.Location = new System.Drawing.Point(8, 26);
             this.lbxTriggerList.Name = "lbxTriggerList";
-            this.lbxTriggerList.Size = new System.Drawing.Size(255, 522);
+            this.lbxTriggerList.Size = new System.Drawing.Size(255, 520);
             this.lbxTriggerList.TabIndex = 2;
             this.lbxTriggerList.SelectedIndexChanged += new System.EventHandler(this.lbxTriggerList_SelectedIndexChanged);
             // 
@@ -1560,12 +1559,12 @@
             // 
             // gpbTeamTeam
             // 
+            this.gpbTeamTeam.Controls.Add(this.lbxTeamList);
             this.gpbTeamTeam.Controls.Add(this.btnCopyTeam);
             this.gpbTeamTeam.Controls.Add(this.btnNewTeam);
             this.gpbTeamTeam.Controls.Add(this.gpbTeamTeamCur);
             this.gpbTeamTeam.Controls.Add(this.btnDelTeam);
             this.gpbTeamTeam.Controls.Add(this.label28);
-            this.gpbTeamTeam.Controls.Add(this.olvTeamList);
             this.gpbTeamTeam.Location = new System.Drawing.Point(569, 6);
             this.gpbTeamTeam.Margin = new System.Windows.Forms.Padding(2);
             this.gpbTeamTeam.Name = "gpbTeamTeam";
@@ -1574,6 +1573,16 @@
             this.gpbTeamTeam.TabIndex = 2;
             this.gpbTeamTeam.TabStop = false;
             this.gpbTeamTeam.Text = "LGCgpbTeamTeam";
+            // 
+            // lbxTeamList
+            // 
+            this.lbxTeamList.FormattingEnabled = true;
+            this.lbxTeamList.HorizontalScrollbar = true;
+            this.lbxTeamList.ItemHeight = 12;
+            this.lbxTeamList.Location = new System.Drawing.Point(1, 29);
+            this.lbxTeamList.Name = "lbxTeamList";
+            this.lbxTeamList.Size = new System.Drawing.Size(247, 496);
+            this.lbxTeamList.TabIndex = 6;
             // 
             // btnCopyTeam
             // 
@@ -1639,19 +1648,6 @@
             this.label28.Size = new System.Drawing.Size(89, 12);
             this.label28.TabIndex = 1;
             this.label28.Text = "LGClblTeamList";
-            // 
-            // olvTeamList
-            // 
-            this.olvTeamList.CellEditUseWholeCell = false;
-            this.olvTeamList.Cursor = System.Windows.Forms.Cursors.Default;
-            this.olvTeamList.HideSelection = false;
-            this.olvTeamList.Location = new System.Drawing.Point(4, 28);
-            this.olvTeamList.Margin = new System.Windows.Forms.Padding(2);
-            this.olvTeamList.Name = "olvTeamList";
-            this.olvTeamList.Size = new System.Drawing.Size(245, 498);
-            this.olvTeamList.TabIndex = 0;
-            this.olvTeamList.UseCompatibleStateImageBehavior = false;
-            this.olvTeamList.View = System.Windows.Forms.View.Details;
             // 
             // gpbTeamScript
             // 
@@ -1861,6 +1857,7 @@
             this.lbxScriptMemList.Name = "lbxScriptMemList";
             this.lbxScriptMemList.Size = new System.Drawing.Size(270, 64);
             this.lbxScriptMemList.TabIndex = 0;
+            this.lbxScriptMemList.SelectedIndexChanged += new System.EventHandler(this.lbxScriptMemList_SelectedIndexChanged);
             // 
             // label33
             // 
@@ -1875,12 +1872,14 @@
             // lbxScriptList
             // 
             this.lbxScriptList.FormattingEnabled = true;
+            this.lbxScriptList.HorizontalScrollbar = true;
             this.lbxScriptList.ItemHeight = 12;
             this.lbxScriptList.Location = new System.Drawing.Point(4, 26);
             this.lbxScriptList.Margin = new System.Windows.Forms.Padding(2);
             this.lbxScriptList.Name = "lbxScriptList";
             this.lbxScriptList.Size = new System.Drawing.Size(270, 232);
             this.lbxScriptList.TabIndex = 0;
+            this.lbxScriptList.SelectedIndexChanged += new System.EventHandler(this.lbxScriptList_SelectedIndexChanged);
             // 
             // gpbTeamTask
             // 
@@ -2104,6 +2103,7 @@
             // lbxTaskList
             // 
             this.lbxTaskList.FormattingEnabled = true;
+            this.lbxTaskList.HorizontalScrollbar = true;
             this.lbxTaskList.ItemHeight = 12;
             this.lbxTaskList.Location = new System.Drawing.Point(4, 26);
             this.lbxTaskList.Margin = new System.Windows.Forms.Padding(2);
@@ -2524,7 +2524,6 @@
             this.gpbTeamTeam.PerformLayout();
             this.gpbTeamTeamCur.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.olvTeamConfig)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.olvTeamList)).EndInit();
             this.gpbTeamScript.ResumeLayout(false);
             this.gpbTeamScript.PerformLayout();
             this.gpbTeamScriptCur.ResumeLayout(false);
@@ -2731,7 +2730,6 @@
         private System.Windows.Forms.GroupBox gpbTeamTeamCur;
         private BrightIdeasSoftware.ObjectListView olvTeamConfig;
         private System.Windows.Forms.Label label28;
-        private BrightIdeasSoftware.ObjectListView olvTeamList;
         private System.Windows.Forms.Button btnCopyTeam;
         private System.Windows.Forms.Button btnDelTeam;
         private System.Windows.Forms.Button btnNewTeam;
@@ -2743,5 +2741,6 @@
         private System.Windows.Forms.CheckedListBox chklbxLocalVar;
         private BrightIdeasSoftware.DataTreeListView dtlvMiscs;
         private System.Windows.Forms.ComboBox cbbTagID;
+        private System.Windows.Forms.ListBox lbxTeamList;
     }
 }
