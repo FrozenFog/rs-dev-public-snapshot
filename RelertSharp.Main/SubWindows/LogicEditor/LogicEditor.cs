@@ -190,27 +190,15 @@ namespace RelertSharp.SubWindows.LogicEditor
         private void UpdateTags(string triggerID)
         {
             TriggerItem trg = map.Triggers[triggerID];
-            TagItem tg = map.Tags.GetTagFromTrigger(triggerID, trg);
-
+            var tags = map.Tags.GetTagFromTrigger(triggerID, trg);
             txbTrgID.Text = triggerID;
             txbTrgName.Text = trg.Name;
-            txbTagID.Text = tg.ID;
-            txbTagName.Text = tg.Name;
+            StaticHelper.LoadToObjectCollection(cbbTagID, tags);
+            cbbTagID.SelectedIndex = tags.Count >= 0 ? 0 : -1;
+            cbbTagID_SelectedIndexChanged(cbbTagID, null);
             rdbRepeat0.Checked = false;
             rdbRepeat1.Checked = false;
             rdbRepeat2.Checked = false;
-            switch (tg.Repeating)
-            {
-                case TriggerRepeatingType.NoRepeating:
-                    rdbRepeat0.Checked = true;
-                    break;
-                case TriggerRepeatingType.OneTimeLogicAND:
-                    rdbRepeat1.Checked = true;
-                    break;
-                case TriggerRepeatingType.RepeatLogicOR:
-                    rdbRepeat2.Checked = true;
-                    break;
-            }
             ckbDisabled.Checked = trg.Disabled;
             lbxTriggerHouses.SelectedItem = map.Countries.GetCountry(trg.House);
             if (trg.LinkedWith != "<none>")
@@ -506,7 +494,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         private TriggerItem _CurrentTrigger { get { return map.Triggers[txbTrgID.Text]; } }
         private LogicItem _CurrentEvent { get { return _CurrentTrigger.Events[lbxEventList.SelectedIndex]; } }
         private LogicItem _CurrentAction { get { return _CurrentTrigger.Actions[lbxActionList.SelectedIndex]; } }
-        private TagItem _CurrentTag { get { return map.Tags[txbTagID.Text]; } }
+        private TagItem _CurrentTag { get { return map.Tags[cbbTagID.Text]; } }
         private SearchCollection _SearchResult { get; set; } = new SearchCollection();
         #endregion
     }

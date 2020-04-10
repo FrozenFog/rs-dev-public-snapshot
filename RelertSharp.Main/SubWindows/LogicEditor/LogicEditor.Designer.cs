@@ -100,6 +100,7 @@
             this.btnNewEvent = new System.Windows.Forms.Button();
             this.rtxbEventDetail = new System.Windows.Forms.RichTextBox();
             this.gpbTag = new System.Windows.Forms.GroupBox();
+            this.cbbTagID = new System.Windows.Forms.ComboBox();
             this.lklTraceTrigger = new System.Windows.Forms.LinkLabel();
             this.ckbHard = new System.Windows.Forms.CheckBox();
             this.ckbNormal = new System.Windows.Forms.CheckBox();
@@ -121,7 +122,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txbTagID = new System.Windows.Forms.TextBox();
             this.txbTrgID = new System.Windows.Forms.TextBox();
             this.txbTagName = new System.Windows.Forms.TextBox();
             this.txbTrgName = new System.Windows.Forms.TextBox();
@@ -1115,6 +1115,7 @@
             this.gpbTag.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gpbTag.Controls.Add(this.cbbTagID);
             this.gpbTag.Controls.Add(this.lklTraceTrigger);
             this.gpbTag.Controls.Add(this.ckbHard);
             this.gpbTag.Controls.Add(this.ckbNormal);
@@ -1133,7 +1134,6 @@
             this.gpbTag.Controls.Add(this.label3);
             this.gpbTag.Controls.Add(this.label5);
             this.gpbTag.Controls.Add(this.label2);
-            this.gpbTag.Controls.Add(this.txbTagID);
             this.gpbTag.Controls.Add(this.txbTrgID);
             this.gpbTag.Controls.Add(this.txbTagName);
             this.gpbTag.Controls.Add(this.txbTrgName);
@@ -1147,6 +1147,16 @@
             this.gpbTag.TabIndex = 4;
             this.gpbTag.TabStop = false;
             this.gpbTag.Text = "LGCgpbTrgTag";
+            // 
+            // cbbTagID
+            // 
+            this.cbbTagID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbTagID.FormattingEnabled = true;
+            this.cbbTagID.Location = new System.Drawing.Point(13, 121);
+            this.cbbTagID.Name = "cbbTagID";
+            this.cbbTagID.Size = new System.Drawing.Size(87, 20);
+            this.cbbTagID.TabIndex = 17;
+            this.cbbTagID.SelectedIndexChanged += new System.EventHandler(this.cbbTagID_SelectedIndexChanged);
             // 
             // lklTraceTrigger
             // 
@@ -1323,7 +1333,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(77, 124);
+            this.label6.Location = new System.Drawing.Point(106, 124);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(11, 12);
             this.label6.TabIndex = 8;
@@ -1332,7 +1342,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(77, 75);
+            this.label4.Location = new System.Drawing.Point(106, 72);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(11, 12);
             this.label4.TabIndex = 8;
@@ -1341,7 +1351,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(92, 104);
+            this.label7.Location = new System.Drawing.Point(121, 104);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(83, 12);
             this.label7.TabIndex = 7;
@@ -1351,7 +1361,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(92, 54);
+            this.label3.Location = new System.Drawing.Point(121, 54);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(83, 12);
             this.label3.TabIndex = 7;
@@ -1375,35 +1385,27 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "LGClblTrgID";
             // 
-            // txbTagID
-            // 
-            this.txbTagID.Location = new System.Drawing.Point(13, 121);
-            this.txbTagID.Name = "txbTagID";
-            this.txbTagID.ReadOnly = true;
-            this.txbTagID.Size = new System.Drawing.Size(58, 21);
-            this.txbTagID.TabIndex = 6;
-            // 
             // txbTrgID
             // 
             this.txbTrgID.Location = new System.Drawing.Point(13, 69);
             this.txbTrgID.Name = "txbTrgID";
             this.txbTrgID.ReadOnly = true;
-            this.txbTrgID.Size = new System.Drawing.Size(58, 21);
+            this.txbTrgID.Size = new System.Drawing.Size(87, 21);
             this.txbTrgID.TabIndex = 6;
             // 
             // txbTagName
             // 
-            this.txbTagName.Location = new System.Drawing.Point(94, 121);
+            this.txbTagName.Location = new System.Drawing.Point(123, 121);
             this.txbTagName.Name = "txbTagName";
             this.txbTagName.ReadOnly = true;
-            this.txbTagName.Size = new System.Drawing.Size(271, 21);
+            this.txbTagName.Size = new System.Drawing.Size(242, 21);
             this.txbTagName.TabIndex = 5;
             // 
             // txbTrgName
             // 
-            this.txbTrgName.Location = new System.Drawing.Point(94, 69);
+            this.txbTrgName.Location = new System.Drawing.Point(123, 69);
             this.txbTrgName.Name = "txbTrgName";
-            this.txbTrgName.Size = new System.Drawing.Size(271, 21);
+            this.txbTrgName.Size = new System.Drawing.Size(242, 21);
             this.txbTrgName.TabIndex = 5;
             this.txbTrgName.Validated += new System.EventHandler(this.txbTrgName_Validated);
             // 
@@ -2567,7 +2569,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txbTagID;
         private System.Windows.Forms.TextBox txbTrgID;
         private System.Windows.Forms.TextBox txbTagName;
         private System.Windows.Forms.TextBox txbTrgName;
@@ -2741,5 +2742,6 @@
         private System.Windows.Forms.Button btnNewLocalVar;
         private System.Windows.Forms.CheckedListBox chklbxLocalVar;
         private BrightIdeasSoftware.DataTreeListView dtlvMiscs;
+        private System.Windows.Forms.ComboBox cbbTagID;
     }
 }

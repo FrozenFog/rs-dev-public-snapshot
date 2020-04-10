@@ -162,10 +162,13 @@ namespace RelertSharp.SubWindows.LogicEditor
         {
             int _i = lbxTriggerList.SelectedIndex;
             TriggerItem t = _CurrentBoxTrigger;
+            var tags = map.Tags.GetTagFromTrigger(t.ID);
             map.DelID(t.ID);
-            map.DelID(map.Tags.GetTagFromTrigger(t.ID).ID);
+            foreach (var i in tags)
+                map.DelID(i.ID);
             map.Triggers.Remove(t);
-            map.Tags.Remove(map.Tags.GetTagFromTrigger(t.ID), t.ID);
+            foreach (var i in tags)
+                map.Tags.Remove(i, t.ID);
             lbxTriggerList.Items.Remove(t);
             cbbAttatchedTrg.Items.Remove(t);
             lbxTriggerList.SelectedIndex = _i == 0 ? 0 : _i - 1;
@@ -244,6 +247,25 @@ namespace RelertSharp.SubWindows.LogicEditor
         }
         #endregion
         #region cbb
+        private void cbbTagID_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbbTagID.SelectedItem == null) return;
+            var tg = cbbTagID.SelectedItem as TagItem;
+            txbTagName.Text = tg.Name;
+            switch (tg.Repeating)
+            {
+                case TriggerRepeatingType.NoRepeating:
+                    rdbRepeat0.Checked = true;
+                    break;
+                case TriggerRepeatingType.OneTimeLogicAND:
+                    rdbRepeat1.Checked = true;
+                    break;
+                case TriggerRepeatingType.RepeatLogicOR:
+                    rdbRepeat2.Checked = true;
+                    break;
+            }
+        }
+
         private void cbbAttatchedTrg_SelectedValueChanged(object sender, EventArgs e)
         {
             TriggerItem asso = cbbAttatchedTrg.SelectedItem as TriggerItem;
