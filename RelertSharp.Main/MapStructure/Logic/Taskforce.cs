@@ -15,7 +15,7 @@ namespace RelertSharp.MapStructure.Logic
         {
             Number = pair.Item2;
             RegName= pair.Item1;
-            Name = Utils.Misc.FindUIName(RegName);
+            Name = GlobalVar.GlobalRules.GetCsfUIName(RegName);
         }
         public int Number { get; set; }
         public string RegName { get; set; }

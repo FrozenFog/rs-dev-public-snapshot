@@ -111,7 +111,8 @@ namespace RelertSharp.FileSystem
         {
             get
             {
-                if (HasString(_uiTag)) return data[_uiTag.ToLower()];
+                _uiTag = _uiTag.ToLower();
+                if (HasString(_uiTag)) return data[_uiTag];
                 else
                 {
                     CsfString csf = new CsfString(_uiTag);

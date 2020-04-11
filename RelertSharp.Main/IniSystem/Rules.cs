@@ -82,6 +82,12 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Methods - Rules
+        public string GetCsfUIName(string regid)
+        {
+            if (!HasIniEnt(regid)) return GlobalCsf[regid].ContentString;
+            string uiname = this[regid]["UIName"];
+            return GlobalCsf[uiname].ContentString;
+        }
         public string GetCustomPaletteName(string nameid)
         {
             string art = this[nameid]["Image"];

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.Common;
 
 namespace RelertSharp.IniSystem
 {
@@ -108,7 +109,7 @@ namespace RelertSharp.IniSystem
                     abst += "";
                     break;
                 case AbstractType.CsfName:
-                    abst += " " + Utils.Misc.FindUIName(RegName);
+                    abst += " " + GlobalVar.GlobalRules.GetCsfUIName(RegName);
                     break;
             }
         }
