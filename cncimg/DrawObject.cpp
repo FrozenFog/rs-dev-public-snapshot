@@ -4,6 +4,8 @@
 #include "VxlMath.h"
 #include "VxlFile.h"
 #include "VPLFile.h"
+#include "ShpFileClass.h"
+#include "Misc.h"
 
 #include "SceneClass.h"
 
@@ -15,6 +17,8 @@ long PaintingStruct::ID = PAINTING_START_ID;
 
 std::unordered_map<int, PaintingStruct*> DrawObject::GlobalOpaqueObjects;
 std::unordered_map<int, PaintingStruct*> DrawObject::GlobalTransperantObjects;
+std::unordered_map<int, PaintingStruct*> DrawObject::GlobalTopObjects;
+
 std::vector<LPDIRECT3DTEXTURE9> DrawObject::IsolatedTextures;
 DWORD DrawObject::idTextureManagementThread = 0;
 HANDLE DrawObject::hTextureManagementThread = INVALID_HANDLE_VALUE;
@@ -28,10 +32,11 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	//integrate first, than sort by distance, finally;
 	//draw opaque first, transpetant objects then;
 	//should check if the object is within our sight
-	std::vector<PaintingStruct*> DrawingOpaqueObject, DrawingTransperantObject;
+	std::vector<PaintingStruct*> DrawingOpaqueObject, DrawingTransperantObject, DrawingTopObject;
 
 	DrawingOpaqueObject.reserve(GlobalOpaqueObjects.size());
 	DrawingTransperantObject.reserve(GlobalTransperantObjects.size());
+	DrawingTopObject.reserve(GlobalTopObjects.size());
 
 	for (auto& pair : GlobalOpaqueObjects) {
 		if (pair.second->IsWithinSight())
@@ -41,6 +46,11 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	for (auto& pair : GlobalTransperantObjects) {
 		if (pair.second->IsWithinSight())
 			DrawingTransperantObject.push_back(pair.second);
+	}
+
+	for (auto& pair : GlobalTopObjects) {
+		if (pair.second->IsWithinSight())
+			DrawingTopObject.push_back(pair.second);
 	}
 
 	//the shorter the distance is , the later they will be painted
@@ -62,6 +72,11 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 		for (auto paint : DrawingTransperantObject) {
 			paint->Draw(pDevice);
 		}
+
+		for (auto paint : DrawingTopObject) {
+			paint->Draw(pDevice);
+		}
+
 		pDevice->EndScene();
 	}
 
@@ -92,12 +107,12 @@ bool DrawObject::CanIsolatedTextureUnloadNow(LPDIRECT3DTEXTURE9 pTexture)
 {
 	unsigned long reference = 0;
 	for (auto& item : GlobalTransperantObjects) {
-		if (item.second->pTexture == pTexture)
+		if (item.second->pTexture == pTexture || item.second->pPaletteTexture == pTexture)
 			reference++;
 	}
 
 	for (auto& item : GlobalOpaqueObjects) {
-		if (item.second->pTexture == pTexture)
+		if (item.second->pTexture == pTexture || item.second->pPaletteTexture == pTexture)
 			reference++;
 	}
 
@@ -428,20 +443,36 @@ int DrawObject::CommitOpaqueObject(PaintingStruct & Object)
 	return nCurrentID;
 }
 
+int DrawObject::CommitTopObject(PaintingStruct & Object)
+{
+	int nCurrentID = PaintingStruct::ID;
+	InterlockedAdd(&PaintingStruct::ID, 2);
+
+	this->TopObjectTable[nCurrentID] = Object;
+	GlobalTopObjects[nCurrentID] = &this->TopObjectTable[nCurrentID];
+	return nCurrentID;
+}
+
 void DrawObject::ClearAllObjects()
 {
 	for (auto&pair : this->TransperantImageTable) {
-		pair.second.pVertexBuffer->Release();
 		GlobalTransperantObjects.erase(pair.first);
+		SAFE_RELEASE(pair.second.pVertexBuffer);
 	}
 
 	for (auto& pair : this->OpaqueImageTable) {
-		pair.second.pVertexBuffer->Release();
 		GlobalOpaqueObjects.erase(pair.first);
+		SAFE_RELEASE(pair.second.pVertexBuffer);
+	}
+
+	for (auto& pair : this->TopObjectTable) {
+		GlobalOpaqueObjects.erase(pair.first);
+		SAFE_RELEASE(pair.second.pVertexBuffer);
 	}
 
 	this->TransperantImageTable.clear();
 	this->OpaqueImageTable.clear();
+	this->TopObjectTable.clear();
 }
 
 void DrawObject::RemoveTransperantObject(int nID)
@@ -466,6 +497,34 @@ void DrawObject::RemoveOpaqueObject(int nID)
 	}
 }
 
+void DrawObject::RemoveTopObject(int nID)
+{
+	auto find = this->TopObjectTable.find(nID);
+	if (find != this->TopObjectTable.end()) {
+		SAFE_RELEASE(find->second.pVertexBuffer);
+
+		this->TopObjectTable.erase(nID);
+		GlobalTopObjects.erase(nID);
+	}
+}
+
+void DrawObject::RemoveShpObject(int nID)
+{
+	for (auto& file : ShpFileClass::FileObjectTable) {
+		if (!file.second)
+			continue;
+		//try find and erase
+		file.second->RemoveTransperantObject(nID);
+	}
+}
+
+void DrawObject::RemoveCommonObject(int nID)
+{
+	LineClass::GlobalLineGenerator.RemoveOpaqueObject(nID);
+	FontClass::GlobalFont.RemoveTopObject(nID);
+	RectangleClass::GlobalRectangleGenerator.RemoveOpaqueObject(nID);
+}
+
 PaintingStruct * DrawObject::FindObjectById(int nID)
 {
 	auto find = GlobalTransperantObjects.find(nID);
@@ -475,6 +534,11 @@ PaintingStruct * DrawObject::FindObjectById(int nID)
 	find = GlobalOpaqueObjects.find(nID);
 	if (find != GlobalOpaqueObjects.end())
 		return find->second;
+
+	find = GlobalTopObjects.find(nID);
+	if (find != GlobalTopObjects.end())
+		return find->second;
+
 	return nullptr;
 }
 
@@ -485,75 +549,109 @@ void DrawObject::ObjectTransformation(int nID, D3DXMATRIX & Matrix)
 	TexturedVertex* pTexturedVertexData;
 	auto pFind = FindObjectById(nID);
 
-	if (!pFind || !pFind->pVertexBuffer)
+	if (!pFind)
 		return;
 
 	auto &Vpl = VPLFile::GlobalVPL;
-	pFind->pVertexBuffer->GetDesc(&Desc);
-	if (Desc.FVF == Vertex::dwFVFType)
+	if (!pFind->String.empty())
 	{
-		//is vxl vertices
-		if (pFind->BufferedNormals.empty() || pFind->BufferedVoxels.empty() ||
-			pFind->BufferedVoxels.size() != pFind->BufferedNormals.size() ||
-			pFind->BufferedVoxels.size() != Desc.Size / sizeof Vertex)
-			return;
-
-		Palette Palette;
-		if (auto palette = Palette::FindPaletteByID(pFind->nPaletteID))
-			Palette = *palette;
-		else
-			return;
-
-		Palette.MakeRemapColor(pFind->dwRemapColor);
-		if (FAILED(pFind->pVertexBuffer->Lock(0, 0, (void**)&pVertexData, D3DLOCK_DISCARD)))
-			return;
-
-		D3DXMATRIX NormalMatrix = Matrix;
-		NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;// no translation
-
 		pFind->Position *= Matrix;
-		//process vertecies and position
-		for (int i = 0; i < Desc.Size / sizeof Vertex; i++)
+	}
+	else if (pFind->pVertexBuffer)
+	{
+		pFind->pVertexBuffer->GetDesc(&Desc);
+		if (Desc.FVF == Vertex::dwFVFType)
 		{
-			pVertexData[i].Vector *= Matrix;
-
-			DWORD dwColor;
-			auto& OriginalNormalVec = pFind->BufferedNormals[i];
-			auto OriginalVoxelData = pFind->BufferedVoxels[i];
-
-			OriginalNormalVec *= NormalMatrix;
-			auto fAngle = std::acos((VxlFile::LightReversed * OriginalNormalVec) /
-				D3DXVec3Length(&VxlFile::LightReversed) / D3DXVec3Length(&OriginalNormalVec));
-
-			if (fAngle >= D3DX_PI / 2)
+			if (pFind->BufferedVoxels.empty() && Desc.Size / sizeof Vertex == 2)
 			{
-				auto& Color = Palette[Vpl[0].Table[OriginalVoxelData.nColor]];
-				dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+				if (FAILED(pFind->pVertexBuffer->Lock(0, 0, (void**)&pVertexData, D3DLOCK_DISCARD)))
+					return;
+
+				pFind->Position *= Matrix;
+				pVertexData[0].Vector *= Matrix;
+				pVertexData[1].Vector *= Matrix;
+
+				pFind->pVertexBuffer->Unlock();
+			}
+			else if (pFind->BufferedVoxels.empty() && Desc.Size / sizeof Vertex == 4)
+			{
+				if (FAILED(pFind->pVertexBuffer->Lock(0, 0, (void**)&pVertexData, D3DLOCK_DISCARD)))
+					return;
+
+				pFind->Position *= Matrix;
+				pVertexData[0].Vector *= Matrix;
+				pVertexData[1].Vector *= Matrix;
+				pVertexData[2].Vector *= Matrix;
+				pVertexData[3].Vector *= Matrix;
+
+				pFind->pVertexBuffer->Unlock();
 			}
 			else
 			{
-				int nIndex = 31 - int(fAngle / (D3DX_PI / 2)*32.0);
-				if (nIndex > 31 || nIndex < 0) nIndex = 31; // FzF: fix 0.0f = 0x80000000h
-				auto& Color = Palette[Vpl[nIndex].Table[OriginalVoxelData.nColor]];
-				dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+				//is vxl vertices
+				if (pFind->BufferedNormals.empty() || pFind->BufferedVoxels.empty() ||
+					pFind->BufferedVoxels.size() != pFind->BufferedNormals.size() ||
+					pFind->BufferedVoxels.size() != Desc.Size / sizeof Vertex)
+					return;
+
+				Palette Palette;
+				if (auto palette = Palette::FindPaletteByID(pFind->nPaletteID))
+					Palette = *palette;
+				else
+					return;
+
+				Palette.MakeRemapColor(pFind->dwRemapColor);
+				if (FAILED(pFind->pVertexBuffer->Lock(0, 0, (void**)&pVertexData, D3DLOCK_DISCARD)))
+					return;
+
+				pFind->Position *= Matrix;
+				D3DXMATRIX NormalMatrix = Matrix;
+				NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;// no translation
+
+				//process vertecies and position
+				for (int i = 0; i < Desc.Size / sizeof Vertex; i++)
+				{
+					pVertexData[i].Vector *= Matrix;
+
+					DWORD dwColor;
+					auto& OriginalNormalVec = pFind->BufferedNormals[i];
+					auto OriginalVoxelData = pFind->BufferedVoxels[i];
+
+					OriginalNormalVec *= NormalMatrix;
+					auto fAngle = std::acos((VxlFile::LightReversed * OriginalNormalVec) /
+						D3DXVec3Length(&VxlFile::LightReversed) / D3DXVec3Length(&OriginalNormalVec));
+
+					if (fAngle >= D3DX_PI / 2)
+					{
+						auto& Color = Palette[Vpl[0].Table[OriginalVoxelData.nColor]];
+						dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+					}
+					else
+					{
+						int nIndex = 31 - int(fAngle / (D3DX_PI / 2)*32.0);
+						if (nIndex > 31 || nIndex < 0) nIndex = 31; // FzF: fix 0.0f = 0x80000000h
+						auto& Color = Palette[Vpl[nIndex].Table[OriginalVoxelData.nColor]];
+						dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
+					}
+
+					pVertexData[i].dwColor = dwColor;
+				}
+				pFind->pVertexBuffer->Unlock();
 			}
-
-			pVertexData[i].dwColor = dwColor;
 		}
-		pFind->pVertexBuffer->Unlock();
-	}
-	else
-	{
-		//is plane art
-		if (FAILED(pFind->pVertexBuffer->Lock(0, 0, (void**)&pTexturedVertexData, D3DLOCK_DISCARD)))
-			return;
+		else
+		{
+			//is plane art
+			if (FAILED(pFind->pVertexBuffer->Lock(0, 0, (void**)&pTexturedVertexData, D3DLOCK_DISCARD)))
+				return;
 
-		pFind->Position *= Matrix;
-		//process coords only
-		for (int i = 0; i < Desc.Size / sizeof TexturedVertex; i++)
-			pTexturedVertexData[i].Vector *= Matrix;
+			pFind->Position *= Matrix;
+			//process coords only
+			for (int i = 0; i < Desc.Size / sizeof TexturedVertex; i++)
+				pTexturedVertexData[i].Vector *= Matrix;
 
-		pFind->pVertexBuffer->Unlock();
+			pFind->pVertexBuffer->Unlock();
+		}
 	}
 	pFind->InitializeVisualRect();
 }
@@ -561,8 +659,8 @@ void DrawObject::ObjectTransformation(int nID, D3DXMATRIX & Matrix)
 void DrawObject::ObjectDisplacement(int nID, D3DXVECTOR3 Displacement)
 {
 	D3DXMATRIX Translation;
-
 	D3DXMatrixTranslation(&Translation, Displacement.x, Displacement.y, Displacement.z);
+	
 	ObjectTransformation(nID, Translation);
 }
 
@@ -618,7 +716,8 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 	std::vector<Voxel>* BufferedVoxels, 
 	std::vector<D3DXVECTOR3>* BufferedNormals,
 	int nPaletteID,
-	DWORD dwRemapColor
+	DWORD dwRemapColor,
+	std::string String
 )
 {
 	Object.pVertexBuffer = pVertexBuffer;
@@ -627,6 +726,7 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 	Object.nPaletteID = nPaletteID;
 	Object.dwRemapColor = dwRemapColor;
 	Object.bIsShadow = bIsShadow;
+	Object.String = String;
 
 	if (BufferedVoxels)
 		Object.BufferedVoxels = *BufferedVoxels;
@@ -636,54 +736,116 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 
 	Object.SetColorCoefficient(D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
 	Object.SetCompareOffset(D3DXVECTOR3(0.0, 0.0, 0.0));
+	Object.SetPlainArtAttributes(nullptr);
 	Object.InitializeVisualRect();
 }
 
 //should BeginScene() at first
 bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 {
-	if (!pDevice || !this->pVertexBuffer)
+	if (!pDevice)
 		return false;
 
 	bool Result = false;
 	D3DVERTEXBUFFER_DESC Desc;
-	LPDIRECT3DBASETEXTURE9 pFormerTexture;
+	LPDIRECT3DBASETEXTURE9 pFormerTexture, pFormer2;
 	LPDIRECT3DPIXELSHADER9 pFormerShader;
+	LPDIRECT3DVERTEXBUFFER9 pFormerStream;
+	UINT uStride, uOffset;
+	HDC hBackDC;
 
 	auto& VxlShader = SceneClass::Instance.GetVXLShader();
 	auto& PlainShader = SceneClass::Instance.GetPlainArtShader();
 	auto& ShadowShader = SceneClass::Instance.GetShadowShader();
 
+	if (!pVertexBuffer)
+	{
+		if (!this->String.empty())
+		{
+			if (FAILED(SceneClass::Instance.GetBackSurface()->GetDC(&hBackDC)))
+				return false;
+
+			auto hFont = FontClass::GlobalFont.GetHFont();
+			auto hOld = SelectObject(hBackDC, hFont);
+			auto ScreenPos = SceneClass::Instance.CoordsToClient(this->Position);
+
+			SetBkMode(hBackDC, TRANSPARENT);
+			SetTextColor(hBackDC, this->dwRemapColor);
+			Result = TextOut(hBackDC, ScreenPos.x, ScreenPos.y, this->String.c_str(), this->String.size());
+			SelectObject(hBackDC, hOld);
+			SceneClass::Instance.GetBackSurface()->ReleaseDC(hBackDC);
+
+			return Result;
+		}
+		return false;
+	}
+
 	this->pVertexBuffer->GetDesc(&Desc);
 	if (Desc.FVF == Vertex::dwFVFType)
 	{
+		D3DPRIMITIVETYPE PrimitiveType = D3DPT_POINTLIST;
+		int nPrimitiveCount;
 		//is vxl, requires Voxels and Normals,count = Desc.size / sizeof Vertex
 		pDevice->GetTexture(0, &pFormerTexture);
+		pDevice->GetTexture(1, &pFormer2);
 		pDevice->GetPixelShader(&pFormerShader);
+		pDevice->GetStreamSource(0, &pFormerStream, &uOffset, &uStride);
 
 		pDevice->SetTexture(0, nullptr);
+		pDevice->SetTexture(1, nullptr);
 		pDevice->SetFVF(Desc.FVF);
 		pDevice->SetStreamSource(0, this->pVertexBuffer, 0, sizeof Vertex);
 
+		//PlainShader.SetRemapColor(pDevice, D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
+		if (PrimitiveType == D3DPT_POINTLIST)
 		VxlShader.SetConstantVector(pDevice, this->ColorCoefficient);
-		pDevice->SetPixelShader(VxlShader.GetShaderObject());
 
-		Result = SUCCEEDED(pDevice->DrawPrimitive(D3DPT_POINTLIST, 0, Desc.Size / sizeof Vertex));
+		if(this->BufferedVoxels.empty())
+		{
+			if (Desc.Size / sizeof Vertex == 2)
+				PrimitiveType = D3DPT_LINELIST;
+			else if (Desc.Size / sizeof Vertex == 4)
+				PrimitiveType = D3DPT_TRIANGLESTRIP;
+		}
+
+		pDevice->SetPixelShader(PrimitiveType == D3DPT_POINTLIST ? VxlShader.GetShaderObject() : nullptr);
+		nPrimitiveCount = PrimitiveType == D3DPT_LINELIST ? 1 : PrimitiveType == D3DPT_TRIANGLESTRIP ? 2 : Desc.Size / sizeof Vertex;
+
+		Result = SUCCEEDED(pDevice->DrawPrimitive(PrimitiveType, 0, nPrimitiveCount));
+
 		pDevice->SetTexture(0, pFormerTexture);
+		pDevice->SetTexture(1, pFormer2);
 		pDevice->SetPixelShader(pFormerShader);
+		pDevice->SetStreamSource(0, pFormerStream, uOffset, uStride);
+		//VxlShader.SetConstantVector(pDevice);
 	}
-	else // Textured vertex.fvf
+	else// Textured vertex.fvf
 	{
 		//requires pTexture, always 2 rectangles
 		pDevice->GetTexture(0, &pFormerTexture);
+		pDevice->GetTexture(1, &pFormer2);
 		pDevice->GetPixelShader(&pFormerShader);
+		pDevice->GetStreamSource(0, &pFormerStream, &uOffset, &uStride);
 
 		pDevice->SetTexture(0, this->pTexture);
+
+		if (!this->bIsShadow)
+			pDevice->SetTexture(1, this->pPaletteTexture);
+		else
+			pDevice->SetTexture(1, nullptr);
+
 		pDevice->SetFVF(Desc.FVF);
 		pDevice->SetStreamSource(0, this->pVertexBuffer, 0, sizeof TexturedVertex);
 
-		PlainShader.SetConstantVector(pDevice, this->ColorCoefficient);
-		ShadowShader.SetConstantVector(pDevice, this->ColorCoefficient);
+		if (!this->bIsShadow)
+		{
+			PlainShader.SetConstantVector(pDevice, this->ColorCoefficient);
+			PlainShader.SetRemapColor(pDevice, this->ShaderRemapColor);
+		}
+		else
+		{
+			ShadowShader.SetConstantVector(pDevice, this->ColorCoefficient);
+		}
 
 		if (this->bIsShadow)
 			pDevice->SetPixelShader(ShadowShader.GetShaderObject());
@@ -691,8 +853,21 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 			pDevice->SetPixelShader(PlainShader.GetShaderObject());
 
 		Result = SUCCEEDED(pDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, Desc.Size / sizeof TexturedVertex / 3));
+
 		pDevice->SetTexture(0, pFormerTexture);
+		pDevice->SetTexture(1, pFormer2);
 		pDevice->SetPixelShader(pFormerShader);
+		pDevice->SetStreamSource(0, pFormerStream, uOffset, uStride);
+
+		if (!this->bIsShadow)
+		{
+			PlainShader.SetConstantVector(pDevice);
+			PlainShader.SetRemapColor(pDevice);
+		}
+		else
+		{
+			ShadowShader.SetConstantVector(pDevice);
+		}
 	}
 
 	return Result;
@@ -705,48 +880,57 @@ void PaintingStruct::InitializeVisualRect()
 
 	this->VisualRect = EmptyRect;
 
-	if (!Scene.IsDeviceLoaded() || !this->pVertexBuffer)
+	if (!Scene.IsDeviceLoaded())
 		return;
 
 	auto CurrentFocus = Scene.GetFocus();
 	RECT ObjectRect;
 	D3DVERTEXBUFFER_DESC Desc;
 
-	this->pVertexBuffer->GetDesc(&Desc);
-	if (Desc.FVF == Vertex::dwFVFType)
+	if (!this->String.empty())
 	{
-		//is vxl buffer
 		auto Point = Scene.CoordsToScreen(this->Position);
+		printf_s("point = %d, %d.\n", Point.x, Point.y);
 		//256*256 rect
 		ObjectRect = { Point.x - 128,Point.y - 128,Point.x + 128,Point.y + 128 };
 	}
-	else
+	else if (this->pVertexBuffer)
 	{
-		//is plane art
-		TexturedVertex* pTexturedVertexData;
-		if (FAILED(this->pVertexBuffer->Lock(0, 0, (void**)&pTexturedVertexData, D3DLOCK_READONLY)))
-			return;
-
-		int MinX, MinY, MaxX, MaxY;
-		auto FirstPoint = Scene.CoordsToScreen(pTexturedVertexData[0].Vector);
-		MinX = MaxX = FirstPoint.x;
-		MinY = MaxY = FirstPoint.y;
-		for (int i = 0; i < Desc.Size / sizeof TexturedVertex; i++) {
-			auto Point = Scene.CoordsToScreen(pTexturedVertexData[i].Vector);
-			if (Point.x < MinX)
-				MinX = Point.x;
-			if (Point.x > MaxX)
-				MaxX = Point.x;
-			if (Point.y < MinY)
-				MinY = Point.y;
-			if (Point.y > MaxY)
-				MaxY = Point.y;
+		this->pVertexBuffer->GetDesc(&Desc);
+		if (Desc.FVF == Vertex::dwFVFType)
+		{
+			//is vxl buffer
+			auto Point = Scene.CoordsToScreen(this->Position);
+			//256*256 rect
+			ObjectRect = { Point.x - 128,Point.y - 128,Point.x + 128,Point.y + 128 };
 		}
+		else if (this->pVertexBuffer)
+		{
+			//is plane art
+			TexturedVertex* pTexturedVertexData;
+			if (FAILED(this->pVertexBuffer->Lock(0, 0, (void**)&pTexturedVertexData, D3DLOCK_READONLY)))
+				return;
 
-		this->pVertexBuffer->Unlock();
-		ObjectRect = { MinX,MinY,MaxX + 1,MaxY + 1 };
+			int MinX, MinY, MaxX, MaxY;
+			auto FirstPoint = Scene.CoordsToScreen(pTexturedVertexData[0].Vector);
+			MinX = MaxX = FirstPoint.x;
+			MinY = MaxY = FirstPoint.y;
+			for (int i = 0; i < Desc.Size / sizeof TexturedVertex; i++) {
+				auto Point = Scene.CoordsToScreen(pTexturedVertexData[i].Vector);
+				if (Point.x < MinX)
+					MinX = Point.x;
+				if (Point.x > MaxX)
+					MaxX = Point.x;
+				if (Point.y < MinY)
+					MinY = Point.y;
+				if (Point.y > MaxY)
+					MaxY = Point.y;
+			}
+
+			this->pVertexBuffer->Unlock();
+			ObjectRect = { MinX,MinY,MaxX + 1,MaxY + 1 };
+		}
 	}
-
 	this->VisualRect = ObjectRect;
 }
 
@@ -754,7 +938,7 @@ bool PaintingStruct::IsWithinSight()
 {
 	auto& Scene = SceneClass::Instance;
 
-	if (!Scene.IsDeviceLoaded() || !this->pVertexBuffer)
+	if (!Scene.IsDeviceLoaded())
 		return false;
 
 	RECT SceneViewRect = Scene.GetCurrentViewPort();
@@ -771,4 +955,10 @@ void PaintingStruct::SetCompareOffset(D3DXVECTOR3 Offset)
 void PaintingStruct::SetColorCoefficient(D3DXVECTOR4 Coefficient)
 {
 	this->ColorCoefficient = Coefficient;
+}
+
+void PaintingStruct::SetPlainArtAttributes(LPDIRECT3DTEXTURE9 pPaletteTexture, D3DXVECTOR4 ShaderRemap)
+{
+	this->pPaletteTexture = pPaletteTexture;
+	this->ShaderRemapColor = ShaderRemap;
 }

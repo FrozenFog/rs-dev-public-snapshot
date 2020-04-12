@@ -1,5 +1,7 @@
 #include "Palette.h"
 
+#include "DrawObject.h"
+
 #include <stdio.h>
 #include <memory>
 
@@ -36,6 +38,51 @@ void Palette::MakeRemapColor(DWORD dwBaseColor)
 	}
 }
 
+bool Palette::Construct1DPaletteTexture(LPDIRECT3DDEVICE9 pDevice)
+{
+	if (!pDevice)
+		return false;
+
+	LPDIRECT3DTEXTURE9 pTexture = nullptr;
+	D3DLOCKED_RECT LockedRect;
+
+	if (FAILED(pDevice->CreateTexture(256, 1, 0, NULL, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &pTexture, nullptr)))
+		return false;
+
+	if (FAILED(pTexture->LockRect(0, &LockedRect, nullptr, D3DLOCK_DISCARD)))
+		goto Failed;
+
+	auto pData = reinterpret_cast<PDWORD>(LockedRect.pBits);
+	for (int i = 0; i < 256; i++)
+	{
+		auto color = this->Entries[i];
+		if (i == 0)
+			pData[i] = D3DCOLOR_ARGB(0, color.R, color.G, color.B);
+		else
+			pData[i] = D3DCOLOR_XRGB(color.R, color.G, color.B);
+	}
+
+	pTexture->UnlockRect(0);
+	this->PaletteTexture = pTexture;
+
+	return true;
+Failed:
+	if (pTexture)
+		pTexture->Release();
+
+	return false;
+}
+
+void Palette::Set1DPaletteTexture(LPDIRECT3DTEXTURE9 pTex)
+{
+	this->PaletteTexture = pTex;
+}
+
+LPDIRECT3DTEXTURE9 Palette::GetPaletteTexture()
+{
+	return this->PaletteTexture;
+}
+
 Palette * Palette::FindPaletteByID(int nID)
 {
 	auto find = Palette::PaletteTable.find(nID);
@@ -45,19 +92,23 @@ Palette * Palette::FindPaletteByID(int nID)
 	return nullptr;
 }
 
-Palette::Palette()
+Palette::Palette():PaletteTexture(nullptr)
 {
-	//PaletteTable[reinterpret_cast<int>(this)] = this;
+
 }
 
 Palette::~Palette()
 {
-	//PaletteTable.erase(reinterpret_cast<int>(this));
+	if (this->PaletteTexture)
+		DrawObject::CommitIsotatedTexture(this->PaletteTexture);
+
+	this->PaletteTexture = nullptr;
 }
 
-Palette::Palette(const char* pFileName) : Palette()
+Palette::Palette(const char* pFileName, LPDIRECT3DDEVICE9 pDevice) : Palette()
 {
 	this->LoadFromFile(pFileName);
+	this->Construct1DPaletteTexture(pDevice);
 }
 
 Palette::Palette(Palette & Right) : Palette()
@@ -65,10 +116,11 @@ Palette::Palette(Palette & Right) : Palette()
 	memcpy_s(this->Entries, sizeof this->Entries, &Right[0], sizeof this->Entries);
 }
 
-Palette::Palette(LPVOID pFileBuffer):Palette()
+Palette::Palette(LPVOID pFileBuffer, LPDIRECT3DDEVICE9 pDevice) : Palette()
 {
 	this->LoadFromFileInBuffer(pFileBuffer);
 	this->ShiftColors();
+	this->Construct1DPaletteTexture(pDevice);
 }
 
 ColorStruct& Palette::operator[](int nIndex)

@@ -104,13 +104,10 @@ void TransformationMatrix::PrintMatrix(D3DXMATRIX Matrix)
 
 D3DXVECTOR3 & operator*(D3DXVECTOR3 & Left, D3DXMATRIX & Right)
 {
-	float X = Left.x*Right._11 + Left.y*Right._21 + Left.z*Right._31 + 1.0*Right._41;
-	float Y = Left.x*Right._12 + Left.y*Right._22 + Left.z*Right._32 + 1.0*Right._42;
-	float Z = Left.x*Right._13 + Left.y*Right._23 + Left.z*Right._33 + 1.0*Right._43;
-	Left.x = X;
-	Left.y = Y;
-	Left.z = Z;
+	D3DXVECTOR4 Result;
+	D3DXVec3Transform(&Result, &Left, &Right);
 	
+	Left = { Result.x,Result.y,Result.z };
 	return Left;
 }
 

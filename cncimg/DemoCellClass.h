@@ -16,15 +16,15 @@ public:
 
 	static CellClass* FindCellByCoords(D3DXVECTOR3 Coords);
 	static void RemoveCellFromScene(D3DXVECTOR3 Coords);
-	static bool CreateCellAt(D3DXVECTOR3 Position, int nTileFileID, int nTileIndex);
+	static bool CreateCellAt(D3DXVECTOR3 Position, int nPaletteID, int nTileFileID, int nTileIndex);
 	static void MarkCellByMousePosition(POINT MousePosition);
 	static DWORD TransformCoords(D3DXVECTOR3 Position);
 
 	CellClass();
 	~CellClass();
-	CellClass(D3DXVECTOR3 Position, int nTileFileID, int nTileIndex);
+	CellClass(D3DXVECTOR3 Position, int nPaletteID, int nTileFileID, int nTileIndex);
 
-	bool SpawnAtMapCoords(D3DXVECTOR3 Position, int nTileFileID, int nTileIndex);
+	bool SpawnAtMapCoords(D3DXVECTOR3 Position, int nPaletteID, int nTileFileID, int nTileIndex);
 	void Mark();
 	void Unmark();
 	CellCrossType TestCrossType(D3DXVECTOR3 MousePosition);

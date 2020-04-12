@@ -9,6 +9,8 @@
 
 namespace Graphic
 {
+	bool TryCreateIndexedTexture();
+
 	bool Direct3DInitialize(HWND hWnd, const char* pShotFileName = nullptr, bool bUnion = false, int nDirections = 8, int TurretOff = 0);
 
 	void Direct3DUninitialize();
