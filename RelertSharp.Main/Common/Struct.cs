@@ -47,11 +47,11 @@ namespace RelertSharp.Common
         }
         public static Vec4 Transparency
         {
-            get { return new Vec4(1, 1, 1, 0.5f); }
+            get { return new Vec4(0.5f, 1, 0.5f, 0.6f); }
         }
         public static Vec4 DeTransparency
         {
-            get { return new Vec4(1, 1, 1, 2); }
+            get { return new Vec4(1, 1, 1, 1); }
         }
         public static Vec4 operator +(Vec4 a, Vec4 b)
         {

@@ -58,15 +58,16 @@ namespace RelertSharp.DrawingEngine
         #region Draw
         public bool DrawObject(InfantryItem inf, int height, uint color)
         {
-            DrawableInfantry src = CreateDrawableInfantry(inf, color, pPalUnit);
+            int frame = GlobalRules.GetFrameFromDirection(inf.Rotation, inf.NameID);
+            DrawableInfantry src = CreateDrawableInfantry(inf, color, pPalUnit, frame);
             PresentInfantry dest = new PresentInfantry(inf, height);
             Vec3 pos = ToVec3Iso(dest, inf.SubCells);
-            int frame = GlobalRules.GetFrameFromDirection(inf.Rotation, inf.NameID);
             return DrawInfantry(src, pos, dest, frame, pPalUnit, inf.SubCells);
         }
         public bool DrawObject(UnitItem unit, int height, uint color)
         {
-            DrawableUnit src = CreateDrawableUnit(unit.NameID, color, pPalUnit);
+            Vec3 idx = VxlRotation(unit.NameID, unit.Rotation, false);
+            DrawableUnit src = CreateDrawableUnit(unit.NameID, color, pPalUnit, (int)idx.X);
             PresentUnit dest = new PresentUnit(unit, height, src.IsVxl);
             Vec3 pos = ToVec3Iso(dest);
             Vec3 ro = VxlRotation(unit.NameID, unit.Rotation, src.IsVxl);
@@ -74,7 +75,7 @@ namespace RelertSharp.DrawingEngine
         }
         public bool DrawObject(AircraftItem air, int height, uint color)
         {
-            DrawableUnit src = CreateDrawableUnit(air.NameID, color, pPalUnit);
+            DrawableUnit src = CreateDrawableUnit(air.NameID, color, pPalUnit, 0);
             PresentUnit dest = new PresentUnit(air, height);
             Vec3 pos = ToVec3Iso(dest);
             Vec3 ro = VxlRotation(air.NameID, air.Rotation, true);
@@ -82,7 +83,8 @@ namespace RelertSharp.DrawingEngine
         }
         public bool DrawObject(StructureItem structure, int height, uint color)
         {
-            DrawableStructure src = CreateDrawableStructure(structure.NameID, color, pPalUnit);
+            Vec3 idx = BuildingRotation(structure.NameID, structure.Rotation, false);
+            DrawableStructure src = CreateDrawableStructure(structure.NameID, color, pPalUnit, (int)idx.X);
             PresentStructure dest = new PresentStructure(structure, height, src.VoxelTurret);
             Vec3 ro;
             if (src.pTurretAnim != 0) ro = BuildingRotation(structure.NameID, structure.Rotation, src.VoxelTurret);
@@ -92,7 +94,8 @@ namespace RelertSharp.DrawingEngine
         }
         public bool DrawObject(BaseNode node, int height, uint color)
         {
-            DrawableStructure src = CreateDrawableStructure(node.Name, color, pPalUnit, true);
+            Vec3 idx = BuildingRotation(node.Name, 0, false);
+            DrawableStructure src = CreateDrawableStructure(node.Name, color, pPalUnit, (int)idx.X , true);
             PresentStructure dest = new PresentStructure(node, height, src.VoxelTurret);
             Vec3 ro;
             if (src.pTurretAnim != 0) ro = BuildingRotation(node.Name, 0, src.VoxelTurret);
@@ -112,7 +115,7 @@ namespace RelertSharp.DrawingEngine
             string name = TileDictionary[t.TileIndex];
             Vec3 pos = ToVec3Iso(t);
             int tmp = CreateTileFile(name);
-            if (DrawTile(tmp, pos, t.SubIndex, out int pSelf, out int pExtra))
+            if (DrawTile(tmp, pos, t.SubIndex, pPalIso, out int pSelf, out int pExtra))
             {
                 PresentTile pt = new PresentTile(pSelf, pExtra);
                 Buffer.Scenes.Tiles[t.Coord] = pt;
@@ -248,8 +251,8 @@ namespace RelertSharp.DrawingEngine
             pPalTheater = CppExtern.Files.CreatePaletteFromFileInBuffer(thpal.ptr);
             pPalSystem = CppExtern.Files.CreatePaletteFromFileInBuffer(syspal.ptr);
 
-            Buffer.Files.CelltagBase = CreateFile("celltag.shp", DrawableType.Shp, _white, pPalSystem);
-            Buffer.Files.WaypointBase = CreateFile("waypoint.shp", DrawableType.Shp, _white, pPalSystem);
+            Buffer.Files.CelltagBase = CreateFile("celltag.shp", DrawableType.Shp);
+            Buffer.Files.WaypointBase = CreateFile("waypoint.shp", DrawableType.Shp);
         }
         public void Refresh()
         {
@@ -289,27 +292,16 @@ namespace RelertSharp.DrawingEngine
             int id = 0;
             if (!Buffer.Files.Tmp.Keys.Contains(name))
             {
-                id = CreateFile(name, DrawableType.Tmp, 0, pPalIso);
+                id = CreateFile(name, DrawableType.Tmp);
                 Buffer.Files.Tmp[name] = id;
             }
             else id = Buffer.Files.Tmp[name];
             return id;
         }
-        private int CreateGroundShp(string name, int pPal, uint color)
-        {
-            int id = 0;
-            if (!Buffer.Files.Shp.Keys.Contains(name))
-            {
-                id = CreateFile(name, DrawableType.Shp, color, pPal);
-                Buffer.Files.Shp[name] = id;
-            }
-            else id = Buffer.Files.Shp[name];
-            return id;
-        }
-        private DrawableInfantry CreateDrawableInfantry(ObjectItemBase inf, uint color, int pPal)
+        private DrawableInfantry CreateDrawableInfantry(ObjectItemBase inf, uint color, int pPal, int idxFrame)
         {
             DrawableInfantry d;
-            string lookup = inf.NameID + color.ToString();
+            string lookup = string.Format("{0}{1}.in{2}", inf.NameID, color, idxFrame);
             if (!Buffer.Buffers.Infantries.Keys.Contains(lookup))
             {
                 d = new DrawableInfantry();
@@ -322,17 +314,18 @@ namespace RelertSharp.DrawingEngine
                 }
                 d.NameID = nameid;
                 d.RemapColor = color;
-                d.pSelf = CreateFile(nameid, DrawableType.Shp, color, pPal);
                 d.Framecount = frame;
+                d.pSelf = CreateFile(nameid, DrawableType.Shp, idxFrame);
+                d.pShadow = CreateFile(nameid, DrawableType.Shp, idxFrame + frame / 2);
                 Buffer.Buffers.Infantries[lookup] = d;
             }
             else d = Buffer.Buffers.Infantries[lookup];
             return d;
         }
-        private DrawableUnit CreateDrawableUnit(string name, uint color, int pPal)
+        private DrawableUnit CreateDrawableUnit(string name, uint color, int pPal, int idxFrame)
         {
             DrawableUnit d;
-            string lookup = name + color.ToString();
+            string lookup = string.Format("{0}{1}.in{2}", name, color, idxFrame);
             if (!Buffer.Buffers.Units.Keys.Contains(lookup))
             {
                 d = new DrawableUnit(name);
@@ -351,9 +344,9 @@ namespace RelertSharp.DrawingEngine
                 DrawableType t;
                 if (d.IsVxl) t = DrawableType.Vxl;
                 else t = DrawableType.Shp;
-                if (!string.IsNullOrEmpty(self)) d.pSelf = CreateFile(self, t, color, pPal);
-                if (!string.IsNullOrEmpty(turret)) d.pTurret = CreateFile(turret, DrawableType.Vxl, color, pPal);
-                if (!string.IsNullOrEmpty(barl)) d.pBarrel = CreateFile(barl, DrawableType.Vxl, color, pPal);
+                if (!string.IsNullOrEmpty(self)) d.pSelf = CreateFile(self, t, idxFrame);
+                if (!string.IsNullOrEmpty(turret)) d.pTurret = CreateFile(turret, DrawableType.Vxl);
+                if (!string.IsNullOrEmpty(barl)) d.pBarrel = CreateFile(barl, DrawableType.Vxl);
                 Buffer.Buffers.Units[lookup] = d;
             }
             else d = Buffer.Buffers.Units[lookup];
@@ -375,7 +368,8 @@ namespace RelertSharp.DrawingEngine
                     d.pPal = pPalUnit;
                     d.IsZeroVec = true;
                 }
-                d.pSelf = CreateGroundShp(name, d.pPal, _white);
+                d.pSelf = CreateFile(name, DrawableType.Shp);
+                d.pShadow = CreateFile(name, DrawableType.Shp, d.Framecount / 2);
                 Buffer.Buffers.Miscs[name] = d;
             }
             else d = Buffer.Buffers.Miscs[name];
@@ -389,7 +383,7 @@ namespace RelertSharp.DrawingEngine
             if (!Buffer.Buffers.Miscs.Keys.Contains(name))
             {
                 d = new DrawableMisc(MapObjectType.Smudge, name);
-                d.pSelf = CreateGroundShp(name, pPalIso, _white);
+                d.pSelf = CreateFile(name, DrawableType.Shp);
                 Buffer.Buffers.Miscs[name] = d;
             }
             else d = Buffer.Buffers.Miscs[name];
@@ -399,7 +393,7 @@ namespace RelertSharp.DrawingEngine
         {
             DrawableMisc d;
             string name = GlobalRules.GetOverlayName(overlay.Index);
-            string lookup = name + color.ToString();
+            string lookup = string.Format("{0}{1}.in{2}", name, color, overlay.Frame);
             if (!Buffer.Buffers.Miscs.Keys.Contains(lookup))
             {
                 d = new DrawableMisc(MapObjectType.Overlay, name);
@@ -439,17 +433,20 @@ namespace RelertSharp.DrawingEngine
                     else d.pPal = pPalIso;
                 }
 
+                if (d.FlatType == ShpFlatType.FlatGround) d.IsTiberiumOverlay = true;
+
                 d.Framecount = GlobalDir.GetShpFrameCount(filename);
-                d.pSelf = CreateGroundShp(filename, d.pPal, color);
+                d.pSelf = CreateFile(filename, DrawableType.Shp, overlay.Frame);
+                if (!d.IsTiberiumOverlay) d.pShadow = CreateFile(filename, DrawableType.Shp, overlay.Frame + d.Framecount / 2);
                 Buffer.Buffers.Miscs[lookup] = d;
             }
             else d = Buffer.Buffers.Miscs[lookup];
             return d;
         }
-        private DrawableStructure CreateDrawableStructure(string name, uint color, int pPal, bool isBaseNode = false)
+        private DrawableStructure CreateDrawableStructure(string name, uint color, int pPal, int direction, bool isBaseNode = false)
         {
             DrawableStructure d;
-            string lookup = name + color.ToString();
+            string lookup = string.Format("{0}{1}.in{2}", name, color, direction);
             if (isBaseNode) lookup += "n";
             if (!Buffer.Buffers.Structures.Keys.Contains(lookup))
             {
@@ -478,48 +475,116 @@ namespace RelertSharp.DrawingEngine
                     pPal = CreatePalette(customPalName);
                     d.pPalCustom = pPal;
                 }
-                if (!string.IsNullOrEmpty(self)) d.pSelf = CreateFile(self, DrawableType.Shp, color, pPal);
-                if (!string.IsNullOrEmpty(anim)) d.pActivateAnim = CreateFile(anim, DrawableType.Shp, color, pPal);
-                if (!string.IsNullOrEmpty(anim2)) d.pActivateAnim2 = CreateFile(anim2, DrawableType.Shp, color, pPal);
-                if (!string.IsNullOrEmpty(anim3)) d.pActivateAnim3 = CreateFile(anim3, DrawableType.Shp, color, pPal);
-                if (!string.IsNullOrEmpty(super)) d.pSuperAnim = CreateFile(super, DrawableType.Shp, color, pPal);
-                if (!string.IsNullOrEmpty(idle)) d.pIdleAnim = CreateFile(idle, DrawableType.Shp, color, pPal);
-                if (!string.IsNullOrEmpty(bib)) d.pBib = CreateFile(bib, DrawableType.Shp, color, pPal);
+                if (!string.IsNullOrEmpty(self))
+                {
+                    d.pSelf = CreateFile(self, DrawableType.Shp);
+                    if (!GlobalConfig.DeactiveShadow.Contains(name)) d.pShadow = CreateFile(self, DrawableType.Shp, d.Framecount / 2);
+                }
+                if (!string.IsNullOrEmpty(anim))
+                {
+                    d.pActivateAnim = CreateFile(anim, DrawableType.Shp);
+                    d.pShadowActivateAnim = CreateFile(anim, DrawableType.Shp, d.ActivateAnimCount / 2);
+                }
+                if (!string.IsNullOrEmpty(anim2))
+                {
+                    d.pActivateAnim2 = CreateFile(anim2, DrawableType.Shp);
+                    d.pShadowActivateAnim2 = CreateFile(anim2, DrawableType.Shp, d.ActivateAnim2Count / 2);
+                }
+                if (!string.IsNullOrEmpty(anim3))
+                {
+                    d.pActivateAnim3 = CreateFile(anim3, DrawableType.Shp);
+                    d.pShadowActivateAnim3 = CreateFile(anim3, DrawableType.Shp, d.ActivateAnim3Count / 2);
+                }
+                if (!string.IsNullOrEmpty(super))
+                {
+                    d.pSuperAnim = CreateFile(super, DrawableType.Shp);
+                    d.pShadowSuperAnim = CreateFile(super, DrawableType.Shp, d.SuperAnimCount / 2);
+                }
+                if (!string.IsNullOrEmpty(idle))
+                {
+                    d.pIdleAnim = CreateFile(idle, DrawableType.Shp);
+                    d.pShadowIdleAnim = CreateFile(idle, DrawableType.Shp, d.IdleAnimCount / 2);
+                }
+                if (!string.IsNullOrEmpty(bib))
+                {
+                    d.pBib = CreateFile(bib, DrawableType.Shp);
+                    d.pShadowBib = CreateFile(bib, DrawableType.Shp, d.BibCount / 2);
+                }
                 if (!string.IsNullOrEmpty(turret))
                 {
                     d.offsetTurret = GlobalRules.GetVoxTurOffset(name);
                     if (d.VoxelTurret)
                     {
-                        d.pTurretAnim = CreateFile(turret, DrawableType.Vxl, color, pPal);
-                        if (!string.IsNullOrEmpty(barl)) d.pTurretBarl = CreateFile(barl, DrawableType.Vxl, color, pPal);
+                        d.pTurretAnim = CreateFile(turret, DrawableType.Vxl);
+                        if (!string.IsNullOrEmpty(barl)) d.pTurretBarl = CreateFile(barl, DrawableType.Vxl);
                     }
-                    else d.pTurretAnim = CreateFile(turret, DrawableType.Shp, color, pPal);
+                    else
+                    {
+                        d.pTurretAnim = CreateFile(turret, DrawableType.Shp, direction);
+                        d.pShadowTurretAnim = CreateFile(turret, DrawableType.Shp, direction + d.TurretAnimCount / 2);
+                    }
                 }
                 Buffer.Buffers.Structures[lookup] = d;
             }
             else d = Buffer.Buffers.Structures[lookup];
             return d;
         }
-        private int CreateFile(string filename, DrawableType type, uint color, int pPal)
+        private int CreateFile(string filename, DrawableType type, int shpframe = 0)
         {
-            if (!GlobalDir.HasFile(filename)) return 0;
-            VFileInfo info = GlobalDir.GetFilePtr(filename);
             switch (type)
             {
                 case DrawableType.Shp:
-                    int shp = CppExtern.Files.CreateShpFileFromFileInMemory(info.ptr, info.size);
-                    bool b = CppExtern.Files.LoadShpTextures(shp, pPal, color);
-                    return shp;
+                    return CreateShp(filename, shpframe);
                 case DrawableType.Tmp:
-                    int tmp = CppExtern.Files.CreateTmpFileFromFilenMemory(info.ptr, info.size);
-                    CppExtern.Files.LoadTmpTextures(tmp, pPal);
-                    return tmp;
+                    return CreateTmp(filename);
                 case DrawableType.Vxl:
-                    VFileInfo hva = GlobalDir.GetFilePtr(filename.Replace("vxl", "hva"));
-                    return CppExtern.Files.CreateVxlFileFromFileInMemory(info.ptr, info.size, hva.ptr, hva.size);
+                    return CreateVxl(filename);
                 default:
                     return 0;
             }
+        }
+        private int CreateTmp(string filename)
+        {
+            int id;
+            if (!Buffer.Files.Tmp.Keys.Contains(filename))
+            {
+                if (!GlobalDir.HasFile(filename)) return 0;
+                VFileInfo info = GlobalDir.GetFilePtr(filename);
+                id = CppExtern.Files.CreateTmpFileFromFileInMemory(info.ptr, info.size);
+                CppExtern.Files.LoadTmpTextures(id);
+                Buffer.Files.Tmp[filename] = id;
+            }
+            else id = Buffer.Files.Tmp[filename];
+            return id;
+        }
+        private int CreateShp(string filename, int shpframe)
+        {
+            int id;
+            string lookup = string.Format("{0}.in{1}", filename, shpframe);
+            if (!Buffer.Files.Shp.Keys.Contains(lookup))
+            {
+                if (!GlobalDir.HasFile(filename)) return 0;
+                VFileInfo info = GlobalDir.GetFilePtr(filename);
+                id = CppExtern.Files.CreateShpFileFromFileInMemory(info.ptr, info.size);
+                CppExtern.Files.LoadShpTextures(id, shpframe);
+                Buffer.Files.Shp[lookup] = id;
+            }
+            else id = Buffer.Files.Shp[lookup];
+            return id;
+        }
+        private int CreateVxl(string filename)
+        {
+            int id;
+            if (!Buffer.Files.Vxl.Keys.Contains(filename))
+            {
+                if (!GlobalDir.HasFile(filename)) return 0;
+                VFileInfo info = GlobalDir.GetFilePtr(filename);
+                VFileInfo hva = GlobalDir.GetFilePtr(filename.Replace("vxl", "hva"));
+                id = CppExtern.Files.CreateVxlFileFromFileInMemory(info.ptr, info.size, hva.ptr, hva.size);
+                Buffer.Files.Vxl[filename] = id;
+            }
+            else id = Buffer.Files.Vxl[filename];
+            return id;
         }
         private int CreatePalette(string filename)
         {
@@ -545,7 +610,7 @@ namespace RelertSharp.DrawingEngine
                 dest.pSelf = RenderAndPresent(src.pSelf, pos, frame, color, pPal, type);
                 if (!src.IsTiberiumOverlay && 
                     src.MiscType != MapObjectType.Smudge &&
-                    src.MiscType != MapObjectType.Celltag) dest.pSelfShadow = RenderAndPresent(src.pSelf, pos.Rise(), frame + shadow / 2, color, pPal, ShpFlatType.FlatGround, true);
+                    src.MiscType != MapObjectType.Celltag) dest.pSelfShadow = RenderAndPresent(src.pShadow, pos.Rise(), frame + shadow / 2, color, pPal, ShpFlatType.FlatGround, true);
             }
 
             return dest.IsValid;
@@ -556,7 +621,7 @@ namespace RelertSharp.DrawingEngine
             if (src.pSelf != 0)
             {
                 dest.pSelf = RenderAndPresent(src.pSelf, pos, frame, src.RemapColor, pPal, ShpFlatType.Vertical);
-                dest.pSelfShadow = RenderAndPresent(src.pSelf, pos.Rise(), frame + src.Framecount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, true);
+                dest.pSelfShadow = RenderAndPresent(src.pShadow, pos.Rise(), frame + src.Framecount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, true);
             }
 
             Buffer.Scenes.Infantries[dest.Coord << 2 + subcell] = dest;
@@ -569,37 +634,37 @@ namespace RelertSharp.DrawingEngine
             if (src.pSelf != 0)
             {
                 dest.pSelf = RenderAndPresent(src, src.pSelf, pos, pPal, flat);
-                dest.pSelfShadow = RenderAndPresent(src, src.pSelf, pos.Rise(), pPal, ShpFlatType.FlatGround, src.Framecount, true);
+                dest.pSelfShadow = RenderAndPresent(src, src.pShadow, pos.Rise(), pPal, ShpFlatType.FlatGround, src.Framecount, true);
             }
             if (src.pActivateAnim != 0)
             {
                 dest.pActivateAnim = RenderAndPresent(src, src.pActivateAnim, pos + _generalOffset, pPal, flat);
-                dest.pActivateAnim2Shadow = RenderAndPresent(src, src.pActivateAnim, pos.Rise() + _generalOffset, pPal, ShpFlatType.FlatGround, src.ActivateAnimCount, true);
+                dest.pActivateAnim2Shadow = RenderAndPresent(src, src.pShadowActivateAnim, pos.Rise() + _generalOffset, pPal, ShpFlatType.FlatGround, src.ActivateAnimCount, true);
             }
             if (src.pIdleAnim != 0)
             {
                 dest.pIdleAnim = RenderAndPresent(src, src.pIdleAnim, _generalOffset + pos, pPal, flat);
-                dest.pIdleAnimShadow = RenderAndPresent(src, src.pIdleAnim, _generalOffset + pos.Rise(), pPal, ShpFlatType.FlatGround, src.IdleAnimCount, true);
+                dest.pIdleAnimShadow = RenderAndPresent(src, src.pShadowIdleAnim, _generalOffset + pos.Rise(), pPal, ShpFlatType.FlatGround, src.IdleAnimCount, true);
             }
             if (src.pActivateAnim2 != 0)
             {
                 dest.pActivateAnim2 = RenderAndPresent(src, src.pActivateAnim2, 2 * _generalOffset + pos, pPal, flat);
-                dest.pActivateAnim2Shadow = RenderAndPresent(src, src.pActivateAnim2, 2 * _generalOffset + pos.Rise(), pPal, ShpFlatType.FlatGround, src.ActivateAnim2Count, true);
+                dest.pActivateAnim2Shadow = RenderAndPresent(src, src.pShadowActivateAnim2, 2 * _generalOffset + pos.Rise(), pPal, ShpFlatType.FlatGround, src.ActivateAnim2Count, true);
             }
             if (src.pActivateAnim3 != 0)
             {
                 dest.pActivateAnim3 = RenderAndPresent(src, src.pActivateAnim3, 3 * _generalOffset + pos, pPal, ShpFlatType.Vertical);
-                dest.pActivateAnim3Shadow = RenderAndPresent(src, src.pActivateAnim2, 3 * _generalOffset + pos.Rise(), pPal, ShpFlatType.FlatGround, src.ActivateAnim3Count, true);
+                dest.pActivateAnim3Shadow = RenderAndPresent(src, src.pShadowActivateAnim3, 3 * _generalOffset + pos.Rise(), pPal, ShpFlatType.FlatGround, src.ActivateAnim3Count, true);
             }
             if (src.pSuperAnim != 0)
             {
                 dest.pSuperAnim = RenderAndPresent(src, src.pSuperAnim, 3 * _generalOffset + pos, pPal, flat);
-                dest.pSuperAnimShadow = RenderAndPresent(src, src.pSuperAnim, 3 * _generalOffset + pos.Rise(), pPal, ShpFlatType.FlatGround, src.SuperAnimCount, true);
+                dest.pSuperAnimShadow = RenderAndPresent(src, src.pShadowSuperAnim, 3 * _generalOffset + pos.Rise(), pPal, ShpFlatType.FlatGround, src.SuperAnimCount, true);
             }
             if (src.pBib != 0)
             {
                 dest.pBib = RenderAndPresent(src, src.pBib, pos, pPal, flat);
-                dest.pBibShadow = RenderAndPresent(src, src.pBib, pos.Rise(), pPal, ShpFlatType.FlatGround, src.BibCount, true);
+                dest.pBibShadow = RenderAndPresent(src, src.pShadowBib, pos.Rise(), pPal, ShpFlatType.FlatGround, src.BibCount, true);
             }
             if (src.pTurretAnim != 0)
             {
@@ -611,7 +676,7 @@ namespace RelertSharp.DrawingEngine
                 else
                 {
                     dest.pTurretAnim = RenderAndPresent(src.pTurretAnim, pos + src.offsetTurret, (int)turRotation.X, src.RemapColor, pPal, ShpFlatType.Vertical);
-                    dest.pTurretAnimShadow = RenderAndPresent(src.pTurretAnim, pos.Rise() + src.offsetTurret, (int)turRotation.X + src.TurretAnimCount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, true);
+                    dest.pTurretAnimShadow = RenderAndPresent(src.pShadowTurretAnim, pos.Rise() + src.offsetTurret, (int)turRotation.X + src.TurretAnimCount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, true);
                 }
             }
             Buffer.Scenes.Structures[dest.Coord] = dest;
@@ -637,10 +702,10 @@ namespace RelertSharp.DrawingEngine
             Buffer.Scenes.Units[dest.Coord] = dest;
             return dest.IsValid;
         }
-        private bool DrawTile(int idTmp, Vec3 pos, byte subindex, out int idSelf, out int idExtra)
+        private bool DrawTile(int idTmp, Vec3 pos, byte subindex, int pPal, out int idSelf, out int idExtra)
         {
             idSelf = 0;idExtra = 0;
-            return CppExtern.ObjectUtils.CreateTmpObjectAtScene(idTmp, pos, subindex, ref idSelf, ref idExtra);
+            return CppExtern.ObjectUtils.CreateTmpObjectAtScene(idTmp, pos, pPal, subindex, ref idSelf, ref idExtra);
         }
         private int RenderAndPresent(int shpID, Vec3 pos, int frame, uint color, int pPal, ShpFlatType flat, bool shadow = false)
         {

@@ -62,7 +62,7 @@ namespace RelertSharp.DrawingEngine
             #region Private Methods - CScene
             private void DeleteFromScene(int id)
             {
-                if (id != 0) CppExtern.ObjectUtils.RemoveObjectAtScene(id);
+                if (id != 0) CppExtern.ObjectUtils.RemoveObjectFromScene(id);
             }
             #endregion
 

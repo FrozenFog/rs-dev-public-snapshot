@@ -154,6 +154,8 @@ namespace RelertSharp.Common
         public string ConfigName { get { return this["General"]["ConfigName"]; } }
         public string[] BagNameList { get { return this["SoundConfigs"].GetPair("Bags").ParseStringList(); } }
         public List<string> DeactiveAnimList { get { return this["DrawingConfig"].GetPair("DeactivateAnim").ParseStringList().ToList(); } }
+        public List<string> DeactiveBibList { get { return this["DrawingConfig"].GetPair("DeactivateBib").ParseStringList().ToList(); } }
+        public List<string> DeactiveShadow { get { return this["DrawingConfig"].GetPair("DeactivateShadow").ParseStringList().ToList(); } }
         public List<string> StringtableList { get; private set; }
         public List<string> MixNameList { get; private set; }
         public List<string> CiphedMix { get; private set; }

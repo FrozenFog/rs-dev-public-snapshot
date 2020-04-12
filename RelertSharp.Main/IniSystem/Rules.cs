@@ -262,7 +262,10 @@ namespace RelertSharp.IniSystem
             }
             idle = GuessStructureName(this[art["IdleAnim"]]);
             super = GuessStructureName(this[art["SuperAnim"]]);
-            bib = GuessStructureName(art["BibShape"]);
+            if (!GlobalConfig.DeactiveBibList.Contains(art.Name))
+            {
+                bib = GuessStructureName(art["BibShape"]);
+            }
             isVox = ParseBool(this[id]["TurretAnimIsVoxel"]);
             if (isVox)
             {
