@@ -16,9 +16,9 @@ void CellClass::RemoveCellFromScene(D3DXVECTOR3 Coords)
 	MapCells.erase(TransformCoords(Coords));
 }
 
-bool CellClass::CreateCellAt(D3DXVECTOR3 Position, int nTileFileID, int nTileIndex)
+bool CellClass::CreateCellAt(D3DXVECTOR3 Position, int nPaletteID, int nTileFileID, int nTileIndex)
 {
-	auto pCell = std::make_unique<CellClass>(Position, nTileFileID, nTileIndex);
+	auto pCell = std::make_unique<CellClass>(Position, nPaletteID, nTileFileID, nTileIndex);
 	if (pCell) {
 		MapCells[TransformCoords(Position)] = std::move(pCell);
 		return true;
@@ -86,15 +86,15 @@ CellClass::~CellClass()
 	printf_s("Cell at %f, %f, %f has been erased.\n", Position.x, Position.y, Position.z);
 }
 
-CellClass::CellClass(D3DXVECTOR3 Position, int nTileFileID, int nTileIndex) : CellClass()
+CellClass::CellClass(D3DXVECTOR3 Position, int nPaletteID, int nTileFileID, int nTileIndex) : CellClass()
 {
-	SpawnAtMapCoords(Position, nTileFileID, nTileIndex);
+	SpawnAtMapCoords(Position, nPaletteID, nTileFileID, nTileIndex);
 }
 
-bool CellClass::SpawnAtMapCoords(D3DXVECTOR3 Position, int nTileFileID, int nTileIndex)
+bool CellClass::SpawnAtMapCoords(D3DXVECTOR3 Position, int nPaletteID, int nTileFileID, int nTileIndex)
 {
 	this->Position = Position;
-	CreateTmpObjectAtScene(nTileFileID, Position, nTileIndex, this->nImageId, this->nExtraId);
+	CreateTmpObjectAtScene(nTileFileID, Position, nPaletteID, nTileIndex, this->nImageId, this->nExtraId);
 
 	if (this->nImageId || this->nExtraId) {
 		return true;

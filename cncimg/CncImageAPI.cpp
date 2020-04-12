@@ -5,7 +5,7 @@ EXPORT_START
 int WINAPI CreatePaletteFile(const char * pFileName)
 {
 	//return reinterpret_cast<int>(new Palette(pFileName));
-	auto pal = std::make_unique<Palette>(pFileName);
+	auto pal = std::make_unique<Palette>(pFileName, SceneClass::Instance.GetDevice());
 	if (pal)
 	{
 		auto id = GlobalID::AllocatedGlobalId++;
@@ -18,7 +18,7 @@ int WINAPI CreatePaletteFile(const char * pFileName)
 
 int WINAPI CreatePaletteFromFileInBuffer(LPVOID pFileBuffer)
 {
-	auto pal = std::make_unique<Palette>(pFileBuffer);
+	auto pal = std::make_unique<Palette>(pFileBuffer, SceneClass::Instance.GetDevice());
 	if (pal)
 	{
 		auto id = GlobalID::AllocatedGlobalId++;
@@ -109,15 +109,13 @@ bool WINAPI RemoveTmpFile(int nFileId)
 	return true;
 }
 
-bool WINAPI LoadTmpTextures(int nFileId,int nPaletteID)
+bool WINAPI LoadTmpTextures(int nFileId)
 {
 	auto find = TmpFileClass::FileObjectTable.find(nFileId);
 	if (find == TmpFileClass::FileObjectTable.end())
 		return false;
 
-	if(auto palette = Palette::FindPaletteByID(nPaletteID))
-		return find->second->MakeTextures(SceneClass::Instance.GetDevice(), *palette);
-	return false;
+	return find->second->MakeTextures(SceneClass::Instance.GetDevice());
 }
 
 int WINAPI CreateShpFile(const char * pFileName)
@@ -157,22 +155,22 @@ bool WINAPI RemoveShpFile(int nFileId)
 	return true;
 }
 
-bool WINAPI LoadShpTextures(int nFileId, int idxFrame, int nPaletteId, DWORD dwRemapColor)
+bool WINAPI LoadShpTextures(int nFileId, int idxFrame)
 {
 	auto find = ShpFileClass::FileObjectTable.find(nFileId);
 	if (find == ShpFileClass::FileObjectTable.end())
 		return false;
 
-	return find->second->MakeTextures(SceneClass::Instance.GetDevice(), nPaletteId, dwRemapColor, idxFrame);
+	return find->second->MakeTextures(SceneClass::Instance.GetDevice(), idxFrame);
 }
 
-bool WINAPI IsShpFrameLoadedAsTexture(int nFileID, int idxFrame, int nPaletteID, DWORD dwRemapColor)
+bool WINAPI IsShpFrameLoadedAsTexture(int nFileID, int idxFrame)
 {
 	auto find = ShpFileClass::FileObjectTable.find(nFileID);
 	if (find == ShpFileClass::FileObjectTable.end())
 		return false;
 
-	return find->second->IsFrameTextureLoaded(idxFrame, nPaletteID, dwRemapColor);
+	return find->second->IsFrameTextureLoaded(idxFrame);
 }
 
 int WINAPI CreateCommonTextureFile(const char * pFileName)
@@ -227,13 +225,13 @@ int WINAPI CreateVxlObjectAtScene(int nFileId, D3DXVECTOR3 Position, float Rotat
 	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position, RotationX, RotationY, RotationZ, nColorSchemeID, dwRemap);
 }
 
-bool WINAPI CreateTmpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int nTileIndex, int& OutTileIndex, int& OutExtraIndex)
+bool WINAPI CreateTmpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int nPaletteID, int nTileIndex, int& OutTileIndex, int& OutExtraIndex)
 {
 	auto find = TmpFileClass::FileObjectTable.find(nFileId);
 	if (find == TmpFileClass::FileObjectTable.end())
 		return false;
 
-	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position, nTileIndex, OutTileIndex, OutExtraIndex);
+	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position, nPaletteID, nTileIndex, OutTileIndex, OutExtraIndex);
 }
 
 int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFrame, int nPaletteId, DWORD dwRemapColor, char bFlat,

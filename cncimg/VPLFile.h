@@ -34,6 +34,7 @@ public:
 
 private:
 	VPLHeader Header;
-	Palette ContainedPal;
+	//Palette ContainedPal;
+	ColorStruct ContainedPal[256];
 	std::vector<VPLSectionTable> Sections;
 };

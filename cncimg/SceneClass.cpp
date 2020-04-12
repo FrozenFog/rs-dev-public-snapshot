@@ -108,21 +108,23 @@ bool SceneClass::LoadShaders()
 	const char* pVarName = "vec";
 	const char* pMatrixName = "vpmatrix";
 	const char* pShadowMain = "smain";
+	const char* pRemapColorName = "remap_color";
 
-	if (this->VoxelShader.CompileFromFile(pShaderFile, pVoxelShaderMain) &&
-		this->PlainArtShader.CompileFromFile(pShaderFile, pPlainShaderMain) &&
-		this->VertexShader.CompileFromFile(pShaderFile, pVertexMain, true) &&
-		this->ShadowShader.CompileFromFile(pShaderFile, pShadowMain))
+	if (this->VoxelShader.CompileFromFile(".\\shaders\\voxel.hlsl", pVoxelShaderMain) &&
+		this->PlainArtShader.CompileFromFile(".\\shaders\\plain.hlsl", pPlainShaderMain) &&
+		this->VertexShader.CompileFromFile(".\\shaders\\vertex.hlsl", pVertexMain, true) &&
+		this->ShadowShader.CompileFromFile(".\\shaders\\shadow.hlsl", pShadowMain))
 	{
 		return
 			this->VoxelShader.CreateShader(this->GetDevice()) &&
 			this->PlainArtShader.CreateShader(this->GetDevice()) &&
 			this->VertexShader.CreateVertexShader(this->GetDevice()) &&
 			this->ShadowShader.CreateShader(this->GetDevice()) &&
-			this->VoxelShader.LinkConstants(pVarName) &&
-			this->PlainArtShader.LinkConstants(pVarName) &&
+			this->VoxelShader.LinkConstants("vxl_cof") &&
+			this->PlainArtShader.LinkConstants("plain_cof") &&
+			this->PlainArtShader.LinkRemapConstants(pRemapColorName) &&
 			this->VertexShader.LinkConstants(pMatrixName) &&
-			this->ShadowShader.LinkConstants(pVarName);
+			this->ShadowShader.LinkConstants("shadow_cof");
 	}
 	else
 	{
@@ -445,6 +447,27 @@ bool ShaderStruct::LinkConstants(const char * pVarName)
 		printf_s("failed to link constant %s.\n", pVarName);
 
 	return this->hConstant != NULL;
+}
+
+bool ShaderStruct::LinkRemapConstants(const char * pRemapName)
+{
+	if (!this->IsLoaded())
+		return false;
+
+	this->hRemapConstant = this->pConstantTable->GetConstantByName(NULL, pRemapName);
+
+	if (!this->hRemapConstant)
+		printf_s("failed to link constant %s.\n", hRemapConstant);
+
+	return this->hRemapConstant != NULL;
+}
+
+bool ShaderStruct::SetRemapColor(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR4 Color)
+{
+	if (!pDevice || !this->IsLoaded())
+		return false;
+
+	return SUCCEEDED(this->pConstantTable->SetVector(pDevice, this->hRemapConstant, &Color));
 }
 
 bool ShaderStruct::SetConstantVector(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR4 Vector)

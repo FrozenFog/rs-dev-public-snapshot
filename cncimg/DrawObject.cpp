@@ -107,12 +107,12 @@ bool DrawObject::CanIsolatedTextureUnloadNow(LPDIRECT3DTEXTURE9 pTexture)
 {
 	unsigned long reference = 0;
 	for (auto& item : GlobalTransperantObjects) {
-		if (item.second->pTexture == pTexture)
+		if (item.second->pTexture == pTexture || item.second->pPaletteTexture == pTexture)
 			reference++;
 	}
 
 	for (auto& item : GlobalOpaqueObjects) {
-		if (item.second->pTexture == pTexture)
+		if (item.second->pTexture == pTexture || item.second->pPaletteTexture == pTexture)
 			reference++;
 	}
 
@@ -736,6 +736,7 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 
 	Object.SetColorCoefficient(D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
 	Object.SetCompareOffset(D3DXVECTOR3(0.0, 0.0, 0.0));
+	Object.SetPlainArtAttributes(nullptr);
 	Object.InitializeVisualRect();
 }
 
@@ -747,8 +748,10 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 
 	bool Result = false;
 	D3DVERTEXBUFFER_DESC Desc;
-	LPDIRECT3DBASETEXTURE9 pFormerTexture;
+	LPDIRECT3DBASETEXTURE9 pFormerTexture, pFormer2;
 	LPDIRECT3DPIXELSHADER9 pFormerShader;
+	LPDIRECT3DVERTEXBUFFER9 pFormerStream;
+	UINT uStride, uOffset;
 	HDC hBackDC;
 
 	auto& VxlShader = SceneClass::Instance.GetVXLShader();
@@ -780,16 +783,21 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 	this->pVertexBuffer->GetDesc(&Desc);
 	if (Desc.FVF == Vertex::dwFVFType)
 	{
-		D3DPRIMITIVETYPE PrimitiveType;
+		D3DPRIMITIVETYPE PrimitiveType = D3DPT_POINTLIST;
 		int nPrimitiveCount;
 		//is vxl, requires Voxels and Normals,count = Desc.size / sizeof Vertex
 		pDevice->GetTexture(0, &pFormerTexture);
+		pDevice->GetTexture(1, &pFormer2);
 		pDevice->GetPixelShader(&pFormerShader);
+		pDevice->GetStreamSource(0, &pFormerStream, &uOffset, &uStride);
 
 		pDevice->SetTexture(0, nullptr);
+		pDevice->SetTexture(1, nullptr);
 		pDevice->SetFVF(Desc.FVF);
 		pDevice->SetStreamSource(0, this->pVertexBuffer, 0, sizeof Vertex);
 
+		//PlainShader.SetRemapColor(pDevice, D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
+		if (PrimitiveType == D3DPT_POINTLIST)
 		VxlShader.SetConstantVector(pDevice, this->ColorCoefficient);
 
 		if(this->BufferedVoxels.empty())
@@ -798,28 +806,46 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 				PrimitiveType = D3DPT_LINELIST;
 			else if (Desc.Size / sizeof Vertex == 4)
 				PrimitiveType = D3DPT_TRIANGLESTRIP;
-			else
-				PrimitiveType = D3DPT_POINTLIST;
 		}
 
 		pDevice->SetPixelShader(PrimitiveType == D3DPT_POINTLIST ? VxlShader.GetShaderObject() : nullptr);
 		nPrimitiveCount = PrimitiveType == D3DPT_LINELIST ? 1 : PrimitiveType == D3DPT_TRIANGLESTRIP ? 2 : Desc.Size / sizeof Vertex;
+
 		Result = SUCCEEDED(pDevice->DrawPrimitive(PrimitiveType, 0, nPrimitiveCount));
+
 		pDevice->SetTexture(0, pFormerTexture);
+		pDevice->SetTexture(1, pFormer2);
 		pDevice->SetPixelShader(pFormerShader);
+		pDevice->SetStreamSource(0, pFormerStream, uOffset, uStride);
+		//VxlShader.SetConstantVector(pDevice);
 	}
 	else// Textured vertex.fvf
 	{
 		//requires pTexture, always 2 rectangles
 		pDevice->GetTexture(0, &pFormerTexture);
+		pDevice->GetTexture(1, &pFormer2);
 		pDevice->GetPixelShader(&pFormerShader);
+		pDevice->GetStreamSource(0, &pFormerStream, &uOffset, &uStride);
 
 		pDevice->SetTexture(0, this->pTexture);
+
+		if (!this->bIsShadow)
+			pDevice->SetTexture(1, this->pPaletteTexture);
+		else
+			pDevice->SetTexture(1, nullptr);
+
 		pDevice->SetFVF(Desc.FVF);
 		pDevice->SetStreamSource(0, this->pVertexBuffer, 0, sizeof TexturedVertex);
 
-		PlainShader.SetConstantVector(pDevice, this->ColorCoefficient);
-		ShadowShader.SetConstantVector(pDevice, this->ColorCoefficient);
+		if (!this->bIsShadow)
+		{
+			PlainShader.SetConstantVector(pDevice, this->ColorCoefficient);
+			PlainShader.SetRemapColor(pDevice, this->ShaderRemapColor);
+		}
+		else
+		{
+			ShadowShader.SetConstantVector(pDevice, this->ColorCoefficient);
+		}
 
 		if (this->bIsShadow)
 			pDevice->SetPixelShader(ShadowShader.GetShaderObject());
@@ -827,8 +853,21 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 			pDevice->SetPixelShader(PlainShader.GetShaderObject());
 
 		Result = SUCCEEDED(pDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, Desc.Size / sizeof TexturedVertex / 3));
+
 		pDevice->SetTexture(0, pFormerTexture);
+		pDevice->SetTexture(1, pFormer2);
 		pDevice->SetPixelShader(pFormerShader);
+		pDevice->SetStreamSource(0, pFormerStream, uOffset, uStride);
+
+		if (!this->bIsShadow)
+		{
+			PlainShader.SetConstantVector(pDevice);
+			PlainShader.SetRemapColor(pDevice);
+		}
+		else
+		{
+			ShadowShader.SetConstantVector(pDevice);
+		}
 	}
 
 	return Result;
@@ -916,4 +955,10 @@ void PaintingStruct::SetCompareOffset(D3DXVECTOR3 Offset)
 void PaintingStruct::SetColorCoefficient(D3DXVECTOR4 Coefficient)
 {
 	this->ColorCoefficient = Coefficient;
+}
+
+void PaintingStruct::SetPlainArtAttributes(LPDIRECT3DTEXTURE9 pPaletteTexture, D3DXVECTOR4 ShaderRemap)
+{
+	this->pPaletteTexture = pPaletteTexture;
+	this->ShaderRemapColor = ShaderRemap;
 }

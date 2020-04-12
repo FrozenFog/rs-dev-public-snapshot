@@ -32,13 +32,13 @@ EXPORT bool WINAPI RemoveVxlFile(int nFileId);
 EXPORT int WINAPI CreateTmpFile(const char* pFileName);
 EXPORT int WINAPI CreateTmpFileFromFileInMemory(LPVOID pFileBuffer, ULONG nSize);
 EXPORT bool WINAPI RemoveTmpFile(int nFileId);
-EXPORT bool WINAPI LoadTmpTextures(int nFileId, int nPaletteId);
+EXPORT bool WINAPI LoadTmpTextures(int nFileId);
 
 EXPORT int WINAPI CreateShpFile(const char* pFileName);
 EXPORT int WINAPI CreateShpFileFromFileInMemory(LPVOID pFileBuffer, ULONG nSize);
 EXPORT bool WINAPI RemoveShpFile(int nFileId);
-EXPORT bool WINAPI LoadShpTextures(int nFileId, int idxFrame, int nPaletteId, DWORD dwRemapColor);
-EXPORT bool WINAPI IsShpFrameLoadedAsTexture(int nFileID, int idxFrame, int nPaletteID, DWORD dwRemapColor);
+EXPORT bool WINAPI LoadShpTextures(int nFileId, int idxFrame);
+EXPORT bool WINAPI IsShpFrameLoadedAsTexture(int nFileID, int idxFrame);
 
 EXPORT int WINAPI CreateCommonTextureFile(const char* pFileName);
 EXPORT int WINAPI CreateCircularCommonTextureFile(float Radius, float Thickness, DWORD dwD3DColor);
@@ -48,7 +48,7 @@ EXPORT bool WINAPI RemoveCommonTextureFile(int nFileId);
 EXPORT int WINAPI CreateVxlObjectAtScene(int nFileId, D3DXVECTOR3 Position,
 	float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor);
 
-EXPORT bool WINAPI CreateTmpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int nTileIndex, int& OutTileIndex, int& OutExtraIndex);
+EXPORT bool WINAPI CreateTmpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int nPaletteID, int nTileIndex, int& OutTileIndex, int& OutExtraIndex);
 
 EXPORT int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFrame, int nPaletteId, DWORD dwRemapColor, char bFlat,
 	int nFoundationX, int nFoundationY, int nHeight, bool bDrawAsShadow);

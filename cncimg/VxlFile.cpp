@@ -6,9 +6,9 @@
 #include "SceneClass.h"
 
 #define SAFE_DELETE_ARRAY(arr) if(arr)delete[] arr, arr=nullptr;
-
-Palette VxlFile::RANormals("Normals\\RANormals.pal");
-Palette VxlFile::TSNormals("Normals\\TSNormals.pal");
+//
+//Palette VxlFile::RANormals();
+//Palette VxlFile::TSNormals();
 
 D3DXVECTOR3 VxlFile::LightReversed = { 0.0,1.0,0.0 };
 
@@ -252,7 +252,16 @@ void VxlFile::LoadFromFileInBuffer(LPVOID pFileBuffer, ULONG nSize, LPVOID pHVAB
 
 	memcpy_s(&this->FileHeader, sizeof this->FileHeader, pBuffer, sizeof this->FileHeader);
 
-	this->FileHeader.ContainedPalette.ShiftColors();
+	//this->FileHeader.ContainedPalette.ShiftColors();
+	//this->FileHeader.ContainedPalette.Set1DPaletteTexture(nullptr);
+
+	for (int i = 0; i < 256; i++)
+	{
+		this->FileHeader.ContainedPalette[i].R <<= 2;
+		this->FileHeader.ContainedPalette[i].G <<= 2;
+		this->FileHeader.ContainedPalette[i].B <<= 2;
+	}
+
 	auto nLimbs = this->FileHeader.nNumberOfLimbs;
 	this->LimbHeaders.resize(nLimbs);
 	this->LimbTailers.resize(nLimbs);
@@ -338,11 +347,11 @@ bool VxlFile::GetVoxelLH(int nLimb, int x, int y, int z, Voxel & Voxel)
 }
 
 void VxlFile::LoadPalette(const char * pPaletteName)
-{
+{/*
 	if (this->IsLoaded())
 	{
 		this->FileHeader.ContainedPalette.LoadFromFile(pPaletteName);
-	}
+	}*/
 }
 
 int VxlFile::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,

@@ -375,7 +375,7 @@ void TmpFileClass::GetCellSizeRectWithHeight(int nIndex, RECT & Rectangle)
 		OffsetRect(&Rectangle, -Rectangle.left, -Rectangle.top);
 }
 
-bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
+bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice)
 {
 	if (!pDevice || !this->IsLoaded())
 		return false;
@@ -401,7 +401,7 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 			continue;
 
 		if (FAILED(pDevice->CreateTexture(this->GetFileData()->Header.nBlocksWidth, this->GetFileData()->Header.nBlocksHeight, 1, NULL,
-			D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &pTexture, nullptr)))
+			D3DFMT_L8, D3DPOOL_MANAGED, &pTexture, nullptr)))
 		{
 			SAFE_RELEASE(pTexture);
 			continue;
@@ -421,37 +421,34 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 		{
 			auto pTextureData = pData + y*LockedRect.Pitch;// +x * sizeof(D3DCOLOR_ARGB(0, 0, 0, 0));
 			auto nSize = this->GetFileData()->Header.nBlocksWidth - 2 * x;
-			bool bFirstEnter;
+			bool bFirstEnter = true;
 
-			bFirstEnter = true;
-			RtlZeroMemory(pTextureData, this->GetFileData()->Header.nBlocksWidth * sizeof D3DCOLOR);
-			pTextureData += x * sizeof D3DCOLOR;
+			RtlZeroMemory(pTextureData, this->GetFileData()->Header.nBlocksWidth);
+			pTextureData += x;
 
 			for (int i = 0; i < nSize; i++)
 			{
-				auto pColorData = reinterpret_cast<PDWORD>(pTextureData);
+				auto pColorData = reinterpret_cast<PBYTE>(pTextureData);
 				auto nColor = *pFileData++;
-				auto& Color = Palette[nColor];
-				auto dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
 
 				if (nColor) {
-					pColorData[0] = dwColor;
+					pColorData[0] = nColor;
 					if (bFirstEnter && x + i >= 1) {
-						pColorData[-1] = dwColor;
+						pColorData[-1] = nColor;
 						if (x + i >= 2)
-							pColorData[-2] = dwColor;
+							pColorData[-2] = nColor;
 
 						bFirstEnter = false;
 					}
 					if (!bFirstEnter && x + i <= this->GetFileData()->Header.nBlocksWidth - 1 && (*pFileData == 0 || i == nSize - 1)) {
-						pColorData[1] = dwColor;
+						pColorData[1] = nColor;
 						if (x + i <= this->GetFileData()->Header.nBlocksWidth - 2)
-							pColorData[2] = dwColor;
+							pColorData[2] = nColor;
 
 						bFirstEnter = true;
 					}
 				}
-				pTextureData += sizeof D3DCOLOR;
+				pTextureData++;
 			}
 		}
 
@@ -462,12 +459,12 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 			bool bFirstEnter;
 
 			bFirstEnter = true;
-			RtlZeroMemory(pTextureData, this->GetFileData()->Header.nBlocksWidth * sizeof D3DCOLOR);
-			pTextureData += x * sizeof D3DCOLOR;
+			RtlZeroMemory(pTextureData, this->GetFileData()->Header.nBlocksWidth);
+			pTextureData += x;
 
 			if (!nSize)
 			{
-				auto pColorData = reinterpret_cast<PDWORD>(pTextureData);
+				auto pColorData = reinterpret_cast<PBYTE>(pTextureData);
 				BYTE nColor = 0;
 				int i = 0;
 				while (!nColor)
@@ -475,33 +472,30 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 					i++;
 					nColor = *(pFileData - i);
 				}
-				auto& Color = Palette[nColor];
-				auto dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
-				pColorData[-2] = pColorData[-1] = pColorData[0] = pColorData[1] = dwColor;
+
+				pColorData[-2] = pColorData[-1] = pColorData[0] = pColorData[1] = nColor;
 			}
 			for (int i = 0; i < nSize; i++)
 			{
-				auto pColorData = reinterpret_cast<PDWORD>(pTextureData);
+				auto pColorData = reinterpret_cast<PBYTE>(pTextureData);
 				auto nColor = *pFileData++;
-				auto& Color = Palette[nColor];
-				auto dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
 
 				if (nColor) {
-					pColorData[0] = dwColor;
+					pColorData[0] = nColor;
 					if (bFirstEnter && x + i >= 1) {
-						pColorData[-1] = dwColor;
+						pColorData[-1] = nColor;
 						if (x + i >= 2)
-							pColorData[-2] = dwColor;
+							pColorData[-2] = nColor;
 						bFirstEnter = false;
 					}
 					if (!bFirstEnter && x + i <= this->GetFileData()->Header.nBlocksWidth - 1 && (*pFileData == 0 || i == nSize - 1)) {
-						pColorData[1] = dwColor;
+						pColorData[1] = nColor;
 						if (x + i <= this->GetFileData()->Header.nBlocksWidth - 2)
-							pColorData[2] = dwColor;
+							pColorData[2] = nColor;
 						bFirstEnter = true;
 					}
 				}
-				pTextureData += sizeof D3DCOLOR;
+				pTextureData++;
 			}
 		}
 
@@ -519,7 +513,7 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 			continue;
 
 		if (FAILED(pDevice->CreateTexture(ExtraSizeRect.right, ExtraSizeRect.bottom, 0, NULL, 
-			D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &pExtraTexture, nullptr)))
+			D3DFMT_L8, D3DPOOL_MANAGED, &pExtraTexture, nullptr)))
 		{
 			SAFE_RELEASE(pExtraTexture);
 			continue;
@@ -535,8 +529,8 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 		pFileData = this->GetExtraPixelData(i);
 		for (int nLine = 0; nLine < ExtraSizeRect.bottom; nLine++)
 		{
-			RtlZeroMemory(pData, ExtraSizeRect.right * sizeof D3DCOLOR);
-			auto pColorData = reinterpret_cast<PDWORD>(pData);
+			RtlZeroMemory(pData, ExtraSizeRect.right);
+			auto pColorData = reinterpret_cast<PBYTE>(pData);
 			bool bEnter;
 
 			bEnter = true;
@@ -544,20 +538,18 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 			{
 				if (auto nColor = *pFileData++)
 				{
-					auto& Color = Palette[nColor];
-					auto dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
-					pColorData[i] = dwColor;
+					pColorData[i] = nColor;
 					if (bEnter) {
 						if (i >= 1)
-							pColorData[i - 1] = dwColor;
+							pColorData[i - 1] = nColor;
 						if (i >= 2)
-							pColorData[i - 2] = dwColor;
+							pColorData[i - 2] = nColor;
 						bEnter = false;
 					}
 					if (!bEnter && *pFileData == 0 && i < ExtraSizeRect.right - 1) {
-						pColorData[i + 1] = dwColor;
+						pColorData[i + 1] = nColor;
 						if (i < ExtraSizeRect.right - 2)
-							pColorData[i + 2] = dwColor;
+							pColorData[i + 2] = nColor;
 						bEnter = true;
 					}
 				}
@@ -575,7 +567,7 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette & Palette)
 	return this->CellTextures.size() == this->GetValidBlockCount();
 }
 
-bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, int nTileIndex, int &OutTileIndex, int&OutExtraIndex)
+bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, int nPaletteID, int nTileIndex, int &OutTileIndex, int&OutExtraIndex)
 {
 	OutTileIndex = OutExtraIndex = 0;
 
@@ -603,6 +595,10 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 
 	pTexture = this->FindCellTexture(nTileIndex);
 	if (!pTexture)
+		return false;
+
+	auto palette = Palette::FindPaletteByID(nPaletteID);
+	if (!palette)
 		return false;
 
 	this->GetWholeRectWithHeight(CoordsRect);
@@ -707,6 +703,7 @@ DrawScene:
 		//this->AddTextureAtPosition(Position, pTexture);
 
 		PaintingStruct::InitializePaintingStruct(PaintObject, pVertexBuffer, Position, pTexture);
+		PaintObject.SetPlainArtAttributes(palette->GetPaletteTexture());
 		OutTileIndex =  this->CommitOpaqueObject(PaintObject);
 	}
 
@@ -716,6 +713,7 @@ DrawScene:
 		//this->AddExtraTextureAtPosition(Position, pExtraTexture);
 		PaintingStruct::InitializePaintingStruct(PaintObject, pExtraVertexBuffer, Position/* - HeightPoint*/, pExtraTexture);
 		PaintObject.SetCompareOffset(-HeightPoint);
+		PaintObject.SetPlainArtAttributes(palette->GetPaletteTexture());
 		OutExtraIndex = this->CommitTransperantObject(PaintObject);
 	}
 	

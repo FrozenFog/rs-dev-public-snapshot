@@ -46,6 +46,8 @@ struct PaintingStruct
 
 	//for shps & tmps and should be released by class
 	LPDIRECT3DTEXTURE9 pTexture;
+	LPDIRECT3DTEXTURE9 pPaletteTexture;
+	D3DXVECTOR4 ShaderRemapColor;
 	bool bIsShadow;
 
 	//for vxl colorbuffer only
@@ -66,6 +68,7 @@ struct PaintingStruct
 	bool IsWithinSight();
 	void SetCompareOffset(D3DXVECTOR3 Offset);
 	void SetColorCoefficient(D3DXVECTOR4 Coefficient);
+	void SetPlainArtAttributes(LPDIRECT3DTEXTURE9 pPaletteTexture, D3DXVECTOR4 ShaderRemap = D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
 };
 
 class DrawObject

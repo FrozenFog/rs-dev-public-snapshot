@@ -46,7 +46,7 @@ struct VxlFileHeader
 	UINT nBodySize;
 	BYTE nRemapStartIndex;
 	BYTE nRemapEndIndex;
-	Palette ContainedPalette;
+	ColorStruct ContainedPalette[256];
 
 	void LoadFromBuffer(PBYTE pBuffer);
 };
@@ -103,8 +103,8 @@ struct VxlLimbBody
 class VxlFile : public DrawObject
 {
 public:
-	static Palette TSNormals;
-	static Palette RANormals;
+	//static Palette TSNormals;
+	//static Palette RANormals;
 	static D3DXVECTOR3 LightReversed;
 
 	static std::unordered_map<int, std::unique_ptr<VxlFile>> FileObjectTable;
