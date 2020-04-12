@@ -280,6 +280,13 @@ namespace RelertSharp.Utils
         {
            return new Point(now.X - pre.X, now.Y - pre.Y);
         }
+        public static void DebugSave(byte[] data, string filename)
+        {
+            System.IO.FileStream fs = new System.IO.FileStream(filename, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+            fs.Write(data, 0, data.Length);
+            fs.Flush();
+            fs.Dispose();
+        }
     }
 
 }

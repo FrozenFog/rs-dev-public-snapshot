@@ -78,6 +78,13 @@ namespace RelertSharp.IniSystem
             if (string.IsNullOrEmpty(img)) return GuessStructureName(ent.Name);
             else return GuessStructureName(img);
         }
+        private string GetArtName(string regname)
+        {
+            string img = this[regname]["Image"];
+            if (string.IsNullOrEmpty(img)) return regname;
+            if (HasIniEnt(img)) return img;
+            else return regname;
+        }
         #endregion
 
 
@@ -87,6 +94,12 @@ namespace RelertSharp.IniSystem
             if (!HasIniEnt(regid)) return GlobalCsf[regid].ContentString;
             string uiname = this[regid]["UIName"];
             return GlobalCsf[uiname].ContentString;
+        }
+        public string GetPcxName(string regid)
+        {
+            string art = GetArtName(regid);
+            if (string.IsNullOrEmpty(this[art]["CameoPCX"])) return "xxicon.shp";
+            return this[art]["CameoPCX"];
         }
         public string GetCustomPaletteName(string nameid)
         {

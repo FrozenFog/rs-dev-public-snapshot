@@ -160,7 +160,7 @@ namespace RelertSharp.FileSystem
 
 
         #region Public Calls - ShpFrame
-        public bool IsNullFrame { get { return Offset == 0 || X == 0 || Y == 0; } }
+        public bool IsNullFrame { get { return Offset == 0 || Width == 0 || Height == 0; } }
         public ushort X { get; private set; }
         public ushort Y { get; private set; }
         public ushort Width { get; private set; }

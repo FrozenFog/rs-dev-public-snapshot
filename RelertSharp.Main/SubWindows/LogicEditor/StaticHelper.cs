@@ -14,6 +14,7 @@ namespace RelertSharp.SubWindows.LogicEditor
     {
         public static void LoadToObjectCollection(ListView dest, IEnumerable<ListViewItem> src)
         {
+            dest.Items.Clear();
             dest.BeginUpdate();
             if (src.Count() > 0)
             {

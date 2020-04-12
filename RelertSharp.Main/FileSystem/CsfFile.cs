@@ -47,7 +47,7 @@ namespace RelertSharp.FileSystem
                 {
                     int _numPairs = ReadInt32();
                     int _lenLblName = ReadInt32();
-                    string labelName = ReadString(_lenLblName);
+                    string labelName = ReadString(_lenLblName).ToLower();
                     int _subidentity = ReadInt32();
                     int _lenLblValue = ReadInt32();
                     byte[] _value = ReadBytes(_lenLblValue * 2);

@@ -97,9 +97,11 @@ Custom2Theater=
 Custom3Theater=
 
 [StringTable]
-0=stringtable10
-1=stringtable11
-2=ra2md
+0=ra2
+1=ra2md
+2=stringtable09
+3=stringtable10
+4=stringtable11
 
 [Triggers]
 UselessEvents=3

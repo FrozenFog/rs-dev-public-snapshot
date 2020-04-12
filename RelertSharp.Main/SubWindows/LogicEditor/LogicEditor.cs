@@ -103,8 +103,8 @@ namespace RelertSharp.SubWindows.LogicEditor
             foreach (TechnoPair techno in technoPairs)
                 if (!string.IsNullOrEmpty(techno.UIName))
                     techno.ResetAbst(TechnoPair.AbstractType.CsfName, TechnoPair.IndexType.RegName);
-            technoPairs.Sort((x, y) => (x.RegName.CompareTo(y.RegName)));
-            StaticHelper.LoadToObjectCollection(cbbTaskCurType, technoPairs);
+            technoPairs.Sort((x, y) => x.RegName.CompareTo(y.RegName));
+            StaticHelper.LoadToObjectCollection(cbbTaskType, technoPairs);
         }
         private void LoadScriptList()
         {
@@ -283,13 +283,20 @@ namespace RelertSharp.SubWindows.LogicEditor
         }
         private void UpdateTaskforceContent()
         {
+            imglstPcx.Images.Clear();
             TaskforceItem taskforce = lbxTaskList.SelectedItem as TaskforceItem;
+            Dictionary<string, Image> dict = GlobalVar.GlobalDir.GetPcxImages(taskforce.MemberPcxNames);
+            foreach (string key in dict.Keys)
+            {
+                imglstPcx.Images.Add(key, dict[key]);
+            }
             txbTaskName.Text = taskforce.Name;
-            txbTaskGroup.Text = taskforce.Group.ToString();
-            var mems = taskforce.MemberData;
-            List<TaskforceShowItem> memList = new List<TaskforceShowItem>();
-            foreach (var i in mems) memList.Add(new TaskforceShowItem(i));
-            StaticHelper.LoadToObjectCollection(lbxTaskMemList, memList);
+            mtxbTaskGroup.Text = taskforce.Group.ToString();
+            txbTaskID.Text = taskforce.ID;
+            IEnumerable<TaskforceUnit> units = taskforce.Members.Values;
+            IEnumerable<ListViewItem> items = TaskforceItem.ToListViewItems(units);
+            ListViewItem item = new ListViewItem();
+            StaticHelper.LoadToObjectCollection(lvTaskforceUnits, items);
         }
         #endregion
 
