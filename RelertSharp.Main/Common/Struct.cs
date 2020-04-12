@@ -89,6 +89,10 @@ namespace RelertSharp.Common
         {
             return new Vec3(X, Y, Z + 0.1f);
         }
+        public Vec3 MoveX(float delta)
+        {
+            return new Vec3(X + delta, Y, Z);
+        }
         public static Vec3 FromXYZ(I3dLocateable src)
         {
             return new Vec3() { X = src.X, Y = src.Y, Z = src.Z };

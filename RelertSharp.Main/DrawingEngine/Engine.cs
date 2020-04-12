@@ -51,9 +51,9 @@ namespace RelertSharp.DrawingEngine
 
 
         #region Public Methods - Engine
-        public bool Initialize(IntPtr ptr)
+        public bool Initialize(IntPtr ptr, Font font)
         {
-            return CppExtern.Scene.SetUpScene(ptr) && CppExtern.Scene.ResetSceneView();
+            return CppExtern.Scene.SetUpScene(ptr) && CppExtern.Scene.ResetSceneView() && CppExtern.Scene.SetSceneFont(font.Name, (int)font.Size);
         }
         #region Draw
         public bool DrawObject(InfantryItem inf, int height, uint color)
@@ -169,7 +169,7 @@ namespace RelertSharp.DrawingEngine
         }
         public bool DrawWaypoint(WaypointItem waypoint, int height)
         {
-            DrawableMisc src = new DrawableMisc(MapObjectType.Waypoint, "");
+            DrawableMisc src = new DrawableMisc(MapObjectType.Waypoint, waypoint.Num);
             src.pSelf = Buffer.Files.WaypointBase;
             PresentMisc dest = new PresentMisc(MapObjectType.Waypoint, waypoint, height);
             Vec3 pos = ToVec3Iso(dest).Rise() + 100 * _generalOffset;
@@ -611,6 +611,7 @@ namespace RelertSharp.DrawingEngine
                 if (!src.IsTiberiumOverlay && 
                     src.MiscType != MapObjectType.Smudge &&
                     src.MiscType != MapObjectType.Celltag) dest.pSelfShadow = RenderAndPresent(src.pShadow, pos.Rise(), frame + shadow / 2, color, pPal, ShpFlatType.FlatGround, true);
+                if (src.MiscType == MapObjectType.Waypoint) dest.pWpNum = CppExtern.ObjectUtils.CreateStringObjectAtScene(pos.MoveX(_15SQ2 * -1), 0x0000FFFF, src.NameID);
             }
 
             return dest.IsValid;

@@ -78,7 +78,6 @@
     <Compile Include="DrawingEngine\Presenting\PresentStructure.cs" />
     <Compile Include="DrawingEngine\Presenting\PresentTile.cs" />
     <Compile Include="DrawingEngine\Presenting\PresentUnit.cs" />
-    <Compile Include="DrawingEngine\Struct.cs" />
     <Compile Include="Encoding\AudEncoding.cs" />
     <Compile Include="Encoding\Blowfish.cs" />
     <Compile Include="Encoding\CsfEncoding.cs" />

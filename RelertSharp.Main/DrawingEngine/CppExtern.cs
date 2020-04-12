@@ -13,6 +13,8 @@ namespace RelertSharp.DrawingEngine
         public static class Scene
         {
             [DllImport("CncVxlRenderText.dll")]
+            public static extern bool SetSceneFont(string fontName, int size);
+            [DllImport("CncVxlRenderText.dll")]
             public static extern void ScenePositionToClientPosition(Vec3 pos, ref Pnt result);
             [DllImport("CncVxlRenderText.dll")]
             public static extern void ClientPositionToScenePosition(Pnt pos, ref Vec3 result);
@@ -81,6 +83,8 @@ namespace RelertSharp.DrawingEngine
             public static extern bool CreateTmpObjectAtScene(int idTmp, Vec3 pos, int pPal, int tileIndex, ref int outTileIndex, ref int outExIndex);
             [DllImport("CncVxlRenderText.dll")]
             public static extern int CreateShpObjectAtScene(int idShp, Vec3 pos, int idFrame, int idPal, uint dwRemapColor, int flatType, int foundationX, int foundationY, int height, bool isShadow);
+            [DllImport("CncVxlRenderText.dll")]
+            public static extern int CreateStringObjectAtScene(Vec3 pos, uint color, string content);
             [DllImport("CncVxlRenderText.dll")]
             public static extern void RemoveObjectFromScene(int id);
             [DllImport("CncVxlRenderText.dll")]
