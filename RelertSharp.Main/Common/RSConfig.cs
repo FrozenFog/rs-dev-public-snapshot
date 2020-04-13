@@ -29,8 +29,6 @@ namespace RelertSharp.Common
         private void LoadAttribute()
         {
             BagNameList = this["SoundConfigs"].GetPair("Bags").ParseStringList();
-            GamePath = this["General"]["GamePath"];
-            if (!GamePath.EndsWith("\\")) GamePath += "\\";
             RulesName = this["INI"]["RulesFileName"];
             ArtName = this["INI"]["ArtFileName"];
             SoundName = this["INI"]["SoundFileName"];
@@ -161,7 +159,15 @@ namespace RelertSharp.Common
         public string ThemeName { get; private set; }
         public string AiName { get; private set; }
         public string EvaName { get; private set; }
-        public string GamePath { get; private set; }
+        public string GamePath
+        {
+            get
+            {
+                string p = this["General"]["GamePath"];
+                if (!p.EndsWith("\\")) return p + "\\";
+                return p;
+            }
+        }
         public string ConfigName { get; private set; }
         public string[] BagNameList { get; private set; }
         public List<string> DeactiveAnimList { get; private set; }

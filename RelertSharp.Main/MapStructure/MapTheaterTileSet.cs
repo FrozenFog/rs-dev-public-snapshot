@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 using RelertSharp.Common;
 using RelertSharp.IniSystem;
+using RelertSharp.FileSystem;
 using static RelertSharp.Common.GlobalVar;
 
 namespace RelertSharp.MapStructure
@@ -12,11 +14,13 @@ namespace RelertSharp.MapStructure
     public class MapTheaterTileSet
     {
         private List<string> tileNameIndex = new List<string>();
+        private Dictionary<int, TileAbstract> tileabstract;
 
 
         #region Ctor - MapTheaterTileSet
         public MapTheaterTileSet(TheaterType _type)
         {
+            tileabstract = new Dictionary<int, TileAbstract>();
             string _theater = "";
             switch (_type)
             {
@@ -83,6 +87,26 @@ namespace RelertSharp.MapStructure
         {
             return string.Format("{0}.{1}", name.ToLower(), TheaterSub);
         }
+        public TileAbstract GetTileAbstract(int tileindex)
+        {
+            TileAbstract abs;
+            if (!tileabstract.Keys.Contains(tileindex))
+            {
+                abs = new TileAbstract();
+                string name = this[tileindex];
+                TmpFile tmp = new TmpFile(GlobalDir.GetRawByte(name), name);
+                for (int i = 0; i < tmp.Images.Count; i++)
+                {
+                    TileAbstract.SubTileAbstract sub = new TileAbstract.SubTileAbstract();
+                    sub.ColorLeft = tmp[i].ColorRadarLeft;
+                    sub.ColorRight = tmp[i].ColorRadarRight;
+                    abs[i] = sub;
+                }
+                tileabstract[tileindex] = abs;
+            }
+            else abs = tileabstract[tileindex];
+            return abs;
+        }
         #endregion
 
 
@@ -97,5 +121,36 @@ namespace RelertSharp.MapStructure
             }
         }
         #endregion
+    }
+
+
+    public class TileAbstract
+    {
+        private Dictionary<int, SubTileAbstract> subtiles = new Dictionary<int, SubTileAbstract>();
+        public TileAbstract() { }
+
+
+        public SubTileAbstract this[int subindex]
+        {
+            get
+            {
+                if (subtiles.Keys.Contains(subindex)) return subtiles[subindex];
+                return subtiles[0];
+            }
+            set
+            {
+                subtiles[subindex] = value;
+            }
+        }
+
+
+        public class SubTileAbstract
+        {
+            public SubTileAbstract() { }
+
+            
+            public Color ColorLeft { get; set; }
+            public Color ColorRight { get; set; }
+        }
     }
 }
