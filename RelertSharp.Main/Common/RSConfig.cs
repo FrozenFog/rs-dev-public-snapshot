@@ -20,12 +20,30 @@ namespace RelertSharp.Common
             GetCiphedMixNameList();
             GetOldMixList();
             GetStringtable();
+            LoadAttribute();
         }
         #endregion
 
 
         #region Private Methods - RSConfig
-        
+        private void LoadAttribute()
+        {
+            BagNameList = this["SoundConfigs"].GetPair("Bags").ParseStringList();
+            GamePath = this["General"]["GamePath"];
+            if (!GamePath.EndsWith("\\")) GamePath += "\\";
+            RulesName = this["INI"]["RulesFileName"];
+            ArtName = this["INI"]["ArtFileName"];
+            SoundName = this["INI"]["SoundFileName"];
+            ThemeName = this["INI"]["ThemeFileName"];
+            AiName = this["INI"]["AIFileName"];
+            EvaName = this["INI"]["EvaFileName"];
+            ConfigName = this["General"]["ConfigName"];
+            IgnoreBuildingTheaterArt = this["DrawingConfig"].GetPair("IgnoreBuildingTheaterArt").ParseBool();
+
+            DeactiveAnimList = this["DrawingConfig"].GetPair("DeactivateAnim").ParseStringList().ToList();
+            DeactiveBibList = this["DrawingConfig"].GetPair("DeactivateBib").ParseStringList().ToList();
+            DeactiveShadow = this["DrawingConfig"].GetPair("DeactivateShadow").ParseStringList().ToList();
+        }
         private void LoadMixName(string type, List<string> _host)
         {
             foreach (string mixname in this[type].TakeValuesToList())
@@ -136,26 +154,19 @@ namespace RelertSharp.Common
 
 
         #region Public Calls - RSConfig
-        public string RulesName { get { return this["INI"]["RulesFileName"]; } }
-        public string ArtName { get { return this["INI"]["ArtFileName"]; } }
-        public string SoundName { get { return this["INI"]["SoundFileName"]; } }
-        public string ThemeName { get { return this["INI"]["ThemeFileName"]; } }
-        public string AiName { get { return this["INI"]["AIFileName"]; } }
-        public string EvaName { get { return this["INI"]["EvaFileName"]; } }
-        public string GamePath
-        {
-            get
-            {
-                string path = this["General"]["GamePath"];
-                if (path.EndsWith("\\")) return path;
-                else return path + "\\";
-            }
-        }
-        public string ConfigName { get { return this["General"]["ConfigName"]; } }
-        public string[] BagNameList { get { return this["SoundConfigs"].GetPair("Bags").ParseStringList(); } }
-        public List<string> DeactiveAnimList { get { return this["DrawingConfig"].GetPair("DeactivateAnim").ParseStringList().ToList(); } }
-        public List<string> DeactiveBibList { get { return this["DrawingConfig"].GetPair("DeactivateBib").ParseStringList().ToList(); } }
-        public List<string> DeactiveShadow { get { return this["DrawingConfig"].GetPair("DeactivateShadow").ParseStringList().ToList(); } }
+        public bool IgnoreBuildingTheaterArt { get; private set; }
+        public string RulesName { get; private set; }
+        public string ArtName { get; private set; }
+        public string SoundName { get; private set; }
+        public string ThemeName { get; private set; }
+        public string AiName { get; private set; }
+        public string EvaName { get; private set; }
+        public string GamePath { get; private set; }
+        public string ConfigName { get; private set; }
+        public string[] BagNameList { get; private set; }
+        public List<string> DeactiveAnimList { get; private set; }
+        public List<string> DeactiveBibList { get; private set; }
+        public List<string> DeactiveShadow { get; private set; }
         public List<string> StringtableList { get; private set; }
         public List<string> MixNameList { get; private set; }
         public List<string> CiphedMix { get; private set; }

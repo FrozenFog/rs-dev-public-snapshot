@@ -17,7 +17,7 @@ namespace RelertSharp.IniSystem
         {
             get
             {
-                switch (Common.GlobalVar.CurrentTheater)
+                switch (CurrentTheater)
                 {
                     case TheaterType.Desert:
                         return 'D';
@@ -66,10 +66,15 @@ namespace RelertSharp.IniSystem
         private string GuessStructureName(string id)
         {
             if (string.IsNullOrEmpty(id)) return "";
-            string name = Replace(id + ".shp", 1, _suff);
+            string name = id + ".shp";
+            string gname = Replace(name, 1, 'G');
+            if (!GlobalConfig.IgnoreBuildingTheaterArt)
+            {
+                name = Replace(id + ".shp", 1, _suff);
+                if (GlobalDir.HasFile(name)) return name;
+            }
+            if (GlobalDir.HasFile(gname)) return gname;
             if (GlobalDir.HasFile(name)) return name;
-            if (GlobalDir.HasFile(Replace(name, 1, 'G'))) return Replace(name, 1, 'G');
-            if (GlobalDir.HasFile(id + ".shp")) return id + ".shp";
             return "";
         }
         private string GuessStructureName(INIEntity ent)
@@ -77,6 +82,16 @@ namespace RelertSharp.IniSystem
             string img = ent["Image"];
             if (string.IsNullOrEmpty(img)) return GuessStructureName(ent.Name);
             else return GuessStructureName(img);
+        }
+        private void VxlFormating(string id, bool vxl, ref string name, ref string tur, ref string barl)
+        {
+            if (vxl)
+            {
+                tur = id + "tur.vxl";
+                barl = id + "barl.vxl";
+                name = id + ".vxl";
+            }
+            else name = id + ".shp";
         }
         #endregion
 
@@ -90,37 +105,26 @@ namespace RelertSharp.IniSystem
         }
         public string GetCustomPaletteName(string nameid)
         {
-            string art = this[nameid]["Image"];
-            if (!string.IsNullOrEmpty(art) && art.ToLower() != nameid.ToLower())
-            {
-                if (HasIniEnt(art))
-                {
-                    nameid = art;
-                }
-            }
+            string artname = GetArtEntityName(nameid);
+            INIEntity art = Art[artname];
 
-            string pal = this[nameid]["Palette"];
+            string pal = art["Palette"];
             if (string.IsNullOrEmpty(pal)) return pal;
             else return string.Format("{0}{1}.{2}", pal, TileDictionary.TheaterSub, "pal");
         }
         public void GetBuildingShapeData(string nameid, out int height, out int foundX, out int foundY)
         {
+            string artname = GetArtEntityName(nameid);
+            INIEntity art = Art[artname];
             string img = this[nameid]["Image"];
-            if (!string.IsNullOrEmpty(img) && img.ToLower() != nameid.ToLower())
-            {
-                if (HasIniEnt(img))
-                {
-                    nameid = img;
-                }
-            }
 
-            string foundation = (string)this[nameid]["Foundation"].ToLower();
+            string foundation = (string)art["Foundation"].ToLower();
             if (!string.IsNullOrEmpty(foundation))
             {
                 if (foundation == "custom")
                 {
-                    foundX = this[nameid].GetPair("Foundation.X").ParseInt(1);
-                    foundY = this[nameid].GetPair("Foundation.Y").ParseInt(1);
+                    foundX = art.GetPair("Foundation.X").ParseInt(1);
+                    foundY = art.GetPair("Foundation.Y").ParseInt(1);
                 }
                 else
                 {
@@ -134,16 +138,16 @@ namespace RelertSharp.IniSystem
                 foundX = 1;
                 foundY = 1;
             }
-            height = this[nameid].GetPair("Height").ParseInt(5) + 3;
+            height = art.GetPair("Height").ParseInt(5) + 3;
         }
         public bool IsVxl(string id)
         {
-            return ParseBool(this[id]["Voxel"]);
+            return ParseBool(Art[id]["Voxel"]);
         }
         public int GetFrameFromDirection(int direction, string nameID)
         {
-            string img = GetObjectImgName(nameID);
-            INIEntity sequence = this[this[img]["Sequence"]];
+            string art = GetArtEntityName(nameID);
+            INIEntity sequence = Art[Art[art]["Sequence"]];
             direction >>= 5;
             if (direction == 7) direction = 0;
             else direction++;
@@ -152,15 +156,15 @@ namespace RelertSharp.IniSystem
             int result = ready[0];
             return result + direction;
         }
-        public string GetObjectImgName(string nameID)
+        public string GetArtEntityName(string nameID, bool isinfantry = false)
         {
-            string img = this[nameID]["Image"];
-            if (string.IsNullOrEmpty(img)) img = nameID;
-            if (ParseBool(this[nameID]["AlternateTheaterArt"]))
+            string artname = this[nameID]["Image"];
+            if (string.IsNullOrEmpty(artname)) artname = nameID;
+            if (isinfantry && ParseBool(this[nameID]["AlternateTheaterArt"]))
             {
-                if (GlobalDir.HasFile(img + _suff + ".shp")) img += _suff;
+                if (GlobalDir.HasFile(artname + _suff + ".shp")) artname += _suff;
             }
-            return img;
+            return artname;
         }
         public Pnt GetVoxTurOffset(string id)
         {
@@ -172,97 +176,36 @@ namespace RelertSharp.IniSystem
                 Y = string.IsNullOrEmpty(y) ? 0 : int.Parse(y)
             };
         }
-        private void VxlFormating(string id, bool vxl, ref string name, ref string tur, ref string barl)
-        {
-            if (vxl)
-            {
-                tur = id + "tur.vxl";
-                barl = id + "barl.vxl";
-                name = id + ".vxl";
-            }
-            else name = id + ".shp";
-        }
         public string GetUnitImgName(string id, ref string tur, ref string barl, ref bool vxl)
         {
-            string img = this[id]["Image"];
-            if (string.IsNullOrEmpty(img))
-            {
-                vxl = IsVxl(id);
-                VxlFormating(id, vxl, ref img, ref tur, ref barl);
-            }
-            else
-            {
-                if (IniDict.Keys.Contains(img))
-                {
-                    string subimg = this[img]["Image"];
-                    if (string.IsNullOrEmpty(subimg))
-                    {
-                        vxl = IsVxl(img);
-                        VxlFormating(img, vxl, ref img, ref tur, ref barl);
-                    }
-                    else
-                    {
-                        vxl = IsVxl(subimg);
-                        VxlFormating(subimg, vxl, ref img, ref tur, ref barl);
-                    }
-                }
-                else
-                {
-                    vxl = IsVxl(img);
-                    VxlFormating(img, vxl, ref img, ref tur, ref barl);
-                }
-            }
-            return img;
+            string artname = GetArtEntityName(id);
+            INIEntity art = Art[artname];
+            vxl = IsVxl(artname);
+            VxlFormating(artname, vxl, ref artname, ref tur, ref barl);
+            return artname;
         }
         public INIEntity GetBuildingTurret(string nameid)
         {
-            INIEntity art = this[nameid];
-            string img = this[nameid]["Image"];
-            string turretAnim = art["TurretAnim"];
-            if (!string.IsNullOrEmpty(turretAnim)) return this[turretAnim];
-            if (string.IsNullOrEmpty(img)) art = this[nameid];
-            else
-            {
-                if (HasIniEnt(img)) art = this[img];
-                else art = this[nameid];
-            }
-            return this[art["TurretAnim"]];
+            string turanim = this[nameid]["TurretAnim"];
+            return Art[turanim];
         }
         public string GetObjectImgName(string id, ref string anim, ref string turret, ref string bib, ref bool isVox, ref string idle, ref string anim2, ref string anim3, ref string barl, ref string super,
             out short nSelf, out short nAnim, out short nTurret, out short nBib, out short nIdle, out short nAnim2, out short nAnim3, out short nSuper)
         {
-            string img = this[id]["Image"];
-            INIEntity art;
-            if (string.IsNullOrEmpty(img))
+            string artname = GetArtEntityName(id);
+            INIEntity art = Art[artname];
+            string img;
+            if (string.IsNullOrEmpty(art.Name)) img = id + ".shp";
+            else img = GuessStructureName(art);
+            if (!GlobalConfig.DeactiveAnimList.Contains(artname))
             {
-                art = this[id];
-                img = GuessStructureName(id);
-                if (string.IsNullOrEmpty(img)) img = id + ".shp";
+                anim = GuessStructureName(Art[art["ActiveAnim"]]);
+                anim2 = GuessStructureName(Art[art["ActiveAnimTwo"]]);
+                anim3 = GuessStructureName(Art[art["ActiveAnimThree"]]);
             }
-            else
-            {
-                if (IniDict.Keys.Contains(img))
-                {
-                    art = this[img];
-                    string subimg = GuessStructureName(this[img]);
-                    if (string.IsNullOrEmpty(subimg)) subimg = GuessStructureName(img);
-                    img = subimg;
-                }
-                else
-                {
-                    img = GuessStructureName(img);
-                    art = this[id];
-                }
-            }
-            if (!GlobalConfig.DeactiveAnimList.Contains(art.Name))
-            {
-                anim = GuessStructureName(this[art["ActiveAnim"]]);
-                anim2 = GuessStructureName(this[art["ActiveAnimTwo"]]);
-                anim3 = GuessStructureName(this[art["ActiveAnimThree"]]);
-            }
-            idle = GuessStructureName(this[art["IdleAnim"]]);
-            super = GuessStructureName(this[art["SuperAnim"]]);
-            if (!GlobalConfig.DeactiveBibList.Contains(art.Name))
+            idle = GuessStructureName(Art[art["IdleAnim"]]);
+            super = GuessStructureName(Art[art["SuperAnim"]]);
+            if (!GlobalConfig.DeactiveBibList.Contains(artname))
             {
                 bib = GuessStructureName(art["BibShape"]);
             }
@@ -272,7 +215,7 @@ namespace RelertSharp.IniSystem
                 turret = this[id]["TurretAnim"] + ".vxl";
                 barl = turret.ToLower().Replace("tur", "barl");
             }
-            else turret = GuessStructureName(this[this[id]["TurretAnim"]]);
+            else turret = GuessStructureName(Art[this[id]["TurretAnim"]]);
 
             nSelf = GlobalDir.GetShpFrameCount(img);
             if (!isVox) nTurret = GlobalDir.GetShpFrameCount(turret);
@@ -288,13 +231,13 @@ namespace RelertSharp.IniSystem
         public string GetObjectImgName(ObjectItemBase inf, out short frame)
         {
             frame = 0;
-            string img = GetObjectImgName(inf.NameID) + ".shp";
+            string img = GetArtEntityName(inf.NameID) + ".shp";
             frame = GlobalDir.GetShpFrameCount(img);
             return img;
         }
         public void LoadArt(INIFile f)
         {
-            Override(f.IniData);
+            Art = f;
         }
         public string GetOverlayName(byte overlayid)
         {
@@ -305,6 +248,7 @@ namespace RelertSharp.IniSystem
 
         #region Public Calls - Rules
         public Dictionary<string, INIEntity> MapIniData { get; set; }
+        public INIFile Art { get; private set; }
         public List<TechnoPair> VehicleList
         {
             get
@@ -391,6 +335,17 @@ namespace RelertSharp.IniSystem
                 result.AddRange(GetTechnoPairs("VehicleTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
                 result.AddRange(GetTechnoPairs("AircraftTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
                 result.AddRange(GetTechnoPairs("BuildingTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
+                return result;
+            }
+        }
+        public List<TechnoPair> TaskforceUnitAvailableList
+        {
+            get
+            {
+                List<TechnoPair> result = new List<TechnoPair>();
+                result.AddRange(GetTechnoPairs("InfantryTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
+                result.AddRange(GetTechnoPairs("VehicleTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
+                result.AddRange(GetTechnoPairs("AircraftTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
                 return result;
             }
         }

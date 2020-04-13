@@ -406,14 +406,16 @@ namespace RelertSharp.DrawingEngine
                 bool rubble = ParseBool(GlobalRules[name]["IsRubble"]);
                 bool wall = ParseBool(GlobalRules[name]["Wall"]);
                 string img = GlobalRules[name]["Image"];
+                string land = GlobalRules[name]["Land"];
 
                 if (!string.IsNullOrEmpty(img) && name != img) filename = img;
                 if (overrides) flat = false;
                 if (!rubble)
                 {
-                    if (!_zeroLandType.Contains((string)GlobalRules[name]["Land"]))
+                    if (!_zeroLandType.Contains(land))
                     {
-                        flat = false;
+                        if (land == "Railroad") flat = true;
+                        else flat = false;
                         d.IsZeroVec = false;
                     }
                 }
@@ -607,11 +609,12 @@ namespace RelertSharp.DrawingEngine
         {
             if (src.pSelf != 0)
             {
+                if (type == ShpFlatType.FlatGround) pos = pos.Rise();
                 dest.pSelf = RenderAndPresent(src.pSelf, pos, frame, color, pPal, type);
                 if (!src.IsTiberiumOverlay && 
                     src.MiscType != MapObjectType.Smudge &&
                     src.MiscType != MapObjectType.Celltag) dest.pSelfShadow = RenderAndPresent(src.pShadow, pos.Rise(), frame + shadow / 2, color, pPal, ShpFlatType.FlatGround, true);
-                if (src.MiscType == MapObjectType.Waypoint) dest.pWpNum = CppExtern.ObjectUtils.CreateStringObjectAtScene(pos.MoveX(_15SQ2 * -1), 0x0000FFFF, src.NameID);
+                //if (src.MiscType == MapObjectType.Waypoint) dest.pWpNum = CppExtern.ObjectUtils.CreateStringObjectAtScene(pos.MoveX(_15SQ2 * -1), 0x0000FFFF, src.NameID);
             }
 
             return dest.IsValid;
