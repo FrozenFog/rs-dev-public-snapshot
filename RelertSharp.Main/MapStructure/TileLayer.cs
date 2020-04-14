@@ -73,8 +73,10 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - TileLayer
-        public Bitmap GenerateShot(int width, int height)
+        public Bitmap GenerateShot(Rectangle rect)
         {
+            int width = rect.Width;
+            int height = rect.Height;
             Bitmap bmp = new Bitmap(width * 2, height * 2);
             int xmin = 1;
             int ymax = width;
