@@ -51,9 +51,9 @@ namespace RelertSharp.DrawingEngine
 
 
         #region Public Methods - Engine
-        public bool Initialize(IntPtr ptr, Font font)
+        public bool Initialize(IntPtr ptr)
         {
-            return CppExtern.Scene.SetUpScene(ptr) && CppExtern.Scene.ResetSceneView() && CppExtern.Scene.SetSceneFont(font.Name, (int)font.Size);
+            return CppExtern.Scene.SetUpScene(ptr) && CppExtern.Scene.ResetSceneView();
         }
         #region Draw
         public bool DrawObject(InfantryItem inf, int height, uint color)
