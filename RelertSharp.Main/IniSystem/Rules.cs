@@ -184,16 +184,6 @@ namespace RelertSharp.IniSystem
                 Y = string.IsNullOrEmpty(y) ? 0 : int.Parse(y)
             };
         }
-        private void VxlFormating(string id, bool vxl, ref string name, ref string tur, ref string barl)
-        {
-            if (vxl)
-            {
-                tur = id + "tur.vxl";
-                barl = id + "barl.vxl";
-                name = id + ".vxl";
-            }
-            else name = id + ".shp";
-        }
         public string GetUnitImgName(string id, ref string tur, ref string barl, ref bool vxl)
         {
             string artname = GetArtEntityName(id);
