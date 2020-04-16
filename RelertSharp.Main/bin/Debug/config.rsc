@@ -105,5 +105,10 @@ Custom3Theater=
 
 [Triggers]
 UselessEvents=3
+
 [DrawingConfig]
+IgnoreBuildingTheaterArt=true
+IgnoreInfantryTheaterArt=false
 DeactivateAnim=YAPOWR
+DeactivateShadow=GAHPAD
+DeactivateBib=GAHPAD

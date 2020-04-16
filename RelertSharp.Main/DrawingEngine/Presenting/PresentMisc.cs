@@ -36,6 +36,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         public MapObjectType MiscType { get; private set; }
         public bool IsTiberiumOverlay { get; set; }
         public bool IsValid { get { return pSelf != 0; } }
+        public int pWpNum { get; set; }
         #endregion
     }
 }

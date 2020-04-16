@@ -32,8 +32,8 @@ namespace RelertSharp.DrawingEngine.Presenting
         #region Protected - PresentBase
         protected virtual void RemoveProp(int pointer, int pshadow = 0)
         {
-            if (pointer != 0) CppExtern.ObjectUtils.RemoveObjectAtScene(pointer);
-            if (pshadow != 0) CppExtern.ObjectUtils.RemoveObjectAtScene(pshadow);
+            if (pointer != 0) CppExtern.ObjectUtils.RemoveObjectFromScene(pointer);
+            if (pshadow != 0) CppExtern.ObjectUtils.RemoveObjectFromScene(pshadow);
         }
         protected virtual void SetColor(int pointer, Vec4 color)
         {

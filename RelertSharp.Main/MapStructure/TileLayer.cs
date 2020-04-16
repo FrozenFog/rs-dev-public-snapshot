@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.IO;
 using RelertSharp.Encoding;
 using System.Collections;
+using RelertSharp.FileSystem;
 using RelertSharp.Utils;
 using RelertSharp.Common;
 
@@ -45,12 +46,71 @@ namespace RelertSharp.MapStructure
 
 
         #region Private Methods - TileLayer
-
+        private void LayTileWeb(int xmin, int ymax, int width, int height)
+        {
+            for (int i = 0; i < height; i++)
+            {
+                int x = xmin;
+                int y = ymax;
+                for (int j = 0; j < width; j++)
+                {
+                    if (this[x, y] == null) this[x, y] = Tile.EmptyTileAt(x, y);
+                    x++;
+                    y--;
+                }
+                xmin++;
+                ymax++;
+            }
+        }
+        private void SetTilePixelInPreview(Bitmap dest, Tile t, int bmpx, int bmpy)
+        {
+            TileAbstract abs = GlobalVar.TileDictionary.GetTileAbstract(t.TileIndex);
+            var sub = abs[t.SubIndex];
+            dest.SetPixel(bmpx, bmpy, sub.ColorLeft);
+            dest.SetPixel(bmpx + 1, bmpy, sub.ColorRight);
+        }
         #endregion
 
 
         #region Public Methods - TileLayer
-
+        public Bitmap GenerateShot(Rectangle rect)
+        {
+            int width = rect.Width;
+            int height = rect.Height;
+            Bitmap bmp = new Bitmap(width * 2, height * 2);
+            int xmin = 1;
+            int ymax = width;
+            for (int j = 0; j < height; j++)
+            {
+                int x = xmin;
+                int y = ymax;
+                for (int i = 0; i<width; i++)
+                {
+                    SetTilePixelInPreview(bmp, this[x, y], 2 * i, 2 * j);
+                    x++; y--;
+                }
+                xmin++; ymax++;
+            }
+            xmin = 2;
+            ymax = width;
+            for (int j = 0; j < height; j++)
+            {
+                int x = xmin;
+                int y = ymax;
+                for (int i = 0; i < width - 1; i++)
+                {
+                    SetTilePixelInPreview(bmp, this[x, y], 2 * i + 1, 2 * j + 1);
+                    x++;y--;
+                }
+                xmin++; ymax++;
+            }
+            return bmp;
+        }
+        public void FixEmptyTiles(int width, int height)
+        {
+            LayTileWeb(1, width, width, height);
+            LayTileWeb(2, width, width - 1, height);
+        }
         public bool HasTileOn(I3dLocateable pos)
         {
             Tile t = this[pos.X, pos.Y];
@@ -241,6 +301,10 @@ namespace RelertSharp.MapStructure
         public static Tile EmptyTile
         {
             get { return new Tile(0, 0, 65535, 0, 0, 0); }
+        }
+        public static Tile EmptyTileAt(int x, int y)
+        {
+            return new Tile((short)x, (short)y, 0, 0, 0, 0);
         }
         public short X16 { get; set; }
         public short Y16 { get; set; }

@@ -31,12 +31,12 @@ namespace RelertSharp.SubWindows.LogicEditor
 
 
         #region Ctor - LogicEditor
-        public LogicEditor(Map m)
+        public LogicEditor()
         {
             InitializeComponent();
             SetLanguage();
             InitControls();
-            map = m;
+            map = GlobalVar.CurrentMapDocument.Map;
             SetGlobal();
             
             StaticHelper.LoadToObjectCollection(cbbEventAbst, descriptCollection.Events);

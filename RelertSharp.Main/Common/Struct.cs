@@ -47,11 +47,11 @@ namespace RelertSharp.Common
         }
         public static Vec4 Transparency
         {
-            get { return new Vec4(1, 1, 1, 0.5f); }
+            get { return new Vec4(0.5f, 1, 0.5f, 0.6f); }
         }
         public static Vec4 DeTransparency
         {
-            get { return new Vec4(1, 1, 1, 2); }
+            get { return new Vec4(1, 1, 1, 1); }
         }
         public static Vec4 operator +(Vec4 a, Vec4 b)
         {
@@ -88,6 +88,10 @@ namespace RelertSharp.Common
         public Vec3 Rise()
         {
             return new Vec3(X, Y, Z + 0.1f);
+        }
+        public Vec3 MoveX(float delta)
+        {
+            return new Vec3(X + delta, Y, Z);
         }
         public static Vec3 FromXYZ(I3dLocateable src)
         {

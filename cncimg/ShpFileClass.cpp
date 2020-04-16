@@ -34,12 +34,9 @@ ShpFileClass::~ShpFileClass()
 
 void ShpFileClass::Clear()
 {
-	for (auto textures : this->FrameTextures) {
-		for (auto texture : textures.second) {
-			for (auto item : texture.second)
-				//SAFE_RELEASE(item);
-				CommitIsotatedTexture(item);
-		}
+	for (auto texture : this->FrameTextures) {
+		if (texture)
+			CommitIsotatedTexture(texture);
 	}
 	this->FrameTextures.clear();
 
@@ -122,6 +119,16 @@ bool ShpFileClass::HasCompression(int idxFrame)
 	return false;
 }
 
+bool ShpFileClass::IsFrameTextureLoaded(int idxFrame)
+{
+	auto& Frames = this->FrameTextures;
+
+	if (Frames.empty() || Frames.size() <= idxFrame)
+		return false;
+
+	return Frames[idxFrame] != nullptr;
+}
+
 RECT ShpFileClass::GetImageBounds()
 {
 	if (auto header = this->GetFileHeader()) {
@@ -164,42 +171,35 @@ void ShpFileClass::RemoveAllTextures(int nPaletteId, DWORD dwRemapColor)
 		texture->Release();
 	}
 	*/
-	this->FrameTextures[nPaletteId][dwRemapColor].clear();
+	this->FrameTextures.clear();
 }
 
-bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD dwRemapColor)
+bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int idxFrame)
 {
 	if (!this->IsLoaded() || !pDevice)
 		return false;
 
 	D3DLOCKED_RECT LockedRect;
-	D3DCOLOR* pTextureData;
+	PBYTE pTextureData;
 	PBYTE dwPointerBuffer;
 	LPDIRECT3DTEXTURE9 pTexture;
 	int nValidFrames, nNullFrames;
 
-	for (auto item : this->FrameTextures[nPaletteID][dwRemapColor]) {
-		DrawObject::CommitIsotatedTexture(item);
+	auto& Frames = this->FrameTextures;
+
+	if (Frames.empty()) {
+		Frames.resize(this->GetFrameCount());
+		ZeroMemory(Frames.data(), Frames.size() * sizeof LPDIRECT3DTEXTURE9);
 	}
 
-	this->RemoveAllTextures(nPaletteID, dwRemapColor);
-	this->FrameTextures[nPaletteID][dwRemapColor].resize(this->GetFrameCount());
-
-	Palette NewPalette;
-	if (auto palette = Palette::FindPaletteByID(nPaletteID)) {
-		NewPalette = *palette;
+	if (auto pExistTexture = Frames[idxFrame]) {
+		DrawObject::CommitIsotatedTexture(pExistTexture);
+		Frames[idxFrame] = nullptr;
 	}
-	else 
-		return false;
 
-	NewPalette.MakeRemapColor(dwRemapColor);
-
-	ZeroMemory(this->FrameTextures[nPaletteID][dwRemapColor].data(), 
-		this->FrameTextures[nPaletteID][dwRemapColor].size() * sizeof LPDIRECT3DTEXTURE9);
-
-	nNullFrames = 0;
-	for (int i = 0; i < this->GetFrameCount(); i++)
+	if (idxFrame < this->GetFrameCount() && idxFrame >= 0)
 	{
+		auto i = idxFrame;
 		auto bCompressed = this->HasCompression(i);
 		auto pData = this->GetFrameData(i);
 		auto Bounds = this->GetFrameBounds(i);
@@ -208,31 +208,30 @@ bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD
 		auto height = Bounds.bottom - Bounds.top;
 		
 		if (!pData)
-			continue;
+			return false;
 
 		if (!width || !height)
 		{
-			nNullFrames++;
-			continue;
+			return true;
 		}
 
-		if (FAILED(pDevice->CreateTexture(width, height, 0, NULL, D3DFMT_A8R8G8B8,
+		if (FAILED(pDevice->CreateTexture(width, height, 0, NULL, D3DFMT_L8,
 			D3DPOOL_MANAGED, &pTexture, nullptr))) 
 		{
 			SAFE_RELEASE(pTexture);
-			continue;
+			return false;
 		}
 
 		if (FAILED(pTexture->LockRect(0, &LockedRect, nullptr, NULL))) 
 		{
 			SAFE_RELEASE(pTexture);
-			continue;
+			return false;
 		}
 
-		pTextureData = reinterpret_cast<D3DCOLOR*>(LockedRect.pBits);
+		pTextureData = reinterpret_cast<PBYTE>(LockedRect.pBits);
 		for (int i = 0; i < height; i++) 
 		{
-			ZeroMemory(reinterpret_cast<PBYTE>(LockedRect.pBits) + i*LockedRect.Pitch, LockedRect.Pitch);
+			ZeroMemory(pTextureData + i*LockedRect.Pitch, width);
 		}
 
 		if (bCompressed) 
@@ -246,17 +245,14 @@ bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD
 				while (source < pData + size) 
 				{
 					if (auto ncolor = *source++) {
-						auto color = NewPalette[ncolor];
-						*dest++ = D3DCOLOR_XRGB(color.R, color.G, color.B);
+						*dest++ = ncolor;
 					}
 					else {
 						dest += *source++;
 					}
 				}
 				pData += size;
-				dwPointerBuffer = reinterpret_cast<PBYTE>(pTextureData);
-				dwPointerBuffer += LockedRect.Pitch;
-				pTextureData = reinterpret_cast<D3DCOLOR*>(dwPointerBuffer);
+				pTextureData += LockedRect.Pitch;
 			}
 		}
 		else 
@@ -265,34 +261,20 @@ bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD
 			{
 				auto source = pData;
 				auto dest = pTextureData;
-				for (int x = 0; x < width; x++)
-				{
-					if (auto ncolor = *source++)
-					{
-						auto color = NewPalette[ncolor];
-						*dest = D3DCOLOR_XRGB(color.R, color.G, color.B);
-					}
-					dest++;
-				}
+
+				RtlCopyMemory(dest, source, width);
+
 				pData += width;
-				dwPointerBuffer = reinterpret_cast<PBYTE>(pTextureData);
-				dwPointerBuffer += LockedRect.Pitch;
-				pTextureData = reinterpret_cast<D3DCOLOR*>(dwPointerBuffer);
+				pTextureData += LockedRect.Pitch;
 			}
 		}
 
 		pTexture->UnlockRect(0);
-		this->FrameTextures[nPaletteID][dwRemapColor][i] = pTexture;
-	}
-
-	nValidFrames = 0;
-	for (auto item : this->FrameTextures[nPaletteID][dwRemapColor]) {
-		if (item)
-			nValidFrames++;
+		Frames[i] = pTexture;
 	}
 
 	//D3DXSaveTextureToFile("destfile.png", D3DXIFF_PNG, this->FrameTextures[nPaletteID][dwRemapColor][0], nullptr);
-	return (this->GetFrameCount() - nNullFrames) == nValidFrames;
+	return IsFrameTextureLoaded(idxFrame);
 }
 
 int ShpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, int idxFrame, char bFlat, int nPaletteID, DWORD dwRemap,
@@ -301,19 +283,17 @@ int ShpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, i
 	if (!pDevice || idxFrame < 0 || idxFrame >= this->GetFrameCount())
 		return 0;
 
-	if (this->FrameTextures.find(nPaletteID) == this->FrameTextures.end())
+	if (this->FrameTextures.empty())
 		return 0;
 
-	if (this->FrameTextures[nPaletteID].find(dwRemap) == this->FrameTextures[nPaletteID].end())
-		return 0;
-
-	if (!this->FrameTextures[nPaletteID][dwRemap].size())
-		return 0;
-
-	auto pTexture = this->FrameTextures[nPaletteID][dwRemap][idxFrame];
+	auto pTexture = this->FrameTextures[idxFrame];
 	if (!pTexture)
 		return 0;
-	
+
+	auto palette = Palette::FindPaletteByID(nPaletteID);
+	if (!palette)
+		return false;
+
 	auto ImageBounds = this->GetImageBounds();
 	auto FrameBounds = this->GetFrameBounds(idxFrame);
 
@@ -421,5 +401,16 @@ int ShpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, i
 	if (VertexBuffer.size() == 6)
 		Object.SetCompareOffset(HeightPosition);
 
+	if (dwRemap == INVALID_COLOR_VALUE)
+	{
+		Object.SetPlainArtAttributes(palette->GetPaletteTexture());
+	}
+	else
+	{
+		float Red = (dwRemap & 0x000000FF) / 255.0f;
+		float Green = ((dwRemap & 0x0000FF00) >> 8) / 255.0f;
+		float Blue = ((dwRemap & 0x00FF0000) >> 16) / 255.0f;
+		Object.SetPlainArtAttributes(palette->GetPaletteTexture(), D3DXVECTOR4(Red, Green, Blue, 0.0));
+	}
 	return this->CommitTransperantObject(Object);
 }

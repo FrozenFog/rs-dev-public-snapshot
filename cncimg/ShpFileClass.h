@@ -52,13 +52,14 @@ public:
 	PBYTE GetFrameData(int idxFrame);
 	int GetFrameCount();
 	bool HasCompression(int idxFrame);
+	bool IsFrameTextureLoaded(int idxFrame);
 	RECT GetImageBounds();
 	RECT GetFrameBounds(int idxFrame);
 	ShpFrameHeader* GetFrameHeader(int idxFrame);
 	ShpFileHeader* GetFileHeader();
 
 	void RemoveAllTextures(int nPaletteId, DWORD dwRemapColor);
-	bool MakeTextures(LPDIRECT3DDEVICE9 pDevice, int nPaletteID, DWORD dwRemapColor);
+	bool MakeTextures(LPDIRECT3DDEVICE9 pDevice, int idxFrame);
 	int DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, int idxFrame, char bFlatType, int nPaletteID,
 		DWORD dwRemapColor, int nX, int nY, int nHeight, bool bDrawAsShadow);
 
@@ -68,5 +69,6 @@ private:
 	//std""vector<LPDIRECT3DTEXTURE9> RemapTextures;
 	//std::unordered_map<int, std::vector<LPDIRECT3DTEXTURE9>> FrameTextures;
 	//frames = f(Palette, Remap)
-	std::unordered_map<int, std::unordered_map<DWORD, std::vector<LPDIRECT3DTEXTURE9>>> FrameTextures;
+	//std::unordered_map<int, std::unordered_map<DWORD, std::vector<LPDIRECT3DTEXTURE9>>> FrameTextures;
+	std::vector<LPDIRECT3DTEXTURE9> FrameTextures;
 };

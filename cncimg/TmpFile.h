@@ -111,8 +111,8 @@ public:
 	void								GetCellSizeRect(int nIndex, RECT& Rectangle);
 	void								GetCellRectWithHeight(int nIndex, RECT& Rectangle);
 	void								GetCellSizeRectWithHeight(int nIndex, RECT& Rectangle);
-	bool								MakeTextures(LPDIRECT3DDEVICE9 pDevice, Palette& Palette);
-	bool								DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, int nTileIndex, int &OutTileIndex,int&OutExtraIndex);
+	bool								MakeTextures(LPDIRECT3DDEVICE9 pDevice);
+	bool								DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, int nPaletteID, int nTileIndex, int &OutTileIndex,int&OutExtraIndex);
 
 private:
 	LPDIRECT3DTEXTURE9 FindCellTexture(int nIndex);
