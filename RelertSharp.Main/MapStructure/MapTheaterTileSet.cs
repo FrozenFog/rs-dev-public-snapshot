@@ -117,6 +117,7 @@ namespace RelertSharp.MapStructure
             get
             {
                 if (_TileIndex == 65535) return tileNameIndex[0];
+                if (_TileIndex > tileNameIndex.Count) return tileNameIndex[0];
                 return tileNameIndex[_TileIndex];
             }
         }

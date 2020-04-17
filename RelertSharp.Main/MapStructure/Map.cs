@@ -124,6 +124,11 @@ namespace RelertSharp.MapStructure
             globalid.Remove(ID);
             return true;
         }
+        //public Bitmap GetMinimap(Rectangle resize)
+        //{
+        //    Bitmap tile = TilesData.GenerateShot(info.Size);
+        //    return tile;
+        //}
         #endregion
 
 

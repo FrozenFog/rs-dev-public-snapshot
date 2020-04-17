@@ -71,6 +71,7 @@
     <Compile Include="DrawingEngine\Drawables\DrawableInfantry.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableMisc.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableStructure.cs" />
+    <Compile Include="DrawingEngine\Drawables\DrawableTile.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableUnit.cs" />
     <Compile Include="DrawingEngine\Engine.cs" />
     <Compile Include="DrawingEngine\Enums.cs" />

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
 using RelertSharp.MapStructure;
 using RelertSharp.MapStructure.Points;
@@ -29,7 +30,7 @@ namespace RelertSharp.DrawingEngine
         private const uint _white = 0xFFFFFFFF;
         private static Vec3 _generalOffset = new Vec3() { X = 1, Y = 1, Z = (float)Math.Sqrt(2f/3f) };
         private BufferCollection Buffer = new BufferCollection();
-        private GdipSurface surface;
+        private GdipSurface minimap;
         private Vec3 previousTile = Vec3.Zero;
         private int pPalIso = 0;
         private int pPalUnit = 0;
@@ -44,16 +45,16 @@ namespace RelertSharp.DrawingEngine
             _10SQ3 = (float)(10F * Math.Sqrt(3));
             _15SQ2 = _30SQ2 / 2;
             _rad45 = (float)Math.PI / 4;
-            surface = new GdipSurface(60, 54);
             _TileColor = Vec4.Unit4(1);
+            minimap = new GdipSurface();
         }
         #endregion
 
 
         #region Public Methods - Engine
-        public bool Initialize(IntPtr ptr)
+        public bool Initialize(IntPtr mainHandle, Size panelsize, Rectangle mapsize)
         {
-            return CppExtern.Scene.SetUpScene(ptr) && CppExtern.Scene.ResetSceneView();
+            return CppExtern.Scene.SetUpScene(mainHandle) && CppExtern.Scene.ResetSceneView() && minimap.Initialize(panelsize, mapsize);
         }
         #region Draw
         public bool DrawObject(InfantryItem inf, int height, uint color)
@@ -124,9 +125,10 @@ namespace RelertSharp.DrawingEngine
                 name = TileDictionary[t.TileIndex];
                 subindex = t.SubIndex;
             }
+            DrawableTile src = CreateDrawableTile(name, subindex);
+            minimap.DrawTile(src, t, subindex);
             Vec3 pos = ToVec3Iso(t);
-            int tmp = CreateTileFile(name);
-            if (DrawTile(tmp, pos, subindex, pPalIso, out int pSelf, out int pExtra))
+            if (DrawTile(src.pSelf, pos, subindex, pPalIso, out int pSelf, out int pExtra))
             {
                 PresentTile pt = new PresentTile(pSelf, pExtra);
                 Buffer.Scenes.Tiles[t.Coord] = pt;
@@ -308,6 +310,23 @@ namespace RelertSharp.DrawingEngine
             }
             else id = Buffer.Files.Tmp[name];
             return id;
+        }
+        private DrawableTile CreateDrawableTile(string filename, int subindex)
+        {
+            DrawableTile d;
+            if (!Buffer.Buffers.Tiles.Keys.Contains(filename))
+            {
+                d = new DrawableTile();
+                d.pSelf = CreateTileFile(filename);
+                TmpFile tmp = new TmpFile(GlobalDir.GetRawByte(filename), filename);
+                foreach (TmpImage img in tmp.Images)
+                {
+                    d.Colors.Add(new DrawableTile.ColorPair(img.ColorRadarLeft, img.ColorRadarRight));
+                }
+                Buffer.Buffers.Tiles[filename] = d;
+            }
+            else d = Buffer.Buffers.Tiles[filename];
+            return d;
         }
         private DrawableInfantry CreateDrawableInfantry(ObjectItemBase inf, uint color, int pPal, int idxFrame)
         {
@@ -838,6 +857,11 @@ namespace RelertSharp.DrawingEngine
             return new Vec3() { X = x * _30SQ2 - _15SQ2, Y = y * _30SQ2 - _15SQ2, Z = z * _10SQ3 };
         }
         #endregion
+        #endregion
+
+
+        #region Public Calls - Engine
+        public Bitmap MiniMap { get { return minimap.MiniMap; } }
         #endregion
     }
 }

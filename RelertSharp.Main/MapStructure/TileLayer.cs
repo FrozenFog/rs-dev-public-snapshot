@@ -62,50 +62,50 @@ namespace RelertSharp.MapStructure
                 ymax++;
             }
         }
-        private void SetTilePixelInPreview(Bitmap dest, Tile t, int bmpx, int bmpy)
-        {
-            TileAbstract abs = GlobalVar.TileDictionary.GetTileAbstract(t.TileIndex);
-            var sub = abs[t.SubIndex];
-            dest.SetPixel(bmpx, bmpy, sub.ColorLeft);
-            dest.SetPixel(bmpx + 1, bmpy, sub.ColorRight);
-        }
+        //private void SetTilePixelInPreview(Bitmap dest, Tile t, int bmpx, int bmpy)
+        //{
+        //    TileAbstract abs = GlobalVar.TileDictionary.GetTileAbstract(t.TileIndex);
+        //    var sub = abs[t.SubIndex];
+        //    dest.SetPixel(bmpx, bmpy, sub.ColorLeft);
+        //    dest.SetPixel(bmpx + 1, bmpy, sub.ColorRight);
+        //}
         #endregion
 
 
         #region Public Methods - TileLayer
-        public Bitmap GenerateShot(Rectangle rect)
-        {
-            int width = rect.Width;
-            int height = rect.Height;
-            Bitmap bmp = new Bitmap(width * 2, height * 2);
-            int xmin = 1;
-            int ymax = width;
-            for (int j = 0; j < height; j++)
-            {
-                int x = xmin;
-                int y = ymax;
-                for (int i = 0; i<width; i++)
-                {
-                    SetTilePixelInPreview(bmp, this[x, y], 2 * i, 2 * j);
-                    x++; y--;
-                }
-                xmin++; ymax++;
-            }
-            xmin = 2;
-            ymax = width;
-            for (int j = 0; j < height; j++)
-            {
-                int x = xmin;
-                int y = ymax;
-                for (int i = 0; i < width - 1; i++)
-                {
-                    SetTilePixelInPreview(bmp, this[x, y], 2 * i + 1, 2 * j + 1);
-                    x++;y--;
-                }
-                xmin++; ymax++;
-            }
-            return bmp;
-        }
+        //public Bitmap GenerateShot(Rectangle rect)
+        //{
+        //    int width = rect.Width;
+        //    int height = rect.Height;
+        //    Bitmap bmp = new Bitmap(width * 2, height * 2);
+        //    int xmin = 1;
+        //    int ymax = width;
+        //    for (int j = 0; j < height; j++)
+        //    {
+        //        int x = xmin;
+        //        int y = ymax;
+        //        for (int i = 0; i<width; i++)
+        //        {
+        //            SetTilePixelInPreview(bmp, this[x, y], 2 * i, 2 * j);
+        //            x++; y--;
+        //        }
+        //        xmin++; ymax++;
+        //    }
+        //    xmin = 2;
+        //    ymax = width;
+        //    for (int j = 0; j < height; j++)
+        //    {
+        //        int x = xmin;
+        //        int y = ymax;
+        //        for (int i = 0; i < width - 1; i++)
+        //        {
+        //            SetTilePixelInPreview(bmp, this[x, y], 2 * i + 1, 2 * j + 1);
+        //            x++;y--;
+        //        }
+        //        xmin++; ymax++;
+        //    }
+        //    return bmp;
+        //}
         public void FixEmptyTiles(int width, int height)
         {
             LayTileWeb(1, width, width, height);

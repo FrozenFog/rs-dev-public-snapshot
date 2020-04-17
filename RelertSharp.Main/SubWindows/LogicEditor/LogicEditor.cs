@@ -46,8 +46,8 @@ namespace RelertSharp.SubWindows.LogicEditor
             LoadTeamList();
             LoadHouseList();
             LoadLocalVariables();
-            
-            lbxTriggerList.SelectedIndex = 0;
+
+            lbxTriggerList.SelectedIndex = lbxTriggerList.Items.Count > 0 ? 0 : -1;
         }
         #endregion
 
