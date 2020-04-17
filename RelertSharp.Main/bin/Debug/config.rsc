@@ -2,6 +2,7 @@
 ConfigName=Relert Sharp Config for Mental Omega 3.3.4
 ConfigVersion=1.0
 CustomTheater=false
+PreloadTheaterMix=true
 AutosaveTime=60
 
 [MixList]

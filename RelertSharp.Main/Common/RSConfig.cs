@@ -43,6 +43,15 @@ namespace RelertSharp.Common
             DeactiveShadow = this["DrawingConfig"].GetPair("DeactivateShadow").ParseStringList().ToList();
 
             BridgeOffsetFrames = this["DrawingConfig"].GetPair("OffsetBridgeFrames").ParseIntList().ToList();
+            if (this["General"].GetPair("PreloadTheaterMix").ParseBool())
+            {
+                PreloadMixes = new List<string>();
+                foreach (INIPair p in this["TheaterMixList"])
+                {
+                    string[] l = p.ParseStringList();
+                    if (l.Length > 0) PreloadMixes.AddRange(l);
+                }
+            }
         }
         private void LoadMixName(string type, List<string> _host)
         {
@@ -182,6 +191,7 @@ namespace RelertSharp.Common
         public List<string> ExpandMixList { get; private set; }
         public List<string> TheaterMixList { get; private set; }
         public List<int> BridgeOffsetFrames { get; private set; }
+        public List<string> PreloadMixes { get; private set; }
         #endregion
     }
 }

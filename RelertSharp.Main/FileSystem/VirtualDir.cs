@@ -17,6 +17,10 @@ namespace RelertSharp.FileSystem
     {
         private Dictionary<uint, VirtualFileInfo> fileOrigin = new Dictionary<uint, VirtualFileInfo>();
         private Dictionary<string, MixTatics> mixTatics = new Dictionary<string, MixTatics>();
+        private Dictionary<string, byte[]> preLoadMixes = new Dictionary<string, byte[]>();
+        private bool preloadInitialized = false;
+
+
         #region Ctor - VirtualDir
         public VirtualDir()
         {
@@ -61,6 +65,21 @@ namespace RelertSharp.FileSystem
 
 
         #region Public Methods - VirtualDir
+        public void BeginPreload()
+        {
+            foreach (string name in GlobalConfig.PreloadMixes)
+            {
+                string filename = name + ".mix";
+                if (HasFile(filename)) preLoadMixes[name] = GetRawByte(filename);
+            }
+            preloadInitialized = true;
+        }
+        public void DisposePreloaded()
+        {
+            preLoadMixes.Clear();
+            GC.Collect();
+            preloadInitialized = false;
+        }
         public Dictionary<string, Image> GetPcxImages(IEnumerable<string> src)
         {
             Dictionary<string, Image> result = new Dictionary<string, Image>();
@@ -87,7 +106,10 @@ namespace RelertSharp.FileSystem
             foreach (MixEntry ent in _mixfile.Index.Entries.Values)
             {
                 VirtualFileInfo info;
-                if (_isSub) info = new VirtualFileInfo(_mixfile.FilePath, _mixfile.FileName, ent, _mixfile.BodyPos, _parentMixPath);
+                if (_isSub)
+                {
+                    info = new VirtualFileInfo(_mixfile.FilePath, _mixfile.FileName, ent, _mixfile.BodyPos, _parentMixPath);
+                }
                 else info = new VirtualFileInfo(_mixfile.FilePath, _mixfile.FileName, ent, _mixfile.BodyPos);
                 fileOrigin[ent.fileID] = info;
             }
@@ -126,7 +148,10 @@ namespace RelertSharp.FileSystem
             }
             else
             {
-                MemoryStream mix = new MemoryStream(GetRawByte(info.MixName + ".mix"));
+                byte[] data;
+                if (preloadInitialized && preLoadMixes.Keys.Contains(info.MixName)) data = preLoadMixes[info.MixName];
+                else data = GetRawByte(info.MixName + ".mix");
+                MemoryStream mix = new MemoryStream(data);
                 mix.Seek(info.FileOffset, SeekOrigin.Begin);
                 BinaryReader br = new BinaryReader(mix);
                 byte[] result = br.ReadBytes(info.FileSize);

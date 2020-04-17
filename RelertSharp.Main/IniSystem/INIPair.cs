@@ -139,7 +139,7 @@ namespace RelertSharp.IniSystem
                 }
                 return def;
             }
-            catch { return 0; }
+            catch { return def; }
         }
         /// <summary>
         /// Try parse the value as float

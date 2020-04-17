@@ -24,7 +24,10 @@ namespace RelertSharp.MapStructure.Logic
             foreach (INIPair p in ent.DataList)
             {
                 string[] tmp = p.ParseStringList();
-                data.Add(new TeamScriptItem(int.Parse(tmp[0]), tmp[1]));
+                TeamScriptItem item;
+                if (tmp.Length != 2) item = new TeamScriptItem(0, "0");
+                else item = new TeamScriptItem(int.Parse(tmp[0]), tmp[1]);
+                data.Add(item);
             }
         }
         public TeamScriptGroup() : base() { }

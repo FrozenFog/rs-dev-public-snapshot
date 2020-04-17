@@ -45,12 +45,12 @@ namespace RelertSharp.MapStructure.Logic
             ScriptID = ent.PopPair("Script").Value;
             Waypoint = WaypointInt(ent.PopPair("Waypoint").Value);
             House = ent.PopPair("House").Value;
-            VeteranLevel = (TeamVeteranLevel)(int.Parse(ent.PopPair("VeteranLevel").Value));
-            MCDecision = (TeamMCDecision)(int.Parse(ent.PopPair("MindControlDecision").Value));
-            TeamCapacity = int.Parse(ent.PopPair("Max").Value);
-            Priority = int.Parse(ent.PopPair("Priority").Value);
-            TechLevel = int.Parse(ent.PopPair("TechLevel").Value);
-            Group = int.Parse(ent.PopPair("Group").Value);
+            VeteranLevel = (TeamVeteranLevel)ent.PopPair("VeteranLevel").ParseInt(1);
+            MCDecision = (TeamMCDecision)ent.PopPair("MindControlDecision").ParseInt(0);
+            TeamCapacity = ent.PopPair("Max").ParseInt(5);
+            Priority = ent.PopPair("Priority").ParseInt(5);
+            TechLevel = ent.PopPair("TechLevel").ParseInt();
+            Group = ent.PopPair("Group").ParseInt(-1);
             residual = ent.DictData;
             LoadAttributes();
         }
