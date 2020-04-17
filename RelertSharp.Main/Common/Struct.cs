@@ -101,6 +101,10 @@ namespace RelertSharp.Common
         {
             get { return new Vec3() { X = 0, Y = 0, Z = 0 }; }
         }
+        public static Vec3 DefaultBox
+        {
+            get { return new Vec3(1, 1, 5); }
+        }
         public static Vec3 operator +(Vec3 a, int b)
         {
             return new Vec3() { X = a.X + b, Y = a.Y + b, Z = a.Z + b };

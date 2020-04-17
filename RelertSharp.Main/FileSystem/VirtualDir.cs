@@ -162,7 +162,6 @@ namespace RelertSharp.FileSystem
                     if (!_fileName.EndsWith(".vxl")) _fileName += ".vxl";
                     return new VxlFile(GetRawByte(_fileName), _fileName);
                 case FileExtension.SHP:
-                    if (!_fileName.EndsWith(".shp")) _fileName += ".shp";
                     return new ShpFile(GetRawByte(_fileName), _fileName);
                 case FileExtension.HVA:
                     if (!_fileName.EndsWith(".hva")) _fileName += ".hva";

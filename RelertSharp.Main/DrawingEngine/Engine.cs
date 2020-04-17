@@ -110,12 +110,23 @@ namespace RelertSharp.DrawingEngine
             }
             return false;
         }
-        public bool DrawGeneralItem(Tile t)
+        public bool DrawGeneralItem(Tile t, bool isFramework = false)
         {
-            string name = TileDictionary[t.TileIndex];
+            string name;
+            int subindex;
+            if (isFramework)
+            {
+                name = "framework.tem";
+                subindex = 0;
+            }
+            else
+            {
+                name = TileDictionary[t.TileIndex];
+                subindex = t.SubIndex;
+            }
             Vec3 pos = ToVec3Iso(t);
             int tmp = CreateTileFile(name);
-            if (DrawTile(tmp, pos, t.SubIndex, pPalIso, out int pSelf, out int pExtra))
+            if (DrawTile(tmp, pos, subindex, pPalIso, out int pSelf, out int pExtra))
             {
                 PresentTile pt = new PresentTile(pSelf, pExtra);
                 Buffer.Scenes.Tiles[t.Coord] = pt;
@@ -409,7 +420,12 @@ namespace RelertSharp.DrawingEngine
                 string land = GlobalRules[name]["Land"];
 
                 if (!string.IsNullOrEmpty(img) && name != img) filename = img;
-                if (overrides) flat = false;
+                if (overrides)
+                {
+                    flat = false;
+                    d.IsHiBridge = true;
+                    if (GlobalConfig.BridgeOffsetFrames.Contains(overlay.Frame)) d.IsOffsetBridge = true;
+                }
                 if (!rubble)
                 {
                     if (!_zeroLandType.Contains(land))
@@ -609,11 +625,17 @@ namespace RelertSharp.DrawingEngine
         {
             if (src.pSelf != 0)
             {
+                Vec3 box = Vec3.DefaultBox;
+                if (src.IsOffsetBridge) pos = ToVec3Zero(pos);
+                if (src.IsHiBridge)
+                {
+                    type = ShpFlatType.Vertical;
+                }
                 if (type == ShpFlatType.FlatGround) pos = pos.Rise();
-                dest.pSelf = RenderAndPresent(src.pSelf, pos, frame, color, pPal, type);
+                dest.pSelf = RenderAndPresent(src.pSelf, pos, frame, color, pPal, type, box);
                 if (!src.IsTiberiumOverlay && 
                     src.MiscType != MapObjectType.Smudge &&
-                    src.MiscType != MapObjectType.Celltag) dest.pSelfShadow = RenderAndPresent(src.pShadow, pos.Rise(), frame + shadow / 2, color, pPal, ShpFlatType.FlatGround, true);
+                    src.MiscType != MapObjectType.Celltag) dest.pSelfShadow = RenderAndPresent(src.pShadow, pos.Rise(), frame + shadow / 2, color, pPal, ShpFlatType.FlatGround, box, true);
                 //if (src.MiscType == MapObjectType.Waypoint) dest.pWpNum = CppExtern.ObjectUtils.CreateStringObjectAtScene(pos.MoveX(_15SQ2 * -1), 0x0000FFFF, src.NameID);
             }
 
@@ -624,8 +646,8 @@ namespace RelertSharp.DrawingEngine
             if (src.pPalCustom != 0) pPal = src.pPalCustom;
             if (src.pSelf != 0)
             {
-                dest.pSelf = RenderAndPresent(src.pSelf, pos, frame, src.RemapColor, pPal, ShpFlatType.Vertical);
-                dest.pSelfShadow = RenderAndPresent(src.pShadow, pos.Rise(), frame + src.Framecount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, true);
+                dest.pSelf = RenderAndPresent(src.pSelf, pos, frame, src.RemapColor, pPal, ShpFlatType.Vertical, Vec3.DefaultBox);
+                dest.pSelfShadow = RenderAndPresent(src.pShadow, pos.Rise(), frame + src.Framecount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, Vec3.DefaultBox, true);
             }
 
             Buffer.Scenes.Infantries[dest.Coord << 2 + subcell] = dest;
@@ -679,8 +701,8 @@ namespace RelertSharp.DrawingEngine
                 }
                 else
                 {
-                    dest.pTurretAnim = RenderAndPresent(src.pTurretAnim, pos + src.offsetTurret, (int)turRotation.X, src.RemapColor, pPal, ShpFlatType.Vertical);
-                    dest.pTurretAnimShadow = RenderAndPresent(src.pShadowTurretAnim, pos.Rise() + src.offsetTurret, (int)turRotation.X + src.TurretAnimCount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, true);
+                    dest.pTurretAnim = RenderAndPresent(src.pTurretAnim, pos + src.offsetTurret, (int)turRotation.X, src.RemapColor, pPal, ShpFlatType.Vertical, Vec3.DefaultBox);
+                    dest.pTurretAnimShadow = RenderAndPresent(src.pShadowTurretAnim, pos.Rise() + src.offsetTurret, (int)turRotation.X + src.TurretAnimCount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, Vec3.DefaultBox, true);
                 }
             }
             Buffer.Scenes.Structures[dest.Coord] = dest;
@@ -699,24 +721,24 @@ namespace RelertSharp.DrawingEngine
             {
                 if (src.pSelf != 0)
                 {
-                    dest.pSelf = RenderAndPresent(src.pSelf, pos, (int)rotation.X, src.RemapColor, pPal, ShpFlatType.Vertical);
-                    dest.pSelfShadow = RenderAndPresent(src.pSelf, pos.Rise(), (int)rotation.X + src.Framecount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, true);
+                    dest.pSelf = RenderAndPresent(src.pSelf, pos, (int)rotation.X, src.RemapColor, pPal, ShpFlatType.Vertical, Vec3.DefaultBox);
+                    dest.pSelfShadow = RenderAndPresent(src.pSelf, pos.Rise(), (int)rotation.X + src.Framecount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, Vec3.DefaultBox, true);
                 }
             }
             Buffer.Scenes.Units[dest.Coord] = dest;
             return dest.IsValid;
         }
-        private bool DrawTile(int idTmp, Vec3 pos, byte subindex, int pPal, out int idSelf, out int idExtra)
+        private bool DrawTile(int idTmp, Vec3 pos, int subindex, int pPal, out int idSelf, out int idExtra)
         {
             idSelf = 0;idExtra = 0;
             return CppExtern.ObjectUtils.CreateTmpObjectAtScene(idTmp, pos, pPal, subindex, ref idSelf, ref idExtra);
         }
-        private int RenderAndPresent(int shpID, Vec3 pos, int frame, uint color, int pPal, ShpFlatType flat, bool shadow = false)
+        private int RenderAndPresent(int shpID, Vec3 pos, int frame, uint color, int pPal, ShpFlatType flat, Vec3 boxsize, bool shadow = false)
         {
             if (flat == ShpFlatType.Box1)
             {
                 pos.Z += 0.1F;
-                return CppExtern.ObjectUtils.CreateShpObjectAtScene(shpID, pos, frame, pPal, color, (int)flat, 1, 1, 5, shadow);
+                return CppExtern.ObjectUtils.CreateShpObjectAtScene(shpID, pos, frame, pPal, color, (int)flat, (int)boxsize.X, (int)boxsize.Y, (int)boxsize.Z, shadow);
             }
             else return CppExtern.ObjectUtils.CreateShpObjectAtScene(shpID, pos, frame, pPal, color, (int)flat, 0, 0, 0, shadow);
         }

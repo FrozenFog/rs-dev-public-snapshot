@@ -41,6 +41,8 @@ namespace RelertSharp.Common
             DeactiveAnimList = this["DrawingConfig"].GetPair("DeactivateAnim").ParseStringList().ToList();
             DeactiveBibList = this["DrawingConfig"].GetPair("DeactivateBib").ParseStringList().ToList();
             DeactiveShadow = this["DrawingConfig"].GetPair("DeactivateShadow").ParseStringList().ToList();
+
+            BridgeOffsetFrames = this["DrawingConfig"].GetPair("OffsetBridgeFrames").ParseIntList().ToList();
         }
         private void LoadMixName(string type, List<string> _host)
         {
@@ -179,6 +181,7 @@ namespace RelertSharp.Common
         public List<string> OldMix { get; private set; }
         public List<string> ExpandMixList { get; private set; }
         public List<string> TheaterMixList { get; private set; }
+        public List<int> BridgeOffsetFrames { get; private set; }
         #endregion
     }
 }

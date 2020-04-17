@@ -18,6 +18,8 @@ namespace RelertSharp.DrawingEngine.Drawables
 
 
         #region Public Calls - DrawableMisc
+        public bool IsHiBridge { get; set; }
+        public bool IsOffsetBridge { get; set; }
         public MapObjectType MiscType { get; private set; }
         public ShpFlatType FlatType { get; set; }
         public int pPal { get; set; }
