@@ -36,7 +36,7 @@ namespace RelertSharp.SubWindows.LogicEditor
             if (d.ShowDialog() == DialogResult.OK)
             {
                 _CurrentTrigger.Events.Multiply(d.Result.Split(new char[] { '\n' }), _CurrentEvent, _CurrentEventParameters);
-                UpdateAt(lbxTriggerList, _CurrentTrigger);
+                UpdateAt(lbxTriggerList, _CurrentTrigger, ref updatingLbxTriggerList);
                 UpdateContent(_CurrentBoxTrigger);
             }
         }
@@ -46,7 +46,7 @@ namespace RelertSharp.SubWindows.LogicEditor
             if (d.ShowDialog() == DialogResult.OK)
             {
                 _CurrentTrigger.Actions.Multiply(d.Result.Split(new char[] { '\n' }), _CurrentAction, _CurrentActionParameters);
-                UpdateAt(lbxTriggerList, _CurrentTrigger);
+                UpdateAt(lbxTriggerList, _CurrentTrigger, ref updatingLbxTriggerList);
                 UpdateContent(_CurrentBoxTrigger);
             }
         }
@@ -112,6 +112,7 @@ namespace RelertSharp.SubWindows.LogicEditor
             lbxEventList.SelectedItem = ev;
             mtxbEventID.Focus();
             mtxbEventID.SelectAll();
+            UpdateAt(lbxTriggerList, _CurrentTrigger, ref updatingLbxTriggerList);
         }
 
         private void btnNewAction_Click(object sender, EventArgs e)
@@ -122,6 +123,7 @@ namespace RelertSharp.SubWindows.LogicEditor
             lbxActionList.SelectedItem = ac;
             mtxbActionID.Focus();
             mtxbActionID.SelectAll();
+            UpdateAt(lbxTriggerList, _CurrentTrigger, ref updatingLbxTriggerList);
         }
 
         private void btnSaveTemp_Click(object sender, EventArgs e)
@@ -163,10 +165,9 @@ namespace RelertSharp.SubWindows.LogicEditor
             int _i = lbxTriggerList.SelectedIndex;
             TriggerItem t = _CurrentBoxTrigger;
             var tags = map.Tags.GetTagFromTrigger(t.ID);
-            map.DelID(t.ID);
             foreach (var i in tags)
                 map.DelID(i.ID);
-            map.Triggers.Remove(t);
+            map.Triggers.RemoveTrigger(t);
             foreach (var i in tags)
                 map.Tags.Remove(i, t.ID);
             lbxTriggerList.Items.Remove(t);
@@ -175,15 +176,15 @@ namespace RelertSharp.SubWindows.LogicEditor
         }
         private void btnDeleteEvent_Click(object sender, EventArgs e)
         {
-            int _i = lbxEventList.SelectedIndex;
-            _CurrentTrigger.Events.Remove(_i);
-            RemoveAt(lbxEventList, _i);
+            LogicItem ev = lbxEventList.SelectedItem as LogicItem;
+            _CurrentTrigger.Events.Remove(ev);
+            RemoveAt(lbxEventList, lbxEventList.SelectedIndex, ref updatingLbxEventList);
         }
         private void btnDeleteAction_Click(object sender, EventArgs e)
         {
-            int _i = lbxActionList.SelectedIndex;
-            _CurrentTrigger.Actions.Remove(_i);
-            RemoveAt(lbxActionList, _i);
+            LogicItem ac = lbxActionList.SelectedItem as LogicItem;
+            _CurrentTrigger.Actions.Remove(ac);
+            RemoveAt(lbxActionList, lbxActionList.SelectedIndex, ref updatingLbxActionList);
         }
         #endregion
         #region txb
@@ -217,7 +218,7 @@ namespace RelertSharp.SubWindows.LogicEditor
 
         private void mtxbEventID_TextChanged(object sender, EventArgs e)
         {
-            if (!cbbEventAbstChanging)
+            if (!updatingCbbEventAbst)
             {
                 if (string.IsNullOrEmpty(mtxbEventID.Text)) return;
                 cbbEventAbst.SelectedIndex = int.Parse(mtxbEventID.Text);
@@ -226,7 +227,7 @@ namespace RelertSharp.SubWindows.LogicEditor
 
         private void mtxbActionID_TextChanged(object sender, EventArgs e)
         {
-            if (!cbbActionAbstChanging)
+            if (!updatingCbbActionAbst)
             {
                 if (string.IsNullOrEmpty(mtxbActionID.Text)) return;
                 cbbActionAbst.SelectedIndex = int.Parse(mtxbActionID.Text);
@@ -243,7 +244,7 @@ namespace RelertSharp.SubWindows.LogicEditor
                 _CurrentTag.Name = _CurrentTrigger.Name + " - Tag";
                 txbTagName.Text = _CurrentTag.Name;
             }
-            UpdateAt(lbxTriggerList, _CurrentTrigger);
+            UpdateAt(lbxTriggerList, _CurrentTrigger, ref updatingLbxTriggerList);
         }
         #endregion
         #region cbb
@@ -266,21 +267,21 @@ namespace RelertSharp.SubWindows.LogicEditor
             }
         }
 
+        private bool updatingCbbAttatchedTrg = false;
         private void cbbAttatchedTrg_SelectedValueChanged(object sender, EventArgs e)
         {
             TriggerItem asso = cbbAttatchedTrg.SelectedItem as TriggerItem;
             if (asso != null && asso.ID != _CurrentTrigger.LinkedWith)
             {
                 _CurrentTrigger.LinkedWith = asso.ID;
-                UpdateAt(lbxTriggerList, _CurrentTrigger);
+                UpdateAt(lbxTriggerList, _CurrentTrigger, ref updatingLbxTriggerList);
             }
         }
 
-        private bool cbbEventAbstChanging = false;
+        private bool updatingCbbEventAbst = false;
         private void cbbEventAbst_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbxEventList.Items.Count == 0) return;
-            cbbEventAbstChanging = true;
             int evid = cbbEventAbst.SelectedIndex;
             if (evid != int.Parse(mtxbEventID.Text)) mtxbEventID.Text = cbbEventAbst.SelectedIndex.ToString();
             TriggerDescription description = cbbEventAbst.SelectedItem as TriggerDescription;
@@ -289,17 +290,15 @@ namespace RelertSharp.SubWindows.LogicEditor
             {
                 _CurrentEvent.ID = evid;
                 _CurrentEvent.Parameters = description.InitParams;
-                UpdateAt(lbxEventList, _CurrentEvent);
+                UpdateAt(lbxEventList, _CurrentEvent, ref updatingLbxEventList);
             }
             if (eventItem != null) UpdateEventParams(description, eventItem.Parameters);
-            cbbEventAbstChanging = false;
         }
 
-        private bool cbbActionAbstChanging = false;
+        private bool updatingCbbActionAbst = false;
         private void cbbActionAbst_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbxActionList.Items.Count == 0) return;
-            cbbActionAbstChanging = true;
             int acid = cbbActionAbst.SelectedIndex;
             if (acid != int.Parse(mtxbActionID.Text)) mtxbActionID.Text = cbbActionAbst.SelectedIndex.ToString();
             TriggerDescription description = cbbActionAbst.SelectedItem as TriggerDescription;
@@ -308,10 +307,9 @@ namespace RelertSharp.SubWindows.LogicEditor
             {
                 _CurrentAction.ID = acid;
                 _CurrentAction.Parameters = description.InitParams;
-                UpdateAt(lbxActionList, _CurrentAction);
+                UpdateAt(lbxActionList, _CurrentAction, ref updatingLbxActionList);
             }
             if (actionItem != null) UpdateActionParams(description, actionItem.Parameters);
-            cbbActionAbstChanging = false;
         }
 
         #endregion
@@ -322,18 +320,20 @@ namespace RelertSharp.SubWindows.LogicEditor
             _CurrentTrigger.House = house;
         }
 
+        private bool updatingLbxTriggerList = false;
         private void lbxTriggerList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!listUpdating)
+            if (!updatingLbxTriggerList)
             {
                 TriggerItem item = ((ListBox)sender).SelectedItem as TriggerItem;
                 if (item != null) UpdateContent(item);
             }
         }
 
+        private bool updatingLbxEventList = false;
         private void lbxEventList_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (!cbbEventAbstChanging && !listUpdating)
+            if (!updatingLbxEventList)
             {
                 LogicItem item = lbxEventList.SelectedItem as LogicItem;
                 UpdateEventContent(item);
@@ -341,9 +341,10 @@ namespace RelertSharp.SubWindows.LogicEditor
             }
         }
 
+        private bool updatingLbxActionList = false;
         private void lbxActionList_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (!cbbActionAbstChanging && !listUpdating)
+            if (!updatingLbxActionList)
             {
                 LogicItem item = lbxActionList.SelectedItem as LogicItem;
                 UpdateActionContent(item);
@@ -351,6 +352,8 @@ namespace RelertSharp.SubWindows.LogicEditor
             }
         }
         #endregion
+
+        #region etc
         private void lvSearchResult_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             lvSearchResult.BeginUpdate();
@@ -360,13 +363,13 @@ namespace RelertSharp.SubWindows.LogicEditor
         }
         private void EventParamChanged(object sender, EventArgs e)
         {
-            if (cbbEventAbstChanging) return;
-            ParamChanged(sender, LogicType.EventLogic);
+            ParamChanged(sender, LogicType.EventLogic, ref updatingLbxEventList);
+            UpdateAt(lbxTriggerList, _CurrentTrigger, ref updatingLbxTriggerList);
         }
         private void ActionParamChanged(object sender, EventArgs e)
         {
-            if (cbbActionAbstChanging) return;
-            ParamChanged(sender, LogicType.ActionLogic);
+            ParamChanged(sender, LogicType.ActionLogic, ref updatingLbxActionList);
+            UpdateAt(lbxTriggerList, _CurrentTrigger, ref updatingLbxTriggerList);
         }
 
         private void ckb_CheckedChanged(object sender, EventArgs e)
@@ -433,6 +436,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         {
             lbxTriggerList.SelectedItem = cbbAttatchedTrg.SelectedItem;
         }
+        #endregion
 
         #endregion
 
@@ -441,164 +445,112 @@ namespace RelertSharp.SubWindows.LogicEditor
         #region btn
         private void btnNewTask_Click(object sender, EventArgs e)
         {
-            TaskforceItem item = new TaskforceItem();
-            item.ID = map.NewID;
-            item.Group = -1;
-            item.Name = "New Taskforce";
-            map.TaskForces[item.ID] = item;
-            map.TaskForces.AscendingSort();
-            StaticHelper.LoadToObjectCollection(lbxTaskList, map.TaskForces);
-            lbxTaskList.SelectedIndex = lbxTaskList.Items.IndexOf(item);
+            TaskforceItem item = map.NewTaskforce();
+            AddTo(lbxTaskList, item, ref updatingLbxTaskList);
         }
 
         private void btnDelTask_Click(object sender, EventArgs e)
         {
             if (lbxTaskList.SelectedItem == null) return;
+            int index = lbxTaskList.SelectedIndex;
             TaskforceItem item = lbxTaskList.SelectedItem as TaskforceItem;
-            map.DelID(item.ID);
-            map.TaskForces.Remove(item.ID);
-            StaticHelper.LoadToObjectCollection(lbxTaskList, map.TaskForces);
+            map.RemoveTaskforce(item);
+            RemoveAt(lbxTaskList, index, ref updatingLbxTaskList);
         }
 
         private void btnCopyTask_Click(object sender, EventArgs e)
         {
             if (lbxTaskList.SelectedItem == null) return;
-            TaskforceItem copyItem = lbxTaskList.SelectedItem as TaskforceItem;
-            TaskforceItem item = new TaskforceItem();
-            item.ID = map.NewID;
-            item.Group = copyItem.Group;
-            item.Name = copyItem.Name + " Clone";
-            item.MemberData = copyItem.MemberData;
-            map.TaskForces[item.ID] = item;
-            map.TaskForces.AscendingSort();
-            StaticHelper.LoadToObjectCollection(lbxTaskList, map.TaskForces);
-            lbxTaskList.SelectedIndex = lbxTaskList.Items.IndexOf(item);
+            TaskforceItem copied = _CurrentTaskforce.Copy(map.NewID);
+            map.TaskForces[copied.ID] = copied;
+            AddTo(lbxTaskList, copied, ref updatingLbxTaskList);
         }
 
         private void btnAddTaskMem_Click(object sender, EventArgs e)
         {
             if (lbxTaskList.SelectedItem == null) return;
-            TaskforceItem item = lbxTaskList.SelectedItem as TaskforceItem;
-            item.MemberData.Add(new Tuple<string, int>("E1", 1));
-            UpdateTaskforceContent();
+            TechnoPair p = cbbTaskType.Items[0] as TechnoPair;
+            TaskforceUnit u = _CurrentTaskforce.NewUnitItem(p.RegName, 1);
+            UpdateTaskforceContent(_CurrentTaskforce.Members.Count - 1);
         }
 
         private void btnDelTaskMem_Click(object sender, EventArgs e)
         {
-            //if (lbxTaskList.SelectedItem == null || lbxTaskMemList.SelectedItem == null) return;
-            //TaskforceItem item = lbxTaskList.SelectedItem as TaskforceItem;
-            //item.MemberData.RemoveAt(lbxTaskMemList.SelectedIndex);
-            //UpdateTaskforceContent();
+            if (lbxTaskList.SelectedItem == null || lvTaskforceUnits.SelectedIndices.Count < 1) return;
+            int index = lvTaskforceUnits.SelectedIndices[0];
+            _CurrentTaskforce.Members.RemoveAt(lvTaskforceUnits.SelectedIndices[0]);
+            RemoveAt(lvTaskforceUnits, index, ref updatingLvTaskforceUnits);
         }
 
         private void btnCopyTaskMem_Click(object sender, EventArgs e)
         {
-            //if (lbxTaskList.SelectedItem == null || lbxTaskMemList.SelectedItem == null) return;
-            //TaskforceItem item = lbxTaskList.SelectedItem as TaskforceItem;
-            //TaskforceShowItem showItem = lbxTaskMemList.SelectedItem as TaskforceShowItem;
-            //Tuple<string, int> copyitem = new Tuple<string, int>(showItem.RegName, showItem.Number);
-            //item.MemberData.Add(copyitem);
-            //UpdateTaskforceContent();
+            if (lbxTaskList.SelectedItem == null || lvTaskforceUnits.SelectedIndices.Count < 1) return;
+            TechnoPair p = cbbTaskType.SelectedItem as TechnoPair;
+            TaskforceUnit u = TaskforceUnit.FromListviewItem(lvTaskforceUnits.SelectedItems[0]);
+            TaskforceUnit newunit = _CurrentTaskforce.NewUnitItem(u.RegName, u.UnitNum);
+            int index = lvTaskforceUnits.Items.Count;
+            UpdateTaskforceContent(index);
         }
         #endregion
         #region cbb
         private void cbbTaskCurType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //if (lbxTaskList.SelectedItem == null || cbbTaskType.SelectedItem == null) return;
-            //if (lbxTaskList.SelectedItem == null || lbxTaskMemList.SelectedItem == null) return;
-            //TaskforceShowItem showItem = lbxTaskMemList.SelectedItem as TaskforceShowItem;
-            //TaskforceItem taskforce = lbxTaskList.SelectedItem as TaskforceItem;
-            //TechnoPair techno = cbbTaskType.SelectedItem as TechnoPair;
-            //int index = lbxTaskMemList.SelectedIndex;
-            //taskforce.MemberData[index] = new Tuple<string, int>(techno.RegName, showItem.Number);
-            //lbxTaskList.BeginUpdate();
-            //List<TaskforceShowItem> memList = new List<TaskforceShowItem>();
-            //foreach (var i in taskforce.MemberData) memList.Add(new TaskforceShowItem(i));
-            //StaticHelper.LoadToObjectCollection(lbxTaskMemList, memList);
-            //lbxTaskMemList.SelectedIndex = index;
-            //lbxTaskList.EndUpdate();
+            if (lvTaskforceUnits.SelectedItems.Count < 1) return;
+            int index = lvTaskforceUnits.SelectedIndices[0];
+            TechnoPair selectedunit = cbbTaskType.SelectedItem as TechnoPair;
+            TaskforceUnit unit = _CurrentBoxTaskforceUnit;
+            unit.RegName = selectedunit.RegName;
+            _CurrentTaskforce.Members[index] = unit;
+            UpdateTaskforceContent(index);
         }
         #endregion
         #region txb
-        private void mtxbTaskGroup_KeyPress(object sender, KeyPressEventArgs e)
+        private void txbTaskName_Validated(object sender, EventArgs e)
         {
-            System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex
-                (
-                    mtxbTaskGroup.SelectionStart==0&&mtxbTaskGroup.SelectionLength>0
-                    ? @"^[0-9-\b]*$" 
-                    : @"^[0-9\b]*$"
-                );
-            e.Handled = !re.IsMatch(e.KeyChar.ToString());
+            _CurrentTaskforce.Name = txbTaskName.Text;
+            UpdateAt(lbxTaskList, _CurrentTaskforce, ref updatingLbxTaskList);
         }
-        private void txbTaskCurNum_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex(@"^[0-9\b]*$");
-            e.Handled = !re.IsMatch(e.KeyChar.ToString());
-        }
-        private void txbTaskCurNum_TextChanged(object sender, EventArgs e)
-        {
-            //if (lbxTaskList.SelectedItem == null || lbxTaskMemList.SelectedItem == null) return;
-            //TaskforceShowItem showItem = lbxTaskMemList.SelectedItem as TaskforceShowItem;
-            //TaskforceItem taskforce = lbxTaskList.SelectedItem as TaskforceItem;
-            //int index = lbxTaskMemList.SelectedIndex;
-            //taskforce.MemberData[index]
-            //    = new Tuple<string, int>(taskforce.MemberData[index].Item1, int.Parse(txbTaskCurNum.Text));
-            //lbxTaskList.BeginUpdate();
-            //List<TaskforceShowItem> memList = new List<TaskforceShowItem>();
-            //foreach (var i in taskforce.MemberData) memList.Add(new TaskforceShowItem(i));
-            //StaticHelper.LoadToObjectCollection(lbxTaskMemList, memList);
-            //lbxTaskMemList.SelectedIndex = index;
-            //lbxTaskList.EndUpdate();
-        }
-
-        private void txbTaskName_TextChanged(object sender, EventArgs e)
+        private void mtxbTaskGroup_Validated(object sender, EventArgs e)
         {
             if (lbxTaskList.SelectedItem == null) return;
-            TaskforceItem taskforce = lbxTaskList.SelectedItem as TaskforceItem;
-            if (!string.IsNullOrEmpty(mtxbTaskGroup.Text))
+            int group;
+            try
             {
-                taskforce.Name = txbTaskName.Text;
-                lbxTaskList.BeginUpdate();
-                int index = lbxTaskList.SelectedIndex;
-                StaticHelper.LoadToObjectCollection(lbxTaskList, map.TaskForces);
-                lbxTaskList.SelectedIndex = index;
-                lbxTaskList.EndUpdate();
+                group = int.Parse(mtxbTaskGroup.Text);
             }
-                
+            catch
+            {
+                group = -1;
+                mtxbTaskGroup.Text = "-1";
+            }
+            _CurrentTaskforce.Group = group;
         }
-
-        private void mtxbTaskGroup_TextChanged(object sender, EventArgs e)
+        private void mtxbTaskNum_Validated(object sender, EventArgs e)
         {
-            if (lbxTaskList.SelectedItem == null) return;
-            TaskforceItem taskforce = lbxTaskList.SelectedItem as TaskforceItem;
-            if (!string.IsNullOrEmpty(mtxbTaskGroup.Text) && mtxbTaskGroup.Text.Trim() != "-") 
-                taskforce.Group = int.Parse(mtxbTaskGroup.Text);
+            _CurrentTaskforceUnit.UnitNum = int.Parse(mtxbTaskNum.Text);
+            UpdateTaskforceContent(lvTaskforceUnits.SelectedIndices[0]);
         }
         #endregion
         #region lbx
-        private bool updatingTaskforceContent = false;
+        private bool updatingLbxTaskList = false;
         private void lbxTaskList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbxTaskList.SelectedItem == null) return;
-            if (!updatingTaskforceContent)
+            if (!updatingLbxTaskList)
             {
-                UpdateTaskforceContent();
+                UpdateTaskforceContent(0);
             }
         }
-        private void lbxTaskMemList_SelectedIndexChanged(object sender, EventArgs e)
+        private bool updatingLvTaskforceUnits = false;
+        private void lvTaskforceUnits_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //if ((lbxTaskList.SelectedItem == null || lbxTaskMemList.SelectedItem == null)) return;
-            //TaskforceShowItem curItem = lbxTaskMemList.SelectedItem as TaskforceShowItem;
-            //int index = -1;
-            //foreach(TechnoPair pair in cbbTaskType.Items)
-            //    if (pair.RegName == curItem.RegName)
-            //    {
-            //        index = cbbTaskType.Items.IndexOf(pair);
-            //        break;
-            //    }
-            //if (index >= 0) cbbTaskType.SelectedIndex = index;
-            //else cbbTaskType.Text = curItem.RegName;
-            //txbTaskCurNum.Text = curItem.Number.ToString();
+            if (lvTaskforceUnits.SelectedItems.Count < 1) return;
+            if (!updatingLvTaskforceUnits)
+            {
+                TaskforceUnit unit = _CurrentBoxTaskforceUnit;
+                cbbTaskType.Text = unit.RegName;
+                mtxbTaskNum.Text = unit.UnitNum.ToString();
+            }
         }
         #endregion
         #endregion

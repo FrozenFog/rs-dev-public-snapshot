@@ -65,6 +65,34 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - Map
+
+
+        #region Collection Utils
+        public TriggerItem NewTrigger()
+        {
+            TriggerItem t = Triggers.NewTrigger(NewID);
+            TagItem tag = new TagItem(t, NewID);
+            Tags[tag.ID] = tag;
+            return t;
+        }
+        public void RemoveTrigger(TriggerItem item)
+        {
+            Triggers.RemoveTrigger(item);
+            DelID(item.ID);
+        }
+        public TaskforceItem NewTaskforce()
+        {
+            TaskforceItem t = TaskForces.NewTaskforce(NewID);
+            return t;
+        }
+        public void RemoveTaskforce(TaskforceItem item)
+        {
+            TaskForces.Remove(item.ID);
+            DelID(item.ID);
+        }
+        #endregion
+
+
         public uint GetHouseColor(string housename)
         {
             HouseItem house = Houses.GetHouse(housename);
@@ -84,13 +112,6 @@ namespace RelertSharp.MapStructure
         {
             overlayString = Overlays.CompressIndex();
             overlaydataString = Overlays.CompressFrame();
-        }
-        public TriggerItem NewTrigger()
-        {
-            TriggerItem t = Triggers.NewTrigger(NewID);
-            TagItem tag = new TagItem(t, NewID);
-            Tags[tag.ID] = tag;
-            return t;
         }
         public int GetHeightFromTile(I2dLocateable obj)
         {

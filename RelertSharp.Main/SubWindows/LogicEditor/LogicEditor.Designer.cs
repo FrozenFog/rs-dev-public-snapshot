@@ -1713,13 +1713,18 @@
             this.cbbTaskType.Name = "cbbTaskType";
             this.cbbTaskType.Size = new System.Drawing.Size(364, 23);
             this.cbbTaskType.TabIndex = 13;
+            this.cbbTaskType.SelectedIndexChanged += new System.EventHandler(this.cbbTaskCurType_SelectedIndexChanged);
             // 
             // mtxbTaskNum
             // 
             this.mtxbTaskNum.Location = new System.Drawing.Point(376, 603);
+            this.mtxbTaskNum.Mask = "000";
             this.mtxbTaskNum.Name = "mtxbTaskNum";
+            this.mtxbTaskNum.PromptChar = ' ';
             this.mtxbTaskNum.Size = new System.Drawing.Size(60, 25);
             this.mtxbTaskNum.TabIndex = 12;
+            this.mtxbTaskNum.ValidatingType = typeof(int);
+            this.mtxbTaskNum.Validated += new System.EventHandler(this.mtxbTaskNum_Validated);
             // 
             // label42
             // 
@@ -1744,10 +1749,12 @@
             this.lvTaskforceUnits.HideSelection = false;
             this.lvTaskforceUnits.LargeImageList = this.imglstPcx;
             this.lvTaskforceUnits.Location = new System.Drawing.Point(6, 122);
+            this.lvTaskforceUnits.MultiSelect = false;
             this.lvTaskforceUnits.Name = "lvTaskforceUnits";
             this.lvTaskforceUnits.Size = new System.Drawing.Size(430, 460);
             this.lvTaskforceUnits.TabIndex = 3;
             this.lvTaskforceUnits.UseCompatibleStateImageBehavior = false;
+            this.lvTaskforceUnits.SelectedIndexChanged += new System.EventHandler(this.lvTaskforceUnits_SelectedIndexChanged);
             // 
             // imglstPcx
             // 
@@ -1761,6 +1768,7 @@
             this.mtxbTaskGroup.Name = "mtxbTaskGroup";
             this.mtxbTaskGroup.Size = new System.Drawing.Size(60, 25);
             this.mtxbTaskGroup.TabIndex = 3;
+            this.mtxbTaskGroup.Validated += new System.EventHandler(this.mtxbTaskGroup_Validated);
             // 
             // txbTaskName
             // 
@@ -1768,6 +1776,7 @@
             this.txbTaskName.Name = "txbTaskName";
             this.txbTaskName.Size = new System.Drawing.Size(243, 25);
             this.txbTaskName.TabIndex = 2;
+            this.txbTaskName.Validated += new System.EventHandler(this.txbTaskName_Validated);
             // 
             // txbTaskID
             // 
@@ -1821,6 +1830,7 @@
             this.btnCopyTaskforce.TabIndex = 0;
             this.btnCopyTaskforce.Text = "LGCbtnCopyTask";
             this.btnCopyTaskforce.UseVisualStyleBackColor = true;
+            this.btnCopyTaskforce.Click += new System.EventHandler(this.btnCopyTask_Click);
             // 
             // btnDelTaskforce
             // 
@@ -1830,6 +1840,7 @@
             this.btnDelTaskforce.TabIndex = 0;
             this.btnDelTaskforce.Text = "LGCbtnDelTask";
             this.btnDelTaskforce.UseVisualStyleBackColor = true;
+            this.btnDelTaskforce.Click += new System.EventHandler(this.btnDelTask_Click);
             // 
             // btnCopyTfUnit
             // 
@@ -1839,6 +1850,7 @@
             this.btnCopyTfUnit.TabIndex = 0;
             this.btnCopyTfUnit.Text = "LGCbtnCopyTaskMem";
             this.btnCopyTfUnit.UseVisualStyleBackColor = true;
+            this.btnCopyTfUnit.Click += new System.EventHandler(this.btnCopyTaskMem_Click);
             // 
             // btnDelTfUnit
             // 
@@ -1848,6 +1860,7 @@
             this.btnDelTfUnit.TabIndex = 0;
             this.btnDelTfUnit.Text = "LGCbtnDelTaskMem";
             this.btnDelTfUnit.UseVisualStyleBackColor = true;
+            this.btnDelTfUnit.Click += new System.EventHandler(this.btnDelTaskMem_Click);
             // 
             // btnNewTfUnit
             // 
@@ -1857,6 +1870,7 @@
             this.btnNewTfUnit.TabIndex = 0;
             this.btnNewTfUnit.Text = "LGCbtnAddTaskMem";
             this.btnNewTfUnit.UseVisualStyleBackColor = true;
+            this.btnNewTfUnit.Click += new System.EventHandler(this.btnAddTaskMem_Click);
             // 
             // btnNewTaskforce
             // 
@@ -1866,10 +1880,12 @@
             this.btnNewTaskforce.TabIndex = 0;
             this.btnNewTaskforce.Text = "LGCbtnNewTask";
             this.btnNewTaskforce.UseVisualStyleBackColor = true;
+            this.btnNewTaskforce.Click += new System.EventHandler(this.btnNewTask_Click);
             // 
             // lbxTaskList
             // 
             this.lbxTaskList.FormattingEnabled = true;
+            this.lbxTaskList.HorizontalScrollbar = true;
             this.lbxTaskList.ItemHeight = 15;
             this.lbxTaskList.Location = new System.Drawing.Point(9, 40);
             this.lbxTaskList.Name = "lbxTaskList";
@@ -2323,7 +2339,7 @@
             this.gpbSearch.Margin = new System.Windows.Forms.Padding(4);
             this.gpbSearch.Name = "gpbSearch";
             this.gpbSearch.Padding = new System.Windows.Forms.Padding(4);
-            this.gpbSearch.Size = new System.Drawing.Size(396, 739);
+            this.gpbSearch.Size = new System.Drawing.Size(353, 739);
             this.gpbSearch.TabIndex = 4;
             this.gpbSearch.TabStop = false;
             this.gpbSearch.Text = "LGCgpbSearch";
@@ -2506,7 +2522,7 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(267, 22);
+            this.btnSearch.Location = new System.Drawing.Point(220, 22);
             this.btnSearch.Margin = new System.Windows.Forms.Padding(4);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(111, 26);
@@ -2521,7 +2537,7 @@
             this.txbSearchName.Location = new System.Drawing.Point(8, 25);
             this.txbSearchName.Margin = new System.Windows.Forms.Padding(4);
             this.txbSearchName.Name = "txbSearchName";
-            this.txbSearchName.Size = new System.Drawing.Size(251, 25);
+            this.txbSearchName.Size = new System.Drawing.Size(204, 25);
             this.txbSearchName.TabIndex = 4;
             this.txbSearchName.Text = "LGClblFakeSearch";
             this.txbSearchName.Enter += new System.EventHandler(this.txbSearchName_Enter);
@@ -2561,7 +2577,7 @@
             this.lvSearchResult.Margin = new System.Windows.Forms.Padding(4);
             this.lvSearchResult.MultiSelect = false;
             this.lvSearchResult.Name = "lvSearchResult";
-            this.lvSearchResult.Size = new System.Drawing.Size(370, 228);
+            this.lvSearchResult.Size = new System.Drawing.Size(328, 228);
             this.lvSearchResult.TabIndex = 1;
             this.lvSearchResult.UseCompatibleStateImageBehavior = false;
             this.lvSearchResult.View = System.Windows.Forms.View.Details;
@@ -2590,7 +2606,7 @@
             this.rtxbSearchInspector.Margin = new System.Windows.Forms.Padding(4);
             this.rtxbSearchInspector.Name = "rtxbSearchInspector";
             this.rtxbSearchInspector.ReadOnly = true;
-            this.rtxbSearchInspector.Size = new System.Drawing.Size(370, 179);
+            this.rtxbSearchInspector.Size = new System.Drawing.Size(328, 179);
             this.rtxbSearchInspector.TabIndex = 0;
             this.rtxbSearchInspector.Text = "";
             // 
@@ -2598,7 +2614,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1973, 791);
+            this.ClientSize = new System.Drawing.Size(1920, 791);
             this.Controls.Add(this.gpbSearch);
             this.Controls.Add(this.tbcMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;

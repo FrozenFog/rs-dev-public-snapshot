@@ -82,7 +82,7 @@ namespace RelertSharp.IniSystem
         {
             string img = this[regname]["Image"];
             if (string.IsNullOrEmpty(img)) return regname;
-            if (HasIniEnt(img)) return img;
+            if (Art.HasIniEnt(img)) return img;
             else return regname;
         }
         private void VxlFormating(string id, bool vxl, ref string name, ref string tur, ref string barl)
@@ -108,8 +108,9 @@ namespace RelertSharp.IniSystem
         public string GetPcxName(string regid)
         {
             string art = GetArtName(regid);
-            if (string.IsNullOrEmpty(this[art]["CameoPCX"])) return "xxicon.shp";
-            return this[art]["CameoPCX"];
+            string pcx = Art[art]["CameoPCX"];
+            if (string.IsNullOrEmpty(pcx)) return "xxicon.shp";
+            return pcx;
         }
         public string GetCustomPaletteName(string nameid)
         {
