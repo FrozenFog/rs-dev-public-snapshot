@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure.Points
 {
@@ -12,16 +13,16 @@ namespace RelertSharp.MapStructure.Points
     }
 
 
-    public class TerrainItem : PointItemBase
+    public class TerrainItem : PointItemBase, IMapObject
     {
         public TerrainItem(string _coord, string _name) : base(_coord)
         {
-            TerrainName = _name;
+            RegName = _name;
         }
 
 
         #region Public Calls - TerrainItem
-        public string TerrainName { get; set; }
+        public string RegName { get; set; }
         #endregion
     }
 }

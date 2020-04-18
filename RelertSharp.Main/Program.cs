@@ -63,15 +63,19 @@ namespace RelertSharp
             GlobalVar.GlobalSoundBank = new SoundBank(GlobalVar.GlobalConfig.BagNameList);
 
             //csf
-            GlobalVar.GlobalCsf = GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.StringtableList[0], FileExtension.CSF);
-            if (GlobalVar.GlobalConfig.StringtableList.Count > 1)
+            if (GlobalVar.GlobalConfig.StringtableList.Count > 0)
             {
-                foreach (string name in GlobalVar.GlobalConfig.StringtableList.Skip(1))
+                GlobalVar.GlobalCsf = GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.StringtableList[0], FileExtension.CSF);
+                if (GlobalVar.GlobalConfig.StringtableList.Count > 1)
                 {
-                    GlobalVar.GlobalCsf.AddCsfLib(GlobalVar.GlobalDir.GetFile(name, FileExtension.CSF));
+                    foreach (string name in GlobalVar.GlobalConfig.StringtableList.Skip(1))
+                    {
+                        GlobalVar.GlobalCsf.AddCsfLib(GlobalVar.GlobalDir.GetFile(name, FileExtension.CSF));
+                    }
                 }
+                GlobalVar.GlobalCsf.ToTechno();
             }
-            GlobalVar.GlobalCsf.ToTechno();
+            else GlobalVar.GlobalCsf = new CsfFile();
         }
     }
 }

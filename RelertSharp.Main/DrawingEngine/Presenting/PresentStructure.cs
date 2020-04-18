@@ -38,6 +38,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             if (!IsBaseNode)
             {
+                ColorVector = color;
                 SetColor(pSelf, color);
                 SetColor(pActivateAnim, color);
                 SetColor(pActivateAnim2, color);
@@ -47,6 +48,11 @@ namespace RelertSharp.DrawingEngine.Presenting
                 SetColor(pTurretAnim, color);
                 SetColor(pTurretBarl, color);
             }
+        }
+        public void MultiplyColor(Vec4 color)
+        {
+            ColorVector *= color;
+            SetColor(ColorVector);
         }
         #endregion
 

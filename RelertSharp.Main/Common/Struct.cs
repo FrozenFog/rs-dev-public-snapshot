@@ -20,7 +20,13 @@ namespace RelertSharp.Common
         public float Z;
         public float V;
 
-
+        /// <summary>
+        /// RGBA if using as color vector
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="g"></param>
+        /// <param name="b"></param>
+        /// <param name="a"></param>
         public Vec4(float r, float g, float b, float a)
         {
             X = r; Y = g; Z = b; V = a;
@@ -32,6 +38,10 @@ namespace RelertSharp.Common
         public static Vec4 Unit4(float num)
         {
             return new Vec4(num, num, num, num);
+        }
+        public static Vec4 One
+        {
+            get { return new Vec4(1, 1, 1, 1); }
         }
         public static Vec4 Zero
         {
@@ -53,6 +63,9 @@ namespace RelertSharp.Common
         {
             get { return new Vec4(1, 1, 1, 1); }
         }
+
+
+        #region operator
         public static Vec4 operator +(Vec4 a, Vec4 b)
         {
             return new Vec4(a.X + b.X, a.Y + b.Y, a.Z + b.Z, a.V + b.V);
@@ -65,6 +78,35 @@ namespace RelertSharp.Common
         {
             return new Vec4(a.X * b.X, a.Y * b.Y, a.Z * b.Z, a.V * b.V);
         }
+        public static Vec4 operator*(Vec4 a, float b)
+        {
+            return new Vec4(a.X * b, a.Y * b, a.Z * b, a.V * b);
+        }
+        public static Vec4 operator*(float a ,Vec4 b)
+        {
+            return b * a;
+        }
+        public static Vec4 operator/(Vec4 a, float b)
+        {
+            return new Vec4(a.X / b, a.Y / b, a.Z / b, a.V / b);
+        }
+        public static bool operator==(Vec4 a, Vec4 b)
+        {
+            return a.X == b.X && a.Y == b.Y && a.Z == b.Z && a.V == b.V;
+        }
+        public static bool operator!=(Vec4 a, Vec4 b)
+        {
+            return a.X != b.X || a.Y != b.Y || a.Z != b.Z || a.V != b.V;
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+        #endregion
     }
     public struct Vec3
     {
@@ -97,14 +139,20 @@ namespace RelertSharp.Common
         {
             return new Vec3() { X = src.X, Y = src.Y, Z = src.Z };
         }
+        public static Vec3 One
+        {
+            get { return new Vec3(1, 1, 1); }
+        }
         public static Vec3 Zero
         {
-            get { return new Vec3() { X = 0, Y = 0, Z = 0 }; }
+            get { return new Vec3(0, 0, 0); }
         }
         public static Vec3 DefaultBox
         {
             get { return new Vec3(1, 1, 5); }
         }
+
+        #region operator
         public static Vec3 operator +(Vec3 a, int b)
         {
             return new Vec3() { X = a.X + b, Y = a.Y + b, Z = a.Z + b };
@@ -150,6 +198,15 @@ namespace RelertSharp.Common
         {
             return a.X != b.X || a.Y != b.Y || a.Z != b.Z;
         }
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+        #endregion
     }
     public struct Pnt
     {

@@ -180,6 +180,7 @@ namespace RelertSharp.Common
             }
         }
         public string ConfigName { get; private set; }
+        public string LastPath { get; set; }
         public string[] BagNameList { get; private set; }
         public List<string> DeactiveAnimList { get; private set; }
         public List<string> DeactiveBibList { get; private set; }

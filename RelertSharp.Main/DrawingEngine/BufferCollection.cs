@@ -21,7 +21,9 @@ namespace RelertSharp.DrawingEngine
             Overlays = 1<<4,
             Terrains = 1<<5,
             Smudges = 1<<6,
-            All = Tiles|Structures|Units|Infantries|Overlays|Terrains|Smudges
+            Waypoints = 1<<7,
+            Celltags = 1<<8,
+            All = Tiles|Structures|Units|Infantries|Overlays|Terrains|Smudges|Waypoints|Celltags
         }
         #region Ctor - BufferCollection
         public BufferCollection()
@@ -41,6 +43,13 @@ namespace RelertSharp.DrawingEngine
             if ((flag & RemoveFlag.Overlays) != 0) Scenes.RemoveOverlays();
             if ((flag & RemoveFlag.Terrains) != 0) Scenes.RemoveTerrains();
             if ((flag & RemoveFlag.Smudges) != 0) Scenes.RemoveSmudges();
+            if ((flag & RemoveFlag.Waypoints) != 0) Scenes.RemoveWaypoints();
+            if ((flag & RemoveFlag.Celltags) != 0) Scenes.RemoveCelltags();
+            GC.Collect();
+        }
+        public void ReleaseFiles()
+        {
+            Files.Dispose();
         }
         #endregion
 
@@ -68,13 +77,27 @@ namespace RelertSharp.DrawingEngine
 
 
             #region Public Methods - CScene
-            public void ColoringTile(int coord, Vec4 color, Vec4 exColor)
+            public void BeginLamp()
+            {
+                foreach (PresentTile t in Tiles.Values) t.Lamped = false;
+            }
+            public void ColoringTile(I2dLocateable pos, Vec4 color)
+            {
+                int coord = Utils.Misc.CoordInt(pos);
+                if (Tiles.Keys.Contains(coord))
+                {
+                    if (!Tiles[coord].Lamped)
+                    {
+                        Tiles[coord].MultiplyColor(color);
+                        Tiles[coord].Lamped = true;
+                    }
+                }
+            }
+            public void MarkTile(int coord, Vec4 color, Vec4 exColor, bool deselect)
             {
                 if (Tiles.Keys.Contains(coord))
                 {
-                    PresentTile t = Tiles[coord];
-                    CppExtern.ObjectUtils.SetObjectColorCoefficient(t.pSelf, color);
-                    if (t.pExtra != 0) CppExtern.ObjectUtils.SetObjectColorCoefficient(t.pExtra, exColor);
+                    Tiles[coord].Mark(color, exColor, deselect);
                 }
             }
             public void RemoveInfantries()
@@ -111,6 +134,16 @@ namespace RelertSharp.DrawingEngine
             {
                 foreach (PresentMisc smg in Smudges.Values) smg.Dispose();
                 Smudges.Clear();
+            }
+            public void RemoveCelltags()
+            {
+                foreach (PresentMisc ctg in Celltags.Values) ctg.Dispose();
+                Celltags.Clear();
+            }
+            public void RemoveWaypoints()
+            {
+                foreach (PresentMisc wp in Waypoints.Values) wp.Dispose();
+                Waypoints.Clear();
             }
             #endregion
 
@@ -155,6 +188,22 @@ namespace RelertSharp.DrawingEngine
         {
             #region Ctor - File
             public CFile() { }
+            #endregion
+
+
+            #region Public Methods - File
+            public void Dispose()
+            {
+                foreach (int p in Shp.Values) CppExtern.Files.RemoveShpFile(p);
+                foreach (int p in Vxl.Values) CppExtern.Files.RemoveVxlFile(p);
+                foreach (int p in Tmp.Values) CppExtern.Files.RemoveTmpFile(p);
+                foreach (int p in Pal.Values) CppExtern.Files.RemovePalette(p);
+                Shp.Clear();
+                Vxl.Clear();
+                Tmp.Clear();
+                Pal.Clear();
+                GC.Collect();
+            }
             #endregion
 
 

@@ -24,7 +24,8 @@ namespace RelertSharp.DrawingEngine
         private readonly string[] _zeroLandType = new string[] { "Water", "Clear", "" };
         private float _width { get { return _30SQ2; } }
         private Vec3 _NormTileVec { get { return new Vec3(_15SQ2, _15SQ2, _10SQ3); } }
-        private Vec4 _TileColor { get; set; }
+        private Vec4 sceneColor { get; set; }
+        private Vec4 sceneObjectColor { get; set; }
         private float _height { get { return _10SQ3; } }
         private const uint _colorIgnore = 0x000000FF;
         private const uint _white = 0xFFFFFFFF;
@@ -45,7 +46,7 @@ namespace RelertSharp.DrawingEngine
             _10SQ3 = (float)(10F * Math.Sqrt(3));
             _15SQ2 = _30SQ2 / 2;
             _rad45 = (float)Math.PI / 4;
-            _TileColor = Vec4.Unit4(1);
+            sceneColor = Vec4.Unit4(1);
             minimap = new GdipSurface();
         }
         #endregion
@@ -56,10 +57,12 @@ namespace RelertSharp.DrawingEngine
         {
             return CppExtern.Scene.SetUpScene(mainHandle) && CppExtern.Scene.ResetSceneView() && minimap.Initialize(panelsize, mapsize);
         }
+
+
         #region Draw
         public bool DrawObject(InfantryItem inf, int height, uint color)
         {
-            int frame = GlobalRules.GetFrameFromDirection(inf.Rotation, inf.NameID);
+            int frame = GlobalRules.GetFrameFromDirection(inf.Rotation, inf.RegName);
             DrawableInfantry src = CreateDrawableInfantry(inf, color, pPalUnit, frame);
             PresentInfantry dest = new PresentInfantry(inf, height);
             Vec3 pos = ToVec3Iso(dest, inf.SubCells);
@@ -67,39 +70,39 @@ namespace RelertSharp.DrawingEngine
         }
         public bool DrawObject(UnitItem unit, int height, uint color)
         {
-            Vec3 idx = VxlRotation(unit.NameID, unit.Rotation, false);
-            DrawableUnit src = CreateDrawableUnit(unit.NameID, color, pPalUnit, (int)idx.X);
+            Vec3 idx = VxlRotation(unit.RegName, unit.Rotation, false);
+            DrawableUnit src = CreateDrawableUnit(unit.RegName, color, pPalUnit, (int)idx.X);
             PresentUnit dest = new PresentUnit(unit, height, src.IsVxl);
             Vec3 pos = ToVec3Iso(dest);
-            Vec3 ro = VxlRotation(unit.NameID, unit.Rotation, src.IsVxl);
+            Vec3 ro = VxlRotation(unit.RegName, unit.Rotation, src.IsVxl);
             return DrawUnit(src, dest, pos, ro, pPalUnit);
         }
         public bool DrawObject(AircraftItem air, int height, uint color)
         {
-            DrawableUnit src = CreateDrawableUnit(air.NameID, color, pPalUnit, 0);
+            DrawableUnit src = CreateDrawableUnit(air.RegName, color, pPalUnit, 0);
             PresentUnit dest = new PresentUnit(air, height);
             Vec3 pos = ToVec3Iso(dest);
-            Vec3 ro = VxlRotation(air.NameID, air.Rotation, true);
+            Vec3 ro = VxlRotation(air.RegName, air.Rotation, true);
             return DrawUnit(src, dest, pos, ro, pPalUnit);
         }
         public bool DrawObject(StructureItem structure, int height, uint color)
         {
-            Vec3 idx = BuildingRotation(structure.NameID, structure.Rotation, false);
-            DrawableStructure src = CreateDrawableStructure(structure.NameID, color, pPalUnit, (int)idx.X);
+            Vec3 idx = BuildingRotation(structure.RegName, structure.Rotation, false);
+            DrawableStructure src = CreateDrawableStructure(structure.RegName, color, pPalUnit, (int)idx.X);
             PresentStructure dest = new PresentStructure(structure, height, src.VoxelTurret);
             Vec3 ro;
-            if (src.pTurretAnim != 0) ro = BuildingRotation(structure.NameID, structure.Rotation, src.VoxelTurret);
+            if (src.pTurretAnim != 0) ro = BuildingRotation(structure.RegName, structure.Rotation, src.VoxelTurret);
             else ro = Vec3.Zero;
             Vec3 pos = ToVec3Zero(dest).Rise();
             return DrawStructure(src, pos, dest, ro, pPalUnit);
         }
         public bool DrawObject(BaseNode node, int height, uint color)
         {
-            Vec3 idx = BuildingRotation(node.Name, 0, false);
-            DrawableStructure src = CreateDrawableStructure(node.Name, color, pPalUnit, (int)idx.X , true);
+            Vec3 idx = BuildingRotation(node.RegName, 0, false);
+            DrawableStructure src = CreateDrawableStructure(node.RegName, color, pPalUnit, (int)idx.X , true);
             PresentStructure dest = new PresentStructure(node, height, src.VoxelTurret);
             Vec3 ro;
-            if (src.pTurretAnim != 0) ro = BuildingRotation(node.Name, 0, src.VoxelTurret);
+            if (src.pTurretAnim != 0) ro = BuildingRotation(node.RegName, 0, src.VoxelTurret);
             else ro = Vec3.Zero;
             Vec3 pos = ToVec3Zero(dest);
             pos.Z += 0.2F;
@@ -130,7 +133,7 @@ namespace RelertSharp.DrawingEngine
             Vec3 pos = ToVec3Iso(t);
             if (DrawTile(src.pSelf, pos, subindex, pPalIso, out int pSelf, out int pExtra))
             {
-                PresentTile pt = new PresentTile(pSelf, pExtra);
+                PresentTile pt = new PresentTile(pSelf, pExtra, t.Height);
                 Buffer.Scenes.Tiles[t.Coord] = pt;
                 return true;
             }
@@ -155,7 +158,6 @@ namespace RelertSharp.DrawingEngine
             DrawableMisc src = CreateDrawableMisc(smg);
             PresentMisc dest = new PresentMisc(MapObjectType.Smudge, smg, height);
             Vec3 pos = ToVec3Zero(smg, height);
-            pos.Z += 0.02F;
             if (DrawMisc(src, dest, pos, pPalIso, 0, _white, ShpFlatType.FlatGround))
             {
                 Buffer.Scenes.Smudges[smg.CoordInt] = dest;
@@ -208,15 +210,45 @@ namespace RelertSharp.DrawingEngine
             return false;
         }
         #endregion
-        public void SetObjectLightning(LightningItem light)
+
+
+        private void ApplyLampAt(I2dLocateable pos, Vec4 color, int range)
+        {
+            Buffer.Scenes.BeginLamp();
+            Vec4 grade = (color - Vec4.One) / range;
+            for (int r = 0; r <= range; r++)
+            {
+                Circle2D c = new Circle2D(pos, r);
+                foreach(I2dLocateable target in c)
+                {
+                    Buffer.Scenes.ColoringTile(target, color);
+                }
+                color -= grade;
+            }
+        }
+        public void SetObjectLampLightning(IMapObject item, bool enableLightning)
+        {
+            Vec4 lampcolor = GlobalRules.GetBuildingLampData(item.RegName, out float intensity, out int visibility);
+            if (!enableLightning) lampcolor = Vec4.One;
+            if (enableLightning && intensity == 0f || lampcolor == Vec4.One) return;
+            int range = visibility >> 8;
+            ApplyLampAt(item, lampcolor * Vec4.Unit3(1f + intensity * 1.5f), range + 1);
+        }
+        public void SetSceneLightning(LightningItem light)
         {
             Vec4 color = new Vec4(light.Red, light.Green, light.Blue, 1);
             Vec4 amb = Vec4.Unit3(light.Ambient);
             color *= amb;
-            _TileColor = color;
-            foreach (PresentTile t in Buffer.Scenes.Tiles.Values) t.SetColor(color);
-            foreach (IPresentBase obj in Buffer.Scenes.MapObjects) obj.SetColor(amb);
-            foreach (PresentMisc misc in Buffer.Scenes.MapMiscs) misc.SetColor(color);
+            sceneColor = color;
+            sceneObjectColor = amb;
+            foreach (PresentTile t in Buffer.Scenes.Tiles.Values)
+            {
+                Vec4 tilecolor = sceneColor;
+                tilecolor += Vec4.Unit3(light.Level * t.Height);
+                t.SetColor(tilecolor);
+            }
+            foreach (IPresentBase obj in Buffer.Scenes.MapObjects) obj.SetColor(sceneObjectColor);
+            foreach (PresentMisc misc in Buffer.Scenes.MapMiscs) misc.SetColor(sceneColor);
         }
         public Vec3 ClientPointToCellPos(Point src, TileLayer referance)
         {
@@ -241,8 +273,8 @@ namespace RelertSharp.DrawingEngine
         {
             if (newpos != previousTile)
             {
-                Buffer.Scenes.ColoringTile(newpos.ToCoord(), Vec4.TileIndicator, Vec4.TileExIndi);
-                Buffer.Scenes.ColoringTile(previousTile.ToCoord(), _TileColor, _TileColor);
+                Buffer.Scenes.MarkTile(newpos.ToCoord(), Vec4.TileIndicator, Vec4.TileExIndi, false);
+                Buffer.Scenes.MarkTile(previousTile.ToCoord(), Vec4.Zero, Vec4.Zero, true);
                 previousTile = newpos;
                 return true;
             }
@@ -292,6 +324,7 @@ namespace RelertSharp.DrawingEngine
         public void Dispose()
         {
             Buffer.RemoveSceneItem(BufferCollection.RemoveFlag.All);
+            Buffer.ReleaseFiles();
             CppExtern.Scene.ResetSceneView();
             CppExtern.Scene.PresentAllObject();
         }
@@ -331,12 +364,12 @@ namespace RelertSharp.DrawingEngine
         private DrawableInfantry CreateDrawableInfantry(ObjectItemBase inf, uint color, int pPal, int idxFrame)
         {
             DrawableInfantry d;
-            string lookup = string.Format("{0}{1}.in{2}", inf.NameID, color, idxFrame);
+            string lookup = string.Format("{0}{1}.in{2}", inf.RegName, color, idxFrame);
             if (!Buffer.Buffers.Infantries.Keys.Contains(lookup))
             {
                 d = new DrawableInfantry();
                 string nameid = GlobalRules.GetObjectImgName(inf, out short frame);
-                string customPalName = GlobalRules.GetCustomPaletteName(inf.NameID);
+                string customPalName = GlobalRules.GetCustomPaletteName(inf.RegName);
                 if (!string.IsNullOrEmpty(customPalName))
                 {
                     pPal = CreatePalette(customPalName);
@@ -385,12 +418,12 @@ namespace RelertSharp.DrawingEngine
         private DrawableMisc CreateDrawableMisc(TerrainItem terrain)
         {
             DrawableMisc d;
-            string name = TileDictionary.NameAsTheater(terrain.TerrainName);
+            string name = TileDictionary.NameAsTheater(terrain.RegName);
             if (!Buffer.Buffers.Miscs.Keys.Contains(name))
             {
                 d = new DrawableMisc(MapObjectType.Terrain, name);
                 d.Framecount = GlobalDir.GetShpFrameCount(name);
-                bool isTibTree = ParseBool(GlobalRules[terrain.TerrainName]["SpawnsTiberium"]);
+                bool isTibTree = ParseBool(GlobalRules[terrain.RegName]["SpawnsTiberium"]);
                 d.pPal = pPalIso;
                 d.IsZeroVec = false;
                 if (isTibTree)
@@ -409,7 +442,7 @@ namespace RelertSharp.DrawingEngine
         private DrawableMisc CreateDrawableMisc(SmudgeItem smudge)
         {
             DrawableMisc d;
-            string name = TileDictionary.NameAsTheater(smudge.Name);
+            string name = TileDictionary.NameAsTheater(smudge.RegName);
             if (!Buffer.Buffers.Miscs.Keys.Contains(name))
             {
                 d = new DrawableMisc(MapObjectType.Smudge, name);

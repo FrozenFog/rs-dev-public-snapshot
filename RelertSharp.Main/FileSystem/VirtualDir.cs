@@ -181,6 +181,7 @@ namespace RelertSharp.FileSystem
                     if (!_fileName.EndsWith(".pal")) _fileName += ".pal";
                     return new PalFile(GetRawByte(_fileName), _fileName);
                 case FileExtension.INI:
+                    if (string.IsNullOrEmpty(_fileName)) return new INIFile();
                     if (!_fileName.EndsWith(".ini")) _fileName += ".ini";
                     return new INIFile(GetRawByte(_fileName), _fileName);
                 case FileExtension.VXL:

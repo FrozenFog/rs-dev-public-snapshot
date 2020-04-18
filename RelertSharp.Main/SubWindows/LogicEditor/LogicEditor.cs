@@ -66,6 +66,7 @@ namespace RelertSharp.SubWindows.LogicEditor
                 if (house.PlayerControl)
                 {
                     CountryItem country = map.Countries.GetCountry(house.Country);
+                    if (country == null) break;
                     GlobalVar.PlayerSide = country.Side;
                     break;
                 }

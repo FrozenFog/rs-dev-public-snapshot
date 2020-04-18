@@ -43,6 +43,7 @@ namespace RelertSharp.DrawingEngine.Presenting
 
 
         #region Public Calls - PresentBase
+        public Vec4 ColorVector { get; set; } = Vec4.One;
         public int Coord { get { return Utils.Misc.CoordInt(X, Y); } }
         public int X { get; set; }
         public int Y { get; set; }
@@ -63,5 +64,6 @@ namespace RelertSharp.DrawingEngine.Presenting
         bool IsValid { get; }
         void Dispose();
         void SetColor(Vec4 color);
+        void MultiplyColor(Vec4 color);
     }
 }

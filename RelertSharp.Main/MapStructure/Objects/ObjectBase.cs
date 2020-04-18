@@ -42,7 +42,7 @@ namespace RelertSharp.MapStructure.Objects
         #endregion
     }
 
-    public class ObjectItemBase : I2dLocateable
+    public class ObjectItemBase : I2dLocateable, IMapObject
     {
         #region Ctor
         public ObjectItemBase(string _id, string[] _args)
@@ -60,7 +60,7 @@ namespace RelertSharp.MapStructure.Objects
 
         #region Public Calls - ObjectItemBase
         public string ID { get; set; }
-        public string NameID { get; set; }
+        public string RegName { get; set; }
         public string OwnerHouse { get; set; }
         public int HealthPoint { get; set; }
         public string Status { get; set; }

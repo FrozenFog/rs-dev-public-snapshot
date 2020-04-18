@@ -149,6 +149,25 @@ namespace RelertSharp.IniSystem
             }
             height = art.GetPair("Height").ParseInt(5) + 3;
         }
+        public Vec4 GetBuildingLampData(string nameid, out float intensity, out int visibility)
+        {
+            if (!HasIniEnt(nameid) || string.IsNullOrEmpty(this[nameid].Name))
+            {
+                intensity = 0;
+                visibility = 0;
+                return Vec4.Unit3(0);
+            }
+            else
+            {
+                INIEntity item = this[nameid];
+                visibility = item.GetPair("LightVisibility").ParseInt(5000);
+                intensity = item.GetPair("LightIntensity").ParseFloat();
+                float r = item.GetPair("LightRedTint").ParseFloat() + 1;
+                float g = item.GetPair("LightGreenTint").ParseFloat() + 1;
+                float b = item.GetPair("LightBlueTint").ParseFloat() + 1;
+                return new Vec4(r, g, b, 1);
+            }
+        }
         public bool IsVxl(string id)
         {
             return ParseBool(Art[id]["Voxel"]);
@@ -240,7 +259,7 @@ namespace RelertSharp.IniSystem
         public string GetObjectImgName(ObjectItemBase inf, out short frame)
         {
             frame = 0;
-            string img = GetArtEntityName(inf.NameID) + ".shp";
+            string img = GetArtEntityName(inf.RegName) + ".shp";
             frame = GlobalDir.GetShpFrameCount(img);
             return img;
         }

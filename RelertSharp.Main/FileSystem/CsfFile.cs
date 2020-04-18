@@ -25,6 +25,7 @@ namespace RelertSharp.FileSystem
         {
             Read();
         }
+        public CsfFile() { }
         #endregion
 
 

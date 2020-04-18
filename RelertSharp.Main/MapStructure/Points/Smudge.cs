@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure.Points
 {
@@ -12,17 +13,17 @@ namespace RelertSharp.MapStructure.Points
     }
 
 
-    public class SmudgeItem : PointItemBase
+    public class SmudgeItem : PointItemBase, IMapObject
     {
         public SmudgeItem(string _name, int x, int y, bool _ignore) : base(x, y)
         {
-            Name = _name;
+            RegName = _name;
             IgnoreSmudge = _ignore;
         }
 
 
         #region Public Calls - SmudgeItem
-        public string Name { get; set; }
+        public string RegName { get; set; }
         public bool IgnoreSmudge { get; set; }
         #endregion
     }
