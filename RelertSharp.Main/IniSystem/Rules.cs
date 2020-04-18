@@ -38,7 +38,10 @@ namespace RelertSharp.IniSystem
         }
         #region Ctor - Rules
         public Rules(string path, INIFileType itype = INIFileType.RulesINI) : base(path, INIFileType.RulesINI) { }
-        public Rules(byte[] _data, string _filename) : base(_data, _filename, INIFileType.RulesINI) { }
+        public Rules(byte[] _data, string _filename) : base(_data, _filename, INIFileType.RulesINI)
+        {
+            this["OverlayTypes"].Reorganize();
+        }
         #endregion
 
 
@@ -269,7 +272,8 @@ namespace RelertSharp.IniSystem
         }
         public string GetOverlayName(byte overlayid)
         {
-            return this["OverlayTypes"][overlayid.ToString()];
+            INIEntity ov = this["OverlayTypes"];
+            return ov[overlayid.ToString()];
         }
         #endregion
 

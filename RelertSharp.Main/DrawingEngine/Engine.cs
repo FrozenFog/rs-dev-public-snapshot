@@ -255,8 +255,8 @@ namespace RelertSharp.DrawingEngine
             Pnt p = Pnt.FromPoint(src);
             Vec3 pos = new Vec3();
             CppExtern.Scene.ClientPositionToScenePosition(p, ref pos);
-            pos += _NormTileVec * 12;
-            for (int height = 0; height < 12; height++)
+            pos += _NormTileVec * 15;
+            for (int height = 0; height < 15; height++)
             {
                 Vec3 tilepos = ScenePosToCoord(pos);
                 if (referance.HasTileOn(tilepos)) return tilepos;
@@ -507,7 +507,7 @@ namespace RelertSharp.DrawingEngine
 
                 d.Framecount = GlobalDir.GetShpFrameCount(filename);
                 d.pSelf = CreateFile(filename, DrawableType.Shp, overlay.Frame);
-                if (!d.IsTiberiumOverlay) d.pShadow = CreateFile(filename, DrawableType.Shp, overlay.Frame + d.Framecount / 2);
+                if (wall) d.pShadow = CreateFile(filename, DrawableType.Shp, overlay.Frame + d.Framecount / 2);
                 Buffer.Buffers.Miscs[lookup] = d;
             }
             else d = Buffer.Buffers.Miscs[lookup];
