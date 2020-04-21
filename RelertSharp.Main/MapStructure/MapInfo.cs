@@ -132,6 +132,19 @@ namespace RelertSharp.MapStructure
             Ground = ground;
             Ambient = ambient;
         }
+        public LightningItem()
+        {
+            Red = 1;
+            Green = 1;
+            Blue = 1;
+            Level = 0;
+            Ground = 0;
+            Ambient = 1;
+        }
+        #endregion
+
+
+        #region Public Methods - LightningItem
         #endregion
 
 

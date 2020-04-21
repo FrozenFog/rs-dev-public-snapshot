@@ -152,6 +152,7 @@
     <Compile Include="MapStructure\TileLayer.cs" />
     <Compile Include="MapStructure\Objects\UnitLayer.cs" />
     <Compile Include="Model\BindableBase.cs" />
+    <Compile Include="Model\MainWindowDataModel.cs" />
     <Compile Include="Model\ViewModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

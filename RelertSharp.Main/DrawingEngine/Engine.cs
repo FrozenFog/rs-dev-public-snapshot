@@ -255,12 +255,12 @@ namespace RelertSharp.DrawingEngine
             Pnt p = Pnt.FromPoint(src);
             Vec3 pos = new Vec3();
             CppExtern.Scene.ClientPositionToScenePosition(p, ref pos);
-            pos += _NormTileVec * 15;
-            for (int height = 0; height < 15; height++)
+            pos += _NormTileVec * 12;
+            for (int height = 0; height < 24; height++)
             {
                 Vec3 tilepos = ScenePosToCoord(pos);
                 if (referance.HasTileOn(tilepos)) return tilepos;
-                pos -= _NormTileVec;
+                pos -= _NormTileVec / 2f;
             }
             return Vec3.Zero;
         }

@@ -177,6 +177,10 @@ namespace RelertSharp.Common
         {
             return b * a;
         }
+        public static Vec3 operator/(Vec3 a, float b)
+        {
+            return new Vec3(a.X / b, a.Y / b, a.Z / b);
+        }
         public static Vec3 operator +(Vec3 a, Pnt b)
         {
             float sq3 = (float)Math.Sqrt(3);
