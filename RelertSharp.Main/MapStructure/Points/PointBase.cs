@@ -61,22 +61,22 @@ namespace RelertSharp.MapStructure.Points
         public PointItemBase() { }
         public PointItemBase(string _coord)
         {
-            Coord = _coord;
-            CoordInt = int.Parse(_coord);
+            CoordString = _coord;
+            Coord = int.Parse(_coord);
         }
         public PointItemBase(int _x, int _y)
         {
             X = _x;
             Y = _y;
-            Coord = CoordString(X, Y);
+            CoordString = CoordString(X, Y);
         }
 
 
         #region Public Calls - PointItemBase
-        public string Coord { get; set; }
+        public string CoordString { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public int CoordInt
+        public int Coord
         {
             get { return Utils.Misc.CoordInt(X, Y); }
             set

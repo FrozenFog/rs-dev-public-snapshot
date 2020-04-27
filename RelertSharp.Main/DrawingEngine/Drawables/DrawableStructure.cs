@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine.Drawables
@@ -15,6 +16,7 @@ namespace RelertSharp.DrawingEngine.Drawables
 
 
         #region Public Calls
+        public Color MinimapColor { get; set; } = Color.FromArgb(0x00000000);
         public int Height { get; set; }
         public int FoundationX { get; set; }
         public int FoundationY { get; set; }

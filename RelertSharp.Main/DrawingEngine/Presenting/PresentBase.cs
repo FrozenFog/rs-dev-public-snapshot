@@ -61,6 +61,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         int Z { get; set; }
         int pSelf { get; set; }
         int pSelfShadow { get; set; }
+        int Coord { get; }
         bool IsValid { get; }
         void Dispose();
         void SetColor(Vec4 color);

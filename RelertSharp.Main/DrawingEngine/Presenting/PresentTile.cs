@@ -10,11 +10,14 @@ namespace RelertSharp.DrawingEngine.Presenting
     internal class PresentTile : PresentBase, IPresentBase
     {
         #region Ctor - PresentTile
-        public PresentTile(int pself, int pextra, byte height)
+        public PresentTile(int pself, int pextra, byte height, Drawables.DrawableTile tile, int subtile)
         {
             pSelf = pself;
             pExtra = pextra;
             Height = height;
+            WaterPassable = tile[subtile].WaterPassable;
+            Buildable = tile[subtile].Buildable;
+            LandPassable = tile[subtile].LandPassable;
         }
         #endregion
 
@@ -46,6 +49,10 @@ namespace RelertSharp.DrawingEngine.Presenting
             ColorVector *= color;
             SetColor(ColorVector);
         }
+        public void DivColor(Vec4 color)
+        {
+            ColorVector /= color;
+        }
         public void AddColor(Vec4 color)
         {
             ColorVector += color;
@@ -59,6 +66,9 @@ namespace RelertSharp.DrawingEngine.Presenting
         public int pExtra { get; set; }
         public bool IsValid { get { return pSelf != 0 || pExtra != 0; } }
         public bool Lamped { get; set; }
+        public bool Buildable { get; set; }
+        public bool WaterPassable { get; set; }
+        public bool LandPassable { get; set; }
         #endregion
     }
 }

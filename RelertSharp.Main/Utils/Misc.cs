@@ -256,6 +256,34 @@ namespace RelertSharp.Utils
             }
             return result;
         }
+        /// <summary>
+        /// Return black(0x00000000) if something happened
+        /// </summary>
+        /// <param name="src"></param>
+        /// <returns></returns>
+        public static Color ToColor(string[] src)
+        {
+            int r = 0xFF, g = 0xFF, b = 0xFF;
+            if (src.Length != 3) return Color.FromArgb(0x00000000);
+            try
+            {
+                r = int.Parse(src[0]);
+                g = int.Parse(src[1]);
+                b = int.Parse(src[2]);
+            }
+            catch
+            {
+                return Color.FromArgb(0x00000000);
+            }
+            return Color.FromArgb(r, g, b);
+        }
+        public static Color ToColor(uint remapcolor)
+        {
+            int r = (int)(remapcolor & 0xFF);
+            int g = (int)(remapcolor & 0xFF00) >> 8;
+            int b = (int)(remapcolor & 0xFF0000) >> 16;
+            return Color.FromArgb(r, g, b);
+        }
         public static Rectangle UnionRectangle(ref Rectangle rectA, ref Rectangle rectB)
         {
             Rectangle result = Rectangle.Union(rectA, rectB);

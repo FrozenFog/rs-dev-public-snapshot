@@ -59,5 +59,9 @@ namespace RelertSharp.Utils
         {
             return FromHSB(int.Parse(stringlist[0]), int.Parse(stringlist[1]), int.Parse(stringlist[2]), base256);
         }
+        public static Color FromHSB(Color hsbcolor)
+        {
+            return FromHSB(hsbcolor.R, hsbcolor.G, hsbcolor.B);
+        }
     }
 }

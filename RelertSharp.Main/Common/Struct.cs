@@ -31,6 +31,14 @@ namespace RelertSharp.Common
         {
             X = r; Y = g; Z = b; V = a;
         }
+        public Vec4 ToNormalize3(out float scale)
+        {
+            float max = Math.Max(Math.Max(X, Y), Z);
+            float min = Math.Min(Math.Min(X, Y), Z);
+            float delta = max - min;
+            scale = 1 / delta;
+            return new Vec4(X * scale, Y * scale, Z * scale, V);
+        }
         public static Vec4 Unit3(float num)
         {
             return new Vec4(num, num, num, 1);
@@ -90,6 +98,10 @@ namespace RelertSharp.Common
         {
             return new Vec4(a.X / b, a.Y / b, a.Z / b, a.V / b);
         }
+        public static Vec4 operator/(Vec4 a, Vec4 b)
+        {
+            return new Vec4(a.X / b.X, a.Y / b.Y, a.Z / b.Z, a.V / b.V);
+        }
         public static bool operator==(Vec4 a, Vec4 b)
         {
             return a.X == b.X && a.Y == b.Y && a.Z == b.Z && a.V == b.V;
@@ -97,6 +109,12 @@ namespace RelertSharp.Common
         public static bool operator!=(Vec4 a, Vec4 b)
         {
             return a.X != b.X || a.Y != b.Y || a.Z != b.Z || a.V != b.V;
+        }
+        public static Vec4 operator!(Vec4 src)
+        {
+            if (src == One) return src;
+            Vec4 result = new Vec4(1 - src.X, 1 - src.Y, 1 - src.Z, 1);
+            return result;
         }
         public override int GetHashCode()
         {

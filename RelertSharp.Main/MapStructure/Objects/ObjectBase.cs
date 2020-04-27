@@ -67,7 +67,7 @@ namespace RelertSharp.MapStructure.Objects
         public string TaggedTrigger { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public int CoordInt
+        public int Coord
         {
             get { return Utils.Misc.CoordInt(X, Y); }
             set

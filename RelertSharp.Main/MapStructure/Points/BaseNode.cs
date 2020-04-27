@@ -21,6 +21,7 @@ namespace RelertSharp.MapStructure.Points
         public string RegName { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+        public int Coord { get { return Utils.Misc.CoordInt(this); } }
         #endregion
     }
 }

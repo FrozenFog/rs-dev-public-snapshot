@@ -160,6 +160,8 @@ namespace RelertSharp.DrawingEngine
             public Dictionary<int, PresentMisc> Waypoints { get; private set; } = new Dictionary<int, PresentMisc>();
             public IEnumerable<IPresentBase> MapObjects { get { return Structures.Values.Concat<IPresentBase>(Units.Values).Concat(Infantries.Values); } }
             public IEnumerable<PresentMisc> MapMiscs { get { return Overlays.Values.Concat(Terrains.Values).Concat(Smudges.Values); } }
+            public IEnumerable<PresentMisc> MiscWithoutSmudges { get { return Overlays.Values.Concat(Terrains.Values); } }
+            public IEnumerable<IPresentBase> OneCellObjects { get { return Units.Values.Concat<IPresentBase>(Infantries.Values).Concat(Overlays.Values).Concat(Terrains.Values); } }
             public IEnumerable<PresentMisc> LogicObjects { get { return Celltags.Values.Concat(Waypoints.Values); } }
             #endregion
         }

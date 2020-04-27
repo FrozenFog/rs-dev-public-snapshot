@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Collections;
 
 namespace RelertSharp.DrawingEngine.Drawables
 {
@@ -15,8 +16,32 @@ namespace RelertSharp.DrawingEngine.Drawables
 
 
         #region Public Calls - DrawableTile
-        public List<ColorPair> Colors { get; private set; } = new List<ColorPair>();
+        public List<SubTile> SubTiles { get; private set; } = new List<SubTile>();
+        public SubTile this[int subtile] { get { return SubTiles[subtile]; } }
         #endregion
+
+
+        #region Public Methods - DrawableTile
+        #region Enumerator
+
+        #endregion
+        #endregion
+
+
+        public class SubTile
+        {
+            #region Ctor - SubTile
+            public SubTile() { }
+            #endregion
+
+
+            #region Public Calls - SubTile
+            public ColorPair RadarColor { get; set; }
+            public bool Buildable { get; set; }
+            public bool LandPassable { get; set; }
+            public bool WaterPassable { get; set; }
+            #endregion
+        }
 
 
         public class ColorPair

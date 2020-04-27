@@ -18,12 +18,14 @@ namespace RelertSharp.Common
         }
         public int X { get; set; }
         public int Y { get; set; }
+        public int Coord { get { return Utils.Misc.CoordInt(this); } }
     }
 
     public interface I2dLocateable
     {
         int X { get; }
         int Y { get; }
+        int Coord { get; }
     }
 
 
