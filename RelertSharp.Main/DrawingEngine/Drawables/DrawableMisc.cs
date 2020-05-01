@@ -25,7 +25,10 @@ namespace RelertSharp.DrawingEngine.Drawables
         public ShpFlatType FlatType { get; set; }
         public int pPal { get; set; }
         public bool IsZeroVec { get; set; }
+        public bool IsFlatOnly { get; set; }
+        public bool IsRubble { get; set; }
         public bool IsTiberiumOverlay { get; set; }
+        public bool IsMoveBlockingOverlay { get; set; }
         public Color RadarColor { get; set; } = Color.FromArgb(0, 0, 0, 0);//null color
         #endregion
     }

@@ -41,6 +41,8 @@ namespace RelertSharp.DrawingEngine.Presenting
         #region Public Calls - PresentMisc
         public MapObjectType MiscType { get; private set; }
         public bool IsTiberiumOverlay { get; set; }
+        public bool IsMoveBlockingOverlay { get; set; }
+        public bool IsRubble { get; set; }
         public bool IsValid { get { return pSelf != 0; } }
         public int pWpNum { get; set; }
         #endregion

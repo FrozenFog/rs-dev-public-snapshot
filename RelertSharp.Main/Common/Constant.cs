@@ -130,7 +130,7 @@ namespace RelertSharp.Common
                 public const int LAT_D = 14;
                 public const int Clear = 13;
                 public static readonly int[] Buildables = { Roads, LAT_D, LAT_P, Clear };
-                public static readonly int[] GroundPassable = { Track, Roads, LAT_P, LAT_D, Clear };
+                public static readonly int[] Passable = { Track, Roads, LAT_P, LAT_D, Clear, Shore, Water };
             }
         }
     }

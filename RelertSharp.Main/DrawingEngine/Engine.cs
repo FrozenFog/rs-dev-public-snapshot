@@ -170,6 +170,8 @@ namespace RelertSharp.DrawingEngine
             DrawableMisc src = CreateDrawableMisc(o, _white);
             PresentMisc dest = new PresentMisc(MapObjectType.Overlay, o, height);
             dest.IsTiberiumOverlay = src.IsTiberiumOverlay;
+            dest.IsMoveBlockingOverlay = src.IsMoveBlockingOverlay;
+            dest.IsRubble = src.IsRubble;
             Vec3 pos;
             if (src.IsZeroVec) pos = ToVec3Zero(o, height);
             else pos = ToVec3Iso(o, height);
@@ -212,6 +214,10 @@ namespace RelertSharp.DrawingEngine
         #endregion
 
 
+        public void ResizeMinimap(Size src)
+        {
+            minimap.ResetSize(src);
+        }
         public void IndicateBuildableTile(bool enable)
         {
             Vec4 buildable = new Vec4(0.6f, 1, 0.6f, 1);
@@ -243,6 +249,44 @@ namespace RelertSharp.DrawingEngine
                 foreach (PresentTile p in Buffer.Scenes.Tiles.Values)
                 {
                     p.SetColor(Vec4.One);
+                }
+            }
+        }
+        public void IndicatePassableTile(bool enable)
+        {
+            Vec4 passable = new Vec4(0.6f, 0.6f, 1, 1);
+            Vec4 unable = new Vec4(1, 0.6f, 0.6f, 1);
+            if (enable)
+            {
+                foreach (PresentTile p in Buffer.Scenes.Tiles.Values)
+                {
+                    if (p.LandPassable) p.SetColor(passable);
+                    else p.SetColor(unable);
+                }
+                foreach (PresentStructure ps in Buffer.Scenes.Structures.Values)
+                {
+                    foreach (I2dLocateable pos in new Square2D(ps, ps.FoundationX, ps.FoundationY))
+                    {
+                        int coord = pos.Coord;
+                        if (!Buffer.Scenes.Tiles.Keys.Contains(coord)) continue;
+                        Buffer.Scenes.Tiles[coord].SetColor(unable);
+                    }
+                }
+                foreach (PresentMisc msc in Buffer.Scenes.MiscWithoutSmudges)
+                {
+                    int coord = msc.Coord;
+                    if (Buffer.Scenes.Tiles.Keys.Contains(coord))
+                    {
+                        if ((msc.IsTiberiumOverlay || msc.IsRubble) && !msc.IsMoveBlockingOverlay) Buffer.Scenes.Tiles[coord].SetColor(passable);
+                        else Buffer.Scenes.Tiles[coord].SetColor(unable);
+                    }
+                }
+            }
+            else
+            {
+                foreach (PresentTile t in Buffer.Scenes.Tiles.Values)
+                {
+                    t.SetColor(Vec4.One);
                 }
             }
         }
@@ -346,9 +390,18 @@ namespace RelertSharp.DrawingEngine
             CppExtern.Scene.ResetSceneView();
             Refresh();
         }
-        public void ViewShift(Point delta)
+        public void ResetMinimapWindow(Size client)
         {
-            CppExtern.Scene.MoveFocusOnScreen(delta.X, delta.Y);
+            minimap.SetClientWindowSize(new Rectangle(Point.Empty, client));
+        }
+        public void ViewShift(Point previous, Point now)
+        {
+            Vec3 LT = new Vec3();
+            CppExtern.Scene.ClientPositionToScenePosition(Pnt.Zero, ref LT);
+            Vec3 coord = ScenePosToCoord(LT);
+            minimap.ClientPos = new Point((int)coord.X, (int)coord.Y);
+            Point delta = DeltaPoint(now, previous);
+            CppExtern.Scene.MoveFocusOnScreen(delta.X * 1.2f, delta.Y * 1.2f);
             Refresh();
         }
         public void SetBackgroundColor(Color c)
@@ -392,6 +445,7 @@ namespace RelertSharp.DrawingEngine
                     subtile.RadarColor = new DrawableTile.ColorPair(img.ColorRadarLeft, img.ColorRadarRight);
                     d.SubTiles.Add(subtile);
                     subtile.WaterPassable = img.TerrainType == Constant.DrawingEngine.Tiles.Water;
+                    subtile.LandPassable = Constant.DrawingEngine.Tiles.Passable.Contains(img.TerrainType);
                     subtile.Buildable = Constant.DrawingEngine.Tiles.Buildables.Contains(img.TerrainType) && img.RampType == 0;
                 }
                 Buffer.Buffers.Tiles[filename] = d;
@@ -511,6 +565,8 @@ namespace RelertSharp.DrawingEngine
                 string land = GlobalRules[name]["Land"];
                 string[] colors = GlobalRules[name].GetPair("RadarColor").ParseStringList();
                 d.RadarColor = ToColor(colors);
+                d.IsMoveBlockingOverlay = land == "Rock";
+                d.IsRubble = rubble;
 
                 if (!string.IsNullOrEmpty(img) && name != img) filename = img;
                 if (overrides)
@@ -544,11 +600,11 @@ namespace RelertSharp.DrawingEngine
                     else d.pPal = pPalIso;
                 }
 
-                if (d.FlatType == ShpFlatType.FlatGround) d.IsTiberiumOverlay = true;
+                if (d.FlatType == ShpFlatType.FlatGround) d.IsFlatOnly = true;
 
                 d.Framecount = GlobalDir.GetShpFrameCount(filename);
                 d.pSelf = CreateFile(filename, DrawableType.Shp, overlay.Frame);
-                if (wall) d.pShadow = CreateFile(filename, DrawableType.Shp, overlay.Frame + d.Framecount / 2);
+                if (wall || !rubble || !isTiberium) d.pShadow = CreateFile(filename, DrawableType.Shp, overlay.Frame + d.Framecount / 2);
                 Buffer.Buffers.Miscs[lookup] = d;
             }
             else d = Buffer.Buffers.Miscs[lookup];
@@ -729,7 +785,8 @@ namespace RelertSharp.DrawingEngine
                 dest.pSelf = RenderAndPresent(src.pSelf, pos, frame, color, pPal, type, box);
                 if (!src.IsTiberiumOverlay && 
                     src.MiscType != MapObjectType.Smudge &&
-                    src.MiscType != MapObjectType.Celltag) dest.pSelfShadow = RenderAndPresent(src.pShadow, pos.Rise(), frame + shadow / 2, color, pPal, ShpFlatType.FlatGround, box, true);
+                    src.MiscType != MapObjectType.Celltag &&
+                    !src.IsFlatOnly) dest.pSelfShadow = RenderAndPresent(src.pShadow, pos.Rise(), frame + shadow / 2, color, pPal, ShpFlatType.FlatGround, box, true);
                 //if (src.MiscType == MapObjectType.Waypoint) dest.pWpNum = CppExtern.ObjectUtils.CreateStringObjectAtScene(pos.MoveX(_15SQ2 * -1), 0x0000FFFF, src.NameID);
             }
             if (dest.IsValid) minimap.DrawMisc(src, dest);

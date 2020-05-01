@@ -235,6 +235,13 @@ namespace RelertSharp.Common
         public int X;
         public int Y;
 
+
+        public Pnt(int x, int y)
+        {
+            X = x;Y = y;
+        }
+
+        public static Pnt Zero { get { return new Pnt(0, 0); } }
         public static Pnt FromPoint(Point src)
         {
             return new Pnt() { X = src.X, Y = src.Y };
