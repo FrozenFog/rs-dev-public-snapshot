@@ -152,63 +152,14 @@
     <Compile Include="MapStructure\Points\TerrainLayer.cs" />
     <Compile Include="MapStructure\TileLayer.cs" />
     <Compile Include="MapStructure\Objects\UnitLayer.cs" />
-    <Compile Include="Model\BindableBase.cs" />
-    <Compile Include="Model\MainWindowDataModel.cs" />
-    <Compile Include="Model\ViewModel.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DrawingEngine\CppExtern.cs" />
-    <Compile Include="SubWindows\INIEditor\dlgNewSection.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubWindows\INIEditor\dlgNewSection.Designer.cs">
-      <DependentUpon>dlgNewSection.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubWindows\INIEditor\EventHandler.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubWindows\INIEditor\INIEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubWindows\INIEditor\INIEditor.Designer.cs">
-      <DependentUpon>INIEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubWindows\LogicEditor\EventHandler.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubWindows\INIComparator.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubWindows\INIComparator.Designer.cs">
-      <DependentUpon>INIComparator.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubWindows\LogicEditor\LogicEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubWindows\LogicEditor\LogicEditor.Designer.cs">
-      <DependentUpon>LogicEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubWindows\LogicEditor\dlgCopy.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubWindows\LogicEditor\dlgCopy.Designer.cs">
-      <DependentUpon>dlgCopy.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubWindows\LogicEditor\SearchCollection.cs" />
-    <Compile Include="SubWindows\LogicEditor\StaticHelper.cs" />
     <Compile Include="Utils\Colors.cs" />
     <Compile Include="FileSystem\BaseFile.cs" />
     <Compile Include="Common\RSException.cs" />
     <Compile Include="Utils\Interpreter.cs" />
     <Compile Include="Utils\Lang.cs" />
     <Compile Include="Utils\Misc.cs" />
-    <Compile Include="_fm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="_fm.Designer.cs">
-      <DependentUpon>_fm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="_Test.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -222,24 +173,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SubWindows\INIComparator.resx">
-      <DependentUpon>INIComparator.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubWindows\INIEditor\dlgNewSection.resx">
-      <DependentUpon>dlgNewSection.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubWindows\INIEditor\INIEditor.resx">
-      <DependentUpon>INIEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubWindows\LogicEditor\LogicEditor.resx">
-      <DependentUpon>LogicEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubWindows\LogicEditor\dlgCopy.resx">
-      <DependentUpon>dlgCopy.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="_fm.resx">
-      <DependentUpon>_fm.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -255,7 +188,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GUI\" />
     <Folder Include="MainEventHandler\" />
     <Folder Include="UtilLib\" />
   </ItemGroup>
