@@ -11,7 +11,7 @@ struct ShaderStruct
 {
 	LPD3DXBUFFER pShader;
 	LPD3DXCONSTANTTABLE pConstantTable;
-	D3DXHANDLE hConstant;
+	D3DXHANDLE hConstant,hRemapConstant;
 
 	union {
 		LPDIRECT3DPIXELSHADER9 pShaderObject;
@@ -21,7 +21,8 @@ struct ShaderStruct
 	ShaderStruct() :pShader(nullptr),
 		pConstantTable(nullptr),
 		pShaderObject(nullptr),
-		hConstant(NULL)
+		hConstant(NULL),
+		hRemapConstant(NULL)
 	{}
 
 	~ShaderStruct() 
@@ -30,7 +31,9 @@ struct ShaderStruct
 	bool IsLoaded();
 	bool CompileFromFile(const char* pSource, const char* pEntry, bool bVertexShader = false);
 	bool LinkConstants(const char* pVarName);
-	bool SetConstantVector(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR4 Vector);
+	bool LinkRemapConstants(const char* pRemapName);
+	bool SetRemapColor(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR4 Color = D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
+	bool SetConstantVector(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR4 Vector = D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
 	bool SetConstantMatrix(LPDIRECT3DDEVICE9 pDevice, D3DXMATRIX Matrix);
 	bool CreateShader(LPDIRECT3DDEVICE9 pDevice);
 	bool CreateVertexShader(LPDIRECT3DDEVICE9 pDevice);

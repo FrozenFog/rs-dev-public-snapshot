@@ -19,6 +19,14 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - LocalVarCollection
+        public bool UpdateData(List<LocalVarItem> localVars)
+        {
+            if (localVars == null) return false;
+            data.Clear();
+            foreach (LocalVarItem localVar in localVars)
+                data.Add(localVar.Index.ToString(), localVar);
+            return true;
+        }
         public List<IniSystem.TechnoPair> ToTechno()
         {
             List<IniSystem.TechnoPair> result = new List<IniSystem.TechnoPair>();
@@ -49,18 +57,11 @@ namespace RelertSharp.MapStructure.Logic
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public LocalVarItem this[string name]
-        {
-            get
-            {
-                if (data.Keys.Contains(name)) return data[name];
-                return null;
-            }
-            set
-            {
-                data[name] = value;
-            }
+        public LocalVarItem this[string name] { 
+            get { return data.Keys.Contains(name) ? data[name] : null; }
+            set { data[name] = value; }
         }
+        
         #endregion
     }
 
@@ -79,6 +80,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - LocalVarItem
+        public override string ToString() { return ID + ' ' + Name; }
         public string Name { get; set; }
         public bool InitState { get; set; }
         public int Index { get; set; }

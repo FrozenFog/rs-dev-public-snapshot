@@ -28,6 +28,11 @@ namespace RelertSharp.MapStructure.Logic
         {
             data = data.OrderByDescending(x => x.Key).ToDictionary(x => x.Key, y => y.Value);
         }
+        public bool Remove(string ID)
+        {
+            if (!data.ContainsKey(ID)) return false;
+            return data.Remove(ID);
+        }
         #region Enumerator
         public IEnumerator<T> GetEnumerator()
         {

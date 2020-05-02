@@ -2,6 +2,7 @@
 ConfigName=Relert Sharp Config for Mental Omega 3.3.4
 ConfigVersion=1.0
 CustomTheater=false
+PreloadTheaterMix=true
 AutosaveTime=60
 
 [MixList]
@@ -97,11 +98,19 @@ Custom2Theater=
 Custom3Theater=
 
 [StringTable]
-0=stringtable10
-1=stringtable11
+0=ra2
+1=ra2md
+2=stringtable09
+3=stringtable10
+4=stringtable11
 
 [Triggers]
 UselessEvents=3
 
 [DrawingConfig]
+OffsetBridgeFrames=9,10,11,12,13,14,15,16,17
+IgnoreBuildingTheaterArt=true
+IgnoreInfantryTheaterArt=false
 DeactivateAnim=YAPOWR
+DeactivateShadow=GAHPAD
+DeactivateBib=GAHPAD

@@ -117,5 +117,21 @@ namespace RelertSharp.Common
                 "Experience.MindControlSelfModifier","Experience.SpawnOwnerModifier","BallisticScatter.Max","BallisticScatter.Min"
             };
         }
+        public static class DrawingEngine
+        {
+            public static class Tiles
+            {
+                public const int Cliff = 15;
+                public const int Water = 9;
+                public const int Shore = 10;
+                public const int Track = 6;
+                public const int Roads = 12;
+                public const int LAT_P = 11;
+                public const int LAT_D = 14;
+                public const int Clear = 13;
+                public static readonly int[] Buildables = { Roads, LAT_D, LAT_P, Clear };
+                public static readonly int[] Passable = { Track, Roads, LAT_P, LAT_D, Clear, Shore, Water };
+            }
+        }
     }
 }

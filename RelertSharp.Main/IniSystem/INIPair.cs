@@ -139,7 +139,7 @@ namespace RelertSharp.IniSystem
                 }
                 return def;
             }
-            catch { return 0; }
+            catch { return def; }
         }
         /// <summary>
         /// Try parse the value as float
@@ -164,6 +164,7 @@ namespace RelertSharp.IniSystem
         /// <returns></returns>
         public string[] ParseStringList()
         {
+            if (string.IsNullOrEmpty(Value)) return new string[0];
             return ((string)Value).Split(new char[] { ',' });
         }
         /// <summary>
@@ -173,7 +174,13 @@ namespace RelertSharp.IniSystem
         public int[] ParseIntList()
         {
             List<int> result = new List<int>();
-            foreach (string s in ParseStringList()) result.Add(int.Parse(s));
+            IEnumerable<string> tmp = ParseStringList();
+            if (tmp.Count() == 0) return result.ToArray();
+            foreach (string s in tmp)
+            {
+                if (!string.IsNullOrEmpty(s)) 
+                result.Add(int.Parse(s));
+            }
             return result.ToArray();
         }
         #endregion

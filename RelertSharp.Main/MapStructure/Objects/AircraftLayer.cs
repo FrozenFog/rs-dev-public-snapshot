@@ -19,7 +19,7 @@ namespace RelertSharp.MapStructure.Objects
         {
             ID = _id;
             OwnerHouse = _args[0];
-            NameID = _args[1];
+            RegName = _args[1];
             HealthPoint = int.Parse(_args[2]);
             X = int.Parse(_args[3]);
             Y = int.Parse(_args[4]);

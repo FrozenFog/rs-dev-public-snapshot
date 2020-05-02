@@ -46,7 +46,11 @@ namespace RelertSharp.FileSystem
             for (int i = 0; i < WidthCount * HeightCount; i++)
             {
                 int imageOffset = BitConverter.ToInt32(indexs, i * 4);
-                if (imageOffset == 0) continue;
+                if (imageOffset == 0)
+                {
+                    images.Add(new TmpImage());
+                    continue;
+                }
                 ReadSeek(imageOffset, SeekOrigin.Begin);
                 TmpImage img = new TmpImage();
                 img.Read(BReader, blockWidthPX, blockHeightPX);

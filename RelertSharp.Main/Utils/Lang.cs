@@ -61,7 +61,7 @@ namespace RelertSharp
                     SetControlLanguage(c);
                 }
             }
-            else if(t == typeof(TabControl))
+            else if (t == typeof(TabControl))
             {
                 foreach (TabPage pg in ((TabControl)p).TabPages)
                 {
@@ -77,9 +77,16 @@ namespace RelertSharp
             }
             else if (t == typeof(DataGridView))
             {
-                foreach(DataGridViewTextBoxColumn col in ((DataGridView)p).Columns)
+                foreach (DataGridViewTextBoxColumn col in ((DataGridView)p).Columns)
                 {
                     col.HeaderText = DICT[col.HeaderText];
+                }
+            }
+            else if (t == typeof(BrightIdeasSoftware.ObjectListView)) 
+            {
+                foreach(BrightIdeasSoftware.OLVColumn col in ((BrightIdeasSoftware.ObjectListView)p).Columns)
+                {
+                    col.Text = DICT[col.Text];
                 }
             }
             if(p.ContextMenuStrip != null)

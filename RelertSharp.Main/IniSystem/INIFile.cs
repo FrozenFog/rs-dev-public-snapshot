@@ -25,7 +25,12 @@ namespace RelertSharp.IniSystem
             initype = _type;
             Load();
         }
+        public INIFile()
+        {
+            initype = INIFileType.UnknownINI;
+        }
         #endregion
+
 
         #region Private Methods - INIFile
         private void Load()
@@ -71,8 +76,10 @@ namespace RelertSharp.IniSystem
                 else if (line.StartsWith("*")) continue;
                 else
                 {
+                    INIPair p;
                     string[] tmp = line.Split(new char[] { '=' }, 2);
-                    INIPair p = new INIPair(tmp[0].Trim(), tmp[1].Trim(), combuf, preCommentBuffer);
+                    if (tmp.Length == 1) p = new INIPair(tmp[0].Trim(), "", combuf, preCommentBuffer);
+                    else p = new INIPair(tmp[0].Trim(), tmp[1].Trim(), combuf, preCommentBuffer);
                     ent.AddPair(p);
                     preCommentBuffer = "";
                 }
@@ -80,6 +87,7 @@ namespace RelertSharp.IniSystem
             AddEnt(ent);
         }
         #endregion
+
 
         #region Public Methods - INIFile
         /// <summary>

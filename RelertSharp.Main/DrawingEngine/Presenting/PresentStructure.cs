@@ -12,9 +12,11 @@ namespace RelertSharp.DrawingEngine.Presenting
     internal class PresentStructure : PresentBase, IPresentBase
     {
         #region Ctor
-        public PresentStructure(StructureItem item, int z, bool vxlTurret) : base(item, z)
+        public PresentStructure(StructureItem item, int z, bool vxlTurret, Drawables.DrawableStructure src) : base(item, z)
         {
             VoxelTurret = vxlTurret;
+            FoundationX = src.FoundationX;
+            FoundationY = src.FoundationY;
         }
         public PresentStructure(BaseNode node, int z, bool vxlTurret) : base(node, z)
         {
@@ -38,6 +40,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             if (!IsBaseNode)
             {
+                ColorVector = color;
                 SetColor(pSelf, color);
                 SetColor(pActivateAnim, color);
                 SetColor(pActivateAnim2, color);
@@ -47,6 +50,11 @@ namespace RelertSharp.DrawingEngine.Presenting
                 SetColor(pTurretAnim, color);
                 SetColor(pTurretBarl, color);
             }
+        }
+        public void MultiplyColor(Vec4 color)
+        {
+            ColorVector *= color;
+            SetColor(ColorVector);
         }
         #endregion
 
@@ -97,6 +105,8 @@ namespace RelertSharp.DrawingEngine.Presenting
         public bool VoxelTurret { get; set; }
         public bool IsValid { get { return !((pSelf | pActivateAnim | pActivateAnim2 | pActivateAnim3 | pBib | pTurretAnim | pIdleAnim) == 0); } }
         public bool IsBaseNode { get; set; }
+        public int FoundationX { get; private set; }
+        public int FoundationY { get; private set; }
         #endregion
     }
 }

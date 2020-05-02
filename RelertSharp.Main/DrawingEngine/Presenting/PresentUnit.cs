@@ -28,9 +28,15 @@ namespace RelertSharp.DrawingEngine.Presenting
         }
         public void SetColor(Vec4 color)
         {
+            ColorVector = color;
             SetColor(pSelf, color);
             SetColor(pTurret, color);
             SetColor(pBarrel, color);
+        }
+        public void MultiplyColor(Vec4 color)
+        {
+            ColorVector *= color;
+            SetColor(ColorVector);
         }
         #endregion
 

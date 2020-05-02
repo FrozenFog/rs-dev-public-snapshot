@@ -49,6 +49,7 @@ namespace RelertSharp.MapStructure
 
             Tiles = new TileLayer(isomappack5String, info.Size);
             Overlays = new OverlayLayer(overlayString, overlaydataString);
+            Tiles.FixEmptyTiles(Info.Size.Width, info.Size.Height);
             residual = new Dictionary<string, INIEntity>(f.IniDict);
 
             globalid.AddRange(Triggers.Keys);
@@ -64,6 +65,34 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - Map
+
+
+        #region Collection Utils
+        public TriggerItem NewTrigger()
+        {
+            TriggerItem t = Triggers.NewTrigger(NewID);
+            TagItem tag = new TagItem(t, NewID);
+            Tags[tag.ID] = tag;
+            return t;
+        }
+        public void RemoveTrigger(TriggerItem item)
+        {
+            Triggers.RemoveTrigger(item);
+            DelID(item.ID);
+        }
+        public TaskforceItem NewTaskforce()
+        {
+            TaskforceItem t = TaskForces.NewTaskforce(NewID);
+            return t;
+        }
+        public void RemoveTaskforce(TaskforceItem item)
+        {
+            TaskForces.Remove(item.ID);
+            DelID(item.ID);
+        }
+        #endregion
+
+
         public uint GetHouseColor(string housename)
         {
             HouseItem house = Houses.GetHouse(housename);
@@ -84,18 +113,22 @@ namespace RelertSharp.MapStructure
             overlayString = Overlays.CompressIndex();
             overlaydataString = Overlays.CompressFrame();
         }
-        public TriggerItem NewTrigger()
-        {
-            TriggerItem t = Triggers.NewTrigger(NewID);
-            TagItem tag = new TagItem(t, NewID);
-            Tags[tag.ID] = tag;
-            return t;
-        }
         public int GetHeightFromTile(I2dLocateable obj)
         {
             Tile t = Tiles[CoordInt(obj.X, obj.Y)];
             return t == null ? 0 : t.Height;
         }
+        public bool DelID(string ID)
+        {
+            if (!globalid.Contains(ID)) return false;
+            globalid.Remove(ID);
+            return true;
+        }
+        //public Bitmap GetMinimap(Rectangle resize)
+        //{
+        //    Bitmap tile = TilesData.GenerateShot(info.Size);
+        //    return tile;
+        //}
         #endregion
 
 
@@ -227,7 +260,7 @@ namespace RelertSharp.MapStructure
             foreach (INIPair p in entVar.DataList)
             {
                 string[] tmp = p.ParseStringList();
-                LocalVariables[tmp[0]] = new LocalVarItem(tmp[0], ParseBool(tmp[1]), p.Name);
+                LocalVariables[p.Name] = new LocalVarItem(tmp[0], ParseBool(tmp[1]), p.Name);
             }
             foreach (INIPair p in entAITrigger.DataList)
             {
@@ -331,7 +364,7 @@ namespace RelertSharp.MapStructure
         {
             get
             {
-                for (; genID < 99999999; genID++)
+                for (genID = 1000000; genID < 99999999; genID++)
                 {
                     string id = string.Format("{0:D8}", genID);
                     if (!globalid.Contains(id))

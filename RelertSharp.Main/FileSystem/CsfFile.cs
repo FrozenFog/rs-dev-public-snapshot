@@ -25,6 +25,7 @@ namespace RelertSharp.FileSystem
         {
             Read();
         }
+        public CsfFile() { }
         #endregion
 
 
@@ -47,7 +48,7 @@ namespace RelertSharp.FileSystem
                 {
                     int _numPairs = ReadInt32();
                     int _lenLblName = ReadInt32();
-                    string labelName = ReadString(_lenLblName);
+                    string labelName = ReadString(_lenLblName).ToLower();
                     int _subidentity = ReadInt32();
                     int _lenLblValue = ReadInt32();
                     byte[] _value = ReadBytes(_lenLblValue * 2);
@@ -111,7 +112,8 @@ namespace RelertSharp.FileSystem
         {
             get
             {
-                if (HasString(_uiTag)) return data[_uiTag.ToLower()];
+                _uiTag = _uiTag.ToLower();
+                if (HasString(_uiTag)) return data[_uiTag];
                 else
                 {
                     CsfString csf = new CsfString(_uiTag);

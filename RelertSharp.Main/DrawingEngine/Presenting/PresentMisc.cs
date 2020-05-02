@@ -27,7 +27,13 @@ namespace RelertSharp.DrawingEngine.Presenting
         public void SetColor(Vec4 color)
         {
             if (IsTiberiumOverlay) return;
+            ColorVector = color;
             SetColor(pSelf, color);
+        }
+        public void MultiplyColor(Vec4 color)
+        {
+            ColorVector *= color;
+            SetColor(ColorVector);
         }
         #endregion
 
@@ -35,7 +41,10 @@ namespace RelertSharp.DrawingEngine.Presenting
         #region Public Calls - PresentMisc
         public MapObjectType MiscType { get; private set; }
         public bool IsTiberiumOverlay { get; set; }
+        public bool IsMoveBlockingOverlay { get; set; }
+        public bool IsRubble { get; set; }
         public bool IsValid { get { return pSelf != 0; } }
+        public int pWpNum { get; set; }
         #endregion
     }
 }

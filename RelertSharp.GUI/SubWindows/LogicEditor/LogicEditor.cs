@@ -24,22 +24,30 @@ namespace RelertSharp.SubWindows.LogicEditor
         private CheckBox[] ckbEP, ckbAP;
         private ComboBox[] cbbEP, cbbAP;
         private SoundManager soundPlayer = new SoundManager();
-        private bool listUpdating = false;
+
+        private List<LocalVarItem> localVarList = new List<LocalVarItem>();
+        private BindingSource localVarSource = new BindingSource();
 
 
         #region Ctor - LogicEditor
-        public LogicEditor(Map m)
+        public LogicEditor()
         {
             InitializeComponent();
             SetLanguage();
             InitControls();
-            map = m;
+            map = GlobalVar.CurrentMapDocument.Map;
+            SetGlobal();
+            
             StaticHelper.LoadToObjectCollection(cbbEventAbst, descriptCollection.Events);
             StaticHelper.LoadToObjectCollection(cbbActionAbst, descriptCollection.Actions);
             UpdateTrgList(TriggerItem.DisplayingType.IDandName);
+            LoadTaskforceList();
+            LoadScriptList();
+            LoadTeamList();
             LoadHouseList();
-            SetGlobal();
-            lbxTriggerList.SelectedIndex = 0;
+            LoadLocalVariables();
+
+            lbxTriggerList.SelectedIndex = lbxTriggerList.Items.Count > 0 ? 0 : -1;
         }
         #endregion
 
@@ -58,12 +66,14 @@ namespace RelertSharp.SubWindows.LogicEditor
                 if (house.PlayerControl)
                 {
                     CountryItem country = map.Countries.GetCountry(house.Country);
+                    if (country == null) break;
                     GlobalVar.PlayerSide = country.Side;
                     break;
                 }
             }
             GlobalVar.GlobalRules.Override(map.IniResidue.Values);
         }
+
         private void InitControls()
         {
             lklEP = new LinkLabel[4] { lklEP1, lklEP2, lklEP3, lklEP4 };
@@ -81,6 +91,38 @@ namespace RelertSharp.SubWindows.LogicEditor
         {
             map.Countries.AscendingSort();
             StaticHelper.LoadToObjectCollection(lbxTriggerHouses, map.Countries);
+        }
+        private void LoadTaskforceList()
+        {
+            StaticHelper.LoadToObjectCollection(lbxTaskList, map.TaskForces);
+            List<TechnoPair> technoPairs = new List<TechnoPair>();
+            technoPairs.Add(new TechnoPair(string.Empty, "(Nothing)"));
+            technoPairs.AddRange(GlobalVar.GlobalRules.InfantryList);
+            technoPairs.AddRange(GlobalVar.GlobalRules.AircraftList);
+            technoPairs.AddRange(GlobalVar.GlobalRules.VehicleList);
+            foreach (TechnoPair techno in technoPairs)
+                //if (!string.IsNullOrEmpty(techno.UIName))
+                techno.ResetAbst(TechnoPair.AbstractType.CsfName, TechnoPair.IndexType.RegName);
+            //technoPairs.Sort((x, y) => x.RegName.CompareTo(y.RegName));
+            StaticHelper.LoadToObjectCollection(cbbTaskType, technoPairs);
+        }
+        private void LoadScriptList()
+        {
+            StaticHelper.LoadToObjectCollection(lbxScriptList, map.Scripts);
+        }
+        private void LoadTeamList()
+        {
+            StaticHelper.LoadToObjectCollection(lbxTeamList, map.Teams);
+        }
+        private void LoadLocalVariables()
+        {
+            chklbxLocalVar.Items.Clear();
+            chklbxLocalVar.DataSource = localVarSource;
+            localVarList = map.LocalVariables.ToList();
+            if (localVarList == null) return;
+            localVarSource.DataSource = localVarList;
+            for (int idx = 0, count = localVarList.Count; idx < count; ++idx)
+                chklbxLocalVar.SetItemChecked(idx, localVarList[idx].InitState);
         }
         #endregion
 
@@ -172,27 +214,15 @@ namespace RelertSharp.SubWindows.LogicEditor
         private void UpdateTags(string triggerID)
         {
             TriggerItem trg = map.Triggers[triggerID];
-            TagItem tg = map.Tags.GetTagFromTrigger(triggerID, trg);
-
+            var tags = map.Tags.GetTagFromTrigger(triggerID, trg);
             txbTrgID.Text = triggerID;
             txbTrgName.Text = trg.Name;
-            txbTagID.Text = tg.ID;
-            txbTagName.Text = tg.Name;
+            StaticHelper.LoadToObjectCollection(cbbTagID, tags);
+            cbbTagID.SelectedIndex = tags.Count >= 0 ? 0 : -1;
+            cbbTagID_SelectedIndexChanged(cbbTagID, null);
             rdbRepeat0.Checked = false;
             rdbRepeat1.Checked = false;
             rdbRepeat2.Checked = false;
-            switch (tg.Repeating)
-            {
-                case TriggerRepeatingType.NoRepeating:
-                    rdbRepeat0.Checked = true;
-                    break;
-                case TriggerRepeatingType.OneTimeLogicAND:
-                    rdbRepeat1.Checked = true;
-                    break;
-                case TriggerRepeatingType.RepeatLogicOR:
-                    rdbRepeat2.Checked = true;
-                    break;
-            }
             ckbDisabled.Checked = trg.Disabled;
             lbxTriggerHouses.SelectedItem = map.Countries.GetCountry(trg.House);
             if (trg.LinkedWith != "<none>")
@@ -251,6 +281,29 @@ namespace RelertSharp.SubWindows.LogicEditor
                 }
             }
         }
+        private void UpdateTaskforceContent(int lvSelectedindex)
+        {
+            TaskforceItem taskforce = lbxTaskList.SelectedItem as TaskforceItem;
+            txbTaskName.Text = taskforce.Name;
+            mtxbTaskGroup.Text = taskforce.Group.ToString();
+            txbTaskID.Text = taskforce.ID;
+
+            imglstPcx.Images.Clear();
+            lvTaskforceUnits.SelectedIndices.Clear();
+            lvTaskforceUnits.Items.Clear();
+            if (taskforce.Members.Count > 0)
+            {
+                Dictionary<string, Image> dict = GlobalVar.GlobalDir.GetPcxImages(taskforce.MemberPcxNames);
+                foreach (string key in dict.Keys)
+                {
+                    imglstPcx.Images.Add(key, dict[key]);
+                }
+                IEnumerable<TaskforceUnit> units = taskforce.Members;
+                IEnumerable<ListViewItem> items = TaskforceItem.ToListViewItems(units);
+                StaticHelper.LoadToObjectCollection(lvTaskforceUnits, items);
+                lvTaskforceUnits.SelectedIndices.Add(lvSelectedindex);
+            }
+        }
         #endregion
 
         #region Trace Utils
@@ -275,20 +328,50 @@ namespace RelertSharp.SubWindows.LogicEditor
         #endregion
 
         #region Misc Utils
-        private void UpdateAt(ListBox dest, object updatevalue)
+        private void AddTo(ListBox dest, object obj, ref bool locker)
         {
-            listUpdating = true;
+            locker = true;
+            dest.Items.Add(obj);
+            locker = false;
+            dest.SelectedItem = obj;
+        }
+        private void UpdateAt(ListBox dest, object updatevalue, ref bool locker)
+        {
+            locker = true;
             int index = dest.SelectedIndex;
+            if (index < 0)
+            {
+                locker = false;
+                return;
+            }
             dest.Items.RemoveAt(index);
             dest.Items.Insert(index, updatevalue);
             dest.SelectedIndex = index;
-            listUpdating = false;
+            locker = false;
         }
-        private void RemoveAt(ListBox dest, int index)
+        private void UpdateAt(ListView dest, ListViewItem item, ref bool locker)
         {
-            listUpdating = true;
+            locker = true;
+            int index = dest.SelectedIndices[0];
             dest.Items.RemoveAt(index);
-            listUpdating = false;
+            dest.Items.Insert(index, item);
+            dest.SelectedIndices.Clear();
+            dest.SelectedIndices.Add(index);
+            locker = false;
+        }
+        private void RemoveAt(ListView dest, int index, ref bool locker)
+        {
+            locker = true;
+            dest.SelectedIndices.Clear();
+            dest.Items.RemoveAt(index);
+            locker = false;
+            if (index != 0) dest.SelectedIndices.Add(index - 1);
+        }
+        private void RemoveAt(ListBox dest, int index, ref bool locker)
+        {
+            locker = true;
+            dest.Items.RemoveAt(index);
+            locker = false;
             if (index != 0) dest.SelectedIndex = index - 1;
         }
         private IEnumerable<object> GetComboCollections(TriggerParam param)
@@ -383,7 +466,7 @@ namespace RelertSharp.SubWindows.LogicEditor
             }
             controls[controlIndex].Visible = true;
         }
-        private void WriteParam(string value, int pos, LogicType type, bool base26 = false)
+        private void WriteParam(string value, int pos, LogicType type, ref bool locker, bool base26 = false)
         {
             if (base26)
             {
@@ -400,32 +483,32 @@ namespace RelertSharp.SubWindows.LogicEditor
             if (type == LogicType.EventLogic)
             {
                 _CurrentEvent.Parameters[pos] = value;
-                UpdateAt(lbxEventList, _CurrentEvent);
+                UpdateAt(lbxEventList, _CurrentEvent, ref locker);
             }
             else
             {
                 _CurrentAction.Parameters[pos] = value;
-                UpdateAt(lbxActionList, _CurrentAction);
+                UpdateAt(lbxActionList, _CurrentAction, ref locker);
             }
         }
-        private void WriteParam(TechnoPair value, int pos, LogicType type)
+        private void WriteParam(TechnoPair value, int pos, LogicType type, ref bool locker)
         {
-            WriteParam(value.Index, pos, type);
+            WriteParam(value.Index, pos, type, ref locker);
         }
-        private void WriteParam(bool value, int pos, LogicType type)
+        private void WriteParam(bool value, int pos, LogicType type, ref bool locker)
         {
             if (type == LogicType.EventLogic)
             {
                 _CurrentEvent.Parameters[pos] = value ? "1" : "0";
-                UpdateAt(lbxEventList, _CurrentEvent);
+                UpdateAt(lbxEventList, _CurrentEvent, ref locker);
             }
             else
             {
                 _CurrentAction.Parameters[pos] = value ? "1" : "0";
-                UpdateAt(lbxActionList, _CurrentAction);
+                UpdateAt(lbxActionList, _CurrentAction, ref locker);
             }
         }
-        private void ParamChanged(object sender, LogicType type)
+        private void ParamChanged(object sender, LogicType type, ref bool locker)
         {
             Type t = sender.GetType();
             int paramsindex = int.Parse(((Control)sender).Tag.ToString());
@@ -437,17 +520,17 @@ namespace RelertSharp.SubWindows.LogicEditor
             if (t == typeof(TextBox))
             {
                 string text = ((TextBox)sender).Text;
-                WriteParam(text, i, type, isBase26);
+                WriteParam(text, i, type, ref locker, isBase26);
             }
             else if (t == typeof(ComboBox))
             {
                 TechnoPair p = ((ComboBox)sender).SelectedItem as TechnoPair;
                 if (p == null) p = new TechnoPair(((ComboBox)sender).Text, "");
-                WriteParam(p, i, type);
+                WriteParam(p, i, type, ref locker);
             }
             else if (t == typeof(CheckBox))
             {
-                WriteParam(((CheckBox)sender).Checked, i, type);
+                WriteParam(((CheckBox)sender).Checked, i, type, ref locker);
             }
         }
         #endregion
@@ -462,9 +545,14 @@ namespace RelertSharp.SubWindows.LogicEditor
         private List<TriggerParam> _CurrentActionParameters { get { return _CurrentActionDesc.Parameters; } }
         private TriggerItem _CurrentBoxTrigger { get { return lbxTriggerList.SelectedItem as TriggerItem; } }
         private TriggerItem _CurrentTrigger { get { return map.Triggers[txbTrgID.Text]; } }
-        private LogicItem _CurrentEvent { get { return _CurrentTrigger.Events[lbxEventList.SelectedIndex]; } }
-        private LogicItem _CurrentAction { get { return _CurrentTrigger.Actions[lbxActionList.SelectedIndex]; } }
-        private TagItem _CurrentTag { get { return map.Tags[txbTagID.Text]; } }
+        private TaskforceItem _CurrentTaskforce { get { return map.TaskForces[txbTaskID.Text]; } }
+        private TaskforceUnit _CurrentBoxTaskforceUnit { get { return TaskforceUnit.FromListviewItem(lvTaskforceUnits.SelectedItems[0]); } }
+        private TaskforceUnit _CurrentTaskforceUnit { get { return _CurrentTaskforce.Members[lvTaskforceUnits.SelectedIndices[0]]; } }
+        private LogicItem _CurrentEvent { get { return _CurrentTrigger.Events[_CurrentBoxEvent.idx]; } }
+        private LogicItem _CurrentBoxEvent { get { return lbxEventList.SelectedItem as LogicItem; } }
+        private LogicItem _CurrentAction { get { return _CurrentTrigger.Actions[_CurrentBoxAction.idx]; } }
+        private LogicItem _CurrentBoxAction { get { return lbxActionList.SelectedItem as LogicItem; } }
+        private TagItem _CurrentTag { get { return map.Tags[cbbTagID.Text]; } }
         private SearchCollection _SearchResult { get; set; } = new SearchCollection();
         #endregion
     }

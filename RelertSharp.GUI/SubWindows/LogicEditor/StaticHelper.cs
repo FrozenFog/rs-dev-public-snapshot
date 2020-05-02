@@ -14,6 +14,7 @@ namespace RelertSharp.SubWindows.LogicEditor
     {
         public static void LoadToObjectCollection(ListView dest, IEnumerable<ListViewItem> src)
         {
+            dest.Items.Clear();
             dest.BeginUpdate();
             if (src.Count() > 0)
             {
@@ -23,9 +24,12 @@ namespace RelertSharp.SubWindows.LogicEditor
         }
         public static void LoadToObjectCollection<T>(ComboBox dest, IList<T> src)
         {
-            int max = src.Max(x => x.ToString().Length) * 7;
+            if (src != null && src.Count != 0)
+            {
+                int max = src.Max(x => x.ToString().Length) * 7;
+                dest.DropDownWidth = max;
+            }
             dest.DataSource = src;
-            dest.DropDownWidth = max;
         }
         public static void LoadToObjectCollection(ComboBox dest, IEnumerable<object> src)
         {

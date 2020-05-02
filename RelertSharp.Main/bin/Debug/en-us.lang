@@ -56,6 +56,7 @@ LGCDescTagName=Right click to view all tags that applies this trigger.
 
 LGCtbpTrgPage=Triggers
 LGCtbpTeamPage=Teams
+LGCtbpMiscPage=Miscellaneous
 
 LGCclhRegID=UID
 LGCclhType=Type
@@ -86,8 +87,9 @@ LGClblSearchResult=Global search result
 LGClblFakeSearch=Search keyword...
 LGClblSearchNum=Global search result: {0} matches
 LGClblTaskList=Taskforce list
-LGClblTaskName=Name:
-LGClblTaskGroup=Group:
+LGClblTaskID=ID
+LGClblTaskName=Name
+LGClblTaskGroup=Group
 LGClblTaskMemberList=Taskforce members list
 LGClblTaskCurType=Unit type:
 LGClblTaskCurNum=Unit num:
@@ -98,6 +100,7 @@ LGClblScriptCurType=Type:
 LGClblScriptCurPara=Parameter:
 LGClblScriptDesc=Parameter description
 LGClblTeamList=Team list
+LGClblLocalVarName=Name:
 
 LGClklTrace=Trace...
 
@@ -126,6 +129,8 @@ LGCbtnCopyScriptMem=Copy
 LGCbtnNewTeam=New
 LGCbtnDelTeam=Del
 LGCbtnCopyTeam=Copy
+LGCbtnNewLocalVar=New
+LGCbtnDelLocalVar=Del
 LGCbtnSearch=Search
 
 LGCckbDisabled=Disabled
@@ -162,12 +167,16 @@ LGCgpbTeamScript=Scripts
 LGCgpbTeamScriptCur=Current Script
 LGCgpbTeamTeam=Teams
 LGCgpbTeamTeamCur=Current Team
+LGCgpbLocalVar=Local Variables
 LGCgpbSearch=Global search
 
 LGCrdbRep0=One time AND
 LGCrdbRep1=One time OR
 LGCrdbRep2=Repeating OR
 
+LGColvColumnSection=Property
+LGColvColumnKey=Item
+LGColvColumnValue=Value
 
 LGCtsmiAscend=Ascending sort
 LGCtsmiDecend=Decending sort

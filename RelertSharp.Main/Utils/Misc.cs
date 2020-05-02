@@ -101,6 +101,16 @@ namespace RelertSharp.Utils
             }
             return result;
         }
+        public static float ParseFloat(string src, float def = 0)
+        {
+            if (string.IsNullOrEmpty(src)) return def;
+            return float.Parse(src);
+        }
+        public static double ParseDouble(string src, double def = 0)
+        {
+            if (string.IsNullOrEmpty(src)) return def;
+            return double.Parse(src);
+        }
         public static string CoordString(int x, int y)
         {
             return (x * 1000 + y).ToString();
@@ -108,6 +118,10 @@ namespace RelertSharp.Utils
         public static int CoordInt(int x, int y)
         {
             return 1000 * x + y;
+        }
+        public static int CoordInt(I2dLocateable pos)
+        {
+            return 1000 * pos.X + pos.Y;
         }
         public static int CoordInt(float x, float y)
         {
@@ -242,6 +256,34 @@ namespace RelertSharp.Utils
             }
             return result;
         }
+        /// <summary>
+        /// Return black(0x00000000) if something happened
+        /// </summary>
+        /// <param name="src"></param>
+        /// <returns></returns>
+        public static Color ToColor(string[] src)
+        {
+            int r = 0xFF, g = 0xFF, b = 0xFF;
+            if (src.Length != 3) return Color.FromArgb(0x00000000);
+            try
+            {
+                r = int.Parse(src[0]);
+                g = int.Parse(src[1]);
+                b = int.Parse(src[2]);
+            }
+            catch
+            {
+                return Color.FromArgb(0x00000000);
+            }
+            return Color.FromArgb(r, g, b);
+        }
+        public static Color ToColor(uint remapcolor)
+        {
+            int r = (int)(remapcolor & 0xFF);
+            int g = (int)(remapcolor & 0xFF00) >> 8;
+            int b = (int)(remapcolor & 0xFF0000) >> 16;
+            return Color.FromArgb(r, g, b);
+        }
         public static Rectangle UnionRectangle(ref Rectangle rectA, ref Rectangle rectB)
         {
             Rectangle result = Rectangle.Union(rectA, rectB);
@@ -252,6 +294,12 @@ namespace RelertSharp.Utils
             rectA.Location = new Point(aX, aY);
             rectB.Location = new Point(bX, bY);
             return result;
+        }
+        public static Rectangle RectFromIntList(int[] src)
+        {
+            if (src.Length == 2) return new Rectangle(0, 0, src[0], src[1]);
+            else if (src.Length == 4) return new Rectangle(src[0], src[1], src[2], src[3]);
+            else return new Rectangle();
         }
         public static int TimeInt(string s)
         {
@@ -279,6 +327,13 @@ namespace RelertSharp.Utils
         public static Point DeltaPoint(Point pre, Point now)
         {
            return new Point(now.X - pre.X, now.Y - pre.Y);
+        }
+        public static void DebugSave(byte[] data, string filename)
+        {
+            System.IO.FileStream fs = new System.IO.FileStream(filename, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+            fs.Write(data, 0, data.Length);
+            fs.Flush();
+            fs.Dispose();
         }
     }
 

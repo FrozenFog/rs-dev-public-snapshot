@@ -45,13 +45,13 @@ namespace RelertSharp.MapStructure.Logic
 
     public class LogicGroup : IEnumerable<LogicItem>
     {
-        private List<LogicItem> data = new List<LogicItem>();
-        private int count = 1;
+        private Dictionary<int, LogicItem> data = new Dictionary<int, LogicItem>();
 
 
         #region Ctor - LogicGroup
         public LogicGroup(INIPair p, LogicType type)
         {
+            int num = 1;
             string[] l = p.ParseStringList();
             if (l.Contains(""))
             {
@@ -72,7 +72,7 @@ namespace RelertSharp.MapStructure.Logic
                             logicID,
                             new string[] { l[i + 1], l[i + 2], l[i + 3], l[i + 4], l[i + 5], l[i + 6], l[i + 7] },
                             type,
-                            count++
+                            num++
                         ));
                         break;
                     case LogicType.EventLogic:
@@ -81,7 +81,7 @@ namespace RelertSharp.MapStructure.Logic
                             logicID,
                             new string[] { l[i + 1], l[i + 2], steplen == 4 ? l[i + 3] : "0" },
                             type,
-                            count++
+                            num++
                             ));
                         break;
                 }
@@ -113,17 +113,29 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
 
 
+        #region Private Methods - LogicGroup
+        private int GetCount()
+        {
+            for (int i = 1; i < 50; i++)
+            {
+                if (!data.Keys.Contains(i)) return i;
+            }
+            return 50;
+        }
+        #endregion
+
+
         #region Public Methods - LogicGroup
         public LogicItem NewEvent()
         {
-            LogicItem item = new LogicItem(LogicType.EventLogic, count++);
-            data.Add(item);
+            LogicItem item = new LogicItem(LogicType.EventLogic, GetCount());
+            Add(item);
             return item;
         }
         public LogicItem NewAction()
         {
-            LogicItem item = new LogicItem(LogicType.ActionLogic, count++);
-            data.Add(item);
+            LogicItem item = new LogicItem(LogicType.ActionLogic, GetCount());
+            Add(item);
             return item;
         }
         public void Multiply(string[] command, LogicItem template, List<TriggerParam> lookups)
@@ -133,34 +145,31 @@ namespace RelertSharp.MapStructure.Logic
                 if (string.IsNullOrEmpty(s)) continue;
                 string[] sl = s.Split(new char[] { ',' });
                 if (sl.Length != lookups.Count) return;
-                LogicItem item = new LogicItem(template, count++);
+                LogicItem item = new LogicItem(template, GetCount());
                 for (int i = 0; i < sl.Length; i++)
                 {
                     item.Parameters[lookups[i].ParamPos] = sl[i];
                 }
-                data.Add(item);
+                Add(item);
             }
         }
         public void Add(LogicItem item)
         {
-            data.Add(item);
-        }
-        public void Remove(int index)
-        {
-            data.RemoveAt(index);
+            data[item.idx] = item;
         }
         public void Remove(LogicItem item)
         {
-            data.Remove(item);
+            if (item == null) return;
+            data.Remove(item.idx);
         }
         #region Enumerator
         public IEnumerator<LogicItem> GetEnumerator()
         {
-            return data.GetEnumerator();
+            return data.Values.GetEnumerator();
         }
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return data.GetEnumerator();
+            return data.Values.GetEnumerator();
         }
         #endregion
         #endregion
@@ -183,7 +192,7 @@ namespace RelertSharp.MapStructure.Logic
     public class LogicItem : BindableBase
     {
         private LogicType type;
-        private int count;
+        internal int idx;
         private int id;
         private string comment;
         private string[] parameters;
@@ -196,13 +205,13 @@ namespace RelertSharp.MapStructure.Logic
             type = _type;
             Parameters = _param;
             Comment = _comment;
-            count = num;
+            idx = num;
         }
         public LogicItem(LogicType _type, int num)
         {
             ID = 0;
             type = _type;
-            count = num;
+            idx = num;
             if (_type == LogicType.EventLogic) Parameters = new string[] { "0", "0", "0" };
             else Parameters = new string[] { "0", "0", "0", "0", "0", "0", "A" };
         }
@@ -211,7 +220,7 @@ namespace RelertSharp.MapStructure.Logic
             id = src.id;
             comment = src.comment;
             type = src.type;
-            count = num;
+            idx = num;
             if (src.type == LogicType.EventLogic) Parameters = new string[] { "0", "0", "0" };
             else Parameters = new string[] { "0", "0", "0", "0", "0", "0", "A" };
             Array.Copy(src.parameters, parameters, parameters.Length);
@@ -225,8 +234,8 @@ namespace RelertSharp.MapStructure.Logic
             if (!string.IsNullOrEmpty(Comment)) return Comment;
             else
             {
-                if (type == LogicType.ActionLogic) return string.Format("Action{0:D2}-ID:{1:D2}", count, ID);
-                else return string.Format("Event{0:D2}-ID:{1:D2}", count, ID);
+                if (type == LogicType.ActionLogic) return string.Format("Action{0:D2}-ID:{1:D2}", idx, ID);
+                else return string.Format("Event{0:D2}-ID:{1:D2}", idx, ID);
             }
 
         }

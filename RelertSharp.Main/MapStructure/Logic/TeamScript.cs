@@ -24,13 +24,18 @@ namespace RelertSharp.MapStructure.Logic
             foreach (INIPair p in ent.DataList)
             {
                 string[] tmp = p.ParseStringList();
-                data.Add(new TeamScriptItem(int.Parse(tmp[0]), tmp[1]));
+                TeamScriptItem item;
+                if (tmp.Length != 2) item = new TeamScriptItem(0, "0");
+                else item = new TeamScriptItem(int.Parse(tmp[0]), tmp[1]);
+                data.Add(item);
             }
         }
         public TeamScriptGroup() : base() { }
 
 
         #region Public Calls - TeamScriptGroup
+        public List<TeamScriptItem> Data { get { return data; } set { data = value; } }
+        public override string ToString() { return ID + " " + Name; }
         public string Name { get; set; }
         #endregion
     }
@@ -44,6 +49,7 @@ namespace RelertSharp.MapStructure.Logic
         }
 
         #region Public Calls - TeamScriptItem
+        public override string ToString() { return string.Format("{0:D2}", ScriptActionIndex) + " " + ActionValue; }
         public int ScriptActionIndex { get; set; }
         public string ActionValue { get; set; }
         #endregion

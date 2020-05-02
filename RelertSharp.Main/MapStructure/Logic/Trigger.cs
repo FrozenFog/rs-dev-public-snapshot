@@ -48,7 +48,7 @@ namespace RelertSharp.MapStructure.Logic
                 data[p.Name] = new TriggerItem(p.Name, l[0], l[1], l[2], ParseBool(l[3]), ParseBool(l[4]), ParseBool(l[5]), ParseBool(l[6]), int.Parse(l[7]));
             }
         }
-        public void Remove(TriggerItem trigger)
+        public void RemoveTrigger(TriggerItem trigger)
         {
             if (!data.Keys.Contains(trigger.ID)) data.Remove(trigger.ID);
         }

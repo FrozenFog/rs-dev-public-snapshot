@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using RelertSharp.Encoding;
 using RelertSharp.Common;
@@ -16,6 +17,10 @@ namespace RelertSharp.FileSystem
     {
         private Dictionary<uint, VirtualFileInfo> fileOrigin = new Dictionary<uint, VirtualFileInfo>();
         private Dictionary<string, MixTatics> mixTatics = new Dictionary<string, MixTatics>();
+        private Dictionary<string, byte[]> preLoadMixes = new Dictionary<string, byte[]>();
+        private bool preloadInitialized = false;
+
+
         #region Ctor - VirtualDir
         public VirtualDir()
         {
@@ -60,13 +65,51 @@ namespace RelertSharp.FileSystem
 
 
         #region Public Methods - VirtualDir
+        public void BeginPreload()
+        {
+            foreach (string name in GlobalConfig.PreloadMixes)
+            {
+                string filename = name + ".mix";
+                if (HasFile(filename)) preLoadMixes[name] = GetRawByte(filename);
+            }
+            preloadInitialized = true;
+        }
+        public void DisposePreloaded()
+        {
+            preLoadMixes.Clear();
+            GC.Collect();
+            preloadInitialized = false;
+        }
+        public Dictionary<string, Image> GetPcxImages(IEnumerable<string> src)
+        {
+            Dictionary<string, Image> result = new Dictionary<string, Image>();
+            foreach(string pcx in src)
+            {
+                string key = pcx.ToLower();
+                if (string.IsNullOrEmpty(key)) key = "xxicon.shp";
+                if (key.EndsWith(".shp") && HasFile(key))
+                {
+                    ShpFile shp = GetFile(key, FileExtension.SHP);
+                    shp.LoadColor(GetFile("cameo.pal", FileExtension.PAL));
+                    result[key] = shp.Frames[0].Image;
+                }
+                else if (key.EndsWith(".pcx") && HasFile(key))
+                {
+                    result[key] = PcxDecoder.Decode(GetRawByte(key));
+                }
+            }
+            return result;
+        }
         public void AddMixDir(MixFile _mixfile, bool _isSub = false, string _parentMixPath = "")
         {
             mixTatics[_mixfile.FileName] = _mixfile.Tatics;
             foreach (MixEntry ent in _mixfile.Index.Entries.Values)
             {
                 VirtualFileInfo info;
-                if (_isSub) info = new VirtualFileInfo(_mixfile.FilePath, _mixfile.FileName, ent, _mixfile.BodyPos, _parentMixPath);
+                if (_isSub)
+                {
+                    info = new VirtualFileInfo(_mixfile.FilePath, _mixfile.FileName, ent, _mixfile.BodyPos, _parentMixPath);
+                }
                 else info = new VirtualFileInfo(_mixfile.FilePath, _mixfile.FileName, ent, _mixfile.BodyPos);
                 fileOrigin[ent.fileID] = info;
             }
@@ -105,7 +148,10 @@ namespace RelertSharp.FileSystem
             }
             else
             {
-                MemoryStream mix = new MemoryStream(GetRawByte(info.MixName + ".mix"));
+                byte[] data;
+                if (preloadInitialized && preLoadMixes.Keys.Contains(info.MixName)) data = preLoadMixes[info.MixName];
+                else data = GetRawByte(info.MixName + ".mix");
+                MemoryStream mix = new MemoryStream(data);
                 mix.Seek(info.FileOffset, SeekOrigin.Begin);
                 BinaryReader br = new BinaryReader(mix);
                 byte[] result = br.ReadBytes(info.FileSize);
@@ -128,24 +174,26 @@ namespace RelertSharp.FileSystem
         }
         public dynamic GetFile(string _fileName, FileExtension _fileType)
         {
+            _fileName = _fileName.ToLower();
             switch (_fileType)
             {
                 case FileExtension.PAL:
-                    _fileName += ".pal";
+                    if (!_fileName.EndsWith(".pal")) _fileName += ".pal";
                     return new PalFile(GetRawByte(_fileName), _fileName);
                 case FileExtension.INI:
-                    _fileName += ".ini";
+                    if (string.IsNullOrEmpty(_fileName)) return new INIFile();
+                    if (!_fileName.EndsWith(".ini")) _fileName += ".ini";
                     return new INIFile(GetRawByte(_fileName), _fileName);
                 case FileExtension.VXL:
-                    _fileName += ".vxl";
+                    if (!_fileName.EndsWith(".vxl")) _fileName += ".vxl";
                     return new VxlFile(GetRawByte(_fileName), _fileName);
                 case FileExtension.SHP:
                     return new ShpFile(GetRawByte(_fileName), _fileName);
                 case FileExtension.HVA:
-                    _fileName += ".hva";
+                    if (!_fileName.EndsWith(".hva")) _fileName += ".hva";
                     return new HvaFile(GetRawByte(_fileName), _fileName);
                 case FileExtension.CSF:
-                    _fileName += ".csf";
+                    if (!_fileName.EndsWith(".csf")) _fileName += ".csf";
                     return new CsfFile(GetRawByte(_fileName), _fileName);
                 default:
                     return GetRawByte(_fileName);

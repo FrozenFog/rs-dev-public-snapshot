@@ -28,7 +28,13 @@ void VPLFile::LoadFromFile(const char * pFileName)
 	if (!ReadFile(hFile, &this->ContainedPal, sizeof this->ContainedPal, &nReadBytes, nullptr) || nReadBytes != sizeof this->ContainedPal)
 		printf_s("failed to load contained normal pal.\n");
 
-	this->ContainedPal.ShiftColors();
+	for (int i = 0; i < 256; i++)
+	{
+		this->ContainedPal[i].R <<= 2;
+		this->ContainedPal[i].G <<= 2;
+		this->ContainedPal[i].B <<= 2;
+	}
+
 	if (!ReadFile(hFile, this->Sections.data(), sizeof VPLSectionTable*this->Sections.size(), &nReadBytes, nullptr) ||
 		nReadBytes != sizeof VPLSectionTable*this->Sections.size())
 		printf_s("failed to load vpl sections.\n");

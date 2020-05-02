@@ -12,8 +12,8 @@ namespace RelertSharp.MapStructure.Logic
 {
     public class TagCollection : IEnumerable<TagItem>
     {
-        private Dictionary<string, TagItem> data = new Dictionary<string, TagItem>();
-        private Dictionary<string, string> trigger_tag = new Dictionary<string, string>();
+        private Dictionary<string,TagItem> data = new Dictionary<string,TagItem>();
+        private Dictionary<string, List<string>> trigger_tag = new Dictionary<string, List<string>>();
 
 
         #region Ctor - TagCollection
@@ -41,15 +41,17 @@ namespace RelertSharp.MapStructure.Logic
         /// </summary>
         /// <param name="triggerID"></param>
         /// <returns></returns>
-        public TagItem GetTagFromTrigger(string triggerID, TriggerItem item = null)
+        public List<TagItem> GetTagFromTrigger(string triggerID, TriggerItem item = null)
         {
-            if (triggerID == "TEMPLATE") return new TagItem(item, "TGMPLATE");
-            if (trigger_tag.Keys.Contains(triggerID))
-            {
-                return data[trigger_tag[triggerID]];
-            }
-            TagItem nullitem = new TagItem("xxxxxxxx", new string[3]{ "0","!NO AVAIABLE TAG!","<none>"});
-            return nullitem;
+            if (triggerID == "TEMPLATE") return new List<TagItem>(new TagItem[]{new TagItem(item, "TGMPLATE")});
+            List<TagItem> ret = new List<TagItem>();
+            if (trigger_tag.ContainsKey(triggerID))
+                foreach (var i in trigger_tag[triggerID])
+                    ret.Add(data[i]);
+            return
+                ret.Count > 0
+                ? ret
+                : new List<TagItem>(new TagItem[] { new TagItem("xxxxxxxx", new string[3] { "0", "!NO AVAIABLE TAG!", "<none>" }) });
         }
         public IEnumerable<TechnoPair> ToTechno()
         {
@@ -86,7 +88,8 @@ namespace RelertSharp.MapStructure.Logic
             set
             {
                 data[_id] = value;
-                trigger_tag[value.AssoTrigger] = value.ID;
+                if (!trigger_tag.ContainsKey(value.AssoTrigger)) trigger_tag[value.AssoTrigger] = new List<string>();
+                trigger_tag[value.AssoTrigger].Add(value.ID);
             }
         }
         public IEnumerable<string> Keys { get { return data.Keys; } }
@@ -120,6 +123,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TagItem
+        public override string ToString() { return id; }
         public TriggerRepeatingType Repeating
         {
             get { return repeatingType; }

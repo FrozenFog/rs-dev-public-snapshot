@@ -4,7 +4,8 @@
 #include "VxlFile.h"
 #include "ShpFileClass.h"
 #include "SceneClass.h"
-#include"CommonTextureFileClass.h"
+#include "CommonTextureFileClass.h"
+#include "Misc.h"
 
 #define EXPORT_START extern "C" {
 #define EXPORT_END }
@@ -29,14 +30,15 @@ EXPORT int WINAPI CreateVxlFileFromFileInMemory(LPVOID pFileBuffer, ULONG nSize,
 EXPORT bool WINAPI RemoveVxlFile(int nFileId);
 
 EXPORT int WINAPI CreateTmpFile(const char* pFileName);
-EXPORT int WINAPI CreateTmpFileFromFilenMemory(LPVOID pFileBuffer, ULONG nSize);
+EXPORT int WINAPI CreateTmpFileFromFileInMemory(LPVOID pFileBuffer, ULONG nSize);
 EXPORT bool WINAPI RemoveTmpFile(int nFileId);
-EXPORT bool WINAPI LoadTmpTextures(int nFileId, int nPaletteId);
+EXPORT bool WINAPI LoadTmpTextures(int nFileId);
 
 EXPORT int WINAPI CreateShpFile(const char* pFileName);
 EXPORT int WINAPI CreateShpFileFromFileInMemory(LPVOID pFileBuffer, ULONG nSize);
 EXPORT bool WINAPI RemoveShpFile(int nFileId);
-EXPORT bool WINAPI LoadShpTextures(int nFileId, int nPaletteId, DWORD dwRemapColor);
+EXPORT bool WINAPI LoadShpTextures(int nFileId, int idxFrame);
+EXPORT bool WINAPI IsShpFrameLoadedAsTexture(int nFileID, int idxFrame);
 
 EXPORT int WINAPI CreateCommonTextureFile(const char* pFileName);
 EXPORT int WINAPI CreateCircularCommonTextureFile(float Radius, float Thickness, DWORD dwD3DColor);
@@ -46,7 +48,7 @@ EXPORT bool WINAPI RemoveCommonTextureFile(int nFileId);
 EXPORT int WINAPI CreateVxlObjectAtScene(int nFileId, D3DXVECTOR3 Position,
 	float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor);
 
-EXPORT bool WINAPI CreateTmpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int nTileIndex, int& OutTileIndex, int& OutExtraIndex);
+EXPORT bool WINAPI CreateTmpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int nPaletteID, int nTileIndex, int& OutTileIndex, int& OutExtraIndex);
 
 EXPORT int WINAPI CreateShpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int idxFrame, int nPaletteId, DWORD dwRemapColor, char bFlat,
 	int nFoundationX, int nFoundationY, int nHeight, bool bDrawAsShadow);
@@ -80,6 +82,12 @@ EXPORT void WINAPI ScenePositionToClientPosition(D3DXVECTOR3 Position, POINT& Ou
 EXPORT void WINAPI ClientPositionToScenePosition(POINT Position, D3DXVECTOR3& Out);
 
 EXPORT void WINAPI ClearSceneObjects();
+
+EXPORT int WINAPI CreateLineObjectAtScene(D3DXVECTOR3 Start, D3DXVECTOR3 End, DWORD dwStartColor, DWORD dwEndColor);
+EXPORT int WINAPI CreateRectangleObjectAtScene(D3DXVECTOR3 Position, float XLength, float YLength, DWORD dwColor);
+
+EXPORT bool WINAPI SetSceneFont(const char* pFontName, int nSize);
+EXPORT int WINAPI CreateStringObjectAtScene(D3DXVECTOR3 Position, DWORD dwColor, const char* pString);
 
 /*
 Obsolete apis

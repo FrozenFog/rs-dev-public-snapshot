@@ -1,6 +1,8 @@
 #pragma once
 #include <Windows.h>
 
+#include <d3d9.h>
+
 #include <unordered_map>
 #include <memory>
 
@@ -25,17 +27,21 @@ public:
 	static Palette* FindPaletteByID(int nID);
 
 	Palette();
-	Palette(const char* pFileName);
+	Palette(const char* pFileName, LPDIRECT3DDEVICE9 pDevice);
 	Palette(Palette& Right);
-	Palette(LPVOID pFileBuffer);
+	Palette(LPVOID pFileBuffer, LPDIRECT3DDEVICE9 pDevice);
 	~Palette();
 
 	void LoadFromFile(const char* pFileName);
 	void LoadFromFileInBuffer(LPVOID pFileBuffer);
 	void ShiftColors();
 	void MakeRemapColor(DWORD dwBaseColor);
+	bool Construct1DPaletteTexture(LPDIRECT3DDEVICE9 pDevice);
+	void Set1DPaletteTexture(LPDIRECT3DTEXTURE9 pTex);
+	LPDIRECT3DTEXTURE9 GetPaletteTexture();
 	ColorStruct& operator[](int nIndex);
 
 private:
 	ColorStruct Entries[256];
+	LPDIRECT3DTEXTURE9 PaletteTexture;
 };

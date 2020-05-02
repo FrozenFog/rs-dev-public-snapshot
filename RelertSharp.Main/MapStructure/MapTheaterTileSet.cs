@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 using RelertSharp.Common;
 using RelertSharp.IniSystem;
+using RelertSharp.FileSystem;
 using static RelertSharp.Common.GlobalVar;
 
 namespace RelertSharp.MapStructure
@@ -78,6 +80,10 @@ namespace RelertSharp.MapStructure
         #endregion
 
 
+        #region Private Methods - MapTheaterTileSet
+        #endregion
+
+
         #region Public Methods - MapTheaterTileSet
         public string NameAsTheater(string name)
         {
@@ -93,6 +99,7 @@ namespace RelertSharp.MapStructure
             get
             {
                 if (_TileIndex == 65535) return tileNameIndex[0];
+                if (_TileIndex > tileNameIndex.Count) return tileNameIndex[0];
                 return tileNameIndex[_TileIndex];
             }
         }

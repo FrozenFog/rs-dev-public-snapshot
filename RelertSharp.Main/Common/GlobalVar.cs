@@ -2,6 +2,7 @@
 {
     public static class GlobalVar
     {
+        public static FileSystem.MapFile CurrentMapDocument { get; set; }
         public static ELanguage CurrentLanguage { get; set; } = ELanguage.EnglishUS;
         public static RSConfig GlobalConfig { get; set; }
         public static FileSystem.VirtualDir GlobalDir { get; set; }

@@ -32,8 +32,8 @@ namespace RelertSharp.DrawingEngine.Presenting
         #region Protected - PresentBase
         protected virtual void RemoveProp(int pointer, int pshadow = 0)
         {
-            if (pointer != 0) CppExtern.ObjectUtils.RemoveObjectAtScene(pointer);
-            if (pshadow != 0) CppExtern.ObjectUtils.RemoveObjectAtScene(pshadow);
+            if (pointer != 0) CppExtern.ObjectUtils.RemoveObjectFromScene(pointer);
+            if (pshadow != 0) CppExtern.ObjectUtils.RemoveObjectFromScene(pshadow);
         }
         protected virtual void SetColor(int pointer, Vec4 color)
         {
@@ -43,6 +43,7 @@ namespace RelertSharp.DrawingEngine.Presenting
 
 
         #region Public Calls - PresentBase
+        public Vec4 ColorVector { get; set; } = Vec4.One;
         public int Coord { get { return Utils.Misc.CoordInt(X, Y); } }
         public int X { get; set; }
         public int Y { get; set; }
@@ -60,8 +61,10 @@ namespace RelertSharp.DrawingEngine.Presenting
         int Z { get; set; }
         int pSelf { get; set; }
         int pSelfShadow { get; set; }
+        int Coord { get; }
         bool IsValid { get; }
         void Dispose();
         void SetColor(Vec4 color);
+        void MultiplyColor(Vec4 color);
     }
 }

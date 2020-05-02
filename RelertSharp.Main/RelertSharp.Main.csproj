@@ -34,6 +34,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ImageFormats, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageFormats.1.0.0\lib\net45\ImageFormats.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.DirectX.DirectSound, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\assembly\GAC\Microsoft.DirectX.DirectSound\1.0.2902.0__31bf3856ad364e35\Microsoft.DirectX.DirectSound.dll</HintPath>
@@ -56,18 +59,21 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Circle2DEnumerator.cs" />
     <Compile Include="Common\Constant.cs" />
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\GlobalVar.cs" />
     <Compile Include="Common\Interfaces.cs" />
     <Compile Include="Common\RSConfig.cs" />
     <Compile Include="Common\SoundManager.cs" />
+    <Compile Include="Common\Square2DEnumerator.cs" />
     <Compile Include="Common\Struct.cs" />
     <Compile Include="DrawingEngine\BufferCollection.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableBase.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableInfantry.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableMisc.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableStructure.cs" />
+    <Compile Include="DrawingEngine\Drawables\DrawableTile.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableUnit.cs" />
     <Compile Include="DrawingEngine\Engine.cs" />
     <Compile Include="DrawingEngine\Enums.cs" />
@@ -78,7 +84,6 @@
     <Compile Include="DrawingEngine\Presenting\PresentStructure.cs" />
     <Compile Include="DrawingEngine\Presenting\PresentTile.cs" />
     <Compile Include="DrawingEngine\Presenting\PresentUnit.cs" />
-    <Compile Include="DrawingEngine\Struct.cs" />
     <Compile Include="Encoding\AudEncoding.cs" />
     <Compile Include="Encoding\Blowfish.cs" />
     <Compile Include="Encoding\CsfEncoding.cs" />
@@ -86,6 +91,7 @@
     <Compile Include="Encoding\CRC.cs" />
     <Compile Include="Encoding\MiniLZO.cs" />
     <Compile Include="Encoding\PackEncoding.cs" />
+    <Compile Include="Encoding\PcxDecoder.cs" />
     <Compile Include="Encoding\ShpEncoding.cs" />
     <Compile Include="Encoding\WSKeyCalc.cs" />
     <Compile Include="FileSystem\AudFile.cs" />
@@ -116,7 +122,6 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="MapStructure\Interfaces.cs" />
     <Compile Include="MapStructure\Logic\AITrigger.cs" />
     <Compile Include="MapStructure\Logic\Country.cs" />
     <Compile Include="MapStructure\Logic\House.cs" />
@@ -147,62 +152,14 @@
     <Compile Include="MapStructure\Points\TerrainLayer.cs" />
     <Compile Include="MapStructure\TileLayer.cs" />
     <Compile Include="MapStructure\Objects\UnitLayer.cs" />
-    <Compile Include="Model\BindableBase.cs" />
-    <Compile Include="Model\ViewModel.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DrawingEngine\CppExtern.cs" />
-    <Compile Include="SubWindows\INIEditor\dlgNewSection.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubWindows\INIEditor\dlgNewSection.Designer.cs">
-      <DependentUpon>dlgNewSection.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubWindows\INIEditor\EventHandler.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubWindows\INIEditor\INIEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubWindows\INIEditor\INIEditor.Designer.cs">
-      <DependentUpon>INIEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubWindows\LogicEditor\EventHandler.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubWindows\INIComparator.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubWindows\INIComparator.Designer.cs">
-      <DependentUpon>INIComparator.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubWindows\LogicEditor\LogicEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubWindows\LogicEditor\LogicEditor.Designer.cs">
-      <DependentUpon>LogicEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubWindows\LogicEditor\dlgCopy.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubWindows\LogicEditor\dlgCopy.Designer.cs">
-      <DependentUpon>dlgCopy.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SubWindows\LogicEditor\SearchCollection.cs" />
-    <Compile Include="SubWindows\LogicEditor\StaticHelper.cs" />
     <Compile Include="Utils\Colors.cs" />
     <Compile Include="FileSystem\BaseFile.cs" />
     <Compile Include="Common\RSException.cs" />
     <Compile Include="Utils\Interpreter.cs" />
     <Compile Include="Utils\Lang.cs" />
     <Compile Include="Utils\Misc.cs" />
-    <Compile Include="_fm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="_fm.Designer.cs">
-      <DependentUpon>_fm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="_Test.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -216,24 +173,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SubWindows\INIComparator.resx">
-      <DependentUpon>INIComparator.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubWindows\INIEditor\dlgNewSection.resx">
-      <DependentUpon>dlgNewSection.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubWindows\INIEditor\INIEditor.resx">
-      <DependentUpon>INIEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubWindows\LogicEditor\LogicEditor.resx">
-      <DependentUpon>LogicEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubWindows\LogicEditor\dlgCopy.resx">
-      <DependentUpon>dlgCopy.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="_fm.resx">
-      <DependentUpon>_fm.cs</DependentUpon>
-    </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -248,7 +188,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GUI\" />
     <Folder Include="MainEventHandler\" />
     <Folder Include="UtilLib\" />
   </ItemGroup>

@@ -36,9 +36,9 @@ namespace RelertSharp.MapStructure
             GameModes = Basic.PopPair("GameMode").ParseStringList();
 
             int[] buf = MapSize.PopPair("Size").ParseIntList();
-            Size = new Rectangle(buf[0], buf[1], buf[2], buf[3]);
+            Size = RectFromIntList(buf);
             buf = MapSize.PopPair("LocalSize").ParseIntList();
-            LocalSize = new Rectangle(buf[0], buf[1], buf[2], buf[3]);
+            LocalSize = RectFromIntList(buf);
             BasicResidue = Basic;
             SpecialFlagsResidue = SpecialFlags;
         }
@@ -94,7 +94,7 @@ namespace RelertSharp.MapStructure
                 ent["IonLevel"], ent["IonGround"], ent["IonAmbient"]);
             Dominator = new LightningItem(ent["DominatorRed"], ent["DominatorGreen"], ent["DominatorBlue"],
                 ent["DominatorLevel"], ent["DominatorGround"], ent["DominatorAmbient"]);
-            DominatorChangeRate = double.Parse(ent["DominatorAmbientChangeRate"]);
+            DominatorChangeRate = ParseDouble(ent["DominatorAmbientChangeRate"]);
         }
         #endregion
 
@@ -116,12 +116,12 @@ namespace RelertSharp.MapStructure
         #region Ctor - LightningItem
         public LightningItem(string _R, string _G, string _B, string _level, string _ground, string _ambient)
         {
-            Red = float.Parse(_R);
-            Green = float.Parse(_G);
-            Blue = float.Parse(_B);
-            Level = float.Parse(_level);
-            Ground = float.Parse(_ground);
-            Ambient = float.Parse(_ambient);
+            Red = ParseFloat(_R, 1);
+            Green = ParseFloat(_G, 1);
+            Blue = ParseFloat(_B, 1);
+            Level = ParseFloat(_level);
+            Ground = ParseFloat(_ground);
+            Ambient = ParseFloat(_ambient, 1);
         }
         public LightningItem(float r, float g, float b, float level, float ground, float ambient)
         {
@@ -132,6 +132,19 @@ namespace RelertSharp.MapStructure
             Ground = ground;
             Ambient = ambient;
         }
+        public LightningItem()
+        {
+            Red = 1;
+            Green = 1;
+            Blue = 1;
+            Level = 0;
+            Ground = 0;
+            Ambient = 1;
+        }
+        #endregion
+
+
+        #region Public Methods - LightningItem
         #endregion
 
 
