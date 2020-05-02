@@ -116,8 +116,6 @@ namespace RelertSharp.DrawingEngine
             Rectangle indicator = GetClientWindowRectangle(clientSize, ClientPos, dest.Size, scale);
             g.DrawRectangle(borderPen, indicator);
             g.Dispose();
-            src.Save("1.png");
-            dest.Save("2.png");
             return dest;
         }
         private Rectangle GetClientWindowRectangle(Rectangle clientsize, Point currentPos, Size destImgSize, float posScale)

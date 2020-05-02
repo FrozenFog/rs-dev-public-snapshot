@@ -41,9 +41,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\assembly\GAC\Microsoft.DirectX.DirectSound\1.0.2902.0__31bf3856ad364e35\Microsoft.DirectX.DirectSound.dll</HintPath>
     </Reference>
-    <Reference Include="ObjectListView, Version=2.9.1.40222, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\ObjectListView.dll</HintPath>
+    <Reference Include="ObjectListView">
+      <HintPath>..\Debug\ObjectListView.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -116,12 +115,6 @@
     <Compile Include="IniSystem\Rules.cs" />
     <Compile Include="IniSystem\SoundRules.cs" />
     <Compile Include="IniSystem\TechnoPair.cs" />
-    <Compile Include="Main.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Main.Designer.cs">
-      <DependentUpon>Main.cs</DependentUpon>
-    </Compile>
     <Compile Include="MapStructure\Logic\AITrigger.cs" />
     <Compile Include="MapStructure\Logic\Country.cs" />
     <Compile Include="MapStructure\Logic\House.cs" />
@@ -152,6 +145,9 @@
     <Compile Include="MapStructure\Points\TerrainLayer.cs" />
     <Compile Include="MapStructure\TileLayer.cs" />
     <Compile Include="MapStructure\Objects\UnitLayer.cs" />
+    <Compile Include="Model\BindableBase.cs" />
+    <Compile Include="Model\ViewModel.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DrawingEngine\CppExtern.cs" />
     <Compile Include="Utils\Colors.cs" />
@@ -160,9 +156,6 @@
     <Compile Include="Utils\Interpreter.cs" />
     <Compile Include="Utils\Lang.cs" />
     <Compile Include="Utils\Misc.cs" />
-    <EmbeddedResource Include="Main.resx">
-      <DependentUpon>Main.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

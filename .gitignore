@@ -11,7 +11,9 @@ _*.*
 *.ilk
 *.lib
 .vs
-/Debug
+/Debug/frag
+/Debug/vert
+/Debug/shader
 cncimg/Debug
 OpenTKIntro
 RelertSharp.GUI.WPF/bin
