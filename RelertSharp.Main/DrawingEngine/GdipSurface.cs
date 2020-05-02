@@ -35,7 +35,7 @@ namespace RelertSharp.DrawingEngine
             try
             {
                 this.mapsize = mapsize;
-                sceneSize = new Size(mapsize.Width * 75, mapsize.Height * 40);
+                sceneSize = new Size(mapsize.Width * 60, mapsize.Height * 30 + 15);
                 panelSize = panelsize;
                 minimap = new Bitmap(this.mapsize.Width * 2, this.mapsize.Height * 2);
                 ds = Graphics.FromImage(minimap);
@@ -125,7 +125,9 @@ namespace RelertSharp.DrawingEngine
             float scaleX = clientsize.Width / (float)sceneSize.Width;
             float scaleY = clientsize.Height / (float)sceneSize.Height;
             To2dCoord(currentPos, out int x, out int y);
-            return new Rectangle((int)(x * 2 * posScale), (int)(y * posScale), (int)(destImgSize.Width * scaleX), (int)(destImgSize.Height * scaleY));
+            int rx = (int)(x * posScale);
+            int ry = (int)(y * posScale);
+            return new Rectangle(rx, ry, (int)(destImgSize.Width * scaleX), (int)(destImgSize.Height * scaleY));
         }
         #endregion
 
