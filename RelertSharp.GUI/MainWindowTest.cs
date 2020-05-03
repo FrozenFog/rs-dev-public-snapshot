@@ -15,9 +15,9 @@ using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.IniSystem;
 using RelertSharp.Common;
-using RelertSharp.Model;
+using RelertSharp.GUI.Model;
 
-namespace RelertSharp
+namespace RelertSharp.GUI
 {
     public partial class MainWindowTest : Form
     {
@@ -192,7 +192,7 @@ namespace RelertSharp
         {
             GlobalVar.Engine = new Engine();
             Engine eg = GlobalVar.Engine;
-            initialized = GlobalVar.Engine.Initialize(panel1.Handle, pnlMiniMap.Size, map.Info.Size);
+            initialized = GlobalVar.Engine.Initialize(panel1.Handle, pnlMiniMap.Size, map.Info.Size, map.TilesData);
             GlobalVar.Engine.SetTheater(GlobalVar.GlobalConfig.GetTheater(map.Info.TheaterName));
             GlobalVar.Engine.SetBackgroundColor(Color.FromArgb(30, 30, 30));
             GlobalVar.GlobalDir.BeginPreload();
@@ -238,7 +238,7 @@ namespace RelertSharp
         {
             if (initialized)
             {
-                Vec3 pos = GlobalVar.Engine.ClientPointToCellPos(e.Location, Map.TilesData);
+                Vec3 pos = GlobalVar.Engine.ClientPointToCellPos(e.Location);
                 lblMouseX.Text = string.Format("MouseX : {0}", e.Location.X);
                 lblMouseY.Text = string.Format("MouseY : {0}", e.Location.Y);
                 if (pos != Vec3.Zero)
@@ -347,6 +347,36 @@ namespace RelertSharp
                 GlobalVar.Engine.ResizeMinimap(pnlMiniMap.Size);
                 pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
             }
+        }
+
+        private void panel1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                var flag = Current.SelectingFlags;
+                if (flag == MainWindowDataModel.SelectingFlag.None) return;
+                I2dLocateable pos = GlobalVar.Engine.ClientPointToCellPos(e.Location).To2dLocateable();
+                if ((flag | MainWindowDataModel.SelectingFlag.Units) != 0)
+                {
+                    Current.SelectUnitAt(pos);
+                }
+            }
+        }
+        private void panel1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Current.ReleaseAll();
+            }
+            if (e.KeyCode == Keys.Delete)
+            {
+                Current.RemoveAll();
+            }
+        }
+
+        private void panel1_MouseEnter(object sender, EventArgs e)
+        {
+            panel1.Focus();
         }
 
         private void panel1_MouseUp(object sender, MouseEventArgs e)

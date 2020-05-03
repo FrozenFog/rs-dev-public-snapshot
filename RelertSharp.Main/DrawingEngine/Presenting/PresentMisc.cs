@@ -28,12 +28,23 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             if (IsTiberiumOverlay) return;
             ColorVector = color;
-            SetColor(pSelf, color);
+            if (!selected)
+            {
+                SetColorStrict(ColorVector);
+            }
         }
         public void MultiplyColor(Vec4 color)
         {
             ColorVector *= color;
             SetColor(ColorVector);
+        }
+        #endregion
+
+
+        #region Private Methods - PresentMisc
+        private void SetColorStrict(Vec4 color)
+        {
+            SetColor(pSelf, color);
         }
         #endregion
 

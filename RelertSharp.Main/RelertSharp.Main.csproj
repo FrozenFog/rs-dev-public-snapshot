@@ -74,7 +74,14 @@
     <Compile Include="DrawingEngine\Drawables\DrawableStructure.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableTile.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableUnit.cs" />
-    <Compile Include="DrawingEngine\Engine.cs" />
+    <Compile Include="DrawingEngine\Engine\Drawing.cs" />
+    <Compile Include="DrawingEngine\Engine\FileManagement.cs" />
+    <Compile Include="DrawingEngine\Engine\GlobalLightning.cs" />
+    <Compile Include="DrawingEngine\Engine\Main.cs" />
+    <Compile Include="DrawingEngine\Engine\Minimap.cs" />
+    <Compile Include="DrawingEngine\Engine\ObjectUtil.cs" />
+    <Compile Include="DrawingEngine\Engine\Transform.cs" />
+    <Compile Include="DrawingEngine\Engine\ViewPort.cs" />
     <Compile Include="DrawingEngine\Enums.cs" />
     <Compile Include="DrawingEngine\GdipSurface.cs" />
     <Compile Include="DrawingEngine\Presenting\PresentBase.cs" />

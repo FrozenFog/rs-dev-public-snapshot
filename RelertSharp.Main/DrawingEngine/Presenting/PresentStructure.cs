@@ -41,14 +41,10 @@ namespace RelertSharp.DrawingEngine.Presenting
             if (!IsBaseNode)
             {
                 ColorVector = color;
-                SetColor(pSelf, color);
-                SetColor(pActivateAnim, color);
-                SetColor(pActivateAnim2, color);
-                SetColor(pActivateAnim3, color);
-                SetColor(pIdleAnim, color);
-                SetColor(pSuperAnim, color);
-                SetColor(pTurretAnim, color);
-                SetColor(pTurretBarl, color);
+                if (!selected)
+                {
+                    SetColorStrict(ColorVector);
+                }
             }
         }
         public void MultiplyColor(Vec4 color)
@@ -60,7 +56,7 @@ namespace RelertSharp.DrawingEngine.Presenting
 
 
         #region Private Methods - PresentStructure
-        public void SetTransparency(Vec4 color)
+        private void SetTransparency(Vec4 color)
         {
             foreach (int p in Pointers) CppExtern.ObjectUtils.SetObjectColorCoefficient(p, color);
             if (VoxelTurret)
@@ -74,6 +70,17 @@ namespace RelertSharp.DrawingEngine.Presenting
             {
                 CppExtern.ObjectUtils.SetObjectColorCoefficient(pTurretAnim, color);
             }
+        }
+        private void SetColorStrict(Vec4 color)
+        {
+            SetColor(pSelf, color);
+            SetColor(pActivateAnim, color);
+            SetColor(pActivateAnim2, color);
+            SetColor(pActivateAnim3, color);
+            SetColor(pIdleAnim, color);
+            SetColor(pSuperAnim, color);
+            SetColor(pTurretAnim, color);
+            SetColor(pTurretBarl, color);
         }
         #endregion
 

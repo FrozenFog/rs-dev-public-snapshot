@@ -55,6 +55,10 @@ namespace RelertSharp.Common
         {
             get { return new Vec4(0, 0, 0, 0); }
         }
+        public static Vec4 Selector
+        {
+            get { return new Vec4(0.5f, 0.5f, 1, 1); }
+        }
         public static Vec4 TileIndicator
         {
             get { return new Vec4(1, 0, 0, 1); }
@@ -228,8 +232,14 @@ namespace RelertSharp.Common
         {
             return base.GetHashCode();
         }
+        public I2dLocateable To2dLocateable()
+        {
+            return new Base2D((int)X, (int)Y);
+        }
         #endregion
     }
+
+
     public struct Pnt
     {
         public int X;

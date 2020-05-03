@@ -145,6 +145,19 @@ namespace RelertSharp.DrawingEngine
                 foreach (PresentMisc wp in Waypoints.Values) wp.Dispose();
                 Waypoints.Clear();
             }
+            public void MarkUnit(int coord)
+            {
+                Units[coord].MarkSelected();
+            }
+            public void UnMarkUnit(int coord)
+            {
+                Units[coord].Unmark();
+            }
+            public void RemoveUnitAt(int coord)
+            {
+                Units[coord].Dispose();
+                Units.Remove(coord);
+            }
             #endregion
 
 

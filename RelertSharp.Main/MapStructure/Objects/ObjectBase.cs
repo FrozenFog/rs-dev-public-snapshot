@@ -9,10 +9,34 @@ using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure.Objects
 {
-    public class ObjectBase<T> : IEnumerable<T>
+    public class ObjectBase<T> : IEnumerable<T> where T : ObjectItemBase
     {
         private Dictionary<string, T> data = new Dictionary<string, T>();
         public ObjectBase() { }
+
+
+        #region Public Methods - ObjectBase
+        public T FindByCoord(I2dLocateable src)
+        {
+            foreach (T item in data.Values)
+            {
+                if (item.X == src.X && item.Y == src.Y) return item;
+            }
+            return null;
+        }
+        public void RemoveByCoord(I2dLocateable src)
+        {
+            Dictionary<string, T> tmp = new Dictionary<string, T>(data);
+            foreach (T item in tmp.Values)
+            {
+                if (item.X == src.X && item.Y == src.Y)
+                {
+                    data.Remove(item.ID);
+                    return;
+                }
+            }
+        }
+        #endregion
 
 
         #region Public Calls - ObjectBase
@@ -41,6 +65,7 @@ namespace RelertSharp.MapStructure.Objects
         #endregion
         #endregion
     }
+
 
     public class ObjectItemBase : I2dLocateable, IMapObject
     {

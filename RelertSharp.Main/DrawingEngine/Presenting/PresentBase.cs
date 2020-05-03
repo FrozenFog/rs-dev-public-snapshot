@@ -12,6 +12,9 @@ namespace RelertSharp.DrawingEngine.Presenting
 {
     public class PresentBase : I3dLocateable
     {
+        protected bool selected = false;
+
+
         #region Ctor - PresentBase
         public PresentBase() { }
         public PresentBase(I2dLocateable obj, int height)

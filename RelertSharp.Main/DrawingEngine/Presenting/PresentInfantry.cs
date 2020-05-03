@@ -23,12 +23,23 @@ namespace RelertSharp.DrawingEngine.Presenting
         public void SetColor(Vec4 color)
         {
             ColorVector = color;
-            SetColor(pSelf, color);
+            if (!selected)
+            {
+                SetColorStrict(color);
+            }
         }
         public void MultiplyColor(Vec4 color)
         {
             ColorVector *= color;
             SetColor(ColorVector);
+        }
+        #endregion
+
+
+        #region Private Methods - PresentInfantry
+        private void SetColorStrict(Vec4 color)
+        {
+            SetColor(pSelf, color);
         }
         #endregion
 
