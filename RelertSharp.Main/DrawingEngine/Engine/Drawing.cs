@@ -206,7 +206,7 @@ namespace RelertSharp.DrawingEngine
                 dest.pSelfShadow = RenderAndPresent(src.pShadow, pos.Rise(), frame + src.Framecount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, Vec3.DefaultBox, true);
             }
 
-            Buffer.Scenes.Infantries[dest.Coord << 2 + subcell] = dest;
+            Buffer.Scenes.Infantries[(dest.Coord << 2) + subcell] = dest;
             if (dest.IsValid) minimap.DrawObject(src, dest);
             return dest.IsValid;
         }

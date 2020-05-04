@@ -157,47 +157,93 @@ namespace RelertSharp.DrawingEngine
             #region Mark And Single-remove
             public void MarkUnit(int coord)
             {
-                Units[coord].MarkSelected();
+                MarkBy(Units, coord);
             }
             public void UnMarkUnit(int coord)
             {
-                Units[coord].Unmark();
+                UnMarkBy(Units, coord);
             }
             public void RemoveUnitAt(int coord)
             {
-                Units[coord].Dispose();
-                Units.Remove(coord);
+                RemoveAtBy(Units, coord);
             }
             public void MarkInfantry(int coord, int subcell)
             {
-                Infantries[coord << 2 + subcell].MarkSelected();
+                MarkBy(Infantries, (coord << 2) + subcell);
             }
             public void UnMarkInfantry(int coord, int subcell)
             {
-                Infantries[coord << 2 + subcell].Unmark();
+                UnMarkBy(Infantries, (coord << 2) + subcell);
             }
             public void RemoveInfantryAt(int coord, int subcell)
             {
-                int c = coord << 2 + subcell;
-                Infantries[c].Dispose();
-                Infantries.Remove(c);
+                RemoveAtBy(Infantries, (coord << 2) + subcell);
             }
             public void MarkBuilding(int coord)
             {
-                Structures[coord].MarkSelected();
+                MarkBy(Structures, coord);
             }
             public void UnMarkBuilding(int coord)
             {
-                Structures[coord].Unmark();
+                UnMarkBy(Structures, coord);
             }
             public void RemoveBuildingAt(int coord)
             {
-                Structures[coord].Dispose();
-                Structures.Remove(coord);
+                RemoveAtBy(Structures, coord);
+            }
+            public void MarkTerrain(int coord)
+            {
+                MarkBy(Terrains, coord);
+            }
+            public void UnMarkTerrain(int coord)
+            {
+                UnMarkBy(Terrains, coord);
+            }
+            public void RemoveTerrainAt(int coord)
+            {
+                RemoveAtBy(Terrains, coord);
+            }
+            public void MarkOverlay(int coord)
+            {
+                MarkBy(Overlays, coord);
+            }
+            public void UnMarkOverlay(int coord)
+            {
+                UnMarkBy(Overlays, coord);
+            }
+            public void RemoveOverlayAt(int coord)
+            {
+                RemoveAtBy(Overlays, coord);
             }
             #endregion
 
 
+            #endregion
+
+
+            #region Private Methods - Scene
+            private void MarkBy<T>(Dictionary<int, T> src, int coord) where T : IPresentBase
+            {
+                if (src.Keys.Contains(coord))
+                {
+                    src[coord].MarkSelected();
+                }
+            }
+            private void UnMarkBy<T>(Dictionary<int, T> src, int coord) where T : IPresentBase
+            {
+                if (src.Keys.Contains(coord))
+                {
+                    src[coord].Unmark();
+                }
+            }
+            private void RemoveAtBy<T>(Dictionary<int, T> src, int coord) where T : IPresentBase
+            {
+                if (src.Keys.Contains(coord))
+                {
+                    src[coord].Dispose();
+                    src.Remove(coord);
+                }
+            }
             #endregion
 
 

@@ -23,28 +23,16 @@ namespace RelertSharp.DrawingEngine
         #region Unit
         public void SelectUnitAt(I2dLocateable pos)
         {
-            int coord = pos.Coord;
-            if (Buffer.Scenes.Units.Keys.Contains(coord))
-            {
-                Buffer.Scenes.MarkUnit(coord);
-                Refresh();
-            }
+            Buffer.Scenes.MarkUnit(pos.Coord);
+            Refresh();
         }
         public void UnSelectUnitAt(I2dLocateable pos)
         {
-            int coord = pos.Coord;
-            if (Buffer.Scenes.Units.Keys.Contains(coord))
-            {
-                Buffer.Scenes.UnMarkUnit(coord);
-            }
+            Buffer.Scenes.UnMarkUnit(pos.Coord);
         }
         public void RemoveUnitAt(I2dLocateable pos)
         {
-            int coord = pos.Coord;
-            if (Buffer.Scenes.Units.Keys.Contains(coord))
-            {
-                Buffer.Scenes.RemoveUnitAt(coord);
-            }
+            Buffer.Scenes.RemoveUnitAt(pos.Coord);
         }
         #endregion
 
@@ -52,28 +40,16 @@ namespace RelertSharp.DrawingEngine
         #region Infantry
         public void SelectInfantryAt(I2dLocateable pos, int subcell)
         {
-            int coord = pos.Coord;
-            if (Buffer.Scenes.Infantries.Keys.Contains(coord << 2 + subcell))
-            {
-                Buffer.Scenes.MarkInfantry(coord, subcell);
-                Refresh();
-            }
+            Buffer.Scenes.MarkInfantry(pos.Coord, subcell);
+            Refresh();
         }
         public void UnSelectInfantryAt(I2dLocateable pos, int subcell)
         {
-            int coord = pos.Coord;
-            if (Buffer.Scenes.Infantries.Keys.Contains(coord << 2 + subcell))
-            {
-                Buffer.Scenes.UnMarkInfantry(coord, subcell);
-            }
+            Buffer.Scenes.UnMarkInfantry(pos.Coord, subcell);
         }
         public void RemoveInfantryAt(I2dLocateable pos, int subcell)
         {
-            int coord = pos.Coord;
-            if (Buffer.Scenes.Infantries.Keys.Contains(coord << 2 + subcell))
-            {
-                Buffer.Scenes.RemoveInfantryAt(coord, subcell);
-            }
+            Buffer.Scenes.RemoveInfantryAt(pos.Coord, subcell);
         }
         #endregion
 
@@ -81,28 +57,47 @@ namespace RelertSharp.DrawingEngine
         #region Building
         public void SelectBuildingAt(I2dLocateable pos)
         {
-            int coord = pos.Coord;
-            if (Buffer.Scenes.Structures.Keys.Contains(coord))
-            {
-                Buffer.Scenes.MarkBuilding(coord);
-                Refresh();
-            }
+            Buffer.Scenes.MarkBuilding(pos.Coord);
+            Refresh();
         }
         public void UnSelectBuindingAt(I2dLocateable pos)
         {
-            int coord = pos.Coord;
-            if (Buffer.Scenes.Structures.Keys.Contains(coord))
-            {
-                Buffer.Scenes.UnMarkBuilding(coord);
-            }
+            Buffer.Scenes.UnMarkBuilding(pos.Coord);
         }
         public void RemoveBuildingAt(I2dLocateable pos)
         {
-            int coord = pos.Coord;
-            if (Buffer.Scenes.Structures.Keys.Contains(coord))
-            {
-                Buffer.Scenes.RemoveBuildingAt(coord);
-            }
+            Buffer.Scenes.RemoveBuildingAt(pos.Coord);
+        }
+        #endregion
+
+
+        #region Misc
+        public void SelectTerrainAt(I2dLocateable pos)
+        {
+            Buffer.Scenes.MarkTerrain(pos.Coord);
+            Refresh();
+        }
+        public void UnSelectTerrainAt(I2dLocateable pos)
+        {
+            Buffer.Scenes.UnMarkTerrain(pos.Coord);
+        }
+        public void RemoveTerrainAt(I2dLocateable pos)
+        {
+            Buffer.Scenes.RemoveTerrainAt(pos.Coord);
+        }
+
+        public void SelectOverlayAt(I2dLocateable pos)
+        {
+            Buffer.Scenes.MarkOverlay(pos.Coord);
+            Refresh();
+        }
+        public void UnSelectOverlayAt(I2dLocateable pos)
+        {
+            Buffer.Scenes.UnMarkOverlay(pos.Coord);
+        }
+        public void RemoveOverlayAt(I2dLocateable pos)
+        {
+            Buffer.Scenes.RemoveOverlayAt(pos.Coord);
         }
         #endregion
     }

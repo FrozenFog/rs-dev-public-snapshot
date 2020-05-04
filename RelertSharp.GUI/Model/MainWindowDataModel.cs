@@ -69,6 +69,24 @@ namespace RelertSharp.GUI.Model
                 Engine.SelectBuildingAt(building);
             }
         }
+        public void SelectTerrainAt(I2dLocateable pos)
+        {
+            TerrainItem terr = map.Terrains.FindByCoord(pos);
+            if (terr != null && !Terrains.Contains(terr))
+            {
+                Terrains.Add(terr);
+                Engine.SelectTerrainAt(terr);
+            }
+        }
+        public void SelectOverlayAt(I2dLocateable pos)
+        {
+            OverlayUnit ov = map.Overlays[pos.X, pos.Y];
+            if (ov != null && !Overlays.Contains(ov))
+            {
+                Overlays.Add(ov);
+                Engine.SelectOverlayAt(ov);
+            }
+        }
         public void ReleaseAll()
         {
             foreach (UnitItem unit in Units)
@@ -86,6 +104,17 @@ namespace RelertSharp.GUI.Model
                 Engine.UnSelectBuindingAt(building);
             }
             Buildings.Clear();
+            foreach (TerrainItem terr in Terrains)
+            {
+                Engine.UnSelectTerrainAt(terr);
+            }
+            Terrains.Clear();
+            foreach (OverlayUnit ov in Overlays)
+            {
+                Engine.UnSelectOverlayAt(ov);
+            }
+            Overlays.Clear();
+
 
             Engine.Refresh();
         }
@@ -109,6 +138,18 @@ namespace RelertSharp.GUI.Model
                 map.Buildings.RemoveByCoord(st);
             }
             Buildings.Clear();
+            foreach (TerrainItem terr in Terrains)
+            {
+                Engine.RemoveTerrainAt(terr);
+                map.Terrains.RemoveByCoord(terr);
+            }
+            Terrains.Clear();
+            foreach (OverlayUnit ov in Overlays)
+            {
+                Engine.RemoveOverlayAt(ov);
+                map.Overlays.RemoveByCoord(ov);
+            }
+            Overlays.Clear();
 
             Engine.Refresh();
         }
@@ -116,11 +157,13 @@ namespace RelertSharp.GUI.Model
 
 
         #region Public Calls - MainWindowDataModel
-        public SelectingFlag SelectingFlags { get; set; } = SelectingFlag.Units | SelectingFlag.Infantries | SelectingFlag.Buildings;
+        public SelectingFlag SelectingFlags { get; set; } = SelectingFlag.Units | SelectingFlag.Infantries | SelectingFlag.Buildings | SelectingFlag.Terrains | SelectingFlag.Overlays;
         public LightningItem LightningItem { get; set; }
         public List<InfantryItem> Infantries { get; private set; } = new List<InfantryItem>();
         public List<UnitItem> Units { get; private set; } = new List<UnitItem>();
         public List<StructureItem> Buildings { get; private set; } = new List<StructureItem>();
+        public List<TerrainItem> Terrains { get; private set; } = new List<TerrainItem>();
+        public List<OverlayUnit> Overlays { get; private set; } = new List<OverlayUnit>();
         #endregion
     }
 }

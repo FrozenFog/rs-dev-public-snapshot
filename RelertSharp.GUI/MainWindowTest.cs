@@ -369,6 +369,14 @@ namespace RelertSharp.GUI
                 {
                     Current.SelectBuildingAt(pos);
                 }
+                if ((flag | MainWindowDataModel.SelectingFlag.Terrains) != 0)
+                {
+                    Current.SelectTerrainAt(pos);
+                }
+                if ((flag|MainWindowDataModel.SelectingFlag.Overlays) != 0)
+                {
+                    Current.SelectOverlayAt(pos);
+                }
             }
         }
         private void panel1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)

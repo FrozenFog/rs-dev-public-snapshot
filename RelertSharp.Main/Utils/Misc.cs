@@ -133,7 +133,7 @@ namespace RelertSharp.Utils
         }
         public static int CoordByteY(int crd)
         {
-            return crd / 512;
+            return crd >> 9;
         }
         public static int CoordIntX(int crd)
         {

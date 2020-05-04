@@ -9,10 +9,34 @@ using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Points
 {
-    public class PointCollectionBase<T> : IEnumerable<T>
+    public class PointCollectionBase<T> : IEnumerable<T> where T : PointItemBase
     {
         private Dictionary<string, T> data = new Dictionary<string, T>();
         public PointCollectionBase() { }
+
+
+        #region Public Methods - ObjectBase
+        public virtual T FindByCoord(I2dLocateable src)
+        {
+            foreach (T item in data.Values)
+            {
+                if (item.X == src.X && item.Y == src.Y) return item;
+            }
+            return null;
+        }
+        public virtual void RemoveByCoord(I2dLocateable src)
+        {
+            Dictionary<string, T> tmp = new Dictionary<string, T>(data);
+            foreach (T item in tmp.Values)
+            {
+                if (item.X == src.X && item.Y == src.Y)
+                {
+                    data.Remove(item.CoordString);
+                    return;
+                }
+            }
+        }
+        #endregion
 
 
         #region Public Calls - PointCollectionBase
@@ -78,7 +102,7 @@ namespace RelertSharp.MapStructure.Points
         public int Y { get; set; }
         public int Coord
         {
-            get { return Utils.Misc.CoordInt(X, Y); }
+            get { return CoordInt(X, Y); }
             set
             {
                 X = CoordIntX(value);
