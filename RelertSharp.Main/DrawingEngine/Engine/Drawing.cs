@@ -262,7 +262,9 @@ namespace RelertSharp.DrawingEngine
                     dest.pTurretAnimShadow = RenderAndPresent(src.pShadowTurretAnim, pos.Rise() + src.offsetTurret, (int)turRotation.X + src.TurretAnimCount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, Vec3.DefaultBox, true);
                 }
             }
-            Buffer.Scenes.Structures[dest.Coord] = dest;
+            int lookup = dest.Coord;
+            if (dest.IsBaseNode) lookup = lookup << 1 + 1;
+            Buffer.Scenes.Structures[lookup] = dest;
             if (dest.IsValid) minimap.DrawStructure(src, dest);
             return dest.IsValid;
         }

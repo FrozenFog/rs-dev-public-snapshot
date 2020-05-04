@@ -35,11 +35,11 @@ namespace RelertSharp.DrawingEngine
         {
             return ToVec3Zero(d3.X, d3.Y, d3.Z);
         }
-        private Vec3 ToVec3Iso(I2dLocateable d2, int height)
+        private Vec3 ToVec3Iso(I2dLocateable d2, int height = 0)
         {
             return ToVec3Iso(d2.X, d2.Y, height);
         }
-        private Vec3 ToVec3Zero(I2dLocateable d2, int height)
+        private Vec3 ToVec3Zero(I2dLocateable d2, int height = 0)
         {
             return ToVec3Zero(d2.X, d2.Y, height);
         }

@@ -11,11 +11,29 @@ namespace RelertSharp.MapStructure.Objects
     public class StructureLayer : ObjectBase<StructureItem>
     {
         public StructureLayer() { }
+
+
+        #region Public Methods - StructureLayer
+        public override StructureItem FindByCoord(I2dLocateable pos)
+        {
+            foreach (StructureItem item in this)
+            {
+                foreach (I2dLocateable target in new Square2D(item, item.SizeX, item.SizeY))
+                {
+                    if (target.X == pos.X && target.Y == pos.Y) return item;
+                }
+            }
+            return null;
+        }
+        #endregion
     }
 
 
     public class StructureItem : ObjectItemBase
     {
+        private int sizeX = 0, sizeY = 0;
+
+
         public StructureItem(string _id, string[] _args) : base(_id, _args)
         {
             ID = _id;
@@ -46,6 +64,30 @@ namespace RelertSharp.MapStructure.Objects
         public string Upgrade3 { get; set; }
         public bool AIRepairable { get; set; }
         public bool Nominal { get; private set; } = false;
+        public int SizeX
+        {
+            get
+            {
+                if (sizeX == 0)
+                {
+                    GlobalVar.GlobalRules.GetBuildingShapeData(RegName, out int height, out int sizeX, out int sizeY);
+                    this.sizeX = sizeX;
+                    this.sizeY = sizeY;
+                }
+                return sizeX;
+            }
+        }
+        public int SizeY
+        {
+            get
+            {
+                if (sizeY == 0)
+                {
+                    GlobalVar.GlobalRules.GetBuildingShapeData(RegName, out int height, out int sizeX, out int sizeY);
+                }
+                return sizeY;
+            }
+        }
         #endregion
 
     }

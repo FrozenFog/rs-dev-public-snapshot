@@ -69,14 +69,14 @@ namespace RelertSharp.DrawingEngine
 
 
             #region Private Methods - CScene
-            private void DeleteFromScene(int id)
-            {
-                if (id != 0) CppExtern.ObjectUtils.RemoveObjectFromScene(id);
-            }
+
             #endregion
 
 
             #region Public Methods - CScene
+
+
+            #region Lightnings
             public void BeginLamp()
             {
                 foreach (PresentTile t in Tiles.Values) t.Lamped = false;
@@ -93,6 +93,9 @@ namespace RelertSharp.DrawingEngine
                     }
                 }
             }
+            #endregion
+
+
             public void MarkTile(int coord, Vec4 color, Vec4 exColor, bool deselect)
             {
                 if (Tiles.Keys.Contains(coord))
@@ -100,6 +103,9 @@ namespace RelertSharp.DrawingEngine
                     Tiles[coord].Mark(color, exColor, deselect);
                 }
             }
+
+
+            #region Remove all
             public void RemoveInfantries()
             {
                 foreach (PresentInfantry infantry in Infantries.Values) infantry.Dispose();
@@ -145,6 +151,10 @@ namespace RelertSharp.DrawingEngine
                 foreach (PresentMisc wp in Waypoints.Values) wp.Dispose();
                 Waypoints.Clear();
             }
+            #endregion
+
+
+            #region Mark And Single-remove
             public void MarkUnit(int coord)
             {
                 Units[coord].MarkSelected();
@@ -158,12 +168,49 @@ namespace RelertSharp.DrawingEngine
                 Units[coord].Dispose();
                 Units.Remove(coord);
             }
+            public void MarkInfantry(int coord, int subcell)
+            {
+                Infantries[coord << 2 + subcell].MarkSelected();
+            }
+            public void UnMarkInfantry(int coord, int subcell)
+            {
+                Infantries[coord << 2 + subcell].Unmark();
+            }
+            public void RemoveInfantryAt(int coord, int subcell)
+            {
+                int c = coord << 2 + subcell;
+                Infantries[c].Dispose();
+                Infantries.Remove(c);
+            }
+            public void MarkBuilding(int coord)
+            {
+                Structures[coord].MarkSelected();
+            }
+            public void UnMarkBuilding(int coord)
+            {
+                Structures[coord].Unmark();
+            }
+            public void RemoveBuildingAt(int coord)
+            {
+                Structures[coord].Dispose();
+                Structures.Remove(coord);
+            }
+            #endregion
+
+
             #endregion
 
 
             #region Public Calls - Scene
+            /// <summary>
+            /// index : st.Coord
+            /// st.Coord lsh 1 + 1 if it is BaseNode
+            /// </summary>
             public Dictionary<int, PresentStructure> Structures { get; private set; } = new Dictionary<int, PresentStructure>();
             public Dictionary<int, PresentUnit> Units { get; private set; } = new Dictionary<int, PresentUnit>();
+            /// <summary>
+            /// index : inf.Coord lsh 2 + subcell
+            /// </summary>
             public Dictionary<int, PresentInfantry> Infantries { get; private set; } = new Dictionary<int, PresentInfantry>();
             public Dictionary<int, PresentTile> Tiles { get; private set; } = new Dictionary<int, PresentTile>();
             public Dictionary<int, PresentMisc> Overlays { get; private set; } = new Dictionary<int, PresentMisc>();

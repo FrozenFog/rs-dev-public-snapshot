@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.Common;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Objects
@@ -10,6 +11,30 @@ namespace RelertSharp.MapStructure.Objects
     public class InfantryLayer : ObjectBase<InfantryItem>
     {
         public InfantryLayer() { }
+
+
+        #region Public Methods - InfantryLayer
+        public InfantryItem FindByCoord(I2dLocateable pos, int subcell)
+        {
+            foreach (InfantryItem inf in this)
+            {
+                if (inf.X == pos.X && inf.Y == pos.Y && inf.SubCells == subcell) return inf;
+            }
+            return null;
+        }
+        public void RemoveByCoord(I2dLocateable pos, int subcell)
+        {
+            Dictionary<string, InfantryItem> tmp = new Dictionary<string, InfantryItem>(GetDictionary());
+            foreach(InfantryItem inf in tmp.Values)
+            {
+                if (inf.X == pos.X & inf.Y == pos.Y && inf.SubCells == subcell)
+                {
+                    RemoveItem(inf);
+                    return;
+                }
+            }
+        }
+        #endregion
     }
 
     public class InfantryItem : ObjectItemBase

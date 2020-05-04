@@ -360,6 +360,15 @@ namespace RelertSharp.GUI
                 {
                     Current.SelectUnitAt(pos);
                 }
+                if ((flag | MainWindowDataModel.SelectingFlag.Infantries) != 0)
+                {
+                    I2dLocateable infpos = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell).To2dLocateable();
+                    Current.SelectInfantryAt(infpos, subcell);
+                }
+                if ((flag | MainWindowDataModel.SelectingFlag.Buildings) != 0)
+                {
+                    Current.SelectBuildingAt(pos);
+                }
             }
         }
         private void panel1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)

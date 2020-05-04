@@ -69,5 +69,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         void Dispose();
         void SetColor(Vec4 color);
         void MultiplyColor(Vec4 color);
+        void MarkSelected();
+        void Unmark();
     }
 }

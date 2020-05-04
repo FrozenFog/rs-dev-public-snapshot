@@ -38,6 +38,16 @@ namespace RelertSharp.DrawingEngine.Presenting
             ColorVector *= color;
             SetColor(ColorVector);
         }
+        public void MarkSelected()
+        {
+            SetColorStrict(Vec4.Selector);
+            selected = true;
+        }
+        public void Unmark()
+        {
+            selected = false;
+            SetColorStrict(ColorVector);
+        }
         #endregion
 
 

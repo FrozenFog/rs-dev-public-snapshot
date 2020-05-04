@@ -51,6 +51,24 @@ namespace RelertSharp.GUI.Model
                 Engine.SelectUnitAt(pos);
             }
         }
+        public void SelectInfantryAt(I2dLocateable pos, int subcell)
+        {
+            InfantryItem inf = map.Infantries.FindByCoord(pos, subcell);
+            if (inf != null && !Infantries.Contains(inf))
+            {
+                Infantries.Add(inf);
+                Engine.SelectInfantryAt(pos, subcell);
+            }
+        }
+        public void SelectBuildingAt(I2dLocateable pos)
+        {
+            StructureItem building = map.Buildings.FindByCoord(pos);
+            if (building != null && !Buildings.Contains(building))
+            {
+                Buildings.Add(building);
+                Engine.SelectBuildingAt(building);
+            }
+        }
         public void ReleaseAll()
         {
             foreach (UnitItem unit in Units)
@@ -58,6 +76,16 @@ namespace RelertSharp.GUI.Model
                 Engine.UnSelectUnitAt(unit);
             }
             Units.Clear();
+            foreach (InfantryItem inf in Infantries)
+            {
+                Engine.UnSelectInfantryAt(inf, inf.SubCells);
+            }
+            Infantries.Clear();
+            foreach (StructureItem building in Buildings)
+            {
+                Engine.UnSelectBuindingAt(building);
+            }
+            Buildings.Clear();
 
             Engine.Refresh();
         }
@@ -69,6 +97,18 @@ namespace RelertSharp.GUI.Model
                 map.Units.RemoveByCoord(unit);
             }
             Units.Clear();
+            foreach (InfantryItem inf in Infantries)
+            {
+                Engine.RemoveInfantryAt(inf, inf.SubCells);
+                map.Infantries.RemoveByCoord(inf, inf.SubCells);
+            }
+            Infantries.Clear();
+            foreach (StructureItem st in Buildings)
+            {
+                Engine.RemoveBuildingAt(st);
+                map.Buildings.RemoveByCoord(st);
+            }
+            Buildings.Clear();
 
             Engine.Refresh();
         }
@@ -76,10 +116,11 @@ namespace RelertSharp.GUI.Model
 
 
         #region Public Calls - MainWindowDataModel
-        public SelectingFlag SelectingFlags { get; set; } = SelectingFlag.Units;
+        public SelectingFlag SelectingFlags { get; set; } = SelectingFlag.Units | SelectingFlag.Infantries | SelectingFlag.Buildings;
         public LightningItem LightningItem { get; set; }
         public List<InfantryItem> Infantries { get; private set; } = new List<InfantryItem>();
         public List<UnitItem> Units { get; private set; } = new List<UnitItem>();
+        public List<StructureItem> Buildings { get; private set; } = new List<StructureItem>();
         #endregion
     }
 }

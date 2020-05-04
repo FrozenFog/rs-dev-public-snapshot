@@ -20,6 +20,7 @@ namespace RelertSharp.DrawingEngine
 {
     public partial class Engine
     {
+        #region Unit
         public void SelectUnitAt(I2dLocateable pos)
         {
             int coord = pos.Coord;
@@ -45,5 +46,64 @@ namespace RelertSharp.DrawingEngine
                 Buffer.Scenes.RemoveUnitAt(coord);
             }
         }
+        #endregion
+
+
+        #region Infantry
+        public void SelectInfantryAt(I2dLocateable pos, int subcell)
+        {
+            int coord = pos.Coord;
+            if (Buffer.Scenes.Infantries.Keys.Contains(coord << 2 + subcell))
+            {
+                Buffer.Scenes.MarkInfantry(coord, subcell);
+                Refresh();
+            }
+        }
+        public void UnSelectInfantryAt(I2dLocateable pos, int subcell)
+        {
+            int coord = pos.Coord;
+            if (Buffer.Scenes.Infantries.Keys.Contains(coord << 2 + subcell))
+            {
+                Buffer.Scenes.UnMarkInfantry(coord, subcell);
+            }
+        }
+        public void RemoveInfantryAt(I2dLocateable pos, int subcell)
+        {
+            int coord = pos.Coord;
+            if (Buffer.Scenes.Infantries.Keys.Contains(coord << 2 + subcell))
+            {
+                Buffer.Scenes.RemoveInfantryAt(coord, subcell);
+            }
+        }
+        #endregion
+
+
+        #region Building
+        public void SelectBuildingAt(I2dLocateable pos)
+        {
+            int coord = pos.Coord;
+            if (Buffer.Scenes.Structures.Keys.Contains(coord))
+            {
+                Buffer.Scenes.MarkBuilding(coord);
+                Refresh();
+            }
+        }
+        public void UnSelectBuindingAt(I2dLocateable pos)
+        {
+            int coord = pos.Coord;
+            if (Buffer.Scenes.Structures.Keys.Contains(coord))
+            {
+                Buffer.Scenes.UnMarkBuilding(coord);
+            }
+        }
+        public void RemoveBuildingAt(I2dLocateable pos)
+        {
+            int coord = pos.Coord;
+            if (Buffer.Scenes.Structures.Keys.Contains(coord))
+            {
+                Buffer.Scenes.RemoveBuildingAt(coord);
+            }
+        }
+        #endregion
     }
 }

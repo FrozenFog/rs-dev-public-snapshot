@@ -52,6 +52,16 @@ namespace RelertSharp.DrawingEngine.Presenting
             ColorVector *= color;
             SetColor(ColorVector);
         }
+        public void MarkSelected()
+        {
+            SetColorStrict(Vec4.Selector);
+            selected = true;
+        }
+        public void Unmark()
+        {
+            selected = false;
+            SetColorStrict(ColorVector);
+        }
         #endregion
 
 
@@ -81,6 +91,7 @@ namespace RelertSharp.DrawingEngine.Presenting
             SetColor(pSuperAnim, color);
             SetColor(pTurretAnim, color);
             SetColor(pTurretBarl, color);
+            SetColor(pBib, color);
         }
         #endregion
 
@@ -90,8 +101,8 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             get
             {
-                return new int[] { pSelf, pActivateAnim, pActivateAnim2, pActivateAnim3, pBib, pIdleAnim,
-                pSelfShadow, pActivateAnimShadow, pActivateAnim2Shadow, pActivateAnim3Shadow, pBibShadow, pIdleAnimShadow};
+                return new int[] { pSelf, pActivateAnim, pActivateAnim2, pActivateAnim3, pBib, pIdleAnim, pSuperAnim, pTurretAnim, pTurretBarl,
+                pSelfShadow, pActivateAnimShadow, pActivateAnim2Shadow, pActivateAnim3Shadow, pBibShadow, pIdleAnimShadow, pSuperAnimShadow, pTurretAnimShadow};
             }
         }
         public int pActivateAnim { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.FileSystem;
@@ -36,6 +37,9 @@ namespace RelertSharp.IniSystem
                 }
             }
         }
+        private Dictionary<string, Vec3> bufferedBuildingShape = new Dictionary<string, Vec3>();
+
+
         #region Ctor - Rules
         public Rules(string path, INIFileType itype = INIFileType.RulesINI) : base(path, INIFileType.RulesINI) { }
         public Rules(byte[] _data, string _filename) : base(_data, _filename, INIFileType.RulesINI)
@@ -126,31 +130,41 @@ namespace RelertSharp.IniSystem
         }
         public void GetBuildingShapeData(string nameid, out int height, out int foundX, out int foundY)
         {
-            string artname = GetArtEntityName(nameid);
-            INIEntity art = Art[artname];
-            string img = this[nameid]["Image"];
-
-            string foundation = (string)art["Foundation"].ToLower();
-            if (!string.IsNullOrEmpty(foundation))
+            Vec3 sz;
+            if (!bufferedBuildingShape.Keys.Contains(nameid))
             {
-                if (foundation == "custom")
+                sz = new Vec3();
+                string artname = GetArtEntityName(nameid);
+                INIEntity art = Art[artname];
+                string img = this[nameid]["Image"];
+
+                string foundation = (string)art["Foundation"].ToLower();
+                if (!string.IsNullOrEmpty(foundation))
                 {
-                    foundX = art.GetPair("Foundation.X").ParseInt(1);
-                    foundY = art.GetPair("Foundation.Y").ParseInt(1);
+                    if (foundation == "custom")
+                    {
+                        sz.X = art.GetPair("Foundation.X").ParseInt(1);
+                        sz.Y = art.GetPair("Foundation.Y").ParseInt(1);
+                    }
+                    else
+                    {
+                        string[] tmp = foundation.Split('x');
+                        sz.X = int.Parse(tmp[0]);
+                        sz.Y = int.Parse(tmp[1]);
+                    }
                 }
                 else
                 {
-                    string[] tmp = foundation.Split('x');
-                    foundX = int.Parse(tmp[0]);
-                    foundY = int.Parse(tmp[1]);
+                    sz.X = 1;
+                    sz.Y = 1;
                 }
+                sz.Z = art.GetPair("Height").ParseInt(5) + 3;
+                bufferedBuildingShape[nameid] = sz;
             }
-            else
-            {
-                foundX = 1;
-                foundY = 1;
-            }
-            height = art.GetPair("Height").ParseInt(5) + 3;
+            else sz = bufferedBuildingShape[nameid];
+            foundX = (int)sz.X;
+            foundY = (int)sz.Y;
+            height = (int)sz.Z;
         }
         public Vec4 GetBuildingLampData(string nameid, out float intensity, out int visibility)
         {

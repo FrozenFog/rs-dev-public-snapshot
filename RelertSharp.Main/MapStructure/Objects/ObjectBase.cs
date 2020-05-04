@@ -16,7 +16,7 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - ObjectBase
-        public T FindByCoord(I2dLocateable src)
+        public virtual T FindByCoord(I2dLocateable src)
         {
             foreach (T item in data.Values)
             {
@@ -24,7 +24,7 @@ namespace RelertSharp.MapStructure.Objects
             }
             return null;
         }
-        public void RemoveByCoord(I2dLocateable src)
+        public virtual void RemoveByCoord(I2dLocateable src)
         {
             Dictionary<string, T> tmp = new Dictionary<string, T>(data);
             foreach (T item in tmp.Values)
@@ -35,6 +35,18 @@ namespace RelertSharp.MapStructure.Objects
                     return;
                 }
             }
+        }
+        #endregion
+
+
+        #region Protected
+        protected Dictionary<string, T> GetDictionary()
+        {
+            return data;
+        }
+        protected void RemoveItem(T item)
+        {
+            data.Remove(item.ID);
         }
         #endregion
 
