@@ -20,6 +20,19 @@ namespace RelertSharp.DrawingEngine
 {
     public partial class Engine
     {
+        private Vec3 MoveVertical(Vec3 src, int px)
+        {
+            src.X += px;
+            src.Y += px;
+            return src;
+        }
+        private Vec3 MoveHorizontal(Vec3 src, int px)
+        {
+            int offset = (int)(px / Math.Sqrt(3));
+            src.X += offset;
+            src.Y -= offset;
+            return src;
+        }
         private Vec3 ToVec3Iso(PresentInfantry inf, int subcell)
         {
             float x = inf.X + 0.25f, y = inf.Y + 0.25f, z = inf.Z;

@@ -58,6 +58,7 @@ namespace RelertSharp.DrawingEngine
         public CScene Scenes { get; private set; } = new CScene();
         public CBuffer Buffers { get; private set; } = new CBuffer();
         public CFile Files { get; private set; } = new CFile();
+        public List<int> WaypointNum { get; private set; } = new List<int>();
         #endregion
 
 
