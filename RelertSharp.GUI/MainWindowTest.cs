@@ -396,6 +396,11 @@ namespace RelertSharp.GUI
             panel1.Focus();
         }
 
+        private void pnlMiniMap_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
+
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Middle)

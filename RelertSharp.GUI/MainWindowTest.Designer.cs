@@ -304,6 +304,7 @@
             this.pnlMiniMap.Size = new System.Drawing.Size(206, 176);
             this.pnlMiniMap.TabIndex = 4;
             this.pnlMiniMap.SizeChanged += new System.EventHandler(this.pnlMiniMap_SizeChanged);
+            this.pnlMiniMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseDown);
             // 
             // pnlSide
             // 
