@@ -149,7 +149,9 @@ namespace RelertSharp.SubWindows.LogicEditor
                 ClearContent(gpbEvents);
                 mtxbEventID.Text = "00";
             }
+            ;
             StaticHelper.LoadToObjectCollection(lbxActionList, trg.Actions);
+            ;
             if (lbxActionList.Items.Count > 0) lbxActionList.SelectedIndex = 0;
             else
             {
@@ -217,7 +219,8 @@ namespace RelertSharp.SubWindows.LogicEditor
             var tags = map.Tags.GetTagFromTrigger(triggerID, trg);
             txbTrgID.Text = triggerID;
             txbTrgName.Text = trg.Name;
-            StaticHelper.LoadToObjectCollection(cbbTagID, tags);
+            cbbTagID.Items.Clear();
+            foreach (TagItem tag in tags) cbbTagID.Items.Add(tag.ID);
             cbbTagID.SelectedIndex = tags.Count >= 0 ? 0 : -1;
             cbbTagID_SelectedIndexChanged(cbbTagID, null);
             rdbRepeat0.Checked = false;
@@ -548,6 +551,8 @@ namespace RelertSharp.SubWindows.LogicEditor
         private TaskforceItem _CurrentTaskforce { get { return map.TaskForces[txbTaskID.Text]; } }
         private TaskforceUnit _CurrentBoxTaskforceUnit { get { return TaskforceUnit.FromListviewItem(lvTaskforceUnits.SelectedItems[0]); } }
         private TaskforceUnit _CurrentTaskforceUnit { get { return _CurrentTaskforce.Members[lvTaskforceUnits.SelectedIndices[0]]; } }
+        private TeamItem _CurrentTeam { get { return lbxTeamList.SelectedItem as TeamItem; } }
+        private TeamUnit _CurrentTeamUnit { get { return _CurrentTeam.GetToUnit; } set { _CurrentTeam.GetToUnit = value; } }
         private LogicItem _CurrentEvent { get { return _CurrentTrigger.Events[_CurrentBoxEvent.idx]; } }
         private LogicItem _CurrentBoxEvent { get { return lbxEventList.SelectedItem as LogicItem; } }
         private LogicItem _CurrentAction { get { return _CurrentTrigger.Actions[_CurrentBoxAction.idx]; } }

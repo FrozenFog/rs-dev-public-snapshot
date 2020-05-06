@@ -192,7 +192,7 @@ namespace RelertSharp.MapStructure.Logic
     public class LogicItem : BindableBase
     {
         private LogicType type;
-        public int idx;
+        internal int idx;
         private int id;
         private string comment;
         private string[] parameters;

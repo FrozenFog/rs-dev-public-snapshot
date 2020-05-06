@@ -251,7 +251,8 @@ namespace RelertSharp.SubWindows.LogicEditor
         private void cbbTagID_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbbTagID.SelectedItem == null) return;
-            var tg = cbbTagID.SelectedItem as TagItem;
+            string id = cbbTagID.SelectedItem as string;
+            TagItem tg = GlobalVar.CurrentMapDocument.Map.Tags[id];
             txbTagName.Text = tg.Name;
             switch (tg.Repeating)
             {
@@ -570,7 +571,288 @@ namespace RelertSharp.SubWindows.LogicEditor
         }
         #endregion
         #endregion
+        #region Team
+        #region btn
+        private void btnNewTeam_Click(object sender, EventArgs e)
+        {
+            TeamItem item = map.NewTeam();
+            AddTo(lbxTeamList, item, ref updatingLbxTeamList);
+        }
 
+        private void btnDelTeam_Click(object sender, EventArgs e)
+        {
+            if (lbxTeamList.SelectedItem == null) return;
+            int index = lbxTeamList.SelectedIndex;
+            TeamItem item = lbxTeamList.SelectedItem as TeamItem;
+            map.RemoveTeam(item);
+            RemoveAt(lbxTeamList, index, ref updatingLbxTeamList);
+        }
+
+        private void btnCopyTeam_Click(object sender, EventArgs e)
+        {
+            if (lbxTeamList.SelectedItem == null) return;
+            TeamItem copied = _CurrentTeam.Copy(map.NewID);
+            map.Teams[copied.ID] = copied;
+            AddTo(lbxTeamList, copied, ref updatingLbxTeamList);
+        }
+        #endregion
+        #region lbx
+        private bool updatingLbxTeamList = false;
+        private void lbxTeamList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbxTeamList.SelectedItem == null) return;
+            if (!updatingLbxTeamList)
+            {
+                olvTeamConfig.ClearObjects();
+                olvTeamConfig.SetObjects(_CurrentTeamUnit.Data);
+            }
+        }
+        #endregion
+        #region olv
+        private void olvTeamConfig_CellEditStarting(object sender, BrightIdeasSoftware.CellEditEventArgs e)
+        {
+            if (e.SubItemIndex != 1) return;
+            KeyValuePair<string, TeamUnit.TeamUnitNode> valuePair = (KeyValuePair<string, TeamUnit.TeamUnitNode>)e.RowObject;
+            ComboBox cmb = new ComboBox();
+            if (e.Control.GetType().FullName == "BrightIdeasSoftware.BooleanCellEditor2")
+            {
+                cmb.FlatStyle = FlatStyle.Flat;
+                cmb.DropDownStyle = ComboBoxStyle.DropDownList;
+                cmb.Bounds = e.CellBounds;
+                cmb.Items.Add("0 False");
+                cmb.Items.Add("1 True");
+                cmb.SelectedIndex = ((bool)e.Value == false) ? 0 : 1;
+                e.Control = cmb;
+            }
+            else if (e.Control.GetType().FullName == "BrightIdeasSoftware.EnumCellEditor")
+            {
+                cmb.DropDownStyle = ComboBoxStyle.DropDownList;
+                cmb.FlatStyle = FlatStyle.Flat;
+                cmb.Bounds = e.CellBounds;
+                switch (valuePair.Key)
+                {
+                    case "VeteranLevel":
+                        cmb.Items.Add(DICT["LGColvEnumTeamVeteran1"]);
+                        cmb.Items.Add(DICT["LGColvEnumTeamVeteran2"]);
+                        cmb.Items.Add(DICT["LGColvEnumTeamVeteran3"]);
+                        cmb.SelectedIndex = (int)valuePair.Value.Value - 1;
+                        break;
+                    case "MCDecision":
+                        cmb.Items.Add(DICT["LGColvEnumTeamMCD0"]);
+                        cmb.Items.Add(DICT["LGColvEnumTeamMCD1"]);
+                        cmb.Items.Add(DICT["LGColvEnumTeamMCD2"]);
+                        cmb.Items.Add(DICT["LGColvEnumTeamMCD3"]);
+                        cmb.Items.Add(DICT["LGColvEnumTeamMCD4"]);
+                        cmb.Items.Add(DICT["LGColvEnumTeamMCD5"]);
+                        cmb.SelectedIndex = (int)valuePair.Value.Value;
+                        break;
+                }
+                e.Control = cmb;
+            }
+            else if (valuePair.Key == "Waypoint")
+            {
+                cmb.FlatStyle = FlatStyle.Flat;
+                cmb.DropDownStyle = ComboBoxStyle.DropDown;
+                cmb.Bounds = e.CellBounds;
+                cmb.Items.AddRange(GlobalVar.CurrentMapDocument.Map.Waypoints.ToArray());
+                cmb.Text = e.Control.Text;
+                e.Control = cmb;
+            }
+            else switch (valuePair.Key) 
+                {
+                    case "TechLevel":
+                            cmb.FlatStyle = FlatStyle.Flat;
+                            cmb.DropDownStyle = ComboBoxStyle.DropDown;
+                            cmb.Bounds = e.CellBounds;
+                            cmb.Items.Add("0");
+                            cmb.Items.Add("1");
+                            cmb.Items.Add("2");
+                            cmb.Items.Add("3");
+                            cmb.Items.Add("4");
+                            cmb.Items.Add("5");
+                            cmb.Items.Add("6");
+                            cmb.Items.Add("7");
+                            cmb.Items.Add("8");
+                            cmb.Items.Add("9");
+                            cmb.Items.Add("10");
+                            cmb.Text = e.Control.Text;
+                            e.Control = cmb;
+                            break;
+                    case "TaskforceID":
+                        cmb.FlatStyle = FlatStyle.Flat;
+                        cmb.DropDownStyle = ComboBoxStyle.DropDownList;
+                        cmb.Bounds = e.CellBounds;
+                        cmb.Items.AddRange(GlobalVar.CurrentMapDocument.Map.TaskForces.ToArray());
+                        cmb.SelectedItem = GlobalVar.CurrentMapDocument.Map.TaskForces.ToList().Find(s => s.ID == e.Control.Text);
+                        e.Control = cmb;
+                        break;
+                    case "ScriptID":
+                        cmb.FlatStyle = FlatStyle.Flat;
+                        cmb.DropDownStyle = ComboBoxStyle.DropDownList;
+                        cmb.Bounds = e.CellBounds;
+                        cmb.Items.AddRange(GlobalVar.CurrentMapDocument.Map.Scripts.ToArray());
+                        cmb.SelectedItem = GlobalVar.CurrentMapDocument.Map.Scripts.ToList().Find(s => s.ID == e.Control.Text);
+                        e.Control = cmb;
+                        break;
+                    case "TagID":
+                        cmb.FlatStyle = FlatStyle.Flat;
+                        cmb.DropDownStyle = ComboBoxStyle.DropDownList;
+                        cmb.Bounds = e.CellBounds;
+                        cmb.Items.Add("None");
+                        cmb.Items.AddRange(GlobalVar.CurrentMapDocument.Map.Tags.ToArray());
+                        if (string.IsNullOrEmpty(e.Control.Text)) cmb.SelectedIndex = 0;
+                        else cmb.SelectedItem = GlobalVar.CurrentMapDocument.Map.Tags.ToList().Find(s => s.ID == e.Control.Text);
+                        e.Control = cmb;
+                        break;
+                    case "House":
+                        cmb.FlatStyle = FlatStyle.Flat;
+                        cmb.DropDownStyle = ComboBoxStyle.DropDownList;
+                        cmb.Bounds = e.CellBounds;
+                        cmb.Items.AddRange(GlobalVar.CurrentMapDocument.Map.Countries.ToArray());
+                        cmb.SelectedItem = GlobalVar.CurrentMapDocument.Map.Countries.ToList().Find(s => s.ID == e.Control.Text);
+                        e.Control = cmb;
+                        break;
+                    default:
+                        e.Control.Bounds = e.CellBounds;
+                        break;
+                }
+        }
+        private void olvTeamConfig_CellEditFinishing(object sender, BrightIdeasSoftware.CellEditEventArgs e)
+        {
+            if(!e.Cancel && e.SubItemIndex == 1)
+            {
+                // Do save works
+                KeyValuePair<string, TeamUnit.TeamUnitNode> valuePair = (KeyValuePair<string, TeamUnit.TeamUnitNode>)e.RowObject;
+                TeamUnit.TeamUnitNode ret = _CurrentTeamUnit.Data[valuePair.Key] = new TeamUnit.TeamUnitNode(valuePair.Value.ShowName, valuePair.Value.Value);
+                // _CurrentTeamUnit.Data[valuePair.Key].Value;
+                if (Constant.TeamBoolIndex.Contains(valuePair.Key))
+                {
+                    ComboBox cmb = e.Control as ComboBox;
+                    ret.Value = cmb.SelectedIndex == 0 ? false : true;
+                    _CurrentTeamUnit.Data[valuePair.Key] = ret;
+                }
+                else if (valuePair.Key == "Waypoint")
+                {
+                    ComboBox cmb = e.Control as ComboBox;
+                    string text = cmb.Text;
+                    int val = 0;
+                    try
+                    {
+                        val = int.Parse(text);
+                    }
+                    catch
+                    {
+                        val = 0;
+                    }
+                    if (val < 0 || val > 701) val = 0;
+                    if (GlobalVar.CurrentMapDocument.Map.Waypoints.ToList().Find(s => s.Num == val.ToString()) == null) val = 0;
+                    ret.Value = val;
+                    _CurrentTeamUnit.Data[valuePair.Key] = ret;
+                }
+                else if (valuePair.Key == "TechLevel")
+                {
+                    ComboBox cmb = e.Control as ComboBox;
+                    string text = cmb.Text;
+                    int val = 0;
+                    try
+                    {
+                        val = int.Parse(text);
+                    }
+                    catch
+                    {
+                        val = 0;
+                    }
+                    ret.Value = val;
+                    _CurrentTeamUnit.Data[valuePair.Key] = ret;
+                }
+                else if (valuePair.Key == "Group")
+                {
+                    string text = e.Control.Text;
+                    int val = -1;
+                    try
+                    {
+                        val = int.Parse(text);
+                    }
+                    catch
+                    {
+                        val = -1;
+                    }
+                    ret.Value = val;
+                    _CurrentTeamUnit.Data[valuePair.Key] = ret;
+                }
+                else if (valuePair.Key == "Priority")
+                {
+                    string text = e.Control.Text;
+                    int val = 0;
+                    try
+                    {
+                        val = int.Parse(text);
+                    }
+                    catch
+                    {
+                        val = 0;
+                    }
+                    ret.Value = val;
+                    _CurrentTeamUnit.Data[valuePair.Key] = ret;
+                }
+                else if (valuePair.Key == "TeamCapacity")
+                {
+                    string text = e.Control.Text;
+                    int val = 0;
+                    try
+                    {
+                        val = int.Parse(text);
+                    }
+                    catch
+                    {
+                        val = 0;
+                    }
+                    ret.Value = val;
+                    _CurrentTeamUnit.Data[valuePair.Key] = ret;
+                }
+                else if (valuePair.Key == "VeteranLevel")
+                {
+                    ComboBox cmb = e.Control as ComboBox;
+                    ret.Value = (TeamVeteranLevel)(cmb.SelectedIndex + 1);
+                    _CurrentTeamUnit.Data[valuePair.Key] = ret;
+                }
+                else if (valuePair.Key == "MCDecision")
+                {
+                    ComboBox cmb = e.Control as ComboBox;
+                    ret.Value = (TeamMCDecision)(cmb.SelectedIndex);
+                    _CurrentTeamUnit.Data[valuePair.Key] = ret;
+                }
+                else if (valuePair.Key == "TaskforceID")
+                {
+                    ComboBox cmb = e.Control as ComboBox;
+                    ret.Value = ((TaskforceItem)cmb.SelectedItem).ID;
+                    _CurrentTeamUnit.Data[valuePair.Key] = ret;
+                }
+                else if (valuePair.Key == "ScriptID")
+                {
+                    ComboBox cmb = e.Control as ComboBox;
+                    ret.Value = ((TeamScriptGroup)cmb.SelectedItem).ID;
+                    _CurrentTeamUnit.Data[valuePair.Key] = ret;
+                }
+                else if (valuePair.Key == "TagID")
+                {
+                    ComboBox cmb = e.Control as ComboBox;
+                    ret.Value = cmb.Text == "None" ? string.Empty : ((TagItem)cmb.SelectedItem).ID;
+                    _CurrentTeamUnit.Data[valuePair.Key] = ret;
+                }
+                else ret.Value = e.Control.Text;
+                _CurrentTeamUnit.Data[valuePair.Key] = ret;
+            }
+        }
+        private void olvTeamConfig_CellEditFinished(object sender, BrightIdeasSoftware.CellEditEventArgs e)
+        {
+            olvTeamConfig.ClearObjects();
+            olvTeamConfig.AddObjects(_CurrentTeamUnit.Data);
+            _CurrentTeam.SetFromUnit(_CurrentTeamUnit);
+            UpdateAt(lbxTeamList, _CurrentTeam, ref updatingLbxTeamList);
+        }
+        #endregion
+        #endregion
         #endregion
 
         #region Misc Page
