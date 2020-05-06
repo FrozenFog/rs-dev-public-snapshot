@@ -68,11 +68,12 @@ namespace RelertSharp.DrawingEngine
         }
         public void MoveTo(I3dLocateable pos)
         {
-            CppExtern.Scene.MoveFocusOnScene(ToVec3Iso(pos));
+            CppExtern.Scene.SetFocusOnScene(ToVec3Iso(pos));
         }
         public void MoveTo(I2dLocateable pos)
         {
-            CppExtern.Scene.MoveFocusOnScene(ToVec3Iso(pos));
+            CppExtern.Scene.SetFocusOnScene(ToVec3Iso(pos));
+            SetMinimapClientPos();
         }
         public void ResetView()
         {
@@ -81,12 +82,9 @@ namespace RelertSharp.DrawingEngine
         }
         public void ViewShift(Point previous, Point now)
         {
-            Vec3 LT = new Vec3();
-            CppExtern.Scene.ClientPositionToScenePosition(Pnt.Zero, ref LT);
-            Vec3 coord = ScenePosToCoord(LT);
-            minimap.ClientPos = new Point((int)coord.X, (int)coord.Y);
             Point delta = DeltaPoint(now, previous);
             CppExtern.Scene.MoveFocusOnScreen(delta.X * 1.2f, delta.Y * 1.2f);
+            SetMinimapClientPos();
             Refresh();
         }
         private Vec3 ScenePosToCoord(Vec3 px)

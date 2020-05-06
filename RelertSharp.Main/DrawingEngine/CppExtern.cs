@@ -23,7 +23,7 @@ namespace RelertSharp.DrawingEngine
             [DllImport("CncVxlRenderText.dll")]
             public static extern void MoveFocusOnScene(Vec3 Displacement);
             [DllImport("CncVxlRenderText.dll")]
-            public static extern void SetFocusOnScreen(Vec3 pos);
+            public static extern void SetFocusOnScene(Vec3 pos);
             [DllImport("CncVxlRenderText.dll")]
             public static extern void MoveFocusOnScreen(float x, float y);
 

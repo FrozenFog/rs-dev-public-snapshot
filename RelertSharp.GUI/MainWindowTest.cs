@@ -396,9 +396,40 @@ namespace RelertSharp.GUI
             panel1.Focus();
         }
 
+        private bool minimapMoving = false;
         private void pnlMiniMap_MouseDown(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Left)
+            {
+                minimapMoving = true;
+            }
+        }
 
+        private void pnlMiniMap_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (initialized && drew && minimapMoving)
+            {
+                GlobalVar.Engine.MinimapMoving(e.Location);
+                pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
+            }
+        }
+
+        private void pnlMiniMap_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                minimapMoving = false;
+            }
+        }
+
+        private void pnlMiniMap_MouseLeave(object sender, EventArgs e)
+        {
+            minimapMoving = false;
+        }
+
+        private void panel1_SizeChanged(object sender, EventArgs e)
+        {
+            pnlMiniMap_SizeChanged(sender, e);
         }
 
         private void panel1_MouseUp(object sender, MouseEventArgs e)

@@ -19,6 +19,9 @@ namespace RelertSharp.DrawingEngine
         private Rectangle mapsize;
         private Bitmap minimap;
         private Size panelSize;
+        private Size scaledMinimapSize = Size.Empty;
+        private Pnt scaledMinimapPos = Pnt.Zero;
+        private float minimapScale;
 
 
         #region Ctor - GdipSurface
@@ -85,10 +88,22 @@ namespace RelertSharp.DrawingEngine
         {
             clientSize = client;
         }
+        public Pnt GetPointFromMinimapSeeking(Pnt panelClicked)
+        {
+            Pnt minimapPos = panelClicked - scaledMinimapPos;
+            int x = (int)(minimapPos.X / minimapScale);
+            int y = (int)(minimapPos.Y / minimapScale);
+            return ToTilePos(x, y);
+        }
         #endregion
 
 
         #region Private Methods - GdipSurface
+        private void GetScaledMinimapPos()
+        {
+            scaledMinimapPos.X = (panelSize.Width - scaledMinimapSize.Width) / 2;
+            scaledMinimapPos.Y = (panelSize.Height - scaledMinimapSize.Height) / 2;
+        }
         private void SetMinimapColorAt(int x,int y, Color color)
         {
             if (x < 0 || y < 0 || x >= minimap.Width || y >= minimap.Height) return;
@@ -104,27 +119,33 @@ namespace RelertSharp.DrawingEngine
             x = pos.X - pos.Y + mapsize.Width - 1;
             y = pos.X + pos.Y - mapsize.Width - 1;
         }
+        private Pnt ToTilePos(int x, int y)
+        {
+            return new Pnt((x + y + 2) / 2, mapsize.Width + (y - x) / 2);
+        }
         private Bitmap ResizeTo(Bitmap src, Size destSize)
         {
             float scaleW = destSize.Width / (float)src.Width;
             float scaleH = destSize.Height / (float)src.Height;
-            float scale = Math.Min(scaleW, scaleH);
-            Bitmap dest = new Bitmap((int)(src.Width*scale), (int)(src.Height*scale));
+            minimapScale = Math.Min(scaleW, scaleH);
+            scaledMinimapSize = new Size((int)(src.Width * minimapScale), (int)(src.Height * minimapScale));
+            GetScaledMinimapPos();
+            Bitmap dest = new Bitmap(scaledMinimapSize.Width, scaledMinimapSize.Height);
             Graphics g = Graphics.FromImage(dest);
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             g.DrawImage(src, new Rectangle(Point.Empty, dest.Size), new Rectangle(Point.Empty, src.Size), GraphicsUnit.Pixel);
-            Rectangle indicator = GetClientWindowRectangle(clientSize, ClientPos, dest.Size, scale);
+            Rectangle indicator = GetClientWindowRectangle(ClientPos, dest.Size);
             g.DrawRectangle(borderPen, indicator);
             g.Dispose();
             return dest;
         }
-        private Rectangle GetClientWindowRectangle(Rectangle clientsize, Point currentPos, Size destImgSize, float posScale)
+        private Rectangle GetClientWindowRectangle(Point currentPos, Size destImgSize)
         {
-            float scaleX = clientsize.Width / (float)sceneSize.Width;
-            float scaleY = clientsize.Height / (float)sceneSize.Height;
+            float scaleX = clientSize.Width / (float)sceneSize.Width;
+            float scaleY = clientSize.Height / (float)sceneSize.Height;
             To2dCoord(currentPos, out int x, out int y);
-            int rx = (int)(x * posScale);
-            int ry = (int)(y * posScale);
+            int rx = (int)(x * minimapScale);
+            int ry = (int)(y * minimapScale);
             return new Rectangle(rx, ry, (int)(destImgSize.Width * scaleX), (int)(destImgSize.Height * scaleY));
         }
         #endregion
