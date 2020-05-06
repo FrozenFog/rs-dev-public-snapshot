@@ -90,6 +90,16 @@ namespace RelertSharp.MapStructure
             TaskForces.Remove(item.ID);
             DelID(item.ID);
         }
+        public TeamItem NewTeam()
+        {
+            TeamItem t = Teams.NewTeam(NewID);
+            return t;
+        }
+        public void RemoveTeam(TeamItem item)
+        {
+            Teams.Remove(item.ID);
+            DelID(item.ID);
+        }
         #endregion
 
 
