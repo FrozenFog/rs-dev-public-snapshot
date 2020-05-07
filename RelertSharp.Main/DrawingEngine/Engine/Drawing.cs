@@ -237,7 +237,7 @@ namespace RelertSharp.DrawingEngine
             if (src.pActivateAnim != 0)
             {
                 dest.pActivateAnim = RenderAndPresent(src, src.pActivateAnim, pos + _generalOffset, pPal, flat);
-                dest.pActivateAnim2Shadow = RenderAndPresent(src, src.pShadowActivateAnim, pos.Rise() + _generalOffset, pPal, ShpFlatType.FlatGround, src.ActivateAnimCount, true);
+                dest.pActivateAnimShadow = RenderAndPresent(src, src.pShadowActivateAnim, pos.Rise() + _generalOffset, pPal, ShpFlatType.FlatGround, src.ActivateAnimCount, true);
             }
             if (src.pIdleAnim != 0)
             {

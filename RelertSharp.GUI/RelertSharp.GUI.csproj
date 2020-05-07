@@ -51,6 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainWindow\Drawing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Navigating.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Viewport.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Model\SellectedCollection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

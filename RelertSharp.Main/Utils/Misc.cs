@@ -335,6 +335,16 @@ namespace RelertSharp.Utils
             fs.Flush();
             fs.Dispose();
         }
+        public static void TileToFlatCoord(I2dLocateable pos, int mapWidth, out int x, out int y)
+        {
+            x = pos.X - pos.Y + mapWidth - 1;
+            y = pos.X + pos.Y - mapWidth - 1;
+        }
+        public static void FlatCoordToTile(I2dLocateable pos, int mapWidth, out int tileX, out int tileY)
+        {
+            tileX = (pos.X + pos.Y + 2) / 2;
+            tileY = (2 * mapWidth + pos.Y - pos.X) / 2;
+        }
     }
 
 }

@@ -24,7 +24,6 @@ namespace RelertSharp.DrawingEngine
         public void SelectUnitAt(I2dLocateable pos)
         {
             Buffer.Scenes.MarkUnit(pos.Coord);
-            Refresh();
         }
         public void UnSelectUnitAt(I2dLocateable pos)
         {
@@ -41,7 +40,6 @@ namespace RelertSharp.DrawingEngine
         public void SelectInfantryAt(I2dLocateable pos, int subcell)
         {
             Buffer.Scenes.MarkInfantry(pos.Coord, subcell);
-            Refresh();
         }
         public void UnSelectInfantryAt(I2dLocateable pos, int subcell)
         {
@@ -58,7 +56,6 @@ namespace RelertSharp.DrawingEngine
         public void SelectBuildingAt(I2dLocateable pos)
         {
             Buffer.Scenes.MarkBuilding(pos.Coord);
-            Refresh();
         }
         public void UnSelectBuindingAt(I2dLocateable pos)
         {
@@ -75,7 +72,6 @@ namespace RelertSharp.DrawingEngine
         public void SelectTerrainAt(I2dLocateable pos)
         {
             Buffer.Scenes.MarkTerrain(pos.Coord);
-            Refresh();
         }
         public void UnSelectTerrainAt(I2dLocateable pos)
         {
@@ -89,7 +85,6 @@ namespace RelertSharp.DrawingEngine
         public void SelectOverlayAt(I2dLocateable pos)
         {
             Buffer.Scenes.MarkOverlay(pos.Coord);
-            Refresh();
         }
         public void UnSelectOverlayAt(I2dLocateable pos)
         {

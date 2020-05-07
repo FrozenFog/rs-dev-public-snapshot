@@ -236,9 +236,9 @@ namespace RelertSharp.Common
         {
             return base.GetHashCode();
         }
-        public I2dLocateable To2dLocateable()
+        public Pnt To2dLocateable()
         {
-            return new Base2D((int)X, (int)Y);
+            return new Pnt((int)X, (int)Y);
         }
         #endregion
     }
@@ -266,6 +266,30 @@ namespace RelertSharp.Common
         public static Pnt operator-(Pnt a, Pnt b)
         {
             return new Pnt(a.X - b.X, a.Y - b.Y);
+        }
+        public static bool operator==(Pnt a, Pnt b)
+        {
+            return a.X == b.X && a.Y == b.Y;
+        }
+        public static bool operator!=(Pnt a, Pnt b)
+        {
+            return a.X != b.X || a.Y != b.Y;
+        }
+        public static bool operator==(Pnt a, int b)
+        {
+            return a.X == b && a.Y == b;
+        }
+        public static bool operator==(int b, Pnt a)
+        {
+            return a == b;
+        }
+        public static bool operator!=(Pnt a, int b)
+        {
+            return a.X != b || a.Y != b;
+        }
+        public static bool operator!=(int b, Pnt a)
+        {
+            return a != b;
         }
 
         int I2dLocateable.X { get { return X; } }

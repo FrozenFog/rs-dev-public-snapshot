@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using RelertSharp.DrawingEngine.Drawables;
 using RelertSharp.Common;
+using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.DrawingEngine
 {
@@ -55,7 +56,7 @@ namespace RelertSharp.DrawingEngine
         }
         public void DrawTile(DrawableTile t, I2dLocateable pos, int subindex)
         {
-            To2dCoord(pos, out int x, out int y);
+            TileToFlatCoord(pos, mapsize.Width, out int x, out int y);
             if (subindex > t.SubTiles.Count - 1) subindex = 0;
             SetMinimapColorAt(x, y, t.SubTiles[subindex].RadarColor.Left);
             SetMinimapColorAt(x + 1, y, t.SubTiles[subindex].RadarColor.Right);
@@ -64,22 +65,22 @@ namespace RelertSharp.DrawingEngine
         {
             foreach (I2dLocateable p in new Square2D(pos, d.FoundationX, d.FoundationY))
             {
-                To2dCoord(p, out int x, out int y);
+                TileToFlatCoord(pos, mapsize.Width, out int x, out int y);
                 SetMinimapColorAt(x, y, d.MinimapColor);
                 SetMinimapColorAt(x + 1, y, d.MinimapColor);
             }
         }
         public void DrawMisc(DrawableMisc d, I2dLocateable pos)
         {
-            To2dCoord(pos, out int x, out int y);
+            TileToFlatCoord(pos, mapsize.Width, out int x, out int y);
             if (d.RadarColor == nullcolor) return;
             SetMinimapColorAt(x, y, d.RadarColor);
             SetMinimapColorAt(x + 1, y, d.RadarColor);
         }
         public void DrawObject(IDrawableBase d, I2dLocateable pos)
         {
-            To2dCoord(pos, out int x, out int y);
-            Color c = Utils.Misc.ToColor(d.RemapColor);
+            TileToFlatCoord(pos, mapsize.Width, out int x, out int y);
+            Color c = ToColor(d.RemapColor);
             if (c == nullcolor) return;
             SetMinimapColorAt(x, y, c);
             SetMinimapColorAt(x + 1, y, c);
@@ -143,7 +144,7 @@ namespace RelertSharp.DrawingEngine
         {
             float scaleX = clientSize.Width / (float)sceneSize.Width;
             float scaleY = clientSize.Height / (float)sceneSize.Height;
-            To2dCoord(currentPos, out int x, out int y);
+            TileToFlatCoord(Pnt.FromPoint(currentPos), mapsize.Width, out int x, out int y);
             int rx = (int)(x * minimapScale);
             int ry = (int)(y * minimapScale);
             return new Rectangle(rx, ry, (int)(destImgSize.Width * scaleX), (int)(destImgSize.Height * scaleY));
