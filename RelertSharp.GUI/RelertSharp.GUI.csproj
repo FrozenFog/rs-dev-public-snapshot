@@ -81,6 +81,12 @@
     <Compile Include="SubWindows\LogicEditor\dlgCopy.Designer.cs">
       <DependentUpon>dlgCopy.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\LogicEditor\dlgNewHouse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\dlgNewHouse.Designer.cs">
+      <DependentUpon>dlgNewHouse.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\LogicEditor\EventHandler.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\LogicEditor\dlgCopy.resx">
       <DependentUpon>dlgCopy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\dlgNewHouse.resx">
+      <DependentUpon>dlgNewHouse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\LogicEditor\LogicEditor.resx">
       <DependentUpon>LogicEditor.cs</DependentUpon>

@@ -15,6 +15,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - CountryCollection
+
         public IEnumerable<TechnoPair> ToTechno()
         {
             List<TechnoPair> result = new List<TechnoPair>();
@@ -53,6 +54,7 @@ namespace RelertSharp.MapStructure.Logic
             ParentCountryName = ent.PopPair("ParentCountry").Value;
             residual = ent.DictData;
         }
+        public CountryItem() { }
         #endregion
 
 

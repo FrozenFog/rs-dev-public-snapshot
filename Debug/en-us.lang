@@ -48,6 +48,9 @@ DLGCancel=Cancel
 
 [Dialog-Logic]
 LGCTitle=Logic Editor
+
+LGCdlgNewHouse=Logic Editor - New House
+
 LGCDescRepeat0=Runs only one time, no repeating.\r\nIf multiple trigger(objects attached this trigger) exist, the first object meets the condition will fire this trigger, others will expire.
 LGCDescRepeat1=Runs only one time, no repeating.\r\nIf multiple trigger(objects attached this trigger) exist, trigger will fire when these objects meet their condition simultaneously.
 LGCDescRepeat2=Trigger will repeating.\r\nIf multiple trigger(objects attached this trigger) exist, trigger will fire as long as one of these objects meet their condition.
@@ -100,6 +103,10 @@ LGClblScriptCurType=Type:
 LGClblScriptCurPara=Parameter:
 LGClblScriptDesc=Parameter description
 LGClblTeamList=Team list
+LGClblHouseNewName=Name
+LGClblHouseNewParent=Parent country
+LGClblAllie=Allies
+LGClblEnemy=Enemies
 LGClblLocalVarName=Name:
 
 LGClklTrace=Trace...
@@ -129,6 +136,9 @@ LGCbtnCopyScriptMem=Copy
 LGCbtnNewTeam=New
 LGCbtnDelTeam=Del
 LGCbtnCopyTeam=Copy
+LGCbtnNewHouse=New House
+LGCbtnDelHouse=Del House
+LGCbtnHouseNewConfirm=Create new house
 LGCbtnNewLocalVar=New
 LGCbtnDelLocalVar=Del
 LGCbtnSearch=Search
@@ -167,6 +177,8 @@ LGCgpbTeamScript=Scripts
 LGCgpbTeamScriptCur=Current Script
 LGCgpbTeamTeam=Teams
 LGCgpbTeamTeamCur=Current Team
+LGCgpbHouses=Houses
+LGCgpbHouseAllies=Allies
 LGCgpbLocalVar=Local Variables
 LGCgpbSearch=Global search
 
@@ -177,6 +189,18 @@ LGCrdbRep2=Repeating OR
 LGColvColumnSection=Property
 LGColvColumnKey=Item
 LGColvColumnValue=Value
+LGColvColHouseKey=Item
+LGColvColHouseValue=Value
+
+LGColvRowHouseColorName=Color
+LGColvRowHouseCountry=Country
+LGColvRowHouseCredits=Credits(x100)
+LGColvRowHouseTechLevel=TechLevel
+LGColvRowHousePlayerControl=Player Control
+LGColvRowHouseNodeCounts=Node Counts
+LGColvRowHouseIQ=IQ
+LGColvRowHouseEdge=Edge
+LGColvRowHousePercentBuilt=Percent Built
 
 LGCtsmiAscend=Ascending sort
 LGCtsmiDecend=Decending sort

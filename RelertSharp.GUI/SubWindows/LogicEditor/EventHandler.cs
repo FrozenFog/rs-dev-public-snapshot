@@ -11,6 +11,8 @@ using RelertSharp.FileSystem;
 using RelertSharp.Common;
 using RelertSharp.IniSystem;
 using static RelertSharp.Language;
+using BrightIdeasSoftware;
+using RelertSharp.SubWindows.LogicEditor;
 
 namespace RelertSharp.SubWindows.LogicEditor
 {
@@ -856,6 +858,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         #endregion
 
         #region Misc Page
+        #region Local Variables
 
         #region Button
         private void btnNewLocalVar_Click(object sender, EventArgs e)
@@ -890,7 +893,211 @@ namespace RelertSharp.SubWindows.LogicEditor
             map.LocalVariables.UpdateData(localVarList);
             ;
         }
+        #endregion
 
+        #region Houses
+        #region lbx
+        private bool updatingLbxHousesList = false;
+        private void lbxHouses_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbxHouses.SelectedItem == null) return;
+            if (!updatingLbxHousesList)
+            {
+                olvHouse.ClearObjects();
+                olvHouse.SetObjects(_CurrentHouseUnit.Data);
+                UpdateHouseAlliance();
+            }
+        }
+        private void lbxHouseAllie_Enter(object sender, EventArgs e)
+        {
+            lbxHouseEnemy.SelectedIndices.Clear();
+        }
+        private void lbxHouseEnemy_Enter(object sender, EventArgs e)
+        {
+            lbxHouseAllie.SelectedIndices.Clear();
+        }
+        #endregion
+        #region olv
+        private void olvHouse_CellEditStarting(object sender, BrightIdeasSoftware.CellEditEventArgs e)
+        {
+            KeyValuePair<string, HouseUnit.HouseShowUnit> keyValuePair = (KeyValuePair<string, HouseUnit.HouseShowUnit>)e.RowObject;
+            switch (keyValuePair.Key)
+            {
+                case "IQ":
+                    ComboBox iqCbb = new ComboBox();
+                    iqCbb.DropDownStyle = ComboBoxStyle.DropDownList;
+                    iqCbb.Items.Add("0");
+                    iqCbb.Items.Add("1");
+                    iqCbb.Items.Add("2");
+                    iqCbb.Items.Add("3");
+                    iqCbb.Items.Add("4");
+                    iqCbb.Items.Add("5");
+                    if ((int)keyValuePair.Value.Value > 5 || (int)keyValuePair.Value.Value < 0) iqCbb.SelectedIndex = 0;
+                    else iqCbb.SelectedIndex = (int)keyValuePair.Value.Value;
+                    e.Control = iqCbb;
+                    break;
+                case "PlayerControl":
+                    ComboBox boolCombobox = new ComboBox();
+                    boolCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
+                    boolCombobox.Items.Add("False");
+                    boolCombobox.Items.Add("True");
+                    boolCombobox.SelectedIndex = (bool)keyValuePair.Value.Value ? 1 : 0;
+                    e.Control = boolCombobox;
+                    break;
+                case "Country":
+                    ComboBox countryCbb = new ComboBox();
+                    countryCbb.DropDownStyle = ComboBoxStyle.DropDownList;
+                    StaticHelper.LoadToObjectCollection(countryCbb, map.Countries);
+                    CountryItem countryItem = map.Countries.GetCountry((string)keyValuePair.Value.Value);
+                    countryCbb.SelectedItem = countryItem;
+                    e.Control = countryCbb;
+                    break;
+                case "ColorName":
+                    List<string> colorList = new List<string>();
+                    var iniPairs= GlobalVar.GlobalRules["Colors"].ToList();
+                    foreach (INIPair pair in iniPairs) colorList.Add(pair.Name);
+                    ComboBox colorCbb = new ComboBox();
+                    colorCbb.DropDownStyle = ComboBoxStyle.DropDownList;
+                    colorCbb.Items.AddRange(colorList.ToArray());
+                    if (colorList.Exists(s => s == (string)keyValuePair.Value.Value))
+                        colorCbb.SelectedItem = (string)keyValuePair.Value.Value;
+                    e.Control = colorCbb;
+                    break;
+                case "NodeCounts":
+                    e.Cancel = true;
+                    break;
+                default:
+                    break;
+            }
+            e.Control.Bounds = e.CellBounds;
+        }
+
+        private void olvHouse_CellEditFinishing(object sender, BrightIdeasSoftware.CellEditEventArgs e)
+        {
+            if (!e.Cancel)
+            {
+                string value = e.Control.Text;
+                KeyValuePair<string, HouseUnit.HouseShowUnit> keyValuePair = (KeyValuePair<string, HouseUnit.HouseShowUnit>)e.RowObject;
+                HouseUnit.HouseShowUnit ret = new HouseUnit.HouseShowUnit(keyValuePair.Value.ShowName, keyValuePair.Value.Value);
+                switch (keyValuePair.Key)
+                {
+                    case "IQ":
+                        ret.Value = ((ComboBox)e.Control).SelectedIndex;
+                        _CurrentHouseUnit.Data["IQ"] = ret;
+                        break;
+                    case "PlayerControl":
+                        ret.Value = ((ComboBox)e.Control).SelectedIndex == 0 ? false : true;
+                        _CurrentHouseUnit.Data["PlayerControl"] = ret;
+                        break;
+                    case "Country":
+                        ret.Value = string.IsNullOrEmpty(e.Control.Text) ? keyValuePair.Value.Value : ret.Value = e.Control.Text;
+                        _CurrentHouseUnit.Data["Country"] = ret;
+                        break;
+                    case "ColorName":
+                        ret.Value = string.IsNullOrEmpty(e.Control.Text) ? keyValuePair.Value.Value : ret.Value = e.Control.Text;
+                        _CurrentHouseUnit.Data["ColorName"] = ret;
+                        break;
+                    case "TechLevel":
+                        try { ret.Value = int.Parse(e.Control.Text); }
+                        catch { ret.Value = 10; }
+                        _CurrentHouseUnit.Data["TechLevel"] = ret;
+                        break;
+                    case "Credits":
+                        try { ret.Value = int.Parse(e.Control.Text); }
+                        catch { ret.Value = 0; }
+                        _CurrentHouseUnit.Data["Credits"] = ret;
+                        break;
+                    case "PercentBuilt":
+                        try { ret.Value = double.Parse(e.Control.Text); }
+                        catch { ret.Value = 100d; }
+                        if ((double)ret.Value < 0) ret.Value = 100d;
+                        _CurrentHouseUnit.Data["PercentBuilt"] = ret;
+                        break;
+                    case "Edge":
+                        ret.Value = (HouseEdges)(((ComboBox)e.Control).SelectedIndex + 1);
+                        _CurrentHouseUnit.Data["Edge"] = ret;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void olvHouse_CellEditFinished(object sender, BrightIdeasSoftware.CellEditEventArgs e)
+        {
+            olvHouse.ClearObjects();
+            olvHouse.AddObjects(_CurrentHouseUnit.Data);
+            _CurrentHouse.SetFromUnit(_CurrentHouseUnit);
+            UpdateAt(lbxHouses, _CurrentHouse, ref updatingLbxHousesList);
+        }
+        #endregion
+        #region btn
+        private void btnGoEnemy_Click(object sender, EventArgs e)
+        {
+            foreach(string house in lbxHouseAllie.SelectedItems)
+                _CurrentHouse.AlliesWith.Remove(house);
+            UpdateHouseAlliance();
+        }
+
+        private void btnGoAllie_Click(object sender, EventArgs e)
+        {
+            foreach (string house in lbxHouseEnemy.SelectedItems)
+                _CurrentHouse.AlliesWith.Add(house);
+            UpdateHouseAlliance();
+        }
+        private void btnDelHouse_Click(object sender, EventArgs e)
+        {
+            if (_CurrentHouse == null) return;
+            if (MessageBox.Show("Are your sure to remove this house?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                map.Houses.Remove(_CurrentHouse.Name);
+                int idx = lbxHouses.SelectedIndex;
+                RemoveAt(lbxHouses, idx, ref updatingLbxHousesList);
+                if (idx > 0) idx -= 1;
+                if (map.Houses.Count() > 0) lbxHouses.SelectedIndex = idx;
+            }
+                
+        }
+
+        public static HouseItem retHouse = new HouseItem();
+        private void btnNewHouse_Click(object sender, EventArgs e)
+        {
+            dlgNewHouse dlgNew = new dlgNewHouse();
+            if (dlgNew.ShowDialog() == DialogResult.OK)
+                AddTo(lbxHouses, retHouse, ref updatingLbxHousesList);
+        }
+        #endregion
+        #region txb
+        private void txbHouseAllies_Validating(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                _CurrentHouse.AlliesWith.Clear();
+                string[] allies = txbHouseAllies.Text.Split(',');
+                foreach (string house in allies)
+                {
+                    bool houseExist = false;
+                    foreach (HouseItem item in map.Houses)
+                        if (item.Name == house)
+                        {
+                            houseExist = true;
+                            break;
+                        }
+                    if (houseExist) _CurrentHouse.AlliesWith.Add(house);
+                }
+            }
+            catch
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void txbHouseAllies_Validated(object sender, EventArgs e)
+        {
+            UpdateHouseAlliance();
+        }
+        #endregion
+        #endregion
         #endregion
     }
 }

@@ -203,6 +203,21 @@
             this.btnDelTeam = new System.Windows.Forms.Button();
             this.label28 = new System.Windows.Forms.Label();
             this.tbpMiscs = new System.Windows.Forms.TabPage();
+            this.gpbHouses = new System.Windows.Forms.GroupBox();
+            this.olvHouse = new BrightIdeasSoftware.ObjectListView();
+            this.olvColHouseKey = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColHouseValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.LGCgpbHouseAllies = new System.Windows.Forms.GroupBox();
+            this.btnGoAllie = new System.Windows.Forms.Button();
+            this.btnGoEnemy = new System.Windows.Forms.Button();
+            this.lbxHouseEnemy = new System.Windows.Forms.ListBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.lbxHouseAllie = new System.Windows.Forms.ListBox();
+            this.txbHouseAllies = new System.Windows.Forms.TextBox();
+            this.btnDelHouse = new System.Windows.Forms.Button();
+            this.btnNewHouse = new System.Windows.Forms.Button();
+            this.lbxHouses = new System.Windows.Forms.ListBox();
             this.dtlvMiscs = new BrightIdeasSoftware.DataTreeListView();
             this.gpbLocalVar = new System.Windows.Forms.GroupBox();
             this.txbLocalName = new System.Windows.Forms.TextBox();
@@ -260,6 +275,9 @@
             this.gpbTeamTeam.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvTeamConfig)).BeginInit();
             this.tbpMiscs.SuspendLayout();
+            this.gpbHouses.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.olvHouse)).BeginInit();
+            this.LGCgpbHouseAllies.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtlvMiscs)).BeginInit();
             this.gpbLocalVar.SuspendLayout();
             this.gpbSearch.SuspendLayout();
@@ -2260,6 +2278,7 @@
             // tbpMiscs
             // 
             this.tbpMiscs.BackColor = System.Drawing.Color.Transparent;
+            this.tbpMiscs.Controls.Add(this.gpbHouses);
             this.tbpMiscs.Controls.Add(this.dtlvMiscs);
             this.tbpMiscs.Controls.Add(this.gpbLocalVar);
             this.tbpMiscs.Location = new System.Drawing.Point(4, 22);
@@ -2268,6 +2287,179 @@
             this.tbpMiscs.Size = new System.Drawing.Size(1142, 565);
             this.tbpMiscs.TabIndex = 2;
             this.tbpMiscs.Text = "LGCtbpMiscPage";
+            // 
+            // gpbHouses
+            // 
+            this.gpbHouses.Controls.Add(this.olvHouse);
+            this.gpbHouses.Controls.Add(this.LGCgpbHouseAllies);
+            this.gpbHouses.Controls.Add(this.btnDelHouse);
+            this.gpbHouses.Controls.Add(this.btnNewHouse);
+            this.gpbHouses.Controls.Add(this.lbxHouses);
+            this.gpbHouses.Location = new System.Drawing.Point(6, 6);
+            this.gpbHouses.Name = "gpbHouses";
+            this.gpbHouses.Size = new System.Drawing.Size(573, 379);
+            this.gpbHouses.TabIndex = 3;
+            this.gpbHouses.TabStop = false;
+            this.gpbHouses.Text = "LGCgpbHouses";
+            // 
+            // olvHouse
+            // 
+            this.olvHouse.AllColumns.Add(this.olvColHouseKey);
+            this.olvHouse.AllColumns.Add(this.olvColHouseValue);
+            this.olvHouse.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.SingleClickAlways;
+            this.olvHouse.CellEditUseWholeCell = false;
+            this.olvHouse.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColHouseKey,
+            this.olvColHouseValue});
+            this.olvHouse.Cursor = System.Windows.Forms.Cursors.Default;
+            this.olvHouse.FullRowSelect = true;
+            this.olvHouse.HideSelection = false;
+            this.olvHouse.Location = new System.Drawing.Point(187, 19);
+            this.olvHouse.Name = "olvHouse";
+            this.olvHouse.ShowGroups = false;
+            this.olvHouse.Size = new System.Drawing.Size(380, 178);
+            this.olvHouse.TabIndex = 4;
+            this.olvHouse.UseCompatibleStateImageBehavior = false;
+            this.olvHouse.View = System.Windows.Forms.View.Details;
+            this.olvHouse.CellEditFinished += new BrightIdeasSoftware.CellEditEventHandler(this.olvHouse_CellEditFinished);
+            this.olvHouse.CellEditFinishing += new BrightIdeasSoftware.CellEditEventHandler(this.olvHouse_CellEditFinishing);
+            this.olvHouse.CellEditStarting += new BrightIdeasSoftware.CellEditEventHandler(this.olvHouse_CellEditStarting);
+            // 
+            // olvColHouseKey
+            // 
+            this.olvColHouseKey.AspectName = "Value.ShowName";
+            this.olvColHouseKey.IsEditable = false;
+            this.olvColHouseKey.Sortable = false;
+            this.olvColHouseKey.Text = "LGColvColHouseKey";
+            this.olvColHouseKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColHouseKey.Width = 168;
+            // 
+            // olvColHouseValue
+            // 
+            this.olvColHouseValue.AspectName = "Value.Value";
+            this.olvColHouseValue.Sortable = false;
+            this.olvColHouseValue.Text = "LGColvColHouseValue";
+            this.olvColHouseValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColHouseValue.Width = 177;
+            // 
+            // LGCgpbHouseAllies
+            // 
+            this.LGCgpbHouseAllies.Controls.Add(this.btnGoAllie);
+            this.LGCgpbHouseAllies.Controls.Add(this.btnGoEnemy);
+            this.LGCgpbHouseAllies.Controls.Add(this.lbxHouseEnemy);
+            this.LGCgpbHouseAllies.Controls.Add(this.label24);
+            this.LGCgpbHouseAllies.Controls.Add(this.label23);
+            this.LGCgpbHouseAllies.Controls.Add(this.lbxHouseAllie);
+            this.LGCgpbHouseAllies.Controls.Add(this.txbHouseAllies);
+            this.LGCgpbHouseAllies.Location = new System.Drawing.Point(187, 194);
+            this.LGCgpbHouseAllies.Name = "LGCgpbHouseAllies";
+            this.LGCgpbHouseAllies.Size = new System.Drawing.Size(380, 179);
+            this.LGCgpbHouseAllies.TabIndex = 3;
+            this.LGCgpbHouseAllies.TabStop = false;
+            // 
+            // btnGoAllie
+            // 
+            this.btnGoAllie.Location = new System.Drawing.Point(157, 103);
+            this.btnGoAllie.Name = "btnGoAllie";
+            this.btnGoAllie.Size = new System.Drawing.Size(61, 23);
+            this.btnGoAllie.TabIndex = 6;
+            this.btnGoAllie.Text = "<-";
+            this.btnGoAllie.UseVisualStyleBackColor = true;
+            this.btnGoAllie.Click += new System.EventHandler(this.btnGoAllie_Click);
+            // 
+            // btnGoEnemy
+            // 
+            this.btnGoEnemy.Location = new System.Drawing.Point(157, 74);
+            this.btnGoEnemy.Name = "btnGoEnemy";
+            this.btnGoEnemy.Size = new System.Drawing.Size(61, 23);
+            this.btnGoEnemy.TabIndex = 5;
+            this.btnGoEnemy.Text = "->";
+            this.btnGoEnemy.UseVisualStyleBackColor = true;
+            this.btnGoEnemy.Click += new System.EventHandler(this.btnGoEnemy_Click);
+            // 
+            // lbxHouseEnemy
+            // 
+            this.lbxHouseEnemy.FormattingEnabled = true;
+            this.lbxHouseEnemy.HorizontalScrollbar = true;
+            this.lbxHouseEnemy.ItemHeight = 12;
+            this.lbxHouseEnemy.Location = new System.Drawing.Point(224, 32);
+            this.lbxHouseEnemy.Name = "lbxHouseEnemy";
+            this.lbxHouseEnemy.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lbxHouseEnemy.Size = new System.Drawing.Size(150, 112);
+            this.lbxHouseEnemy.TabIndex = 4;
+            this.lbxHouseEnemy.Enter += new System.EventHandler(this.lbxHouseEnemy_Enter);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label24.Location = new System.Drawing.Point(306, 17);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(71, 12);
+            this.label24.TabIndex = 3;
+            this.label24.Text = "LGClblEnemy";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label23.Location = new System.Drawing.Point(3, 17);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(71, 12);
+            this.label23.TabIndex = 2;
+            this.label23.Text = "LGClblAllie";
+            // 
+            // lbxHouseAllie
+            // 
+            this.lbxHouseAllie.FormattingEnabled = true;
+            this.lbxHouseAllie.HorizontalScrollbar = true;
+            this.lbxHouseAllie.ItemHeight = 12;
+            this.lbxHouseAllie.Location = new System.Drawing.Point(6, 32);
+            this.lbxHouseAllie.Name = "lbxHouseAllie";
+            this.lbxHouseAllie.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lbxHouseAllie.Size = new System.Drawing.Size(145, 112);
+            this.lbxHouseAllie.TabIndex = 1;
+            this.lbxHouseAllie.Enter += new System.EventHandler(this.lbxHouseAllie_Enter);
+            // 
+            // txbHouseAllies
+            // 
+            this.txbHouseAllies.Location = new System.Drawing.Point(6, 152);
+            this.txbHouseAllies.Name = "txbHouseAllies";
+            this.txbHouseAllies.Size = new System.Drawing.Size(368, 21);
+            this.txbHouseAllies.TabIndex = 0;
+            this.txbHouseAllies.Validating += new System.ComponentModel.CancelEventHandler(this.txbHouseAllies_Validating);
+            this.txbHouseAllies.Validated += new System.EventHandler(this.txbHouseAllies_Validated);
+            // 
+            // btnDelHouse
+            // 
+            this.btnDelHouse.Location = new System.Drawing.Point(99, 350);
+            this.btnDelHouse.Name = "btnDelHouse";
+            this.btnDelHouse.Size = new System.Drawing.Size(82, 23);
+            this.btnDelHouse.TabIndex = 2;
+            this.btnDelHouse.Text = "LGCbtnDelHouse";
+            this.btnDelHouse.UseVisualStyleBackColor = true;
+            this.btnDelHouse.Click += new System.EventHandler(this.btnDelHouse_Click);
+            // 
+            // btnNewHouse
+            // 
+            this.btnNewHouse.Location = new System.Drawing.Point(9, 350);
+            this.btnNewHouse.Name = "btnNewHouse";
+            this.btnNewHouse.Size = new System.Drawing.Size(82, 23);
+            this.btnNewHouse.TabIndex = 1;
+            this.btnNewHouse.Text = "LGCbtnNewHouse";
+            this.btnNewHouse.UseVisualStyleBackColor = true;
+            this.btnNewHouse.Click += new System.EventHandler(this.btnNewHouse_Click);
+            // 
+            // lbxHouses
+            // 
+            this.lbxHouses.FormattingEnabled = true;
+            this.lbxHouses.HorizontalScrollbar = true;
+            this.lbxHouses.ItemHeight = 12;
+            this.lbxHouses.Location = new System.Drawing.Point(9, 20);
+            this.lbxHouses.Name = "lbxHouses";
+            this.lbxHouses.Size = new System.Drawing.Size(172, 328);
+            this.lbxHouses.TabIndex = 0;
+            this.lbxHouses.SelectedIndexChanged += new System.EventHandler(this.lbxHouses_SelectedIndexChanged);
             // 
             // dtlvMiscs
             // 
@@ -2370,7 +2562,7 @@
             // ckbSuper
             // 
             this.ckbSuper.AutoSize = true;
-            this.ckbSuper.Location = new System.Drawing.Point(158, 179);
+            this.ckbSuper.Location = new System.Drawing.Point(144, 179);
             this.ckbSuper.Name = "ckbSuper";
             this.ckbSuper.Size = new System.Drawing.Size(90, 16);
             this.ckbSuper.TabIndex = 7;
@@ -2380,7 +2572,7 @@
             // ckbAnim
             // 
             this.ckbAnim.AutoSize = true;
-            this.ckbAnim.Location = new System.Drawing.Point(158, 157);
+            this.ckbAnim.Location = new System.Drawing.Point(144, 157);
             this.ckbAnim.Name = "ckbAnim";
             this.ckbAnim.Size = new System.Drawing.Size(84, 16);
             this.ckbAnim.TabIndex = 7;
@@ -2390,7 +2582,7 @@
             // ckbTheme
             // 
             this.ckbTheme.AutoSize = true;
-            this.ckbTheme.Location = new System.Drawing.Point(158, 135);
+            this.ckbTheme.Location = new System.Drawing.Point(144, 135);
             this.ckbTheme.Name = "ckbTheme";
             this.ckbTheme.Size = new System.Drawing.Size(78, 16);
             this.ckbTheme.TabIndex = 7;
@@ -2400,7 +2592,7 @@
             // ckbEva
             // 
             this.ckbEva.AutoSize = true;
-            this.ckbEva.Location = new System.Drawing.Point(158, 113);
+            this.ckbEva.Location = new System.Drawing.Point(144, 113);
             this.ckbEva.Name = "ckbEva";
             this.ckbEva.Size = new System.Drawing.Size(78, 16);
             this.ckbEva.TabIndex = 7;
@@ -2410,7 +2602,7 @@
             // ckbSound
             // 
             this.ckbSound.AutoSize = true;
-            this.ckbSound.Location = new System.Drawing.Point(158, 91);
+            this.ckbSound.Location = new System.Drawing.Point(144, 91);
             this.ckbSound.Name = "ckbSound";
             this.ckbSound.Size = new System.Drawing.Size(78, 16);
             this.ckbSound.TabIndex = 7;
@@ -2420,7 +2612,7 @@
             // ckbTechno
             // 
             this.ckbTechno.AutoSize = true;
-            this.ckbTechno.Location = new System.Drawing.Point(158, 69);
+            this.ckbTechno.Location = new System.Drawing.Point(144, 69);
             this.ckbTechno.Name = "ckbTechno";
             this.ckbTechno.Size = new System.Drawing.Size(96, 16);
             this.ckbTechno.TabIndex = 7;
@@ -2430,7 +2622,7 @@
             // ckbCsf
             // 
             this.ckbCsf.AutoSize = true;
-            this.ckbCsf.Location = new System.Drawing.Point(158, 47);
+            this.ckbCsf.Location = new System.Drawing.Point(144, 47);
             this.ckbCsf.Name = "ckbCsf";
             this.ckbCsf.Size = new System.Drawing.Size(78, 16);
             this.ckbCsf.TabIndex = 7;
@@ -2460,7 +2652,7 @@
             // ckbGlobal
             // 
             this.ckbGlobal.AutoSize = true;
-            this.ckbGlobal.Location = new System.Drawing.Point(158, 201);
+            this.ckbGlobal.Location = new System.Drawing.Point(144, 201);
             this.ckbGlobal.Name = "ckbGlobal";
             this.ckbGlobal.Size = new System.Drawing.Size(96, 16);
             this.ckbGlobal.TabIndex = 6;
@@ -2661,6 +2853,10 @@
             this.gpbTeamTeam.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvTeamConfig)).EndInit();
             this.tbpMiscs.ResumeLayout(false);
+            this.gpbHouses.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.olvHouse)).EndInit();
+            this.LGCgpbHouseAllies.ResumeLayout(false);
+            this.LGCgpbHouseAllies.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtlvMiscs)).EndInit();
             this.gpbLocalVar.ResumeLayout(false);
             this.gpbLocalVar.PerformLayout();
@@ -2880,5 +3076,20 @@
         private System.Windows.Forms.Label label22;
         private BrightIdeasSoftware.OLVColumn olvColTeamKey;
         private BrightIdeasSoftware.OLVColumn olvColTeamValue;
+        private System.Windows.Forms.GroupBox gpbHouses;
+        private System.Windows.Forms.ListBox lbxHouses;
+        private BrightIdeasSoftware.ObjectListView olvHouse;
+        private BrightIdeasSoftware.OLVColumn olvColHouseKey;
+        private BrightIdeasSoftware.OLVColumn olvColHouseValue;
+        private System.Windows.Forms.GroupBox LGCgpbHouseAllies;
+        private System.Windows.Forms.Button btnDelHouse;
+        private System.Windows.Forms.Button btnNewHouse;
+        private System.Windows.Forms.Button btnGoAllie;
+        private System.Windows.Forms.Button btnGoEnemy;
+        private System.Windows.Forms.ListBox lbxHouseEnemy;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.ListBox lbxHouseAllie;
+        private System.Windows.Forms.TextBox txbHouseAllies;
     }
 }
