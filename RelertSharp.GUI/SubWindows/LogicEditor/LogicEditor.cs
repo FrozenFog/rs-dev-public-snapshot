@@ -323,6 +323,9 @@ namespace RelertSharp.SubWindows.LogicEditor
             List<string> allies = _CurrentHouse.AlliesWith;
             try { allies.Remove(_CurrentHouse.Name); }
             catch { }
+            for (int i = allies.Count - 1; i >= 0; i--)
+                if (!map.Houses.ValueExists(map.Houses.GetHouse(allies[i])))  
+                    allies.RemoveAt(i);
             if (allies.Count > 0) displayAllies += ",";
             for (int i = 0; i < allies.Count - 1; i++)
                 displayAllies += (allies[i] + ",");

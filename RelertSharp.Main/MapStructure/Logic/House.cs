@@ -35,11 +35,17 @@ namespace RelertSharp.MapStructure.Logic
             }
             return null;
         }
+        public int NewIndex()
+        {
+            for (int i = 0; i < int.MaxValue; ++i)
+                if (!Exists(i.ToString())) return i;
+            return -1;
+        }
         #endregion
     }
 
 
-    public class HouseItem : TeamLogicItem
+    public class HouseItem : TeamLogicItem,IRegistable
     {
         private List<string> alliesWith;
         private Dictionary<string, INIPair> residual;
@@ -94,6 +100,7 @@ namespace RelertSharp.MapStructure.Logic
 
         #region Public Calls - HouseItem
         public List<BaseNode> BaseNodes { get; private set; } = new List<BaseNode>();
+        public string Index { get; set; }
         public int IQ { get; set; }
         public HouseEdges Edge { get; set; }
         public string ColorName { get; set; }

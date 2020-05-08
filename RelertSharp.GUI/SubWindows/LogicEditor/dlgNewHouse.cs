@@ -34,11 +34,11 @@ namespace RelertSharp.SubWindows.LogicEditor
             string Name = txbName.Text;
             if (GlobalVar.CurrentMapDocument.Map.Countries.GetCountry(Name) != null)
             {
-                MessageBox.Show("", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(DICT["LGCbtnHouseNewMsgboxMain"], DICT["LGCbtnHouseNewMsgboxTitle"], MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            Name.Replace(' ', '_');
+            Name = Name.Replace(' ', '_');
             CountryItem newCountry = new CountryItem();
             newCountry.Name = Name;
             newCountry.ID = Name;
@@ -48,6 +48,7 @@ namespace RelertSharp.SubWindows.LogicEditor
             newCountry.Suffix = GlobalVar.GlobalRules[cbbParent.Text]["Suffix"];
             newCountry.Prefix = GlobalVar.GlobalRules[cbbParent.Text]["Prefix"];
             newCountry.ColorName = GlobalVar.GlobalRules[cbbParent.Text]["Color"];
+            newCountry.Index = GlobalVar.CurrentMapDocument.Map.Countries.NewIndex().ToString();
 
             HouseItem newHouse = new HouseItem();
             newHouse.Name = Name + " House";
@@ -63,6 +64,7 @@ namespace RelertSharp.SubWindows.LogicEditor
             newHouse.PercentBuilt = 100D;
             newHouse.NodeCounts = 0;
             newHouse.GetToUnit = new HouseUnit(newHouse);
+            newHouse.Index = GlobalVar.CurrentMapDocument.Map.Houses.NewIndex().ToString();
 
             GlobalVar.CurrentMapDocument.Map.Countries[Name] = newCountry;
             GlobalVar.CurrentMapDocument.Map.Houses[newHouse.Name] = newHouse;

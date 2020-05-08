@@ -33,6 +33,12 @@ namespace RelertSharp.MapStructure.Logic
             }
             return null;
         }
+        public int NewIndex()
+        {
+            for (int i = 0; i < int.MaxValue; ++i)
+                if (!Exists(i.ToString())) return i;
+            return -1;
+        }
         #endregion
     }
 

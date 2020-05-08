@@ -230,7 +230,9 @@ namespace RelertSharp.MapStructure
 
             foreach (INIPair p in _houseList)
             {
-                Houses[p.Name] = new HouseItem(f.PopEnt(p.Value));
+                HouseItem item = new HouseItem(f.PopEnt(p.Value));
+                item.Index = p.Name;
+                Houses[p.Name] = item;
             }
             Countries = new CountryCollection();
             foreach (INIPair p in _countryList)

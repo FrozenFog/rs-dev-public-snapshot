@@ -1048,13 +1048,12 @@ namespace RelertSharp.SubWindows.LogicEditor
         private void btnDelHouse_Click(object sender, EventArgs e)
         {
             if (_CurrentHouse == null) return;
-            if (MessageBox.Show("Are your sure to remove this house?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show(DICT["LGCbtnHouseDelMsgboxMain"], DICT["LGCbtnHouseDelMsgboxTitle"], MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                map.Houses.Remove(_CurrentHouse.Name);
+                map.Countries.Remove(map.Countries.GetCountry(_CurrentHouse.Country).Index);
+                map.Houses.Remove(_CurrentHouse.Index);
                 int idx = lbxHouses.SelectedIndex;
                 RemoveAt(lbxHouses, idx, ref updatingLbxHousesList);
-                if (idx > 0) idx -= 1;
-                if (map.Houses.Count() > 0) lbxHouses.SelectedIndex = idx;
             }
                 
         }
