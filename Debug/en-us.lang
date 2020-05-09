@@ -42,6 +42,24 @@ RCalc=Calculate Relative Changes;
 ROrg=-Original File Name(Template Version)  : 
 RDst=-New File Name(New Version)            : 
 
+[Enums]
+AITriggerConditionType.ConditionTrue=Always
+AITriggerConditionType.EnemyHouseOwnsObj=Enemy owns objects...
+AITriggerConditionType.OwningHouseOwnsObj=House owns objects...
+AITriggerConditionType.EnemyHouseLowPower=Enemy low  power...
+AITriggerConditionType.EnemyHouseNoPower=Enemy no power...
+AITriggerConditionType.EnemyHouseHasMoneyOf=Enemy has money of...
+AITriggerConditionType.OwnerHouseIronCurtainChargeInPercentage=House iron curtain charge in percentage...
+AITriggerConditionType.OwnerHouseChronoChargeInPercentage=House chronosphere charge in percentage...
+AITriggerConditionType.NeutralOrCivOwnsObj=Neutral or Civilian owns objects...
+
+AITriggerConditionOperator.LessThan=<
+AITriggerConditionOperator.LessOrEqual=<=
+AITriggerConditionOperator.Equal==
+AITriggerConditionOperator.GreaterOrEqual=>=
+AITriggerConditionOperator.GreaterThan=>
+AITriggerConditionOperator.NotEqual=≠
+
 [Dialog-General]
 DLGAcc=Accept
 DLGCancel=Cancel
@@ -58,7 +76,8 @@ LGCDescRepeatGpb=Modifies all attached tags.
 LGCDescTagName=Right click to view all tags that applies this trigger.
 
 LGCtbpTrgPage=Triggers
-LGCtbpTeamPage=Teams
+LGCtbpTaskScriptPage=Taskforces & Scripts
+LGCtbpTeamPage=Teams & AI Triggers
 LGCtbpMiscPage=Miscellaneous
 
 LGCclhRegID=UID
@@ -103,6 +122,7 @@ LGClblScriptCurType=Type:
 LGClblScriptCurPara=Parameter:
 LGClblScriptDesc=Parameter description
 LGClblTeamList=Team list
+LGClblAIList=AI Trigger List
 LGClblHouseNewName=Name
 LGClblHouseNewParent=Parent country
 LGClblAllie=Allies
@@ -136,6 +156,9 @@ LGCbtnCopyScriptMem=Copy
 LGCbtnNewTeam=New
 LGCbtnDelTeam=Del
 LGCbtnCopyTeam=Copy
+LGCbtnNewAI=New
+LGCbtnDelAI=Del
+LGCbtnCopyAI=Copy
 LGCbtnNewHouse=New House
 LGCbtnDelHouse=Del House
 LGCbtnHouseDelMsgboxMain=Are your sure to remove this house?
@@ -180,7 +203,7 @@ LGCgpbTeamTaskCur=Current Taskforce
 LGCgpbTeamScript=Scripts
 LGCgpbTeamScriptCur=Current Script
 LGCgpbTeamTeam=Teams
-LGCgpbTeamTeamCur=Current Team
+LGCgpbTeamAI=AI Triggers
 LGCgpbHouses=Houses
 LGCgpbHouseAllies=Allies
 LGCgpbLocalVar=Local Variables
@@ -190,11 +213,32 @@ LGCrdbRep0=One time AND
 LGCrdbRep1=One time OR
 LGCrdbRep2=Repeating OR
 
-LGColvColumnSection=Property
-LGColvColumnKey=Item
-LGColvColumnValue=Value
-LGColvColHouseKey=Item
+LGColvColTeamKey=Property
+LGColvColTeamValue=Value
+LGColvColAIKey=Property
+LGColvColAIValue=Value
+LGColvColHouseKey=Property
 LGColvColHouseValue=Value
+
+LGColvRowAIName=Name
+LGColvRowAITeam1=Team 1
+LGColvRowAITeam2=Team 2
+LGColvRowAIOwner=Trigger House
+LGColvRowAICondObj=Condition Unit
+LGColvRowAITechLevel=TechLevel
+LGColvRowAISideIndex=Side
+LGColvRowAIStartingWeight=Starting Weight
+LGColvRowAIMinimumWeight=Minimum Weight
+LGColvRowAIMaximumWeight=Maximum Weight
+LGColvRowAIEnabled=IsEnabled
+LGColvRowAISkirmish=IsSkirmish
+LGColvRowAIEasy=IsEasy
+LGColvRowAINormal=IsNormal
+LGColvRowAIHard=IsHard
+LGColvRowAIOperNum=Condition num
+LGColvRowAIOperator=Operator
+LGColvRowAICondition=Condition
+LGColvRowAICondObj=Unit type
 
 LGColvRowHouseColorName=Color
 LGColvRowHouseCountry=Country

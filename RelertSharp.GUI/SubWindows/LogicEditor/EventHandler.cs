@@ -13,6 +13,7 @@ using RelertSharp.IniSystem;
 using static RelertSharp.Language;
 using BrightIdeasSoftware;
 using RelertSharp.SubWindows.LogicEditor;
+using System.CodeDom;
 
 namespace RelertSharp.SubWindows.LogicEditor
 {
@@ -109,6 +110,8 @@ namespace RelertSharp.SubWindows.LogicEditor
 
         private void btnNewEvent_Click(object sender, EventArgs e)
         {
+            if (lbxTriggerList.SelectedItem == null) return;
+            if (lbxEventList.Items.Count > 19) return;
             LogicItem ev = _CurrentTrigger.Events.NewEvent();
             lbxEventList.Items.Add(ev);
             lbxEventList.SelectedItem = ev;
@@ -119,6 +122,8 @@ namespace RelertSharp.SubWindows.LogicEditor
 
         private void btnNewAction_Click(object sender, EventArgs e)
         {
+            if (lbxTriggerList.SelectedItem == null) return;
+            if (lbxActionList.Items.Count > 19) return;
             string tid = txbTrgID.Text;
             LogicItem ac = map.Triggers[tid].Actions.NewAction();
             lbxActionList.Items.Add(ac);
@@ -178,12 +183,14 @@ namespace RelertSharp.SubWindows.LogicEditor
         }
         private void btnDeleteEvent_Click(object sender, EventArgs e)
         {
+            if (lbxEventList.SelectedItem == null) return;
             LogicItem ev = lbxEventList.SelectedItem as LogicItem;
             _CurrentTrigger.Events.Remove(ev);
             RemoveAt(lbxEventList, lbxEventList.SelectedIndex, ref updatingLbxEventList);
         }
         private void btnDeleteAction_Click(object sender, EventArgs e)
         {
+            if (lbxEventList.SelectedItem == null) return;
             LogicItem ac = lbxActionList.SelectedItem as LogicItem;
             _CurrentTrigger.Actions.Remove(ac);
             RemoveAt(lbxActionList, lbxActionList.SelectedIndex, ref updatingLbxActionList);
@@ -472,6 +479,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         private void btnAddTaskMem_Click(object sender, EventArgs e)
         {
             if (lbxTaskList.SelectedItem == null) return;
+            if (lvTaskforceUnits.Items.Count > 5) return;
             TechnoPair p = cbbTaskType.Items[0] as TechnoPair;
             TaskforceUnit u = _CurrentTaskforce.NewUnitItem(p.RegName, 1);
             UpdateTaskforceContent(_CurrentTaskforce.Members.Count - 1);
@@ -488,6 +496,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         private void btnCopyTaskMem_Click(object sender, EventArgs e)
         {
             if (lbxTaskList.SelectedItem == null || lvTaskforceUnits.SelectedIndices.Count < 1) return;
+            if (lvTaskforceUnits.Items.Count > 5) return;
             TechnoPair p = cbbTaskType.SelectedItem as TechnoPair;
             TaskforceUnit u = TaskforceUnit.FromListviewItem(lvTaskforceUnits.SelectedItems[0]);
             TaskforceUnit newunit = _CurrentTaskforce.NewUnitItem(u.RegName, u.UnitNum);
@@ -855,6 +864,233 @@ namespace RelertSharp.SubWindows.LogicEditor
         }
         #endregion
         #endregion
+        #region AI Trigger
+        #region btn
+        private void btnNewAI_Click(object sender, EventArgs e)
+        {
+            AITriggerItem item = map.NewAITrigger();
+            AddTo(lbxAIList, item, ref updatingLbxAIList);
+        }
+        private void btnDelAI_Click(object sender, EventArgs e)
+        {
+            if (lbxAIList.SelectedItem == null) return;
+            int index = lbxAIList.SelectedIndex;
+            AITriggerItem item = lbxAIList.SelectedItem as AITriggerItem;
+            map.RemoveAITrigger(item);
+            RemoveAt(lbxAIList, index, ref updatingLbxAIList);
+        }
+        private void btnCopyAI_Click(object sender, EventArgs e)
+        {
+            if (lbxAIList.SelectedItem == null) return;
+            AITriggerItem copied = _CurrentAITrigger.Copy(map.NewID);
+            map.AiTriggers[copied.ID] = copied;
+            AddTo(lbxAIList, copied, ref updatingLbxAIList);
+        }
+        #endregion
+        #region lbx
+        private bool updatingLbxAIList = false;
+        private void lbxAIList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbxAIList.SelectedItem == null) return;
+            if (!updatingLbxAIList)
+            {
+                olvAIConfig.ClearObjects();
+                _CurrentAITrigger.GetToUnit = new AITriggerUnit(_CurrentAITrigger);
+                olvAIConfig.SetObjects(_CurrentAITriggerUnit.Data);
+            }
+        }
+        #endregion
+        #region olv
+        private void olvAIConfig_CellEditStarting(object sender, BrightIdeasSoftware.CellEditEventArgs e)
+        {
+            KeyValuePair<string, AITriggerUnit.AITriggerShowItem> valuePair = (KeyValuePair<string, AITriggerUnit.AITriggerShowItem>)e.RowObject;
+            if (e.Control.GetType().FullName == "BrightIdeasSoftware.BooleanCellEditor2")
+            {
+                ComboBox boolCbb = new ComboBox();
+                boolCbb.FlatStyle = FlatStyle.Flat;
+                boolCbb.DropDownStyle = ComboBoxStyle.DropDownList;
+                boolCbb.Bounds = e.CellBounds;
+                boolCbb.Items.Add("False");
+                boolCbb.Items.Add("True");
+                boolCbb.SelectedIndex = ((bool)e.Value == false) ? 0 : 1;
+                e.Control = boolCbb;
+            }
+            else if (e.Control.GetType().FullName == "BrightIdeasSoftware.EnumCellEditor")
+            {
+                ComboBox enumCbb = new ComboBox();
+                enumCbb.FlatStyle = FlatStyle.Flat;
+                enumCbb.DropDownStyle = ComboBoxStyle.DropDownList;
+                
+                Type type;
+                switch (valuePair.Key)
+                {
+                    case "Operator":
+                        type = typeof(AITriggerConditionOperator);
+                        break;
+                    case "Condition":
+                    default:
+                        type = typeof(AITriggerConditionType);
+                        break;
+                }
+                StaticHelper.LoadToObjectCollection(enumCbb, type);
+                int idxE;
+                for (idxE = 0; idxE < enumCbb.Items.Count; idxE++)
+                    if ((EnumDisplayClass)(enumCbb.Items[idxE]) == (int)valuePair.Value.Value)
+                        break;
+                try { enumCbb.SelectedIndex = idxE; } catch { }
+                e.Control = enumCbb;
+            }
+            else if(e.Control.GetType().FullName== "BrightIdeasSoftware.FloatCellEditor")
+            {
+                FloatCellEditor cellEditors = (FloatCellEditor)e.Control;
+                if(valuePair.Value.Value.GetType()== typeof(int))
+                {
+                    cellEditors.DecimalPlaces = 0;
+                    cellEditors.Increment = 1;
+                }
+                else if (valuePair.Value.Value.GetType() == typeof(double))
+                {
+                    cellEditors.DecimalPlaces = 6;
+                    cellEditors.Increment = 0.1M;
+                    cellEditors.Minimum = 0;
+                    cellEditors.Maximum = 5000;
+                }
+            }
+            else
+            {
+                switch (valuePair.Key)
+                {
+                    case "Team1":
+                    case "Team2":
+                        ComboBox teamCbb = new ComboBox();
+                        teamCbb.FlatStyle = FlatStyle.Flat;
+                        teamCbb.DropDownStyle = ComboBoxStyle.DropDownList;
+                        teamCbb.Items.Add("<none>");
+                        teamCbb.Items.AddRange(map.Teams.ToArray());
+                        int idxT;
+                        if ((string)valuePair.Value.Value == "<none>") idxT = 0;
+                        else
+                        {
+                            for (idxT = 1; idxT < teamCbb.Items.Count; idxT++)
+                                if (((TeamItem)teamCbb.Items[idxT]).ID == (string)valuePair.Value.Value)
+                                    break;
+                            if (idxT == teamCbb.Items.Count) idxT = 0;
+                        }
+                        try { teamCbb.SelectedIndex = idxT; } catch { }
+                        Utils.Misc.AdjustComboBoxDropDownWidth(ref teamCbb);
+                        e.Control = teamCbb;
+                        break;
+                    case "Owner":
+                        ComboBox houseCbb = new ComboBox();
+                        houseCbb.FlatStyle = FlatStyle.Flat;
+                        houseCbb.DropDownStyle = ComboBoxStyle.DropDownList;
+                        houseCbb.Items.Add("<all>");
+                        houseCbb.Items.AddRange(map.Countries.ToArray());
+                        if ((string)valuePair.Value.Value == "<all>") houseCbb.SelectedIndex = 0;
+                        else
+                        {
+                            CountryItem country = map.Countries.GetCountry((string)valuePair.Value.Value);
+                            if (country == null) houseCbb.SelectedIndex = 0;
+                            else houseCbb.SelectedItem = country;
+                        }
+                        Utils.Misc.AdjustComboBoxDropDownWidth(ref houseCbb);
+                        e.Control = houseCbb;
+                        break;
+                    case "SideIndex":
+                        ComboBox sideCbb = new ComboBox();
+                        sideCbb.FlatStyle = FlatStyle.Flat;
+                        sideCbb.DropDownStyle = ComboBoxStyle.DropDownList;
+                        sideCbb.Items.Add("0 All");
+                        INIEntity iNIPairs = GlobalVar.GlobalConfig["SidesList"];
+                        foreach(INIPair pair in iNIPairs)
+                            sideCbb.Items.Add(pair.Name + " " + pair.Value);
+                        int idxS;
+                        for (idxS = 0; idxS < sideCbb.Items.Count; idxS++)
+                            if (idxS == (int)valuePair.Value.Value)
+                                break;
+                        try { sideCbb.SelectedIndex = idxS; } catch { }
+                        Utils.Misc.AdjustComboBoxDropDownWidth(ref sideCbb);
+                        e.Control = sideCbb;
+                        break;
+                    case "CondObj":
+                        ComboBox objCbb = new ComboBox();
+                        objCbb.FlatStyle = FlatStyle.Flat;
+                        objCbb.DropDownStyle = ComboBoxStyle.DropDown;
+                        List<TechnoPair> technoPairs = new List<TechnoPair>();
+                        technoPairs.AddRange(GlobalVar.GlobalRules.BuildingList);
+                        technoPairs.AddRange(GlobalVar.GlobalRules.InfantryList);
+                        technoPairs.AddRange(GlobalVar.GlobalRules.AircraftList);
+                        technoPairs.AddRange(GlobalVar.GlobalRules.VehicleList);
+                        foreach (TechnoPair techno in technoPairs)
+                            techno.ResetAbst(TechnoPair.AbstractType.CsfName, TechnoPair.IndexType.RegName);
+                        technoPairs.Add(TechnoPair.NonePair);
+                        StaticHelper.LoadToObjectCollection(objCbb, technoPairs.AsEnumerable());
+                        objCbb.SelectedIndex = technoPairs.FindIndex(p => p.RegName == (string)valuePair.Value.Value);
+                        if (objCbb.SelectedItem == null && objCbb.Items.Count > 0) objCbb.SelectedIndex = technoPairs.Count - 1;
+                        e.Control = objCbb;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            e.Control.Bounds = e.CellBounds;
+        }
+        private void olvAIConfig_CellEditFinishing(object sender, BrightIdeasSoftware.CellEditEventArgs e)
+        {
+            if (!e.Cancel)
+            {
+                KeyValuePair<string, AITriggerUnit.AITriggerShowItem> valuePair = (KeyValuePair<string, AITriggerUnit.AITriggerShowItem>)e.RowObject;
+                AITriggerUnit.AITriggerShowItem ret = new AITriggerUnit.AITriggerShowItem(valuePair.Value.ShowName, valuePair.Value.Value);
+                switch (valuePair.Key)
+                {
+                    case "Enabled":
+                    case "Skirmish":
+                    case "Easy":
+                    case "Normal":
+                    case "Hard":
+                        ret.Value = e.Control.Text == "True";
+                        break;
+                    case "Operator":
+                        ret.Value = (AITriggerConditionOperator)((EnumDisplayClass)((ComboBox)e.Control).SelectedItem).Value;
+                        break;
+                    case "Condition":
+                        ret.Value = (AITriggerConditionType)((EnumDisplayClass)((ComboBox)e.Control).SelectedItem).Value;
+                        break;
+                    case "OperNum":
+                    case "TechLevel":
+                    case "SideIndex":
+                        try { ret.Value = int.Parse(e.Control.Text); }
+                        catch { ret.Value = 0; }
+                        break;
+                    case "StartingWeight":
+                    case "MinimumWeight":
+                    case "MaximumWeight":
+                        try { ret.Value = double.Parse(e.Control.Text); }
+                        catch { ret.Value = 0D; }
+                        break;
+                    case "CondObj":
+                        ret.Value = ((TechnoPair)((ComboBox)e.Control).SelectedItem).RegName;
+                        break;
+                    case "Name":
+                    case "Team1":
+                    case "Team2":
+                    case "Owner":
+                    default:
+                        ret.Value = e.Control.Text;
+                        break;
+                }
+                _CurrentAITriggerUnit.Data[valuePair.Key] = ret;
+            }
+        }
+        private void olvAIConfig_CellEditFinished(object sender, BrightIdeasSoftware.CellEditEventArgs e)
+        {
+            olvAIConfig.ClearObjects();
+            olvAIConfig.AddObjects(_CurrentAITriggerUnit.Data);
+            _CurrentAITrigger.SetFromUnit(_CurrentAITriggerUnit);
+            UpdateAt(lbxAIList, _CurrentAITrigger, ref updatingLbxTeamList);
+        }
+        #endregion
+        #endregion
         #endregion
 
         #region Misc Page
@@ -925,6 +1161,7 @@ namespace RelertSharp.SubWindows.LogicEditor
             {
                 case "IQ":
                     ComboBox iqCbb = new ComboBox();
+                    iqCbb.FlatStyle = FlatStyle.Flat;
                     iqCbb.DropDownStyle = ComboBoxStyle.DropDownList;
                     iqCbb.Items.Add("0");
                     iqCbb.Items.Add("1");
@@ -938,14 +1175,19 @@ namespace RelertSharp.SubWindows.LogicEditor
                     break;
                 case "PlayerControl":
                     ComboBox boolCombobox = new ComboBox();
+                    boolCombobox.FlatStyle = FlatStyle.Flat;
                     boolCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
                     boolCombobox.Items.Add("False");
                     boolCombobox.Items.Add("True");
                     boolCombobox.SelectedIndex = (bool)keyValuePair.Value.Value ? 1 : 0;
                     e.Control = boolCombobox;
                     break;
+                case "Edge":
+                    ((ComboBox)e.Control).FlatStyle = FlatStyle.Flat;
+                    break;
                 case "Country":
                     ComboBox countryCbb = new ComboBox();
+                    countryCbb.FlatStyle = FlatStyle.Flat;
                     countryCbb.DropDownStyle = ComboBoxStyle.DropDownList;
                     StaticHelper.LoadToObjectCollection(countryCbb, map.Countries);
                     CountryItem countryItem = map.Countries.GetCountry((string)keyValuePair.Value.Value);
@@ -957,6 +1199,7 @@ namespace RelertSharp.SubWindows.LogicEditor
                     var iniPairs= GlobalVar.GlobalRules["Colors"].ToList();
                     foreach (INIPair pair in iniPairs) colorList.Add(pair.Name);
                     ComboBox colorCbb = new ComboBox();
+                    colorCbb.FlatStyle = FlatStyle.Flat;
                     colorCbb.DropDownStyle = ComboBoxStyle.DropDownList;
                     colorCbb.Items.AddRange(colorList.ToArray());
                     if (colorList.Exists(s => s == (string)keyValuePair.Value.Value))
@@ -1005,6 +1248,7 @@ namespace RelertSharp.SubWindows.LogicEditor
                     case "Credits":
                         try { ret.Value = int.Parse(e.Control.Text); }
                         catch { ret.Value = 0; }
+                        if ((int)ret.Value < 0) ret.Value = 0;
                         _CurrentHouseUnit.Data["Credits"] = ret;
                         break;
                     case "PercentBuilt":

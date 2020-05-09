@@ -44,6 +44,7 @@ namespace RelertSharp.SubWindows.LogicEditor
             LoadTaskforceList();
             LoadScriptList();
             LoadTeamList();
+            LoadAITrgList();
             LoadTrgHouseList();
             LoadLocalVariables();
             LoadHouseList();
@@ -106,14 +107,22 @@ namespace RelertSharp.SubWindows.LogicEditor
                 techno.ResetAbst(TechnoPair.AbstractType.CsfName, TechnoPair.IndexType.RegName);
             //technoPairs.Sort((x, y) => x.RegName.CompareTo(y.RegName));
             StaticHelper.LoadToObjectCollection(cbbTaskType, technoPairs);
+            if (lbxTaskList.Items.Count > 0) lbxTaskList.SelectedIndex = 0;
         }
         private void LoadScriptList()
         {
             StaticHelper.LoadToObjectCollection(lbxScriptList, map.Scripts);
+            if (lbxScriptList.Items.Count > 0) lbxScriptList.SelectedIndex = 0;
         }
         private void LoadTeamList()
         {
             StaticHelper.LoadToObjectCollection(lbxTeamList, map.Teams);
+            if (lbxTeamList.Items.Count > 0) lbxTeamList.SelectedIndex = 0;
+        }
+        private void LoadAITrgList()
+        {
+            StaticHelper.LoadToObjectCollection(lbxAIList, map.AiTriggers);
+            if (lbxAIList.Items.Count > 0) lbxAIList.SelectedIndex = 0;
         }
         private void LoadLocalVariables()
         {
@@ -590,6 +599,8 @@ namespace RelertSharp.SubWindows.LogicEditor
         private LogicItem _CurrentAction { get { return _CurrentTrigger.Actions[_CurrentBoxAction.idx]; } }
         private LogicItem _CurrentBoxAction { get { return lbxActionList.SelectedItem as LogicItem; } }
         private TagItem _CurrentTag { get { return map.Tags[cbbTagID.Text]; } }
+        private AITriggerItem _CurrentAITrigger { get { return lbxAIList.SelectedItem as AITriggerItem; } }
+        private AITriggerUnit _CurrentAITriggerUnit { get { return _CurrentAITrigger.GetToUnit; } set { _CurrentAITrigger.GetToUnit = value; } }
         private HouseItem _CurrentHouse { get { return lbxHouses.SelectedItem as HouseItem; } }
         private HouseUnit _CurrentHouseUnit { get { return _CurrentHouse.GetToUnit; } set { _CurrentHouse.GetToUnit = value; } }
         private SearchCollection _SearchResult { get; set; } = new SearchCollection();

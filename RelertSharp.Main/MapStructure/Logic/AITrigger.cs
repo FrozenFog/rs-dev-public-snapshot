@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.Common;
 using RelertSharp.Model;
+using RelertSharp.Utils;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Logic
@@ -20,6 +21,32 @@ namespace RelertSharp.MapStructure.Logic
         public AITriggerCollection() { }
         #endregion
 
+        #region Public Methods - AITriggerCollection
+        public AITriggerItem NewAITrigger(string id)
+        {
+            AITriggerItem item = new AITriggerItem();
+            item.ID = id;
+            item.Name = "New AI Trigger";
+            item.Team1ID = item.Team2ID = "<none>";
+            item.OwnerHouse = "<all>";
+            item.ConditionObjID = "<none>";
+            item.TechLevel = 0;
+            item.SideIndex = 0;
+            item.StartingWeight = 50D;
+            item.MinimumWeight = 30D;
+            item.MaximumWeight = 50D;
+            item.Enabled = item.IsForSkirmish = item.EasyOn = item.NormalOn = item.HardOn = true;
+            item.Comparator = new AITriggerComparator(@"0000000000000000000000000000000000000000000000000000000000000000");
+            item.ConditionType = AITriggerConditionType.ConditionTrue;
+            item.GetToUnit = new AITriggerUnit(item);
+            return item;
+        }
+        public bool Remove(string ID)
+        {
+            if (!localTriggers.ContainsKey(ID)) return false;
+            return localTriggers.Remove(ID);
+        }
+        #endregion
 
         #region Public Calls - AITriggerCollection
         public AITriggerItem this[string id]
@@ -85,11 +112,63 @@ namespace RelertSharp.MapStructure.Logic
             NormalOn = ParseBool(_args[16]);
             HardOn = ParseBool(_args[17]);
             Enabled = false;
+            GetToUnit = new AITriggerUnit(this);
         }
         #endregion
 
+        #region Public Methods - AITriggerItem
+        public AITriggerItem Copy(string newID)
+        {
+            AITriggerItem item = new AITriggerItem();
+            item.ID = newID;
+            item.name = name + " Clone";
+            item.team1id = team1id;
+            item.team2id = team2id;
+            item.ownerhouse = ownerhouse;
+            item.condObjID = condObjID;
+            item.tech = tech;
+            item.sideindex = sideindex;
+            item.startwg = startwg;
+            item.minwg = minwg; 
+            item.maxwg = maxwg;
+            item.enabled = enabled;
+            item.skirmish = skirmish;
+            item.hd = hd;
+            item.ez = ez;
+            item.nm = nm;
+            item.comparator = comparator;
+            item.condtype = condtype;
+            item.GetToUnit = new AITriggerUnit(item);
+            return item;
+        }
+        public void SetFromUnit(AITriggerUnit unit)
+        {
+            name = (string)unit.Data["Name"].Value;
+            team1id = (string)unit.Data["Team1"].Value;
+            team2id = (string)unit.Data["Team2"].Value;
+            ownerhouse = (string)unit.Data["Owner"].Value;
+            tech = (int)unit.Data["TechLevel"].Value;
+            sideindex = (int)unit.Data["SideIndex"].Value;
+            startwg = (double)unit.Data["StartingWeight"].Value;
+            minwg = (double)unit.Data["MinimumWeight"].Value;
+            maxwg = (double)unit.Data["MaximumWeight"].Value;
+            enabled = (bool)unit.Data["Enabled"].Value;
+            ez = (bool)unit.Data["Easy"].Value;
+            nm= (bool)unit.Data["Normal"].Value;
+            hd = (bool)unit.Data["Hard"].Value;
+            skirmish= (bool)unit.Data["Skirmish"].Value;
+            condObjID = (string)unit.Data["CondObj"].Value;
+            condtype = (AITriggerConditionType)unit.Data["Condition"].Value;
+            comparator.Num1 = (int)unit.Data["OperNum"].Value;
+            comparator.Operator = (AITriggerConditionOperator)unit.Data["Operator"].Value;
+        }
+        #endregion
 
         #region Public Calls - AITriggerItem
+        public override string ToString()
+        {
+            return ID + " " + Name;
+        }
         public bool Enabled
         {
             get { return enabled; }
@@ -182,9 +261,48 @@ namespace RelertSharp.MapStructure.Logic
             get { return hd; }
             set { SetProperty(ref hd, value); }
         }
+        public AITriggerUnit GetToUnit { get; set; }
         #endregion
     }
 
+
+    public class AITriggerUnit
+    {
+        public struct AITriggerShowItem
+        {
+            public string ShowName;
+            public object Value;
+            public AITriggerShowItem(string displayName,object value) { ShowName = displayName;Value = value; }
+        }
+
+        #region Ctor - AITriggerUnit
+        public AITriggerUnit(AITriggerItem item)
+        {
+            Data["Name"] = new AITriggerShowItem(Language.DICT["LGColvRowAIName"], item.Name);
+            Data["Team1"] = new AITriggerShowItem(Language.DICT["LGColvRowAITeam1"], item.Team1ID);
+            Data["Team2"] = new AITriggerShowItem(Language.DICT["LGColvRowAITeam2"], item.Team2ID);
+            Data["Owner"] = new AITriggerShowItem(Language.DICT["LGColvRowAIOwner"], item.OwnerHouse);
+            Data["TechLevel"] = new AITriggerShowItem(Language.DICT["LGColvRowAITechLevel"], item.TechLevel);
+            Data["SideIndex"]= new AITriggerShowItem(Language.DICT["LGColvRowAISideIndex"], item.SideIndex);
+            Data["StartingWeight"] = new AITriggerShowItem(Language.DICT["LGColvRowAIStartingWeight"], item.StartingWeight);
+            Data["MinimumWeight"] = new AITriggerShowItem(Language.DICT["LGColvRowAIMinimumWeight"], item.MinimumWeight);
+            Data["MaximumWeight"] = new AITriggerShowItem(Language.DICT["LGColvRowAIMaximumWeight"], item.MaximumWeight);
+            Data["Enabled"] = new AITriggerShowItem(Language.DICT["LGColvRowAIEnabled"], item.Enabled);
+            Data["Skirmish"] = new AITriggerShowItem(Language.DICT["LGColvRowAISkirmish"], item.IsForSkirmish);
+            Data["Easy"] = new AITriggerShowItem(Language.DICT["LGColvRowAIEasy"], item.EasyOn);
+            Data["Normal"] = new AITriggerShowItem(Language.DICT["LGColvRowAINormal"], item.NormalOn);
+            Data["Hard"] = new AITriggerShowItem(Language.DICT["LGColvRowAIHard"], item.HardOn);
+            Data["OperNum"] = new AITriggerShowItem(Language.DICT["LGColvRowAIOperNum"], item.Comparator.Num1);
+            Data["Operator"] = new AITriggerShowItem(Language.DICT["LGColvRowAIOperator"], item.Comparator.Operator);
+            Data["Condition"] = new AITriggerShowItem(Language.DICT["LGColvRowAICondition"], item.ConditionType);
+            Data["CondObj"] = new AITriggerShowItem(Language.DICT["LGColvRowAICondObj"], item.ConditionObjID);
+        }
+        #endregion
+
+        #region Public Calls - AITriggerUnit
+        public Dictionary<string, AITriggerShowItem> Data { get; set; } = new Dictionary<string, AITriggerShowItem>();
+        #endregion
+    }
 
     public class AITriggerComparator : BindableBase
     {
@@ -192,7 +310,7 @@ namespace RelertSharp.MapStructure.Logic
         private AITriggerConditionOperator oper;
 
 
-        #region Ctor AITriggerComparator
+        #region Ctor - AITriggerComparator
         public AITriggerComparator(string cmpString)
         {
             Num1 = FromLEByteString(cmpString.Substring(0, 8));
@@ -212,6 +330,7 @@ namespace RelertSharp.MapStructure.Logic
             get { return oper; }
             set { SetProperty(ref oper, value); }
         }
+        public string ToCmpString { get { return ToLEByteString(Num1) + ToLEByteString((int)Operator) + Zeros; } }
         public static string Zeros { get { return @"000000000000000000000000000000000000000000000000"; } }
         #endregion
     }

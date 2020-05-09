@@ -140,7 +140,7 @@
             this.tsmiTrgLstName = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiTrgLstIDName = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tbpTaskScriptPage = new System.Windows.Forms.TabPage();
             this.gpbTeamScript = new System.Windows.Forms.GroupBox();
             this.btnDelScript = new System.Windows.Forms.Button();
             this.btnNewScript = new System.Windows.Forms.Button();
@@ -188,6 +188,8 @@
             this.tbpTeams = new System.Windows.Forms.TabPage();
             this.gpbTeamAI = new System.Windows.Forms.GroupBox();
             this.olvAIConfig = new BrightIdeasSoftware.ObjectListView();
+            this.olvColAIKey = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColAIValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.lbxAIList = new System.Windows.Forms.ListBox();
             this.btnCopyAI = new System.Windows.Forms.Button();
             this.btnNewAI = new System.Windows.Forms.Button();
@@ -203,6 +205,7 @@
             this.btnDelTeam = new System.Windows.Forms.Button();
             this.label28 = new System.Windows.Forms.Label();
             this.tbpMiscs = new System.Windows.Forms.TabPage();
+            this.gpbMap = new System.Windows.Forms.GroupBox();
             this.gpbHouses = new System.Windows.Forms.GroupBox();
             this.olvHouse = new BrightIdeasSoftware.ObjectListView();
             this.olvColHouseKey = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -218,7 +221,6 @@
             this.btnDelHouse = new System.Windows.Forms.Button();
             this.btnNewHouse = new System.Windows.Forms.Button();
             this.lbxHouses = new System.Windows.Forms.ListBox();
-            this.dtlvMiscs = new BrightIdeasSoftware.DataTreeListView();
             this.gpbLocalVar = new System.Windows.Forms.GroupBox();
             this.txbLocalName = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
@@ -264,7 +266,7 @@
             this.gpbRepeat.SuspendLayout();
             this.cmsEditTemplate.SuspendLayout();
             this.cmsTriggerList.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tbpTaskScriptPage.SuspendLayout();
             this.gpbTeamScript.SuspendLayout();
             this.gpbTeamScriptCur.SuspendLayout();
             this.gpbTeamTask.SuspendLayout();
@@ -278,7 +280,6 @@
             this.gpbHouses.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvHouse)).BeginInit();
             this.LGCgpbHouseAllies.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dtlvMiscs)).BeginInit();
             this.gpbLocalVar.SuspendLayout();
             this.gpbSearch.SuspendLayout();
             this.SuspendLayout();
@@ -288,7 +289,7 @@
             this.tbcMain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tbcMain.Controls.Add(this.tbpTriggers);
-            this.tbcMain.Controls.Add(this.tabPage1);
+            this.tbcMain.Controls.Add(this.tbpTaskScriptPage);
             this.tbcMain.Controls.Add(this.tbpTeams);
             this.tbcMain.Controls.Add(this.tbpMiscs);
             this.tbcMain.Location = new System.Drawing.Point(12, 33);
@@ -1569,18 +1570,18 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "LGClblTrgList";
             // 
-            // tabPage1
+            // tbpTaskScriptPage
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage1.Controls.Add(this.gpbTeamScript);
-            this.tabPage1.Controls.Add(this.gpbTeamTask);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage1.Size = new System.Drawing.Size(1142, 565);
-            this.tabPage1.TabIndex = 3;
-            this.tabPage1.Text = "tabPage1";
+            this.tbpTaskScriptPage.BackColor = System.Drawing.Color.Transparent;
+            this.tbpTaskScriptPage.Controls.Add(this.gpbTeamScript);
+            this.tbpTaskScriptPage.Controls.Add(this.gpbTeamTask);
+            this.tbpTaskScriptPage.Location = new System.Drawing.Point(4, 22);
+            this.tbpTaskScriptPage.Margin = new System.Windows.Forms.Padding(2);
+            this.tbpTaskScriptPage.Name = "tbpTaskScriptPage";
+            this.tbpTaskScriptPage.Padding = new System.Windows.Forms.Padding(2);
+            this.tbpTaskScriptPage.Size = new System.Drawing.Size(1142, 565);
+            this.tbpTaskScriptPage.TabIndex = 3;
+            this.tbpTaskScriptPage.Text = "LGCtbpTaskScriptPage";
             // 
             // gpbTeamScript
             // 
@@ -2103,16 +2104,44 @@
             // 
             // olvAIConfig
             // 
+            this.olvAIConfig.AllColumns.Add(this.olvColAIKey);
+            this.olvAIConfig.AllColumns.Add(this.olvColAIValue);
+            this.olvAIConfig.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.SingleClickAlways;
             this.olvAIConfig.CellEditUseWholeCell = false;
+            this.olvAIConfig.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColAIKey,
+            this.olvColAIValue});
             this.olvAIConfig.Cursor = System.Windows.Forms.Cursors.Default;
+            this.olvAIConfig.FullRowSelect = true;
+            this.olvAIConfig.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.olvAIConfig.HideSelection = false;
             this.olvAIConfig.Location = new System.Drawing.Point(253, 14);
             this.olvAIConfig.Margin = new System.Windows.Forms.Padding(2);
+            this.olvAIConfig.MultiSelect = false;
             this.olvAIConfig.Name = "olvAIConfig";
+            this.olvAIConfig.ShowGroups = false;
             this.olvAIConfig.Size = new System.Drawing.Size(309, 539);
             this.olvAIConfig.TabIndex = 0;
             this.olvAIConfig.UseCompatibleStateImageBehavior = false;
             this.olvAIConfig.View = System.Windows.Forms.View.Details;
+            this.olvAIConfig.CellEditFinished += new BrightIdeasSoftware.CellEditEventHandler(this.olvAIConfig_CellEditFinished);
+            this.olvAIConfig.CellEditFinishing += new BrightIdeasSoftware.CellEditEventHandler(this.olvAIConfig_CellEditFinishing);
+            this.olvAIConfig.CellEditStarting += new BrightIdeasSoftware.CellEditEventHandler(this.olvAIConfig_CellEditStarting);
+            // 
+            // olvColAIKey
+            // 
+            this.olvColAIKey.AspectName = "Value.ShowName";
+            this.olvColAIKey.IsEditable = false;
+            this.olvColAIKey.Text = "LGColvColAIKey";
+            this.olvColAIKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColAIKey.Width = 133;
+            // 
+            // olvColAIValue
+            // 
+            this.olvColAIValue.AspectName = "Value.Value";
+            this.olvColAIValue.Text = "LGColvColAIValue";
+            this.olvColAIValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColAIValue.Width = 152;
             // 
             // lbxAIList
             // 
@@ -2123,6 +2152,7 @@
             this.lbxAIList.Name = "lbxAIList";
             this.lbxAIList.Size = new System.Drawing.Size(247, 496);
             this.lbxAIList.TabIndex = 6;
+            this.lbxAIList.SelectedIndexChanged += new System.EventHandler(this.lbxAIList_SelectedIndexChanged);
             // 
             // btnCopyAI
             // 
@@ -2133,16 +2163,18 @@
             this.btnCopyAI.TabIndex = 5;
             this.btnCopyAI.Text = "LGCbtnCopyAI";
             this.btnCopyAI.UseVisualStyleBackColor = true;
+            this.btnCopyAI.Click += new System.EventHandler(this.btnCopyAI_Click);
             // 
             // btnNewAI
             // 
-            this.btnNewAI.Location = new System.Drawing.Point(6, 530);
+            this.btnNewAI.Location = new System.Drawing.Point(6, 531);
             this.btnNewAI.Margin = new System.Windows.Forms.Padding(2);
             this.btnNewAI.Name = "btnNewAI";
             this.btnNewAI.Size = new System.Drawing.Size(77, 23);
             this.btnNewAI.TabIndex = 3;
             this.btnNewAI.Text = "LGCbtnNewAI";
             this.btnNewAI.UseVisualStyleBackColor = true;
+            this.btnNewAI.Click += new System.EventHandler(this.btnNewAI_Click);
             // 
             // btnDelAI
             // 
@@ -2153,6 +2185,7 @@
             this.btnDelAI.TabIndex = 4;
             this.btnDelAI.Text = "LGCbtnDelAI";
             this.btnDelAI.UseVisualStyleBackColor = true;
+            this.btnDelAI.Click += new System.EventHandler(this.btnDelAI_Click);
             // 
             // label22
             // 
@@ -2212,12 +2245,14 @@
             this.olvColTeamKey.AspectName = "Value.ShowName";
             this.olvColTeamKey.IsEditable = false;
             this.olvColTeamKey.Text = "LGColvColTeamKey";
+            this.olvColTeamKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.olvColTeamKey.Width = 116;
             // 
             // olvColTeamValue
             // 
             this.olvColTeamValue.AspectName = "Value.Value";
             this.olvColTeamValue.Text = "LGColvColTeamValue";
+            this.olvColTeamValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.olvColTeamValue.Width = 165;
             // 
             // lbxTeamList
@@ -2278,8 +2313,8 @@
             // tbpMiscs
             // 
             this.tbpMiscs.BackColor = System.Drawing.Color.Transparent;
+            this.tbpMiscs.Controls.Add(this.gpbMap);
             this.tbpMiscs.Controls.Add(this.gpbHouses);
-            this.tbpMiscs.Controls.Add(this.dtlvMiscs);
             this.tbpMiscs.Controls.Add(this.gpbLocalVar);
             this.tbpMiscs.Location = new System.Drawing.Point(4, 22);
             this.tbpMiscs.Name = "tbpMiscs";
@@ -2287,6 +2322,15 @@
             this.tbpMiscs.Size = new System.Drawing.Size(1142, 565);
             this.tbpMiscs.TabIndex = 2;
             this.tbpMiscs.Text = "LGCtbpMiscPage";
+            // 
+            // gpbMap
+            // 
+            this.gpbMap.Location = new System.Drawing.Point(592, 7);
+            this.gpbMap.Name = "gpbMap";
+            this.gpbMap.Size = new System.Drawing.Size(544, 250);
+            this.gpbMap.TabIndex = 4;
+            this.gpbMap.TabStop = false;
+            this.gpbMap.Text = "LGCgpbMap";
             // 
             // gpbHouses
             // 
@@ -2297,7 +2341,7 @@
             this.gpbHouses.Controls.Add(this.lbxHouses);
             this.gpbHouses.Location = new System.Drawing.Point(6, 6);
             this.gpbHouses.Name = "gpbHouses";
-            this.gpbHouses.Size = new System.Drawing.Size(573, 379);
+            this.gpbHouses.Size = new System.Drawing.Size(580, 379);
             this.gpbHouses.TabIndex = 3;
             this.gpbHouses.TabStop = false;
             this.gpbHouses.Text = "LGCgpbHouses";
@@ -2313,11 +2357,13 @@
             this.olvColHouseValue});
             this.olvHouse.Cursor = System.Windows.Forms.Cursors.Default;
             this.olvHouse.FullRowSelect = true;
+            this.olvHouse.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.olvHouse.HideSelection = false;
             this.olvHouse.Location = new System.Drawing.Point(187, 19);
+            this.olvHouse.MultiSelect = false;
             this.olvHouse.Name = "olvHouse";
             this.olvHouse.ShowGroups = false;
-            this.olvHouse.Size = new System.Drawing.Size(380, 178);
+            this.olvHouse.Size = new System.Drawing.Size(384, 178);
             this.olvHouse.TabIndex = 4;
             this.olvHouse.UseCompatibleStateImageBehavior = false;
             this.olvHouse.View = System.Windows.Forms.View.Details;
@@ -2353,7 +2399,7 @@
             this.LGCgpbHouseAllies.Controls.Add(this.txbHouseAllies);
             this.LGCgpbHouseAllies.Location = new System.Drawing.Point(187, 194);
             this.LGCgpbHouseAllies.Name = "LGCgpbHouseAllies";
-            this.LGCgpbHouseAllies.Size = new System.Drawing.Size(380, 179);
+            this.LGCgpbHouseAllies.Size = new System.Drawing.Size(387, 179);
             this.LGCgpbHouseAllies.TabIndex = 3;
             this.LGCgpbHouseAllies.TabStop = false;
             // 
@@ -2385,7 +2431,7 @@
             this.lbxHouseEnemy.Location = new System.Drawing.Point(224, 32);
             this.lbxHouseEnemy.Name = "lbxHouseEnemy";
             this.lbxHouseEnemy.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbxHouseEnemy.Size = new System.Drawing.Size(150, 112);
+            this.lbxHouseEnemy.Size = new System.Drawing.Size(157, 112);
             this.lbxHouseEnemy.TabIndex = 4;
             this.lbxHouseEnemy.Enter += new System.EventHandler(this.lbxHouseEnemy_Enter);
             // 
@@ -2393,7 +2439,7 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Dock = System.Windows.Forms.DockStyle.Right;
-            this.label24.Location = new System.Drawing.Point(306, 17);
+            this.label24.Location = new System.Drawing.Point(313, 17);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(71, 12);
             this.label24.TabIndex = 3;
@@ -2425,7 +2471,7 @@
             // 
             this.txbHouseAllies.Location = new System.Drawing.Point(6, 152);
             this.txbHouseAllies.Name = "txbHouseAllies";
-            this.txbHouseAllies.Size = new System.Drawing.Size(368, 21);
+            this.txbHouseAllies.Size = new System.Drawing.Size(375, 21);
             this.txbHouseAllies.TabIndex = 0;
             this.txbHouseAllies.Validating += new System.ComponentModel.CancelEventHandler(this.txbHouseAllies_Validating);
             this.txbHouseAllies.Validated += new System.EventHandler(this.txbHouseAllies_Validated);
@@ -2460,21 +2506,6 @@
             this.lbxHouses.Size = new System.Drawing.Size(172, 328);
             this.lbxHouses.TabIndex = 0;
             this.lbxHouses.SelectedIndexChanged += new System.EventHandler(this.lbxHouses_SelectedIndexChanged);
-            // 
-            // dtlvMiscs
-            // 
-            this.dtlvMiscs.CellEditUseWholeCell = false;
-            this.dtlvMiscs.DataSource = null;
-            this.dtlvMiscs.HideSelection = false;
-            this.dtlvMiscs.Location = new System.Drawing.Point(585, 2);
-            this.dtlvMiscs.Name = "dtlvMiscs";
-            this.dtlvMiscs.RootKeyValueString = "";
-            this.dtlvMiscs.ShowGroups = false;
-            this.dtlvMiscs.Size = new System.Drawing.Size(554, 553);
-            this.dtlvMiscs.TabIndex = 2;
-            this.dtlvMiscs.UseCompatibleStateImageBehavior = false;
-            this.dtlvMiscs.View = System.Windows.Forms.View.Details;
-            this.dtlvMiscs.VirtualMode = true;
             // 
             // gpbLocalVar
             // 
@@ -2836,7 +2867,7 @@
             this.gpbRepeat.PerformLayout();
             this.cmsEditTemplate.ResumeLayout(false);
             this.cmsTriggerList.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.tbpTaskScriptPage.ResumeLayout(false);
             this.gpbTeamScript.ResumeLayout(false);
             this.gpbTeamScript.PerformLayout();
             this.gpbTeamScriptCur.ResumeLayout(false);
@@ -2857,7 +2888,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.olvHouse)).EndInit();
             this.LGCgpbHouseAllies.ResumeLayout(false);
             this.LGCgpbHouseAllies.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dtlvMiscs)).EndInit();
             this.gpbLocalVar.ResumeLayout(false);
             this.gpbLocalVar.PerformLayout();
             this.gpbSearch.ResumeLayout(false);
@@ -3019,10 +3049,9 @@
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Button btnNewLocalVar;
         private System.Windows.Forms.CheckedListBox chklbxLocalVar;
-        private BrightIdeasSoftware.DataTreeListView dtlvMiscs;
         private System.Windows.Forms.ComboBox cbbTagID;
         private System.Windows.Forms.ListBox lbxTeamList;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tbpTaskScriptPage;
         private System.Windows.Forms.GroupBox gpbTaskDetial;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Button btnCopyTaskforce;
@@ -3091,5 +3120,8 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.ListBox lbxHouseAllie;
         private System.Windows.Forms.TextBox txbHouseAllies;
+        private System.Windows.Forms.GroupBox gpbMap;
+        private BrightIdeasSoftware.OLVColumn olvColAIKey;
+        private BrightIdeasSoftware.OLVColumn olvColAIValue;
     }
 }

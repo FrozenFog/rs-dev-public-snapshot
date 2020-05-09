@@ -100,6 +100,16 @@ namespace RelertSharp.MapStructure
             Teams.Remove(item.ID);
             DelID(item.ID);
         }
+        public AITriggerItem NewAITrigger()
+        {
+            AITriggerItem t = AiTriggers.NewAITrigger(NewID);
+            return t;
+        }
+        public void RemoveAITrigger(AITriggerItem item)
+        {
+            AiTriggers.Remove(item.ID);
+            DelID(item.ID);
+        }
         #endregion
 
 

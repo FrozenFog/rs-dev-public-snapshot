@@ -30,14 +30,14 @@ namespace RelertSharp.SubWindows.INIEditor
 
 
         #region Ctor - INIEditor
-        public INIEditor(Map m)
+        public INIEditor()
         {
             InitializeComponent();
             SetLanguage();
-            file = m;
-            sections = m.IniResidue;
-            sections.Add("Basic", m.Info.BasicResidue);
-            sections.Add("SpecialFlags", m.Info.SpecialFlagsResidue);
+            file = GlobalVar.CurrentMapDocument.Map;
+            sections = file.IniResidue;
+            sections.Add("Basic", file.Info.BasicResidue);
+            sections.Add("SpecialFlags", file.Info.SpecialFlagsResidue);
             osections = DeepCopy(sections) as Dictionary<string, INIEntity>;
             
             bdsSectionL = sections.Keys.ToList();

@@ -32,6 +32,7 @@ namespace RelertSharp.SubWindows.LogicEditor
         private void btnHouseNewConfirm_Click(object sender, EventArgs e)
         {
             string Name = txbName.Text;
+            if (string.IsNullOrWhiteSpace(Name)) return;
             if (GlobalVar.CurrentMapDocument.Map.Countries.GetCountry(Name) != null)
             {
                 MessageBox.Show(DICT["LGCbtnHouseNewMsgboxMain"], DICT["LGCbtnHouseNewMsgboxTitle"], MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -49,6 +49,7 @@ namespace RelertSharp.SubWindows.INIEditor
             searchList = bdsSectionL.FindAll(s => s.Contains(txbSectionSearch.Text.Trim()));
             bdsSection.DataSource = null;
             bdsSection.DataSource = searchList;
+            if (searchList.Count > 0) lbxSectionList.SelectedIndex = 0;
         }
         
         private void btnNewSection_Click(object sender, EventArgs e)
