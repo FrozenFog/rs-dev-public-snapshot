@@ -31,6 +31,11 @@ namespace RelertSharp.GUI.Model
             Waypoints = 1 << 9,
             CellTags = 1 << 10,
         }
+        public enum SelectingBoxMode
+        {
+            ClientRectangle = 1,
+            IsometricRectangle = 2
+        }
 
 
         #region Ctor - MainWindowDataModel
@@ -158,6 +163,7 @@ namespace RelertSharp.GUI.Model
 
         #region Public Calls - MainWindowDataModel
         public SelectingFlag SelectingFlags { get; set; } = SelectingFlag.Units | SelectingFlag.Infantries | SelectingFlag.Buildings | SelectingFlag.Terrains | SelectingFlag.Overlays;
+        public SelectingBoxMode SelectingBoxFlag { get; set; } = SelectingBoxMode.ClientRectangle;
         public LightningItem LightningItem { get; set; }
         public List<InfantryItem> Infantries { get; private set; } = new List<InfantryItem>();
         public List<UnitItem> Units { get; private set; } = new List<UnitItem>();

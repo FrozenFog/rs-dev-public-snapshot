@@ -219,6 +219,16 @@ namespace RelertSharp.DrawingEngine
             #endregion
 
 
+            #region ViewPort
+            public void ResetSelectingRectangle()
+            {
+                foreach (int line in RectangleLines)
+                {
+                    if (line != 0) CppExtern.ObjectUtils.RemoveObjectFromScene(line);
+                }
+                RectangleLines.Clear();
+            }
+            #endregion
             #endregion
 
 
@@ -270,6 +280,7 @@ namespace RelertSharp.DrawingEngine
             public IEnumerable<PresentMisc> MiscWithoutSmudges { get { return Overlays.Values.Concat(Terrains.Values); } }
             public IEnumerable<IPresentBase> OneCellObjects { get { return Units.Values.Concat<IPresentBase>(Infantries.Values).Concat(Overlays.Values).Concat(Terrains.Values); } }
             public IEnumerable<PresentMisc> LogicObjects { get { return Celltags.Values.Concat(Waypoints.Values); } }
+            public List<int> RectangleLines { get; private set; } = new List<int>();
             #endregion
         }
 

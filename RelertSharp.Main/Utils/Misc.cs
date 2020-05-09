@@ -345,6 +345,12 @@ namespace RelertSharp.Utils
             tileX = (pos.X + pos.Y + 2) / 2;
             tileY = (2 * mapWidth + pos.Y - pos.X) / 2;
         }
+        public static void Swap<T>(ref T src1, ref T src2) where T : struct
+        {
+            T tmp = src1;
+            src1 = src2;
+            src2 = tmp;
+        }
     }
 
 }

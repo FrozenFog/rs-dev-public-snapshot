@@ -7,12 +7,40 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.Common
 {
-    public class Square2D : IEnumerable
+    public class Square2D : IEnumerable<I2dLocateable>
     {
         private I2dLocateable src;
         private int x, y;
         public Square2D(I2dLocateable pos, int lenX, int lenY) { src = pos;x = lenX;y = lenY; }
-        public IEnumerator GetEnumerator() { return new Square2DEnumerator(src, x, y); }
+        public Square2D(I2dLocateable up, I2dLocateable down)
+        {
+            if (up.X >= down.X && up.Y >= down.Y)
+            {
+                src = down;
+                x = up.X - down.X + 1;
+                y = up.Y - down.Y + 1;
+            }
+            else if (up.X <= down.X && up.Y >= down.Y)
+            {
+                src = new Pnt(up.X, down.Y);
+                x = down.X - up.X + 1;
+                y = up.Y - down.Y + 1;
+            }
+            else if (up.X >= down.X && up.Y <= down.Y)
+            {
+                src = new Pnt(down.X, up.Y);
+                x = up.X - down.X + 1;
+                y = down.Y - up.Y + 1;
+            }
+            else
+            {
+                src = up;
+                x = down.X - up.X + 1;
+                y = down.Y - up.Y + 1;
+            }
+        }
+        public IEnumerator<I2dLocateable> GetEnumerator() { return new Square2DEnumerator(src, x, y); }
+        IEnumerator IEnumerable.GetEnumerator() { return new Square2DEnumerator(src, x, y); }
     }
 
 

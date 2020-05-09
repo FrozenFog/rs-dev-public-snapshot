@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Collections.Generic;
 using RelertSharp.MapStructure;
 using RelertSharp.Common;
 using static RelertSharp.Utils.Misc;
@@ -66,6 +67,37 @@ namespace RelertSharp.DrawingEngine
             }
             return false;
         }
+        public void DrawSelectingRectangle(Pnt begin, Pnt end, bool isIsometric)
+        {
+            Buffer.Scenes.ResetSelectingRectangle();
+            Vec3 p1 = new Vec3(), p2 = new Vec3(), p3 = new Vec3(), p4 = new Vec3();
+            if (isIsometric)
+            {
+                CppExtern.Scene.ClientPositionToScenePosition(begin, ref p1);
+                CppExtern.Scene.ClientPositionToScenePosition(end, ref p3);
+                p2 = new Vec3(p3.X, p1.Y, 0);
+                p4 = new Vec3(p1.X, p3.Y, 0);
+            }
+            else
+            {
+                CppExtern.Scene.ClientPositionToScenePosition(begin, ref p1);
+                CppExtern.Scene.ClientPositionToScenePosition(end, ref p3);
+                Pnt tmp1 = new Pnt(begin.X, end.Y);
+                Pnt tmp2 = new Pnt(end.X, begin.Y);
+                CppExtern.Scene.ClientPositionToScenePosition(tmp1, ref p2);
+                CppExtern.Scene.ClientPositionToScenePosition(tmp2, ref p4);
+            }
+            p1 += 20 * _NormTileVec;
+            p2 += 20 * _NormTileVec;
+            p3 += 20 * _NormTileVec;
+            p4 += 20 * _NormTileVec;
+            DrawRectangleLine(p1, p2, p3, p4, _white, Buffer.Scenes.RectangleLines);
+            CppExtern.Scene.PresentAllObject();
+        }
+        public void ReleaseDrawingRectangle()
+        {
+            Buffer.Scenes.ResetSelectingRectangle();
+        }
         public void MoveTo(I3dLocateable pos)
         {
             CppExtern.Scene.SetFocusOnScene(ToVec3Iso(pos));
@@ -86,6 +118,16 @@ namespace RelertSharp.DrawingEngine
             CppExtern.Scene.MoveFocusOnScreen(delta.X * 1.2f, delta.Y * 1.2f);
             SetMinimapClientPos();
             Refresh();
+        }
+
+
+        private void DrawRectangleLine(Vec3 p1, Vec3 p2, Vec3 p3, Vec3 p4, uint color, List<int> dest)
+        {
+            dest.Clear();
+            dest.Add(CppExtern.ObjectUtils.CreateLineObjectAtScene(p1, p2, color, color));
+            dest.Add(CppExtern.ObjectUtils.CreateLineObjectAtScene(p2, p3, color, color));
+            dest.Add(CppExtern.ObjectUtils.CreateLineObjectAtScene(p3, p4, color, color));
+            dest.Add(CppExtern.ObjectUtils.CreateLineObjectAtScene(p4, p1, color, color));
         }
         private Vec3 ScenePosToCoord(Vec3 px)
         {

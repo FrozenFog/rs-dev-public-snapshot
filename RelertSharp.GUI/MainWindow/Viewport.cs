@@ -33,12 +33,28 @@ namespace RelertSharp.GUI
                 isSelecting = true;
             }
         }
+        private void DrawSelectingBoxOnScene(MouseEventArgs now)
+        {
+            if (isSelecting)
+            {
+                GlobalVar.Engine.DrawSelectingRectangle(Pnt.FromPoint(selectorBoxLT), Pnt.FromPoint(now.Location), Current.SelectingBoxFlag == MainWindowDataModel.SelectingBoxMode.IsometricRectangle);
+            }
+        }
         private void SelectSceneItemsInsideBox(MouseEventArgs releasePoint)
         {
             if (drew && isSelecting)
             {
+                GlobalVar.Engine.ReleaseDrawingRectangle();
                 var mode = Current.SelectingFlags;
-                foreach (I2dLocateable pos in new SceneSquare2D(selectorBoxLT, releasePoint.Location, map.Info.Size.Width))
+                IEnumerable<I2dLocateable> iter;
+                if (Current.SelectingBoxFlag == MainWindowDataModel.SelectingBoxMode.ClientRectangle) iter = new SceneSquare2D(selectorBoxLT, releasePoint.Location, map.Info.Size.Width);
+                else
+                {
+                    Vec3 up = GlobalVar.Engine.ClientPointToCellPos(selectorBoxLT);
+                    Vec3 down = GlobalVar.Engine.ClientPointToCellPos(releasePoint.Location);
+                    iter = new Square2D(up.To2dLocateable(), down.To2dLocateable());
+                }
+                foreach (I2dLocateable pos in iter)
                 {
                     if ((mode | MainWindowDataModel.SelectingFlag.Infantries) != 0)
                     {

@@ -122,6 +122,7 @@ namespace RelertSharp.GUI
         {
             if (initialized)
             {
+                DrawSelectingBoxOnScene(e);
                 Vec3 pos = GlobalVar.Engine.ClientPointToCellPos(e.Location);
                 lblMouseX.Text = string.Format("MouseX : {0}", e.Location.X);
                 lblMouseY.Text = string.Format("MouseY : {0}", e.Location.Y);

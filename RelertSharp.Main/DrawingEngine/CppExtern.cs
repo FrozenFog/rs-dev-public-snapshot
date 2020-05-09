@@ -84,6 +84,10 @@ namespace RelertSharp.DrawingEngine
             [DllImport("CncVxlRenderText.dll")]
             public static extern int CreateShpObjectAtScene(int idShp, Vec3 pos, int idFrame, int idPal, uint dwRemapColor, int flatType, int foundationX, int foundationY, int height, bool isShadow);
             [DllImport("CncVxlRenderText.dll")]
+            public static extern int CreateRectangleObjectAtScene(Vec3 pos, float width, float height, uint color);
+            [DllImport("CncVxlRenderText.dll")]
+            public static extern int CreateLineObjectAtScene(Vec3 start, Vec3 end, uint startColor, uint endColor);
+            [DllImport("CncVxlRenderText.dll")]
             public static extern int CreateStringObjectAtScene(Vec3 pos, uint color, string content);
             [DllImport("CncVxlRenderText.dll")]
             public static extern void RemoveObjectFromScene(int id);

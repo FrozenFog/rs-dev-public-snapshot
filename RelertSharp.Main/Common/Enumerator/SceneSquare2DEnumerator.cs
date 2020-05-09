@@ -15,6 +15,22 @@ namespace RelertSharp.Common
 
         public SceneSquare2D(Point LT, Point RB, int mapwidth)
         {
+            if (LT.X > RB.X && LT.Y > RB.Y)
+            {
+                Utils.Misc.Swap(ref LT, ref RB);
+            }
+            else if (LT.X > RB.X && LT.Y < RB.Y)
+            {
+                int right = LT.X;
+                LT.X = RB.X;
+                RB.X = right;
+            }
+            else if (LT.X < RB.X && LT.Y > RB.Y)
+            {
+                int up = RB.Y;
+                RB.Y = LT.Y;
+                LT.Y = up;
+            }
             Pnt cellLT = GlobalVar.Engine.ClientPointToCellPos(LT).To2dLocateable();
             Pnt cellRB = GlobalVar.Engine.ClientPointToCellPos(RB).To2dLocateable();
             Utils.Misc.TileToFlatCoord(cellLT, mapwidth, out int beginX, out int beginY);
