@@ -55,3 +55,4 @@ local.rsc
 *.ini
 *.vpl
 *.xml
+!RelertSharp.GUI/Resources/*.png

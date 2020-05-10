@@ -254,6 +254,14 @@ namespace RelertSharp.Common
         {
             X = x;Y = y;
         }
+        public Pnt(I2dLocateable src)
+        {
+            X = src.X; Y = src.Y;
+        }
+        public Pnt(I3dLocateable src)
+        {
+            X = src.X; Y = src.Y;
+        }
 
         public static Pnt Zero { get { return new Pnt(0, 0); } }
 

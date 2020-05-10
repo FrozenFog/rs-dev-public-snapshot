@@ -105,11 +105,15 @@ namespace RelertSharp.GUI
         {
             if (e.Button == MouseButtons.Middle)
             {
-                BeginMove(e);
+                MmbDown(e);
             }
-            if (e.Button == MouseButtons.Left)
+            else if (e.Button == MouseButtons.Left)
             {
-                SceneSelectionBoxSet(e);
+                LmbDown(e);
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                RmbDown(e);
             }
         }
 
@@ -120,21 +124,7 @@ namespace RelertSharp.GUI
 
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (initialized)
-            {
-                DrawSelectingBoxOnScene(e);
-                Vec3 pos = GlobalVar.Engine.ClientPointToCellPos(e.Location);
-                lblMouseX.Text = string.Format("MouseX : {0}", e.Location.X);
-                lblMouseY.Text = string.Format("MouseY : {0}", e.Location.Y);
-                if (pos != Vec3.Zero)
-                {
-                    lblx.Text = string.Format("X : {0}", pos.X);
-                    lbly.Text = string.Format("Y : {0}", pos.Y);
-                    lblz.Text = string.Format("Z : {0}", pos.Z);
-                    if (GlobalVar.Engine.SelectTile(pos)) GlobalVar.Engine.Refresh();
-                }
-                MainPanelMoving(e);
-            }
+            MouseMoving(e);
         }
 
         private void ckbLight_CheckedChanged(object sender, EventArgs e)
@@ -231,44 +221,14 @@ namespace RelertSharp.GUI
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)
         {
-            //if (e.Button == MouseButtons.Left)
-            //{
-            //    var flag = Current.SelectingFlags;
-            //    if (flag == MainWindowDataModel.SelectingFlag.None) return;
-            //    I2dLocateable pos = GlobalVar.Engine.ClientPointToCellPos(e.Location).To2dLocateable();
-            //    if ((flag | MainWindowDataModel.SelectingFlag.Units) != 0)
-            //    {
-            //        Current.SelectUnitAt(pos);
-            //    }
-            //    if ((flag | MainWindowDataModel.SelectingFlag.Infantries) != 0)
-            //    {
-            //        I2dLocateable infpos = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell).To2dLocateable();
-            //        Current.SelectInfantryAt(infpos, subcell);
-            //    }
-            //    if ((flag | MainWindowDataModel.SelectingFlag.Buildings) != 0)
-            //    {
-            //        Current.SelectBuildingAt(pos);
-            //    }
-            //    if ((flag | MainWindowDataModel.SelectingFlag.Terrains) != 0)
-            //    {
-            //        Current.SelectTerrainAt(pos);
-            //    }
-            //    if ((flag|MainWindowDataModel.SelectingFlag.Overlays) != 0)
-            //    {
-            //        Current.SelectOverlayAt(pos);
-            //    }
-            //}
+            if (e.Button == MouseButtons.Left)
+            {
+                LmbClick(e);
+            }
         }
         private void panel1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
-            {
-                Current.ReleaseAll();
-            }
-            if (e.KeyCode == Keys.Delete)
-            {
-                Current.RemoveAll();
-            }
+            HandlingKey(e);
         }
 
         private void panel1_MouseEnter(object sender, EventArgs e)
@@ -311,11 +271,11 @@ namespace RelertSharp.GUI
         {
             if (e.Button == MouseButtons.Middle)
             {
-                panel1_MouseLeave(null, null);
+                MmbUp(e);
             }
             else if (e.Button == MouseButtons.Left)
             {
-                SelectSceneItemsInsideBox(e);
+                LmbUp(e);
             }
         }
     }

@@ -3,24 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.Common
 {
-    public struct Base2D : I2dLocateable
-    {
-        public Base2D(I2dLocateable src)
-        {
-            X = src.X; Y = src.Y;
-        }
-        public Base2D(int x, int y)
-        {
-            X = x;Y = y;
-        }
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Coord { get { return Utils.Misc.CoordInt(this); } }
-    }
-
     public interface I2dLocateable
     {
         int X { get; }
@@ -37,6 +23,19 @@ namespace RelertSharp.Common
 
     public interface IMapObject : I2dLocateable
     {
-        string RegName { get; }
+        string RegName { get; set; }
+    }
+
+    public interface ICombatObject : IMapObject
+    {
+        string ID { get; set; }
+        string OwnerHouse { get; set; }
+        int HealthPoint { get; set; }
+        string Status { get; set; }
+        string TaggedTrigger { get; set; }
+        int Rotation { get; set; }
+        int VeterancyPercentage { get; set; }
+        int Group { get; set; }
+        void ApplyAttributeFrom(ICombatObject src, AttributeChanger ckb);
     }
 }

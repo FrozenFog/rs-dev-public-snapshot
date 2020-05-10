@@ -92,6 +92,8 @@
             this.lblz = new System.Windows.Forms.Label();
             this.lblMouseX = new System.Windows.Forms.Label();
             this.lblMouseY = new System.Windows.Forms.Label();
+            this.rbPanelAttribute = new RelertSharp.GUI.RbPanel.RbPanelAttribute();
+            this.panel1.SuspendLayout();
             this.pnlSideObjects.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.pnlSideDebug.SuspendLayout();
@@ -132,6 +134,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.rbPanelAttribute);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -1008,6 +1011,13 @@
             this.lblMouseY.TabIndex = 4;
             this.lblMouseY.Text = "MouseY :";
             // 
+            // rbPanelAttribute
+            // 
+            this.rbPanelAttribute.Location = new System.Drawing.Point(3, 3);
+            this.rbPanelAttribute.Name = "rbPanelAttribute";
+            this.rbPanelAttribute.Size = new System.Drawing.Size(403, 299);
+            this.rbPanelAttribute.TabIndex = 0;
+            // 
             // MainWindowTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1023,6 +1033,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainWindowTest";
             this.Text = "_test";
+            this.panel1.ResumeLayout(false);
             this.pnlSideObjects.ResumeLayout(false);
             this.pnlSideObjects.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -1127,5 +1138,6 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private RbPanel.RbPanelAttribute rbPanelAttribute;
     }
 }

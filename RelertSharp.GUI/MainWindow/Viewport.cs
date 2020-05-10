@@ -56,31 +56,54 @@ namespace RelertSharp.GUI
                 }
                 foreach (I2dLocateable pos in iter)
                 {
-                    if ((mode | MainWindowDataModel.SelectingFlag.Infantries) != 0)
-                    {
-                        Current.SelectInfantryAt(pos, 1);
-                        Current.SelectInfantryAt(pos, 2);
-                        Current.SelectInfantryAt(pos, 3);
-                    }
-                    if ((mode | MainWindowDataModel.SelectingFlag.Units) != 0)
-                    {
-                        Current.SelectUnitAt(pos);
-                    }
-                    if ((mode | MainWindowDataModel.SelectingFlag.Buildings) != 0)
-                    {
-                        Current.SelectBuildingAt(pos);
-                    }
-                    if ((mode | MainWindowDataModel.SelectingFlag.Overlays) != 0)
-                    {
-                        Current.SelectOverlayAt(pos);
-                    }
-                    if ((mode | MainWindowDataModel.SelectingFlag.Terrains) != 0)
-                    {
-                        Current.SelectTerrainAt(pos);
-                    }
+                    SelectAt(pos, mode, releasePoint, false);
                 }
                 GlobalVar.Engine.Refresh();
                 isSelecting = false;
+            }
+        }
+        private void PreciseSelecting(MouseEventArgs e)
+        {
+            if (drew)
+            {
+                var flag = Current.SelectingFlags;
+                if (flag == MainWindowDataModel.SelectingFlag.None) return;
+                I2dLocateable pos = GlobalVar.Engine.ClientPointToCellPos(e.Location).To2dLocateable();
+                SelectAt(pos, flag, e, true);
+                GlobalVar.Engine.Refresh();
+            }
+        }
+        private void SelectAt(I2dLocateable pos, MainWindowDataModel.SelectingFlag flag, MouseEventArgs e, bool isPrecise)
+        {
+            if ((flag | MainWindowDataModel.SelectingFlag.Units) != 0)
+            {
+                Current.SelectUnitAt(pos);
+            }
+            if ((flag | MainWindowDataModel.SelectingFlag.Infantries) != 0)
+            {
+                if (isPrecise)
+                {
+                    I2dLocateable infpos = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell).To2dLocateable();
+                    Current.SelectInfantryAt(infpos, subcell);
+                }
+                else
+                {
+                    Current.SelectInfantryAt(pos, 1);
+                    Current.SelectInfantryAt(pos, 2);
+                    Current.SelectInfantryAt(pos, 3);
+                }
+            }
+            if ((flag | MainWindowDataModel.SelectingFlag.Buildings) != 0)
+            {
+                Current.SelectBuildingAt(pos);
+            }
+            if ((flag | MainWindowDataModel.SelectingFlag.Terrains) != 0)
+            {
+                Current.SelectTerrainAt(pos);
+            }
+            if ((flag | MainWindowDataModel.SelectingFlag.Overlays) != 0)
+            {
+                Current.SelectOverlayAt(pos);
             }
         }
     }

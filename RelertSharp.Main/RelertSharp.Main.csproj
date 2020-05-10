@@ -129,6 +129,7 @@
     <Compile Include="MapStructure\Logic\TriggerDescription.cs" />
     <Compile Include="MapStructure\MapTheaterTileSet.cs" />
     <Compile Include="MapStructure\Objects\AircraftLayer.cs" />
+    <Compile Include="MapStructure\Objects\AttributeChanger.cs" />
     <Compile Include="MapStructure\Objects\InfantryLayer.cs" />
     <Compile Include="MapStructure\Logic\Action.cs" />
     <Compile Include="MapStructure\Logic\Event.cs" />

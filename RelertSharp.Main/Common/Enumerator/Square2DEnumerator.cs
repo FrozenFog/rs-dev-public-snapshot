@@ -59,7 +59,7 @@ namespace RelertSharp.Common
             org = pos;
         }
 
-        public I2dLocateable Current { get { return new Base2D(xNow, yNow); } }
+        public I2dLocateable Current { get { return new Pnt(xNow, yNow); } }
 
         object IEnumerator.Current { get { return Current; } }
 

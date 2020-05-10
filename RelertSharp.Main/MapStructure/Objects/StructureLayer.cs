@@ -29,19 +29,13 @@ namespace RelertSharp.MapStructure.Objects
     }
 
 
-    public class StructureItem : ObjectItemBase
+    public class StructureItem : ObjectItemBase, ICombatObject
     {
         private int sizeX = 0, sizeY = 0;
 
 
         public StructureItem(string _id, string[] _args) : base(_id, _args)
         {
-            ID = _id;
-            OwnerHouse = _args[0];
-            RegName = _args[1];
-            HealthPoint = int.Parse(_args[2]);
-            X = int.Parse(_args[3]);
-            Y = int.Parse(_args[4]);
             Rotation = int.Parse(_args[5]);
             TaggedTrigger = _args[6];
             AISellable = ParseBool(_args[7]);

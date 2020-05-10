@@ -37,20 +37,14 @@ namespace RelertSharp.MapStructure.Objects
         #endregion
     }
 
-    public class InfantryItem : ObjectItemBase
+    public class InfantryItem : ObjectItemBase, ICombatObject
     {
-        private int subcell;
+        private int subcell = 1;
 
 
         #region Ctor - InfantryItem
         public InfantryItem(string _id, string[] _args) : base(_id, _args)
         {
-            ID = _id;
-            OwnerHouse = _args[0];
-            RegName = _args[1];
-            HealthPoint = int.Parse(_args[2]);
-            X = int.Parse(_args[3]);
-            Y = int.Parse(_args[4]);
             SubCells = int.Parse(_args[5]);
             Status = _args[6];
             Rotation = int.Parse(_args[7]);
@@ -61,6 +55,7 @@ namespace RelertSharp.MapStructure.Objects
             AutoNORecruitType = ParseBool(_args[12]);
             AutoYESRecruitType = ParseBool(_args[13]);
         }
+        public InfantryItem() { }
         #endregion
 
 
