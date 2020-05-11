@@ -48,6 +48,14 @@ namespace RelertSharp.GUI
                     case Keys.V:
                         Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.None;
                         break;
+                    case Keys.W:
+                        break;
+                    case Keys.A:
+                        break;
+                    case Keys.S:
+                        break;
+                    case Keys.D:
+                        break;
                 }
             }
         }

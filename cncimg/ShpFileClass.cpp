@@ -7,6 +7,7 @@ std::unordered_map<int, std::unique_ptr<ShpFileClass>> ShpFileClass::FileObjectT
 
 void ShpFileClass::ClearAllObjectForAllFile()
 {
+	if (FileObjectTable.size() == 0)	return;
 	for (auto& file : FileObjectTable) {
 		if (file.second)
 			file.second->ClearAllObjects();
