@@ -117,7 +117,7 @@ namespace RelertSharp.DrawingEngine
                 t.SetColor(tilecolor);
             }
             foreach (IPresentBase obj in Buffer.Scenes.MapObjects) obj.SetColor(sceneObjectColor);
-            foreach (PresentMisc misc in Buffer.Scenes.MapMiscs) misc.SetColor(sceneColor);
+            foreach (PresentMisc misc in Buffer.Scenes.MapMiscs) misc.SetColor(sceneObjectColor);
         }
     }
 }
