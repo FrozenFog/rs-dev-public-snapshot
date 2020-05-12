@@ -16,6 +16,8 @@ using RelertSharp.MapStructure.Logic;
 using RelertSharp.IniSystem;
 using RelertSharp.Common;
 using RelertSharp.GUI.Model;
+using RelertSharp.SubWindows.LogicEditor;
+using RelertSharp.SubWindows.INIEditor;
 
 namespace RelertSharp.GUI
 {
@@ -265,6 +267,16 @@ namespace RelertSharp.GUI
         private void panel1_SizeChanged(object sender, EventArgs e)
         {
             pnlMiniMap_SizeChanged(sender, e);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            new LogicEditor().Show();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            new INIEditor().Show();
         }
 
         private void panel1_MouseUp(object sender, MouseEventArgs e)
