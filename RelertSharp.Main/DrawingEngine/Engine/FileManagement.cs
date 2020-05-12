@@ -168,6 +168,7 @@ namespace RelertSharp.DrawingEngine
                 d.RadarColor = ToColor(colors);
                 d.IsMoveBlockingOverlay = land == "Rock";
                 d.IsRubble = rubble;
+                d.IsWall = wall;
 
                 if (!string.IsNullOrEmpty(img) && name != img) filename = img;
                 if (overrides)
