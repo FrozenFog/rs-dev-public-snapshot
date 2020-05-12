@@ -90,6 +90,26 @@ namespace RelertSharp.MapStructure
             TaskForces.Remove(item.ID);
             DelID(item.ID);
         }
+        public TeamItem NewTeam()
+        {
+            TeamItem t = Teams.NewTeam(NewID);
+            return t;
+        }
+        public void RemoveTeam(TeamItem item)
+        {
+            Teams.Remove(item.ID);
+            DelID(item.ID);
+        }
+        public AITriggerItem NewAITrigger()
+        {
+            AITriggerItem t = AiTriggers.NewAITrigger(NewID);
+            return t;
+        }
+        public void RemoveAITrigger(AITriggerItem item)
+        {
+            AiTriggers.Remove(item.ID);
+            DelID(item.ID);
+        }
         #endregion
 
 
@@ -220,7 +240,9 @@ namespace RelertSharp.MapStructure
 
             foreach (INIPair p in _houseList)
             {
-                Houses[p.Name] = new HouseItem(f.PopEnt(p.Value));
+                HouseItem item = new HouseItem(f.PopEnt(p.Value));
+                item.Index = p.Name;
+                Houses[p.Name] = item;
             }
             Countries = new CountryCollection();
             foreach (INIPair p in _countryList)

@@ -44,8 +44,10 @@ namespace RelertSharp.SubWindows.LogicEditor
             LoadTaskforceList();
             LoadScriptList();
             LoadTeamList();
-            LoadHouseList();
+            LoadAITrgList();
+            LoadTrgHouseList();
             LoadLocalVariables();
+            LoadHouseList();
 
             lbxTriggerList.SelectedIndex = lbxTriggerList.Items.Count > 0 ? 0 : -1;
         }
@@ -87,7 +89,7 @@ namespace RelertSharp.SubWindows.LogicEditor
             lblNoParamE.Location = new Point(gpbEventParam.Size.Width / 2 - lblNoParamE.Size.Width / 2, gpbEventParam.Size.Height / 2 - lblNoParamE.Size.Height);
             lblNoParamA.Location = new Point(gpbActionParam.Size.Width / 2 - lblNoParamA.Size.Width / 2, gpbActionParam.Size.Height / 2 - lblNoParamA.Size.Height);
         }
-        private void LoadHouseList()
+        private void LoadTrgHouseList()
         {
             map.Countries.AscendingSort();
             StaticHelper.LoadToObjectCollection(lbxTriggerHouses, map.Countries);
@@ -105,14 +107,22 @@ namespace RelertSharp.SubWindows.LogicEditor
                 techno.ResetAbst(TechnoPair.AbstractType.CsfName, TechnoPair.IndexType.RegName);
             //technoPairs.Sort((x, y) => x.RegName.CompareTo(y.RegName));
             StaticHelper.LoadToObjectCollection(cbbTaskType, technoPairs);
+            if (lbxTaskList.Items.Count > 0) lbxTaskList.SelectedIndex = 0;
         }
         private void LoadScriptList()
         {
             StaticHelper.LoadToObjectCollection(lbxScriptList, map.Scripts);
+            if (lbxScriptList.Items.Count > 0) lbxScriptList.SelectedIndex = 0;
         }
         private void LoadTeamList()
         {
             StaticHelper.LoadToObjectCollection(lbxTeamList, map.Teams);
+            if (lbxTeamList.Items.Count > 0) lbxTeamList.SelectedIndex = 0;
+        }
+        private void LoadAITrgList()
+        {
+            StaticHelper.LoadToObjectCollection(lbxAIList, map.AiTriggers);
+            if (lbxAIList.Items.Count > 0) lbxAIList.SelectedIndex = 0;
         }
         private void LoadLocalVariables()
         {
@@ -123,6 +133,11 @@ namespace RelertSharp.SubWindows.LogicEditor
             localVarSource.DataSource = localVarList;
             for (int idx = 0, count = localVarList.Count; idx < count; ++idx)
                 chklbxLocalVar.SetItemChecked(idx, localVarList[idx].InitState);
+        }
+        private void LoadHouseList()
+        {
+            StaticHelper.LoadToObjectCollection(lbxHouses, map.Houses);
+            if (lbxHouses.Items.Count > 0) lbxHouses.SelectedIndex = 0;
         }
         #endregion
 
@@ -149,7 +164,9 @@ namespace RelertSharp.SubWindows.LogicEditor
                 ClearContent(gpbEvents);
                 mtxbEventID.Text = "00";
             }
+            ;
             StaticHelper.LoadToObjectCollection(lbxActionList, trg.Actions);
+            ;
             if (lbxActionList.Items.Count > 0) lbxActionList.SelectedIndex = 0;
             else
             {
@@ -217,7 +234,8 @@ namespace RelertSharp.SubWindows.LogicEditor
             var tags = map.Tags.GetTagFromTrigger(triggerID, trg);
             txbTrgID.Text = triggerID;
             txbTrgName.Text = trg.Name;
-            StaticHelper.LoadToObjectCollection(cbbTagID, tags);
+            cbbTagID.Items.Clear();
+            foreach (TagItem tag in tags) cbbTagID.Items.Add(tag.ID);
             cbbTagID.SelectedIndex = tags.Count >= 0 ? 0 : -1;
             cbbTagID_SelectedIndexChanged(cbbTagID, null);
             rdbRepeat0.Checked = false;
@@ -303,6 +321,32 @@ namespace RelertSharp.SubWindows.LogicEditor
                 StaticHelper.LoadToObjectCollection(lvTaskforceUnits, items);
                 lvTaskforceUnits.SelectedIndices.Add(lvSelectedindex);
             }
+        }
+        private void UpdateHouseAlliance()
+        {
+            lbxHouseAllie.Items.Clear();
+            lbxHouseEnemy.Items.Clear();
+            txbHouseAllies.Clear();
+            string displayAllies = _CurrentHouse.Name;
+            List<string> enemies = new List<string>();
+            List<string> allies = _CurrentHouse.AlliesWith;
+            try { allies.Remove(_CurrentHouse.Name); }
+            catch { }
+            for (int i = allies.Count - 1; i >= 0; i--)
+                if (!map.Houses.ValueExists(map.Houses.GetHouse(allies[i])))  
+                    allies.RemoveAt(i);
+            if (allies.Count > 0) displayAllies += ",";
+            for (int i = 0; i < allies.Count - 1; i++)
+                displayAllies += (allies[i] + ",");
+            displayAllies += allies.LastOrDefault();
+            txbHouseAllies.Text = displayAllies;
+
+            lbxHouseAllie.Items.AddRange(allies.ToArray());
+
+            foreach (HouseItem house in map.Houses)
+                if (!_CurrentHouse.AlliesWith.Exists(s => s == house.Name) && _CurrentHouse.Name != house.Name)
+                    enemies.Add(house.Name);
+            lbxHouseEnemy.Items.AddRange(enemies.ToArray());
         }
         #endregion
 
@@ -548,11 +592,17 @@ namespace RelertSharp.SubWindows.LogicEditor
         private TaskforceItem _CurrentTaskforce { get { return map.TaskForces[txbTaskID.Text]; } }
         private TaskforceUnit _CurrentBoxTaskforceUnit { get { return TaskforceUnit.FromListviewItem(lvTaskforceUnits.SelectedItems[0]); } }
         private TaskforceUnit _CurrentTaskforceUnit { get { return _CurrentTaskforce.Members[lvTaskforceUnits.SelectedIndices[0]]; } }
+        private TeamItem _CurrentTeam { get { return lbxTeamList.SelectedItem as TeamItem; } }
+        private TeamUnit _CurrentTeamUnit { get { return _CurrentTeam.GetToUnit; } set { _CurrentTeam.GetToUnit = value; } }
         private LogicItem _CurrentEvent { get { return _CurrentTrigger.Events[_CurrentBoxEvent.idx]; } }
         private LogicItem _CurrentBoxEvent { get { return lbxEventList.SelectedItem as LogicItem; } }
         private LogicItem _CurrentAction { get { return _CurrentTrigger.Actions[_CurrentBoxAction.idx]; } }
         private LogicItem _CurrentBoxAction { get { return lbxActionList.SelectedItem as LogicItem; } }
         private TagItem _CurrentTag { get { return map.Tags[cbbTagID.Text]; } }
+        private AITriggerItem _CurrentAITrigger { get { return lbxAIList.SelectedItem as AITriggerItem; } }
+        private AITriggerUnit _CurrentAITriggerUnit { get { return _CurrentAITrigger.GetToUnit; } set { _CurrentAITrigger.GetToUnit = value; } }
+        private HouseItem _CurrentHouse { get { return lbxHouses.SelectedItem as HouseItem; } }
+        private HouseUnit _CurrentHouseUnit { get { return _CurrentHouse.GetToUnit; } set { _CurrentHouse.GetToUnit = value; } }
         private SearchCollection _SearchResult { get; set; } = new SearchCollection();
         #endregion
     }

@@ -33,6 +33,14 @@ namespace RelertSharp.MapStructure.Logic
             if (!data.ContainsKey(ID)) return false;
             return data.Remove(ID);
         }
+        public bool Exists(string ID)
+        {
+            return data.ContainsKey(ID);
+        }
+        public bool ValueExists(T Value)
+        {
+            return data.ContainsValue(Value);
+        }
         #region Enumerator
         public IEnumerator<T> GetEnumerator()
         {

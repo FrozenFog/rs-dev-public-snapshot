@@ -114,3 +114,9 @@ IgnoreInfantryTheaterArt=false
 DeactivateAnim=YAPOWR
 DeactivateShadow=GAHPAD
 DeactivateBib=GAHPAD
+
+[SidesList]
+1=Allied
+2=Soviet
+3=Epsilon
+4=Foehn

@@ -21,6 +21,10 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Public Calls - WaypointItem
+        public override string ToString()
+        {
+            return Num + " - " + "(" + X + "," + Y + ")";
+        }
         public string Num { get; set; }
         #endregion
     }
