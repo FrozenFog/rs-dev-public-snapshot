@@ -120,6 +120,11 @@ namespace RelertSharp.DrawingEngine
             foreach (PresentMisc misc in Buffer.Scenes.MapMiscs)
             {
                 if (misc.IsWall) misc.SetColor(sceneObjectColor);
+                else if (misc.IsHiBridge)
+                {
+                    Vec4 hiColor = Vec4.Unit3(light.Level * misc.Z);
+                    misc.SetColor(hiColor);
+                }
                 else misc.SetColor(sceneColor);
             }
         }

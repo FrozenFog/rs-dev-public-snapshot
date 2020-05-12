@@ -70,6 +70,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         public bool IsMoveBlockingOverlay { get; set; }
         public bool IsRubble { get; set; }
         public bool IsValid { get { return pSelf != 0; } }
+        public bool IsHiBridge { get; set; }
         public List<int> WaypointNums { get; private set; } = new List<int>();
         #endregion
     }

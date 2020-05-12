@@ -134,6 +134,7 @@ namespace RelertSharp.DrawingEngine
             dest.IsMoveBlockingOverlay = src.IsMoveBlockingOverlay;
             dest.IsRubble = src.IsRubble;
             dest.IsWall = src.IsWall;
+            dest.IsHiBridge = src.IsHiBridge;
             Vec3 pos;
             if (src.IsZeroVec) pos = ToVec3Zero(o, height);
             else pos = ToVec3Iso(o, height);
