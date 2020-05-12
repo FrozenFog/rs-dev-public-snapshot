@@ -351,6 +351,16 @@ namespace RelertSharp.Utils
             src1 = src2;
             src2 = tmp;
         }
+        public static void AdjustComboBoxDropDownWidth(ref System.Windows.Forms.ComboBox cbb)
+        {
+            if (cbb != null && cbb.Items.Count != 0)
+            {
+                int max = cbb.Width;
+                foreach (var i in cbb.Items)
+                    max = i.ToString().Length * 7 > max ? i.ToString().Length * 7 : max;
+                cbb.DropDownWidth = max;
+            }
+        }
     }
 
 }
