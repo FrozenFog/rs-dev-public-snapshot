@@ -25,7 +25,7 @@ class ColorScheme
 public:
 	static ColorScheme GlobalColorScheme;
 
-	ColorScheme();
+	 ColorScheme();
 	~ColorScheme();
 
 	bool IsLoaded();

@@ -179,9 +179,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\RelertSharp.Main\RelertSharp.Main.csproj">
       <Project>{8597c2bd-5421-4a66-958e-240768ea8a9a}</Project>
       <Name>RelertSharp.Main</Name>
