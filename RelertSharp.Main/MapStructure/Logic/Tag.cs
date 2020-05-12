@@ -123,7 +123,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TagItem
-        public override string ToString() { return id; }
+        public override string ToString() { return id + ' ' + Name; }
         public TriggerRepeatingType Repeating
         {
             get { return repeatingType; }

@@ -257,6 +257,23 @@ namespace RelertSharp.Utils
             return result;
         }
         /// <summary>
+        /// Return string From int, using for saving ai-trigger condition
+        /// </summary>
+        /// <param name="byteInt"></param>
+        /// <returns></returns>
+        public static string ToLEByteString(int byteInt)
+        {
+            string ret = string.Empty;
+            string src = string.Format("{0:X8}", byteInt);
+            src = src.ToUpper();
+            for (int i = 3; i >= 0; i--)
+            {
+                ret += src.Substring(i * 2, 2);
+            }
+
+            return ret;
+        }
+        /// <summary>
         /// Return black(0x00000000) if something happened
         /// </summary>
         /// <param name="src"></param>
@@ -350,6 +367,16 @@ namespace RelertSharp.Utils
             T tmp = src1;
             src1 = src2;
             src2 = tmp;
+        }
+        public static void AdjustComboBoxDropDownWidth(ref System.Windows.Forms.ComboBox cbb)
+        {
+            if (cbb != null && cbb.Items.Count != 0)
+            {
+                int max = cbb.Width;
+                foreach (var i in cbb.Items)
+                    max = i.ToString().Length * 7 > max ? i.ToString().Length * 7 : max;
+                cbb.DropDownWidth = max;
+            }
         }
     }
 

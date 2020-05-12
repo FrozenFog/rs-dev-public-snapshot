@@ -122,6 +122,15 @@ namespace RelertSharp.IniSystem
         public string ID { get { return RegName; } }
         public string RegName { get; set; } = "";
         public string UIName { get; set; } = "";
+        public static TechnoPair NonePair
+        {
+            get
+            {
+                TechnoPair ret = new TechnoPair("<none>", "<none>");
+                ret.ResetAbst(AbstractType.IndexOnly, IndexType.Index);
+                return ret;
+            }
+        }
         #endregion
     }
 }

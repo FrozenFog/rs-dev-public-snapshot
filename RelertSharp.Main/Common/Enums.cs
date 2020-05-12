@@ -6,6 +6,19 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.Common
 {
+    public struct EnumDisplayClass
+    {
+        public int Value;
+        public string Name;
+        public EnumDisplayClass(int v, string n) { Value = v; Name = n; }
+        public override string ToString()
+        {
+            return Value + " " + Name;
+        }
+        public static bool operator ==(EnumDisplayClass a, int b) { return b == a.Value; }
+        public static bool operator !=(EnumDisplayClass a, int b) { return b != a.Value; }
+    }
+
     [Flags]
     public enum MapObjectType
     {
