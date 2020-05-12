@@ -54,6 +54,18 @@ namespace RelertSharp
                     SetControlLanguage(c);
                 }
             }
+            else if (t == typeof(Panel))
+            {
+                foreach(Control c in ((Panel)p).Controls)
+                {
+                    SetControlLanguage(c);
+                }
+            }
+            else if (t == typeof(SplitContainer))
+            {
+                foreach (Control c in ((SplitContainer)p).Panel1.Controls) SetControlLanguage(c);
+                foreach (Control c in ((SplitContainer)p).Panel2.Controls) SetControlLanguage(c);
+            }
             else if (t == typeof(TabPage))
             {
                 foreach (Control c in ((TabPage)p).Controls)

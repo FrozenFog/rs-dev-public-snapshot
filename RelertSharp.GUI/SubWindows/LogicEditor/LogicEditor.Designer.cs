@@ -206,6 +206,12 @@
             this.label28 = new System.Windows.Forms.Label();
             this.tbpMiscs = new System.Windows.Forms.TabPage();
             this.gpbMap = new System.Windows.Forms.GroupBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.chklbxSpecialFlag = new System.Windows.Forms.CheckedListBox();
+            this.chklbxBasic = new System.Windows.Forms.CheckedListBox();
             this.gpbHouses = new System.Windows.Forms.GroupBox();
             this.olvHouse = new BrightIdeasSoftware.ObjectListView();
             this.olvColHouseKey = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -254,6 +260,7 @@
             this.hdValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.hdExtraValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rtxbSearchInspector = new System.Windows.Forms.RichTextBox();
+            this.olvBasic = new BrightIdeasSoftware.ObjectListView();
             this.tbcMain.SuspendLayout();
             this.tbpTriggers.SuspendLayout();
             this.gpbActions.SuspendLayout();
@@ -277,11 +284,18 @@
             this.gpbTeamTeam.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvTeamConfig)).BeginInit();
             this.tbpMiscs.SuspendLayout();
+            this.gpbMap.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.gpbHouses.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvHouse)).BeginInit();
             this.LGCgpbHouseAllies.SuspendLayout();
             this.gpbLocalVar.SuspendLayout();
             this.gpbSearch.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.olvBasic)).BeginInit();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -2325,12 +2339,80 @@
             // 
             // gpbMap
             // 
+            this.gpbMap.Controls.Add(this.splitContainer1);
             this.gpbMap.Location = new System.Drawing.Point(592, 7);
             this.gpbMap.Name = "gpbMap";
-            this.gpbMap.Size = new System.Drawing.Size(544, 250);
+            this.gpbMap.Size = new System.Drawing.Size(544, 552);
             this.gpbMap.TabIndex = 4;
             this.gpbMap.TabStop = false;
             this.gpbMap.Text = "LGCgpbMap";
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(3, 17);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.olvBasic);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.panel1);
+            this.splitContainer1.Size = new System.Drawing.Size(538, 532);
+            this.splitContainer1.SplitterDistance = 261;
+            this.splitContainer1.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label26);
+            this.panel1.Controls.Add(this.label25);
+            this.panel1.Controls.Add(this.chklbxSpecialFlag);
+            this.panel1.Controls.Add(this.chklbxBasic);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(538, 267);
+            this.panel1.TabIndex = 0;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label26.Location = new System.Drawing.Point(425, 0);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(113, 12);
+            this.label26.TabIndex = 7;
+            this.label26.Text = "LGClblSpecialFlags";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label25.Location = new System.Drawing.Point(0, 0);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(107, 12);
+            this.label25.TabIndex = 6;
+            this.label25.Text = "LGClblBasicChecks";
+            // 
+            // chklbxSpecialFlag
+            // 
+            this.chklbxSpecialFlag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chklbxSpecialFlag.FormattingEnabled = true;
+            this.chklbxSpecialFlag.Location = new System.Drawing.Point(272, 18);
+            this.chklbxSpecialFlag.Name = "chklbxSpecialFlag";
+            this.chklbxSpecialFlag.Size = new System.Drawing.Size(263, 244);
+            this.chklbxSpecialFlag.TabIndex = 5;
+            // 
+            // chklbxBasic
+            // 
+            this.chklbxBasic.FormattingEnabled = true;
+            this.chklbxBasic.Location = new System.Drawing.Point(3, 18);
+            this.chklbxBasic.Name = "chklbxBasic";
+            this.chklbxBasic.Size = new System.Drawing.Size(263, 244);
+            this.chklbxBasic.TabIndex = 4;
             // 
             // gpbHouses
             // 
@@ -2834,6 +2916,18 @@
             this.rtxbSearchInspector.TabIndex = 0;
             this.rtxbSearchInspector.Text = "";
             // 
+            // olvBasic
+            // 
+            this.olvBasic.CellEditUseWholeCell = false;
+            this.olvBasic.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.olvBasic.HideSelection = false;
+            this.olvBasic.Location = new System.Drawing.Point(0, 0);
+            this.olvBasic.Name = "olvBasic";
+            this.olvBasic.Size = new System.Drawing.Size(538, 261);
+            this.olvBasic.TabIndex = 0;
+            this.olvBasic.UseCompatibleStateImageBehavior = false;
+            this.olvBasic.View = System.Windows.Forms.View.Details;
+            // 
             // LogicEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2884,6 +2978,13 @@
             this.gpbTeamTeam.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvTeamConfig)).EndInit();
             this.tbpMiscs.ResumeLayout(false);
+            this.gpbMap.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.gpbHouses.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.olvHouse)).EndInit();
             this.LGCgpbHouseAllies.ResumeLayout(false);
@@ -2892,6 +2993,7 @@
             this.gpbLocalVar.PerformLayout();
             this.gpbSearch.ResumeLayout(false);
             this.gpbSearch.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.olvBasic)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -3123,5 +3225,12 @@
         private System.Windows.Forms.GroupBox gpbMap;
         private BrightIdeasSoftware.OLVColumn olvColAIKey;
         private BrightIdeasSoftware.OLVColumn olvColAIValue;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.CheckedListBox chklbxSpecialFlag;
+        private System.Windows.Forms.CheckedListBox chklbxBasic;
+        private BrightIdeasSoftware.ObjectListView olvBasic;
     }
 }

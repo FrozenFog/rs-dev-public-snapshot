@@ -29,7 +29,7 @@ namespace RelertSharp.MapStructure.Logic
         {
             foreach (CountryItem c in this)
             {
-                if (c.ID == name) return c;
+                if (c.Name == name) return c;
             }
             return null;
         }

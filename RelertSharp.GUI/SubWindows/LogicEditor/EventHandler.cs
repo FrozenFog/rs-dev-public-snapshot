@@ -630,34 +630,33 @@ namespace RelertSharp.SubWindows.LogicEditor
                 cmb.FlatStyle = FlatStyle.Flat;
                 cmb.DropDownStyle = ComboBoxStyle.DropDownList;
                 cmb.Bounds = e.CellBounds;
-                cmb.Items.Add("0 False");
-                cmb.Items.Add("1 True");
+                cmb.Items.Add("False");
+                cmb.Items.Add("True");
                 cmb.SelectedIndex = ((bool)e.Value == false) ? 0 : 1;
                 e.Control = cmb;
             }
             else if (e.Control.GetType().FullName == "BrightIdeasSoftware.EnumCellEditor")
             {
-                cmb.DropDownStyle = ComboBoxStyle.DropDownList;
                 cmb.FlatStyle = FlatStyle.Flat;
+                cmb.DropDownStyle = ComboBoxStyle.DropDownList;
                 cmb.Bounds = e.CellBounds;
+                Type type;
                 switch (valuePair.Key)
                 {
                     case "VeteranLevel":
-                        cmb.Items.Add(DICT["LGColvEnumTeamVeteran1"]);
-                        cmb.Items.Add(DICT["LGColvEnumTeamVeteran2"]);
-                        cmb.Items.Add(DICT["LGColvEnumTeamVeteran3"]);
-                        cmb.SelectedIndex = (int)valuePair.Value.Value - 1;
+                        type = typeof(TeamVeteranLevel);
                         break;
                     case "MCDecision":
-                        cmb.Items.Add(DICT["LGColvEnumTeamMCD0"]);
-                        cmb.Items.Add(DICT["LGColvEnumTeamMCD1"]);
-                        cmb.Items.Add(DICT["LGColvEnumTeamMCD2"]);
-                        cmb.Items.Add(DICT["LGColvEnumTeamMCD3"]);
-                        cmb.Items.Add(DICT["LGColvEnumTeamMCD4"]);
-                        cmb.Items.Add(DICT["LGColvEnumTeamMCD5"]);
-                        cmb.SelectedIndex = (int)valuePair.Value.Value;
+                    default:
+                        type = typeof(TeamMCDecision);
                         break;
                 }
+                StaticHelper.LoadToObjectCollection(cmb, type);
+                int idxE;
+                for (idxE = 0; idxE < cmb.Items.Count; idxE++)
+                    if ((EnumDisplayClass)(cmb.Items[idxE]) == (int)valuePair.Value.Value)
+                        break;
+                try { cmb.SelectedIndex = idxE; } catch { }
                 e.Control = cmb;
             }
             else if (valuePair.Key == "Waypoint")
@@ -665,8 +664,11 @@ namespace RelertSharp.SubWindows.LogicEditor
                 cmb.FlatStyle = FlatStyle.Flat;
                 cmb.DropDownStyle = ComboBoxStyle.DropDown;
                 cmb.Bounds = e.CellBounds;
-                cmb.Items.AddRange(GlobalVar.CurrentMapDocument.Map.Waypoints.ToArray());
-                cmb.Text = e.Control.Text;
+                var waypoints = GlobalVar.CurrentMapDocument.Map.Waypoints.ToList();
+                waypoints.Sort((a, b) => int.Parse(a.Num) - int.Parse(b.Num));
+                StaticHelper.LoadToObjectCollection(cmb, waypoints.AsEnumerable());
+                cmb.SelectedItem = waypoints.Find(s => s.Num == e.Control.Text);
+                if (cmb.SelectedItem == null && waypoints.Count > 0)  cmb.SelectedIndex = 0;
                 e.Control = cmb;
             }
             else switch (valuePair.Key) 
@@ -716,11 +718,14 @@ namespace RelertSharp.SubWindows.LogicEditor
                         e.Control = cmb;
                         break;
                     case "House":
+                        cmb.Bounds = e.CellBounds;
                         cmb.FlatStyle = FlatStyle.Flat;
                         cmb.DropDownStyle = ComboBoxStyle.DropDownList;
-                        cmb.Bounds = e.CellBounds;
-                        cmb.Items.AddRange(GlobalVar.CurrentMapDocument.Map.Countries.ToArray());
-                        cmb.SelectedItem = GlobalVar.CurrentMapDocument.Map.Countries.ToList().Find(s => s.ID == e.Control.Text);
+                        cmb.Items.AddRange(map.Countries.ToArray());
+                        CountryItem country = map.Countries.GetCountry((string)valuePair.Value.Value);
+                        if (country == null) cmb.SelectedIndex = 0;
+                        else cmb.SelectedItem = country;
+                        Utils.Misc.AdjustComboBoxDropDownWidth(ref cmb);
                         e.Control = cmb;
                         break;
                     default:
@@ -745,10 +750,10 @@ namespace RelertSharp.SubWindows.LogicEditor
                 else if (valuePair.Key == "Waypoint")
                 {
                     ComboBox cmb = e.Control as ComboBox;
-                    string text = cmb.Text;
                     int val = 0;
                     try
                     {
+                        string text = cmb.Text.Split('-')[0].Trim();
                         val = int.Parse(text);
                     }
                     catch
@@ -823,14 +828,12 @@ namespace RelertSharp.SubWindows.LogicEditor
                 }
                 else if (valuePair.Key == "VeteranLevel")
                 {
-                    ComboBox cmb = e.Control as ComboBox;
-                    ret.Value = (TeamVeteranLevel)(cmb.SelectedIndex + 1);
+                    ret.Value = (TeamVeteranLevel)((EnumDisplayClass)((ComboBox)e.Control).SelectedItem).Value;
                     _CurrentTeamUnit.Data[valuePair.Key] = ret;
                 }
                 else if (valuePair.Key == "MCDecision")
                 {
-                    ComboBox cmb = e.Control as ComboBox;
-                    ret.Value = (TeamMCDecision)(cmb.SelectedIndex);
+                    ret.Value = (TeamMCDecision)((EnumDisplayClass)((ComboBox)e.Control).SelectedItem).Value;
                     _CurrentTeamUnit.Data[valuePair.Key] = ret;
                 }
                 else if (valuePair.Key == "TaskforceID")

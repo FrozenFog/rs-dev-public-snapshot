@@ -43,6 +43,15 @@ ROrg=-Original File Name(Template Version)  :
 RDst=-New File Name(New Version)            : 
 
 [Enums]
+TeamVeteranLevel.Rookie=Rookie
+TeamVeteranLevel.Veteran=Veteran
+TeamVeteranLevel.Elite=Elite
+TeamMCDecision.Default=Default
+TeamMCDecision.AddToTeam=Add to team
+TeamMCDecision.Grinder=Grinder
+TeamMCDecision.BioReaCtor=Bio Reactor
+TeamMCDecision.GoHunt=Go hunt
+TeamMCDecision.Nothing=Do nothing
 AITriggerConditionType.ConditionTrue=Always
 AITriggerConditionType.EnemyHouseOwnsObj=Enemy owns objects...
 AITriggerConditionType.OwningHouseOwnsObj=House owns objects...
@@ -52,7 +61,6 @@ AITriggerConditionType.EnemyHouseHasMoneyOf=Enemy has money of...
 AITriggerConditionType.OwnerHouseIronCurtainChargeInPercentage=House iron curtain charge in percentage...
 AITriggerConditionType.OwnerHouseChronoChargeInPercentage=House chronosphere charge in percentage...
 AITriggerConditionType.NeutralOrCivOwnsObj=Neutral or Civilian owns objects...
-
 AITriggerConditionOperator.LessThan=<
 AITriggerConditionOperator.LessOrEqual=<=
 AITriggerConditionOperator.Equal==
@@ -128,6 +136,8 @@ LGClblHouseNewParent=Parent country
 LGClblAllie=Allies
 LGClblEnemy=Enemies
 LGClblLocalVarName=Name:
+LGClblBasicChecks=Basic bools
+LGClblSpecialFlags=SpecialFlags
 
 LGClklTrace=Trace...
 
@@ -207,6 +217,7 @@ LGCgpbTeamAI=AI Triggers
 LGCgpbHouses=Houses
 LGCgpbHouseAllies=Allies
 LGCgpbLocalVar=Local Variables
+LGCgpbMap=Map Configs
 LGCgpbSearch=Global search
 
 LGCrdbRep0=One time AND
@@ -219,6 +230,42 @@ LGColvColAIKey=Property
 LGColvColAIValue=Value
 LGColvColHouseKey=Property
 LGColvColHouseValue=Value
+
+LGColvRowTeamName=Name
+LGColvRowTeamTaskforce=Taskforce
+LGColvRowTeamScript=Script
+LGColvRowTeamTag=Tag
+LGColvRowTeamWaypoint=Waypoint
+LGColvRowTeamHouse=Country
+LGColvRowTeamVeteran=Veteran level
+LGColvRowTeamMCD=Mind Control Decision
+LGColvRowTeamCapacity=Capacity
+LGColvRowTeamPriority=Priority
+LGColvRowTeamTechLevel=Techlevel
+LGColvRowTeamGroup=Group
+LGColvRowTeamPriority=Priority
+LGColvRowTeamBool0=Full
+LGColvRowTeamBool1=Whiner
+LGColvRowTeamBool2=Droppod
+LGColvRowTeamBool3=Suicide
+LGColvRowTeamBool4=Loadable
+LGColvRowTeamBool5=Prebuild
+LGColvRowTeamBool6=Annoyance
+LGColvRowTeamBool7=Ion Immune
+LGColvRowTeamBool8=Recruiter
+LGColvRowTeamBool9=Reinforce
+LGColvRowTeamBool10=Aggressive
+LGColvRowTeamBool11=Auto create
+LGColvRowTeamBool12=Guard slower
+LGColvRowTeamBool13=On transport only
+LGColvRowTeamBool14=Avoid threats
+LGColvRowTeamBool15=Loose recruit
+LGColvRowTeamBool16=Is base defense
+LGColvRowTeamBool17=Use transport origin
+LGColvRowTeamBool18=Only target house enemy
+LGColvRowTeamBool19=Transport return on unload
+LGColvRowTeamBool20=Are team members recruitable
+
 
 LGColvRowAIName=Name
 LGColvRowAITeam1=Team 1
