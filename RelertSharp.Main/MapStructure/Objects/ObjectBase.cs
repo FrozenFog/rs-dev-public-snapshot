@@ -84,26 +84,40 @@ namespace RelertSharp.MapStructure.Objects
         #region Ctor
         public ObjectItemBase(string _id, string[] _args)
         {
-
+            ID = _id;
+            OwnerHouse = _args[0];
+            RegName = _args[1];
+            HealthPoint = int.Parse(_args[2]);
+            X = int.Parse(_args[3]);
+            Y = int.Parse(_args[4]);
         }
         public ObjectItemBase() { }
         #endregion
 
 
         #region Public Methods - ObjectItemBase
-
+        public virtual void ApplyAttributeFrom(ICombatObject obj, AttributeChanger ckb)
+        {
+            if (ckb.bOwnerHouse) OwnerHouse = obj.OwnerHouse;
+            if (ckb.bHealthPoint) HealthPoint = obj.HealthPoint;
+            if (ckb.bGroup) Group = obj.Group;
+            if (ckb.bStatus) Status = obj.Status;
+            if (ckb.bTaggedTrigger) TaggedTrigger = obj.TaggedTrigger;
+            if (ckb.bVeteran) VeterancyPercentage = obj.VeterancyPercentage;
+            if (ckb.bRotation) Rotation = obj.Rotation;
+        }
         #endregion
 
 
         #region Public Calls - ObjectItemBase
-        public string ID { get; set; }
-        public string RegName { get; set; }
-        public string OwnerHouse { get; set; }
-        public int HealthPoint { get; set; }
-        public string Status { get; set; }
-        public string TaggedTrigger { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
+        public string ID { get; set; } = "NULL";
+        public string RegName { get; set; } = "(NOTHING)";
+        public string OwnerHouse { get; set; } = "<none>";
+        public int HealthPoint { get; set; } = 256;
+        public string Status { get; set; } = "<none>";
+        public string TaggedTrigger { get; set; } = "<none>";
+        public int X { get; set; } = 0;
+        public int Y { get; set; } = 0;
         public int Coord
         {
             get { return Utils.Misc.CoordInt(X, Y); }
@@ -113,12 +127,12 @@ namespace RelertSharp.MapStructure.Objects
                 Y = Utils.Misc.CoordIntY(value);
             }
         }
-        public int Rotation { get; set; }
-        public int VeterancyPercentage { get; set; }
-        public int Group { get; set; }
-        public bool IsAboveGround { get; set; }
-        public bool AutoNORecruitType { get; set; }
-        public bool AutoYESRecruitType { get; set; }
+        public int Rotation { get; set; } = 0;
+        public int VeterancyPercentage { get; set; } = 100;
+        public int Group { get; set; } = -1;
+        public bool IsAboveGround { get; set; } = false;
+        public bool AutoNORecruitType { get; set; } = false;
+        public bool AutoYESRecruitType { get; set; } = true;
         #endregion
     }
 }

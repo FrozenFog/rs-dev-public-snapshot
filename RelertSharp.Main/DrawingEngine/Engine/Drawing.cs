@@ -151,7 +151,7 @@ namespace RelertSharp.DrawingEngine
             src.pSelf = Buffer.Files.WaypointBase;
             PresentMisc dest = new PresentMisc(MapObjectType.Waypoint, waypoint, height);
             Vec3 pos = ToVec3Iso(dest).Rise() + 100 * _generalOffset;
-            if (DrawMisc(src, dest, pos, pPalSystem, 0, _white, ShpFlatType.Vertical))
+            if (DrawMisc(src, dest, pos, pPalSystem, 0, _white, ShpFlatType.Vertical) && DrawWaypointNum(dest, waypoint.Num, pos))
             {
                 Buffer.Scenes.Waypoints[dest.Coord] = dest;
                 return true;
@@ -176,6 +176,21 @@ namespace RelertSharp.DrawingEngine
 
 
         #region Draw - Private
+        private bool DrawWaypointNum(PresentMisc dest, string waypointNum, Vec3 pos)
+        {
+            int width = waypointNum.Count() * 12;
+            pos = MoveVertical(MoveHorizontal(pos, -1 * (width / 2 - 2)), 10);
+            bool result = false;
+            foreach (char c in waypointNum)
+            {
+                int num = int.Parse(c.ToString());
+                int id = RenderAndPresent(Buffer.WaypointNum[num], pos.Rise(), num, _white, pPalSystem, ShpFlatType.Vertical, Vec3.Zero);
+                result = result | (id != 0);
+                dest.WaypointNums.Add(id);
+                pos = MoveHorizontal(pos, 12);
+            }
+            return result;
+        }
         private bool DrawMisc(DrawableMisc src, PresentMisc dest, Vec3 pos, int pPal, int frame, uint color, ShpFlatType type = ShpFlatType.Vertical, short shadow = 0)
         {
             if (src.pSelf != 0)
@@ -222,7 +237,7 @@ namespace RelertSharp.DrawingEngine
             if (src.pActivateAnim != 0)
             {
                 dest.pActivateAnim = RenderAndPresent(src, src.pActivateAnim, pos + _generalOffset, pPal, flat);
-                dest.pActivateAnim2Shadow = RenderAndPresent(src, src.pShadowActivateAnim, pos.Rise() + _generalOffset, pPal, ShpFlatType.FlatGround, src.ActivateAnimCount, true);
+                dest.pActivateAnimShadow = RenderAndPresent(src, src.pShadowActivateAnim, pos.Rise() + _generalOffset, pPal, ShpFlatType.FlatGround, src.ActivateAnimCount, true);
             }
             if (src.pIdleAnim != 0)
             {

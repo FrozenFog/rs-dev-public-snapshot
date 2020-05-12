@@ -55,7 +55,7 @@ namespace RelertSharp.DrawingEngine
         public bool Initialize(IntPtr mainHandle, Size panelsize, Rectangle mapsize, TileLayer tileReferace)
         {
             _cellFindingReferance = tileReferace;
-            return CppExtern.Scene.SetUpScene(mainHandle) && CppExtern.Scene.ResetSceneView() && minimap.Initialize(panelsize, mapsize);
+            return CppExtern.Scene.SetUpScene(mainHandle) && CppExtern.Scene.ResetSceneView() && minimap.Initialize(panelsize, mapsize) && InitWaypointNum();
         }
         public void SetTheater(TheaterType type)
         {
@@ -98,6 +98,23 @@ namespace RelertSharp.DrawingEngine
 
 
         #region Etc
+        private bool InitWaypointNum()
+        {
+            try
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    int numid = CreateFile("rsnum.shp", DrawableType.Shp, i);
+                    Buffer.WaypointNum.Add(numid);
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
         #endregion
         #endregion
 

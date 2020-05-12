@@ -18,7 +18,7 @@ namespace RelertSharp.Common
     internal class Circle2DEnumerator : IEnumerator<I2dLocateable>
     {
         private I2dLocateable last;
-        private Base2D data;
+        private Pnt data;
         private int range;
         private int thetadeg;
         private int ox,oy;
@@ -29,9 +29,9 @@ namespace RelertSharp.Common
             range = r;
             ox = src.X;
             oy = src.Y;
-            data = new Base2D(src);
+            data = new Pnt(src);
             data.X += r;
-            last = new Base2D(-1, -1);
+            last = new Pnt(-1, -1);
             thetadeg = 0;
         }
 

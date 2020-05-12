@@ -22,6 +22,10 @@ namespace RelertSharp.DrawingEngine.Presenting
         public void Dispose()
         {
             RemoveProp(pSelf, pSelfShadow);
+            foreach (int id in WaypointNums)
+            {
+                RemoveProp(id);
+            }
         }
 
         public void SetColor(Vec4 color)
@@ -65,7 +69,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         public bool IsMoveBlockingOverlay { get; set; }
         public bool IsRubble { get; set; }
         public bool IsValid { get { return pSelf != 0; } }
-        public int pWpNum { get; set; }
+        public List<int> WaypointNums { get; private set; } = new List<int>();
         #endregion
     }
 }

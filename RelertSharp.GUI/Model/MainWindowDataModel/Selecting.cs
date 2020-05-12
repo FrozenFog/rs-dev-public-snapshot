@@ -13,9 +13,8 @@ using static RelertSharp.Common.GlobalVar;
 
 namespace RelertSharp.GUI.Model
 {
-    public class MainWindowDataModel
+    public partial class MainWindowDataModel
     {
-        private Map map { get { return CurrentMapDocument.Map; } }
         [Flags]
         public enum SelectingFlag
         {
@@ -31,17 +30,13 @@ namespace RelertSharp.GUI.Model
             Waypoints = 1 << 9,
             CellTags = 1 << 10,
         }
-
-
-        #region Ctor - MainWindowDataModel
-        public MainWindowDataModel()
+        public enum SelectingBoxMode
         {
-
+            ClientRectangle = 1,
+            IsometricRectangle = 2
         }
-        #endregion
 
 
-        #region Public Methods - MainWindowDataModel
         public void SelectUnitAt(I2dLocateable pos)
         {
             UnitItem unit = map.Units.FindByCoord(pos);
@@ -153,17 +148,13 @@ namespace RelertSharp.GUI.Model
 
             Engine.Refresh();
         }
-        #endregion
 
-
-        #region Public Calls - MainWindowDataModel
         public SelectingFlag SelectingFlags { get; set; } = SelectingFlag.Units | SelectingFlag.Infantries | SelectingFlag.Buildings | SelectingFlag.Terrains | SelectingFlag.Overlays;
-        public LightningItem LightningItem { get; set; }
+        public SelectingBoxMode SelectingBoxFlag { get; set; } = SelectingBoxMode.ClientRectangle;
         public List<InfantryItem> Infantries { get; private set; } = new List<InfantryItem>();
         public List<UnitItem> Units { get; private set; } = new List<UnitItem>();
         public List<StructureItem> Buildings { get; private set; } = new List<StructureItem>();
         public List<TerrainItem> Terrains { get; private set; } = new List<TerrainItem>();
         public List<OverlayUnit> Overlays { get; private set; } = new List<OverlayUnit>();
-        #endregion
     }
 }

@@ -7,8 +7,6 @@ using System.Drawing;
 using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
 using RelertSharp.Common;
-using System.Windows.Forms;
-using System.Windows.Controls;
 
 namespace RelertSharp.Utils
 {
@@ -259,23 +257,6 @@ namespace RelertSharp.Utils
             return result;
         }
         /// <summary>
-        /// Return string From int, using for saving ai-trigger condition
-        /// </summary>
-        /// <param name="byteInt"></param>
-        /// <returns></returns>
-        public static string ToLEByteString(int byteInt)
-        {
-            string ret = string.Empty;
-            string src = string.Format("{0:X8}", byteInt);
-            src = src.ToUpper();
-            for (int i = 3; i >= 0; i--) 
-            {
-                ret += src.Substring(i * 2, 2);
-            }
-
-            return ret;
-        }
-        /// <summary>
         /// Return black(0x00000000) if something happened
         /// </summary>
         /// <param name="src"></param>
@@ -354,15 +335,21 @@ namespace RelertSharp.Utils
             fs.Flush();
             fs.Dispose();
         }
-        public static void AdjustComboBoxDropDownWidth(ref System.Windows.Forms.ComboBox cbb)
+        public static void TileToFlatCoord(I2dLocateable pos, int mapWidth, out int x, out int y)
         {
-            if (cbb != null && cbb.Items.Count != 0)
-            {
-                int max = cbb.Width;
-                foreach (var i in cbb.Items)
-                    max = i.ToString().Length * 7 > max ? i.ToString().Length * 7 : max;
-                cbb.DropDownWidth = max;
-            }
+            x = pos.X - pos.Y + mapWidth - 1;
+            y = pos.X + pos.Y - mapWidth - 1;
+        }
+        public static void FlatCoordToTile(I2dLocateable pos, int mapWidth, out int tileX, out int tileY)
+        {
+            tileX = (pos.X + pos.Y + 2) / 2;
+            tileY = (2 * mapWidth + pos.Y - pos.X) / 2;
+        }
+        public static void Swap<T>(ref T src1, ref T src2) where T : struct
+        {
+            T tmp = src1;
+            src1 = src2;
+            src2 = tmp;
         }
     }
 

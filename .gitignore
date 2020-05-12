@@ -11,6 +11,7 @@ _*.*
 *.ilk
 *.lib
 .vs
+ressrc/
 /Debug/frag
 /Debug/vert
 /Debug/shader
@@ -54,3 +55,4 @@ local.rsc
 *.ini
 *.vpl
 *.xml
+!RelertSharp.GUI/Resources/*.png

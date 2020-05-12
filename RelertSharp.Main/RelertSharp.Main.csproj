@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -58,14 +58,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Circle2DEnumerator.cs" />
+    <Compile Include="Common\Enumerator\Circle2DEnumerator.cs" />
     <Compile Include="Common\Constant.cs" />
+    <Compile Include="Common\Enumerator\SceneSquare2DEnumerator.cs" />
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\GlobalVar.cs" />
     <Compile Include="Common\Interfaces.cs" />
     <Compile Include="Common\RSConfig.cs" />
     <Compile Include="Common\SoundManager.cs" />
-    <Compile Include="Common\Square2DEnumerator.cs" />
+    <Compile Include="Common\Enumerator\Square2DEnumerator.cs" />
     <Compile Include="Common\Struct.cs" />
     <Compile Include="DrawingEngine\BufferCollection.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableBase.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="MapStructure\Logic\TriggerDescription.cs" />
     <Compile Include="MapStructure\MapTheaterTileSet.cs" />
     <Compile Include="MapStructure\Objects\AircraftLayer.cs" />
+    <Compile Include="MapStructure\Objects\AttributeChanger.cs" />
     <Compile Include="MapStructure\Objects\InfantryLayer.cs" />
     <Compile Include="MapStructure\Logic\Action.cs" />
     <Compile Include="MapStructure\Logic\Event.cs" />
@@ -173,7 +175,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -12,6 +12,7 @@ std::unordered_map<int, std::unique_ptr<TmpFileClass>> TmpFileClass::FileObjectT
 //clear all object on scene
 void TmpFileClass::ClearAllObjectForAllFile()
 {
+	if (FileObjectTable.size() == 0)	return;
 	for (auto& file : FileObjectTable) {
 		if (file.second)
 			file.second->ClearAllObjects();

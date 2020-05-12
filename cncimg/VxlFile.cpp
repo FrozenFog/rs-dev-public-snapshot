@@ -127,6 +127,7 @@ void VxlLimbTailer::LoadFromBuffer(PBYTE pBuffer)
 //clear all objects on scene
 void VxlFile::ClearAllObjectForAllFile()
 {
+	if (FileObjectTable.size() == 0)	return;
 	for (auto& file : FileObjectTable) {
 		if (file.second)
 			file.second->ClearAllObjects();
