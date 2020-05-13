@@ -7,7 +7,7 @@
     <ProjectGuid>{8597C2BD-5421-4A66-958E-240768EA8A9A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>RelertSharp</RootNamespace>
-    <AssemblyName>relert-sharp</AssemblyName>
+    <AssemblyName>rsdata</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
