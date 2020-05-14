@@ -732,6 +732,7 @@ namespace RelertSharp.SubWindows.LogicEditor
                         e.Control.Bounds = e.CellBounds;
                         break;
                 }
+            Utils.Misc.AdjustComboBoxDropDownWidth(ref cmb);
         }
         private void olvTeamConfig_CellEditFinishing(object sender, BrightIdeasSoftware.CellEditEventArgs e)
         {
@@ -1174,6 +1175,7 @@ namespace RelertSharp.SubWindows.LogicEditor
                     iqCbb.Items.Add("5");
                     if ((int)keyValuePair.Value.Value > 5 || (int)keyValuePair.Value.Value < 0) iqCbb.SelectedIndex = 0;
                     else iqCbb.SelectedIndex = (int)keyValuePair.Value.Value;
+                    Utils.Misc.AdjustComboBoxDropDownWidth(ref iqCbb);
                     e.Control = iqCbb;
                     break;
                 case "PlayerControl":
@@ -1183,10 +1185,15 @@ namespace RelertSharp.SubWindows.LogicEditor
                     boolCombobox.Items.Add("False");
                     boolCombobox.Items.Add("True");
                     boolCombobox.SelectedIndex = (bool)keyValuePair.Value.Value ? 1 : 0;
+                    Utils.Misc.AdjustComboBoxDropDownWidth(ref boolCombobox);
                     e.Control = boolCombobox;
                     break;
                 case "Edge":
-                    ((ComboBox)e.Control).FlatStyle = FlatStyle.Flat;
+                    ComboBox enumCbb = new ComboBox();
+                    enumCbb.FlatStyle = FlatStyle.Flat;
+                    enumCbb.DropDownStyle = ComboBoxStyle.DropDownList;
+                    StaticHelper.LoadToObjectCollection(enumCbb, typeof(HouseEdges));
+                    e.Control = enumCbb;
                     break;
                 case "Country":
                     ComboBox countryCbb = new ComboBox();
@@ -1195,6 +1202,7 @@ namespace RelertSharp.SubWindows.LogicEditor
                     StaticHelper.LoadToObjectCollection(countryCbb, map.Countries);
                     CountryItem countryItem = map.Countries.GetCountry((string)keyValuePair.Value.Value);
                     countryCbb.SelectedItem = countryItem;
+                    Utils.Misc.AdjustComboBoxDropDownWidth(ref countryCbb);
                     e.Control = countryCbb;
                     break;
                 case "ColorName":
@@ -1207,6 +1215,7 @@ namespace RelertSharp.SubWindows.LogicEditor
                     colorCbb.Items.AddRange(colorList.ToArray());
                     if (colorList.Exists(s => s == (string)keyValuePair.Value.Value))
                         colorCbb.SelectedItem = (string)keyValuePair.Value.Value;
+                    Utils.Misc.AdjustComboBoxDropDownWidth(ref colorCbb);
                     e.Control = colorCbb;
                     break;
                 case "NodeCounts":

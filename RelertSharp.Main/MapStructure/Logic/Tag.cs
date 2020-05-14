@@ -108,6 +108,11 @@ namespace RelertSharp.MapStructure.Logic
         public TagItem(string _id, string[] dataList)
         {
             ID = _id;
+            if (dataList.Length != 3)
+            {
+                //logger
+                return;
+            }
             Repeating = (TriggerRepeatingType)(int.Parse(dataList[0]));
             Name = dataList[1];
             AssoTrigger = dataList[2];

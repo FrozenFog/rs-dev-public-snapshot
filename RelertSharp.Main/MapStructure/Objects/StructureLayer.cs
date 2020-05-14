@@ -36,6 +36,11 @@ namespace RelertSharp.MapStructure.Objects
 
         public StructureItem(string _id, string[] _args) : base(_id, _args)
         {
+            if (_args.Length != 16)
+            {
+                //logger
+                return;
+            }
             Rotation = int.Parse(_args[5]);
             TaggedTrigger = _args[6];
             AISellable = ParseBool(_args[7]);

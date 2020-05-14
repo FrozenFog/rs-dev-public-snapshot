@@ -92,6 +92,11 @@ namespace RelertSharp.MapStructure.Logic
         public AITriggerItem() { }
         public AITriggerItem(string _id, string[] _args)
         {
+            if (_args.Length != 18)
+            {
+                //logger
+                return;
+            }
             ID = _id;
             Name = _args[0];
             Team1ID = _args[1];

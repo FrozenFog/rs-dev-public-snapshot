@@ -139,6 +139,11 @@ namespace RelertSharp.MapStructure.Logic
         {
             ID = p.Name;
             string[] tmp = p.ParseStringList();
+            if (tmp.Length != 2)
+            {
+                //logger
+                return;
+            }
             RegName = tmp[1];
             UnitNum = int.Parse(tmp[0]);
         }
