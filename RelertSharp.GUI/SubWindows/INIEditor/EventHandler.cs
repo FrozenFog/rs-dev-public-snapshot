@@ -197,20 +197,22 @@ namespace RelertSharp.SubWindows.INIEditor
         #region Form
         private void INIEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
+            e.Cancel = true;
             switch (MessageBox.Show(this.Owner, DICT["INImsgSave"], DICT["INITitle"], MessageBoxButtons.YesNoCancel))
             {
                 case DialogResult.Yes:
                     {
+                        Hide();
                         break;
                     }
                 case DialogResult.No:
                     {
                         file.IniResidue = DeepCopy(osections) as Dictionary<string, INIEntity>;
+                        Hide();
                         break;
                     }
                 case DialogResult.Cancel:
                 default:
-                    e.Cancel = true;
                     break;
             }
             return;

@@ -1354,5 +1354,13 @@ namespace RelertSharp.SubWindows.LogicEditor
         #endregion
         #endregion
         #endregion
+
+        #region Form
+        private void LogicEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
+        }
+        #endregion
     }
 }
