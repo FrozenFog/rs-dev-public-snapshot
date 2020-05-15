@@ -32,7 +32,7 @@ namespace RelertSharp.GUI
             DrawSmudges();
             DrawTerrains();
             DrawObjects();
-            //DrawWaypoints();
+            DrawWaypoints();
             DrawCelltags();
             GlobalVar.GlobalDir.DisposePreloaded();
             return true;
