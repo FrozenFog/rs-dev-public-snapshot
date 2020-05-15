@@ -23,6 +23,11 @@ namespace RelertSharp.MapStructure.Objects
     {
         public UnitItem(string _id, string[] _args) : base(_id, _args)
         {
+            if (_args.Length != 15)
+            {
+                //logger
+                return;
+            }
             Rotation = int.Parse(_args[5]);
             Status = _args[6];
             TaggedTrigger = _args[7];

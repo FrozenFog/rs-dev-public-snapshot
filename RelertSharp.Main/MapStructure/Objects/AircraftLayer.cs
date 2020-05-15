@@ -18,6 +18,11 @@ namespace RelertSharp.MapStructure.Objects
     {
         public AircraftItem(string _id, string[] _args) : base(_id, _args)
         {
+            if (_args.Length != 12)
+            {
+                //logger
+                return;
+            }
             Rotation = int.Parse(_args[5]);
             Status = _args[6];
             TaggedTrigger = _args[7];

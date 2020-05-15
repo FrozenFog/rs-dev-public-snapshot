@@ -45,6 +45,11 @@ namespace RelertSharp.MapStructure.Objects
         #region Ctor - InfantryItem
         public InfantryItem(string _id, string[] _args) : base(_id, _args)
         {
+            if(_args.Length!=14)
+            {
+                //logger
+                return;
+            }
             SubCells = int.Parse(_args[5]);
             Status = _args[6];
             Rotation = int.Parse(_args[7]);

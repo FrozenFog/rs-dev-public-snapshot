@@ -207,6 +207,7 @@
             this.tbpMiscs = new System.Windows.Forms.TabPage();
             this.gpbMap = new System.Windows.Forms.GroupBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.olvBasic = new BrightIdeasSoftware.ObjectListView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
@@ -260,7 +261,6 @@
             this.hdValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.hdExtraValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rtxbSearchInspector = new System.Windows.Forms.RichTextBox();
-            this.olvBasic = new BrightIdeasSoftware.ObjectListView();
             this.tbcMain.SuspendLayout();
             this.tbpTriggers.SuspendLayout();
             this.gpbActions.SuspendLayout();
@@ -289,13 +289,13 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.olvBasic)).BeginInit();
             this.panel1.SuspendLayout();
             this.gpbHouses.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvHouse)).BeginInit();
             this.LGCgpbHouseAllies.SuspendLayout();
             this.gpbLocalVar.SuspendLayout();
             this.gpbSearch.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.olvBasic)).BeginInit();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -2365,6 +2365,19 @@
             this.splitContainer1.SplitterDistance = 261;
             this.splitContainer1.TabIndex = 0;
             // 
+            // olvBasic
+            // 
+            this.olvBasic.CellEditUseWholeCell = false;
+            this.olvBasic.Cursor = System.Windows.Forms.Cursors.Default;
+            this.olvBasic.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.olvBasic.HideSelection = false;
+            this.olvBasic.Location = new System.Drawing.Point(0, 0);
+            this.olvBasic.Name = "olvBasic";
+            this.olvBasic.Size = new System.Drawing.Size(538, 261);
+            this.olvBasic.TabIndex = 0;
+            this.olvBasic.UseCompatibleStateImageBehavior = false;
+            this.olvBasic.View = System.Windows.Forms.View.Details;
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.label26);
@@ -2916,18 +2929,6 @@
             this.rtxbSearchInspector.TabIndex = 0;
             this.rtxbSearchInspector.Text = "";
             // 
-            // olvBasic
-            // 
-            this.olvBasic.CellEditUseWholeCell = false;
-            this.olvBasic.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.olvBasic.HideSelection = false;
-            this.olvBasic.Location = new System.Drawing.Point(0, 0);
-            this.olvBasic.Name = "olvBasic";
-            this.olvBasic.Size = new System.Drawing.Size(538, 261);
-            this.olvBasic.TabIndex = 0;
-            this.olvBasic.UseCompatibleStateImageBehavior = false;
-            this.olvBasic.View = System.Windows.Forms.View.Details;
-            // 
             // LogicEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2942,6 +2943,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LGCTitle";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogicEditor_FormClosing);
             this.tbcMain.ResumeLayout(false);
             this.tbpTriggers.ResumeLayout(false);
             this.tbpTriggers.PerformLayout();
@@ -2983,6 +2985,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.olvBasic)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.gpbHouses.ResumeLayout(false);
@@ -2993,7 +2996,6 @@
             this.gpbLocalVar.PerformLayout();
             this.gpbSearch.ResumeLayout(false);
             this.gpbSearch.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.olvBasic)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -29,6 +29,8 @@ namespace RelertSharp.GUI
         private List<string> failed = new List<string>();
         private MainWindowDataModel Current = new MainWindowDataModel();
 
+        private LogicEditor logicEditor = new LogicEditor();
+        private INIEditor iNIEditor = new INIEditor();
 
         public MainWindowTest()
         {
@@ -87,6 +89,7 @@ namespace RelertSharp.GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
+            button1.Enabled = false;
             EngineInitialize(panel1.Handle, pnlMiniMap);
             DrawAll();
             GlobalVar.Engine.MoveTo(map.CenterPoint);
@@ -273,12 +276,12 @@ namespace RelertSharp.GUI
 
         private void button2_Click(object sender, EventArgs e)
         {
-            new LogicEditor().Show();
+            logicEditor.Show();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            new INIEditor().Show();
+            iNIEditor.Show();
         }
 
         private void panel1_MouseUp(object sender, MouseEventArgs e)

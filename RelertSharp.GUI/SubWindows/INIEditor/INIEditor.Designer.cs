@@ -270,6 +270,7 @@
             this.MinimizeBox = false;
             this.Name = "INIEditor";
             this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "INITitle";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.INIEditor_FormClosing);
