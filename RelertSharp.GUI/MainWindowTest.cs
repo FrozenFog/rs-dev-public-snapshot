@@ -89,9 +89,11 @@ namespace RelertSharp.GUI
         {
             EngineInitialize(panel1.Handle, pnlMiniMap);
             DrawAll();
+            GlobalVar.Engine.MoveTo(map.CenterPoint);
             pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
             GlobalVar.Engine.Refresh();
             drew = true;
+            button1.Enabled = false;
         }
 
         private void panel1_Resize(object sender, EventArgs e)

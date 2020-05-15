@@ -10,6 +10,7 @@ _*.*
 *.exp
 *.ilk
 *.lib
+*.sln
 .vs
 ressrc/
 /Debug/frag
@@ -56,3 +57,4 @@ local.rsc
 *.vpl
 *.xml
 !RelertSharp.GUI/Resources/*.png
+!relert-sharp.sln

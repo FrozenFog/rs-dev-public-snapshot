@@ -64,6 +64,12 @@
     <Compile Include="MainWindow\KeyHandler.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MainWindow\LoadingWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\LoadingWindow.Designer.cs">
+      <DependentUpon>LoadingWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow\MouseHandler.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,6 +149,9 @@
       <DependentUpon>MainWindowTest.cs</DependentUpon>
     </Compile>
     <Compile Include="_Test.cs" />
+    <EmbeddedResource Include="MainWindow\LoadingWindow.resx">
+      <DependentUpon>LoadingWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RbPanel\RbPanelBase.resx">
       <DependentUpon>RbPanelBase.cs</DependentUpon>
     </EmbeddedResource>

@@ -398,6 +398,13 @@ namespace RelertSharp.MapStructure
                 return "";
             }
         }
+        public I2dLocateable CenterPoint
+        {
+            get
+            {
+                return new Pnt(info.Size.Width, info.Size.Height);
+            }
+        }
         #endregion
     }
 }

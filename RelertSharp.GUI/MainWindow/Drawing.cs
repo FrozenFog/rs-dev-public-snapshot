@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using RelertSharp.DrawingEngine;
 using RelertSharp.FileSystem;
@@ -22,10 +23,16 @@ namespace RelertSharp.GUI
     public partial class MainWindowTest
     {
         private bool drew = false;
+        private LoadingWindow lw;
+
 
 
         private bool DrawAll()
         {
+            lw = new LoadingWindow();
+            lw.Show();
+            lw.Refresh();
+            lw.Begin();
             GlobalVar.GlobalDir.BeginPreload();
             DrawTiles();
             DrawOverlays();
@@ -35,6 +42,9 @@ namespace RelertSharp.GUI
             DrawWaypoints();
             DrawCelltags();
             GlobalVar.GlobalDir.DisposePreloaded();
+            lw.EndDrawing();
+            lw.Close();
+            lw.Dispose();
             return true;
         }
         private bool EngineInitialize(IntPtr mainHandle, Panel minimapPanel)
@@ -57,9 +67,10 @@ namespace RelertSharp.GUI
         }
         private void DrawTiles()
         {
+            lw.StartDrawing(map.TilesData.Count(), "Tiles");
             foreach (Tile t in Map.TilesData)
             {
-                tilecount++;
+                lw.Incre();
                 if (!GlobalVar.Engine.DrawGeneralItem(t))
                 {
                     failed.Add(string.Format("Tile in {0}", t.Coord));
@@ -68,9 +79,10 @@ namespace RelertSharp.GUI
         }
         private void DrawTerrains()
         {
+            lw.StartDrawing(map.Terrains.Count(), "Terrain");
             foreach (TerrainItem terr in Map.Terrains)
             {
-                objectcount++;
+                lw.Incre();
                 if (!GlobalVar.Engine.DrawGeneralItem(terr, Map.GetHeightFromTile(terr)))
                 {
                     failed.Add(string.Format("Terrain in {0}", terr.CoordString));
@@ -79,9 +91,10 @@ namespace RelertSharp.GUI
         }
         private void DrawSmudges()
         {
+            lw.StartDrawing(map.Smudges.Count(), "Smudges");
             foreach (SmudgeItem smg in Map.Smudges)
             {
-                objectcount++;
+                lw.Incre();
                 if (!GlobalVar.Engine.DrawGeneralItem(smg, Map.GetHeightFromTile(smg)))
                 {
                     failed.Add(string.Format("Smudge in {0}", smg.CoordString));
@@ -90,9 +103,10 @@ namespace RelertSharp.GUI
         }
         private void DrawOverlays()
         {
+            lw.StartDrawing(map.Overlays.Count(), "Overlays");
             foreach (OverlayUnit o in Map.Overlays)
             {
-                objectcount++;
+                lw.Incre();
                 if (!GlobalVar.Engine.DrawGeneralItem(o, Map.GetHeightFromTile(o)))
                 {
                     failed.Add(string.Format("Overlay in {0}, id {1}", o.Coord, GlobalVar.GlobalRules.GetOverlayName(o.Index)));
@@ -101,8 +115,10 @@ namespace RelertSharp.GUI
         }
         private void DrawWaypoints()
         {
+            lw.StartDrawing(map.Waypoints.Count(), "Waypoints");
             foreach (WaypointItem w in map.Waypoints)
             {
+                lw.Incre();
                 if (!GlobalVar.Engine.DrawWaypoint(w, map.GetHeightFromTile(w)))
                 {
                     failed.Add(string.Format("Waypoint in {0}", w.CoordString));
@@ -111,8 +127,10 @@ namespace RelertSharp.GUI
         }
         private void DrawCelltags()
         {
+            lw.StartDrawing(map.Celltags.Count(), "Celltags");
             foreach (CellTagItem c in map.Celltags)
             {
+                lw.Incre();
                 if (!GlobalVar.Engine.DrawCelltag(c, map.GetHeightFromTile(c), true))
                 {
                     failed.Add(string.Format("Cellta at {0}", c.CoordString));
@@ -121,35 +139,40 @@ namespace RelertSharp.GUI
         }
         private void DrawObjects()
         {
+            lw.StartDrawing(map.Infantries.Count(), "Infantries");
             foreach (InfantryItem inf in Map.Infantries)
             {
-                objectcount++;
+                lw.Incre();
                 if (!GlobalVar.Engine.DrawObject(inf, Map.GetHeightFromTile(inf), Map.GetHouseColor(inf.OwnerHouse)))
                     failed.Add(inf.RegName);
             }
+            lw.StartDrawing(map.Buildings.Count(), "Buildings");
             foreach (StructureItem structure in Map.Buildings)
             {
-                objectcount++;
+                lw.Incre();
                 if (!GlobalVar.Engine.DrawObject(structure, Map.GetHeightFromTile(structure), Map.GetHouseColor(structure.OwnerHouse)))
                     failed.Add(structure.RegName);
             }
+            lw.StartDrawing(map.Units.Count(), "Units");
             foreach (UnitItem unit in Map.Units)
             {
-                objectcount++;
+                lw.Incre();
                 if (!GlobalVar.Engine.DrawObject(unit, Map.GetHeightFromTile(unit), Map.GetHouseColor(unit.OwnerHouse)))
                     failed.Add(unit.RegName);
             }
+            lw.StartDrawing(map.Aircrafts.Count(), "Aircrafts");
             foreach (AircraftItem air in Map.Aircrafts)
             {
-                objectcount++;
+                lw.Incre();
                 if (!GlobalVar.Engine.DrawObject(air, Map.GetHeightFromTile(air), Map.GetHouseColor(air.OwnerHouse)))
                     failed.Add(air.RegName);
             }
+            lw.StartDrawing(map.Houses.Count(), "BaseNodes");
             foreach (HouseItem house in Map.Houses)
             {
+                lw.Incre();
                 foreach (BaseNode node in house.BaseNodes)
                 {
-                    objectcount++;
                     if (!GlobalVar.Engine.DrawObject(node, Map.GetHeightFromTile(node), Map.GetHouseColor(house.Name)))
                         failed.Add("Node " + node.RegName);
                 }
