@@ -142,6 +142,15 @@
   <data name="Arrow7" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Arrow7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="load0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\load0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="load1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\load1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="load_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\load-1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="rotationBase" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\rotationBase.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

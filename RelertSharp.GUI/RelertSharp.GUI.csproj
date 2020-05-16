@@ -254,6 +254,9 @@
     <None Include="Resources\Arrow7.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\load0.png" />
+    <None Include="Resources\load1.png" />
+    <None Include="Resources\load-1.png" />
     <Content Include="rslogo.ico" />
   </ItemGroup>
   <ItemGroup>

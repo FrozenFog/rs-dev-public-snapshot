@@ -73,7 +73,7 @@ namespace RelertSharp.SubWindows.LogicEditor
                     break;
                 }
             }
-            GlobalVar.GlobalRules.Override(map.IniResidue.Values);
+            //GlobalVar.GlobalRules.Override(map.IniResidue.Values);
         }
 
         private void InitControls()

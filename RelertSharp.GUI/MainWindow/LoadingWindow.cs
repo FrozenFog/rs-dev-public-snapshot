@@ -13,6 +13,20 @@ namespace RelertSharp.GUI
 {
     internal partial class LoadingWindow : Form
     {
+        public enum LoadingFlag
+        {
+            Tiles = 1,
+            Overlays = 2,
+            Smudges = 3,
+            Terrains = 4,
+            Units = 5,
+            Infantries = 6,
+            Buildings = 7,
+            Aircrafts = 8,
+            BaseNodes = 9,
+            Waypoints = 10,
+            Celltags = 11
+        }
         private delegate void DSetText(string lblText, Label dest);
         private delegate void DSetValue(int nValue, ProgressBar pgb);
         private delegate void DIncreValue(ProgressBar pgb);
@@ -54,7 +68,7 @@ namespace RelertSharp.GUI
             progMain.Maximum = 1;
             progMain.Value = 1;
             Refresh();
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
         }
         public void ResetBar()
         {
@@ -64,6 +78,77 @@ namespace RelertSharp.GUI
         {
             SetText("Loading mix...", lblCurrentStatus);
         }
+        #region Items
+        public void EndItems(LoadingFlag flag)
+        {
+            string item = "";
+            Label dest = null;
+            PictureBox pbx = null;
+            switch (flag)
+            {
+                case LoadingFlag.Tiles:
+                    item = "Tiles";
+                    dest = lblTile;
+                    pbx = pbxTiles;
+                    break;
+                case LoadingFlag.Overlays:
+                    item = "Overlays";
+                    dest = lblOverlays;
+                    pbx = pbxOverlays;
+                    break;
+                case LoadingFlag.Infantries:
+                    item = "Infantries";
+                    dest = lblInfantries;
+                    pbx = pbxInfantries;
+                    break;
+                case LoadingFlag.Units:
+                    item = "Units";
+                    dest = lblUnits;
+                    pbx = pbxUnits;
+                    break;
+                case LoadingFlag.Buildings:
+                    item = "Buildings";
+                    dest = lblBuildings;
+                    pbx = pbxBuildings;
+                    break;
+                case LoadingFlag.Aircrafts:
+                    item = "Aircrafts";
+                    dest = lblAircrafts;
+                    pbx = pbxAircrafts;
+                    break;
+                case LoadingFlag.Terrains:
+                    item = "Terrains";
+                    dest = lblTerrains;
+                    pbx = pbxTerrains;
+                    break;
+                case LoadingFlag.Smudges:
+                    item = "Smudges";
+                    dest = lblSmudges;
+                    pbx = pbxSmudges;
+                    break;
+                case LoadingFlag.BaseNodes:
+                    item = "BaseNodes";
+                    dest = lblNodes;
+                    pbx = pbxNode;
+                    break;
+                case LoadingFlag.Waypoints:
+                    item = "Waypoints";
+                    dest = lblWaypoints;
+                    pbx = pbxWaypoints;
+                    break;
+                case LoadingFlag.Celltags:
+                    item = "Celltags";
+                    dest = lblCelltags;
+                    pbx = pbxCelltags;
+                    break;
+            }
+            SetText(string.Format("{0} {1} loaded", maxValue, item), dest);
+            SetPbxComplete(pbx);
+
+        }
+        #endregion
+
+
 
         #region Base
         private void StartThread(Action action)
@@ -98,6 +183,11 @@ namespace RelertSharp.GUI
             //  });
             maxValue = nValue;
             dest.Maximum = nValue;
+            dest.Refresh();
+        }
+        private void SetPbxComplete(PictureBox dest)
+        {
+            dest.Image = Properties.Resources.load1;
             dest.Refresh();
         }
         private void ResetValue(ProgressBar dest)

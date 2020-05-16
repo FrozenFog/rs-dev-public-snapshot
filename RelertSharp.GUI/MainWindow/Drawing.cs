@@ -76,6 +76,7 @@ namespace RelertSharp.GUI
                     failed.Add(string.Format("Tile in {0}", t.Coord));
                 }
             }
+            lw.EndItems(LoadingWindow.LoadingFlag.Tiles);
         }
         private void DrawTerrains()
         {
@@ -88,6 +89,7 @@ namespace RelertSharp.GUI
                     failed.Add(string.Format("Terrain in {0}", terr.CoordString));
                 }
             }
+            lw.EndItems(LoadingWindow.LoadingFlag.Terrains);
         }
         private void DrawSmudges()
         {
@@ -100,6 +102,7 @@ namespace RelertSharp.GUI
                     failed.Add(string.Format("Smudge in {0}", smg.CoordString));
                 }
             }
+            lw.EndItems(LoadingWindow.LoadingFlag.Smudges);
         }
         private void DrawOverlays()
         {
@@ -112,6 +115,7 @@ namespace RelertSharp.GUI
                     failed.Add(string.Format("Overlay in {0}, id {1}", o.Coord, GlobalVar.GlobalRules.GetOverlayName(o.Index)));
                 }
             }
+            lw.EndItems(LoadingWindow.LoadingFlag.Overlays);
         }
         private void DrawWaypoints()
         {
@@ -124,6 +128,7 @@ namespace RelertSharp.GUI
                     failed.Add(string.Format("Waypoint in {0}", w.CoordString));
                 }
             }
+            lw.EndItems(LoadingWindow.LoadingFlag.Waypoints);
         }
         private void DrawCelltags()
         {
@@ -136,6 +141,7 @@ namespace RelertSharp.GUI
                     failed.Add(string.Format("Cellta at {0}", c.CoordString));
                 }
             }
+            lw.EndItems(LoadingWindow.LoadingFlag.Celltags);
         }
         private void DrawObjects()
         {
@@ -146,6 +152,7 @@ namespace RelertSharp.GUI
                 if (!GlobalVar.Engine.DrawObject(inf, Map.GetHeightFromTile(inf), Map.GetHouseColor(inf.OwnerHouse)))
                     failed.Add(inf.RegName);
             }
+            lw.EndItems(LoadingWindow.LoadingFlag.Infantries);
             lw.StartDrawing(map.Buildings.Count(), "Buildings");
             foreach (StructureItem structure in Map.Buildings)
             {
@@ -154,12 +161,14 @@ namespace RelertSharp.GUI
                     failed.Add(structure.RegName);
             }
             lw.StartDrawing(map.Units.Count(), "Units");
+            lw.EndItems(LoadingWindow.LoadingFlag.Buildings);
             foreach (UnitItem unit in Map.Units)
             {
                 lw.Incre();
                 if (!GlobalVar.Engine.DrawObject(unit, Map.GetHeightFromTile(unit), Map.GetHouseColor(unit.OwnerHouse)))
                     failed.Add(unit.RegName);
             }
+            lw.EndItems(LoadingWindow.LoadingFlag.Units);
             lw.StartDrawing(map.Aircrafts.Count(), "Aircrafts");
             foreach (AircraftItem air in Map.Aircrafts)
             {
@@ -167,6 +176,7 @@ namespace RelertSharp.GUI
                 if (!GlobalVar.Engine.DrawObject(air, Map.GetHeightFromTile(air), Map.GetHouseColor(air.OwnerHouse)))
                     failed.Add(air.RegName);
             }
+            lw.EndItems(LoadingWindow.LoadingFlag.Aircrafts);
             lw.StartDrawing(map.Houses.Count(), "BaseNodes");
             foreach (HouseItem house in Map.Houses)
             {
@@ -177,6 +187,7 @@ namespace RelertSharp.GUI
                         failed.Add("Node " + node.RegName);
                 }
             }
+            lw.EndItems(LoadingWindow.LoadingFlag.BaseNodes);
             listBox1.Items.AddRange(failed.ToArray());
         }
     }
