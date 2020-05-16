@@ -18,7 +18,7 @@ namespace RelertSharp.MapStructure.Objects
     {
         public AircraftItem(string _id, string[] _args) : base(_id, _args)
         {
-            if (_args.Length != 12)
+            if (_args.Length != Constant.MapStructure.ArgLenAircraft)
             {
                 //logger
                 return;

@@ -23,7 +23,7 @@ namespace RelertSharp.MapStructure.Objects
     {
         public UnitItem(string _id, string[] _args) : base(_id, _args)
         {
-            if (_args.Length != 15)
+            if (_args.Length != Constant.MapStructure.ArgLenUnit)
             {
                 //logger
                 return;

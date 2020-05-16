@@ -36,7 +36,7 @@ namespace RelertSharp.MapStructure.Objects
 
         public StructureItem(string _id, string[] _args) : base(_id, _args)
         {
-            if (_args.Length != 16)
+            if (_args.Length != Constant.MapStructure.ArgLenStructure)
             {
                 //logger
                 return;

@@ -284,6 +284,13 @@ namespace RelertSharp.GUI
             iNIEditor.Show();
         }
 
+        private void pnlMiniMap_MouseClick(object sender, MouseEventArgs e)
+        {
+            minimapMoving = true;
+            MinimapMoving(e);
+            minimapMoving = false;
+        }
+
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Middle)

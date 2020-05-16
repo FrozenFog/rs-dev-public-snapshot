@@ -45,7 +45,7 @@ namespace RelertSharp.MapStructure.Objects
         #region Ctor - InfantryItem
         public InfantryItem(string _id, string[] _args) : base(_id, _args)
         {
-            if(_args.Length!=14)
+            if (_args.Length != Constant.MapStructure.ArgLenInfantry)
             {
                 //logger
                 return;
