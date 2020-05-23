@@ -30,18 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindowTest));
             this.button1 = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.rbPanelAttribute = new RelertSharp.GUI.RbPanel.RbPanelAttribute();
-            this.pnlSideObjects = new System.Windows.Forms.Panel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.ckbObjectsPanel = new System.Windows.Forms.CheckBox();
-            this.pnlSideDebug = new System.Windows.Forms.Panel();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.ckbDebugPanel = new System.Windows.Forms.CheckBox();
             this.panelHost = new System.Windows.Forms.Panel();
             this.splitMain = new System.Windows.Forms.SplitContainer();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.toolsMain = new System.Windows.Forms.ToolStrip();
+            this.toolBtnSelectingDropdown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolBtnMoving = new System.Windows.Forms.ToolStripButton();
+            this.toolBtnAttributeBrush = new System.Windows.Forms.ToolStripButton();
             this.splitSide = new System.Windows.Forms.SplitContainer();
             this.pnlMiniMap = new System.Windows.Forms.Panel();
             this.pnlSide = new System.Windows.Forms.Panel();
@@ -62,6 +57,9 @@
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.ckbRankPanel = new System.Windows.Forms.CheckBox();
+            this.pnlSideDebug = new System.Windows.Forms.Panel();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.ckbDebugPanel = new System.Windows.Forms.CheckBox();
             this.pnlSideLightning = new System.Windows.Forms.Panel();
             this.tlpLightning = new System.Windows.Forms.TableLayoutPanel();
             this.btnLightningRefresh = new System.Windows.Forms.Button();
@@ -89,6 +87,11 @@
             this.ckbBuildableTiles = new System.Windows.Forms.CheckBox();
             this.ckbGroundPassableTiles = new System.Windows.Forms.CheckBox();
             this.cbbCheckingPanel = new System.Windows.Forms.CheckBox();
+            this.pnlSideObjects = new System.Windows.Forms.Panel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ckbObjectsPanel = new System.Windows.Forms.CheckBox();
             this.lblx = new System.Windows.Forms.Label();
             this.lbly = new System.Windows.Forms.Label();
             this.lblz = new System.Windows.Forms.Label();
@@ -96,15 +99,14 @@
             this.lblMouseY = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
-            this.pnlSideObjects.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.pnlSideDebug.SuspendLayout();
+            this.rbPanelAttribute = new RelertSharp.GUI.RbPanel.RbPanelAttribute();
             this.panelHost.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
             this.splitMain.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.toolsMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitSide)).BeginInit();
             this.splitSide.Panel1.SuspendLayout();
             this.splitSide.Panel2.SuspendLayout();
@@ -112,6 +114,7 @@
             this.pnlSide.SuspendLayout();
             this.pnlSideRank.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.pnlSideDebug.SuspendLayout();
             this.pnlSideLightning.SuspendLayout();
             this.tlpLightning.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmbxLightningRed)).BeginInit();
@@ -122,6 +125,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nmbxLightningLevel)).BeginInit();
             this.pnlSideChecking.SuspendLayout();
             this.tlpChecking.SuspendLayout();
+            this.pnlSideObjects.SuspendLayout();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -135,150 +140,13 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.rbPanelAttribute);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1035, 796);
-            this.panel1.TabIndex = 2;
-            this.panel1.SizeChanged += new System.EventHandler(this.panel1_SizeChanged);
-            this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
-            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
-            this.panel1.MouseEnter += new System.EventHandler(this.panel1_MouseEnter);
-            this.panel1.MouseLeave += new System.EventHandler(this.panel1_MouseLeave);
-            this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
-            this.panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseUp);
-            this.panel1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.panel1_PreviewKeyDown);
-            this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
-            // 
-            // rbPanelAttribute
-            // 
-            this.rbPanelAttribute.BackColor = System.Drawing.SystemColors.Control;
-            this.rbPanelAttribute.Location = new System.Drawing.Point(26, 33);
-            this.rbPanelAttribute.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rbPanelAttribute.Name = "rbPanelAttribute";
-            this.rbPanelAttribute.Size = new System.Drawing.Size(550, 299);
-            this.rbPanelAttribute.TabIndex = 0;
-            this.rbPanelAttribute.Visible = false;
-            // 
-            // pnlSideObjects
-            // 
-            this.pnlSideObjects.AutoSize = true;
-            this.pnlSideObjects.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.pnlSideObjects.Controls.Add(this.tabControl1);
-            this.pnlSideObjects.Controls.Add(this.ckbObjectsPanel);
-            this.pnlSideObjects.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlSideObjects.Location = new System.Drawing.Point(0, 0);
-            this.pnlSideObjects.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pnlSideObjects.Name = "pnlSideObjects";
-            this.pnlSideObjects.Size = new System.Drawing.Size(183, 305);
-            this.pnlSideObjects.TabIndex = 0;
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tabControl1.Location = new System.Drawing.Point(0, 25);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(183, 280);
-            this.tabControl1.TabIndex = 2;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage1.Size = new System.Drawing.Size(175, 251);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(196, 251);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // ckbObjectsPanel
-            // 
-            this.ckbObjectsPanel.Appearance = System.Windows.Forms.Appearance.Button;
-            this.ckbObjectsPanel.AutoSize = true;
-            this.ckbObjectsPanel.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ckbObjectsPanel.Checked = true;
-            this.ckbObjectsPanel.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbObjectsPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ckbObjectsPanel.Location = new System.Drawing.Point(0, 0);
-            this.ckbObjectsPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ckbObjectsPanel.Name = "ckbObjectsPanel";
-            this.ckbObjectsPanel.Size = new System.Drawing.Size(183, 25);
-            this.ckbObjectsPanel.TabIndex = 1;
-            this.ckbObjectsPanel.Text = "Map Objects";
-            this.ckbObjectsPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ckbObjectsPanel.UseVisualStyleBackColor = true;
-            this.ckbObjectsPanel.CheckedChanged += new System.EventHandler(this.Panelchecker_CheckedChanged0);
-            // 
-            // pnlSideDebug
-            // 
-            this.pnlSideDebug.AutoSize = true;
-            this.pnlSideDebug.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.pnlSideDebug.Controls.Add(this.listBox1);
-            this.pnlSideDebug.Controls.Add(this.ckbDebugPanel);
-            this.pnlSideDebug.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlSideDebug.Location = new System.Drawing.Point(0, 651);
-            this.pnlSideDebug.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pnlSideDebug.Name = "pnlSideDebug";
-            this.pnlSideDebug.Size = new System.Drawing.Size(183, 254);
-            this.pnlSideDebug.TabIndex = 5;
-            // 
-            // listBox1
-            // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.HorizontalScrollbar = true;
-            this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(0, 25);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(183, 229);
-            this.listBox1.TabIndex = 3;
-            // 
-            // ckbDebugPanel
-            // 
-            this.ckbDebugPanel.Appearance = System.Windows.Forms.Appearance.Button;
-            this.ckbDebugPanel.AutoSize = true;
-            this.ckbDebugPanel.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ckbDebugPanel.Checked = true;
-            this.ckbDebugPanel.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbDebugPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ckbDebugPanel.Location = new System.Drawing.Point(0, 0);
-            this.ckbDebugPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ckbDebugPanel.Name = "ckbDebugPanel";
-            this.ckbDebugPanel.Size = new System.Drawing.Size(183, 25);
-            this.ckbDebugPanel.TabIndex = 4;
-            this.ckbDebugPanel.Text = "Debugs";
-            this.ckbDebugPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ckbDebugPanel.UseVisualStyleBackColor = true;
-            this.ckbDebugPanel.CheckedChanged += new System.EventHandler(this.Panelchecker_CheckedChanged0);
-            // 
             // panelHost
             // 
             this.panelHost.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelHost.Controls.Add(this.splitMain);
-            this.panelHost.Location = new System.Drawing.Point(16, 51);
+            this.panelHost.Location = new System.Drawing.Point(10, 50);
             this.panelHost.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelHost.Name = "panelHost";
             this.panelHost.Size = new System.Drawing.Size(1243, 796);
@@ -295,6 +163,7 @@
             // splitMain.Panel1
             // 
             this.splitMain.Panel1.Controls.Add(this.panel1);
+            this.splitMain.Panel1.Controls.Add(this.toolsMain);
             // 
             // splitMain.Panel2
             // 
@@ -302,6 +171,69 @@
             this.splitMain.Size = new System.Drawing.Size(1243, 796);
             this.splitMain.SplitterDistance = 1035;
             this.splitMain.TabIndex = 5;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.rbPanelAttribute);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(40, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(995, 796);
+            this.panel1.TabIndex = 2;
+            this.panel1.SizeChanged += new System.EventHandler(this.panel1_SizeChanged);
+            this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
+            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
+            this.panel1.MouseEnter += new System.EventHandler(this.panel1_MouseEnter);
+            this.panel1.MouseLeave += new System.EventHandler(this.panel1_MouseLeave);
+            this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
+            this.panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseUp);
+            this.panel1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.panel1_PreviewKeyDown);
+            this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
+            // 
+            // toolsMain
+            // 
+            this.toolsMain.Dock = System.Windows.Forms.DockStyle.Left;
+            this.toolsMain.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.toolsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolBtnSelectingDropdown,
+            this.toolBtnMoving,
+            this.toolBtnAttributeBrush});
+            this.toolsMain.Location = new System.Drawing.Point(0, 0);
+            this.toolsMain.Name = "toolsMain";
+            this.toolsMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolsMain.Size = new System.Drawing.Size(40, 796);
+            this.toolsMain.TabIndex = 3;
+            this.toolsMain.Text = "toolStrip1";
+            // 
+            // toolBtnSelectingDropdown
+            // 
+            this.toolBtnSelectingDropdown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnSelectingDropdown.Image = global::RelertSharp.GUI.Properties.Resources.btnRectSelecting;
+            this.toolBtnSelectingDropdown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnSelectingDropdown.Name = "toolBtnSelectingDropdown";
+            this.toolBtnSelectingDropdown.Size = new System.Drawing.Size(37, 24);
+            this.toolBtnSelectingDropdown.Text = "toolStripDropDownButton1";
+            // 
+            // toolBtnMoving
+            // 
+            this.toolBtnMoving.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnMoving.Image = global::RelertSharp.GUI.Properties.Resources.btnMoving;
+            this.toolBtnMoving.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolBtnMoving.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnMoving.Name = "toolBtnMoving";
+            this.toolBtnMoving.Size = new System.Drawing.Size(37, 24);
+            this.toolBtnMoving.Text = "toolStripButton1";
+            // 
+            // toolBtnAttributeBrush
+            // 
+            this.toolBtnAttributeBrush.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnAttributeBrush.Image = global::RelertSharp.GUI.Properties.Resources.btnBrush;
+            this.toolBtnAttributeBrush.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolBtnAttributeBrush.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnAttributeBrush.Name = "toolBtnAttributeBrush";
+            this.toolBtnAttributeBrush.Size = new System.Drawing.Size(37, 24);
+            this.toolBtnAttributeBrush.Text = "toolStripButton2";
             // 
             // splitSide
             // 
@@ -567,6 +499,49 @@
             this.ckbRankPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ckbRankPanel.UseVisualStyleBackColor = true;
             this.ckbRankPanel.CheckedChanged += new System.EventHandler(this.Panelchecker_CheckedChanged0);
+            // 
+            // pnlSideDebug
+            // 
+            this.pnlSideDebug.AutoSize = true;
+            this.pnlSideDebug.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.pnlSideDebug.Controls.Add(this.listBox1);
+            this.pnlSideDebug.Controls.Add(this.ckbDebugPanel);
+            this.pnlSideDebug.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlSideDebug.Location = new System.Drawing.Point(0, 651);
+            this.pnlSideDebug.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlSideDebug.Name = "pnlSideDebug";
+            this.pnlSideDebug.Size = new System.Drawing.Size(183, 254);
+            this.pnlSideDebug.TabIndex = 5;
+            // 
+            // listBox1
+            // 
+            this.listBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.HorizontalScrollbar = true;
+            this.listBox1.ItemHeight = 15;
+            this.listBox1.Location = new System.Drawing.Point(0, 25);
+            this.listBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(183, 229);
+            this.listBox1.TabIndex = 3;
+            // 
+            // ckbDebugPanel
+            // 
+            this.ckbDebugPanel.Appearance = System.Windows.Forms.Appearance.Button;
+            this.ckbDebugPanel.AutoSize = true;
+            this.ckbDebugPanel.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ckbDebugPanel.Checked = true;
+            this.ckbDebugPanel.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbDebugPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ckbDebugPanel.Location = new System.Drawing.Point(0, 0);
+            this.ckbDebugPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ckbDebugPanel.Name = "ckbDebugPanel";
+            this.ckbDebugPanel.Size = new System.Drawing.Size(183, 25);
+            this.ckbDebugPanel.TabIndex = 4;
+            this.ckbDebugPanel.Text = "Debugs";
+            this.ckbDebugPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ckbDebugPanel.UseVisualStyleBackColor = true;
+            this.ckbDebugPanel.CheckedChanged += new System.EventHandler(this.Panelchecker_CheckedChanged0);
             // 
             // pnlSideLightning
             // 
@@ -1021,6 +996,71 @@
             this.cbbCheckingPanel.UseVisualStyleBackColor = true;
             this.cbbCheckingPanel.CheckedChanged += new System.EventHandler(this.Panelchecker_CheckedChanged0);
             // 
+            // pnlSideObjects
+            // 
+            this.pnlSideObjects.AutoSize = true;
+            this.pnlSideObjects.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.pnlSideObjects.Controls.Add(this.tabControl1);
+            this.pnlSideObjects.Controls.Add(this.ckbObjectsPanel);
+            this.pnlSideObjects.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlSideObjects.Location = new System.Drawing.Point(0, 0);
+            this.pnlSideObjects.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlSideObjects.Name = "pnlSideObjects";
+            this.pnlSideObjects.Size = new System.Drawing.Size(183, 305);
+            this.pnlSideObjects.TabIndex = 0;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabControl1.Location = new System.Drawing.Point(0, 25);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(183, 280);
+            this.tabControl1.TabIndex = 2;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage1.Size = new System.Drawing.Size(175, 251);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage2.Size = new System.Drawing.Size(175, 251);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // ckbObjectsPanel
+            // 
+            this.ckbObjectsPanel.Appearance = System.Windows.Forms.Appearance.Button;
+            this.ckbObjectsPanel.AutoSize = true;
+            this.ckbObjectsPanel.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ckbObjectsPanel.Checked = true;
+            this.ckbObjectsPanel.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbObjectsPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ckbObjectsPanel.Location = new System.Drawing.Point(0, 0);
+            this.ckbObjectsPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ckbObjectsPanel.Name = "ckbObjectsPanel";
+            this.ckbObjectsPanel.Size = new System.Drawing.Size(183, 25);
+            this.ckbObjectsPanel.TabIndex = 1;
+            this.ckbObjectsPanel.Text = "Map Objects";
+            this.ckbObjectsPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ckbObjectsPanel.UseVisualStyleBackColor = true;
+            this.ckbObjectsPanel.CheckedChanged += new System.EventHandler(this.Panelchecker_CheckedChanged0);
+            // 
             // lblx
             // 
             this.lblx.AutoSize = true;
@@ -1090,6 +1130,16 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // rbPanelAttribute
+            // 
+            this.rbPanelAttribute.BackColor = System.Drawing.SystemColors.Control;
+            this.rbPanelAttribute.Location = new System.Drawing.Point(195, 67);
+            this.rbPanelAttribute.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbPanelAttribute.Name = "rbPanelAttribute";
+            this.rbPanelAttribute.Size = new System.Drawing.Size(550, 299);
+            this.rbPanelAttribute.TabIndex = 0;
+            this.rbPanelAttribute.Visible = false;
+            // 
             // MainWindowTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1108,17 +1158,15 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainWindowTest";
             this.Text = "_test";
-            this.panel1.ResumeLayout(false);
-            this.pnlSideObjects.ResumeLayout(false);
-            this.pnlSideObjects.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
-            this.pnlSideDebug.ResumeLayout(false);
-            this.pnlSideDebug.PerformLayout();
             this.panelHost.ResumeLayout(false);
             this.splitMain.Panel1.ResumeLayout(false);
+            this.splitMain.Panel1.PerformLayout();
             this.splitMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).EndInit();
             this.splitMain.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.toolsMain.ResumeLayout(false);
+            this.toolsMain.PerformLayout();
             this.splitSide.Panel1.ResumeLayout(false);
             this.splitSide.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitSide)).EndInit();
@@ -1129,6 +1177,8 @@
             this.pnlSideRank.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.pnlSideDebug.ResumeLayout(false);
+            this.pnlSideDebug.PerformLayout();
             this.pnlSideLightning.ResumeLayout(false);
             this.pnlSideLightning.PerformLayout();
             this.tlpLightning.ResumeLayout(false);
@@ -1143,6 +1193,9 @@
             this.pnlSideChecking.PerformLayout();
             this.tlpChecking.ResumeLayout(false);
             this.tlpChecking.PerformLayout();
+            this.pnlSideObjects.ResumeLayout(false);
+            this.pnlSideObjects.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1216,5 +1269,9 @@
         private RbPanel.RbPanelAttribute rbPanelAttribute;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.ToolStrip toolsMain;
+        private System.Windows.Forms.ToolStripDropDownButton toolBtnSelectingDropdown;
+        private System.Windows.Forms.ToolStripButton toolBtnMoving;
+        private System.Windows.Forms.ToolStripButton toolBtnAttributeBrush;
     }
 }

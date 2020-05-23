@@ -260,6 +260,10 @@
     <None Include="Resources\load0.png" />
     <None Include="Resources\load1.png" />
     <None Include="Resources\load-1.png" />
+    <None Include="Resources\arrow.png" />
+    <None Include="Resources\brush.png" />
+    <None Include="Resources\moving.png" />
+    <None Include="Resources\selectRect.png" />
     <Content Include="rslogo.ico" />
   </ItemGroup>
   <ItemGroup>
