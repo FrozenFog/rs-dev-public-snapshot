@@ -115,7 +115,7 @@ namespace RelertSharp.DrawingEngine
         public void ViewShift(Point previous, Point now)
         {
             Point delta = DeltaPoint(now, previous);
-            CppExtern.Scene.MoveFocusOnScreen(delta.X * 1.2f, delta.Y * 1.2f);
+            CppExtern.Scene.MoveFocusOnScreen(delta.X * 1.2f, delta.Y * 2f);
             SetMinimapClientPos();
             Refresh();
         }

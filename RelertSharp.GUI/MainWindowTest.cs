@@ -35,6 +35,8 @@ namespace RelertSharp.GUI
         public MainWindowTest()
         {
             InitializeComponent();
+            (panel1 as Control).KeyDown += new KeyEventHandler(panel1_KeyDown);
+            (panel1 as Control).KeyUp += new KeyEventHandler(panel1_KeyUp);
             map = GlobalVar.CurrentMapDocument.Map;
             GlobalVar.GlobalRules.MapIniData = map.IniResidue;
             panel1.BackColor = Color.FromArgb(30, 30, 30);
@@ -237,6 +239,14 @@ namespace RelertSharp.GUI
         private void panel1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             HandlingKey(e);
+        }
+        private void panel1_KeyDown(object sender, KeyEventArgs e)
+        {
+            HandlingKeyDown(e);
+        }
+        private void panel1_KeyUp(object sender, KeyEventArgs e)
+        {
+            HandlingKeyUp(e);
         }
 
         private void panel1_MouseEnter(object sender, EventArgs e)

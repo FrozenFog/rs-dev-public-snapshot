@@ -30,6 +30,12 @@ namespace RelertSharp.GUI
                 case MainWindowDataModel.MouseActionType.BoxSelecting:
                     SceneSelectionBoxSet(e);
                     break;
+                case MainWindowDataModel.MouseActionType.Moving:
+                    if (spaceKeyMoving)
+                    {
+                        BeginMove(e);
+                    }
+                    break;
             }
         }
         private void MmbDown(MouseEventArgs e)
@@ -80,6 +86,9 @@ namespace RelertSharp.GUI
             {
                 case MainWindowDataModel.MouseActionType.BoxSelecting:
                     SelectSceneItemsInsideBox(e);
+                    break;
+                case MainWindowDataModel.MouseActionType.Moving:
+                    MmbUp(e);
                     break;
             }
         }

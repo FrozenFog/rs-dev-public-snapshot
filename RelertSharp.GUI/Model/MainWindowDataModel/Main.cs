@@ -24,6 +24,7 @@ namespace RelertSharp.GUI.Model
             TileEditing = 1 << 2,
             AttributeBrush = 1 << 3,
             PreciseSelect = 1 << 4,
+            Moving = 1 << 5,
             Selecting = BoxSelecting | PreciseSelect,
 
             None = 0

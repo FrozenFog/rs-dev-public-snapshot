@@ -24,6 +24,7 @@ namespace RelertSharp.GUI
     {
         private bool onMoving = false;
         private bool minimapMoving = false;
+        private bool spaceKeyMoving = false;
         private Point previousLocation;
 
         private void BeginMove(MouseEventArgs e)

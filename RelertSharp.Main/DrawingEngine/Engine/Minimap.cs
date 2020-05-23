@@ -16,6 +16,10 @@ namespace RelertSharp.DrawingEngine
         {
             minimap.SetClientWindowSize(new Rectangle(Point.Empty, client));
         }
+        public void RefreshMinimap()
+        {
+            SetMinimapClientPos();
+        }
         public void MinimapMoving(Point panelClicked)
         {
             I2dLocateable pos = minimap.GetPointFromMinimapSeeking(Pnt.FromPoint(panelClicked));

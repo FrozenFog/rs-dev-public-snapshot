@@ -46,7 +46,7 @@ namespace RelertSharp.GUI
                         Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.AttributeBrush;
                         break;
                     case Keys.V:
-                        Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.None;
+                        Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.Moving;
                         break;
                     case Keys.Enter:
                         if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.AttributeBrush)
@@ -54,13 +54,39 @@ namespace RelertSharp.GUI
                             ApplyAttributeToSelected();
                         }
                         break;
-                    case Keys.Up:
+                }
+            }
+        }
+
+        private void HandlingKeyDown(KeyEventArgs e)
+        {
+            if (drew)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.Space:
+                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.Moving)
+                        {
+                            spaceKeyMoving = true;
+                            panel1.Cursor = Cursors.SizeAll;
+                        }
                         break;
-                    case Keys.Left:
-                        break;
-                    case Keys.Down:
-                        break;
-                    case Keys.Right:
+                }
+            }
+        }
+
+        private void HandlingKeyUp(KeyEventArgs e)
+        {
+            if (drew)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.Space:
+                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.Moving)
+                        {
+                            spaceKeyMoving = false;
+                            panel1.Cursor = Cursors.Default;
+                        }
                         break;
                 }
             }
