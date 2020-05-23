@@ -96,15 +96,16 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - ObjectItemBase
-        public virtual void ApplyAttributeFrom(ICombatObject obj, AttributeChanger ckb)
+        public virtual void ApplyAttributeFrom(AttributeChanger obj)
         {
-            if (ckb.bOwnerHouse) OwnerHouse = obj.OwnerHouse;
-            if (ckb.bHealthPoint) HealthPoint = obj.HealthPoint;
-            if (ckb.bGroup) Group = obj.Group;
-            if (ckb.bStatus) Status = obj.Status;
-            if (ckb.bTaggedTrigger) TaggedTrigger = obj.TaggedTrigger;
-            if (ckb.bVeteran) VeterancyPercentage = obj.VeterancyPercentage;
-            if (ckb.bRotation) Rotation = obj.Rotation;
+            ICombatObject host = obj.Host;
+            if (obj.bOwnerHouse) OwnerHouse = host.OwnerHouse;
+            if (obj.bHealthPoint) HealthPoint = host.HealthPoint;
+            if (obj.bGroup) Group = host.Group;
+            if (obj.bStatus) Status = host.Status;
+            if (obj.bTaggedTrigger) TaggedTrigger = host.TaggedTrigger;
+            if (obj.bVeteran) VeterancyPercentage = host.VeterancyPercentage;
+            if (obj.bRotation) Rotation = host.Rotation;
         }
         #endregion
 

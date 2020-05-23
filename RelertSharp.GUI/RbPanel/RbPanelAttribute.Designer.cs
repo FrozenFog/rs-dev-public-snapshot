@@ -46,9 +46,15 @@
             this.ckbTags = new System.Windows.Forms.CheckBox();
             this.ckbOwnerHouse = new System.Windows.Forms.CheckBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ckbToAircraft = new System.Windows.Forms.CheckBox();
+            this.ckbToBuilding = new System.Windows.Forms.CheckBox();
+            this.ckbToUnit = new System.Windows.Forms.CheckBox();
+            this.ckbToInfantry = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pboxFacing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkbVeteran)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkbHP)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // txbGroup
@@ -57,6 +63,7 @@
             this.txbGroup.Name = "txbGroup";
             this.txbGroup.Size = new System.Drawing.Size(173, 25);
             this.txbGroup.TabIndex = 22;
+            this.txbGroup.TextChanged += new System.EventHandler(this.txbGroup_TextChanged);
             // 
             // pboxFacing
             // 
@@ -78,6 +85,7 @@
             this.mtxbVeteran.Name = "mtxbVeteran";
             this.mtxbVeteran.Size = new System.Drawing.Size(69, 25);
             this.mtxbVeteran.TabIndex = 19;
+            this.mtxbVeteran.Validated += new System.EventHandler(this.mtxbVeteran_Validated);
             // 
             // mtxbHP
             // 
@@ -85,6 +93,7 @@
             this.mtxbHP.Name = "mtxbHP";
             this.mtxbHP.Size = new System.Drawing.Size(69, 25);
             this.mtxbHP.TabIndex = 20;
+            this.mtxbHP.Validated += new System.EventHandler(this.mtxbHP_Validated);
             // 
             // trkbVeteran
             // 
@@ -96,6 +105,7 @@
             this.trkbVeteran.Size = new System.Drawing.Size(98, 23);
             this.trkbVeteran.TabIndex = 17;
             this.trkbVeteran.TickFrequency = 32;
+            this.trkbVeteran.Scroll += new System.EventHandler(this.trkbVeteran_Scroll);
             // 
             // trkbHP
             // 
@@ -108,7 +118,8 @@
             this.trkbHP.Size = new System.Drawing.Size(98, 23);
             this.trkbHP.TabIndex = 18;
             this.trkbHP.TickFrequency = 32;
-            this.trkbHP.Value = 1;
+            this.trkbHP.Value = 256;
+            this.trkbHP.Scroll += new System.EventHandler(this.trkbHP_Scroll);
             // 
             // cbbStatus
             // 
@@ -117,6 +128,7 @@
             this.cbbStatus.Name = "cbbStatus";
             this.cbbStatus.Size = new System.Drawing.Size(173, 23);
             this.cbbStatus.TabIndex = 14;
+            this.cbbStatus.SelectedIndexChanged += new System.EventHandler(this.cbbStatus_SelectedIndexChanged);
             // 
             // cbbTags
             // 
@@ -125,6 +137,7 @@
             this.cbbTags.Name = "cbbTags";
             this.cbbTags.Size = new System.Drawing.Size(173, 23);
             this.cbbTags.TabIndex = 15;
+            this.cbbTags.SelectedIndexChanged += new System.EventHandler(this.cbbTags_SelectedIndexChanged);
             // 
             // cbbOwnerHouse
             // 
@@ -133,6 +146,7 @@
             this.cbbOwnerHouse.Name = "cbbOwnerHouse";
             this.cbbOwnerHouse.Size = new System.Drawing.Size(173, 23);
             this.cbbOwnerHouse.TabIndex = 16;
+            this.cbbOwnerHouse.SelectedIndexChanged += new System.EventHandler(this.cbbOwnerHouse_SelectedIndexChanged);
             // 
             // ckbFacing
             // 
@@ -218,11 +232,65 @@
             this.ckbOwnerHouse.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.ckbOwnerHouse.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.ckbToAircraft);
+            this.groupBox1.Controls.Add(this.ckbToBuilding);
+            this.groupBox1.Controls.Add(this.ckbToUnit);
+            this.groupBox1.Controls.Add(this.ckbToInfantry);
+            this.groupBox1.Location = new System.Drawing.Point(384, 14);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(146, 230);
+            this.groupBox1.TabIndex = 23;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Apply To";
+            // 
+            // ckbToAircraft
+            // 
+            this.ckbToAircraft.AutoSize = true;
+            this.ckbToAircraft.Location = new System.Drawing.Point(6, 189);
+            this.ckbToAircraft.Name = "ckbToAircraft";
+            this.ckbToAircraft.Size = new System.Drawing.Size(101, 19);
+            this.ckbToAircraft.TabIndex = 0;
+            this.ckbToAircraft.Text = "Aircrafts";
+            this.ckbToAircraft.UseVisualStyleBackColor = true;
+            // 
+            // ckbToBuilding
+            // 
+            this.ckbToBuilding.AutoSize = true;
+            this.ckbToBuilding.Location = new System.Drawing.Point(6, 134);
+            this.ckbToBuilding.Name = "ckbToBuilding";
+            this.ckbToBuilding.Size = new System.Drawing.Size(101, 19);
+            this.ckbToBuilding.TabIndex = 0;
+            this.ckbToBuilding.Text = "Buildings";
+            this.ckbToBuilding.UseVisualStyleBackColor = true;
+            // 
+            // ckbToUnit
+            // 
+            this.ckbToUnit.AutoSize = true;
+            this.ckbToUnit.Location = new System.Drawing.Point(6, 79);
+            this.ckbToUnit.Name = "ckbToUnit";
+            this.ckbToUnit.Size = new System.Drawing.Size(69, 19);
+            this.ckbToUnit.TabIndex = 0;
+            this.ckbToUnit.Text = "Units";
+            this.ckbToUnit.UseVisualStyleBackColor = true;
+            // 
+            // ckbToInfantry
+            // 
+            this.ckbToInfantry.AutoSize = true;
+            this.ckbToInfantry.Location = new System.Drawing.Point(6, 24);
+            this.ckbToInfantry.Name = "ckbToInfantry";
+            this.ckbToInfantry.Size = new System.Drawing.Size(109, 19);
+            this.ckbToInfantry.TabIndex = 0;
+            this.ckbToInfantry.Text = "Infantries";
+            this.ckbToInfantry.UseVisualStyleBackColor = true;
+            // 
             // RbPanelAttribute
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.txbGroup);
             this.Controls.Add(this.pboxFacing);
             this.Controls.Add(this.mtxbVeteran);
@@ -240,6 +308,7 @@
             this.Controls.Add(this.ckbTags);
             this.Controls.Add(this.ckbOwnerHouse);
             this.Name = "RbPanelAttribute";
+            this.Size = new System.Drawing.Size(551, 300);
             this.Controls.SetChildIndex(this.ckbOwnerHouse, 0);
             this.Controls.SetChildIndex(this.ckbTags, 0);
             this.Controls.SetChildIndex(this.ckbStat, 0);
@@ -256,9 +325,12 @@
             this.Controls.SetChildIndex(this.mtxbVeteran, 0);
             this.Controls.SetChildIndex(this.pboxFacing, 0);
             this.Controls.SetChildIndex(this.txbGroup, 0);
+            this.Controls.SetChildIndex(this.groupBox1, 0);
             ((System.ComponentModel.ISupportInitialize)(this.pboxFacing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkbVeteran)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkbHP)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -283,5 +355,10 @@
         private System.Windows.Forms.CheckBox ckbTags;
         private System.Windows.Forms.CheckBox ckbOwnerHouse;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox ckbToAircraft;
+        private System.Windows.Forms.CheckBox ckbToBuilding;
+        private System.Windows.Forms.CheckBox ckbToUnit;
+        private System.Windows.Forms.CheckBox ckbToInfantry;
     }
 }

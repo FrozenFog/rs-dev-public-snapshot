@@ -36,6 +36,6 @@ namespace RelertSharp.Common
         int Rotation { get; set; }
         int VeterancyPercentage { get; set; }
         int Group { get; set; }
-        void ApplyAttributeFrom(ICombatObject src, AttributeChanger ckb);
+        void ApplyAttributeFrom(AttributeChanger ckb);
     }
 }

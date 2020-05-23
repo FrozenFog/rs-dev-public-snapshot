@@ -102,6 +102,9 @@ namespace RelertSharp.GUI
                 case MainWindowDataModel.MouseActionType.PreciseSelect:
                     PreciseSelecting(e);
                     break;
+                case MainWindowDataModel.MouseActionType.AttributeBrush:
+                    ApplyAttributeToPrecise(e);
+                    break;
             }
         }
         private void RmbClick(MouseEventArgs e)

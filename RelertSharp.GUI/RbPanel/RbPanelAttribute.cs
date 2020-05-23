@@ -8,17 +8,44 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RelertSharp.MapStructure.Objects;
+using RelertSharp.MapStructure.Logic;
 using RelertSharp.Common;
 
 namespace RelertSharp.GUI.RbPanel
 {
     public partial class RbPanelAttribute : RbPanelBase
     {
+        private bool initialized = false;
         private AttributeChanger changer = new AttributeChanger();
         public RbPanelAttribute()
         {
             InitializeComponent();
+        }
+        public void Initialize(IEnumerable<HouseItem> houses, IEnumerable<TagItem> tags)
+        {
             SetFacing(0);
+            cbbOwnerHouse.Items.AddRange(houses.ToArray());
+            cbbTags.Items.AddRange(tags.ToArray());
+            cbbOwnerHouse.Text = changer.Host.OwnerHouse;
+            UpdateGuiFromHost();
+            initialized = true;
+        }
+        public void LoadFrom(ICombatObject src)
+        {
+            initialized = false;
+            changer.Host.ApplyAttributeFrom(AttributeChanger.FromCombatObject(src));
+            UpdateGuiFromHost();
+            initialized = true;
+        }
+        private void UpdateGuiFromHost()
+        {
+            mtxbHP.Text = changer.Host.HealthPoint.ToString();
+            mtxbVeteran.Text = changer.Host.VeterancyPercentage.ToString();
+            trkbHP.Value = changer.Host.HealthPoint;
+            trkbVeteran.Value = changer.Host.VeterancyPercentage;
+            cbbTags.Text = changer.Host.TaggedTrigger;
+            cbbStatus.Text = changer.Host.Status;
+            txbGroup.Text = changer.Host.Group.ToString();
         }
 
         #region Facing
@@ -111,18 +138,19 @@ namespace RelertSharp.GUI.RbPanel
                     arrow = Properties.Resources.Arrow7;
                     break;
             }
-            Changer.Host.Rotation = facing;
+            changer.Host.Rotation = facing;
             Graphics g = Graphics.FromImage(facingBase);
             g.DrawImage(arrow, Point.Empty);
             g.Dispose();
             pboxFacing.Image = facingBase;
-            toolTip.SetToolTip(pboxFacing, Changer.Host.Rotation.ToString());
+            toolTip.SetToolTip(pboxFacing, changer.Host.Rotation.ToString());
         }
 
         #endregion
 
 
 
+        #region Public Calls - RbPanelAttribute
         public AttributeChanger Changer
         {
             get
@@ -135,6 +163,113 @@ namespace RelertSharp.GUI.RbPanel
                 changer.bTaggedTrigger = ckbTags.Checked;
                 changer.bVeteran = ckbVeteran.Checked;
                 return changer;
+            }
+        }
+        public bool ToInfantries { get { return ckbToInfantry.Checked; } }
+        public bool ToUnits { get { return ckbToUnit.Checked; } }
+        public bool ToBuildings { get { return ckbToBuilding.Checked; } }
+        public bool ToAircrafts { get { return ckbToAircraft.Checked; } }
+        #endregion
+
+        private void cbbOwnerHouse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (initialized)
+            {
+                HouseItem h = cbbOwnerHouse.SelectedItem as HouseItem;
+                changer.Host.OwnerHouse = h.ID;
+            }
+        }
+
+        private bool trackerHpLock = false;
+        private void mtxbHP_Validated(object sender, EventArgs e)
+        {
+            if (initialized)
+            {
+                trackerHpLock = true;
+                int num = 0;
+                try
+                {
+                    num = int.Parse(mtxbHP.Text);
+                }
+                catch
+                {
+                    num = 1;
+                }
+                if (num <= 0) num = 1;
+                if (num > 256) num = 256;
+                trkbHP.Value = num;
+                changer.Host.HealthPoint = num;
+                trackerHpLock = false;
+            }
+        }
+
+        private void trkbHP_Scroll(object sender, EventArgs e)
+        {
+            if (!trackerHpLock && initialized)
+            {
+                mtxbHP.Text = trkbHP.Value.ToString();
+            }
+        }
+
+        private bool trackerVeteranLock = false;
+        private void mtxbVeteran_Validated(object sender, EventArgs e)
+        {
+            if (initialized)
+            {
+                trackerVeteranLock = true;
+                int num = 0;
+                try
+                {
+                    num = int.Parse(mtxbVeteran.Text);
+                }
+                catch
+                {
+                    num = 0;
+                }
+                if (num < 0) num = 0;
+                if (num > 200) num = 200;
+                trkbVeteran.Value = num;
+                changer.Host.VeterancyPercentage = num;
+                trackerVeteranLock = false;
+            }
+        }
+
+        private void trkbVeteran_Scroll(object sender, EventArgs e)
+        {
+            if (!trackerVeteranLock && initialized)
+            {
+                mtxbVeteran.Text = trkbVeteran.Value.ToString();
+            }
+        }
+
+        private void cbbTags_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (initialized)
+            {
+                TagItem tag = cbbTags.SelectedItem as TagItem;
+                changer.Host.TaggedTrigger = tag.ID;
+            }
+        }
+
+        private void cbbStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (initialized)
+            {
+                changer.Host.Status = cbbStatus.Text;//TODO: stat list improv
+            }
+        }
+
+        private void txbGroup_TextChanged(object sender, EventArgs e)
+        {
+            if (initialized)
+            {
+                int group = -1;
+                try
+                {
+                    group = int.Parse(txbGroup.Text);
+                }
+                catch { }
+                changer.Host.Group = group;
             }
         }
     }

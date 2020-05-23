@@ -33,6 +33,18 @@ namespace RelertSharp.DrawingEngine
         {
             Buffer.Scenes.RemoveUnitAt(pos.Coord);
         }
+        public void UpdateUnitAttribute(UnitItem unit, int height, uint color, bool isSelected)
+        {
+            RemoveUnitAt(unit);
+            DrawObject(unit, height, color);
+            if (isSelected) SelectUnitAt(unit);
+        }
+        public void UpdateAircraftAttribute(AircraftItem air, int height, uint color, bool isSelected)
+        {
+            RemoveUnitAt(air);
+            DrawObject(air, height, color);
+            if (isSelected) SelectUnitAt(air);
+        }
         #endregion
 
 
@@ -49,6 +61,12 @@ namespace RelertSharp.DrawingEngine
         {
             Buffer.Scenes.RemoveInfantryAt(pos.Coord, subcell);
         }
+        public void UpdateInfantryAttribute(InfantryItem inf, int height, uint color, int subcell, bool isSelected)
+        {
+            RemoveInfantryAt(inf, subcell);
+            DrawObject(inf, height, color);
+            if (isSelected) SelectInfantryAt(inf, subcell);
+        }
         #endregion
 
 
@@ -64,6 +82,12 @@ namespace RelertSharp.DrawingEngine
         public void RemoveBuildingAt(I2dLocateable pos)
         {
             Buffer.Scenes.RemoveBuildingAt(pos.Coord);
+        }
+        public void UpdateBuildingAttribute(StructureItem bud, int height, uint color, bool isSelected)
+        {
+            RemoveBuildingAt(bud);
+            DrawObject(bud, height, color);
+            if (isSelected) SelectBuildingAt(bud);
         }
         #endregion
 

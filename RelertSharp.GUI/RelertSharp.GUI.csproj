@@ -76,6 +76,9 @@
     <Compile Include="MainWindow\Drawing.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MainWindow\AttributeBrush.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainWindow\KeyHandler.cs">
       <SubType>Form</SubType>
     </Compile>

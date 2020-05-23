@@ -149,12 +149,17 @@ namespace RelertSharp.GUI.Model
             Engine.Refresh();
         }
 
+
+        #region Public Calls - MainWindowDataModel
         public SelectingFlag SelectingFlags { get; set; } = SelectingFlag.Units | SelectingFlag.Infantries | SelectingFlag.Buildings | SelectingFlag.Terrains | SelectingFlag.Overlays;
         public SelectingBoxMode SelectingBoxFlag { get; set; } = SelectingBoxMode.ClientRectangle;
+        public List<AircraftItem> Aircrafts { get; private set; } = new List<AircraftItem>();
         public List<InfantryItem> Infantries { get; private set; } = new List<InfantryItem>();
         public List<UnitItem> Units { get; private set; } = new List<UnitItem>();
         public List<StructureItem> Buildings { get; private set; } = new List<StructureItem>();
         public List<TerrainItem> Terrains { get; private set; } = new List<TerrainItem>();
         public List<OverlayUnit> Overlays { get; private set; } = new List<OverlayUnit>();
+        public IEnumerable<ICombatObject> CombatObjects { get { return Infantries.Concat<ICombatObject>(Units).Concat(Buildings); } }
+        #endregion
     }
 }

@@ -48,13 +48,19 @@ namespace RelertSharp.GUI
                     case Keys.V:
                         Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.None;
                         break;
-                    case Keys.W:
+                    case Keys.Enter:
+                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.AttributeBrush)
+                        {
+                            ApplyAttributeToSelected();
+                        }
                         break;
-                    case Keys.A:
+                    case Keys.Up:
                         break;
-                    case Keys.S:
+                    case Keys.Left:
                         break;
-                    case Keys.D:
+                    case Keys.Down:
+                        break;
+                    case Keys.Right:
                         break;
                 }
             }

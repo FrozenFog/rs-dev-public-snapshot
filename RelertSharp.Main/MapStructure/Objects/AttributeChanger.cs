@@ -17,6 +17,25 @@ namespace RelertSharp.MapStructure.Objects
         #endregion
 
 
+        #region Public Methods - AttributeChanger
+        public static AttributeChanger FromCombatObject(ICombatObject src)
+        {
+            AttributeChanger dest = new AttributeChanger()
+            {
+                Host = src,
+                bOwnerHouse = true,
+                bHealthPoint = true,
+                bTaggedTrigger = true,
+                bRotation = true,
+                bVeteran = true,
+                bGroup = true,
+                bStatus = true
+            };
+            return dest;
+        }
+        #endregion
+
+
         #region Public Calls - AttributeChanger
         public ICombatObject Host { get; set; }
         public bool bOwnerHouse { get; set; }

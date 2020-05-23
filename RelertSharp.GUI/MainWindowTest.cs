@@ -95,6 +95,7 @@ namespace RelertSharp.GUI
             GlobalVar.Engine.MoveTo(map.CenterPoint);
             pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
             GlobalVar.Engine.Refresh();
+            rbPanelAttribute.Initialize(map.Houses, map.Tags);
             drew = true;
             button1.Enabled = false;
         }
