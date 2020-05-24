@@ -180,6 +180,12 @@ namespace RelertSharp.DrawingEngine
             {
                 RemoveAtBy(Infantries, (coord << 2) + subcell);
             }
+            public bool HasInfantryAt(int coord)
+            {
+                return Infantries.Keys.Contains((coord << 2) + 1) ||
+                    Infantries.Keys.Contains((coord << 2) + 2)||
+                    Infantries.Keys.Contains((coord << 2) + 3);
+            }
             public void MarkBuilding(int coord)
             {
                 MarkBy(Structures, coord);
@@ -270,6 +276,7 @@ namespace RelertSharp.DrawingEngine
             /// </summary>
             public Dictionary<int, PresentInfantry> Infantries { get; private set; } = new Dictionary<int, PresentInfantry>();
             public Dictionary<int, PresentTile> Tiles { get; private set; } = new Dictionary<int, PresentTile>();
+            public Dictionary<int, DrawableTile> DrawableTiles { get; private set; } = new Dictionary<int, DrawableTile>();
             public Dictionary<int, PresentMisc> Overlays { get; private set; } = new Dictionary<int, PresentMisc>();
             public Dictionary<int, PresentMisc> Terrains { get; private set; } = new Dictionary<int, PresentMisc>();
             public Dictionary<int, PresentMisc> Smudges { get; private set; } = new Dictionary<int, PresentMisc>();

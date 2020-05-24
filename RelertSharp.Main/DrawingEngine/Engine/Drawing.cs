@@ -90,6 +90,7 @@ namespace RelertSharp.DrawingEngine
                 subindex = t.SubIndex;
             }
             DrawableTile src = CreateDrawableTile(name, subindex);
+            Buffer.Scenes.DrawableTiles[t.Coord] = src;
             minimap.DrawTile(src, t, subindex);
             Vec3 pos = ToVec3Iso(t);
             if (DrawTile(src.pSelf, pos, subindex, pPalIso, out int pSelf, out int pExtra))

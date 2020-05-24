@@ -38,12 +38,16 @@ namespace RelertSharp.GUI
                 {
                     case MainWindowDataModel.MouseActionType.BoxSelecting:
                         if (Current.SelectingBoxFlag != MainWindowDataModel.SelectingBoxMode.Precise) SceneSelectionBoxSet(e);
+                        else PreciseSelecting(e);
                         break;
                     case MainWindowDataModel.MouseActionType.Moving:
                         if (spaceKeyMoving)
                         {
                             BeginMove(e);
                         }
+                        break;
+                    case MainWindowDataModel.MouseActionType.AttributeBrush:
+                        ApplyAttributeToPrecise(e);
                         break;
                 }
             }
@@ -124,22 +128,11 @@ namespace RelertSharp.GUI
         #region Click
         private void LmbClick(MouseEventArgs e)
         {
-
             if (rbPanelAttribute.Visible)
             {
                 rbPanelAttribute.Visible = false;
-            }
-            else
-            {
-                switch (Current.CurrentMouseAction)
-                {
-                    case MainWindowDataModel.MouseActionType.BoxSelecting:
-                        if (Current.SelectingBoxFlag == MainWindowDataModel.SelectingBoxMode.Precise) PreciseSelecting(e);
-                        break;
-                    case MainWindowDataModel.MouseActionType.AttributeBrush:
-                        ApplyAttributeToPrecise(e);
-                        break;
-                }
+                panel1.Cursor = prevCur;
+                GlobalVar.Engine.Refresh();
             }
         }
         private void RmbClick(MouseEventArgs e)

@@ -32,6 +32,7 @@ namespace RelertSharp.DrawingEngine
         public void RemoveUnitAt(I2dLocateable pos)
         {
             Buffer.Scenes.RemoveUnitAt(pos.Coord);
+
         }
         public void UpdateUnitAttribute(UnitItem unit, int height, uint color, bool isSelected)
         {
@@ -79,9 +80,9 @@ namespace RelertSharp.DrawingEngine
         {
             Buffer.Scenes.UnMarkBuilding(pos.Coord);
         }
-        public void RemoveBuildingAt(I2dLocateable pos)
+        public void RemoveBuildingAt(StructureItem bud)
         {
-            Buffer.Scenes.RemoveBuildingAt(pos.Coord);
+            Buffer.Scenes.RemoveBuildingAt(bud.Coord);
         }
         public void UpdateBuildingAttribute(StructureItem bud, int height, uint color, bool isSelected)
         {
