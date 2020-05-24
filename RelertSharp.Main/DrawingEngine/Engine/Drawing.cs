@@ -95,7 +95,10 @@ namespace RelertSharp.DrawingEngine
             Vec3 pos = ToVec3Iso(t);
             if (DrawTile(src.pSelf, pos, subindex, pPalIso, out int pSelf, out int pExtra))
             {
-                PresentTile pt = new PresentTile(pSelf, pExtra, t.Height, src, subindex);
+                PresentTile pt = new PresentTile(pSelf, pExtra, t.Height, src, subindex, t);
+                Color cl = src.SubTiles[subindex].RadarColor.Left;
+                Color cr = src.SubTiles[subindex].RadarColor.Right;
+                pt.RadarColor = new RadarColor(cl, cr);
                 Buffer.Scenes.Tiles[t.Coord] = pt;
                 return true;
             }
@@ -110,7 +113,7 @@ namespace RelertSharp.DrawingEngine
             else pos = ToVec3Iso(terrain, height);
             if (DrawMisc(src, dest, pos, src.pPal, 0, _white, ShpFlatType.Vertical, src.Framecount))
             {
-                Buffer.Scenes.Terrains[terrain.Coord] = dest;
+                Buffer.Scenes.AddTerrainAt(terrain.Coord, dest);
                 return true;
             }
             return false;
@@ -143,7 +146,7 @@ namespace RelertSharp.DrawingEngine
             ShpFlatType type = src.FlatType;
             if (DrawMisc(src, dest, pos, src.pPal, o.Frame, _white, type, src.Framecount))
             {
-                Buffer.Scenes.Overlays[o.Coord] = dest;
+                Buffer.Scenes.AddOverlayAt(o.Coord, dest);
                 return true;
             }
             return false;
@@ -212,7 +215,11 @@ namespace RelertSharp.DrawingEngine
                     !src.IsFlatOnly) dest.pSelfShadow = RenderAndPresent(src.pShadow, pos.Rise(), frame + shadow / 2, color, pPal, ShpFlatType.FlatGround, box, true);
                 //if (src.MiscType == MapObjectType.Waypoint) dest.pWpNum = CppExtern.ObjectUtils.CreateStringObjectAtScene(pos.MoveX(_15SQ2 * -1), 0x0000FFFF, src.NameID);
             }
-            if (dest.IsValid) minimap.DrawMisc(src, dest);
+            if (dest.IsValid)
+            {
+                minimap.DrawMisc(src, dest);
+                dest.RadarColor = new RadarColor(src.RadarColor);
+            }
             return dest.IsValid;
         }
         private bool DrawInfantry(DrawableInfantry src, Vec3 pos, PresentInfantry dest, int frame, int pPal, int subcell)
@@ -223,9 +230,12 @@ namespace RelertSharp.DrawingEngine
                 dest.pSelf = RenderAndPresent(src.pSelf, pos, frame, src.RemapColor, pPal, ShpFlatType.Vertical, Vec3.DefaultBox);
                 dest.pSelfShadow = RenderAndPresent(src.pShadow, pos.Rise(), frame + src.Framecount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, Vec3.DefaultBox, true);
             }
-
-            Buffer.Scenes.Infantries[(dest.Coord << 2) + subcell] = dest;
-            if (dest.IsValid) minimap.DrawObject(src, dest);
+            Buffer.Scenes.AddInfantryAt(dest.Coord, dest, subcell);
+            if (dest.IsValid)
+            {
+                minimap.DrawObject(src, dest, out Color c);
+                dest.RadarColor = new RadarColor(c);
+            }
             return dest.IsValid;
         }
         private bool DrawStructure(DrawableStructure src, Vec3 pos, PresentStructure dest, Vec3 turRotation, int pPal)
@@ -280,10 +290,12 @@ namespace RelertSharp.DrawingEngine
                     dest.pTurretAnimShadow = RenderAndPresent(src.pShadowTurretAnim, pos.Rise() + src.offsetTurret, (int)turRotation.X + src.TurretAnimCount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, Vec3.DefaultBox, true);
                 }
             }
-            int lookup = dest.Coord;
-            if (dest.IsBaseNode) lookup = lookup << 1 + 1;
-            Buffer.Scenes.Structures[lookup] = dest;
-            if (dest.IsValid) minimap.DrawStructure(src, dest);
+            Buffer.Scenes.AddBuildingAt(dest.Coord, dest, dest.IsBaseNode);
+            if (dest.IsValid)
+            {
+                minimap.DrawStructure(src, dest, dest.IsBaseNode);
+                dest.RadarColor = new RadarColor(src.MinimapColor);
+            }
             return dest.IsValid;
         }
         private bool DrawUnit(DrawableUnit src, PresentUnit dest, Vec3 pos, Vec3 rotation, int pPal)
@@ -303,8 +315,12 @@ namespace RelertSharp.DrawingEngine
                     dest.pSelfShadow = RenderAndPresent(src.pSelf, pos.Rise(), (int)rotation.X + src.Framecount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, Vec3.DefaultBox, true);
                 }
             }
-            Buffer.Scenes.Units[dest.Coord] = dest;
-            if (dest.IsValid) minimap.DrawObject(src, dest);
+            Buffer.Scenes.AddUnitAt(dest.Coord, dest);
+            if (dest.IsValid)
+            {
+                minimap.DrawObject(src, dest, out Color c);
+                dest.RadarColor = new RadarColor(c);
+            }
             return dest.IsValid;
         }
         private bool DrawTile(int idTmp, Vec3 pos, int subindex, int pPal, out int idSelf, out int idExtra)

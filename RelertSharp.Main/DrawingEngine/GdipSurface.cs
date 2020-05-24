@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using RelertSharp.DrawingEngine.Drawables;
+using RelertSharp.DrawingEngine.Presenting;
 using RelertSharp.Common;
 using static RelertSharp.Utils.Misc;
 
@@ -61,11 +62,18 @@ namespace RelertSharp.DrawingEngine
             SetMinimapColorAt(x, y, t.SubTiles[subindex].RadarColor.Left);
             SetMinimapColorAt(x + 1, y, t.SubTiles[subindex].RadarColor.Right);
         }
-        public void DrawStructure(DrawableStructure d, I2dLocateable pos)
+        public void DrawTile(PresentTile t)
         {
+            TileToFlatCoord(t, mapsize.Width, out int x, out int y);
+            SetMinimapColorAt(x, y, t.RadarColor.Left);
+            SetMinimapColorAt(x + 1, y, t.RadarColor.Right);
+        }
+        public void DrawStructure(DrawableStructure d, I2dLocateable pos, bool isBaseNode)
+        {
+            if (isBaseNode) return;
             foreach (I2dLocateable p in new Square2D(pos, d.FoundationX, d.FoundationY))
             {
-                TileToFlatCoord(pos, mapsize.Width, out int x, out int y);
+                TileToFlatCoord(p, mapsize.Width, out int x, out int y);
                 SetMinimapColorAt(x, y, d.MinimapColor);
                 SetMinimapColorAt(x + 1, y, d.MinimapColor);
             }
@@ -77,13 +85,18 @@ namespace RelertSharp.DrawingEngine
             SetMinimapColorAt(x, y, d.RadarColor);
             SetMinimapColorAt(x + 1, y, d.RadarColor);
         }
-        public void DrawObject(IDrawableBase d, I2dLocateable pos)
+        public void DrawObject(IDrawableBase d, I2dLocateable pos, out Color c)
         {
             TileToFlatCoord(pos, mapsize.Width, out int x, out int y);
-            Color c = ToColor(d.RemapColor);
-            if (c == nullcolor) return;
+            c = ToColor(d.RemapColor);
             SetMinimapColorAt(x, y, c);
             SetMinimapColorAt(x + 1, y, c);
+        }
+        public void DrawColorable(I2dLocateable pos, IMinimapVisiable src)
+        {
+            TileToFlatCoord(pos, mapsize.Width, out int x, out int y);
+            SetMinimapColorAt(x, y, src.RadarColor.Left);
+            SetMinimapColorAt(x + 1, y, src.RadarColor.Right);
         }
         public void SetClientWindowSize(Rectangle client)
         {
@@ -108,6 +121,7 @@ namespace RelertSharp.DrawingEngine
         private void SetMinimapColorAt(int x,int y, Color color)
         {
             if (x < 0 || y < 0 || x >= minimap.Width || y >= minimap.Height) return;
+            if (color == nullcolor) return;
             minimap.SetPixel(x, y, color);
         }
         private void To2dCoord(I2dLocateable pos, out int x, out int y)

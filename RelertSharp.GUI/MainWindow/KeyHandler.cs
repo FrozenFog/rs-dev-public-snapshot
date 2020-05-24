@@ -37,6 +37,7 @@ namespace RelertSharp.GUI
                         break;
                     case Keys.Delete:
                         Current.RemoveAll();
+                        pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
                         break;
                     case Keys.M:
                         ToolBoxClick(toolBtnSelecting);
@@ -74,6 +75,7 @@ namespace RelertSharp.GUI
                         if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.AttributeBrush)
                         {
                             ApplyAttributeToSelected();
+                            pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
                         }
                         break;
                 }

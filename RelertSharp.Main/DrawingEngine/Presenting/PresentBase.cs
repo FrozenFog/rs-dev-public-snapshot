@@ -10,7 +10,7 @@ using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine.Presenting
 {
-    public class PresentBase : I3dLocateable
+    public class PresentBase : I3dLocateable, IMinimapVisiable
     {
         protected bool selected = false;
 
@@ -53,6 +53,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         public int Z { get; set; }
         public int pSelf { get; set; }
         public int pSelfShadow { get; set; }
+        public RadarColor RadarColor { get; set; }
         #endregion
     }
 
@@ -71,5 +72,11 @@ namespace RelertSharp.DrawingEngine.Presenting
         void MultiplyColor(Vec4 color);
         void MarkSelected();
         void Unmark();
+    }
+
+
+    public interface IMinimapVisiable
+    {
+        RadarColor RadarColor { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine.Presenting
@@ -10,11 +11,13 @@ namespace RelertSharp.DrawingEngine.Presenting
     internal class PresentTile : PresentBase, IPresentBase
     {
         #region Ctor - PresentTile
-        public PresentTile(int pself, int pextra, byte height, Drawables.DrawableTile tile, int subtile)
+        public PresentTile(int pself, int pextra, byte height, Drawables.DrawableTile tile, int subtile, I2dLocateable pos)
         {
             pSelf = pself;
             pExtra = pextra;
             Height = height;
+            X = pos.X;
+            Y = pos.Y;
             WaterPassable = tile[subtile].WaterPassable;
             Buildable = tile[subtile].Buildable;
             LandPassable = tile[subtile].LandPassable;
@@ -90,6 +93,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         public bool Buildable { get; set; }
         public bool WaterPassable { get; set; }
         public bool LandPassable { get; set; }
+        public List<IMinimapVisiable> TileObjects { get; private set; } = new List<IMinimapVisiable>();
         #endregion
     }
 }

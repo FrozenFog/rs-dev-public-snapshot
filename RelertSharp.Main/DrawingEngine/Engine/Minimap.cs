@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using RelertSharp.DrawingEngine.Presenting;
 using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine
@@ -25,6 +26,18 @@ namespace RelertSharp.DrawingEngine
             I2dLocateable pos = minimap.GetPointFromMinimapSeeking(Pnt.FromPoint(panelClicked));
             MoveTo(pos);
             Refresh();
+        }
+        public void RedrawMinimapAll()
+        {
+            foreach (PresentTile t in Buffer.Scenes.Tiles.Values)
+            {
+                if (t.TileObjects.Count == 0) minimap.DrawTile(t);
+                else
+                {
+                    IMinimapVisiable c = t.TileObjects[t.TileObjects.Count - 1];
+                    minimap.DrawColorable(t, c);
+                }
+            }
         }
         
 

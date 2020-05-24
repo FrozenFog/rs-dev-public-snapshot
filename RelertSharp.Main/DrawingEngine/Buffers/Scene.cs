@@ -9,59 +9,8 @@ using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine
 {
-    internal class BufferCollection
+    internal partial class BufferCollection
     {
-        [Flags]
-        public enum RemoveFlag
-        {
-            Tiles = 1,
-            Structures = 1<<1,
-            Units = 1<<2,
-            Infantries = 1<<3,
-            Overlays = 1<<4,
-            Terrains = 1<<5,
-            Smudges = 1<<6,
-            Waypoints = 1<<7,
-            Celltags = 1<<8,
-            All = Tiles|Structures|Units|Infantries|Overlays|Terrains|Smudges|Waypoints|Celltags
-        }
-        #region Ctor - BufferCollection
-        public BufferCollection()
-        {
-            
-        }
-        #endregion
-
-
-        #region Public Methods - BufferCollection
-        public void RemoveSceneItem(RemoveFlag flag)
-        {
-            if ((flag & RemoveFlag.Infantries) != 0) Scenes.RemoveInfantries();
-            if ((flag & RemoveFlag.Units) != 0) Scenes.RemoveUnits();
-            if ((flag & RemoveFlag.Structures) != 0) Scenes.RemoveStructures();
-            if ((flag & RemoveFlag.Tiles) != 0) Scenes.RemoveTiles();
-            if ((flag & RemoveFlag.Overlays) != 0) Scenes.RemoveOverlays();
-            if ((flag & RemoveFlag.Terrains) != 0) Scenes.RemoveTerrains();
-            if ((flag & RemoveFlag.Smudges) != 0) Scenes.RemoveSmudges();
-            if ((flag & RemoveFlag.Waypoints) != 0) Scenes.RemoveWaypoints();
-            if ((flag & RemoveFlag.Celltags) != 0) Scenes.RemoveCelltags();
-            GC.Collect();
-        }
-        public void ReleaseFiles()
-        {
-            Files.Dispose();
-        }
-        #endregion
-
-
-        #region Public Calls - BufferCollection
-        public CScene Scenes { get; private set; } = new CScene();
-        public CBuffer Buffers { get; private set; } = new CBuffer();
-        public CFile Files { get; private set; } = new CFile();
-        public List<int> WaypointNum { get; private set; } = new List<int>();
-        #endregion
-
-
         public class CScene
         {
             #region Ctor - Scene
@@ -75,6 +24,75 @@ namespace RelertSharp.DrawingEngine
 
 
             #region Public Methods - CScene
+
+
+            #region Remove & add Object
+            public void RemoveUnitAt(int coord)
+            {
+                PresentUnit u = RemoveAtBy(Units, coord);
+                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Remove(u);
+            }
+            public void AddUnitAt(int coord, PresentUnit unit)
+            {
+                Units[coord] = unit;
+                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Add(unit);
+            }
+            public void RemoveInfantryAt(int coord, int subcell)
+            {
+                PresentInfantry inf = RemoveAtBy(Infantries, (coord << 2) + subcell);
+                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Remove(inf);
+            }
+            public void AddInfantryAt(int coord, PresentInfantry inf, int subcell)
+            {
+                Infantries[(coord << 2) + subcell] = inf;
+                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Add(inf);
+            }
+            public void RemoveBuildingAt(int coord)
+            {
+                PresentStructure bud = RemoveAtBy(Structures, coord);
+                foreach(I2dLocateable pos in new Square2D(bud, bud.FoundationX, bud.FoundationY))
+                {
+                    int subcord = pos.Coord;
+                    if (Tiles.Keys.Contains(subcord)) Tiles[subcord].TileObjects.Remove(bud);
+                }
+            }
+            public void AddBuildingAt(int coord, PresentStructure bud, bool isNode)
+            {
+                if (isNode)
+                {
+                    Structures[(coord << 1) + 1] = bud;
+                }
+                else
+                {
+                    Structures[coord] = bud;
+                    foreach(I2dLocateable pos in new Square2D(bud, bud.FoundationX, bud.FoundationY))
+                    {
+                        int subcord = pos.Coord;
+                        if (Tiles.Keys.Contains(subcord)) Tiles[subcord].TileObjects.Add(bud);
+                    }
+                }
+            }
+            public void RemoveOverlayAt(int coord)
+            {
+                PresentMisc ov = RemoveAtBy(Overlays, coord);
+                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Remove(ov);
+            }
+            public void AddOverlayAt(int coord, PresentMisc ov)
+            {
+                Overlays[coord] = ov;
+                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Add(ov);
+            }
+            public void RemoveTerrainAt(int coord)
+            {
+                PresentMisc ter = RemoveAtBy(Terrains, coord);
+                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Remove(ter);
+            }
+            public void AddTerrainAt(int coord, PresentMisc terr)
+            {
+                Terrains[coord] = terr;
+                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Add(terr);
+            }
+            #endregion
 
 
             #region Lightnings
@@ -155,7 +173,7 @@ namespace RelertSharp.DrawingEngine
             #endregion
 
 
-            #region Mark And Single-remove
+            #region Mark
             public void MarkUnit(int coord)
             {
                 MarkBy(Units, coord);
@@ -163,10 +181,6 @@ namespace RelertSharp.DrawingEngine
             public void UnMarkUnit(int coord)
             {
                 UnMarkBy(Units, coord);
-            }
-            public void RemoveUnitAt(int coord)
-            {
-                RemoveAtBy(Units, coord);
             }
             public void MarkInfantry(int coord, int subcell)
             {
@@ -176,14 +190,10 @@ namespace RelertSharp.DrawingEngine
             {
                 UnMarkBy(Infantries, (coord << 2) + subcell);
             }
-            public void RemoveInfantryAt(int coord, int subcell)
-            {
-                RemoveAtBy(Infantries, (coord << 2) + subcell);
-            }
             public bool HasInfantryAt(int coord)
             {
                 return Infantries.Keys.Contains((coord << 2) + 1) ||
-                    Infantries.Keys.Contains((coord << 2) + 2)||
+                    Infantries.Keys.Contains((coord << 2) + 2) ||
                     Infantries.Keys.Contains((coord << 2) + 3);
             }
             public void MarkBuilding(int coord)
@@ -194,10 +204,6 @@ namespace RelertSharp.DrawingEngine
             {
                 UnMarkBy(Structures, coord);
             }
-            public void RemoveBuildingAt(int coord)
-            {
-                RemoveAtBy(Structures, coord);
-            }
             public void MarkTerrain(int coord)
             {
                 MarkBy(Terrains, coord);
@@ -206,10 +212,6 @@ namespace RelertSharp.DrawingEngine
             {
                 UnMarkBy(Terrains, coord);
             }
-            public void RemoveTerrainAt(int coord)
-            {
-                RemoveAtBy(Terrains, coord);
-            }
             public void MarkOverlay(int coord)
             {
                 MarkBy(Overlays, coord);
@@ -217,10 +219,6 @@ namespace RelertSharp.DrawingEngine
             public void UnMarkOverlay(int coord)
             {
                 UnMarkBy(Overlays, coord);
-            }
-            public void RemoveOverlayAt(int coord)
-            {
-                RemoveAtBy(Overlays, coord);
             }
             #endregion
 
@@ -253,13 +251,16 @@ namespace RelertSharp.DrawingEngine
                     src[coord].Unmark();
                 }
             }
-            private void RemoveAtBy<T>(Dictionary<int, T> src, int coord) where T : IPresentBase
+            private T RemoveAtBy<T>(Dictionary<int, T> src, int coord) where T : PresentBase, IPresentBase
             {
                 if (src.Keys.Contains(coord))
                 {
+                    T result = src[coord];
                     src[coord].Dispose();
                     src.Remove(coord);
+                    return result;
                 }
+                return null;
             }
             #endregion
 
@@ -290,58 +291,6 @@ namespace RelertSharp.DrawingEngine
             public List<int> RectangleLines { get; private set; } = new List<int>();
             #endregion
         }
-
-
-        public class CBuffer
-        {
-            #region Ctor - Buffer
-            public CBuffer() { }
-            #endregion
-
-
-            #region Public Calls - CBuffer
-            public int Celltag { get; set; }
-            public int WaypointBase { get; set; }
-            public Dictionary<string, DrawableStructure> Structures { get; private set; } = new Dictionary<string, DrawableStructure>();
-            public Dictionary<string, DrawableUnit> Units { get; private set; } = new Dictionary<string, DrawableUnit>();
-            public Dictionary<string, DrawableInfantry> Infantries { get; private set; } = new Dictionary<string, DrawableInfantry>();
-            public Dictionary<string, DrawableMisc> Miscs { get; private set; } = new Dictionary<string, DrawableMisc>();
-            public Dictionary<string, DrawableTile> Tiles { get; private set; } = new Dictionary<string, DrawableTile>();
-            #endregion
-        }
-
-
-        public class CFile
-        {
-            #region Ctor - File
-            public CFile() { }
-            #endregion
-
-
-            #region Public Methods - File
-            public void Dispose()
-            {
-                foreach (int p in Shp.Values) CppExtern.Files.RemoveShpFile(p);
-                foreach (int p in Vxl.Values) CppExtern.Files.RemoveVxlFile(p);
-                foreach (int p in Tmp.Values) CppExtern.Files.RemoveTmpFile(p);
-                foreach (int p in Pal.Values) CppExtern.Files.RemovePalette(p);
-                Shp.Clear();
-                Vxl.Clear();
-                Tmp.Clear();
-                Pal.Clear();
-                GC.Collect();
-            }
-            #endregion
-
-
-            #region Public Calls - File
-            public Dictionary<string, int> Shp { get; private set; } = new Dictionary<string, int>();
-            public Dictionary<string, int> Vxl { get; private set; } = new Dictionary<string, int>();
-            public Dictionary<string, int> Tmp { get; private set; } = new Dictionary<string, int>();
-            public Dictionary<string, int> Pal { get; private set; } = new Dictionary<string, int>();
-            public int WaypointBase { get; set; }
-            public int CelltagBase { get; set; }
-            #endregion
-        }
     }
+
 }

@@ -148,6 +148,7 @@ namespace RelertSharp.GUI.Model
             Overlays.Clear();
 
             Engine.Refresh();
+            Engine.RedrawMinimapAll();
         }
 
 

@@ -66,6 +66,7 @@ namespace RelertSharp.GUI
                 }
             }
             Engine.Refresh();
+            Engine.RedrawMinimapAll();
         }
 
 
@@ -93,6 +94,7 @@ namespace RelertSharp.GUI
                 Engine.UpdateBuildingAttribute(bud, map.GetHeightFromTile(bud), map.GetHouseColor(bud.OwnerHouse), true);
             }
             Engine.Refresh();
+            Engine.RedrawMinimapAll();
         }
     }
 }
