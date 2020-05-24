@@ -194,12 +194,10 @@ namespace RelertSharp.IniSystem
             string art = GetArtEntityName(nameID);
             INIEntity sequence = Art[Art[art]["Sequence"]];
             direction >>= 5;
-            if (direction == 7) direction = 0;
-            else direction++;
             if (sequence.Name == "") return direction;
             int[] ready = sequence.GetPair("Ready").ParseIntList();
             int result = ready[0];
-            return result + direction;
+            return 7 - direction;
         }
         public string GetArtEntityName(string nameID, bool isinfantry = false)
         {
