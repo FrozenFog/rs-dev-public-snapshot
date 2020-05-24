@@ -275,6 +275,7 @@
     <None Include="Resources\moving.ico" />
     <None Include="Resources\curIso.ico" />
     <None Include="Resources\curBrush.ico" />
+    <None Include="Resources\curAttrib.ico" />
     <Content Include="rslogo.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -28,24 +28,33 @@ namespace RelertSharp.GUI
                 switch (e.KeyCode)
                 {
                     case Keys.Escape:
-                        if ((Current.CurrentMouseAction & MainWindowDataModel.MouseActionType.BoxSelecting) != 0) Current.ReleaseAll();
-                        else if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.AttributeBrush)
+                        if (rbPanelAttribute.Visible)
                         {
                             rbPanelAttribute.Visible = false;
                             GlobalVar.Engine.Refresh();
+                            panel1.Cursor = prevCur;
                         }
                         break;
                     case Keys.Delete:
                         Current.RemoveAll();
                         break;
                     case Keys.M:
-                        Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.BoxSelecting;
+                        ToolBoxClick(toolBtnSelecting);
                         break;
                     case Keys.B:
-                        Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.AttributeBrush;
+                        ToolBoxClick(toolBtnBrush);
                         break;
                     case Keys.V:
-                        Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.Moving;
+                        ToolBoxClick(toolBtnMoving);
+                        break;
+                    case Keys.A:
+                        ToolBoxClick(toolBtnAttributeBrush);
+                        break;
+                    case Keys.D:
+                        if (e.Control)
+                        {
+                            Current.ReleaseAll();
+                        }
                         break;
                     case Keys.Enter:
                         if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.AttributeBrush)

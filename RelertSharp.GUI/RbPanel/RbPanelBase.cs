@@ -25,24 +25,5 @@ namespace RelertSharp.GUI.RbPanel
                 Language.SetControlLanguage(c);
             }
         }
-
-        protected virtual void OkClicked()
-        {
-            Visible = false;
-        }
-        protected virtual void CancelClicked()
-        {
-            Visible = false;
-        }
-
-        private void btnOK_Click(object sender, EventArgs e)
-        {
-            OkClicked();
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            CancelClicked();
-        }
     }
 }

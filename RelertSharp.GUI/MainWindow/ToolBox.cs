@@ -48,6 +48,7 @@ namespace RelertSharp.GUI
                     break;
                 case "attribute":
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.AttributeBrush;
+                    panel1.Cursor = new Cursor(Properties.Resources.curAttrib.Handle);
                     break;
             }
             btn.Checked = true;

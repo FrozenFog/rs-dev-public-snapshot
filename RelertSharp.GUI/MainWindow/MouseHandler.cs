@@ -25,23 +25,29 @@ namespace RelertSharp.GUI
         #region Down
         private void LmbDown(MouseEventArgs e)
         {
+            panel1.Focus();
             if (rbPanelAttribute.Visible)
             {
                 rbPanelAttribute.Visible = false;
+                panel1.Cursor = prevCur;
                 GlobalVar.Engine.Refresh();
             }
-            switch (Current.CurrentMouseAction)
+            else
             {
-                case MainWindowDataModel.MouseActionType.BoxSelecting:
-                    SceneSelectionBoxSet(e);
-                    break;
-                case MainWindowDataModel.MouseActionType.Moving:
-                    if (spaceKeyMoving)
-                    {
-                        BeginMove(e);
-                    }
-                    break;
+                switch (Current.CurrentMouseAction)
+                {
+                    case MainWindowDataModel.MouseActionType.BoxSelecting:
+                        SceneSelectionBoxSet(e);
+                        break;
+                    case MainWindowDataModel.MouseActionType.Moving:
+                        if (spaceKeyMoving)
+                        {
+                            BeginMove(e);
+                        }
+                        break;
+                }
             }
+
         }
         private void MmbDown(MouseEventArgs e)
         {
@@ -54,6 +60,8 @@ namespace RelertSharp.GUI
                 case MainWindowDataModel.MouseActionType.AttributeBrush:
                     if (!rbPanelAttribute.Visible)
                     {
+                        prevCur = panel1.Cursor;
+                        panel1.Cursor = Cursors.Arrow;
                         rbPanelAttribute.Location = e.Location;
                         rbPanelAttribute.Visible = true;
                     }
