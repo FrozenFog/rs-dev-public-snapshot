@@ -73,6 +73,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainWindow\Command.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainWindow\Drawing.cs">
       <SubType>Form</SubType>
     </Compile>

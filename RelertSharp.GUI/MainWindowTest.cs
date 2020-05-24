@@ -26,7 +26,6 @@ namespace RelertSharp.GUI
         private Map map;
         private int tilecount = 0, objectcount = 0;
         private bool initialized = false;
-        private List<string> failed = new List<string>();
         private MainWindowDataModel Current = new MainWindowDataModel();
 
         private LogicEditor logicEditor = new LogicEditor();
@@ -331,6 +330,22 @@ namespace RelertSharp.GUI
         private void ToolBoxClickHandler(object sender, EventArgs e)
         {
             ToolBoxClick(sender as ToolStripButton);
+        }
+
+        private void txbCommand_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.OemQuestion && e.Control)
+            {
+                txbCommand.Visible = false;
+                panel1.Focus();
+            }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                ExecuteCommand(txbCommand.Text);
+                txbCommand.Visible = false;
+                panel1.Focus();
+            }
         }
 
         private void ToolBoxRightClickHandler(object sender, MouseEventArgs e)

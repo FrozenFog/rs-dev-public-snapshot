@@ -18,7 +18,7 @@ namespace RelertSharp.MapStructure.Points
         #region Public Methods - ObjectBase
         public virtual void RemoveByCoord(I2dLocateable src)
         {
-            string coord = src.Coord.ToString();
+            string coord = CoordString(src.Y, src.X);
             if (data.Keys.Contains(coord)) data.Remove(coord);
         }
         #endregion
@@ -29,13 +29,13 @@ namespace RelertSharp.MapStructure.Points
         {
             get
             {
-                string coord = CoordString(x, y);
+                string coord = CoordString(y, x);
                 if (data.Keys.Contains(coord)) return data[coord];
                 return null;
             }
             set
             {
-                data[CoordString(x, y)] = value;
+                data[CoordString(y, x)] = value;
             }
         }
         public T this[string coord]
@@ -54,13 +54,14 @@ namespace RelertSharp.MapStructure.Points
         {
             get
             {
-                string coord = pos.Coord.ToString();
+                string coord = CoordString(pos.Y, pos.X);
                 if (data.Keys.Contains(coord)) return data[coord];
                 return null;
             }
             set
             {
-                data[pos.Coord.ToString()] = value;
+                string coord = CoordString(pos.Y, pos.X);
+                data[coord] = value;
             }
         }
 
@@ -100,7 +101,7 @@ namespace RelertSharp.MapStructure.Points
         public int Y { get; set; }
         public int Coord
         {
-            get { return CoordInt(X, Y); }
+            get { return CoordInt(Y, X); }
             set
             {
                 X = CoordIntX(value);

@@ -387,6 +387,9 @@ RSMainSideLblOverMsg=Over Message
 RSMainSideLblUnderTtl=Under Title
 RSMainSideLblUnderMsg=Under Message
 
+[CommandResult]
+RSCmdMoveError=Cannot move to target location, check your command and coordinate.
+
 [INIAttribute]
 AA=target air unit
 AG=target ground unit

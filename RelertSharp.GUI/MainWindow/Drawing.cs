@@ -24,7 +24,7 @@ namespace RelertSharp.GUI
     {
         private bool drew = false;
         private LoadingWindow lw;
-
+        private List<string> _failed = new List<string>();
 
 
         private bool DrawAll()
@@ -46,6 +46,7 @@ namespace RelertSharp.GUI
             lw.Close();
             lw.Dispose();
             ToolBoxClick(toolBtnMoving);
+            prevCur = panel1.Cursor;
             return true;
         }
         private bool EngineInitialize(IntPtr mainHandle, Panel minimapPanel)
@@ -74,7 +75,7 @@ namespace RelertSharp.GUI
                 lw.Incre();
                 if (!GlobalVar.Engine.DrawGeneralItem(t))
                 {
-                    failed.Add(string.Format("Tile in {0}", t.Coord));
+                    _failed.Add(string.Format("Tile in {0}", t.Coord));
                 }
             }
             lw.EndItems(LoadingWindow.LoadingFlag.Tiles);
@@ -87,7 +88,7 @@ namespace RelertSharp.GUI
                 lw.Incre();
                 if (!GlobalVar.Engine.DrawGeneralItem(terr, Map.GetHeightFromTile(terr)))
                 {
-                    failed.Add(string.Format("Terrain in {0}", terr.CoordString));
+                    _failed.Add(string.Format("Terrain in {0}", terr.CoordString));
                 }
             }
             lw.EndItems(LoadingWindow.LoadingFlag.Terrains);
@@ -100,7 +101,7 @@ namespace RelertSharp.GUI
                 lw.Incre();
                 if (!GlobalVar.Engine.DrawGeneralItem(smg, Map.GetHeightFromTile(smg)))
                 {
-                    failed.Add(string.Format("Smudge in {0}", smg.CoordString));
+                    _failed.Add(string.Format("Smudge in {0}", smg.CoordString));
                 }
             }
             lw.EndItems(LoadingWindow.LoadingFlag.Smudges);
@@ -113,7 +114,7 @@ namespace RelertSharp.GUI
                 lw.Incre();
                 if (!GlobalVar.Engine.DrawGeneralItem(o, Map.GetHeightFromTile(o)))
                 {
-                    failed.Add(string.Format("Overlay in {0}, id {1}", o.Coord, GlobalVar.GlobalRules.GetOverlayName(o.Index)));
+                    _failed.Add(string.Format("Overlay in {0}, id {1}", o.Coord, GlobalVar.GlobalRules.GetOverlayName(o.Index)));
                 }
             }
             lw.EndItems(LoadingWindow.LoadingFlag.Overlays);
@@ -126,7 +127,7 @@ namespace RelertSharp.GUI
                 lw.Incre();
                 if (!GlobalVar.Engine.DrawWaypoint(w, map.GetHeightFromTile(w)))
                 {
-                    failed.Add(string.Format("Waypoint in {0}", w.CoordString));
+                    _failed.Add(string.Format("Waypoint in {0}", w.CoordString));
                 }
             }
             lw.EndItems(LoadingWindow.LoadingFlag.Waypoints);
@@ -139,7 +140,7 @@ namespace RelertSharp.GUI
                 lw.Incre();
                 if (!GlobalVar.Engine.DrawCelltag(c, map.GetHeightFromTile(c), true))
                 {
-                    failed.Add(string.Format("Cellta at {0}", c.CoordString));
+                    _failed.Add(string.Format("Cellta at {0}", c.CoordString));
                 }
             }
             lw.EndItems(LoadingWindow.LoadingFlag.Celltags);
@@ -151,7 +152,7 @@ namespace RelertSharp.GUI
             {
                 lw.Incre();
                 if (!GlobalVar.Engine.DrawObject(inf, Map.GetHeightFromTile(inf), Map.GetHouseColor(inf.OwnerHouse)))
-                    failed.Add(inf.RegName);
+                    _failed.Add(inf.RegName);
             }
             lw.EndItems(LoadingWindow.LoadingFlag.Infantries);
             lw.StartDrawing(map.Buildings.Count(), "Buildings");
@@ -159,7 +160,7 @@ namespace RelertSharp.GUI
             {
                 lw.Incre();
                 if (!GlobalVar.Engine.DrawObject(structure, Map.GetHeightFromTile(structure), Map.GetHouseColor(structure.OwnerHouse)))
-                    failed.Add(structure.RegName);
+                    _failed.Add(structure.RegName);
             }
             lw.StartDrawing(map.Units.Count(), "Units");
             lw.EndItems(LoadingWindow.LoadingFlag.Buildings);
@@ -167,7 +168,7 @@ namespace RelertSharp.GUI
             {
                 lw.Incre();
                 if (!GlobalVar.Engine.DrawObject(unit, Map.GetHeightFromTile(unit), Map.GetHouseColor(unit.OwnerHouse)))
-                    failed.Add(unit.RegName);
+                    _failed.Add(unit.RegName);
             }
             lw.EndItems(LoadingWindow.LoadingFlag.Units);
             lw.StartDrawing(map.Aircrafts.Count(), "Aircrafts");
@@ -175,7 +176,7 @@ namespace RelertSharp.GUI
             {
                 lw.Incre();
                 if (!GlobalVar.Engine.DrawObject(air, Map.GetHeightFromTile(air), Map.GetHouseColor(air.OwnerHouse)))
-                    failed.Add(air.RegName);
+                    _failed.Add(air.RegName);
             }
             lw.EndItems(LoadingWindow.LoadingFlag.Aircrafts);
             lw.StartDrawing(map.Houses.Count(), "BaseNodes");
@@ -185,11 +186,11 @@ namespace RelertSharp.GUI
                 foreach (BaseNode node in house.BaseNodes)
                 {
                     if (!GlobalVar.Engine.DrawObject(node, Map.GetHeightFromTile(node), Map.GetHouseColor(house.Name)))
-                        failed.Add("Node " + node.RegName);
+                        _failed.Add("Node " + node.RegName);
                 }
             }
             lw.EndItems(LoadingWindow.LoadingFlag.BaseNodes);
-            listBox1.Items.AddRange(failed.ToArray());
+            listBox1.Items.AddRange(_failed.ToArray());
         }
     }
 }

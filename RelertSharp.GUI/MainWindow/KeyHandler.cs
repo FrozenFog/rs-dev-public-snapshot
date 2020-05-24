@@ -56,6 +56,20 @@ namespace RelertSharp.GUI
                             Current.ReleaseAll();
                         }
                         break;
+                    case Keys.OemQuestion:
+                        if (e.Control)
+                        {
+                            if (txbCommand.Visible) txbCommand.Visible = false;
+                            else
+                            {
+                                txbCommand.Visible = true;
+                                txbCommand.Focus();
+                                txbCommand.Text = @"/";
+                                txbCommand.SelectionLength = 0;
+                                txbCommand.SelectionStart = 1;
+                            }
+                        }
+                        break;
                     case Keys.Enter:
                         if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.AttributeBrush)
                         {

@@ -43,8 +43,24 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - Seeking
+        private bool buildingDumped = false;
+        private void DumpStructures()
+        {
+            if (!buildingDumped)
+            {
+                foreach (StructureItem bud in Buildings)
+                {
+                    foreach (I2dLocateable pos in new Square2D(bud, bud.SizeX, bud.SizeY))
+                    {
+                        Tiles.AddObjectOnTile(pos, bud);
+                    }
+                }
+                buildingDumped = true;
+            }
+        }
         public StructureItem GetBuilding(I2dLocateable pos)
         {
+            if (!buildingDumped) DumpStructures();
             StructureItem refer = GetMapObject<StructureItem>(pos);
             if (refer != null) return Buildings[refer.ID];
             return null;
@@ -76,6 +92,10 @@ namespace RelertSharp.MapStructure
                 }
             }
             return null;
+        }
+        public TerrainItem GetTerrain(I2dLocateable pos)
+        {
+            return Terrains[pos];
         }
         #endregion
     }

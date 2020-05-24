@@ -31,7 +31,6 @@ namespace RelertSharp.DrawingEngine
         private const uint _white = 0xFFFFFFFF;
         private static Vec3 _generalOffset = new Vec3() { X = 1, Y = 1, Z = (float)Math.Sqrt(2f/3f) };
         private BufferCollection Buffer = new BufferCollection();
-        private Vec3 previousTile = Vec3.Zero;
         private int pPalIso = 0;
         private int pPalUnit = 0;
         private int pPalTheater = 0;

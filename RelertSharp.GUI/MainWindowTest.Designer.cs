@@ -33,7 +33,9 @@
             this.button1 = new System.Windows.Forms.Button();
             this.panelHost = new System.Windows.Forms.Panel();
             this.splitMain = new System.Windows.Forms.SplitContainer();
+            this.pnlMainAreaContainer = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txbCommand = new System.Windows.Forms.TextBox();
             this.toolsMain = new System.Windows.Forms.ToolStrip();
             this.toolBtnMoving = new System.Windows.Forms.ToolStripButton();
             this.toolBtnSelecting = new System.Windows.Forms.ToolStripButton();
@@ -115,6 +117,7 @@
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
             this.splitMain.SuspendLayout();
+            this.pnlMainAreaContainer.SuspendLayout();
             this.panel1.SuspendLayout();
             this.toolsMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitSide)).BeginInit();
@@ -173,7 +176,7 @@
             // 
             // splitMain.Panel1
             // 
-            this.splitMain.Panel1.Controls.Add(this.panel1);
+            this.splitMain.Panel1.Controls.Add(this.pnlMainAreaContainer);
             this.splitMain.Panel1.Controls.Add(this.toolsMain);
             // 
             // splitMain.Panel2
@@ -183,14 +186,24 @@
             this.splitMain.SplitterDistance = 1035;
             this.splitMain.TabIndex = 5;
             // 
+            // pnlMainAreaContainer
+            // 
+            this.pnlMainAreaContainer.Controls.Add(this.panel1);
+            this.pnlMainAreaContainer.Controls.Add(this.txbCommand);
+            this.pnlMainAreaContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMainAreaContainer.Location = new System.Drawing.Point(25, 0);
+            this.pnlMainAreaContainer.Name = "pnlMainAreaContainer";
+            this.pnlMainAreaContainer.Size = new System.Drawing.Size(1010, 796);
+            this.pnlMainAreaContainer.TabIndex = 4;
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.rbPanelAttribute);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(25, 0);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1010, 796);
+            this.panel1.Size = new System.Drawing.Size(1010, 771);
             this.panel1.TabIndex = 2;
             this.panel1.SizeChanged += new System.EventHandler(this.panel1_SizeChanged);
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
@@ -200,6 +213,17 @@
             this.panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseUp);
             this.panel1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.panel1_PreviewKeyDown);
             this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
+            // 
+            // txbCommand
+            // 
+            this.txbCommand.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.txbCommand.Location = new System.Drawing.Point(0, 771);
+            this.txbCommand.Name = "txbCommand";
+            this.txbCommand.Size = new System.Drawing.Size(1010, 25);
+            this.txbCommand.TabIndex = 3;
+            this.txbCommand.Text = "/";
+            this.txbCommand.Visible = false;
+            this.txbCommand.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbCommand_KeyDown);
             // 
             // toolsMain
             // 
@@ -1194,7 +1218,7 @@
             this.tsmiIsoSelect,
             this.tsmiPreciseSelect});
             this.cmsToolSelect.Name = "cmsToolSelect";
-            this.cmsToolSelect.Size = new System.Drawing.Size(275, 110);
+            this.cmsToolSelect.Size = new System.Drawing.Size(275, 82);
             // 
             // tsmiRectSelect
             // 
@@ -1254,6 +1278,8 @@
             this.splitMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).EndInit();
             this.splitMain.ResumeLayout(false);
+            this.pnlMainAreaContainer.ResumeLayout(false);
+            this.pnlMainAreaContainer.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.toolsMain.ResumeLayout(false);
             this.toolsMain.PerformLayout();
@@ -1373,5 +1399,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiRectSelect;
         private System.Windows.Forms.ToolStripMenuItem tsmiIsoSelect;
         private System.Windows.Forms.ToolStripMenuItem tsmiPreciseSelect;
+        private System.Windows.Forms.Panel pnlMainAreaContainer;
+        private System.Windows.Forms.TextBox txbCommand;
     }
 }

@@ -36,10 +36,6 @@ namespace RelertSharp.MapStructure
         {
             StructureItem bud = new StructureItem(id, args);
             Buildings[id] = bud;
-            foreach (I2dLocateable pos in new Square2D(bud, bud.SizeX, bud.SizeY))
-            {
-                Tiles.AddObjectOnTile(pos, bud);
-            }
             return bud;
         }
         public AircraftItem AddAircraft(string id, string[] args)
@@ -53,7 +49,6 @@ namespace RelertSharp.MapStructure
         {
             TerrainItem ter = new TerrainItem(coord, regname);
             Terrains[coord] = ter;
-            Tiles.AddObjectOnTile(ter);
             return ter;
         }
     }

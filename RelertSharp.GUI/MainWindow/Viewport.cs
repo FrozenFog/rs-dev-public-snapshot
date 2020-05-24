@@ -22,6 +22,8 @@ namespace RelertSharp.GUI
     public partial class MainWindowTest
     {
         private Point selectorBoxLT = Point.Empty;
+        private I3dLocateable prevSelectingLT;
+        private I3dLocateable prevSelectingRB;
         private bool isSelecting = false;
 
 
@@ -30,6 +32,8 @@ namespace RelertSharp.GUI
             if (drew)
             {
                 selectorBoxLT = e.Location;
+                prevSelectingLT = GlobalVar.Engine.GetPreviousLegalTile();
+                prevSelectingRB = prevSelectingLT;
                 isSelecting = true;
             }
         }
@@ -38,6 +42,7 @@ namespace RelertSharp.GUI
             if (isSelecting)
             {
                 GlobalVar.Engine.DrawSelectingRectangle(Pnt.FromPoint(selectorBoxLT), Pnt.FromPoint(now.Location), Current.SelectingBoxFlag == MainWindowDataModel.SelectingBoxMode.IsometricRectangle);
+                prevSelectingRB = GlobalVar.Engine.GetPreviousLegalTile();
             }
         }
         private void SelectSceneItemsInsideBox(MouseEventArgs releasePoint)
@@ -47,12 +52,15 @@ namespace RelertSharp.GUI
                 GlobalVar.Engine.ReleaseDrawingRectangle();
                 var mode = Current.SelectingFlags;
                 IEnumerable<I2dLocateable> iter;
-                if (Current.SelectingBoxFlag == MainWindowDataModel.SelectingBoxMode.ClientRectangle) iter = new SceneSquare2D(selectorBoxLT, releasePoint.Location, map.Info.Size.Width);
+                if (Current.SelectingBoxFlag == MainWindowDataModel.SelectingBoxMode.ClientRectangle)
+                {
+                    Point LT = GlobalVar.Engine.CellPosToClientPos(prevSelectingLT);
+                    Point RB = GlobalVar.Engine.CellPosToClientPos(prevSelectingRB);
+                    iter = new SceneSquare2D(LT, RB, map.Info.Size.Width);
+                }
                 else
                 {
-                    Vec3 up = GlobalVar.Engine.ClientPointToCellPos(selectorBoxLT);
-                    Vec3 down = GlobalVar.Engine.ClientPointToCellPos(releasePoint.Location);
-                    iter = new Square2D(up.To2dLocateable(), down.To2dLocateable());
+                    iter = new Square2D(prevSelectingLT, prevSelectingRB);
                 }
                 foreach (I2dLocateable pos in iter)
                 {

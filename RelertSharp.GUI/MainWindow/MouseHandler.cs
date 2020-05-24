@@ -37,7 +37,7 @@ namespace RelertSharp.GUI
                 switch (Current.CurrentMouseAction)
                 {
                     case MainWindowDataModel.MouseActionType.BoxSelecting:
-                        SceneSelectionBoxSet(e);
+                        if (Current.SelectingBoxFlag != MainWindowDataModel.SelectingBoxMode.Precise) SceneSelectionBoxSet(e);
                         break;
                     case MainWindowDataModel.MouseActionType.Moving:
                         if (spaceKeyMoving)
@@ -64,6 +64,7 @@ namespace RelertSharp.GUI
                         panel1.Cursor = Cursors.Arrow;
                         rbPanelAttribute.Location = e.Location;
                         rbPanelAttribute.Visible = true;
+                        GlobalVar.Engine.Refresh();
                     }
                     break;
             }
@@ -101,12 +102,13 @@ namespace RelertSharp.GUI
             switch (Current.CurrentMouseAction)
             {
                 case MainWindowDataModel.MouseActionType.BoxSelecting:
-                    SelectSceneItemsInsideBox(e);
+                    if (Current.SelectingBoxFlag != MainWindowDataModel.SelectingBoxMode.Precise) SelectSceneItemsInsideBox(e);
                     break;
                 case MainWindowDataModel.MouseActionType.Moving:
                     MmbUp(e);
                     break;
             }
+            spaceKeyMoving = false;
         }
         private void MmbUp(MouseEventArgs e)
         {

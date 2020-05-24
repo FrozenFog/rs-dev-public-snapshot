@@ -240,7 +240,32 @@ namespace RelertSharp.Common
         {
             return new Pnt((int)X, (int)Y);
         }
+        public I3dLocateable To3dLocateable()
+        {
+            return new Pnt3((int)X, (int)Y, (int)Z);
+        }
         #endregion
+    }
+
+
+    public struct Pnt3: I3dLocateable
+    {
+        public int X;
+        public int Y;
+        public int Z;
+
+        public Pnt3(int x,int y,int z)
+        {
+            X = x;Y = y;Z = z;
+        }
+
+        public int Coord => Utils.Misc.CoordInt(X, Y);
+
+        int I3dLocateable.Z => Z;
+
+        int I2dLocateable.X => X;
+
+        int I2dLocateable.Y => Y;
     }
 
 
@@ -307,6 +332,10 @@ namespace RelertSharp.Common
         public static Pnt FromPoint(Point src)
         {
             return new Pnt() { X = src.X, Y = src.Y };
+        }
+        public Point ToPoint()
+        {
+            return new Point(X, Y);
         }
     }
 }

@@ -10,6 +10,8 @@ namespace RelertSharp.DrawingEngine
     public partial class Engine
     {
         private TileLayer _cellFindingReferance;
+        private Vec3 previousTile = Vec3.Zero;
+
         public Vec3 ClientPointToCellPos(Point src)
         {
             Pnt p = Pnt.FromPoint(src);
@@ -50,6 +52,16 @@ namespace RelertSharp.DrawingEngine
             }
             infsubcell = -1;
             return Vec3.Zero;
+        }
+        public Point CellPosToClientPos(I3dLocateable pos)
+        {
+            Pnt result = new Pnt();
+            CppExtern.Scene.ScenePositionToClientPosition(ToVec3Iso(pos), ref result);
+            return result.ToPoint();
+        }
+        public I3dLocateable GetPreviousLegalTile()
+        {
+            return previousTile.To3dLocateable();
         }
         /// <summary>
         /// Return true if pos changed
