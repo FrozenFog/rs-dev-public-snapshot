@@ -35,14 +35,24 @@ namespace RelertSharp.GUI
         public MainWindowTest()
         {
             InitializeComponent();
-            (panel1 as Control).KeyDown += new KeyEventHandler(panel1_KeyDown);
-            (panel1 as Control).KeyUp += new KeyEventHandler(panel1_KeyUp);
+            InitializeControl();
+
             map = GlobalVar.CurrentMapDocument.Map;
             GlobalVar.GlobalRules.MapIniData = map.IniResidue;
             panel1.BackColor = Color.FromArgb(30, 30, 30);
             cbbLightningType.SelectedIndex = 0;
         }
 
+        private void InitializeControl()
+        {
+            (panel1 as Control).KeyDown += new KeyEventHandler(panel1_KeyDown);
+            (panel1 as Control).KeyUp += new KeyEventHandler(panel1_KeyUp);
+            foreach (Control c in Controls)
+            {
+                Language.SetControlLanguage(c);
+            }
+            Text = Language.DICT[Text];
+        }
         private bool updatingLightningData = false;
         private void UpdateLightningSide(LightningItem src, bool enable)
         {
@@ -113,17 +123,20 @@ namespace RelertSharp.GUI
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Middle)
+            if (drew)
             {
-                MmbDown(e);
-            }
-            else if (e.Button == MouseButtons.Left)
-            {
-                LmbDown(e);
-            }
-            else if (e.Button == MouseButtons.Right)
-            {
-                RmbDown(e);
+                if (e.Button == MouseButtons.Middle)
+                {
+                    MmbDown(e);
+                }
+                else if (e.Button == MouseButtons.Left)
+                {
+                    LmbDown(e);
+                }
+                else if (e.Button == MouseButtons.Right)
+                {
+                    RmbDown(e);
+                }
             }
         }
 
@@ -311,6 +324,21 @@ namespace RelertSharp.GUI
             else if (e.Button == MouseButtons.Left)
             {
                 LmbUp(e);
+            }
+        }
+
+        private void ToolBoxClickHandler(object sender, EventArgs e)
+        {
+            ToolBoxClick(sender as ToolStripButton);
+        }
+
+        private void ToolBoxRightClickHandler(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                Point pos = (sender as ToolStripButton).GetCurrentParent().PointToScreen(e.Location);
+                pos.Y += 24;
+                ToolBoxRightClick(sender as ToolStripButton, pos);
             }
         }
     }

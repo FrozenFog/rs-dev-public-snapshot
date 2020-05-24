@@ -18,6 +18,14 @@ namespace RelertSharp.GUI.RbPanel
             Visible = false;
         }
 
+        protected virtual void SetLanguage()
+        {
+            foreach(Control c in Controls)
+            {
+                Language.SetControlLanguage(c);
+            }
+        }
+
         protected virtual void OkClicked()
         {
             Visible = false;

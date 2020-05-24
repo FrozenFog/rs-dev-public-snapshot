@@ -350,6 +350,43 @@ CMPckbIgnoreNew=Ignore New Items
 CMPckbCalcRelative=Calculate Relative Percentage
 CMPTitle=INI Comparator
 
+[Dialog-Main]
+RSMainTitle=Relert Sharp
+
+RSMainTooltsmiRectangle=Client Rectangle Selecting
+RSMainTooltsmiIsometric=Scene Isometric Rectangle Selecting
+RSMainTooltsmiPrecise=Precise Selecting
+RSMainToolBtnSelecting=Select Object(M)
+RSMainToolBtnMoving=Move Object(V)
+RSMainToolBrush=Brush(B)
+RSMainToolAttBrush=Attribute Brush(A)
+
+[Dialog-Main-Side]
+RSMainSideCkbMapObj=Map Objects
+RSMainSideCkbCheck=Map Checking
+RSMainSideCkbLight=Lightning Control
+RSMainSideCkbDebug=Debug
+RSMainSideCkbRank=Ranking
+
+RSMainSideLblBuildable=Buildable Tiles
+RSMainSideLblPassable=Passable Tiles
+RSMainSideLblEnable=Enable
+RSMainSideLblType=Type
+RSMainSideLblR=Red
+RSMainSideLblG=Green
+RSMainSideLblB=Blue
+RSMainSideLblAmb=Ambient
+RSMainSideLblGnd=Ground
+RSMainSideLblLvl=Level
+RSMainSideLblRefreshLight=Refresh Lightning
+RSMainSideLblParE=ParTime-E
+RSMainSideLblParM=ParTime-M
+RSMainSideLblParH=ParTime-H
+RSMainSideLblOverTtl=Over Title
+RSMainSideLblOverMsg=Over Message
+RSMainSideLblUnderTtl=Under Title
+RSMainSideLblUnderMsg=Under Message
+
 [INIAttribute]
 AA=target air unit
 AG=target ground unit

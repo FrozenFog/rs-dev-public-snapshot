@@ -94,6 +94,9 @@
     <Compile Include="MainWindow\Navigating.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MainWindow\ToolBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainWindow\Viewport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -264,6 +267,14 @@
     <None Include="Resources\brush.png" />
     <None Include="Resources\moving.png" />
     <None Include="Resources\selectRect.png" />
+    <None Include="Resources\selectIso.png" />
+    <None Include="Resources\abrush.png" />
+    <None Include="Resources\selectPrec.png" />
+    <None Include="Resources\cursorSolid.ico" />
+    <None Include="Resources\rectIcon.ico" />
+    <None Include="Resources\moving.ico" />
+    <None Include="Resources\curIso.ico" />
+    <None Include="Resources\curBrush.ico" />
     <Content Include="rslogo.ico" />
   </ItemGroup>
   <ItemGroup>

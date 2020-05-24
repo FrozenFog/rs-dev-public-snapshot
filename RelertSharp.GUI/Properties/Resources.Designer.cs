@@ -143,6 +143,16 @@ namespace RelertSharp.GUI.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap btnABrush {
+            get {
+                object obj = ResourceManager.GetObject("btnABrush", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap btnArrow {
             get {
                 object obj = ResourceManager.GetObject("btnArrow", resourceCulture);
@@ -163,9 +173,29 @@ namespace RelertSharp.GUI.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap btnIsoSelecting {
+            get {
+                object obj = ResourceManager.GetObject("btnIsoSelecting", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap btnMoving {
             get {
                 object obj = ResourceManager.GetObject("btnMoving", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap btnPrecSelecting {
+            get {
+                object obj = ResourceManager.GetObject("btnPrecSelecting", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -177,6 +207,46 @@ namespace RelertSharp.GUI.Properties {
             get {
                 object obj = ResourceManager.GetObject("btnRectSelecting", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Icon curBrush {
+            get {
+                object obj = ResourceManager.GetObject("curBrush", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Icon curIso {
+            get {
+                object obj = ResourceManager.GetObject("curIso", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Icon curRect {
+            get {
+                object obj = ResourceManager.GetObject("curRect", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Icon cursorSolid {
+            get {
+                object obj = ResourceManager.GetObject("cursorSolid", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

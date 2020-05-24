@@ -28,14 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindowTest));
             this.button1 = new System.Windows.Forms.Button();
             this.panelHost = new System.Windows.Forms.Panel();
             this.splitMain = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.toolsMain = new System.Windows.Forms.ToolStrip();
-            this.toolBtnSelectingDropdown = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolBtnMoving = new System.Windows.Forms.ToolStripButton();
+            this.toolBtnSelecting = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolBtnBrush = new System.Windows.Forms.ToolStripButton();
             this.toolBtnAttributeBrush = new System.Windows.Forms.ToolStripButton();
             this.splitSide = new System.Windows.Forms.SplitContainer();
             this.pnlMiniMap = new System.Windows.Forms.Panel();
@@ -99,6 +102,13 @@
             this.lblMouseY = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.itemRectangle = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemIsometric = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemPrecise = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsToolSelect = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiRectSelect = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiIsoSelect = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiPreciseSelect = new System.Windows.Forms.ToolStripMenuItem();
             this.rbPanelAttribute = new RelertSharp.GUI.RbPanel.RbPanelAttribute();
             this.panelHost.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
@@ -127,6 +137,7 @@
             this.tlpChecking.SuspendLayout();
             this.pnlSideObjects.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.cmsToolSelect.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -176,10 +187,10 @@
             // 
             this.panel1.Controls.Add(this.rbPanelAttribute);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(40, 0);
+            this.panel1.Location = new System.Drawing.Point(25, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(995, 796);
+            this.panel1.Size = new System.Drawing.Size(1010, 796);
             this.panel1.TabIndex = 2;
             this.panel1.SizeChanged += new System.EventHandler(this.panel1_SizeChanged);
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
@@ -196,44 +207,74 @@
             this.toolsMain.Dock = System.Windows.Forms.DockStyle.Left;
             this.toolsMain.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolBtnSelectingDropdown,
             this.toolBtnMoving,
+            this.toolBtnSelecting,
+            this.toolStripSeparator1,
+            this.toolBtnBrush,
             this.toolBtnAttributeBrush});
+            this.toolsMain.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
             this.toolsMain.Location = new System.Drawing.Point(0, 0);
             this.toolsMain.Name = "toolsMain";
             this.toolsMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolsMain.Size = new System.Drawing.Size(40, 796);
+            this.toolsMain.Size = new System.Drawing.Size(25, 796);
             this.toolsMain.TabIndex = 3;
             this.toolsMain.Text = "toolStrip1";
             // 
-            // toolBtnSelectingDropdown
-            // 
-            this.toolBtnSelectingDropdown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolBtnSelectingDropdown.Image = global::RelertSharp.GUI.Properties.Resources.btnRectSelecting;
-            this.toolBtnSelectingDropdown.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolBtnSelectingDropdown.Name = "toolBtnSelectingDropdown";
-            this.toolBtnSelectingDropdown.Size = new System.Drawing.Size(37, 24);
-            this.toolBtnSelectingDropdown.Text = "toolStripDropDownButton1";
-            // 
             // toolBtnMoving
             // 
+            this.toolBtnMoving.Checked = true;
+            this.toolBtnMoving.CheckOnClick = true;
+            this.toolBtnMoving.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolBtnMoving.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolBtnMoving.Image = global::RelertSharp.GUI.Properties.Resources.btnMoving;
-            this.toolBtnMoving.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolBtnMoving.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnMoving.Name = "toolBtnMoving";
-            this.toolBtnMoving.Size = new System.Drawing.Size(37, 24);
-            this.toolBtnMoving.Text = "toolStripButton1";
+            this.toolBtnMoving.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnMoving.Tag = "moving";
+            this.toolBtnMoving.Text = "RSMainToolBtnMoving";
+            this.toolBtnMoving.Click += new System.EventHandler(this.ToolBoxClickHandler);
+            // 
+            // toolBtnSelecting
+            // 
+            this.toolBtnSelecting.CheckOnClick = true;
+            this.toolBtnSelecting.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnSelecting.Image = global::RelertSharp.GUI.Properties.Resources.btnRectSelecting;
+            this.toolBtnSelecting.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnSelecting.Name = "toolBtnSelecting";
+            this.toolBtnSelecting.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnSelecting.Tag = "selecting";
+            this.toolBtnSelecting.Text = "RSMainToolBtnSelecting";
+            this.toolBtnSelecting.Click += new System.EventHandler(this.ToolBoxClickHandler);
+            this.toolBtnSelecting.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ToolBoxRightClickHandler);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(22, 6);
+            // 
+            // toolBtnBrush
+            // 
+            this.toolBtnBrush.CheckOnClick = true;
+            this.toolBtnBrush.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnBrush.Image = global::RelertSharp.GUI.Properties.Resources.btnBrush;
+            this.toolBtnBrush.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnBrush.Name = "toolBtnBrush";
+            this.toolBtnBrush.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnBrush.Tag = "brush";
+            this.toolBtnBrush.Text = "RSMainToolBrush";
+            this.toolBtnBrush.Click += new System.EventHandler(this.ToolBoxClickHandler);
             // 
             // toolBtnAttributeBrush
             // 
+            this.toolBtnAttributeBrush.CheckOnClick = true;
             this.toolBtnAttributeBrush.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolBtnAttributeBrush.Image = global::RelertSharp.GUI.Properties.Resources.btnBrush;
-            this.toolBtnAttributeBrush.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolBtnAttributeBrush.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnAttributeBrush.Image")));
             this.toolBtnAttributeBrush.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnAttributeBrush.Name = "toolBtnAttributeBrush";
-            this.toolBtnAttributeBrush.Size = new System.Drawing.Size(37, 24);
-            this.toolBtnAttributeBrush.Text = "toolStripButton2";
+            this.toolBtnAttributeBrush.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnAttributeBrush.Tag = "attribute";
+            this.toolBtnAttributeBrush.Text = "RSMainToolAttBrush";
+            this.toolBtnAttributeBrush.Click += new System.EventHandler(this.ToolBoxClickHandler);
             // 
             // splitSide
             // 
@@ -342,21 +383,21 @@
             // 
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(120, 89);
+            this.comboBox1.Location = new System.Drawing.Point(184, 89);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(60, 23);
+            this.comboBox1.Size = new System.Drawing.Size(1, 23);
             this.comboBox1.TabIndex = 1;
             // 
             // maskedTextBox1
             // 
             this.maskedTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.maskedTextBox1.Location = new System.Drawing.Point(120, 2);
+            this.maskedTextBox1.Location = new System.Drawing.Point(184, 2);
             this.maskedTextBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.maskedTextBox1.Mask = "00:00:00";
             this.maskedTextBox1.Name = "maskedTextBox1";
             this.maskedTextBox1.PromptChar = '0';
-            this.maskedTextBox1.Size = new System.Drawing.Size(60, 25);
+            this.maskedTextBox1.Size = new System.Drawing.Size(1, 25);
             this.maskedTextBox1.TabIndex = 1;
             this.maskedTextBox1.ValidatingType = typeof(System.DateTime);
             // 
@@ -366,9 +407,9 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(35, 7);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(79, 15);
+            this.label10.Size = new System.Drawing.Size(143, 15);
             this.label10.TabIndex = 0;
-            this.label10.Text = "ParTime-E";
+            this.label10.Text = "RSMainSideLblParE";
             // 
             // label11
             // 
@@ -376,9 +417,9 @@
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(35, 36);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(79, 15);
+            this.label11.Size = new System.Drawing.Size(143, 15);
             this.label11.TabIndex = 2;
-            this.label11.Text = "ParTime-M";
+            this.label11.Text = "RSMainSideLblParM";
             // 
             // label12
             // 
@@ -386,19 +427,19 @@
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(35, 65);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(79, 15);
+            this.label12.Size = new System.Drawing.Size(143, 15);
             this.label12.TabIndex = 4;
-            this.label12.Text = "ParTime-H";
+            this.label12.Text = "RSMainSideLblParH";
             // 
             // label13
             // 
             this.label13.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(27, 93);
+            this.label13.Location = new System.Drawing.Point(11, 93);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(87, 15);
+            this.label13.Size = new System.Drawing.Size(167, 15);
             this.label13.TabIndex = 4;
-            this.label13.Text = "Over Title";
+            this.label13.Text = "RSMainSideLblOverTtl";
             // 
             // label14
             // 
@@ -406,19 +447,19 @@
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(11, 120);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(103, 15);
+            this.label14.Size = new System.Drawing.Size(167, 15);
             this.label14.TabIndex = 4;
-            this.label14.Text = "Over Message";
+            this.label14.Text = "RSMainSideLblOverMsg";
             // 
             // label15
             // 
             this.label15.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(19, 147);
+            this.label15.Location = new System.Drawing.Point(3, 147);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(95, 15);
+            this.label15.Size = new System.Drawing.Size(175, 15);
             this.label15.TabIndex = 4;
-            this.label15.Text = "Under Title";
+            this.label15.Text = "RSMainSideLblUnderTtl";
             // 
             // label16
             // 
@@ -426,60 +467,60 @@
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(3, 174);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(111, 15);
+            this.label16.Size = new System.Drawing.Size(175, 15);
             this.label16.TabIndex = 4;
-            this.label16.Text = "Under Message";
+            this.label16.Text = "RSMainSideLblUnderMsg";
             // 
             // maskedTextBox2
             // 
             this.maskedTextBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.maskedTextBox2.Location = new System.Drawing.Point(120, 31);
+            this.maskedTextBox2.Location = new System.Drawing.Point(184, 31);
             this.maskedTextBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.maskedTextBox2.Mask = "00:00:00";
             this.maskedTextBox2.Name = "maskedTextBox2";
             this.maskedTextBox2.PromptChar = '0';
-            this.maskedTextBox2.Size = new System.Drawing.Size(60, 25);
+            this.maskedTextBox2.Size = new System.Drawing.Size(1, 25);
             this.maskedTextBox2.TabIndex = 1;
             // 
             // maskedTextBox3
             // 
             this.maskedTextBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.maskedTextBox3.Location = new System.Drawing.Point(120, 60);
+            this.maskedTextBox3.Location = new System.Drawing.Point(184, 60);
             this.maskedTextBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.maskedTextBox3.Mask = "00:00:00";
             this.maskedTextBox3.Name = "maskedTextBox3";
             this.maskedTextBox3.PromptChar = '0';
-            this.maskedTextBox3.Size = new System.Drawing.Size(60, 25);
+            this.maskedTextBox3.Size = new System.Drawing.Size(1, 25);
             this.maskedTextBox3.TabIndex = 1;
             // 
             // comboBox2
             // 
             this.comboBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(120, 116);
+            this.comboBox2.Location = new System.Drawing.Point(184, 116);
             this.comboBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(60, 23);
+            this.comboBox2.Size = new System.Drawing.Size(1, 23);
             this.comboBox2.TabIndex = 1;
             // 
             // comboBox3
             // 
             this.comboBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(120, 143);
+            this.comboBox3.Location = new System.Drawing.Point(184, 143);
             this.comboBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(60, 23);
+            this.comboBox3.Size = new System.Drawing.Size(1, 23);
             this.comboBox3.TabIndex = 1;
             // 
             // comboBox4
             // 
             this.comboBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(120, 170);
+            this.comboBox4.Location = new System.Drawing.Point(184, 170);
             this.comboBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(60, 23);
+            this.comboBox4.Size = new System.Drawing.Size(1, 23);
             this.comboBox4.TabIndex = 1;
             // 
             // ckbRankPanel
@@ -495,7 +536,7 @@
             this.ckbRankPanel.Name = "ckbRankPanel";
             this.ckbRankPanel.Size = new System.Drawing.Size(183, 25);
             this.ckbRankPanel.TabIndex = 1;
-            this.ckbRankPanel.Text = "Ranks";
+            this.ckbRankPanel.Text = "RSMainSideCkbRank";
             this.ckbRankPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ckbRankPanel.UseVisualStyleBackColor = true;
             this.ckbRankPanel.CheckedChanged += new System.EventHandler(this.Panelchecker_CheckedChanged0);
@@ -530,15 +571,13 @@
             this.ckbDebugPanel.Appearance = System.Windows.Forms.Appearance.Button;
             this.ckbDebugPanel.AutoSize = true;
             this.ckbDebugPanel.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ckbDebugPanel.Checked = true;
-            this.ckbDebugPanel.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckbDebugPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.ckbDebugPanel.Location = new System.Drawing.Point(0, 0);
             this.ckbDebugPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ckbDebugPanel.Name = "ckbDebugPanel";
             this.ckbDebugPanel.Size = new System.Drawing.Size(183, 25);
             this.ckbDebugPanel.TabIndex = 4;
-            this.ckbDebugPanel.Text = "Debugs";
+            this.ckbDebugPanel.Text = "RSMainSideCkbDebug";
             this.ckbDebugPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ckbDebugPanel.UseVisualStyleBackColor = true;
             this.ckbDebugPanel.CheckedChanged += new System.EventHandler(this.Panelchecker_CheckedChanged0);
@@ -608,7 +647,7 @@
             this.btnLightningRefresh.Name = "btnLightningRefresh";
             this.btnLightningRefresh.Size = new System.Drawing.Size(177, 25);
             this.btnLightningRefresh.TabIndex = 6;
-            this.btnLightningRefresh.Text = "Refresh Lightning";
+            this.btnLightningRefresh.Text = "RSMainSideLblRefreshLight";
             this.btnLightningRefresh.UseVisualStyleBackColor = true;
             this.btnLightningRefresh.Click += new System.EventHandler(this.btnLightningRefresh_Click);
             // 
@@ -618,18 +657,18 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(3, 3);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 15);
+            this.label1.Size = new System.Drawing.Size(159, 15);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Enabled";
+            this.label1.Text = "RSMainSideLblEnable";
             // 
             // ckbLightningEnable
             // 
             this.ckbLightningEnable.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ckbLightningEnable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ckbLightningEnable.Location = new System.Drawing.Point(72, 2);
+            this.ckbLightningEnable.Location = new System.Drawing.Point(168, 2);
             this.ckbLightningEnable.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ckbLightningEnable.Name = "ckbLightningEnable";
-            this.ckbLightningEnable.Size = new System.Drawing.Size(108, 18);
+            this.ckbLightningEnable.Size = new System.Drawing.Size(12, 18);
             this.ckbLightningEnable.TabIndex = 1;
             this.ckbLightningEnable.UseVisualStyleBackColor = true;
             this.ckbLightningEnable.CheckedChanged += new System.EventHandler(this.ckbLight_CheckedChanged);
@@ -638,11 +677,11 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(27, 28);
+            this.label2.Location = new System.Drawing.Point(19, 28);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(39, 15);
+            this.label2.Size = new System.Drawing.Size(143, 15);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Type";
+            this.label2.Text = "RSMainSideLblType";
             // 
             // cbbLightningType
             // 
@@ -653,10 +692,10 @@
             "Normal",
             "LightningStorm",
             "Dominator"});
-            this.cbbLightningType.Location = new System.Drawing.Point(72, 24);
+            this.cbbLightningType.Location = new System.Drawing.Point(168, 24);
             this.cbbLightningType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbbLightningType.Name = "cbbLightningType";
-            this.cbbLightningType.Size = new System.Drawing.Size(108, 23);
+            this.cbbLightningType.Size = new System.Drawing.Size(12, 23);
             this.cbbLightningType.TabIndex = 3;
             this.cbbLightningType.SelectedIndexChanged += new System.EventHandler(this.ckbLightningType_SelectedIndexChanged);
             // 
@@ -664,31 +703,31 @@
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(35, 56);
+            this.label3.Location = new System.Drawing.Point(43, 56);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(31, 15);
+            this.label3.Size = new System.Drawing.Size(119, 15);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Red";
+            this.label3.Text = "RSMainSideLblR";
             // 
             // label4
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(19, 85);
+            this.label4.Location = new System.Drawing.Point(43, 85);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 15);
+            this.label4.Size = new System.Drawing.Size(119, 15);
             this.label4.TabIndex = 4;
-            this.label4.Text = "Green";
+            this.label4.Text = "RSMainSideLblG";
             // 
             // label5
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(27, 114);
+            this.label5.Location = new System.Drawing.Point(43, 114);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(39, 15);
+            this.label5.Size = new System.Drawing.Size(119, 15);
             this.label5.TabIndex = 4;
-            this.label5.Text = "Blue";
+            this.label5.Text = "RSMainSideLblB";
             // 
             // nmbxLightningRed
             // 
@@ -700,7 +739,7 @@
             0,
             0,
             131072});
-            this.nmbxLightningRed.Location = new System.Drawing.Point(72, 51);
+            this.nmbxLightningRed.Location = new System.Drawing.Point(168, 51);
             this.nmbxLightningRed.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nmbxLightningRed.Maximum = new decimal(new int[] {
             10,
@@ -708,7 +747,7 @@
             0,
             0});
             this.nmbxLightningRed.Name = "nmbxLightningRed";
-            this.nmbxLightningRed.Size = new System.Drawing.Size(108, 25);
+            this.nmbxLightningRed.Size = new System.Drawing.Size(12, 25);
             this.nmbxLightningRed.TabIndex = 5;
             this.nmbxLightningRed.Value = new decimal(new int[] {
             1,
@@ -727,7 +766,7 @@
             0,
             0,
             131072});
-            this.nmbxLightningGreen.Location = new System.Drawing.Point(72, 80);
+            this.nmbxLightningGreen.Location = new System.Drawing.Point(168, 80);
             this.nmbxLightningGreen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nmbxLightningGreen.Maximum = new decimal(new int[] {
             10,
@@ -735,7 +774,7 @@
             0,
             0});
             this.nmbxLightningGreen.Name = "nmbxLightningGreen";
-            this.nmbxLightningGreen.Size = new System.Drawing.Size(108, 25);
+            this.nmbxLightningGreen.Size = new System.Drawing.Size(12, 25);
             this.nmbxLightningGreen.TabIndex = 5;
             this.nmbxLightningGreen.Value = new decimal(new int[] {
             1,
@@ -754,7 +793,7 @@
             0,
             0,
             131072});
-            this.nmbxLightningBlue.Location = new System.Drawing.Point(72, 109);
+            this.nmbxLightningBlue.Location = new System.Drawing.Point(168, 109);
             this.nmbxLightningBlue.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nmbxLightningBlue.Maximum = new decimal(new int[] {
             10,
@@ -762,7 +801,7 @@
             0,
             0});
             this.nmbxLightningBlue.Name = "nmbxLightningBlue";
-            this.nmbxLightningBlue.Size = new System.Drawing.Size(108, 25);
+            this.nmbxLightningBlue.Size = new System.Drawing.Size(12, 25);
             this.nmbxLightningBlue.TabIndex = 5;
             this.nmbxLightningBlue.Value = new decimal(new int[] {
             1,
@@ -775,31 +814,31 @@
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 143);
+            this.label6.Location = new System.Drawing.Point(27, 143);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 15);
+            this.label6.Size = new System.Drawing.Size(135, 15);
             this.label6.TabIndex = 4;
-            this.label6.Text = "Ambient";
+            this.label6.Text = "RSMainSideLblAmb";
             // 
             // label7
             // 
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(11, 172);
+            this.label7.Location = new System.Drawing.Point(27, 172);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(55, 15);
+            this.label7.Size = new System.Drawing.Size(135, 15);
             this.label7.TabIndex = 4;
-            this.label7.Text = "Ground";
+            this.label7.Text = "RSMainSideLblGnd";
             // 
             // label8
             // 
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(19, 201);
+            this.label8.Location = new System.Drawing.Point(27, 201);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(47, 15);
+            this.label8.Size = new System.Drawing.Size(135, 15);
             this.label8.TabIndex = 4;
-            this.label8.Text = "Level";
+            this.label8.Text = "RSMainSideLblLvl";
             // 
             // nmbxLightningAmbient
             // 
@@ -811,7 +850,7 @@
             0,
             0,
             131072});
-            this.nmbxLightningAmbient.Location = new System.Drawing.Point(72, 138);
+            this.nmbxLightningAmbient.Location = new System.Drawing.Point(168, 138);
             this.nmbxLightningAmbient.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nmbxLightningAmbient.Maximum = new decimal(new int[] {
             10,
@@ -819,7 +858,7 @@
             0,
             0});
             this.nmbxLightningAmbient.Name = "nmbxLightningAmbient";
-            this.nmbxLightningAmbient.Size = new System.Drawing.Size(108, 25);
+            this.nmbxLightningAmbient.Size = new System.Drawing.Size(12, 25);
             this.nmbxLightningAmbient.TabIndex = 5;
             this.nmbxLightningAmbient.Value = new decimal(new int[] {
             1,
@@ -838,7 +877,7 @@
             0,
             0,
             131072});
-            this.nmbxLightningGround.Location = new System.Drawing.Point(72, 167);
+            this.nmbxLightningGround.Location = new System.Drawing.Point(168, 167);
             this.nmbxLightningGround.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nmbxLightningGround.Maximum = new decimal(new int[] {
             10,
@@ -846,7 +885,7 @@
             0,
             0});
             this.nmbxLightningGround.Name = "nmbxLightningGround";
-            this.nmbxLightningGround.Size = new System.Drawing.Size(108, 25);
+            this.nmbxLightningGround.Size = new System.Drawing.Size(12, 25);
             this.nmbxLightningGround.TabIndex = 5;
             this.nmbxLightningGround.Value = new decimal(new int[] {
             1,
@@ -865,7 +904,7 @@
             0,
             0,
             196608});
-            this.nmbxLightningLevel.Location = new System.Drawing.Point(72, 196);
+            this.nmbxLightningLevel.Location = new System.Drawing.Point(168, 196);
             this.nmbxLightningLevel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nmbxLightningLevel.Maximum = new decimal(new int[] {
             10,
@@ -873,7 +912,7 @@
             0,
             0});
             this.nmbxLightningLevel.Name = "nmbxLightningLevel";
-            this.nmbxLightningLevel.Size = new System.Drawing.Size(108, 25);
+            this.nmbxLightningLevel.Size = new System.Drawing.Size(12, 25);
             this.nmbxLightningLevel.TabIndex = 5;
             this.nmbxLightningLevel.Value = new decimal(new int[] {
             1,
@@ -895,7 +934,7 @@
             this.ckbLightningPanel.Name = "ckbLightningPanel";
             this.ckbLightningPanel.Size = new System.Drawing.Size(183, 25);
             this.ckbLightningPanel.TabIndex = 0;
-            this.ckbLightningPanel.Text = "Lightning Control";
+            this.ckbLightningPanel.Text = "RSMainSideCkbLight";
             this.ckbLightningPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ckbLightningPanel.UseVisualStyleBackColor = true;
             this.ckbLightningPanel.CheckedChanged += new System.EventHandler(this.Panelchecker_CheckedChanged0);
@@ -940,9 +979,9 @@
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(11, 25);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(119, 15);
+            this.label17.Size = new System.Drawing.Size(175, 15);
             this.label17.TabIndex = 3;
-            this.label17.Text = "Passable Tiles";
+            this.label17.Text = "RSMainSideLblPassable";
             // 
             // label9
             // 
@@ -950,18 +989,18 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(3, 3);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(127, 15);
+            this.label9.Size = new System.Drawing.Size(183, 15);
             this.label9.TabIndex = 1;
-            this.label9.Text = "Buildable Tiles";
+            this.label9.Text = "RSMainSideLblBuildable";
             // 
             // ckbBuildableTiles
             // 
             this.ckbBuildableTiles.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ckbBuildableTiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ckbBuildableTiles.Location = new System.Drawing.Point(136, 2);
+            this.ckbBuildableTiles.Location = new System.Drawing.Point(192, 2);
             this.ckbBuildableTiles.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ckbBuildableTiles.Name = "ckbBuildableTiles";
-            this.ckbBuildableTiles.Size = new System.Drawing.Size(44, 18);
+            this.ckbBuildableTiles.Size = new System.Drawing.Size(1, 18);
             this.ckbBuildableTiles.TabIndex = 2;
             this.ckbBuildableTiles.UseVisualStyleBackColor = true;
             this.ckbBuildableTiles.CheckedChanged += new System.EventHandler(this.ckbBuildableTiles_CheckedChanged);
@@ -970,10 +1009,10 @@
             // 
             this.ckbGroundPassableTiles.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ckbGroundPassableTiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ckbGroundPassableTiles.Location = new System.Drawing.Point(136, 24);
+            this.ckbGroundPassableTiles.Location = new System.Drawing.Point(192, 24);
             this.ckbGroundPassableTiles.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ckbGroundPassableTiles.Name = "ckbGroundPassableTiles";
-            this.ckbGroundPassableTiles.Size = new System.Drawing.Size(44, 18);
+            this.ckbGroundPassableTiles.Size = new System.Drawing.Size(1, 18);
             this.ckbGroundPassableTiles.TabIndex = 2;
             this.ckbGroundPassableTiles.UseVisualStyleBackColor = true;
             this.ckbGroundPassableTiles.CheckedChanged += new System.EventHandler(this.ckbGroundPassableTiles_CheckedChanged);
@@ -991,7 +1030,7 @@
             this.cbbCheckingPanel.Name = "cbbCheckingPanel";
             this.cbbCheckingPanel.Size = new System.Drawing.Size(183, 25);
             this.cbbCheckingPanel.TabIndex = 0;
-            this.cbbCheckingPanel.Text = "Map Checking";
+            this.cbbCheckingPanel.Text = "RSMainSideCkbCheck";
             this.cbbCheckingPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.cbbCheckingPanel.UseVisualStyleBackColor = true;
             this.cbbCheckingPanel.CheckedChanged += new System.EventHandler(this.Panelchecker_CheckedChanged0);
@@ -1056,7 +1095,7 @@
             this.ckbObjectsPanel.Name = "ckbObjectsPanel";
             this.ckbObjectsPanel.Size = new System.Drawing.Size(183, 25);
             this.ckbObjectsPanel.TabIndex = 1;
-            this.ckbObjectsPanel.Text = "Map Objects";
+            this.ckbObjectsPanel.Text = "RSMainSideCkbMapObj";
             this.ckbObjectsPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ckbObjectsPanel.UseVisualStyleBackColor = true;
             this.ckbObjectsPanel.CheckedChanged += new System.EventHandler(this.Panelchecker_CheckedChanged0);
@@ -1130,10 +1169,62 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // itemRectangle
+            // 
+            this.itemRectangle.Name = "itemRectangle";
+            this.itemRectangle.Size = new System.Drawing.Size(276, 26);
+            this.itemRectangle.Text = "RSMainTooltsmiRectangle";
+            // 
+            // itemIsometric
+            // 
+            this.itemIsometric.Name = "itemIsometric";
+            this.itemIsometric.Size = new System.Drawing.Size(276, 26);
+            this.itemIsometric.Text = "RSMainTooltsmiIsometric";
+            // 
+            // itemPrecise
+            // 
+            this.itemPrecise.Name = "itemPrecise";
+            this.itemPrecise.Size = new System.Drawing.Size(276, 26);
+            this.itemPrecise.Text = "RSMainTooltsmiPrecise";
+            // 
+            // cmsToolSelect
+            // 
+            this.cmsToolSelect.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsToolSelect.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiRectSelect,
+            this.tsmiIsoSelect,
+            this.tsmiPreciseSelect});
+            this.cmsToolSelect.Name = "cmsToolSelect";
+            this.cmsToolSelect.Size = new System.Drawing.Size(275, 82);
+            // 
+            // tsmiRectSelect
+            // 
+            this.tsmiRectSelect.Image = global::RelertSharp.GUI.Properties.Resources.btnRectSelecting;
+            this.tsmiRectSelect.Name = "tsmiRectSelect";
+            this.tsmiRectSelect.Size = new System.Drawing.Size(274, 26);
+            this.tsmiRectSelect.Text = "RSMainTooltsmiRectangle";
+            this.tsmiRectSelect.Click += new System.EventHandler(this.tsmiRectSelect_Click);
+            // 
+            // tsmiIsoSelect
+            // 
+            this.tsmiIsoSelect.Image = global::RelertSharp.GUI.Properties.Resources.btnIsoSelecting;
+            this.tsmiIsoSelect.Name = "tsmiIsoSelect";
+            this.tsmiIsoSelect.Size = new System.Drawing.Size(274, 26);
+            this.tsmiIsoSelect.Text = "RSMainTooltsmiIsometric";
+            this.tsmiIsoSelect.Click += new System.EventHandler(this.tsmiIsoSelect_Click);
+            // 
+            // tsmiPreciseSelect
+            // 
+            this.tsmiPreciseSelect.Image = global::RelertSharp.GUI.Properties.Resources.btnPrecSelecting;
+            this.tsmiPreciseSelect.Name = "tsmiPreciseSelect";
+            this.tsmiPreciseSelect.Size = new System.Drawing.Size(274, 26);
+            this.tsmiPreciseSelect.Text = "RSMainTooltsmiPrecise";
+            this.tsmiPreciseSelect.Click += new System.EventHandler(this.tsmiPreciseSelect_Click);
+            // 
             // rbPanelAttribute
             // 
             this.rbPanelAttribute.BackColor = System.Drawing.SystemColors.Control;
-            this.rbPanelAttribute.Location = new System.Drawing.Point(195, 67);
+            this.rbPanelAttribute.Location = new System.Drawing.Point(101, 51);
             this.rbPanelAttribute.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rbPanelAttribute.Name = "rbPanelAttribute";
             this.rbPanelAttribute.Size = new System.Drawing.Size(550, 299);
@@ -1157,7 +1248,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainWindowTest";
-            this.Text = "_test";
+            this.Text = "RSMainTitle";
             this.panelHost.ResumeLayout(false);
             this.splitMain.Panel1.ResumeLayout(false);
             this.splitMain.Panel1.PerformLayout();
@@ -1196,6 +1287,7 @@
             this.pnlSideObjects.ResumeLayout(false);
             this.pnlSideObjects.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            this.cmsToolSelect.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1270,8 +1362,17 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ToolStrip toolsMain;
-        private System.Windows.Forms.ToolStripDropDownButton toolBtnSelectingDropdown;
         private System.Windows.Forms.ToolStripButton toolBtnMoving;
         private System.Windows.Forms.ToolStripButton toolBtnAttributeBrush;
+        private System.Windows.Forms.ToolStripButton toolBtnBrush;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem itemRectangle;
+        private System.Windows.Forms.ToolStripMenuItem itemIsometric;
+        private System.Windows.Forms.ToolStripMenuItem itemPrecise;
+        private System.Windows.Forms.ToolStripButton toolBtnSelecting;
+        private System.Windows.Forms.ContextMenuStrip cmsToolSelect;
+        private System.Windows.Forms.ToolStripMenuItem tsmiRectSelect;
+        private System.Windows.Forms.ToolStripMenuItem tsmiIsoSelect;
+        private System.Windows.Forms.ToolStripMenuItem tsmiPreciseSelect;
     }
 }

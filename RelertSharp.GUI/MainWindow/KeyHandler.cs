@@ -28,7 +28,7 @@ namespace RelertSharp.GUI
                 switch (e.KeyCode)
                 {
                     case Keys.Escape:
-                        if ((Current.CurrentMouseAction & MainWindowDataModel.MouseActionType.Selecting) != 0) Current.ReleaseAll();
+                        if ((Current.CurrentMouseAction & MainWindowDataModel.MouseActionType.BoxSelecting) != 0) Current.ReleaseAll();
                         else if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.AttributeBrush)
                         {
                             rbPanelAttribute.Visible = false;
@@ -39,8 +39,7 @@ namespace RelertSharp.GUI
                         Current.RemoveAll();
                         break;
                     case Keys.M:
-                        if (e.Shift) Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.PreciseSelect;
-                        else Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.BoxSelecting;
+                        Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.BoxSelecting;
                         break;
                     case Keys.B:
                         Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.AttributeBrush;
@@ -58,6 +57,8 @@ namespace RelertSharp.GUI
             }
         }
 
+        private Cursor prevCur = Cursors.Arrow;
+        private MainWindowDataModel.MouseActionType prevType = MainWindowDataModel.MouseActionType.None;
         private void HandlingKeyDown(KeyEventArgs e)
         {
             if (drew)
@@ -65,11 +66,14 @@ namespace RelertSharp.GUI
                 switch (e.KeyCode)
                 {
                     case Keys.Space:
-                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.Moving)
+                        if (panel1.Cursor != Cursors.SizeAll)
                         {
-                            spaceKeyMoving = true;
-                            panel1.Cursor = Cursors.SizeAll;
+                            prevCur = panel1.Cursor;
+                            prevType = Current.CurrentMouseAction;
                         }
+                        spaceKeyMoving = true;
+                        panel1.Cursor = Cursors.SizeAll;
+                        Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.Moving;
                         break;
                 }
             }
@@ -82,11 +86,9 @@ namespace RelertSharp.GUI
                 switch (e.KeyCode)
                 {
                     case Keys.Space:
-                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.Moving)
-                        {
-                            spaceKeyMoving = false;
-                            panel1.Cursor = Cursors.Default;
-                        }
+                        spaceKeyMoving = false;
+                        panel1.Cursor = prevCur;
+                        Current.CurrentMouseAction = prevType;
                         break;
                 }
             }

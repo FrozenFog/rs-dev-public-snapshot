@@ -33,7 +33,8 @@ namespace RelertSharp.GUI.Model
         public enum SelectingBoxMode
         {
             ClientRectangle = 1,
-            IsometricRectangle = 2
+            IsometricRectangle = 2,
+            Precise = 3
         }
 
 

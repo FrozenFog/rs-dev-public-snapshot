@@ -101,7 +101,21 @@ namespace RelertSharp
                     col.Text = DICT[col.Text];
                 }
             }
-            if(p.ContextMenuStrip != null)
+            else if (t == typeof(TableLayoutPanel))
+            {
+                foreach (Control c in (p as TableLayoutPanel).Controls)
+                {
+                    SetControlLanguage(c);
+                }
+            }
+            else if (t == typeof(ToolStrip))
+            {
+                foreach (ToolStripItem c in (p as ToolStrip).Items)
+                {
+                    c.Text = DICT[c.Text];
+                }
+            }
+            if (p.ContextMenuStrip != null)
             {
                 foreach (ToolStripItem item in p.ContextMenuStrip.Items)
                 {

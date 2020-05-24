@@ -166,4 +166,25 @@
   <data name="btnRectSelecting" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\selectRect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btnABrush" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\abrush.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnIsoSelecting" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\selectIso.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnPrecSelecting" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\selectPrec.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cursorSolid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cursorSolid.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="curRect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rectIcon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="curBrush" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\curBrush.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="curIso" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\curIso.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

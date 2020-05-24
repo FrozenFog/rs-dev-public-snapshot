@@ -26,8 +26,10 @@ namespace RelertSharp.GUI.RbPanel
             SetFacing(0);
             cbbOwnerHouse.Items.AddRange(houses.ToArray());
             cbbTags.Items.AddRange(tags.ToArray());
+            cbbOwnerHouse.SelectedIndex = 1;
             cbbOwnerHouse.Text = changer.Host.OwnerHouse;
             UpdateGuiFromHost();
+            SetLanguage();
             initialized = true;
         }
         public void LoadFrom(ICombatObject src)

@@ -25,6 +25,11 @@ namespace RelertSharp.GUI
         #region Down
         private void LmbDown(MouseEventArgs e)
         {
+            if (rbPanelAttribute.Visible)
+            {
+                rbPanelAttribute.Visible = false;
+                GlobalVar.Engine.Refresh();
+            }
             switch (Current.CurrentMouseAction)
             {
                 case MainWindowDataModel.MouseActionType.BoxSelecting:
@@ -47,8 +52,11 @@ namespace RelertSharp.GUI
             switch (Current.CurrentMouseAction)
             {
                 case MainWindowDataModel.MouseActionType.AttributeBrush:
-                    rbPanelAttribute.Location = e.Location;
-                    rbPanelAttribute.Visible = true;
+                    if (!rbPanelAttribute.Visible)
+                    {
+                        rbPanelAttribute.Location = e.Location;
+                        rbPanelAttribute.Visible = true;
+                    }
                     break;
             }
         }
@@ -106,14 +114,22 @@ namespace RelertSharp.GUI
         #region Click
         private void LmbClick(MouseEventArgs e)
         {
-            switch (Current.CurrentMouseAction)
+
+            if (rbPanelAttribute.Visible)
             {
-                case MainWindowDataModel.MouseActionType.PreciseSelect:
-                    PreciseSelecting(e);
-                    break;
-                case MainWindowDataModel.MouseActionType.AttributeBrush:
-                    ApplyAttributeToPrecise(e);
-                    break;
+                rbPanelAttribute.Visible = false;
+            }
+            else
+            {
+                switch (Current.CurrentMouseAction)
+                {
+                    case MainWindowDataModel.MouseActionType.BoxSelecting:
+                        if (Current.SelectingBoxFlag == MainWindowDataModel.SelectingBoxMode.Precise) PreciseSelecting(e);
+                        break;
+                    case MainWindowDataModel.MouseActionType.AttributeBrush:
+                        ApplyAttributeToPrecise(e);
+                        break;
+                }
             }
         }
         private void RmbClick(MouseEventArgs e)
