@@ -51,6 +51,7 @@ namespace RelertSharp.GUI
             {
                 Language.SetControlLanguage(c);
             }
+            Language.SetControlLanguage(cmsToolSelect);
             Text = Language.DICT[Text];
         }
         private bool updatingLightningData = false;

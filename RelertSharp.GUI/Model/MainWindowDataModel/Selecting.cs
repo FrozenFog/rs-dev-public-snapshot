@@ -40,7 +40,7 @@ namespace RelertSharp.GUI.Model
 
         public void SelectUnitAt(I2dLocateable pos)
         {
-            UnitItem unit = map.Units.FindByCoord(pos);
+            UnitItem unit = map.GetUnit(pos);
             if (unit != null && !Units.Contains(unit))
             {
                 Units.Add(unit);
@@ -49,7 +49,7 @@ namespace RelertSharp.GUI.Model
         }
         public void SelectInfantryAt(I2dLocateable pos, int subcell)
         {
-            InfantryItem inf = map.Infantries.FindByCoord(pos, subcell);
+            InfantryItem inf = map.GetInfantry(pos, subcell);
             if (inf != null && !Infantries.Contains(inf))
             {
                 Infantries.Add(inf);
@@ -58,7 +58,7 @@ namespace RelertSharp.GUI.Model
         }
         public void SelectBuildingAt(I2dLocateable pos)
         {
-            StructureItem building = map.Buildings.FindByCoord(pos);
+            StructureItem building = map.GetBuilding(pos);
             if (building != null && !Buildings.Contains(building))
             {
                 Buildings.Add(building);
@@ -67,7 +67,7 @@ namespace RelertSharp.GUI.Model
         }
         public void SelectTerrainAt(I2dLocateable pos)
         {
-            TerrainItem terr = map.Terrains.FindByCoord(pos);
+            TerrainItem terr = map.Terrains[pos];
             if (terr != null && !Terrains.Contains(terr))
             {
                 Terrains.Add(terr);
@@ -119,25 +119,25 @@ namespace RelertSharp.GUI.Model
             foreach (UnitItem unit in Units)
             {
                 Engine.RemoveUnitAt(unit);
-                map.Units.RemoveByCoord(unit);
+                map.RemoveUnit(unit);
             }
             Units.Clear();
             foreach (InfantryItem inf in Infantries)
             {
                 Engine.RemoveInfantryAt(inf, inf.SubCells);
-                map.Infantries.RemoveByCoord(inf, inf.SubCells);
+                map.RemoveInfantry(inf);
             }
             Infantries.Clear();
             foreach (StructureItem st in Buildings)
             {
                 Engine.RemoveBuildingAt(st);
-                map.Buildings.RemoveByCoord(st);
+                map.RemoveBuilding(st);
             }
             Buildings.Clear();
             foreach (TerrainItem terr in Terrains)
             {
                 Engine.RemoveTerrainAt(terr);
-                map.Terrains.RemoveByCoord(terr);
+                map.RemoveTerrains(terr);
             }
             Terrains.Clear();
             foreach (OverlayUnit ov in Overlays)

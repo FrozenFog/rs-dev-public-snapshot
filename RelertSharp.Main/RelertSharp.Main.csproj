@@ -128,6 +128,10 @@
     <Compile Include="MapStructure\Logic\House.cs" />
     <Compile Include="MapStructure\Logic\TriggerDescription.cs" />
     <Compile Include="MapStructure\MapTheaterTileSet.cs" />
+    <Compile Include="MapStructure\Map\ObjectAdding.cs" />
+    <Compile Include="MapStructure\Map\ObjectDeleting.cs" />
+    <Compile Include="MapStructure\Map\ObjectSeeking.cs" />
+    <Compile Include="MapStructure\Map\Reading.cs" />
     <Compile Include="MapStructure\Objects\AircraftLayer.cs" />
     <Compile Include="MapStructure\Objects\AttributeChanger.cs" />
     <Compile Include="MapStructure\Objects\InfantryLayer.cs" />
@@ -141,7 +145,7 @@
     <Compile Include="MapStructure\Logic\TeamLogicCollection.cs" />
     <Compile Include="MapStructure\Logic\TeamScript.cs" />
     <Compile Include="MapStructure\Logic\Trigger.cs" />
-    <Compile Include="MapStructure\Map.cs" />
+    <Compile Include="MapStructure\Map\Map.cs" />
     <Compile Include="MapStructure\MapInfo.cs" />
     <Compile Include="MapStructure\Objects\ObjectBase.cs" />
     <Compile Include="MapStructure\OverlayLayer.cs" />

@@ -45,6 +45,7 @@ namespace RelertSharp.GUI
             lw.EndDrawing();
             lw.Close();
             lw.Dispose();
+            ToolBoxClick(toolBtnMoving);
             return true;
         }
         private bool EngineInitialize(IntPtr mainHandle, Panel minimapPanel)

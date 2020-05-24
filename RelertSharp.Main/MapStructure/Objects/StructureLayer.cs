@@ -14,17 +14,6 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - StructureLayer
-        public override StructureItem FindByCoord(I2dLocateable pos)
-        {
-            foreach (StructureItem item in this)
-            {
-                foreach (I2dLocateable target in new Square2D(item, item.SizeX, item.SizeY))
-                {
-                    if (target.X == pos.X && target.Y == pos.Y) return item;
-                }
-            }
-            return null;
-        }
         #endregion
     }
 

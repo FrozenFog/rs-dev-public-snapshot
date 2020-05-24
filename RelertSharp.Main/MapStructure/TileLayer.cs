@@ -106,6 +106,14 @@ namespace RelertSharp.MapStructure
         //    }
         //    return bmp;
         //}
+        public void AddObjectOnTile(IMapObject src)
+        {
+            this[src]?.AddObject(src);
+        }
+        public void AddObjectOnTile(I2dLocateable pos, IMapObject src)
+        {
+            this[pos]?.AddObject(src);
+        }
         public void FixEmptyTiles(int width, int height)
         {
             LayTileWeb(1, width, width, height);
@@ -215,6 +223,19 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Calls - TileLayer
+        public Tile this[I2dLocateable src]
+        {
+            get
+            {
+                int coord = src.Coord;
+                if (data.Keys.Contains(coord)) return data[coord];
+                return null;
+            }
+            set
+            {
+                data[src.Coord] = value;
+            }
+        }
         public Tile this[int x, int y]
         {
             get
@@ -255,6 +276,7 @@ namespace RelertSharp.MapStructure
     public class Tile : I3dLocateable
     {
         private int tileIndex;
+        private List<IMapObject> objectsOnTile = new List<IMapObject>();
 
 
         #region Ctor - Tile
@@ -281,6 +303,18 @@ namespace RelertSharp.MapStructure
             result[9] = Height;
             result[10] = IceGrowth;
             return result;
+        }
+        public IEnumerable<IMapObject> GetObjects()
+        {
+            return objectsOnTile;
+        }
+        public void AddObject(IMapObject src)
+        {
+            objectsOnTile.Add(src);
+        }
+        public void RemoveObject(IMapObject src)
+        {
+            objectsOnTile.Remove(src);
         }
         #endregion
 

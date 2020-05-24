@@ -16,25 +16,9 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - ObjectBase
-        public virtual T FindByCoord(I2dLocateable src)
+        public virtual void RemoveByID(string id)
         {
-            foreach (T item in data.Values)
-            {
-                if (item.X == src.X && item.Y == src.Y) return item;
-            }
-            return null;
-        }
-        public virtual void RemoveByCoord(I2dLocateable src)
-        {
-            Dictionary<string, T> tmp = new Dictionary<string, T>(data);
-            foreach (T item in tmp.Values)
-            {
-                if (item.X == src.X && item.Y == src.Y)
-                {
-                    data.Remove(item.ID);
-                    return;
-                }
-            }
+            if (data.Keys.Contains(id)) data.Remove(id);
         }
         #endregion
 
@@ -57,7 +41,7 @@ namespace RelertSharp.MapStructure.Objects
             get
             {
                 if (data.Keys.Contains(_id)) return data[_id];
-                return default(T);
+                return null;
             }
             set
             {
@@ -106,6 +90,10 @@ namespace RelertSharp.MapStructure.Objects
             if (obj.bTaggedTrigger) TaggedTrigger = host.TaggedTrigger;
             if (obj.bVeteran) VeterancyPercentage = host.VeterancyPercentage;
             if (obj.bRotation) Rotation = host.Rotation;
+        }
+        public override string ToString()
+        {
+            return string.Format("{0} at {1},{2}", RegName, X, Y);
         }
         #endregion
 

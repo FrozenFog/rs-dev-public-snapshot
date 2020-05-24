@@ -115,6 +115,13 @@ namespace RelertSharp
                     c.Text = DICT[c.Text];
                 }
             }
+            else if (t == typeof(ContextMenuStrip))
+            {
+                foreach (ToolStripMenuItem tsmi in (p as ContextMenuStrip).Items)
+                {
+                    tsmi.Text = DICT[tsmi.Text];
+                }
+            }
             if (p.ContextMenuStrip != null)
             {
                 foreach (ToolStripItem item in p.ContextMenuStrip.Items)

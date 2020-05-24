@@ -31,7 +31,7 @@ namespace RelertSharp.GUI
             int height = (int)v3.Z;
             if (rbPanelAttribute.ToInfantries)
             {
-                InfantryItem inf = map.Infantries.FindByCoord(pos, subcell);
+                InfantryItem inf = map.GetInfantry(pos, subcell);
                 if (inf != null)
                 {
                     inf.ApplyAttributeFrom(changer);
@@ -40,7 +40,7 @@ namespace RelertSharp.GUI
             }
             if (rbPanelAttribute.ToUnits)
             {
-                UnitItem unit = map.Units.FindByCoord(pos);
+                UnitItem unit = map.GetUnit(pos);
                 if (unit != null)
                 {
                     unit.ApplyAttributeFrom(changer);
@@ -49,7 +49,7 @@ namespace RelertSharp.GUI
             }
             if (rbPanelAttribute.ToBuildings)
             {
-                StructureItem bud = map.Buildings.FindByCoord(pos);
+                StructureItem bud = map.GetBuilding(pos);
                 if (bud != null)
                 {
                     bud.ApplyAttributeFrom(changer);
@@ -58,7 +58,7 @@ namespace RelertSharp.GUI
             }
             if (rbPanelAttribute.ToAircrafts)
             {
-                AircraftItem air = map.Aircrafts.FindByCoord(pos);
+                AircraftItem air = map.GetAircraft(pos);
                 if (air != null)
                 {
                     air.ApplyAttributeFrom(changer);

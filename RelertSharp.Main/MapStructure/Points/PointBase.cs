@@ -16,25 +16,10 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Public Methods - ObjectBase
-        public virtual T FindByCoord(I2dLocateable src)
-        {
-            foreach (T item in data.Values)
-            {
-                if (item.X == src.X && item.Y == src.Y) return item;
-            }
-            return null;
-        }
         public virtual void RemoveByCoord(I2dLocateable src)
         {
-            Dictionary<string, T> tmp = new Dictionary<string, T>(data);
-            foreach (T item in tmp.Values)
-            {
-                if (item.X == src.X && item.Y == src.Y)
-                {
-                    data.Remove(item.CoordString);
-                    return;
-                }
-            }
+            string coord = src.Coord.ToString();
+            if (data.Keys.Contains(coord)) data.Remove(coord);
         }
         #endregion
 
@@ -46,7 +31,7 @@ namespace RelertSharp.MapStructure.Points
             {
                 string coord = CoordString(x, y);
                 if (data.Keys.Contains(coord)) return data[coord];
-                return default(T);
+                return null;
             }
             set
             {
@@ -58,11 +43,24 @@ namespace RelertSharp.MapStructure.Points
             get
             {
                 if (data.Keys.Contains(coord)) return data[coord];
-                return default(T);
+                return null;
             }
             set
             {
                 data[coord] = value;
+            }
+        }
+        public T this[I2dLocateable pos]
+        {
+            get
+            {
+                string coord = pos.Coord.ToString();
+                if (data.Keys.Contains(coord)) return data[coord];
+                return null;
+            }
+            set
+            {
+                data[pos.Coord.ToString()] = value;
             }
         }
 
