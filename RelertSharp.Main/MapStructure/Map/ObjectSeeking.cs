@@ -24,6 +24,11 @@ namespace RelertSharp.MapStructure
             }
             return null;
         }
+        private void UpdateObject<T>(T src) where T : ObjectItemBase, IMapObject
+        {
+            Tiles[src].RemoveObject(src);
+            Tiles[src].AddObject(src);
+        }
         private T GetMapObject<T>(I2dLocateable pos, string regname) where T: ObjectItemBase, IMapObject
         {
             Tile t = Tiles[pos];
@@ -65,17 +70,36 @@ namespace RelertSharp.MapStructure
             if (refer != null) return Buildings[refer.ID];
             return null;
         }
+        public void UpdateBuilding(StructureItem bud)
+        {
+            if (!buildingDumped) DumpStructures();
+            foreach (I2dLocateable pos in new Square2D(bud, bud.SizeX, bud.SizeY))
+            {
+                UpdateObject(bud);
+            }
+            Buildings[bud.ID] = bud;
+        }
         public UnitItem GetUnit(I2dLocateable pos)
         {
             UnitItem refer = GetMapObject<UnitItem>(pos);
             if (refer != null) return Units[refer.ID];
             return null;
         }
+        public void UpdateUnit(UnitItem unit)
+        {
+            UpdateObject(unit);
+            Units[unit.ID] = unit;
+        }
         public AircraftItem GetAircraft(I2dLocateable pos)
         {
             AircraftItem refer = GetMapObject<AircraftItem>(pos);
             if (refer != null) return Aircrafts[refer.ID];
             return null;
+        }
+        public void UpdateAircraft(AircraftItem air)
+        {
+            UpdateObject(air);
+            Aircrafts[air.ID] = air;
         }
         public InfantryItem GetInfantry(I2dLocateable pos, int subcell)
         {
@@ -92,6 +116,11 @@ namespace RelertSharp.MapStructure
                 }
             }
             return null;
+        }
+        public void UpdateInfantry(InfantryItem inf)
+        {
+            UpdateObject(inf);
+            Infantries[inf.ID] = inf;
         }
         public TerrainItem GetTerrain(I2dLocateable pos)
         {

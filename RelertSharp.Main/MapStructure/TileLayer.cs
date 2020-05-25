@@ -312,9 +312,24 @@ namespace RelertSharp.MapStructure
         {
             objectsOnTile.Add(src);
         }
+        /// <summary>
+        /// By type and RegName
+        /// </summary>
+        /// <param name="src"></param>
         public void RemoveObject(IMapObject src)
         {
-            objectsOnTile.Remove(src);
+            int index = 0;
+            bool found = false;
+            foreach(IMapObject target in objectsOnTile)
+            {
+                if (target.GetType() == src.GetType() && target.RegName == src.RegName)
+                {
+                    found = true;
+                    break;
+                }
+                index++;
+            }
+            if (found) objectsOnTile.RemoveAt(index);
         }
         #endregion
 

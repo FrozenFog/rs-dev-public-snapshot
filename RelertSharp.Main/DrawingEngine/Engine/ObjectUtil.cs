@@ -62,11 +62,11 @@ namespace RelertSharp.DrawingEngine
         {
             Buffer.Scenes.RemoveInfantryAt(pos.Coord, subcell);
         }
-        public void UpdateInfantryAttribute(InfantryItem inf, int height, uint color, int subcell)
+        public void UpdateInfantryAttribute(InfantryItem inf, int height, uint color, int originalSubcell)
         {
-            RemoveInfantryAt(inf, subcell);
+            RemoveInfantryAt(inf, originalSubcell);
             DrawObject(inf, height, color);
-            if (inf.Selected) SelectInfantryAt(inf, subcell);
+            if (inf.Selected) SelectInfantryAt(inf, inf.SubCells);
         }
         #endregion
 

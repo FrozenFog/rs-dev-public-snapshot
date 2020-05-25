@@ -22,22 +22,44 @@ namespace RelertSharp.GUI
     public partial class MainWindowTest
     {
         private UnitAttributeForm unitForm;
+        private InfantryAttributeForm infForm;
 
         private void InspectItemAt(MouseEventArgs e)
         {
-            Vec3 pos = GlobalVar.Engine.ClientPointToCellPos(e.Location);
+            Vec3 pos = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
             Tile t = map.TilesData[pos.To2dLocateable()];
-            if (t != null && t.GetObjects().Count() > 0)
+            IEnumerable<IMapObject> objects = t.GetObjects();
+            if (t != null && objects.Count() > 0)
             {
-                IMapObject obj = t.GetObjects().Last();
-                if (obj.GetType() == typeof(UnitItem))
+                foreach (IMapObject obj in objects)
                 {
-                    if (unitForm == null) unitForm = new UnitAttributeForm(obj as UnitItem, map.Houses, map.Tags);
-                    else unitForm.Reload(obj as UnitItem, map.Houses, map.Tags);
-                    unitForm.ShowDialog();
-                    UnitItem newitem = unitForm.Result;
-                    map.Units[newitem.ID] = newitem;
-                    GlobalVar.Engine.UpdateUnitAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse));
+                    if (obj.GetType() == typeof(UnitItem))
+                    {
+                        if (unitForm == null) unitForm = new UnitAttributeForm(obj as UnitItem);
+                        else unitForm.Reload(obj as UnitItem);
+                        unitForm.ShowDialog();
+                        UnitItem newitem = unitForm.Result;
+                        map.UpdateUnit(newitem);
+                        GlobalVar.Engine.UpdateUnitAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse));
+                        break;
+                    }
+                    else if (obj.GetType() == typeof(InfantryItem))
+                    {
+                        foreach (InfantryItem inf in objects)
+                        {
+                            if (inf.SubCells == subcell)
+                            {
+                                if (infForm == null) infForm = new InfantryAttributeForm(inf as InfantryItem);
+                                else infForm.Reload(inf as InfantryItem);
+                                infForm.ShowDialog();
+                                InfantryItem newitem = infForm.Result;
+                                map.UpdateInfantry(newitem);
+                                GlobalVar.Engine.UpdateInfantryAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse), subcell);
+                                break;
+                            }
+                        }
+                        break;
+                    }
                 }
             }
         }

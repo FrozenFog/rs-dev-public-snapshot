@@ -91,11 +91,29 @@
     <Compile Include="MainWindow\ObjectInspect.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MainWindow\Sub\AircraftAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\AircraftAttributeForm.Designer.cs">
+      <DependentUpon>AircraftAttributeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow\Sub\BaseAttributeForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow\Sub\BaseAttributeForm.Designer.cs">
       <DependentUpon>BaseAttributeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\Sub\BuildingAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\BuildingAttributeForm.Designer.cs">
+      <DependentUpon>BuildingAttributeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\Sub\InfantryAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\InfantryAttributeForm.Designer.cs">
+      <DependentUpon>InfantryAttributeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\Sub\LoadingWindow.cs">
       <SubType>Form</SubType>
@@ -190,6 +208,9 @@
     <Compile Include="_Test.cs" />
     <EmbeddedResource Include="MainWindow\Sub\BaseAttributeForm.resx">
       <DependentUpon>BaseAttributeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\InfantryAttributeForm.resx">
+      <DependentUpon>InfantryAttributeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\Sub\LoadingWindow.resx">
       <DependentUpon>LoadingWindow.cs</DependentUpon>

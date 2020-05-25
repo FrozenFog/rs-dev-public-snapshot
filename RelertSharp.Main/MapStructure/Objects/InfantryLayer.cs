@@ -40,6 +40,18 @@ namespace RelertSharp.MapStructure.Objects
             AutoNORecruitType = ParseBool(_args[12]);
             AutoYESRecruitType = ParseBool(_args[13]);
         }
+        public InfantryItem(InfantryItem src) : base(src)
+        {
+            SubCells = src.SubCells;
+            Status = src.Status;
+            Rotation = src.Rotation;
+            TaggedTrigger = src.TaggedTrigger;
+            VeterancyPercentage = src.VeterancyPercentage;
+            Group = src.Group;
+            IsAboveGround = src.IsAboveGround;
+            AutoNORecruitType = src.AutoNORecruitType;
+            AutoYESRecruitType = src.AutoYESRecruitType;
+        }
         public InfantryItem() { }
         #endregion
 

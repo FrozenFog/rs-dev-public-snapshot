@@ -13,19 +13,19 @@ using RelertSharp.Common;
 
 namespace RelertSharp.GUI
 {
-    internal partial class UnitAttributeForm : BaseAttributeForm
+    internal partial class InfantryAttributeForm : BaseAttributeForm
     {
-        private UnitItem unithost, original;
+        private InfantryItem infhost, original;
         private bool confirmed = false;
 
 
-        public UnitAttributeForm(UnitItem src)
+        public InfantryAttributeForm(InfantryItem src)
         {
             InitializeComponent();
             LoadCombobox(GlobalVar.CurrentMapDocument.Map.Houses, GlobalVar.CurrentMapDocument.Map.Tags);
-            original = new UnitItem(src);
-            unithost = src;
-            changer.Host = unithost;
+            original = new InfantryItem(src);
+            infhost = src;
+            changer.Host = infhost;
             UpdateGuiFromHost();
             SetLanguage();
             initialized = true;
@@ -35,39 +35,30 @@ namespace RelertSharp.GUI
         {
             initialized = false;
             confirmed = false;
-            UnitItem newitem = src as UnitItem;
+            InfantryItem newitem = src as InfantryItem;
             Result = null;
-            original = new UnitItem(newitem);
-            unithost = newitem;
-            changer.Host = unithost;
+            original = new InfantryItem(newitem);
+            infhost = newitem;
+            changer.Host = infhost;
             UpdateGuiFromHost();
             initialized = true;
         }
         protected override void UpdateGuiFromHost()
         {
-            txbFollows.Text = unithost.FollowsIndex;
-            ckbOnBridge.Checked = unithost.IsAboveGround;
-            ckbRecruit.Checked = unithost.AutoNORecruitType;
-            ckbRebuild.Checked = unithost.AutoYESRecruitType;
-            lblUnitID.Text = string.Format("Unit ID : {0}", unithost.ID);
-            lblUnitRegName.Text = string.Format("Unit Registion Name : {0}", unithost.RegName);
-            lklTrace.Enabled = unithost.TaggedTrigger != "None";
+            ckbOnBridge.Checked = infhost.IsAboveGround;
+            ckbRecruit.Checked = infhost.AutoNORecruitType;
+            ckbRebuild.Checked = infhost.AutoYESRecruitType;
+            lblUnitID.Text = string.Format("Infantry ID : {0}", infhost.ID);
+            lblUnitRegName.Text = string.Format("Infantry Registion Name : {0}", infhost.RegName);
+            lklTrace.Enabled = infhost.TaggedTrigger != "None";
             base.UpdateGuiFromHost();
-        }
-
-        private void txbFollows_Validated(object sender, EventArgs e)
-        {
-            if (initialized)
-            {
-                unithost.FollowsIndex = txbFollows.Text;
-            }
         }
 
         private void ckbOnBridge_CheckedChanged(object sender, EventArgs e)
         {
             if (initialized)
             {
-                unithost.IsAboveGround = ckbOnBridge.Checked;
+                infhost.IsAboveGround = ckbOnBridge.Checked;
             }
         }
 
@@ -75,7 +66,7 @@ namespace RelertSharp.GUI
         {
             if (initialized)
             {
-                unithost.AutoNORecruitType = ckbRecruit.Checked;
+                infhost.AutoNORecruitType = ckbRecruit.Checked;
             }
         }
 
@@ -83,7 +74,7 @@ namespace RelertSharp.GUI
         {
             if (initialized)
             {
-                unithost.AutoYESRecruitType = ckbRebuild.Checked;
+                infhost.AutoYESRecruitType = ckbRebuild.Checked;
             }
         }
 
@@ -96,7 +87,7 @@ namespace RelertSharp.GUI
         {
             if (confirmed)
             {
-                Result = unithost;
+                Result = infhost;
                 Result.ApplyAttributeFrom(changer);
             }
             else
@@ -105,6 +96,6 @@ namespace RelertSharp.GUI
             }
         }
 
-        public UnitItem Result { get; private set; }
+        public InfantryItem Result { get; private set; }
     }
 }
