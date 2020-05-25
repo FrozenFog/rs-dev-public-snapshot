@@ -43,7 +43,7 @@
             this.toolBtnBrush = new System.Windows.Forms.ToolStripButton();
             this.toolBtnAttributeBrush = new System.Windows.Forms.ToolStripButton();
             this.splitSide = new System.Windows.Forms.SplitContainer();
-            this.pnlMiniMap = new System.Windows.Forms.Panel();
+            this.pnlMiniMap = new RelertSharp.GUI.Controls.MinimapPanel();
             this.pnlSide = new System.Windows.Forms.Panel();
             this.pnlSideRank = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -1329,7 +1329,7 @@
         private System.Windows.Forms.Label lblz;
         private System.Windows.Forms.Label lblMouseX;
         private System.Windows.Forms.Label lblMouseY;
-        private System.Windows.Forms.Panel pnlMiniMap;
+        private RelertSharp.GUI.Controls.MinimapPanel pnlMiniMap;
         private System.Windows.Forms.Panel pnlSideDebug;
         private System.Windows.Forms.Panel pnlSideLightning;
         private System.Windows.Forms.CheckBox ckbLightningPanel;
