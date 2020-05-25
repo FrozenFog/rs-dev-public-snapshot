@@ -46,10 +46,6 @@
             // 
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
-            // btnCancel
-            // 
-            this.btnCancel.Location = new System.Drawing.Point(481, 336);
-            // 
             // gpnUnit
             // 
             this.gpnUnit.Controls.Add(this.lklTrace);
@@ -63,7 +59,7 @@
             this.gpnUnit.Size = new System.Drawing.Size(315, 281);
             this.gpnUnit.TabIndex = 42;
             this.gpnUnit.TabStop = false;
-            this.gpnUnit.Text = "Unit Attribute";
+            this.gpnUnit.Text = "Infantry Attribute";
             // 
             // lklTrace
             // 

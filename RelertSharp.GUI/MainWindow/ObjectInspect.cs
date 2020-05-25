@@ -23,10 +23,13 @@ namespace RelertSharp.GUI
     {
         private UnitAttributeForm unitForm;
         private InfantryAttributeForm infForm;
+        private BuildingAttributeForm budForm;
+        private AircraftAttributeForm airForm;
 
         private void InspectItemAt(MouseEventArgs e)
         {
             Vec3 pos = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
+            map.DumpStructures();
             Tile t = map.TilesData[pos.To2dLocateable()];
             IEnumerable<IMapObject> objects = t.GetObjects();
             if (t != null && objects.Count() > 0)
@@ -58,6 +61,26 @@ namespace RelertSharp.GUI
                                 break;
                             }
                         }
+                        break;
+                    }
+                    else if (obj.GetType() == typeof(StructureItem))
+                    {
+                        if (budForm == null) budForm = new BuildingAttributeForm(obj as StructureItem);
+                        else budForm.Reload(obj as StructureItem);
+                        budForm.ShowDialog();
+                        StructureItem newitem = budForm.Result;
+                        map.UpdateBuilding(newitem);
+                        GlobalVar.Engine.UpdateBuildingAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse));
+                        break;
+                    }
+                    else if (obj.GetType() == typeof(AircraftItem))
+                    {
+                        if (airForm == null) airForm = new AircraftAttributeForm(obj as AircraftItem);
+                        else airForm.Reload(obj as AircraftItem);
+                        airForm.ShowDialog();
+                        AircraftItem newitem = airForm.Result;
+                        map.UpdateAircraft(newitem);
+                        GlobalVar.Engine.UpdateAircraftAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse));
                         break;
                     }
                 }

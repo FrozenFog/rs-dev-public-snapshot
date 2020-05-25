@@ -258,7 +258,7 @@ namespace RelertSharp.GUI
         {
             if (initialized)
             {
-                changer.Host.Status = cbbStatus.Text;//TODO: stat list improv
+                changer.Host.Status = cbbStatus.Text;//TODO: stat list impl
             }
         }
 

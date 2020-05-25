@@ -41,6 +41,19 @@ namespace RelertSharp.MapStructure.Objects
             Upgrade3 = _args[14];
             AIRepairable = ParseBool(_args[15]);
         }
+        public StructureItem(StructureItem src) : base(src)
+        {
+            Rotation = src.Rotation;
+            TaggedTrigger = src.TaggedTrigger;
+            AISellable = src.AISellable;
+            BuildingOnline = src.BuildingOnline;
+            UpgradeNum = src.UpgradeNum;
+            SpotlightType = src.SpotlightType;
+            Upgrade1 = src.Upgrade1;
+            Upgrade2 = src.Upgrade2;
+            Upgrade3 = src.Upgrade3;
+            AIRepairable = src.AIRepairable;
+        }
         #region Public Calls - StructureItem
         public bool AISellable { get; set; }
         public bool AIRebuildable { get; private set; } = false;

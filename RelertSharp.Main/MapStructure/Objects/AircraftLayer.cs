@@ -31,5 +31,15 @@ namespace RelertSharp.MapStructure.Objects
             AutoNORecruitType = ParseBool(_args[10]);
             AutoYESRecruitType = ParseBool(_args[11]);
         }
+        public AircraftItem(AircraftItem src) : base(src)
+        {
+            Rotation = src.Rotation;
+            Status = src.Status;
+            TaggedTrigger = src.TaggedTrigger;
+            VeterancyPercentage = src.VeterancyPercentage;
+            Group = src.Group;
+            AutoNORecruitType = src.AutoNORecruitType;
+            AutoYESRecruitType = src.AutoYESRecruitType;
+        }
     }
 }

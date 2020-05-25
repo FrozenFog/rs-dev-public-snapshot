@@ -50,6 +50,24 @@ namespace RelertSharp.IniSystem
 
 
         #region Private Methods - Rules
+        private void InitializePowerupDictionary()
+        {
+            foreach (INIEntity ent in IniData)
+            {
+                if (ent.HasPair("PowersUpBuilding"))
+                {
+                    INIPair p = ent.GetPair("PowersUpBuilding");
+                    string host = p.Value as string;
+                    if (!powerups.Keys.Contains(host))
+                    {
+                        powerups[host] = new List<string>();
+                    }
+                    string pwups = string.Format("{0} {1}", ent.Name, ent["Name"]);
+                    powerups[host].Add(ent.Name);
+                }
+            }
+            powerupInitialize = true;
+        }
         private List<TechnoPair> GetTechnoPairs(string entName, TechnoPair.AbstractType type, TechnoPair.IndexType indexType = TechnoPair.IndexType.Index)
         {
             INIEntity entLs = this[entName];
@@ -106,6 +124,20 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Methods - Rules
+        private bool powerupInitialize = false;
+        private Dictionary<string, List<string>> powerups = new Dictionary<string, List<string>>();
+        public IEnumerable<string> GetBuildingUpgradeList(string regid)
+        {
+            if (!powerupInitialize)
+            {
+                InitializePowerupDictionary();
+            }
+            if (powerups.Keys.Contains(regid))
+            {
+                return powerups[regid];
+            }
+            return null;
+        }
         public string GetCsfUIName(string regid)
         {
             if (!HasIniEnt(regid)) return GlobalCsf[regid].ContentString;

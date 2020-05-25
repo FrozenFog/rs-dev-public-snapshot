@@ -49,7 +49,7 @@ namespace RelertSharp.MapStructure
 
         #region Public Methods - Seeking
         private bool buildingDumped = false;
-        private void DumpStructures()
+        public void DumpStructures()
         {
             if (!buildingDumped)
             {

@@ -48,10 +48,6 @@
             // 
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
-            // btnCancel
-            // 
-            this.btnCancel.Location = new System.Drawing.Point(481, 336);
-            // 
             // gpnUnit
             // 
             this.gpnUnit.Controls.Add(this.lklTrace);

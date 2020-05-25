@@ -206,8 +206,14 @@
       <DependentUpon>MainWindowTest.cs</DependentUpon>
     </Compile>
     <Compile Include="_Test.cs" />
+    <EmbeddedResource Include="MainWindow\Sub\AircraftAttributeForm.resx">
+      <DependentUpon>AircraftAttributeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\Sub\BaseAttributeForm.resx">
       <DependentUpon>BaseAttributeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\BuildingAttributeForm.resx">
+      <DependentUpon>BuildingAttributeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\Sub\InfantryAttributeForm.resx">
       <DependentUpon>InfantryAttributeForm.cs</DependentUpon>
