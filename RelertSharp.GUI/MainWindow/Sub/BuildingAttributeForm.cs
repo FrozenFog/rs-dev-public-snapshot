@@ -17,6 +17,7 @@ namespace RelertSharp.GUI
     {
         private StructureItem budhost, original;
         private bool confirmed = false;
+        private int upgNum = 0;
 
 
         public BuildingAttributeForm(StructureItem src)
@@ -45,18 +46,24 @@ namespace RelertSharp.GUI
             IEnumerable<string> src = GlobalVar.GlobalRules.GetBuildingUpgradeList(regname);
             if (src != null)
             {
-                int num = src.Count();
+                upgNum = src.Count();
                 InsertToUpgradeComboBox(src, cbbUpg1);
                 InsertToUpgradeComboBox(src, cbbUpg2);
                 InsertToUpgradeComboBox(src, cbbUpg3);
-                cbbUpg1.Enabled = true;
-                cbbUpg2.Enabled = num >= 2;
-                cbbUpg3.Enabled = num == 3;
             }
+            else
+            {
+                upgNum = 0;
+            }
+        }
+        private void RefreshUpgradeCombobox()
+        {
+            cbbUpg1.Enabled = upgNum > 0 && budhost.UpgradeNum >= 1;
+            cbbUpg2.Enabled = upgNum > 0 && budhost.UpgradeNum >= 2;
+            cbbUpg3.Enabled = upgNum > 0 && budhost.UpgradeNum == 3;
         }
         private void InsertToUpgradeComboBox(IEnumerable<string> src, ComboBox dest)
         {
-            dest.Enabled = false;
             dest.Items.Clear();
             dest.Items.Add("None");
             dest.Items.AddRange(src.ToArray());
@@ -94,6 +101,7 @@ namespace RelertSharp.GUI
             cbbUpg3.Text = budhost.Upgrade3;
             cbbSpotlight.SelectedIndex = (int)budhost.SpotlightType;
             mtxbUpCount.Text = budhost.UpgradeNum.ToString();
+            RefreshUpgradeCombobox();
             base.UpdateGuiFromHost();
         }
 
@@ -144,12 +152,23 @@ namespace RelertSharp.GUI
             try
             {
                 int num = int.Parse(mtxbUpCount.Text);
-                if (num < 0 || num > 3) budhost.UpgradeNum = 0;
+                if (num < 0)
+                {
+                    num = 0;
+                    mtxbUpCount.Text = "0";
+                }
+                else if (num > 3)
+                {
+                    num = 3;
+                    mtxbUpCount.Text = "3";
+                }
                 else budhost.UpgradeNum = num;
+                RefreshUpgradeCombobox();
             }
             catch
             {
-                mtxbUpCount.Text = "";
+                mtxbUpCount.Text = "0";
+                RefreshUpgradeCombobox();
             }
         }
 

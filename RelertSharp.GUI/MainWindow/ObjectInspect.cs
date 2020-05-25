@@ -84,6 +84,8 @@ namespace RelertSharp.GUI
                         break;
                     }
                 }
+                GlobalVar.Engine.RedrawMinimapAll();
+                pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
             }
         }
     }

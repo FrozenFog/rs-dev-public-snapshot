@@ -47,10 +47,12 @@ namespace RelertSharp.GUI
         protected virtual void UpdateGuiFromHost()
         {
             SetFacing(changer.Host.Rotation);
+            int hp = Utils.Misc.Region(1, 256, changer.Host.HealthPoint);
+            int veteran = Utils.Misc.Region(0, 200, changer.Host.VeterancyPercentage);
+            trkbHP.Value = hp;
+            trkbVeteran.Value = veteran;
             mtxbHP.Text = changer.Host.HealthPoint.ToString();
             mtxbVeteran.Text = changer.Host.VeterancyPercentage.ToString();
-            trkbHP.Value = changer.Host.HealthPoint;
-            trkbVeteran.Value = changer.Host.VeterancyPercentage;
             cbbTags.Text = changer.Host.TaggedTrigger;
             cbbStatus.Text = changer.Host.Status;
             cbbOwnerHouse.Text = changer.Host.OwnerHouse;
@@ -151,8 +153,11 @@ namespace RelertSharp.GUI
                 case 160:
                     arrow = Properties.Resources.Arrow6;
                     break;
-                default:
+                case 192:
                     arrow = Properties.Resources.Arrow7;
+                    break;
+                default:
+                    arrow = Properties.Resources.Arrow1;
                     break;
             }
             changer.Host.Rotation = facing;

@@ -49,6 +49,12 @@ namespace RelertSharp.Utils
             }
             return dest;
         }
+        public static int Region(int _floor, int _ceil, int _src)
+        {
+            if (_src >= _ceil) return _ceil;
+            if (_src <= _floor) return _floor;
+            return _src;
+        }
         public static string Replace(string src, int pos, char c)
         {
             return src.Remove(pos, 1).Insert(pos, c.ToString());
