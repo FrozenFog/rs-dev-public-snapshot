@@ -34,17 +34,17 @@ namespace RelertSharp.DrawingEngine
             Buffer.Scenes.RemoveUnitAt(pos.Coord);
 
         }
-        public void UpdateUnitAttribute(UnitItem unit, int height, uint color, bool isSelected)
+        public void UpdateUnitAttribute(UnitItem unit, int height, uint color)
         {
             RemoveUnitAt(unit);
             DrawObject(unit, height, color);
-            if (isSelected) SelectUnitAt(unit);
+            if (unit.Selected) SelectUnitAt(unit);
         }
-        public void UpdateAircraftAttribute(AircraftItem air, int height, uint color, bool isSelected)
+        public void UpdateAircraftAttribute(AircraftItem air, int height, uint color)
         {
             RemoveUnitAt(air);
             DrawObject(air, height, color);
-            if (isSelected) SelectUnitAt(air);
+            if (air.Selected) SelectUnitAt(air);
         }
         #endregion
 
@@ -62,11 +62,11 @@ namespace RelertSharp.DrawingEngine
         {
             Buffer.Scenes.RemoveInfantryAt(pos.Coord, subcell);
         }
-        public void UpdateInfantryAttribute(InfantryItem inf, int height, uint color, int subcell, bool isSelected)
+        public void UpdateInfantryAttribute(InfantryItem inf, int height, uint color, int subcell)
         {
             RemoveInfantryAt(inf, subcell);
             DrawObject(inf, height, color);
-            if (isSelected) SelectInfantryAt(inf, subcell);
+            if (inf.Selected) SelectInfantryAt(inf, subcell);
         }
         #endregion
 
@@ -84,11 +84,11 @@ namespace RelertSharp.DrawingEngine
         {
             Buffer.Scenes.RemoveBuildingAt(bud.Coord);
         }
-        public void UpdateBuildingAttribute(StructureItem bud, int height, uint color, bool isSelected)
+        public void UpdateBuildingAttribute(StructureItem bud, int height, uint color)
         {
             RemoveBuildingAt(bud);
             DrawObject(bud, height, color);
-            if (isSelected) SelectBuildingAt(bud);
+            if (bud.Selected) SelectBuildingAt(bud);
         }
         #endregion
 

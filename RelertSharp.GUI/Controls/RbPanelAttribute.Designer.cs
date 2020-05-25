@@ -1,4 +1,4 @@
-﻿namespace RelertSharp.GUI.RbPanel
+﻿namespace RelertSharp.GUI.Controls
 {
     partial class RbPanelAttribute : RbPanelBase
     {
@@ -309,23 +309,6 @@
             this.Controls.Add(this.ckbOwnerHouse);
             this.Name = "RbPanelAttribute";
             this.Size = new System.Drawing.Size(551, 300);
-            this.Controls.SetChildIndex(this.ckbOwnerHouse, 0);
-            this.Controls.SetChildIndex(this.ckbTags, 0);
-            this.Controls.SetChildIndex(this.ckbStat, 0);
-            this.Controls.SetChildIndex(this.ckbGroup, 0);
-            this.Controls.SetChildIndex(this.ckbHP, 0);
-            this.Controls.SetChildIndex(this.ckbVeteran, 0);
-            this.Controls.SetChildIndex(this.ckbFacing, 0);
-            this.Controls.SetChildIndex(this.cbbOwnerHouse, 0);
-            this.Controls.SetChildIndex(this.cbbTags, 0);
-            this.Controls.SetChildIndex(this.cbbStatus, 0);
-            this.Controls.SetChildIndex(this.trkbHP, 0);
-            this.Controls.SetChildIndex(this.trkbVeteran, 0);
-            this.Controls.SetChildIndex(this.mtxbHP, 0);
-            this.Controls.SetChildIndex(this.mtxbVeteran, 0);
-            this.Controls.SetChildIndex(this.pboxFacing, 0);
-            this.Controls.SetChildIndex(this.txbGroup, 0);
-            this.Controls.SetChildIndex(this.groupBox1, 0);
             ((System.ComponentModel.ISupportInitialize)(this.pboxFacing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkbVeteran)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkbHP)).EndInit();

@@ -44,6 +44,7 @@ namespace RelertSharp.GUI.Model
             if (unit != null && !Units.Contains(unit))
             {
                 Units.Add(unit);
+                unit.Selected = true;
                 Engine.SelectUnitAt(pos);
             }
         }
@@ -53,6 +54,7 @@ namespace RelertSharp.GUI.Model
             if (inf != null && !Infantries.Contains(inf))
             {
                 Infantries.Add(inf);
+                inf.Selected = true;
                 Engine.SelectInfantryAt(pos, subcell);
             }
         }
@@ -62,6 +64,7 @@ namespace RelertSharp.GUI.Model
             if (building != null && !Buildings.Contains(building))
             {
                 Buildings.Add(building);
+                building.Selected = true;
                 Engine.SelectBuildingAt(building);
             }
         }
@@ -71,6 +74,7 @@ namespace RelertSharp.GUI.Model
             if (terr != null && !Terrains.Contains(terr))
             {
                 Terrains.Add(terr);
+                terr.Selected = true;
                 Engine.SelectTerrainAt(terr);
             }
         }
@@ -88,21 +92,25 @@ namespace RelertSharp.GUI.Model
             foreach (UnitItem unit in Units)
             {
                 Engine.UnSelectUnitAt(unit);
+                unit.Selected = false;
             }
             Units.Clear();
             foreach (InfantryItem inf in Infantries)
             {
                 Engine.UnSelectInfantryAt(inf, inf.SubCells);
+                inf.Selected = false;
             }
             Infantries.Clear();
             foreach (StructureItem building in Buildings)
             {
                 Engine.UnSelectBuindingAt(building);
+                building.Selected = false;
             }
             Buildings.Clear();
             foreach (TerrainItem terr in Terrains)
             {
                 Engine.UnSelectTerrainAt(terr);
+                terr.Selected = false;
             }
             Terrains.Clear();
             foreach (OverlayUnit ov in Overlays)

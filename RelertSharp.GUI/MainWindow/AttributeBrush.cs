@@ -35,7 +35,7 @@ namespace RelertSharp.GUI
                 if (inf != null)
                 {
                     inf.ApplyAttributeFrom(changer);
-                    Engine.UpdateInfantryAttribute(inf, height, map.GetHouseColor(inf.OwnerHouse), subcell, false);
+                    Engine.UpdateInfantryAttribute(inf, height, map.GetHouseColor(inf.OwnerHouse), subcell);
                 }
             }
             if (rbPanelAttribute.ToUnits)
@@ -44,7 +44,7 @@ namespace RelertSharp.GUI
                 if (unit != null)
                 {
                     unit.ApplyAttributeFrom(changer);
-                    Engine.UpdateUnitAttribute(unit, height, map.GetHouseColor(unit.OwnerHouse), false);
+                    Engine.UpdateUnitAttribute(unit, height, map.GetHouseColor(unit.OwnerHouse));
                 }
             }
             if (rbPanelAttribute.ToBuildings)
@@ -53,7 +53,7 @@ namespace RelertSharp.GUI
                 if (bud != null)
                 {
                     bud.ApplyAttributeFrom(changer);
-                    Engine.UpdateBuildingAttribute(bud, height, map.GetHouseColor(bud.OwnerHouse), false);
+                    Engine.UpdateBuildingAttribute(bud, height, map.GetHouseColor(bud.OwnerHouse));
                 }
             }
             if (rbPanelAttribute.ToAircrafts)
@@ -62,7 +62,7 @@ namespace RelertSharp.GUI
                 if (air != null)
                 {
                     air.ApplyAttributeFrom(changer);
-                    Engine.UpdateAircraftAttribute(air, height, map.GetHouseColor(air.OwnerHouse), false);
+                    Engine.UpdateAircraftAttribute(air, height, map.GetHouseColor(air.OwnerHouse));
                 }
             }
             Engine.Refresh();
@@ -76,22 +76,22 @@ namespace RelertSharp.GUI
             foreach (InfantryItem inf in Current.Infantries)
             {
                 inf.ApplyAttributeFrom(changer);
-                Engine.UpdateInfantryAttribute(inf, map.GetHeightFromTile(inf), map.GetHouseColor(inf.OwnerHouse), inf.SubCells, true);
+                Engine.UpdateInfantryAttribute(inf, map.GetHeightFromTile(inf), map.GetHouseColor(inf.OwnerHouse), inf.SubCells);
             }
             foreach (UnitItem unit in Current.Units)
             {
                 unit.ApplyAttributeFrom(changer);
-                Engine.UpdateUnitAttribute(unit, map.GetHeightFromTile(unit), map.GetHouseColor(unit.OwnerHouse), true);
+                Engine.UpdateUnitAttribute(unit, map.GetHeightFromTile(unit), map.GetHouseColor(unit.OwnerHouse));
             }
             foreach (AircraftItem air in Current.Aircrafts)
             {
                 air.ApplyAttributeFrom(changer);
-                Engine.UpdateAircraftAttribute(air, map.GetHeightFromTile(air), map.GetHouseColor(air.OwnerHouse), true);
+                Engine.UpdateAircraftAttribute(air, map.GetHeightFromTile(air), map.GetHouseColor(air.OwnerHouse));
             }
             foreach (StructureItem bud in Current.Buildings)
             {
                 bud.ApplyAttributeFrom(changer);
-                Engine.UpdateBuildingAttribute(bud, map.GetHeightFromTile(bud), map.GetHouseColor(bud.OwnerHouse), true);
+                Engine.UpdateBuildingAttribute(bud, map.GetHeightFromTile(bud), map.GetHouseColor(bud.OwnerHouse));
             }
             Engine.Refresh();
             Engine.RedrawMinimapAll();

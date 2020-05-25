@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RelertSharp.GUI.RbPanel
+namespace RelertSharp.GUI.Controls
 {
     public partial class RbPanelBase : UserControl
     {

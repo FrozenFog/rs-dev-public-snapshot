@@ -24,6 +24,7 @@ namespace RelertSharp.Common
     public interface IMapObject : I2dLocateable
     {
         string RegName { get; set; }
+        bool Selected { get; set; }
     }
 
     public interface ICombatObject : IMapObject

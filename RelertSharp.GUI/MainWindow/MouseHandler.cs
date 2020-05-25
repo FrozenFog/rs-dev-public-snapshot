@@ -76,6 +76,7 @@ namespace RelertSharp.GUI
         #endregion
 
 
+        #region Moving
         private void MouseMoving(MouseEventArgs e)
         {
             if (initialized)
@@ -98,6 +99,7 @@ namespace RelertSharp.GUI
                 if (GlobalVar.Engine.SelectTile(pos)) GlobalVar.Engine.Refresh();
             }
         }
+        #endregion
 
 
         #region Up
@@ -138,6 +140,19 @@ namespace RelertSharp.GUI
         private void RmbClick(MouseEventArgs e)
         {
 
+        }
+        private void LmbDoubleClicked(MouseEventArgs e)
+        {
+            if (drew)
+            {
+                switch (Current.CurrentMouseAction)
+                {
+                    case MainWindowDataModel.MouseActionType.Moving:
+                    case MainWindowDataModel.MouseActionType.None:
+                        InspectItemAt(e);
+                        break;
+                }
+            }
         }
         #endregion
     }

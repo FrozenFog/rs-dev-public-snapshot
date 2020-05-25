@@ -11,7 +11,7 @@ using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Common;
 
-namespace RelertSharp.GUI.RbPanel
+namespace RelertSharp.GUI.Controls
 {
     public partial class RbPanelAttribute : RbPanelBase
     {
@@ -26,7 +26,7 @@ namespace RelertSharp.GUI.RbPanel
             SetFacing(0);
             cbbOwnerHouse.Items.AddRange(houses.ToArray());
             cbbTags.Items.AddRange(tags.ToArray());
-            cbbOwnerHouse.SelectedIndex = 1;
+            cbbOwnerHouse.SelectedIndex = 0;
             cbbOwnerHouse.Text = changer.Host.OwnerHouse;
             UpdateGuiFromHost();
             SetLanguage();
@@ -241,6 +241,10 @@ namespace RelertSharp.GUI.RbPanel
             if (!trackerVeteranLock && initialized)
             {
                 mtxbVeteran.Text = trkbVeteran.Value.ToString();
+                string veteran = "Rookie";
+                if (trkbVeteran.Value >= 100 && trkbVeteran.Value < 200) veteran = "Veteran";
+                else if (trkbVeteran.Value == 200) veteran = "Elite";
+                toolTip.SetToolTip(trkbVeteran, veteran);
             }
         }
 

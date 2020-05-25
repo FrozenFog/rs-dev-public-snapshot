@@ -22,6 +22,7 @@ namespace RelertSharp.MapStructure.Points
         public int X { get; set; }
         public int Y { get; set; }
         public int Coord { get { return Utils.Misc.CoordInt(this); } }
+        public bool Selected { get; set; }
         #endregion
     }
 }

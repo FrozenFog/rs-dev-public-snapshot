@@ -1,4 +1,4 @@
-﻿namespace RelertSharp.GUI.RbPanel
+﻿namespace RelertSharp.GUI.Controls
 {
     partial class RbPanelBase
     {

@@ -111,7 +111,7 @@
             this.tsmiRectSelect = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiIsoSelect = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPreciseSelect = new System.Windows.Forms.ToolStripMenuItem();
-            this.rbPanelAttribute = new RelertSharp.GUI.RbPanel.RbPanelAttribute();
+            this.rbPanelAttribute = new RelertSharp.GUI.Controls.RbPanelAttribute();
             this.panelHost.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
@@ -207,6 +207,7 @@
             this.panel1.TabIndex = 2;
             this.panel1.SizeChanged += new System.EventHandler(this.panel1_SizeChanged);
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
+            this.panel1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDoubleClick);
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             this.panel1.MouseLeave += new System.EventHandler(this.panel1_MouseLeave);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
@@ -1247,7 +1248,7 @@
             // rbPanelAttribute
             // 
             this.rbPanelAttribute.BackColor = System.Drawing.SystemColors.Control;
-            this.rbPanelAttribute.Location = new System.Drawing.Point(111, 51);
+            this.rbPanelAttribute.Location = new System.Drawing.Point(91, 66);
             this.rbPanelAttribute.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rbPanelAttribute.Name = "rbPanelAttribute";
             this.rbPanelAttribute.Size = new System.Drawing.Size(540, 258);
@@ -1383,7 +1384,7 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private RbPanel.RbPanelAttribute rbPanelAttribute;
+        private Controls.RbPanelAttribute rbPanelAttribute;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ToolStrip toolsMain;

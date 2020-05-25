@@ -348,6 +348,14 @@ namespace RelertSharp.GUI
             }
         }
 
+        private void panel1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                LmbDoubleClicked(e);
+            }
+        }
+
         private void ToolBoxRightClickHandler(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)

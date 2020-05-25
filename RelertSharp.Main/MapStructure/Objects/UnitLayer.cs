@@ -38,6 +38,19 @@ namespace RelertSharp.MapStructure.Objects
             AutoNORecruitType = ParseBool(_args[12]);
             AutoYESRecruitType = ParseBool(_args[13]);
         }
+        public UnitItem(UnitItem src) : base(src)
+        {
+            FollowsIndex = src.FollowsIndex;
+            Rotation = src.Rotation;
+            Status = src.Status;
+            TaggedTrigger = src.TaggedTrigger;
+            VeterancyPercentage = src.VeterancyPercentage;
+            Group = src.Group;
+            IsAboveGround = src.IsAboveGround;
+            AutoNORecruitType = src.AutoNORecruitType;
+            AutoYESRecruitType = src.AutoYESRecruitType;
+        }
+        public UnitItem() { }
         public string FollowsIndex { get; set; }
     }
 }

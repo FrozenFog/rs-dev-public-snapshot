@@ -112,6 +112,7 @@ namespace RelertSharp.MapStructure.Points
                 Y = CoordIntY(value);
             }
         }
+        public bool Selected { get; set; }
         #endregion;
     }
 }

@@ -75,6 +75,15 @@ namespace RelertSharp.MapStructure.Objects
             X = int.Parse(_args[3]);
             Y = int.Parse(_args[4]);
         }
+        public ObjectItemBase(ObjectItemBase src)
+        {
+            ID = src.ID;
+            OwnerHouse = src.OwnerHouse;
+            RegName = src.RegName;
+            HealthPoint = src.HealthPoint;
+            X = src.X;
+            Y = src.Y;
+        }
         public ObjectItemBase() { }
         #endregion
 
@@ -104,7 +113,7 @@ namespace RelertSharp.MapStructure.Objects
         public string OwnerHouse { get; set; } = "<none>";
         public int HealthPoint { get; set; } = 256;
         public string Status { get; set; } = "<none>";
-        public string TaggedTrigger { get; set; } = "<none>";
+        public string TaggedTrigger { get; set; } = "None";
         public int X { get; set; } = 0;
         public int Y { get; set; } = 0;
         public int Coord
@@ -122,6 +131,7 @@ namespace RelertSharp.MapStructure.Objects
         public bool IsAboveGround { get; set; } = false;
         public bool AutoNORecruitType { get; set; } = false;
         public bool AutoYESRecruitType { get; set; } = true;
+        public bool Selected { get; set; } = false;
         #endregion
     }
 }

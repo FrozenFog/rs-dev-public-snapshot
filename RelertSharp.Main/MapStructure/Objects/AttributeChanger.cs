@@ -10,6 +10,20 @@ namespace RelertSharp.MapStructure.Objects
     public class AttributeChanger
     {
         #region Ctor - AttributeChanger
+        public AttributeChanger(bool allTrue = false)
+        {
+            if (allTrue)
+            {
+                bOwnerHouse = true;
+                bHealthPoint = true;
+                bTaggedTrigger = true;
+                bRotation = true;
+                bVeteran = true;
+                bGroup = true;
+                bStatus = true;
+            }
+            Host = new InfantryItem();
+        }
         public AttributeChanger()
         {
             Host = new InfantryItem();
