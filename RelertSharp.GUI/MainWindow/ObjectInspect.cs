@@ -21,6 +21,8 @@ namespace RelertSharp.GUI
 {
     public partial class MainWindowTest
     {
+        private UnitAttributeForm unitForm;
+
         private void InspectItemAt(MouseEventArgs e)
         {
             Vec3 pos = GlobalVar.Engine.ClientPointToCellPos(e.Location);
@@ -30,9 +32,10 @@ namespace RelertSharp.GUI
                 IMapObject obj = t.GetObjects().Last();
                 if (obj.GetType() == typeof(UnitItem))
                 {
-                    UnitAttributeForm fm = new UnitAttributeForm(obj as UnitItem, map.Houses, map.Tags);
-                    fm.ShowDialog();
-                    UnitItem newitem = fm.Result;
+                    if (unitForm == null) unitForm = new UnitAttributeForm(obj as UnitItem, map.Houses, map.Tags);
+                    else unitForm.Reload(obj as UnitItem, map.Houses, map.Tags);
+                    unitForm.ShowDialog();
+                    UnitItem newitem = unitForm.Result;
                     map.Units[newitem.ID] = newitem;
                     GlobalVar.Engine.UpdateUnitAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse));
                 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Logic;
+using RelertSharp.Common;
 
 namespace RelertSharp.GUI
 {
@@ -30,6 +31,19 @@ namespace RelertSharp.GUI
             initialized = true;
         }
 
+        public void Reload(ICombatObject src, IEnumerable<HouseItem> houses, IEnumerable<TagItem> tags)
+        {
+            initialized = false;
+            confirmed = false;
+            LoadCombobox(houses, tags);
+            UnitItem newitem = src as UnitItem;
+            Result = null;
+            original = new UnitItem(newitem);
+            unithost = newitem;
+            changer.Host = unithost;
+            UpdateGuiFromHost();
+            initialized = true;
+        }
         protected override void UpdateGuiFromHost()
         {
             txbFollows.Text = unithost.FollowsIndex;

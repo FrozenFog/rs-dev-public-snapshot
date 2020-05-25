@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Logic;
+using RelertSharp.Common;
 
 namespace RelertSharp.GUI
 {
@@ -30,13 +31,18 @@ namespace RelertSharp.GUI
             InitializeComponent();
             changer = new AttributeChanger(true);
         }
-
         protected void LoadCombobox(IEnumerable<HouseItem> houses, IEnumerable<TagItem> tags)
         {
+            cbbOwnerHouse.Items.Clear();
+            cbbTags.Items.Clear();
             cbbOwnerHouse.Items.AddRange(houses.ToArray());
             cbbTags.Items.AddRange(tags.ToArray());
             cbbOwnerHouse.SelectedIndex = 0;
             cbbOwnerHouse.Text = changer.Host.OwnerHouse;
+            int houseMX = houses.Max(x => x.ToString().Length) * 7;
+            int tagMX = tags.Max(x => x.ToString().Length) * 7;
+            cbbOwnerHouse.DropDownWidth = houseMX;
+            cbbTags.DropDownWidth = tagMX;
         }
         protected virtual void UpdateGuiFromHost()
         {
