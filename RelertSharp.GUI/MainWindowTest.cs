@@ -96,6 +96,13 @@ namespace RelertSharp.GUI
                 GlobalVar.Engine.Refresh();
             }
         }
+        protected override void WndProc(ref Message m)
+        {
+            if (!isLoading)
+            {
+                base.WndProc(ref m);
+            }
+        }
 
         private Map Map { get { return map; } }
 
@@ -103,13 +110,7 @@ namespace RelertSharp.GUI
         {
             button1.Enabled = false;
             EngineInitialize(panel1.Handle, pnlMiniMap);
-            DrawAll();
-            GlobalVar.Engine.MoveTo(map.CenterPoint);
-            pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
-            GlobalVar.Engine.Refresh();
-            rbPanelAttribute.Initialize(map.Houses, map.Tags);
-            drew = true;
-            button1.Enabled = false;
+            bgwDraw.RunWorkerAsync();
         }
 
         private void panel1_Resize(object sender, EventArgs e)
@@ -353,6 +354,29 @@ namespace RelertSharp.GUI
             if (e.Button == MouseButtons.Left)
             {
                 LmbDoubleClicked(e);
+            }
+        }
+
+        private void bgwDraw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            DrawAll(worker);
+            GlobalVar.Engine.MoveTo(map.CenterPoint);
+            GlobalVar.Engine.Refresh();
+            pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
+            rbPanelAttribute.Initialize(map.Houses, map.Tags);
+            drew = true;
+            button1.Enabled = false;
+        }
+
+        private void bgwDraw_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (e.ProgressPercentage == 1) // basic drawing done
+            {
+                listBox1.Items.Clear();
+                listBox1.Items.AddRange(_failed.ToArray());
+                ToolBoxClick(toolBtnMoving);
+                prevCur = panel1.Cursor;
             }
         }
 

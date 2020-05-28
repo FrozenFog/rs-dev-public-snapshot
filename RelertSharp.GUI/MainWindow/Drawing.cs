@@ -23,12 +23,14 @@ namespace RelertSharp.GUI
     public partial class MainWindowTest
     {
         private bool drew = false;
+        private bool isLoading = false;
         private LoadingWindow lw;
         private List<string> _failed = new List<string>();
 
 
-        private bool DrawAll()
+        private bool DrawAll(BackgroundWorker worker)
         {
+            isLoading = true;
             lw = new LoadingWindow();
             lw.Show();
             lw.Refresh();
@@ -44,9 +46,8 @@ namespace RelertSharp.GUI
             GlobalVar.GlobalDir.DisposePreloaded();
             lw.EndDrawing();
             lw.Close();
-            lw.Dispose();
-            ToolBoxClick(toolBtnMoving);
-            prevCur = panel1.Cursor;
+            worker.ReportProgress(1);
+            isLoading = false;
             return true;
         }
         private bool EngineInitialize(IntPtr mainHandle, Panel minimapPanel)
@@ -190,7 +191,6 @@ namespace RelertSharp.GUI
                 }
             }
             lw.EndItems(LoadingWindow.LoadingFlag.BaseNodes);
-            listBox1.Items.AddRange(_failed.ToArray());
         }
     }
 }

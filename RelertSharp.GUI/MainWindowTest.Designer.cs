@@ -35,6 +35,7 @@
             this.splitMain = new System.Windows.Forms.SplitContainer();
             this.pnlMainAreaContainer = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rbPanelAttribute = new RelertSharp.GUI.Controls.RbPanelAttribute();
             this.txbCommand = new System.Windows.Forms.TextBox();
             this.toolsMain = new System.Windows.Forms.ToolStrip();
             this.toolBtnMoving = new System.Windows.Forms.ToolStripButton();
@@ -111,7 +112,7 @@
             this.tsmiRectSelect = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiIsoSelect = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPreciseSelect = new System.Windows.Forms.ToolStripMenuItem();
-            this.rbPanelAttribute = new RelertSharp.GUI.Controls.RbPanelAttribute();
+            this.bgwDraw = new System.ComponentModel.BackgroundWorker();
             this.panelHost.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
@@ -214,6 +215,16 @@
             this.panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseUp);
             this.panel1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.panel1_PreviewKeyDown);
             this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
+            // 
+            // rbPanelAttribute
+            // 
+            this.rbPanelAttribute.BackColor = System.Drawing.SystemColors.Control;
+            this.rbPanelAttribute.Location = new System.Drawing.Point(66, 28);
+            this.rbPanelAttribute.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbPanelAttribute.Name = "rbPanelAttribute";
+            this.rbPanelAttribute.Size = new System.Drawing.Size(540, 258);
+            this.rbPanelAttribute.TabIndex = 0;
+            this.rbPanelAttribute.Visible = false;
             // 
             // txbCommand
             // 
@@ -1101,7 +1112,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(175, 251);
+            this.tabPage2.Size = new System.Drawing.Size(196, 251);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1245,15 +1256,11 @@
             this.tsmiPreciseSelect.Text = "RSMainTooltsmiPrecise";
             this.tsmiPreciseSelect.Click += new System.EventHandler(this.tsmiPreciseSelect_Click);
             // 
-            // rbPanelAttribute
+            // bgwDraw
             // 
-            this.rbPanelAttribute.BackColor = System.Drawing.SystemColors.Control;
-            this.rbPanelAttribute.Location = new System.Drawing.Point(91, 66);
-            this.rbPanelAttribute.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rbPanelAttribute.Name = "rbPanelAttribute";
-            this.rbPanelAttribute.Size = new System.Drawing.Size(540, 258);
-            this.rbPanelAttribute.TabIndex = 0;
-            this.rbPanelAttribute.Visible = false;
+            this.bgwDraw.WorkerReportsProgress = true;
+            this.bgwDraw.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwDraw_DoWork);
+            this.bgwDraw.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgwDraw_ProgressChanged);
             // 
             // MainWindowTest
             // 
@@ -1402,5 +1409,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiPreciseSelect;
         private System.Windows.Forms.Panel pnlMainAreaContainer;
         private System.Windows.Forms.TextBox txbCommand;
+        private System.ComponentModel.BackgroundWorker bgwDraw;
     }
 }
