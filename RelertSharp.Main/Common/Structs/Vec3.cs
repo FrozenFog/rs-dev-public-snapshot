@@ -11,6 +11,9 @@ namespace RelertSharp.Common
         public float X;
         public float Y;
         public float Z;
+        private const float _15SQ2 = 21.213203f;
+        private const float _30SQ2 = 42.426406f;
+        private const float _10SQ3 = 17.320508f;
 
 
         public Vec3(int x, int y, int z)
@@ -53,7 +56,33 @@ namespace RelertSharp.Common
         {
             get { return new Vec3(1, 1, 5); }
         }
-
+        public static Vec3 ToVec3Iso(I3dLocateable src)
+        {
+            return ToVec3Iso(src.X, src.Y, src.Z);
+        }
+        public static Vec3 ToVec3Iso(Vec3 src)
+        {
+            return ToVec3Iso(src.X, src.Y, src.Z);
+        }
+        public static Vec3 ToVec3Iso(I3dLocateable src, int subcell)
+        {
+            float x = src.X + 0.25f, y = src.Y + 0.25f, z = src.Z;
+            if (subcell == 2) x -= 0.5f;
+            else if (subcell == 3) y -= 0.5f;
+            return ToVec3Iso(x, y, z);
+        }
+        public static Vec3 ToVec3Iso(float x, float y, float z)
+        {
+            return new Vec3(x * _30SQ2, y * _30SQ2, z * _10SQ3);
+        }
+        public static Vec3 ToVec3Zero(I3dLocateable src)
+        {
+            return ToVec3Zero(src.X, src.Y, src.Z);
+        }
+        public static Vec3 ToVec3Zero(float x, float y, float z)
+        {
+            return new Vec3(x * _30SQ2 - _15SQ2, y * _30SQ2 - _15SQ2, z * _10SQ3);
+        }
         #region operator
         public static Vec3 operator +(Vec3 a, int b)
         {

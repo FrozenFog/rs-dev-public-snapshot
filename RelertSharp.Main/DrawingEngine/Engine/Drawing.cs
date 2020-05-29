@@ -108,6 +108,7 @@ namespace RelertSharp.DrawingEngine
         {
             DrawableMisc src = CreateDrawableMisc(terrain);
             PresentMisc dest = new PresentMisc(MapObjectType.Terrain, terrain, height);
+            dest.IsZeroVec = src.IsZeroVec;
             Vec3 pos;
             if (src.IsZeroVec) pos = ToVec3Zero(terrain, height);
             else pos = ToVec3Iso(terrain, height);
@@ -139,6 +140,7 @@ namespace RelertSharp.DrawingEngine
             dest.IsRubble = src.IsRubble;
             dest.IsWall = src.IsWall;
             dest.IsHiBridge = src.IsHiBridge;
+            dest.IsZeroVec = src.IsZeroVec;
             Vec3 pos;
             if (src.IsZeroVec) pos = ToVec3Zero(o, height);
             else pos = ToVec3Iso(o, height);

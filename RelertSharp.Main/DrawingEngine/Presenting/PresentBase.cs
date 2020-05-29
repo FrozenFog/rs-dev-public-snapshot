@@ -42,6 +42,24 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             if (pointer != 0) CppExtern.ObjectUtils.SetObjectColorCoefficient(pointer, color);
         }
+        protected virtual void ShiftBy(Vec3 displacement, int ptr, int pshadow = 0)
+        {
+            if (ptr != 0) CppExtern.ObjectUtils.MoveObject(ptr, displacement);
+            if (pshadow != 0) CppExtern.ObjectUtils.MoveObject(pshadow, displacement);
+        }
+        protected virtual void SetLocation(Vec3 pos, int ptr, int pshadow = 0)
+        {
+            if (ptr != 0) CppExtern.ObjectUtils.SetObjectLocation(ptr, pos);
+            if (pshadow != 0) CppExtern.ObjectUtils.SetObjectLocation(pshadow, pos);
+        }
+        protected Vec3 GetDeltaDistant(I3dLocateable newpos)
+        {
+            Vec3 delta = Vec3.ToVec3Iso(Vec3.FromXYZ(newpos) - Vec3.FromXYZ(this));
+            X = newpos.X;
+            Y = newpos.Y;
+            Z = newpos.Z;
+            return delta;
+        }
         #endregion
 
 
@@ -72,6 +90,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         void MultiplyColor(Vec4 color);
         void MarkSelected();
         void Unmark();
+        void MoveTo(I3dLocateable pos);
     }
 
 

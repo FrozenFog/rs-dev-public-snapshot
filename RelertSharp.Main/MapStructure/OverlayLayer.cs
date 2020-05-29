@@ -94,7 +94,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class OverlayUnit : I2dLocateable
+    public class OverlayUnit : IMapObject
     {
 
 
@@ -116,6 +116,8 @@ namespace RelertSharp.MapStructure
         public int X { get; set; }
         public int Y { get; set; }
         public int Coord { get { return Misc.CoordInt(X, Y); } }
+        public bool Selected { get; set; }
+        public string RegName { get; set; }
         #endregion
     }
 }

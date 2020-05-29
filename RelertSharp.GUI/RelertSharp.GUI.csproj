@@ -91,6 +91,9 @@
     <Compile Include="MainWindow\ObjectInspect.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MainWindow\ObjectMoving.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainWindow\Sub\AircraftAttributeForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -27,6 +27,7 @@ namespace RelertSharp.DrawingEngine
 
 
             #region Remove & add Object
+            #region Unit
             public void RemoveUnitAt(int coord)
             {
                 PresentUnit u = RemoveAtBy(Units, coord);
@@ -37,6 +38,18 @@ namespace RelertSharp.DrawingEngine
                 Units[coord] = unit;
                 if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Add(unit);
             }
+            public void MoveUnitTo(I3dLocateable dest, I3dLocateable src)
+            {
+                int org = src.Coord;
+                PresentUnit unit = Units[org];
+                Units.Remove(org);
+                Tiles[org].TileObjects.Remove(unit);
+                unit.MoveTo(dest);
+                Tiles[unit.Coord].TileObjects.Add(unit);
+                Units[unit.Coord] = unit;
+            }
+            #endregion
+            #region Infantry
             public void RemoveInfantryAt(int coord, int subcell)
             {
                 PresentInfantry inf = RemoveAtBy(Infantries, (coord << 2) + subcell);
@@ -47,6 +60,19 @@ namespace RelertSharp.DrawingEngine
                 Infantries[(coord << 2) + subcell] = inf;
                 if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Add(inf);
             }
+            public void MoveInfantryTo(I3dLocateable dest, I3dLocateable src, int orgSubcell, int newSubcell)
+            {
+                int org = (src.Coord << 2) + orgSubcell;
+                PresentInfantry inf = Infantries[org];
+                Infantries.Remove(org);
+                Tiles[src.Coord].TileObjects.Remove(inf);
+                if (orgSubcell == newSubcell) inf.MoveTo(dest);
+                else inf.SetTo(dest, newSubcell);
+                Tiles[inf.Coord].TileObjects.Add(inf);
+                Infantries[(inf.Coord << 2) + newSubcell] = inf;
+            }
+            #endregion
+            #region Building
             public void RemoveBuildingAt(int coord)
             {
                 PresentStructure bud = RemoveAtBy(Structures, coord);
@@ -72,6 +98,27 @@ namespace RelertSharp.DrawingEngine
                     }
                 }
             }
+            public void MoveBuildingTo(I3dLocateable dest, I3dLocateable src)
+            {
+                int org = src.Coord << 1;
+                int dst = dest.Coord << 1;
+                PresentStructure bud = Structures[org];
+                Structures.Remove(org);
+                foreach(I2dLocateable pos in new Square2D(bud, bud.FoundationX, bud.FoundationY))
+                {
+                    int subcoord = pos.Coord;
+                    if (Tiles.Keys.Contains(subcoord)) Tiles[subcoord].TileObjects.Remove(bud);
+                }
+                bud.MoveTo(dest);
+                Structures[dst] = bud;
+                foreach(I2dLocateable pos in new Square2D(bud, bud.FoundationX, bud.FoundationY))
+                {
+                    int subcoord = pos.Coord;
+                    if (Tiles.Keys.Contains(subcoord)) Tiles[subcoord].TileObjects.Add(bud);
+                }
+            }
+            #endregion
+            #region Overlay
             public void RemoveOverlayAt(int coord)
             {
                 PresentMisc ov = RemoveAtBy(Overlays, coord);
@@ -82,6 +129,22 @@ namespace RelertSharp.DrawingEngine
                 Overlays[coord] = ov;
                 if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Add(ov);
             }
+            public void MoveOverlayTo(I3dLocateable dest, I3dLocateable src)
+            {
+                int org = src.Coord;
+                int dst = dest.Coord;
+                if (!Overlays.Keys.Contains(dst))
+                {
+                    PresentMisc ov = Overlays[org];
+                    Overlays.Remove(org);
+                    Tiles[org].TileObjects.Remove(ov);
+                    ov.MoveTo(dest);
+                    Overlays[dst] = ov;
+                    Tiles[dst].TileObjects.Add(ov);
+                }
+            }
+            #endregion
+            #region Terrain
             public void RemoveTerrainAt(int coord)
             {
                 PresentMisc ter = RemoveAtBy(Terrains, coord);
@@ -92,6 +155,18 @@ namespace RelertSharp.DrawingEngine
                 Terrains[coord] = terr;
                 if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Add(terr);
             }
+            public void MoveTerrainTo(I3dLocateable dest, I3dLocateable src)
+            {
+                int org = src.Coord;
+                int dst = dest.Coord;
+                PresentMisc terr = Terrains[org];
+                Terrains.Remove(org);
+                Tiles[org].TileObjects.Remove(terr);
+                terr.MoveTo(dest);
+                Terrains[dst] = terr;
+                Tiles[dst].TileObjects.Add(terr);
+            }
+            #endregion
             #endregion
 
 

@@ -76,7 +76,7 @@
     <Compile Include="DrawingEngine\Buffers\BufferCollection.cs" />
     <Compile Include="DrawingEngine\Buffers\Buffers.cs" />
     <Compile Include="DrawingEngine\Buffers\Files.cs" />
-    <Compile Include="DrawingEngine\Buffers\Scene.cs" />
+    <Compile Include="DrawingEngine\Buffers\Scene\Scene.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableBase.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableInfantry.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableMisc.cs" />
@@ -88,6 +88,7 @@
     <Compile Include="DrawingEngine\Engine\GlobalLightning.cs" />
     <Compile Include="DrawingEngine\Engine\Main.cs" />
     <Compile Include="DrawingEngine\Engine\Minimap.cs" />
+    <Compile Include="DrawingEngine\Engine\ObjectMoving.cs" />
     <Compile Include="DrawingEngine\Engine\ObjectUtil.cs" />
     <Compile Include="DrawingEngine\Engine\Transform.cs" />
     <Compile Include="DrawingEngine\Engine\ViewPort.cs" />

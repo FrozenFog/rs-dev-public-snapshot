@@ -16,6 +16,10 @@ namespace RelertSharp.Common
         {
             X = x; Y = y; Z = z;
         }
+        public Pnt3(I2dLocateable d2, int height)
+        {
+            X = d2.X;Y = d2.Y;Z = height;
+        }
 
         public int Coord => Utils.Misc.CoordInt(X, Y);
 

@@ -31,6 +31,14 @@ namespace RelertSharp.DrawingEngine.Presenting
             RemoveProp(pSelf);
             RemoveProp(pExtra);
         }
+        /// <summary>
+        /// Move tile will do nothing
+        /// </summary>
+        /// <param name="cell"></param>
+        public void MoveTo(I3dLocateable cell)
+        {
+
+        }
         public void Mark(Vec4 main, Vec4 extra, bool deSelect)
         {
             if (deSelect)

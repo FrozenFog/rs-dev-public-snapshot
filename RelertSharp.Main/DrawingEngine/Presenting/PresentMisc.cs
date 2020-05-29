@@ -28,6 +28,11 @@ namespace RelertSharp.DrawingEngine.Presenting
             }
         }
 
+        public void MoveTo(I3dLocateable cell)
+        {
+            Vec3 delta = GetDeltaDistant(cell);
+            ShiftBy(delta, pSelf, pSelfShadow);
+        }
         public void SetColor(Vec4 color)
         {
             if (IsTiberiumOverlay) return;
@@ -71,6 +76,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         public bool IsRubble { get; set; }
         public bool IsValid { get { return pSelf != 0; } }
         public bool IsHiBridge { get; set; }
+        public bool IsZeroVec { get; set; }
         public List<int> WaypointNums { get; private set; } = new List<int>();
         #endregion
     }

@@ -20,6 +20,22 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             RemoveProp(pSelf, pSelfShadow);
         }
+        public void SetTo(I3dLocateable cell, int subcell)
+        {
+            if (subcell != -1)
+            {
+                Vec3 pos = Vec3.ToVec3Iso(cell, subcell);
+                SetLocation(pos, pSelf, pSelfShadow);
+                X = cell.X;
+                Y = cell.Y;
+                Z = cell.Z;
+            }
+        }
+        public void MoveTo(I3dLocateable cell)
+        {
+            Vec3 delta = GetDeltaDistant(cell);
+            ShiftBy(delta, pSelf, pSelfShadow);
+        }
         public void SetColor(Vec4 color)
         {
             ColorVector = color;

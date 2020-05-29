@@ -12,6 +12,11 @@ namespace RelertSharp.DrawingEngine
         private TileLayer _cellFindingReferance;
         private Vec3 previousTile = Vec3.Zero;
 
+        /// <summary>
+        /// return Vec3.Zero if it is not a valid coord
+        /// </summary>
+        /// <param name="src"></param>
+        /// <returns></returns>
         public Vec3 ClientPointToCellPos(Point src)
         {
             Pnt p = Pnt.FromPoint(src);

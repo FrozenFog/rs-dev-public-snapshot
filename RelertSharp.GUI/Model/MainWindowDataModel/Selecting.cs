@@ -170,6 +170,7 @@ namespace RelertSharp.GUI.Model
         public List<TerrainItem> Terrains { get; private set; } = new List<TerrainItem>();
         public List<OverlayUnit> Overlays { get; private set; } = new List<OverlayUnit>();
         public IEnumerable<ICombatObject> CombatObjects { get { return Infantries.Concat<ICombatObject>(Units).Concat(Buildings); } }
+        public IEnumerable<IMapObject> SelectedMapObjects { get { return Aircrafts.Concat<IMapObject>(Infantries).Concat(Units).Concat(Buildings).Concat(Terrains); } }
         #endregion
     }
 }
