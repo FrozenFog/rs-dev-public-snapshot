@@ -81,6 +81,27 @@ namespace RelertSharp.DrawingEngine.Presenting
             selected = false;
             SetColorStrict(ColorVector);
         }
+        public T GetFirstTileObject<T>(Predicate<T> predicate) where T : PresentBase, IPresentBase
+        {
+            foreach (IPresentBase obj in TileObjects)
+            {
+                T target = obj as T;
+                if (target != null)
+                {
+                    if (predicate.Invoke(target)) return target;
+                }
+            }
+            return null;
+        }
+        public T GetFirstTileObject<T>() where T : PresentBase, IPresentBase
+        {
+            foreach (IPresentBase obj in TileObjects)
+            {
+                T target = obj as T;
+                if (target != null) return target;
+            }
+            return null;
+        }
         #endregion
 
 
@@ -101,7 +122,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         public bool Buildable { get; set; }
         public bool WaterPassable { get; set; }
         public bool LandPassable { get; set; }
-        public List<IMinimapVisiable> TileObjects { get; private set; } = new List<IMinimapVisiable>();
+        public List<IPresentBase> TileObjects { get; private set; } = new List<IPresentBase>();
         #endregion
     }
 }

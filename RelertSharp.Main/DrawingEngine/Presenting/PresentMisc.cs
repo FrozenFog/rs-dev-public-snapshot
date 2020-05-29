@@ -77,6 +77,8 @@ namespace RelertSharp.DrawingEngine.Presenting
         public bool IsValid { get { return pSelf != 0; } }
         public bool IsHiBridge { get; set; }
         public bool IsZeroVec { get; set; }
+        public int SmgWidth { get; set; }
+        public int SmgHeight { get; set; }
         public List<int> WaypointNums { get; private set; } = new List<int>();
         #endregion
     }

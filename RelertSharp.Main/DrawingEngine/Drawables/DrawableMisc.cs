@@ -30,6 +30,8 @@ namespace RelertSharp.DrawingEngine.Drawables
         public bool IsTiberiumOverlay { get; set; }
         public bool IsMoveBlockingOverlay { get; set; }
         public bool IsWall { get; set; }
+        public int SmudgeWidth { get; set; }
+        public int SmudgeHeight { get; set; }
         public Color RadarColor { get; set; } = Color.FromArgb(0, 0, 0, 0);//null color
         #endregion
     }

@@ -11,7 +11,7 @@ namespace RelertSharp.DrawingEngine
 {
     internal partial class BufferCollection
     {
-        public class CScene
+        public partial class CScene
         {
             #region Ctor - Scene
             public CScene() { }
@@ -28,144 +28,28 @@ namespace RelertSharp.DrawingEngine
 
             #region Remove & add Object
             #region Unit
-            public void RemoveUnitAt(int coord)
-            {
-                PresentUnit u = RemoveAtBy(Units, coord);
-                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Remove(u);
-            }
-            public void AddUnitAt(int coord, PresentUnit unit)
-            {
-                Units[coord] = unit;
-                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Add(unit);
-            }
-            public void MoveUnitTo(I3dLocateable dest, I3dLocateable src)
-            {
-                int org = src.Coord;
-                PresentUnit unit = Units[org];
-                Units.Remove(org);
-                Tiles[org].TileObjects.Remove(unit);
-                unit.MoveTo(dest);
-                Tiles[unit.Coord].TileObjects.Add(unit);
-                Units[unit.Coord] = unit;
-            }
+
+
+
             #endregion
             #region Infantry
-            public void RemoveInfantryAt(int coord, int subcell)
-            {
-                PresentInfantry inf = RemoveAtBy(Infantries, (coord << 2) + subcell);
-                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Remove(inf);
-            }
-            public void AddInfantryAt(int coord, PresentInfantry inf, int subcell)
-            {
-                Infantries[(coord << 2) + subcell] = inf;
-                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Add(inf);
-            }
-            public void MoveInfantryTo(I3dLocateable dest, I3dLocateable src, int orgSubcell, int newSubcell)
-            {
-                int org = (src.Coord << 2) + orgSubcell;
-                PresentInfantry inf = Infantries[org];
-                Infantries.Remove(org);
-                Tiles[src.Coord].TileObjects.Remove(inf);
-                if (orgSubcell == newSubcell) inf.MoveTo(dest);
-                else inf.SetTo(dest, newSubcell);
-                Tiles[inf.Coord].TileObjects.Add(inf);
-                Infantries[(inf.Coord << 2) + newSubcell] = inf;
-            }
+
+
+
             #endregion
             #region Building
-            public void RemoveBuildingAt(int coord)
-            {
-                PresentStructure bud = RemoveAtBy(Structures, coord);
-                foreach(I2dLocateable pos in new Square2D(bud, bud.FoundationX, bud.FoundationY))
-                {
-                    int subcord = pos.Coord;
-                    if (Tiles.Keys.Contains(subcord)) Tiles[subcord].TileObjects.Remove(bud);
-                }
-            }
-            public void AddBuildingAt(int coord, PresentStructure bud, bool isNode)
-            {
-                if (isNode)
-                {
-                    Structures[(coord << 1) + 1] = bud;
-                }
-                else
-                {
-                    Structures[coord] = bud;
-                    foreach(I2dLocateable pos in new Square2D(bud, bud.FoundationX, bud.FoundationY))
-                    {
-                        int subcord = pos.Coord;
-                        if (Tiles.Keys.Contains(subcord)) Tiles[subcord].TileObjects.Add(bud);
-                    }
-                }
-            }
-            public void MoveBuildingTo(I3dLocateable dest, I3dLocateable src)
-            {
-                int org = src.Coord << 1;
-                int dst = dest.Coord << 1;
-                PresentStructure bud = Structures[org];
-                Structures.Remove(org);
-                foreach(I2dLocateable pos in new Square2D(bud, bud.FoundationX, bud.FoundationY))
-                {
-                    int subcoord = pos.Coord;
-                    if (Tiles.Keys.Contains(subcoord)) Tiles[subcoord].TileObjects.Remove(bud);
-                }
-                bud.MoveTo(dest);
-                Structures[dst] = bud;
-                foreach(I2dLocateable pos in new Square2D(bud, bud.FoundationX, bud.FoundationY))
-                {
-                    int subcoord = pos.Coord;
-                    if (Tiles.Keys.Contains(subcoord)) Tiles[subcoord].TileObjects.Add(bud);
-                }
-            }
+
+
+
             #endregion
             #region Overlay
-            public void RemoveOverlayAt(int coord)
-            {
-                PresentMisc ov = RemoveAtBy(Overlays, coord);
-                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Remove(ov);
-            }
-            public void AddOverlayAt(int coord, PresentMisc ov)
-            {
-                Overlays[coord] = ov;
-                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Add(ov);
-            }
-            public void MoveOverlayTo(I3dLocateable dest, I3dLocateable src)
-            {
-                int org = src.Coord;
-                int dst = dest.Coord;
-                if (!Overlays.Keys.Contains(dst))
-                {
-                    PresentMisc ov = Overlays[org];
-                    Overlays.Remove(org);
-                    Tiles[org].TileObjects.Remove(ov);
-                    ov.MoveTo(dest);
-                    Overlays[dst] = ov;
-                    Tiles[dst].TileObjects.Add(ov);
-                }
-            }
+
+
+
             #endregion
             #region Terrain
-            public void RemoveTerrainAt(int coord)
-            {
-                PresentMisc ter = RemoveAtBy(Terrains, coord);
-                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Remove(ter);
-            }
-            public void AddTerrainAt(int coord, PresentMisc terr)
-            {
-                Terrains[coord] = terr;
-                if (Tiles.Keys.Contains(coord)) Tiles[coord].TileObjects.Add(terr);
-            }
-            public void MoveTerrainTo(I3dLocateable dest, I3dLocateable src)
-            {
-                int org = src.Coord;
-                int dst = dest.Coord;
-                PresentMisc terr = Terrains[org];
-                Terrains.Remove(org);
-                Tiles[org].TileObjects.Remove(terr);
-                terr.MoveTo(dest);
-                Terrains[dst] = terr;
-                Tiles[dst].TileObjects.Add(terr);
-            }
+
+
             #endregion
             #endregion
 
@@ -249,52 +133,7 @@ namespace RelertSharp.DrawingEngine
 
 
             #region Mark
-            public void MarkUnit(int coord)
-            {
-                MarkBy(Units, coord);
-            }
-            public void UnMarkUnit(int coord)
-            {
-                UnMarkBy(Units, coord);
-            }
-            public void MarkInfantry(int coord, int subcell)
-            {
-                MarkBy(Infantries, (coord << 2) + subcell);
-            }
-            public void UnMarkInfantry(int coord, int subcell)
-            {
-                UnMarkBy(Infantries, (coord << 2) + subcell);
-            }
-            public bool HasInfantryAt(int coord)
-            {
-                return Infantries.Keys.Contains((coord << 2) + 1) ||
-                    Infantries.Keys.Contains((coord << 2) + 2) ||
-                    Infantries.Keys.Contains((coord << 2) + 3);
-            }
-            public void MarkBuilding(int coord)
-            {
-                MarkBy(Structures, coord);
-            }
-            public void UnMarkBuilding(int coord)
-            {
-                UnMarkBy(Structures, coord);
-            }
-            public void MarkTerrain(int coord)
-            {
-                MarkBy(Terrains, coord);
-            }
-            public void UnMarkTerrain(int coord)
-            {
-                UnMarkBy(Terrains, coord);
-            }
-            public void MarkOverlay(int coord)
-            {
-                MarkBy(Overlays, coord);
-            }
-            public void UnMarkOverlay(int coord)
-            {
-                UnMarkBy(Overlays, coord);
-            }
+
             #endregion
 
 
@@ -312,44 +151,12 @@ namespace RelertSharp.DrawingEngine
 
 
             #region Private Methods - Scene
-            private void MarkBy<T>(Dictionary<int, T> src, int coord) where T : IPresentBase
-            {
-                if (src.Keys.Contains(coord))
-                {
-                    src[coord].MarkSelected();
-                }
-            }
-            private void UnMarkBy<T>(Dictionary<int, T> src, int coord) where T : IPresentBase
-            {
-                if (src.Keys.Contains(coord))
-                {
-                    src[coord].Unmark();
-                }
-            }
-            private T RemoveAtBy<T>(Dictionary<int, T> src, int coord) where T : PresentBase, IPresentBase
-            {
-                if (src.Keys.Contains(coord))
-                {
-                    T result = src[coord];
-                    src[coord].Dispose();
-                    src.Remove(coord);
-                    return result;
-                }
-                return null;
-            }
             #endregion
 
 
             #region Public Calls - Scene
-            /// <summary>
-            /// index : st.Coord
-            /// st.Coord lsh 1 + 1 if it is BaseNode
-            /// </summary>
             public Dictionary<int, PresentStructure> Structures { get; private set; } = new Dictionary<int, PresentStructure>();
             public Dictionary<int, PresentUnit> Units { get; private set; } = new Dictionary<int, PresentUnit>();
-            /// <summary>
-            /// index : inf.Coord lsh 2 + subcell
-            /// </summary>
             public Dictionary<int, PresentInfantry> Infantries { get; private set; } = new Dictionary<int, PresentInfantry>();
             public Dictionary<int, PresentTile> Tiles { get; private set; } = new Dictionary<int, PresentTile>();
             public Dictionary<int, DrawableTile> DrawableTiles { get; private set; } = new Dictionary<int, DrawableTile>();

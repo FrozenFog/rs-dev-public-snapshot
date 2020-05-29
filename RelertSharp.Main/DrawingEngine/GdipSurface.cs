@@ -92,7 +92,7 @@ namespace RelertSharp.DrawingEngine
             SetMinimapColorAt(x, y, c);
             SetMinimapColorAt(x + 1, y, c);
         }
-        public void DrawColorable(I2dLocateable pos, IMinimapVisiable src)
+        public void DrawColorable(I2dLocateable pos, IPresentBase src)
         {
             TileToFlatCoord(pos, mapsize.Width, out int x, out int y);
             SetMinimapColorAt(x, y, src.RadarColor.Left);

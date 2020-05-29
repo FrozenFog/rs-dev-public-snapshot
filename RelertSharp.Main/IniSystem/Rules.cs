@@ -160,6 +160,12 @@ namespace RelertSharp.IniSystem
             if (string.IsNullOrEmpty(pal)) return pal;
             else return string.Format("{0}{1}.{2}", pal, TileDictionary.TheaterSub, "pal");
         }
+        public void GetSmudgeSizeData(string nameid, out int foundx, out int foundy)
+        {
+            INIEntity ent = this[nameid];
+            foundx = ent.GetPair("Width").ParseInt(1);
+            foundy = ent.GetPair("Height").ParseInt(1);
+        }
         public void GetBuildingShapeData(string nameid, out int height, out int foundX, out int foundY)
         {
             Vec3 sz;

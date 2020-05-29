@@ -141,6 +141,9 @@ namespace RelertSharp.DrawingEngine
             {
                 d = new DrawableMisc(MapObjectType.Smudge, name);
                 d.pSelf = CreateFile(name, DrawableType.Shp);
+                GlobalRules.GetSmudgeSizeData(smudge.RegName, out int w, out int h);
+                d.SmudgeWidth = w;
+                d.SmudgeHeight = h;
                 Buffer.Buffers.Miscs[name] = d;
             }
             else d = Buffer.Buffers.Miscs[name];

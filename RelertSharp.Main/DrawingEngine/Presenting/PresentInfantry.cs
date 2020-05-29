@@ -29,6 +29,7 @@ namespace RelertSharp.DrawingEngine.Presenting
                 X = cell.X;
                 Y = cell.Y;
                 Z = cell.Z;
+                SubCell = subcell;
             }
         }
         public void MoveTo(I3dLocateable cell)
@@ -72,6 +73,7 @@ namespace RelertSharp.DrawingEngine.Presenting
 
         #region Public Calls - PresentInfantry
         public bool IsValid { get { return pSelf != 0; } }
+        public int SubCell { get; set; }
         #endregion
     }
 }

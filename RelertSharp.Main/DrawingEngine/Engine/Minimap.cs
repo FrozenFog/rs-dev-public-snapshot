@@ -34,7 +34,7 @@ namespace RelertSharp.DrawingEngine
                 if (t.TileObjects.Count == 0) minimap.DrawTile(t);
                 else
                 {
-                    IMinimapVisiable c = t.TileObjects[t.TileObjects.Count - 1];
+                    IPresentBase c = t.TileObjects[t.TileObjects.Count - 1];
                     minimap.DrawColorable(t, c);
                 }
             }

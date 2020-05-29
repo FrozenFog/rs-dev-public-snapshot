@@ -114,7 +114,7 @@ namespace RelertSharp.DrawingEngine
             else pos = ToVec3Iso(terrain, height);
             if (DrawMisc(src, dest, pos, src.pPal, 0, _white, ShpFlatType.Vertical, src.Framecount))
             {
-                Buffer.Scenes.AddTerrainAt(terrain.Coord, dest);
+                Buffer.Scenes.AddTerrain(dest);
                 return true;
             }
             return false;
@@ -123,6 +123,8 @@ namespace RelertSharp.DrawingEngine
         {
             DrawableMisc src = CreateDrawableMisc(smg);
             PresentMisc dest = new PresentMisc(MapObjectType.Smudge, smg, height);
+            dest.SmgWidth = src.SmudgeWidth;
+            dest.SmgHeight = src.SmudgeHeight;
             Vec3 pos = ToVec3Zero(smg, height);
             if (DrawMisc(src, dest, pos, pPalIso, 0, _white, ShpFlatType.FlatGround))
             {
@@ -148,7 +150,7 @@ namespace RelertSharp.DrawingEngine
             ShpFlatType type = src.FlatType;
             if (DrawMisc(src, dest, pos, src.pPal, o.Frame, _white, type, src.Framecount))
             {
-                Buffer.Scenes.AddOverlayAt(o.Coord, dest);
+                Buffer.Scenes.AddOverlay(dest);
                 return true;
             }
             return false;
@@ -232,7 +234,7 @@ namespace RelertSharp.DrawingEngine
                 dest.pSelf = RenderAndPresent(src.pSelf, pos, frame, src.RemapColor, pPal, ShpFlatType.Vertical, Vec3.DefaultBox);
                 dest.pSelfShadow = RenderAndPresent(src.pShadow, pos.Rise(), frame + src.Framecount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, Vec3.DefaultBox, true);
             }
-            Buffer.Scenes.AddInfantryAt(dest.Coord, dest, subcell);
+            Buffer.Scenes.AddInfantry(dest);
             if (dest.IsValid)
             {
                 minimap.DrawObject(src, dest, out Color c);
@@ -292,7 +294,7 @@ namespace RelertSharp.DrawingEngine
                     dest.pTurretAnimShadow = RenderAndPresent(src.pShadowTurretAnim, pos.Rise() + src.offsetTurret, (int)turRotation.X + src.TurretAnimCount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, Vec3.DefaultBox, true);
                 }
             }
-            Buffer.Scenes.AddBuildingAt(dest.Coord, dest, dest.IsBaseNode);
+            Buffer.Scenes.AddBuilding(dest);
             if (dest.IsValid)
             {
                 minimap.DrawStructure(src, dest, dest.IsBaseNode);
@@ -317,7 +319,7 @@ namespace RelertSharp.DrawingEngine
                     dest.pSelfShadow = RenderAndPresent(src.pSelf, pos.Rise(), (int)rotation.X + src.Framecount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, Vec3.DefaultBox, true);
                 }
             }
-            Buffer.Scenes.AddUnitAt(dest.Coord, dest);
+            Buffer.Scenes.AddUnit(dest);
             if (dest.IsValid)
             {
                 minimap.DrawObject(src, dest, out Color c);
