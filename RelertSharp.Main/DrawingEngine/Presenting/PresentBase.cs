@@ -78,11 +78,8 @@ namespace RelertSharp.DrawingEngine.Presenting
     }
 
 
-    public interface IPresentBase
+    public interface IPresentBase : I3dLocateable
     {
-        int X { get; set; }
-        int Y { get; set; }
-        int Z { get; set; }
         int ID { get; set; }
         int pSelf { get; set; }
         int pSelfShadow { get; set; }
