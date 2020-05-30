@@ -11,7 +11,10 @@ namespace RelertSharp.DrawingEngine.Presenting
     internal class PresentInfantry : PresentBase, IPresentBase
     {
         #region Ctor - PresentInfantry
-        public PresentInfantry(InfantryItem inf, int height) : base(inf, height) { }
+        public PresentInfantry(InfantryItem inf, int height) : base(inf, height)
+        {
+            SubCell = inf.SubCells;
+        }
         #endregion
 
 
@@ -32,10 +35,16 @@ namespace RelertSharp.DrawingEngine.Presenting
                 SubCell = subcell;
             }
         }
-        public void MoveTo(I3dLocateable cell)
+        public override void MoveTo(I3dLocateable cell)
         {
             Vec3 delta = GetDeltaDistant(cell);
             ShiftBy(delta, pSelf, pSelfShadow);
+            base.MoveTo(cell);
+        }
+        public override void ShiftBy(I3dLocateable delta)
+        {
+            ShiftBy(Vec3.ToVec3Iso(delta), pSelf, pSelfShadow);
+            base.ShiftBy(delta);
         }
         public void SetColor(Vec4 color)
         {

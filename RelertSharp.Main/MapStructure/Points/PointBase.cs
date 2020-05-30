@@ -93,6 +93,20 @@ namespace RelertSharp.MapStructure.Points
         }
 
 
+        #region Public Methods - PointItemBase
+        public void MoveTo(I2dLocateable pos)
+        {
+            X = pos.X;
+            Y = pos.Y;
+        }
+        public void ShiftBy(I2dLocateable delta)
+        {
+            X += delta.X;
+            Y += delta.Y;
+        }
+        #endregion
+
+
         #region Public Calls - PointItemBase
         public string CoordString
         {

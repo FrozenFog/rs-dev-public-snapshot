@@ -56,6 +56,15 @@ namespace RelertSharp.MapStructure.Objects
         #endregion
 
 
+        #region Public Methods - InfantryItem
+        public void MoveTo(I2dLocateable pos, int subcell)
+        {
+            if (subcell != -1) this.subcell = subcell;
+            MoveTo(pos);
+        }
+        #endregion
+
+
         #region Public Calls - InfantryItem
         public int SubCells
         {

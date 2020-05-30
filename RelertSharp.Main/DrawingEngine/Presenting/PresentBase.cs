@@ -52,6 +52,18 @@ namespace RelertSharp.DrawingEngine.Presenting
             if (ptr != 0) CppExtern.ObjectUtils.SetObjectLocation(ptr, pos);
             if (pshadow != 0) CppExtern.ObjectUtils.SetObjectLocation(pshadow, pos);
         }
+        public virtual void MoveTo(I3dLocateable pos)
+        {
+            X = pos.X;
+            Y = pos.Y;
+            Z = pos.Z;
+        }
+        public virtual void ShiftBy(I3dLocateable delta)
+        {
+            X += delta.X;
+            Y += delta.Y;
+            Z += delta.Z;
+        }
         protected Vec3 GetDeltaDistant(I3dLocateable newpos)
         {
             Vec3 delta = Vec3.ToVec3Iso(Vec3.FromXYZ(newpos) - Vec3.FromXYZ(this));
@@ -72,7 +84,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         public int Z { get; set; }
         public int pSelf { get; set; }
         public int pSelfShadow { get; set; }
-        public bool Selected { get; set; }
+        public bool Selected { get { return selected; } set { selected = value; } }
         public RadarColor RadarColor { get; set; }
         #endregion
     }
@@ -83,7 +95,6 @@ namespace RelertSharp.DrawingEngine.Presenting
         int ID { get; set; }
         int pSelf { get; set; }
         int pSelfShadow { get; set; }
-        int Coord { get; }
         bool IsValid { get; }
         bool Selected { get; set; }
         RadarColor RadarColor { get; set; }
@@ -93,5 +104,6 @@ namespace RelertSharp.DrawingEngine.Presenting
         void MarkSelected();
         void Unmark();
         void MoveTo(I3dLocateable pos);
+        void ShiftBy(I3dLocateable delta);
     }
 }

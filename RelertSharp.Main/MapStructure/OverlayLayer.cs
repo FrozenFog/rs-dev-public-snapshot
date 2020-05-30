@@ -110,6 +110,20 @@ namespace RelertSharp.MapStructure
         #endregion
 
 
+        #region Public Methods - OverlayUnit
+        public void MoveTo(I2dLocateable pos)
+        {
+            X = pos.X;
+            Y = pos.Y;
+        }
+        public void ShiftBy(I2dLocateable delta)
+        {
+            X += delta.X;
+            Y += delta.Y;
+        }
+        #endregion
+
+
         #region Public Calls - OverlayUnit
         public byte Index { get; set; }
         public byte Frame { get; set; }

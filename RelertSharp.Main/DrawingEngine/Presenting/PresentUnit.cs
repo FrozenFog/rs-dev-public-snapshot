@@ -26,12 +26,21 @@ namespace RelertSharp.DrawingEngine.Presenting
             RemoveProp(pSelf);
             RemoveProp(pTurret);
         }
-        public void MoveTo(I3dLocateable cell)
+        public override void MoveTo(I3dLocateable cell)
         {
             Vec3 delta = GetDeltaDistant(cell);
             ShiftBy(delta, pSelf, pSelfShadow);
             ShiftBy(delta, pBarrel);
             ShiftBy(delta, pTurret);
+            base.MoveTo(cell);
+        }
+        public override void ShiftBy(I3dLocateable delta)
+        {
+            Vec3 distant = Vec3.ToVec3Iso(delta);
+            ShiftBy(distant, pSelf, pSelfShadow);
+            ShiftBy(distant, pBarrel);
+            ShiftBy(distant, pTurret);
+            base.ShiftBy(delta);
         }
         public void SetColor(Vec4 color)
         {

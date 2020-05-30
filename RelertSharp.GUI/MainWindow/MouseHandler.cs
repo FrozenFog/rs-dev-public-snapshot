@@ -45,6 +45,10 @@ namespace RelertSharp.GUI
                         {
                             BeginMove(e);
                         }
+                        else
+                        {
+                            ObjectMovingBegin(e);
+                        }
                         break;
                     case MainWindowDataModel.MouseActionType.AttributeBrush:
                         ApplyAttributeToPrecise(e);
@@ -79,11 +83,12 @@ namespace RelertSharp.GUI
         #region Moving
         private void MouseMoving(MouseEventArgs e)
         {
-            if (initialized)
+            if (initialized && drew)
             {
                 GeneralMouseMovingUpdate(e);
                 DrawSelectingBoxOnScene(e);
                 MainPanelMoving(e);
+                OnObjectMoving(e);
             }
         }
         private void GeneralMouseMovingUpdate(MouseEventArgs e)
@@ -112,6 +117,7 @@ namespace RelertSharp.GUI
                     break;
                 case MainWindowDataModel.MouseActionType.Moving:
                     MmbUp(e);
+                    ObjectMovingEnd(e);
                     break;
             }
             spaceKeyMoving = false;

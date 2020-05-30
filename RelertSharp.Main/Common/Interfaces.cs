@@ -25,6 +25,8 @@ namespace RelertSharp.Common
     {
         string RegName { get; set; }
         bool Selected { get; set; }
+        void MoveTo(I2dLocateable pos);
+        void ShiftBy(I2dLocateable delta);
     }
 
     public interface ICombatObject : IMapObject

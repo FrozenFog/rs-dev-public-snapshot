@@ -35,9 +35,17 @@ namespace RelertSharp.DrawingEngine.Presenting
         /// Move tile will do nothing
         /// </summary>
         /// <param name="cell"></param>
-        public void MoveTo(I3dLocateable cell)
+        public override void MoveTo(I3dLocateable cell)
         {
 
+        }
+        /// <summary>
+        /// Shift tile will do nothing
+        /// </summary>
+        /// <param name="delta"></param>
+        public override void ShiftBy(I3dLocateable delta)
+        {
+            
         }
         public void Mark(Vec4 main, Vec4 extra, bool deSelect)
         {

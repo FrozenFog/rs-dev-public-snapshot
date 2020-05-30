@@ -84,6 +84,10 @@ namespace RelertSharp.Common
             return new Vec3(x * _30SQ2 - _15SQ2, y * _30SQ2 - _15SQ2, z * _10SQ3);
         }
         #region operator
+        public static Vec3 operator-(Vec3 a)
+        {
+            return Zero - a;
+        }
         public static Vec3 operator +(Vec3 a, int b)
         {
             return new Vec3() { X = a.X + b, Y = a.Y + b, Z = a.Z + b };

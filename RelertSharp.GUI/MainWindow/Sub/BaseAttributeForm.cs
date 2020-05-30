@@ -33,14 +33,15 @@ namespace RelertSharp.GUI
         }
         protected void LoadCombobox(IEnumerable<HouseItem> houses, IEnumerable<TagItem> tags)
         {
+            int houseMX, tagMX = 1;
             cbbOwnerHouse.Items.Clear();
             cbbTags.Items.Clear();
             cbbOwnerHouse.Items.AddRange(houses.ToArray());
             cbbTags.Items.AddRange(tags.ToArray());
             cbbOwnerHouse.SelectedIndex = 0;
             cbbOwnerHouse.Text = changer.Host.OwnerHouse;
-            int houseMX = houses.Max(x => x.ToString().Length) * 7;
-            int tagMX = tags.Max(x => x.ToString().Length) * 7;
+            houseMX = houses.Max(x => x.ToString().Length) * 7;
+            if (tags.Count() > 0) tagMX = tags.Max(x => x.ToString().Length) * 7;
             cbbOwnerHouse.DropDownWidth = houseMX;
             cbbTags.DropDownWidth = tagMX;
         }

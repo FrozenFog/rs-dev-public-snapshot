@@ -44,6 +44,54 @@ namespace RelertSharp.MapStructure
             }
             return null;
         }
+        private void EraseObjectTileData(IMapObject obj)
+        {
+            Type t = obj.GetType();
+            if (t == typeof(StructureItem))
+            {
+                StructureItem bud = obj as StructureItem;
+                foreach(I2dLocateable pos in new Square2D(bud, bud.SizeX, bud.SizeY))
+                {
+                    Tiles[pos].RemoveObject(bud);
+                }
+            }
+            else if (t == typeof(SmudgeItem))
+            {
+                SmudgeItem smg = obj as SmudgeItem;
+                foreach(I2dLocateable pos in new Square2D(smg, smg.SizeX, smg.SizeY))
+                {
+                    Tiles[pos].RemoveObject(smg);
+                }
+            }
+            else
+            {
+                Tiles[obj].RemoveObject(obj);
+            }
+        }
+        private void AddObjectInfoInTile(IMapObject obj)
+        {
+            Type t = obj.GetType();
+            if (t == typeof(StructureItem))
+            {
+                StructureItem bud = obj as StructureItem;
+                foreach (I2dLocateable pos in new Square2D(bud, bud.SizeX, bud.SizeY))
+                {
+                    Tiles[pos].AddObject(bud);
+                }
+            }
+            else if (t == typeof(SmudgeItem))
+            {
+                SmudgeItem smg = obj as SmudgeItem;
+                foreach (I2dLocateable pos in new Square2D(smg, smg.SizeX, smg.SizeY))
+                {
+                    Tiles[pos].AddObject(smg);
+                }
+            }
+            else
+            {
+                Tiles[obj].AddObject(obj);
+            }
+        }
         #endregion
 
 

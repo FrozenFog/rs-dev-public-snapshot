@@ -27,10 +27,17 @@ namespace RelertSharp.DrawingEngine.Presenting
 
 
         #region Public Methods - PresentStructure
-        public void MoveTo(I3dLocateable cell)
+        public override void MoveTo(I3dLocateable cell)
         {
             Vec3 delta = GetDeltaDistant(cell);
             foreach (int p in Pointers) ShiftBy(delta, p);
+            base.MoveTo(cell);
+        }
+        public override void ShiftBy(I3dLocateable delta)
+        {
+            Vec3 distant = Vec3.ToVec3Iso(delta);
+            foreach (int p in Pointers) ShiftBy(distant, p);
+            base.ShiftBy(delta);
         }
         public void SetTransparency(bool isTransparency)
         {

@@ -144,6 +144,7 @@
     <Compile Include="MapStructure\MapTheaterTileSet.cs" />
     <Compile Include="MapStructure\Map\ObjectAdding.cs" />
     <Compile Include="MapStructure\Map\ObjectDeleting.cs" />
+    <Compile Include="MapStructure\Map\ObjectMoving.cs" />
     <Compile Include="MapStructure\Map\ObjectSeeking.cs" />
     <Compile Include="MapStructure\Map\Reading.cs" />
     <Compile Include="MapStructure\Objects\AircraftLayer.cs" />

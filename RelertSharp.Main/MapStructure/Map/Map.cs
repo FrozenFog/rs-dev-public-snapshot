@@ -89,6 +89,18 @@ namespace RelertSharp.MapStructure
         #endregion
 
 
+        public I3dLocateable ReferanceDeltaCell(I2dLocateable originalLocation, I2dLocateable groundDelta)
+        {
+            Pnt3 result = new Pnt3(groundDelta.X, groundDelta.Y, 0);
+            Pnt newLocation = new Pnt(originalLocation.X + groundDelta.X, originalLocation.Y + groundDelta.Y);
+            result.Z = GetHeightFromTile(newLocation) - GetHeightFromTile(originalLocation);
+            return result;
+        }
+        public bool IsOutOfSize(I2dLocateable objectLocation, I2dLocateable delta)
+        {
+            Pnt tmp = new Pnt(objectLocation.X + delta.X, objectLocation.Y + delta.Y);
+            return !TilesData.HasTileOn(tmp);
+        }
         public uint GetHouseColor(string housename)
         {
             HouseItem house = Houses.GetHouse(housename);

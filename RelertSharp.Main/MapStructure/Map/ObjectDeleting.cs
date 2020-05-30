@@ -26,7 +26,7 @@ namespace RelertSharp.MapStructure
             Buildings.RemoveByID(bud.ID);
             foreach (I2dLocateable pos in new Square2D(bud, bud.SizeX, bud.SizeY))
             {
-                Tiles[bud].RemoveObject(bud);
+                Tiles[pos].RemoveObject(bud);
             }
         }
         public void RemoveAircraft(AircraftItem air)

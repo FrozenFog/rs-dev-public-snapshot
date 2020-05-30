@@ -125,6 +125,10 @@ namespace RelertSharp.MapStructure
             if (t != null) return t.Z == pos.Z;
             return false;
         }
+        public bool HasTileOn(I2dLocateable tile)
+        {
+            return this[tile] != null;
+        }
         public bool HasTileOn(Vec3 pos)
         {
             Tile t = this[pos.ToCoord()];

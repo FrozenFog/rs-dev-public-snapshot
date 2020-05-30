@@ -68,7 +68,7 @@ namespace RelertSharp.DrawingEngine
 
             public void MoveUnitTo(I3dLocateable dest, I3dLocateable src)
             {
-                PresentUnit unit = GetObjectByCoord<PresentUnit>(src);
+                PresentUnit unit = GetObjectByCoord<PresentUnit>(src, x => x.Selected);
                 if (unit != null)
                 {
                     EraseOriginalPosition(Units, unit);
@@ -76,9 +76,19 @@ namespace RelertSharp.DrawingEngine
                     ApplyNewPosition(Units, unit);
                 }
             }
+            public void ShiftUnitBy(I3dLocateable delta, I2dLocateable src)
+            {
+                PresentUnit unit = GetObjectByCoord<PresentUnit>(src, x => x.Selected);
+                if (unit != null)
+                {
+                    EraseOriginalPosition(Units, unit);
+                    unit.ShiftBy(delta);
+                    ApplyNewPosition(Units, unit);
+                }
+            }
             public void MoveInfantryTo(I3dLocateable dest, I3dLocateable src, int orgSubcell, int newSubcell)
             {
-                PresentInfantry inf = GetObjectByCoord<PresentInfantry>(src, x => x.SubCell == orgSubcell);
+                PresentInfantry inf = GetObjectByCoord<PresentInfantry>(src, x => x.SubCell == orgSubcell && x.Selected);
                 if (inf != null)
                 {
                     EraseOriginalPosition(Infantries, inf);
@@ -87,9 +97,19 @@ namespace RelertSharp.DrawingEngine
                     ApplyNewPosition(Infantries, inf);
                 }
             }
+            public void ShiftInfantryBy(I3dLocateable delta, I2dLocateable src, int orgSubcell)
+            {
+                PresentInfantry inf = GetObjectByCoord<PresentInfantry>(src, x => x.SubCell == orgSubcell && x.Selected);
+                if (inf != null)
+                {
+                    EraseOriginalPosition(Infantries, inf);
+                    inf.ShiftBy(delta);
+                    ApplyNewPosition(Infantries, inf);
+                }
+            }
             public void MoveBuildingTo(I3dLocateable dest, I3dLocateable src)
             {
-                PresentStructure bud = GetObjectByCoord<PresentStructure>(src, x => !x.IsBaseNode);
+                PresentStructure bud = GetObjectByCoord<PresentStructure>(src, x => !x.IsBaseNode && x.Selected);
                 if (bud != null)
                 {
                     EraseOriginalPosition(Structures, bud);
@@ -97,9 +117,19 @@ namespace RelertSharp.DrawingEngine
                     ApplyNewPosition(Structures, bud);
                 }
             }
+            public void ShiftBuildingBy(I3dLocateable delta, I2dLocateable src)
+            {
+                PresentStructure bud = GetObjectByCoord<PresentStructure>(src, x => !x.IsBaseNode && x.Selected);
+                if (bud != null)
+                {
+                    EraseOriginalPosition(Structures, bud);
+                    bud.ShiftBy(delta);
+                    ApplyNewPosition(Structures, bud);
+                }
+            }
             public void MoveTerrainTo(I3dLocateable dest, I3dLocateable src)
             {
-                PresentMisc terr = GetObjectByCoord<PresentMisc>(src, x => x.MiscType == MapObjectType.Terrain);
+                PresentMisc terr = GetObjectByCoord<PresentMisc>(src, x => x.MiscType == MapObjectType.Terrain || x.Selected);
                 if (terr != null)
                 {
                     EraseOriginalPosition(Terrains, terr);
@@ -107,14 +137,54 @@ namespace RelertSharp.DrawingEngine
                     ApplyNewPosition(Terrains, terr);
                 }
             }
+            public void ShiftTerrainBy(I3dLocateable delta, I2dLocateable src)
+            {
+                PresentMisc terr = GetObjectByCoord<PresentMisc>(src, x => x.MiscType == MapObjectType.Terrain || x.Selected);
+                if (terr != null)
+                {
+                    EraseOriginalPosition(Terrains, terr);
+                    terr.ShiftBy(delta);
+                    ApplyNewPosition(Terrains, terr);
+                }
+            }
             public void MoveOverlayTo(I3dLocateable dest, I3dLocateable src)
             {
-                PresentMisc ov = GetObjectByCoord<PresentMisc>(src, x => x.MiscType == MapObjectType.Overlay);
+                PresentMisc ov = GetObjectByCoord<PresentMisc>(src, x => x.MiscType == MapObjectType.Overlay || x.Selected);
                 if (ov != null)
                 {
                     EraseOriginalPosition(Overlays, ov);
                     ov.MoveTo(dest);
                     ApplyNewPosition(Overlays, ov);
+                }
+            }
+            public void ShiftOverlayBy(I3dLocateable delta, I2dLocateable src)
+            {
+                PresentMisc ov = GetObjectByCoord<PresentMisc>(src, x => x.MiscType == MapObjectType.Overlay || x.Selected);
+                if (ov != null)
+                {
+                    EraseOriginalPosition(Overlays, ov);
+                    ov.ShiftBy(delta);
+                    ApplyNewPosition(Overlays, ov);
+                }
+            }
+            public void MoveSmudgeTo(I3dLocateable dest, I3dLocateable src)
+            {
+                PresentMisc smg = GetObjectByCoord<PresentMisc>(src, x => x.MiscType == MapObjectType.Smudge || x.Selected);
+                if (smg != null)
+                {
+                    EraseOriginalPosition(Smudges, smg);
+                    smg.MoveTo(dest);
+                    ApplyNewPosition(Smudges, smg);
+                }
+            }
+            public void ShiftSmudgeTo(I3dLocateable delta, I2dLocateable src)
+            {
+                PresentMisc smg = GetObjectByCoord<PresentMisc>(src, x => x.MiscType == MapObjectType.Smudge || x.Selected);
+                if (smg != null)
+                {
+                    EraseOriginalPosition(Smudges, smg);
+                    smg.ShiftBy(delta);
+                    ApplyNewPosition(Smudges, smg);
                 }
             }
         }
