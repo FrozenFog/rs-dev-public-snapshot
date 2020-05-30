@@ -53,7 +53,7 @@ namespace RelertSharp.DrawingEngine
                     foreach(I2dLocateable pos in new Square2D(bud, bud.FoundationX, bud.FoundationY))
                     {
                         int sub = pos.Coord;
-                        if (Tiles.Keys.Contains(coord)) Tiles[sub].TileObjects.Add(bud);
+                        if (Tiles.Keys.Contains(sub)) Tiles[sub].TileObjects.Add(bud);
                     }
                 }
             }

@@ -49,13 +49,17 @@ namespace RelertSharp.DrawingEngine
         public bool DrawObject(StructureItem structure, int height, uint color)
         {
             Vec3 idx = BuildingRotation(structure.RegName, structure.Rotation, false);
+            DrawableStructure upg1 = null, upg2 = null, upg3 = null;
             DrawableStructure src = CreateDrawableStructure(structure.RegName, color, pPalUnit, (int)idx.X);
             PresentStructure dest = new PresentStructure(structure, height, src.VoxelTurret, src);
+            if (structure.Upgrade1 != "None") upg1 = CreateDrawableStructure(structure.Upgrade1, color, pPalUnit, (int)idx.X);
+            if (structure.Upgrade2 != "None") upg2 = CreateDrawableStructure(structure.Upgrade2, color, pPalUnit, (int)idx.X);
+            if (structure.Upgrade3 != "None") upg3 = CreateDrawableStructure(structure.Upgrade3, color, pPalUnit, (int)idx.X);
             Vec3 ro;
             if (src.pTurretAnim != 0) ro = BuildingRotation(structure.RegName, structure.Rotation, src.VoxelTurret);
             else ro = Vec3.Zero;
             Vec3 pos = ToVec3Zero(dest).Rise();
-            return DrawStructure(src, pos, dest, ro, pPalUnit);
+            return DrawStructure(src, pos, dest, ro, pPalUnit, upg1, upg2, upg3);
         }
         public bool DrawObject(BaseNode node, int height, uint color)
         {
@@ -242,7 +246,7 @@ namespace RelertSharp.DrawingEngine
             }
             return dest.IsValid;
         }
-        private bool DrawStructure(DrawableStructure src, Vec3 pos, PresentStructure dest, Vec3 turRotation, int pPal)
+        private bool DrawStructure(DrawableStructure src, Vec3 pos, PresentStructure dest, Vec3 turRotation, int pPal, DrawableStructure upg1 = null, DrawableStructure upg2 = null, DrawableStructure upg3 = null)
         {
             ShpFlatType flat = ShpFlatType.Box1;
             if (src.pPalCustom != 0) pPal = src.pPalCustom;
@@ -292,6 +296,30 @@ namespace RelertSharp.DrawingEngine
                 {
                     dest.pTurretAnim = RenderAndPresent(src.pTurretAnim, pos + src.offsetTurret, (int)turRotation.X, src.RemapColor, pPal, ShpFlatType.Vertical, Vec3.DefaultBox);
                     dest.pTurretAnimShadow = RenderAndPresent(src.pShadowTurretAnim, pos.Rise() + src.offsetTurret, (int)turRotation.X + src.TurretAnimCount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, Vec3.DefaultBox, true);
+                }
+            }
+            if (upg1 != null)
+            {
+                if (upg1.pSelf != 0)
+                {
+                    dest.pPlug1 = RenderAndPresent(src, upg1.pSelf, pos + 4 * _generalOffset, pPal, flat);
+                    dest.pPlug1Shadow = RenderAndPresent(src, upg1.pShadow, pos.Rise() + 4 * _generalOffset, pPal, ShpFlatType.FlatGround, upg1.Framecount, true);
+                }
+            }
+            if (upg2 != null)
+            {
+                if (upg2.pSelf != 0)
+                {
+                    dest.pPlug2 = RenderAndPresent(src, upg2.pSelf, pos + 5 * _generalOffset, pPal, flat);
+                    dest.pPlug2Shadow = RenderAndPresent(src, upg2.pShadow, pos.Rise() + 5 * _generalOffset, pPal, ShpFlatType.FlatGround, upg2.Framecount, true);
+                }
+            }
+            if (upg3 != null)
+            {
+                if (upg3.pSelf != 0)
+                {
+                    dest.pPlug3 = RenderAndPresent(src, upg3.pSelf, pos + 6 * _generalOffset, pPal, flat);
+                    dest.pPlug3Shadow = RenderAndPresent(src, upg3.pShadow, pos.Rise() + 6 * _generalOffset, pPal, ShpFlatType.FlatGround, upg3.Framecount, true);
                 }
             }
             Buffer.Scenes.AddBuilding(dest);

@@ -104,6 +104,9 @@ namespace RelertSharp.DrawingEngine.Presenting
             SetColor(pTurretAnim, color);
             SetColor(pTurretBarl, color);
             SetColor(pBib, color);
+            SetColor(pPlug1, color);
+            SetColor(pPlug2, color);
+            SetColor(pPlug3, color);
         }
         #endregion
 
