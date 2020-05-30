@@ -114,9 +114,16 @@ namespace RelertSharp.DrawingEngine.Presenting
             get
             {
                 return new int[] { pSelf, pActivateAnim, pActivateAnim2, pActivateAnim3, pBib, pIdleAnim, pSuperAnim, pTurretAnim, pTurretBarl,
-                pSelfShadow, pActivateAnimShadow, pActivateAnim2Shadow, pActivateAnim3Shadow, pBibShadow, pIdleAnimShadow, pSuperAnimShadow, pTurretAnimShadow};
+                pSelfShadow, pActivateAnimShadow, pActivateAnim2Shadow, pActivateAnim3Shadow, pBibShadow, pIdleAnimShadow, pSuperAnimShadow, pTurretAnimShadow,
+                pPlug1, pPlug1Shadow, pPlug2, pPlug2Shadow, pPlug3, pPlug3Shadow};
             }
         }
+        public int pPlug1 { get; set; }
+        public int pPlug2 { get; set; }
+        public int pPlug3 { get; set; }
+        public int pPlug1Shadow { get; set; }
+        public int pPlug2Shadow { get; set; }
+        public int pPlug3Shadow { get; set; }
         public int pActivateAnim { get; set; }
         public int pActivateAnimShadow { get; set; }
         public int pIdleAnim { get; set; }

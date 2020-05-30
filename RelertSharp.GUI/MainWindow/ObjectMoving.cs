@@ -39,6 +39,10 @@ namespace RelertSharp.GUI
                 PreciseSelecting(e);
                 isPreciseMovingMode = true;
             }
+            else if (Current.SelectedMapObjects.Count() == 1)
+            {
+                isPreciseMovingMode = true;
+            }
             isObjectMoving = true;
             if (Current.SelectedMapObjects.Count() == 0)
             {
@@ -57,12 +61,11 @@ namespace RelertSharp.GUI
 
                 if (posNow != previousObjectLocation)
                 {
-                    if (isPreciseMovingMode && previousSubcell != subcell && subcell != -1)
+                    if (isPreciseMovingMode && subcell != -1)
                     {
                         IMapObject obj = Current.SelectedMapObjects.First();
                         Engine.MoveObjectTo(obj, posNow.To3dLocateable(), subcell);
-                        map.MoveObjectTo(obj, posNow.To2dLocateable());
-                        previousSubcell = subcell;
+                        map.MoveObjectTo(obj, posNow.To2dLocateable(), subcell);
                     }
                     else
                     {
@@ -81,6 +84,12 @@ namespace RelertSharp.GUI
                     Engine.RedrawMinimapAll();
                     pnlMiniMap.BackgroundImage = Engine.MiniMap;
                     Engine.Refresh();
+                }
+                else if (subcell != -1 && isPreciseMovingMode)
+                {
+                    IMapObject obj = Current.SelectedMapObjects.First();
+                    Engine.MoveObjectTo(obj, posNow.To3dLocateable(), subcell);
+                    map.MoveObjectTo(obj, posNow.To2dLocateable(), subcell);
                 }
                 movingInProgress = false;
             }

@@ -21,8 +21,11 @@ namespace RelertSharp.DrawingEngine
             Type t = obj.GetType();
             if (t == typeof(InfantryItem))
             {
-                InfantryItem inf = obj as InfantryItem;
-                Buffer.Scenes.MoveInfantryTo(newcell, org, inf.SubCells, subcell);
+                if (subcell != -1)
+                {
+                    InfantryItem inf = obj as InfantryItem;
+                    Buffer.Scenes.MoveInfantryTo(newcell, org, inf.SubCells, subcell);
+                }
             }
             else if (t == typeof(StructureItem))
             {
