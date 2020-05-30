@@ -85,10 +85,10 @@ namespace RelertSharp.GUI
         {
             if (initialized && drew)
             {
+                OnObjectMoving(e);
                 GeneralMouseMovingUpdate(e);
                 DrawSelectingBoxOnScene(e);
                 MainPanelMoving(e);
-                OnObjectMoving(e);
             }
         }
         private void GeneralMouseMovingUpdate(MouseEventArgs e)

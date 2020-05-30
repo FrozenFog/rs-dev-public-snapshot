@@ -15,7 +15,7 @@ namespace RelertSharp.GUI
 {
     internal partial class InfantryAttributeForm : BaseAttributeForm
     {
-        private InfantryItem infhost, original;
+        private InfantryItem infhost;
         private bool confirmed = false;
 
 
@@ -23,8 +23,7 @@ namespace RelertSharp.GUI
         {
             InitializeComponent();
             LoadCombobox(GlobalVar.CurrentMapDocument.Map.Houses, GlobalVar.CurrentMapDocument.Map.Tags);
-            original = new InfantryItem(src);
-            infhost = src;
+            infhost = new InfantryItem(src);
             changer.Host = infhost;
             UpdateGuiFromHost();
             SetLanguage();
@@ -37,8 +36,7 @@ namespace RelertSharp.GUI
             confirmed = false;
             InfantryItem newitem = src as InfantryItem;
             Result = null;
-            original = new InfantryItem(newitem);
-            infhost = newitem;
+            infhost = new InfantryItem(newitem);
             changer.Host = infhost;
             UpdateGuiFromHost();
             initialized = true;
@@ -89,10 +87,6 @@ namespace RelertSharp.GUI
             {
                 Result = infhost;
                 Result.ApplyAttributeFrom(changer);
-            }
-            else
-            {
-                Result = original;
             }
         }
 

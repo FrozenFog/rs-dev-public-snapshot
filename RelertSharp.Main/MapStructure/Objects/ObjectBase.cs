@@ -83,6 +83,7 @@ namespace RelertSharp.MapStructure.Objects
             HealthPoint = src.HealthPoint;
             X = src.X;
             Y = src.Y;
+            Selected = src.Selected;
         }
         public ObjectItemBase() { }
         #endregion

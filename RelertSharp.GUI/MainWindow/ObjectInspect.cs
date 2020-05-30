@@ -40,10 +40,12 @@ namespace RelertSharp.GUI
                     {
                         if (unitForm == null) unitForm = new UnitAttributeForm(obj as UnitItem);
                         else unitForm.Reload(obj as UnitItem);
-                        unitForm.ShowDialog();
-                        UnitItem newitem = unitForm.Result;
-                        map.UpdateUnit(newitem);
-                        GlobalVar.Engine.UpdateUnitAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse));
+                        if (unitForm.ShowDialog() == DialogResult.OK)
+                        {
+                            UnitItem newitem = unitForm.Result;
+                            map.UpdateUnit(newitem);
+                            GlobalVar.Engine.UpdateUnitAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse));
+                        }
                         break;
                     }
                     else if (obj.GetType() == typeof(InfantryItem))
@@ -54,10 +56,12 @@ namespace RelertSharp.GUI
                             {
                                 if (infForm == null) infForm = new InfantryAttributeForm(inf as InfantryItem);
                                 else infForm.Reload(inf as InfantryItem);
-                                infForm.ShowDialog();
-                                InfantryItem newitem = infForm.Result;
-                                map.UpdateInfantry(newitem);
-                                GlobalVar.Engine.UpdateInfantryAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse), subcell);
+                                if (infForm.ShowDialog() == DialogResult.OK)
+                                {
+                                    InfantryItem newitem = infForm.Result;
+                                    map.UpdateInfantry(newitem);
+                                    GlobalVar.Engine.UpdateInfantryAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse), subcell);
+                                }
                                 break;
                             }
                         }
@@ -67,20 +71,24 @@ namespace RelertSharp.GUI
                     {
                         if (budForm == null) budForm = new BuildingAttributeForm(obj as StructureItem);
                         else budForm.Reload(obj as StructureItem);
-                        budForm.ShowDialog();
-                        StructureItem newitem = budForm.Result;
-                        map.UpdateBuilding(newitem);
-                        GlobalVar.Engine.UpdateBuildingAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse));
+                        if (budForm.ShowDialog() == DialogResult.OK)
+                        {
+                            StructureItem newitem = budForm.Result;
+                            map.UpdateBuilding(newitem);
+                            GlobalVar.Engine.UpdateBuildingAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse));
+                        }
                         break;
                     }
                     else if (obj.GetType() == typeof(AircraftItem))
                     {
                         if (airForm == null) airForm = new AircraftAttributeForm(obj as AircraftItem);
                         else airForm.Reload(obj as AircraftItem);
-                        airForm.ShowDialog();
-                        AircraftItem newitem = airForm.Result;
-                        map.UpdateAircraft(newitem);
-                        GlobalVar.Engine.UpdateAircraftAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse));
+                        if (airForm.ShowDialog() == DialogResult.OK)
+                        {
+                            AircraftItem newitem = airForm.Result;
+                            map.UpdateAircraft(newitem);
+                            GlobalVar.Engine.UpdateAircraftAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse));
+                        }
                         break;
                     }
                 }

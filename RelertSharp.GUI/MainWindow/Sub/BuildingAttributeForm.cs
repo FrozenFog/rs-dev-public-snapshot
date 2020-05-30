@@ -15,7 +15,7 @@ namespace RelertSharp.GUI
 {
     internal partial class BuildingAttributeForm : BaseAttributeForm
     {
-        private StructureItem budhost, original;
+        private StructureItem budhost;
         private bool confirmed = false;
         private int upgNum = 0;
 
@@ -26,8 +26,7 @@ namespace RelertSharp.GUI
             LoadCombobox(GlobalVar.CurrentMapDocument.Map.Houses, GlobalVar.CurrentMapDocument.Map.Tags);
             LoadUpgrades(src.RegName);
             LoadSpotlight();
-            original = new StructureItem(src);
-            budhost = src;
+            budhost = new StructureItem(src);
             changer.Host = budhost;
             UpdateGuiFromHost();
             SetLanguage();
@@ -78,8 +77,7 @@ namespace RelertSharp.GUI
             confirmed = false;
             StructureItem newitem = src as StructureItem;
             Result = null;
-            original = new StructureItem(newitem);
-            budhost = newitem;
+            budhost = new StructureItem(newitem);
             changer.Host = budhost;
             LoadUpgrades(src.RegName);
             UpdateGuiFromHost();
@@ -116,10 +114,6 @@ namespace RelertSharp.GUI
             {
                 Result = budhost;
                 Result.ApplyAttributeFrom(changer);
-            }
-            else
-            {
-                Result = original;
             }
         }
 

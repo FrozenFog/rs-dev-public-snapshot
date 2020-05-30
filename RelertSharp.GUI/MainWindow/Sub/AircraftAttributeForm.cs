@@ -15,7 +15,7 @@ namespace RelertSharp.GUI
 {
     internal partial class AircraftAttributeForm : BaseAttributeForm
     {
-        private AircraftItem airhost, original;
+        private AircraftItem airhost;
         private bool confirmed = false;
 
 
@@ -23,8 +23,7 @@ namespace RelertSharp.GUI
         {
             InitializeComponent();
             LoadCombobox(GlobalVar.CurrentMapDocument.Map.Houses, GlobalVar.CurrentMapDocument.Map.Tags);
-            original = new AircraftItem(src);
-            airhost = src;
+            airhost = new AircraftItem(src);
             changer.Host = airhost;
             UpdateGuiFromHost();
             SetLanguage();
@@ -37,8 +36,7 @@ namespace RelertSharp.GUI
             confirmed = false;
             AircraftItem newitem = src as AircraftItem;
             Result = null;
-            original = new AircraftItem(newitem);
-            airhost = newitem;
+            airhost = new AircraftItem(newitem);
             changer.Host = airhost;
             UpdateGuiFromHost();
             initialized = true;
@@ -80,10 +78,6 @@ namespace RelertSharp.GUI
             {
                 Result = airhost;
                 Result.ApplyAttributeFrom(changer);
-            }
-            else
-            {
-                Result = original;
             }
         }
 

@@ -15,7 +15,7 @@ namespace RelertSharp.GUI
 {
     internal partial class UnitAttributeForm : BaseAttributeForm
     {
-        private UnitItem unithost, original;
+        private UnitItem unithost;
         private bool confirmed = false;
 
 
@@ -23,8 +23,7 @@ namespace RelertSharp.GUI
         {
             InitializeComponent();
             LoadCombobox(GlobalVar.CurrentMapDocument.Map.Houses, GlobalVar.CurrentMapDocument.Map.Tags);
-            original = new UnitItem(src);
-            unithost = src;
+            unithost = new UnitItem(src);
             changer.Host = unithost;
             UpdateGuiFromHost();
             SetLanguage();
@@ -37,8 +36,7 @@ namespace RelertSharp.GUI
             confirmed = false;
             UnitItem newitem = src as UnitItem;
             Result = null;
-            original = new UnitItem(newitem);
-            unithost = newitem;
+            unithost = new UnitItem(newitem);
             changer.Host = unithost;
             UpdateGuiFromHost();
             initialized = true;
@@ -98,10 +96,6 @@ namespace RelertSharp.GUI
             {
                 Result = unithost;
                 Result.ApplyAttributeFrom(changer);
-            }
-            else
-            {
-                Result = original;
             }
         }
 
