@@ -16,7 +16,7 @@ using RelertSharp.MapStructure.Logic;
 using RelertSharp.IniSystem;
 using RelertSharp.Common;
 using RelertSharp.GUI.Model;
-using RelertSharp.SubWindows.LogicEditor;
+using RelertSharp.GUI.SubWindows.LogicEditor;
 using RelertSharp.SubWindows.INIEditor;
 
 namespace RelertSharp.GUI

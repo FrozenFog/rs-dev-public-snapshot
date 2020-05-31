@@ -44,10 +44,10 @@ namespace RelertSharp.MapStructure
 
 
         #region Collection Utils
-        public TriggerItem NewTrigger()
+        public TriggerItem NewTrigger(out TagItem tag)
         {
             TriggerItem t = Triggers.NewTrigger(NewID);
-            TagItem tag = new TagItem(t, NewID);
+            tag = new TagItem(t, NewID);
             Tags[tag.ID] = tag;
             return t;
         }

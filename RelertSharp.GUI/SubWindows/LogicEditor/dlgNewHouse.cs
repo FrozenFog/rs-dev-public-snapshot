@@ -12,8 +12,9 @@ using RelertSharp.MapStructure.Logic;
 using RelertSharp.Common;
 using RelertSharp.IniSystem;
 using static RelertSharp.Language;
+using static RelertSharp.GUI.GuiUtils;
 
-namespace RelertSharp.SubWindows.LogicEditor
+namespace RelertSharp.GUI.SubWindows.LogicEditor
 {
     public partial class dlgNewHouse : Form
     {
@@ -26,7 +27,7 @@ namespace RelertSharp.SubWindows.LogicEditor
             btnHouseNewConfirm.Text = DICT[btnHouseNewConfirm.Text];
             List<string> stdCountries = new List<string>();
             foreach (INIPair pair in GlobalVar.GlobalRules["Countries"]) stdCountries.Add(pair.Value);
-            StaticHelper.LoadToObjectCollection(cbbParent, stdCountries);
+            LoadToObjectCollection(cbbParent, stdCountries);
         }
 
         private void btnHouseNewConfirm_Click(object sender, EventArgs e)

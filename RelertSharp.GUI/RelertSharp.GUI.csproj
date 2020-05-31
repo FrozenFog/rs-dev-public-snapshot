@@ -73,6 +73,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\Delegates.cs" />
     <Compile Include="Controls\MinimapPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -199,6 +200,27 @@
     <Compile Include="SubWindows\LogicEditor\LogicEditor.Designer.cs">
       <DependentUpon>LogicEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelEvent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelEvent.Designer.cs">
+      <DependentUpon>PanelEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\ParameterPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\ParameterPanel.Designer.cs">
+      <DependentUpon>ParameterPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\TriggerPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelTrgTag.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelTrgTag.Designer.cs">
+      <DependentUpon>PanelTrgTag.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\LogicEditor\SearchCollection.cs" />
     <Compile Include="SubWindows\LogicEditor\StaticHelper.cs" />
     <Compile Include="Model\MainWindowDataModel\Main.cs" />
@@ -208,6 +230,7 @@
     <Compile Include="MainWindowTest.Designer.cs">
       <DependentUpon>MainWindowTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUIUtils.cs" />
     <Compile Include="_Test.cs" />
     <EmbeddedResource Include="MainWindow\Sub\AircraftAttributeForm.resx">
       <DependentUpon>AircraftAttributeForm.cs</DependentUpon>
@@ -264,6 +287,16 @@
     <EmbeddedResource Include="MainWindowTest.resx">
       <DependentUpon>MainWindowTest.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelEvent.resx">
+      <DependentUpon>PanelEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelTrgTag.resx">
+      <DependentUpon>PanelTrgTag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TriggerPage\ParameterPanel.resx">
+      <DependentUpon>ParameterPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

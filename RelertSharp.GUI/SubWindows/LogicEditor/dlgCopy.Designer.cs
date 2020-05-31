@@ -1,4 +1,4 @@
-﻿namespace RelertSharp.SubWindows.LogicEditor
+﻿namespace RelertSharp.GUI.SubWindows.LogicEditor
 {
     partial class dlgCopy
     {

@@ -117,6 +117,13 @@ namespace RelertSharp.MapStructure.Logic
             Name = dataList[1];
             AssoTrigger = dataList[2];
         }
+        public TagItem(TagItem src)
+        {
+            ID = src.ID;
+            Repeating = src.Repeating;
+            Name = src.Name;
+            AssoTrigger = src.AssoTrigger;
+        }
         public TagItem(TriggerItem trg, string _id)
         {
             ID = _id;

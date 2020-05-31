@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static RelertSharp.Language;
 
-namespace RelertSharp.SubWindows.LogicEditor
+namespace RelertSharp.GUI.SubWindows.LogicEditor
 {
     public partial class dlgCopy : Form
     {

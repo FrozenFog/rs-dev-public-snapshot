@@ -158,6 +158,7 @@ namespace RelertSharp.MapStructure
             INIEntity entWaypoints = f.PopEnt("Waypoints");
 
             Tags = new TagCollection(entTag);
+            Tags.TemplateTag = new TagItem(Triggers.TemplateTrigger, "TGMPLATE");
 
             foreach (INIPair p in entTrigger.DataList)
             {
