@@ -18,6 +18,35 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - TeamCollection
+        public TeamItem NewTeam(string id)
+        {
+            TeamItem item = new TeamItem();
+            item.ID = id;
+            item.TeamName = "New Team";
+            item.TaskforceID =
+                GlobalVar.CurrentMapDocument.Map.TaskForces.Count() > 0 ?
+                GlobalVar.CurrentMapDocument.Map.TaskForces.ElementAt(0).ID :
+                string.Empty;
+            item.ScriptID =
+                GlobalVar.CurrentMapDocument.Map.Scripts.Count() > 0 ?
+                GlobalVar.CurrentMapDocument.Map.Scripts.ElementAt(0).ID :
+                string.Empty;
+            item.TagID = string.Empty;
+            item.Waypoint = 0;
+            item.House =
+                GlobalVar.CurrentMapDocument.Map.Countries.Count() > 0 ?
+                GlobalVar.CurrentMapDocument.Map.Countries.ElementAt(0).Name :
+                string.Empty;
+            item.VeteranLevel = TeamVeteranLevel.Rookie;
+            item.MCDecision = TeamMCDecision.Default;
+            item.TeamCapacity = 5;
+            item.Priority = 5;
+            item.TechLevel = 0;
+            item.Group = -1;
+            item.Attributes = new System.Collections.BitArray(21);
+            item.GetToUnit = new TeamUnit(item);
+            return item;
+        }
         public IEnumerable<TechnoPair> ToTechno()
         {
             List<TechnoPair> result = new List<TechnoPair>();
@@ -31,11 +60,9 @@ namespace RelertSharp.MapStructure.Logic
 
     }
 
-
     public class TeamItem : TeamLogicItem, IRegistable
     {
         private Dictionary<string, INIPair> residual;
-
 
         #region Ctor - TeamItem
         public TeamItem(INIEntity ent) : base(ent)
@@ -43,6 +70,7 @@ namespace RelertSharp.MapStructure.Logic
             TeamName = ent.PopPair("Name").Value;
             TaskforceID = ent.PopPair("TaskForce").Value;
             ScriptID = ent.PopPair("Script").Value;
+            TagID = ent.PopPair("Tag").Value;
             Waypoint = WaypointInt(ent.PopPair("Waypoint").Value);
             House = ent.PopPair("House").Value;
             VeteranLevel = (TeamVeteranLevel)ent.PopPair("VeteranLevel").ParseInt(1);
@@ -53,10 +81,10 @@ namespace RelertSharp.MapStructure.Logic
             Group = ent.PopPair("Group").ParseInt(-1);
             residual = ent.DictData;
             LoadAttributes();
+            GetToUnit = new TeamUnit(this);
         }
         public TeamItem() : base() { }
         #endregion
-
 
         #region Private Methods - TeamItem
         private void LoadAttributes()
@@ -75,7 +103,6 @@ namespace RelertSharp.MapStructure.Logic
         }
         #endregion
 
-
         #region Public Methods - TeamItem
         public void SetAttribute(string index, bool value)
         {
@@ -84,6 +111,42 @@ namespace RelertSharp.MapStructure.Logic
         public bool GetAttribute(string index)
         {
             return Attributes.Get(Constant.TeamBoolIndex.IndexOf(index));
+        }
+        public void SetFromUnit(TeamUnit teamUnit)
+        {
+            TeamName = (string)teamUnit.Data["TeamName"].Value;
+            TaskforceID = (string)teamUnit.Data["TaskforceID"].Value;
+            ScriptID = (string)teamUnit.Data["ScriptID"].Value;
+            TagID = (string)teamUnit.Data["TagID"].Value;
+            Waypoint = (int)teamUnit.Data["Waypoint"].Value;
+            House = (string)teamUnit.Data["House"].Value;
+            VeteranLevel = (TeamVeteranLevel)teamUnit.Data["VeteranLevel"].Value;
+            MCDecision = (TeamMCDecision)teamUnit.Data["VeteranLevel"].Value;
+            TeamCapacity = (int)teamUnit.Data["TeamCapacity"].Value;
+            Priority = (int)teamUnit.Data["Priority"].Value;
+            TechLevel = (int)teamUnit.Data["TechLevel"].Value;
+            Group = (int)teamUnit.Data["Group"].Value;
+            foreach (string idx in Constant.TeamBoolIndex) SetAttribute(idx, (bool)teamUnit.Data[idx].Value);
+        }
+        public TeamItem Copy(string newid)
+        {
+            TeamItem item = new TeamItem();
+            item.ID = newid;
+            item.TeamName = TeamName += " Clone";
+            item.TaskforceID = TaskforceID;
+            item.ScriptID = ScriptID;
+            item.TagID = TagID;
+            item.Waypoint = Waypoint;
+            item.House = House;
+            item.VeteranLevel = VeteranLevel;
+            item.MCDecision = MCDecision;
+            item.TeamCapacity = TeamCapacity;
+            item.Priority = Priority;
+            item.TechLevel = TechLevel;
+            item.Group = Group;
+            item.Attributes = Attributes;
+            item.GetToUnit = new TeamUnit(item);
+            return item;
         }
         #endregion
 
@@ -105,9 +168,47 @@ namespace RelertSharp.MapStructure.Logic
         public string Name { get { return TeamName; } }
         public string TaskforceID { get; set; }
         public string ScriptID { get; set; }
+        public string TagID { get; set; }
         public string House { get; set; }
         public int Waypoint { get; set; }
         public BitArray Attributes { get; set; } = new BitArray(21);
+        public TeamUnit GetToUnit { get; set; }
+        #endregion
+    }
+
+    public class TeamUnit
+    {
+        public struct TeamUnitNode
+        {
+            public object Value;
+            public string ShowName;
+            public TeamUnitNode(string showName,object value) { Value = value;ShowName = showName; }
+        }
+        
+        #region Ctor - TeamUnit
+        public TeamUnit(TeamItem item)
+        {
+            // A new config could be added to decide the name displayed on the screen.
+            Data["TeamName"] = new TeamUnitNode(Language.DICT["LGColvRowTeamName"], item.TeamName);
+            Data["TaskforceID"] = new TeamUnitNode(Language.DICT["LGColvRowTeamTaskforce"], item.TaskforceID);
+            Data["ScriptID"] = new TeamUnitNode(Language.DICT["LGColvRowTeamScript"], item.ScriptID);
+            Data["TagID"] = new TeamUnitNode(Language.DICT["LGColvRowTeamTag"], item.TagID);
+            Data["Waypoint"] = new TeamUnitNode(Language.DICT["LGColvRowTeamWaypoint"], item.Waypoint);
+            Data["House"] = new TeamUnitNode(Language.DICT["LGColvRowTeamHouse"], item.House);
+            Data["VeteranLevel"] = new TeamUnitNode(Language.DICT["LGColvRowTeamVeteran"], item.VeteranLevel);
+            Data["MCDecision"] = new TeamUnitNode(Language.DICT["LGColvRowTeamMCD"], item.MCDecision);
+            Data["TeamCapacity"] = new TeamUnitNode(Language.DICT["LGColvRowTeamCapacity"], item.TeamCapacity);
+            Data["Priority"] = new TeamUnitNode(Language.DICT["LGColvRowTeamPriority"], item.Priority);
+            Data["TechLevel"] = new TeamUnitNode(Language.DICT["LGColvRowTeamTechLevel"], item.TechLevel);
+            Data["Group"] = new TeamUnitNode(Language.DICT["LGColvRowTeamGroup"], item.Group);
+            for (int i = 0; i < Constant.TeamBoolIndex.Count; ++i) // For this one, a List<string> to save each bool's display name.
+                Data[Constant.TeamBoolIndex[i]] = new TeamUnitNode(Language.DICT["LGColvRowTeamBool" + i.ToString()], item.Attributes[i]);
+        }
+        public TeamUnit() { }
+        #endregion
+
+        #region Public Calls - TeamUnit
+        public Dictionary<string, TeamUnitNode> Data { get; set; } = new Dictionary<string, TeamUnitNode>();
         #endregion
     }
 }

@@ -26,17 +26,54 @@ namespace RelertSharp.DrawingEngine.Presenting
             RemoveProp(pSelf);
             RemoveProp(pTurret);
         }
+        public override void MoveTo(I3dLocateable cell)
+        {
+            Vec3 delta = GetDeltaDistant(cell);
+            ShiftBy(delta, pSelf, pSelfShadow);
+            ShiftBy(delta, pBarrel);
+            ShiftBy(delta, pTurret);
+            base.MoveTo(cell);
+        }
+        public override void ShiftBy(I3dLocateable delta)
+        {
+            Vec3 distant = Vec3.ToVec3Iso(delta);
+            ShiftBy(distant, pSelf, pSelfShadow);
+            ShiftBy(distant, pBarrel);
+            ShiftBy(distant, pTurret);
+            base.ShiftBy(delta);
+        }
         public void SetColor(Vec4 color)
         {
             ColorVector = color;
-            SetColor(pSelf, color);
-            SetColor(pTurret, color);
-            SetColor(pBarrel, color);
+            if (!selected)
+            {
+                SetColorStrict(ColorVector);
+            }
         }
         public void MultiplyColor(Vec4 color)
         {
             ColorVector *= color;
             SetColor(ColorVector);
+        }
+        public void MarkSelected()
+        {
+            SetColorStrict(Vec4.Selector);
+            selected = true;
+        }
+        public void Unmark()
+        {
+            selected = false;
+            SetColorStrict(ColorVector);
+        }
+        #endregion
+
+
+        #region Private Methods - PresentUnit
+        private void SetColorStrict(Vec4 color)
+        {
+            SetColor(pSelf, color);
+            SetColor(pTurret, color);
+            SetColor(pBarrel, color);
         }
         #endregion
 

@@ -10,8 +10,12 @@ _*.*
 *.exp
 *.ilk
 *.lib
+*.sln
 .vs
-/Debug
+ressrc/
+/Debug/frag
+/Debug/vert
+/Debug/shader
 cncimg/Debug
 OpenTKIntro
 RelertSharp.GUI.WPF/bin
@@ -52,3 +56,5 @@ local.rsc
 *.ini
 *.vpl
 *.xml
+!RelertSharp.GUI/Resources/*.png
+!relert-sharp.sln

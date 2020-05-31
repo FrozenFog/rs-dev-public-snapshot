@@ -29,6 +29,8 @@ namespace RelertSharp.FileSystem
         public void SaveMap()
         {
             IniDict = Map.IniResidue;
+            Map.CompressTile();
+            Map.CompressOverlay();
             DumpGeneralInfo();
             SaveIni(true);
         }

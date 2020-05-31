@@ -7,19 +7,25 @@ using System.Windows.Forms;
 using RelertSharp.IniSystem;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Common;
+using System.Security.Cryptography;
+using System.ComponentModel;
 
 namespace RelertSharp.SubWindows.LogicEditor
 {
     internal static class StaticHelper
     {
-        public static void LoadToObjectCollection(ListView dest, IEnumerable<ListViewItem> src)
+        public static void LoadToObjectCollection(ComboBox dest,Type type)
         {
             dest.Items.Clear();
             dest.BeginUpdate();
-            if (src.Count() > 0)
+            string[] names = Enum.GetNames(type);
+            int[] values = (int[])Enum.GetValues(type);
+            int count = names.Length;
+            for(int i = 0; i < count; i++)
             {
-                dest.Items.AddRange(src.ToArray());
+                dest.Items.Add(new EnumDisplayClass(values[i], Language.DICT[type.Name + "." + names[i]]));
             }
+            Utils.Misc.AdjustComboBoxDropDownWidth(ref dest);
             dest.EndUpdate();
         }
         public static void LoadToObjectCollection<T>(ComboBox dest, IList<T> src)
@@ -30,64 +36,6 @@ namespace RelertSharp.SubWindows.LogicEditor
                 dest.DropDownWidth = max;
             }
             dest.DataSource = src;
-        }
-        public static void LoadToObjectCollection(ComboBox dest, IEnumerable<object> src)
-        {
-            dest.Items.Clear();
-            if (src == null) return;
-            dest.Items.AddRange(src.ToArray());
-        }
-        public static void LoadToObjectCollection(ListBox dest, IEnumerable<object> src)
-        {
-            dest.Items.Clear();
-            if (src == null) return;
-            dest.Items.AddRange(src.ToArray());
-        }
-        public static void SelectCombo(ComboBox dest, string param, TriggerParam lookup)
-        {
-            switch (lookup.ComboType)
-            {
-                case TriggerParam.ComboContent.CsfLabel:
-                    param = param.ToLower();
-                    Select(dest, param);
-                    break;
-                case TriggerParam.ComboContent.SoundNames:
-                case TriggerParam.ComboContent.EvaNames:
-                case TriggerParam.ComboContent.ThemeNames:
-                case TriggerParam.ComboContent.TechnoType:
-                case TriggerParam.ComboContent.BuildingID:
-                    Select(dest, param, false);
-                    break;
-                default:
-                    Select(dest, param);
-                    break;
-            }
-        }
-        private static void Select(ComboBox dest, string param, bool isIndex = true)
-        {
-            if (isIndex)
-            {
-                foreach (TechnoPair p in dest.Items)
-                {
-                    if (p.Index == param)
-                    {
-                        dest.SelectedItem = p;
-                        return;
-                    }
-                }
-            }
-            else
-            {
-                foreach (TechnoPair p in dest.Items)
-                {
-                    if (p.RegName == param)
-                    {
-                        dest.SelectedItem = p;
-                        return;
-                    }
-                }
-            }
-            dest.Text = param;
         }
     }
 }

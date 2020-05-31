@@ -147,9 +147,18 @@ namespace RelertSharp.IniSystem
             if (data.Keys.Contains(pairName)) return data[pairName];
             return INIPair.NullPair;
         }
+        /// <summary>
+        /// Return true if this contains sanme key as P
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
         public bool HasPair(INIPair p)
         {
             return data.Keys.Contains(p.Name);
+        }
+        public bool HasPair(string keyname)
+        {
+            return data.Keys.Contains(keyname);
         }
         /// <summary>
         /// Try convert all Pair value into destinate type.

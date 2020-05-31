@@ -7,21 +7,37 @@
     <ProjectGuid>{8616607F-80C7-4BD9-95D7-B0691EE3081B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>RelertSharp.GUI</RootNamespace>
-    <AssemblyName>RelertSharp.GUI</AssemblyName>
+    <AssemblyName>RelertSharp</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>2</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,9 +48,19 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>rslogo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ObjectListView, Version=2.9.1.40222, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Debug\ObjectListView.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,16 +70,94 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Controls\Delegates.cs" />
+    <Compile Include="Controls\MinimapPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Command.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MainWindow\Drawing.cs">
+      <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MainWindow\AttributeBrush.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\KeyHandler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\ObjectInspect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\ObjectMoving.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\AircraftAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\AircraftAttributeForm.Designer.cs">
+      <DependentUpon>AircraftAttributeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\Sub\BaseAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\BaseAttributeForm.Designer.cs">
+      <DependentUpon>BaseAttributeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\Sub\BuildingAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\BuildingAttributeForm.Designer.cs">
+      <DependentUpon>BuildingAttributeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\Sub\InfantryAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\InfantryAttributeForm.Designer.cs">
+      <DependentUpon>InfantryAttributeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\Sub\LoadingWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\LoadingWindow.Designer.cs">
+      <DependentUpon>LoadingWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\MouseHandler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Navigating.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\UnitAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\UnitAttributeForm.Designer.cs">
+      <DependentUpon>UnitAttributeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\ToolBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Viewport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\RbPanelBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RbPanelBase.Designer.cs">
+      <DependentUpon>RbPanelBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MainWindowDataModel\Selecting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controls\RbPanelAttribute.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RbPanelAttribute.Designer.cs">
+      <DependentUpon>RbPanelAttribute.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\INIComparator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +185,12 @@
     <Compile Include="SubWindows\LogicEditor\dlgCopy.Designer.cs">
       <DependentUpon>dlgCopy.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\LogicEditor\dlgNewHouse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\dlgNewHouse.Designer.cs">
+      <DependentUpon>dlgNewHouse.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\LogicEditor\EventHandler.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,18 +200,59 @@
     <Compile Include="SubWindows\LogicEditor\LogicEditor.Designer.cs">
       <DependentUpon>LogicEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="SubWindows\LogicEditor\SearchCollection.cs" />
-    <Compile Include="SubWindows\LogicEditor\StaticHelper.cs" />
-    <Compile Include="Model\BindableBase.cs" />
-    <Compile Include="Model\MainWindowDataModel.cs" />
-    <Compile Include="Model\ViewModel.cs" />
-    <Compile Include="_fm.cs">
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelEvent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelEvent.Designer.cs">
+      <DependentUpon>PanelEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\ParameterPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\ParameterPanel.Designer.cs">
+      <DependentUpon>ParameterPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\TriggerPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="_fm.Designer.cs">
-      <DependentUpon>_fm.cs</DependentUpon>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelTrgTag.cs">
+      <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelTrgTag.Designer.cs">
+      <DependentUpon>PanelTrgTag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\SearchCollection.cs" />
+    <Compile Include="SubWindows\LogicEditor\StaticHelper.cs" />
+    <Compile Include="Model\MainWindowDataModel\Main.cs" />
+    <Compile Include="MainWindowTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindowTest.Designer.cs">
+      <DependentUpon>MainWindowTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUIUtils.cs" />
     <Compile Include="_Test.cs" />
+    <EmbeddedResource Include="MainWindow\Sub\AircraftAttributeForm.resx">
+      <DependentUpon>AircraftAttributeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\BaseAttributeForm.resx">
+      <DependentUpon>BaseAttributeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\BuildingAttributeForm.resx">
+      <DependentUpon>BuildingAttributeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\InfantryAttributeForm.resx">
+      <DependentUpon>InfantryAttributeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\LoadingWindow.resx">
+      <DependentUpon>LoadingWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\UnitAttributeForm.resx">
+      <DependentUpon>UnitAttributeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RbPanelBase.resx">
+      <DependentUpon>RbPanelBase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -110,7 +261,11 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Controls\RbPanelAttribute.resx">
+      <DependentUpon>RbPanelAttribute.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\INIComparator.resx">
       <DependentUpon>INIComparator.cs</DependentUpon>
     </EmbeddedResource>
@@ -123,12 +278,25 @@
     <EmbeddedResource Include="SubWindows\LogicEditor\dlgCopy.resx">
       <DependentUpon>dlgCopy.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\dlgNewHouse.resx">
+      <DependentUpon>dlgNewHouse.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\LogicEditor\LogicEditor.resx">
       <DependentUpon>LogicEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="_fm.resx">
-      <DependentUpon>_fm.cs</DependentUpon>
+    <EmbeddedResource Include="MainWindowTest.resx">
+      <DependentUpon>MainWindowTest.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelEvent.resx">
+      <DependentUpon>PanelEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelTrgTag.resx">
+      <DependentUpon>PanelTrgTag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TriggerPage\ParameterPanel.resx">
+      <DependentUpon>ParameterPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -140,13 +308,68 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\RelertSharp.Main\RelertSharp.Main.csproj">
       <Project>{8597c2bd-5421-4a66-958e-240768ea8a9a}</Project>
       <Name>RelertSharp.Main</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rotationBase.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load0.png" />
+    <None Include="Resources\load1.png" />
+    <None Include="Resources\load-1.png" />
+    <None Include="Resources\arrow.png" />
+    <None Include="Resources\brush.png" />
+    <None Include="Resources\moving.png" />
+    <None Include="Resources\selectRect.png" />
+    <None Include="Resources\selectIso.png" />
+    <None Include="Resources\abrush.png" />
+    <None Include="Resources\selectPrec.png" />
+    <None Include="Resources\cursorSolid.ico" />
+    <None Include="Resources\rectIcon.ico" />
+    <None Include="Resources\moving.ico" />
+    <None Include="Resources\curIso.ico" />
+    <None Include="Resources\curBrush.ico" />
+    <None Include="Resources\curAttrib.ico" />
+    <Content Include="rslogo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

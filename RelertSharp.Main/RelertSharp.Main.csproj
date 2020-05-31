@@ -7,7 +7,7 @@
     <ProjectGuid>{8597C2BD-5421-4A66-958E-240768EA8A9A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>RelertSharp</RootNamespace>
-    <AssemblyName>relert-sharp</AssemblyName>
+    <AssemblyName>rsdata</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -41,9 +41,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\assembly\GAC\Microsoft.DirectX.DirectSound\1.0.2902.0__31bf3856ad364e35\Microsoft.DirectX.DirectSound.dll</HintPath>
     </Reference>
-    <Reference Include="ObjectListView, Version=2.9.1.40222, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\ObjectListView.dll</HintPath>
+    <Reference Include="ObjectListView">
+      <HintPath>..\Debug\ObjectListView.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -59,23 +58,45 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Circle2DEnumerator.cs" />
+    <Compile Include="Common\Enumerator\Circle2DEnumerator.cs" />
     <Compile Include="Common\Constant.cs" />
+    <Compile Include="Common\Enumerator\SceneSquare2DEnumerator.cs" />
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\GlobalVar.cs" />
     <Compile Include="Common\Interfaces.cs" />
     <Compile Include="Common\RSConfig.cs" />
     <Compile Include="Common\SoundManager.cs" />
-    <Compile Include="Common\Square2DEnumerator.cs" />
-    <Compile Include="Common\Struct.cs" />
-    <Compile Include="DrawingEngine\BufferCollection.cs" />
+    <Compile Include="Common\Enumerator\Square2DEnumerator.cs" />
+    <Compile Include="Common\Structs\Pnt.cs" />
+    <Compile Include="Common\Structs\Pnt3.cs" />
+    <Compile Include="Common\Structs\RadarColor.cs" />
+    <Compile Include="Common\Structs\Vec3.cs" />
+    <Compile Include="Common\Structs\Vec4.cs" />
+    <Compile Include="Common\Structs\VFileInfo.cs" />
+    <Compile Include="DrawingEngine\Buffers\BufferCollection.cs" />
+    <Compile Include="DrawingEngine\Buffers\Buffers.cs" />
+    <Compile Include="DrawingEngine\Buffers\Files.cs" />
+    <Compile Include="DrawingEngine\Buffers\Scene\ObjectAdding.cs" />
+    <Compile Include="DrawingEngine\Buffers\Scene\ObjectMarking.cs" />
+    <Compile Include="DrawingEngine\Buffers\Scene\ObjectMoving.cs" />
+    <Compile Include="DrawingEngine\Buffers\Scene\ObjectRemoving.cs" />
+    <Compile Include="DrawingEngine\Buffers\Scene\ObjectSeeking.cs" />
+    <Compile Include="DrawingEngine\Buffers\Scene\Scene.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableBase.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableInfantry.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableMisc.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableStructure.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableTile.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableUnit.cs" />
-    <Compile Include="DrawingEngine\Engine.cs" />
+    <Compile Include="DrawingEngine\Engine\Drawing.cs" />
+    <Compile Include="DrawingEngine\Engine\FileManagement.cs" />
+    <Compile Include="DrawingEngine\Engine\GlobalLightning.cs" />
+    <Compile Include="DrawingEngine\Engine\Main.cs" />
+    <Compile Include="DrawingEngine\Engine\Minimap.cs" />
+    <Compile Include="DrawingEngine\Engine\ObjectMoving.cs" />
+    <Compile Include="DrawingEngine\Engine\ObjectUtil.cs" />
+    <Compile Include="DrawingEngine\Engine\Transform.cs" />
+    <Compile Include="DrawingEngine\Engine\ViewPort.cs" />
     <Compile Include="DrawingEngine\Enums.cs" />
     <Compile Include="DrawingEngine\GdipSurface.cs" />
     <Compile Include="DrawingEngine\Presenting\PresentBase.cs" />
@@ -116,18 +137,18 @@
     <Compile Include="IniSystem\Rules.cs" />
     <Compile Include="IniSystem\SoundRules.cs" />
     <Compile Include="IniSystem\TechnoPair.cs" />
-    <Compile Include="Main.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Main.Designer.cs">
-      <DependentUpon>Main.cs</DependentUpon>
-    </Compile>
     <Compile Include="MapStructure\Logic\AITrigger.cs" />
     <Compile Include="MapStructure\Logic\Country.cs" />
     <Compile Include="MapStructure\Logic\House.cs" />
     <Compile Include="MapStructure\Logic\TriggerDescription.cs" />
     <Compile Include="MapStructure\MapTheaterTileSet.cs" />
+    <Compile Include="MapStructure\Map\ObjectAdding.cs" />
+    <Compile Include="MapStructure\Map\ObjectDeleting.cs" />
+    <Compile Include="MapStructure\Map\ObjectMoving.cs" />
+    <Compile Include="MapStructure\Map\ObjectSeeking.cs" />
+    <Compile Include="MapStructure\Map\Reading.cs" />
     <Compile Include="MapStructure\Objects\AircraftLayer.cs" />
+    <Compile Include="MapStructure\Objects\AttributeChanger.cs" />
     <Compile Include="MapStructure\Objects\InfantryLayer.cs" />
     <Compile Include="MapStructure\Logic\Action.cs" />
     <Compile Include="MapStructure\Logic\Event.cs" />
@@ -139,7 +160,7 @@
     <Compile Include="MapStructure\Logic\TeamLogicCollection.cs" />
     <Compile Include="MapStructure\Logic\TeamScript.cs" />
     <Compile Include="MapStructure\Logic\Trigger.cs" />
-    <Compile Include="MapStructure\Map.cs" />
+    <Compile Include="MapStructure\Map\Map.cs" />
     <Compile Include="MapStructure\MapInfo.cs" />
     <Compile Include="MapStructure\Objects\ObjectBase.cs" />
     <Compile Include="MapStructure\OverlayLayer.cs" />
@@ -152,6 +173,9 @@
     <Compile Include="MapStructure\Points\TerrainLayer.cs" />
     <Compile Include="MapStructure\TileLayer.cs" />
     <Compile Include="MapStructure\Objects\UnitLayer.cs" />
+    <Compile Include="Model\BindableBase.cs" />
+    <Compile Include="Model\ViewModel.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DrawingEngine\CppExtern.cs" />
     <Compile Include="Utils\Colors.cs" />
@@ -160,9 +184,6 @@
     <Compile Include="Utils\Interpreter.cs" />
     <Compile Include="Utils\Lang.cs" />
     <Compile Include="Utils\Misc.cs" />
-    <EmbeddedResource Include="Main.resx">
-      <DependentUpon>Main.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -173,7 +194,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

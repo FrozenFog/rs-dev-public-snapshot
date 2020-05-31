@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using RelertSharp.IniSystem;
 using static RelertSharp.Language;
 
-namespace RelertSharp.SubWindows.LogicEditor
+namespace RelertSharp.GUI.SubWindows.LogicEditor
 {
     internal class SearchCollection : IEnumerable<SearchItem>
     {

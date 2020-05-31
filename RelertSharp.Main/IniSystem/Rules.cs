@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.FileSystem;
@@ -36,6 +37,9 @@ namespace RelertSharp.IniSystem
                 }
             }
         }
+        private Dictionary<string, Vec3> bufferedBuildingShape = new Dictionary<string, Vec3>();
+
+
         #region Ctor - Rules
         public Rules(string path, INIFileType itype = INIFileType.RulesINI) : base(path, INIFileType.RulesINI) { }
         public Rules(byte[] _data, string _filename) : base(_data, _filename, INIFileType.RulesINI)
@@ -46,6 +50,24 @@ namespace RelertSharp.IniSystem
 
 
         #region Private Methods - Rules
+        private void InitializePowerupDictionary()
+        {
+            foreach (INIEntity ent in IniData)
+            {
+                if (ent.HasPair("PowersUpBuilding"))
+                {
+                    INIPair p = ent.GetPair("PowersUpBuilding");
+                    string host = p.Value as string;
+                    if (!powerups.Keys.Contains(host))
+                    {
+                        powerups[host] = new List<string>();
+                    }
+                    string pwups = string.Format("{0} {1}", ent.Name, ent["Name"]);
+                    powerups[host].Add(ent.Name);
+                }
+            }
+            powerupInitialize = true;
+        }
         private List<TechnoPair> GetTechnoPairs(string entName, TechnoPair.AbstractType type, TechnoPair.IndexType indexType = TechnoPair.IndexType.Index)
         {
             INIEntity entLs = this[entName];
@@ -102,6 +124,20 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Methods - Rules
+        private bool powerupInitialize = false;
+        private Dictionary<string, List<string>> powerups = new Dictionary<string, List<string>>();
+        public IEnumerable<string> GetBuildingUpgradeList(string regid)
+        {
+            if (!powerupInitialize)
+            {
+                InitializePowerupDictionary();
+            }
+            if (powerups.Keys.Contains(regid))
+            {
+                return powerups[regid];
+            }
+            return null;
+        }
         public string GetCsfUIName(string regid)
         {
             if (!HasIniEnt(regid)) return GlobalCsf[regid].ContentString;
@@ -124,33 +160,49 @@ namespace RelertSharp.IniSystem
             if (string.IsNullOrEmpty(pal)) return pal;
             else return string.Format("{0}{1}.{2}", pal, TileDictionary.TheaterSub, "pal");
         }
+        public void GetSmudgeSizeData(string nameid, out int foundx, out int foundy)
+        {
+            INIEntity ent = this[nameid];
+            foundx = ent.GetPair("Width").ParseInt(1);
+            foundy = ent.GetPair("Height").ParseInt(1);
+        }
         public void GetBuildingShapeData(string nameid, out int height, out int foundX, out int foundY)
         {
-            string artname = GetArtEntityName(nameid);
-            INIEntity art = Art[artname];
-            string img = this[nameid]["Image"];
-
-            string foundation = (string)art["Foundation"].ToLower();
-            if (!string.IsNullOrEmpty(foundation))
+            Vec3 sz;
+            if (!bufferedBuildingShape.Keys.Contains(nameid))
             {
-                if (foundation == "custom")
+                sz = new Vec3();
+                string artname = GetArtEntityName(nameid);
+                INIEntity art = Art[artname];
+                string img = this[nameid]["Image"];
+
+                string foundation = (string)art["Foundation"].ToLower();
+                if (!string.IsNullOrEmpty(foundation))
                 {
-                    foundX = art.GetPair("Foundation.X").ParseInt(1);
-                    foundY = art.GetPair("Foundation.Y").ParseInt(1);
+                    if (foundation == "custom")
+                    {
+                        sz.X = art.GetPair("Foundation.X").ParseInt(1);
+                        sz.Y = art.GetPair("Foundation.Y").ParseInt(1);
+                    }
+                    else
+                    {
+                        string[] tmp = foundation.Split('x');
+                        sz.X = int.Parse(tmp[0]);
+                        sz.Y = int.Parse(tmp[1]);
+                    }
                 }
                 else
                 {
-                    string[] tmp = foundation.Split('x');
-                    foundX = int.Parse(tmp[0]);
-                    foundY = int.Parse(tmp[1]);
+                    sz.X = 1;
+                    sz.Y = 1;
                 }
+                sz.Z = art.GetPair("Height").ParseInt(5) + 3;
+                bufferedBuildingShape[nameid] = sz;
             }
-            else
-            {
-                foundX = 1;
-                foundY = 1;
-            }
-            height = art.GetPair("Height").ParseInt(5) + 3;
+            else sz = bufferedBuildingShape[nameid];
+            foundX = (int)sz.X;
+            foundY = (int)sz.Y;
+            height = (int)sz.Z;
         }
         public Vec4 GetBuildingLampData(string nameid, out float intensity, out int visibility)
         {
@@ -180,12 +232,10 @@ namespace RelertSharp.IniSystem
             string art = GetArtEntityName(nameID);
             INIEntity sequence = Art[Art[art]["Sequence"]];
             direction >>= 5;
-            if (direction == 7) direction = 0;
-            else direction++;
             if (sequence.Name == "") return direction;
             int[] ready = sequence.GetPair("Ready").ParseIntList();
             int result = ready[0];
-            return result + direction;
+            return 7 - direction;
         }
         public string GetArtEntityName(string nameID, bool isinfantry = false)
         {

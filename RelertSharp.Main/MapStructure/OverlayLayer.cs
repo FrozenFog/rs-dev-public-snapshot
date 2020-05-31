@@ -34,6 +34,11 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - OverlayLayer
+        public void RemoveByCoord(I2dLocateable pos)
+        {
+            int coord = (pos.Y << 9) + pos.X;
+            data.Remove(coord);
+        }
         public string CompressIndex()
         {
             byte[] preCompress = new byte[262144];
@@ -75,22 +80,21 @@ namespace RelertSharp.MapStructure
         {
             get
             {
-                int coord = y * 512 + x;
+                int coord = (y << 9) + x;
                 if (data.Keys.Contains(coord)) return data[coord];
                 return null;
             }
             set
             {
                 if (x + y > 512) throw new RSException.OverlayOutOfIndexException(x.ToString(), y.ToString());
-                data[y * 512 + x] = value;
+                data[(y << 9) + x] = value;
             }
         }
-        public Dictionary<int, OverlayUnit> Data { get { return data; } }
     #endregion
     }
 
 
-    public class OverlayUnit : I2dLocateable
+    public class OverlayUnit : IMapObject
     {
 
 
@@ -106,12 +110,28 @@ namespace RelertSharp.MapStructure
         #endregion
 
 
+        #region Public Methods - OverlayUnit
+        public void MoveTo(I2dLocateable pos)
+        {
+            X = pos.X;
+            Y = pos.Y;
+        }
+        public void ShiftBy(I2dLocateable delta)
+        {
+            X += delta.X;
+            Y += delta.Y;
+        }
+        #endregion
+
+
         #region Public Calls - OverlayUnit
         public byte Index { get; set; }
         public byte Frame { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
         public int Coord { get { return Misc.CoordInt(X, Y); } }
+        public bool Selected { get; set; }
+        public string RegName { get; set; }
         #endregion
     }
 }

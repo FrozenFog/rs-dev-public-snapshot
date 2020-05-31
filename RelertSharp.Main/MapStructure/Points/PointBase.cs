@@ -9,10 +9,19 @@ using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Points
 {
-    public class PointCollectionBase<T> : IEnumerable<T>
+    public class PointCollectionBase<T> : IEnumerable<T> where T : PointItemBase
     {
         private Dictionary<string, T> data = new Dictionary<string, T>();
         public PointCollectionBase() { }
+
+
+        #region Public Methods - ObjectBase
+        public virtual void RemoveByCoord(I2dLocateable src)
+        {
+            string coord = CoordString(src.Y, src.X);
+            if (data.Keys.Contains(coord)) data.Remove(coord);
+        }
+        #endregion
 
 
         #region Public Calls - PointCollectionBase
@@ -20,13 +29,13 @@ namespace RelertSharp.MapStructure.Points
         {
             get
             {
-                string coord = CoordString(x, y);
+                string coord = CoordString(y, x);
                 if (data.Keys.Contains(coord)) return data[coord];
-                return default(T);
+                return null;
             }
             set
             {
-                data[CoordString(x, y)] = value;
+                data[CoordString(y, x)] = value;
             }
         }
         public T this[string coord]
@@ -34,10 +43,24 @@ namespace RelertSharp.MapStructure.Points
             get
             {
                 if (data.Keys.Contains(coord)) return data[coord];
-                return default(T);
+                return null;
             }
             set
             {
+                data[coord] = value;
+            }
+        }
+        public T this[I2dLocateable pos]
+        {
+            get
+            {
+                string coord = CoordString(pos.Y, pos.X);
+                if (data.Keys.Contains(coord)) return data[coord];
+                return null;
+            }
+            set
+            {
+                string coord = CoordString(pos.Y, pos.X);
                 data[coord] = value;
             }
         }
@@ -61,30 +84,49 @@ namespace RelertSharp.MapStructure.Points
         public PointItemBase() { }
         public PointItemBase(string _coord)
         {
-            CoordString = _coord;
             Coord = int.Parse(_coord);
         }
         public PointItemBase(int _x, int _y)
         {
             X = _x;
             Y = _y;
-            CoordString = CoordString(X, Y);
         }
 
 
+        #region Public Methods - PointItemBase
+        public void MoveTo(I2dLocateable pos)
+        {
+            X = pos.X;
+            Y = pos.Y;
+        }
+        public void ShiftBy(I2dLocateable delta)
+        {
+            X += delta.X;
+            Y += delta.Y;
+        }
+        #endregion
+
+
         #region Public Calls - PointItemBase
-        public string CoordString { get; set; }
+        public string CoordString
+        {
+            get
+            {
+                return Utils.Misc.CoordString(Y, X);
+            }
+        }
         public int X { get; set; }
         public int Y { get; set; }
         public int Coord
         {
-            get { return Utils.Misc.CoordInt(X, Y); }
+            get { return CoordInt(X, Y); }
             set
             {
                 X = CoordIntX(value);
                 Y = CoordIntY(value);
             }
         }
+        public bool Selected { get; set; }
         #endregion;
     }
 }

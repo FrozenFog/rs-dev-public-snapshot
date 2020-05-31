@@ -8,6 +8,13 @@ namespace RelertSharp.Common
 {
     public static class Constant
     {
+        public static class MapStructure
+        {
+            public static int ArgLenInfantry = 14;
+            public static int ArgLenStructure = 17;
+            public static int ArgLenUnit = 14;
+            public static int ArgLenAircraft = 12;
+        }
         public static class EntName
         {
             public static readonly string[] SystemEntity =

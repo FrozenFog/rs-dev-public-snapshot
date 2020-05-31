@@ -149,6 +149,7 @@ namespace RelertSharp.MapStructure.Logic
         private bool disabled, ez, nm, hd;
         private TriggerRepeatingType repeattype;
         private LogicGroup events, actions;
+        private DisplayingType displayintType = DisplayingType.IDandName;
 
         [Flags]
         public enum DisplayingType { OnlyID = 0x1, OnlyName = 0x2, IDandName = OnlyID | OnlyName, Remain = 0x4 }
@@ -168,6 +169,19 @@ namespace RelertSharp.MapStructure.Logic
             Repeating = (TriggerRepeatingType)repeating;
             SetDisplayingString(DisplayingType.IDandName);
         }
+        public TriggerItem(TriggerItem src)
+        {
+            ID = src.id;
+            House = src.house;
+            LinkedWith = src.LinkedWith;
+            Name = src.Name;
+            Disabled = src.Disabled;
+            EasyOn = src.EasyOn;
+            NormalOn = src.NormalOn;
+            HardOn = src.HardOn;
+            Repeating = src.Repeating;
+            SetDisplayingString(src.displayintType);
+        }
         public TriggerItem() { }
         #endregion
 
@@ -184,6 +198,7 @@ namespace RelertSharp.MapStructure.Logic
         }
         public void SetDisplayingString(DisplayingType type)
         {
+            displayintType = type;
             switch (type)
             {
                 case DisplayingType.OnlyID:

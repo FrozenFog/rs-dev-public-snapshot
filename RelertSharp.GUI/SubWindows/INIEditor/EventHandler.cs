@@ -49,6 +49,7 @@ namespace RelertSharp.SubWindows.INIEditor
             searchList = bdsSectionL.FindAll(s => s.Contains(txbSectionSearch.Text.Trim()));
             bdsSection.DataSource = null;
             bdsSection.DataSource = searchList;
+            if (searchList.Count > 0) lbxSectionList.SelectedIndex = 0;
         }
         
         private void btnNewSection_Click(object sender, EventArgs e)
@@ -196,20 +197,22 @@ namespace RelertSharp.SubWindows.INIEditor
         #region Form
         private void INIEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
+            e.Cancel = true;
             switch (MessageBox.Show(this.Owner, DICT["INImsgSave"], DICT["INITitle"], MessageBoxButtons.YesNoCancel))
             {
                 case DialogResult.Yes:
                     {
+                        Hide();
                         break;
                     }
                 case DialogResult.No:
                     {
                         file.IniResidue = DeepCopy(osections) as Dictionary<string, INIEntity>;
+                        Hide();
                         break;
                     }
                 case DialogResult.Cancel:
                 default:
-                    e.Cancel = true;
                     break;
             }
             return;

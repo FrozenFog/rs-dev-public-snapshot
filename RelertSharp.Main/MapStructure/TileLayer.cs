@@ -106,6 +106,14 @@ namespace RelertSharp.MapStructure
         //    }
         //    return bmp;
         //}
+        public void AddObjectOnTile(IMapObject src)
+        {
+            this[src]?.AddObject(src);
+        }
+        public void AddObjectOnTile(I2dLocateable pos, IMapObject src)
+        {
+            this[pos]?.AddObject(src);
+        }
         public void FixEmptyTiles(int width, int height)
         {
             LayTileWeb(1, width, width, height);
@@ -116,6 +124,10 @@ namespace RelertSharp.MapStructure
             Tile t = this[pos.X, pos.Y];
             if (t != null) return t.Z == pos.Z;
             return false;
+        }
+        public bool HasTileOn(I2dLocateable tile)
+        {
+            return this[tile] != null;
         }
         public bool HasTileOn(Vec3 pos)
         {
@@ -215,6 +227,19 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Calls - TileLayer
+        public Tile this[I2dLocateable src]
+        {
+            get
+            {
+                int coord = src.Coord;
+                if (data.Keys.Contains(coord)) return data[coord];
+                return null;
+            }
+            set
+            {
+                data[src.Coord] = value;
+            }
+        }
         public Tile this[int x, int y]
         {
             get
@@ -255,6 +280,7 @@ namespace RelertSharp.MapStructure
     public class Tile : I3dLocateable
     {
         private int tileIndex;
+        private List<IMapObject> objectsOnTile = new List<IMapObject>();
 
 
         #region Ctor - Tile
@@ -281,6 +307,33 @@ namespace RelertSharp.MapStructure
             result[9] = Height;
             result[10] = IceGrowth;
             return result;
+        }
+        public IEnumerable<IMapObject> GetObjects()
+        {
+            return objectsOnTile;
+        }
+        public void AddObject(IMapObject src)
+        {
+            objectsOnTile.Add(src);
+        }
+        /// <summary>
+        /// By type and RegName
+        /// </summary>
+        /// <param name="src"></param>
+        public void RemoveObject(IMapObject src)
+        {
+            int index = 0;
+            bool found = false;
+            foreach(IMapObject target in objectsOnTile)
+            {
+                if (target.GetType() == src.GetType() && target.RegName == src.RegName)
+                {
+                    found = true;
+                    break;
+                }
+                index++;
+            }
+            if (found) objectsOnTile.RemoveAt(index);
         }
         #endregion
 

@@ -9,7 +9,7 @@ using RelertSharp.Common;
 using RelertSharp.SubWindows.LogicEditor;
 using RelertSharp.SubWindows.INIEditor;
 
-namespace RelertSharp
+namespace RelertSharp.GUI
 {
     static class Program
     {

@@ -27,6 +27,18 @@ namespace RelertSharp.DrawingEngine.Presenting
 
 
         #region Public Methods - PresentStructure
+        public override void MoveTo(I3dLocateable cell)
+        {
+            Vec3 delta = GetDeltaDistant(cell);
+            foreach (int p in Pointers) ShiftBy(delta, p);
+            base.MoveTo(cell);
+        }
+        public override void ShiftBy(I3dLocateable delta)
+        {
+            Vec3 distant = Vec3.ToVec3Iso(delta);
+            foreach (int p in Pointers) ShiftBy(distant, p);
+            base.ShiftBy(delta);
+        }
         public void SetTransparency(bool isTransparency)
         {
             if (isTransparency) SetTransparency(Vec4.Transparency);
@@ -41,14 +53,10 @@ namespace RelertSharp.DrawingEngine.Presenting
             if (!IsBaseNode)
             {
                 ColorVector = color;
-                SetColor(pSelf, color);
-                SetColor(pActivateAnim, color);
-                SetColor(pActivateAnim2, color);
-                SetColor(pActivateAnim3, color);
-                SetColor(pIdleAnim, color);
-                SetColor(pSuperAnim, color);
-                SetColor(pTurretAnim, color);
-                SetColor(pTurretBarl, color);
+                if (!selected)
+                {
+                    SetColorStrict(ColorVector);
+                }
             }
         }
         public void MultiplyColor(Vec4 color)
@@ -56,11 +64,21 @@ namespace RelertSharp.DrawingEngine.Presenting
             ColorVector *= color;
             SetColor(ColorVector);
         }
+        public void MarkSelected()
+        {
+            SetColorStrict(Vec4.Selector);
+            selected = true;
+        }
+        public void Unmark()
+        {
+            selected = false;
+            SetColorStrict(ColorVector);
+        }
         #endregion
 
 
         #region Private Methods - PresentStructure
-        public void SetTransparency(Vec4 color)
+        private void SetTransparency(Vec4 color)
         {
             foreach (int p in Pointers) CppExtern.ObjectUtils.SetObjectColorCoefficient(p, color);
             if (VoxelTurret)
@@ -75,6 +93,21 @@ namespace RelertSharp.DrawingEngine.Presenting
                 CppExtern.ObjectUtils.SetObjectColorCoefficient(pTurretAnim, color);
             }
         }
+        private void SetColorStrict(Vec4 color)
+        {
+            SetColor(pSelf, color);
+            SetColor(pActivateAnim, color);
+            SetColor(pActivateAnim2, color);
+            SetColor(pActivateAnim3, color);
+            SetColor(pIdleAnim, color);
+            SetColor(pSuperAnim, color);
+            SetColor(pTurretAnim, color);
+            SetColor(pTurretBarl, color);
+            SetColor(pBib, color);
+            SetColor(pPlug1, color);
+            SetColor(pPlug2, color);
+            SetColor(pPlug3, color);
+        }
         #endregion
 
 
@@ -83,10 +116,17 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             get
             {
-                return new int[] { pSelf, pActivateAnim, pActivateAnim2, pActivateAnim3, pBib, pIdleAnim,
-                pSelfShadow, pActivateAnimShadow, pActivateAnim2Shadow, pActivateAnim3Shadow, pBibShadow, pIdleAnimShadow};
+                return new int[] { pSelf, pActivateAnim, pActivateAnim2, pActivateAnim3, pBib, pIdleAnim, pSuperAnim, pTurretAnim, pTurretBarl,
+                pSelfShadow, pActivateAnimShadow, pActivateAnim2Shadow, pActivateAnim3Shadow, pBibShadow, pIdleAnimShadow, pSuperAnimShadow, pTurretAnimShadow,
+                pPlug1, pPlug1Shadow, pPlug2, pPlug2Shadow, pPlug3, pPlug3Shadow};
             }
         }
+        public int pPlug1 { get; set; }
+        public int pPlug2 { get; set; }
+        public int pPlug3 { get; set; }
+        public int pPlug1Shadow { get; set; }
+        public int pPlug2Shadow { get; set; }
+        public int pPlug3Shadow { get; set; }
         public int pActivateAnim { get; set; }
         public int pActivateAnimShadow { get; set; }
         public int pIdleAnim { get; set; }

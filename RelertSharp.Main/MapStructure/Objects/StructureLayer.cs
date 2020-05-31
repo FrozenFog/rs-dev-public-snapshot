@@ -11,19 +11,25 @@ namespace RelertSharp.MapStructure.Objects
     public class StructureLayer : ObjectBase<StructureItem>
     {
         public StructureLayer() { }
+
+
+        #region Public Methods - StructureLayer
+        #endregion
     }
 
 
-    public class StructureItem : ObjectItemBase
+    public class StructureItem : ObjectItemBase, ICombatObject
     {
+        private int sizeX = 0, sizeY = 0;
+
+
         public StructureItem(string _id, string[] _args) : base(_id, _args)
         {
-            ID = _id;
-            OwnerHouse = _args[0];
-            RegName = _args[1];
-            HealthPoint = int.Parse(_args[2]);
-            X = int.Parse(_args[3]);
-            Y = int.Parse(_args[4]);
+            if (_args.Length != Constant.MapStructure.ArgLenStructure)
+            {
+                //logger
+                return;
+            }
             Rotation = int.Parse(_args[5]);
             TaggedTrigger = _args[6];
             AISellable = ParseBool(_args[7]);
@@ -34,6 +40,19 @@ namespace RelertSharp.MapStructure.Objects
             Upgrade2 = _args[13];
             Upgrade3 = _args[14];
             AIRepairable = ParseBool(_args[15]);
+        }
+        public StructureItem(StructureItem src) : base(src)
+        {
+            Rotation = src.Rotation;
+            TaggedTrigger = src.TaggedTrigger;
+            AISellable = src.AISellable;
+            BuildingOnline = src.BuildingOnline;
+            UpgradeNum = src.UpgradeNum;
+            SpotlightType = src.SpotlightType;
+            Upgrade1 = src.Upgrade1;
+            Upgrade2 = src.Upgrade2;
+            Upgrade3 = src.Upgrade3;
+            AIRepairable = src.AIRepairable;
         }
         #region Public Calls - StructureItem
         public bool AISellable { get; set; }
@@ -46,6 +65,30 @@ namespace RelertSharp.MapStructure.Objects
         public string Upgrade3 { get; set; }
         public bool AIRepairable { get; set; }
         public bool Nominal { get; private set; } = false;
+        public int SizeX
+        {
+            get
+            {
+                if (sizeX == 0)
+                {
+                    GlobalVar.GlobalRules.GetBuildingShapeData(RegName, out int height, out int sizeX, out int sizeY);
+                    this.sizeX = sizeX;
+                    this.sizeY = sizeY;
+                }
+                return sizeX;
+            }
+        }
+        public int SizeY
+        {
+            get
+            {
+                if (sizeY == 0)
+                {
+                    GlobalVar.GlobalRules.GetBuildingShapeData(RegName, out int height, out int sizeX, out int sizeY);
+                }
+                return sizeY;
+            }
+        }
         #endregion
 
     }

@@ -23,7 +23,7 @@ namespace RelertSharp.DrawingEngine
             [DllImport("CncVxlRenderText.dll")]
             public static extern void MoveFocusOnScene(Vec3 Displacement);
             [DllImport("CncVxlRenderText.dll")]
-            public static extern void SetFocusOnScreen(Vec3 pos);
+            public static extern void SetFocusOnScene(Vec3 pos);
             [DllImport("CncVxlRenderText.dll")]
             public static extern void MoveFocusOnScreen(float x, float y);
 
@@ -83,6 +83,10 @@ namespace RelertSharp.DrawingEngine
             public static extern bool CreateTmpObjectAtScene(int idTmp, Vec3 pos, int pPal, int tileIndex, ref int outTileIndex, ref int outExIndex);
             [DllImport("CncVxlRenderText.dll")]
             public static extern int CreateShpObjectAtScene(int idShp, Vec3 pos, int idFrame, int idPal, uint dwRemapColor, int flatType, int foundationX, int foundationY, int height, bool isShadow);
+            [DllImport("CncVxlRenderText.dll")]
+            public static extern int CreateRectangleObjectAtScene(Vec3 pos, float width, float height, uint color);
+            [DllImport("CncVxlRenderText.dll")]
+            public static extern int CreateLineObjectAtScene(Vec3 start, Vec3 end, uint startColor, uint endColor);
             [DllImport("CncVxlRenderText.dll")]
             public static extern int CreateStringObjectAtScene(Vec3 pos, uint color, string content);
             [DllImport("CncVxlRenderText.dll")]

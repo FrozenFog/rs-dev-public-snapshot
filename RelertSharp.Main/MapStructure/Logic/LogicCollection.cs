@@ -185,6 +185,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Calls - LogicGroup
         public string ID { get; set; }
         public LogicItem this[int index] { get { return data[index]; } set { data[index] = value; } }
+        public string ParentID { get; set; }
         #endregion
     }
 
@@ -192,7 +193,7 @@ namespace RelertSharp.MapStructure.Logic
     public class LogicItem : BindableBase
     {
         private LogicType type;
-        internal int idx;
+        public int idx;
         private int id;
         private string comment;
         private string[] parameters;

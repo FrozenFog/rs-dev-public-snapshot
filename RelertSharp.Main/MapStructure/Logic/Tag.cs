@@ -108,9 +108,21 @@ namespace RelertSharp.MapStructure.Logic
         public TagItem(string _id, string[] dataList)
         {
             ID = _id;
+            if (dataList.Length != 3)
+            {
+                //logger
+                return;
+            }
             Repeating = (TriggerRepeatingType)(int.Parse(dataList[0]));
             Name = dataList[1];
             AssoTrigger = dataList[2];
+        }
+        public TagItem(TagItem src)
+        {
+            ID = src.ID;
+            Repeating = src.Repeating;
+            Name = src.Name;
+            AssoTrigger = src.AssoTrigger;
         }
         public TagItem(TriggerItem trg, string _id)
         {
@@ -123,7 +135,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TagItem
-        public override string ToString() { return id; }
+        public override string ToString() { return id + ' ' + Name; }
         public TriggerRepeatingType Repeating
         {
             get { return repeatingType; }

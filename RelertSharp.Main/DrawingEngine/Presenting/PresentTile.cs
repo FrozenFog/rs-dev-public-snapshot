@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine.Presenting
@@ -10,11 +11,13 @@ namespace RelertSharp.DrawingEngine.Presenting
     internal class PresentTile : PresentBase, IPresentBase
     {
         #region Ctor - PresentTile
-        public PresentTile(int pself, int pextra, byte height, Drawables.DrawableTile tile, int subtile)
+        public PresentTile(int pself, int pextra, byte height, Drawables.DrawableTile tile, int subtile, I2dLocateable pos)
         {
             pSelf = pself;
             pExtra = pextra;
             Height = height;
+            X = pos.X;
+            Y = pos.Y;
             WaterPassable = tile[subtile].WaterPassable;
             Buildable = tile[subtile].Buildable;
             LandPassable = tile[subtile].LandPassable;
@@ -27,6 +30,22 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             RemoveProp(pSelf);
             RemoveProp(pExtra);
+        }
+        /// <summary>
+        /// Move tile will do nothing
+        /// </summary>
+        /// <param name="cell"></param>
+        public override void MoveTo(I3dLocateable cell)
+        {
+
+        }
+        /// <summary>
+        /// Shift tile will do nothing
+        /// </summary>
+        /// <param name="delta"></param>
+        public override void ShiftBy(I3dLocateable delta)
+        {
+            
         }
         public void Mark(Vec4 main, Vec4 extra, bool deSelect)
         {
@@ -41,8 +60,10 @@ namespace RelertSharp.DrawingEngine.Presenting
         public void SetColor(Vec4 color)
         {
             ColorVector = color;
-            SetColor(pSelf, ColorVector);
-            SetColor(pExtra, ColorVector);
+            if (!selected)
+            {
+                SetColorStrict(color);
+            }
         }
         public void MultiplyColor(Vec4 color)
         {
@@ -58,6 +79,46 @@ namespace RelertSharp.DrawingEngine.Presenting
             ColorVector += color;
             SetColor(ColorVector);
         }
+        public void MarkSelected()
+        {
+            SetColorStrict(Vec4.Selector);
+            selected = true;
+        }
+        public void Unmark()
+        {
+            selected = false;
+            SetColorStrict(ColorVector);
+        }
+        public T GetFirstTileObject<T>(Predicate<T> predicate) where T : PresentBase, IPresentBase
+        {
+            foreach (IPresentBase obj in TileObjects)
+            {
+                T target = obj as T;
+                if (target != null)
+                {
+                    if (predicate.Invoke(target)) return target;
+                }
+            }
+            return null;
+        }
+        public T GetFirstTileObject<T>() where T : PresentBase, IPresentBase
+        {
+            foreach (IPresentBase obj in TileObjects)
+            {
+                T target = obj as T;
+                if (target != null) return target;
+            }
+            return null;
+        }
+        #endregion
+
+
+        #region Private Methods - PresentTile
+        private void SetColorStrict(Vec4 color)
+        {
+            SetColor(pSelf, color);
+            SetColor(pExtra, color);
+        }
         #endregion
 
 
@@ -69,6 +130,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         public bool Buildable { get; set; }
         public bool WaterPassable { get; set; }
         public bool LandPassable { get; set; }
+        public List<IPresentBase> TileObjects { get; private set; } = new List<IPresentBase>();
         #endregion
     }
 }

@@ -17,11 +17,26 @@ namespace RelertSharp.MapStructure.Points
         }
 
 
+        #region Public Methods - BaseNode
+        public void MoveTo(I2dLocateable pos)
+        {
+            X = pos.X;
+            Y = pos.Y;
+        }
+        public void ShiftBy(I2dLocateable delta)
+        {
+            X += delta.X;
+            Y += delta.Y;
+        }
+        #endregion
+
+
         #region Public Calls - BaseNode
         public string RegName { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
         public int Coord { get { return Utils.Misc.CoordInt(this); } }
+        public bool Selected { get; set; }
         #endregion
     }
 }
