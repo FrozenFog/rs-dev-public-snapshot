@@ -26,6 +26,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         internal TriggerItem CurrentTrigger { get; set; }
         internal TagItem CurrentTag { get; set; }
+        internal IEnumerable<TagItem> CurrentTagCollection { get; set; }
         private Map Map { get { return CurrentMapDocument.Map; } }
 
 
@@ -47,26 +48,19 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             RefreshAttatchedList();
             RefreshHouseList();
         }
-        public void Reload(TriggerItem trg, IEnumerable<TagItem> tags, bool isTemplate = false)
+        public void Reload(TriggerItem trg, IEnumerable<TagItem> tags)
         {
-            if (!isTemplate)
-            {
-                if (initialized)
-                {
-                    Map.Triggers[CurrentTrigger.ID] = CurrentTrigger;
-                    Map.Tags[CurrentTag.ID] = CurrentTag;
-                }
-                else initialized = true;
-            }
+            CurrentTagCollection = tags;
             CurrentTrigger = trg;
             CurrentTag = tags.First();
-            RefreshControl(tags);
+            RefreshControl();
         }
         private void Reload(TriggerItem tmpTrg, TagItem tmpTag)
         {
+            CurrentTagCollection = new TagItem[] { tmpTag };
             CurrentTrigger = tmpTrg;
             CurrentTag = tmpTag;
-            RefreshControl(new TagItem[] { tmpTag });
+            RefreshControl();
         }
         public void RefreshAttatchedList()
         {
@@ -86,13 +80,13 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             foreach (Control c in Controls) Language.SetControlLanguage(c);
         }
         private bool isControlRefreshing = false;
-        private void RefreshControl(IEnumerable<TagItem> tags)
+        private void RefreshControl()
         {
             isControlRefreshing = true;
             txbTrgID.Text = CurrentTrigger.ID;
             txbTrgName.Text = CurrentTrigger.Name;
             txbTagName.Text = CurrentTag.Name;
-            LoadToObjectCollection(cbbTagID, tags);
+            LoadToObjectCollection(cbbTagID, CurrentTagCollection);
             cbbTagID.SelectedItem = CurrentTag;
             ckbDisabled.Checked = CurrentTrigger.Disabled;
             ckbEasy.Checked = CurrentTrigger.EasyOn;
@@ -224,14 +218,14 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             prevTag = CurrentTag;
             Reload(Map.Triggers.TemplateTrigger, Map.Tags.TemplateTag);
             OnTemplateChanged(true);
-            RefreshControl(new TagItem[] { CurrentTag });
+            RefreshControl();
         }
         private void btnSaveTemp_Click(object sender, EventArgs e)
         {
             isEditingTemplate = false;
             Reload(prevTrg, prevTag);
             OnTemplateChanged(false);
-            RefreshControl(new TagItem[] { CurrentTag });
+            RefreshControl();
             btnNewTrigger.Enabled = true;
             btnDelTrigger.Enabled = true;
             btnCopyTrigger.Enabled = true;
@@ -252,7 +246,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             CurrentTrigger = new TriggerItem(newtrigger);
             CurrentTag = new TagItem(tag);
             cbbAttatchedTrg.Items.Add(newtrigger);
-            RefreshControl(new TagItem[] { tag });
+            RefreshControl();
             OnNewTriggerAdded(newtrigger);
         }
 

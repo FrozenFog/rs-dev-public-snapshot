@@ -73,15 +73,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         public void Reload(TriggerItem trigger)
         {
-            if (initialized)
-            {
-                if (isEvent) Map.Triggers[parentID].Events = EventCollection;
-                else Map.Triggers[parentID].Actions = EventCollection;
-            }
-            else
-            {
-                initialized = true;
-            }
             if (isEvent) EventCollection = trigger.Events;
             else EventCollection = trigger.Actions;
             parentID = trigger.ID;
@@ -120,12 +111,12 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             isControlRefreshing = true;
             LoadToObjectCollection(lbxEventList, EventCollection);
-            isControlRefreshing = false;
             if (EventCollection.Count() > 0)
             {
                 lbxEventList.SelectedIndex = 0;
                 pnlParameter.Reload(CurrentEvent);
             }
+            isControlRefreshing = false;
         }
         private void SetLanguage(bool isEvent)
         {

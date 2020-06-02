@@ -21,6 +21,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         internal event LogicItemUpdateHandler ItemUpdated;
         internal event SoundPlayingHandler NeedPlayingShound;
         internal event TriggerUpdateHandler TriggerTracing;
+        private ComboBox cbbCsf, cbbPrev;
 
 
         internal LogicItem CurrentItem { get; set; }
@@ -53,13 +54,19 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             cbbs = new ComboBox[4] { cbbEP1, cbbEP2, cbbEP3, cbbEP4 };
             lblNoParamE.Location = new Point(gpbEventParam.Size.Width / 2 - lblNoParamE.Size.Width / 2, gpbEventParam.Size.Height / 2 - lblNoParamE.Size.Height);
             lbxReferance = refer;
+            cbbCsf = new ComboBox()
+            {
+                Location = cbbEP1.Location,
+                Size = cbbEP1.Size,
+                Visible = false,
+                Name = "cbbCsf"
+            };
+            cbbCsf.Items.AddRange(GlobalCsf.TechnoPairs.ToArray());
+            cbbCsf.SelectedIndexChanged += new EventHandler(ParamChanged);
+            gpbEventParam.Controls.Add(cbbCsf);
         }
         public void Reload(LogicItem item)
         {
-            if (CurrentItem != null)
-            {
-                //OnLogicItemChanged();
-            }
             CurrentItem = item;
             if (item == null) ClearContent();
             else RefreshControl();
@@ -141,6 +148,27 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             }
             isParamRefreshing = false;
         }
+        private int indexPrev = -1;
+        private bool csfEnabled = false;
+        private void SwapCombobox(bool isCsfNow, int indexNow)
+        {
+            if (isCsfNow && !csfEnabled)
+            {
+                csfEnabled = true;
+                cbbPrev = cbbs[indexNow];
+                cbbs[indexNow] = cbbCsf;
+                indexPrev = indexNow;
+                cbbCsf.Tag = cbbPrev.Tag;
+            }
+            else if (!isCsfNow && csfEnabled)
+            {
+                if (indexPrev != -1)
+                {
+                    csfEnabled = false;
+                    cbbs[indexPrev] = cbbPrev;
+                }
+            }
+        }
         private void SetParamControls(Control[] controls, TriggerParam param, string[] paramData, int controlIndex)
         {
             if (controls.GetType() == typeof(LinkLabel[]))
@@ -150,9 +178,17 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             }
             else if (controls.GetType() == typeof(ComboBox[]))
             {
-                Cursor = Cursors.WaitCursor;
-                IList<object> data = GetComboCollections(param).ToList();
-                LoadToObjectCollection((ComboBox)controls[controlIndex], data);
+                if (param.ComboType == TriggerParam.ComboContent.CsfLabel)
+                {
+                    SwapCombobox(true, controlIndex);
+                }
+                else
+                {
+                    SwapCombobox(false, controlIndex);
+                    Cursor = Cursors.WaitCursor;
+                    IList<object> data = GetComboCollections(param).ToList();
+                    LoadToObjectCollection((ComboBox)controls[controlIndex], data);
+                }
                 SelectCombo((ComboBox)controls[controlIndex], param.GetParameter(paramData), param);
                 Cursor = Cursors.Arrow;
             }
