@@ -75,7 +75,8 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             if (initialized)
             {
-                Map.Triggers[parentID].Events = EventCollection;
+                if (isEvent) Map.Triggers[parentID].Events = EventCollection;
+                else Map.Triggers[parentID].Actions = EventCollection;
             }
             else
             {

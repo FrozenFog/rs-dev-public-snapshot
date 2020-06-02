@@ -20,10 +20,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
     {
         private Map map { get { return GlobalVar.CurrentMapDocument.Map; } }
         private DescriptCollection descriptCollection = new DescriptCollection();
-        private LinkLabel[] lklEP, lklAP;
-        private TextBox[] txbEP, txbAP;
-        private CheckBox[] ckbEP, ckbAP;
-        private ComboBox[] cbbEP, cbbAP;
         private SoundManager soundPlayer = new SoundManager();
 
         private List<LocalVarItem> localVarList = new List<LocalVarItem>();
@@ -46,6 +42,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             LoadLocalVariables();
             LoadHouseList();
 
+            pnlSearch.Initialize();
             lbxTriggerList.SelectedIndex = lbxTriggerList.Items.Count > 0 ? 0 : -1;
         }
         #endregion
@@ -127,18 +124,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         #endregion
 
         #region General GUI Update Utils
-        private void ClearContent(GroupBox gpb)
-        {
-            foreach (Control c in gpb.Controls)
-            {
-                var t = c.GetType();
-                if (t == typeof(TextBox) ||
-                    t == typeof(ComboBox) ||
-                    t == typeof(MaskedTextBox) ||
-                    t == typeof(RichTextBox)) c.Text = "";
-                if (t == typeof(GroupBox)) ClearContent(c as GroupBox);
-            }
-        }
         private void UpdateTaskforceContent(int lvSelectedindex)
         {
             TaskforceItem taskforce = lbxTaskList.SelectedItem as TaskforceItem;
@@ -212,15 +197,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         #endregion
 
         #region Misc Utils
-        private void GoEnter(KeyEventArgs e, Action a)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.Handled = true;
-                e.SuppressKeyPress = true;
-                a.Invoke();
-            }
-        }
         #endregion
 
         #endregion
@@ -236,7 +212,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private AITriggerUnit _CurrentAITriggerUnit { get { return _CurrentAITrigger.GetToUnit; } set { _CurrentAITrigger.GetToUnit = value; } }
         private HouseItem _CurrentHouse { get { return lbxHouses.SelectedItem as HouseItem; } }
         private HouseUnit _CurrentHouseUnit { get { return _CurrentHouse.GetToUnit; } set { _CurrentHouse.GetToUnit = value; } }
-        private SearchCollection _SearchResult { get; set; } = new SearchCollection();
         #endregion
     }
 }

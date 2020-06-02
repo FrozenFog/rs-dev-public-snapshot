@@ -94,5 +94,14 @@ namespace RelertSharp.GUI
             if (index != 0) dest.SelectedIndex = index - 1;
             else if (dest.Items.Count > 0) dest.SelectedIndex = 0;
         }
+        public static void GoEnter(KeyEventArgs e, Action a)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                a.Invoke();
+            }
+        }
     }
 }

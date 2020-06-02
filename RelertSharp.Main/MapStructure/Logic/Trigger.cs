@@ -181,6 +181,9 @@ namespace RelertSharp.MapStructure.Logic
             HardOn = src.HardOn;
             Repeating = src.Repeating;
             SetDisplayingString(src.displayintType);
+            Events = new LogicGroup(src.events);
+            Actions = new LogicGroup(src.actions);
+
         }
         public TriggerItem() { }
         #endregion

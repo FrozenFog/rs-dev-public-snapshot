@@ -84,5 +84,27 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 }
             }
         }
+        private void tsmiTrgLstAscending_Click(object sender, EventArgs e)
+        {
+            map.Triggers.AscendingSort();
+            UpdateTrgList();
+        }
+        private void tsmiTrgLstDecending_Click(object sender, EventArgs e)
+        {
+            map.Triggers.DecendingSort();
+            UpdateTrgList();
+        }
+        private void tsmiTrgLstID_Click(object sender, EventArgs e)
+        {
+            UpdateTrgList(TriggerItem.DisplayingType.OnlyID);
+        }
+        private void tsmiTrgLstName_Click(object sender, EventArgs e)
+        {
+            UpdateTrgList(TriggerItem.DisplayingType.OnlyName);
+        }
+        private void tsmiTrgLstIDName_Click(object sender, EventArgs e)
+        {
+            UpdateTrgList(TriggerItem.DisplayingType.IDandName);
+        }
     }
 }

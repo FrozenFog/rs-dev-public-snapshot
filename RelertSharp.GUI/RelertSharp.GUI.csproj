@@ -221,6 +221,12 @@
     <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelTrgTag.Designer.cs">
       <DependentUpon>PanelTrgTag.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\PanelGlobalSearch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\PanelGlobalSearch.Designer.cs">
+      <DependentUpon>PanelGlobalSearch.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\LogicEditor\SearchCollection.cs" />
     <Compile Include="SubWindows\LogicEditor\StaticHelper.cs" />
     <Compile Include="Model\MainWindowDataModel\Main.cs" />
@@ -295,6 +301,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TriggerPage\ParameterPanel.resx">
       <DependentUpon>ParameterPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\PanelGlobalSearch.resx">
+      <DependentUpon>PanelGlobalSearch.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

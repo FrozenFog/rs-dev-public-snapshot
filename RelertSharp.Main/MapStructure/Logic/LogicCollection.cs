@@ -49,9 +49,16 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Ctor - LogicGroup
+        public LogicGroup(LogicGroup src)
+        {
+            ID = src.ID;
+            data = new Dictionary<int, LogicItem>(src.data);
+            ParentID = src.ParentID;
+        }
         public LogicGroup(INIPair p, LogicType type)
         {
             int num = 1;
+            LogicType = type;
             string[] l = p.ParseStringList();
             if (l.Contains(""))
             {
