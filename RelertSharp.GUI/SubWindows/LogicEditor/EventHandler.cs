@@ -23,117 +23,48 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         #region Team Page
         #region Taskforce
         #region btn
-        private void btnNewTask_Click(object sender, EventArgs e)
-        {
-            TaskforceItem item = map.NewTaskforce();
-            AddTo(lbxTaskList, item, ref updatingLbxTaskList);
-        }
-
-        private void btnDelTask_Click(object sender, EventArgs e)
-        {
-            if (lbxTaskList.SelectedItem == null) return;
-            int index = lbxTaskList.SelectedIndex;
-            TaskforceItem item = lbxTaskList.SelectedItem as TaskforceItem;
-            map.RemoveTaskforce(item);
-            RemoveAt(lbxTaskList, index, ref updatingLbxTaskList);
-        }
-
-        private void btnCopyTask_Click(object sender, EventArgs e)
-        {
-            if (lbxTaskList.SelectedItem == null) return;
-            TaskforceItem copied = _CurrentTaskforce.Copy(map.NewID);
-            map.TaskForces[copied.ID] = copied;
-            AddTo(lbxTaskList, copied, ref updatingLbxTaskList);
-        }
-
-        private void btnAddTaskMem_Click(object sender, EventArgs e)
-        {
-            if (lbxTaskList.SelectedItem == null) return;
-            if (lvTaskforceUnits.Items.Count > 5) return;
-            TechnoPair p = cbbTaskType.Items[0] as TechnoPair;
-            TaskforceUnit u = _CurrentTaskforce.NewUnitItem(p.RegName, 1);
-            UpdateTaskforceContent(_CurrentTaskforce.Members.Count - 1);
-        }
-
-        private void btnDelTaskMem_Click(object sender, EventArgs e)
-        {
-            if (lbxTaskList.SelectedItem == null || lvTaskforceUnits.SelectedIndices.Count < 1) return;
-            int index = lvTaskforceUnits.SelectedIndices[0];
-            _CurrentTaskforce.Members.RemoveAt(lvTaskforceUnits.SelectedIndices[0]);
-            RemoveAt(lvTaskforceUnits, index, ref updatingLvTaskforceUnits);
-        }
-
-        private void btnCopyTaskMem_Click(object sender, EventArgs e)
-        {
-            if (lbxTaskList.SelectedItem == null || lvTaskforceUnits.SelectedIndices.Count < 1) return;
-            if (lvTaskforceUnits.Items.Count > 5) return;
-            TechnoPair p = cbbTaskType.SelectedItem as TechnoPair;
-            TaskforceUnit u = TaskforceUnit.FromListviewItem(lvTaskforceUnits.SelectedItems[0]);
-            TaskforceUnit newunit = _CurrentTaskforce.NewUnitItem(u.RegName, u.UnitNum);
-            int index = lvTaskforceUnits.Items.Count;
-            UpdateTaskforceContent(index);
-        }
         #endregion
         #region cbb
         private void cbbTaskCurType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lvTaskforceUnits.SelectedItems.Count < 1) return;
-            int index = lvTaskforceUnits.SelectedIndices[0];
-            TechnoPair selectedunit = cbbTaskType.SelectedItem as TechnoPair;
-            TaskforceUnit unit = _CurrentBoxTaskforceUnit;
-            unit.RegName = selectedunit.RegName;
-            _CurrentTaskforce.Members[index] = unit;
-            UpdateTaskforceContent(index);
+            //if (lvTaskforceUnits.SelectedItems.Count < 1) return;
+            //int index = lvTaskforceUnits.SelectedIndices[0];
+            //TechnoPair selectedunit = cbbTaskType.SelectedItem as TechnoPair;
+            //TaskforceUnit unit = _CurrentBoxTaskforceUnit;
+            //unit.RegName = selectedunit.RegName;
+            //_CurrentTaskforce.Members[index] = unit;
+            //UpdateTaskforceContent(index);
         }
         #endregion
         #region txb
         private void txbTaskName_Validated(object sender, EventArgs e)
         {
-            _CurrentTaskforce.Name = txbTaskName.Text;
-            UpdateAt(lbxTaskList, _CurrentTaskforce, ref updatingLbxTaskList);
+            //_CurrentTaskforce.Name = txbTaskName.Text;
+            //UpdateAt(lbxTaskList, _CurrentTaskforce, ref updatingLbxTaskList);
         }
         private void mtxbTaskGroup_Validated(object sender, EventArgs e)
         {
-            if (lbxTaskList.SelectedItem == null) return;
-            int group;
-            try
-            {
-                group = int.Parse(mtxbTaskGroup.Text);
-            }
-            catch
-            {
-                group = -1;
-                mtxbTaskGroup.Text = "-1";
-            }
-            _CurrentTaskforce.Group = group;
+            //if (lbxTaskList.SelectedItem == null) return;
+            //int group;
+            //try
+            //{
+            //    group = int.Parse(mtxbTaskGroup.Text);
+            //}
+            //catch
+            //{
+            //    group = -1;
+            //    mtxbTaskGroup.Text = "-1";
+            //}
+            //_CurrentTaskforce.Group = group;
         }
         private void mtxbTaskNum_Validated(object sender, EventArgs e)
         {
-            _CurrentTaskforceUnit.UnitNum = int.Parse(mtxbTaskNum.Text);
-            UpdateTaskforceContent(lvTaskforceUnits.SelectedIndices[0]);
+            //_CurrentTaskforceUnit.UnitNum = int.Parse(mtxbTaskNum.Text);
+            //UpdateTaskforceContent(lvTaskforceUnits.SelectedIndices[0]);
         }
         #endregion
         #region lbx
-        private bool updatingLbxTaskList = false;
-        private void lbxTaskList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lbxTaskList.SelectedItem == null) return;
-            if (!updatingLbxTaskList)
-            {
-                UpdateTaskforceContent(0);
-            }
-        }
-        private bool updatingLvTaskforceUnits = false;
-        private void lvTaskforceUnits_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lvTaskforceUnits.SelectedItems.Count < 1) return;
-            if (!updatingLvTaskforceUnits)
-            {
-                TaskforceUnit unit = _CurrentBoxTaskforceUnit;
-                cbbTaskType.Text = unit.RegName;
-                mtxbTaskNum.Text = unit.UnitNum.ToString();
-            }
-        }
+
         #endregion
         #endregion
         #region Script

@@ -33,9 +33,8 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             InitializeComponent();
             SetLanguage();
             InitialTriggerPage();
+            InitialTaskforcePage();
             SetGlobal();
-            UpdateTrgList(TriggerItem.DisplayingType.IDandName);
-            LoadTaskforceList();
             LoadScriptList();
             LoadTeamList();
             LoadAITrgList();
@@ -75,22 +74,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             LoadToObjectCollection(lbxTriggerList, map.Triggers);
             pnlTriggerTag.RefreshAttatchedList();
         }
-
-        private void LoadTaskforceList()
-        {
-            LoadToObjectCollection(lbxTaskList, map.TaskForces);
-            List<TechnoPair> technoPairs = new List<TechnoPair>();
-            technoPairs.Add(new TechnoPair(string.Empty, "(Nothing)"));
-            technoPairs.AddRange(GlobalVar.GlobalRules.InfantryList);
-            technoPairs.AddRange(GlobalVar.GlobalRules.AircraftList);
-            technoPairs.AddRange(GlobalVar.GlobalRules.VehicleList);
-            foreach (TechnoPair techno in technoPairs)
-                //if (!string.IsNullOrEmpty(techno.UIName))
-                techno.ResetAbst(TechnoPair.AbstractType.CsfName, TechnoPair.IndexType.RegName);
-            //technoPairs.Sort((x, y) => x.RegName.CompareTo(y.RegName));
-            LoadToObjectCollection(cbbTaskType, technoPairs);
-            if (lbxTaskList.Items.Count > 0) lbxTaskList.SelectedIndex = 0;
-        }
         private void LoadScriptList()
         {
             LoadToObjectCollection(lbxScriptList, map.Scripts);
@@ -124,29 +107,29 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         #endregion
 
         #region General GUI Update Utils
-        private void UpdateTaskforceContent(int lvSelectedindex)
-        {
-            TaskforceItem taskforce = lbxTaskList.SelectedItem as TaskforceItem;
-            txbTaskName.Text = taskforce.Name;
-            mtxbTaskGroup.Text = taskforce.Group.ToString();
-            txbTaskID.Text = taskforce.ID;
+        //private void UpdateTaskforceContent(int lvSelectedindex)
+        //{
+        //    TaskforceItem taskforce = lbxTaskList.SelectedItem as TaskforceItem;
+        //    txbTaskName.Text = taskforce.Name;
+        //    mtxbTaskGroup.Text = taskforce.Group.ToString();
+        //    txbTaskID.Text = taskforce.ID;
 
-            imglstPcx.Images.Clear();
-            lvTaskforceUnits.SelectedIndices.Clear();
-            lvTaskforceUnits.Items.Clear();
-            if (taskforce.Members.Count > 0)
-            {
-                Dictionary<string, Image> dict = GlobalVar.GlobalDir.GetPcxImages(taskforce.MemberPcxNames);
-                foreach (string key in dict.Keys)
-                {
-                    imglstPcx.Images.Add(key, dict[key]);
-                }
-                IEnumerable<TaskforceUnit> units = taskforce.Members;
-                IEnumerable<ListViewItem> items = TaskforceItem.ToListViewItems(units);
-                LoadToObjectCollection(lvTaskforceUnits, items);
-                lvTaskforceUnits.SelectedIndices.Add(lvSelectedindex);
-            }
-        }
+        //    imglstPcx.Images.Clear();
+        //    lvTaskforceUnits.SelectedIndices.Clear();
+        //    lvTaskforceUnits.Items.Clear();
+        //    if (taskforce.Members.Count > 0)
+        //    {
+        //        Dictionary<string, Image> dict = GlobalVar.GlobalDir.GetPcxImages(taskforce.MemberPcxNames);
+        //        foreach (string key in dict.Keys)
+        //        {
+        //            imglstPcx.Images.Add(key, dict[key]);
+        //        }
+        //        IEnumerable<TaskforceUnit> units = taskforce.Members;
+        //        IEnumerable<ListViewItem> items = TaskforceItem.ToListViewItems(units);
+        //        LoadToObjectCollection(lvTaskforceUnits, items);
+        //        lvTaskforceUnits.SelectedIndices.Add(lvSelectedindex);
+        //    }
+        //}
         private void UpdateHouseAlliance()
         {
             lbxHouseAllie.Items.Clear();
@@ -203,9 +186,9 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
 
         #region Private Calls - LogicEditor
-        private TaskforceItem _CurrentTaskforce { get { return map.TaskForces[txbTaskID.Text]; } }
-        private TaskforceUnit _CurrentBoxTaskforceUnit { get { return TaskforceUnit.FromListviewItem(lvTaskforceUnits.SelectedItems[0]); } }
-        private TaskforceUnit _CurrentTaskforceUnit { get { return _CurrentTaskforce.Members[lvTaskforceUnits.SelectedIndices[0]]; } }
+        //private TaskforceItem _CurrentTaskforce { get { return map.TaskForces[txbTaskID.Text]; } }
+        //private TaskforceUnit _CurrentBoxTaskforceUnit { get { return TaskforceUnit.FromListviewItem(lvTaskforceUnits.SelectedItems[0]); } }
+        //private TaskforceUnit _CurrentTaskforceUnit { get { return _CurrentTaskforce.Members[lvTaskforceUnits.SelectedIndices[0]]; } }
         private TeamItem _CurrentTeam { get { return lbxTeamList.SelectedItem as TeamItem; } }
         private TeamUnit _CurrentTeamUnit { get { return _CurrentTeam.GetToUnit; } set { _CurrentTeam.GetToUnit = value; } }
         private AITriggerItem _CurrentAITrigger { get { return lbxAIList.SelectedItem as AITriggerItem; } }

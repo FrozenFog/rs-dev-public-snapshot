@@ -9,6 +9,22 @@ namespace RelertSharp.GUI
 {
     internal static class GuiUtils
     {
+        public static void ClearControlContent(Control c)
+        {
+            Type t = c.GetType();
+            if (t == typeof(ListView)) (c as ListView).Items.Clear();
+            else if (t == typeof(MaskedTextBox) || t == typeof(TextBox)) c.Text = "";
+            else if (t == typeof(ComboBox))
+            {
+                ComboBox cbb = c as ComboBox;
+                if (cbb.Items.Count > 0) cbb.SelectedIndex = 0;
+                else cbb.Text = "";
+            }
+            else if (t == typeof(GroupBox))
+            {
+                foreach (Control child in (c as GroupBox).Controls) ClearControlContent(child);
+            }
+        }
         public static void LoadToObjectCollection(ComboBox dest, IEnumerable<object> src)
         {
             dest.Items.Clear();
@@ -85,9 +101,19 @@ namespace RelertSharp.GUI
             dest.Items.RemoveAt(index);
             locker = false;
             if (index != 0) dest.SelectedIndices.Add(index - 1);
+            else if (dest.Items.Count > 0) dest.SelectedIndices.Add(0);
         }
         public static void RemoveAt(ListBox dest, int index, ref bool locker)
         {
+            locker = true;
+            dest.Items.RemoveAt(index);
+            locker = false;
+            if (index != 0) dest.SelectedIndex = index - 1;
+            else if (dest.Items.Count > 0) dest.SelectedIndex = 0;
+        }
+        public static void RemoveAt(ListBox dest, ref bool locker)
+        {
+            int index = dest.SelectedIndex;
             locker = true;
             dest.Items.RemoveAt(index);
             locker = false;

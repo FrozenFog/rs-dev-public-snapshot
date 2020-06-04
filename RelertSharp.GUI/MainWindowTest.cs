@@ -52,6 +52,7 @@ namespace RelertSharp.GUI
             }
             Language.SetControlLanguage(cmsToolSelect);
             Text = Language.DICT[Text];
+            logicEditor.JumpToWaypoint += LogicJumpToWaypoint;
         }
         private bool updatingLightningData = false;
         private void UpdateLightningSide(LightningItem src, bool enable)

@@ -20,6 +20,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         internal event TriggerUpdateHandler TriggerRefreshing;
         internal event TriggerUpdateHandler TriggerTracing;
         internal event SoundPlayingHandler NeedPlayingSound;
+        internal event I2dLocateableHandler JumpToWaypoint;
 
 
         internal LogicGroup EventCollection { get; set; }
@@ -48,10 +49,16 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             IEnumerable<TriggerDescription> desc;
             if (isEvent) desc = coll.Events;
             else desc = coll.Actions;
-            pnlParameter.Initialize(desc, lbxEventList);
+            pnlParameter.Initialize(desc, lbxEventList, isEvent);
             pnlParameter.ItemUpdated += PnlParameter_ItemUpdated;
             pnlParameter.TriggerTracing += PnlParameter_TriggerTracing;
             pnlParameter.NeedPlayingShound += PnlParameter_NeedPlayingShound;
+            pnlParameter.JumpToWaypoint += PnlParameter_JumpToWaypoint;
+        }
+
+        private void PnlParameter_JumpToWaypoint(object sender, I2dLocateable pos)
+        {
+            OnJumpToWaypoint(pos);
         }
 
         private void PnlParameter_NeedPlayingShound(object sender, TriggerParam param, TechnoPair p)
@@ -102,6 +109,10 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         protected virtual void OnTriggerRefreshing(TriggerItem trigger)
         {
             TriggerRefreshing?.Invoke(this, trigger);
+        }
+        protected virtual void OnJumpToWaypoint(I2dLocateable cell)
+        {
+            JumpToWaypoint?.Invoke(this, cell);
         }
         #endregion
 

@@ -89,6 +89,9 @@
     <Compile Include="MainWindow\KeyHandler.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MainWindow\LogicReciver.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainWindow\ObjectInspect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -200,6 +203,15 @@
     <Compile Include="SubWindows\LogicEditor\LogicEditor.Designer.cs">
       <DependentUpon>LogicEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelTaskforce.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelTaskforce.Designer.cs">
+      <DependentUpon>PanelTaskforce.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TaskforcePage\TaskforcePage.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelEvent.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -292,6 +304,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindowTest.resx">
       <DependentUpon>MainWindowTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelTaskforce.resx">
+      <DependentUpon>PanelTaskforce.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelEvent.resx">
       <DependentUpon>PanelEvent.cs</DependentUpon>

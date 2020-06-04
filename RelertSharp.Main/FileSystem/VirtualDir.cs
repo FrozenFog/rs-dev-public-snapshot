@@ -100,6 +100,21 @@ namespace RelertSharp.FileSystem
             }
             return result;
         }
+        public Image GetPcxImage(string regName)
+        {
+            string pcxName = GlobalRules.GetPcxName(regName).ToLower();
+            if (pcxName.EndsWith(".shp") && HasFile(pcxName))
+            {
+                ShpFile shp = GetFile(pcxName, FileExtension.SHP);
+                shp.LoadColor(GetFile("cameo.pal", FileExtension.PAL));
+                return shp.Frames[0].Image;
+            }
+            else if (pcxName.EndsWith(".pcx") && HasFile(pcxName))
+            {
+                return PcxDecoder.Decode(GetRawByte(pcxName));
+            }
+            return null;
+        }
         public void AddMixDir(MixFile _mixfile, bool _isSub = false, string _parentMixPath = "")
         {
             mixTatics[_mixfile.FileName] = _mixfile.Tatics;

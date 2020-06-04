@@ -7,12 +7,16 @@ using System.Windows.Forms;
 using RelertSharp.GUI;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.IniSystem;
+using RelertSharp.Common;
 using static RelertSharp.GUI.GuiUtils;
 
 namespace RelertSharp.GUI.SubWindows.LogicEditor
 {
     internal partial class LogicEditor
     {
+        internal event I2dLocateableHandler JumpToWaypoint;
+
+
         private void InitialTriggerPage()
         {
             pnlTriggerTag.Initialize(lbxTriggerList);
@@ -25,12 +29,23 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             pnlEvent.NeedPlayingSound += PlayingSound;
             pnlEvent.TriggerTracing += PnlTriggerTag_TraceFired;
             pnlEvent.TriggerRefreshing += TriggerRefreshing;
+            pnlEvent.JumpToWaypoint += Pnl_JumpToWaypoint;
             pnlAction.Initialize(lbxTriggerList, false, descriptCollection);
             pnlAction.NeedPlayingSound += PlayingSound;
             pnlAction.TriggerTracing += PnlTriggerTag_TraceFired;
             pnlAction.TriggerRefreshing += TriggerRefreshing;
+            pnlAction.JumpToWaypoint += Pnl_JumpToWaypoint;
+            UpdateTrgList(TriggerItem.DisplayingType.IDandName);
         }
 
+        private void Pnl_JumpToWaypoint(object sender, I2dLocateable pos)
+        {
+            OnJumpToWaypoint(pos);
+        }
+        protected virtual void OnJumpToWaypoint(I2dLocateable cell)
+        {
+            JumpToWaypoint?.Invoke(this, cell);
+        }
         private void TriggerRefreshing(object sender, TriggerItem trigger)
         {
             UpdateAt(lbxTriggerList, trigger, ref updatingLbxTriggerList);

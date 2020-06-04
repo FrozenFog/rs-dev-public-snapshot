@@ -9,6 +9,16 @@ namespace RelertSharp.MapStructure.Points
     public class WaypointCollection : PointCollectionBase<WaypointItem>
     {
         public WaypointCollection() { }
+
+        
+        public WaypointItem FindByID(string id)
+        {
+            foreach (WaypointItem item in this)
+            {
+                if (item.Num == id) return item;
+            }
+            return null;
+        }
     }
 
 

@@ -44,8 +44,6 @@ namespace RelertSharp.MapStructure.Logic
 
     public class TaskforceItem : TeamLogicItem, IRegistable
     {
-        //private Dictionary<string, int> memberData = new Dictionary<string, int>();
-        private List<Tuple<string, int>> memberData = new List<Tuple<string, int>>();
         private int group;
         private string name;
         private int memberid = 0;
@@ -104,7 +102,6 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Calls - TaskforceItem
         public List<TaskforceUnit> Members { get; private set; } = new List<TaskforceUnit>();
         public override string ToString() { return ID + " " + Name; }
-        public List<Tuple<string, int>> MemberData { get { return memberData; } set { memberData = value; } }
         public IEnumerable<string> MemberPcxNames
         {
             get

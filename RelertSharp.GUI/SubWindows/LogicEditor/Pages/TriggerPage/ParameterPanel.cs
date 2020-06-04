@@ -11,6 +11,7 @@ using RelertSharp.IniSystem;
 using RelertSharp.Common;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.MapStructure;
+using RelertSharp.MapStructure.Points;
 using static RelertSharp.Common.GlobalVar;
 using static RelertSharp.GUI.GuiUtils;
 
@@ -21,6 +22,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         internal event LogicItemUpdateHandler ItemUpdated;
         internal event SoundPlayingHandler NeedPlayingShound;
         internal event TriggerUpdateHandler TriggerTracing;
+        internal event I2dLocateableHandler JumpToWaypoint;
         private ComboBox cbbCsf, cbbPrev;
 
 
@@ -44,7 +46,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
 
         #region Public Methods
-        public void Initialize(IEnumerable<TriggerDescription> descriptions, ListBox refer)
+        public void Initialize(IEnumerable<TriggerDescription> descriptions, ListBox refer, bool isEvent)
         {
             SetLanguage();
             LoadToObjectCollection(cbbEventAbst, descriptions);
@@ -64,6 +66,10 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             cbbCsf.Items.AddRange(GlobalCsf.TechnoPairs.ToArray());
             cbbCsf.SelectedIndexChanged += new EventHandler(ParamChanged);
             gpbEventParam.Controls.Add(cbbCsf);
+            if (!isEvent)
+            {
+                mtxbEventID.Mask = "000";
+            }
         }
         public void Reload(LogicItem item)
         {
@@ -88,6 +94,10 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         protected virtual void OnTracingTrigger(TriggerItem trigger)
         {
             TriggerTracing?.Invoke(this, trigger);
+        }
+        protected virtual void OnWaypointJump(I2dLocateable cell)
+        {
+            JumpToWaypoint?.Invoke(this, cell);
         }
         #endregion
 
@@ -434,6 +444,12 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     TriggerItem trigger = Map.Triggers[triggerid];
                     OnTracingTrigger(trigger);
                     break;
+            }
+            if (param.Type == TriggerParam.ParamType.Waypoint)
+            {
+                string wpid = txbs[tagid].Text;
+                WaypointItem wp = Map.Waypoints.FindByID(wpid);
+                OnWaypointJump(wp);
             }
         }
     }

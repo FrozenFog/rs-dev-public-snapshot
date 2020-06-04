@@ -109,6 +109,7 @@
             this.lklEP4.Tag = "3";
             this.lklEP4.Text = "EP4";
             this.lklEP4.Visible = false;
+            this.lklEP4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lkl_LinkClicked);
             // 
             // lklEP3
             // 
@@ -122,6 +123,7 @@
             this.lklEP3.Tag = "2";
             this.lklEP3.Text = "EP3";
             this.lklEP3.Visible = false;
+            this.lklEP3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lkl_LinkClicked);
             // 
             // lklEP2
             // 
@@ -135,6 +137,7 @@
             this.lklEP2.Tag = "1";
             this.lklEP2.Text = "EP2";
             this.lklEP2.Visible = false;
+            this.lklEP2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lkl_LinkClicked);
             // 
             // lklEP1
             // 
