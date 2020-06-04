@@ -161,7 +161,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Methods - TaskforceUnit
         public ListViewItem ToListviewItem()
         {
-            ListViewItem item = new ListViewItem(string.Format("{0}({1}):{2}", UiName, RegName, UnitNum), PcxName.ToLower());
+            ListViewItem item = new ListViewItem(string.Format("{0}\n({1}):\n{2}", UiName, RegName, UnitNum), PcxName.ToLower());
             item.Name = RegName;
             return item;
         }
