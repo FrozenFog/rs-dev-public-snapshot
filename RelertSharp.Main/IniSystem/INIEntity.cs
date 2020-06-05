@@ -62,6 +62,17 @@ namespace RelertSharp.IniSystem
             data = d;
             return firstindex;
         }
+        public INIEntity ReorganizeTo(int firstindex = 0)
+        {
+            INIEntity result = new INIEntity();
+            foreach(INIPair p in data.Values)
+            {
+                INIPair np = new INIPair(p);
+                np.Name = firstindex++.ToString();
+                result.AddPair(np);
+            }
+            return result;
+        }
         /// <summary>
         /// Merge two IniEnt, items with same key will be overwrite by new one.
         /// </summary>

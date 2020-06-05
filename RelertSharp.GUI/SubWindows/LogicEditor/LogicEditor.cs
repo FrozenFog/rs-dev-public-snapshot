@@ -35,7 +35,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             InitialTriggerPage();
             InitialTaskforcePage();
             SetGlobal();
-            LoadScriptList();
             LoadTeamList();
             LoadAITrgList();
             LoadLocalVariables();
@@ -73,11 +72,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             map.Triggers.SetToString(type);
             LoadToObjectCollection(lbxTriggerList, map.Triggers);
             pnlTriggerTag.RefreshAttatchedList();
-        }
-        private void LoadScriptList()
-        {
-            LoadToObjectCollection(lbxScriptList, map.Scripts);
-            if (lbxScriptList.Items.Count > 0) lbxScriptList.SelectedIndex = 0;
         }
         private void LoadTeamList()
         {

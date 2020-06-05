@@ -203,6 +203,18 @@
     <Compile Include="SubWindows\LogicEditor\LogicEditor.Designer.cs">
       <DependentUpon>LogicEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelScript.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelScript.Designer.cs">
+      <DependentUpon>PanelScript.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelScriptParam.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelScriptParam.Designer.cs">
+      <DependentUpon>PanelScriptParam.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelTaskforce.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -304,6 +316,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindowTest.resx">
       <DependentUpon>MainWindowTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelScript.resx">
+      <DependentUpon>PanelScript.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelScriptParam.resx">
+      <DependentUpon>PanelScriptParam.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelTaskforce.resx">
       <DependentUpon>PanelTaskforce.cs</DependentUpon>

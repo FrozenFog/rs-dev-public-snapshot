@@ -20,69 +20,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 {
     internal partial class LogicEditor : Form
     {
-        #region Team Page
-        #region Taskforce
-        #region btn
-        #endregion
-        #region cbb
-        private void cbbTaskCurType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //if (lvTaskforceUnits.SelectedItems.Count < 1) return;
-            //int index = lvTaskforceUnits.SelectedIndices[0];
-            //TechnoPair selectedunit = cbbTaskType.SelectedItem as TechnoPair;
-            //TaskforceUnit unit = _CurrentBoxTaskforceUnit;
-            //unit.RegName = selectedunit.RegName;
-            //_CurrentTaskforce.Members[index] = unit;
-            //UpdateTaskforceContent(index);
-        }
-        #endregion
-        #region txb
-        private void txbTaskName_Validated(object sender, EventArgs e)
-        {
-            //_CurrentTaskforce.Name = txbTaskName.Text;
-            //UpdateAt(lbxTaskList, _CurrentTaskforce, ref updatingLbxTaskList);
-        }
-        private void mtxbTaskGroup_Validated(object sender, EventArgs e)
-        {
-            //if (lbxTaskList.SelectedItem == null) return;
-            //int group;
-            //try
-            //{
-            //    group = int.Parse(mtxbTaskGroup.Text);
-            //}
-            //catch
-            //{
-            //    group = -1;
-            //    mtxbTaskGroup.Text = "-1";
-            //}
-            //_CurrentTaskforce.Group = group;
-        }
-        private void mtxbTaskNum_Validated(object sender, EventArgs e)
-        {
-            //_CurrentTaskforceUnit.UnitNum = int.Parse(mtxbTaskNum.Text);
-            //UpdateTaskforceContent(lvTaskforceUnits.SelectedIndices[0]);
-        }
-        #endregion
-        #region lbx
-
-        #endregion
-        #endregion
-        #region Script
-        #region lbx
-        private void lbxScriptList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lbxScriptList.SelectedItem == null) return;
-            TeamScriptGroup scriptGroup = lbxScriptList.SelectedItem as TeamScriptGroup;
-            txbScriptName.Text = scriptGroup.Name;
-            LoadToObjectCollection(lbxScriptMemList, scriptGroup.Data);
-        }
-
-        private void lbxScriptMemList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-        #endregion
-        #endregion
         #region Team
         #region btn
         private void btnNewTeam_Click(object sender, EventArgs e)
@@ -594,7 +531,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             _CurrentAITrigger.SetFromUnit(_CurrentAITriggerUnit);
             UpdateAt(lbxAIList, _CurrentAITrigger, ref updatingLbxTeamList);
         }
-        #endregion
         #endregion
         #endregion
 

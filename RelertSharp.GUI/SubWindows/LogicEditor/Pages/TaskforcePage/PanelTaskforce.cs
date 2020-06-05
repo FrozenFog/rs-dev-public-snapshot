@@ -242,7 +242,11 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     {
                         CurrentCollection.Group = int.Parse(mtxbTaskGroup.Text);
                     }
-                    catch { }
+                    catch
+                    {
+                        CurrentCollection.Group = -1;
+                        mtxbTaskGroup.Text = "-1";
+                    }
                 }
             }
         }

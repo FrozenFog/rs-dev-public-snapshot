@@ -45,27 +45,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbpTaskScriptPage = new System.Windows.Forms.TabPage();
             this.gpbTeamTask = new System.Windows.Forms.GroupBox();
+            this.pnlTaskforce = new RelertSharp.GUI.SubWindows.LogicEditor.PanelTaskforce();
             this.label36 = new System.Windows.Forms.Label();
             this.lbxTaskList = new System.Windows.Forms.ListBox();
             this.gpbTeamScript = new System.Windows.Forms.GroupBox();
-            this.btnDelScript = new System.Windows.Forms.Button();
-            this.btnNewScript = new System.Windows.Forms.Button();
-            this.btnCopyScript = new System.Windows.Forms.Button();
-            this.gpbTeamScriptCur = new System.Windows.Forms.GroupBox();
-            this.label34 = new System.Windows.Forms.Label();
-            this.ckbInsert = new System.Windows.Forms.CheckBox();
-            this.rtxbScriptDesc = new System.Windows.Forms.RichTextBox();
-            this.cbbScriptCurPara = new System.Windows.Forms.ComboBox();
-            this.btnDelScriptMem = new System.Windows.Forms.Button();
-            this.btnCopyScriptMem = new System.Windows.Forms.Button();
-            this.txbScriptName = new System.Windows.Forms.TextBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.cbbScriptCurType = new System.Windows.Forms.ComboBox();
-            this.label31 = new System.Windows.Forms.Label();
-            this.btnAddScriptMem = new System.Windows.Forms.Button();
-            this.label32 = new System.Windows.Forms.Label();
-            this.lbxScriptMemList = new System.Windows.Forms.ListBox();
+            this.pnlScript = new RelertSharp.GUI.SubWindows.LogicEditor.PanelScript();
             this.label33 = new System.Windows.Forms.Label();
             this.lbxScriptList = new System.Windows.Forms.ListBox();
             this.tbpTeams = new System.Windows.Forms.TabPage();
@@ -118,14 +102,12 @@
             this.chklbxLocalVar = new System.Windows.Forms.CheckedListBox();
             this.ttTrg = new System.Windows.Forms.ToolTip(this.components);
             this.pnlSearch = new RelertSharp.GUI.SubWindows.LogicEditor.PanelGlobalSearch();
-            this.pnlTaskforce = new RelertSharp.GUI.SubWindows.LogicEditor.PanelTaskforce();
             this.tbcMain.SuspendLayout();
             this.tbpTriggers.SuspendLayout();
             this.cmsTriggerList.SuspendLayout();
             this.tbpTaskScriptPage.SuspendLayout();
             this.gpbTeamTask.SuspendLayout();
             this.gpbTeamScript.SuspendLayout();
-            this.gpbTeamScriptCur.SuspendLayout();
             this.tbpTeams.SuspendLayout();
             this.gpbTeamAI.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvAIConfig)).BeginInit();
@@ -295,14 +277,21 @@
             this.gpbTeamTask.Controls.Add(this.pnlTaskforce);
             this.gpbTeamTask.Controls.Add(this.label36);
             this.gpbTeamTask.Controls.Add(this.lbxTaskList);
-            this.gpbTeamTask.Location = new System.Drawing.Point(0, 0);
+            this.gpbTeamTask.Location = new System.Drawing.Point(3, 4);
             this.gpbTeamTask.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gpbTeamTask.Name = "gpbTeamTask";
             this.gpbTeamTask.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gpbTeamTask.Size = new System.Drawing.Size(757, 709);
+            this.gpbTeamTask.Size = new System.Drawing.Size(754, 702);
             this.gpbTeamTask.TabIndex = 5;
             this.gpbTeamTask.TabStop = false;
             this.gpbTeamTask.Text = "LGCgpbTeamTask";
+            // 
+            // pnlTaskforce
+            // 
+            this.pnlTaskforce.Location = new System.Drawing.Point(284, 22);
+            this.pnlTaskforce.Name = "pnlTaskforce";
+            this.pnlTaskforce.Size = new System.Drawing.Size(453, 667);
+            this.pnlTaskforce.TabIndex = 2;
             // 
             // label36
             // 
@@ -328,212 +317,29 @@
             // 
             // gpbTeamScript
             // 
-            this.gpbTeamScript.Controls.Add(this.btnDelScript);
-            this.gpbTeamScript.Controls.Add(this.btnNewScript);
-            this.gpbTeamScript.Controls.Add(this.btnCopyScript);
-            this.gpbTeamScript.Controls.Add(this.gpbTeamScriptCur);
+            this.gpbTeamScript.Controls.Add(this.pnlScript);
             this.gpbTeamScript.Controls.Add(this.label33);
             this.gpbTeamScript.Controls.Add(this.lbxScriptList);
-            this.gpbTeamScript.Location = new System.Drawing.Point(773, 16);
+            this.gpbTeamScript.Location = new System.Drawing.Point(763, 4);
             this.gpbTeamScript.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gpbTeamScript.Name = "gpbTeamScript";
             this.gpbTeamScript.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gpbTeamScript.Size = new System.Drawing.Size(747, 688);
+            this.gpbTeamScript.Size = new System.Drawing.Size(754, 702);
             this.gpbTeamScript.TabIndex = 4;
             this.gpbTeamScript.TabStop = false;
             this.gpbTeamScript.Text = "LGCgpbTeamScript";
             // 
-            // btnDelScript
+            // pnlScript
             // 
-            this.btnDelScript.Location = new System.Drawing.Point(128, 331);
-            this.btnDelScript.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnDelScript.Name = "btnDelScript";
-            this.btnDelScript.Size = new System.Drawing.Size(117, 29);
-            this.btnDelScript.TabIndex = 8;
-            this.btnDelScript.Text = "LGCbtnDelScript";
-            this.btnDelScript.UseVisualStyleBackColor = true;
-            // 
-            // btnNewScript
-            // 
-            this.btnNewScript.Location = new System.Drawing.Point(8, 331);
-            this.btnNewScript.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnNewScript.Name = "btnNewScript";
-            this.btnNewScript.Size = new System.Drawing.Size(115, 29);
-            this.btnNewScript.TabIndex = 7;
-            this.btnNewScript.Text = "LGCbtnNewScript";
-            this.btnNewScript.UseVisualStyleBackColor = true;
-            // 
-            // btnCopyScript
-            // 
-            this.btnCopyScript.Location = new System.Drawing.Point(251, 331);
-            this.btnCopyScript.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnCopyScript.Name = "btnCopyScript";
-            this.btnCopyScript.Size = new System.Drawing.Size(115, 29);
-            this.btnCopyScript.TabIndex = 6;
-            this.btnCopyScript.Text = "LGCbtnCopyScript";
-            this.btnCopyScript.UseVisualStyleBackColor = true;
-            // 
-            // gpbTeamScriptCur
-            // 
-            this.gpbTeamScriptCur.Controls.Add(this.label34);
-            this.gpbTeamScriptCur.Controls.Add(this.ckbInsert);
-            this.gpbTeamScriptCur.Controls.Add(this.rtxbScriptDesc);
-            this.gpbTeamScriptCur.Controls.Add(this.cbbScriptCurPara);
-            this.gpbTeamScriptCur.Controls.Add(this.btnDelScriptMem);
-            this.gpbTeamScriptCur.Controls.Add(this.btnCopyScriptMem);
-            this.gpbTeamScriptCur.Controls.Add(this.txbScriptName);
-            this.gpbTeamScriptCur.Controls.Add(this.label29);
-            this.gpbTeamScriptCur.Controls.Add(this.label30);
-            this.gpbTeamScriptCur.Controls.Add(this.cbbScriptCurType);
-            this.gpbTeamScriptCur.Controls.Add(this.label31);
-            this.gpbTeamScriptCur.Controls.Add(this.btnAddScriptMem);
-            this.gpbTeamScriptCur.Controls.Add(this.label32);
-            this.gpbTeamScriptCur.Controls.Add(this.lbxScriptMemList);
-            this.gpbTeamScriptCur.Location = new System.Drawing.Point(371, 18);
-            this.gpbTeamScriptCur.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gpbTeamScriptCur.Name = "gpbTeamScriptCur";
-            this.gpbTeamScriptCur.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gpbTeamScriptCur.Size = new System.Drawing.Size(371, 338);
-            this.gpbTeamScriptCur.TabIndex = 2;
-            this.gpbTeamScriptCur.TabStop = false;
-            this.gpbTeamScriptCur.Text = "LGCgpbTeamScriptCur";
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(5, 162);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(135, 15);
-            this.label34.TabIndex = 17;
-            this.label34.Text = "LGClblScriptDesc";
-            // 
-            // ckbInsert
-            // 
-            this.ckbInsert.AutoSize = true;
-            this.ckbInsert.Location = new System.Drawing.Point(237, 49);
-            this.ckbInsert.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ckbInsert.Name = "ckbInsert";
-            this.ckbInsert.Size = new System.Drawing.Size(125, 19);
-            this.ckbInsert.TabIndex = 16;
-            this.ckbInsert.Text = "LGCckbInsert";
-            this.ckbInsert.UseVisualStyleBackColor = true;
-            // 
-            // rtxbScriptDesc
-            // 
-            this.rtxbScriptDesc.Location = new System.Drawing.Point(5, 180);
-            this.rtxbScriptDesc.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rtxbScriptDesc.Name = "rtxbScriptDesc";
-            this.rtxbScriptDesc.ReadOnly = true;
-            this.rtxbScriptDesc.Size = new System.Drawing.Size(359, 56);
-            this.rtxbScriptDesc.TabIndex = 15;
-            this.rtxbScriptDesc.Text = "";
-            // 
-            // cbbScriptCurPara
-            // 
-            this.cbbScriptCurPara.FormattingEnabled = true;
-            this.cbbScriptCurPara.Location = new System.Drawing.Point(177, 272);
-            this.cbbScriptCurPara.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbbScriptCurPara.Name = "cbbScriptCurPara";
-            this.cbbScriptCurPara.Size = new System.Drawing.Size(187, 23);
-            this.cbbScriptCurPara.TabIndex = 14;
-            // 
-            // btnDelScriptMem
-            // 
-            this.btnDelScriptMem.Location = new System.Drawing.Point(124, 302);
-            this.btnDelScriptMem.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnDelScriptMem.Name = "btnDelScriptMem";
-            this.btnDelScriptMem.Size = new System.Drawing.Size(115, 30);
-            this.btnDelScriptMem.TabIndex = 13;
-            this.btnDelScriptMem.Text = "LGCbtnDelScriptMem";
-            this.btnDelScriptMem.UseVisualStyleBackColor = true;
-            // 
-            // btnCopyScriptMem
-            // 
-            this.btnCopyScriptMem.Location = new System.Drawing.Point(244, 302);
-            this.btnCopyScriptMem.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnCopyScriptMem.Name = "btnCopyScriptMem";
-            this.btnCopyScriptMem.Size = new System.Drawing.Size(121, 30);
-            this.btnCopyScriptMem.TabIndex = 12;
-            this.btnCopyScriptMem.Text = "LGCbtnCopyScriptMem";
-            this.btnCopyScriptMem.UseVisualStyleBackColor = true;
-            // 
-            // txbScriptName
-            // 
-            this.txbScriptName.Location = new System.Drawing.Point(177, 18);
-            this.txbScriptName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txbScriptName.Name = "txbScriptName";
-            this.txbScriptName.Size = new System.Drawing.Size(187, 25);
-            this.txbScriptName.TabIndex = 9;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(5, 21);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(135, 15);
-            this.label29.TabIndex = 8;
-            this.label29.Text = "LGClblScriptName";
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(5, 276);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(159, 15);
-            this.label30.TabIndex = 7;
-            this.label30.Text = "LGClblScriptCurPara";
-            // 
-            // cbbScriptCurType
-            // 
-            this.cbbScriptCurType.FormattingEnabled = true;
-            this.cbbScriptCurType.Location = new System.Drawing.Point(177, 242);
-            this.cbbScriptCurType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbbScriptCurType.Name = "cbbScriptCurType";
-            this.cbbScriptCurType.Size = new System.Drawing.Size(187, 23);
-            this.cbbScriptCurType.TabIndex = 5;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(5, 246);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(159, 15);
-            this.label31.TabIndex = 4;
-            this.label31.Text = "LGClblScriptCurType";
-            // 
-            // btnAddScriptMem
-            // 
-            this.btnAddScriptMem.Location = new System.Drawing.Point(5, 302);
-            this.btnAddScriptMem.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnAddScriptMem.Name = "btnAddScriptMem";
-            this.btnAddScriptMem.Size = new System.Drawing.Size(113, 30);
-            this.btnAddScriptMem.TabIndex = 2;
-            this.btnAddScriptMem.Text = "LGCbtnAddScriptMem";
-            this.btnAddScriptMem.UseVisualStyleBackColor = true;
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(5, 49);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(183, 15);
-            this.label32.TabIndex = 1;
-            this.label32.Text = "LGClblScriptMemberList";
-            // 
-            // lbxScriptMemList
-            // 
-            this.lbxScriptMemList.FormattingEnabled = true;
-            this.lbxScriptMemList.ItemHeight = 15;
-            this.lbxScriptMemList.Location = new System.Drawing.Point(5, 74);
-            this.lbxScriptMemList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.lbxScriptMemList.Name = "lbxScriptMemList";
-            this.lbxScriptMemList.Size = new System.Drawing.Size(359, 79);
-            this.lbxScriptMemList.TabIndex = 0;
+            this.pnlScript.Location = new System.Drawing.Point(281, 22);
+            this.pnlScript.Name = "pnlScript";
+            this.pnlScript.Size = new System.Drawing.Size(461, 671);
+            this.pnlScript.TabIndex = 2;
             // 
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(5, 19);
+            this.label33.Location = new System.Drawing.Point(6, 22);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(135, 15);
             this.label33.TabIndex = 1;
@@ -544,11 +350,12 @@
             this.lbxScriptList.FormattingEnabled = true;
             this.lbxScriptList.HorizontalScrollbar = true;
             this.lbxScriptList.ItemHeight = 15;
-            this.lbxScriptList.Location = new System.Drawing.Point(5, 32);
+            this.lbxScriptList.Location = new System.Drawing.Point(6, 40);
             this.lbxScriptList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lbxScriptList.Name = "lbxScriptList";
-            this.lbxScriptList.Size = new System.Drawing.Size(359, 289);
+            this.lbxScriptList.Size = new System.Drawing.Size(269, 649);
             this.lbxScriptList.TabIndex = 0;
+            this.lbxScriptList.SelectedValueChanged += new System.EventHandler(this.lbxScriptList_SelectedValueChanged);
             // 
             // tbpTeams
             // 
@@ -1155,13 +962,6 @@
             this.pnlSearch.Size = new System.Drawing.Size(353, 710);
             this.pnlSearch.TabIndex = 1;
             // 
-            // pnlTaskforce
-            // 
-            this.pnlTaskforce.Location = new System.Drawing.Point(284, 22);
-            this.pnlTaskforce.Name = "pnlTaskforce";
-            this.pnlTaskforce.Size = new System.Drawing.Size(453, 667);
-            this.pnlTaskforce.TabIndex = 2;
-            // 
             // LogicEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1187,8 +987,6 @@
             this.gpbTeamTask.PerformLayout();
             this.gpbTeamScript.ResumeLayout(false);
             this.gpbTeamScript.PerformLayout();
-            this.gpbTeamScriptCur.ResumeLayout(false);
-            this.gpbTeamScriptCur.PerformLayout();
             this.tbpTeams.ResumeLayout(false);
             this.gpbTeamAI.ResumeLayout(false);
             this.gpbTeamAI.PerformLayout();
@@ -1245,24 +1043,6 @@
         private System.Windows.Forms.ListBox lbxTeamList;
         private System.Windows.Forms.TabPage tbpTaskScriptPage;
         private System.Windows.Forms.GroupBox gpbTeamScript;
-        private System.Windows.Forms.Button btnDelScript;
-        private System.Windows.Forms.Button btnNewScript;
-        private System.Windows.Forms.Button btnCopyScript;
-        private System.Windows.Forms.GroupBox gpbTeamScriptCur;
-        private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.CheckBox ckbInsert;
-        private System.Windows.Forms.RichTextBox rtxbScriptDesc;
-        private System.Windows.Forms.ComboBox cbbScriptCurPara;
-        private System.Windows.Forms.Button btnDelScriptMem;
-        private System.Windows.Forms.Button btnCopyScriptMem;
-        private System.Windows.Forms.TextBox txbScriptName;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.ComboBox cbbScriptCurType;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Button btnAddScriptMem;
-        private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.ListBox lbxScriptMemList;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.ListBox lbxScriptList;
         private System.Windows.Forms.GroupBox gpbTeamAI;
@@ -1307,5 +1087,6 @@
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.ListBox lbxTaskList;
         private PanelTaskforce pnlTaskforce;
+        private PanelScript pnlScript;
     }
 }

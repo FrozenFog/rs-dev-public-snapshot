@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.IniSystem;
+using static RelertSharp.Common.GlobalVar.Scripts;
 using static RelertSharp.Language;
 
 namespace RelertSharp.MapStructure.Logic
@@ -13,6 +14,7 @@ namespace RelertSharp.MapStructure.Logic
     {
         private Dictionary<int, TriggerDescription> events = new Dictionary<int, TriggerDescription>();
         private Dictionary<int, TriggerDescription> actions = new Dictionary<int, TriggerDescription>();
+        private Dictionary<int, TriggerDescription> scripts = new Dictionary<int, TriggerDescription>();
 
 
         #region Constructor - DescriptCollection
@@ -21,8 +23,11 @@ namespace RelertSharp.MapStructure.Logic
             INIFile f = new INIFile(@"Triggers.tgc");
             INIEntity ev = f["EventParams"];
             INIEntity ac = f["ActionParams"];
+            INIEntity sc = f["Scripts"];
             Load(ev, events);
             Load(ac, actions);
+            Load(sc, scripts);
+            LoadScriptSubCombo(f);
         }
         #endregion
 
@@ -50,6 +55,28 @@ namespace RelertSharp.MapStructure.Logic
                 _data[id] = description;
             }
         }
+        private void LoadScriptSubCombo(INIFile f)
+        {
+            INIEntity target = f["AttackTargetType"];
+            INIEntity unload = f["UnloadBehavior"];
+            INIEntity mission = f["DoMission"];
+            INIEntity facing = f["ChangeFacing"];
+            INIEntity bubble = f["TalkBubble"];
+
+            ReadScriptSubCombo(AttackTargetType, target);
+            ReadScriptSubCombo(UnloadBehavior, unload);
+            ReadScriptSubCombo(Missions, mission);
+            ReadScriptSubCombo(FacingDirections, facing);
+            ReadScriptSubCombo(TalkBubbles, bubble);
+        }
+        private void ReadScriptSubCombo(List<TechnoPair> dest, INIEntity src)
+        {
+            dest = new List<TechnoPair>();
+            foreach(INIPair p in src)
+            {
+                dest.Add(new TechnoPair(src.Name, DICT[p.Value]));
+            }
+        }
         #endregion
 
 
@@ -70,6 +97,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Calls - DescriptCollection
         public Dictionary<int, TriggerDescription>.ValueCollection Events { get { return events.Values; } }
         public Dictionary<int, TriggerDescription>.ValueCollection Actions { get { return actions.Values; } }
+        public Dictionary<int, TriggerDescription>.ValueCollection Scripts { get { return scripts.Values; } }
         #endregion
     }
 
@@ -154,7 +182,19 @@ namespace RelertSharp.MapStructure.Logic
             Warhead = 18,
             ParticalAnim = 19,
             VoxelAnim = 21,
-            BuildingID = 22
+            BuildingID = 22,
+
+            AttackTargetType = 23,
+            UnloadBehavior = 24,
+            ScriptMission = 25,
+            ScriptFrom0 = 26,
+            EvaNames0 = 27,
+            SoundNames0 = 28,
+            ThemeNames0 = 29,
+            Facing = 30,
+            Buildings0 = 31,
+            Animations0 = 32,
+            TalkBubble = 33
         }
         #region Constructor - TriggerParam
         public TriggerParam(int paramType, bool traceable, int pos, string name, int comboType)

@@ -11,6 +11,19 @@ namespace RelertSharp.MapStructure.Logic
     public class TeamScriptCollection : TeamLogicCollection<TeamScriptGroup>
     {
         public TeamScriptCollection() : base() { }
+
+        public List<TechnoPair> ToTechnoFrom0()
+        {
+            List<TechnoPair> result = new List<TechnoPair>();
+            int i = 0;
+            foreach(TeamScriptGroup g in this)
+            {
+                TechnoPair p = new TechnoPair(i.ToString(), string.Format("{0} - {1}", g.ID, g.Name));
+                result.Add(p);
+                i++;
+            }
+            return result;
+        }
     }
 
     public class TeamScriptGroup : TeamLogicItem, IRegistable

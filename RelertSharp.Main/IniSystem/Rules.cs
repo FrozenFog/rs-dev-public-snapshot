@@ -359,6 +359,13 @@ namespace RelertSharp.IniSystem
                 return GetTechnoPairs("BuildingTypes", TechnoPair.AbstractType.Name);
             }
         }
+        public List<TechnoPair> BuildingList0
+        {
+            get
+            {
+                return GetTechnoPairs(this["BuildingTypes"].ReorganizeTo());
+            }
+        }
         public List<TechnoPair> BuildingIDList
         {
             get
@@ -385,6 +392,13 @@ namespace RelertSharp.IniSystem
             get
             {
                 return GetTechnoPairs(this["Animations"]);
+            }
+        }
+        public List<TechnoPair> AnimationList0
+        {
+            get
+            {
+                return GetTechnoPairs(this["Animations"].ReorganizeTo());
             }
         }
         public List<TechnoPair> ParticalList

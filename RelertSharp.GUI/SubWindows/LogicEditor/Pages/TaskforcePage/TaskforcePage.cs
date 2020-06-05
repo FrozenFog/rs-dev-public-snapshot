@@ -15,11 +15,14 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private void InitialTaskforcePage()
         {
             LoadToObjectCollection(lbxTaskList, map.TaskForces);
+            LoadToObjectCollection(lbxScriptList, map.Scripts);
             pnlTaskforce.Initialize(lbxTaskList);
             pnlTaskforce.TaskforceNameUpdated += PnlTaskforce_TaskforceNameUpdated;
             pnlTaskforce.TaskforceAdded += PnlTaskforce_TaskforceAdded;
             pnlTaskforce.TaskforceDeleted += PnlTaskforce_TaskforceDeleted;
+            pnlScript.Initialize(descriptCollection.Scripts);
             if (lbxTaskList.Items.Count > 0) lbxTaskList.SelectedIndex = 0;
+            if (lbxScriptList.Items.Count > 0) lbxScriptList.SelectedIndex = 0;
         }
 
         private void PnlTaskforce_TaskforceDeleted(object sender, TaskforceItem taskforce)
@@ -43,6 +46,15 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             {
                 TaskforceItem item = lbxTaskList.SelectedItem as TaskforceItem;
                 pnlTaskforce.Reload(item);
+            }
+        }
+        private bool updatingLbxScriptList = false;
+        private void lbxScriptList_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (!updatingLbxScriptList)
+            {
+                TeamScriptGroup item = lbxScriptList.SelectedItem as TeamScriptGroup;
+                pnlScript.Reload(item);
             }
         }
     }

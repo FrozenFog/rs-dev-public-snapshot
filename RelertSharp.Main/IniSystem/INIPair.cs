@@ -23,6 +23,14 @@ namespace RelertSharp.IniSystem
             Value = val;
             keytype = GetKeyType(n);
         }
+        public INIPair(INIPair src)
+        {
+            Name = src.Name;
+            comment = src.comment;
+            preComment = src.preComment;
+            Value = src.Value;
+            keytype = src.keytype;
+        }
         #endregion
 
 

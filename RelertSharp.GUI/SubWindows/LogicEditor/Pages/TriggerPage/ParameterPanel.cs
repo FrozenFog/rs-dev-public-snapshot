@@ -196,7 +196,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 {
                     SwapCombobox(false, controlIndex);
                     Cursor = Cursors.WaitCursor;
-                    IList<object> data = GetComboCollections(param).ToList();
+                    IList<object> data = Map.GetComboCollections(param).ToList();
                     LoadToObjectCollection((ComboBox)controls[controlIndex], data);
                 }
                 SelectCombo((ComboBox)controls[controlIndex], param.GetParameter(paramData), param);
@@ -241,58 +241,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 ComboBox cbb = c as ComboBox;
                 if (cbb.Items.Count > 0) cbb.SelectedIndex = 0;
                 else cbb.Text = "";
-            }
-        }
-        private IEnumerable<object> GetComboCollections(TriggerParam param)
-        {
-            switch (param.ComboType)
-            {
-                case TriggerParam.ComboContent.Aircrafts:
-                    return GlobalRules.AircraftList;
-                case TriggerParam.ComboContent.Buildings:
-                    return GlobalRules.BuildingList;
-                case TriggerParam.ComboContent.Infantries:
-                    return GlobalRules.InfantryList;
-                case TriggerParam.ComboContent.Units:
-                    return GlobalRules.VehicleList;
-                case TriggerParam.ComboContent.SoundNames:
-                    return GlobalSound.SoundList;
-                case TriggerParam.ComboContent.EvaNames:
-                    return GlobalSound.EvaList;
-                case TriggerParam.ComboContent.ThemeNames:
-                    return GlobalSound.ThemeList;
-                case TriggerParam.ComboContent.LocalVar:
-                    return Map.LocalVariables.ToTechno();
-                case TriggerParam.ComboContent.SuperWeapons:
-                    return GlobalRules.SuperWeaponList;
-                case TriggerParam.ComboContent.CsfLabel:
-                    return GlobalCsf.TechnoPairs;
-                case TriggerParam.ComboContent.Triggers:
-                    return Map.Triggers.ToTechno();
-                case TriggerParam.ComboContent.Tags:
-                    return Map.Tags.ToTechno();
-                case TriggerParam.ComboContent.TechnoType:
-                    return GlobalRules.TechnoList;
-                case TriggerParam.ComboContent.GlobalVar:
-                    return GlobalRules.GlobalVar;
-                case TriggerParam.ComboContent.Teams:
-                    return Map.Teams.ToTechno();
-                case TriggerParam.ComboContent.Houses:
-                    return Map.Countries.ToTechno();
-                case TriggerParam.ComboContent.Animations:
-                    return GlobalRules.AnimationList;
-                case TriggerParam.ComboContent.ParticalAnim:
-                    return GlobalRules.ParticalList;
-                case TriggerParam.ComboContent.VoxelAnim:
-                    return GlobalRules.VoxAnimList;
-                case TriggerParam.ComboContent.BuildingID:
-                    return GlobalRules.BuildingIDList;
-                case TriggerParam.ComboContent.Movies:
-                    return GlobalRules.MovieList;
-                case TriggerParam.ComboContent.Warhead:
-                    return GlobalRules.WarheadList;
-                default:
-                    return null;
             }
         }
         private void SelectCombo(ComboBox dest, string param, TriggerParam lookup)

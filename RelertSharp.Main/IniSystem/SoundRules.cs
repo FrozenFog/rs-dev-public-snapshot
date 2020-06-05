@@ -29,22 +29,28 @@ namespace RelertSharp.IniSystem
         {
             INIEntity ent;
             ent = sound["SoundList"];
-            SoundList = new List<TechnoPair>();
+            int i = 0;
             foreach (INIPair p in ent)
             {
                 SoundList.Add(sound[p.Value as string].ToTechno(p.Name));
+                SoundList0.Add(new TechnoPair(i.ToString(), p.Value));
+                i++;
             }
+            i = 0;
             ent = eva["DialogList"];
-            EvaList = new List<TechnoPair>();
             foreach (INIPair p in ent)
             {
                 EvaList.Add(eva[p.Value as string].ToTechno(p.Name));
+                EvaList0.Add(new TechnoPair(i.ToString(), p.Value));
+                i++;
             }
+            i = 0;
             ent = theme["Themes"];
-            ThemeList = new List<TechnoPair>();
             foreach (INIPair p in ent)
             {
                 ThemeList.Add(theme[p.Value as string].ToTechno(p.Name));
+                ThemeList0.Add(new TechnoPair(i.ToString(), p.Value));
+                i++;
             }
         }
         #endregion
@@ -70,9 +76,12 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Calls - SoundRules
-        public List<TechnoPair> SoundList { get; private set; }
-        public List<TechnoPair> ThemeList { get; private set; }
-        public List<TechnoPair> EvaList { get; private set; }
+        public List<TechnoPair> SoundList { get; private set; } = new List<TechnoPair>();
+        public List<TechnoPair> ThemeList { get; private set; } = new List<TechnoPair>();
+        public List<TechnoPair> EvaList { get; private set; } = new List<TechnoPair>();
+        public List<TechnoPair> EvaList0 { get; private set; } = new List<TechnoPair>();
+        public List<TechnoPair> SoundList0 { get; private set; } = new List<TechnoPair>();
+        public List<TechnoPair> ThemeList0 { get; private set; } = new List<TechnoPair>();
         #endregion
     }
 }
