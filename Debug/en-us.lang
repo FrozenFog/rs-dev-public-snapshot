@@ -129,7 +129,7 @@ LGClblTaskCurNum=Unit num:
 LGClblScriptList=Script list
 LGClblScriptName=Script Name:
 LGClblScriptID=Script ID:
-LGClblScriptMemberList=Taskforce members list
+LGClblScriptMemberList=Script item list
 LGClblScriptCurType=Type:
 LGClblScriptCurPara=Parameter:
 LGClblScriptDesc=Parameter description
@@ -800,6 +800,7 @@ TstrScript=Script(start from 0)
 TstrTeam0=Team Type(start from 0)
 TstrFacing=Facing Direction
 TstrBudNum=Building Value
+TstrTarget=Target Type
 
 [TriggerEvents]
 TEA000=No Event
@@ -851,7 +852,7 @@ TED022=Triggers when the #TRIGGER HOUSE# builds the #AIRCRAFT#(registed in Ini).
 TEA023=Team Leaves Map
 TED023=Triggers when the #TEAM# leaves the map, this event will fire when the last team member leaves the map.\nWill NOT trigger if the team is COMPLETELY destroyed.
 TEA024=Zone Entered By...
-TED024=!ADVANCE!\nTriggers when any unit belonging to #HOUSE# enters a zone with a celltag along with this trigger.\nA ZONE is defined as follows:\nAn area which a unit can reach, or an area that a ground unit can reach using their pathfinding algorithm. A ZONE must be an isolated area considering by an individual unit.\nEg. Two land area was seperated by a river, a ground unit will consider these two lands as two seperated ZONEs, while an amphibious ground unit can reach both land and they will consider these two lands are one united ZONE. Thus, the former ground unit on the other land will not trigger this event, while the later amphibious unit will trigger this event with only ONE CELL MOVE ACTION. This also applies to landable non-aircraft unit, but it will trigger untill they landed.\nThus, ZONEs are various with different unit types.\nHovering air unit on and only on that celltag WILL fire this event, otherwise will not.\nSubterannean and chrono-moving units are complicated, testing is advised.\nMultiple identical tags in same zone will not cause multiple effect.\nIrrelevant to trigger house.
+TED024=!ADVANCE!\nTriggers when any unit belonging to #HOUSE# enters a zone with a celltag along with this trigger.\nA ZONE is defined as follows:\nAn area which a unit can reach, or an area that a ground unit can reach using their pathfinding algorithm. A ZONE must be an isolated area considering by an individual unit.\nEg. Two land area was seperated by a river, a ground unit will consider these two lands as two seperated ZONEs, while an amphibious ground unit can reach both land and they will consider these two lands as one united ZONE. Thus, the former ground unit on the other land will not trigger this event, while the later amphibious unit will trigger this event with only ONE CELL MOVE ACTION. This also applies to landable non-aircraft unit, but it will trigger untill they landed.\nThus, ZONEs are various with different unit types.\nHovering air unit on and only on that celltag WILL fire this event, otherwise will not.\nSubterannean and chrono-moving units are complicated, testing is advised.\nMultiple identical tags in same zone will not cause multiple effect.\nIrrelevant to trigger house.
 TEA025=Crossed Horizontal Line...
 TED025=Triggers when any unit belonging to #HOUSE# crossed horizontal line indicated with celltag.\nHorizontal line: Top-Left to Bottom-Right. Irrelevant to either side of the line, only triggers when the unit cross the line.\nIrrelevant to trigger house.
 TEA026=Crossed Vertical Line...

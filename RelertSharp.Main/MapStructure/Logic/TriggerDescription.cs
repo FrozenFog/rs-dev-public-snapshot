@@ -63,6 +63,11 @@ namespace RelertSharp.MapStructure.Logic
             INIEntity facing = f["ChangeFacing"];
             INIEntity bubble = f["TalkBubble"];
 
+            AttackTargetType = new List<TechnoPair>();
+            UnloadBehavior = new List<TechnoPair>();
+            Missions = new List<TechnoPair>();
+            FacingDirections = new List<TechnoPair>();
+            TalkBubbles = new List<TechnoPair>();
             ReadScriptSubCombo(AttackTargetType, target);
             ReadScriptSubCombo(UnloadBehavior, unload);
             ReadScriptSubCombo(Missions, mission);
@@ -71,10 +76,9 @@ namespace RelertSharp.MapStructure.Logic
         }
         private void ReadScriptSubCombo(List<TechnoPair> dest, INIEntity src)
         {
-            dest = new List<TechnoPair>();
             foreach(INIPair p in src)
             {
-                dest.Add(new TechnoPair(src.Name, DICT[p.Value]));
+                dest.Add(new TechnoPair(p.Name, DICT[p.Value]));
             }
         }
         #endregion

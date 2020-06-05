@@ -78,6 +78,9 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             if (CurrentDesc.Parameters.Count == 0)
             {
                 lblNa.Visible = true;
+                lklParamName.Visible = false;
+                lblParamName.Visible = true;
+                lblParamName.Text = Language.DICT["LGClblScriptCurPara"];
             }
             else
             {
@@ -98,13 +101,13 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 {
                     lklParamName.Visible = true;
                     lblParamName.Visible = false;
-                    lklParamName.Text = desc.Parameters[0].Name;
+                    lklParamName.Text = Language.DICT[desc.Parameters[0].Name];
                 }
                 else
                 {
                     lklParamName.Visible = false;
                     lblParamName.Visible = true;
-                    lblParamName.Text = desc.Parameters[0].Name;
+                    lblParamName.Text = Language.DICT[desc.Parameters[0].Name];
                 }
             }
         }
