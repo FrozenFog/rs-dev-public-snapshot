@@ -129,6 +129,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private void RefreshParam()
         {
             isParamRefreshing = true;
+            toolTip.RemoveAll();
             TriggerDescription desc = cbbEventAbst.SelectedItem as TriggerDescription;
             string[] parameters = CurrentItem.Parameters;
             foreach(Control c in gpbEventParam.Controls)
@@ -395,12 +396,15 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 case TriggerParam.ComboContent.SoundNames:
                 case TriggerParam.ComboContent.ThemeNames:
                 case TriggerParam.ComboContent.EvaNames:
-                    OnPlayingSound(param, p);
+                    if (p != null) OnPlayingSound(param, p);
                     break;
                 case TriggerParam.ComboContent.Triggers:
                     string triggerid = p.Index;
                     TriggerItem trigger = Map.Triggers[triggerid];
                     OnTracingTrigger(trigger);
+                    break;
+                case TriggerParam.ComboContent.CsfLabel:
+                    if (p != null) ManageCsfToolTip(sender as LinkLabel, p);
                     break;
             }
             if (param.Type == TriggerParam.ParamType.Waypoint)
@@ -409,6 +413,11 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 WaypointItem wp = Map.Waypoints.FindByID(wpid);
                 OnWaypointJump(wp);
             }
+        }
+        private void ManageCsfToolTip(LinkLabel sender, TechnoPair p)
+        {
+            string csf = GlobalCsf[p.Index].ContentString;
+            toolTip.SetToolTip(sender, csf);
         }
     }
 }

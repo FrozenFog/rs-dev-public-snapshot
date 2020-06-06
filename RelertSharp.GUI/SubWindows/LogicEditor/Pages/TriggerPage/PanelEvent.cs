@@ -121,6 +121,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private void RefreshControl()
         {
             isControlRefreshing = true;
+            EventCollection.Sort();
             LoadToObjectCollection(lbxEventList, EventCollection);
             if (EventCollection.Count() > 0)
             {
@@ -190,6 +191,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             if (!updatingLbxEventList && !isControlRefreshing)
             {
                 LogicItem item = lbxEventList.SelectedItem as LogicItem;
+                CurrentEvent = item;
                 pnlParameter.Reload(item);
             }
         }

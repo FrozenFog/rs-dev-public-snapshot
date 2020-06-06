@@ -125,6 +125,10 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - LogicGroup
+        public void Sort()
+        {
+            data.OrderBy(x => x.Key);
+        }
         public int GetCount()
         {
             for (int i = 1; i < 50; i++)

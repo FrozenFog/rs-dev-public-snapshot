@@ -11,7 +11,7 @@ namespace RelertSharp.GUI
     {
         private void LogicJumpToWaypoint(object logic, I2dLocateable cell)
         {
-            if (drew)
+            if (drew && cell != null)
             {
                 GlobalVar.Engine.MoveTo(cell);
                 GlobalVar.Engine.Refresh();

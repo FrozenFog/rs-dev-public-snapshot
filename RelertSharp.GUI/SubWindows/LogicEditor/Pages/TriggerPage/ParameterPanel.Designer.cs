@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.mtxbEventID = new System.Windows.Forms.MaskedTextBox();
             this.gpbEventParam = new System.Windows.Forms.GroupBox();
             this.lklEP4 = new System.Windows.Forms.LinkLabel();
@@ -54,6 +55,7 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.rtxbEventDetail = new System.Windows.Forms.RichTextBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.gpbEventParam.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -430,5 +432,6 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.RichTextBox rtxbEventDetail;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
