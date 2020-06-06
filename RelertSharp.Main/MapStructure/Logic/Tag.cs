@@ -31,6 +31,18 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - TagCollection
+        public TagItem NewTag(TriggerItem trg, string id)
+        {
+            TagItem t = new TagItem(trg, id);
+            this[id] = t;
+            return t;
+        }
+        public TagItem NewTag(TagItem src, string id)
+        {
+            TagItem t = new TagItem(src, id);
+            this[id] = t;
+            return t;
+        }
         public void Remove(TagItem t, string triggerid)
         {
             if (data.Keys.Contains(t.ID)) data.Remove(t.ID);
@@ -117,11 +129,11 @@ namespace RelertSharp.MapStructure.Logic
             Name = dataList[1];
             AssoTrigger = dataList[2];
         }
-        public TagItem(TagItem src)
+        public TagItem(TagItem src, string id)
         {
-            ID = src.ID;
+            ID = id;
             Repeating = src.Repeating;
-            Name = src.Name;
+            Name = src.Name + " - Clone";
             AssoTrigger = src.AssoTrigger;
         }
         public TagItem(TriggerItem trg, string _id)

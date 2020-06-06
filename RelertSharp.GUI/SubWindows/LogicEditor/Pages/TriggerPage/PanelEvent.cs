@@ -186,7 +186,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private bool updatingLbxEventList = false;
         private void lbxEventList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!updatingLbxEventList)
+            if (!updatingLbxEventList && !isControlRefreshing)
             {
                 LogicItem item = lbxEventList.SelectedItem as LogicItem;
                 pnlParameter.Reload(item);

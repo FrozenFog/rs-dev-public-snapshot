@@ -75,9 +75,12 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             CurrentItem = item;
             if (item == null) ClearContent();
-            else RefreshControl();
-            mtxbEventID.Focus();
-            mtxbEventID.SelectAll();
+            else
+            {
+                RefreshControl();
+                mtxbEventID.Focus();
+                mtxbEventID.SelectAll();
+            }
         }
         #endregion
 
@@ -221,10 +224,17 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         }
         public void ClearContent()
         {
-            foreach(Control c in Controls)
-            {
-                ClearContent(c);
-            }
+            isControlRefreshing = true;
+            foreach (ComboBox cbb in cbbs) cbb.Visible = false;
+            foreach (TextBox txb in txbs) txb.Visible = false;
+            foreach (CheckBox ckb in ckbs) ckb.Visible = false;
+            foreach (LinkLabel lkl in lkls) lkl.Visible = false;
+            lblNoParamE.Visible = true;
+            rtxbEventDetail.Text = "";
+            mtxbEventID.Text = "";
+            cbbEventAbst.SelectedIndex = 0;
+            txbEventAnno.Text = "";
+            isControlRefreshing = false;
         }
         private void ClearContent(Control c)
         {

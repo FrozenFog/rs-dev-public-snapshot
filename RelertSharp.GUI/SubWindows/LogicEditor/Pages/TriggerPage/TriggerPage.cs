@@ -72,15 +72,14 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             UpdateAt(lbxTriggerList, trigger, ref updatingLbxTriggerList);
         }
 
-        private void PnlTriggerTag_TriggerDeleted(object sender, TriggerItem trigger)
+        private void PnlTriggerTag_TriggerDeleted(object sender, EventArgs e)
         {
-            RemoveAt(lbxTriggerList, lbxTriggerList.SelectedIndex, ref updatingLbxTriggerList);
+            RemoveAt(lbxTriggerList, ref updatingLbxTriggerList);
         }
 
         private void PnlTriggerTag_NewTriggerFired(object sender, TriggerItem trigger)
         {
             AddTo(lbxTriggerList, trigger, ref updatingLbxTriggerList);
-            lbxTriggerList_SelectedValueChanged(null, null);
         }
 
 
@@ -89,7 +88,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             if (!updatingLbxTriggerList)
             {
-                TriggerItem item = (lbxTriggerList.SelectedItem) as TriggerItem;
+                TriggerItem item = lbxTriggerList.SelectedItem as TriggerItem;
                 if (item != null)
                 {
                     IEnumerable<TagItem> tags = Map.Tags.GetTagFromTrigger(item.ID);

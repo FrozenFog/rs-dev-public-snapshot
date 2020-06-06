@@ -21,12 +21,13 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         internal event TemplateStatChangedHandler TemplateStatChanged;
         internal event TriggerUpdateHandler TraceFired;
         internal event TriggerUpdateHandler NewTriggerFired;
-        internal event TriggerUpdateHandler TriggerDeleted;
+        internal event EventHandler TriggerDeleted;
 
 
         internal TriggerItem CurrentTrigger { get; set; }
         internal TagItem CurrentTag { get; set; }
         internal IEnumerable<TagItem> CurrentTagCollection { get; set; }
+        internal TriggerItem.DisplayingType DisplayingType { get; set; }
         private Map Map { get { return CurrentMapDocument.Map; } }
 
 
@@ -144,6 +145,8 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             }
         }
 
+
+        #region OnEvent
         protected virtual void OnTriggerUpdated()
         {
             TriggerUpdated?.Invoke(this, CurrentTrigger);
@@ -156,14 +159,17 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             TraceFired?.Invoke(this, target);
         }
-        protected virtual void OnNewTriggerAdded(TriggerItem newtrigger)
+        protected virtual void OnNewTriggerAdded()
         {
-            NewTriggerFired?.Invoke(this, newtrigger);
+            NewTriggerFired?.Invoke(this, CurrentTrigger);
         }
-        protected virtual void OnTriggerDeleted(TriggerItem deletedTrigger)
+        protected virtual void OnTriggerDeleted()
         {
-            TriggerDeleted?.Invoke(this, deletedTrigger);
+            TriggerDeleted?.Invoke(this, new EventArgs());
         }
+        #endregion
+
+
         private void txbTrgName_Validated(object sender, EventArgs e)
         {
             if (!isControlRefreshing)
@@ -242,40 +248,28 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         private void btnNewTrigger_Click(object sender, EventArgs e)
         {
-            TriggerItem newtrigger = Map.NewTrigger(out TagItem tag);
-            CurrentTrigger = new TriggerItem(newtrigger);
-            CurrentTag = new TagItem(tag);
+            TriggerItem newtrigger = Map.NewTrigger(DisplayingType, out TagItem tag);
+            CurrentTrigger = newtrigger;
+            CurrentTag = tag;
             cbbAttatchedTrg.Items.Add(newtrigger);
-            RefreshControl();
-            OnNewTriggerAdded(newtrigger);
+            OnNewTriggerAdded();
         }
 
         private void btnDelTrigger_Click(object sender, EventArgs e)
         {
-            IEnumerable<TagItem> tags = Map.Tags.GetTagFromTrigger(CurrentTrigger.ID);
-            foreach (TagItem i in tags)
-                Map.DelID(i.ID);
-            Map.Triggers.RemoveTrigger(CurrentTrigger);
-            foreach (var i in tags)
-                Map.Tags.Remove(i, CurrentTrigger.ID);
-            isControlRefreshing = true;
-            cbbAttatchedTrg.Items.Remove(CurrentTrigger);
-            isControlRefreshing = false;
-            OnTriggerDeleted(CurrentTrigger);
+            Map.RemoveTrigger(CurrentTrigger);
+            CurrentTrigger = null;
+            CurrentTagCollection = null;
+            OnTriggerDeleted();
         }
 
         private void btnCopyTrigger_Click(object sender, EventArgs e)
         {
-            TriggerItem copytrigger = new TriggerItem(CurrentTrigger);
-            copytrigger.ID = Map.NewID;
-            copytrigger.Name += " Clone";
-            copytrigger.SetDisplayingString(lbxTriggerList.Tag.ToString());
-            TagItem newtag = new TagItem(copytrigger, Map.NewID);
-            Map.Triggers[copytrigger.ID] = copytrigger;
-            Map.Tags[newtag.ID] = newtag;
-            Reload(copytrigger, new TagItem[] { newtag });
-            cbbAttatchedTrg.Items.Add(CurrentTrigger);
-            OnNewTriggerAdded(CurrentTrigger);
+            TriggerItem t = Map.NewTrigger(CurrentTrigger, DisplayingType, out TagItem tag);
+            CurrentTrigger = t;
+            CurrentTag = tag;
+            cbbAttatchedTrg.Items.Add(t);
+            OnNewTriggerAdded();
         }
 
         private void cbbTagID_SelectedIndexChanged(object sender, EventArgs e)

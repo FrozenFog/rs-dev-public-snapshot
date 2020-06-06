@@ -60,6 +60,13 @@ namespace RelertSharp.MapStructure.Logic
             this[id] = t;
             return t;
         }
+        public TriggerItem NewTrigger(string id, TriggerItem src, TriggerItem.DisplayingType type = TriggerItem.DisplayingType.IDandName)
+        {
+            TriggerItem t = new TriggerItem(src, id);
+            t.SetDisplayingString(type);
+            this[id] = t;
+            return t;
+        }
         public IEnumerable<TechnoPair> ToTechno()
         {
             List<TechnoPair> result = new List<TechnoPair>();
@@ -169,12 +176,12 @@ namespace RelertSharp.MapStructure.Logic
             Repeating = (TriggerRepeatingType)repeating;
             SetDisplayingString(DisplayingType.IDandName);
         }
-        public TriggerItem(TriggerItem src)
+        public TriggerItem(TriggerItem src, string id)
         {
-            ID = src.id;
+            ID = id;
             House = src.house;
             LinkedWith = src.LinkedWith;
-            Name = src.Name;
+            Name = src.Name + " - Clone";
             Disabled = src.Disabled;
             EasyOn = src.EasyOn;
             NormalOn = src.NormalOn;
