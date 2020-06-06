@@ -21,8 +21,33 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             pnlTaskforce.TaskforceAdded += PnlTaskforce_TaskforceAdded;
             pnlTaskforce.TaskforceDeleted += PnlTaskforce_TaskforceDeleted;
             pnlScript.Initialize(descriptCollection.Scripts);
+            pnlScript.NeedPlayingSound += PnlScript_NeedPlayingSound;
+            pnlScript.JumpToWaypoint += Pnl_JumpToWaypoint;
+            pnlScript.ScriptNameUpdated += PnlScript_ScriptNameUpdated;
+            pnlScript.NewScriptAdded += PnlScript_NewScriptAdded;
+            pnlScript.ScriptRemoved += PnlScript_ScriptRemoved;
             if (lbxTaskList.Items.Count > 0) lbxTaskList.SelectedIndex = 0;
             if (lbxScriptList.Items.Count > 0) lbxScriptList.SelectedIndex = 0;
+        }
+
+        private void PnlScript_ScriptRemoved(object sender, EventArgs e)
+        {
+            RemoveAt(lbxScriptList, ref updatingLbxScriptList);
+        }
+
+        private void PnlScript_NewScriptAdded(object sender, TeamScriptGroup scripts)
+        {
+            AddTo(lbxScriptList, scripts, ref updatingLbxScriptList);
+        }
+
+        private void PnlScript_ScriptNameUpdated(object sender, TeamScriptGroup scripts)
+        {
+            UpdateAt(lbxScriptList, scripts, ref updatingLbxScriptList);
+        }
+
+        private void PnlScript_NeedPlayingSound(object sender, TriggerParam param, TechnoPair p)
+        {
+            ManageSound(param, p, true);
         }
 
         private void PnlTaskforce_TaskforceDeleted(object sender, TaskforceItem taskforce)

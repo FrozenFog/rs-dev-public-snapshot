@@ -354,6 +354,7 @@
             this.lbxScriptList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lbxScriptList.Name = "lbxScriptList";
             this.lbxScriptList.Size = new System.Drawing.Size(269, 649);
+            this.lbxScriptList.Sorted = true;
             this.lbxScriptList.TabIndex = 0;
             this.lbxScriptList.SelectedValueChanged += new System.EventHandler(this.lbxScriptList_SelectedValueChanged);
             // 

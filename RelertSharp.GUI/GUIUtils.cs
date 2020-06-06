@@ -9,6 +9,21 @@ namespace RelertSharp.GUI
 {
     internal static class GuiUtils
     {
+        public static void InsertAt(ListBox dest, object item, ref bool locker)
+        {
+            locker = true;
+            int index = dest.SelectedIndex;
+            if (index >= 0)
+            {
+                dest.Items.Insert(index + 1, item);
+            }
+            else
+            {
+                dest.Items.Add(item);
+            }
+            locker = false;
+            dest.SelectedIndex = index + 1;
+        }
         public static void ClearControlContent(Control c)
         {
             Type t = c.GetType();
@@ -110,6 +125,7 @@ namespace RelertSharp.GUI
             locker = false;
             if (index != 0) dest.SelectedIndex = index - 1;
             else if (dest.Items.Count > 0) dest.SelectedIndex = 0;
+            else dest.SelectedItem = null;
         }
         public static void RemoveAt(ListBox dest, ref bool locker)
         {
@@ -119,6 +135,7 @@ namespace RelertSharp.GUI
             locker = false;
             if (index != 0) dest.SelectedIndex = index - 1;
             else if (dest.Items.Count > 0) dest.SelectedIndex = 0;
+            else dest.SelectedItem = null;
         }
         public static void GoEnter(KeyEventArgs e, Action a)
         {

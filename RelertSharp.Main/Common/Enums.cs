@@ -49,7 +49,10 @@ namespace RelertSharp.Common
     {
         SoundBankRnd = 14,
         Eva = 15,
-        Theme = 20
+        Theme = 20,
+        SoundBankRnd0 = 28,
+        Eva0 = 27,
+        Theme0 = 29
     }
     public enum CsfLanguage
     {

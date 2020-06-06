@@ -15,4 +15,6 @@ namespace RelertSharp.GUI
     internal delegate void SoundPlayingHandler(object sender, TriggerParam param, TechnoPair p);
     internal delegate void TaskforceHandler(object sender, TaskforceItem taskforce);
     internal delegate void I2dLocateableHandler(object sender, I2dLocateable pos);
+    internal delegate void ScriptHandler(object sender, TeamScriptItem script);
+    internal delegate void ScriptGroupHandler(object sender, TeamScriptGroup scripts);
 }

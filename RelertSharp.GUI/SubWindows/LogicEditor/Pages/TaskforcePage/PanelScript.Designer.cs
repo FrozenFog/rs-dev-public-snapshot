@@ -65,9 +65,9 @@
             // 
             // pnlParam
             // 
-            this.pnlParam.Location = new System.Drawing.Point(10, 367);
+            this.pnlParam.Location = new System.Drawing.Point(10, 322);
             this.pnlParam.Name = "pnlParam";
-            this.pnlParam.Size = new System.Drawing.Size(445, 299);
+            this.pnlParam.Size = new System.Drawing.Size(445, 344);
             this.pnlParam.TabIndex = 26;
             // 
             // txbScriptID
@@ -86,6 +86,7 @@
             this.txbScriptName.Name = "txbScriptName";
             this.txbScriptName.Size = new System.Drawing.Size(324, 25);
             this.txbScriptName.TabIndex = 25;
+            this.txbScriptName.Validated += new System.EventHandler(this.txbScriptName_Validated);
             // 
             // label2
             // 
@@ -107,13 +108,14 @@
             // 
             // btnDelScriptMem
             // 
-            this.btnDelScriptMem.Location = new System.Drawing.Point(164, 22);
+            this.btnDelScriptMem.Location = new System.Drawing.Point(167, 22);
             this.btnDelScriptMem.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnDelScriptMem.Name = "btnDelScriptMem";
             this.btnDelScriptMem.Size = new System.Drawing.Size(137, 29);
             this.btnDelScriptMem.TabIndex = 13;
-            this.btnDelScriptMem.Text = "LGCbtnDelScriptMem";
+            this.btnDelScriptMem.Text = "LGCbtnDelScript";
             this.btnDelScriptMem.UseVisualStyleBackColor = true;
+            this.btnDelScriptMem.Click += new System.EventHandler(this.btnDelScriptMem_Click);
             // 
             // btnCopyScriptMem
             // 
@@ -122,8 +124,9 @@
             this.btnCopyScriptMem.Name = "btnCopyScriptMem";
             this.btnCopyScriptMem.Size = new System.Drawing.Size(137, 29);
             this.btnCopyScriptMem.TabIndex = 12;
-            this.btnCopyScriptMem.Text = "LGCbtnCopyScriptMem";
+            this.btnCopyScriptMem.Text = "LGCbtnCopyScript";
             this.btnCopyScriptMem.UseVisualStyleBackColor = true;
+            this.btnCopyScriptMem.Click += new System.EventHandler(this.btnCopyScriptMem_Click);
             // 
             // btnAddScriptMem
             // 
@@ -132,8 +135,9 @@
             this.btnAddScriptMem.Name = "btnAddScriptMem";
             this.btnAddScriptMem.Size = new System.Drawing.Size(137, 29);
             this.btnAddScriptMem.TabIndex = 2;
-            this.btnAddScriptMem.Text = "LGCbtnAddScriptMem";
+            this.btnAddScriptMem.Text = "LGCbtnNewScript";
             this.btnAddScriptMem.UseVisualStyleBackColor = true;
+            this.btnAddScriptMem.Click += new System.EventHandler(this.btnAddScriptMem_Click);
             // 
             // label32
             // 
@@ -151,7 +155,7 @@
             this.lbxScriptList.Location = new System.Drawing.Point(10, 118);
             this.lbxScriptList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lbxScriptList.Name = "lbxScriptList";
-            this.lbxScriptList.Size = new System.Drawing.Size(445, 244);
+            this.lbxScriptList.Size = new System.Drawing.Size(445, 199);
             this.lbxScriptList.TabIndex = 0;
             this.lbxScriptList.SelectedValueChanged += new System.EventHandler(this.lbxScriptList_SelectedValueChanged);
             // 

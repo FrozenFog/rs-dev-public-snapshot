@@ -149,6 +149,14 @@ namespace RelertSharp.Utils
         {
             return crd / 1000;
         }
+        public static int Coord128X(int coord)
+        {
+            return coord % 128;
+        }
+        public static int Coord128Y(int coord)
+        {
+            return coord >> 7;
+        }
         public static uint[] ToUintArray(byte[] data)
         {
             uint[] result = new uint[data.Length / 4];

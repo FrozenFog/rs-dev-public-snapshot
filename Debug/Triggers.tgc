@@ -212,13 +212,13 @@
 
 ;id=paramNum,param1,param2,TEAxxx,TEDxxx,
 ;;;;paramEditableNum,paramtype,traceable,pos,name,dropDataType
-;;;;;;;;;;;;;;;;;;;;;type:0=plain string, 1=selectable string, 2=bool, 3=waypoint like
+;;;;;;;;;;;;;;;;;;;;;type:0=plain string, 1=selectable string, 2=bool, 3=waypoint like, 4=cell coord like
 [Scripts]
 0=1,0,SAA00,SAD00,1,1,0,0,TstrTarget,23
-1=1,0,SAA01,SAD01,1,0,1,0,TstrWaypoint,0
+1=1,0,SAA01,SAD01,1,3,1,0,TstrWaypoint,0
 2=1,0,SAA02,SAD02,0
-3=1,0,SAA03,SAD03,1,0,1,0,TstrWaypoint,0
-4=1,0,SAA04,SAD04,1,0,1,0,TstrCelltag,0
+3=1,0,SAA03,SAD03,1,3,1,0,TstrWaypoint,0
+4=1,0,SAA04,SAD04,1,3,1,0,TstrCelltag,0
 5=1,0,SAA05,SAD05,1,0,0,0,TstrTimeSec,0
 6=1,0,SAA06,SAD06,1,0,0,0,TstrScpLine,0
 7=1,0,SAA07,SAD07,0
@@ -229,8 +229,8 @@
 12=1,0,SAA12,SAD12,1,1,1,0,TstrGlob,8
 13=1,0,SAA13,SAD13,1,0,0,0,TstrSeq,0
 14=1,0,SAA14,SAD14,0
-15=1,0,SAA15,SAD15,1,0,1,0,TstrWaypoint,0
-16=1,0,SAA16,SAD16,1,0,1,0,TstrWaypoint,0
+15=1,0,SAA15,SAD15,1,3,1,0,TstrWaypoint,0
+16=1,0,SAA16,SAD16,1,3,1,0,TstrWaypoint,0
 17=1,0,SAA17,SAD17,1,1,1,0,TstrScript,26
 18=1,0,SAA18,SAD18,1,1,1,0,TstrTeam0,27
 19=1,0,SAA19,SAD19,0
@@ -240,7 +240,7 @@
 23=1,0,SAA23,SAD23,0
 24=1,0,SAA24,SAD24,1,1,1,0,TstrEvaN,27
 25=1,0,SAA25,SAD25,1,1,1,0,TstrSoundN,28
-26=1,0,SAA26,SAD26,1,1,0,0,TstrMovie,10
+26=1,0,SAA26,SAD26,1,1,0,0,TstrMovie,34
 27=1,0,SAA27,SAD27,1,1,1,0,TstrMusN,29
 28=1,0,SAA28,SAD28,0
 29=1,0,SAA29,SAD29,0
@@ -273,7 +273,7 @@
 56=1,0,SAA56,SAD56,1,1,0,0,TstrBudNum,31
 57=1,0,SAA57,SAD57,1,1,0,0,TstrBudNum,31
 58=1,0,SAA58,SAD58,1,1,0,0,TstrBudNum,31
-59=1,0,SAA59,SAD59,1,0,1,0,TstrWaypoint,0
+59=1,0,SAA59,SAD59,1,3,1,0,TstrWaypoint,0
 60=1,0,SAA60,SAD60,0
 61=1,0,SAA61,SAD61,0
 62=1,0,SAA62,SAD62,0

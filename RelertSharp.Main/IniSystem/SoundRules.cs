@@ -62,15 +62,30 @@ namespace RelertSharp.IniSystem
             string evaname = eva["DialogList"][index];
             return eva[evaname];
         }
+        public INIEntity GetEva(int index)
+        {
+            string name = eva["DialogList"].GetPair(index).Value;
+            return eva[name];
+        }
         public INIEntity GetSound(string index)
         {
             string soundname = sound["SoundList"][index];
             return sound[soundname];
         }
+        public INIEntity GetSound(int index)
+        {
+            string name = sound["SoundList"].GetPair(index).Value;
+            return sound[name];
+        }
         public INIEntity GetTheme(string index)
         {
             string themename = theme["Themes"][index];
             return theme[themename];
+        }
+        public INIEntity GetTheme(int index)
+        {
+            string name = theme["Themes"].GetPair(index).Value;
+            return theme[name];
         }
         #endregion
 

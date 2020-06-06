@@ -148,6 +148,10 @@ namespace RelertSharp.IniSystem
             foreach(INIPair p in data.Values) if(!result.Contains(p.Value)) result.Add(p.Value);
             return result;
         }
+        public INIPair GetPair(int index)
+        {
+            return data[data.Keys.ElementAt(index)];
+        }
         /// <summary>
         /// Find and return specified IniPair, return NullPair(not null) if not found.
         /// </summary>

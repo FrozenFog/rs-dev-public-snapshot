@@ -153,7 +153,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         #endregion
 
         #region Trace Utils
-        private async void ManageSound(TriggerParam param, TechnoPair p)
+        private async void ManageSound(TriggerParam param, TechnoPair p, bool isZero = false)
         {
             if (soundPlayer.IsPlaying)
             {
@@ -162,7 +162,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             }
             else
             {
-                string name = soundPlayer.GetSoundName(p, (SoundType)param.ComboType);
+                string name = soundPlayer.GetSoundName(p, (SoundType)param.ComboType, isZero);
                 await Task.Run(() =>
                 {
                     soundPlayer.LoadWav(GlobalVar.GlobalSoundBank.GetSound(name));

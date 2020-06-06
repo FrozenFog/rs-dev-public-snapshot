@@ -57,6 +57,21 @@ namespace RelertSharp.MapStructure
             Triggers.RemoveTrigger(item);
             DelID(item.ID);
         }
+        public TeamScriptGroup NewScript()
+        {
+            TeamScriptGroup group = Scripts.NewScript(NewID);
+            return group;
+        }
+        public TeamScriptGroup NewScript(TeamScriptGroup src)
+        {
+            TeamScriptGroup g = Scripts.NewScript(src, NewID);
+            return g;
+        }
+        public void RemoveScript(TeamScriptGroup group)
+        {
+            Scripts.Remove(group.ID);
+            DelID(group.ID);
+        }
         public TaskforceItem NewTaskforce()
         {
             TaskforceItem t = TaskForces.NewTaskforce(NewID);
@@ -133,6 +148,8 @@ namespace RelertSharp.MapStructure
                     return GlobalRules.BuildingIDList;
                 case TriggerParam.ComboContent.Movies:
                     return GlobalRules.MovieList;
+                case TriggerParam.ComboContent.Movies0:
+                    return GlobalRules.MovieList0;
                 case TriggerParam.ComboContent.Warhead:
                     return GlobalRules.WarheadList;
                 case TriggerParam.ComboContent.Animations0:

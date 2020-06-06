@@ -64,18 +64,31 @@ namespace RelertSharp.Common
             watch.Reset();
             isValid = true;
         }
-        public string GetSoundName(TechnoPair pair, SoundType type)
+        public string GetSoundName(TechnoPair pair, SoundType type, bool isZero = false)
         {
             INIEntity ent;
+            int index = -1;
+            try
+            {
+                if (isZero) index = int.Parse(pair.Index);
+            }
+            catch
+            {
+                return string.Empty;
+            }
             switch (type)
             {
                 case SoundType.Eva:
+                case SoundType.Eva0:
                     string tmp = GlobalVar.PlayerSide + "Eva";
                     string evakey = GlobalVar.GlobalConfig["SoundConfigs"][tmp];
-                    ent = GlobalVar.GlobalSound.GetEva(pair.Index);
+                    if (isZero) ent = GlobalVar.GlobalSound.GetEva(int.Parse(pair.Index));
+                    else ent = GlobalVar.GlobalSound.GetEva(pair.Index);
                     return ent[evakey] + ".wav";
                 case SoundType.SoundBankRnd:
-                    ent = GlobalVar.GlobalSound.GetSound(pair.Index);
+                case SoundType.SoundBankRnd0:
+                    if (isZero) ent = GlobalVar.GlobalSound.GetSound(int.Parse(pair.Index));
+                    else ent = GlobalVar.GlobalSound.GetSound(pair.Index);
                     string[] randoms = ent["Sounds"].Split(new char[] { ' ' });
                     Random r = new Random();
                     int rand = r.Next(0, randoms.Length - 1);
@@ -83,7 +96,9 @@ namespace RelertSharp.Common
                     if (result.StartsWith("$")) result = result.Substring(1);
                     return result;
                 case SoundType.Theme:
-                    ent = GlobalVar.GlobalSound.GetTheme(pair.Index);
+                case SoundType.Theme0:
+                    if (isZero) ent = GlobalVar.GlobalSound.GetTheme(int.Parse(pair.Index));
+                    else ent = GlobalVar.GlobalSound.GetTheme(pair.Index);
                     return ent["Sound"] + ".wav";
                 default:
                     return string.Empty;

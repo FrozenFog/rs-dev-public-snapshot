@@ -160,7 +160,8 @@ namespace RelertSharp.MapStructure.Logic
             PlainString = 0,
             SelectableString = 1,
             Bool = 2,
-            Waypoint = 3
+            Waypoint = 3,
+            CellPos = 4
         }
         public enum ComboContent
         {
@@ -198,7 +199,8 @@ namespace RelertSharp.MapStructure.Logic
             Facing = 30,
             Buildings0 = 31,
             Animations0 = 32,
-            TalkBubble = 33
+            TalkBubble = 33,
+            Movies0 = 34
         }
         #region Constructor - TriggerParam
         public TriggerParam(int paramType, bool traceable, int pos, string name, int comboType)

@@ -419,7 +419,14 @@ namespace RelertSharp.IniSystem
         {
             get
             {
-                return GetTechnoPairs(this["Movies"]);
+                return GetTechnoPairs(Art["Movies"]);
+            }
+        }
+        public List<TechnoPair> MovieList0
+        {
+            get
+            {
+                return GetTechnoPairs(Art["Movies"].ReorganizeTo());
             }
         }
         public List<TechnoPair> TechnoList

@@ -52,13 +52,13 @@
             this.mtxbScriptID.Size = new System.Drawing.Size(41, 25);
             this.mtxbScriptID.TabIndex = 42;
             this.mtxbScriptID.ValidatingType = typeof(int);
-            this.mtxbScriptID.Validated += new System.EventHandler(this.mtxbScriptID_Validated);
+            this.mtxbScriptID.TextChanged += new System.EventHandler(this.mtxbScriptID_Validated);
             // 
             // lblNa
             // 
             this.lblNa.AutoSize = true;
             this.lblNa.Enabled = false;
-            this.lblNa.Location = new System.Drawing.Point(307, 24);
+            this.lblNa.Location = new System.Drawing.Point(0, 73);
             this.lblNa.Name = "lblNa";
             this.lblNa.Size = new System.Drawing.Size(111, 15);
             this.lblNa.TabIndex = 41;
@@ -67,56 +67,61 @@
             // 
             // txbParam
             // 
-            this.txbParam.Location = new System.Drawing.Point(307, 20);
+            this.txbParam.Location = new System.Drawing.Point(0, 69);
             this.txbParam.Name = "txbParam";
-            this.txbParam.Size = new System.Drawing.Size(137, 25);
+            this.txbParam.Size = new System.Drawing.Size(442, 25);
             this.txbParam.TabIndex = 39;
             this.txbParam.Visible = false;
+            this.txbParam.Validated += new System.EventHandler(this.ParamChanged);
             // 
             // btnNewScript
             // 
-            this.btnNewScript.Location = new System.Drawing.Point(0, 54);
+            this.btnNewScript.Location = new System.Drawing.Point(0, 99);
             this.btnNewScript.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnNewScript.Name = "btnNewScript";
             this.btnNewScript.Size = new System.Drawing.Size(137, 29);
             this.btnNewScript.TabIndex = 31;
-            this.btnNewScript.Text = "LGCbtnNewScript";
+            this.btnNewScript.Text = "LGCbtnAddScriptMem";
             this.btnNewScript.UseVisualStyleBackColor = true;
+            this.btnNewScript.Click += new System.EventHandler(this.btnNewScript_Click);
             // 
             // btnDelScript
             // 
-            this.btnDelScript.Location = new System.Drawing.Point(307, 54);
+            this.btnDelScript.Location = new System.Drawing.Point(153, 99);
             this.btnDelScript.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnDelScript.Name = "btnDelScript";
             this.btnDelScript.Size = new System.Drawing.Size(137, 29);
             this.btnDelScript.TabIndex = 32;
-            this.btnDelScript.Text = "LGCbtnDelScript";
+            this.btnDelScript.Text = "LGCbtnDelScriptMem";
             this.btnDelScript.UseVisualStyleBackColor = true;
+            this.btnDelScript.Click += new System.EventHandler(this.btnDelScript_Click);
             // 
             // btnCopyScript
             // 
-            this.btnCopyScript.Location = new System.Drawing.Point(155, 54);
+            this.btnCopyScript.Location = new System.Drawing.Point(305, 99);
             this.btnCopyScript.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCopyScript.Name = "btnCopyScript";
             this.btnCopyScript.Size = new System.Drawing.Size(137, 29);
             this.btnCopyScript.TabIndex = 30;
-            this.btnCopyScript.Text = "LGCbtnCopyScript";
+            this.btnCopyScript.Text = "LGCbtnCopyScriptMem";
             this.btnCopyScript.UseVisualStyleBackColor = true;
+            this.btnCopyScript.Click += new System.EventHandler(this.btnCopyScript_Click);
             // 
             // cbbParam
             // 
             this.cbbParam.FormattingEnabled = true;
-            this.cbbParam.Location = new System.Drawing.Point(307, 21);
+            this.cbbParam.Location = new System.Drawing.Point(0, 70);
             this.cbbParam.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbbParam.Name = "cbbParam";
-            this.cbbParam.Size = new System.Drawing.Size(137, 23);
+            this.cbbParam.Size = new System.Drawing.Size(442, 23);
             this.cbbParam.TabIndex = 38;
             this.cbbParam.Visible = false;
+            this.cbbParam.SelectedValueChanged += new System.EventHandler(this.ParamChanged);
             // 
             // lblParamName
             // 
             this.lblParamName.AutoSize = true;
-            this.lblParamName.Location = new System.Drawing.Point(305, 1);
+            this.lblParamName.Location = new System.Drawing.Point(-2, 50);
             this.lblParamName.Name = "lblParamName";
             this.lblParamName.Size = new System.Drawing.Size(159, 15);
             this.lblParamName.TabIndex = 37;
@@ -129,7 +134,7 @@
             this.cbbScriptType.Location = new System.Drawing.Point(47, 21);
             this.cbbScriptType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbbScriptType.Name = "cbbScriptType";
-            this.cbbScriptType.Size = new System.Drawing.Size(245, 23);
+            this.cbbScriptType.Size = new System.Drawing.Size(395, 23);
             this.cbbScriptType.TabIndex = 36;
             this.cbbScriptType.SelectedValueChanged += new System.EventHandler(this.cbbScriptType_SelectedValueChanged);
             // 
@@ -145,7 +150,7 @@
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(0, 90);
+            this.label34.Location = new System.Drawing.Point(0, 130);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(135, 15);
             this.label34.TabIndex = 34;
@@ -153,23 +158,24 @@
             // 
             // rtxbScriptDesc
             // 
-            this.rtxbScriptDesc.Location = new System.Drawing.Point(3, 107);
+            this.rtxbScriptDesc.Location = new System.Drawing.Point(3, 147);
             this.rtxbScriptDesc.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rtxbScriptDesc.Name = "rtxbScriptDesc";
             this.rtxbScriptDesc.ReadOnly = true;
-            this.rtxbScriptDesc.Size = new System.Drawing.Size(445, 195);
+            this.rtxbScriptDesc.Size = new System.Drawing.Size(439, 195);
             this.rtxbScriptDesc.TabIndex = 33;
             this.rtxbScriptDesc.Text = "";
             // 
             // lklParamName
             // 
             this.lklParamName.AutoSize = true;
-            this.lklParamName.Location = new System.Drawing.Point(305, 1);
+            this.lklParamName.Location = new System.Drawing.Point(-2, 50);
             this.lklParamName.Name = "lklParamName";
             this.lklParamName.Size = new System.Drawing.Size(87, 15);
             this.lklParamName.TabIndex = 43;
             this.lklParamName.TabStop = true;
             this.lklParamName.Text = "linkLabel1";
+            this.lklParamName.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lklParamName_LinkClicked);
             // 
             // PanelScriptParam
             // 
@@ -189,7 +195,7 @@
             this.Controls.Add(this.label34);
             this.Controls.Add(this.rtxbScriptDesc);
             this.Name = "PanelScriptParam";
-            this.Size = new System.Drawing.Size(451, 304);
+            this.Size = new System.Drawing.Size(445, 344);
             this.ResumeLayout(false);
             this.PerformLayout();
 
