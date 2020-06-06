@@ -25,12 +25,12 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         internal LogicGroup EventCollection { get; set; }
         private LogicItem CurrentEvent { get; set; }
+        private TriggerItem ParentTrigger { get; set; }
         private Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
 
 
         private bool isEvent = true;
         private bool initialized = false;
-        private string parentID;
         private ListBox lbxTriggerList;
 
 
@@ -82,7 +82,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             if (isEvent) EventCollection = trigger.Events;
             else EventCollection = trigger.Actions;
-            parentID = trigger.ID;
+            ParentTrigger = trigger;
             if (EventCollection.Count() > 0)
             {
                 CurrentEvent = EventCollection.First(); ;
@@ -127,6 +127,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 lbxEventList.SelectedIndex = 0;
                 pnlParameter.Reload(CurrentEvent);
             }
+            else pnlParameter.Reload(null);
             isControlRefreshing = false;
         }
         private void SetLanguage(bool isEvent)
@@ -162,14 +163,13 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         private void btnNewEvent_Click(object sender, EventArgs e)
         {
-            if (lbxTriggerList.SelectedItem == null) return;
-            if (lbxEventList.Items.Count > 19) return;
+            if (ParentTrigger == null) return;
+            if (lbxEventList.Items.Count > 30) return;
             isControlRefreshing = true;
             LogicItem item;
-            if (isEvent) item = Map.Triggers[parentID].Events.NewEvent();
-            else item = Map.Triggers[parentID].Actions.NewAction();
-            lbxEventList.Items.Add(item);
-            lbxEventList.SelectedItem = item;
+            if (isEvent) item = EventCollection.NewEvent();
+            else item = EventCollection.NewAction();
+            AddTo(lbxEventList, item, ref updatingLbxEventList);
             pnlParameter.Reload(item);
             isControlRefreshing = false;
         }
@@ -178,9 +178,10 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             if (lbxEventList.SelectedItem == null) return;
             LogicItem ev = pnlParameter.CurrentItem;
-            Map.Triggers[parentID].Events.Remove(ev);
+            EventCollection.Remove(ev);
             pnlParameter.CurrentItem = null;
             RemoveAt(lbxEventList, lbxEventList.SelectedIndex, ref updatingLbxEventList);
+            if (lbxEventList.Items.Count == 0) pnlParameter.Reload(null);
         }
 
         private bool updatingLbxEventList = false;
@@ -198,8 +199,18 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             dlgCopy d = new dlgCopy();
             if (d.ShowDialog() == DialogResult.OK)
             {
-                Map.Triggers[parentID].Events.Multiply(d.Result.Split(new char[] { '\n' }), CurrentEvent, pnlParameter.CurrentParams);
-                OnTriggerRefreshing(Map.Triggers[parentID]);
+                EventCollection.Multiply(d.Result.Split(new char[] { '\n' }), CurrentEvent, pnlParameter.CurrentParams);
+            }
+        }
+
+        private void btnCopyEvent_Click(object sender, EventArgs e)
+        {
+            if (ParentTrigger != null && EventCollection != null)
+            {
+                int num = EventCollection.GetCount();
+                LogicItem lg = new LogicItem(CurrentEvent, num);
+                EventCollection.Add(lg);
+                AddTo(lbxEventList, lg, ref updatingLbxEventList);
             }
         }
     }

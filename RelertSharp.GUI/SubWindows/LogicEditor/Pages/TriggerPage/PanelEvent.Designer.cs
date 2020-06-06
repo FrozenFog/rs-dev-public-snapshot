@@ -76,6 +76,7 @@
             this.lbxEventList.Margin = new System.Windows.Forms.Padding(4);
             this.lbxEventList.Name = "lbxEventList";
             this.lbxEventList.Size = new System.Drawing.Size(183, 289);
+            this.lbxEventList.Sorted = true;
             this.lbxEventList.TabIndex = 9;
             this.lbxEventList.SelectedIndexChanged += new System.EventHandler(this.lbxEventList_SelectedIndexChanged);
             // 
@@ -99,6 +100,7 @@
             this.btnCopyEvent.TabIndex = 8;
             this.btnCopyEvent.Text = "LGCbtnCopyEvent";
             this.btnCopyEvent.UseVisualStyleBackColor = true;
+            this.btnCopyEvent.Click += new System.EventHandler(this.btnCopyEvent_Click);
             // 
             // cmsCopyEvent
             // 

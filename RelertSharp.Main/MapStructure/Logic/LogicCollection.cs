@@ -121,7 +121,11 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Private Methods - LogicGroup
-        private int GetCount()
+        #endregion
+
+
+        #region Public Methods - LogicGroup
+        public int GetCount()
         {
             for (int i = 1; i < 50; i++)
             {
@@ -129,10 +133,6 @@ namespace RelertSharp.MapStructure.Logic
             }
             return 50;
         }
-        #endregion
-
-
-        #region Public Methods - LogicGroup
         public LogicItem NewEvent()
         {
             LogicItem item = new LogicItem(LogicType.EventLogic, GetCount());
