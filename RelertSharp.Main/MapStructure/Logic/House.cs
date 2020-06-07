@@ -55,7 +55,14 @@ namespace RelertSharp.MapStructure.Logic
         public HouseItem(INIEntity ent) : base(ent)
         {
             IQ = ent.PopPair("IQ").ParseInt();
-            Edge = (HouseEdges)Enum.Parse(typeof(HouseEdges), ent.PopPair("Edge").Value, true);
+            try
+            {
+                Edge = (HouseEdges)Enum.Parse(typeof(HouseEdges), ent.PopPair("Edge").Value, true);
+            }
+            catch
+            {
+                Edge = HouseEdges.North;
+            }
             ColorName = ent.PopPair("Color").Value;
             alliesWith = ent.PopPair("Allies").ParseStringList().ToList();
             Country = ent.PopPair("Country").Value;

@@ -258,6 +258,11 @@ namespace RelertSharp.FileSystem
             }
         }
         #endregion
+
+
+        #region Public Calls - VirtualDir
+        public int Count { get { return fileOrigin.Count; } }
+        #endregion
     }
 
 

@@ -20,7 +20,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Constructor - DescriptCollection
         public DescriptCollection()
         {
-            INIFile f = new INIFile(@"Triggers.tgc");
+            INIFile f = new INIFile(@"Triggers.tgc", Common.INIFileType.DefaultINI, true);
             INIEntity ev = f["EventParams"];
             INIEntity ac = f["ActionParams"];
             INIEntity sc = f["Scripts"];

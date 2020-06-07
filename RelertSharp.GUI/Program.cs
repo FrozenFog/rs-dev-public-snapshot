@@ -44,15 +44,12 @@ namespace RelertSharp.GUI
                     string name;
                     if (args.Count() == 0)
                     {
-                        OpenFileDialog dlg = new OpenFileDialog()
+                        WelcomeWindow welcome = new WelcomeWindow();
+                        Application.Run(welcome);
+                        if (welcome.DialogResult == DialogResult.OK)
                         {
-                            Title = Language.DICT["OpenMapDlgTitle"],
-                            InitialDirectory = Application.StartupPath,
-                            Filter = "Red Alert 2 Map File|*.map;*.yrm;*.mpr",
-                            AddExtension = true,
-                            CheckFileExists = true,
-                        };
-                        if (dlg.ShowDialog() == DialogResult.OK) name = dlg.FileName;
+                            name = welcome.MapName;
+                        }
                         else return;
                     }
                     else name = args[0];
