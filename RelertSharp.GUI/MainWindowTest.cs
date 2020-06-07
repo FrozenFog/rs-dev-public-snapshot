@@ -50,7 +50,7 @@ namespace RelertSharp.GUI
                 Language.SetControlLanguage(c);
             }
             Language.SetControlLanguage(cmsToolSelect);
-            Text = Language.DICT[Text];
+            Text = Language.DICT[Text] + Constant.ReleaseDate;
             logicEditor.JumpToWaypoint += LogicJumpToWaypoint;
         }
         private bool updatingLightningData = false;
