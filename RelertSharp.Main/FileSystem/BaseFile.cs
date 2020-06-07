@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.IO;
 using RelertSharp.Common;
+using CipherLib;
 
 namespace RelertSharp.FileSystem
 {
@@ -26,11 +28,23 @@ namespace RelertSharp.FileSystem
 
 
         #region Ctor - BaseFile
-        public BaseFile(string path, FileMode m, FileAccess a, bool _keepAlive = true)
+        public BaseFile(string path, FileMode m, FileAccess a, bool _keepAlive = true, bool ciphed = false)
         {
             if (m == FileMode.Create && File.Exists(path)) File.Delete(path);
             _fs = new FileStream(path, m, a);
-            if (!_keepAlive) _fs.CopyTo(memoryRead);
+            if (ciphed)
+            {
+                MemoryStream ms = new MemoryStream();
+                _fs.CopyTo(ms);
+                byte[] tmp = Cipher.DecodeArray(ms.ToArray());
+                memoryRead = new MemoryStream(tmp);
+                ms.Dispose();
+                _keepAlive = false;
+            }
+            else
+            {
+                if (!_keepAlive) _fs.CopyTo(memoryRead);
+            }
             memoryRead.Seek(0, SeekOrigin.Begin);
             access = a;
             filepath = _fs.Name;
@@ -40,8 +54,12 @@ namespace RelertSharp.FileSystem
             if (!_keepAlive) _fs.Dispose();
             InitStream();
         }
-        public BaseFile(byte[] _rawData, string _fileName, FileAccess _acc = FileAccess.Read)
+        public BaseFile(byte[] _rawData, string _fileName, FileAccess _acc = FileAccess.Read, bool ciphed = false)
         {
+            if (ciphed)
+            {
+                _rawData = Cipher.DecodeArray(_rawData);
+            }
             memoryRead = new MemoryStream(_rawData);
             memoryRead.Seek(0, SeekOrigin.Begin);
             access = _acc;
@@ -49,7 +67,7 @@ namespace RelertSharp.FileSystem
             GetNames();
             InitStream();
         }
-        public BaseFile(Stream stream, string _fileName)
+        public BaseFile(Stream stream, string _fileName, bool ciphed = false)
         {
             stream.CopyTo(memoryRead);
             memoryRead.Seek(0, SeekOrigin.Begin);

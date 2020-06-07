@@ -148,8 +148,10 @@ namespace RelertSharp.IniSystem
         {
             string art = GetArtName(regid);
             string pcx = Art[art]["CameoPCX"];
-            if (string.IsNullOrEmpty(pcx)) return "xxicon.shp";
-            return pcx;
+            string shp = Art[art]["Cameo"].ToLower() + ".shp";
+            if (string.IsNullOrEmpty(pcx)) return shp;
+            if (string.IsNullOrEmpty(shp)) return pcx;
+            return "xxicon.shp";
         }
         public string GetCustomPaletteName(string nameid)
         {

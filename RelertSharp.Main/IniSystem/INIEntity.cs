@@ -42,6 +42,10 @@ namespace RelertSharp.IniSystem
             }
             entitytype = INIEntType.ListType;
         }
+        public INIEntity (string name)
+        {
+            this.name = name;
+        }
         #endregion
 
 
@@ -72,6 +76,30 @@ namespace RelertSharp.IniSystem
                 result.AddPair(np);
             }
             return result;
+        }
+        /// <summary>
+        /// Similar to JoinWith, but remain original kvpair when the src has same kvpair
+        /// </summary>
+        /// <param name="src"></param>
+        public void MergeWith(INIEntity src)
+        {
+            if (entitytype == INIEntType.ListType)
+            {
+                int maxindex = Reorganize();
+                foreach(INIPair p in src)
+                {
+                    p.Name = maxindex++.ToString();
+                    data[p.Name] = p;
+                }
+            }
+            else
+            {
+                foreach(INIPair p in src)
+                {
+                    if (data.Keys.Contains(p.Name)) continue;
+                    else data[p.Name] = p;
+                }
+            }
         }
         /// <summary>
         /// Merge two IniEnt, items with same key will be overwrite by new one.
@@ -207,6 +235,10 @@ namespace RelertSharp.IniSystem
             }
             return sb.ToString();
         }
+        public override string ToString()
+        {
+            return string.Format("[{0}]:{1} items", Name, data.Count);
+        }
         #region Enumerator
         public IEnumerator<INIPair> GetEnumerator()
         {
@@ -238,6 +270,11 @@ namespace RelertSharp.IniSystem
             {
                 if (data.Keys.Contains(key)) return data[key].Value;
                 else return "";
+            }
+            set
+            {
+                if (data.Keys.Contains(key)) data[key].Value = value;
+                else data[key] = new INIPair(key, value);
             }
         }
         public List<INIPair> DataList { get { return data.Values.ToList(); } }

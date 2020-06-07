@@ -14,7 +14,7 @@ namespace RelertSharp.FileSystem
 
 
         #region Ctor - LangFile
-        public LangFile(string path) : base(path)
+        public LangFile(string path) : base(path, INIFileType.Language, true)
         {
             INIType = INIFileType.Language;
         }

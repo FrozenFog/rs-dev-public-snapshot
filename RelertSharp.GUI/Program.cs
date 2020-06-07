@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
 using RelertSharp.Common;
-using RelertSharp.SubWindows.LogicEditor;
-using RelertSharp.SubWindows.INIEditor;
+using RelertSharp.GUI.SubWindows.LogicEditor;
 
 namespace RelertSharp.GUI
 {
@@ -23,39 +23,86 @@ namespace RelertSharp.GUI
             Initialization();
             _Test.Run();
 #else
-            if (args.Length < 1) return;
-            try
+            if (args.Length < 1)
             {
-                Initialization();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Initialization failed!\nTrace:\n" + e.StackTrace, "RelertSharp", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            try
-            {
-                MapFile map = new MapFile(args[0]);
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new LogicEditor(map.Map));
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Unhandled error!\nTrace:\n" + e.StackTrace, "Fatal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                try
+                {
+                    Application.EnableVisualStyles();
+                    Application.SetCompatibleTextRenderingDefault(false);
+                    if (!Initialization())
+                    {
+                        return;
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Initialization failed!\nTrace:\n" + e.StackTrace, "RelertSharp", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                try
+                {
+                    string name;
+                    if (args.Count() == 0)
+                    {
+                        OpenFileDialog dlg = new OpenFileDialog()
+                        {
+                            Title = Language.DICT["OpenMapDlgTitle"],
+                            InitialDirectory = Application.StartupPath,
+                            Filter = "Red Alert 2 Map File|*.map;*.yrm;*.mpr",
+                            AddExtension = true,
+                            CheckFileExists = true,
+                        };
+                        if (dlg.ShowDialog() == DialogResult.OK) name = dlg.FileName;
+                        else return;
+                    }
+                    else name = args[0];
+                    MapFile map = new MapFile(name);
+                    GlobalVar.CurrentMapDocument = map;
+                    Application.Run(new MainWindowTest());
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Unhandled error!\nTrace:\n" + e.StackTrace, "Fatal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 #endif
         }
-        static void Initialization()
+        static bool Initialization()
         {
-            Utils.Misc.Init_Language();
-            SetGlobalVar();
+            try
+            {
+                Utils.Misc.Init_Language();
+            }
+            catch
+            {
+                MessageBox.Show("Failed to read language file!", "Fatal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return SetGlobalVar();
         }
-        static void SetGlobalVar()
+        static bool SetGlobalVar()
         {
-            GlobalVar.GlobalConfig = new RSConfig();
-            INIFile local = new INIFile("local.rsc");
-            GlobalVar.GlobalConfig.Override(local.IniData);
+            bool isNewCfg = false;
+            LocalConfig cfgLocal;
+            LocalSettingWindow localSetting = new LocalSettingWindow();
+            if (!File.Exists("local.rsc"))
+            {
+                isNewCfg = true;
+                cfgLocal = new LocalConfig();
+            }
+            else
+            {
+                cfgLocal = new LocalConfig("local.rsc");
+            }
+            if (!cfgLocal.IsValid)
+            {
+                localSetting.Reload(cfgLocal);
+                Application.Run(localSetting);
+                if (localSetting.DialogResult == DialogResult.Cancel) return false;
+                cfgLocal.SaveConfig();
+            }
+            LocalConfig local = new LocalConfig("local.rsc");
+            GlobalVar.GlobalConfig = new RSConfig(local.PrimaryConfigName);
+            GlobalVar.GlobalConfig.Merge(local);
             GlobalVar.GlobalDir = new VirtualDir();
             GlobalVar.GlobalRules = new Rules(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.RulesName + ".ini"), GlobalVar.GlobalConfig.RulesName + ".ini");
             GlobalVar.GlobalRules.LoadArt(GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.ArtName, FileExtension.INI));
@@ -76,6 +123,7 @@ namespace RelertSharp.GUI
                 GlobalVar.GlobalCsf.ToTechno();
             }
             else GlobalVar.GlobalCsf = new CsfFile();
+            return true;
         }
     }
 }

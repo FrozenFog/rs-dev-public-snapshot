@@ -13,16 +13,22 @@ namespace RelertSharp.FileSystem
     public class MixFile : BaseFile
     {
         private MixHeader index;
+        private bool ciphed = false;
 
 
         #region Ctor - MixFile
-        public MixFile(string path, MixTatics tatics) : base(path, FileMode.Open, FileAccess.Read, true)
+        public MixFile(string path, MixTatics tatics, bool ciphed = false) : base(path, FileMode.Open, FileAccess.Read, true, ciphed)
         {
+            this.ciphed = ciphed;
             Initialize(tatics);
         }
         public MixFile(byte[] rawData, string fileName, MixTatics tatics) :base(rawData,fileName)
         {
             Initialize(tatics);
+        }
+        public MixFile(string path): base(path, FileMode.Open, FileAccess.Read, false, true)
+        {
+
         }
         #endregion
 
@@ -37,7 +43,7 @@ namespace RelertSharp.FileSystem
                 case MixTatics.Plain:
                     NumOfFiles = ReadUInt16();
                     ReadSeek(4, SeekOrigin.Current);
-                    index = new MixHeader(ReadBytes(NumOfFiles * 12), NumOfFiles);
+                    index = new MixHeader(ReadBytes(NumOfFiles * 12), NumOfFiles, ciphed);
                     BodyPos = 10 + NumOfFiles * 12;
                     break;
                 case MixTatics.Ciphed:
@@ -95,6 +101,11 @@ namespace RelertSharp.FileSystem
                 throw new RSException.MixEntityNotFoundException(FullName, filefullname);
             }
         }
+        public byte[] GetByte(VirtualFileInfo info)
+        {
+            ReadSeek(info.FileOffset, SeekOrigin.Begin);
+            return ReadBytes(info.FileSize);
+        }
         public bool HasFile(string fileName)
         {
             return index.Entries.Keys.Contains(CRC.GetCRC(fileName));
@@ -118,14 +129,14 @@ namespace RelertSharp.FileSystem
 
 
         #region Ctor - MixHeader
-        public MixHeader(byte[] rawData, ushort num)
+        public MixHeader(byte[] rawData, ushort num, bool ciphed = false)
         {
             numOfFiles = num;
             BinaryReader br = new BinaryReader(new MemoryStream(rawData));
             for(int i = 0; i < num; i++)
             {
                 uint id = br.ReadUInt32();
-                entries[id] = new MixEntry(id, br.ReadInt32(), br.ReadInt32());
+                entries[id] = new MixEntry(id, br.ReadInt32(), br.ReadInt32(), ciphed);
             }
             br.Dispose();
         }
@@ -161,14 +172,16 @@ namespace RelertSharp.FileSystem
     {
         public uint fileID;
         public int offset, size;
+        public bool hostCiphed;
 
 
         #region Ctor - MixEntry
-        public MixEntry(uint id, int _offset, int _size)
+        public MixEntry(uint id, int _offset, int _size, bool ciphed = false)
         {
             fileID = id;
             offset = _offset;
             size = _size;
+            hostCiphed = ciphed;
         }
         #endregion
     }

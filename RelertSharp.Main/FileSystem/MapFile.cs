@@ -32,7 +32,7 @@ namespace RelertSharp.FileSystem
             Map.CompressTile();
             Map.CompressOverlay();
             DumpGeneralInfo();
-            SaveIni(true);
+            //SaveIni(true);
         }
         #endregion
 

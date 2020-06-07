@@ -4,20 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Runtime.InteropServices;
 using RelertSharp.Common;
+using System.Collections;
 
 namespace RelertSharp.IniSystem
 {
-    public class INIFile : FileSystem.BaseFile
+    public class INIFile : FileSystem.BaseFile, IEnumerable<INIEntity>
     {
         private Dictionary<string, INIEntity> inidata = new Dictionary<string, INIEntity>();
         private INIFileType initype;
+        private bool ciphed = false;
 
 
         #region Ctor - INIFile
-        public INIFile(string path,  INIFileType itype = INIFileType.DefaultINI) : base(path, FileMode.Open, FileAccess.Read, false)
+        public INIFile(string path,  INIFileType itype = INIFileType.DefaultINI, bool ciphed = false) : base(path, FileMode.Open, FileAccess.Read, false, ciphed)
         {
             initype = itype;
+            this.ciphed = ciphed;
             Load();
         }
         public INIFile(byte[] _data, string _filename, INIFileType _type = INIFileType.DefaultINI) : base(_data, _filename)
@@ -25,14 +29,26 @@ namespace RelertSharp.IniSystem
             initype = _type;
             Load();
         }
-        public INIFile()
+        public INIFile(bool ciphed)
         {
             initype = INIFileType.UnknownINI;
+            this.ciphed = ciphed;
         }
+        public INIFile() { initype = INIFileType.UnknownINI; }
         #endregion
 
 
         #region Private Methods - INIFile
+        //[DllImport("rslib.dll")]
+        //private static extern IntPtr Encode(IntPtr src, int length);
+        //private byte[] Encode(byte[] src)
+        //{
+        //    IntPtr p = Marshal.AllocHGlobal(src.Length);
+        //    byte[] dest = new byte[src.Length];
+        //    Marshal.Copy(src, 0, p, src.Length);
+        //    Marshal.Copy(Encode(p, src.Length), dest, 0, src.Length);
+        //    return dest;
+        //}
         private void Load()
         {
             bool init = true;
@@ -91,6 +107,24 @@ namespace RelertSharp.IniSystem
 
         #region Public Methods - INIFile
         /// <summary>
+        /// Similar to Override, but remain original key/value when src have same key/value 
+        /// </summary>
+        /// <param name="src"></param>
+        public void Merge(IEnumerable<INIEntity> src)
+        {
+            foreach(INIEntity ent in src)
+            {
+                if (HasIniEnt(ent))
+                {
+                    IniDict[ent.Name].MergeWith(ent);
+                }
+                else
+                {
+                    AddEnt(ent);
+                }
+            }
+        }
+        /// <summary>
         /// Merge two IniFile, Entity with same name will be merged, IniPair with same key will be overwrite by new one
         /// </summary>
         /// <param name="newEnt">New Ent</param>
@@ -112,10 +146,10 @@ namespace RelertSharp.IniSystem
         /// Save current IniFile structure into a file
         /// </summary>
         /// <param name="ignoreComment"></param>
-        public void SaveIni(bool ignoreComment = false)
+        public void SaveIni(string filePath, bool ignoreComment = false)
         {
-            //if (File.Exists(FilePath)) File.Delete(FilePath);
-            FileStream fs = new FileStream(FilePath, FileMode.Create, FileAccess.Write);
+            if (File.Exists(filePath)) File.Delete(filePath);
+            FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write);
             MemoryStream msbuffer = new MemoryStream();
             StreamWriter sw = new StreamWriter(msbuffer);
             foreach (INIEntity ent in IniData)
@@ -134,7 +168,12 @@ namespace RelertSharp.IniSystem
                 sw.Write("\n");
                 sw.Flush();
             }
+            if (ciphed)
+            {
+                msbuffer = new MemoryStream(CipherLib.Cipher.EncodeArray(msbuffer.ToArray()));
+            }
             msbuffer.WriteTo(fs);
+            fs.Flush();
             sw.Dispose();
             fs.Dispose();
             msbuffer.Dispose();
@@ -199,6 +238,16 @@ namespace RelertSharp.IniSystem
         {
             inidata.Clear();
         }
+
+        public IEnumerator<INIEntity> GetEnumerator()
+        {
+            return IniData.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return IniData.GetEnumerator();
+        }
         #endregion
 
 
@@ -210,8 +259,25 @@ namespace RelertSharp.IniSystem
         }
         public INIEntity this[string name]
         {
-            get { return GetEnt(name); }
-            set { inidata[name] = value; }
+            get
+            {
+                if (!IniDict.Keys.Contains(name))
+                {
+                    INIEntity ent = new INIEntity(name);
+                    IniDict[name] = ent;
+                    return ent;
+                }
+                else return GetEnt(name);
+            }
+            set
+            {
+                if (!IniDict.Keys.Contains(name))
+                {
+                    INIEntity ent = new INIEntity(name);
+                    IniDict[name] = ent;
+                }
+                else IniDict[name] = value;
+            }
         }
         public List<INIEntity> IniData
         {

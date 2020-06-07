@@ -15,6 +15,12 @@ namespace RelertSharp.IniSystem
 
 
         #region Ctor - INIPair
+        public INIPair(string key, string value)
+        {
+            Name = key;
+            Value = value;
+            keytype = GetKeyType(key);
+        }
         public INIPair(string n, string val, string com, string _preComment)
         {
             Name = n;
@@ -190,6 +196,10 @@ namespace RelertSharp.IniSystem
                 result.Add(int.Parse(s));
             }
             return result.ToArray();
+        }
+        public override string ToString()
+        {
+            return string.Format("{0}={1};{2}", Name, Value, comment);
         }
         #endregion
 

@@ -58,3 +58,4 @@ local.rsc
 *.xml
 !RelertSharp.GUI/Resources/*.png
 !relert-sharp.sln
+!rslib.dll

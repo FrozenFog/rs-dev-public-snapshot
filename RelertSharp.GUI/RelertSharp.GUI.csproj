@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>RelertSharp.GUI</RootNamespace>
     <AssemblyName>RelertSharp</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,9 +25,9 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -42,8 +43,8 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Debug\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -76,6 +77,12 @@
     <Compile Include="Controls\Delegates.cs" />
     <Compile Include="Controls\MinimapPanel.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LocalSettingWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LocalSettingWindow.Designer.cs">
+      <DependentUpon>LocalSettingWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\Command.cs">
       <SubType>Form</SubType>
@@ -262,6 +269,9 @@
     </Compile>
     <Compile Include="GUIUtils.cs" />
     <Compile Include="_Test.cs" />
+    <EmbeddedResource Include="LocalSettingWindow.resx">
+      <DependentUpon>LocalSettingWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\Sub\AircraftAttributeForm.resx">
       <DependentUpon>AircraftAttributeForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -338,6 +348,7 @@
     <EmbeddedResource Include="SubWindows\LogicEditor\Pages\PanelGlobalSearch.resx">
       <DependentUpon>PanelGlobalSearch.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

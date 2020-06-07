@@ -12,7 +12,7 @@ namespace RelertSharp.Common
 
 
         #region ContruCtor - RSConfig
-        public RSConfig() : base("config.rsc", INIFileType.DefaultINI)
+        public RSConfig(string configFileName) : base(configFileName, INIFileType.DefaultINI, true)
         {
             GetMixNameList();
             GetExpandMixList();
@@ -36,6 +36,7 @@ namespace RelertSharp.Common
             AiName = this["INI"]["AIFileName"];
             EvaName = this["INI"]["EvaFileName"];
             ConfigName = this["General"]["ConfigName"];
+            ConfigVersion = this["General"]["ConfigVersion"];
             IgnoreBuildingTheaterArt = this["DrawingConfig"].GetPair("IgnoreBuildingTheaterArt").ParseBool();
 
             DeactiveAnimList = this["DrawingConfig"].GetPair("DeactivateAnim").ParseStringList().ToList();
@@ -180,6 +181,7 @@ namespace RelertSharp.Common
             }
         }
         public string ConfigName { get; private set; }
+        public string ConfigVersion { get; private set; }
         public string LastPath { get; set; }
         public string[] BagNameList { get; private set; }
         public List<string> DeactiveAnimList { get; private set; }

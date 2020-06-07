@@ -28,7 +28,7 @@ namespace RelertSharp.FileSystem
             LoadMixIndex(GlobalConfig.TheaterMixList);
             LoadMixIndex(GlobalConfig.ExpandMixList);
             if (!File.Exists(RunPath + "data.mix")) System.Windows.Forms.MessageBox.Show("Critical File Missing!");
-            MixFile mx = new MixFile(RunPath + "data.mix", MixTatics.Plain);
+            MixFile mx = new MixFile(RunPath + "data.mix", MixTatics.Plain, true);
             AddMixDir(mx);
         }
         #endregion
@@ -153,13 +153,21 @@ namespace RelertSharp.FileSystem
             VirtualFileInfo info = fileOrigin[fileID];
             if (!info.HasParent)
             {
-                FileStream fs = new FileStream(info.MixPath, FileMode.Open, FileAccess.Read);
-                fs.Seek(info.FileOffset, SeekOrigin.Begin);
-                BinaryReader br = new BinaryReader(fs);
-                byte[] result = br.ReadBytes(info.FileSize);
-                br.Dispose();
-                fs.Dispose();
-                return result;
+                if (info.HostCiphed)
+                {
+                    MixFile mx = new MixFile(info.MixPath);
+                    return mx.GetByte(info);
+                }
+                else
+                {
+                    FileStream fs = new FileStream(info.MixPath, FileMode.Open, FileAccess.Read);
+                    fs.Seek(info.FileOffset, SeekOrigin.Begin);
+                    BinaryReader br = new BinaryReader(fs);
+                    byte[] result = br.ReadBytes(info.FileSize);
+                    br.Dispose();
+                    fs.Dispose();
+                    return result;
+                }
             }
             else
             {
@@ -261,6 +269,7 @@ namespace RelertSharp.FileSystem
             MixPath = _mixpath;
             MixName = _mixName;
             ParentPath = _parentMixPath;
+            HostCiphed = _ent.hostCiphed;
             if (!string.IsNullOrEmpty(_parentMixPath))
             {
                 ParentMixName = _parentMixPath.Substring(_parentMixPath.LastIndexOf('\\') + 1);
@@ -280,6 +289,7 @@ namespace RelertSharp.FileSystem
         public string MixName { get; private set; }
         public int FileOffset { get; private set; }
         public int FileSize { get; private set; }
+        public bool HostCiphed { get; private set; }
         #endregion
     }
 }

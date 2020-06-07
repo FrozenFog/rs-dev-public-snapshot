@@ -35,7 +35,6 @@ namespace RelertSharp.GUI
         {
             InitializeComponent();
             InitializeControl();
-
             map = GlobalVar.CurrentMapDocument.Map;
             GlobalVar.GlobalRules.MapIniData = map.IniResidue;
             panel1.BackColor = Color.FromArgb(30, 30, 30);
