@@ -112,8 +112,14 @@ namespace RelertSharp.GUI
         private void button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
-            EngineInitialize(panel1.Handle, pnlMiniMap);
-            bgwDraw.RunWorkerAsync();
+            if(EngineInitialize(panel1.Handle, pnlMiniMap))
+            {
+                bgwDraw.RunWorkerAsync();
+            }
+            else
+            {
+                GuiUtils.Fatal("Engine Initialize Failed!!");
+            }
         }
 
         private void panel1_Resize(object sender, EventArgs e)

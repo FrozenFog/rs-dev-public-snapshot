@@ -129,6 +129,9 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         //}
         private void UpdateHouseAlliance()
         {
+            lbxHouseAllie.BeginUpdate();
+            lbxHouseEnemy.BeginUpdate();
+
             lbxHouseAllie.Items.Clear();
             lbxHouseEnemy.Items.Clear();
             txbHouseAllies.Clear();

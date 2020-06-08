@@ -40,11 +40,13 @@ namespace RelertSharp.DrawingEngine
         #region Ctor - Engine
         public Engine()
         {
+            Log.Write("Engine Begin");
             _30SQ2 = (float)(30F * Math.Sqrt(2));
             _10SQ3 = (float)(10F * Math.Sqrt(3));
             _15SQ2 = _30SQ2 / 2;
             _rad45 = (float)Math.PI / 4;
             sceneColor = Vec4.Unit4(1);
+            Log.Write("Minimap Begin");
             minimap = new GdipSurface();
         }
         #endregion

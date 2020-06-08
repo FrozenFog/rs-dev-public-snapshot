@@ -58,10 +58,14 @@ namespace RelertSharp.GUI
             {
                 GlobalVar.Engine = new Engine();
                 Engine eg = GlobalVar.Engine;
+                Log.Write("Binding Engine Handle...");
                 initialized = GlobalVar.Engine.Initialize(mainHandle, minimapPanel.Size, map.Info.Size, map.TilesData);
+                Log.Write("Initializing Theater");
                 GlobalVar.Engine.SetTheater(GlobalVar.GlobalConfig.GetTheater(map.Info.TheaterName));
+                Log.Write("Resetting...");
                 GlobalVar.Engine.SetBackgroundColor(Color.FromArgb(30, 30, 30));
                 GlobalVar.Engine.ResetMinimapWindow(panel1.Size);
+                Log.Write("ENGINE INITIALIZE COMPLETE");
                 return true;
             }
             catch
