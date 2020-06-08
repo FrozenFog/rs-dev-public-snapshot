@@ -8,7 +8,7 @@ namespace RelertSharp.Common
 {
     public class RSException : ApplicationException
     {
-        public class INIEntityNotFoundException :ApplicationException
+        public class INIEntityNotFoundException : ApplicationException
         {
             private string entityname, parent;
             public INIEntityNotFoundException(string entityName, string host) { entityname = entityName; parent = host; }
@@ -18,9 +18,10 @@ namespace RelertSharp.Common
         public class MixEntityNotFoundException : ApplicationException
         {
             private string mixName, fileName;
-            public MixEntityNotFoundException(string mixname, string filename) { mixName = mixname; fileName = filename; }
+            public MixEntityNotFoundException(string mixname, string filename) { mixName = mixname; fileName = filename; RSMessage = "File not found in virtual mix directory!"; }
             public string MixName { get { return mixName; } }
             public string FileName { get { return fileName; } }
+            public string RSMessage { get; private set; }
         }
         public class OverlayOutOfIndexException : ApplicationException
         {

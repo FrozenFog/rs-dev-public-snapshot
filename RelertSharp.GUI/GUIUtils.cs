@@ -4,11 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RelertSharp.Common;
 
 namespace RelertSharp.GUI
 {
     internal static class GuiUtils
     {
+        public static bool SafeRun(Action a, string errorMsg)
+        {
+            try
+            {
+                a.Invoke();
+                return true;
+            }
+            catch (Exception e)
+            {
+                if (e.GetType() == typeof(RSException.MixEntityNotFoundException))
+                {
+                    RSException.MixEntityNotFoundException mx = e as RSException.MixEntityNotFoundException;
+                    Fatal(string.Format("{0}\nError message: {1}\nFile name: {3}\n\nTrace:\n{2}", errorMsg, mx.RSMessage, e.StackTrace, mx.FileName));
+                }
+                else
+                {
+                    Fatal(string.Format("{0}\nError message: {1}\n\nTrace:\n{2}", errorMsg, e.Message, e.StackTrace));
+                }
+                return false;
+            }
+        }
+        public static void Fatal(string content)
+        {
+            MessageBox.Show(content, "Fatal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
         public static void InsertAt(ListBox dest, object item, ref bool locker)
         {
             locker = true;

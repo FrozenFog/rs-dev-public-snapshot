@@ -8,6 +8,7 @@ using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
 using RelertSharp.Common;
 using RelertSharp.GUI.SubWindows.LogicEditor;
+using static RelertSharp.GUI.GuiUtils;
 
 namespace RelertSharp.GUI
 {
@@ -20,7 +21,9 @@ namespace RelertSharp.GUI
         static void Main(string[] args)
         {
 #if DEBUG
-            Initialization();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            if (!Initialization()) return;
             _Test.Run();
 #else
             if (args.Length < 1)
@@ -36,10 +39,10 @@ namespace RelertSharp.GUI
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Initialization failed!\nTrace:\n" + e.StackTrace, "RelertSharp", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Fatal("Initialization failed!\nTrace:\n" + e.StackTrace);
                     return;
                 }
-                try
+                SafeRun(() =>
                 {
                     string name;
                     if (args.Count() == 0)
@@ -56,24 +59,14 @@ namespace RelertSharp.GUI
                     MapFile map = new MapFile(name);
                     GlobalVar.CurrentMapDocument = map;
                     Application.Run(new MainWindowTest());
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show("Unhandled error!\nTrace:\n" + e.StackTrace, "Fatal", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                },
+                "Unhandled error!");
             }
 #endif
         }
         static bool Initialization()
         {
-            try
-            {
-                Utils.Misc.Init_Language();
-            }
-            catch
-            {
-                MessageBox.Show("Failed to read language file!", "Fatal", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            if (!SafeRun(() => { Utils.Misc.Init_Language(); }, "Failed to read language file!")) return false;
             return SetGlobalVar();
         }
         static bool SetGlobalVar()
@@ -94,32 +87,43 @@ namespace RelertSharp.GUI
             {
                 localSetting.Reload(cfgLocal);
                 Application.Run(localSetting);
-                if (localSetting.DialogResult == DialogResult.Cancel) return false;
+                if (localSetting.DialogResult != DialogResult.OK) return false;
                 cfgLocal.SaveConfig();
             }
             LocalConfig local = new LocalConfig("local.rsc");
             GlobalVar.GlobalConfig = new RSConfig(local.PrimaryConfigName);
             GlobalVar.GlobalConfig.Merge(local);
-            GlobalVar.GlobalDir = new VirtualDir();
-            GlobalVar.GlobalRules = new Rules(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.RulesName + ".ini"), GlobalVar.GlobalConfig.RulesName + ".ini");
-            GlobalVar.GlobalRules.LoadArt(GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.ArtName, FileExtension.INI));
-            GlobalVar.GlobalSound = new SoundRules(GlobalVar.GlobalConfig.SoundName, GlobalVar.GlobalConfig.EvaName, GlobalVar.GlobalConfig.ThemeName);
-            GlobalVar.GlobalSoundBank = new SoundBank(GlobalVar.GlobalConfig.BagNameList);
+            if (!SafeRun(() => { GlobalVar.GlobalDir = new VirtualDir(); },
+                "Virtual mix directiory initialization failed!")) return false;
+            if (!SafeRun(() => { GlobalVar.GlobalRules = new Rules(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.RulesName + ".ini"), GlobalVar.GlobalConfig.RulesName + ".ini"); },
+                "Rules not found or corrupted!")) return false;
+            if (!SafeRun(() => { GlobalVar.GlobalRules.LoadArt(GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.ArtName, FileExtension.INI)); },
+                "Art not found or corrupted!")) return false;
+            if (!SafeRun(() =>
+            {
+                GlobalVar.GlobalSound = new SoundRules(GlobalVar.GlobalConfig.SoundName, GlobalVar.GlobalConfig.EvaName, GlobalVar.GlobalConfig.ThemeName);
+                GlobalVar.GlobalSoundBank = new SoundBank(GlobalVar.GlobalConfig.BagNameList);
+            },
+            "Sound library initialization failed!")) return false;
 
             //csf
-            if (GlobalVar.GlobalConfig.StringtableList.Count > 0)
+            if (!SafeRun(() =>
             {
-                GlobalVar.GlobalCsf = GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.StringtableList[0], FileExtension.CSF);
-                if (GlobalVar.GlobalConfig.StringtableList.Count > 1)
+                if (GlobalVar.GlobalConfig.StringtableList.Count > 0)
                 {
-                    foreach (string name in GlobalVar.GlobalConfig.StringtableList.Skip(1))
+                    GlobalVar.GlobalCsf = GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.StringtableList[0], FileExtension.CSF);
+                    if (GlobalVar.GlobalConfig.StringtableList.Count > 1)
                     {
-                        GlobalVar.GlobalCsf.AddCsfLib(GlobalVar.GlobalDir.GetFile(name, FileExtension.CSF));
+                        foreach (string name in GlobalVar.GlobalConfig.StringtableList.Skip(1))
+                        {
+                            GlobalVar.GlobalCsf.AddCsfLib(GlobalVar.GlobalDir.GetFile(name, FileExtension.CSF));
+                        }
                     }
+                    GlobalVar.GlobalCsf.ToTechno();
                 }
-                GlobalVar.GlobalCsf.ToTechno();
-            }
-            else GlobalVar.GlobalCsf = new CsfFile();
+                else GlobalVar.GlobalCsf = new CsfFile();
+            },
+            "Csf library initialization failed!")) return false;
             return true;
         }
     }

@@ -17,6 +17,7 @@ ressrc/
 /Debug/vert
 /Debug/shader
 cncimg/Debug
+/Debug/release
 OpenTKIntro
 RelertSharp.GUI.WPF/bin
 RelertSharp.Main/obj
@@ -59,3 +60,4 @@ local.rsc
 !RelertSharp.GUI/Resources/*.png
 !relert-sharp.sln
 !rslib.dll
+!voxel.vpl

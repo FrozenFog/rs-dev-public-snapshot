@@ -150,6 +150,10 @@ namespace RelertSharp.FileSystem
         public byte[] GetRawByte(string _fullName)
         {
             uint fileID = CRC.GetCRC(_fullName);
+            if (!fileOrigin.Keys.Contains(fileID))
+            {
+                throw new RSException.MixEntityNotFoundException("unknown mix", _fullName);
+            }
             VirtualFileInfo info = fileOrigin[fileID];
             if (!info.HasParent)
             {
