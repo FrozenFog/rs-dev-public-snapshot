@@ -56,7 +56,24 @@ namespace RelertSharp.DrawingEngine
         public bool Initialize(IntPtr mainHandle, Size panelsize, Rectangle mapsize, TileLayer tileReferace)
         {
             _cellFindingReferance = tileReferace;
-            return CppExtern.Scene.SetUpScene(mainHandle) && CppExtern.Scene.ResetSceneView() && minimap.Initialize(panelsize, mapsize) && InitWaypointNum();
+
+            Log.Write("Setup Scene...");
+            if (CppExtern.Scene.SetUpScene(mainHandle)) Log.Write("Setup complete");
+            else return false;
+
+            Log.Write("Resetting Viewport...");
+            if (CppExtern.Scene.ResetSceneView()) Log.Write("Resetting complete");
+            else return false;
+
+            Log.Write("Booting Minimap...");
+            if (minimap.Initialize(panelsize, mapsize)) Log.Write("Minimap booted");
+            else return false;
+
+            Log.Write("Initializing Waypoint");
+            if (InitWaypointNum()) Log.Write("Done.");
+            else return false;
+
+            return true;
         }
         public void SetTheater(TheaterType type)
         {

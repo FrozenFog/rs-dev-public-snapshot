@@ -104,29 +104,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         #endregion
 
         #region General GUI Update Utils
-        //private void UpdateTaskforceContent(int lvSelectedindex)
-        //{
-        //    TaskforceItem taskforce = lbxTaskList.SelectedItem as TaskforceItem;
-        //    txbTaskName.Text = taskforce.Name;
-        //    mtxbTaskGroup.Text = taskforce.Group.ToString();
-        //    txbTaskID.Text = taskforce.ID;
-
-        //    imglstPcx.Images.Clear();
-        //    lvTaskforceUnits.SelectedIndices.Clear();
-        //    lvTaskforceUnits.Items.Clear();
-        //    if (taskforce.Members.Count > 0)
-        //    {
-        //        Dictionary<string, Image> dict = GlobalVar.GlobalDir.GetPcxImages(taskforce.MemberPcxNames);
-        //        foreach (string key in dict.Keys)
-        //        {
-        //            imglstPcx.Images.Add(key, dict[key]);
-        //        }
-        //        IEnumerable<TaskforceUnit> units = taskforce.Members;
-        //        IEnumerable<ListViewItem> items = TaskforceItem.ToListViewItems(units);
-        //        LoadToObjectCollection(lvTaskforceUnits, items);
-        //        lvTaskforceUnits.SelectedIndices.Add(lvSelectedindex);
-        //    }
-        //}
         private void UpdateHouseAlliance()
         {
             lbxHouseAllie.BeginUpdate();
@@ -155,6 +132,9 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 if (!_CurrentHouse.AlliesWith.Exists(s => s == house.Name) && _CurrentHouse.Name != house.Name)
                     enemies.Add(house.Name);
             lbxHouseEnemy.Items.AddRange(enemies.ToArray());
+
+            lbxHouseAllie.EndUpdate();
+            lbxHouseEnemy.EndUpdate();
         }
         #endregion
 

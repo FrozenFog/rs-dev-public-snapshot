@@ -59,6 +59,7 @@ namespace RelertSharp.GUI
                 GlobalVar.Engine = new Engine();
                 Engine eg = GlobalVar.Engine;
                 Log.Write("Binding Engine Handle...");
+                Log.Write(string.Format("MAINHANDLE-{0}, MINIHANDLE-{1}", mainHandle.ToString(), minimapPanel.Handle.ToString()));
                 initialized = GlobalVar.Engine.Initialize(mainHandle, minimapPanel.Size, map.Info.Size, map.TilesData);
                 Log.Write("Initializing Theater");
                 GlobalVar.Engine.SetTheater(GlobalVar.GlobalConfig.GetTheater(map.Info.TheaterName));
@@ -68,8 +69,9 @@ namespace RelertSharp.GUI
                 Log.Write("ENGINE INITIALIZE COMPLETE");
                 return true;
             }
-            catch
+            catch (Exception e)
             {
+                GuiUtils.Fatal(string.Format("Fatal Error!\n Debug Message:{0}\n\nTrace:\n{1}", e.Message, e.StackTrace));
                 Log.Write("======CRITICAL======    Engine Initialize failed!");
                 return false;
             }

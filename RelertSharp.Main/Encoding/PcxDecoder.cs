@@ -15,7 +15,6 @@ namespace RelertSharp.Encoding
         {
             MemoryStream ms = new MemoryStream(src);
             Bitmap result = PcxReader.Load(ms);
-            result.Save("1.png");
             return result;
         }
     }

@@ -91,7 +91,8 @@ namespace RelertSharp.IniSystem
         private string GuessStructureName(string id)
         {
             if (string.IsNullOrEmpty(id)) return "";
-            string name = Replace(id + ".shp", 1, _suff);
+            string name = id + ".shp";
+            if (!GlobalConfig.IgnoreBuildingTheaterArt) name = Replace(id + ".shp", 1, _suff);
             if (GlobalDir.HasFile(name)) return name;
             if (GlobalDir.HasFile(Replace(name, 1, 'G'))) return Replace(name, 1, 'G');
             if (GlobalDir.HasFile(id + ".shp")) return id + ".shp";

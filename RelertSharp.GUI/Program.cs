@@ -60,6 +60,7 @@ namespace RelertSharp.GUI
                     }
                     else name = args[0];
                     MapFile map = new MapFile(name);
+                    GlobalVar.GlobalRules.Override(map.Map.IniResidue.Values);
                     GlobalVar.CurrentMapDocument = map;
                     Application.Run(new MainWindowTest());
                 },

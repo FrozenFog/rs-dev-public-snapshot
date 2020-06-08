@@ -68,7 +68,7 @@ namespace RelertSharp.MapStructure.Logic
             ID = p.Name;
             Num = int.Parse(l[0]);
             int steplen = 0, llen = l.Length;
-            for(int i = 1; i < llen; i += steplen)
+            for (int i = 1; i < llen; i += steplen)
             {
                 int logicID = int.Parse(l[i]);
                 switch (type)

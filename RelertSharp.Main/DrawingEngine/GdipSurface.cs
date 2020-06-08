@@ -48,6 +48,7 @@ namespace RelertSharp.DrawingEngine
             }
             catch
             {
+                GlobalVar.Log.Write("Minimap init failed!");
                 return false;
             }
         }
