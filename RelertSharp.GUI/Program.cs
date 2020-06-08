@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
 using RelertSharp.Common;
@@ -31,6 +32,12 @@ namespace RelertSharp.GUI
 #else
             if (args.Length < 1)
             {
+                Process[] ps = Process.GetProcesses();
+                if (ps.Count(x=>x.ProcessName == "RelertSharp") > 1)
+                {
+                    Fatal("May only run 1 process.");
+                    return;
+                }
                 try
                 {
                     Application.EnableVisualStyles();
