@@ -80,12 +80,19 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         public void Reload(TriggerItem trigger)
         {
-            if (isEvent) EventCollection = trigger.Events;
-            else EventCollection = trigger.Actions;
             ParentTrigger = trigger;
-            if (EventCollection.Count() > 0)
+            if (trigger == null)
             {
-                CurrentEvent = EventCollection.First(); ;
+                EventCollection = null;
+            }
+            else
+            {
+                if (isEvent) EventCollection = trigger.Events;
+                else EventCollection = trigger.Actions;
+            }
+            if (EventCollection != null && EventCollection.Count() > 0)
+            {
+                CurrentEvent = EventCollection.First();
             }
             else
             {

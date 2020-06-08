@@ -32,7 +32,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
 
         private ListBox lbxTriggerList;
-        private bool initialized = false;
 
 
         public PanelTrgTag()
@@ -53,7 +52,8 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             CurrentTagCollection = tags;
             CurrentTrigger = trg;
-            CurrentTag = tags.First();
+            if (tags == null || tags.Count() == 0) CurrentTag = null;
+            else CurrentTag = tags.First();
             RefreshControl();
         }
         private void Reload(TriggerItem tmpTrg, TagItem tmpTag)
@@ -71,6 +71,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         }
         public void RefreshHouseList()
         {
+            if (Map.Countries.Count() == 0) Warning(Language.DICT["WarHouseEmpty"]);
             LoadToObjectCollection(lbxTriggerHouses, Map.Countries);
         }
         #endregion
@@ -84,40 +85,49 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private void RefreshControl()
         {
             isControlRefreshing = true;
-            txbTrgID.Text = CurrentTrigger.ID;
-            txbTrgName.Text = CurrentTrigger.Name;
-            txbTagName.Text = CurrentTag.Name;
-            LoadToObjectCollection(cbbTagID, CurrentTagCollection);
-            cbbTagID.SelectedItem = CurrentTag;
-            ckbDisabled.Checked = CurrentTrigger.Disabled;
-            ckbEasy.Checked = CurrentTrigger.EasyOn;
-            ckbNormal.Checked = CurrentTrigger.NormalOn;
-            ckbHard.Checked = CurrentTrigger.HardOn;
-            rdbRepeat0.Checked = false;
-            rdbRepeat0.Checked = false;
-            rdbRepeat0.Checked = false;
-            switch (CurrentTag.Repeating)
+            if (CurrentTrigger == null || CurrentTag == null)
             {
-                case TriggerRepeatingType.NoRepeating:
-                    rdbRepeat0.Checked = true;
-                    break;
-                case TriggerRepeatingType.OneTimeLogicAND:
-                    rdbRepeat1.Checked = true;
-                    break;
-                case TriggerRepeatingType.RepeatLogicOR:
-                    rdbRepeat2.Checked = true;
-                    break;
+                ClearControlContent(txbTrgID, txbTrgName, txbTagName, cbbTagID, ckbDisabled, ckbEasy, ckbNormal, ckbHard, rdbRepeat0, rdbRepeat1, rdbRepeat2);
+                lbxTriggerHouses.SelectedIndex = 0;
+                cbbAttatchedTrg.Text = "";
             }
-            lbxTriggerHouses.SelectedItem = Map.Countries.GetCountry(CurrentTrigger.House);
-            cbbAttatchedTrg.Text = CurrentTrigger.LinkedWith;
-            lklTraceTrigger.Enabled = CurrentTag.AssoTrigger != "<none>";
+            else
+            {
+                txbTrgID.Text = CurrentTrigger.ID;
+                txbTrgName.Text = CurrentTrigger.Name;
+                txbTagName.Text = CurrentTag.Name;
+                LoadToObjectCollection(cbbTagID, CurrentTagCollection);
+                cbbTagID.SelectedItem = CurrentTag;
+                ckbDisabled.Checked = CurrentTrigger.Disabled;
+                ckbEasy.Checked = CurrentTrigger.EasyOn;
+                ckbNormal.Checked = CurrentTrigger.NormalOn;
+                ckbHard.Checked = CurrentTrigger.HardOn;
+                rdbRepeat0.Checked = false;
+                rdbRepeat0.Checked = false;
+                rdbRepeat0.Checked = false;
+                switch (CurrentTag.Repeating)
+                {
+                    case TriggerRepeatingType.NoRepeating:
+                        rdbRepeat0.Checked = true;
+                        break;
+                    case TriggerRepeatingType.OneTimeLogicAND:
+                        rdbRepeat1.Checked = true;
+                        break;
+                    case TriggerRepeatingType.RepeatLogicOR:
+                        rdbRepeat2.Checked = true;
+                        break;
+                }
+                lbxTriggerHouses.SelectedItem = Map.Countries.GetCountry(CurrentTrigger.House);
+                cbbAttatchedTrg.Text = CurrentTrigger.LinkedWith;
+                lklTraceTrigger.Enabled = CurrentTag.AssoTrigger != "<none>";
+            }
             isControlRefreshing = false;
         }
 
 
         private void DiffRepeatCheckChanged(object sender, EventArgs e)
         {
-            if (!isControlRefreshing)
+            if (!isControlRefreshing && CurrentTrigger != null && CurrentTag != null)
             {
                 bool stat = sender.GetType() == typeof(CheckBox) ? ((CheckBox)sender).Checked : ((RadioButton)sender).Checked;
                 string tag = ((Control)sender).Tag.ToString();
@@ -172,7 +182,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         private void txbTrgName_Validated(object sender, EventArgs e)
         {
-            if (!isControlRefreshing)
+            if (!isControlRefreshing && CurrentTrigger != null && CurrentTag != null)
             {
                 if (CurrentTag.Name == CurrentTrigger.Name + " - Tag")
                 {
@@ -185,7 +195,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         private void lbxTriggerHouses_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!isControlRefreshing)
+            if (!isControlRefreshing && CurrentTrigger != null && CurrentTag != null)
             {
                 CurrentTrigger.House = (lbxTriggerHouses.SelectedItem as CountryItem).Name;
             }
@@ -193,7 +203,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         private void cbbAttatchedTrg_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!isControlRefreshing)
+            if (!isControlRefreshing && CurrentTrigger != null && CurrentTag != null)
             {
                 TriggerItem trg = cbbAttatchedTrg.SelectedItem as TriggerItem;
                 if (trg != null)
@@ -242,8 +252,11 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         private void lklTraceTrigger_Click(object sender, EventArgs e)
         {
-            TriggerItem asso = cbbAttatchedTrg.SelectedItem as TriggerItem;
-            OnTraceFired(asso);
+            if (CurrentTrigger != null && CurrentTag != null)
+            {
+                TriggerItem asso = cbbAttatchedTrg.SelectedItem as TriggerItem;
+                if (asso != null) OnTraceFired(asso);
+            }
         }
 
         private void btnNewTrigger_Click(object sender, EventArgs e)
@@ -257,24 +270,30 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         private void btnDelTrigger_Click(object sender, EventArgs e)
         {
-            Map.RemoveTrigger(CurrentTrigger);
-            CurrentTrigger = null;
-            CurrentTagCollection = null;
-            OnTriggerDeleted();
+            if (CurrentTrigger != null && CurrentTag != null)
+            {
+                Map.RemoveTrigger(CurrentTrigger);
+                CurrentTrigger = null;
+                CurrentTagCollection = null;
+                OnTriggerDeleted();
+            }
         }
 
         private void btnCopyTrigger_Click(object sender, EventArgs e)
         {
-            TriggerItem t = Map.NewTrigger(CurrentTrigger, DisplayingType, out TagItem tag);
-            CurrentTrigger = t;
-            CurrentTag = tag;
-            cbbAttatchedTrg.Items.Add(t);
-            OnNewTriggerAdded();
+            if (CurrentTrigger != null && CurrentTag != null)
+            {
+                TriggerItem t = Map.NewTrigger(CurrentTrigger, DisplayingType, out TagItem tag);
+                CurrentTrigger = t;
+                CurrentTag = tag;
+                cbbAttatchedTrg.Items.Add(t);
+                OnNewTriggerAdded();
+            }
         }
 
         private void cbbTagID_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!isControlRefreshing)
+            if (!isControlRefreshing && CurrentTrigger != null)
             {
                 CurrentTag = cbbTagID.SelectedItem as TagItem;
                 txbTagName.Text = CurrentTag.Name;

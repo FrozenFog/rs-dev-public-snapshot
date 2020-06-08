@@ -31,6 +31,10 @@ namespace RelertSharp.GUI
                 return false;
             }
         }
+        public static void Warning(string content)
+        {
+            MessageBox.Show(content, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
         public static void Fatal(string content)
         {
             MessageBox.Show(content, "Fatal", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -64,6 +68,13 @@ namespace RelertSharp.GUI
             else if (t == typeof(GroupBox))
             {
                 foreach (Control child in (c as GroupBox).Controls) ClearControlContent(child);
+            }
+        }
+        public static void ClearControlContent(params Control[] controls)
+        {
+            foreach (Control c in controls)
+            {
+                ClearControlContent(c);
             }
         }
         public static void LoadToObjectCollection(ComboBox dest, IEnumerable<object> src)
