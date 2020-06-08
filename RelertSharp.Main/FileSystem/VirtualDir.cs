@@ -15,6 +15,9 @@ namespace RelertSharp.FileSystem
 {
     public class VirtualDir
     {
+        private RsLog Log { get { return GlobalVar.Log; } }
+
+
         private Dictionary<uint, VirtualFileInfo> fileOrigin = new Dictionary<uint, VirtualFileInfo>();
         private Dictionary<string, MixTatics> mixTatics = new Dictionary<string, MixTatics>();
         private Dictionary<string, byte[]> preLoadMixes = new Dictionary<string, byte[]>();
@@ -24,12 +27,15 @@ namespace RelertSharp.FileSystem
         #region Ctor - VirtualDir
         public VirtualDir()
         {
+            Log.Write("Mix loading begin");
             LoadMixIndex(GlobalConfig.MixNameList);
             LoadMixIndex(GlobalConfig.TheaterMixList);
             LoadMixIndex(GlobalConfig.ExpandMixList);
+            Log.Write("General mix loaded");
             if (!File.Exists(RunPath + "data.mix")) System.Windows.Forms.MessageBox.Show("Critical File Missing!");
             MixFile mx = new MixFile(RunPath + "data.mix", MixTatics.Plain, true);
             AddMixDir(mx);
+            Log.Write("Virtual Dir Initialization Complete");
         }
         #endregion
 
@@ -41,10 +47,12 @@ namespace RelertSharp.FileSystem
             {
                 MixFile mx;
                 string path = GlobalConfig.GamePath + mixname + ".mix";
+                Log.Write(string.Format("Loading mix: {0}. From {1}", mixname, path));
                 if (File.Exists(path))
                 {
                     if (GlobalConfig.CiphedMix.Contains(mixname)) mx = new MixFile(path, MixTatics.Ciphed);
                     else mx = new MixFile(path, MixTatics.Plain);
+                    Log.Write(string.Format("{0} loaded", mixname));
                     AddMixDir(mx);
                     mx.Dispose();
                 }
@@ -67,6 +75,7 @@ namespace RelertSharp.FileSystem
         #region Public Methods - VirtualDir
         public void BeginPreload()
         {
+            Log.Write("Begin Preloading mix");
             foreach (string name in GlobalConfig.PreloadMixes)
             {
                 string filename = name + ".mix";
@@ -117,6 +126,7 @@ namespace RelertSharp.FileSystem
         }
         public void AddMixDir(MixFile _mixfile, bool _isSub = false, string _parentMixPath = "")
         {
+            if (_isSub) Log.Write(string.Format("Loading mix {0} from {1}", _mixfile.FileName, _parentMixPath));
             mixTatics[_mixfile.FileName] = _mixfile.Tatics;
             foreach (MixEntry ent in _mixfile.Index.Entries.Values)
             {
@@ -128,6 +138,7 @@ namespace RelertSharp.FileSystem
                 else info = new VirtualFileInfo(_mixfile.FilePath, _mixfile.FileName, ent, _mixfile.BodyPos);
                 fileOrigin[ent.fileID] = info;
             }
+            Log.Write(string.Format("{0} virtualization complete, {1} file(s) loaded", _mixfile.FileName, _mixfile.Index.Entries.Count));
         }
         public VFileInfo GetFilePtr(string filename)
         {
@@ -149,6 +160,7 @@ namespace RelertSharp.FileSystem
         }
         public byte[] GetRawByte(string _fullName)
         {
+            Log.Write("Finding " + _fullName);
             uint fileID = CRC.GetCRC(_fullName);
             if (!fileOrigin.Keys.Contains(fileID))
             {
@@ -186,11 +198,6 @@ namespace RelertSharp.FileSystem
                 mix.Dispose();
                 return result;
             }
-        }
-        public T GetFile<T>(string name, Func<byte[], string, T> func) where T : BaseFile
-        {
-            byte[] data = GetRawByte(name);
-            return func(data, name);
         }
         public short GetShpFrameCount(string filename)
         {

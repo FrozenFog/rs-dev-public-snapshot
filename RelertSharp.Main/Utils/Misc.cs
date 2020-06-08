@@ -12,6 +12,9 @@ namespace RelertSharp.Utils
 {
     public class Misc
     {
+        private static RsLog Log { get { return GlobalVar.Log; } }
+
+
         public static void Init_Language()
         {
             GlobalVar.CurrentLanguage = ELanguage.EnglishUS;
@@ -21,9 +24,11 @@ namespace RelertSharp.Utils
             {
                 case ELanguage.EnglishUS:
                     f = new LangFile("en-us.lang");
+                    Log.Write("Language set as English-US");
                     break;
                 case ELanguage.Chinese:
                     f = new LangFile("chs.lang");
+                    Log.Write("Language set as Chinese");
                     break;
             }
             foreach (INIEntity ent in f.IniData)
@@ -34,6 +39,7 @@ namespace RelertSharp.Utils
                 }
             }
             Language.DICT = new Lang(dict);
+            Log.Write("Language Init complete");
         }
         public static T MemCpy<T>(T src)
         {

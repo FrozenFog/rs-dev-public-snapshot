@@ -12,6 +12,8 @@ _*.*
 *.lib
 *.sln
 .vs
+cncimg/Release
+rs.log
 ressrc/
 /Debug/frag
 /Debug/vert

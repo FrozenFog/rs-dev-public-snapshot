@@ -23,6 +23,7 @@ namespace RelertSharp.GUI
 {
     public partial class MainWindowTest : Form
     {
+        private static RsLog Log { get { return GlobalVar.Log; } }
         private Map map;
         private int tilecount = 0, objectcount = 0;
         private bool initialized = false;
@@ -33,12 +34,14 @@ namespace RelertSharp.GUI
 
         public MainWindowTest()
         {
+            Log.Write("Mainwindow Initializing");
             InitializeComponent();
             InitializeControl();
             map = GlobalVar.CurrentMapDocument.Map;
             GlobalVar.GlobalRules.MapIniData = map.IniResidue;
             panel1.BackColor = Color.FromArgb(30, 30, 30);
             cbbLightningType.SelectedIndex = 0;
+            Log.Write("Mainwindow Initialized");
         }
 
         private void InitializeControl()

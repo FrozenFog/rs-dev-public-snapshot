@@ -10,6 +10,7 @@ namespace RelertSharp.Common
 {
     public class LocalConfig : INIFile
     {
+        private static RsLog Log { get { return GlobalVar.Log; } }
         #region Ctor
         public LocalConfig(string name) : base(name, INIFileType.DefaultINI, true)
         {
@@ -27,6 +28,7 @@ namespace RelertSharp.Common
         {
             string name = Application.StartupPath + "\\local.rsc";
             SaveIni(name, true);
+            Log.Write("Local config saved!");
         }
         #endregion
 

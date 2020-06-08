@@ -30,6 +30,7 @@ namespace RelertSharp.GUI
 
         private bool DrawAll(BackgroundWorker worker)
         {
+            Log.Write("Begin Rendering");
             isLoading = true;
             lw = new LoadingWindow();
             lw.Show();
@@ -52,6 +53,7 @@ namespace RelertSharp.GUI
         }
         private bool EngineInitialize(IntPtr mainHandle, Panel minimapPanel)
         {
+            Log.Write("Engine Initializing");
             try
             {
                 GlobalVar.Engine = new Engine();
@@ -64,12 +66,14 @@ namespace RelertSharp.GUI
             }
             catch
             {
+                Log.Write("======CRITICAL======    Engine Initialize failed!");
                 return false;
             }
 
         }
         private void DrawTiles()
         {
+            Log.Write("Drawing Tiles");
             lw.StartDrawing(map.TilesData.Count(), "Tiles");
             foreach (Tile t in Map.TilesData)
             {
@@ -83,6 +87,7 @@ namespace RelertSharp.GUI
         }
         private void DrawTerrains()
         {
+            Log.Write("Drawing Terrain");
             lw.StartDrawing(map.Terrains.Count(), "Terrain");
             foreach (TerrainItem terr in Map.Terrains)
             {
@@ -96,6 +101,7 @@ namespace RelertSharp.GUI
         }
         private void DrawSmudges()
         {
+            Log.Write("Drawing Smudges");
             lw.StartDrawing(map.Smudges.Count(), "Smudges");
             foreach (SmudgeItem smg in Map.Smudges)
             {
@@ -109,6 +115,7 @@ namespace RelertSharp.GUI
         }
         private void DrawOverlays()
         {
+            Log.Write("Drawing Overlays");
             lw.StartDrawing(map.Overlays.Count(), "Overlays");
             foreach (OverlayUnit o in Map.Overlays)
             {
@@ -122,6 +129,7 @@ namespace RelertSharp.GUI
         }
         private void DrawWaypoints()
         {
+            Log.Write("Drawing Waypoints");
             lw.StartDrawing(map.Waypoints.Count(), "Waypoints");
             foreach (WaypointItem w in map.Waypoints)
             {
@@ -135,6 +143,7 @@ namespace RelertSharp.GUI
         }
         private void DrawCelltags()
         {
+            Log.Write("Drawing Celltags");
             lw.StartDrawing(map.Celltags.Count(), "Celltags");
             foreach (CellTagItem c in map.Celltags)
             {
@@ -148,6 +157,7 @@ namespace RelertSharp.GUI
         }
         private void DrawObjects()
         {
+            Log.Write("Drawing Infantries");
             lw.StartDrawing(map.Infantries.Count(), "Infantries");
             foreach (InfantryItem inf in Map.Infantries)
             {
@@ -156,6 +166,8 @@ namespace RelertSharp.GUI
                     _failed.Add(inf.RegName);
             }
             lw.EndItems(LoadingWindow.LoadingFlag.Infantries);
+
+            Log.Write("Drawing Buildings");
             lw.StartDrawing(map.Buildings.Count(), "Buildings");
             foreach (StructureItem structure in Map.Buildings)
             {
@@ -163,6 +175,8 @@ namespace RelertSharp.GUI
                 if (!GlobalVar.Engine.DrawObject(structure, Map.GetHeightFromTile(structure), Map.GetHouseColor(structure.OwnerHouse)))
                     _failed.Add(structure.RegName);
             }
+
+            Log.Write("Drawing Units");
             lw.StartDrawing(map.Units.Count(), "Units");
             lw.EndItems(LoadingWindow.LoadingFlag.Buildings);
             foreach (UnitItem unit in Map.Units)
@@ -172,6 +186,8 @@ namespace RelertSharp.GUI
                     _failed.Add(unit.RegName);
             }
             lw.EndItems(LoadingWindow.LoadingFlag.Units);
+
+            Log.Write("Drawing Aircrafts");
             lw.StartDrawing(map.Aircrafts.Count(), "Aircrafts");
             foreach (AircraftItem air in Map.Aircrafts)
             {
@@ -180,6 +196,8 @@ namespace RelertSharp.GUI
                     _failed.Add(air.RegName);
             }
             lw.EndItems(LoadingWindow.LoadingFlag.Aircrafts);
+
+            Log.Write("Drawing BaseNodes");
             lw.StartDrawing(map.Houses.Count(), "BaseNodes");
             foreach (HouseItem house in Map.Houses)
             {

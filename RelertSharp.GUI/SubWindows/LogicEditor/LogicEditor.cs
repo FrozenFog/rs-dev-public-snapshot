@@ -18,6 +18,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 {
     internal partial class LogicEditor : Form
     {
+        private static RsLog Log { get { return GlobalVar.Log; } }
         private Map map { get { return GlobalVar.CurrentMapDocument.Map; } }
         private DescriptCollection descriptCollection = new DescriptCollection();
         private SoundManager soundPlayer = new SoundManager();
@@ -30,6 +31,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         #region Ctor - LogicEditor
         public LogicEditor()
         {
+            Log.Write("Logic Editor Initializing");
             InitializeComponent();
             SetLanguage();
             InitialTriggerPage();
@@ -42,6 +44,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
             pnlSearch.Initialize();
             lbxTriggerList.SelectedIndex = lbxTriggerList.Items.Count > 0 ? 0 : -1;
+            Log.Write("Logic Editor Initialized");
         }
         #endregion
 

@@ -16,6 +16,7 @@ namespace RelertSharp.Common
         public static DrawingEngine.Engine Engine { get; set; }
         public static TheaterType CurrentTheater { get; set; }
         public static string RunPath { get { return System.Windows.Forms.Application.StartupPath + "\\"; } }
+        public static RsLog Log { get; set; }
         public static class Scripts
         {
             public static List<IniSystem.TechnoPair> AttackTargetType { get; set; }
