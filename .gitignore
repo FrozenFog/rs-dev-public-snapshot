@@ -3,6 +3,8 @@
 obj
 *.exe
 *.cache
+*.iobj
+*.ipdb
 packages
 _*.*
 *.dll
@@ -13,6 +15,7 @@ _*.*
 *.sln
 .vs
 cncimg/Release
+/Release
 rs.log
 ressrc/
 /Debug/frag
