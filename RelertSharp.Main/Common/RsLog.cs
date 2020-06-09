@@ -43,7 +43,6 @@ namespace RelertSharp.Common
         {
             sw.Flush();
             _fs.Dispose();
-            sw.Dispose();
         }
         #endregion
     }

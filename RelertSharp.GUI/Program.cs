@@ -24,12 +24,12 @@ namespace RelertSharp.GUI
         [STAThread]
         static void Main(string[] args)
         {
-#if DEBUG
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            if (!Initialization()) return;
-            _Test.Run();
-#else
+//#if DEBUG
+//            Application.EnableVisualStyles();
+//            Application.SetCompatibleTextRenderingDefault(false);
+//            if (!Initialization()) return;
+//            _Test.Run();
+//#else
             if (args.Length < 1)
             {
                 Process[] ps = Process.GetProcesses();
@@ -73,7 +73,7 @@ namespace RelertSharp.GUI
                 },
                 "Unhandled error!");
             }
-#endif
+//#endif
             Log.Write("PROGRAM EXITING\n\n\n");
             Log.Dispose();
         }

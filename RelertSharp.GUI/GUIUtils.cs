@@ -80,7 +80,7 @@ namespace RelertSharp.GUI
         public static void LoadToObjectCollection(ComboBox dest, IEnumerable<object> src)
         {
             dest.Items.Clear();
-            if (src == null) return;
+            if (src == null || src.Count() == 0) return;
             dest.Items.AddRange(src.ToArray());
             int wd = src.Max(x => x.ToString().Length) * 7;
             dest.DropDownWidth = wd;
@@ -88,14 +88,14 @@ namespace RelertSharp.GUI
         public static void LoadToObjectCollection(ListBox dest, IEnumerable<object> src)
         {
             dest.Items.Clear();
-            if (src == null) return;
+            if (src == null || src.Count() == 0) return;
             dest.Items.AddRange(src.ToArray());
         }
         public static void LoadToObjectCollection(ListView dest, IEnumerable<ListViewItem> src)
         {
             dest.Items.Clear();
             dest.BeginUpdate();
-            if (src.Count() > 0)
+            if (src != null && src.Count() > 0)
             {
                 dest.Items.AddRange(src.ToArray());
             }
