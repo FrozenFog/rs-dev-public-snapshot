@@ -9,6 +9,7 @@ using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
 using RelertSharp.Common;
 using RelertSharp.GUI.SubWindows.LogicEditor;
+using System.Runtime.InteropServices;
 using static RelertSharp.GUI.GuiUtils;
 
 namespace RelertSharp.GUI
@@ -16,7 +17,8 @@ namespace RelertSharp.GUI
     static class Program
     {
         private static RsLog Log { get { return GlobalVar.Log; } }
-
+        [DllImport("kernel32.dll")]
+        static extern bool SetDllDirectory(string pathname);
 
         /// <summary>
         /// 应用程序的主入口点。
@@ -24,6 +26,7 @@ namespace RelertSharp.GUI
         [STAThread]
         static void Main(string[] args)
         {
+            SetDllDirectory(Application.StartupPath);
 //#if DEBUG
 //            Application.EnableVisualStyles();
 //            Application.SetCompatibleTextRenderingDefault(false);
