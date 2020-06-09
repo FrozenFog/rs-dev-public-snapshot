@@ -28,7 +28,7 @@ public:
 
 	Palette();
 	Palette(const char* pFileName, LPDIRECT3DDEVICE9 pDevice);
-	Palette(Palette& Right);
+	Palette(const Palette& Right);
 	Palette(LPVOID pFileBuffer, LPDIRECT3DDEVICE9 pDevice);
 	~Palette();
 
@@ -39,7 +39,7 @@ public:
 	bool Construct1DPaletteTexture(LPDIRECT3DDEVICE9 pDevice);
 	void Set1DPaletteTexture(LPDIRECT3DTEXTURE9 pTex);
 	LPDIRECT3DTEXTURE9 GetPaletteTexture();
-	ColorStruct& operator[](int nIndex);
+	ColorStruct& operator[](const int nIndex);
 
 private:
 	ColorStruct Entries[256];

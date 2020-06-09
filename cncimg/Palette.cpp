@@ -111,9 +111,9 @@ Palette::Palette(const char* pFileName, LPDIRECT3DDEVICE9 pDevice) : Palette()
 	this->Construct1DPaletteTexture(pDevice);
 }
 
-Palette::Palette(Palette & Right) : Palette()
+Palette::Palette(const Palette & Right) : Palette()
 {
-	memcpy_s(this->Entries, sizeof this->Entries, &Right[0], sizeof this->Entries);
+	memcpy_s(this->Entries, sizeof this->Entries, &const_cast<Palette&>(Right)[0], sizeof this->Entries);
 }
 
 Palette::Palette(LPVOID pFileBuffer, LPDIRECT3DDEVICE9 pDevice) : Palette()
@@ -123,7 +123,7 @@ Palette::Palette(LPVOID pFileBuffer, LPDIRECT3DDEVICE9 pDevice) : Palette()
 	this->Construct1DPaletteTexture(pDevice);
 }
 
-ColorStruct& Palette::operator[](int nIndex)
+ColorStruct& Palette::operator[](const int nIndex)
 {
 	return this->Entries[nIndex];
 }
