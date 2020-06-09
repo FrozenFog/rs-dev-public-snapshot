@@ -29,6 +29,7 @@ namespace RelertSharp.Common
             string name = Application.StartupPath + "\\local.rsc";
             SaveIni(name, true);
             Log.Write("Local config saved!");
+            Dispose();
         }
         #endregion
 

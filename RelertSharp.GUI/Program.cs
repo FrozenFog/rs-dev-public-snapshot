@@ -27,6 +27,11 @@ namespace RelertSharp.GUI
         static void Main(string[] args)
         {
             SetDllDirectory(Application.StartupPath);
+            if (!File.Exists("CncVxlRenderText.dll"))
+            {
+                Fatal("Cannot find Render Dll, please check your folder.");
+                return;
+            }
 //#if DEBUG
 //            Application.EnableVisualStyles();
 //            Application.SetCompatibleTextRenderingDefault(false);
@@ -88,13 +93,11 @@ namespace RelertSharp.GUI
         }
         static bool SetGlobalVar()
         {
-            bool isNewCfg = false;
             LocalConfig cfgLocal;
             LocalSettingWindow localSetting = new LocalSettingWindow();
             if (!File.Exists("local.rsc"))
             {
                 Log.Write("Local config not found, creating new one");
-                isNewCfg = true;
                 cfgLocal = new LocalConfig();
             }
             else
@@ -109,6 +112,7 @@ namespace RelertSharp.GUI
                 if (localSetting.DialogResult != DialogResult.OK) return false;
                 cfgLocal.SaveConfig();
             }
+            localSetting.Dispose();
             LocalConfig local = new LocalConfig("local.rsc");
             GlobalVar.GlobalConfig = new RSConfig(local.PrimaryConfigName);
             GlobalVar.GlobalConfig.Merge(local);
