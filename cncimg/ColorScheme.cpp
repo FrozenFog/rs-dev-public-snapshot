@@ -72,7 +72,9 @@ void ColorScheme::SetColorScheme(TheaterType Theater, int nColorSchemeID, COLORR
 	Color.G = (RemapColor & 0x0000FF00) >> 8;
 	Color.B = (RemapColor & 0x00FF0000) >> 16;
 
-	Palette NewPalette = this->TheaterPalettes[static_cast<int>(Theater)][BASE_PALETTE_INDEX];
+	Palette NewPalette;
+
+	NewPalette = this->TheaterPalettes[static_cast<int>(Theater)][BASE_PALETTE_INDEX];
 	for (int i = GLOBAL_REMAP_START; i <= GLOBAL_REMAP_END; i++)
 	{
 		BYTE R, G, B;
@@ -102,6 +104,7 @@ bool ColorScheme::GetPalette(TheaterType Theater, int nColorSchemeID, Palette & 
 
 bool ColorScheme::GetCurrentTilePalette(Palette & PaletteOut)
 {
+	
 	auto Theater = SceneClass::Instance.GetTheater();
 	
 	if (!this->IsLoaded())
@@ -109,4 +112,5 @@ bool ColorScheme::GetCurrentTilePalette(Palette & PaletteOut)
 
 	PaletteOut = this->TilePalettes[static_cast<int>(Theater)];
 	return true;
+	
 }
