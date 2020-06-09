@@ -39,6 +39,12 @@ namespace RelertSharp.Common
             isStream = false;
             sw.Flush();
         }
+        public void Dispose()
+        {
+            sw.Flush();
+            _fs.Dispose();
+            sw.Dispose();
+        }
         #endregion
     }
 }

@@ -75,6 +75,7 @@ namespace RelertSharp.GUI
             }
 #endif
             Log.Write("PROGRAM EXITING\n\n\n");
+            Log.Dispose();
         }
         static bool Initialization()
         {

@@ -15,6 +15,7 @@ _*.*
 *.sln
 .vs
 cncimg/Release
+cncimg/x64/Release
 /Release
 rs.log
 ressrc/

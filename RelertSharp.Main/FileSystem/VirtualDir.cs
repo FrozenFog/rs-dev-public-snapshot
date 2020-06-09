@@ -172,7 +172,9 @@ namespace RelertSharp.FileSystem
                 if (info.HostCiphed)
                 {
                     MixFile mx = new MixFile(info.MixPath);
-                    return mx.GetByte(info);
+                    byte[] b = mx.GetByte(info);
+                    mx.Dispose();
+                    return b;
                 }
                 else
                 {
