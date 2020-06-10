@@ -125,6 +125,13 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Methods - Rules
+        public void FixWallOverlayName(ref string filename)
+        {
+            if (!GlobalConfig.IgnoreBuildingTheaterArt)
+            {
+                filename = Replace(filename, 1, _suff);
+            }
+        }
         private bool powerupInitialize = false;
         private Dictionary<string, List<string>> powerups = new Dictionary<string, List<string>>();
         public IEnumerable<string> GetBuildingUpgradeList(string regid)

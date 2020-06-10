@@ -157,6 +157,10 @@ namespace RelertSharp.DrawingEngine
         {
             DrawableMisc d;
             string name = GlobalRules.GetOverlayName(overlay.Index);
+            if (name == "GAWALL")
+            {
+                int i = 0;
+            }
             string lookup = string.Format("{0}{1}.in{2}", name, color, overlay.Frame);
             if (!Buffer.Buffers.Miscs.Keys.Contains(lookup))
             {
@@ -172,6 +176,7 @@ namespace RelertSharp.DrawingEngine
                 string img = GlobalRules[name]["Image"];
                 string land = GlobalRules[name]["Land"];
                 string[] colors = GlobalRules[name].GetPair("RadarColor").ParseStringList();
+                if (wall) GlobalRules.FixWallOverlayName(ref filename);
                 d.RadarColor = ToColor(colors);
                 d.IsMoveBlockingOverlay = land == "Rock";
                 d.IsRubble = rubble;
