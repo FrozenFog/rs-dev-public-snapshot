@@ -73,6 +73,18 @@ namespace RelertSharp.FileSystem
 
 
         #region Public Methods - VirtualDir
+        public void DumpFile(string filename)
+        {
+            if (HasFile(filename))
+            {
+                FileStream dump = new FileStream(filename, FileMode.Create, FileAccess.Write);
+                BinaryWriter bw = new BinaryWriter(dump);
+                bw.Write(GetRawByte(filename));
+                bw.Flush();
+                bw.Dispose();
+                dump.Dispose();
+            }
+        }
         public void BeginPreload()
         {
             Log.Write("Begin Preloading mix");
