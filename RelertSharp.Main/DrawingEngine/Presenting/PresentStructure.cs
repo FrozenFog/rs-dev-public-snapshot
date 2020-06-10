@@ -118,7 +118,8 @@ namespace RelertSharp.DrawingEngine.Presenting
             {
                 return new int[] { pSelf, pActivateAnim, pActivateAnim2, pActivateAnim3, pBib, pIdleAnim, pSuperAnim, pTurretAnim, pTurretBarl,
                 pSelfShadow, pActivateAnimShadow, pActivateAnim2Shadow, pActivateAnim3Shadow, pBibShadow, pIdleAnimShadow, pSuperAnimShadow, pTurretAnimShadow,
-                pPlug1, pPlug1Shadow, pPlug2, pPlug2Shadow, pPlug3, pPlug3Shadow};
+                pPlug1, pPlug1Shadow, pPlug2, pPlug2Shadow, pPlug3, pPlug3Shadow,
+                pAlphaImg};
             }
         }
         public int pPlug1 { get; set; }
@@ -142,6 +143,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         public int pTurretBarl { get; set; }
         public int pBib { get; set; }
         public int pBibShadow { get; set; }
+        public int pAlphaImg { get; set; }
         public bool VoxelTurret { get; set; }
         public bool IsValid { get { return !((pSelf | pActivateAnim | pActivateAnim2 | pActivateAnim3 | pBib | pTurretAnim | pIdleAnim) == 0); } }
         public bool IsBaseNode { get; set; }

@@ -42,6 +42,7 @@ namespace RelertSharp.DrawingEngine.Drawables
         public Pnt offsetTurret { get; set; }
         public int pBib { get; set; }
         public int pShadowBib { get; set; }
+        public int pAlphaImg { get; set; }
         public short BibCount { get; set; }
         public bool VoxelTurret { get; set; }
         public bool FlatSelf { get { return pTurretAnim != 0; } }

@@ -281,13 +281,15 @@ namespace RelertSharp.IniSystem
             return Art[turanim];
         }
         public string GetObjectImgName(string id, ref string anim, ref string turret, ref string bib, ref bool isVox, ref string idle, ref string anim2, ref string anim3, ref string barl, ref string super,
-            out short nSelf, out short nAnim, out short nTurret, out short nBib, out short nIdle, out short nAnim2, out short nAnim3, out short nSuper)
+            out short nSelf, out short nAnim, out short nTurret, out short nBib, out short nIdle, out short nAnim2, out short nAnim3, out short nSuper, out string alpha)
         {
             string artname = GetArtEntityName(id);
             INIEntity art = Art[artname];
             string img;
             if (string.IsNullOrEmpty(art.Name)) img = id + ".shp";
             else img = GuessStructureName(art);
+            alpha = this[id]["AlphaImage"];
+            if (!string.IsNullOrEmpty(alpha)) alpha += ".shp";
             if (!GlobalConfig.DeactiveAnimList.Contains(artname))
             {
                 anim = GuessStructureName(Art[art["ActiveAnim"]]);

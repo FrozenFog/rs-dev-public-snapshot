@@ -235,7 +235,8 @@ namespace RelertSharp.DrawingEngine
                 string self = "", turret = "", anim = "", bib = "", idle = "", anim2 = "", anim3 = "", barl = "", super = "";
                 bool vox = false;
                 self = GlobalRules.GetObjectImgName(name, ref anim, ref turret, ref bib, ref vox, ref idle, ref anim2, ref anim3, ref barl, ref super,
-                                                    out short nSelf, out short nAnim, out short nTurret, out short nBib, out short nIdle, out short nAnim2, out short nAnim3, out short nSuper);
+                                                    out short nSelf, out short nAnim, out short nTurret, out short nBib, out short nIdle, out short nAnim2, out short nAnim3, out short nSuper,
+                                                    out string alphaName);
                 GlobalRules.GetBuildingShapeData(name, out int height, out int foundx, out int foundy);
                 #region framecount
                 d.Framecount = nSelf;
@@ -291,6 +292,10 @@ namespace RelertSharp.DrawingEngine
                 {
                     d.pBib = CreateFile(bib, DrawableType.Shp);
                     d.pShadowBib = CreateFile(bib, DrawableType.Shp, d.BibCount / 2);
+                }
+                if (!string.IsNullOrEmpty(alphaName))
+                {
+                    d.pAlphaImg = CreateFile(alphaName, DrawableType.Shp);
                 }
                 if (!string.IsNullOrEmpty(turret))
                 {
