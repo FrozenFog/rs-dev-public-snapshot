@@ -712,7 +712,7 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer, 
 	D3DXVECTOR3 Position, 
 	LPDIRECT3DTEXTURE9 pTexture,
-	bool bIsShadow,
+	char cSpecialDrawType,
 	std::vector<Voxel>* BufferedVoxels, 
 	std::vector<D3DXVECTOR3>* BufferedNormals,
 	int nPaletteID,
@@ -725,7 +725,7 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 	Object.pTexture = pTexture;
 	Object.nPaletteID = nPaletteID;
 	Object.dwRemapColor = dwRemapColor;
-	Object.bIsShadow = bIsShadow;
+	Object.cSpecialDrawType = cSpecialDrawType;
 	Object.String = String;
 
 	if (BufferedVoxels)
@@ -757,6 +757,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 	auto& VxlShader = SceneClass::Instance.GetVXLShader();
 	auto& PlainShader = SceneClass::Instance.GetPlainArtShader();
 	auto& ShadowShader = SceneClass::Instance.GetShadowShader();
+	auto& AlphaShader = SceneClass::Instance.GetAlphaShader();
 
 	if (!pVertexBuffer)
 	{
@@ -829,7 +830,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 
 		pDevice->SetTexture(0, this->pTexture);
 
-		if (!this->bIsShadow)
+		if (this->cSpecialDrawType == SPECIAL_NORMAL)
 			pDevice->SetTexture(1, this->pPaletteTexture);
 		else
 			pDevice->SetTexture(1, nullptr);
@@ -837,7 +838,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->SetFVF(Desc.FVF);
 		pDevice->SetStreamSource(0, this->pVertexBuffer, 0, sizeof TexturedVertex);
 
-		if (!this->bIsShadow)
+		if (this->cSpecialDrawType == SPECIAL_NORMAL)
 		{
 			PlainShader.SetConstantVector(pDevice, this->ColorCoefficient);
 			PlainShader.SetRemapColor(pDevice, this->ShaderRemapColor);
@@ -845,10 +846,13 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		else
 		{
 			ShadowShader.SetConstantVector(pDevice, this->ColorCoefficient);
+			AlphaShader.SetConstantVector(pDevice, this->ColorCoefficient);
 		}
 
-		if (this->bIsShadow)
+		if (this->cSpecialDrawType == SPECIAL_SHADOW)
 			pDevice->SetPixelShader(ShadowShader.GetShaderObject());
+		else if (this->cSpecialDrawType == SPECIAL_ALPHA)
+			pDevice->SetPixelShader(AlphaShader.GetShaderObject());
 		else
 			pDevice->SetPixelShader(PlainShader.GetShaderObject());
 
@@ -859,7 +863,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->SetPixelShader(pFormerShader);
 		pDevice->SetStreamSource(0, pFormerStream, uOffset, uStride);
 
-		if (!this->bIsShadow)
+		if (!this->cSpecialDrawType)
 		{
 			PlainShader.SetConstantVector(pDevice);
 			PlainShader.SetRemapColor(pDevice);
@@ -867,6 +871,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		else
 		{
 			ShadowShader.SetConstantVector(pDevice);
+			AlphaShader.SetConstantVector(pDevice);
 		}
 	}
 
