@@ -170,9 +170,29 @@ namespace RelertSharp.FileSystem
             uint crc = CRC.GetCRC(_fileFullName);
             return fileOrigin[crc].MixPath;
         }
-        public byte[] GetRawByte(string _fullName)
+        private byte[] GetFromRoot(string _filename)
+        {
+            string path = GlobalConfig.GamePath + _filename;
+            if (File.Exists(GlobalConfig.GamePath + _filename))
+            {
+                FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+                MemoryStream ms = new MemoryStream();
+                fs.CopyTo(ms);
+                fs.Dispose();
+                byte[] b = ms.ToArray();
+                ms.Dispose();
+                return b;
+            }
+            return null;
+        }
+        public byte[] GetRawByte(string _fullName, bool fromRoot = false)
         {
             Log.Write("Finding " + _fullName);
+            if (fromRoot)
+            {
+                byte[] b = GetFromRoot(_fullName);
+                if (b != null) return b;
+            }
             uint fileID = CRC.GetCRC(_fullName);
             if (!fileOrigin.Keys.Contains(fileID))
             {
@@ -220,31 +240,31 @@ namespace RelertSharp.FileSystem
             ShpFile shp = GetFile(filename, FileExtension.SHP);
             return (short)shp.Count;
         }
-        public dynamic GetFile(string _fileName, FileExtension _fileType)
+        public dynamic GetFile(string _fileName, FileExtension _fileType, bool fromRoot = false)
         {
             _fileName = _fileName.ToLower();
             switch (_fileType)
             {
                 case FileExtension.PAL:
                     if (!_fileName.EndsWith(".pal")) _fileName += ".pal";
-                    return new PalFile(GetRawByte(_fileName), _fileName);
+                    return new PalFile(GetRawByte(_fileName, fromRoot), _fileName);
                 case FileExtension.INI:
                     if (string.IsNullOrEmpty(_fileName)) return new INIFile();
                     if (!_fileName.EndsWith(".ini")) _fileName += ".ini";
-                    return new INIFile(GetRawByte(_fileName), _fileName);
+                    return new INIFile(GetRawByte(_fileName, fromRoot), _fileName);
                 case FileExtension.VXL:
                     if (!_fileName.EndsWith(".vxl")) _fileName += ".vxl";
-                    return new VxlFile(GetRawByte(_fileName), _fileName);
+                    return new VxlFile(GetRawByte(_fileName, fromRoot), _fileName);
                 case FileExtension.SHP:
-                    return new ShpFile(GetRawByte(_fileName), _fileName);
+                    return new ShpFile(GetRawByte(_fileName, fromRoot), _fileName);
                 case FileExtension.HVA:
                     if (!_fileName.EndsWith(".hva")) _fileName += ".hva";
-                    return new HvaFile(GetRawByte(_fileName), _fileName);
+                    return new HvaFile(GetRawByte(_fileName, fromRoot), _fileName);
                 case FileExtension.CSF:
                     if (!_fileName.EndsWith(".csf")) _fileName += ".csf";
-                    return new CsfFile(GetRawByte(_fileName), _fileName);
+                    return new CsfFile(GetRawByte(_fileName, fromRoot), _fileName);
                 default:
-                    return GetRawByte(_fileName);
+                    return GetRawByte(_fileName, fromRoot);
             }
         }
         public dynamic GetTheaterTmpFile(string _fileName, TheaterType _type)

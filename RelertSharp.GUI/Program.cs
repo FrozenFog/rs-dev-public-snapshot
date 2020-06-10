@@ -131,10 +131,10 @@ namespace RelertSharp.GUI
             if (!SafeRun(() => { GlobalVar.GlobalDir = new VirtualDir(); },
                 "Virtual mix directiory initialization failed!")) return false;
             Log.Write("Loading Rules");
-            if (!SafeRun(() => { GlobalVar.GlobalRules = new Rules(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.RulesName + ".ini"), GlobalVar.GlobalConfig.RulesName + ".ini"); },
+            if (!SafeRun(() => { GlobalVar.GlobalRules = new Rules(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.RulesName + ".ini", true), GlobalVar.GlobalConfig.RulesName + ".ini"); },
                 "Rules not found or corrupted!")) return false;
             Log.Write("Loading Art");
-            if (!SafeRun(() => { GlobalVar.GlobalRules.LoadArt(GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.ArtName, FileExtension.INI)); },
+            if (!SafeRun(() => { GlobalVar.GlobalRules.LoadArt(GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.ArtName, FileExtension.INI, true)); },
                 "Art not found or corrupted!")) return false;
             Log.Write("Loading Sound");
             if (!SafeRun(() =>
