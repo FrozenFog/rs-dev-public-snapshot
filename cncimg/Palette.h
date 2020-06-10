@@ -32,8 +32,6 @@ public:
 	Palette(LPVOID pFileBuffer, LPDIRECT3DDEVICE9 pDevice);
 	~Palette();
 
-	Palette& operator=(const Palette& Right);
-
 	void LoadFromFile(const char* pFileName);
 	void LoadFromFileInBuffer(LPVOID pFileBuffer);
 	void ShiftColors();

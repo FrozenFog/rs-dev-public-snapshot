@@ -27,6 +27,7 @@ namespace RelertSharp.GUI
         static void Main(string[] args)
         {
             SetDllDirectory(Application.StartupPath);
+            GlobalVar.Log = new RsLog();
             if (!File.Exists("CncVxlRenderText.dll"))
             {
                 Fatal("Cannot find Render Dll, please check your folder.");
@@ -98,7 +99,6 @@ namespace RelertSharp.GUI
         }
         static bool Initialization()
         {
-            GlobalVar.Log = new RsLog();
             if (!SafeRun(() => { Utils.Misc.Init_Language(); }, "Failed to read language file!")) return false;
             return SetGlobalVar();
         }
