@@ -179,6 +179,9 @@ bool ShpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice, int idxFrame)
 	if (!this->IsLoaded() || !pDevice)
 		return false;
 
+	if (idxFrame >= this->GetFrameCount())
+		return false;
+
 	D3DLOCKED_RECT LockedRect;
 	PBYTE pTextureData;
 	PBYTE dwPointerBuffer;
