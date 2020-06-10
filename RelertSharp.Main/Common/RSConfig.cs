@@ -52,6 +52,10 @@ namespace RelertSharp.Common
                     string[] l = p.ParseStringList();
                     if (l.Length > 0) PreloadMixes.AddRange(l);
                 }
+                foreach (INIPair p in this["PreloadMixExtra"])
+                {
+                    PreloadMixes.Add(p.Value);
+                }
             }
         }
         private void LoadMixName(string type, List<string> _host)
