@@ -81,10 +81,6 @@ namespace RelertSharp.DrawingEngine
         private DrawableUnit CreateDrawableUnit(string name, uint color, int pPal, int idxFrame)
         {
             DrawableUnit d;
-            if (name == "ZEP")
-            {
-                int i = 0;
-            }
             string lookup = string.Format("{0}{1}.in{2}", name, color, idxFrame);
             if (!Buffer.Buffers.Units.Keys.Contains(lookup))
             {
