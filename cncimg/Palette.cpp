@@ -105,14 +105,6 @@ Palette::~Palette()
 	this->PaletteTexture = nullptr;
 }
 
-Palette& Palette::operator=(const Palette& Right)
-{
-	this->PaletteTexture = nullptr;
-	memcpy_s(this->Entries, sizeof this->Entries, &const_cast<Palette&>(Right)[0], sizeof this->Entries);
-	
-	return *this;
-}
-
 Palette::Palette(const char* pFileName, LPDIRECT3DDEVICE9 pDevice) : Palette()
 {
 	this->LoadFromFile(pFileName);
@@ -121,7 +113,7 @@ Palette::Palette(const char* pFileName, LPDIRECT3DDEVICE9 pDevice) : Palette()
 
 Palette::Palette(const Palette & Right) : Palette()
 {
-	*this = Right;
+	memcpy_s(this->Entries, sizeof this->Entries, &const_cast<Palette&>(Right)[0], sizeof this->Entries);
 }
 
 Palette::Palette(LPVOID pFileBuffer, LPDIRECT3DDEVICE9 pDevice) : Palette()
