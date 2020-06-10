@@ -25,7 +25,6 @@ namespace RelertSharp.GUI
     {
         private static RsLog Log { get { return GlobalVar.Log; } }
         private Map map;
-        private int tilecount = 0, objectcount = 0;
         private bool initialized = false;
         private MainWindowDataModel Current = new MainWindowDataModel();
 
@@ -55,6 +54,7 @@ namespace RelertSharp.GUI
             Language.SetControlLanguage(cmsToolSelect);
             Text = Language.DICT[Text] + Constant.ReleaseDate;
             logicEditor.JumpToWaypoint += LogicJumpToWaypoint;
+            initialized = true;
         }
         private bool updatingLightningData = false;
         private void UpdateLightningSide(LightningItem src, bool enable)
@@ -124,7 +124,7 @@ namespace RelertSharp.GUI
 
         private void panel1_Resize(object sender, EventArgs e)
         {
-            if (initialized)
+            if (initialized && drew)
             {
                 GlobalVar.Engine.ResetView();
                 GlobalVar.Engine.ResetMinimapWindow(panel1.Size);

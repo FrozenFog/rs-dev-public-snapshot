@@ -53,6 +53,10 @@ namespace RelertSharp.DrawingEngine
 
 
         #region Public Methods - Engine
+        public static bool FirstRun()
+        {
+            return CppExtern.Scene.SetUpScene(IntPtr.Zero);
+        }
         public bool Initialize(IntPtr mainHandle, Size panelsize, Rectangle mapsize, TileLayer tileReferace)
         {
             _cellFindingReferance = tileReferace;

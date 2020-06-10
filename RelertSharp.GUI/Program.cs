@@ -32,12 +32,23 @@ namespace RelertSharp.GUI
                 Fatal("Cannot find Render Dll, please check your folder.");
                 return;
             }
-//#if DEBUG
-//            Application.EnableVisualStyles();
-//            Application.SetCompatibleTextRenderingDefault(false);
-//            if (!Initialization()) return;
-//            _Test.Run();
-//#else
+            else
+            {
+                try
+                {
+                    DrawingEngine.Engine.FirstRun();
+                }
+                catch
+                {
+                    Log.Write("Engine Catched");
+                }
+            }
+            //#if DEBUG
+            //            Application.EnableVisualStyles();
+            //            Application.SetCompatibleTextRenderingDefault(false);
+            //            if (!Initialization()) return;
+            //            _Test.Run();
+            //#else
             if (args.Length < 1)
             {
                 Process[] ps = Process.GetProcesses();

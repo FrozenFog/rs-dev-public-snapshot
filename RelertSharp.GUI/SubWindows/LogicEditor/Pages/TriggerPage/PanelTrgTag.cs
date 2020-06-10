@@ -218,12 +218,10 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             }
         }
 
-        private bool isEditingTemplate = false;
         private TriggerItem prevTrg;
         private TagItem prevTag;
         private void tsmiEditTemp_Click(object sender, EventArgs e)
         {
-            isEditingTemplate = true;
             btnNewTrigger.Enabled = false;
             btnDelTrigger.Enabled = false;
             btnCopyTrigger.Enabled = false;
@@ -238,7 +236,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         }
         private void btnSaveTemp_Click(object sender, EventArgs e)
         {
-            isEditingTemplate = false;
             Reload(prevTrg, prevTag);
             OnTemplateChanged(false);
             RefreshControl();

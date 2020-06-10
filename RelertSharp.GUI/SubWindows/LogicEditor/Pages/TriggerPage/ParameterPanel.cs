@@ -31,7 +31,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private Map Map { get { return CurrentMapDocument.Map; } }
 
 
-        private bool initialized = false;
         private ListBox lbxReferance;
         private LinkLabel[] lkls;
         private TextBox[] txbs;
@@ -357,25 +356,28 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private bool isUpdatingIndex = false;
         private void cbbEventAbst_SelectedIndexChanged(object sender, EventArgs e)
         {
-            isUpdatingIndex = true;
-            if (lbxReferance.Items.Count == 0) return;
-            TriggerDescription desc = cbbEventAbst.SelectedItem as TriggerDescription;
-            int evid = desc.ID;
-            mtxbEventID.Text = evid.ToString();
-            if (CurrentItem.ID != evid)
+            if (!isControlRefreshing)
             {
-                CurrentItem.ID = evid;
-                CurrentItem.Parameters = desc.InitParams;
+                isUpdatingIndex = true;
+                if (lbxReferance.Items.Count == 0) return;
+                TriggerDescription desc = cbbEventAbst.SelectedItem as TriggerDescription;
+                int evid = desc.ID;
+                mtxbEventID.Text = evid.ToString();
+                if (CurrentItem.ID != evid)
+                {
+                    CurrentItem.ID = evid;
+                    CurrentItem.Parameters = desc.InitParams;
+                }
+
+                OnLogicItemChanged();
+                AbstractChanged();
+                isUpdatingIndex = false;
             }
-            
-            OnLogicItemChanged();
-            AbstractChanged();
-            isUpdatingIndex = false;
         }
 
         private void mtxbEventID_Validated(object sender, EventArgs e)
         {
-            if (!isUpdatingIndex)
+            if (!isUpdatingIndex && !isControlRefreshing)
             {
                 if (string.IsNullOrEmpty(mtxbEventID.Text)) return;
                 int i = int.Parse(mtxbEventID.Text);

@@ -11,7 +11,6 @@ namespace RelertSharp.FileSystem
     {
         private byte[] data;
         private int samplePos = 44;
-        private bool acmDecoded = true;
 
 
         #region Ctor - WavFile
@@ -51,7 +50,6 @@ namespace RelertSharp.FileSystem
 
             int fmtSize = br.ReadInt32();
             WavTypeFlag = br.ReadInt16();
-            if (WavTypeFlag != 1) acmDecoded = false;
             Chanel = br.ReadUInt16();
             SamplesPerSec = br.ReadInt32();
             AverageSampleRate = br.ReadUInt32();

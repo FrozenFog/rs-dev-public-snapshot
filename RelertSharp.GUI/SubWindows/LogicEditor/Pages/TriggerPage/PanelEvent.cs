@@ -30,7 +30,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
 
         private bool isEvent = true;
-        private bool initialized = false;
         private ListBox lbxTriggerList;
 
 
