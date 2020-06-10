@@ -87,6 +87,7 @@ public:
 	ShaderStruct& GetVXLShader();
 	ShaderStruct& GetPlainArtShader();
 	ShaderStruct& GetShadowShader();
+	ShaderStruct& GetAlphaShader();
 	//other
 	bool HandleDeviceLost();
 	void InitializeDeviceState();
@@ -112,4 +113,5 @@ private:
 	ShaderStruct VoxelShader, PlainArtShader;
 	ShaderStruct VertexShader;
 	ShaderStruct ShadowShader;
+	ShaderStruct AlphaShader;
 };

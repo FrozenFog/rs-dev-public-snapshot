@@ -288,11 +288,17 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 
 	if (ShpFile = CreateShpFile("images\\ggcnst.shp")) {
 		if (LoadShpTextures(ShpFile, 2) && LoadShpTextures(ShpFile, 4)) {
-			/*MouseObject = */CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 2, UnitPalette, RGB(0, 252, 252), 2, 4, 4, 8, false);
-			CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 4, UnitPalette, RGB(0, 252, 252), 1, 4, 4, 8, true);
+			/*MouseObject = */CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 2, UnitPalette, RGB(0, 252, 252), 2, 4, 4, 8, SPECIAL_NORMAL);
+			CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 4, UnitPalette, RGB(0, 252, 252), 1, 4, 4, 8, SPECIAL_SHADOW);
 		}
 	}
 
+
+	if (auto sid = CreateShpFile("images\\repring.shp")) {
+		if (LoadShpTextures(sid, 0))
+			CreateShpObjectAtScene(sid, { 0.0,0.0,0.1f }, 0, 
+			UnitPalette, RGB(0, 252, 252), 0, 4, 4, 8, SPECIAL_ALPHA);
+	}
 	if (auto vid = CreateVxlFile("images\\ytnk.vxl"))
 	{
 		if (auto tid = CreateVxlFile("images\\ytnktur.vxl"))

@@ -11,6 +11,10 @@
 
 #define SAFE_RELEASE(obj)if(obj)obj->Release(),obj=nullptr;
 
+#define SPECIAL_NORMAL	0
+#define SPECIAL_SHADOW	1
+#define SPECIAL_ALPHA	2
+
 static const RECT EmptyRect = { LONG_MIN,LONG_MIN,LONG_MAX,LONG_MAX };
 
 struct Voxel
@@ -28,7 +32,7 @@ struct PaintingStruct
 		LPDIRECT3DVERTEXBUFFER9 pVertexBuffer,
 		D3DXVECTOR3 Position,
 		LPDIRECT3DTEXTURE9 pTexture = nullptr,
-		bool bIsShadow = false,
+		char cSpecialDrawType = SPECIAL_NORMAL,
 		std::vector<Voxel>* BufferedVoxels = nullptr,
 		std::vector<D3DXVECTOR3>* BufferedNormals = nullptr,
 		int nPalettID = -1,
@@ -48,7 +52,7 @@ struct PaintingStruct
 	LPDIRECT3DTEXTURE9 pTexture;
 	LPDIRECT3DTEXTURE9 pPaletteTexture;
 	D3DXVECTOR4 ShaderRemapColor;
-	bool bIsShadow;
+	char cSpecialDrawType;
 
 	//for vxl colorbuffer only
 	std::vector<Voxel> BufferedVoxels;

@@ -105,6 +105,7 @@ bool SceneClass::LoadShaders()
 	const char* pVoxelShaderMain = "main";
 	const char* pPlainShaderMain = "pmain";
 	const char* pVertexMain = "vmain";
+	const char* pAlphaMain = "amain";
 	const char* pVarName = "vec";
 	const char* pMatrixName = "vpmatrix";
 	const char* pShadowMain = "smain";
@@ -113,18 +114,22 @@ bool SceneClass::LoadShaders()
 	if (this->VoxelShader.CompileFromFile(".\\shaders\\voxel.hlsl", pVoxelShaderMain) &&
 		this->PlainArtShader.CompileFromFile(".\\shaders\\plain.hlsl", pPlainShaderMain) &&
 		this->VertexShader.CompileFromFile(".\\shaders\\vertex.hlsl", pVertexMain, true) &&
-		this->ShadowShader.CompileFromFile(".\\shaders\\shadow.hlsl", pShadowMain))
+		this->ShadowShader.CompileFromFile(".\\shaders\\shadow.hlsl", pShadowMain) &&
+		this->AlphaShader.CompileFromFile(".\\shaders\\alpha.hlsl", pAlphaMain)
+		)
 	{
 		return
 			this->VoxelShader.CreateShader(this->GetDevice()) &&
 			this->PlainArtShader.CreateShader(this->GetDevice()) &&
+			this->AlphaShader.CreateShader(this->GetDevice()) &&
 			this->VertexShader.CreateVertexShader(this->GetDevice()) &&
 			this->ShadowShader.CreateShader(this->GetDevice()) &&
 			this->VoxelShader.LinkConstants("vxl_cof") &&
 			this->PlainArtShader.LinkConstants("plain_cof") &&
 			this->PlainArtShader.LinkRemapConstants(pRemapColorName) &&
 			this->VertexShader.LinkConstants(pMatrixName) &&
-			this->ShadowShader.LinkConstants("shadow_cof");
+			this->ShadowShader.LinkConstants("shadow_cof") &&
+			this->AlphaShader.LinkConstants("alpha_cof");
 	}
 	else
 	{
@@ -292,6 +297,12 @@ ShaderStruct & SceneClass::GetShadowShader()
 {
 	// TODO: 在此处插入 return 语句
 	return this->ShadowShader;
+}
+
+ShaderStruct& SceneClass::GetAlphaShader()
+{
+	// TODO: 在此处插入 return 语句
+	return this->AlphaShader;
 }
 
 bool SceneClass::HandleDeviceLost()
