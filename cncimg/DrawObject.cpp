@@ -12,7 +12,7 @@
 #include <algorithm>
 
 #define PAINTING_START_ID	4
-#define SELF_SURFACE_INDEX	3
+#define SELF_SURFACE_INDEX	1
 
 long PaintingStruct::ID = PAINTING_START_ID;
 
@@ -88,11 +88,11 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 			paint->Draw(pDevice);
 		}
 
-		pDevice->SetTexture(SELF_SURFACE_INDEX, pPassTexture);
+		//pDevice->SetTexture(SELF_SURFACE_INDEX, pPassTexture);
 		for (auto paint : DrawingTopObject) {
 			paint->Draw(pDevice);
 		}
-		pDevice->SetTexture(SELF_SURFACE_INDEX, nullptr);
+		//pDevice->SetTexture(SELF_SURFACE_INDEX, nullptr);
 
 		pDevice->EndScene();
 	}
@@ -826,6 +826,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 	auto& PlainShader = SceneClass::Instance.GetPlainArtShader();
 	auto& ShadowShader = SceneClass::Instance.GetShadowShader();
 	auto& AlphaShader = SceneClass::Instance.GetAlphaShader();
+	auto& Scene = SceneClass::Instance;
 
 	if (!pVertexBuffer)
 	{
@@ -900,8 +901,10 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 
 		if (this->cSpecialDrawType == SPECIAL_NORMAL)
 			pDevice->SetTexture(1, this->pPaletteTexture);
-		else
+		else if (this->cSpecialDrawType == SPECIAL_SHADOW)
 			pDevice->SetTexture(1, nullptr);
+		else if (this->cSpecialDrawType == SPECIAL_ALPHA)
+			pDevice->SetTexture(SELF_SURFACE_INDEX, Scene.GetPassSurface());
 
 		pDevice->SetFVF(Desc.FVF);
 		pDevice->SetStreamSource(0, this->pVertexBuffer, 0, sizeof TexturedVertex);
@@ -914,7 +917,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		else
 		{
 			ShadowShader.SetConstantVector(pDevice, this->ColorCoefficient);
-			AlphaShader.SetConstantVector(pDevice, this->ColorCoefficient);
+			//AlphaShader.SetConstantVector(pDevice, this->ColorCoefficient);
 		}
 
 		if (this->cSpecialDrawType == SPECIAL_SHADOW)
@@ -939,7 +942,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		else
 		{
 			ShadowShader.SetConstantVector(pDevice);
-			AlphaShader.SetConstantVector(pDevice);
+			//AlphaShader.SetConstantVector(pDevice);
 		}
 	}
 

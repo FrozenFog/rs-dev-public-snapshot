@@ -138,8 +138,7 @@ bool SceneClass::LoadShaders()
 			this->PlainArtShader.LinkConstants("plain_cof") &&
 			this->PlainArtShader.LinkRemapConstants(pRemapColorName) &&
 			this->VertexShader.LinkConstants(pMatrixName) &&
-			this->ShadowShader.LinkConstants("shadow_cof") &&
-			this->AlphaShader.LinkConstants("alpha_cof");
+			this->ShadowShader.LinkConstants("shadow_cof");
 	}
 	else
 	{
