@@ -34,13 +34,18 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	//should check if the object is within our sight
 	std::vector<PaintingStruct*> DrawingOpaqueObject, DrawingTransperantObject, DrawingTopObject;
 	LPDIRECT3DSURFACE9 PassSurface = nullptr;
+	LPDIRECT3DSURFACE9 AlphaSurface = nullptr;
 	LPDIRECT3DVERTEXBUFFER9 TempVertex = nullptr;
 	LPVOID pLockedData;
 	
 	auto& Scene = SceneClass::Instance;
 
 	auto pPassTexture = Scene.GetPassSurface();
+	auto pAlphaTexture = Scene.GetAlphaSurface();
 	if (FAILED(pPassTexture->GetSurfaceLevel(0, &PassSurface)))
+		return;
+
+	if (FAILED(pAlphaTexture->GetSurfaceLevel(0, &AlphaSurface)))
 		return;
 
 	Scene.ResetShaderMatrix();
@@ -49,7 +54,6 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	DrawingTransperantObject.reserve(GlobalTransperantObjects.size());
 	DrawingTopObject.reserve(GlobalTopObjects.size());
 
-	
 	for (auto& pair : GlobalOpaqueObjects) {
 		if (pair.second->IsWithinSight())
 			DrawingOpaqueObject.push_back(pair.second);
@@ -75,9 +79,13 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	std::sort(DrawingTransperantObject.begin(), DrawingTransperantObject.end(), DistanceCompairFunction);
 	
 	pDevice->SetRenderTarget(0, PassSurface);
-	PassSurface->Release();
-
 	pDevice->Clear(0, nullptr, D3DCLEAR_ZBUFFER | D3DCLEAR_TARGET, dwBackground, 1.0f, 0);
+	pDevice->SetRenderTarget(0, AlphaSurface);
+	pDevice->Clear(0, nullptr, D3DCLEAR_TARGET, D3DCOLOR_XRGB(127, 0, 0), 1.0f, 0);
+
+	pDevice->SetRenderTarget(0, PassSurface);
+	AlphaSurface->Release();
+	PassSurface->Release();
 	if (SUCCEEDED(pDevice->BeginScene()))
 	{
 		for (auto paint : DrawingOpaqueObject) {
@@ -89,6 +97,8 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 		}
 
 		//pDevice->SetTexture(SELF_SURFACE_INDEX, pPassTexture);
+		pDevice->SetRenderTarget(0, AlphaSurface);
+		pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
 		for (auto paint : DrawingTopObject) {
 			paint->Draw(pDevice);
 		}
@@ -102,21 +112,23 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	if (!bShoot)
 	{
 		D3DXSaveTextureToFile("dest.png", D3DXIFF_PNG, pPassTexture, nullptr);
+		D3DXSaveTextureToFile("alpha.png", D3DXIFF_PNG, pAlphaTexture, nullptr);
 		bShoot = true;
 	}
 
 	pDevice->SetRenderTarget(0, Scene.GetBackSurface());
 	pDevice->Clear(0, nullptr, D3DCLEAR_ZBUFFER | D3DCLEAR_TARGET, dwBackground, 1.0f, 0);
 	auto winRect = Scene.GetWindowRect();
+	auto& PassShader = Scene.GetPassShader();
 	float width = winRect.right;
 	float height = winRect.bottom;
 
 	PlainVertex FixedVertecies[] =
 	{
-		{{0.0,0.0,0.0},1.0,0.0,0.0},
-		{{0.0,height,0.0},1.0,0.0,1.0},
-		{{width,0.0,0.0},1.0,1.0,0.0},
-		{{width,height,0.0},1.0,1.0,1.0},
+		{{0.0,0.0,1.0},1.0,0.0,0.0},
+		{{0.0,height,1.0},1.0,0.0,1.0},
+		{{width,0.0,1.0},1.0,1.0,0.0},
+		{{width,height,1.0},1.0,1.0,1.0},
 	};
 
 	if (FAILED(pDevice->CreateVertexBuffer(sizeof FixedVertecies, NULL, FixedVertecies[0].dwFVFType,
@@ -135,11 +147,14 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	{
 		pDevice->SetFVF(FixedVertecies[0].dwFVFType);
 		pDevice->SetStreamSource(0, TempVertex, 0, sizeof FixedVertecies[0]);
-		pDevice->SetPixelShader(nullptr);
+		pDevice->SetPixelShader(PassShader.GetShaderObject());
 		pDevice->SetTexture(0, pPassTexture);
+		pDevice->SetTexture(1, pAlphaTexture);
 
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 		pDevice->SetTexture(0, nullptr);
+		pDevice->SetTexture(1, nullptr);
+		pDevice->SetPixelShader(nullptr);
 		pDevice->SetStreamSource(0, nullptr, 0, 0);
 
 		pDevice->EndScene();
@@ -904,7 +919,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		else if (this->cSpecialDrawType == SPECIAL_SHADOW)
 			pDevice->SetTexture(1, nullptr);
 		else if (this->cSpecialDrawType == SPECIAL_ALPHA)
-			pDevice->SetTexture(SELF_SURFACE_INDEX, Scene.GetPassSurface());
+			pDevice->SetTexture(SELF_SURFACE_INDEX, Scene.GetAlphaSurface());
 
 		pDevice->SetFVF(Desc.FVF);
 		pDevice->SetStreamSource(0, this->pVertexBuffer, 0, sizeof TexturedVertex);

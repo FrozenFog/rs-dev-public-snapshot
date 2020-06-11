@@ -84,12 +84,13 @@ public:
 	LPDIRECT3DDEVICE9 GetDevice();
 	LPDIRECT3DSURFACE9 GetBackSurface();
 	LPDIRECT3DTEXTURE9 GetPassSurface();
+	LPDIRECT3DTEXTURE9 GetAlphaSurface();
 
 	ShaderStruct& GetVXLShader();
 	ShaderStruct& GetPlainArtShader();
 	ShaderStruct& GetShadowShader();
 	ShaderStruct& GetAlphaShader();
-	//ShaderStruct& GetPassShader();
+	ShaderStruct& GetPassShader();
 	//other
 	bool HandleDeviceLost();
 	void InitializeDeviceState();
@@ -111,11 +112,12 @@ private:
 	LPDIRECT3DDEVICE9 pDevice;
 	LPDIRECT3DSURFACE9 pBackBuffer;
 	LPDIRECT3DTEXTURE9 pPassSurface;
+	LPDIRECT3DTEXTURE9 pAlphaSurface;
 	D3DPRESENT_PARAMETERS SceneParas;
 
 	ShaderStruct VoxelShader, PlainArtShader;
 	ShaderStruct VertexShader;
 	ShaderStruct ShadowShader;
 	ShaderStruct AlphaShader;
-	//ShaderStruct PassShader;
+	ShaderStruct PassShader;
 };

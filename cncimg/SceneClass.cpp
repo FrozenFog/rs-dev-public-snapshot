@@ -12,6 +12,8 @@ SceneClass SceneClass::Instance;
 SceneClass::SceneClass() :pResource(nullptr),
 	pDevice(nullptr),
 	pBackBuffer(nullptr),
+	pPassSurface(nullptr),
+	pAlphaSurface(nullptr),
 	VoxelShader(),
 	PlainArtShader()
 {
@@ -43,6 +45,7 @@ void SceneClass::ClearScene()
 
 void SceneClass::ClearDevice()
 {
+	SAFE_RELEASE(pAlphaSurface);
 	SAFE_RELEASE(pPassSurface);
 	SAFE_RELEASE(pBackBuffer);
 	SAFE_RELEASE(pDevice);
@@ -87,6 +90,13 @@ bool SceneClass::SetUpScene(HWND hWnd)
 		return false;
 	}
 
+	if (FAILED(this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, D3DUSAGE_RENDERTARGET,
+		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pAlphaSurface, nullptr)))
+	{
+		this->ClearDevice();
+		return false;
+	}
+
 	if (!this->LoadShaders())
 	{
 		printf_s("failed loading shader.\n");
@@ -125,13 +135,15 @@ bool SceneClass::LoadShaders()
 		this->PlainArtShader.CompileFromFile(".\\shaders\\plain.hlsl", pPlainShaderMain) &&
 		this->VertexShader.CompileFromFile(".\\shaders\\vertex.hlsl", pVertexMain, true) &&
 		this->ShadowShader.CompileFromFile(".\\shaders\\shadow.hlsl", pShadowMain) &&
-		this->AlphaShader.CompileFromFile(".\\shaders\\alpha.hlsl", pAlphaMain)
+		this->AlphaShader.CompileFromFile(".\\shaders\\alpha.hlsl", pAlphaMain) &&
+		this->PassShader.CompileFromFile(".\\shaders\\pass.hlsl", pPassMain)
 		)
 	{
 		return
 			this->VoxelShader.CreateShader(this->GetDevice()) &&
 			this->PlainArtShader.CreateShader(this->GetDevice()) &&
 			this->AlphaShader.CreateShader(this->GetDevice()) &&
+			this->PassShader.CreateShader(this->GetDevice()) &&
 			this->VertexShader.CreateVertexShader(this->GetDevice()) &&
 			this->ShadowShader.CreateShader(this->GetDevice()) &&
 			this->VoxelShader.LinkConstants("vxl_cof") &&
@@ -297,6 +309,11 @@ LPDIRECT3DTEXTURE9 SceneClass::GetPassSurface()
 	return this->pPassSurface;
 }
 
+LPDIRECT3DTEXTURE9 SceneClass::GetAlphaSurface()
+{
+	return this->pAlphaSurface;
+}
+
 ShaderStruct & SceneClass::GetVXLShader()
 {
 	return this->VoxelShader;
@@ -317,6 +334,12 @@ ShaderStruct& SceneClass::GetAlphaShader()
 {
 	// TODO: 在此处插入 return 语句
 	return this->AlphaShader;
+}
+
+ShaderStruct& SceneClass::GetPassShader()
+{
+	// TODO: 在此处插入 return 语句
+	return this->PassShader;
 }
 
 bool SceneClass::HandleDeviceLost()
@@ -374,6 +397,7 @@ bool SceneClass::ResetDevice()
 
 	SAFE_RELEASE(this->pBackBuffer);
 	SAFE_RELEASE(this->pPassSurface);
+	SAFE_RELEASE(this->pAlphaSurface);
 
 	this->GetDevice()->SetVertexShader(nullptr);
 	SAFE_RELEASE(this->VertexShader.pVertexShader);
@@ -388,6 +412,8 @@ bool SceneClass::ResetDevice()
 	auto winRect = this->GetWindowRect();
 	this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, D3DUSAGE_RENDERTARGET,
 		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pPassSurface, nullptr);
+	this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, D3DUSAGE_RENDERTARGET,
+		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pAlphaSurface, nullptr);
 
 	if (SUCCEEDED(hResult)) {
 		this->InitializeDeviceState();
