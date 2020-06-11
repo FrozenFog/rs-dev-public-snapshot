@@ -43,6 +43,7 @@ void SceneClass::ClearScene()
 
 void SceneClass::ClearDevice()
 {
+	SAFE_RELEASE(pPassSurface);
 	SAFE_RELEASE(pBackBuffer);
 	SAFE_RELEASE(pDevice);
 	SAFE_RELEASE(pResource);
@@ -55,7 +56,7 @@ bool SceneClass::SetUpScene(HWND hWnd)
 	Para.BackBufferFormat = D3DFMT_A8R8G8B8;
 	Para.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 	Para.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;
-	Para.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	Para.SwapEffect = D3DSWAPEFFECT_COPY;
 	Para.EnableAutoDepthStencil = TRUE;
 	Para.AutoDepthStencilFormat = D3DFMT_D24S8;
 	Para.Windowed = TRUE;
@@ -73,6 +74,14 @@ bool SceneClass::SetUpScene(HWND hWnd)
 	}
 
 	if (FAILED(this->pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &this->pBackBuffer)))
+	{
+		this->ClearDevice();
+		return false;
+	}
+
+	auto winRect = this->GetWindowRect();
+	if (FAILED(this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, D3DUSAGE_RENDERTARGET,
+		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pPassSurface, nullptr)))
 	{
 		this->ClearDevice();
 		return false;
@@ -106,6 +115,7 @@ bool SceneClass::LoadShaders()
 	const char* pPlainShaderMain = "pmain";
 	const char* pVertexMain = "vmain";
 	const char* pAlphaMain = "amain";
+	const char* pPassMain = "psmain";
 	const char* pVarName = "vec";
 	const char* pMatrixName = "vpmatrix";
 	const char* pShadowMain = "smain";
@@ -283,6 +293,11 @@ LPDIRECT3DSURFACE9 SceneClass::GetBackSurface()
 	return this->pBackBuffer;
 }
 
+LPDIRECT3DTEXTURE9 SceneClass::GetPassSurface()
+{
+	return this->pPassSurface;
+}
+
 ShaderStruct & SceneClass::GetVXLShader()
 {
 	return this->VoxelShader;
@@ -330,10 +345,7 @@ void SceneClass::InitializeDeviceState()
 
 	D3DXMATRIX Project, View;
 
-	auto hWnd = this->SceneParas.hDeviceWindow;
-	RECT WindowRect;
-
-	GetClientRect(hWnd, &WindowRect);
+	auto WindowRect = this->GetWindowRect();
 	D3DXMatrixOrthoLH(&Project, WindowRect.right, WindowRect.bottom, 0.0, 1000000.0);
 
 	this->pDevice->SetTransform(D3DTS_PROJECTION, &Project);
@@ -362,6 +374,7 @@ bool SceneClass::ResetDevice()
 		return true;
 
 	SAFE_RELEASE(this->pBackBuffer);
+	SAFE_RELEASE(this->pPassSurface);
 
 	this->GetDevice()->SetVertexShader(nullptr);
 	SAFE_RELEASE(this->VertexShader.pVertexShader);
@@ -372,6 +385,10 @@ bool SceneClass::ResetDevice()
 	auto hResult = this->pDevice->Reset(&this->SceneParas);
 
 	this->pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &this->pBackBuffer);
+
+	auto winRect = this->GetWindowRect();
+	this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, D3DUSAGE_RENDERTARGET,
+		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pPassSurface, nullptr);
 
 	if (SUCCEEDED(hResult)) {
 		this->InitializeDeviceState();

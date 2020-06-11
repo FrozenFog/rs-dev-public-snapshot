@@ -415,5 +415,6 @@ int ShpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, i
 		float Blue = ((dwRemap & 0x00FF0000) >> 16) / 255.0f;
 		Object.SetPlainArtAttributes(palette->GetPaletteTexture(), D3DXVECTOR4(Red, Green, Blue, 0.0));
 	}
-	return this->CommitTransperantObject(Object);
+	return cSpecialDrawType == SPECIAL_ALPHA ? this->CommitTopObject(Object) : 
+		this->CommitTransperantObject(Object);
 }

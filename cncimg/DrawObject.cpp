@@ -11,7 +11,8 @@
 
 #include <algorithm>
 
-#define PAINTING_START_ID 4
+#define PAINTING_START_ID	4
+#define SELF_SURFACE_INDEX	3
 
 long PaintingStruct::ID = PAINTING_START_ID;
 
@@ -28,16 +29,27 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	if (!pDevice)
 		return;
 
-	SceneClass::Instance.ResetShaderMatrix();
 	//integrate first, than sort by distance, finally;
 	//draw opaque first, transpetant objects then;
 	//should check if the object is within our sight
 	std::vector<PaintingStruct*> DrawingOpaqueObject, DrawingTransperantObject, DrawingTopObject;
+	LPDIRECT3DSURFACE9 PassSurface = nullptr;
+	LPDIRECT3DVERTEXBUFFER9 TempVertex = nullptr;
+	LPVOID pLockedData;
+	
+	auto& Scene = SceneClass::Instance;
+
+	auto pPassTexture = Scene.GetPassSurface();
+	if (FAILED(pPassTexture->GetSurfaceLevel(0, &PassSurface)))
+		return;
+
+	Scene.ResetShaderMatrix();
 
 	DrawingOpaqueObject.reserve(GlobalOpaqueObjects.size());
 	DrawingTransperantObject.reserve(GlobalTransperantObjects.size());
 	DrawingTopObject.reserve(GlobalTopObjects.size());
 
+	
 	for (auto& pair : GlobalOpaqueObjects) {
 		if (pair.second->IsWithinSight())
 			DrawingOpaqueObject.push_back(pair.second);
@@ -62,6 +74,9 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	std::sort(DrawingOpaqueObject.begin(), DrawingOpaqueObject.end(), DistanceCompairFunction);
 	std::sort(DrawingTransperantObject.begin(), DrawingTransperantObject.end(), DistanceCompairFunction);
 	
+	pDevice->SetRenderTarget(0, PassSurface);
+	PassSurface->Release();
+
 	pDevice->Clear(0, nullptr, D3DCLEAR_ZBUFFER | D3DCLEAR_TARGET, dwBackground, 1.0f, 0);
 	if (SUCCEEDED(pDevice->BeginScene()))
 	{
@@ -73,12 +88,65 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 			paint->Draw(pDevice);
 		}
 
+		pDevice->SetTexture(SELF_SURFACE_INDEX, pPassTexture);
 		for (auto paint : DrawingTopObject) {
 			paint->Draw(pDevice);
 		}
+		pDevice->SetTexture(SELF_SURFACE_INDEX, nullptr);
 
 		pDevice->EndScene();
 	}
+	
+	static bool bShoot = false;
+
+	if (!bShoot)
+	{
+		D3DXSaveTextureToFile("dest.png", D3DXIFF_PNG, pPassTexture, nullptr);
+		bShoot = true;
+	}
+
+	pDevice->SetRenderTarget(0, Scene.GetBackSurface());
+	pDevice->Clear(0, nullptr, D3DCLEAR_ZBUFFER | D3DCLEAR_TARGET, dwBackground, 1.0f, 0);
+	auto winRect = Scene.GetWindowRect();
+	float width = winRect.right;
+	float height = winRect.bottom;
+
+	PlainVertex FixedVertecies[] =
+	{
+		{{0.0,0.0,0.0},1.0,0.0,0.0},
+		{{0.0,height,0.0},1.0,0.0,1.0},
+		{{width,0.0,0.0},1.0,1.0,0.0},
+		{{width,height,0.0},1.0,1.0,1.0},
+	};
+
+	if (FAILED(pDevice->CreateVertexBuffer(sizeof FixedVertecies, NULL, FixedVertecies[0].dwFVFType,
+		D3DPOOL_SYSTEMMEM, &TempVertex, nullptr)))
+		return;
+
+	if (FAILED(TempVertex->Lock(0, 0, &pLockedData, D3DLOCK_DISCARD))) 
+	{
+		TempVertex->Release();
+		return;
+	}
+
+	memcpy_s(pLockedData, sizeof FixedVertecies, FixedVertecies, sizeof FixedVertecies);
+	TempVertex->Unlock();
+	if (SUCCEEDED(pDevice->BeginScene()))
+	{
+		pDevice->SetFVF(FixedVertecies[0].dwFVFType);
+		pDevice->SetStreamSource(0, TempVertex, 0, sizeof FixedVertecies[0]);
+		pDevice->SetPixelShader(nullptr);
+		pDevice->SetTexture(0, pPassTexture);
+
+		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+		pDevice->SetTexture(0, nullptr);
+		pDevice->SetStreamSource(0, nullptr, 0, 0);
+
+		pDevice->EndScene();
+	}
+
+	pDevice->SetRenderTarget(0, nullptr);
+	TempVertex->Release();
 
 	auto hResult = pDevice->Present(nullptr, nullptr, NULL, nullptr);
 	if (hResult == D3DERR_DEVICELOST) {
@@ -466,7 +534,7 @@ void DrawObject::ClearAllObjects()
 	}
 
 	for (auto& pair : this->TopObjectTable) {
-		GlobalOpaqueObjects.erase(pair.first);
+		TopObjectTable.erase(pair.first);
 		SAFE_RELEASE(pair.second.pVertexBuffer);
 	}
 
