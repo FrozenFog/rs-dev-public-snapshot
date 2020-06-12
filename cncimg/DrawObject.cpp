@@ -117,10 +117,10 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 
 	PlainVertex FixedVertecies[] =
 	{
-		{{0.0,0.0,1.0},1.0,0.0,0.0},
-		{{0.0,height,1.0},1.0,0.0,1.0},
-		{{width,0.0,1.0},1.0,1.0,0.0},
-		{{width,height,1.0},1.0,1.0,1.0},
+		{{0.0,0.0,0.0},1.0,0.0,0.0},
+		{{0.0,height,0.0},1.0,0.0,1.0},
+		{{width,0.0,0.0},1.0,1.0,0.0},
+		{{width,height,0.0},1.0,1.0,1.0},
 	};
 
 	if (FAILED(pDevice->CreateVertexBuffer(sizeof FixedVertecies, NULL, FixedVertecies[0].dwFVFType,
@@ -143,11 +143,21 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 		pDevice->SetTexture(0, pPassTexture);
 		pDevice->SetTexture(1, pAlphaTexture);
 
+		pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+		pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+		pDevice->SetSamplerState(1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+		pDevice->SetSamplerState(1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+		
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 		pDevice->SetTexture(0, nullptr);
 		pDevice->SetTexture(1, nullptr);
 		pDevice->SetPixelShader(nullptr);
 		pDevice->SetStreamSource(0, nullptr, 0, 0);
+
+		pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+		pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
+		pDevice->SetSamplerState(1, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+		pDevice->SetSamplerState(1, D3DSAMP_MINFILTER, D3DTEXF_POINT);
 
 		pDevice->EndScene();
 	}

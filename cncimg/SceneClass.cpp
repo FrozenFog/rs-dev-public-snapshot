@@ -382,6 +382,9 @@ void SceneClass::InitializeDeviceState()
 	this->pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	this->pDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_FLAT);
 
+	//this->pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	//this->pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+
 	this->SetUpCamera();
 	this->ResetShaderMatrix();
 }
