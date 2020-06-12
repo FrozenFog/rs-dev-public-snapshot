@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 #include "ColorScheme.h"
+#include "DrawObject.h"
 
 struct ShaderStruct
 {
@@ -83,11 +84,14 @@ public:
 	//device accessment
 	LPDIRECT3DDEVICE9 GetDevice();
 	LPDIRECT3DSURFACE9 GetBackSurface();
+	LPDIRECT3DTEXTURE9 GetPassSurface();
+	LPDIRECT3DTEXTURE9 GetAlphaSurface();
 
 	ShaderStruct& GetVXLShader();
 	ShaderStruct& GetPlainArtShader();
 	ShaderStruct& GetShadowShader();
 	ShaderStruct& GetAlphaShader();
+	ShaderStruct& GetPassShader();
 	//other
 	bool HandleDeviceLost();
 	void InitializeDeviceState();
@@ -96,6 +100,10 @@ public:
 	void SetBackgroundColor(DWORD dwColor);
 	void ResetShaderMatrix();
 	DWORD GetBackgroundColor();
+
+	//alpha specifics
+	void RefillAlphaImageSurface();
+	void DrawAlphaImageToAlphaSurface(PaintingStruct& paint);
 
 private:
 	//for color & calculation
@@ -108,10 +116,13 @@ private:
 	LPDIRECT3D9 pResource;
 	LPDIRECT3DDEVICE9 pDevice;
 	LPDIRECT3DSURFACE9 pBackBuffer;
+	LPDIRECT3DTEXTURE9 pPassSurface;
+	LPDIRECT3DTEXTURE9 pAlphaSurface;
 	D3DPRESENT_PARAMETERS SceneParas;
 
 	ShaderStruct VoxelShader, PlainArtShader;
 	ShaderStruct VertexShader;
 	ShaderStruct ShadowShader;
 	ShaderStruct AlphaShader;
+	ShaderStruct PassShader;
 };

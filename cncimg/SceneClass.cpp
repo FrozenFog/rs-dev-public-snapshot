@@ -12,6 +12,8 @@ SceneClass SceneClass::Instance;
 SceneClass::SceneClass() :pResource(nullptr),
 	pDevice(nullptr),
 	pBackBuffer(nullptr),
+	pPassSurface(nullptr),
+	pAlphaSurface(nullptr),
 	VoxelShader(),
 	PlainArtShader()
 {
@@ -43,6 +45,8 @@ void SceneClass::ClearScene()
 
 void SceneClass::ClearDevice()
 {
+	SAFE_RELEASE(pAlphaSurface);
+	SAFE_RELEASE(pPassSurface);
 	SAFE_RELEASE(pBackBuffer);
 	SAFE_RELEASE(pDevice);
 	SAFE_RELEASE(pResource);
@@ -55,7 +59,7 @@ bool SceneClass::SetUpScene(HWND hWnd)
 	Para.BackBufferFormat = D3DFMT_A8R8G8B8;
 	Para.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 	Para.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;
-	Para.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	Para.SwapEffect = D3DSWAPEFFECT_COPY;
 	Para.EnableAutoDepthStencil = TRUE;
 	Para.AutoDepthStencilFormat = D3DFMT_D24S8;
 	Para.Windowed = TRUE;
@@ -73,6 +77,21 @@ bool SceneClass::SetUpScene(HWND hWnd)
 	}
 
 	if (FAILED(this->pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &this->pBackBuffer)))
+	{
+		this->ClearDevice();
+		return false;
+	}
+
+	auto winRect = this->GetWindowRect();
+	if (FAILED(this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, D3DUSAGE_RENDERTARGET,
+		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pPassSurface, nullptr)))
+	{
+		this->ClearDevice();
+		return false;
+	}
+
+	if (FAILED(this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, NULL,
+		D3DFMT_L8, D3DPOOL_MANAGED, &this->pAlphaSurface, nullptr)))
 	{
 		this->ClearDevice();
 		return false;
@@ -106,6 +125,7 @@ bool SceneClass::LoadShaders()
 	const char* pPlainShaderMain = "pmain";
 	const char* pVertexMain = "vmain";
 	const char* pAlphaMain = "amain";
+	const char* pPassMain = "psmain";
 	const char* pVarName = "vec";
 	const char* pMatrixName = "vpmatrix";
 	const char* pShadowMain = "smain";
@@ -115,21 +135,22 @@ bool SceneClass::LoadShaders()
 		this->PlainArtShader.CompileFromFile(".\\shaders\\plain.hlsl", pPlainShaderMain) &&
 		this->VertexShader.CompileFromFile(".\\shaders\\vertex.hlsl", pVertexMain, true) &&
 		this->ShadowShader.CompileFromFile(".\\shaders\\shadow.hlsl", pShadowMain) &&
-		this->AlphaShader.CompileFromFile(".\\shaders\\alpha.hlsl", pAlphaMain)
+		this->AlphaShader.CompileFromFile(".\\shaders\\alpha.hlsl", pAlphaMain) &&
+		this->PassShader.CompileFromFile(".\\shaders\\pass.hlsl", pPassMain)
 		)
 	{
 		return
 			this->VoxelShader.CreateShader(this->GetDevice()) &&
 			this->PlainArtShader.CreateShader(this->GetDevice()) &&
 			this->AlphaShader.CreateShader(this->GetDevice()) &&
+			this->PassShader.CreateShader(this->GetDevice()) &&
 			this->VertexShader.CreateVertexShader(this->GetDevice()) &&
 			this->ShadowShader.CreateShader(this->GetDevice()) &&
 			this->VoxelShader.LinkConstants("vxl_cof") &&
 			this->PlainArtShader.LinkConstants("plain_cof") &&
 			this->PlainArtShader.LinkRemapConstants(pRemapColorName) &&
 			this->VertexShader.LinkConstants(pMatrixName) &&
-			this->ShadowShader.LinkConstants("shadow_cof") &&
-			this->AlphaShader.LinkConstants("alpha_cof");
+			this->ShadowShader.LinkConstants("shadow_cof");
 	}
 	else
 	{
@@ -283,6 +304,16 @@ LPDIRECT3DSURFACE9 SceneClass::GetBackSurface()
 	return this->pBackBuffer;
 }
 
+LPDIRECT3DTEXTURE9 SceneClass::GetPassSurface()
+{
+	return this->pPassSurface;
+}
+
+LPDIRECT3DTEXTURE9 SceneClass::GetAlphaSurface()
+{
+	return this->pAlphaSurface;
+}
+
 ShaderStruct & SceneClass::GetVXLShader()
 {
 	return this->VoxelShader;
@@ -303,6 +334,12 @@ ShaderStruct& SceneClass::GetAlphaShader()
 {
 	// TODO: 在此处插入 return 语句
 	return this->AlphaShader;
+}
+
+ShaderStruct& SceneClass::GetPassShader()
+{
+	// TODO: 在此处插入 return 语句
+	return this->PassShader;
 }
 
 bool SceneClass::HandleDeviceLost()
@@ -330,10 +367,7 @@ void SceneClass::InitializeDeviceState()
 
 	D3DXMATRIX Project, View;
 
-	auto hWnd = this->SceneParas.hDeviceWindow;
-	RECT WindowRect;
-
-	GetClientRect(hWnd, &WindowRect);
+	auto WindowRect = this->GetWindowRect();
 	D3DXMatrixOrthoLH(&Project, WindowRect.right, WindowRect.bottom, 0.0, 1000000.0);
 
 	this->pDevice->SetTransform(D3DTS_PROJECTION, &Project);
@@ -362,6 +396,7 @@ bool SceneClass::ResetDevice()
 		return true;
 
 	SAFE_RELEASE(this->pBackBuffer);
+	SAFE_RELEASE(this->pPassSurface);
 
 	this->GetDevice()->SetVertexShader(nullptr);
 	SAFE_RELEASE(this->VertexShader.pVertexShader);
@@ -372,6 +407,12 @@ bool SceneClass::ResetDevice()
 	auto hResult = this->pDevice->Reset(&this->SceneParas);
 
 	this->pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &this->pBackBuffer);
+
+	auto winRect = this->GetWindowRect();
+	this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, D3DUSAGE_RENDERTARGET,
+		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pPassSurface, nullptr);
+	//this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, NULL,
+	//	D3DFMT_L8, D3DPOOL_DEFAULT, &this->pAlphaSurface, nullptr);
 
 	if (SUCCEEDED(hResult)) {
 		this->InitializeDeviceState();
@@ -417,6 +458,98 @@ void SceneClass::ResetShaderMatrix()
 DWORD SceneClass::GetBackgroundColor()
 {
 	return this->dwBackgroundColor;
+}
+
+void SceneClass::RefillAlphaImageSurface()
+{
+	auto AlphaSurface = this->GetAlphaSurface();
+	auto Rect = this->GetWindowRect();
+
+	if (!AlphaSurface)
+		return;
+
+	D3DLOCKED_RECT LockedData;
+	BYTE aValue = 127;
+
+	if (FAILED(AlphaSurface->LockRect(0, &LockedData, nullptr, D3DLOCK_DISCARD)))
+		return;
+
+	auto pColors = reinterpret_cast<PBYTE>(LockedData.pBits);
+	for (int i = 0; i < Rect.bottom; i++)
+	{
+		memset(pColors, aValue, Rect.right);
+		pColors += LockedData.Pitch;
+	}
+
+	AlphaSurface->UnlockRect(0);
+}
+
+void SceneClass::DrawAlphaImageToAlphaSurface(PaintingStruct& paint)
+{
+	auto AlphaSurface = this->GetAlphaSurface();
+	auto Texture = paint.pTexture;
+	auto Bound = this->GetCurrentViewPort();
+
+	if (!AlphaSurface || !Texture)
+		return;
+
+	auto VisualRect = paint.VisualRect;
+
+	RECT TargetRect;
+	D3DSURFACE_DESC SurfaceDesc;
+	Texture->GetLevelDesc(0, &SurfaceDesc);
+
+	VisualRect.right = VisualRect.left + SurfaceDesc.Width;
+	VisualRect.bottom = VisualRect.top + SurfaceDesc.Height;
+
+	if (!IntersectRect(&TargetRect, &VisualRect, &Bound))
+		return;
+
+	POINT ImageLockStartingPoint = { TargetRect.left - VisualRect.left, TargetRect.top - VisualRect.top };
+	POINT ImageLockEndPoint = { TargetRect.right - VisualRect.left,TargetRect.bottom - VisualRect.top };
+	POINT SurfaceLockStartingPoint = { TargetRect.left - Bound.left,TargetRect.top - Bound.top };
+	POINT SurfaceLockEndPoint = { TargetRect.right - Bound.left,TargetRect.bottom - Bound.top };
+
+	RECT ImageLockRect = { ImageLockStartingPoint.x,ImageLockStartingPoint.y,
+	ImageLockEndPoint.x,ImageLockEndPoint.y };
+	RECT SurfaceLockRect = { SurfaceLockStartingPoint.x,SurfaceLockStartingPoint.y,
+	SurfaceLockEndPoint.x,SurfaceLockEndPoint.y };
+
+	D3DLOCKED_RECT LockedSurface, LockedTexture;
+
+	if (FAILED(AlphaSurface->LockRect(0, &LockedSurface, &SurfaceLockRect, NULL)))
+		return;
+	
+	if (FAILED(Texture->LockRect(0, &LockedTexture, &ImageLockRect, NULL)))
+	{
+		AlphaSurface->UnlockRect(0);
+		return;
+	}
+
+	auto TextureData = reinterpret_cast<PBYTE>(LockedTexture.pBits);
+	auto SurfaceData = reinterpret_cast<PBYTE>(LockedSurface.pBits);
+	auto Length = TargetRect.right - TargetRect.left;
+	auto Height = TargetRect.bottom - TargetRect.top;
+	for (int i = 0; i < Height; i++)
+	{
+		for (int x = 0; x < Length; x++)
+		{
+			int orig = SurfaceData[x];
+			int aval = TextureData[x];
+
+			orig *= (aval / 127.0);
+			if (orig >= 255)
+				orig = 255;
+
+			SurfaceData[x] = orig;
+		}
+
+		TextureData += LockedTexture.Pitch;
+		SurfaceData += LockedSurface.Pitch;
+	}
+
+	Texture->UnlockRect(0);
+	AlphaSurface->UnlockRect(0);
 }
 
 bool ShaderStruct::IsLoaded()

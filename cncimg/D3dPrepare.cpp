@@ -295,9 +295,12 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 
 
 	if (auto sid = CreateShpFile("images\\repring.shp")) {
-		if (LoadShpTextures(sid, 0))
-			CreateShpObjectAtScene(sid, { 0.0,0.0,0.1f }, 0, 
-			UnitPalette, RGB(0, 252, 252), 0, 4, 4, 8, SPECIAL_ALPHA);
+		if (LoadShpTextures(sid, 0)) {
+			CreateShpObjectAtScene(sid, { 0.0,0.0,0.1f }, 0,
+				UnitPalette, RGB(0, 252, 252), 0, 4, 4, 8, SPECIAL_ALPHA);
+			CreateShpObjectAtScene(sid, { 0.0,-200.0,0.1f }, 0,
+				UnitPalette, RGB(0, 252, 252), 0, 4, 4, 8, SPECIAL_ALPHA);
+		}
 	}
 	if (auto vid = CreateVxlFile("images\\ytnk.vxl"))
 	{
