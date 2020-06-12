@@ -397,6 +397,7 @@ bool SceneClass::ResetDevice()
 
 	SAFE_RELEASE(this->pBackBuffer);
 	SAFE_RELEASE(this->pPassSurface);
+	SAFE_RELEASE(this->pAlphaSurface);
 
 	this->GetDevice()->SetVertexShader(nullptr);
 	SAFE_RELEASE(this->VertexShader.pVertexShader);
@@ -411,8 +412,8 @@ bool SceneClass::ResetDevice()
 	auto winRect = this->GetWindowRect();
 	this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, D3DUSAGE_RENDERTARGET,
 		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pPassSurface, nullptr);
-	//this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, NULL,
-	//	D3DFMT_L8, D3DPOOL_DEFAULT, &this->pAlphaSurface, nullptr);
+	this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, NULL,
+		D3DFMT_L8, D3DPOOL_MANAGED, &this->pAlphaSurface, nullptr);
 
 	if (SUCCEEDED(hResult)) {
 		this->InitializeDeviceState();
