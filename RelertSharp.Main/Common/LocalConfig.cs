@@ -52,6 +52,11 @@ namespace RelertSharp.Common
             get { return this["General"]["PrimaryConfigPath"]; }
             set { this["General"]["PrimaryConfigPath"] = value; }
         }
+        public string RecentPath
+        {
+            get { return this["General"]["RecentPath"]; }
+            set { this["General"]["RecentPath"] = value; }
+        }
         #endregion
     }
 }

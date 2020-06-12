@@ -44,12 +44,6 @@ namespace RelertSharp.GUI
                     Log.Write("Engine Catched");
                 }
             }
-            //#if DEBUG
-            //            Application.EnableVisualStyles();
-            //            Application.SetCompatibleTextRenderingDefault(false);
-            //            if (!Initialization()) return;
-            //            _Test.Run();
-            //#else
             if (args.Length < 1)
             {
                 Process[] ps = Process.GetProcesses();
@@ -91,16 +85,20 @@ namespace RelertSharp.GUI
                     GlobalVar.CurrentMapDocument = map;
                     if (Log.HasCritical)
                     {
+                        Log.Critical("These object will not show in scene(or in logic editor)");
                         Warning(Log.ShowCritical());
                     }
                     Application.Run(new MainWindowTest());
                 },
                 "Unhandled error!");
             }
-//#endif
+            GlobalVar.GlobalConfig.Local.SaveConfig();
             Log.Write("PROGRAM EXITING\n\n\n");
             Log.Dispose();
         }
+
+
+
         static bool Initialization()
         {
             if (!SafeRun(() => { Utils.Misc.Init_Language(); }, "Failed to read language file!")) return false;
@@ -129,8 +127,10 @@ namespace RelertSharp.GUI
             }
             localSetting.Dispose();
             LocalConfig local = new LocalConfig("local.rsc");
-            GlobalVar.GlobalConfig = new RSConfig(local.PrimaryConfigName);
-            GlobalVar.GlobalConfig.Merge(local);
+            GlobalVar.GlobalConfig = new RSConfig(local.PrimaryConfigName)
+            {
+                Local = local
+            };
             Log.Write("Primary config loaded");
             if (!SafeRun(() => { GlobalVar.GlobalDir = new VirtualDir(); },
                 "Virtual mix directiory initialization failed!")) return false;

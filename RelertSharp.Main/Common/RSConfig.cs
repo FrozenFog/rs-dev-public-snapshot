@@ -168,6 +168,7 @@ namespace RelertSharp.Common
 
 
         #region Public Calls - RSConfig
+        public LocalConfig Local { get; set; }
         public bool IgnoreBuildingTheaterArt { get; private set; }
         public string RulesName { get; private set; }
         public string ArtName { get; private set; }
@@ -179,7 +180,7 @@ namespace RelertSharp.Common
         {
             get
             {
-                string p = this["General"]["GamePath"];
+                string p = Local["General"]["GamePath"];
                 if (!p.EndsWith("\\")) return p + "\\";
                 return p;
             }

@@ -45,7 +45,7 @@ namespace RelertSharp.GUI
             OpenFileDialog dlg = new OpenFileDialog()
             {
                 Title = Language.DICT["OpenMapDlgTitle"],
-                InitialDirectory = Application.StartupPath,
+                InitialDirectory = string.IsNullOrEmpty(GlobalConfig.Local.RecentPath) ? Application.StartupPath : GlobalConfig.Local.RecentPath,
                 Filter = "Red Alert 2 Map File|*.map;*.yrm;*.mpr",
                 AddExtension = true,
                 CheckFileExists = true,
@@ -53,6 +53,7 @@ namespace RelertSharp.GUI
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 MapName = dlg.FileName;
+                GlobalConfig.Local.RecentPath = MapName.Substring(0, MapName.Length - MapName.LastIndexOf('\\'));
                 Close();
             }
             else
