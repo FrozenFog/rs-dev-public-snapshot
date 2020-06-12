@@ -311,7 +311,8 @@ namespace RelertSharp.DrawingEngine
             }
             if (src.pAlphaImg != 0)
             {
-                dest.pAlphaImg = RenderAndPresent(src, src.pAlphaImg, pos, pPal, ShpFlatType.Vertical, 0, ShaderType.Alpha);
+                Vec3 alphapos = ToVec3Iso(dest.X + src.FoundationX / 2f, dest.Y + src.FoundationY / 2f, dest.Z);
+                dest.pAlphaImg = RenderAndPresent(src, src.pAlphaImg, alphapos, pPal, ShpFlatType.Vertical, 0, ShaderType.Alpha);
             }
             if (upg1 != null)
             {

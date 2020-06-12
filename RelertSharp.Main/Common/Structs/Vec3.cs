@@ -24,6 +24,10 @@ namespace RelertSharp.Common
         {
             X = (float)x; Y = (float)y; Z = (float)z;
         }
+        public Vec3(I3dLocateable src)
+        {
+            X = src.X;Y = src.Y;Z = src.Z;
+        }
         public int ToCoord()
         {
             return Utils.Misc.CoordInt(X, Y);
