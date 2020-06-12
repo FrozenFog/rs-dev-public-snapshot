@@ -88,11 +88,11 @@ namespace RelertSharp.GUI
         {
             if (initialized && drew)
             {
+                MainPanelMoving(e);
                 switch (Current.CurrentMouseAction)
                 {
                     case MainWindowDataModel.MouseActionType.Moving:
                         UpdateRmbMoveDelta(e);
-                        MainPanelMoving(e);
                         OnObjectMoving(e);
                         break;
                     case MainWindowDataModel.MouseActionType.BoxSelecting:

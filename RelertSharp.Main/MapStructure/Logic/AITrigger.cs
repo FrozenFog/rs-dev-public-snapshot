@@ -94,7 +94,7 @@ namespace RelertSharp.MapStructure.Logic
         {
             try
             {
-                if (_args.Length != 18)
+                if (_args.Length != Constant.MapStructure.ArgLenAiTrigger)
                 {
                     throw new Exception();
                 }
