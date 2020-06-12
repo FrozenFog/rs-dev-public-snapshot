@@ -20,7 +20,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Ctor - TriggerCollection
         public TriggerCollection()
         {
-            TemplateTrigger = new TriggerItem("TEMPLATE", "<none>", "<none>", "DefaultTrigger", true, false, false, false, 0);
+            TemplateTrigger = new TriggerItem("TEMPLATE", "<none>", "<none>", "DefaultTrigger", false, true, true, true, 0);
             TemplateTrigger.Events = new LogicGroup();
             TemplateTrigger.Actions = new LogicGroup();
         }
