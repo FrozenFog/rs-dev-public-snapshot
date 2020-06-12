@@ -10,6 +10,7 @@ using System.Collections;
 using RelertSharp.FileSystem;
 using RelertSharp.Utils;
 using RelertSharp.Common;
+using RelertSharp.DrawingEngine.Presenting;
 
 namespace RelertSharp.MapStructure
 {
@@ -308,7 +309,7 @@ namespace RelertSharp.MapStructure
             result[10] = IceGrowth;
             return result;
         }
-        public IEnumerable<IMapObject> GetObjects()
+        public List<IMapObject> GetObjects()
         {
             return objectsOnTile;
         }
@@ -381,6 +382,8 @@ namespace RelertSharp.MapStructure
         public byte SubIndex { get; set; }
         public byte IceGrowth { get; set; }
         public int Coord { get { return Misc.CoordInt(X, Y); } }
+        public int ObjectCount { get { return objectsOnTile.Count; } }
+        public PresentTile SceneObject { get; set; }
         #endregion
     }
 }

@@ -78,7 +78,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class AITriggerItem : BindableBase, IniSystem.IRegistable
+    public class AITriggerItem : BindableBase, ILogicItem
     {
         private string name, id, team1id, team2id, ownerhouse, condObjID;
         private int tech, sideindex;

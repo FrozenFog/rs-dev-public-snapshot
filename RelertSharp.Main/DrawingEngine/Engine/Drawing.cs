@@ -26,6 +26,7 @@ namespace RelertSharp.DrawingEngine
             int frame = GlobalRules.GetFrameFromDirection(inf.Rotation, inf.RegName);
             DrawableInfantry src = CreateDrawableInfantry(inf, color, pPalUnit, frame);
             PresentInfantry dest = new PresentInfantry(inf, height);
+            inf.SceneObject = dest;
             Vec3 pos = ToVec3Iso(dest, inf.SubCells);
             return DrawInfantry(src, pos, dest, frame, pPalUnit, inf.SubCells);
         }
@@ -34,6 +35,7 @@ namespace RelertSharp.DrawingEngine
             Vec3 idx = VxlRotation(unit.RegName, unit.Rotation, false);
             DrawableUnit src = CreateDrawableUnit(unit.RegName, color, pPalUnit, (int)idx.X);
             PresentUnit dest = new PresentUnit(unit, height, src.IsVxl);
+            unit.SceneObject = dest;
             Vec3 pos = ToVec3Iso(dest);
             Vec3 ro = VxlRotation(unit.RegName, unit.Rotation, src.IsVxl);
             return DrawUnit(src, dest, pos, ro, pPalUnit);
@@ -42,6 +44,7 @@ namespace RelertSharp.DrawingEngine
         {
             DrawableUnit src = CreateDrawableUnit(air.RegName, color, pPalUnit, 0);
             PresentUnit dest = new PresentUnit(air, height);
+            air.SceneObject = dest;
             Vec3 pos = ToVec3Iso(dest);
             Vec3 ro = VxlRotation(air.RegName, air.Rotation, true);
             return DrawUnit(src, dest, pos, ro, pPalUnit);
@@ -52,6 +55,7 @@ namespace RelertSharp.DrawingEngine
             DrawableStructure upg1 = null, upg2 = null, upg3 = null;
             DrawableStructure src = CreateDrawableStructure(structure.RegName, color, pPalUnit, (int)idx.X);
             PresentStructure dest = new PresentStructure(structure, height, src.VoxelTurret, src);
+            structure.SceneObject = dest;
             if (structure.Upgrade1 != "None") upg1 = CreateDrawableStructure(structure.Upgrade1, color, pPalUnit, (int)idx.X);
             if (structure.Upgrade2 != "None") upg2 = CreateDrawableStructure(structure.Upgrade2, color, pPalUnit, (int)idx.X);
             if (structure.Upgrade3 != "None") upg3 = CreateDrawableStructure(structure.Upgrade3, color, pPalUnit, (int)idx.X);
@@ -66,6 +70,7 @@ namespace RelertSharp.DrawingEngine
             Vec3 idx = BuildingRotation(node.RegName, 0, false);
             DrawableStructure src = CreateDrawableStructure(node.RegName, color, pPalUnit, (int)idx.X, true);
             PresentStructure dest = new PresentStructure(node, height, src.VoxelTurret);
+            node.SceneObject = dest;
             Vec3 ro;
             if (src.pTurretAnim != 0) ro = BuildingRotation(node.RegName, 0, src.VoxelTurret);
             else ro = Vec3.Zero;
@@ -100,6 +105,7 @@ namespace RelertSharp.DrawingEngine
             if (DrawTile(src.pSelf, pos, subindex, pPalIso, out int pSelf, out int pExtra))
             {
                 PresentTile pt = new PresentTile(pSelf, pExtra, t.Height, src, subindex, t);
+                t.SceneObject = pt;
                 Color cl = src.SubTiles[subindex].RadarColor.Left;
                 Color cr = src.SubTiles[subindex].RadarColor.Right;
                 pt.RadarColor = new RadarColor(cl, cr);
@@ -112,6 +118,7 @@ namespace RelertSharp.DrawingEngine
         {
             DrawableMisc src = CreateDrawableMisc(terrain);
             PresentMisc dest = new PresentMisc(MapObjectType.Terrain, terrain, height);
+            terrain.SceneObject = dest;
             dest.IsZeroVec = src.IsZeroVec;
             Vec3 pos;
             if (src.IsZeroVec) pos = ToVec3Zero(terrain, height);
@@ -127,12 +134,13 @@ namespace RelertSharp.DrawingEngine
         {
             DrawableMisc src = CreateDrawableMisc(smg);
             PresentMisc dest = new PresentMisc(MapObjectType.Smudge, smg, height);
+            smg.SceneObject = dest;
             dest.SmgWidth = src.SmudgeWidth;
             dest.SmgHeight = src.SmudgeHeight;
             Vec3 pos = ToVec3Zero(smg, height);
             if (DrawMisc(src, dest, pos, pPalIso, 0, _white, ShpFlatType.FlatGround))
             {
-                Buffer.Scenes.Smudges[smg.Coord] = dest;
+                Buffer.Scenes.AddSmudge(dest);
                 return true;
             }
             return false;
@@ -141,6 +149,7 @@ namespace RelertSharp.DrawingEngine
         {
             DrawableMisc src = CreateDrawableMisc(o, _white);
             PresentMisc dest = new PresentMisc(MapObjectType.Overlay, o, height);
+            o.SceneObject = dest;
             dest.IsTiberiumOverlay = src.IsTiberiumOverlay;
             dest.IsMoveBlockingOverlay = src.IsMoveBlockingOverlay;
             dest.IsRubble = src.IsRubble;
@@ -164,6 +173,7 @@ namespace RelertSharp.DrawingEngine
             DrawableMisc src = new DrawableMisc(MapObjectType.Waypoint, waypoint.Num);
             src.pSelf = Buffer.Files.WaypointBase;
             PresentMisc dest = new PresentMisc(MapObjectType.Waypoint, waypoint, height);
+            waypoint.SceneObject = dest;
             Vec3 pos = ToVec3Iso(dest).Rise() + 100 * _generalOffset;
             if (DrawMisc(src, dest, pos, pPalSystem, 0, _white, ShpFlatType.Vertical) && DrawWaypointNum(dest, waypoint.Num, pos))
             {
@@ -177,6 +187,7 @@ namespace RelertSharp.DrawingEngine
             DrawableMisc src = new DrawableMisc(MapObjectType.Celltag, "");
             src.pSelf = Buffer.Files.CelltagBase;
             PresentMisc dest = new PresentMisc(MapObjectType.Celltag, cell, height);
+            cell.SceneObject = dest;
             Vec3 pos = ToVec3Iso(dest).Rise();
             if (topmost) pos += 99 * _generalOffset;
             if (DrawMisc(src, dest, pos, pPalSystem, 0, _white, ShpFlatType.FlatGround))

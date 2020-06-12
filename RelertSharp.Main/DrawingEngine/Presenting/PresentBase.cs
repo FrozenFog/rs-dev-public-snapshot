@@ -85,6 +85,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         public int pSelf { get; set; }
         public int pSelfShadow { get; set; }
         public bool Selected { get { return selected; } set { selected = value; } }
+        public bool Disposed { get; set; }
         public RadarColor RadarColor { get; set; }
         #endregion
     }
@@ -97,6 +98,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         int pSelfShadow { get; set; }
         bool IsValid { get; }
         bool Selected { get; set; }
+        bool Disposed { get; }
         RadarColor RadarColor { get; set; }
         void Dispose();
         void SetColor(Vec4 color);

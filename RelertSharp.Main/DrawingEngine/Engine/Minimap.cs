@@ -1,4 +1,6 @@
 ﻿using System.Drawing;
+using System.Collections.Generic;
+using RelertSharp.MapStructure;
 using RelertSharp.DrawingEngine.Presenting;
 using RelertSharp.Common;
 
@@ -29,12 +31,13 @@ namespace RelertSharp.DrawingEngine
         }
         public void RedrawMinimapAll()
         {
-            foreach (PresentTile t in Buffer.Scenes.Tiles.Values)
+            TileLayer tiles = GlobalVar.CurrentMapDocument.Map.TilesData;
+            foreach (Tile t in tiles)
             {
-                if (t.TileObjects.Count == 0) minimap.DrawTile(t);
+                if (t.ObjectCount == 0) minimap.DrawTile(t.SceneObject);
                 else
                 {
-                    IPresentBase c = t.TileObjects[t.TileObjects.Count - 1];
+                    IPresentBase c = t.GetObjects()[t.ObjectCount - 1].SceneObject;
                     minimap.DrawColorable(t, c);
                 }
             }

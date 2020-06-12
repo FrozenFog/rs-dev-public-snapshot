@@ -7,7 +7,7 @@ using RelertSharp.Common;
 
 namespace RelertSharp.IniSystem
 {
-    public class TechnoPair : IRegistable
+    public class TechnoPair : ILogicItem
     {
         private string abst = "";
         public enum AbstractType

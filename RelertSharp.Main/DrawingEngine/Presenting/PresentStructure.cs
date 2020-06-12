@@ -9,10 +9,10 @@ using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine.Presenting
 {
-    internal class PresentStructure : PresentBase, IPresentBase
+    public class PresentStructure : PresentBase, IPresentBase
     {
         #region Ctor
-        public PresentStructure(StructureItem item, int z, bool vxlTurret, Drawables.DrawableStructure src) : base(item, z)
+        internal PresentStructure(StructureItem item, int z, bool vxlTurret, Drawables.DrawableStructure src) : base(item, z)
         {
             VoxelTurret = vxlTurret;
             FoundationX = src.FoundationX;
@@ -46,7 +46,11 @@ namespace RelertSharp.DrawingEngine.Presenting
         }
         public void Dispose()
         {
-            foreach (int p in Pointers) RemoveProp(p);
+            if (!Disposed)
+            {
+                foreach (int p in Pointers) RemoveProp(p);
+                Disposed = true;
+            }
         }
         public void SetColor(Vec4 color)
         {

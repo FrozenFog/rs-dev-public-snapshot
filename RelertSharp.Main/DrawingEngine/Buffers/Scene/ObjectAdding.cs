@@ -32,7 +32,6 @@ namespace RelertSharp.DrawingEngine
                 if (Tiles.Keys.Contains(coord))
                 {
                     int id = NewID(Units, unit);
-                    Tiles[coord].TileObjects.Add(unit);
                 }
             }
             public void AddInfantry(PresentInfantry inf)
@@ -41,7 +40,6 @@ namespace RelertSharp.DrawingEngine
                 if (Tiles.Keys.Contains(coord))
                 {
                     int id = NewID(Infantries, inf);
-                    Tiles[coord].TileObjects.Add(inf);
                 }
             }
             public void AddBuilding(PresentStructure bud)
@@ -50,11 +48,6 @@ namespace RelertSharp.DrawingEngine
                 if (Tiles.Keys.Contains(coord))
                 {
                     int id = NewID(Structures, bud);
-                    foreach(I2dLocateable pos in new Square2D(bud, bud.FoundationX, bud.FoundationY))
-                    {
-                        int sub = pos.Coord;
-                        if (Tiles.Keys.Contains(sub)) Tiles[sub].TileObjects.Add(bud);
-                    }
                 }
             }
             public void AddOverlay(PresentMisc ov)
@@ -63,7 +56,6 @@ namespace RelertSharp.DrawingEngine
                 if (Tiles.Keys.Contains(coord))
                 {
                     int id = NewID(Overlays, ov);
-                    Tiles[coord].TileObjects.Add(ov);
                 }
             }
             public void AddTerrain(PresentMisc terr)
@@ -72,7 +64,6 @@ namespace RelertSharp.DrawingEngine
                 if (Tiles.Keys.Contains(coord))
                 {
                     int id = NewID(Terrains, terr);
-                    Tiles[coord].TileObjects.Add(terr);
                 }
             }
             public void AddSmudge(PresentMisc smg)
@@ -84,7 +75,6 @@ namespace RelertSharp.DrawingEngine
                     foreach (I2dLocateable pos in new Square2D(smg, smg.SmgWidth, smg.SmgHeight))
                     {
                         int sub = pos.Coord;
-                        if (Tiles.Keys.Contains(sub)) Tiles[sub].TileObjects.Add(smg);
                     }
                 }
             }

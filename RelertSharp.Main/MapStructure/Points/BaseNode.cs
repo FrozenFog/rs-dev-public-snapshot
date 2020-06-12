@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.Common;
+using RelertSharp.DrawingEngine.Presenting;
 
 namespace RelertSharp.MapStructure.Points
 {
@@ -18,15 +19,40 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Public Methods - BaseNode
-        public void MoveTo(I2dLocateable pos)
+        public void MoveTo(I3dLocateable pos)
         {
             X = pos.X;
             Y = pos.Y;
+            SceneObject.MoveTo(pos);
         }
-        public void ShiftBy(I2dLocateable delta)
+        public void ShiftBy(I3dLocateable delta)
         {
             X += delta.X;
             Y += delta.Y;
+            SceneObject.ShiftBy(delta);
+        }
+
+        public void Select()
+        {
+            if (!Selected)
+            {
+                Selected = true;
+                SceneObject.MarkSelected();
+            }
+        }
+
+        public void UnSelect()
+        {
+            if (Selected)
+            {
+                Selected = false;
+                SceneObject.Unmark();
+            }
+        }
+        public void Dispose()
+        {
+            Selected = false;
+            SceneObject.Dispose();
         }
         #endregion
 
@@ -37,6 +63,8 @@ namespace RelertSharp.MapStructure.Points
         public int Y { get; set; }
         public int Coord { get { return Utils.Misc.CoordInt(this); } }
         public bool Selected { get; set; }
+        public PresentStructure SceneObject { get; set; }
+        IPresentBase IMapScenePresentable.SceneObject { get { return SceneObject; } set { SceneObject = (PresentStructure)value; } }
         #endregion
     }
 }

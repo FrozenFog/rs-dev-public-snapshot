@@ -127,7 +127,7 @@ namespace RelertSharp.FileSystem
     }
 
 
-    public class CsfString : IRegistable
+    public class CsfString : ILogicItem
     {
 
 

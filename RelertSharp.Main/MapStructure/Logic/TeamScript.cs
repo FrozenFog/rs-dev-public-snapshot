@@ -45,7 +45,7 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
     }
 
-    public class TeamScriptGroup : TeamLogicItem, IRegistable
+    public class TeamScriptGroup : TeamLogicItem, ILogicItem
     {
         private List<TeamScriptItem> data = new List<TeamScriptItem>();
 

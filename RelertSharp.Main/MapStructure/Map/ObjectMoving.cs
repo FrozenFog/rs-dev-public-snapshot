@@ -10,7 +10,7 @@ namespace RelertSharp.MapStructure
 {
     public partial class Map
     {
-        public void MoveObjectTo(IMapObject target, I2dLocateable pos, int subcell = -1)
+        public void MoveObjectTo(IMapObject target, I3dLocateable pos, int subcell = -1)
         {
             EraseObjectTileData(target);
             if (target.GetType() == typeof(InfantryItem))
@@ -20,7 +20,7 @@ namespace RelertSharp.MapStructure
             else target.MoveTo(pos);
             AddObjectInfoInTile(target);
         }
-        public void ShiftObjectBy(IMapObject target, I2dLocateable delta)
+        public void ShiftObjectBy(IMapObject target, I3dLocateable delta)
         {
             EraseObjectTileData(target);
             target.ShiftBy(delta);

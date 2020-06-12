@@ -22,9 +22,13 @@ namespace RelertSharp.DrawingEngine.Presenting
         #region Public Methods - PresentUnit
         public void Dispose()
         {
-            RemoveProp(pBarrel);
-            RemoveProp(pSelf);
-            RemoveProp(pTurret);
+            if (!Disposed)
+            {
+                RemoveProp(pBarrel);
+                RemoveProp(pSelf);
+                RemoveProp(pTurret);
+                Disposed = true;
+            }
         }
         public override void MoveTo(I3dLocateable cell)
         {

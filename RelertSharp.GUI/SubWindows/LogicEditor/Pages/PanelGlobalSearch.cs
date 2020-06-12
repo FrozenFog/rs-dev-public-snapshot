@@ -52,7 +52,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             if (ckbGlobal.Checked) LoadSearch(GlobalVar.GlobalRules.GlobalVar, SearchItem.SearchType.LGCckbGlobal);
             lblSearchResult.Text = string.Format(DICT["LGClblSearchNum"], SearchResult.Length);
         }
-        private void LoadSearch(IEnumerable<IRegistable> src, SearchItem.SearchType type)
+        private void LoadSearch(IEnumerable<ILogicItem> src, SearchItem.SearchType type)
         {
             LoadToObjectCollection(lvSearchResult, SearchResult.SearchIn(src, type));
         }

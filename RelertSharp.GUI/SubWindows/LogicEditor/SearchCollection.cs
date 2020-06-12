@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RelertSharp.IniSystem;
+using RelertSharp.Common;
 using static RelertSharp.Language;
 
 namespace RelertSharp.GUI.SubWindows.LogicEditor
@@ -30,10 +31,10 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             keyword = kw.ToLower().TrimEnd(' ');
             previousIndex = -1;
         }
-        public IEnumerable<ListViewItem> SearchIn(IEnumerable<IRegistable> srcs, SearchItem.SearchType type)
+        public IEnumerable<ListViewItem> SearchIn(IEnumerable<ILogicItem> srcs, SearchItem.SearchType type)
         {
             List<ListViewItem> result = new List<ListViewItem>();
-            foreach (IRegistable reg in srcs)
+            foreach (ILogicItem reg in srcs)
             {
                 if (reg.ID.ToLower().IndexOf(keyword) != -1 || reg.Name.ToLower().IndexOf(keyword) != -1)
                 {

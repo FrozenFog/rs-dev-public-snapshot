@@ -44,8 +44,7 @@ namespace RelertSharp.GUI.Model
             if (unit != null && !Units.Contains(unit))
             {
                 Units.Add(unit);
-                unit.Selected = true;
-                Engine.SelectUnitAt(pos);
+                unit.Select();
             }
         }
         public void SelectInfantryAt(I2dLocateable pos, int subcell)
@@ -54,8 +53,7 @@ namespace RelertSharp.GUI.Model
             if (inf != null && !Infantries.Contains(inf))
             {
                 Infantries.Add(inf);
-                inf.Selected = true;
-                Engine.SelectInfantryAt(pos, subcell);
+                inf.Select();
             }
         }
         public void SelectBuildingAt(I2dLocateable pos)
@@ -64,8 +62,7 @@ namespace RelertSharp.GUI.Model
             if (building != null && !Buildings.Contains(building))
             {
                 Buildings.Add(building);
-                building.Selected = true;
-                Engine.SelectBuildingAt(building);
+                building.Select();
             }
         }
         public void SelectTerrainAt(I2dLocateable pos)
@@ -74,8 +71,7 @@ namespace RelertSharp.GUI.Model
             if (terr != null && !Terrains.Contains(terr))
             {
                 Terrains.Add(terr);
-                terr.Selected = true;
-                Engine.SelectTerrainAt(terr);
+                terr.Select();
             }
         }
         public void SelectOverlayAt(I2dLocateable pos)
@@ -84,77 +80,56 @@ namespace RelertSharp.GUI.Model
             if (ov != null && !Overlays.Contains(ov))
             {
                 Overlays.Add(ov);
-                Engine.SelectOverlayAt(ov);
+                ov.Select();
             }
         }
         public void ReleaseAll()
         {
-            foreach (UnitItem unit in Units)
-            {
-                Engine.UnSelectUnitAt(unit);
-                unit.Selected = false;
-            }
+            foreach (UnitItem unit in Units) unit.UnSelect();
             Units.Clear();
-            foreach (InfantryItem inf in Infantries)
-            {
-                Engine.UnSelectInfantryAt(inf, inf.SubCells);
-                inf.Selected = false;
-            }
+            foreach (InfantryItem inf in Infantries) inf.UnSelect();
             Infantries.Clear();
-            foreach (StructureItem building in Buildings)
-            {
-                Engine.UnSelectBuindingAt(building);
-                building.Selected = false;
-            }
+            foreach (StructureItem building in Buildings) building.UnSelect();
             Buildings.Clear();
-            foreach (TerrainItem terr in Terrains)
-            {
-                Engine.UnSelectTerrainAt(terr);
-                terr.Selected = false;
-            }
+            foreach (TerrainItem terr in Terrains) terr.UnSelect();
             Terrains.Clear();
-            foreach (OverlayUnit ov in Overlays)
-            {
-                Engine.UnSelectOverlayAt(ov);
-            }
+            foreach (OverlayUnit ov in Overlays) ov.UnSelect();
             Overlays.Clear();
 
 
             Engine.Refresh();
         }
+
         public void RemoveAll()
         {
             foreach (UnitItem unit in Units)
             {
-                Engine.RemoveUnitAt(unit);
                 map.RemoveUnit(unit);
             }
             Units.Clear();
             foreach (InfantryItem inf in Infantries)
             {
-                Engine.RemoveInfantryAt(inf, inf.SubCells);
                 map.RemoveInfantry(inf);
             }
             Infantries.Clear();
             foreach (StructureItem st in Buildings)
             {
-                Engine.RemoveBuildingAt(st);
                 map.RemoveBuilding(st);
             }
             Buildings.Clear();
             foreach (TerrainItem terr in Terrains)
             {
-                Engine.RemoveTerrainAt(terr);
                 map.RemoveTerrains(terr);
             }
             Terrains.Clear();
             foreach (OverlayUnit ov in Overlays)
             {
-                Engine.RemoveOverlayAt(ov);
-                map.Overlays.RemoveByCoord(ov);
+                map.RemoveOverlay(ov);
             }
             Overlays.Clear();
 
+
+            Engine.RemoveDisposedObjects();
             Engine.Refresh();
             Engine.RedrawMinimapAll();
         }

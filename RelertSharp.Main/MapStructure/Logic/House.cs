@@ -45,7 +45,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class HouseItem : TeamLogicItem,IRegistable
+    public class HouseItem : TeamLogicItem,ILogicItem
     {
         private List<string> alliesWith;
         private Dictionary<string, INIPair> residual;

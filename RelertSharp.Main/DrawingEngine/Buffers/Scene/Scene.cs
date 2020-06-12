@@ -19,40 +19,29 @@ namespace RelertSharp.DrawingEngine
 
 
             #region Private Methods - CScene
-
+            private void RemoveDisposedObject<T>(Dictionary<int, T> src) where T : PresentBase, IPresentBase
+            {
+                Dictionary<int, T> refer = new Dictionary<int, T>(src);
+                foreach(int id in refer.Keys)
+                {
+                    if (refer[id].Disposed) src.Remove(id);
+                }
+            }
             #endregion
 
 
             #region Public Methods - CScene
-
-
-            #region Remove & add Object
-            #region Unit
-
-
-
-            #endregion
-            #region Infantry
-
-
-
-            #endregion
-            #region Building
-
-
-
-            #endregion
-            #region Overlay
-
-
-
-            #endregion
-            #region Terrain
-
-
-            #endregion
-            #endregion
-
+            public void RemoveDisposedObject()
+            {
+                RemoveDisposedObject(Structures);
+                RemoveDisposedObject(Units);
+                RemoveDisposedObject(Infantries);
+                RemoveDisposedObject(Overlays);
+                RemoveDisposedObject(Terrains);
+                RemoveDisposedObject(Smudges);
+                RemoveDisposedObject(Celltags);
+                RemoveDisposedObject(Waypoints);
+            }
 
             #region Lightnings
             public void BeginLamp()

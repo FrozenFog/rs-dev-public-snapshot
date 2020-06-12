@@ -8,10 +8,10 @@ using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine.Presenting
 {
-    internal class PresentTile : PresentBase, IPresentBase
+    public class PresentTile : PresentBase, IPresentBase
     {
         #region Ctor - PresentTile
-        public PresentTile(int pself, int pextra, byte height, Drawables.DrawableTile tile, int subtile, I2dLocateable pos)
+        internal PresentTile(int pself, int pextra, byte height, Drawables.DrawableTile tile, int subtile, I2dLocateable pos)
         {
             pSelf = pself;
             pExtra = pextra;
@@ -28,8 +28,12 @@ namespace RelertSharp.DrawingEngine.Presenting
         #region Public Methods - PresentTile
         public void Dispose()
         {
-            RemoveProp(pSelf);
-            RemoveProp(pExtra);
+            if (!Disposed)
+            {
+                RemoveProp(pSelf);
+                RemoveProp(pExtra);
+                Disposed = true;
+            }
         }
         /// <summary>
         /// Move tile will do nothing
@@ -89,27 +93,6 @@ namespace RelertSharp.DrawingEngine.Presenting
             selected = false;
             SetColorStrict(ColorVector);
         }
-        public T GetFirstTileObject<T>(Predicate<T> predicate) where T : PresentBase, IPresentBase
-        {
-            foreach (IPresentBase obj in TileObjects)
-            {
-                T target = obj as T;
-                if (target != null)
-                {
-                    if (predicate.Invoke(target)) return target;
-                }
-            }
-            return null;
-        }
-        public T GetFirstTileObject<T>() where T : PresentBase, IPresentBase
-        {
-            foreach (IPresentBase obj in TileObjects)
-            {
-                T target = obj as T;
-                if (target != null) return target;
-            }
-            return null;
-        }
         #endregion
 
 
@@ -130,7 +113,6 @@ namespace RelertSharp.DrawingEngine.Presenting
         public bool Buildable { get; set; }
         public bool WaterPassable { get; set; }
         public bool LandPassable { get; set; }
-        public List<IPresentBase> TileObjects { get; private set; } = new List<IPresentBase>();
         #endregion
     }
 }

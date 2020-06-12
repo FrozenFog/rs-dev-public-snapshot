@@ -3,10 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.DrawingEngine.Presenting;
 using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.Common
 {
+    public interface ILogicItem
+    {
+        string ID { get; }
+        string Name { get; }
+    }
+
+    public interface IRegistable
+    {
+        string RegName { get; }
+    }
+
     public interface I2dLocateable
     {
         int X { get; }
@@ -20,13 +32,26 @@ namespace RelertSharp.Common
         int Z { get; }
     }
 
-
-    public interface IMapObject : I2dLocateable
+    public interface IMapScenePresentable : I2dLocateable
     {
-        string RegName { get; set; }
         bool Selected { get; set; }
-        void MoveTo(I2dLocateable pos);
-        void ShiftBy(I2dLocateable delta);
+        void MoveTo(I3dLocateable pos);
+        void ShiftBy(I3dLocateable delta);
+        void Select();
+        void UnSelect();
+        void Dispose();
+        IPresentBase SceneObject { get; set; }
+    }
+
+
+    public interface IMapObject : IMapScenePresentable, IRegistable
+    {
+
+    }
+
+    public interface IMapMiscObject : I2dLocateable, IMapScenePresentable
+    {
+
     }
 
     public interface ICombatObject : IMapObject

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.DrawingEngine.Presenting;
 using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure.Points
@@ -23,6 +24,8 @@ namespace RelertSharp.MapStructure.Points
 
         #region Public Calls - TerrainItem
         public string RegName { get; set; }
+        public new PresentMisc SceneObject { get { return (PresentMisc)base.SceneObject; } set { base.SceneObject = value; } }
+        IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
         #endregion
     }
 }

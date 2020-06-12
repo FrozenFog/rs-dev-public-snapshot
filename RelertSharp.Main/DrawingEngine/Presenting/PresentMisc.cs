@@ -7,7 +7,7 @@ using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine.Presenting
 {
-    internal class PresentMisc : PresentBase, IPresentBase
+    public class PresentMisc : PresentBase, IPresentBase
     {
         #region Ctor - PresentMisc
         public PresentMisc(MapObjectType type, I2dLocateable xy, int z) : base(xy, z)
@@ -21,10 +21,14 @@ namespace RelertSharp.DrawingEngine.Presenting
 
         public void Dispose()
         {
-            RemoveProp(pSelf, pSelfShadow);
-            foreach (int id in WaypointNums)
+            if (!Disposed)
             {
-                RemoveProp(id);
+                RemoveProp(pSelf, pSelfShadow);
+                foreach (int id in WaypointNums)
+                {
+                    RemoveProp(id);
+                }
+                Disposed = true;
             }
         }
 

@@ -140,10 +140,6 @@
     <Compile Include="DrawingEngine\Buffers\Buffers.cs" />
     <Compile Include="DrawingEngine\Buffers\Files.cs" />
     <Compile Include="DrawingEngine\Buffers\Scene\ObjectAdding.cs" />
-    <Compile Include="DrawingEngine\Buffers\Scene\ObjectMarking.cs" />
-    <Compile Include="DrawingEngine\Buffers\Scene\ObjectMoving.cs" />
-    <Compile Include="DrawingEngine\Buffers\Scene\ObjectRemoving.cs" />
-    <Compile Include="DrawingEngine\Buffers\Scene\ObjectSeeking.cs" />
     <Compile Include="DrawingEngine\Buffers\Scene\Scene.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableBase.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableInfantry.cs" />
@@ -196,7 +192,6 @@
     <Compile Include="FileSystem\VirtualDir.cs" />
     <Compile Include="FileSystem\VxlFile.cs" />
     <Compile Include="FileSystem\WavFile.cs" />
-    <Compile Include="IniSystem\IRegistable.cs" />
     <Compile Include="IniSystem\Rules.cs" />
     <Compile Include="IniSystem\SoundRules.cs" />
     <Compile Include="IniSystem\TechnoPair.cs" />

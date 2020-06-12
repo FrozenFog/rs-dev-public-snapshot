@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.FileSystem;
 using RelertSharp.Common;
+using RelertSharp.DrawingEngine.Presenting;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Objects
@@ -52,5 +53,16 @@ namespace RelertSharp.MapStructure.Objects
         }
         public UnitItem() { }
         public string FollowsIndex { get; set; }
+
+
+        #region Public Methods
+
+        #endregion
+
+
+        #region Public Calls
+        public new PresentUnit SceneObject { get { return (PresentUnit)base.SceneObject; } set { base.SceneObject = value; } }
+        IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
+        #endregion
     }
 }

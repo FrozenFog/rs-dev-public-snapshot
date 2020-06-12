@@ -42,7 +42,7 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
     }
 
-    public class TaskforceItem : TeamLogicItem, IRegistable
+    public class TaskforceItem : TeamLogicItem, ILogicItem
     {
         private int group;
         private string name;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.DrawingEngine.Presenting;
 using RelertSharp.Common;
 using static RelertSharp.Utils.Misc;
 
@@ -41,5 +42,11 @@ namespace RelertSharp.MapStructure.Objects
             AutoNORecruitType = src.AutoNORecruitType;
             AutoYESRecruitType = src.AutoYESRecruitType;
         }
+
+
+        #region Public Calls
+        public new PresentUnit SceneObject { get { return (PresentUnit)base.SceneObject; } set { base.SceneObject = value; } }
+        IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
+        #endregion
     }
 }

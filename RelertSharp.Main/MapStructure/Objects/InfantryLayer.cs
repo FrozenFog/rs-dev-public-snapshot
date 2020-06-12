@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.Common;
+using RelertSharp.DrawingEngine.Presenting;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Objects
@@ -57,7 +58,7 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - InfantryItem
-        public void MoveTo(I2dLocateable pos, int subcell)
+        public void MoveTo(I3dLocateable pos, int subcell)
         {
             if (subcell != -1) this.subcell = subcell;
             MoveTo(pos);
@@ -81,6 +82,12 @@ namespace RelertSharp.MapStructure.Objects
                 }
             }
         }
+        #endregion
+
+
+        #region Drawing
+        public new PresentInfantry SceneObject { get { return (PresentInfantry)base.SceneObject; } set { base.SceneObject = value; } }
+        IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
         #endregion
     }
 }

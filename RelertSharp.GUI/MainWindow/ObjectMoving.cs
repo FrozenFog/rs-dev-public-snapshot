@@ -39,10 +39,6 @@ namespace RelertSharp.GUI
                 PreciseSelecting(e);
                 isPreciseMovingMode = true;
             }
-            else if (Current.SelectedMapObjects.Count() == 1)
-            {
-                isPreciseMovingMode = true;
-            }
             isObjectMoving = true;
             if (Current.SelectedMapObjects.Count() == 0)
             {
@@ -64,8 +60,7 @@ namespace RelertSharp.GUI
                     if (isPreciseMovingMode && subcell != -1)
                     {
                         IMapObject obj = Current.SelectedMapObjects.First();
-                        Engine.MoveObjectTo(obj, posNow.To3dLocateable(), subcell);
-                        map.MoveObjectTo(obj, posNow.To2dLocateable(), subcell);
+                        map.MoveObjectTo(obj, posNow.To3dLocateable(), subcell);
                     }
                     else
                     {
@@ -75,7 +70,6 @@ namespace RelertSharp.GUI
                             I3dLocateable deltaCell = map.ReferanceDeltaCell(obj, delta.To2dLocateable());
                             if (!map.IsOutOfSize(obj, deltaCell))
                             {
-                                Engine.ShiftObjectBy(deltaCell, obj);
                                 map.ShiftObjectBy(obj, deltaCell);
                             }
                         }
@@ -88,8 +82,7 @@ namespace RelertSharp.GUI
                 else if (subcell != -1 && isPreciseMovingMode)
                 {
                     IMapObject obj = Current.SelectedMapObjects.First();
-                    Engine.MoveObjectTo(obj, posNow.To3dLocateable(), subcell);
-                    map.MoveObjectTo(obj, posNow.To2dLocateable(), subcell);
+                    map.MoveObjectTo(obj, posNow.To3dLocateable(), subcell);
                 }
                 movingInProgress = false;
             }

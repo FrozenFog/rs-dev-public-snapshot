@@ -8,6 +8,7 @@ using RelertSharp.Encoding;
 using RelertSharp.Common;
 using RelertSharp.Utils;
 using System.Collections;
+using RelertSharp.DrawingEngine.Presenting;
 
 namespace RelertSharp.MapStructure
 {
@@ -94,7 +95,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class OverlayUnit : IMapObject
+    public class OverlayUnit : IMapObject, IRegistable
     {
 
 
@@ -111,15 +112,40 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - OverlayUnit
-        public void MoveTo(I2dLocateable pos)
+        public void MoveTo(I3dLocateable pos)
         {
             X = pos.X;
             Y = pos.Y;
+            SceneObject.MoveTo(pos);
         }
-        public void ShiftBy(I2dLocateable delta)
+        public void ShiftBy(I3dLocateable delta)
         {
             X += delta.X;
             Y += delta.Y;
+            SceneObject.ShiftBy(delta);
+        }
+
+        public void Select()
+        {
+            if (!Selected)
+            {
+                Selected = true;
+                SceneObject.MarkSelected();
+            }
+        }
+
+        public void UnSelect()
+        {
+            if (Selected)
+            {
+                Selected = false;
+                SceneObject.Unmark();
+            }
+        }
+        public void Dispose()
+        {
+            Selected = false;
+            SceneObject.Dispose();
         }
         #endregion
 
@@ -132,6 +158,12 @@ namespace RelertSharp.MapStructure
         public int Coord { get { return Misc.CoordInt(X, Y); } }
         public bool Selected { get; set; }
         public string RegName { get; set; }
+        #endregion
+
+
+        #region Drawing
+        public PresentMisc SceneObject { get; set; }
+        IPresentBase IMapScenePresentable.SceneObject { get { return SceneObject; } set { SceneObject = (PresentMisc)value; } }
         #endregion
     }
 }

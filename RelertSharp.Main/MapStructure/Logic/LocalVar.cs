@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure.Logic
 {
@@ -66,7 +67,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class LocalVarItem : IniSystem.IRegistable
+    public class LocalVarItem : ILogicItem
     {
         #region Ctor - LocalVarItem
         public LocalVarItem(string name, bool init, string index) : this(name, init, int.Parse(index)) { }

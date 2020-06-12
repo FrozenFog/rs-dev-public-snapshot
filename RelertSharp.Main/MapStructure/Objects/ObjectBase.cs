@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.IniSystem;
 using RelertSharp.Common;
+using RelertSharp.DrawingEngine.Presenting;
 
 namespace RelertSharp.MapStructure.Objects
 {
@@ -63,7 +64,7 @@ namespace RelertSharp.MapStructure.Objects
     }
 
 
-    public class ObjectItemBase : I2dLocateable, IMapObject
+    public class ObjectItemBase : I2dLocateable, IRegistable
     {
         #region Ctor
         public ObjectItemBase(string _id, string[] _args)
@@ -90,15 +91,38 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - ObjectItemBase
-        public void MoveTo(I2dLocateable pos)
+        public void MoveTo(I3dLocateable pos)
         {
             X = pos.X;
             Y = pos.Y;
+            SceneObject.MoveTo(pos);
         }
-        public void ShiftBy(I2dLocateable delta)
+        public void ShiftBy(I3dLocateable delta)
         {
             X += delta.X;
             Y += delta.Y;
+            SceneObject.ShiftBy(delta);
+        }
+        public void Dispose()
+        {
+            Selected = false;
+            SceneObject.Dispose();
+        }
+        public void Select()
+        {
+            if (!Selected)
+            {
+                Selected = true;
+                SceneObject.MarkSelected();
+            }
+        }
+        public void UnSelect()
+        {
+            if (Selected)
+            {
+                Selected = false;
+                SceneObject.Unmark();
+            }
         }
         public virtual void ApplyAttributeFrom(AttributeChanger obj)
         {
@@ -143,6 +167,11 @@ namespace RelertSharp.MapStructure.Objects
         public bool AutoNORecruitType { get; set; } = false;
         public bool AutoYESRecruitType { get; set; } = true;
         public bool Selected { get; set; } = false;
+        #endregion
+
+
+        #region Protected
+        protected virtual IPresentBase SceneObject { get; set; }
         #endregion
     }
 }

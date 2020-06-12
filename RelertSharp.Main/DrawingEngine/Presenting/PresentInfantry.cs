@@ -8,7 +8,7 @@ using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.DrawingEngine.Presenting
 {
-    internal class PresentInfantry : PresentBase, IPresentBase
+    public class PresentInfantry : PresentBase, IPresentBase
     {
         #region Ctor - PresentInfantry
         public PresentInfantry(InfantryItem inf, int height) : base(inf, height)
@@ -21,7 +21,11 @@ namespace RelertSharp.DrawingEngine.Presenting
         #region Public Methods - PresentInfantry
         public void Dispose()
         {
-            RemoveProp(pSelf, pSelfShadow);
+            if (!Disposed)
+            {
+                RemoveProp(pSelf, pSelfShadow);
+                Disposed = true;
+            }
         }
         public void SetTo(I3dLocateable cell, int subcell)
         {

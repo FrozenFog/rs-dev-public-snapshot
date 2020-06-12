@@ -60,7 +60,7 @@ namespace RelertSharp.MapStructure.Logic
 
     }
 
-    public class TeamItem : TeamLogicItem, IRegistable
+    public class TeamItem : TeamLogicItem, ILogicItem
     {
         private Dictionary<string, INIPair> residual;
 

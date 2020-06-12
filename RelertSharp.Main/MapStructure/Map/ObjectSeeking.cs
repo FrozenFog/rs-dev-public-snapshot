@@ -29,21 +29,6 @@ namespace RelertSharp.MapStructure
             Tiles[src].RemoveObject(src);
             Tiles[src].AddObject(src);
         }
-        private T GetMapObject<T>(I2dLocateable pos, string regname) where T: ObjectItemBase, IMapObject
-        {
-            Tile t = Tiles[pos];
-            if (t != null)
-            {
-                foreach (IMapObject obj in t.GetObjects())
-                {
-                    if (obj.GetType() == typeof(T))
-                    {
-                        if (obj.RegName == regname) return obj as T;
-                    }
-                }
-            }
-            return null;
-        }
         private void EraseObjectTileData(IMapObject obj)
         {
             Type t = obj.GetType();

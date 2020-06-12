@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.IniSystem;
+using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure.Logic
 {
@@ -43,7 +44,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class CountryItem : TeamLogicItem, IRegistable
+    public class CountryItem : TeamLogicItem, ILogicItem
     {
         private Dictionary<string, INIPair> residual = new Dictionary<string, INIPair>();
 

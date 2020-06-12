@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.Common;
+using RelertSharp.DrawingEngine.Presenting;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Objects
@@ -91,5 +92,10 @@ namespace RelertSharp.MapStructure.Objects
         }
         #endregion
 
+
+        #region Drawing
+        public new PresentStructure SceneObject { get { return (PresentStructure)base.SceneObject; } set { base.SceneObject = value; } }
+        IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
+        #endregion
     }
 }

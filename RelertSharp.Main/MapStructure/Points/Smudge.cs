@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.Common;
+using RelertSharp.DrawingEngine.Presenting;
 
 namespace RelertSharp.MapStructure.Points
 {
@@ -54,6 +55,8 @@ namespace RelertSharp.MapStructure.Points
             }
             set { szY = value; }
         }
+        public new PresentMisc SceneObject { get { return (PresentMisc)base.SceneObject; } set { base.SceneObject = value; } }
+        IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
         #endregion
     }
 }
