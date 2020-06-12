@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 #include "ColorScheme.h"
+#include "DrawObject.h"
 
 struct ShaderStruct
 {
@@ -99,6 +100,10 @@ public:
 	void SetBackgroundColor(DWORD dwColor);
 	void ResetShaderMatrix();
 	DWORD GetBackgroundColor();
+
+	//alpha specifics
+	void RefillAlphaImageSurface();
+	void DrawAlphaImageToAlphaSurface(PaintingStruct& paint);
 
 private:
 	//for color & calculation

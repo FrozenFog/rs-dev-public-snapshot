@@ -34,7 +34,6 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	//should check if the object is within our sight
 	std::vector<PaintingStruct*> DrawingOpaqueObject, DrawingTransperantObject, DrawingTopObject;
 	LPDIRECT3DSURFACE9 PassSurface = nullptr;
-	LPDIRECT3DSURFACE9 AlphaSurface = nullptr;
 	LPDIRECT3DVERTEXBUFFER9 TempVertex = nullptr;
 	LPVOID pLockedData;
 	
@@ -43,9 +42,6 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	auto pPassTexture = Scene.GetPassSurface();
 	auto pAlphaTexture = Scene.GetAlphaSurface();
 	if (FAILED(pPassTexture->GetSurfaceLevel(0, &PassSurface)))
-		return;
-
-	if (FAILED(pAlphaTexture->GetSurfaceLevel(0, &AlphaSurface)))
 		return;
 
 	Scene.ResetShaderMatrix();
@@ -80,12 +76,7 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	
 	pDevice->SetRenderTarget(0, PassSurface);
 	pDevice->Clear(0, nullptr, D3DCLEAR_ZBUFFER | D3DCLEAR_TARGET, dwBackground, 1.0f, 0);
-	pDevice->SetRenderTarget(0, AlphaSurface);
-	pDevice->Clear(0, nullptr, D3DCLEAR_TARGET, D3DCOLOR_XRGB(127, 0, 0), 1.0f, 0);
 
-	pDevice->SetRenderTarget(0, PassSurface);
-	AlphaSurface->Release();
-	PassSurface->Release();
 	if (SUCCEEDED(pDevice->BeginScene()))
 	{
 		for (auto paint : DrawingOpaqueObject) {
@@ -97,8 +88,7 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 		}
 
 		//pDevice->SetTexture(SELF_SURFACE_INDEX, pPassTexture);
-		pDevice->SetRenderTarget(0, AlphaSurface);
-		pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+		Scene.RefillAlphaImageSurface();
 		for (auto paint : DrawingTopObject) {
 			paint->Draw(pDevice);
 		}
@@ -106,7 +96,9 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 
 		pDevice->EndScene();
 	}
-	
+
+	PassSurface->Release();
+
 	static bool bShoot = false;
 
 	if (!bShoot)
@@ -829,6 +821,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 	if (!pDevice)
 		return false;
 
+
 	bool Result = false;
 	D3DVERTEXBUFFER_DESC Desc;
 	LPDIRECT3DBASETEXTURE9 pFormerTexture, pFormer2;
@@ -842,6 +835,12 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 	auto& ShadowShader = SceneClass::Instance.GetShadowShader();
 	auto& AlphaShader = SceneClass::Instance.GetAlphaShader();
 	auto& Scene = SceneClass::Instance;
+
+	if (this->cSpecialDrawType == SPECIAL_ALPHA)
+	{
+		Scene.DrawAlphaImageToAlphaSurface(*this);
+		return true;
+	}
 
 	if (!pVertexBuffer)
 	{

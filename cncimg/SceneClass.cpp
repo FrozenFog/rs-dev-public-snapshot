@@ -90,8 +90,8 @@ bool SceneClass::SetUpScene(HWND hWnd)
 		return false;
 	}
 
-	if (FAILED(this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, D3DUSAGE_RENDERTARGET,
-		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pAlphaSurface, nullptr)))
+	if (FAILED(this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, NULL,
+		D3DFMT_L8, D3DPOOL_MANAGED, &this->pAlphaSurface, nullptr)))
 	{
 		this->ClearDevice();
 		return false;
@@ -397,7 +397,6 @@ bool SceneClass::ResetDevice()
 
 	SAFE_RELEASE(this->pBackBuffer);
 	SAFE_RELEASE(this->pPassSurface);
-	SAFE_RELEASE(this->pAlphaSurface);
 
 	this->GetDevice()->SetVertexShader(nullptr);
 	SAFE_RELEASE(this->VertexShader.pVertexShader);
@@ -412,8 +411,8 @@ bool SceneClass::ResetDevice()
 	auto winRect = this->GetWindowRect();
 	this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, D3DUSAGE_RENDERTARGET,
 		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pPassSurface, nullptr);
-	this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, D3DUSAGE_RENDERTARGET,
-		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pAlphaSurface, nullptr);
+	//this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, NULL,
+	//	D3DFMT_L8, D3DPOOL_DEFAULT, &this->pAlphaSurface, nullptr);
 
 	if (SUCCEEDED(hResult)) {
 		this->InitializeDeviceState();
@@ -459,6 +458,98 @@ void SceneClass::ResetShaderMatrix()
 DWORD SceneClass::GetBackgroundColor()
 {
 	return this->dwBackgroundColor;
+}
+
+void SceneClass::RefillAlphaImageSurface()
+{
+	auto AlphaSurface = this->GetAlphaSurface();
+	auto Rect = this->GetWindowRect();
+
+	if (!AlphaSurface)
+		return;
+
+	D3DLOCKED_RECT LockedData;
+	BYTE aValue = 127;
+
+	if (FAILED(AlphaSurface->LockRect(0, &LockedData, nullptr, D3DLOCK_DISCARD)))
+		return;
+
+	auto pColors = reinterpret_cast<PBYTE>(LockedData.pBits);
+	for (int i = 0; i < Rect.bottom; i++)
+	{
+		memset(pColors, aValue, Rect.right);
+		pColors += LockedData.Pitch;
+	}
+
+	AlphaSurface->UnlockRect(0);
+}
+
+void SceneClass::DrawAlphaImageToAlphaSurface(PaintingStruct& paint)
+{
+	auto AlphaSurface = this->GetAlphaSurface();
+	auto Texture = paint.pTexture;
+	auto Bound = this->GetCurrentViewPort();
+
+	if (!AlphaSurface || !Texture)
+		return;
+
+	auto VisualRect = paint.VisualRect;
+
+	RECT TargetRect;
+	D3DSURFACE_DESC SurfaceDesc;
+	Texture->GetLevelDesc(0, &SurfaceDesc);
+
+	VisualRect.right = VisualRect.left + SurfaceDesc.Width;
+	VisualRect.bottom = VisualRect.top + SurfaceDesc.Height;
+
+	if (!IntersectRect(&TargetRect, &VisualRect, &Bound))
+		return;
+
+	POINT ImageLockStartingPoint = { TargetRect.left - VisualRect.left, TargetRect.top - VisualRect.top };
+	POINT ImageLockEndPoint = { TargetRect.right - VisualRect.left,TargetRect.bottom - VisualRect.top };
+	POINT SurfaceLockStartingPoint = { TargetRect.left - Bound.left,TargetRect.top - Bound.top };
+	POINT SurfaceLockEndPoint = { TargetRect.right - Bound.left,TargetRect.bottom - Bound.top };
+
+	RECT ImageLockRect = { ImageLockStartingPoint.x,ImageLockStartingPoint.y,
+	ImageLockEndPoint.x,ImageLockEndPoint.y };
+	RECT SurfaceLockRect = { SurfaceLockStartingPoint.x,SurfaceLockStartingPoint.y,
+	SurfaceLockEndPoint.x,SurfaceLockEndPoint.y };
+
+	D3DLOCKED_RECT LockedSurface, LockedTexture;
+
+	if (FAILED(AlphaSurface->LockRect(0, &LockedSurface, &SurfaceLockRect, NULL)))
+		return;
+	
+	if (FAILED(Texture->LockRect(0, &LockedTexture, &ImageLockRect, NULL)))
+	{
+		AlphaSurface->UnlockRect(0);
+		return;
+	}
+
+	auto TextureData = reinterpret_cast<PBYTE>(LockedTexture.pBits);
+	auto SurfaceData = reinterpret_cast<PBYTE>(LockedSurface.pBits);
+	auto Length = TargetRect.right - TargetRect.left;
+	auto Height = TargetRect.bottom - TargetRect.top;
+	for (int i = 0; i < Height; i++)
+	{
+		for (int x = 0; x < Length; x++)
+		{
+			int orig = SurfaceData[x];
+			int aval = TextureData[x];
+
+			orig *= (aval / 127.0);
+			if (orig >= 255)
+				orig = 255;
+
+			SurfaceData[x] = orig;
+		}
+
+		TextureData += LockedTexture.Pitch;
+		SurfaceData += LockedSurface.Pitch;
+	}
+
+	Texture->UnlockRect(0);
+	AlphaSurface->UnlockRect(0);
 }
 
 bool ShaderStruct::IsLoaded()
