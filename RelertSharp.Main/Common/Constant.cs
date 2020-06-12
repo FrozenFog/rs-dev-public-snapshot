@@ -8,7 +8,7 @@ namespace RelertSharp.Common
 {
     public static class Constant
     {
-        public static string ReleaseDate = " - ver. 2020.06.10-2147 - UNSTABLE";
+        public static string ReleaseDate = " - ver. 2020.06.11-0050 - UNSTABLE";
         public static class MapStructure
         {
             public static int ArgLenInfantry = 14;
