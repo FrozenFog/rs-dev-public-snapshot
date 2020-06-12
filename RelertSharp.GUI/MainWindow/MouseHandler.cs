@@ -75,6 +75,9 @@ namespace RelertSharp.GUI
                         GlobalVar.Engine.Refresh();
                     }
                     break;
+                case MainWindowDataModel.MouseActionType.Moving:
+                    BeginRmbMove(e);
+                    break;
             }
         }
         #endregion
@@ -85,10 +88,18 @@ namespace RelertSharp.GUI
         {
             if (initialized && drew)
             {
-                OnObjectMoving(e);
-                GeneralMouseMovingUpdate(e);
-                DrawSelectingBoxOnScene(e);
-                MainPanelMoving(e);
+                switch (Current.CurrentMouseAction)
+                {
+                    case MainWindowDataModel.MouseActionType.Moving:
+                        UpdateRmbMoveDelta(e);
+                        MainPanelMoving(e);
+                        OnObjectMoving(e);
+                        break;
+                    case MainWindowDataModel.MouseActionType.BoxSelecting:
+                        DrawSelectingBoxOnScene(e);
+                        break;
+                }
+                if (!onRmbMoving && !bgwRmbMoving.IsBusy) GeneralMouseMovingUpdate(e);
             }
         }
         private void GeneralMouseMovingUpdate(MouseEventArgs e)
@@ -128,7 +139,12 @@ namespace RelertSharp.GUI
         }
         private void RmbUp(MouseEventArgs e)
         {
-
+            switch (Current.CurrentMouseAction)
+            {
+                case MainWindowDataModel.MouseActionType.Moving:
+                    EndRmbMove();
+                    break;
+            }
         }
         #endregion
 

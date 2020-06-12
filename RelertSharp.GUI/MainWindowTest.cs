@@ -327,13 +327,20 @@ namespace RelertSharp.GUI
 
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Middle)
+            if (drew)
             {
-                MmbUp(e);
-            }
-            else if (e.Button == MouseButtons.Left)
-            {
-                LmbUp(e);
+                if (e.Button == MouseButtons.Middle)
+                {
+                    MmbUp(e);
+                }
+                else if (e.Button == MouseButtons.Left)
+                {
+                    LmbUp(e);
+                }
+                else if (e.Button == MouseButtons.Right)
+                {
+                    RmbUp(e);
+                }
             }
         }
 

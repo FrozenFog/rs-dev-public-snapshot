@@ -23,9 +23,11 @@ namespace RelertSharp.GUI
     public partial class MainWindowTest
     {
         private bool onMoving = false;
+        private bool onRmbMoving = false;
         private bool minimapMoving = false;
         private bool spaceKeyMoving = false;
         private Point previousLocation;
+        private Point rmbMoveDownLocation;
 
         private void BeginMove(MouseEventArgs e)
         {
@@ -47,6 +49,54 @@ namespace RelertSharp.GUI
             {
                 GlobalVar.Engine.MinimapMoving(e.Location);
                 pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
+            }
+        }
+
+
+        private Point rmbMoveDelta;
+        private bool rmbMoving = false;
+        private void BeginRmbMove(MouseEventArgs e)
+        {
+            if (!onRmbMoving && !bgwRmbMoving.IsBusy)
+            {
+                onRmbMoving = true;
+                rmbMoving = true;
+                rmbMoveDownLocation = e.Location;
+                rmbMoveDelta = new Point();
+                bgwRmbMoving.RunWorkerAsync();
+            }
+        }
+        private void UpdateRmbMoveDelta(MouseEventArgs e)
+        {
+            if (onRmbMoving)
+            {
+                rmbMoveDelta = Utils.Misc.DeltaPoint(rmbMoveDownLocation, e.Location);
+            }
+        }
+        private void EndRmbMove()
+        {
+            if (onRmbMoving)
+            {
+                rmbMoving = false;
+                bgwRmbMoving.CancelAsync();
+                bgwRmbMoving.Dispose();
+                onRmbMoving = false;
+            }
+        }
+        private void bgwRmbMoving_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                if (rmbMoving)
+                {
+                    GlobalVar.Engine.ViewShift(rmbMoveDelta);
+                    pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
+                    Thread.Sleep(16);
+                }
+                else
+                {
+                    return;
+                }
             }
         }
     }

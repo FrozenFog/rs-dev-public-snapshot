@@ -33,17 +33,6 @@ namespace RelertSharp.GUI
                 Fatal("Cannot find Render Dll, please check your folder.");
                 return;
             }
-            else
-            {
-                try
-                {
-                    DrawingEngine.Engine.FirstRun();
-                }
-                catch
-                {
-                    Log.Write("Engine Catched");
-                }
-            }
             if (args.Length < 1)
             {
                 Process[] ps = Process.GetProcesses();
@@ -91,8 +80,8 @@ namespace RelertSharp.GUI
                     Application.Run(new MainWindowTest());
                 },
                 "Unhandled error!");
+                GlobalVar.GlobalConfig.Local.SaveConfig();
             }
-            GlobalVar.GlobalConfig.Local.SaveConfig();
             Log.Write("PROGRAM EXITING\n\n\n");
             Log.Dispose();
         }

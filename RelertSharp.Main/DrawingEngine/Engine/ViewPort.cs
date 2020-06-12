@@ -136,6 +136,12 @@ namespace RelertSharp.DrawingEngine
             SetMinimapClientPos();
             Refresh();
         }
+        public void ViewShift(Point delta)
+        {
+            CppExtern.Scene.MoveFocusOnScreen(delta.X, delta.Y);
+            SetMinimapClientPos();
+            Refresh();
+        }
 
 
         private void DrawRectangleLine(Vec3 p1, Vec3 p2, Vec3 p3, Vec3 p4, uint color, List<int> dest)
