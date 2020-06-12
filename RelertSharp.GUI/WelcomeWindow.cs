@@ -55,6 +55,10 @@ namespace RelertSharp.GUI
                 MapName = dlg.FileName;
                 Close();
             }
+            else
+            {
+                DialogResult = DialogResult.Cancel;
+            }
         }
         private void btnExit_Click(object sender, EventArgs e)
         {

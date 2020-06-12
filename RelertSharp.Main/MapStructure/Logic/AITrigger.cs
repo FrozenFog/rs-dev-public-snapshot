@@ -92,32 +92,38 @@ namespace RelertSharp.MapStructure.Logic
         public AITriggerItem() { }
         public AITriggerItem(string _id, string[] _args)
         {
-            if (_args.Length != 18)
+            try
             {
-                //logger
-                return;
+                if (_args.Length != 18)
+                {
+                    throw new Exception();
+                }
+                ID = _id;
+                Name = _args[0];
+                Team1ID = _args[1];
+                OwnerHouse = _args[2];
+                TechLevel = int.Parse(_args[3]);
+                ConditionType = (AITriggerConditionType)(int.Parse(_args[4]));
+                ConditionObjID = _args[5];
+                Comparator = new AITriggerComparator(_args[6]);
+                StartingWeight = double.Parse(_args[7]);
+                MinimumWeight = double.Parse(_args[8]);
+                MaximumWeight = double.Parse(_args[9]);
+                IsForSkirmish = ParseBool(_args[10]);
+                Residual = "0";
+                SideIndex = int.Parse(_args[12]);
+                IsBaseDefense = false;
+                Team2ID = _args[14];
+                EasyOn = ParseBool(_args[15]);
+                NormalOn = ParseBool(_args[16]);
+                HardOn = ParseBool(_args[17]);
+                Enabled = false;
+                GetToUnit = new AITriggerUnit(this);
             }
-            ID = _id;
-            Name = _args[0];
-            Team1ID = _args[1];
-            OwnerHouse = _args[2];
-            TechLevel = int.Parse(_args[3]);
-            ConditionType = (AITriggerConditionType)(int.Parse(_args[4]));
-            ConditionObjID = _args[5];
-            Comparator = new AITriggerComparator(_args[6]);
-            StartingWeight = double.Parse(_args[7]);
-            MinimumWeight = double.Parse(_args[8]);
-            MaximumWeight = double.Parse(_args[9]);
-            IsForSkirmish = ParseBool(_args[10]);
-            Residual = "0";
-            SideIndex = int.Parse(_args[12]);
-            IsBaseDefense = false;
-            Team2ID = _args[14];
-            EasyOn = ParseBool(_args[15]);
-            NormalOn = ParseBool(_args[16]);
-            HardOn = ParseBool(_args[17]);
-            Enabled = false;
-            GetToUnit = new AITriggerUnit(this);
+            catch
+            {
+                GlobalVar.Log.Critical(string.Format("AITrigger item id: {0} has unreadable data, please verify in map file!", _id));
+            }
         }
         #endregion
 

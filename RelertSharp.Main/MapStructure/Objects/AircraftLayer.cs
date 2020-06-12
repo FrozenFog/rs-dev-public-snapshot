@@ -19,18 +19,24 @@ namespace RelertSharp.MapStructure.Objects
     {
         public AircraftItem(string _id, string[] _args) : base(_id, _args)
         {
-            if (_args.Length != Constant.MapStructure.ArgLenAircraft)
+            try
             {
-                //logger
-                return;
+                if (_args.Length != Constant.MapStructure.ArgLenAircraft)
+                {
+                    throw new Exception();
+                }
+                Rotation = int.Parse(_args[5]);
+                Status = _args[6];
+                TaggedTrigger = _args[7];
+                VeterancyPercentage = int.Parse(_args[8]);
+                Group = int.Parse(_args[9]);
+                AutoNORecruitType = ParseBool(_args[10]);
+                AutoYESRecruitType = ParseBool(_args[11]);
             }
-            Rotation = int.Parse(_args[5]);
-            Status = _args[6];
-            TaggedTrigger = _args[7];
-            VeterancyPercentage = int.Parse(_args[8]);
-            Group = int.Parse(_args[9]);
-            AutoNORecruitType = ParseBool(_args[10]);
-            AutoYESRecruitType = ParseBool(_args[11]);
+            catch
+            {
+                GlobalVar.Log.Critical(string.Format("Aircraft item id: {0} has unreadable data, please verify in map file!", _id));
+            }
         }
         public AircraftItem(AircraftItem src) : base(src)
         {

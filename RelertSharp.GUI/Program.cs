@@ -89,6 +89,10 @@ namespace RelertSharp.GUI
                     MapFile map = new MapFile(name);
                     GlobalVar.GlobalRules.Override(map.Map.IniResidue.Values);
                     GlobalVar.CurrentMapDocument = map;
+                    if (Log.HasCritical)
+                    {
+                        Warning(Log.ShowCritical());
+                    }
                     Application.Run(new MainWindowTest());
                 },
                 "Unhandled error!");

@@ -26,21 +26,27 @@ namespace RelertSharp.MapStructure.Objects
 
         public StructureItem(string _id, string[] _args) : base(_id, _args)
         {
-            if (_args.Length != Constant.MapStructure.ArgLenStructure)
+            try
             {
-                //logger
-                return;
+                if (_args.Length != Constant.MapStructure.ArgLenStructure)
+                {
+                    throw new Exception();
+                }
+                Rotation = int.Parse(_args[5]);
+                TaggedTrigger = _args[6];
+                AISellable = ParseBool(_args[7]);
+                BuildingOnline = ParseBool(_args[9]);
+                UpgradeNum = int.Parse(_args[10]);
+                SpotlightType = (BuildingSpotlightType)(int.Parse(_args[11]));
+                Upgrade1 = _args[12];
+                Upgrade2 = _args[13];
+                Upgrade3 = _args[14];
+                AIRepairable = ParseBool(_args[15]);
             }
-            Rotation = int.Parse(_args[5]);
-            TaggedTrigger = _args[6];
-            AISellable = ParseBool(_args[7]);
-            BuildingOnline = ParseBool(_args[9]);
-            UpgradeNum = int.Parse(_args[10]);
-            SpotlightType = (BuildingSpotlightType)(int.Parse(_args[11]));
-            Upgrade1 = _args[12];
-            Upgrade2 = _args[13];
-            Upgrade3 = _args[14];
-            AIRepairable = ParseBool(_args[15]);
+            catch
+            {
+                GlobalVar.Log.Critical(string.Format("Building item id: {0} has unreadable data, please verify in map file!", _id));
+            }
         }
         public StructureItem(StructureItem src) : base(src)
         {

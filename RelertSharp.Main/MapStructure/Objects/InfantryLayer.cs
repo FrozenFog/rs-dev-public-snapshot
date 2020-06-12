@@ -26,20 +26,26 @@ namespace RelertSharp.MapStructure.Objects
         #region Ctor - InfantryItem
         public InfantryItem(string _id, string[] _args) : base(_id, _args)
         {
-            if (_args.Length != Constant.MapStructure.ArgLenInfantry)
+            try
             {
-                //logger
-                return;
+                if (_args.Length != Constant.MapStructure.ArgLenInfantry)
+                {
+                    throw new Exception();
+                }
+                SubCells = int.Parse(_args[5]);
+                Status = _args[6];
+                Rotation = int.Parse(_args[7]);
+                TaggedTrigger = _args[8];
+                VeterancyPercentage = int.Parse(_args[9]);
+                Group = int.Parse(_args[10]);
+                IsAboveGround = ParseBool(_args[11]);
+                AutoNORecruitType = ParseBool(_args[12]);
+                AutoYESRecruitType = ParseBool(_args[13]);
             }
-            SubCells = int.Parse(_args[5]);
-            Status = _args[6];
-            Rotation = int.Parse(_args[7]);
-            TaggedTrigger = _args[8];
-            VeterancyPercentage = int.Parse(_args[9]);
-            Group = int.Parse(_args[10]);
-            IsAboveGround = ParseBool(_args[11]);
-            AutoNORecruitType = ParseBool(_args[12]);
-            AutoYESRecruitType = ParseBool(_args[13]);
+            catch
+            {
+                GlobalVar.Log.Critical(string.Format("Infantry item id: {0} has unreadable data, please verify in map file!", _id));
+            }
         }
         public InfantryItem(InfantryItem src) : base(src)
         {

@@ -11,6 +11,7 @@ namespace RelertSharp.Common
     {
         private FileStream _fs;
         private StreamWriter sw;
+        private StringBuilder criticalMsg;
         private bool isStream = false;
 
 
@@ -20,11 +21,26 @@ namespace RelertSharp.Common
             if (!File.Exists("rs.log")) _fs = new FileStream("rs.log", FileMode.Create, FileAccess.Write);
             else _fs = new FileStream("rs.log", FileMode.Append, FileAccess.Write);
             sw = new StreamWriter(_fs);
+            criticalMsg = new StringBuilder();
         }
         #endregion
 
 
         #region Public Methods
+        public void Critical(string msg)
+        {
+            HasCritical = true;
+            sw.WriteLine(string.Format("{0}: {1}", DateTime.Now, msg));
+            if (!isStream) sw.Flush();
+            criticalMsg.AppendLine(msg);
+        }
+        public string ShowCritical()
+        {
+            string msg = criticalMsg.ToString();
+            criticalMsg.Clear();
+            HasCritical = false;
+            return msg;
+        }
         public void Write(string msg)
         {
             sw.WriteLine(string.Format("{0}: {1}", DateTime.Now, msg));
@@ -44,6 +60,11 @@ namespace RelertSharp.Common
             sw.Flush();
             _fs.Dispose();
         }
+        #endregion
+
+
+        #region Public Calls
+        public bool HasCritical { get; set; }
         #endregion
     }
 }

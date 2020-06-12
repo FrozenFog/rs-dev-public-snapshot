@@ -208,8 +208,6 @@
     <Compile Include="MapStructure\Objects\AircraftLayer.cs" />
     <Compile Include="MapStructure\Objects\AttributeChanger.cs" />
     <Compile Include="MapStructure\Objects\InfantryLayer.cs" />
-    <Compile Include="MapStructure\Logic\Action.cs" />
-    <Compile Include="MapStructure\Logic\Event.cs" />
     <Compile Include="MapStructure\Logic\LocalVar.cs" />
     <Compile Include="MapStructure\Logic\LogicCollection.cs" />
     <Compile Include="MapStructure\Logic\Tag.cs" />

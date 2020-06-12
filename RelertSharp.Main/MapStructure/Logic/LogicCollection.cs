@@ -10,39 +10,6 @@ using System.Collections;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    //public class LogicCollection
-    //{
-    //    private Dictionary<string, LogicGroup> data = new Dictionary<string, LogicGroup>();
-
-
-    //    #region Ctor - LogicCollection
-    //    public LogicCollection(INIEntity ent, LogicType type)
-    //    {
-    //        foreach (INIPair p in ent.DataList)
-    //        {
-    //            if (!data.Keys.Contains(p.Name))
-    //            {
-    //                string[] l = p.ParseStringList();
-    //                data[p.Name] = new LogicGroup(p.Name, int.Parse(l[0]), l.Skip(1).ToArray(), type);
-    //            }
-    //        }
-    //    }
-    //    #endregion
-
-
-    //    #region Public Calls - LogicCollection
-    //    public LogicGroup this[string _id]
-    //    {
-    //        get
-    //        {
-    //            if (data.Keys.Contains(_id)) return data[_id];
-    //            return null;
-    //        }
-    //    }
-    //    #endregion
-    //}
-
-
     public class LogicGroup : IEnumerable<LogicItem>
     {
         private Dictionary<int, LogicItem> data = new Dictionary<int, LogicItem>();
@@ -57,43 +24,50 @@ namespace RelertSharp.MapStructure.Logic
         }
         public LogicGroup(INIPair p, LogicType type)
         {
-            int num = 1;
-            LogicType = type;
-            string[] l = p.ParseStringList();
-            if (l.Contains(""))
+            try
             {
-                int end = l.ToList().IndexOf("");
-                l = l.Take(end).ToArray();
-            }
-            ID = p.Name;
-            Num = int.Parse(l[0]);
-            int steplen = 0, llen = l.Length;
-            for (int i = 1; i < llen; i += steplen)
-            {
-                int logicID = int.Parse(l[i]);
-                switch (type)
+                int num = 1;
+                LogicType = type;
+                string[] l = p.ParseStringList();
+                if (l.Contains(""))
                 {
-                    case LogicType.ActionLogic:
-                        steplen = 8;
-                        Add(new LogicItem(
-                            logicID,
-                            new string[] { l[i + 1], l[i + 2], l[i + 3], l[i + 4], l[i + 5], l[i + 6], l[i + 7] },
-                            type,
-                            num++
-                        ));
-                        break;
-                    case LogicType.EventLogic:
-                        steplen = (logicID == 60 || logicID == 61) ? 4 : 3;
-                        Add(new LogicItem(
-                            logicID,
-                            new string[] { l[i + 1], l[i + 2], steplen == 4 ? l[i + 3] : "0" },
-                            type,
-                            num++
+                    int end = l.ToList().IndexOf("");
+                    l = l.Take(end).ToArray();
+                }
+                ID = p.Name;
+                Num = int.Parse(l[0]);
+                int steplen = 0, llen = l.Length;
+                for (int i = 1; i < llen; i += steplen)
+                {
+                    int logicID = int.Parse(l[i]);
+                    switch (type)
+                    {
+                        case LogicType.ActionLogic:
+                            steplen = 8;
+                            Add(new LogicItem(
+                                logicID,
+                                new string[] { l[i + 1], l[i + 2], l[i + 3], l[i + 4], l[i + 5], l[i + 6], l[i + 7] },
+                                type,
+                                num++
                             ));
-                        break;
+                            break;
+                        case LogicType.EventLogic:
+                            steplen = (logicID == 60 || logicID == 61) ? 4 : 3;
+                            Add(new LogicItem(
+                                logicID,
+                                new string[] { l[i + 1], l[i + 2], steplen == 4 ? l[i + 3] : "0" },
+                                type,
+                                num++
+                                ));
+                            break;
+                    }
                 }
             }
-
+            catch
+            {
+                string sType = type == LogicType.EventLogic ? "Event" : "Action";
+                GlobalVar.Log.Critical(string.Format("{1} item id: {0} has unreadable data, please verify in map file!", p.Name, sType));
+            }
             /*
             IEnumerable<string> paramEnm = l.Skip(1);
             int end = paramEnm.ToList().IndexOf("");
