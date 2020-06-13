@@ -85,6 +85,7 @@ namespace RelertSharp.MapStructure.Objects
             X = src.X;
             Y = src.Y;
             Selected = src.Selected;
+            SceneObject = src.SceneObject;
         }
         public ObjectItemBase() { }
         #endregion

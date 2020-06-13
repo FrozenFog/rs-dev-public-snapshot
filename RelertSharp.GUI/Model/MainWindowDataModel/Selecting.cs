@@ -38,6 +38,23 @@ namespace RelertSharp.GUI.Model
         }
 
 
+        public void RemoveItemFromSelectList<T>(T item) where T : IMapObject
+        {
+            Type t = item.GetType();
+            if (t == typeof(AircraftItem)) Aircrafts.Remove(item as AircraftItem);
+            else if (t == typeof(StructureItem)) Buildings.Remove(item as StructureItem);
+            else if (t == typeof(UnitItem)) Units.Remove(item as UnitItem);
+            else if (t == typeof(InfantryItem)) Infantries.Remove(item as InfantryItem);
+        }
+        public void SelectAircraftAt(I2dLocateable pos)
+        {
+            AircraftItem air = map.GetAircraft(pos);
+            if (air != null && !Aircrafts.Contains(air))
+            {
+                Aircrafts.Add(air);
+                air.Select();
+            }
+        }
         public void SelectUnitAt(I2dLocateable pos)
         {
             UnitItem unit = map.GetUnit(pos);

@@ -14,6 +14,7 @@ namespace RelertSharp.Encoding
         {
             MemoryStream ms = new MemoryStream(src);
             Bitmap result = PcxReader.Load(ms);
+            ms.Dispose();
             return result;
         }
         /*

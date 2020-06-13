@@ -68,7 +68,7 @@ namespace RelertSharp.DrawingEngine
         {
             return new Vec3() { X = iso.X - _15SQ2, Y = iso.Y - _15SQ2, Z = iso.Z };
         }
-        private Vec3 ToVec3Zero(int x, int y, int z)
+        private Vec3 ToVec3Zero(float x, float y, float z)
         {
             return new Vec3() { X = x * _30SQ2 - _15SQ2, Y = y * _30SQ2 - _15SQ2, Z = z * _10SQ3 };
         }
