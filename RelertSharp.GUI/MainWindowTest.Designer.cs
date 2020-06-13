@@ -1244,7 +1244,7 @@
             // rbPanelAttribute
             // 
             this.rbPanelAttribute.BackColor = System.Drawing.SystemColors.Control;
-            this.rbPanelAttribute.Location = new System.Drawing.Point(66, 28);
+            this.rbPanelAttribute.Location = new System.Drawing.Point(3, 2);
             this.rbPanelAttribute.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rbPanelAttribute.Name = "rbPanelAttribute";
             this.rbPanelAttribute.Size = new System.Drawing.Size(540, 258);

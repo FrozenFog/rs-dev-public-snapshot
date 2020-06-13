@@ -14,7 +14,7 @@ namespace RelertSharp.DrawingEngine
         {
             private int NewID<T>(Dictionary<int, T> referance, T obj) where T : PresentBase, IPresentBase
             {
-                for(int i = 0; i < 10000; i++)
+                for(int i = 0; i < 99999; i++)
                 {
                     if (!referance.Keys.Contains(i))
                     {
