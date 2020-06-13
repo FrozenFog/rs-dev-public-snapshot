@@ -64,7 +64,15 @@ namespace RelertSharp.GUI
                         Application.Run(welcome);
                         if (welcome.DialogResult == DialogResult.OK)
                         {
-                            name = welcome.MapName;
+                            if (welcome.Reboot)
+                            {
+                                Process.Start("rsdata.exe", "/reboot");
+                                return;
+                            }
+                            else
+                            {
+                                name = welcome.MapName;
+                            }
                         }
                         else return;
                     }

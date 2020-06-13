@@ -14,6 +14,9 @@ namespace RelertSharp.GUI
 {
     public partial class WelcomeWindow : Form
     {
+        internal bool Reboot = false;
+
+
         public WelcomeWindow()
         {
             InitializeComponent();
@@ -32,33 +35,40 @@ namespace RelertSharp.GUI
             if (reboot)
             {
                 rtxbDetail.Text = Language.DICT["RSWReboot"];
-                btnLoadMap.Enabled = false;
+                btnLoadMap.Text = "Reboot";
+                Reboot = true;
             }
             else
             {
                 rtxbDetail.Text = string.Format(Language.DICT["RSWContent"], GlobalConfig.ConfigName, GlobalConfig.ConfigVersion, GlobalConfig.GamePath, CurrentLanguage, GlobalDir.Count);
             }
         }
-
         private void btnLoadMap_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog()
+            if (Reboot)
             {
-                Title = Language.DICT["OpenMapDlgTitle"],
-                InitialDirectory = string.IsNullOrEmpty(GlobalConfig.Local.RecentPath) ? Application.StartupPath : GlobalConfig.Local.RecentPath,
-                Filter = "Red Alert 2 Map File|*.map;*.yrm;*.mpr",
-                AddExtension = true,
-                CheckFileExists = true,
-            };
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                MapName = dlg.FileName;
-                GlobalConfig.Local.RecentPath = MapName.Substring(0, MapName.Length - MapName.LastIndexOf('\\'));
                 Close();
             }
             else
             {
-                DialogResult = DialogResult.Cancel;
+                OpenFileDialog dlg = new OpenFileDialog()
+                {
+                    Title = Language.DICT["OpenMapDlgTitle"],
+                    InitialDirectory = string.IsNullOrEmpty(GlobalConfig.Local.RecentPath) ? Application.StartupPath : GlobalConfig.Local.RecentPath,
+                    Filter = "Red Alert 2 Map File|*.map;*.yrm;*.mpr",
+                    AddExtension = true,
+                    CheckFileExists = true,
+                };
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    MapName = dlg.FileName;
+                    GlobalConfig.Local.RecentPath = MapName.Substring(0, MapName.Length - MapName.LastIndexOf('\\'));
+                    Close();
+                }
+                else
+                {
+                    DialogResult = DialogResult.Cancel;
+                }
             }
         }
         private void btnExit_Click(object sender, EventArgs e)
@@ -73,8 +83,7 @@ namespace RelertSharp.GUI
             setting.Reload(cfg);
             if (setting.ShowDialog() == DialogResult.OK)
             {
-                GlobalConfig.Override(cfg);
-                cfg.SaveConfig();
+                GlobalConfig.Local = cfg;
                 SetControl(true);
             }
         }

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Diagnostics;
+using System.Threading;
 
 namespace RelertSharp
 {
@@ -10,7 +13,28 @@ namespace RelertSharp
         [STAThread]
         static void Main(string[] args)
         {
-
+            if (args.Length > 0)
+            {
+                foreach (string a in args)
+                {
+                    if (a == "/reboot")
+                    {
+                        while (true)
+                        {
+                            Process[] ps = Process.GetProcesses();
+                            if (ps.Count(x=>x.ProcessName == "RelertSharp") == 0)
+                            {
+                                Process.Start("RelertSharp.exe");
+                                return;
+                            }
+                            else
+                            {
+                                Thread.Sleep(200);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
