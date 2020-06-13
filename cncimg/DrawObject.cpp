@@ -142,23 +142,24 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 		pDevice->SetPixelShader(PassShader.GetShaderObject());
 		pDevice->SetTexture(0, pPassTexture);
 		pDevice->SetTexture(1, pAlphaTexture);
-
+#define LINEAR_SMOOTH
+#ifdef LINEAR_SMOOTH
 		pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 		pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 		pDevice->SetSamplerState(1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 		pDevice->SetSamplerState(1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
-		
+#endif
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 		pDevice->SetTexture(0, nullptr);
 		pDevice->SetTexture(1, nullptr);
 		pDevice->SetPixelShader(nullptr);
 		pDevice->SetStreamSource(0, nullptr, 0, 0);
-
+#ifdef LINEAR_SMOOTH
 		pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
 		pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
 		pDevice->SetSamplerState(1, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
 		pDevice->SetSamplerState(1, D3DSAMP_MINFILTER, D3DTEXF_POINT);
-
+#endif 
 		pDevice->EndScene();
 	}
 
