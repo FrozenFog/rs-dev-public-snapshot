@@ -118,9 +118,9 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	PlainVertex FixedVertecies[] =
 	{
 		{{0.0,0.0,0.0},1.0,0.0,0.0},
-		{{0.0,height,0.0},1.0,0.0,1.0},
-		{{width,0.0,0.0},1.0,1.0,0.0},
-		{{width,height,0.0},1.0,1.0,1.0},
+		{{0.0,2.0f * height,0.0},1.0,0.0,2.0},
+		{{2.0f * width,0.0,0.0},1.0,2.0,0.0},
+		{{2.0f * width,2.0f * height,0.0},1.0,2.0,2.0},
 	};
 
 	if (FAILED(pDevice->CreateVertexBuffer(sizeof FixedVertecies, NULL, FixedVertecies[0].dwFVFType,
@@ -142,7 +142,7 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 		pDevice->SetPixelShader(PassShader.GetShaderObject());
 		pDevice->SetTexture(0, pPassTexture);
 		pDevice->SetTexture(1, pAlphaTexture);
-#define LINEAR_SMOOTH
+//#define LINEAR_SMOOTH
 #ifdef LINEAR_SMOOTH
 		pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 		pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
