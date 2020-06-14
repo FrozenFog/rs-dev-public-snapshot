@@ -96,7 +96,7 @@ namespace RelertSharp.DrawingEngine
             else
             {
                 name = TileDictionary[t.TileIndex];
-                subindex = t.SubIndex;
+                subindex = TileDictionary.IsValidTile(t.TileIndex) ? t.SubIndex : 0;
             }
             DrawableTile src = CreateDrawableTile(name, subindex);
             Buffer.Scenes.DrawableTiles[t.Coord] = src;

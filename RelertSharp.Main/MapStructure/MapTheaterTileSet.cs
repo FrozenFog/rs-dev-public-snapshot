@@ -85,6 +85,10 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - MapTheaterTileSet
+        public bool IsValidTile(int _tileindex)
+        {
+            return tileNameIndex.Count > _tileindex;
+        }
         public string NameAsTheater(string name)
         {
             return string.Format("{0}.{1}", name.ToLower(), TheaterSub);
