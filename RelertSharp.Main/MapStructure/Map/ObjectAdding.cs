@@ -49,6 +49,7 @@ namespace RelertSharp.MapStructure
         {
             TerrainItem ter = new TerrainItem(coord, regname);
             Terrains[coord] = ter;
+            Tiles.AddObjectOnTile(ter);
             return ter;
         }
     }

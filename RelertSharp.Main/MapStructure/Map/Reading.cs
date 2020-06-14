@@ -28,6 +28,7 @@ namespace RelertSharp.MapStructure
             Tiles = new TileLayer(isomappack5String, info.Size);
             Overlays = new OverlayLayer(overlayString, overlaydataString);
             Tiles.FixEmptyTiles(Info.Size.Width, info.Size.Height);
+            DumpOverlayToTile();
 
             GetPreview(f);
             GetAbstractLogics(f);
@@ -45,6 +46,14 @@ namespace RelertSharp.MapStructure
             isomappack5String = "";
             overlayString = "";
             overlaydataString = "";
+        }
+        private void DumpOverlayToTile()
+        {
+            foreach (OverlayUnit o in Overlays)
+            {
+                Tile t = Tiles[o];
+                if (t != null) t.AddObject(o);
+            }
         }
         private void LoadHouseColor()
         {
