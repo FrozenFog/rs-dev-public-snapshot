@@ -115,13 +115,23 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	float width = winRect.right;
 	float height = winRect.bottom;
 
+#ifdef _WINDLL
 	PlainVertex FixedVertecies[] =
 	{
 		{{0.0,0.0,0.0},1.0,0.0,0.0},
 		{{0.0,2.0f * height,0.0},1.0,0.0,2.0},
 		{{2.0f * width,0.0,0.0},1.0,2.0,0.0},
-		{{2.0f * width,2.0f * height,0.0},1.0,2.0,2.0},
+		//{{2.0f * width,2.0f * height,0.0},1.0,2.0,2.0},
 	};
+#else
+	PlainVertex FixedVertecies[] =
+	{
+		{{-width,-height,0.0},1.0,-1.0f,-1.0f},
+		{{-width,height,0.0},1.0,-1.0f,1.0f},
+		{{width,-height,0.0},1.0,1.0f,-1.0f},
+		{{width,height,0.0},1.0,1.0f,1.0f},
+	};
+#endif
 
 	if (FAILED(pDevice->CreateVertexBuffer(sizeof FixedVertecies, NULL, FixedVertecies[0].dwFVFType,
 		D3DPOOL_SYSTEMMEM, &TempVertex, nullptr)))
@@ -149,7 +159,12 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 		pDevice->SetSamplerState(1, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 		pDevice->SetSamplerState(1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 #endif
+
+#ifdef _WINDLL
+		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 1);
+#else
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+#endif
 		pDevice->SetTexture(0, nullptr);
 		pDevice->SetTexture(1, nullptr);
 		pDevice->SetPixelShader(nullptr);
