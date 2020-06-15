@@ -44,4 +44,6 @@ namespace Graphic
 	void RemoveLastTmp();
 
 	void SceneRotation();
+
+	void RemoveAlphaObjects();
 };

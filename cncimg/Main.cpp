@@ -187,6 +187,10 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_KEYDOWN:
 		switch (wParam)
 		{
+		case VK_SPACE:
+			printf_s("deleting alpha objects.\n");
+			Graphic::RemoveAlphaObjects();
+			break;
 		case VK_UP:
 			Graphic::MoveFocus(0.0, -1.0);
 			break;

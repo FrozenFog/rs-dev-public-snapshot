@@ -19,6 +19,7 @@ namespace Graphic
 	int ShpFile;
 	int roadTileFile;
 	int roadObject[3];
+	int alphaObject1, alphaObject2;
 }
 
 bool Graphic::TryCreateIndexedTexture()
@@ -296,9 +297,9 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 
 	if (auto sid = CreateShpFile("images\\repring.shp")) {
 		if (LoadShpTextures(sid, 0)) {
-			CreateShpObjectAtScene(sid, { 0.0,0.0,0.1f }, 0,
+			alphaObject1 = CreateShpObjectAtScene(sid, { 0.0,0.0,0.1f }, 0,
 				UnitPalette, RGB(0, 252, 252), 0, 4, 4, 8, SPECIAL_ALPHA);
-			CreateShpObjectAtScene(sid, { 0.0,-200.0,0.1f }, 0,
+			alphaObject2 = CreateShpObjectAtScene(sid, { 0.0,-200.0,0.1f }, 0,
 				UnitPalette, RGB(0, 252, 252), 0, 4, 4, 8, SPECIAL_ALPHA);
 		}
 	}
@@ -523,4 +524,10 @@ void Graphic::RemoveLastTmp()
 void Graphic::SceneRotation()
 {
 	RotateWorld(0.05f);
+}
+
+void Graphic::RemoveAlphaObjects()
+{
+	RemoveObjectFromScene(alphaObject1);
+	RemoveObjectFromScene(alphaObject2);
 }
