@@ -263,6 +263,56 @@ namespace RelertSharp.GUI.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap headAir {
+            get {
+                object obj = ResourceManager.GetObject("headAir", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap headBuilding {
+            get {
+                object obj = ResourceManager.GetObject("headBuilding", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap headInfantry {
+            get {
+                object obj = ResourceManager.GetObject("headInfantry", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap headNaval {
+            get {
+                object obj = ResourceManager.GetObject("headNaval", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap headUnit {
+            get {
+                object obj = ResourceManager.GetObject("headUnit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap load_1 {
             get {
                 object obj = ResourceManager.GetObject("load_1", resourceCulture);
@@ -286,6 +336,16 @@ namespace RelertSharp.GUI.Properties {
         internal static System.Drawing.Bitmap load1 {
             get {
                 object obj = ResourceManager.GetObject("load1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap nullImg {
+            get {
+                object obj = ResourceManager.GetObject("nullImg", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

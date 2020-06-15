@@ -31,6 +31,15 @@ namespace RelertSharp.Common
             Log.Write("Local config saved!");
             Dispose();
         }
+        public Dictionary<string, string[]> GetCustomObjectFolder()
+        {
+            Dictionary<string, string[]> result = new Dictionary<string, string[]>();
+            foreach (INIPair p in this["UserCustomTree"])
+            {
+                result[p.Name] = p.ParseStringList();
+            }
+            return result;
+        }
         #endregion
 
 

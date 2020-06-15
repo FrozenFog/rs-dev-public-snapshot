@@ -22,8 +22,8 @@ namespace RelertSharp.DrawingEngine
             Pnt p = Pnt.FromPoint(src);
             Vec3 pos = new Vec3();
             CppExtern.Scene.ClientPositionToScenePosition(p, ref pos);
-            pos += _NormTileVec * 12;
-            for (int height = 0; height < 24; height++)
+            pos += _NormTileVec * Constant.DrawingEngine.MapMaxHeight;
+            for (int height = 0; height < Constant.DrawingEngine.MapMaxHeight * 2; height++)
             {
                 Vec3 tilepos = ScenePosToCoord(pos);
                 if (_cellFindingReferance.HasTileOn(tilepos)) return tilepos;
@@ -42,10 +42,10 @@ namespace RelertSharp.DrawingEngine
             Pnt p = Pnt.FromPoint(src);
             Vec3 scenepos = new Vec3();
             CppExtern.Scene.ClientPositionToScenePosition(p, ref scenepos);
-            scenepos += _NormTileVec * 12;
+            scenepos += _NormTileVec * Constant.DrawingEngine.MapMaxHeight;
             int height = 0;
             Vec3 tileCoord = new Vec3();
-            for (; height < 24; height++)
+            for (; height < Constant.DrawingEngine.MapMaxHeight * 2; height++)
             {
                 tileCoord = ScenePosToCoord(scenepos);
                 if (_cellFindingReferance.HasTileOn(tileCoord))

@@ -128,6 +128,7 @@ namespace RelertSharp.Common
         }
         public static class DrawingEngine
         {
+            public static int MapMaxHeight = 13;
             public static class Tiles
             {
                 public const int Cliff = 15;

@@ -91,7 +91,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'OnPublic|x86'">
     <OutputPath>..\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -125,6 +125,12 @@
     <Compile Include="Controls\Delegates.cs" />
     <Compile Include="Controls\MinimapPanel.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PickPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PickPanel.Designer.cs">
+      <DependentUpon>PickPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="LocalSettingWindow.cs">
       <SubType>Form</SubType>
@@ -323,6 +329,9 @@
       <DependentUpon>WelcomeWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="_Test.cs" />
+    <EmbeddedResource Include="Controls\PickPanel.resx">
+      <DependentUpon>PickPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LocalSettingWindow.resx">
       <DependentUpon>LocalSettingWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -466,6 +475,12 @@
     <None Include="Resources\curIso.ico" />
     <None Include="Resources\curBrush.ico" />
     <None Include="Resources\curAttrib.ico" />
+    <None Include="Resources\headBuilding.png" />
+    <None Include="Resources\headNaval.png" />
+    <None Include="Resources\headUnit.png" />
+    <None Include="Resources\headAir.png" />
+    <None Include="Resources\headInfantry.png" />
+    <None Include="Resources\nullImg.png" />
     <Content Include="rslogo.ico" />
   </ItemGroup>
   <ItemGroup>

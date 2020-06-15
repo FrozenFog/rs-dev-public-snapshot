@@ -190,4 +190,22 @@
   <data name="curIso" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\curIso.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="headAir" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\headAir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="headBuilding" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\headBuilding.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="headNaval" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\headNaval.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="headUnit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\headUnit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="headInfantry" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\headInfantry.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="nullImg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\nullImg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

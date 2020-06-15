@@ -10,13 +10,23 @@ namespace RelertSharp.GUI
 {
     internal static class GuiUtils
     {
+        public static void LoadToTreeNode(TreeNode dest, IEnumerable<TreeNode> src)
+        {
+            foreach(TreeNode n in src)
+            {
+                dest.Nodes.Add(n);
+            }
+        }
         public static bool SafeRun(Action a, string errorMsg)
         {
+#if RELEASE
             try
             {
+#endif
                 a.Invoke();
                 return true;
-            }
+#if RELEASE
+        }
             catch (Exception e)
             {
                 if (e.GetType() == typeof(RSException.MixEntityNotFoundException))
@@ -30,6 +40,7 @@ namespace RelertSharp.GUI
                 }
                 return false;
             }
+#endif
         }
         public static void Warning(string content)
         {

@@ -157,9 +157,12 @@ namespace RelertSharp.IniSystem
             string art = GetArtName(regid);
             string pcx = Art[art]["CameoPCX"];
             string shp = Art[art]["Cameo"].ToLower();
-            if (string.IsNullOrEmpty(pcx)) return shp + ".shp";
-            if (string.IsNullOrEmpty(shp)) return pcx;
-            return "xxicon.shp";
+            if (string.IsNullOrEmpty(pcx))
+            {
+                if (string.IsNullOrEmpty(shp)) return "xxicon.shp";
+                else return shp + ".shp";
+            }
+            return pcx;
         }
         public string GetCustomPaletteName(string nameid)
         {
@@ -336,6 +339,53 @@ namespace RelertSharp.IniSystem
         {
             INIEntity ov = this["OverlayTypes"];
             return ov[overlayid.ToString()];
+        }
+        public int GetSideCount()
+        {
+            int i = 0;
+            INIEntity sidelist = this["Sides"];
+            foreach (INIPair p in sidelist)
+            {
+                if (HasIniEnt(p.Name)) i++;
+            }
+            return i;
+        }
+        public bool IsTechBuilding(string regname)
+        {
+            return this["AI"].GetPair("NeutralTechBuildings").ParseStringList().Contains(regname);
+        }
+        public int GuessSide(string regname, string rootTypeIndex, bool isBuilding = false)
+        {
+            //has planning side
+            if (isBuilding)
+            {
+                int planning = this[regname].GetPair("AIBasePlanningSide").ParseInt(-1);
+                if (planning >= 0) return planning;
+            }
+
+            //guess by root
+            List<string> root = GlobalConfig["SideBeloningRoot"].GetPair(rootTypeIndex).ParseStringList().ToList();
+            foreach (string prerequest in this[regname].GetPair("Prerequisite").ParseStringList())
+            {
+                if (this["GenericPrerequisites"].HasPair(prerequest))
+                {
+                    foreach (string subrequest in this["GenericPrerequisites"].GetPair(prerequest).ParseStringList())
+                    {
+                        if (root.Contains(subrequest)) return root.IndexOf(subrequest);
+                    }
+                }
+                else
+                {
+                    if (root.Contains(prerequest)) return root.IndexOf(prerequest);
+                }
+            }
+
+            //no side
+            return -1;
+        }
+        public string FormatTreeNodeName(string regname)
+        {
+            return string.Format("{1}:{2}({0})", regname, GlobalCsf[this[regname]["UIName"]].ContentString, this[regname]["Name"]);
         }
         #endregion
 

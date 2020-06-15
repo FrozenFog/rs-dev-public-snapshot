@@ -47,13 +47,20 @@ namespace RelertSharp.GUI
         {
             (panel1 as Control).KeyDown += new KeyEventHandler(panel1_KeyDown);
             (panel1 as Control).KeyUp += new KeyEventHandler(panel1_KeyUp);
+
+
             foreach (Control c in Controls)
             {
                 Language.SetControlLanguage(c);
             }
             Language.SetControlLanguage(cmsToolSelect);
             Text = Language.DICT[Text] + Constant.ReleaseDate;
+
+
+            pnlPick.Initialize();
             logicEditor.JumpToWaypoint += LogicJumpToWaypoint;
+
+
             initialized = true;
         }
         private bool updatingLightningData = false;
