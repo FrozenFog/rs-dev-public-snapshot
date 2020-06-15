@@ -616,6 +616,7 @@ void DrawObject::RemoveShpObject(int nID)
 			continue;
 		//try find and erase
 		file.second->RemoveTransperantObject(nID);
+		file.second->RemoveTopObject(nID);
 	}
 }
 
