@@ -59,6 +59,10 @@ namespace RelertSharp.MapStructure.Objects
             AutoNORecruitType = src.AutoNORecruitType;
             AutoYESRecruitType = src.AutoYESRecruitType;
         }
+        public InfantryItem(string regname)
+        {
+            RegName = regname;
+        }
         public InfantryItem() { }
         #endregion
 
@@ -67,7 +71,9 @@ namespace RelertSharp.MapStructure.Objects
         public void MoveTo(I3dLocateable pos, int subcell)
         {
             if (subcell != -1) this.subcell = subcell;
-            MoveTo(pos);
+            X = pos.X;
+            Y = pos.Y;
+            SceneObject.MoveTo(pos, subcell);
         }
         #endregion
 

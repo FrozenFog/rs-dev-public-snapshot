@@ -57,6 +57,10 @@ namespace RelertSharp.MapStructure.Objects
             AutoNORecruitType = src.AutoNORecruitType;
             AutoYESRecruitType = src.AutoYESRecruitType;
         }
+        public UnitItem(string regname)
+        {
+            RegName = regname;
+        }
         public UnitItem() { }
         public string FollowsIndex { get; set; }
 

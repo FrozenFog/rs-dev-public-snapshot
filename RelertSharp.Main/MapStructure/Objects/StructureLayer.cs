@@ -24,6 +24,7 @@ namespace RelertSharp.MapStructure.Objects
         private int sizeX = 0, sizeY = 0;
 
 
+        #region Ctor
         public StructureItem(string _id, string[] _args) : base(_id, _args)
         {
             try
@@ -61,15 +62,22 @@ namespace RelertSharp.MapStructure.Objects
             Upgrade3 = src.Upgrade3;
             AIRepairable = src.AIRepairable;
         }
+        public StructureItem(string regname)
+        {
+            RegName = regname;
+        }
+
+
+        #endregion
         #region Public Calls - StructureItem
         public bool AISellable { get; set; }
         public bool AIRebuildable { get; private set; } = false;
         public bool BuildingOnline { get; set; }
         public int UpgradeNum { get; set; }
         public BuildingSpotlightType SpotlightType { get; set; }
-        public string Upgrade1 { get; set; }
-        public string Upgrade2 { get; set; }
-        public string Upgrade3 { get; set; }
+        public string Upgrade1 { get; set; } = "None";
+        public string Upgrade2 { get; set; } = "None";
+        public string Upgrade3 { get; set; } = "None";
         public bool AIRepairable { get; set; }
         public bool Nominal { get; private set; } = false;
         public int SizeX

@@ -58,9 +58,9 @@ namespace RelertSharp.Common
             return a != b;
         }
 
-        int I2dLocateable.X { get { return X; } }
+        int I2dLocateable.X { get { return X; } set { X = value; } }
 
-        int I2dLocateable.Y { get { return Y; } }
+        int I2dLocateable.Y { get { return Y; } set { Y = value; } }
 
         public static Pnt FromPoint(Point src)
         {

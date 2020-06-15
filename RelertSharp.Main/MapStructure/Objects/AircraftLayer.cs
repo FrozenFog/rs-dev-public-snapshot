@@ -48,6 +48,10 @@ namespace RelertSharp.MapStructure.Objects
             AutoNORecruitType = src.AutoNORecruitType;
             AutoYESRecruitType = src.AutoYESRecruitType;
         }
+        public AircraftItem(string regname)
+        {
+            RegName = regname;
+        }
 
 
         #region Public Calls

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,20 +9,19 @@ using RelertSharp.IniSystem;
 using static RelertSharp.Common.GlobalVar;
 using static RelertSharp.GUI.GuiUtils;
 
-namespace RelertSharp.GUI
+namespace RelertSharp.GUI.Controls
 {
-    public partial class PickPanel : UserControl
+    public partial class PickPanel
     {
-        private Dictionary<string, string> regname_pcx = new Dictionary<string, string>();
+        private const string TNodeBuilding = "\nBuilding";
+        private const string TNodeInfantry = "\nInfantry";
+        private const string TNodeUnit = "\nUnit";
+        private const string TNodeNaval = "\nNaval";
+        private const string TNodeAircraft = "\nAircraft";
+        private readonly string[] RootNodes = { TNodeBuilding, TNodeInfantry, TNodeUnit, TNodeNaval, TNodeAircraft };
 
 
-        public PickPanel()
-        {
-            InitializeComponent();
-        }
-
-
-        public void Initialize()
+        private void InitializeGeneralPanel()
         {
             LoadHeadImages();
             LoadGeneralObjects();
@@ -35,9 +31,13 @@ namespace RelertSharp.GUI
         private void LoadGeneralObjects()
         {
             LoadBuildings();
-            LoadOtherCombatObjects("Infantries", "InfantryTypes", "InfantryRoot", 2);
+            TreeNode inf = new TreeNode("Infantries", 2, 2);
+            inf.Name = TNodeInfantry;
+            TreeNode air = new TreeNode("Aircrafts", 5, 5);
+            air.Name = TNodeAircraft;
+            LoadOtherCombatObjects(inf, "InfantryTypes", "InfantryRoot");
             LoadUnits();
-            LoadOtherCombatObjects("Aircrafts", "AircraftTypes", "AirRoot", 5);
+            LoadOtherCombatObjects(air, "AircraftTypes", "AirRoot");
         }
         private void LoadHeadImages()
         {
@@ -51,6 +51,7 @@ namespace RelertSharp.GUI
         private void LoadBuildings()
         {
             TreeNode building = new TreeNode("Buildings", 1, 1);
+            building.Name = TNodeBuilding;
             List<TreeNode> budSides = InitializeSideNode();
             TreeNode tech = new TreeNode(Language.DICT["NoSideTech"]);
             foreach (INIPair p in GlobalRules["BuildingTypes"])
@@ -70,9 +71,8 @@ namespace RelertSharp.GUI
             LoadToTreeNode(building, budSides);
             trvObject.Nodes.Add(building);
         }
-        private void LoadOtherCombatObjects(string nodeName, string rulesListName, string rootIndexName, int imgIndex)
+        private void LoadOtherCombatObjects(TreeNode dest, string rulesListName, string rootIndexName)
         {
-            TreeNode inf = new TreeNode(nodeName, imgIndex, imgIndex);
             List<TreeNode> sides = InitializeSideNode();
             foreach (INIPair p in GlobalRules[rulesListName])
             {
@@ -80,13 +80,15 @@ namespace RelertSharp.GUI
                 if (side >= 0) AddObjectToNode(sides[side], p.Value);
                 else AddObjectToNode(sides.Last(), p.Value);
             }
-            LoadToTreeNode(inf, sides);
-            trvObject.Nodes.Add(inf);
+            LoadToTreeNode(dest, sides);
+            trvObject.Nodes.Add(dest);
         }
         private void LoadUnits()
         {
             TreeNode unit = new TreeNode("Units", 3, 3);
+            unit.Name = TNodeUnit;
             TreeNode naval = new TreeNode("Navals", 4, 4);
+            naval.Name = TNodeNaval;
             List<TreeNode> navals = InitializeSideNode();
             List<TreeNode> units = InitializeSideNode();
             foreach (INIPair p in GlobalRules["VehicleTypes"])
@@ -128,6 +130,34 @@ namespace RelertSharp.GUI
             }
             nodes.Add(new TreeNode(Language.DICT["NoSideMisc"]));
             return nodes;
+        }
+
+        private void trvObject_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (drew)
+            {
+                TreeNode node = e.Node;
+                if (!string.IsNullOrEmpty(node.Name) && !RootNodes.Contains(node.Name))
+                {
+                    TreeNode root = GetRootNode(node);
+                    switch (root.Name)
+                    {
+                        case TNodeAircraft:
+                            brush.Reload(node.Name, MapObjectType.Aircraft);
+                            break;
+                        case TNodeUnit:
+                        case TNodeNaval:
+                            brush.Reload(node.Name, MapObjectType.Vehicle);
+                            break;
+                        case TNodeInfantry:
+                            brush.Reload(node.Name, MapObjectType.Infantry);
+                            break;
+                        case TNodeBuilding:
+                            brush.Reload(node.Name, MapObjectType.Building);
+                            break;
+                    }
+                }
+            }
         }
     }
 }

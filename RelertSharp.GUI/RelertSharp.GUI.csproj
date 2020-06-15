@@ -126,10 +126,16 @@
     <Compile Include="Controls\MinimapPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\PickPanel.cs">
+    <Compile Include="Controls\PickPanel\Exporting.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\PickPanel.Designer.cs">
+    <Compile Include="Controls\PickPanel\GeneralObjects.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PickPanel\PickPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PickPanel\PickPanel.Designer.cs">
       <DependentUpon>PickPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="LocalSettingWindow.cs">
@@ -151,6 +157,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow\LogicReciver.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\ObjectBrush.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow\ObjectInspect.cs">
@@ -213,6 +222,7 @@
     <Compile Include="Controls\RbPanelBase.Designer.cs">
       <DependentUpon>RbPanelBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\BrushModel\BrushModel.cs" />
     <Compile Include="Model\MainWindowDataModel\Selecting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -329,7 +339,7 @@
       <DependentUpon>WelcomeWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="_Test.cs" />
-    <EmbeddedResource Include="Controls\PickPanel.resx">
+    <EmbeddedResource Include="Controls\PickPanel\PickPanel.resx">
       <DependentUpon>PickPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LocalSettingWindow.resx">
@@ -494,6 +504,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\BrushPanel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

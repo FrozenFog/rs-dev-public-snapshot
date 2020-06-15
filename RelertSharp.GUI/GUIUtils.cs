@@ -10,6 +10,16 @@ namespace RelertSharp.GUI
 {
     internal static class GuiUtils
     {
+        public static TreeNode GetRootNode(TreeNode node)
+        {
+            TreeNode result;
+            result = node;
+            while (result.Parent != null)
+            {
+                result = result.Parent;
+            }
+            return result;
+        }
         public static void LoadToTreeNode(TreeNode dest, IEnumerable<TreeNode> src)
         {
             foreach(TreeNode n in src)

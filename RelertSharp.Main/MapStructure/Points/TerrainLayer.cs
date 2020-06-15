@@ -20,6 +20,10 @@ namespace RelertSharp.MapStructure.Points
         {
             RegName = _name;
         }
+        public TerrainItem(string regname)
+        {
+            RegName = regname;
+        }
 
 
         #region Public Calls - TerrainItem

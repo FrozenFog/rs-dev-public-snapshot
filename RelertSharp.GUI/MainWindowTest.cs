@@ -18,6 +18,7 @@ using RelertSharp.Common;
 using RelertSharp.GUI.Model;
 using RelertSharp.GUI.SubWindows.LogicEditor;
 using RelertSharp.SubWindows.INIEditor;
+using RelertSharp.GUI.Controls;
 
 namespace RelertSharp.GUI
 {
@@ -383,7 +384,7 @@ namespace RelertSharp.GUI
         private void bgwDraw_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
-            DrawAll(worker);
+            if (DrawAll(worker)) pnlPick.DrawComplete();
             GlobalVar.Engine.MoveTo(map.CenterPoint);
             GlobalVar.Engine.Refresh();
             pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;

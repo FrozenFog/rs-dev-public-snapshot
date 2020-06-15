@@ -34,8 +34,9 @@
             this.panelHost = new System.Windows.Forms.Panel();
             this.splitMain = new System.Windows.Forms.SplitContainer();
             this.pnlMainAreaContainer = new System.Windows.Forms.Panel();
+            this.splitPickerMain = new System.Windows.Forms.SplitContainer();
+            this.pnlPick = new RelertSharp.GUI.Controls.PickPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pnlPick = new RelertSharp.GUI.PickPanel();
             this.rbPanelAttribute = new RelertSharp.GUI.Controls.RbPanelAttribute();
             this.txbCommand = new System.Windows.Forms.TextBox();
             this.toolsMain = new System.Windows.Forms.ToolStrip();
@@ -115,12 +116,17 @@
             this.tsmiPreciseSelect = new System.Windows.Forms.ToolStripMenuItem();
             this.bgwDraw = new System.ComponentModel.BackgroundWorker();
             this.bgwRmbMoving = new System.ComponentModel.BackgroundWorker();
+            this.lblSubcell = new System.Windows.Forms.Label();
             this.panelHost.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
             this.splitMain.SuspendLayout();
             this.pnlMainAreaContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitPickerMain)).BeginInit();
+            this.splitPickerMain.Panel1.SuspendLayout();
+            this.splitPickerMain.Panel2.SuspendLayout();
+            this.splitPickerMain.SuspendLayout();
             this.panel1.SuspendLayout();
             this.toolsMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitSide)).BeginInit();
@@ -191,7 +197,7 @@
             // 
             // pnlMainAreaContainer
             // 
-            this.pnlMainAreaContainer.Controls.Add(this.panel1);
+            this.pnlMainAreaContainer.Controls.Add(this.splitPickerMain);
             this.pnlMainAreaContainer.Controls.Add(this.txbCommand);
             this.pnlMainAreaContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMainAreaContainer.Location = new System.Drawing.Point(25, 0);
@@ -199,15 +205,40 @@
             this.pnlMainAreaContainer.Size = new System.Drawing.Size(1010, 796);
             this.pnlMainAreaContainer.TabIndex = 4;
             // 
+            // splitPickerMain
+            // 
+            this.splitPickerMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitPickerMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitPickerMain.Location = new System.Drawing.Point(0, 0);
+            this.splitPickerMain.Name = "splitPickerMain";
+            // 
+            // splitPickerMain.Panel1
+            // 
+            this.splitPickerMain.Panel1.Controls.Add(this.pnlPick);
+            // 
+            // splitPickerMain.Panel2
+            // 
+            this.splitPickerMain.Panel2.Controls.Add(this.panel1);
+            this.splitPickerMain.Size = new System.Drawing.Size(1010, 771);
+            this.splitPickerMain.SplitterDistance = 238;
+            this.splitPickerMain.TabIndex = 4;
+            // 
+            // pnlPick
+            // 
+            this.pnlPick.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlPick.Location = new System.Drawing.Point(0, 0);
+            this.pnlPick.Name = "pnlPick";
+            this.pnlPick.Size = new System.Drawing.Size(238, 771);
+            this.pnlPick.TabIndex = 1;
+            // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.pnlPick);
             this.panel1.Controls.Add(this.rbPanelAttribute);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1010, 771);
+            this.panel1.Size = new System.Drawing.Size(768, 771);
             this.panel1.TabIndex = 2;
             this.panel1.SizeChanged += new System.EventHandler(this.panel1_SizeChanged);
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
@@ -219,17 +250,10 @@
             this.panel1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.panel1_PreviewKeyDown);
             this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
             // 
-            // pnlPick
-            // 
-            this.pnlPick.Location = new System.Drawing.Point(3, 4);
-            this.pnlPick.Name = "pnlPick";
-            this.pnlPick.Size = new System.Drawing.Size(311, 762);
-            this.pnlPick.TabIndex = 1;
-            // 
             // rbPanelAttribute
             // 
             this.rbPanelAttribute.BackColor = System.Drawing.SystemColors.Control;
-            this.rbPanelAttribute.Location = new System.Drawing.Point(365, 2);
+            this.rbPanelAttribute.Location = new System.Drawing.Point(3, 2);
             this.rbPanelAttribute.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rbPanelAttribute.Name = "rbPanelAttribute";
             this.rbPanelAttribute.Size = new System.Drawing.Size(540, 258);
@@ -1175,7 +1199,7 @@
             // lblMouseX
             // 
             this.lblMouseX.AutoSize = true;
-            this.lblMouseX.Location = new System.Drawing.Point(495, 22);
+            this.lblMouseX.Location = new System.Drawing.Point(655, 22);
             this.lblMouseX.Name = "lblMouseX";
             this.lblMouseX.Size = new System.Drawing.Size(71, 15);
             this.lblMouseX.TabIndex = 4;
@@ -1184,7 +1208,7 @@
             // lblMouseY
             // 
             this.lblMouseY.AutoSize = true;
-            this.lblMouseY.Location = new System.Drawing.Point(653, 22);
+            this.lblMouseY.Location = new System.Drawing.Point(813, 22);
             this.lblMouseY.Name = "lblMouseY";
             this.lblMouseY.Size = new System.Drawing.Size(71, 15);
             this.lblMouseY.TabIndex = 4;
@@ -1277,6 +1301,15 @@
             this.bgwRmbMoving.WorkerSupportsCancellation = true;
             this.bgwRmbMoving.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwRmbMoving_DoWork);
             // 
+            // lblSubcell
+            // 
+            this.lblSubcell.AutoSize = true;
+            this.lblSubcell.Location = new System.Drawing.Point(419, 22);
+            this.lblSubcell.Name = "lblSubcell";
+            this.lblSubcell.Size = new System.Drawing.Size(71, 15);
+            this.lblSubcell.TabIndex = 4;
+            this.lblSubcell.Text = "Subcell:";
+            // 
             // MainWindowTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1286,6 +1319,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.lblMouseY);
             this.Controls.Add(this.lblMouseX);
+            this.Controls.Add(this.lblSubcell);
             this.Controls.Add(this.lblz);
             this.Controls.Add(this.lbly);
             this.Controls.Add(this.lblx);
@@ -1303,6 +1337,10 @@
             this.splitMain.ResumeLayout(false);
             this.pnlMainAreaContainer.ResumeLayout(false);
             this.pnlMainAreaContainer.PerformLayout();
+            this.splitPickerMain.Panel1.ResumeLayout(false);
+            this.splitPickerMain.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitPickerMain)).EndInit();
+            this.splitPickerMain.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.toolsMain.ResumeLayout(false);
             this.toolsMain.PerformLayout();
@@ -1426,6 +1464,8 @@
         private System.Windows.Forms.TextBox txbCommand;
         private System.ComponentModel.BackgroundWorker bgwDraw;
         private System.ComponentModel.BackgroundWorker bgwRmbMoving;
-        private PickPanel pnlPick;
+        private RelertSharp.GUI.Controls.PickPanel pnlPick;
+        private System.Windows.Forms.SplitContainer splitPickerMain;
+        private System.Windows.Forms.Label lblSubcell;
     }
 }

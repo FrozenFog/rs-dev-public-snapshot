@@ -21,15 +21,15 @@ namespace RelertSharp.Common
 
     public interface I2dLocateable
     {
-        int X { get; }
-        int Y { get; }
+        int X { get; set; }
+        int Y { get; set; }
         int Coord { get; }
     }
 
 
     public interface I3dLocateable : I2dLocateable
     {
-        int Z { get; }
+        int Z { get; set; }
     }
 
     public interface IMapScenePresentable : I2dLocateable

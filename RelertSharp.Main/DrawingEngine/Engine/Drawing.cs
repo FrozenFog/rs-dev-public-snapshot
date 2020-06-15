@@ -21,6 +21,39 @@ namespace RelertSharp.DrawingEngine
     public partial class Engine
     {
         #region Draw - Public
+        public bool DrawBrushObject(IMapObject obj, int heightFix = 0)
+        {
+            Type t = obj.GetType();
+            if (t == typeof(InfantryItem))
+            {
+                return DrawObject(obj as InfantryItem, 0, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
+            }
+            else if (t == typeof(UnitItem))
+            {
+                return DrawObject(obj as UnitItem, 0, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
+            }
+            else if (t == typeof(StructureItem))
+            {
+                return DrawObject(obj as StructureItem, 0, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
+            }
+            else if (t == typeof(AircraftItem))
+            {
+                return DrawObject(obj as AircraftItem, 0, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
+            }
+            else if (t == typeof(TerrainItem))
+            {
+                return DrawGeneralItem(obj as TerrainItem, 0);
+            }
+            else if (t == typeof(SmudgeItem))
+            {
+                return DrawGeneralItem(obj as SmudgeItem, 0);
+            }
+            else if (t == typeof(OverlayUnit))
+            {
+                return DrawGeneralItem(obj as OverlayUnit, heightFix);
+            }
+            return false;
+        }
         public bool DrawObject(InfantryItem inf, int height, uint color)
         {
             int frame = GlobalRules.GetFrameFromDirection(inf.Rotation, inf.RegName);

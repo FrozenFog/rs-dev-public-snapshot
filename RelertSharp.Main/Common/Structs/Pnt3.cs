@@ -27,10 +27,10 @@ namespace RelertSharp.Common
 
         public int Coord => Utils.Misc.CoordInt(X, Y);
 
-        int I3dLocateable.Z => Z;
+        int I3dLocateable.Z { get { return Z; } set { Z = value; } }
 
-        int I2dLocateable.X => X;
+        int I2dLocateable.X { get { return X; } set { X = value; } }
 
-        int I2dLocateable.Y => Y;
+        int I2dLocateable.Y { get { return Y; } set { Y = value; } }
     }
 }

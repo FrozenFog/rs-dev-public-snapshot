@@ -22,6 +22,10 @@ namespace RelertSharp.MapStructure.Points
             RegName = _name;
             IgnoreSmudge = _ignore;
         }
+        public SmudgeItem(string regname)
+        {
+            RegName = regname;
+        }
 
 
         #region Public Calls - SmudgeItem

@@ -98,13 +98,16 @@ namespace RelertSharp.GUI
                     case MainWindowDataModel.MouseActionType.BoxSelecting:
                         DrawSelectingBoxOnScene(e);
                         break;
+                    case MainWindowDataModel.MouseActionType.AddingObject:
+                        MoveBrushObjectTo(e);
+                        break;
                 }
                 if (!onRmbMoving && !bgwRmbMoving.IsBusy) GeneralMouseMovingUpdate(e);
             }
         }
         private void GeneralMouseMovingUpdate(MouseEventArgs e)
         {
-            Vec3 pos = GlobalVar.Engine.ClientPointToCellPos(e.Location);
+            Vec3 pos = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
             lblMouseX.Text = string.Format("MouseX : {0}", e.Location.X);
             lblMouseY.Text = string.Format("MouseY : {0}", e.Location.Y);
             if (pos != Vec3.Zero)
@@ -112,6 +115,7 @@ namespace RelertSharp.GUI
                 lblx.Text = string.Format("X : {0}", pos.X);
                 lbly.Text = string.Format("Y : {0}", pos.Y);
                 lblz.Text = string.Format("Z : {0}", pos.Z);
+                lblSubcell.Text = string.Format("Subcell : {0}", subcell);
                 if (GlobalVar.Engine.SelectTile(pos)) GlobalVar.Engine.Refresh();
             }
         }

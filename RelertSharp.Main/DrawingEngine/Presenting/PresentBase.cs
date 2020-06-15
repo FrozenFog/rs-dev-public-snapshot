@@ -72,6 +72,14 @@ namespace RelertSharp.DrawingEngine.Presenting
             Z = newpos.Z;
             return delta;
         }
+        protected Vec3 GetDeltaDistant(I3dLocateable pos, int subcell, int orgSubcell)
+        {
+            Vec3 delta = Vec3.ToVec3Iso(pos, subcell) - Vec3.ToVec3Iso(this, orgSubcell);
+            X = pos.X;
+            Y = pos.Y;
+            Z = pos.Z;
+            return delta;
+        }
         #endregion
 
 

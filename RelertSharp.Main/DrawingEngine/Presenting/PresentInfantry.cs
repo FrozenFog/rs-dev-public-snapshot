@@ -27,23 +27,15 @@ namespace RelertSharp.DrawingEngine.Presenting
                 Disposed = true;
             }
         }
-        public void SetTo(I3dLocateable cell, int subcell)
+        public void MoveTo(I3dLocateable cell, int subcell)
         {
-            if (subcell != -1)
+            if (subcell >0 && subcell < 4 && subcell != SubCell)
             {
-                Vec3 pos = Vec3.ToVec3Iso(cell, subcell);
-                SetLocation(pos, pSelf, pSelfShadow);
-                X = cell.X;
-                Y = cell.Y;
-                Z = cell.Z;
+                Vec3 delta = GetDeltaDistant(cell, subcell, SubCell);
+                ShiftBy(delta, pSelf, pSelfShadow);
                 SubCell = subcell;
+                CppExtern.Scene.PresentAllObject();
             }
-        }
-        public override void MoveTo(I3dLocateable cell)
-        {
-            Vec3 delta = GetDeltaDistant(cell);
-            ShiftBy(delta, pSelf, pSelfShadow);
-            base.MoveTo(cell);
         }
         public override void ShiftBy(I3dLocateable delta)
         {

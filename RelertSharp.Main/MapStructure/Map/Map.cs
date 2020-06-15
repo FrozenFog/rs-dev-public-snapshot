@@ -204,6 +204,12 @@ namespace RelertSharp.MapStructure
             if (house == null) return 0;
             return 0xFF000000 | (uint)(house.DrawingColor.B << 16 | house.DrawingColor.G << 8 | house.DrawingColor.R);
         }
+        public uint GetHouseColor(ICombatObject obj)
+        {
+            HouseItem house = Houses.GetHouse(obj.OwnerHouse);
+            if (house == null) return 0;
+            return 0xFF000000 | (uint)(house.DrawingColor.B << 16 | house.DrawingColor.G << 8 | house.DrawingColor.R);
+        }
         public void CompressTile()
         {
             foreach (Tile t in Tiles.Data.Values)
