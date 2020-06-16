@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows.Forms;
 
 namespace RelertSharp.Common
 {
@@ -18,8 +19,10 @@ namespace RelertSharp.Common
         #region Ctor
         public RsLog()
         {
-            if (!File.Exists("rs.log")) _fs = new FileStream("rs.log", FileMode.Create, FileAccess.Write);
-            else _fs = new FileStream("rs.log", FileMode.Append, FileAccess.Write);
+            string path = Application.StartupPath + "\\Log";
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            string name = string.Format("{6}\\{0}-{1}-{2} {3:D2}-{4:D2}-{5:D2}.log", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, path);
+            _fs = new FileStream(name, FileMode.Create, FileAccess.Write);
             sw = new StreamWriter(_fs);
             criticalMsg = new StringBuilder();
         }

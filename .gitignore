@@ -17,6 +17,8 @@ _*.*
 cncimg/Release
 cncimg/x64/Release
 /Release
+/Release/Log
+/Debug/Log
 rs.log
 ressrc/
 /Debug/frag
