@@ -357,6 +357,7 @@ namespace RelertSharp.IniSystem
                 UnitRoots = InitializeListWithCap<string>(side);
                 NavalRoots = InitializeListWithCap<string>(side);
                 AircraftRoots = InitializeListWithCap<string>(side);
+                Log.Write(string.Format("{0} sides loaded", side));
                 sideInitialized = true;
             }
             return side;
@@ -376,6 +377,7 @@ namespace RelertSharp.IniSystem
             {
                 INIEntity ent = this[regname];
                 int planning = ent.GetPair("AIBasePlanningSide").ParseInt(-1);
+                if (planning >= GetSideCount()) return -1;
                 if (planning >= 0)
                 {
                     if (string.IsNullOrEmpty(BuildingRoots[planning]) && ent["Factory"] == "BuildingType") BuildingRoots[planning] = regname;
