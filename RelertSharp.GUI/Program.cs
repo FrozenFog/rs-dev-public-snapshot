@@ -172,6 +172,11 @@ namespace RelertSharp.GUI
                                 if (GlobalVar.GlobalDir.HasFile(sttname)) GlobalVar.GlobalCsf.AddCsfLib(GlobalVar.GlobalDir.GetFile(sttname, FileExtension.CSF));
                             }
                         }
+                        else
+                        {
+                            string csfname = string.Format("{0}.csf", name);
+                            if (GlobalVar.GlobalDir.HasFile(csfname)) GlobalVar.GlobalCsf.AddCsfLib(GlobalVar.GlobalDir.GetFile(csfname, FileExtension.CSF));
+                        }
                     }
                     GlobalVar.GlobalCsf.ToTechno();
                 }
