@@ -18,7 +18,15 @@ namespace RelertSharp.Common
         public static bool operator ==(EnumDisplayClass a, int b) { return b == a.Value; }
         public static bool operator !=(EnumDisplayClass a, int b) { return b != a.Value; }
     }
-
+    [Flags]
+    public enum CombatObjectType
+    {
+        Building = 1,
+        Vehicle = 4,
+        Naval = 8,
+        Infantry = 2,
+        Aircraft = 16
+    }
     [Flags]
     public enum MapObjectType
     {

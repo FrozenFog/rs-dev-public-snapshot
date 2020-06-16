@@ -340,31 +340,73 @@ namespace RelertSharp.IniSystem
             INIEntity ov = this["OverlayTypes"];
             return ov[overlayid.ToString()];
         }
+        private bool sideInitialized = false;
+        private int side = -1;
         public int GetSideCount()
         {
-            int i = 0;
-            INIEntity sidelist = this["Sides"];
-            foreach (INIPair p in sidelist)
+            if (!sideInitialized)
             {
-                if (HasIniEnt(p.Name)) i++;
+                side = 0;
+                INIEntity sidelist = this["Sides"];
+                foreach (INIPair p in sidelist)
+                {
+                    if (p.Name != "Civilian" && p.Name != "Mutant") side++;
+                }
+                BuildingRoots = InitializeListWithCap<string>(side);
+                InfantryRoots = InitializeListWithCap<string>(side);
+                UnitRoots = InitializeListWithCap<string>(side);
+                NavalRoots = InitializeListWithCap<string>(side);
+                AircraftRoots = InitializeListWithCap<string>(side);
+                sideInitialized = true;
             }
-            return i;
+            return side;
+        }
+        public string GetSideName(int index)
+        {
+            return this["Sides"].GetPair(index).Name;
         }
         public bool IsTechBuilding(string regname)
         {
             return this["AI"].GetPair("NeutralTechBuildings").ParseStringList().Contains(regname);
         }
-        public int GuessSide(string regname, string rootTypeIndex, bool isBuilding = false)
+        public int GuessSide(string regname, CombatObjectType type, bool isBuilding = false)
         {
             //has planning side
             if (isBuilding)
             {
-                int planning = this[regname].GetPair("AIBasePlanningSide").ParseInt(-1);
-                if (planning >= 0) return planning;
+                INIEntity ent = this[regname];
+                int planning = ent.GetPair("AIBasePlanningSide").ParseInt(-1);
+                if (planning >= 0)
+                {
+                    if (string.IsNullOrEmpty(BuildingRoots[planning]) && ent["Factory"] == "BuildingType") BuildingRoots[planning] = regname;
+                    if (string.IsNullOrEmpty(InfantryRoots[planning]) && ent["Factory"] == "InfantryType") InfantryRoots[planning] = regname;
+                    if (string.IsNullOrEmpty(UnitRoots[planning]) && ent["Factory"] == "UnitType" && !ent.GetPair("Naval").ParseBool()) UnitRoots[planning] = regname;
+                    if (string.IsNullOrEmpty(NavalRoots[planning]) && ent["Factory"] == "UnitType" && ent.GetPair("Naval").ParseBool()) NavalRoots[planning] = regname;
+                    if (string.IsNullOrEmpty(AircraftRoots[planning]) && ent["Factory"] == "AircraftType") AircraftRoots[planning] = regname;
+                    return planning;
+                }
             }
 
             //guess by root
-            List<string> root = GlobalConfig["SideBeloningRoot"].GetPair(rootTypeIndex).ParseStringList().ToList();
+            List<string> root = new List<string>();
+            switch (type)
+            {
+                case CombatObjectType.Aircraft:
+                    root = AircraftRoots;
+                    break;
+                case CombatObjectType.Vehicle:
+                    root = UnitRoots;
+                    break;
+                case CombatObjectType.Infantry:
+                    root = InfantryRoots;
+                    break;
+                case CombatObjectType.Building:
+                    root = BuildingRoots;
+                    break;
+                case CombatObjectType.Naval:
+                    root = NavalRoots;
+                    break;
+            }
             foreach (string prerequest in this[regname].GetPair("Prerequisite").ParseStringList())
             {
                 if (this["GenericPrerequisites"].HasPair(prerequest))
@@ -391,6 +433,11 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Calls - Rules
+        public List<string> BuildingRoots { get; private set; }
+        public List<string> InfantryRoots { get; private set; } 
+        public List<string> UnitRoots { get; private set; } 
+        public List<string> NavalRoots { get; private set; } 
+        public List<string> AircraftRoots { get; private set; } 
         public Dictionary<string, INIEntity> MapIniData { get; set; }
         public INIFile Art { get; private set; }
         public List<TechnoPair> VehicleList

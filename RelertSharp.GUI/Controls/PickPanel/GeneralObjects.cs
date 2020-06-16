@@ -35,9 +35,9 @@ namespace RelertSharp.GUI.Controls
             inf.Name = TNodeInfantry;
             TreeNode air = new TreeNode("Aircrafts", 5, 5);
             air.Name = TNodeAircraft;
-            LoadOtherCombatObjects(inf, "InfantryTypes", "InfantryRoot");
+            LoadOtherCombatObjects(inf, "InfantryTypes", CombatObjectType.Infantry);
             LoadUnits();
-            LoadOtherCombatObjects(air, "AircraftTypes", "AirRoot");
+            LoadOtherCombatObjects(air, "AircraftTypes", CombatObjectType.Aircraft);
         }
         private void LoadHeadImages()
         {
@@ -62,7 +62,7 @@ namespace RelertSharp.GUI.Controls
                 }
                 else
                 {
-                    int side = GlobalRules.GuessSide(p.Value, "BuildingRoot", true);
+                    int side = GlobalRules.GuessSide(p.Value, CombatObjectType.Building, true);
                     if (side >= 0) AddObjectToNode(budSides[side], p.Value);
                     else AddObjectToNode(budSides.Last(), p.Value);
                 }
@@ -71,12 +71,12 @@ namespace RelertSharp.GUI.Controls
             LoadToTreeNode(building, budSides);
             trvObject.Nodes.Add(building);
         }
-        private void LoadOtherCombatObjects(TreeNode dest, string rulesListName, string rootIndexName)
+        private void LoadOtherCombatObjects(TreeNode dest, string rulesListName, CombatObjectType type)
         {
             List<TreeNode> sides = InitializeSideNode();
             foreach (INIPair p in GlobalRules[rulesListName])
             {
-                int side = GlobalRules.GuessSide(p.Value, rootIndexName);
+                int side = GlobalRules.GuessSide(p.Value, type);
                 if (side >= 0) AddObjectToNode(sides[side], p.Value);
                 else AddObjectToNode(sides.Last(), p.Value);
             }
@@ -95,13 +95,13 @@ namespace RelertSharp.GUI.Controls
             {
                 if (GlobalRules[p.Value]["MovementZone"] == "Water")
                 {
-                    int side = GlobalRules.GuessSide(p.Value, "NavalRoot");
+                    int side = GlobalRules.GuessSide(p.Value, CombatObjectType.Naval);
                     if (side >= 0) AddObjectToNode(navals[side], p.Value);
                     else AddObjectToNode(navals.Last(), p.Value);
                 }
                 else
                 {
-                    int side = GlobalRules.GuessSide(p.Value, "UnitRoot");
+                    int side = GlobalRules.GuessSide(p.Value, CombatObjectType.Vehicle);
                     if (side >= 0) AddObjectToNode(units[side], p.Value);
                     else AddObjectToNode(units.Last(), p.Value);
                 }
@@ -123,10 +123,9 @@ namespace RelertSharp.GUI.Controls
         {
             int num = GlobalRules.GetSideCount();
             List<TreeNode> nodes = new List<TreeNode>();
-            string[] rootnameIndex = GlobalConfig["SideBeloningRoot"].GetPair("SideName").ParseStringList();
             for (int i = 0; i < num; i++)
             {
-                nodes.Add(new TreeNode(Language.DICT[rootnameIndex[i]]));
+                nodes.Add(new TreeNode(Language.DICT[GlobalRules.GetSideName(i)]));
             }
             nodes.Add(new TreeNode(Language.DICT["NoSideMisc"]));
             return nodes;

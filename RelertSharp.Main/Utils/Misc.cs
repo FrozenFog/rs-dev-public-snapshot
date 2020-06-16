@@ -31,15 +31,29 @@ namespace RelertSharp.Utils
                     Log.Write("Language set as Chinese");
                     break;
             }
+            if (System.IO.File.Exists("external.lang"))
+            {
+                INIFile ext = new INIFile("external.lang");
+                f.Merge(ext);
+            }
             foreach (INIEntity ent in f.IniData)
             {
                 foreach (INIPair p in ent.DataList)
                 {
-                    dict[p.Name] = p.Value;
+                    if (!dict.Keys.Contains(p.Name)) dict[p.Name] = p.Value;
                 }
             }
             Language.DICT = new Lang(dict);
             Log.Write("Language Init complete");
+        }
+        public static List<T> InitializeListWithCap<T>(int size)
+        {
+            List<T> result = new List<T>();
+            for (int i = 0; i < size; i++)
+            {
+                result.Add(default(T));
+            }
+            return result;
         }
         public static T MemCpy<T>(T src)
         {
