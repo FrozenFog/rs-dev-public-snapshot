@@ -78,6 +78,24 @@ namespace RelertSharp.DrawingEngine.Presenting
             selected = false;
             SetColorStrict(ColorVector);
         }
+        public void Hide()
+        {
+            if (!IsHidden)
+            {
+                foreach (int p in Pointers) SetColor(Vec4.HideCompletely);
+                IsHidden = true;
+            }
+        }
+        public void Reveal()
+        {
+            if (IsHidden)
+            {
+                SetColorStrict(ColorVector);
+                foreach (int p in Shadows) SetColor(Vec4.One);
+                SetColor(pAlphaImg, Vec4.One);
+                IsHidden = false;
+            }
+        }
         #endregion
 
 
@@ -124,6 +142,14 @@ namespace RelertSharp.DrawingEngine.Presenting
                 pSelfShadow, pActivateAnimShadow, pActivateAnim2Shadow, pActivateAnim3Shadow, pBibShadow, pIdleAnimShadow, pSuperAnimShadow, pTurretAnimShadow,
                 pPlug1, pPlug1Shadow, pPlug2, pPlug2Shadow, pPlug3, pPlug3Shadow,
                 pAlphaImg};
+            }
+        }
+        public int[] Shadows
+        {
+            get
+            {
+                return new int[] {pSelfShadow, pActivateAnimShadow,pActivateAnim2Shadow,pActivateAnim3Shadow,pBibShadow,pIdleAnimShadow,pSuperAnimShadow,pTurretAnimShadow,
+                pPlug1Shadow,pPlug2Shadow,pPlug3Shadow };
             }
         }
         public int pPlug1 { get; set; }

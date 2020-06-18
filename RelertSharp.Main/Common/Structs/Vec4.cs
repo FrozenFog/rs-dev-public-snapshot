@@ -68,6 +68,14 @@ namespace RelertSharp.Common
         {
             get { return new Vec4(1, 1, 1, 1); }
         }
+        public static Vec4 HideCompletely
+        {
+            get { return new Vec4(1, 1, 1, 0); }
+        }
+        public static Vec4 Hide50
+        {
+            get { return new Vec4(1f, 1f, 1f, 0.5f); }
+        }
 
 
         #region operator

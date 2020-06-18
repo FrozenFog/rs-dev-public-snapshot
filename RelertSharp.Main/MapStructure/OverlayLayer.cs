@@ -108,6 +108,13 @@ namespace RelertSharp.MapStructure
             Index = _overlayIndex;
             Frame = _frameIndex;
         }
+        public OverlayUnit(OverlayUnit src)
+        {
+            X = src.X;
+            Y = src.Y;
+            Index = src.Index;
+            Frame = src.Frame;
+        }
         #endregion
 
 
@@ -147,10 +154,32 @@ namespace RelertSharp.MapStructure
             Selected = false;
             SceneObject.Dispose();
         }
+        public IMapObject CopyNew()
+        {
+            OverlayUnit o = new OverlayUnit(this);
+            return o;
+        }
+        public void Hide()
+        {
+            if (!IsHidden)
+            {
+                SceneObject.Hide();
+                IsHidden = true;
+            }
+        }
+        public void Reveal()
+        {
+            if (IsHidden)
+            {
+                SceneObject.Reveal();
+                IsHidden = false;
+            }
+        }
         #endregion
 
 
         #region Public Calls - OverlayUnit
+        public bool IsHidden { get; private set; }
         public byte Index { get; set; }
         public byte Frame { get; set; }
         public int X { get; set; }

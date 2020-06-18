@@ -84,6 +84,7 @@ namespace RelertSharp.DrawingEngine.Presenting
 
 
         #region Public Calls - PresentBase
+        public bool IsHidden { get; protected set; }
         public int ID { get; set; }
         public Vec4 ColorVector { get; set; } = Vec4.One;
         public int Coord { get { return Utils.Misc.CoordInt(X, Y); } }
@@ -115,5 +116,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         void Unmark();
         void MoveTo(I3dLocateable pos);
         void ShiftBy(I3dLocateable delta);
+        void Hide();
+        void Reveal();
     }
 }

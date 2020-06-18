@@ -62,7 +62,6 @@ namespace RelertSharp.MapStructure.Objects
             RegName = regname;
         }
         public UnitItem() { }
-        public string FollowsIndex { get; set; }
 
 
         #region Public Methods
@@ -71,6 +70,7 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Calls
+        public string FollowsIndex { get; set; }
         public new PresentUnit SceneObject { get { return (PresentUnit)base.SceneObject; } set { base.SceneObject = value; } }
         IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
         #endregion

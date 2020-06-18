@@ -92,6 +92,12 @@ namespace RelertSharp.MapStructure.Points
             X = _x;
             Y = _y;
         }
+        public PointItemBase(PointItemBase src)
+        {
+            X = src.X;
+            Y = src.Y;
+            SceneObject = src.SceneObject;
+        }
 
 
         #region Public Methods - PointItemBase
@@ -128,10 +134,27 @@ namespace RelertSharp.MapStructure.Points
             Selected = false;
             SceneObject.Dispose();
         }
+        public void Hide()
+        {
+            if (!IsHidden)
+            {
+                SceneObject.Hide();
+                IsHidden = true;
+            }
+        }
+        public void Reveal()
+        {
+            if (IsHidden)
+            {
+                SceneObject.Reveal();
+                IsHidden = false;
+            }
+        }
         #endregion
 
 
         #region Public Calls - PointItemBase
+        public bool IsHidden { get; protected set; }
         public string CoordString
         {
             get

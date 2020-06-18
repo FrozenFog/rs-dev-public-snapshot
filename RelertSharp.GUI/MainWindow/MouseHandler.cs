@@ -53,6 +53,9 @@ namespace RelertSharp.GUI
                     case MainWindowDataModel.MouseActionType.AttributeBrush:
                         ApplyAttributeToPrecise(e);
                         break;
+                    case MainWindowDataModel.MouseActionType.AddingObject:
+                        AddBrushObjectToMap();
+                        break;
                 }
             }
 

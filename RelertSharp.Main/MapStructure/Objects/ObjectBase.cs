@@ -21,6 +21,18 @@ namespace RelertSharp.MapStructure.Objects
         {
             if (data.Keys.Contains(id)) data.Remove(id);
         }
+        public virtual void AddFromBrush(T item)
+        {
+            for (int i = 0; i < 10000; i++)
+            {
+                if (!data.Keys.Contains(i.ToString()))
+                {
+                    item.ID = i.ToString();
+                    data[item.ID] = item;
+                    return;
+                }
+            }
+        }
         #endregion
 
 
@@ -140,10 +152,27 @@ namespace RelertSharp.MapStructure.Objects
         {
             return string.Format("{0} at {1},{2}", RegName, X, Y);
         }
+        public void Hide()
+        {
+            if (!IsHidden)
+            {
+                SceneObject.Hide();
+                IsHidden = true;
+            }
+        }
+        public void Reveal()
+        {
+            if (IsHidden)
+            {
+                SceneObject.Reveal();
+                IsHidden = false;
+            }
+        }
         #endregion
 
 
         #region Public Calls - ObjectItemBase
+        public bool IsHidden { get; protected set; }
         public string ID { get; set; } = "NULL";
         public string RegName { get; set; } = "(NOTHING)";
         public string OwnerHouse { get; set; } = "<none>";

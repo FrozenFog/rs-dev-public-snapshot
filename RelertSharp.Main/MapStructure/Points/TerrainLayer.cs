@@ -24,6 +24,19 @@ namespace RelertSharp.MapStructure.Points
         {
             RegName = regname;
         }
+        public TerrainItem(TerrainItem src) : base(src)
+        {
+            RegName = src.RegName;
+        }
+
+
+        #region Public Methods - TerrainItem
+        public IMapObject CopyNew()
+        {
+            TerrainItem terr = new TerrainItem(this);
+            return terr;
+        }
+        #endregion
 
 
         #region Public Calls - TerrainItem

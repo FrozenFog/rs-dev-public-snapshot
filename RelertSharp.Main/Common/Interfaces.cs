@@ -46,7 +46,8 @@ namespace RelertSharp.Common
 
     public interface IMapObject : IMapScenePresentable, IRegistable
     {
-
+        void Hide();
+        void Reveal();
     }
 
     public interface IMapMiscObject : I2dLocateable, IMapScenePresentable

@@ -20,6 +20,7 @@ cncimg/x64/Release
 /Release/Log
 /Debug/Log
 rs.log
+external.lang
 ressrc/
 /Debug/frag
 /Debug/vert

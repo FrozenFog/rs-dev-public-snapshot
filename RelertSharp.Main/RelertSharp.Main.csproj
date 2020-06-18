@@ -121,6 +121,7 @@
   <ItemGroup>
     <Compile Include="Common\Enumerator\Circle2DEnumerator.cs" />
     <Compile Include="Common\Constant.cs" />
+    <Compile Include="Common\Enumerator\FoundationEnumerator.cs" />
     <Compile Include="Common\Enumerator\SceneSquare2DEnumerator.cs" />
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\GlobalVar.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="MapStructure\Logic\House.cs" />
     <Compile Include="MapStructure\Logic\TriggerDescription.cs" />
     <Compile Include="MapStructure\MapTheaterTileSet.cs" />
+    <Compile Include="MapStructure\Map\BrushAdding.cs" />
     <Compile Include="MapStructure\Map\ObjectAdding.cs" />
     <Compile Include="MapStructure\Map\ObjectDeleting.cs" />
     <Compile Include="MapStructure\Map\ObjectMoving.cs" />

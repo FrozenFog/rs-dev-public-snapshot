@@ -25,5 +25,16 @@ namespace RelertSharp.GUI
                 pnlPick.MoveBurhObjectTo(cell, subcell);
             }
         }
+        public void AddBrushObjectToMap()
+        {
+            if (drew && pnlPick.Result.BrushObject != null)
+            {
+                IMapObject obj = pnlPick.Result.ReleaseObject();
+                Map.AddObjectFromBrush(obj);
+                GlobalVar.Engine.Refresh();
+                GlobalVar.Engine.RedrawMinimapAll();
+                pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
+            }
+        }
     }
 }

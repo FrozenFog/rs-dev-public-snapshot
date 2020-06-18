@@ -179,6 +179,27 @@ namespace RelertSharp.IniSystem
             foundx = ent.GetPair("Width").ParseInt(1);
             foundy = ent.GetPair("Height").ParseInt(1);
         }
+        public List<bool> GetBuildingCustomShape(string regname, int sizeX, int sizeY)
+        {
+            List<bool> shape =InitializeListWithCap<bool>(sizeX * sizeY);
+            string artname = GetArtEntityName(regname);
+            INIEntity art = Art[artname];
+            string foundation = (string)art["Foundation"].ToLower();
+            if (foundation == "Custom")
+            {
+                for (int i = 0; i < sizeX * sizeY; i++)
+                {
+                    string found = string.Format("Foundation.{0}", i);
+                    if (art.HasPair(found))
+                    {
+                        int[] tmp = art.GetPair(found).ParseIntList();
+                        shape[tmp[0] + tmp[1 * sizeY]] = true;
+                    }
+                }
+            }
+            else shape.ForEach(x => x = true);
+            return shape;
+        }
         public void GetBuildingShapeData(string nameid, out int height, out int foundX, out int foundY)
         {
             Vec3 sz;
@@ -187,7 +208,6 @@ namespace RelertSharp.IniSystem
                 sz = new Vec3();
                 string artname = GetArtEntityName(nameid);
                 INIEntity art = Art[artname];
-                string img = this[nameid]["Image"];
 
                 string foundation = (string)art["Foundation"].ToLower();
                 if (!string.IsNullOrEmpty(foundation))

@@ -30,6 +30,15 @@ namespace RelertSharp.GUI
                 if (item.GetType() == typeof(ToolStripButton)) (item as ToolStripButton).Checked = false;
             }
             string btnName = btn.Tag.ToString();
+            if (btnName != "brush")
+            {
+                pnlPick.Result.Hide();
+            }
+            else
+            {
+                pnlPick.Result.Reveal();
+            }
+            if (drew) GlobalVar.Engine.Refresh();
             switch (btnName)
             {
                 case "moving":

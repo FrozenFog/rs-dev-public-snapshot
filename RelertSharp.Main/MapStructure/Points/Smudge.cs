@@ -26,6 +26,19 @@ namespace RelertSharp.MapStructure.Points
         {
             RegName = regname;
         }
+        public SmudgeItem(SmudgeItem src) : base(src)
+        {
+            RegName = src.RegName;
+        }
+
+
+        #region Public Methods - SmudgeItem
+        public IMapObject CopyNew()
+        {
+            SmudgeItem smg = new SmudgeItem(this);
+            return smg;
+        }
+        #endregion
 
 
         #region Public Calls - SmudgeItem

@@ -66,9 +66,13 @@ namespace RelertSharp.MapStructure.Objects
         {
             RegName = regname;
         }
-
-
         #endregion
+
+
+        #region Public Methods - StructureItem
+        #endregion
+
+
         #region Public Calls - StructureItem
         public bool AISellable { get; set; }
         public bool AIRebuildable { get; private set; } = false;
@@ -102,6 +106,18 @@ namespace RelertSharp.MapStructure.Objects
                     GlobalVar.GlobalRules.GetBuildingShapeData(RegName, out int height, out int sizeX, out int sizeY);
                 }
                 return sizeY;
+            }
+        }
+        private List<bool> shape;
+        public List<bool> BuildingShape
+        {
+            get
+            {
+                if (shape == null)
+                {
+                    shape = GlobalVar.GlobalRules.GetBuildingCustomShape(RegName, SizeX, SizeY);
+                }
+                return shape;
             }
         }
         #endregion

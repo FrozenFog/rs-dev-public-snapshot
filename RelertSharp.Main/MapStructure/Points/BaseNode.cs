@@ -16,6 +16,12 @@ namespace RelertSharp.MapStructure.Points
             X = _x;
             Y = _y;
         }
+        public BaseNode(BaseNode src)
+        {
+            RegName = src.RegName;
+            X = src.X;
+            Y = src.Y;
+        }
 
 
         #region Public Methods - BaseNode
@@ -54,10 +60,27 @@ namespace RelertSharp.MapStructure.Points
             Selected = false;
             SceneObject.Dispose();
         }
+        public void Hide()
+        {
+            if (!IsHidden)
+            {
+                SceneObject.Hide();
+                IsHidden = true;
+            }
+        }
+        public void Reveal()
+        {
+            if (IsHidden)
+            {
+                SceneObject.Reveal();
+                IsHidden = false;
+            }
+        }
         #endregion
 
 
         #region Public Calls - BaseNode
+        public bool IsHidden { get; private set; }
         public string RegName { get; set; }
         public int X { get; set; }
         public int Y { get; set; }

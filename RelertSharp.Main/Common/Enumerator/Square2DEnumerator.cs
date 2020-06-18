@@ -82,8 +82,8 @@ namespace RelertSharp.Common
 
         public void Reset()
         {
-            xMax = -1;
-            yMax = -1;
+            xNow = org.X - 1;
+            yNow = org.Y;
         }
     }
 }

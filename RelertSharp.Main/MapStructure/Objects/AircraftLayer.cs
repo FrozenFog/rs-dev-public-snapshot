@@ -54,6 +54,11 @@ namespace RelertSharp.MapStructure.Objects
         }
 
 
+        #region Public Methods
+
+        #endregion
+
+
         #region Public Calls
         public new PresentUnit SceneObject { get { return (PresentUnit)base.SceneObject; } set { base.SceneObject = value; } }
         IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }

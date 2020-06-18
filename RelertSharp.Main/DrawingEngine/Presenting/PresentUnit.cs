@@ -69,6 +69,22 @@ namespace RelertSharp.DrawingEngine.Presenting
             selected = false;
             SetColorStrict(ColorVector);
         }
+        public void Hide()
+        {
+            if (!IsHidden)
+            {
+                SetColorStrict(Vec4.HideCompletely);
+                IsHidden = true;
+            }
+        }
+        public void Reveal()
+        {
+            if (IsHidden)
+            {
+                SetColorStrict(Vec4.HideCompletely);
+                IsHidden = false;
+            }
+        }
         #endregion
 
 

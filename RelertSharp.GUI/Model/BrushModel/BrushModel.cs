@@ -13,12 +13,17 @@ namespace RelertSharp.GUI.Model.BrushModel
 {
     public class BrushModel
     {
+        private string currentName;
+
+
         public BrushModel() { }
 
 
-        public void Reload(string regname, MapObjectType type)
+        public void Reload(string regname, MapObjectType type, bool reserveOriginal = false)
         {
-            if (BrushObject != null && BrushObject.SceneObject != null)
+            currentName = regname;
+            ObjectType = type;
+            if (BrushObject != null && BrushObject.SceneObject != null && !reserveOriginal)
             {
                 BrushObject.Dispose();
                 GlobalVar.Engine.RemoveDisposedObjects();
@@ -52,8 +57,23 @@ namespace RelertSharp.GUI.Model.BrushModel
             }
             GlobalVar.Engine.DrawBrushObject(BrushObject);
         }
+        public void Hide()
+        {
+            BrushObject?.Hide();
+        }
+        public void Reveal()
+        {
+            BrushObject?.Reveal();
+        }
+        public IMapObject ReleaseObject()
+        {
+            IMapObject obj = BrushObject;
+            Reload(currentName, ObjectType, true);
+            return obj;
+        }
 
 
         public IMapObject BrushObject { get; set; }
+        public MapObjectType ObjectType { get; private set; }
     }
 }
