@@ -14,12 +14,13 @@ namespace RelertSharp.GUI.Model.BrushModel
     public class BrushModel
     {
         private string currentName;
+        private I3dLocateable prevPos;
 
 
         public BrushModel() { }
 
 
-        public void Reload(string regname, MapObjectType type, bool reserveOriginal = false)
+        public void Reload(string regname, MapObjectType type, bool reserveOriginal = false, bool usePrevPos = false)
         {
             currentName = regname;
             ObjectType = type;
@@ -49,21 +50,39 @@ namespace RelertSharp.GUI.Model.BrushModel
                     BrushObject = new SmudgeItem(regname);
                     break;
             }
-            BrushObject.X = -1000;
-            BrushObject.Y = -1000;
+            if (usePrevPos && prevPos != null)
+            {
+                BrushObject.X = prevPos.X;
+                BrushObject.Y = prevPos.Y;
+            }
+            else
+            {
+                BrushObject.X = -1000;
+                BrushObject.Y = -1000;
+            }
             if (BrushObject as ICombatObject != null)
             {
                 (BrushObject as ICombatObject).OwnerHouse = GlobalVar.CurrentMapDocument.Map.Houses.First().Name;
             }
             GlobalVar.Engine.DrawBrushObject(BrushObject);
+            GlobalVar.Engine.SetObjectLightningStandalone(BrushObject.SceneObject);
         }
-        public void Hide()
+        public void MoveBrushObjectTo(I3dLocateable pos)
         {
-            BrushObject?.Hide();
+            BrushObject.MoveTo(pos);
+            prevPos = pos;
         }
-        public void Reveal()
+        public void RedrawBrushObject()
         {
-            BrushObject?.Reveal();
+            if (BrushObject != null)
+            {
+                int fix = prevPos != null ? prevPos.Z : 0;
+                BrushObject.SceneObject.Dispose();
+                BrushObject.SceneObject = null;
+                GlobalVar.Engine.RemoveDisposedObjects();
+                GlobalVar.Engine.DrawBrushObject(BrushObject, fix);
+                GlobalVar.Engine.SetObjectLightningStandalone(BrushObject.SceneObject);
+            }
         }
         public IMapObject ReleaseObject()
         {

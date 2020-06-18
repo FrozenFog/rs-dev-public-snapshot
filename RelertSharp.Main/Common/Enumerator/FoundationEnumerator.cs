@@ -58,15 +58,19 @@ namespace RelertSharp.Common
 
         public bool MoveNext()
         {
-            pos++;
+            NextCell();
+            while (pos < shape.Count && !shape[pos]) NextCell();
+            return yNow < yMax && xNow < xMax;
+        }
+        private void NextCell()
+        {
+            pos++;xNow++;
             if (xNow >= xMax)
             {
                 xNow = begin.X;
                 yNow++;
             }
-            return yNow < yMax && xNow < xMax && shape[pos];
         }
-
         public void Reset()
         {
             xNow = begin.X - 1;

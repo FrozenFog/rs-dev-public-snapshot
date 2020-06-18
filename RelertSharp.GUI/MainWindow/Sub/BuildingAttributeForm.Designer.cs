@@ -287,7 +287,7 @@
             this.mtxbUpCount.Size = new System.Drawing.Size(173, 25);
             this.mtxbUpCount.TabIndex = 38;
             this.mtxbUpCount.ValidatingType = typeof(int);
-            this.mtxbUpCount.Validated += new System.EventHandler(this.mtxbUpCount_Validated);
+            this.mtxbUpCount.TextChanged += new System.EventHandler(this.mtxbUpCount_TextChanged);
             // 
             // label8
             // 

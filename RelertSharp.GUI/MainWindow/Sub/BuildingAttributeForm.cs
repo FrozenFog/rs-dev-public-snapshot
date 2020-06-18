@@ -60,6 +60,9 @@ namespace RelertSharp.GUI
             cbbUpg1.Enabled = upgNum > 0 && budhost.UpgradeNum >= 1;
             cbbUpg2.Enabled = upgNum > 0 && budhost.UpgradeNum >= 2;
             cbbUpg3.Enabled = upgNum > 0 && budhost.UpgradeNum == 3;
+            if (!cbbUpg1.Enabled) cbbUpg1.Text = "None";
+            if (!cbbUpg2.Enabled) cbbUpg2.Text = "None";
+            if (!cbbUpg3.Enabled) cbbUpg3.Text = "None";
         }
         private void InsertToUpgradeComboBox(IEnumerable<string> src, ComboBox dest)
         {
@@ -141,7 +144,27 @@ namespace RelertSharp.GUI
             }
         }
 
-        private void mtxbUpCount_Validated(object sender, EventArgs e)
+        private void buildingCkbSetHandler(object sender, EventArgs e)
+        {
+            if (initialized)
+            {
+                budhost.AISellable = ckbSellable.Checked;
+                budhost.AIRepairable = ckbRepair.Checked;
+                budhost.BuildingOnline = ckbPowered.Checked;
+            }
+        }
+
+        private void cbbSpotlight_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (initialized)
+            {
+                budhost.SpotlightType = (BuildingSpotlightType)cbbSpotlight.SelectedItem;
+            }
+        }
+
+        public StructureItem Result { get; private set; }
+
+        private void mtxbUpCount_TextChanged(object sender, EventArgs e)
         {
             try
             {
@@ -165,25 +188,5 @@ namespace RelertSharp.GUI
                 RefreshUpgradeCombobox();
             }
         }
-
-        private void buildingCkbSetHandler(object sender, EventArgs e)
-        {
-            if (initialized)
-            {
-                budhost.AISellable = ckbSellable.Checked;
-                budhost.AIRepairable = ckbRepair.Checked;
-                budhost.BuildingOnline = ckbPowered.Checked;
-            }
-        }
-
-        private void cbbSpotlight_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (initialized)
-            {
-                budhost.SpotlightType = (BuildingSpotlightType)cbbSpotlight.SelectedItem;
-            }
-        }
-
-        public StructureItem Result { get; private set; }
     }
 }

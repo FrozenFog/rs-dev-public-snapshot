@@ -69,6 +69,14 @@ namespace RelertSharp.DrawingEngine.Presenting
                 SetColorStrict(color);
             }
         }
+        public void MarkForBuildable(Vec4 color)
+        {
+            SetColorStrict(color);
+        }
+        public void UnMarkForBuildable()
+        {
+            SetColorStrict(ColorVector);
+        }
         public void MultiplyColor(Vec4 color)
         {
             ColorVector *= color;

@@ -37,6 +37,7 @@
             this.splitPickerMain = new System.Windows.Forms.SplitContainer();
             this.pnlPick = new RelertSharp.GUI.Controls.PickPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rbPanelBrush = new RelertSharp.GUI.Controls.RbBrushPanel();
             this.rbPanelAttribute = new RelertSharp.GUI.Controls.RbPanelAttribute();
             this.txbCommand = new System.Windows.Forms.TextBox();
             this.toolsMain = new System.Windows.Forms.ToolStrip();
@@ -233,6 +234,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.rbPanelBrush);
             this.panel1.Controls.Add(this.rbPanelAttribute);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -249,6 +251,15 @@
             this.panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseUp);
             this.panel1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.panel1_PreviewKeyDown);
             this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
+            // 
+            // rbPanelBrush
+            // 
+            this.rbPanelBrush.BackColor = System.Drawing.SystemColors.Control;
+            this.rbPanelBrush.Location = new System.Drawing.Point(3, 265);
+            this.rbPanelBrush.Name = "rbPanelBrush";
+            this.rbPanelBrush.Size = new System.Drawing.Size(260, 257);
+            this.rbPanelBrush.TabIndex = 1;
+            this.rbPanelBrush.Visible = false;
             // 
             // rbPanelAttribute
             // 
@@ -1467,5 +1478,6 @@
         private RelertSharp.GUI.Controls.PickPanel pnlPick;
         private System.Windows.Forms.SplitContainer splitPickerMain;
         private System.Windows.Forms.Label lblSubcell;
+        private Controls.RbBrushPanel rbPanelBrush;
     }
 }

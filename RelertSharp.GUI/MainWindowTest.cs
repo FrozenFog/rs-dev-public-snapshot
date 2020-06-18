@@ -60,10 +60,20 @@ namespace RelertSharp.GUI
 
             pnlPick.Initialize();
             logicEditor.JumpToWaypoint += LogicJumpToWaypoint;
+            pnlPick.BrushObjectSelected += FocusOnMainPanel;
 
 
             initialized = true;
         }
+
+        private void FocusOnMainPanel(object sender, EventArgs e)
+        {
+            if (drew)
+            {
+                panel1.Focus();
+            }
+        }
+
         private bool updatingLightningData = false;
         private void UpdateLightningSide(LightningItem src, bool enable)
         {
@@ -389,6 +399,7 @@ namespace RelertSharp.GUI
             GlobalVar.Engine.Refresh();
             pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
             rbPanelAttribute.Initialize(map.Houses, map.Tags);
+            rbPanelBrush.Initialize();
             drew = true;
             button1.Enabled = false;
         }

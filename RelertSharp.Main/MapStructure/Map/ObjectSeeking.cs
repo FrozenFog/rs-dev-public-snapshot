@@ -81,32 +81,32 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - Seeking
-        private bool buildingDumped = false;
-        public void DumpStructures()
-        {
-            if (!buildingDumped)
-            {
-                foreach (StructureItem bud in Buildings)
-                {
-                    foreach (I2dLocateable pos in new Square2D(bud, bud.SizeX, bud.SizeY))
-                    {
-                        Tiles.AddObjectOnTile(pos, bud);
-                    }
-                }
-                buildingDumped = true;
-            }
-        }
+        //private bool buildingDumped = false;
+        //public void DumpStructures()
+        //{
+        //    if (!buildingDumped)
+        //    {
+        //        foreach (StructureItem bud in Buildings)
+        //        {
+        //            foreach (I2dLocateable pos in new Foundation2D(bud))
+        //            {
+        //                Tiles.AddObjectOnTile(pos, bud);
+        //            }
+        //        }
+        //        buildingDumped = true;
+        //    }
+        //}
         public StructureItem GetBuilding(I2dLocateable pos)
         {
-            if (!buildingDumped) DumpStructures();
+            //if (!buildingDumped) DumpStructures();
             StructureItem refer = GetMapObject<StructureItem>(pos);
             if (refer != null) return Buildings[refer.ID];
             return null;
         }
         public void UpdateBuilding(StructureItem bud)
         {
-            if (!buildingDumped) DumpStructures();
-            foreach (I2dLocateable pos in new Square2D(bud, bud.SizeX, bud.SizeY))
+            //if (!buildingDumped) DumpStructures();
+            foreach (I2dLocateable pos in new Foundation2D(bud))
             {
                 UpdateObject(bud);
             }

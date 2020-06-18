@@ -25,10 +25,10 @@ namespace RelertSharp.GUI
         #region Down
         private void LmbDown(MouseEventArgs e)
         {
-            panel1.Focus();
-            if (rbPanelAttribute.Visible)
+            if (!panel1.Focused || RbPanelVisible())
             {
-                rbPanelAttribute.Visible = false;
+                panel1.Focus();
+                HideRbPanel();
                 panel1.Cursor = prevCur;
                 GlobalVar.Engine.Refresh();
             }
@@ -58,7 +58,6 @@ namespace RelertSharp.GUI
                         break;
                 }
             }
-
         }
         private void MmbDown(MouseEventArgs e)
         {
@@ -66,22 +65,31 @@ namespace RelertSharp.GUI
         }
         private void RmbDown(MouseEventArgs e)
         {
-            switch (Current.CurrentMouseAction)
+            if (RbPanelVisible()) HideRbPanel();
+            else
             {
-                case MainWindowDataModel.MouseActionType.AttributeBrush:
-                    if (!rbPanelAttribute.Visible)
-                    {
+                switch (Current.CurrentMouseAction)
+                {
+                    case MainWindowDataModel.MouseActionType.AttributeBrush:
                         prevCur = panel1.Cursor;
                         panel1.Cursor = Cursors.Arrow;
                         rbPanelAttribute.Location = e.Location;
                         rbPanelAttribute.Visible = true;
                         GlobalVar.Engine.Refresh();
-                    }
-                    break;
-                case MainWindowDataModel.MouseActionType.Moving:
-                    BeginRmbMove(e);
-                    break;
+                        break;
+                    case MainWindowDataModel.MouseActionType.Moving:
+                        BeginRmbMove(e);
+                        break;
+                    case MainWindowDataModel.MouseActionType.AddingObject:
+                        prevCur = panel1.Cursor;
+                        panel1.Cursor = Cursors.Arrow;
+                        rbPanelBrush.Location = e.Location;
+                        rbPanelBrush.Visible = true;
+                        GlobalVar.Engine.Refresh();
+                        break;
+                }
             }
+
         }
         #endregion
 
@@ -89,7 +97,7 @@ namespace RelertSharp.GUI
         #region Moving
         private void MouseMoving(MouseEventArgs e)
         {
-            if (initialized && drew)
+            if (initialized && drew && panel1.Focused)
             {
                 MainPanelMoving(e);
                 switch (Current.CurrentMouseAction)

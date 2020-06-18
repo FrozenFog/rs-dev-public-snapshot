@@ -100,6 +100,12 @@ namespace RelertSharp.GUI
                         panel1.Cursor = Cursors.SizeAll;
                         Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.Moving;
                         break;
+                    case Keys.ShiftKey:
+                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.AddingObject)
+                        {
+                            pnlPick.ShiftHide();
+                        }
+                        break;
                 }
             }
         }
@@ -114,6 +120,12 @@ namespace RelertSharp.GUI
                         spaceKeyMoving = false;
                         panel1.Cursor = prevCur;
                         Current.CurrentMouseAction = prevType;
+                        break;
+                    case Keys.ShiftKey:
+                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.AddingObject)
+                        {
+                            pnlPick.ShiftUnHide();
+                        }
                         break;
                 }
             }

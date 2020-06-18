@@ -17,9 +17,12 @@ namespace RelertSharp.GUI.Controls
 {
     public partial class PickPanel : UserControl
     {
-        private Dictionary<string, string> regname_pcx = new Dictionary<string, string>();
+        internal event EventHandler BrushObjectSelected;
+
+
         private BrushModel brush = new BrushModel();
         private bool drew = false;
+        private bool shiftHidden = false;
 
 
         public PickPanel()
@@ -36,6 +39,24 @@ namespace RelertSharp.GUI.Controls
         public void DrawComplete()
         {
             drew = true;
+        }
+        public void ShiftHide()
+        {
+            if (!shiftHidden)
+            {
+                shiftHidden = true;
+                Result.BrushObject.Dispose();
+                Engine.Refresh();
+            }
+        }
+        public void ShiftUnHide()
+        {
+            if (shiftHidden)
+            {
+                shiftHidden = false;
+                Result.RedrawBrushObject();
+                Engine.Refresh();
+            }
         }
         private void SetLanguage()
         {

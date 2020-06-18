@@ -181,11 +181,11 @@ namespace RelertSharp.IniSystem
         }
         public List<bool> GetBuildingCustomShape(string regname, int sizeX, int sizeY)
         {
-            List<bool> shape =InitializeListWithCap<bool>(sizeX * sizeY);
+            List<bool> shape = InitializeListWithCap<bool>(sizeX * sizeY);
             string artname = GetArtEntityName(regname);
             INIEntity art = Art[artname];
             string foundation = (string)art["Foundation"].ToLower();
-            if (foundation == "Custom")
+            if (foundation == "custom")
             {
                 for (int i = 0; i < sizeX * sizeY; i++)
                 {
@@ -193,11 +193,11 @@ namespace RelertSharp.IniSystem
                     if (art.HasPair(found))
                     {
                         int[] tmp = art.GetPair(found).ParseIntList();
-                        shape[tmp[0] + tmp[1 * sizeY]] = true;
+                        shape[tmp[0] + tmp[1] * sizeY] = true;
                     }
                 }
             }
-            else shape.ForEach(x => x = true);
+            else SetListValue<bool>(ref shape, true);
             return shape;
         }
         public void GetBuildingShapeData(string nameid, out int height, out int foundX, out int foundY)

@@ -156,6 +156,7 @@ namespace RelertSharp.GUI.Controls
                             break;
                     }
                 }
+                BrushObjectSelected?.Invoke(this, new EventArgs());
             }
         }
     }

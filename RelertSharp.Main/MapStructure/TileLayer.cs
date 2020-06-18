@@ -10,6 +10,8 @@ using System.Collections;
 using RelertSharp.FileSystem;
 using RelertSharp.Utils;
 using RelertSharp.Common;
+using RelertSharp.MapStructure.Objects;
+using RelertSharp.MapStructure.Points;
 using RelertSharp.DrawingEngine.Presenting;
 
 namespace RelertSharp.MapStructure
@@ -323,18 +325,37 @@ namespace RelertSharp.MapStructure
         /// <param name="src"></param>
         public void RemoveObject(IMapObject src)
         {
-            int index = 0;
-            bool found = false;
-            foreach(IMapObject target in objectsOnTile)
+            int i = 0;
+            for (; i< objectsOnTile.Count; i++)
             {
-                if (target.GetType() == src.GetType() && target.RegName == src.RegName)
+                if (objectsOnTile[i].GetType() == src.GetType() && objectsOnTile[i].RegName == src.RegName)
                 {
-                    found = true;
+                    objectsOnTile.RemoveAt(i);
                     break;
                 }
-                index++;
             }
-            if (found) objectsOnTile.RemoveAt(index);
+            //int index = 0;
+            //bool found = false;
+            //foreach(IMapObject target in objectsOnTile)
+            //{
+            //    if (target.GetType() == src.GetType() && target.RegName == src.RegName)
+            //    {
+            //        found = true;
+            //        break;
+            //    }
+            //    index++;
+            //}
+            //if (found) objectsOnTile.RemoveAt(index);
+        }
+        public bool MarkForSimulating()
+        {
+            if (Buildable) SceneObject.MarkForBuildable(Vec4.BuildableTile);
+            else SceneObject.MarkForBuildable(Vec4.UnBuildableTile);
+            return Buildable;
+        }
+        public void UnMarkForSimulating()
+        {
+            SceneObject.UnMarkForBuildable();
         }
         #endregion
 
@@ -365,6 +386,25 @@ namespace RelertSharp.MapStructure
         public int X { get { return X16; } set { X16 = (short)value; } }
         public int Y { get { return Y16; } set { Y16 = (short)value; } }
         public int Z { get { return Height; } set { Height = (byte)value; } }
+        public bool BaseTileBuildable { get; set; }
+        public bool Buildable
+        {
+            get
+            {
+                if (!BaseTileBuildable) return false;
+                foreach (IMapObject obj in objectsOnTile)
+                {
+                    Type t = obj.GetType();
+                    if (t == typeof(UnitItem) ||
+                        t == typeof(StructureItem) ||
+                        t == typeof(InfantryItem) ||
+                        t == typeof(AircraftItem) ||
+                        t == typeof(OverlayUnit) ||
+                        t == typeof(TerrainItem)) return false;
+                }
+                return true;
+            }
+        }
         public byte Height { get; set; }
         public int TileIndex
         {

@@ -24,8 +24,6 @@ namespace RelertSharp.DrawingEngine
         private readonly string[] _zeroLandType = new string[] { "Water", "Clear", "" };
         private float _width { get { return _30SQ2; } }
         private Vec3 _NormTileVec { get { return new Vec3(_15SQ2, _15SQ2, _10SQ3); } }
-        private Vec4 sceneColor { get; set; }
-        private Vec4 sceneObjectColor { get; set; }
         private float _height { get { return _10SQ3; } }
         private const uint _colorIgnore = 0x000000FF;
         private const uint _white = 0xFFFFFFFF;
@@ -45,7 +43,6 @@ namespace RelertSharp.DrawingEngine
             _10SQ3 = (float)(10F * Math.Sqrt(3));
             _15SQ2 = _30SQ2 / 2;
             _rad45 = (float)Math.PI / 4;
-            sceneColor = Vec4.Unit4(1);
             Log.Write("Minimap Begin");
             minimap = new GdipSurface();
         }

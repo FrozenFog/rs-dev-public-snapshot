@@ -16,7 +16,7 @@ namespace RelertSharp.MapStructure
             if (obj.GetType() == typeof(StructureItem))
             {
                 StructureItem bud = obj as StructureItem;
-                foreach (I2dLocateable pos in new Square2D(bud, bud.SizeX, bud.SizeY))
+                foreach (I2dLocateable pos in new Foundation2D(bud))
                 {
                     Tiles.AddObjectOnTile(pos, obj);
                 }

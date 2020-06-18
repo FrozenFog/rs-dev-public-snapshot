@@ -28,55 +28,27 @@ namespace RelertSharp.DrawingEngine
 
             public void AddUnit(PresentUnit unit)
             {
-                int coord = unit.Coord;
-                if (Tiles.Keys.Contains(coord))
-                {
-                    int id = NewID(Units, unit);
-                }
+                int id = NewID(Units, unit);
             }
             public void AddInfantry(PresentInfantry inf)
             {
-                int coord = inf.Coord;
-                if (Tiles.Keys.Contains(coord))
-                {
-                    int id = NewID(Infantries, inf);
-                }
+                int id = NewID(Infantries, inf);
             }
             public void AddBuilding(PresentStructure bud)
             {
-                int coord = bud.Coord;
-                if (Tiles.Keys.Contains(coord))
-                {
-                    int id = NewID(Structures, bud);
-                }
+                int id = NewID(Structures, bud);
             }
             public void AddOverlay(PresentMisc ov)
             {
-                int coord = ov.Coord;
-                if (Tiles.Keys.Contains(coord))
-                {
-                    int id = NewID(Overlays, ov);
-                }
+                int id = NewID(Overlays, ov);
             }
             public void AddTerrain(PresentMisc terr)
             {
-                int coord = terr.Coord;
-                if (Tiles.Keys.Contains(coord))
-                {
-                    int id = NewID(Terrains, terr);
-                }
+                int id = NewID(Terrains, terr);
             }
             public void AddSmudge(PresentMisc smg)
             {
-                int coord = smg.Coord;
-                if (Tiles.Keys.Contains(coord))
-                {
-                    int id = NewID(Smudges, smg);
-                    foreach (I2dLocateable pos in new Square2D(smg, smg.SmgWidth, smg.SmgHeight))
-                    {
-                        int sub = pos.Coord;
-                    }
-                }
+                int id = NewID(Smudges, smg);
             }
         }
     }

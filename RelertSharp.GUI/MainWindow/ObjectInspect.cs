@@ -29,7 +29,7 @@ namespace RelertSharp.GUI
         private void InspectItemAt(MouseEventArgs e)
         {
             Vec3 pos = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
-            map.DumpStructures();
+            //map.DumpStructures();
             Tile t = map.TilesData[pos.To2dLocateable()];
             IEnumerable<IMapObject> objects = t.GetObjects();
             if (t != null && objects.Count() > 0)

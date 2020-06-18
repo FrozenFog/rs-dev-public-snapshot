@@ -76,6 +76,14 @@ namespace RelertSharp.Common
         {
             get { return new Vec4(1f, 1f, 1f, 0.5f); }
         }
+        public static Vec4 BuildableTile
+        {
+            get { return new Vec4(0, 1, 0, 1); }
+        }
+        public static Vec4 UnBuildableTile
+        {
+            get { return new Vec4(1, 0, 0, 1); }
+        }
 
 
         #region operator

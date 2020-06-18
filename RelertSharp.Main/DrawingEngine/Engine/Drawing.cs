@@ -26,27 +26,27 @@ namespace RelertSharp.DrawingEngine
             Type t = obj.GetType();
             if (t == typeof(InfantryItem))
             {
-                return DrawObject(obj as InfantryItem, 0, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
+                return DrawObject(obj as InfantryItem, heightFix, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
             }
             else if (t == typeof(UnitItem))
             {
-                return DrawObject(obj as UnitItem, 0, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
+                return DrawObject(obj as UnitItem, heightFix, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
             }
             else if (t == typeof(StructureItem))
             {
-                return DrawObject(obj as StructureItem, 0, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
+                return DrawObject(obj as StructureItem, heightFix, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
             }
             else if (t == typeof(AircraftItem))
             {
-                return DrawObject(obj as AircraftItem, 0, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
+                return DrawObject(obj as AircraftItem, heightFix, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
             }
             else if (t == typeof(TerrainItem))
             {
-                return DrawGeneralItem(obj as TerrainItem, 0);
+                return DrawGeneralItem(obj as TerrainItem, heightFix);
             }
             else if (t == typeof(SmudgeItem))
             {
-                return DrawGeneralItem(obj as SmudgeItem, 0);
+                return DrawGeneralItem(obj as SmudgeItem, heightFix);
             }
             else if (t == typeof(OverlayUnit))
             {
@@ -139,6 +139,7 @@ namespace RelertSharp.DrawingEngine
             {
                 PresentTile pt = new PresentTile(pSelf, pExtra, t.Height, src, subindex, t);
                 t.SceneObject = pt;
+                t.BaseTileBuildable = pt.Buildable;
                 Color cl = src.SubTiles[subindex].RadarColor.Left;
                 Color cr = src.SubTiles[subindex].RadarColor.Right;
                 pt.RadarColor = new RadarColor(cl, cr);

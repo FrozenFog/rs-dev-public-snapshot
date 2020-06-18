@@ -29,7 +29,8 @@ namespace RelertSharp.GUI
         {
             if (drew && pnlPick.Result.BrushObject != null)
             {
-                IMapObject obj = pnlPick.Result.ReleaseObject();
+                IMapObject obj = pnlPick.ReleaseBrushObject(rbPanelBrush.IsSimulating, out bool canBuild);
+                if (rbPanelBrush.IsSimulating && !canBuild) return;
                 Map.AddObjectFromBrush(obj);
                 GlobalVar.Engine.Refresh();
                 GlobalVar.Engine.RedrawMinimapAll();

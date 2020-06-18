@@ -55,6 +55,13 @@ namespace RelertSharp.Utils
             }
             return result;
         }
+        public static void SetListValue<T>(ref List<T> src, T value)
+        {
+            for (int i = 0; i < src.Count; i++)
+            {
+                src[i] = value;
+            }
+        }
         public static T MemCpy<T>(T src)
         {
             T dest = Activator.CreateInstance<T>();

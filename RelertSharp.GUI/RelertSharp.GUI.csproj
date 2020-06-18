@@ -138,6 +138,12 @@
     <Compile Include="Controls\PickPanel\PickPanel.Designer.cs">
       <DependentUpon>PickPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RbBrushPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RbBrushPanel.Designer.cs">
+      <DependentUpon>RbBrushPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="LocalSettingWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -341,6 +347,9 @@
     <Compile Include="_Test.cs" />
     <EmbeddedResource Include="Controls\PickPanel\PickPanel.resx">
       <DependentUpon>PickPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RbBrushPanel.resx">
+      <DependentUpon>RbBrushPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LocalSettingWindow.resx">
       <DependentUpon>LocalSettingWindow.cs</DependentUpon>

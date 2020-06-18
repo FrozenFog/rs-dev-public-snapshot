@@ -31,19 +31,13 @@
             this.components = new System.ComponentModel.Container();
             this.tbcMain = new System.Windows.Forms.TabControl();
             this.tbpObject = new System.Windows.Forms.TabPage();
+            this.splitObjects = new System.Windows.Forms.SplitContainer();
             this.trvObject = new System.Windows.Forms.TreeView();
             this.imgMain = new System.Windows.Forms.ImageList(this.components);
-            this.tbpTerrain = new System.Windows.Forms.TabPage();
-            this.tbpSmudge = new System.Windows.Forms.TabPage();
-            this.tbpOverlay = new System.Windows.Forms.TabPage();
-            this.tbpWaypoint = new System.Windows.Forms.TabPage();
-            this.tbpCelltag = new System.Windows.Forms.TabPage();
-            this.tbpBaseNode = new System.Windows.Forms.TabPage();
-            this.splitObjects = new System.Windows.Forms.SplitContainer();
+            this.pnlObjectProp = new System.Windows.Forms.Panel();
             this.tlpObjectProps = new System.Windows.Forms.TableLayoutPanel();
             this.label9 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.pnlObjectProp = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -84,14 +78,20 @@
             this.cbbUpg1 = new System.Windows.Forms.ComboBox();
             this.cbbUpg2 = new System.Windows.Forms.ComboBox();
             this.cbbUpg3 = new System.Windows.Forms.ComboBox();
+            this.tbpTerrain = new System.Windows.Forms.TabPage();
+            this.tbpSmudge = new System.Windows.Forms.TabPage();
+            this.tbpOverlay = new System.Windows.Forms.TabPage();
+            this.tbpWaypoint = new System.Windows.Forms.TabPage();
+            this.tbpCelltag = new System.Windows.Forms.TabPage();
+            this.tbpBaseNode = new System.Windows.Forms.TabPage();
             this.tbcMain.SuspendLayout();
             this.tbpObject.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitObjects)).BeginInit();
             this.splitObjects.Panel1.SuspendLayout();
             this.splitObjects.Panel2.SuspendLayout();
             this.splitObjects.SuspendLayout();
-            this.tlpObjectProps.SuspendLayout();
             this.pnlObjectProp.SuspendLayout();
+            this.tlpObjectProps.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -123,79 +123,6 @@
             this.tbpObject.Text = "General Objects";
             this.tbpObject.UseVisualStyleBackColor = true;
             // 
-            // trvObject
-            // 
-            this.trvObject.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trvObject.ImageIndex = 0;
-            this.trvObject.ImageList = this.imgMain;
-            this.trvObject.Location = new System.Drawing.Point(0, 0);
-            this.trvObject.Name = "trvObject";
-            this.trvObject.SelectedImageIndex = 0;
-            this.trvObject.ShowNodeToolTips = true;
-            this.trvObject.Size = new System.Drawing.Size(331, 506);
-            this.trvObject.TabIndex = 0;
-            this.trvObject.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvObject_NodeMouseClick);
-            // 
-            // imgMain
-            // 
-            this.imgMain.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imgMain.ImageSize = new System.Drawing.Size(16, 16);
-            this.imgMain.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // tbpTerrain
-            // 
-            this.tbpTerrain.Location = new System.Drawing.Point(4, 67);
-            this.tbpTerrain.Name = "tbpTerrain";
-            this.tbpTerrain.Size = new System.Drawing.Size(303, 524);
-            this.tbpTerrain.TabIndex = 4;
-            this.tbpTerrain.Text = "Terrains";
-            this.tbpTerrain.UseVisualStyleBackColor = true;
-            // 
-            // tbpSmudge
-            // 
-            this.tbpSmudge.Location = new System.Drawing.Point(4, 67);
-            this.tbpSmudge.Name = "tbpSmudge";
-            this.tbpSmudge.Size = new System.Drawing.Size(303, 524);
-            this.tbpSmudge.TabIndex = 5;
-            this.tbpSmudge.Text = "Smudges";
-            this.tbpSmudge.UseVisualStyleBackColor = true;
-            // 
-            // tbpOverlay
-            // 
-            this.tbpOverlay.Location = new System.Drawing.Point(4, 67);
-            this.tbpOverlay.Name = "tbpOverlay";
-            this.tbpOverlay.Size = new System.Drawing.Size(303, 524);
-            this.tbpOverlay.TabIndex = 6;
-            this.tbpOverlay.Text = "Overlays";
-            this.tbpOverlay.UseVisualStyleBackColor = true;
-            // 
-            // tbpWaypoint
-            // 
-            this.tbpWaypoint.Location = new System.Drawing.Point(4, 67);
-            this.tbpWaypoint.Name = "tbpWaypoint";
-            this.tbpWaypoint.Size = new System.Drawing.Size(303, 524);
-            this.tbpWaypoint.TabIndex = 7;
-            this.tbpWaypoint.Text = "Waypoints";
-            this.tbpWaypoint.UseVisualStyleBackColor = true;
-            // 
-            // tbpCelltag
-            // 
-            this.tbpCelltag.Location = new System.Drawing.Point(4, 67);
-            this.tbpCelltag.Name = "tbpCelltag";
-            this.tbpCelltag.Size = new System.Drawing.Size(303, 524);
-            this.tbpCelltag.TabIndex = 8;
-            this.tbpCelltag.Text = "Celltags";
-            this.tbpCelltag.UseVisualStyleBackColor = true;
-            // 
-            // tbpBaseNode
-            // 
-            this.tbpBaseNode.Location = new System.Drawing.Point(4, 67);
-            this.tbpBaseNode.Name = "tbpBaseNode";
-            this.tbpBaseNode.Size = new System.Drawing.Size(303, 524);
-            this.tbpBaseNode.TabIndex = 9;
-            this.tbpBaseNode.Text = "Base Nodes";
-            this.tbpBaseNode.UseVisualStyleBackColor = true;
-            // 
             // splitObjects
             // 
             this.splitObjects.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -215,6 +142,37 @@
             this.splitObjects.Size = new System.Drawing.Size(331, 694);
             this.splitObjects.SplitterDistance = 506;
             this.splitObjects.TabIndex = 1;
+            // 
+            // trvObject
+            // 
+            this.trvObject.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trvObject.HideSelection = false;
+            this.trvObject.ImageIndex = 0;
+            this.trvObject.ImageList = this.imgMain;
+            this.trvObject.Location = new System.Drawing.Point(0, 0);
+            this.trvObject.Name = "trvObject";
+            this.trvObject.SelectedImageIndex = 0;
+            this.trvObject.ShowNodeToolTips = true;
+            this.trvObject.Size = new System.Drawing.Size(331, 506);
+            this.trvObject.TabIndex = 0;
+            this.trvObject.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvObject_NodeMouseClick);
+            // 
+            // imgMain
+            // 
+            this.imgMain.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imgMain.ImageSize = new System.Drawing.Size(16, 16);
+            this.imgMain.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // pnlObjectProp
+            // 
+            this.pnlObjectProp.AutoSize = true;
+            this.pnlObjectProp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.pnlObjectProp.Controls.Add(this.tlpObjectProps);
+            this.pnlObjectProp.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlObjectProp.Location = new System.Drawing.Point(0, 0);
+            this.pnlObjectProp.Name = "pnlObjectProp";
+            this.pnlObjectProp.Size = new System.Drawing.Size(310, 573);
+            this.pnlObjectProp.TabIndex = 1;
             // 
             // tlpObjectProps
             // 
@@ -312,17 +270,6 @@
             this.label1.Size = new System.Drawing.Size(119, 15);
             this.label1.TabIndex = 2;
             this.label1.Text = "RSMainObjLblHp";
-            // 
-            // pnlObjectProp
-            // 
-            this.pnlObjectProp.AutoSize = true;
-            this.pnlObjectProp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.pnlObjectProp.Controls.Add(this.tlpObjectProps);
-            this.pnlObjectProp.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlObjectProp.Location = new System.Drawing.Point(0, 0);
-            this.pnlObjectProp.Name = "pnlObjectProp";
-            this.pnlObjectProp.Size = new System.Drawing.Size(310, 573);
-            this.pnlObjectProp.TabIndex = 1;
             // 
             // label2
             // 
@@ -708,6 +655,60 @@
             this.cbbUpg3.Size = new System.Drawing.Size(107, 23);
             this.cbbUpg3.TabIndex = 3;
             // 
+            // tbpTerrain
+            // 
+            this.tbpTerrain.Location = new System.Drawing.Point(4, 46);
+            this.tbpTerrain.Name = "tbpTerrain";
+            this.tbpTerrain.Size = new System.Drawing.Size(337, 700);
+            this.tbpTerrain.TabIndex = 4;
+            this.tbpTerrain.Text = "Terrains";
+            this.tbpTerrain.UseVisualStyleBackColor = true;
+            // 
+            // tbpSmudge
+            // 
+            this.tbpSmudge.Location = new System.Drawing.Point(4, 46);
+            this.tbpSmudge.Name = "tbpSmudge";
+            this.tbpSmudge.Size = new System.Drawing.Size(337, 700);
+            this.tbpSmudge.TabIndex = 5;
+            this.tbpSmudge.Text = "Smudges";
+            this.tbpSmudge.UseVisualStyleBackColor = true;
+            // 
+            // tbpOverlay
+            // 
+            this.tbpOverlay.Location = new System.Drawing.Point(4, 46);
+            this.tbpOverlay.Name = "tbpOverlay";
+            this.tbpOverlay.Size = new System.Drawing.Size(337, 700);
+            this.tbpOverlay.TabIndex = 6;
+            this.tbpOverlay.Text = "Overlays";
+            this.tbpOverlay.UseVisualStyleBackColor = true;
+            // 
+            // tbpWaypoint
+            // 
+            this.tbpWaypoint.Location = new System.Drawing.Point(4, 46);
+            this.tbpWaypoint.Name = "tbpWaypoint";
+            this.tbpWaypoint.Size = new System.Drawing.Size(337, 700);
+            this.tbpWaypoint.TabIndex = 7;
+            this.tbpWaypoint.Text = "Waypoints";
+            this.tbpWaypoint.UseVisualStyleBackColor = true;
+            // 
+            // tbpCelltag
+            // 
+            this.tbpCelltag.Location = new System.Drawing.Point(4, 46);
+            this.tbpCelltag.Name = "tbpCelltag";
+            this.tbpCelltag.Size = new System.Drawing.Size(337, 700);
+            this.tbpCelltag.TabIndex = 8;
+            this.tbpCelltag.Text = "Celltags";
+            this.tbpCelltag.UseVisualStyleBackColor = true;
+            // 
+            // tbpBaseNode
+            // 
+            this.tbpBaseNode.Location = new System.Drawing.Point(4, 46);
+            this.tbpBaseNode.Name = "tbpBaseNode";
+            this.tbpBaseNode.Size = new System.Drawing.Size(337, 700);
+            this.tbpBaseNode.TabIndex = 9;
+            this.tbpBaseNode.Text = "Base Nodes";
+            this.tbpBaseNode.UseVisualStyleBackColor = true;
+            // 
             // PickPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -722,10 +723,10 @@
             this.splitObjects.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitObjects)).EndInit();
             this.splitObjects.ResumeLayout(false);
-            this.tlpObjectProps.ResumeLayout(false);
-            this.tlpObjectProps.PerformLayout();
             this.pnlObjectProp.ResumeLayout(false);
             this.pnlObjectProp.PerformLayout();
+            this.tlpObjectProps.ResumeLayout(false);
+            this.tlpObjectProps.PerformLayout();
             this.ResumeLayout(false);
 
         }

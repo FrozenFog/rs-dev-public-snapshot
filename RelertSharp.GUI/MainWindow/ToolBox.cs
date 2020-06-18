@@ -32,11 +32,8 @@ namespace RelertSharp.GUI
             string btnName = btn.Tag.ToString();
             if (btnName != "brush")
             {
-                pnlPick.Result.Hide();
-            }
-            else
-            {
-                pnlPick.Result.Reveal();
+                pnlPick.Result.BrushObject?.Dispose();
+                GlobalVar.Engine.UnmarkBuildingShape();
             }
             if (drew) GlobalVar.Engine.Refresh();
             switch (btnName)
@@ -53,6 +50,7 @@ namespace RelertSharp.GUI
                     break;
                 case "brush":
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.AddingObject;
+                    pnlPick.Result?.RedrawBrushObject();
                     panel1.Cursor = new Cursor(Properties.Resources.curBrush.Handle);
                     break;
                 case "attribute":

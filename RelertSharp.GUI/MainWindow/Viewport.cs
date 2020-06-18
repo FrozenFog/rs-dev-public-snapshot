@@ -114,5 +114,15 @@ namespace RelertSharp.GUI
                 Current.SelectOverlayAt(pos);
             }
         }
+        private bool RbPanelVisible()
+        {
+            bool b = rbPanelBrush.Visible || rbPanelAttribute.Visible;
+            return b;
+        }
+        private void HideRbPanel()
+        {
+            rbPanelBrush.Visible = false;
+            rbPanelAttribute.Visible = false;
+        }
     }
 }

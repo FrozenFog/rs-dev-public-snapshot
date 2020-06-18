@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Collections.Generic;
 using RelertSharp.MapStructure;
+using RelertSharp.MapStructure.Objects;
 using RelertSharp.Common;
 using static RelertSharp.Utils.Misc;
 
@@ -11,7 +12,47 @@ namespace RelertSharp.DrawingEngine
     {
         private TileLayer _cellFindingReferance;
         private Vec3 previousTile = Vec3.Zero;
+        private List<I2dLocateable> buildingShape = new List<I2dLocateable>();
+        private bool markingBuildingShape = false;
 
+
+
+        public bool MarkBuildingShape(StructureItem bud)
+        {
+            if (_cellFindingReferance[bud] == null) return false;
+            bool result = true;
+            if (buildingShape.Count > 0)
+            {
+                foreach (I2dLocateable pos in buildingShape)
+                {
+                    if (_cellFindingReferance.HasTileOn(pos)) _cellFindingReferance[pos].UnMarkForSimulating();
+                }
+                buildingShape.Clear();
+            }
+            foreach (I2dLocateable pos in new Foundation2D(bud))
+            {
+                if (!markingBuildingShape)
+                {
+                    markingBuildingShape = true;
+                    UnmarkAllTile();
+                }
+                buildingShape.Add(pos);
+                bool b;
+                if (!_cellFindingReferance.HasTileOn(pos)) b = false;
+                else b = _cellFindingReferance[pos].MarkForSimulating();
+                result = result && b;
+            }
+            return result;
+        }
+        public void UnmarkBuildingShape()
+        {
+            foreach (I2dLocateable pos in buildingShape)
+            {
+                if (_cellFindingReferance.HasTileOn(pos)) _cellFindingReferance[pos].UnMarkForSimulating();
+            }
+            buildingShape.Clear();
+            markingBuildingShape = false;
+        }
         /// <summary>
         /// return Vec3.Zero if it is not a valid coord
         /// </summary>
@@ -77,12 +118,19 @@ namespace RelertSharp.DrawingEngine
         {
             if (newpos != previousTile)
             {
-                Buffer.Scenes.MarkTile(newpos.ToCoord(), Vec4.TileIndicator, Vec4.TileExIndi, false);
-                Buffer.Scenes.MarkTile(previousTile.ToCoord(), Vec4.Zero, Vec4.Zero, true);
+                if (!markingBuildingShape)
+                {
+                    Buffer.Scenes.MarkTile(newpos.ToCoord(), Vec4.TileIndicator, Vec4.TileExIndi, false);
+                    Buffer.Scenes.MarkTile(previousTile.ToCoord(), Vec4.Zero, Vec4.Zero, true);
+                }
                 previousTile = newpos;
                 return true;
             }
             return false;
+        }
+        private void UnmarkAllTile()
+        {
+            Buffer.Scenes.MarkTile(previousTile.ToCoord(), Vec4.Zero, Vec4.Zero, true);
         }
         public void DrawSelectingRectangle(Pnt begin, Pnt end, bool isIsometric)
         {
