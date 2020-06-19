@@ -268,7 +268,6 @@
             this.MinimizeBox = false;
             this.Name = "BaseAttributeForm";
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "BaseAttributeForm";
             this.TopMost = true;
@@ -297,10 +296,10 @@
         protected System.Windows.Forms.Label label5;
         protected System.Windows.Forms.ComboBox cbbStatus;
         protected System.Windows.Forms.Label label6;
-        protected System.Windows.Forms.ComboBox cbbTags;
         protected System.Windows.Forms.Label label7;
         protected System.Windows.Forms.ComboBox cbbOwnerHouse;
         protected System.Windows.Forms.Button btnOK;
         protected System.Windows.Forms.Button btnCancel;
+        protected internal System.Windows.Forms.ComboBox cbbTags;
     }
 }

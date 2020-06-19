@@ -60,10 +60,10 @@ namespace RelertSharp.IniSystem
                     string host = p.Value as string;
                     if (!powerups.Keys.Contains(host))
                     {
-                        powerups[host] = new List<string>();
+                        powerups[host] = new List<TechnoPair>();
                     }
-                    string pwups = string.Format("{0} {1}", ent.Name, ent["Name"]);
-                    powerups[host].Add(ent.Name);
+                    TechnoPair pwups = new TechnoPair(ent.Name, ent["Name"]);
+                    powerups[host].Add(pwups);
                 }
             }
             powerupInitialize = true;
@@ -133,8 +133,8 @@ namespace RelertSharp.IniSystem
             }
         }
         private bool powerupInitialize = false;
-        private Dictionary<string, List<string>> powerups = new Dictionary<string, List<string>>();
-        public IEnumerable<string> GetBuildingUpgradeList(string regid)
+        private Dictionary<string, List<TechnoPair>> powerups = new Dictionary<string, List<TechnoPair>>();
+        public IEnumerable<TechnoPair> GetBuildingUpgradeList(string regid)
         {
             if (!powerupInitialize)
             {

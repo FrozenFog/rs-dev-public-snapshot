@@ -128,10 +128,6 @@
             this.label6.Location = new System.Drawing.Point(40, 278);
             this.label6.Visible = false;
             // 
-            // cbbTags
-            // 
-            this.cbbTags.Location = new System.Drawing.Point(180, 142);
-            // 
             // label7
             // 
             this.label7.Location = new System.Drawing.Point(88, 307);
@@ -140,6 +136,10 @@
             // btnOK
             // 
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // cbbTags
+            // 
+            this.cbbTags.Location = new System.Drawing.Point(180, 142);
             // 
             // gpnUnit
             // 
@@ -172,6 +172,7 @@
             // 
             // cbbSpotlight
             // 
+            this.cbbSpotlight.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbSpotlight.FormattingEnabled = true;
             this.cbbSpotlight.Location = new System.Drawing.Point(141, 113);
             this.cbbSpotlight.Name = "cbbSpotlight";

@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Logic;
+using RelertSharp.IniSystem;
 using RelertSharp.Common;
+using static RelertSharp.GUI.GuiUtils;
 
 namespace RelertSharp.GUI
 {
@@ -42,7 +44,7 @@ namespace RelertSharp.GUI
         }
         private void LoadUpgrades(string regname)
         {
-            IEnumerable<string> src = GlobalVar.GlobalRules.GetBuildingUpgradeList(regname);
+            IEnumerable<TechnoPair> src = GlobalVar.GlobalRules.GetBuildingUpgradeList(regname);
             if (src != null)
             {
                 upgNum = src.Count();
@@ -64,12 +66,12 @@ namespace RelertSharp.GUI
             if (!cbbUpg2.Enabled) cbbUpg2.Text = "None";
             if (!cbbUpg3.Enabled) cbbUpg3.Text = "None";
         }
-        private void InsertToUpgradeComboBox(IEnumerable<string> src, ComboBox dest)
+        private void InsertToUpgradeComboBox(IEnumerable<TechnoPair> src, ComboBox dest)
         {
             dest.Items.Clear();
-            dest.Items.Add("None");
+            dest.Items.Add(new TechnoPair("None",""));
             dest.Items.AddRange(src.ToArray());
-            dest.DropDownWidth = src.Max(x => x.Length) * 7;
+            dest.DropDownWidth = src.Max(x => x.ToString().Length) * 7;
         }
 
 
@@ -97,9 +99,9 @@ namespace RelertSharp.GUI
             lblUnitID.Text = string.Format("Building ID : {0}", budhost.ID);
             lblUnitRegName.Text = string.Format("Building Registion Name : {0}", budhost.RegName);
             lklTrace.Enabled = budhost.TaggedTrigger != "None";
-            cbbUpg1.Text = budhost.Upgrade1;
-            cbbUpg2.Text = budhost.Upgrade2;
-            cbbUpg3.Text = budhost.Upgrade3;
+            UpdateComboboxText(cbbUpg1, budhost.Upgrade1);
+            UpdateComboboxText(cbbUpg1, budhost.Upgrade1);
+            UpdateComboboxText(cbbUpg1, budhost.Upgrade1);
             cbbSpotlight.SelectedIndex = (int)budhost.SpotlightType;
             mtxbUpCount.Text = budhost.UpgradeNum.ToString();
             RefreshUpgradeCombobox();
@@ -124,7 +126,8 @@ namespace RelertSharp.GUI
         {
             if (initialized)
             {
-                budhost.Upgrade1 = cbbUpg1.Text;
+                TechnoPair p = cbbUpg1.SelectedItem as TechnoPair;
+                if (p != null) budhost.Upgrade1 = p.Index;
             }
         }
 
@@ -132,7 +135,8 @@ namespace RelertSharp.GUI
         {
             if (initialized)
             {
-                budhost.Upgrade2 = cbbUpg2.Text;
+                TechnoPair p = cbbUpg2.SelectedItem as TechnoPair;
+                if (p != null) budhost.Upgrade2 = p.Index;
             }
         }
 
@@ -140,7 +144,8 @@ namespace RelertSharp.GUI
         {
             if (initialized)
             {
-                budhost.Upgrade3 = cbbUpg3.Text;
+                TechnoPair p = cbbUpg3.SelectedItem as TechnoPair;
+                if (p != null) budhost.Upgrade3 = p.Index;
             }
         }
 

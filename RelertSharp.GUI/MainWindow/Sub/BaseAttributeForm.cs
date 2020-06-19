@@ -7,9 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RelertSharp.IniSystem;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Common;
+using static RelertSharp.GUI.GuiUtils;
 
 namespace RelertSharp.GUI
 {
@@ -37,9 +39,9 @@ namespace RelertSharp.GUI
             cbbOwnerHouse.Items.Clear();
             cbbTags.Items.Clear();
             cbbOwnerHouse.Items.AddRange(houses.ToArray());
+            cbbTags.Items.Add(new TechnoPair("None", ""));
             cbbTags.Items.AddRange(tags.ToArray());
-            cbbOwnerHouse.SelectedIndex = 0;
-            cbbOwnerHouse.Text = changer.Host.OwnerHouse;
+            UpdateComboboxText(cbbOwnerHouse, changer.Host.OwnerHouse);
             houseMX = houses.Max(x => x.ToString().Length) * 7;
             if (tags.Count() > 0) tagMX = tags.Max(x => x.ToString().Length) * 7;
             cbbOwnerHouse.DropDownWidth = houseMX;
@@ -54,9 +56,9 @@ namespace RelertSharp.GUI
             trkbVeteran.Value = veteran;
             mtxbHP.Text = changer.Host.HealthPoint.ToString();
             mtxbVeteran.Text = changer.Host.VeterancyPercentage.ToString();
-            cbbTags.Text = changer.Host.TaggedTrigger;
-            cbbStatus.Text = changer.Host.Status;
-            cbbOwnerHouse.Text = changer.Host.OwnerHouse;
+            UpdateComboboxText(cbbTags, changer.Host.TaggedTrigger);
+            UpdateComboboxText(cbbStatus, changer.Host.Status);
+            UpdateComboboxText(cbbOwnerHouse, changer.Host.OwnerHouse);
             txbGroup.Text = changer.Host.Group.ToString();
         }
         protected virtual void SetLanguage()
@@ -177,7 +179,7 @@ namespace RelertSharp.GUI
             if (initialized)
             {
                 HouseItem h = cbbOwnerHouse.SelectedItem as HouseItem;
-                changer.Host.OwnerHouse = h.ID;
+                if (h != null) changer.Host.OwnerHouse = h.ID;
             }
         }
 
@@ -256,7 +258,7 @@ namespace RelertSharp.GUI
             if (initialized)
             {
                 TagItem tag = cbbTags.SelectedItem as TagItem;
-                changer.Host.TaggedTrigger = tag.ID;
+                if (tag != null) changer.Host.TaggedTrigger = tag.ID;
             }
         }
 

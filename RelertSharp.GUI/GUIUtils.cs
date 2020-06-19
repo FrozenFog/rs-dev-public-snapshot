@@ -10,6 +10,11 @@ namespace RelertSharp.GUI
 {
     internal static class GuiUtils
     {
+        public static void UpdateComboboxText(ComboBox dest, string text)
+        {
+            dest.SelectedItem = null;
+            dest.Text = text;
+        }
         public static TreeNode GetRootNode(TreeNode node)
         {
             TreeNode result;
@@ -102,9 +107,11 @@ namespace RelertSharp.GUI
         {
             dest.Items.Clear();
             if (src == null || src.Count() == 0) return;
+            dest.BeginUpdate();
             dest.Items.AddRange(src.ToArray());
             int wd = src.Max(x => x.ToString().Length) * 7;
             dest.DropDownWidth = wd;
+            dest.EndUpdate();
         }
         public static void LoadToObjectCollection(ListBox dest, IEnumerable<object> src)
         {
