@@ -410,7 +410,7 @@ namespace RelertSharp.GUI
             {
                 listBox1.Items.Clear();
                 listBox1.Items.AddRange(_failed.ToArray());
-                ToolBoxClick(toolBtnMoving);
+                ToolBoxClick(toolBtnArrow);
                 prevCur = panel1.Cursor;
             }
         }

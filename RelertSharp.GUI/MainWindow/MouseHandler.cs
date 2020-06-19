@@ -184,7 +184,7 @@ namespace RelertSharp.GUI
             {
                 switch (Current.CurrentMouseAction)
                 {
-                    case MainWindowDataModel.MouseActionType.Moving:
+                    case MainWindowDataModel.MouseActionType.ArrowInspect:
                     case MainWindowDataModel.MouseActionType.None:
                         InspectItemAt(e);
                         break;

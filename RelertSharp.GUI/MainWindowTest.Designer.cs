@@ -41,6 +41,7 @@
             this.rbPanelAttribute = new RelertSharp.GUI.Controls.RbPanelAttribute();
             this.txbCommand = new System.Windows.Forms.TextBox();
             this.toolsMain = new System.Windows.Forms.ToolStrip();
+            this.toolBtnArrow = new System.Windows.Forms.ToolStripButton();
             this.toolBtnMoving = new System.Windows.Forms.ToolStripButton();
             this.toolBtnSelecting = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -118,7 +119,6 @@
             this.bgwDraw = new System.ComponentModel.BackgroundWorker();
             this.bgwRmbMoving = new System.ComponentModel.BackgroundWorker();
             this.lblSubcell = new System.Windows.Forms.Label();
-            this.toolBtnArrow = new System.Windows.Forms.ToolStripButton();
             this.panelHost.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
@@ -303,11 +303,21 @@
             this.toolsMain.TabIndex = 3;
             this.toolsMain.Text = "toolStrip1";
             // 
+            // toolBtnArrow
+            // 
+            this.toolBtnArrow.CheckOnClick = true;
+            this.toolBtnArrow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnArrow.Image = global::RelertSharp.GUI.Properties.Resources.btnArrow;
+            this.toolBtnArrow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnArrow.Name = "toolBtnArrow";
+            this.toolBtnArrow.Size = new System.Drawing.Size(37, 24);
+            this.toolBtnArrow.Tag = "arrow";
+            this.toolBtnArrow.Text = "RSMainToolBtnArrow";
+            this.toolBtnArrow.Click += new System.EventHandler(this.ToolBoxClickHandler);
+            // 
             // toolBtnMoving
             // 
-            this.toolBtnMoving.Checked = true;
             this.toolBtnMoving.CheckOnClick = true;
-            this.toolBtnMoving.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolBtnMoving.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolBtnMoving.Image = global::RelertSharp.GUI.Properties.Resources.btnMoving;
             this.toolBtnMoving.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -1323,16 +1333,6 @@
             this.lblSubcell.Size = new System.Drawing.Size(71, 15);
             this.lblSubcell.TabIndex = 4;
             this.lblSubcell.Text = "Subcell:";
-            // 
-            // toolBtnArrow
-            // 
-            this.toolBtnArrow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolBtnArrow.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnArrow.Image")));
-            this.toolBtnArrow.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolBtnArrow.Name = "toolBtnArrow";
-            this.toolBtnArrow.Size = new System.Drawing.Size(37, 24);
-            this.toolBtnArrow.Tag = "arrow";
-            this.toolBtnArrow.Text = "RSMainToolBtnArrow";
             // 
             // MainWindowTest
             // 

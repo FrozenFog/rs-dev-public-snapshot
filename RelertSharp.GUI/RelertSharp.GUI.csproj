@@ -490,7 +490,6 @@
     <None Include="Resources\selectPrec.png" />
     <None Include="Resources\cursorSolid.ico" />
     <None Include="Resources\rectIcon.ico" />
-    <None Include="Resources\moving.ico" />
     <None Include="Resources\curIso.ico" />
     <None Include="Resources\curBrush.ico" />
     <None Include="Resources\curAttrib.ico" />
@@ -500,6 +499,8 @@
     <None Include="Resources\headAir.png" />
     <None Include="Resources\headInfantry.png" />
     <None Include="Resources\nullImg.png" />
+    <None Include="Resources\moving.ico" />
+    <None Include="Resources\arrMoving.ico" />
     <Content Include="rslogo.ico" />
   </ItemGroup>
   <ItemGroup>

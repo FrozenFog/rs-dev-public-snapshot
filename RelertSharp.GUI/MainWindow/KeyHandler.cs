@@ -48,8 +48,11 @@ namespace RelertSharp.GUI
                     case Keys.V:
                         ToolBoxClick(toolBtnMoving);
                         break;
-                    case Keys.A:
+                    case Keys.I:
                         ToolBoxClick(toolBtnAttributeBrush);
+                        break;
+                    case Keys.A:
+                        ToolBoxClick(toolBtnArrow);
                         break;
                     case Keys.D:
                         if (e.Control)

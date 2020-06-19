@@ -40,7 +40,7 @@ namespace RelertSharp.GUI
             {
                 case "moving":
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.Moving;
-                    panel1.Cursor = new Cursor(Properties.Resources.cursorSolid.Handle);
+                    panel1.Cursor = new Cursor(Properties.Resources.arrMoving.Handle);
                     break;
                 case "selecting":
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.BoxSelecting;
@@ -56,6 +56,10 @@ namespace RelertSharp.GUI
                 case "attribute":
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.AttributeBrush;
                     panel1.Cursor = new Cursor(Properties.Resources.curAttrib.Handle);
+                    break;
+                case "arrow":
+                    Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.ArrowInspect;
+                    panel1.Cursor = new Cursor(Properties.Resources.cursorSolid.Handle);
                     break;
             }
             btn.Checked = true;
