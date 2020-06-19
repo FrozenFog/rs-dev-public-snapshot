@@ -25,5 +25,18 @@ namespace RelertSharp.GUI.Controls
         public bool IsSimulating { get { return ckbSimBud.Checked; } }
         public bool AddBaseNode { get { return ckbNode.Checked; } }
         public bool IgnoreBuilding { get { return ckbIgnoreBuilding.Checked; } }
+
+        private void ckbNode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ckbNode.Checked)
+            {
+                ckbIgnoreBuilding.Enabled = true;
+            }
+            else
+            {
+                ckbIgnoreBuilding.Enabled = false;
+                ckbIgnoreBuilding.Checked = false;
+            }
+        }
     }
 }

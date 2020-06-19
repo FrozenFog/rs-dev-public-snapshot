@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.Common;
 using RelertSharp.DrawingEngine.Presenting;
+using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.MapStructure.Points
 {
@@ -17,6 +18,12 @@ namespace RelertSharp.MapStructure.Points
             Y = _y;
         }
         public BaseNode(BaseNode src)
+        {
+            RegName = src.RegName;
+            X = src.X;
+            Y = src.Y;
+        }
+        public BaseNode(StructureItem src)
         {
             RegName = src.RegName;
             X = src.X;

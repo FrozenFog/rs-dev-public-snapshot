@@ -21,7 +21,7 @@ namespace RelertSharp.DrawingEngine
     public partial class Engine
     {
         #region Draw - Public
-        public bool DrawBrushObject(IMapObject obj, int heightFix = 0)
+        public bool DrawBrushObject(IMapObject obj, int heightFix = 0, string houseName = "")
         {
             Type t = obj.GetType();
             if (t == typeof(InfantryItem))
@@ -51,6 +51,10 @@ namespace RelertSharp.DrawingEngine
             else if (t == typeof(OverlayUnit))
             {
                 return DrawGeneralItem(obj as OverlayUnit, heightFix);
+            }
+            else if (t == typeof(BaseNode))
+            {
+                return DrawObject(obj as BaseNode, heightFix, CurrentMapDocument.Map.GetHouseColor(houseName));
             }
             return false;
         }

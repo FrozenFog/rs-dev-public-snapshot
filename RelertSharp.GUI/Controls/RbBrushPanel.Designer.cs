@@ -78,6 +78,7 @@
             this.ckbNode.TabIndex = 0;
             this.ckbNode.Text = "Add Basenode";
             this.ckbNode.UseVisualStyleBackColor = true;
+            this.ckbNode.CheckedChanged += new System.EventHandler(this.ckbNode_CheckedChanged);
             // 
             // RbBrushPanel
             // 

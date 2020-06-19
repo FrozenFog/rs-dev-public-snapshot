@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
+using RelertSharp.MapStructure.Points;
 
 namespace RelertSharp.GUI.Controls
 {
@@ -56,5 +57,20 @@ namespace RelertSharp.GUI.Controls
             if (shiftHidden) brush.RedrawBrushObject();
             return brush.ReleaseObject();
         }
+        public IMapObject ReleaseAdditionalBaseNode(out string ownerHouse)
+        {
+            if (brush.BrushObject.GetType() == typeof(StructureItem))
+            {
+                BaseNode n = new BaseNode(brush.BrushObject as StructureItem);
+                ownerHouse = (brush.BrushObject as StructureItem).OwnerHouse;
+                GlobalVar.Engine.DrawBrushObject(n, brush.BrushObject.SceneObject.Z, ownerHouse);
+                return n;
+            }
+            ownerHouse = "";
+            return null;
+        }
+
+
+        public bool CanBuild { get { return canBuild && !brush.IsInvalidItem; } }
     }
 }

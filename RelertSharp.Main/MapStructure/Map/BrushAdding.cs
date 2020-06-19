@@ -21,5 +21,10 @@ namespace RelertSharp.MapStructure
             else if (t == typeof(StructureItem)) Buildings.AddFromBrush(obj as StructureItem);
             AddObjectToTile(obj);
         }
+        public void AddBaseNode(IMapObject obj, string ownerHouse)
+        {
+            BaseNode node = obj as BaseNode;
+            if (node != null) Houses.GetHouse(ownerHouse)?.BaseNodes.Add(node);
+        }
     }
 }

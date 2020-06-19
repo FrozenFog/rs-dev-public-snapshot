@@ -94,5 +94,6 @@ namespace RelertSharp.GUI.Model.BrushModel
 
         public IMapObject BrushObject { get; set; }
         public MapObjectType ObjectType { get; private set; }
+        public bool IsInvalidItem { get { return BrushObject.X == -1000 || BrushObject.Y == -1000; } }
     }
 }

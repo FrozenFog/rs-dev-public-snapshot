@@ -29,12 +29,27 @@ namespace RelertSharp.GUI
         {
             if (drew && pnlPick.Result.BrushObject != null)
             {
-                IMapObject obj = pnlPick.ReleaseBrushObject(rbPanelBrush.IsSimulating, out bool canBuild);
-                if (rbPanelBrush.IsSimulating && !canBuild) return;
-                Map.AddObjectFromBrush(obj);
-                GlobalVar.Engine.Refresh();
-                GlobalVar.Engine.RedrawMinimapAll();
-                pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
+                if (!rbPanelBrush.IsSimulating || pnlPick.CanBuild)
+                {
+                    if (rbPanelBrush.AddBaseNode)
+                    {
+                        IMapObject node = pnlPick.ReleaseAdditionalBaseNode(out string ownerhouse);
+                        if (node != null) Map.AddBaseNode(node, ownerhouse);
+                    }
+                    if (!rbPanelBrush.IgnoreBuilding)
+                    {
+                        IMapObject obj = pnlPick.ReleaseBrushObject(rbPanelBrush.IsSimulating, out bool canBuild);
+                        if (rbPanelBrush.IsSimulating && !canBuild)
+                        {
+                            obj.Dispose();
+                            return;
+                        }
+                        Map.AddObjectFromBrush(obj);
+                    }
+                    GlobalVar.Engine.Refresh();
+                    GlobalVar.Engine.RedrawMinimapAll();
+                    pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
+                }
             }
         }
     }
