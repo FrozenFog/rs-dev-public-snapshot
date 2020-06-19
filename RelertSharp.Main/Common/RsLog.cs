@@ -37,6 +37,11 @@ namespace RelertSharp.Common
             if (!isStream) sw.Flush();
             criticalMsg.AppendLine(msg);
         }
+        public void Critical(string formatMsg, params object[] param)
+        {
+            string msg = string.Format(formatMsg, param);
+            Critical(msg);
+        }
         public string ShowCritical()
         {
             string msg = criticalMsg.ToString();

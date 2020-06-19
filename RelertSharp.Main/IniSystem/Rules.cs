@@ -193,7 +193,21 @@ namespace RelertSharp.IniSystem
                     if (art.HasPair(found))
                     {
                         int[] tmp = art.GetPair(found).ParseIntList();
-                        shape[tmp[0] + tmp[1] * sizeY] = true;
+                        if (tmp.Length != 2)
+                        {
+                            Log.Critical("Building foundation error! Item {0} has unreadable foundation!", regname);
+                            SetListValue<bool>(ref shape, true);
+                            return shape;
+                        }
+                        try
+                        {
+                            shape[tmp[0] + tmp[1] * sizeY] = true;
+                        }
+                        catch
+                        {
+                            Log.Critical("Building foundation error! Item {0}: size {1},{2} has unreadable foundation!", regname, sizeX, sizeY);
+                            SetListValue<bool>(ref shape, true);
+                        }
                     }
                 }
             }
