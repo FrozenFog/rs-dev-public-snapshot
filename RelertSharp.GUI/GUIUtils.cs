@@ -10,6 +10,31 @@ namespace RelertSharp.GUI
 {
     internal static class GuiUtils
     {
+        public static int TryParseTextBox(TextBox src, int def = 0)
+        {
+            try
+            {
+                return int.Parse(src.Text);
+            }
+            catch
+            {
+                return def;
+            }
+        }
+        public static int TrimMaskedTextbox(MaskedTextBox src, int floor, int ceil)
+        {
+            try
+            {
+                int result = int.Parse(src.Text);
+                if (result < floor) return floor;
+                if (result > ceil) return ceil;
+                return result;
+            }
+            catch
+            {
+                return floor;
+            }
+        }
         public static void UpdateComboboxText(ComboBox dest, string text)
         {
             dest.SelectedItem = null;
@@ -102,6 +127,19 @@ namespace RelertSharp.GUI
             {
                 ClearControlContent(c);
             }
+        }
+        public static void LoadToObjectCollection(ComboBox dest, object firstload, IEnumerable<object> src)
+        {
+            dest.Items.Clear();
+            dest.BeginUpdate();
+            if (firstload != null) dest.Items.Add(firstload);
+            if (src != null && src.Count() > 0)
+            {
+                dest.Items.AddRange(src.ToArray());
+                int wd = src.Max(x => x.ToString().Length) * 7;
+                dest.DropDownWidth = wd;
+            }
+            dest.EndUpdate();
         }
         public static void LoadToObjectCollection(ComboBox dest, IEnumerable<object> src)
         {

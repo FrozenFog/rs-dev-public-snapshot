@@ -143,6 +143,11 @@ namespace RelertSharp.MapStructure.Logic
             Name = trg.Name + " - Tag";
             AssoTrigger = trg.ID;
         }
+        public TagItem(string id, string name)
+        {
+            ID = id;
+            Name = name;
+        }
         #endregion
 
 
@@ -168,6 +173,7 @@ namespace RelertSharp.MapStructure.Logic
             get { return id; }
             set { SetProperty(ref id, value); }
         }
+        public static TagItem NullTag { get { return new TagItem("None", ""); } }
         public bool Binded { get; set; } = true;
         #endregion
     }

@@ -55,7 +55,15 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods
-
+        public override void ApplyAttributeFrom(ICombatObject src)
+        {
+            if (src is AircraftItem a)
+            {
+                AutoYESRecruitType = a.AutoYESRecruitType;
+                AutoNORecruitType = a.AutoNORecruitType;
+                base.ApplyAttributeFrom(src);
+            }
+        }
         #endregion
 
 

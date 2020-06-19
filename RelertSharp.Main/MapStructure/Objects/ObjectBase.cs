@@ -148,6 +148,14 @@ namespace RelertSharp.MapStructure.Objects
             if (obj.bVeteran) VeterancyPercentage = host.VeterancyPercentage;
             if (obj.bRotation) Rotation = host.Rotation;
         }
+        public virtual void ApplyAttributeFrom(ICombatObject src)
+        {
+            if (src != null)
+            {
+                AttributeChanger c = new AttributeChanger(true, src);
+                ApplyAttributeFrom(c);
+            }
+        }
         public override string ToString()
         {
             return string.Format("{0} at {1},{2}", RegName, X, Y);

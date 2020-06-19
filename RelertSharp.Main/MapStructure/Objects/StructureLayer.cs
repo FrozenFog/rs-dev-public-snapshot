@@ -70,19 +70,34 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - StructureItem
+        public override void ApplyAttributeFrom(ICombatObject src)
+        {
+            if (src is StructureItem bud)
+            {
+                AIRepairable = bud.AIRepairable;
+                AISellable = bud.AISellable;
+                BuildingOnline = bud.BuildingOnline;
+                SpotlightType = bud.SpotlightType;
+                Upgrade1 = bud.Upgrade1;
+                Upgrade2 = bud.Upgrade2;
+                Upgrade3 = bud.Upgrade3;
+                UpgradeNum = bud.UpgradeNum;
+                base.ApplyAttributeFrom(src);
+            }
+        }
         #endregion
 
 
         #region Public Calls - StructureItem
-        public bool AISellable { get; set; }
+        public bool AISellable { get; set; } = true;
         public bool AIRebuildable { get; private set; } = false;
-        public bool BuildingOnline { get; set; }
+        public bool BuildingOnline { get; set; } = true;
         public int UpgradeNum { get; set; }
         public BuildingSpotlightType SpotlightType { get; set; }
         public string Upgrade1 { get; set; } = "None";
         public string Upgrade2 { get; set; } = "None";
         public string Upgrade3 { get; set; } = "None";
-        public bool AIRepairable { get; set; }
+        public bool AIRepairable { get; set; } = true;
         public bool Nominal { get; private set; } = false;
         public int SizeX
         {

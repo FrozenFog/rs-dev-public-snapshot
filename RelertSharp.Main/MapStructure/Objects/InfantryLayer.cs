@@ -75,6 +75,16 @@ namespace RelertSharp.MapStructure.Objects
             Y = pos.Y;
             SceneObject.MoveTo(pos, subcell);
         }
+        public override void ApplyAttributeFrom(ICombatObject src)
+        {
+            if (src is InfantryItem inf)
+            {
+                IsAboveGround = inf.IsAboveGround;
+                AutoYESRecruitType = inf.AutoYESRecruitType;
+                AutoNORecruitType = inf.AutoNORecruitType;
+                base.ApplyAttributeFrom(src);
+            }
+        }
         #endregion
 
 

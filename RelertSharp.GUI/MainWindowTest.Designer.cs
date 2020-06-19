@@ -118,6 +118,7 @@
             this.bgwDraw = new System.ComponentModel.BackgroundWorker();
             this.bgwRmbMoving = new System.ComponentModel.BackgroundWorker();
             this.lblSubcell = new System.Windows.Forms.Label();
+            this.toolBtnArrow = new System.Windows.Forms.ToolStripButton();
             this.panelHost.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
@@ -201,9 +202,9 @@
             this.pnlMainAreaContainer.Controls.Add(this.splitPickerMain);
             this.pnlMainAreaContainer.Controls.Add(this.txbCommand);
             this.pnlMainAreaContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMainAreaContainer.Location = new System.Drawing.Point(25, 0);
+            this.pnlMainAreaContainer.Location = new System.Drawing.Point(40, 0);
             this.pnlMainAreaContainer.Name = "pnlMainAreaContainer";
-            this.pnlMainAreaContainer.Size = new System.Drawing.Size(1010, 796);
+            this.pnlMainAreaContainer.Size = new System.Drawing.Size(995, 796);
             this.pnlMainAreaContainer.TabIndex = 4;
             // 
             // splitPickerMain
@@ -220,7 +221,7 @@
             // splitPickerMain.Panel2
             // 
             this.splitPickerMain.Panel2.Controls.Add(this.panel1);
-            this.splitPickerMain.Size = new System.Drawing.Size(1010, 771);
+            this.splitPickerMain.Size = new System.Drawing.Size(995, 771);
             this.splitPickerMain.SplitterDistance = 238;
             this.splitPickerMain.TabIndex = 4;
             // 
@@ -240,7 +241,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(768, 771);
+            this.panel1.Size = new System.Drawing.Size(753, 771);
             this.panel1.TabIndex = 2;
             this.panel1.SizeChanged += new System.EventHandler(this.panel1_SizeChanged);
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
@@ -277,7 +278,7 @@
             this.txbCommand.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.txbCommand.Location = new System.Drawing.Point(0, 771);
             this.txbCommand.Name = "txbCommand";
-            this.txbCommand.Size = new System.Drawing.Size(1010, 25);
+            this.txbCommand.Size = new System.Drawing.Size(995, 25);
             this.txbCommand.TabIndex = 3;
             this.txbCommand.Text = "/";
             this.txbCommand.Visible = false;
@@ -288,6 +289,7 @@
             this.toolsMain.Dock = System.Windows.Forms.DockStyle.Left;
             this.toolsMain.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolBtnArrow,
             this.toolBtnMoving,
             this.toolBtnSelecting,
             this.toolStripSeparator1,
@@ -297,7 +299,7 @@
             this.toolsMain.Location = new System.Drawing.Point(0, 0);
             this.toolsMain.Name = "toolsMain";
             this.toolsMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolsMain.Size = new System.Drawing.Size(25, 796);
+            this.toolsMain.Size = new System.Drawing.Size(40, 796);
             this.toolsMain.TabIndex = 3;
             this.toolsMain.Text = "toolStrip1";
             // 
@@ -310,7 +312,7 @@
             this.toolBtnMoving.Image = global::RelertSharp.GUI.Properties.Resources.btnMoving;
             this.toolBtnMoving.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnMoving.Name = "toolBtnMoving";
-            this.toolBtnMoving.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnMoving.Size = new System.Drawing.Size(37, 24);
             this.toolBtnMoving.Tag = "moving";
             this.toolBtnMoving.Text = "RSMainToolBtnMoving";
             this.toolBtnMoving.Click += new System.EventHandler(this.ToolBoxClickHandler);
@@ -322,7 +324,7 @@
             this.toolBtnSelecting.Image = global::RelertSharp.GUI.Properties.Resources.btnRectSelecting;
             this.toolBtnSelecting.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnSelecting.Name = "toolBtnSelecting";
-            this.toolBtnSelecting.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnSelecting.Size = new System.Drawing.Size(37, 24);
             this.toolBtnSelecting.Tag = "selecting";
             this.toolBtnSelecting.Text = "RSMainToolBtnSelecting";
             this.toolBtnSelecting.Click += new System.EventHandler(this.ToolBoxClickHandler);
@@ -331,7 +333,7 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(22, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(37, 6);
             // 
             // toolBtnBrush
             // 
@@ -340,7 +342,7 @@
             this.toolBtnBrush.Image = global::RelertSharp.GUI.Properties.Resources.btnBrush;
             this.toolBtnBrush.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnBrush.Name = "toolBtnBrush";
-            this.toolBtnBrush.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnBrush.Size = new System.Drawing.Size(37, 24);
             this.toolBtnBrush.Tag = "brush";
             this.toolBtnBrush.Text = "RSMainToolBrush";
             this.toolBtnBrush.Click += new System.EventHandler(this.ToolBoxClickHandler);
@@ -352,7 +354,7 @@
             this.toolBtnAttributeBrush.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnAttributeBrush.Image")));
             this.toolBtnAttributeBrush.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnAttributeBrush.Name = "toolBtnAttributeBrush";
-            this.toolBtnAttributeBrush.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnAttributeBrush.Size = new System.Drawing.Size(37, 24);
             this.toolBtnAttributeBrush.Tag = "attribute";
             this.toolBtnAttributeBrush.Text = "RSMainToolAttBrush";
             this.toolBtnAttributeBrush.Click += new System.EventHandler(this.ToolBoxClickHandler);
@@ -1322,6 +1324,16 @@
             this.lblSubcell.TabIndex = 4;
             this.lblSubcell.Text = "Subcell:";
             // 
+            // toolBtnArrow
+            // 
+            this.toolBtnArrow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnArrow.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnArrow.Image")));
+            this.toolBtnArrow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnArrow.Name = "toolBtnArrow";
+            this.toolBtnArrow.Size = new System.Drawing.Size(37, 24);
+            this.toolBtnArrow.Tag = "arrow";
+            this.toolBtnArrow.Text = "RSMainToolBtnArrow";
+            // 
             // MainWindowTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1480,5 +1492,6 @@
         private System.Windows.Forms.SplitContainer splitPickerMain;
         private System.Windows.Forms.Label lblSubcell;
         private Controls.RbBrushPanel rbPanelBrush;
+        private System.Windows.Forms.ToolStripButton toolBtnArrow;
     }
 }

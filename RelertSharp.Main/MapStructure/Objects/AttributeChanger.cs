@@ -10,7 +10,7 @@ namespace RelertSharp.MapStructure.Objects
     public class AttributeChanger
     {
         #region Ctor - AttributeChanger
-        public AttributeChanger(bool allTrue = false)
+        public AttributeChanger(bool allTrue = false, ICombatObject src = null)
         {
             if (allTrue)
             {
@@ -22,7 +22,8 @@ namespace RelertSharp.MapStructure.Objects
                 bGroup = true;
                 bStatus = true;
             }
-            Host = new InfantryItem();
+            if (src != null) Host = src;
+            else Host = new InfantryItem();
         }
         public AttributeChanger()
         {

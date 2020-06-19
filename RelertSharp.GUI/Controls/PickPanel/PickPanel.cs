@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RelertSharp.Common;
+using RelertSharp.MapStructure;
 using RelertSharp.IniSystem;
 using RelertSharp.GUI.Model.BrushModel;
 using static RelertSharp.Common.GlobalVar;
@@ -20,6 +21,7 @@ namespace RelertSharp.GUI.Controls
         internal event EventHandler BrushObjectSelected;
 
 
+        private Map Map { get { return CurrentMapDocument.Map; } }
         private BrushModel brush = new BrushModel();
         private bool drew = false;
         private bool shiftHidden = false;
@@ -35,6 +37,8 @@ namespace RelertSharp.GUI.Controls
         {
             SetLanguage();
             InitializeGeneralPanel();
+
+            initialized = true;
         }
         public void DrawComplete()
         {
@@ -62,7 +66,6 @@ namespace RelertSharp.GUI.Controls
         {
             foreach (Control c in Controls) Language.SetControlLanguage(c);
         }
-
 
         public BrushModel Result { get { return brush; } }
     }

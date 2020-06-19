@@ -66,5 +66,6 @@ namespace RelertSharp.Common
         int VeterancyPercentage { get; set; }
         int Group { get; set; }
         void ApplyAttributeFrom(AttributeChanger ckb);
+        void ApplyAttributeFrom(ICombatObject src);
     }
 }

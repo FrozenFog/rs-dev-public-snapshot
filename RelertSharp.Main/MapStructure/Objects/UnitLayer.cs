@@ -65,7 +65,17 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods
-
+        public override void ApplyAttributeFrom(ICombatObject src)
+        {
+            if (src is UnitItem u)
+            {
+                FollowsIndex = u.FollowsIndex;
+                IsAboveGround = u.IsAboveGround;
+                AutoYESRecruitType = u.AutoYESRecruitType;
+                AutoNORecruitType = u.AutoNORecruitType;
+                base.ApplyAttributeFrom(src);
+            }
+        }
         #endregion
 
 

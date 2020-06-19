@@ -20,7 +20,40 @@ namespace RelertSharp.GUI.Model.BrushModel
         public BrushModel() { }
 
 
-        public void Reload(string regname, MapObjectType type, bool reserveOriginal = false, bool usePrevPos = false)
+        public void Reload(IMapObject src, MapObjectType type, bool reserveOriginal = false)
+        {
+            currentName = src.RegName;
+            ObjectType = type;
+            if (BrushObject != null && BrushObject.SceneObject != null && !reserveOriginal)
+            {
+                BrushObject.Dispose();
+                GlobalVar.Engine.RemoveDisposedObjects();
+            }
+            switch (type)
+            {
+                case MapObjectType.Building:
+                    BrushObject = new StructureItem(src as StructureItem);
+                    break;
+                case MapObjectType.Infantry:
+                    BrushObject = new InfantryItem(src as InfantryItem);
+                    break;
+                case MapObjectType.Vehicle:
+                    BrushObject = new UnitItem(src as UnitItem);
+                    break;
+                case MapObjectType.Aircraft:
+                    BrushObject = new AircraftItem(src as AircraftItem);
+                    break;
+                case MapObjectType.Terrain:
+                    BrushObject = new TerrainItem(src as TerrainItem);
+                    break;
+                case MapObjectType.Smudge:
+                    BrushObject = new SmudgeItem(src as SmudgeItem);
+                    break;
+            }
+            GlobalVar.Engine.DrawBrushObject(BrushObject);
+            GlobalVar.Engine.SetObjectLightningStandalone(BrushObject.SceneObject);
+        }
+        public void Reload(string regname, MapObjectType type, ICombatObject referance = null, bool reserveOriginal = false, bool usePrevPos = false)
         {
             currentName = regname;
             ObjectType = type;
@@ -50,20 +83,7 @@ namespace RelertSharp.GUI.Model.BrushModel
                     BrushObject = new SmudgeItem(regname);
                     break;
             }
-            if (usePrevPos && prevPos != null)
-            {
-                BrushObject.X = prevPos.X;
-                BrushObject.Y = prevPos.Y;
-            }
-            else
-            {
-                BrushObject.X = -1000;
-                BrushObject.Y = -1000;
-            }
-            if (BrushObject as ICombatObject != null)
-            {
-                (BrushObject as ICombatObject).OwnerHouse = GlobalVar.CurrentMapDocument.Map.Houses.First().Name;
-            }
+            if (referance != null) (BrushObject as ICombatObject).ApplyAttributeFrom(referance);
             GlobalVar.Engine.DrawBrushObject(BrushObject);
             GlobalVar.Engine.SetObjectLightningStandalone(BrushObject.SceneObject);
         }
@@ -87,7 +107,7 @@ namespace RelertSharp.GUI.Model.BrushModel
         public IMapObject ReleaseObject()
         {
             IMapObject obj = BrushObject;
-            Reload(currentName, ObjectType, true);
+            Reload(currentName, ObjectType, obj as ICombatObject, true);
             return obj;
         }
 
