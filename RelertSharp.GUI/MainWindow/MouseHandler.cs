@@ -192,5 +192,19 @@ namespace RelertSharp.GUI
             }
         }
         #endregion
+
+
+        #region Enter
+        private void PanelMouseEnter()
+        {
+            if (drew)
+            {
+                if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.AddingObject && !panel1.Focused)
+                {
+                    panel1.Focus();
+                }
+            }
+        }
+        #endregion
     }
 }

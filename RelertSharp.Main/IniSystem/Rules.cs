@@ -201,7 +201,7 @@ namespace RelertSharp.IniSystem
                         }
                         try
                         {
-                            shape[tmp[0] + tmp[1] * sizeY] = true;
+                            shape[tmp[0] + tmp[1] * sizeX] = true;
                         }
                         catch
                         {

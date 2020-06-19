@@ -30,8 +30,8 @@
         {
             this.ckbSimBud = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.ckbNode = new System.Windows.Forms.CheckBox();
             this.ckbIgnoreBuilding = new System.Windows.Forms.CheckBox();
+            this.ckbNode = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,6 +58,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Brush Control";
             // 
+            // ckbIgnoreBuilding
+            // 
+            this.ckbIgnoreBuilding.AutoSize = true;
+            this.ckbIgnoreBuilding.Enabled = false;
+            this.ckbIgnoreBuilding.Location = new System.Drawing.Point(26, 116);
+            this.ckbIgnoreBuilding.Name = "ckbIgnoreBuilding";
+            this.ckbIgnoreBuilding.Size = new System.Drawing.Size(149, 19);
+            this.ckbIgnoreBuilding.TabIndex = 0;
+            this.ckbIgnoreBuilding.Text = "Ignore Building";
+            this.ckbIgnoreBuilding.UseVisualStyleBackColor = true;
+            // 
             // ckbNode
             // 
             this.ckbNode.AutoSize = true;
@@ -67,16 +78,6 @@
             this.ckbNode.TabIndex = 0;
             this.ckbNode.Text = "Add Basenode";
             this.ckbNode.UseVisualStyleBackColor = true;
-            // 
-            // ckbIgnoreBuilding
-            // 
-            this.ckbIgnoreBuilding.AutoSize = true;
-            this.ckbIgnoreBuilding.Location = new System.Drawing.Point(26, 116);
-            this.ckbIgnoreBuilding.Name = "ckbIgnoreBuilding";
-            this.ckbIgnoreBuilding.Size = new System.Drawing.Size(149, 19);
-            this.ckbIgnoreBuilding.TabIndex = 0;
-            this.ckbIgnoreBuilding.Text = "Ignore Building";
-            this.ckbIgnoreBuilding.UseVisualStyleBackColor = true;
             // 
             // RbBrushPanel
             // 

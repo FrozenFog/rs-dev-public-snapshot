@@ -424,5 +424,10 @@ namespace RelertSharp.GUI
                 ToolBoxRightClick(sender as ToolStripButton, pos);
             }
         }
+
+        private void panel1_MouseEnter_1(object sender, EventArgs e)
+        {
+            PanelMouseEnter();
+        }
     }
 }
