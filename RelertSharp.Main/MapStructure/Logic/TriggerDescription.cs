@@ -161,7 +161,8 @@ namespace RelertSharp.MapStructure.Logic
             SelectableString = 1,
             Bool = 2,
             Waypoint = 3,
-            CellPos = 4
+            CellPos = 4,
+            PlainWaypoint = 5
         }
         public enum ComboContent
         {

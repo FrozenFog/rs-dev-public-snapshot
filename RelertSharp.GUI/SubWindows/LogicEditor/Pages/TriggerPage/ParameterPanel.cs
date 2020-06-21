@@ -409,7 +409,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     if (p != null) ManageCsfToolTip(sender as LinkLabel, p);
                     break;
             }
-            if (param.Type == TriggerParam.ParamType.Waypoint)
+            if (param.Type == TriggerParam.ParamType.Waypoint || param.Type == TriggerParam.ParamType.PlainWaypoint)
             {
                 string wpid = txbs[tagid].Text;
                 WaypointItem wp = Map.Waypoints.FindByID(wpid);

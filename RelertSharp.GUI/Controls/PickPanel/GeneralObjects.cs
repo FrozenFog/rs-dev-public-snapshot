@@ -191,7 +191,7 @@ namespace RelertSharp.GUI.Controls
                     case TNodeUnit:
                     case TNodeNaval:
                         CreateInnerUnit(currentCombatObjectRegName);
-                        brush.Reload(currentCombatObjectRegName, MapObjectType.Unit, InnerSource as ICombatObject);
+                        brush.Reload(currentCombatObjectRegName, MapObjectType.Vehicle, InnerSource as ICombatObject);
                         break;
                     case TNodeInfantry:
                         CreateInnerInfantry(currentCombatObjectRegName);

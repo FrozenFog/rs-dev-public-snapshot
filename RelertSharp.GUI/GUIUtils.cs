@@ -140,6 +140,7 @@ namespace RelertSharp.GUI
                 dest.DropDownWidth = wd;
             }
             dest.EndUpdate();
+            dest.SelectedText = string.Empty;
         }
         public static void LoadToObjectCollection(ComboBox dest, IEnumerable<object> src)
         {
@@ -150,6 +151,7 @@ namespace RelertSharp.GUI
             int wd = src.Max(x => x.ToString().Length) * 7;
             dest.DropDownWidth = wd;
             dest.EndUpdate();
+            dest.SelectedText = string.Empty;
         }
         public static void LoadToObjectCollection(ListBox dest, IEnumerable<object> src)
         {
