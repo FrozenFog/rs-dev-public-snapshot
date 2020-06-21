@@ -146,6 +146,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     {
                         case TriggerParam.ParamType.PlainString:
                         case TriggerParam.ParamType.Waypoint:
+                        case TriggerParam.ParamType.PlainWaypoint:
                             SetParamControls(txbs, param, parameters, i);
                             break;
                         case TriggerParam.ParamType.SelectableString:
