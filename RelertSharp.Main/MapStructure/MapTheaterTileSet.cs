@@ -69,7 +69,7 @@ namespace RelertSharp.MapStructure
                 if (!_theaterIni.IniDict.Keys.Contains(_setName)) break;
                 INIEntity _tileSet = _theaterIni.PopEnt(_setName);
                 string _tileFileName = _tileSet["FileName"];
-                int _numsInSet = _tileSet.GetPair("TilesInSet").ParseInt();
+                int _numsInSet = _tileSet.ParseInt("TilesInSet");
                 if (_numsInSet == 0) continue;
                 for (int j = 1;j<_numsInSet + 1; j++)
                 {

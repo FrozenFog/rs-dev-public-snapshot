@@ -176,8 +176,8 @@ namespace RelertSharp.IniSystem
         public void GetSmudgeSizeData(string nameid, out int foundx, out int foundy)
         {
             INIEntity ent = this[nameid];
-            foundx = ent.GetPair("Width").ParseInt(1);
-            foundy = ent.GetPair("Height").ParseInt(1);
+            foundx = ent.ParseInt("Width", 1);
+            foundy = ent.ParseInt("Height", 1);
         }
         public List<bool> GetBuildingCustomShape(string regname, int sizeX, int sizeY)
         {
@@ -192,7 +192,7 @@ namespace RelertSharp.IniSystem
                     string found = string.Format("Foundation.{0}", i);
                     if (art.HasPair(found))
                     {
-                        int[] tmp = art.GetPair(found).ParseIntList();
+                        int[] tmp = art.ParseIntList(found);
                         if (tmp.Length != 2)
                         {
                             Log.Critical("Building foundation error! Item {0} has unreadable foundation!", regname);
@@ -228,8 +228,8 @@ namespace RelertSharp.IniSystem
                 {
                     if (foundation == "custom")
                     {
-                        sz.X = art.GetPair("Foundation.X").ParseInt(1);
-                        sz.Y = art.GetPair("Foundation.Y").ParseInt(1);
+                        sz.X = art.ParseInt("Foundation.X", 1);
+                        sz.Y = art.ParseInt("Foundation.Y", 1);
                     }
                     else
                     {
@@ -243,7 +243,7 @@ namespace RelertSharp.IniSystem
                     sz.X = 1;
                     sz.Y = 1;
                 }
-                sz.Z = art.GetPair("Height").ParseInt(5) + 3;
+                sz.Z = art.ParseInt("Height", 5) + 5;
                 bufferedBuildingShape[nameid] = sz;
             }
             else sz = bufferedBuildingShape[nameid];
@@ -262,11 +262,11 @@ namespace RelertSharp.IniSystem
             else
             {
                 INIEntity item = this[nameid];
-                visibility = item.GetPair("LightVisibility").ParseInt(5000);
-                intensity = item.GetPair("LightIntensity").ParseFloat();
-                float r = item.GetPair("LightRedTint").ParseFloat() + 1;
-                float g = item.GetPair("LightGreenTint").ParseFloat() + 1;
-                float b = item.GetPair("LightBlueTint").ParseFloat() + 1;
+                visibility = item.ParseInt("LightVisibility", 5000);
+                intensity = item.ParseFloat("LightIntensity");
+                float r = item.ParseFloat("LightRedTint") + 1;
+                float g = item.ParseFloat("LightGreenTint") + 1;
+                float b = item.ParseFloat("LightBlueTint") + 1;
                 return new Vec4(r, g, b, 1);
             }
         }
@@ -280,7 +280,7 @@ namespace RelertSharp.IniSystem
             INIEntity sequence = Art[Art[art]["Sequence"]];
             direction >>= 5;
             if (sequence.Name == "") return direction;
-            int[] ready = sequence.GetPair("Ready").ParseIntList();
+            int[] ready = sequence.ParseIntList("Ready");
             int result = ready[0];
             return 7 - direction;
         }
@@ -402,7 +402,7 @@ namespace RelertSharp.IniSystem
         }
         public bool IsTechBuilding(string regname)
         {
-            return this["AI"].GetPair("NeutralTechBuildings").ParseStringList().Contains(regname);
+            return this["AI"].ParseStringList("NeutralTechBuildings").Contains(regname);
         }
         public int GuessSide(string regname, CombatObjectType type, bool isBuilding = false)
         {
@@ -410,14 +410,14 @@ namespace RelertSharp.IniSystem
             if (isBuilding)
             {
                 INIEntity ent = this[regname];
-                int planning = ent.GetPair("AIBasePlanningSide").ParseInt(-1);
+                int planning = ent.ParseInt("AIBasePlanningSide", -1);
                 if (planning >= GetSideCount()) return -1;
                 if (planning >= 0)
                 {
                     if (string.IsNullOrEmpty(BuildingRoots[planning]) && ent["Factory"] == "BuildingType") BuildingRoots[planning] = regname;
                     if (string.IsNullOrEmpty(InfantryRoots[planning]) && ent["Factory"] == "InfantryType") InfantryRoots[planning] = regname;
-                    if (string.IsNullOrEmpty(UnitRoots[planning]) && ent["Factory"] == "UnitType" && !ent.GetPair("Naval").ParseBool()) UnitRoots[planning] = regname;
-                    if (string.IsNullOrEmpty(NavalRoots[planning]) && ent["Factory"] == "UnitType" && ent.GetPair("Naval").ParseBool()) NavalRoots[planning] = regname;
+                    if (string.IsNullOrEmpty(UnitRoots[planning]) && ent["Factory"] == "UnitType" && !ent.ParseBool("Naval")) UnitRoots[planning] = regname;
+                    if (string.IsNullOrEmpty(NavalRoots[planning]) && ent["Factory"] == "UnitType" && ent.ParseBool("Naval")) NavalRoots[planning] = regname;
                     if (string.IsNullOrEmpty(AircraftRoots[planning]) && ent["Factory"] == "AircraftType") AircraftRoots[planning] = regname;
                     return planning;
                 }
@@ -443,11 +443,11 @@ namespace RelertSharp.IniSystem
                     root = NavalRoots;
                     break;
             }
-            foreach (string prerequest in this[regname].GetPair("Prerequisite").ParseStringList())
+            foreach (string prerequest in this[regname].ParseStringList("Prerequisite"))
             {
                 if (this["GenericPrerequisites"].HasPair(prerequest))
                 {
-                    foreach (string subrequest in this["GenericPrerequisites"].GetPair(prerequest).ParseStringList())
+                    foreach (string subrequest in this["GenericPrerequisites"].ParseStringList(prerequest))
                     {
                         if (root.Contains(subrequest)) return root.IndexOf(subrequest);
                     }
@@ -461,9 +461,17 @@ namespace RelertSharp.IniSystem
             //no side
             return -1;
         }
-        public string FormatTreeNodeName(string regname)
+        public string FormatTreeNodeName(string regname, bool hasUiName = true)
         {
-            return string.Format("{1}:{2}({0})", regname, GlobalCsf[this[regname]["UIName"]].ContentString, this[regname]["Name"]);
+            if (hasUiName)
+                return string.Format("{1}:{2}({0})",
+                    regname,
+                    GlobalCsf[this[regname]["UIName"]].ContentString,
+                    this[regname]["Name"]);
+            else
+                return string.Format("{0}({1})",
+                    this[regname]["Name"],
+                    regname);
         }
         #endregion
 

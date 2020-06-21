@@ -75,11 +75,19 @@
             this.cbbUpg2 = new System.Windows.Forms.ComboBox();
             this.cbbUpg3 = new System.Windows.Forms.ComboBox();
             this.tbpTerrain = new System.Windows.Forms.TabPage();
+            this.lbxRndTerrain = new System.Windows.Forms.ListBox();
+            this.ckbRndTerrainEnable = new System.Windows.Forms.CheckBox();
+            this.trvTerrain = new System.Windows.Forms.TreeView();
             this.tbpSmudge = new System.Windows.Forms.TabPage();
             this.tbpOverlay = new System.Windows.Forms.TabPage();
             this.tbpWaypoint = new System.Windows.Forms.TabPage();
             this.tbpCelltag = new System.Windows.Forms.TabPage();
             this.tbpBaseNode = new System.Windows.Forms.TabPage();
+            this.cmsTerrainAddRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiTerrAddRnd = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsTerrainRemoveRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiTerrRemoveSelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiTerrRemoveAllRnd = new System.Windows.Forms.ToolStripMenuItem();
             this.tbcMain.SuspendLayout();
             this.tbpObject.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitObjects)).BeginInit();
@@ -88,6 +96,9 @@
             this.splitObjects.SuspendLayout();
             this.pnlObjectProp.SuspendLayout();
             this.tlpObjectProps.SuspendLayout();
+            this.tbpTerrain.SuspendLayout();
+            this.cmsTerrainAddRnd.SuspendLayout();
+            this.cmsTerrainRemoveRnd.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -107,6 +118,7 @@
             this.tbcMain.Size = new System.Drawing.Size(345, 750);
             this.tbcMain.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tbcMain.TabIndex = 0;
+            this.tbcMain.SelectedIndexChanged += new System.EventHandler(this.tbcMain_SelectedIndexChanged);
             // 
             // tbpObject
             // 
@@ -655,12 +667,51 @@
             // 
             // tbpTerrain
             // 
+            this.tbpTerrain.Controls.Add(this.lbxRndTerrain);
+            this.tbpTerrain.Controls.Add(this.ckbRndTerrainEnable);
+            this.tbpTerrain.Controls.Add(this.trvTerrain);
             this.tbpTerrain.Location = new System.Drawing.Point(4, 46);
             this.tbpTerrain.Name = "tbpTerrain";
             this.tbpTerrain.Size = new System.Drawing.Size(337, 700);
             this.tbpTerrain.TabIndex = 4;
             this.tbpTerrain.Text = "Terrains";
             this.tbpTerrain.UseVisualStyleBackColor = true;
+            // 
+            // lbxRndTerrain
+            // 
+            this.lbxRndTerrain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbxRndTerrain.ContextMenuStrip = this.cmsTerrainRemoveRnd;
+            this.lbxRndTerrain.Enabled = false;
+            this.lbxRndTerrain.FormattingEnabled = true;
+            this.lbxRndTerrain.ItemHeight = 15;
+            this.lbxRndTerrain.Location = new System.Drawing.Point(3, 543);
+            this.lbxRndTerrain.Name = "lbxRndTerrain";
+            this.lbxRndTerrain.Size = new System.Drawing.Size(331, 154);
+            this.lbxRndTerrain.TabIndex = 3;
+            // 
+            // ckbRndTerrainEnable
+            // 
+            this.ckbRndTerrainEnable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ckbRndTerrainEnable.AutoSize = true;
+            this.ckbRndTerrainEnable.Location = new System.Drawing.Point(3, 518);
+            this.ckbRndTerrainEnable.Name = "ckbRndTerrainEnable";
+            this.ckbRndTerrainEnable.Size = new System.Drawing.Size(141, 19);
+            this.ckbRndTerrainEnable.TabIndex = 2;
+            this.ckbRndTerrainEnable.Text = "Random Terrain";
+            this.ckbRndTerrainEnable.UseVisualStyleBackColor = true;
+            this.ckbRndTerrainEnable.CheckedChanged += new System.EventHandler(this.ckbRndTerrainEnable_CheckedChanged);
+            // 
+            // trvTerrain
+            // 
+            this.trvTerrain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trvTerrain.Location = new System.Drawing.Point(3, 3);
+            this.trvTerrain.Name = "trvTerrain";
+            this.trvTerrain.Size = new System.Drawing.Size(331, 426);
+            this.trvTerrain.TabIndex = 0;
+            this.trvTerrain.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvTerrain_NodeMouseClick);
             // 
             // tbpSmudge
             // 
@@ -707,6 +758,44 @@
             this.tbpBaseNode.Text = "Base Nodes";
             this.tbpBaseNode.UseVisualStyleBackColor = true;
             // 
+            // cmsTerrainAddRnd
+            // 
+            this.cmsTerrainAddRnd.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsTerrainAddRnd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiTerrAddRnd});
+            this.cmsTerrainAddRnd.Name = "cmsTerrainAddRnd";
+            this.cmsTerrainAddRnd.Size = new System.Drawing.Size(243, 28);
+            // 
+            // tsmiTerrAddRnd
+            // 
+            this.tsmiTerrAddRnd.Name = "tsmiTerrAddRnd";
+            this.tsmiTerrAddRnd.Size = new System.Drawing.Size(242, 24);
+            this.tsmiTerrAddRnd.Text = "Add to random terrain";
+            this.tsmiTerrAddRnd.Click += new System.EventHandler(this.tsmiTerrAddRnd_Click);
+            // 
+            // cmsTerrainRemoveRnd
+            // 
+            this.cmsTerrainRemoveRnd.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsTerrainRemoveRnd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiTerrRemoveSelected,
+            this.tsmiTerrRemoveAllRnd});
+            this.cmsTerrainRemoveRnd.Name = "contextMenuStrip1";
+            this.cmsTerrainRemoveRnd.Size = new System.Drawing.Size(242, 52);
+            // 
+            // tsmiTerrRemoveSelected
+            // 
+            this.tsmiTerrRemoveSelected.Name = "tsmiTerrRemoveSelected";
+            this.tsmiTerrRemoveSelected.Size = new System.Drawing.Size(241, 24);
+            this.tsmiTerrRemoveSelected.Text = "Remove selected item";
+            this.tsmiTerrRemoveSelected.Click += new System.EventHandler(this.tsmiTerrRemoveSelected_Click);
+            // 
+            // tsmiTerrRemoveAllRnd
+            // 
+            this.tsmiTerrRemoveAllRnd.Name = "tsmiTerrRemoveAllRnd";
+            this.tsmiTerrRemoveAllRnd.Size = new System.Drawing.Size(241, 24);
+            this.tsmiTerrRemoveAllRnd.Text = "Remove All";
+            this.tsmiTerrRemoveAllRnd.Click += new System.EventHandler(this.tsmiTerrRemoveAllRnd_Click);
+            // 
             // PickPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -725,6 +814,10 @@
             this.pnlObjectProp.PerformLayout();
             this.tlpObjectProps.ResumeLayout(false);
             this.tlpObjectProps.PerformLayout();
+            this.tbpTerrain.ResumeLayout(false);
+            this.tbpTerrain.PerformLayout();
+            this.cmsTerrainAddRnd.ResumeLayout(false);
+            this.cmsTerrainRemoveRnd.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -782,5 +875,13 @@
         private System.Windows.Forms.ComboBox cbbUpg1;
         private System.Windows.Forms.ComboBox cbbUpg2;
         private System.Windows.Forms.ComboBox cbbUpg3;
+        private System.Windows.Forms.TreeView trvTerrain;
+        private System.Windows.Forms.CheckBox ckbRndTerrainEnable;
+        private System.Windows.Forms.ListBox lbxRndTerrain;
+        private System.Windows.Forms.ContextMenuStrip cmsTerrainAddRnd;
+        private System.Windows.Forms.ToolStripMenuItem tsmiTerrAddRnd;
+        private System.Windows.Forms.ContextMenuStrip cmsTerrainRemoveRnd;
+        private System.Windows.Forms.ToolStripMenuItem tsmiTerrRemoveSelected;
+        private System.Windows.Forms.ToolStripMenuItem tsmiTerrRemoveAllRnd;
     }
 }

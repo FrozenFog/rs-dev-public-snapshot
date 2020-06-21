@@ -82,10 +82,6 @@ namespace RelertSharp.DrawingEngine
         {
             DrawableUnit d;
             string lookup = string.Format("{0}{1}.in{2}", name, color, idxFrame);
-            if (name == "ZEP")
-            {
-                int i = 0;
-            }
             if (!Buffer.Buffers.Units.Keys.Contains(lookup))
             {
                 d = new DrawableUnit(name);
@@ -120,7 +116,7 @@ namespace RelertSharp.DrawingEngine
             {
                 d = new DrawableMisc(MapObjectType.Terrain, name);
                 d.Framecount = GlobalDir.GetShpFrameCount(name);
-                d.RadarColor = ToColor(GlobalRules[terrain.RegName].GetPair("RadarColor").ParseStringList());
+                d.RadarColor = ToColor(GlobalRules[terrain.RegName].ParseStringList("RadarColor"));
                 bool isTibTree = ParseBool(GlobalRules[terrain.RegName]["SpawnsTiberium"]);
                 d.pPal = pPalIso;
                 d.IsZeroVec = false;
@@ -157,10 +153,6 @@ namespace RelertSharp.DrawingEngine
         {
             DrawableMisc d;
             string name = GlobalRules.GetOverlayName(overlay.Index);
-            if (name == "GAWALL")
-            {
-                int i = 0;
-            }
             string lookup = string.Format("{0}{1}.in{2}", name, color, overlay.Frame);
             if (!Buffer.Buffers.Miscs.Keys.Contains(lookup))
             {
@@ -175,7 +167,7 @@ namespace RelertSharp.DrawingEngine
                 bool wall = ParseBool(GlobalRules[name]["Wall"]);
                 string img = GlobalRules[name]["Image"];
                 string land = GlobalRules[name]["Land"];
-                string[] colors = GlobalRules[name].GetPair("RadarColor").ParseStringList();
+                string[] colors = GlobalRules[name].ParseStringList("RadarColor");
                 if (wall) GlobalRules.FixWallOverlayName(ref filename);
                 d.RadarColor = ToColor(colors);
                 d.IsMoveBlockingOverlay = land == "Rock";

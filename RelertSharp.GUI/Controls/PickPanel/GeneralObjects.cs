@@ -22,7 +22,7 @@ namespace RelertSharp.GUI.Controls
         private const string TNodeUnit = "\nUnit";
         private const string TNodeNaval = "\nNaval";
         private const string TNodeAircraft = "\nAircraft";
-        private readonly string[] RootNodes = { TNodeBuilding, TNodeInfantry, TNodeUnit, TNodeNaval, TNodeAircraft };
+        private readonly string[] RootNodes = { TNodeBuilding, TNodeInfantry, TNodeUnit, TNodeNaval, TNodeAircraft , TNodeTree, TNodeTerrTib, TNodeTerrPole, TNodeTerrOther};
         private IMapObject InnerSource;
 
 
@@ -43,6 +43,7 @@ namespace RelertSharp.GUI.Controls
             cbbSpotlight.DropDownWidth = 55;
             cbbSpotlight.SelectedIndex = 0;
             cbbAttTag.Text = "None";
+            cbbAttTag.SelectedText = string.Empty;
         }
 
         private void LoadGeneralObjects()
@@ -132,9 +133,9 @@ namespace RelertSharp.GUI.Controls
         {
             Dictionary<string, string[]> customTree = GlobalConfig.Local.GetCustomObjectFolder();
         }
-        private void AddObjectToNode(TreeNode dest, string regname)
+        private void AddObjectToNode(TreeNode dest, string regname, bool containsUiName = true)
         {
-            dest.Nodes.Add(regname, GlobalRules.FormatTreeNodeName(regname));
+            dest.Nodes.Add(regname, GlobalRules.FormatTreeNodeName(regname, containsUiName));
         }
         private List<TreeNode> InitializeSideNode()
         {

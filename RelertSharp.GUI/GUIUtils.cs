@@ -82,6 +82,11 @@ namespace RelertSharp.GUI
             }
 #endif
         }
+        public static DialogResult YesNoWarning(string content)
+        {
+            DialogResult result = MessageBox.Show(content, "Warning", MessageBoxButtons.YesNo);
+            return result;
+        }
         public static void Warning(string content)
         {
             MessageBox.Show(content, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -127,6 +132,10 @@ namespace RelertSharp.GUI
             {
                 ClearControlContent(c);
             }
+        }
+        public static void LoadToObjectCollection(TreeView dest, params TreeNode[] nodes)
+        {
+            dest.Nodes.AddRange(nodes);
         }
         public static void LoadToObjectCollection(ComboBox dest, object firstload, IEnumerable<object> src)
         {

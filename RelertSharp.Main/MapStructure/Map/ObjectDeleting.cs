@@ -41,7 +41,7 @@ namespace RelertSharp.MapStructure
         public void RemoveTerrains(TerrainItem ter)
         {
             ter.Dispose();
-            Terrains.RemoveByCoord(ter);
+            Terrains.RemoveObjectByID(ter);
             Tiles[ter]?.RemoveObject(ter);
         }
         public void RemoveOverlay(OverlayUnit o)

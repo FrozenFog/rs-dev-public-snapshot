@@ -138,6 +138,9 @@
     <Compile Include="Controls\PickPanel\PickPanel.Designer.cs">
       <DependentUpon>PickPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PickPanel\TerrainObject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\RbBrushPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>

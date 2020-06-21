@@ -34,6 +34,10 @@ namespace RelertSharp.GUI
                             GlobalVar.Engine.Refresh();
                             panel1.Cursor = prevCur;
                         }
+                        else
+                        {
+                            ToolBoxClick(toolBtnArrow);
+                        }
                         break;
                     case Keys.Delete:
                         Current.RemoveAll();

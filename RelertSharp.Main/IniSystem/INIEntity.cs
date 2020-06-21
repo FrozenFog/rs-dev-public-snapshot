@@ -235,6 +235,26 @@ namespace RelertSharp.IniSystem
             }
             return sb.ToString();
         }
+        public bool ParseBool(string key, bool def = false)
+        {
+            return GetPair(key).ParseBool(def);
+        }
+        public int ParseInt(string key, int def = 0)
+        {
+            return GetPair(key).ParseInt(def);
+        }
+        public float ParseFloat(string key, float def = 0f)
+        {
+            return GetPair(key).ParseFloat(def);
+        }
+        public string[] ParseStringList(string key)
+        {
+            return GetPair(key).ParseStringList();
+        }
+        public int[] ParseIntList(string key)
+        {
+            return GetPair(key).ParseIntList();
+        }
         public override string ToString()
         {
             return string.Format("[{0}]:{1} items", Name, data.Count);

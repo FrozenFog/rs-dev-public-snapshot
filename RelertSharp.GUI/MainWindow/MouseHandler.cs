@@ -110,6 +110,7 @@ namespace RelertSharp.GUI
                         DrawSelectingBoxOnScene(e);
                         break;
                     case MainWindowDataModel.MouseActionType.AddingObject:
+                        pnlPick.ReloadRandomTerrain();
                         MoveBrushObjectTo(e);
                         break;
                 }

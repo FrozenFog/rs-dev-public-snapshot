@@ -13,44 +13,35 @@ namespace RelertSharp.MapStructure.Points
     public class PointCollectionBase<T> : IEnumerable<T> where T : PointItemBase
     {
         private Dictionary<string, T> data = new Dictionary<string, T>();
+
+
         public PointCollectionBase() { }
 
 
         #region Public Methods - ObjectBase
-        public virtual void RemoveByCoord(I2dLocateable src)
+        public void AddObject(T item)
         {
-            string coord = CoordString(src.Y, src.X);
-            if (data.Keys.Contains(coord)) data.Remove(coord);
+            if (string.IsNullOrEmpty(item.ID))
+            {
+                for (int i = 0; i < 10000; i++)
+                {
+                    if (!data.Keys.Contains(i.ToString()))
+                    {
+                        item.ID = i.ToString();
+                        break;
+                    }
+                }
+            }
+            data[item.ID] = item;
+        }
+        public void RemoveObjectByID(T item)
+        {
+            if (data.Keys.Contains(item.ID)) data.Remove(item.ID);
         }
         #endregion
 
 
         #region Public Calls - PointCollectionBase
-        public T this[int x, int y]
-        {
-            get
-            {
-                string coord = CoordString(y, x);
-                if (data.Keys.Contains(coord)) return data[coord];
-                return null;
-            }
-            set
-            {
-                data[CoordString(y, x)] = value;
-            }
-        }
-        public T this[string coord]
-        {
-            get
-            {
-                if (data.Keys.Contains(coord)) return data[coord];
-                return null;
-            }
-            set
-            {
-                data[coord] = value;
-            }
-        }
         public T this[I2dLocateable pos]
         {
             get
@@ -164,6 +155,7 @@ namespace RelertSharp.MapStructure.Points
         }
         public int X { get; set; }
         public int Y { get; set; }
+        public string ID { get; set; }
         public int Coord
         {
             get { return CoordInt(X, Y); }

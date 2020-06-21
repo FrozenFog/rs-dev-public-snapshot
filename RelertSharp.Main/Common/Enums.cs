@@ -18,6 +18,16 @@ namespace RelertSharp.Common
         public static bool operator ==(EnumDisplayClass a, int b) { return b == a.Value; }
         public static bool operator !=(EnumDisplayClass a, int b) { return b != a.Value; }
     }
+    public enum PickPanelType
+    {
+        CombatObject = 0,
+        Terrains = 1,
+        Smudges = 2,
+        Overlays = 3,
+        Waypoints = 4,
+        Celltags = 5,
+        BaseNodes = 6
+    }
     [Flags]
     public enum CombatObjectType
     {

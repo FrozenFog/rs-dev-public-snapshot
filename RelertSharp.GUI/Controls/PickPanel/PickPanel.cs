@@ -37,6 +37,7 @@ namespace RelertSharp.GUI.Controls
         {
             SetLanguage();
             InitializeGeneralPanel();
+            InitializeTerrainPanel();
 
             initialized = true;
         }
@@ -66,7 +67,11 @@ namespace RelertSharp.GUI.Controls
         {
             foreach (Control c in Controls) Language.SetControlLanguage(c);
         }
-
+        private void tbcMain_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CurrentType = (PickPanelType)tbcMain.SelectedIndex;
+        }
         public BrushModel Result { get { return brush; } }
+        public PickPanelType CurrentType { get; private set; }
     }
 }

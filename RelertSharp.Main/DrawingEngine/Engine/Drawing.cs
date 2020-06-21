@@ -443,7 +443,7 @@ namespace RelertSharp.DrawingEngine
                 if (facing == 7) facing = 0;
                 else facing = 7 - facing;
                 INIEntity turret = GlobalRules.GetBuildingTurret(nameid);
-                int maxnum = turret.GetPair("LoopEnd").ParseInt() - turret.GetPair("LoopStart").ParseInt() + 1;
+                int maxnum = turret.ParseInt("LoopEnd") - turret.ParseInt("LoopStart") + 1;
                 if (maxnum < 8) return Vec3.Zero;
                 int increse = maxnum >> 3;
                 return new Vec3() { X = facing * increse, Y = 0, Z = 0 };
@@ -458,12 +458,12 @@ namespace RelertSharp.DrawingEngine
             }
             else
             {
-                int facingBase = 256 / GlobalRules[nameID].GetPair("Facings").ParseInt(8);
+                int facingBase = 256 / GlobalRules[nameID].ParseInt("Facings", 8);
                 int direction = facing / facingBase;
                 if (direction == 7) direction = 0;
                 else direction++;
-                int startFrame = GlobalRules[nameID].GetPair("StartWalkFrame").ParseInt(-1);
-                int walkFrame = GlobalRules[nameID].GetPair("WalkFrames").ParseInt(12);
+                int startFrame = GlobalRules[nameID].ParseInt("StartWalkFrame", -1);
+                int walkFrame = GlobalRules[nameID].ParseInt("WalkFrames", 12);
                 int offset = walkFrame - 1;
                 return new Vec3() { X = startFrame + direction * walkFrame + offset, Y = 0, Z = 0 };
             }

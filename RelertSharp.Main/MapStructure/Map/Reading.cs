@@ -197,11 +197,11 @@ namespace RelertSharp.MapStructure
             }
             foreach (INIPair p in entCelltags.DataList)
             {
-                Celltags[p.Name] = new CellTagItem(p.Name, p.Value);
+                Celltags.AddObject(new CellTagItem(p.Name, p.Value));
             }
             foreach (INIPair p in entWaypoints.DataList)
             {
-                Waypoints[p.Value] = new WaypointItem(p.Value, p.Name);
+                Waypoints.AddObject(new WaypointItem(p.Value, p.Name));
             }
         }
         private void GetPreview(MapFile f)
@@ -212,7 +212,7 @@ namespace RelertSharp.MapStructure
                 f.PopEnt("PreviewPack");
                 return;
             }
-            int[] buf = preview.GetPair("Size").ParseIntList();
+            int[] buf = preview.ParseIntList("Size");
             previewSize = new Rectangle(buf[0], buf[1], buf[2], buf[3]);
             previewString = f.PopEnt("PreviewPack").JoinString();
         }

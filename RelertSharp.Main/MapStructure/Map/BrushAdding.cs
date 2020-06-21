@@ -19,6 +19,7 @@ namespace RelertSharp.MapStructure
             else if (t == typeof(InfantryItem)) Infantries.AddFromBrush(obj as InfantryItem);
             else if (t == typeof(AircraftItem)) Aircrafts.AddFromBrush(obj as AircraftItem);
             else if (t == typeof(StructureItem)) Buildings.AddFromBrush(obj as StructureItem);
+            else if (t == typeof(TerrainItem)) Terrains.AddObject(obj as TerrainItem);
             AddObjectToTile(obj);
         }
         public void AddBaseNode(IMapObject obj, string ownerHouse)

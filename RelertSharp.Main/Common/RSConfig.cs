@@ -28,7 +28,7 @@ namespace RelertSharp.Common
         #region Private Methods - RSConfig
         private void LoadAttribute()
         {
-            BagNameList = this["SoundConfigs"].GetPair("Bags").ParseStringList();
+            BagNameList = this["SoundConfigs"].ParseStringList("Bags");
             RulesName = this["INI"]["RulesFileName"];
             ArtName = this["INI"]["ArtFileName"];
             SoundName = this["INI"]["SoundFileName"];
@@ -37,14 +37,14 @@ namespace RelertSharp.Common
             EvaName = this["INI"]["EvaFileName"];
             ConfigName = this["General"]["ConfigName"];
             ConfigVersion = this["General"]["ConfigVersion"];
-            IgnoreBuildingTheaterArt = this["DrawingConfig"].GetPair("IgnoreBuildingTheaterArt").ParseBool();
+            IgnoreBuildingTheaterArt = this["DrawingConfig"].ParseBool("IgnoreBuildingTheaterArt");
 
-            DeactiveAnimList = this["DrawingConfig"].GetPair("DeactivateAnim").ParseStringList().ToList();
-            DeactiveBibList = this["DrawingConfig"].GetPair("DeactivateBib").ParseStringList().ToList();
-            DeactiveShadow = this["DrawingConfig"].GetPair("DeactivateShadow").ParseStringList().ToList();
+            DeactiveAnimList = this["DrawingConfig"].ParseStringList("DeactivateAnim").ToList();
+            DeactiveBibList = this["DrawingConfig"].ParseStringList("DeactivateBib").ToList();
+            DeactiveShadow = this["DrawingConfig"].ParseStringList("DeactivateShadow").ToList();
 
-            BridgeOffsetFrames = this["DrawingConfig"].GetPair("OffsetBridgeFrames").ParseIntList().ToList();
-            if (this["General"].GetPair("PreloadTheaterMix").ParseBool())
+            BridgeOffsetFrames = this["DrawingConfig"].ParseIntList("OffsetBridgeFrames").ToList();
+            if (this["General"].ParseBool("PreloadTheaterMix"))
             {
                 PreloadMixes = new List<string>();
                 foreach (INIPair p in this["TheaterMixList"])

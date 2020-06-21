@@ -30,7 +30,7 @@ namespace RelertSharp.GUI
                 if (item.GetType() == typeof(ToolStripButton)) (item as ToolStripButton).Checked = false;
             }
             string btnName = btn.Tag.ToString();
-            if (btnName != "brush")
+            if (btnName != "brush" && drew)
             {
                 pnlPick.Result.BrushObject?.Dispose();
                 GlobalVar.Engine.UnmarkBuildingShape();

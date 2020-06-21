@@ -34,7 +34,7 @@ namespace RelertSharp.MapStructure
         public SmudgeItem AddSmudge(string regname, int x, int y, bool ignore)
         {
             SmudgeItem smg = new SmudgeItem(regname, x, y, ignore);
-            Smudges[x, y] = smg;
+            Smudges.AddObject(smg);
             AddObjectToTile(smg);
             return smg;
         }
@@ -69,7 +69,7 @@ namespace RelertSharp.MapStructure
         public TerrainItem AddTerrain(string coord, string regname)
         {
             TerrainItem ter = new TerrainItem(coord, regname);
-            Terrains[coord] = ter;
+            Terrains.AddObject(ter);
             AddObjectToTile(ter);
             return ter;
         }
