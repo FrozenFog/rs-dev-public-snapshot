@@ -369,10 +369,36 @@ namespace RelertSharp.IniSystem
         {
             Art = f;
         }
+        public string GetOverlayPalette(string regName)
+        {
+            INIEntity ov = this[regName];
+            if (ov.ParseBool("Wall")) return string.Format("unit{0}.pal", TileDictionary.TheaterSub);
+            if (ov.ParseBool("Tiberium")) return string.Format("{0}.pal", GlobalConfig.GetTheaterPalName(CurrentMapDocument.Map.Info.TheaterName));
+            return string.Format("iso{0}.pal", TileDictionary.TheaterSub);
+        }
+        public string GetOverlayFileName(string regName)
+        {
+            string filename = regName;
+            INIEntity ov = this[regName];
+            string img = ov["Image"];
+            bool wall = ov.ParseBool("Wall");
+            if (wall) FixWallOverlayName(ref filename);
+            if (!string.IsNullOrEmpty(img) && regName != img) filename = img;
+            if (GlobalDir.HasFile(filename + ".shp")) return filename.ToLower() + ".shp";
+            else if (wall) return Replace(filename, 1, 'G').ToLower() + ".shp";
+            else return string.Format("{0}.{1}", filename.ToLower(), TileDictionary.TheaterSub);
+        }
         public string GetOverlayName(byte overlayid)
         {
             INIEntity ov = this["OverlayTypes"];
             return ov[overlayid.ToString()];
+        }
+        public byte GetOverlayIndex(string regName)
+        {
+            INIEntity lst = this["OverlayTypes"];
+            int index = lst.IndexOfValue(regName);
+            if (index > -1 && index < 256) return (byte)index;
+            else return 0;
         }
         private bool sideInitialized = false;
         private int side = -1;

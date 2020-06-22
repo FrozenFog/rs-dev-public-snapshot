@@ -108,6 +108,13 @@ namespace RelertSharp.MapStructure
             Index = _overlayIndex;
             Frame = _frameIndex;
         }
+        public OverlayUnit(byte index, byte frame)
+        {
+            Index = index;
+            Frame = frame;
+            X = -1000;
+            Y = -1000;
+        }
         public OverlayUnit(OverlayUnit src)
         {
             X = src.X;

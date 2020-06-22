@@ -49,6 +49,9 @@ namespace RelertSharp.GUI.Model.BrushModel
                 case MapObjectType.Smudge:
                     BrushObject = new SmudgeItem(src as SmudgeItem);
                     break;
+                case MapObjectType.Overlay:
+                    BrushObject = new OverlayUnit(src as OverlayUnit);
+                    break;
             }
             GlobalVar.Engine.DrawBrushObject(BrushObject);
             GlobalVar.Engine.SetObjectLightningStandalone(BrushObject.SceneObject);

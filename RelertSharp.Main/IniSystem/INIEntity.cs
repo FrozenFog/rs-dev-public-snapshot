@@ -51,10 +51,25 @@ namespace RelertSharp.IniSystem
 
         #region Public Methods - INIEntity
         /// <summary>
+        /// Returns the index of the designated pair VALUE. Return -1 when not found
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public int IndexOfValue(string value)
+        {
+            int i = 0;
+            foreach (INIPair p in this)
+            {
+                if (p.Value == value) return i;
+                i++;
+            }
+            return -1;
+        }
+        /// <summary>
         /// Rename the key of each item as indexer, start from 0(def). Similar with IsoMapPack5.
         /// </summary>
         /// <param name="firstindex">Key num for first item</param>
-        /// <returns></returns>
+        /// <returns>Max index</returns>
         public int Reorganize(int firstindex = 0)
         {
             Dictionary<string, INIPair> d = new Dictionary<string, INIPair>();
@@ -66,6 +81,11 @@ namespace RelertSharp.IniSystem
             data = d;
             return firstindex;
         }
+        /// <summary>
+        /// Similar to Reorganize, but returns the reorganized entity result
+        /// </summary>
+        /// <param name="firstindex"></param>
+        /// <returns></returns>
         public INIEntity ReorganizeTo(int firstindex = 0)
         {
             INIEntity result = new INIEntity();

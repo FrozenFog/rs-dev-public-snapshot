@@ -76,18 +76,22 @@
             this.cbbUpg3 = new System.Windows.Forms.ComboBox();
             this.tbpTerrain = new System.Windows.Forms.TabPage();
             this.lbxRndTerrain = new System.Windows.Forms.ListBox();
+            this.cmsTerrainRemoveRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiTerrRemoveSelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiTerrRemoveAllRnd = new System.Windows.Forms.ToolStripMenuItem();
             this.ckbRndTerrainEnable = new System.Windows.Forms.CheckBox();
             this.trvTerrain = new System.Windows.Forms.TreeView();
             this.tbpSmudge = new System.Windows.Forms.TabPage();
             this.tbpOverlay = new System.Windows.Forms.TabPage();
+            this.splitOverlay = new System.Windows.Forms.SplitContainer();
+            this.trvOverlay = new System.Windows.Forms.TreeView();
             this.tbpWaypoint = new System.Windows.Forms.TabPage();
             this.tbpCelltag = new System.Windows.Forms.TabPage();
             this.tbpBaseNode = new System.Windows.Forms.TabPage();
             this.cmsTerrainAddRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTerrAddRnd = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsTerrainRemoveRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmiTerrRemoveSelected = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiTerrRemoveAllRnd = new System.Windows.Forms.ToolStripMenuItem();
+            this.lvOverlayFrames = new System.Windows.Forms.ListView();
+            this.imgOverlayFrame = new System.Windows.Forms.ImageList(this.components);
             this.tbcMain.SuspendLayout();
             this.tbpObject.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitObjects)).BeginInit();
@@ -97,8 +101,13 @@
             this.pnlObjectProp.SuspendLayout();
             this.tlpObjectProps.SuspendLayout();
             this.tbpTerrain.SuspendLayout();
-            this.cmsTerrainAddRnd.SuspendLayout();
             this.cmsTerrainRemoveRnd.SuspendLayout();
+            this.tbpOverlay.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitOverlay)).BeginInit();
+            this.splitOverlay.Panel1.SuspendLayout();
+            this.splitOverlay.Panel2.SuspendLayout();
+            this.splitOverlay.SuspendLayout();
+            this.cmsTerrainAddRnd.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -690,6 +699,29 @@
             this.lbxRndTerrain.Size = new System.Drawing.Size(331, 154);
             this.lbxRndTerrain.TabIndex = 3;
             // 
+            // cmsTerrainRemoveRnd
+            // 
+            this.cmsTerrainRemoveRnd.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsTerrainRemoveRnd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiTerrRemoveSelected,
+            this.tsmiTerrRemoveAllRnd});
+            this.cmsTerrainRemoveRnd.Name = "contextMenuStrip1";
+            this.cmsTerrainRemoveRnd.Size = new System.Drawing.Size(242, 52);
+            // 
+            // tsmiTerrRemoveSelected
+            // 
+            this.tsmiTerrRemoveSelected.Name = "tsmiTerrRemoveSelected";
+            this.tsmiTerrRemoveSelected.Size = new System.Drawing.Size(241, 24);
+            this.tsmiTerrRemoveSelected.Text = "Remove selected item";
+            this.tsmiTerrRemoveSelected.Click += new System.EventHandler(this.tsmiTerrRemoveSelected_Click);
+            // 
+            // tsmiTerrRemoveAllRnd
+            // 
+            this.tsmiTerrRemoveAllRnd.Name = "tsmiTerrRemoveAllRnd";
+            this.tsmiTerrRemoveAllRnd.Size = new System.Drawing.Size(241, 24);
+            this.tsmiTerrRemoveAllRnd.Text = "Remove All";
+            this.tsmiTerrRemoveAllRnd.Click += new System.EventHandler(this.tsmiTerrRemoveAllRnd_Click);
+            // 
             // ckbRndTerrainEnable
             // 
             this.ckbRndTerrainEnable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -724,12 +756,41 @@
             // 
             // tbpOverlay
             // 
+            this.tbpOverlay.Controls.Add(this.splitOverlay);
             this.tbpOverlay.Location = new System.Drawing.Point(4, 46);
             this.tbpOverlay.Name = "tbpOverlay";
             this.tbpOverlay.Size = new System.Drawing.Size(337, 700);
             this.tbpOverlay.TabIndex = 6;
             this.tbpOverlay.Text = "Overlays";
             this.tbpOverlay.UseVisualStyleBackColor = true;
+            // 
+            // splitOverlay
+            // 
+            this.splitOverlay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitOverlay.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitOverlay.Location = new System.Drawing.Point(0, 0);
+            this.splitOverlay.Name = "splitOverlay";
+            this.splitOverlay.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitOverlay.Panel1
+            // 
+            this.splitOverlay.Panel1.Controls.Add(this.trvOverlay);
+            // 
+            // splitOverlay.Panel2
+            // 
+            this.splitOverlay.Panel2.Controls.Add(this.lvOverlayFrames);
+            this.splitOverlay.Size = new System.Drawing.Size(337, 700);
+            this.splitOverlay.SplitterDistance = 369;
+            this.splitOverlay.TabIndex = 0;
+            // 
+            // trvOverlay
+            // 
+            this.trvOverlay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trvOverlay.Location = new System.Drawing.Point(0, 0);
+            this.trvOverlay.Name = "trvOverlay";
+            this.trvOverlay.Size = new System.Drawing.Size(337, 369);
+            this.trvOverlay.TabIndex = 0;
+            this.trvOverlay.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvOverlay_NodeMouseClick);
             // 
             // tbpWaypoint
             // 
@@ -773,28 +834,24 @@
             this.tsmiTerrAddRnd.Text = "Add to random terrain";
             this.tsmiTerrAddRnd.Click += new System.EventHandler(this.tsmiTerrAddRnd_Click);
             // 
-            // cmsTerrainRemoveRnd
+            // lvOverlayFrames
             // 
-            this.cmsTerrainRemoveRnd.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cmsTerrainRemoveRnd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiTerrRemoveSelected,
-            this.tsmiTerrRemoveAllRnd});
-            this.cmsTerrainRemoveRnd.Name = "contextMenuStrip1";
-            this.cmsTerrainRemoveRnd.Size = new System.Drawing.Size(242, 52);
+            this.lvOverlayFrames.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvOverlayFrames.HideSelection = false;
+            this.lvOverlayFrames.LargeImageList = this.imgOverlayFrame;
+            this.lvOverlayFrames.Location = new System.Drawing.Point(0, 0);
+            this.lvOverlayFrames.MultiSelect = false;
+            this.lvOverlayFrames.Name = "lvOverlayFrames";
+            this.lvOverlayFrames.Size = new System.Drawing.Size(337, 327);
+            this.lvOverlayFrames.TabIndex = 0;
+            this.lvOverlayFrames.UseCompatibleStateImageBehavior = false;
+            this.lvOverlayFrames.SelectedIndexChanged += new System.EventHandler(this.lvOverlayFrames_SelectedIndexChanged);
             // 
-            // tsmiTerrRemoveSelected
+            // imgOverlayFrame
             // 
-            this.tsmiTerrRemoveSelected.Name = "tsmiTerrRemoveSelected";
-            this.tsmiTerrRemoveSelected.Size = new System.Drawing.Size(241, 24);
-            this.tsmiTerrRemoveSelected.Text = "Remove selected item";
-            this.tsmiTerrRemoveSelected.Click += new System.EventHandler(this.tsmiTerrRemoveSelected_Click);
-            // 
-            // tsmiTerrRemoveAllRnd
-            // 
-            this.tsmiTerrRemoveAllRnd.Name = "tsmiTerrRemoveAllRnd";
-            this.tsmiTerrRemoveAllRnd.Size = new System.Drawing.Size(241, 24);
-            this.tsmiTerrRemoveAllRnd.Text = "Remove All";
-            this.tsmiTerrRemoveAllRnd.Click += new System.EventHandler(this.tsmiTerrRemoveAllRnd_Click);
+            this.imgOverlayFrame.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imgOverlayFrame.ImageSize = new System.Drawing.Size(64, 64);
+            this.imgOverlayFrame.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // PickPanel
             // 
@@ -816,8 +873,13 @@
             this.tlpObjectProps.PerformLayout();
             this.tbpTerrain.ResumeLayout(false);
             this.tbpTerrain.PerformLayout();
-            this.cmsTerrainAddRnd.ResumeLayout(false);
             this.cmsTerrainRemoveRnd.ResumeLayout(false);
+            this.tbpOverlay.ResumeLayout(false);
+            this.splitOverlay.Panel1.ResumeLayout(false);
+            this.splitOverlay.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitOverlay)).EndInit();
+            this.splitOverlay.ResumeLayout(false);
+            this.cmsTerrainAddRnd.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -883,5 +945,9 @@
         private System.Windows.Forms.ContextMenuStrip cmsTerrainRemoveRnd;
         private System.Windows.Forms.ToolStripMenuItem tsmiTerrRemoveSelected;
         private System.Windows.Forms.ToolStripMenuItem tsmiTerrRemoveAllRnd;
+        private System.Windows.Forms.SplitContainer splitOverlay;
+        private System.Windows.Forms.TreeView trvOverlay;
+        private System.Windows.Forms.ListView lvOverlayFrames;
+        private System.Windows.Forms.ImageList imgOverlayFrame;
     }
 }

@@ -164,6 +164,11 @@ namespace RelertSharp.Common
                     return null;
             }
         }
+        public string GetTheaterPalName(string theaterName)
+        {
+            TheaterType type = GetTheater(theaterName);
+            return GetTheaterPalName(type);
+        }
         #endregion
 
 

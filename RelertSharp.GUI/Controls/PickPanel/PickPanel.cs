@@ -38,6 +38,8 @@ namespace RelertSharp.GUI.Controls
             SetLanguage();
             InitializeGeneralPanel();
             InitializeTerrainPanel();
+            InitializeOverlayPanel();
+
 
             initialized = true;
         }

@@ -195,6 +195,10 @@ namespace RelertSharp.DrawingEngine
                 if (wall) d.FlatType = ShpFlatType.Box1;
 
                 if (GlobalDir.HasFile(filename + ".shp")) filename = filename.ToLower() + ".shp";
+                else if (wall)
+                {
+                    filename = Replace(filename, 1, 'G').ToLower() + ".shp";
+                }
                 else
                 {
                     filename = string.Format("{0}.{1}", filename.ToLower(), TileDictionary.TheaterSub);

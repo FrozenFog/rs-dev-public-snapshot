@@ -62,6 +62,21 @@ namespace RelertSharp.Utils
                 src[i] = value;
             }
         }
+        public static Image ResizeImage(Image src, Size newSize)
+        {
+            Bitmap dest = new Bitmap(newSize.Width, newSize.Height);
+            Point pos = GetResizePoint(newSize, src.Size);
+            Graphics g = Graphics.FromImage(dest);
+            g.DrawImage(src, pos);
+            g.Dispose();
+            return dest;
+        }
+        public static Point GetResizePoint(Size dest, Size src)
+        {
+            int x = (dest.Width - src.Width) / 2;
+            int y = (dest.Height - src.Height) / 2;
+            return new Point(x, y);
+        }
         public static T MemCpy<T>(T src)
         {
             T dest = Activator.CreateInstance<T>();

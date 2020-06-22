@@ -10,6 +10,12 @@ namespace RelertSharp.GUI
 {
     internal static class GuiUtils
     {
+        public static TreeNode NewNode(string text, string name)
+        {
+            TreeNode n = new TreeNode(Language.DICT[text]);
+            n.Name = name;
+            return n;
+        }
         public static int TryParseTextBox(TextBox src, int def = 0)
         {
             try

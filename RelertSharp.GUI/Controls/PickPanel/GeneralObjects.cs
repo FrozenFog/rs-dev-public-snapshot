@@ -22,7 +22,7 @@ namespace RelertSharp.GUI.Controls
         private const string TNodeUnit = "\nUnit";
         private const string TNodeNaval = "\nNaval";
         private const string TNodeAircraft = "\nAircraft";
-        private readonly string[] RootNodes = { TNodeBuilding, TNodeInfantry, TNodeUnit, TNodeNaval, TNodeAircraft , TNodeTree, TNodeTerrTib, TNodeTerrPole, TNodeTerrOther};
+        private readonly string[] ObjectRootNodes = { TNodeBuilding, TNodeInfantry, TNodeUnit, TNodeNaval, TNodeAircraft};
         private IMapObject InnerSource;
 
 
@@ -154,7 +154,7 @@ namespace RelertSharp.GUI.Controls
             if (drew)
             {
                 TreeNode node = e.Node;
-                if (!string.IsNullOrEmpty(node.Name) && !RootNodes.Contains(node.Name))
+                if (!string.IsNullOrEmpty(node.Name) && !ObjectRootNodes.Contains(node.Name))
                 {
                     TreeNode root = GetRootNode(node);
                     combatRootName = root.Name;

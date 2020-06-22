@@ -18,6 +18,7 @@ namespace RelertSharp.GUI.Controls
         private const string TNodeTerrOther = "\nTerrOther";
         private const string TNodeTerrPole = "\nTerrPole";
         private const string TNodeTerrTib = "\nTerrTibTree";
+        private static string[] TerrainRootNode = { TNodeTree, TNodeTerrOther, TNodeTerrPole, TNodeTerrTib };
 
 
         private bool isRndTerrain = false;
@@ -45,14 +46,10 @@ namespace RelertSharp.GUI.Controls
         }
         private void LoadTerrains()
         {
-            TreeNode tree = new TreeNode("Trees");
-            tree.Name = TNodeTree;
-            TreeNode other = new TreeNode("Others");
-            other.Name = TNodeTerrOther;
-            TreeNode pole = new TreeNode("Poles");
-            pole.Name = TNodeTerrPole;
-            TreeNode resource = new TreeNode("Resource Fountain");
-            resource.Name = TNodeTerrTib;
+            TreeNode tree = NewNode("Trees", TNodeTree);
+            TreeNode other = NewNode("Others", TNodeTerrOther);
+            TreeNode pole = NewNode("Poles", TNodeTerrPole);
+            TreeNode resource = NewNode("Resource Fountain", TNodeTerrTib);
             foreach (INIPair p in GlobalRules["TerrainTypes"])
             {
                 INIEntity item = GlobalRules[p.Value];
@@ -97,7 +94,7 @@ namespace RelertSharp.GUI.Controls
         private void trvTerrain_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             TreeNode node = e.Node;
-            if (!string.IsNullOrEmpty(node.Name) && !RootNodes.Contains(node.Name))
+            if (!string.IsNullOrEmpty(node.Name) && !TerrainRootNode.Contains(node.Name))
             {
                 mouseNodeName = node.Name;
                 if (e.Button == MouseButtons.Left)
@@ -114,13 +111,6 @@ namespace RelertSharp.GUI.Controls
                     cmsTerrainAddRnd.Show(sender as Control, e.Location);
                 }
 
-            }
-        }
-        private void lbxRndTerrain_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                cmsTerrainRemoveRnd.Show(sender as Control, e.Location);
             }
         }
         private void tsmiTerrAddRnd_Click(object sender, EventArgs e)

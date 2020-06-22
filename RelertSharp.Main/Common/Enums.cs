@@ -18,6 +18,26 @@ namespace RelertSharp.Common
         public static bool operator ==(EnumDisplayClass a, int b) { return b == a.Value; }
         public static bool operator !=(EnumDisplayClass a, int b) { return b != a.Value; }
     }
+    [Flags]
+    public enum WallDirection
+    {
+        Sole = 0,
+        NE = 1,
+        SE = 2,
+        SW = 4,
+        NW = 8,
+        CornerOfEast = NE | SE,
+        LineNeSw = NE | SW,
+        CornerOfSouth = SE | SW,
+        TriSE = NE | SE | SW,
+        CornerOfNorth = NE | NW,
+        LineNwSe = NW | SE,
+        TriNE = NW | NE | SE,
+        CornerOfWest = NW | SW,
+        TriNW = SW | NW | NE,
+        TriSW = SE | SW | NW,
+        All = NE | SE | SW | NW
+    }
     public enum PickPanelType
     {
         CombatObject = 0,

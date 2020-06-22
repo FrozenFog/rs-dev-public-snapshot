@@ -33,6 +33,19 @@ namespace RelertSharp.FileSystem
                 img.SetBitmap(_pal);
             }
         }
+        public Size GetMaxSize()
+        {
+            Size sz = new Size(0, 0);
+            foreach (ShpFrame img in data)
+            {
+                if (img.Image != null)
+                {
+                    if (img.Image.Size.Width > sz.Width) sz.Width = img.Image.Size.Width;
+                    if (img.Image.Size.Height > sz.Height) sz.Height = img.Image.Size.Height;
+                }
+            }
+            return sz;
+        }
         #endregion
 
 
@@ -135,7 +148,11 @@ namespace RelertSharp.FileSystem
         #region Public Methods - ShpFrame
         public void SetBitmap(PalFile _pal)
         {
-            if (IsNullFrame) return;
+            if (IsNullFrame)
+            {
+                Image = new Bitmap(1, 1);
+                return;
+            }
             Bitmap bmp = new Bitmap(Width, Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
             int count = 0;
             for (int j = 0; j < Height; j++)
