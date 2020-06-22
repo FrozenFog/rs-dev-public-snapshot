@@ -142,7 +142,7 @@ namespace RelertSharp.DrawingEngine
                 if (msc.IsWall) msc.SetColor(ambientLight);
                 else if (msc.IsHiBridge)
                 {
-                    Vec4 hicolor = Vec4.Unit3(lightningLevel + (msc.Z + 4)) + sceneColor;
+                    Vec4 hicolor = Vec4.Unit3(lightningLevel * (msc.Z + 4)) + sceneColor;
                     msc.SetColor(hicolor);
                 }
                 else msc.SetColor(sceneColor);
