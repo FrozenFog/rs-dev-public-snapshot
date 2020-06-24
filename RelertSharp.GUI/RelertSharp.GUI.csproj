@@ -129,6 +129,9 @@
     <Compile Include="Controls\PickPanel\BasenodeObject.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\PickPanel\CellTagObject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\PickPanel\Exporting.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -174,7 +177,7 @@
     <Compile Include="MainWindow\KeyHandler.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainWindow\LogicReciver.cs">
+    <Compile Include="MainWindow\EventReciver.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow\ObjectBrush.cs">
@@ -339,6 +342,9 @@
     </Compile>
     <Compile Include="SubWindows\LogicEditor\Pages\PanelGlobalSearch.Designer.cs">
       <DependentUpon>PanelGlobalSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\PublicPort.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="SubWindows\LogicEditor\SearchCollection.cs" />
     <Compile Include="SubWindows\LogicEditor\StaticHelper.cs" />

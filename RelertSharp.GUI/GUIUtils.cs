@@ -27,6 +27,11 @@ namespace RelertSharp.GUI
                 return def;
             }
         }
+        public static void SelectComboboxItem<T>(ComboBox dest, Func<T, bool> predicate)
+        {
+            IEnumerable<T> target = dest.Items.Cast<T>().Where(predicate);
+            if (target.Count() != 0) dest.SelectedItem = target.First();
+        }
         public static int TrimMaskedTextbox(MaskedTextBox src, int floor, int ceil)
         {
             try
@@ -182,7 +187,9 @@ namespace RelertSharp.GUI
         {
             dest.Items.Clear();
             if (src == null || src.Count() == 0) return;
+            dest.BeginUpdate();
             dest.Items.AddRange(src.ToArray());
+            dest.EndUpdate();
         }
         public static void LoadToObjectCollection(ListView dest, IEnumerable<ListViewItem> src)
         {

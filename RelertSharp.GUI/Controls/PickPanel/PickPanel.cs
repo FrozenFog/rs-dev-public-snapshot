@@ -20,6 +20,7 @@ namespace RelertSharp.GUI.Controls
     {
         internal event EventHandler BrushObjectSelected;
         internal event I2dLocateableHandler BaseNodeTracing;
+        internal event TriggerTagItemHandler TraceCelltag;
 
 
         private Map Map { get { return CurrentMapDocument.Map; } }
@@ -42,6 +43,7 @@ namespace RelertSharp.GUI.Controls
             InitializeOverlayPanel();
             InitializeSmudgePanel();
             InitializeNodePanel();
+            InitializeCelltagPanel();
 
             initialized = true;
         }

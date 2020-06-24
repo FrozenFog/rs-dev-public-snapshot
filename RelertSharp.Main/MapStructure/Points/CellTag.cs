@@ -14,12 +14,28 @@ namespace RelertSharp.MapStructure.Points
     }
 
 
-    public class CellTagItem : PointItemBase, IMapMiscObject
+    public class CellTagItem : PointItemBase, IMapObject
     {
         public CellTagItem(string _coord, string _tagID) : base(_coord)
         {
             TagID = _tagID;
         }
+        public CellTagItem(CellTagItem src) : base(src)
+        {
+            TagID = src.TagID;
+        }
+        public CellTagItem(string tagid)
+        {
+            TagID = tagid;
+        }
+
+
+        #region Public Methods
+        public override string ToString()
+        {
+            return string.Format("{0}, {1} - {2}", X, Y, TagID);
+        }
+        #endregion
 
 
         #region Public Calls - CellTagItem

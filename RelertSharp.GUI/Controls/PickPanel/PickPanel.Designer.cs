@@ -95,6 +95,13 @@
             this.imgOverlayFrame = new System.Windows.Forms.ImageList(this.components);
             this.tbpWaypoint = new System.Windows.Forms.TabPage();
             this.tbpCelltag = new System.Windows.Forms.TabPage();
+            this.splitBaseNode = new System.Windows.Forms.SplitContainer();
+            this.lbxCelltags = new System.Windows.Forms.ListBox();
+            this.cbbCelltag = new System.Windows.Forms.ComboBox();
+            this.lbxSameTags = new System.Windows.Forms.ListBox();
+            this.tlpCellUtil = new System.Windows.Forms.TableLayoutPanel();
+            this.btnSelectAllSameCell = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
             this.tbpBaseNode = new System.Windows.Forms.TabPage();
             this.lbxNodes = new System.Windows.Forms.ListBox();
             this.cmsNodeUtils = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -105,13 +112,15 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiRefreshNodes = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmiRemoveAllNodes = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRemoveSelNode = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiRemoveAllNodes = new System.Windows.Forms.ToolStripMenuItem();
             this.cbbNodeHouse = new System.Windows.Forms.ComboBox();
             this.cmsTerrainAddRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTerrAddRnd = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsSmudgeAddRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiSmgAddRnd = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsCelltagUtil = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiTraceTag = new System.Windows.Forms.ToolStripMenuItem();
             this.tbcMain.SuspendLayout();
             this.tbpObject.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitObjects)).BeginInit();
@@ -129,10 +138,17 @@
             this.splitOverlay.Panel1.SuspendLayout();
             this.splitOverlay.Panel2.SuspendLayout();
             this.splitOverlay.SuspendLayout();
+            this.tbpCelltag.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitBaseNode)).BeginInit();
+            this.splitBaseNode.Panel1.SuspendLayout();
+            this.splitBaseNode.Panel2.SuspendLayout();
+            this.splitBaseNode.SuspendLayout();
+            this.tlpCellUtil.SuspendLayout();
             this.tbpBaseNode.SuspendLayout();
             this.cmsNodeUtils.SuspendLayout();
             this.cmsTerrainAddRnd.SuspendLayout();
             this.cmsSmudgeAddRnd.SuspendLayout();
+            this.cmsCelltagUtil.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -149,7 +165,7 @@
             this.tbcMain.Multiline = true;
             this.tbcMain.Name = "tbcMain";
             this.tbcMain.SelectedIndex = 0;
-            this.tbcMain.Size = new System.Drawing.Size(345, 750);
+            this.tbcMain.Size = new System.Drawing.Size(311, 750);
             this.tbcMain.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tbcMain.TabIndex = 0;
             this.tbcMain.SelectedIndexChanged += new System.EventHandler(this.tbcMain_SelectedIndexChanged);
@@ -157,10 +173,10 @@
             // tbpObject
             // 
             this.tbpObject.Controls.Add(this.splitObjects);
-            this.tbpObject.Location = new System.Drawing.Point(4, 46);
+            this.tbpObject.Location = new System.Drawing.Point(4, 67);
             this.tbpObject.Name = "tbpObject";
             this.tbpObject.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpObject.Size = new System.Drawing.Size(337, 700);
+            this.tbpObject.Size = new System.Drawing.Size(303, 679);
             this.tbpObject.TabIndex = 0;
             this.tbpObject.Text = "General Objects";
             this.tbpObject.UseVisualStyleBackColor = true;
@@ -181,8 +197,8 @@
             // 
             this.splitObjects.Panel2.AutoScroll = true;
             this.splitObjects.Panel2.Controls.Add(this.pnlObjectProp);
-            this.splitObjects.Size = new System.Drawing.Size(331, 694);
-            this.splitObjects.SplitterDistance = 506;
+            this.splitObjects.Size = new System.Drawing.Size(297, 673);
+            this.splitObjects.SplitterDistance = 485;
             this.splitObjects.TabIndex = 1;
             // 
             // trvObject
@@ -195,7 +211,7 @@
             this.trvObject.Name = "trvObject";
             this.trvObject.SelectedImageIndex = 0;
             this.trvObject.ShowNodeToolTips = true;
-            this.trvObject.Size = new System.Drawing.Size(331, 506);
+            this.trvObject.Size = new System.Drawing.Size(297, 485);
             this.trvObject.TabIndex = 0;
             this.trvObject.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvObject_NodeMouseClick);
             // 
@@ -213,7 +229,7 @@
             this.pnlObjectProp.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlObjectProp.Location = new System.Drawing.Point(0, 0);
             this.pnlObjectProp.Name = "pnlObjectProp";
-            this.pnlObjectProp.Size = new System.Drawing.Size(310, 527);
+            this.pnlObjectProp.Size = new System.Drawing.Size(276, 527);
             this.pnlObjectProp.TabIndex = 1;
             // 
             // tlpObjectProps
@@ -286,7 +302,7 @@
             this.tlpObjectProps.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpObjectProps.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpObjectProps.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpObjectProps.Size = new System.Drawing.Size(310, 527);
+            this.tlpObjectProps.Size = new System.Drawing.Size(276, 527);
             this.tlpObjectProps.TabIndex = 0;
             // 
             // label9
@@ -486,7 +502,7 @@
             this.cbbOwner.FormattingEnabled = true;
             this.cbbOwner.Location = new System.Drawing.Point(200, 3);
             this.cbbOwner.Name = "cbbOwner";
-            this.cbbOwner.Size = new System.Drawing.Size(107, 23);
+            this.cbbOwner.Size = new System.Drawing.Size(73, 23);
             this.cbbOwner.TabIndex = 3;
             this.cbbOwner.SelectedIndexChanged += new System.EventHandler(this.ParamChangedOnRedraw);
             // 
@@ -497,7 +513,7 @@
             this.mtxbHp.Mask = "000";
             this.mtxbHp.Name = "mtxbHp";
             this.mtxbHp.PromptChar = ' ';
-            this.mtxbHp.Size = new System.Drawing.Size(107, 25);
+            this.mtxbHp.Size = new System.Drawing.Size(73, 25);
             this.mtxbHp.TabIndex = 4;
             this.mtxbHp.Text = "256";
             this.mtxbHp.ValidatingType = typeof(int);
@@ -510,7 +526,7 @@
             this.mtxbVeteran.Mask = "000";
             this.mtxbVeteran.Name = "mtxbVeteran";
             this.mtxbVeteran.PromptChar = ' ';
-            this.mtxbVeteran.Size = new System.Drawing.Size(107, 25);
+            this.mtxbVeteran.Size = new System.Drawing.Size(73, 25);
             this.mtxbVeteran.TabIndex = 5;
             this.mtxbVeteran.Text = "0";
             this.mtxbVeteran.ValidatingType = typeof(int);
@@ -521,7 +537,7 @@
             this.mtxbFacing.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mtxbFacing.Location = new System.Drawing.Point(200, 94);
             this.mtxbFacing.Name = "mtxbFacing";
-            this.mtxbFacing.Size = new System.Drawing.Size(107, 25);
+            this.mtxbFacing.Size = new System.Drawing.Size(73, 25);
             this.mtxbFacing.TabIndex = 5;
             this.mtxbFacing.Text = "0";
             this.mtxbFacing.Validated += new System.EventHandler(this.ParamChangedOnRedraw);
@@ -532,7 +548,7 @@
             this.cbbAttTag.FormattingEnabled = true;
             this.cbbAttTag.Location = new System.Drawing.Point(200, 125);
             this.cbbAttTag.Name = "cbbAttTag";
-            this.cbbAttTag.Size = new System.Drawing.Size(107, 23);
+            this.cbbAttTag.Size = new System.Drawing.Size(73, 23);
             this.cbbAttTag.TabIndex = 3;
             this.cbbAttTag.SelectedIndexChanged += new System.EventHandler(this.ParamChangedOnRedraw);
             // 
@@ -543,7 +559,7 @@
             this.cbbStat.FormattingEnabled = true;
             this.cbbStat.Location = new System.Drawing.Point(200, 154);
             this.cbbStat.Name = "cbbStat";
-            this.cbbStat.Size = new System.Drawing.Size(107, 23);
+            this.cbbStat.Size = new System.Drawing.Size(73, 23);
             this.cbbStat.TabIndex = 3;
             this.cbbStat.SelectedIndexChanged += new System.EventHandler(this.ParamChangedOnRedraw);
             // 
@@ -552,7 +568,7 @@
             this.txbGroup.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txbGroup.Location = new System.Drawing.Point(200, 183);
             this.txbGroup.Name = "txbGroup";
-            this.txbGroup.Size = new System.Drawing.Size(107, 25);
+            this.txbGroup.Size = new System.Drawing.Size(73, 25);
             this.txbGroup.TabIndex = 6;
             this.txbGroup.Text = "-1";
             this.txbGroup.Validated += new System.EventHandler(this.ParamChangedOnRedraw);
@@ -563,7 +579,7 @@
             this.ckbBridge.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ckbBridge.Location = new System.Drawing.Point(200, 214);
             this.ckbBridge.Name = "ckbBridge";
-            this.ckbBridge.Size = new System.Drawing.Size(107, 17);
+            this.ckbBridge.Size = new System.Drawing.Size(73, 17);
             this.ckbBridge.TabIndex = 7;
             this.ckbBridge.UseVisualStyleBackColor = true;
             this.ckbBridge.CheckedChanged += new System.EventHandler(this.ParamChangedOnRedraw);
@@ -574,7 +590,7 @@
             this.ckbRecruit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ckbRecruit.Location = new System.Drawing.Point(200, 237);
             this.ckbRecruit.Name = "ckbRecruit";
-            this.ckbRecruit.Size = new System.Drawing.Size(107, 17);
+            this.ckbRecruit.Size = new System.Drawing.Size(73, 17);
             this.ckbRecruit.TabIndex = 7;
             this.ckbRecruit.UseVisualStyleBackColor = true;
             this.ckbRecruit.CheckedChanged += new System.EventHandler(this.ParamChangedOnRedraw);
@@ -587,7 +603,7 @@
             this.ckbUnitRebuild.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ckbUnitRebuild.Location = new System.Drawing.Point(200, 260);
             this.ckbUnitRebuild.Name = "ckbUnitRebuild";
-            this.ckbUnitRebuild.Size = new System.Drawing.Size(107, 17);
+            this.ckbUnitRebuild.Size = new System.Drawing.Size(73, 17);
             this.ckbUnitRebuild.TabIndex = 7;
             this.ckbUnitRebuild.UseVisualStyleBackColor = true;
             this.ckbUnitRebuild.CheckedChanged += new System.EventHandler(this.ParamChangedOnRedraw);
@@ -600,7 +616,7 @@
             this.ckbSell.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ckbSell.Location = new System.Drawing.Point(200, 283);
             this.ckbSell.Name = "ckbSell";
-            this.ckbSell.Size = new System.Drawing.Size(107, 17);
+            this.ckbSell.Size = new System.Drawing.Size(73, 17);
             this.ckbSell.TabIndex = 7;
             this.ckbSell.UseVisualStyleBackColor = true;
             this.ckbSell.CheckedChanged += new System.EventHandler(this.ParamChangedOnRedraw);
@@ -610,7 +626,7 @@
             this.txbFollow.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txbFollow.Location = new System.Drawing.Point(200, 306);
             this.txbFollow.Name = "txbFollow";
-            this.txbFollow.Size = new System.Drawing.Size(107, 25);
+            this.txbFollow.Size = new System.Drawing.Size(73, 25);
             this.txbFollow.TabIndex = 6;
             this.txbFollow.Text = "-1";
             this.txbFollow.Validated += new System.EventHandler(this.ParamChangedOnRedraw);
@@ -623,7 +639,7 @@
             this.ckbRepair.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ckbRepair.Location = new System.Drawing.Point(200, 337);
             this.ckbRepair.Name = "ckbRepair";
-            this.ckbRepair.Size = new System.Drawing.Size(107, 17);
+            this.ckbRepair.Size = new System.Drawing.Size(73, 17);
             this.ckbRepair.TabIndex = 7;
             this.ckbRepair.UseVisualStyleBackColor = true;
             this.ckbRepair.CheckedChanged += new System.EventHandler(this.ParamChangedOnRedraw);
@@ -636,7 +652,7 @@
             this.ckbPowered.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ckbPowered.Location = new System.Drawing.Point(200, 360);
             this.ckbPowered.Name = "ckbPowered";
-            this.ckbPowered.Size = new System.Drawing.Size(107, 17);
+            this.ckbPowered.Size = new System.Drawing.Size(73, 17);
             this.ckbPowered.TabIndex = 7;
             this.ckbPowered.UseVisualStyleBackColor = true;
             this.ckbPowered.CheckedChanged += new System.EventHandler(this.ParamChangedOnRedraw);
@@ -648,7 +664,7 @@
             this.cbbSpotlight.FormattingEnabled = true;
             this.cbbSpotlight.Location = new System.Drawing.Point(200, 383);
             this.cbbSpotlight.Name = "cbbSpotlight";
-            this.cbbSpotlight.Size = new System.Drawing.Size(107, 23);
+            this.cbbSpotlight.Size = new System.Drawing.Size(73, 23);
             this.cbbSpotlight.TabIndex = 3;
             this.cbbSpotlight.SelectedIndexChanged += new System.EventHandler(this.ParamChangedOnRedraw);
             // 
@@ -659,7 +675,7 @@
             this.mtxbUpgNum.Mask = "0";
             this.mtxbUpgNum.Name = "mtxbUpgNum";
             this.mtxbUpgNum.PromptChar = ' ';
-            this.mtxbUpgNum.Size = new System.Drawing.Size(107, 25);
+            this.mtxbUpgNum.Size = new System.Drawing.Size(73, 25);
             this.mtxbUpgNum.TabIndex = 5;
             this.mtxbUpgNum.Text = "0";
             this.mtxbUpgNum.ValidatingType = typeof(int);
@@ -672,7 +688,7 @@
             this.cbbUpg1.FormattingEnabled = true;
             this.cbbUpg1.Location = new System.Drawing.Point(200, 443);
             this.cbbUpg1.Name = "cbbUpg1";
-            this.cbbUpg1.Size = new System.Drawing.Size(107, 23);
+            this.cbbUpg1.Size = new System.Drawing.Size(73, 23);
             this.cbbUpg1.TabIndex = 3;
             this.cbbUpg1.Text = "None";
             this.cbbUpg1.SelectedIndexChanged += new System.EventHandler(this.ParamChangedOnRedraw);
@@ -683,7 +699,7 @@
             this.cbbUpg2.FormattingEnabled = true;
             this.cbbUpg2.Location = new System.Drawing.Point(200, 472);
             this.cbbUpg2.Name = "cbbUpg2";
-            this.cbbUpg2.Size = new System.Drawing.Size(107, 23);
+            this.cbbUpg2.Size = new System.Drawing.Size(73, 23);
             this.cbbUpg2.TabIndex = 3;
             this.cbbUpg2.Text = "None";
             this.cbbUpg2.SelectedIndexChanged += new System.EventHandler(this.ParamChangedOnRedraw);
@@ -694,7 +710,7 @@
             this.cbbUpg3.FormattingEnabled = true;
             this.cbbUpg3.Location = new System.Drawing.Point(200, 501);
             this.cbbUpg3.Name = "cbbUpg3";
-            this.cbbUpg3.Size = new System.Drawing.Size(107, 23);
+            this.cbbUpg3.Size = new System.Drawing.Size(73, 23);
             this.cbbUpg3.TabIndex = 3;
             this.cbbUpg3.Text = "None";
             this.cbbUpg3.SelectedIndexChanged += new System.EventHandler(this.ParamChangedOnRedraw);
@@ -704,9 +720,9 @@
             this.tbpTerrain.Controls.Add(this.lbxRndTerrain);
             this.tbpTerrain.Controls.Add(this.ckbRndTerrainEnable);
             this.tbpTerrain.Controls.Add(this.trvTerrain);
-            this.tbpTerrain.Location = new System.Drawing.Point(4, 46);
+            this.tbpTerrain.Location = new System.Drawing.Point(4, 67);
             this.tbpTerrain.Name = "tbpTerrain";
-            this.tbpTerrain.Size = new System.Drawing.Size(337, 700);
+            this.tbpTerrain.Size = new System.Drawing.Size(303, 679);
             this.tbpTerrain.TabIndex = 4;
             this.tbpTerrain.Text = "Terrains";
             this.tbpTerrain.UseVisualStyleBackColor = true;
@@ -775,9 +791,9 @@
             this.tbpSmudge.Controls.Add(this.ckbRndSmg);
             this.tbpSmudge.Controls.Add(this.lbxRndSmg);
             this.tbpSmudge.Controls.Add(this.trvSmudge);
-            this.tbpSmudge.Location = new System.Drawing.Point(4, 46);
+            this.tbpSmudge.Location = new System.Drawing.Point(4, 67);
             this.tbpSmudge.Name = "tbpSmudge";
-            this.tbpSmudge.Size = new System.Drawing.Size(337, 700);
+            this.tbpSmudge.Size = new System.Drawing.Size(303, 679);
             this.tbpSmudge.TabIndex = 5;
             this.tbpSmudge.Text = "Smudges";
             this.tbpSmudge.UseVisualStyleBackColor = true;
@@ -844,9 +860,9 @@
             // tbpOverlay
             // 
             this.tbpOverlay.Controls.Add(this.splitOverlay);
-            this.tbpOverlay.Location = new System.Drawing.Point(4, 46);
+            this.tbpOverlay.Location = new System.Drawing.Point(4, 67);
             this.tbpOverlay.Name = "tbpOverlay";
-            this.tbpOverlay.Size = new System.Drawing.Size(337, 700);
+            this.tbpOverlay.Size = new System.Drawing.Size(303, 679);
             this.tbpOverlay.TabIndex = 6;
             this.tbpOverlay.Text = "Overlays";
             this.tbpOverlay.UseVisualStyleBackColor = true;
@@ -866,8 +882,8 @@
             // splitOverlay.Panel2
             // 
             this.splitOverlay.Panel2.Controls.Add(this.lvOverlayFrames);
-            this.splitOverlay.Size = new System.Drawing.Size(337, 700);
-            this.splitOverlay.SplitterDistance = 369;
+            this.splitOverlay.Size = new System.Drawing.Size(303, 679);
+            this.splitOverlay.SplitterDistance = 348;
             this.splitOverlay.TabIndex = 0;
             // 
             // trvOverlay
@@ -875,7 +891,7 @@
             this.trvOverlay.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trvOverlay.Location = new System.Drawing.Point(0, 0);
             this.trvOverlay.Name = "trvOverlay";
-            this.trvOverlay.Size = new System.Drawing.Size(337, 369);
+            this.trvOverlay.Size = new System.Drawing.Size(303, 348);
             this.trvOverlay.TabIndex = 0;
             this.trvOverlay.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvOverlay_NodeMouseClick);
             // 
@@ -887,7 +903,7 @@
             this.lvOverlayFrames.Location = new System.Drawing.Point(0, 0);
             this.lvOverlayFrames.MultiSelect = false;
             this.lvOverlayFrames.Name = "lvOverlayFrames";
-            this.lvOverlayFrames.Size = new System.Drawing.Size(337, 327);
+            this.lvOverlayFrames.Size = new System.Drawing.Size(303, 327);
             this.lvOverlayFrames.TabIndex = 0;
             this.lvOverlayFrames.UseCompatibleStateImageBehavior = false;
             this.lvOverlayFrames.SelectedIndexChanged += new System.EventHandler(this.lvOverlayFrames_SelectedIndexChanged);
@@ -900,29 +916,125 @@
             // 
             // tbpWaypoint
             // 
-            this.tbpWaypoint.Location = new System.Drawing.Point(4, 46);
+            this.tbpWaypoint.Location = new System.Drawing.Point(4, 67);
             this.tbpWaypoint.Name = "tbpWaypoint";
-            this.tbpWaypoint.Size = new System.Drawing.Size(337, 700);
+            this.tbpWaypoint.Size = new System.Drawing.Size(303, 679);
             this.tbpWaypoint.TabIndex = 7;
             this.tbpWaypoint.Text = "Waypoints";
             this.tbpWaypoint.UseVisualStyleBackColor = true;
             // 
             // tbpCelltag
             // 
-            this.tbpCelltag.Location = new System.Drawing.Point(4, 46);
+            this.tbpCelltag.Controls.Add(this.splitBaseNode);
+            this.tbpCelltag.Location = new System.Drawing.Point(4, 67);
             this.tbpCelltag.Name = "tbpCelltag";
-            this.tbpCelltag.Size = new System.Drawing.Size(337, 700);
+            this.tbpCelltag.Size = new System.Drawing.Size(303, 679);
             this.tbpCelltag.TabIndex = 8;
             this.tbpCelltag.Text = "Celltags";
             this.tbpCelltag.UseVisualStyleBackColor = true;
+            // 
+            // splitBaseNode
+            // 
+            this.splitBaseNode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitBaseNode.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitBaseNode.Location = new System.Drawing.Point(0, 0);
+            this.splitBaseNode.Name = "splitBaseNode";
+            this.splitBaseNode.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitBaseNode.Panel1
+            // 
+            this.splitBaseNode.Panel1.Controls.Add(this.lbxCelltags);
+            this.splitBaseNode.Panel1.Controls.Add(this.cbbCelltag);
+            // 
+            // splitBaseNode.Panel2
+            // 
+            this.splitBaseNode.Panel2.Controls.Add(this.lbxSameTags);
+            this.splitBaseNode.Panel2.Controls.Add(this.tlpCellUtil);
+            this.splitBaseNode.Size = new System.Drawing.Size(303, 679);
+            this.splitBaseNode.SplitterDistance = 335;
+            this.splitBaseNode.TabIndex = 0;
+            // 
+            // lbxCelltags
+            // 
+            this.lbxCelltags.ContextMenuStrip = this.cmsCelltagUtil;
+            this.lbxCelltags.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbxCelltags.FormattingEnabled = true;
+            this.lbxCelltags.ItemHeight = 15;
+            this.lbxCelltags.Location = new System.Drawing.Point(0, 23);
+            this.lbxCelltags.Name = "lbxCelltags";
+            this.lbxCelltags.Size = new System.Drawing.Size(303, 312);
+            this.lbxCelltags.TabIndex = 2;
+            this.lbxCelltags.SelectedIndexChanged += new System.EventHandler(this.lbxCelltags_SelectedIndexChanged);
+            this.lbxCelltags.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxCelltags_MouseDoubleClick);
+            // 
+            // cbbCelltag
+            // 
+            this.cbbCelltag.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cbbCelltag.FormattingEnabled = true;
+            this.cbbCelltag.Location = new System.Drawing.Point(0, 0);
+            this.cbbCelltag.Name = "cbbCelltag";
+            this.cbbCelltag.Size = new System.Drawing.Size(303, 23);
+            this.cbbCelltag.TabIndex = 1;
+            this.cbbCelltag.SelectedIndexChanged += new System.EventHandler(this.cbbCelltag_SelectedIndexChanged);
+            // 
+            // lbxSameTags
+            // 
+            this.lbxSameTags.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbxSameTags.FormattingEnabled = true;
+            this.lbxSameTags.ItemHeight = 15;
+            this.lbxSameTags.Location = new System.Drawing.Point(0, 37);
+            this.lbxSameTags.Name = "lbxSameTags";
+            this.lbxSameTags.Size = new System.Drawing.Size(303, 303);
+            this.lbxSameTags.Sorted = true;
+            this.lbxSameTags.TabIndex = 1;
+            this.lbxSameTags.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxCelltags_MouseDoubleClick);
+            // 
+            // tlpCellUtil
+            // 
+            this.tlpCellUtil.AutoSize = true;
+            this.tlpCellUtil.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tlpCellUtil.ColumnCount = 2;
+            this.tlpCellUtil.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpCellUtil.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpCellUtil.Controls.Add(this.btnSelectAllSameCell, 1, 0);
+            this.tlpCellUtil.Controls.Add(this.label7, 0, 0);
+            this.tlpCellUtil.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tlpCellUtil.Location = new System.Drawing.Point(0, 0);
+            this.tlpCellUtil.Name = "tlpCellUtil";
+            this.tlpCellUtil.RowCount = 1;
+            this.tlpCellUtil.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCellUtil.Size = new System.Drawing.Size(303, 37);
+            this.tlpCellUtil.TabIndex = 0;
+            // 
+            // btnSelectAllSameCell
+            // 
+            this.btnSelectAllSameCell.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSelectAllSameCell.Location = new System.Drawing.Point(179, 3);
+            this.btnSelectAllSameCell.Name = "btnSelectAllSameCell";
+            this.btnSelectAllSameCell.Size = new System.Drawing.Size(121, 31);
+            this.btnSelectAllSameCell.TabIndex = 1;
+            this.btnSelectAllSameCell.Text = "Select All";
+            this.btnSelectAllSameCell.UseVisualStyleBackColor = true;
+            this.btnSelectAllSameCell.Click += new System.EventHandler(this.btnSelectAllSameCell_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label7.Location = new System.Drawing.Point(3, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(170, 37);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Tag also used by:";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tbpBaseNode
             // 
             this.tbpBaseNode.Controls.Add(this.lbxNodes);
             this.tbpBaseNode.Controls.Add(this.cbbNodeHouse);
-            this.tbpBaseNode.Location = new System.Drawing.Point(4, 46);
+            this.tbpBaseNode.Location = new System.Drawing.Point(4, 67);
             this.tbpBaseNode.Name = "tbpBaseNode";
-            this.tbpBaseNode.Size = new System.Drawing.Size(337, 700);
+            this.tbpBaseNode.Size = new System.Drawing.Size(303, 679);
             this.tbpBaseNode.TabIndex = 9;
             this.tbpBaseNode.Text = "Base Nodes";
             this.tbpBaseNode.UseVisualStyleBackColor = true;
@@ -935,7 +1047,7 @@
             this.lbxNodes.ItemHeight = 15;
             this.lbxNodes.Location = new System.Drawing.Point(0, 23);
             this.lbxNodes.Name = "lbxNodes";
-            this.lbxNodes.Size = new System.Drawing.Size(337, 677);
+            this.lbxNodes.Size = new System.Drawing.Size(303, 656);
             this.lbxNodes.TabIndex = 3;
             this.lbxNodes.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxNodes_MouseDoubleClick);
             // 
@@ -953,7 +1065,7 @@
             this.tsmiRemoveSelNode,
             this.tsmiRemoveAllNodes});
             this.cmsNodeUtils.Name = "cmsNodeUtils";
-            this.cmsNodeUtils.Size = new System.Drawing.Size(283, 212);
+            this.cmsNodeUtils.Size = new System.Drawing.Size(283, 184);
             // 
             // tsmiNodeUp
             // 
@@ -1000,19 +1112,19 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(279, 6);
             // 
-            // tsmiRemoveAllNodes
-            // 
-            this.tsmiRemoveAllNodes.Name = "tsmiRemoveAllNodes";
-            this.tsmiRemoveAllNodes.Size = new System.Drawing.Size(282, 24);
-            this.tsmiRemoveAllNodes.Text = "Remove all nodes";
-            this.tsmiRemoveAllNodes.Click += new System.EventHandler(this.tsmiRemoveAllNodes_Click);
-            // 
             // tsmiRemoveSelNode
             // 
             this.tsmiRemoveSelNode.Name = "tsmiRemoveSelNode";
             this.tsmiRemoveSelNode.Size = new System.Drawing.Size(282, 24);
             this.tsmiRemoveSelNode.Text = "Remove selected BaseNode";
             this.tsmiRemoveSelNode.Click += new System.EventHandler(this.tsmiRemoveSelNode_Click);
+            // 
+            // tsmiRemoveAllNodes
+            // 
+            this.tsmiRemoveAllNodes.Name = "tsmiRemoveAllNodes";
+            this.tsmiRemoveAllNodes.Size = new System.Drawing.Size(282, 24);
+            this.tsmiRemoveAllNodes.Text = "Remove all nodes";
+            this.tsmiRemoveAllNodes.Click += new System.EventHandler(this.tsmiRemoveAllNodes_Click);
             // 
             // cbbNodeHouse
             // 
@@ -1021,7 +1133,7 @@
             this.cbbNodeHouse.FormattingEnabled = true;
             this.cbbNodeHouse.Location = new System.Drawing.Point(0, 0);
             this.cbbNodeHouse.Name = "cbbNodeHouse";
-            this.cbbNodeHouse.Size = new System.Drawing.Size(337, 23);
+            this.cbbNodeHouse.Size = new System.Drawing.Size(303, 23);
             this.cbbNodeHouse.TabIndex = 2;
             this.cbbNodeHouse.SelectedIndexChanged += new System.EventHandler(this.cbbNodeHouse_SelectedIndexChanged);
             // 
@@ -1055,13 +1167,28 @@
             this.tsmiSmgAddRnd.Text = "Add to random smudge";
             this.tsmiSmgAddRnd.Click += new System.EventHandler(this.tsmiSmgAddRnd_Click);
             // 
+            // cmsCelltagUtil
+            // 
+            this.cmsCelltagUtil.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsCelltagUtil.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiTraceTag});
+            this.cmsCelltagUtil.Name = "cmsCelltagUtil";
+            this.cmsCelltagUtil.Size = new System.Drawing.Size(256, 28);
+            // 
+            // tsmiTraceTag
+            // 
+            this.tsmiTraceTag.Name = "tsmiTraceTag";
+            this.tsmiTraceTag.Size = new System.Drawing.Size(255, 24);
+            this.tsmiTraceTag.Text = "Trace tag in Logic Editor";
+            this.tsmiTraceTag.Click += new System.EventHandler(this.tsmiTraceTag_Click);
+            // 
             // PickPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tbcMain);
             this.Name = "PickPanel";
-            this.Size = new System.Drawing.Size(345, 750);
+            this.Size = new System.Drawing.Size(311, 750);
             this.tbcMain.ResumeLayout(false);
             this.tbpObject.ResumeLayout(false);
             this.splitObjects.Panel1.ResumeLayout(false);
@@ -1084,10 +1211,19 @@
             this.splitOverlay.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitOverlay)).EndInit();
             this.splitOverlay.ResumeLayout(false);
+            this.tbpCelltag.ResumeLayout(false);
+            this.splitBaseNode.Panel1.ResumeLayout(false);
+            this.splitBaseNode.Panel2.ResumeLayout(false);
+            this.splitBaseNode.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitBaseNode)).EndInit();
+            this.splitBaseNode.ResumeLayout(false);
+            this.tlpCellUtil.ResumeLayout(false);
+            this.tlpCellUtil.PerformLayout();
             this.tbpBaseNode.ResumeLayout(false);
             this.cmsNodeUtils.ResumeLayout(false);
             this.cmsTerrainAddRnd.ResumeLayout(false);
             this.cmsSmudgeAddRnd.ResumeLayout(false);
+            this.cmsCelltagUtil.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1177,5 +1313,14 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiNodeDown;
         private System.Windows.Forms.ToolStripMenuItem tsmiNodeToLast;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.SplitContainer splitBaseNode;
+        private System.Windows.Forms.ListBox lbxSameTags;
+        private System.Windows.Forms.Button btnSelectAllSameCell;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ListBox lbxCelltags;
+        private System.Windows.Forms.ComboBox cbbCelltag;
+        private System.Windows.Forms.TableLayoutPanel tlpCellUtil;
+        private System.Windows.Forms.ContextMenuStrip cmsCelltagUtil;
+        private System.Windows.Forms.ToolStripMenuItem tsmiTraceTag;
     }
 }

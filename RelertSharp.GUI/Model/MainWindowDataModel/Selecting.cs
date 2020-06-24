@@ -112,6 +112,8 @@ namespace RelertSharp.GUI.Model
             Terrains.Clear();
             foreach (OverlayUnit ov in Overlays) ov.UnSelect();
             Overlays.Clear();
+            foreach (CellTagItem cell in Celltags) cell.UnSelect();
+            Celltags.Clear();
 
 
             Engine.Refresh();
@@ -161,6 +163,7 @@ namespace RelertSharp.GUI.Model
         public List<StructureItem> Buildings { get; private set; } = new List<StructureItem>();
         public List<TerrainItem> Terrains { get; private set; } = new List<TerrainItem>();
         public List<OverlayUnit> Overlays { get; private set; } = new List<OverlayUnit>();
+        public List<CellTagItem> Celltags { get; private set; } = new List<CellTagItem>();
         public IEnumerable<ICombatObject> CombatObjects { get { return Infantries.Concat<ICombatObject>(Units).Concat(Buildings); } }
         /// <summary>
         /// Aircraft, Infantries, Units, Buildings, Terrains

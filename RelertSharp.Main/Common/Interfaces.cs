@@ -50,11 +50,6 @@ namespace RelertSharp.Common
         void Reveal();
     }
 
-    public interface IMapMiscObject : I2dLocateable, IMapScenePresentable
-    {
-
-    }
-
     public interface ICombatObject : IMapObject
     {
         string ID { get; set; }

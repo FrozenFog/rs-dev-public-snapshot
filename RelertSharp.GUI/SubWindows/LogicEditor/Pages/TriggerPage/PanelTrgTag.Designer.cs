@@ -118,6 +118,7 @@
             // 
             this.lklTraceTrigger.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lklTraceTrigger.AutoSize = true;
+            this.lklTraceTrigger.Enabled = false;
             this.lklTraceTrigger.Location = new System.Drawing.Point(1119, 25);
             this.lklTraceTrigger.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lklTraceTrigger.Name = "lklTraceTrigger";
@@ -126,7 +127,6 @@
             this.lklTraceTrigger.TabStop = true;
             this.lklTraceTrigger.Text = "LGClklTrace";
             this.lklTraceTrigger.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lklTraceTrigger.Visible = false;
             this.lklTraceTrigger.Click += new System.EventHandler(this.lklTraceTrigger_Click);
             // 
             // ckbHard

@@ -65,9 +65,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         }
         public void RefreshAttatchedList()
         {
-            cbbAttatchedTrg.Items.Clear();
-            cbbAttatchedTrg.Items.Add(TriggerItem.NullTrigger);
-            cbbAttatchedTrg.Items.AddRange(Map.Triggers.ToArray());
+            LoadToObjectCollection(cbbAttatchedTrg, TriggerItem.NullTrigger, Map.Triggers);
         }
         public void RefreshHouseList()
         {
@@ -85,6 +83,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private void RefreshControl()
         {
             isControlRefreshing = true;
+            lklTraceTrigger.Enabled = false;
             if (CurrentTrigger == null || CurrentTag == null)
             {
                 ClearControlContent(txbTrgID, txbTrgName, txbTagName, cbbTagID, ckbDisabled, ckbEasy, ckbNormal, ckbHard, rdbRepeat0, rdbRepeat1, rdbRepeat2);
@@ -118,8 +117,12 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                         break;
                 }
                 lbxTriggerHouses.SelectedItem = Map.Countries.GetCountry(CurrentTrigger.House);
-                cbbAttatchedTrg.Text = CurrentTrigger.LinkedWith;
-                lklTraceTrigger.Enabled = CurrentTag.AssoTrigger != "<none>";
+                if (CurrentTrigger.LinkedWith != "<none>")
+                {
+                    SelectComboboxItem<TriggerItem>(cbbAttatchedTrg, x => x.ID == CurrentTrigger.LinkedWith);
+                    lklTraceTrigger.Enabled = true;
+                }
+                else cbbAttatchedTrg.Text = "<none>";
             }
             isControlRefreshing = false;
         }
@@ -209,11 +212,11 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 if (trg != null)
                 {
                     CurrentTrigger.LinkedWith = trg.ID;
-                    lklTraceTrigger.Visible = trg.ID != "<none>";
+                    lklTraceTrigger.Enabled = trg.ID != "<none>";
                 }
                 else
                 {
-                    lklTraceTrigger.Visible = false;
+                    lklTraceTrigger.Enabled = false;
                 }
             }
         }

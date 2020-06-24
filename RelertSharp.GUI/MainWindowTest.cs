@@ -62,17 +62,12 @@ namespace RelertSharp.GUI
             logicEditor.JumpToWaypoint += LogicJumpToWaypoint;
             pnlPick.BrushObjectSelected += FocusOnMainPanel;
             pnlPick.BaseNodeTracing += LogicJumpToWaypoint;
+            pnlPick.TraceCelltag += PnlPick_TraceCelltag;
+            pnlPick.SelectCelltagCollection += PnlPick_SelectCelltagCollection;
+            pnlPick.ReleaseCelltags += PnlPick_ReleaseCelltags;
 
 
             initialized = true;
-        }
-
-        private void FocusOnMainPanel(object sender, EventArgs e)
-        {
-            if (drew)
-            {
-                panel1.Focus();
-            }
         }
 
         private bool updatingLightningData = false;

@@ -94,7 +94,7 @@ namespace RelertSharp.DrawingEngine
                     infsubcell = GetSubCellFromCoord(scenepos, tileCoord.To2dLocateable());
                     return tileCoord;
                 }
-                scenepos -= _NormTileVec / 2f;
+                scenepos -= _NormTileVec;
             }
             infsubcell = -1;
             return Vec3.Zero;

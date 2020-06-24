@@ -24,7 +24,7 @@ namespace RelertSharp.MapStructure.Points
     }
 
 
-    public class WaypointItem : PointItemBase, IMapMiscObject
+    public class WaypointItem : PointItemBase, IMapObject
     {
         public WaypointItem(string _coord, string _index) : base(_coord)
         {

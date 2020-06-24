@@ -56,6 +56,10 @@ namespace RelertSharp.DrawingEngine
             {
                 return DrawObject(obj as BaseNode, heightFix, CurrentMapDocument.Map.GetHouseColor(houseName));
             }
+            else if (t == typeof(CellTagItem))
+            {
+                return DrawCelltag(obj as CellTagItem, heightFix, true);
+            }
             return false;
         }
         public bool DrawObject(InfantryItem inf, int height, uint color)

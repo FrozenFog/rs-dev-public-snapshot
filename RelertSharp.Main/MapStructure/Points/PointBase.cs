@@ -166,6 +166,7 @@ namespace RelertSharp.MapStructure.Points
             }
         }
         public bool Selected { get; set; }
+        public string RegName { get { return string.Empty; } }
         #endregion
 
 
