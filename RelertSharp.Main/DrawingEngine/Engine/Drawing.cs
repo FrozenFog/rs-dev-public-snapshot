@@ -274,7 +274,7 @@ namespace RelertSharp.DrawingEngine
             }
             if (dest.IsValid)
             {
-                minimap.DrawMisc(src, dest);
+                //minimap.DrawMisc(src, dest);
                 dest.RadarColor = new RadarColor(src.RadarColor);
             }
             return dest.IsValid;
@@ -290,8 +290,8 @@ namespace RelertSharp.DrawingEngine
             Buffer.Scenes.AddInfantry(dest);
             if (dest.IsValid)
             {
-                minimap.DrawObject(src, dest, out Color c);
-                dest.RadarColor = new RadarColor(c);
+                //minimap.DrawObject(src, dest, out Color c);
+                dest.RadarColor = new RadarColor(ToColor(src.RemapColor));
             }
             return dest.IsValid;
         }
@@ -379,7 +379,7 @@ namespace RelertSharp.DrawingEngine
             Buffer.Scenes.AddBuilding(dest);
             if (dest.IsValid)
             {
-                minimap.DrawStructure(src, dest, dest.IsBaseNode);
+                //minimap.DrawStructure(src, dest, dest.IsBaseNode);
                 dest.RadarColor = new RadarColor(src.MinimapColor);
             }
             return dest.IsValid;
@@ -404,8 +404,8 @@ namespace RelertSharp.DrawingEngine
             Buffer.Scenes.AddUnit(dest);
             if (dest.IsValid)
             {
-                minimap.DrawObject(src, dest, out Color c);
-                dest.RadarColor = new RadarColor(c);
+                //minimap.DrawObject(src, dest, out Color c);
+                dest.RadarColor = new RadarColor(ToColor(src.RemapColor));
             }
             return dest.IsValid;
         }

@@ -19,6 +19,7 @@ namespace RelertSharp.GUI.Controls
     public partial class PickPanel : UserControl
     {
         internal event EventHandler BrushObjectSelected;
+        internal event I2dLocateableHandler BaseNodeTracing;
 
 
         private Map Map { get { return CurrentMapDocument.Map; } }
@@ -40,7 +41,7 @@ namespace RelertSharp.GUI.Controls
             InitializeTerrainPanel();
             InitializeOverlayPanel();
             InitializeSmudgePanel();
-
+            InitializeNodePanel();
 
             initialized = true;
         }
@@ -50,16 +51,16 @@ namespace RelertSharp.GUI.Controls
         }
         public void ShiftHide()
         {
-            if (!shiftHidden)
+            if (!shiftHidden && drew)
             {
                 shiftHidden = true;
-                Result.BrushObject.Dispose();
+                Result.BrushObject?.Dispose();
                 Engine.Refresh();
             }
         }
         public void ShiftUnHide()
         {
-            if (shiftHidden)
+            if (shiftHidden && drew)
             {
                 shiftHidden = false;
                 Result.RedrawBrushObject();

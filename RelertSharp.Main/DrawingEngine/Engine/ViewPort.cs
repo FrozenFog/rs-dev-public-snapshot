@@ -172,6 +172,12 @@ namespace RelertSharp.DrawingEngine
             CppExtern.Scene.SetFocusOnScene(ToVec3Iso(pos));
             SetMinimapClientPos();
         }
+        public void MoveTo(I2dLocateable pos, int height)
+        {
+            Pnt3 p = new Pnt3(pos, height);
+            CppExtern.Scene.SetFocusOnScene(ToVec3Iso(p));
+            SetMinimapClientPos();
+        }
         public void ResetView()
         {
             CppExtern.Scene.ResetSceneView();

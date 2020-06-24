@@ -84,6 +84,9 @@
             this.tbpSmudge = new System.Windows.Forms.TabPage();
             this.ckbRndSmg = new System.Windows.Forms.CheckBox();
             this.lbxRndSmg = new System.Windows.Forms.ListBox();
+            this.cmsSmudgeRemoveRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiSmgRemoveSel = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSmgRemoveAll = new System.Windows.Forms.ToolStripMenuItem();
             this.trvSmudge = new System.Windows.Forms.TreeView();
             this.tbpOverlay = new System.Windows.Forms.TabPage();
             this.splitOverlay = new System.Windows.Forms.SplitContainer();
@@ -93,13 +96,22 @@
             this.tbpWaypoint = new System.Windows.Forms.TabPage();
             this.tbpCelltag = new System.Windows.Forms.TabPage();
             this.tbpBaseNode = new System.Windows.Forms.TabPage();
+            this.lbxNodes = new System.Windows.Forms.ListBox();
+            this.cmsNodeUtils = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiNodeUp = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiNodeDown = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiNodeToTop = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiNodeToLast = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiRefreshNodes = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiRemoveAllNodes = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiRemoveSelNode = new System.Windows.Forms.ToolStripMenuItem();
+            this.cbbNodeHouse = new System.Windows.Forms.ComboBox();
             this.cmsTerrainAddRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTerrAddRnd = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsSmudgeAddRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiSmgAddRnd = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsSmudgeRemoveRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmiSmgRemoveSel = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiSmgRemoveAll = new System.Windows.Forms.ToolStripMenuItem();
             this.tbcMain.SuspendLayout();
             this.tbpObject.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitObjects)).BeginInit();
@@ -111,14 +123,16 @@
             this.tbpTerrain.SuspendLayout();
             this.cmsTerrainRemoveRnd.SuspendLayout();
             this.tbpSmudge.SuspendLayout();
+            this.cmsSmudgeRemoveRnd.SuspendLayout();
             this.tbpOverlay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitOverlay)).BeginInit();
             this.splitOverlay.Panel1.SuspendLayout();
             this.splitOverlay.Panel2.SuspendLayout();
             this.splitOverlay.SuspendLayout();
+            this.tbpBaseNode.SuspendLayout();
+            this.cmsNodeUtils.SuspendLayout();
             this.cmsTerrainAddRnd.SuspendLayout();
             this.cmsSmudgeAddRnd.SuspendLayout();
-            this.cmsSmudgeRemoveRnd.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -793,6 +807,29 @@
             this.lbxRndSmg.Size = new System.Drawing.Size(331, 154);
             this.lbxRndSmg.TabIndex = 1;
             // 
+            // cmsSmudgeRemoveRnd
+            // 
+            this.cmsSmudgeRemoveRnd.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsSmudgeRemoveRnd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiSmgRemoveSel,
+            this.tsmiSmgRemoveAll});
+            this.cmsSmudgeRemoveRnd.Name = "cmsSmudgeRemoveRnd";
+            this.cmsSmudgeRemoveRnd.Size = new System.Drawing.Size(242, 52);
+            // 
+            // tsmiSmgRemoveSel
+            // 
+            this.tsmiSmgRemoveSel.Name = "tsmiSmgRemoveSel";
+            this.tsmiSmgRemoveSel.Size = new System.Drawing.Size(241, 24);
+            this.tsmiSmgRemoveSel.Text = "Remove selected item";
+            this.tsmiSmgRemoveSel.Click += new System.EventHandler(this.tsmiSmgRemoveSel_Click);
+            // 
+            // tsmiSmgRemoveAll
+            // 
+            this.tsmiSmgRemoveAll.Name = "tsmiSmgRemoveAll";
+            this.tsmiSmgRemoveAll.Size = new System.Drawing.Size(241, 24);
+            this.tsmiSmgRemoveAll.Text = "Remove all";
+            this.tsmiSmgRemoveAll.Click += new System.EventHandler(this.tsmiSmgRemoveAll_Click);
+            // 
             // trvSmudge
             // 
             this.trvSmudge.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -881,12 +918,112 @@
             // 
             // tbpBaseNode
             // 
+            this.tbpBaseNode.Controls.Add(this.lbxNodes);
+            this.tbpBaseNode.Controls.Add(this.cbbNodeHouse);
             this.tbpBaseNode.Location = new System.Drawing.Point(4, 46);
             this.tbpBaseNode.Name = "tbpBaseNode";
             this.tbpBaseNode.Size = new System.Drawing.Size(337, 700);
             this.tbpBaseNode.TabIndex = 9;
             this.tbpBaseNode.Text = "Base Nodes";
             this.tbpBaseNode.UseVisualStyleBackColor = true;
+            // 
+            // lbxNodes
+            // 
+            this.lbxNodes.ContextMenuStrip = this.cmsNodeUtils;
+            this.lbxNodes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbxNodes.FormattingEnabled = true;
+            this.lbxNodes.ItemHeight = 15;
+            this.lbxNodes.Location = new System.Drawing.Point(0, 23);
+            this.lbxNodes.Name = "lbxNodes";
+            this.lbxNodes.Size = new System.Drawing.Size(337, 677);
+            this.lbxNodes.TabIndex = 3;
+            this.lbxNodes.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxNodes_MouseDoubleClick);
+            // 
+            // cmsNodeUtils
+            // 
+            this.cmsNodeUtils.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsNodeUtils.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiNodeUp,
+            this.tsmiNodeDown,
+            this.tsmiNodeToTop,
+            this.tsmiNodeToLast,
+            this.toolStripSeparator2,
+            this.tsmiRefreshNodes,
+            this.toolStripSeparator1,
+            this.tsmiRemoveSelNode,
+            this.tsmiRemoveAllNodes});
+            this.cmsNodeUtils.Name = "cmsNodeUtils";
+            this.cmsNodeUtils.Size = new System.Drawing.Size(283, 212);
+            // 
+            // tsmiNodeUp
+            // 
+            this.tsmiNodeUp.Name = "tsmiNodeUp";
+            this.tsmiNodeUp.Size = new System.Drawing.Size(282, 24);
+            this.tsmiNodeUp.Text = "Move node up";
+            this.tsmiNodeUp.Click += new System.EventHandler(this.tsmiNodeUp_Click);
+            // 
+            // tsmiNodeDown
+            // 
+            this.tsmiNodeDown.Name = "tsmiNodeDown";
+            this.tsmiNodeDown.Size = new System.Drawing.Size(282, 24);
+            this.tsmiNodeDown.Text = "Move node down";
+            this.tsmiNodeDown.Click += new System.EventHandler(this.tsmiNodeDown_Click);
+            // 
+            // tsmiNodeToTop
+            // 
+            this.tsmiNodeToTop.Name = "tsmiNodeToTop";
+            this.tsmiNodeToTop.Size = new System.Drawing.Size(282, 24);
+            this.tsmiNodeToTop.Text = "Move node to TOP";
+            this.tsmiNodeToTop.Click += new System.EventHandler(this.tsmiNodeToTop_Click);
+            // 
+            // tsmiNodeToLast
+            // 
+            this.tsmiNodeToLast.Name = "tsmiNodeToLast";
+            this.tsmiNodeToLast.Size = new System.Drawing.Size(282, 24);
+            this.tsmiNodeToLast.Text = "Move node to BOTTOM";
+            this.tsmiNodeToLast.Click += new System.EventHandler(this.tsmiNodeToLast_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(279, 6);
+            // 
+            // tsmiRefreshNodes
+            // 
+            this.tsmiRefreshNodes.Name = "tsmiRefreshNodes";
+            this.tsmiRefreshNodes.Size = new System.Drawing.Size(282, 24);
+            this.tsmiRefreshNodes.Text = "Refresh nodes";
+            this.tsmiRefreshNodes.Click += new System.EventHandler(this.tsmiRefreshNodes_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(279, 6);
+            // 
+            // tsmiRemoveAllNodes
+            // 
+            this.tsmiRemoveAllNodes.Name = "tsmiRemoveAllNodes";
+            this.tsmiRemoveAllNodes.Size = new System.Drawing.Size(282, 24);
+            this.tsmiRemoveAllNodes.Text = "Remove all nodes";
+            this.tsmiRemoveAllNodes.Click += new System.EventHandler(this.tsmiRemoveAllNodes_Click);
+            // 
+            // tsmiRemoveSelNode
+            // 
+            this.tsmiRemoveSelNode.Name = "tsmiRemoveSelNode";
+            this.tsmiRemoveSelNode.Size = new System.Drawing.Size(282, 24);
+            this.tsmiRemoveSelNode.Text = "Remove selected BaseNode";
+            this.tsmiRemoveSelNode.Click += new System.EventHandler(this.tsmiRemoveSelNode_Click);
+            // 
+            // cbbNodeHouse
+            // 
+            this.cbbNodeHouse.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cbbNodeHouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbNodeHouse.FormattingEnabled = true;
+            this.cbbNodeHouse.Location = new System.Drawing.Point(0, 0);
+            this.cbbNodeHouse.Name = "cbbNodeHouse";
+            this.cbbNodeHouse.Size = new System.Drawing.Size(337, 23);
+            this.cbbNodeHouse.TabIndex = 2;
+            this.cbbNodeHouse.SelectedIndexChanged += new System.EventHandler(this.cbbNodeHouse_SelectedIndexChanged);
             // 
             // cmsTerrainAddRnd
             // 
@@ -918,29 +1055,6 @@
             this.tsmiSmgAddRnd.Text = "Add to random smudge";
             this.tsmiSmgAddRnd.Click += new System.EventHandler(this.tsmiSmgAddRnd_Click);
             // 
-            // cmsSmudgeRemoveRnd
-            // 
-            this.cmsSmudgeRemoveRnd.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cmsSmudgeRemoveRnd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiSmgRemoveSel,
-            this.tsmiSmgRemoveAll});
-            this.cmsSmudgeRemoveRnd.Name = "cmsSmudgeRemoveRnd";
-            this.cmsSmudgeRemoveRnd.Size = new System.Drawing.Size(242, 52);
-            // 
-            // tsmiSmgRemoveSel
-            // 
-            this.tsmiSmgRemoveSel.Name = "tsmiSmgRemoveSel";
-            this.tsmiSmgRemoveSel.Size = new System.Drawing.Size(241, 24);
-            this.tsmiSmgRemoveSel.Text = "Remove selected item";
-            this.tsmiSmgRemoveSel.Click += new System.EventHandler(this.tsmiSmgRemoveSel_Click);
-            // 
-            // tsmiSmgRemoveAll
-            // 
-            this.tsmiSmgRemoveAll.Name = "tsmiSmgRemoveAll";
-            this.tsmiSmgRemoveAll.Size = new System.Drawing.Size(241, 24);
-            this.tsmiSmgRemoveAll.Text = "Remove all";
-            this.tsmiSmgRemoveAll.Click += new System.EventHandler(this.tsmiSmgRemoveAll_Click);
-            // 
             // PickPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -964,14 +1078,16 @@
             this.cmsTerrainRemoveRnd.ResumeLayout(false);
             this.tbpSmudge.ResumeLayout(false);
             this.tbpSmudge.PerformLayout();
+            this.cmsSmudgeRemoveRnd.ResumeLayout(false);
             this.tbpOverlay.ResumeLayout(false);
             this.splitOverlay.Panel1.ResumeLayout(false);
             this.splitOverlay.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitOverlay)).EndInit();
             this.splitOverlay.ResumeLayout(false);
+            this.tbpBaseNode.ResumeLayout(false);
+            this.cmsNodeUtils.ResumeLayout(false);
             this.cmsTerrainAddRnd.ResumeLayout(false);
             this.cmsSmudgeAddRnd.ResumeLayout(false);
-            this.cmsSmudgeRemoveRnd.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1049,5 +1165,17 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiSmgAddRnd;
         private System.Windows.Forms.ToolStripMenuItem tsmiSmgRemoveSel;
         private System.Windows.Forms.ToolStripMenuItem tsmiSmgRemoveAll;
+        private System.Windows.Forms.ListBox lbxNodes;
+        private System.Windows.Forms.ComboBox cbbNodeHouse;
+        private System.Windows.Forms.ContextMenuStrip cmsNodeUtils;
+        private System.Windows.Forms.ToolStripMenuItem tsmiRemoveSelNode;
+        private System.Windows.Forms.ToolStripMenuItem tsmiRefreshNodes;
+        private System.Windows.Forms.ToolStripMenuItem tsmiRemoveAllNodes;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem tsmiNodeToTop;
+        private System.Windows.Forms.ToolStripMenuItem tsmiNodeUp;
+        private System.Windows.Forms.ToolStripMenuItem tsmiNodeDown;
+        private System.Windows.Forms.ToolStripMenuItem tsmiNodeToLast;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }

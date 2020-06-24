@@ -139,6 +139,16 @@ namespace RelertSharp.GUI
                 ClearControlContent(c);
             }
         }
+        public static void RepositionItemInCollection(ListBox dest, int targetdest)
+        {
+            if (dest.SelectedItem is object obj)
+            {
+                int index = dest.SelectedIndex;
+                dest.Items.RemoveAt(index);
+                dest.Items.Insert(targetdest, obj);
+                dest.SelectedIndex = targetdest;
+            }
+        }
         public static void LoadToObjectCollection(TreeView dest, params TreeNode[] nodes)
         {
             dest.Nodes.AddRange(nodes);

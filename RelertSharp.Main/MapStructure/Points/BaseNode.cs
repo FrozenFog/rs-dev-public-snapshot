@@ -83,6 +83,10 @@ namespace RelertSharp.MapStructure.Points
                 IsHidden = false;
             }
         }
+        public override string ToString()
+        {
+            return string.Format("{0} at {1}, {2}", RegName, X, Y);
+        }
         #endregion
 
 

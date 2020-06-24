@@ -46,6 +46,11 @@ namespace RelertSharp.Utils
             Language.DICT = new Lang(dict);
             Log.Write("Language Init complete");
         }
+        public static void RepositionItemInList<T>(List<T> dest, T item, int indexTarget, int indexNow)
+        {
+            dest.RemoveAt(indexNow);
+            dest.Insert(indexTarget, item);
+        }
         public static List<T> InitializeListWithCap<T>(int size)
         {
             List<T> result = new List<T>();

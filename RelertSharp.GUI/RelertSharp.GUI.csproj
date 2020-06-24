@@ -126,6 +126,9 @@
     <Compile Include="Controls\MinimapPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\PickPanel\BasenodeObject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\PickPanel\Exporting.cs">
       <SubType>UserControl</SubType>
     </Compile>

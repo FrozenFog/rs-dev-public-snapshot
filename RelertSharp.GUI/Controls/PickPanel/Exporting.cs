@@ -35,7 +35,6 @@ namespace RelertSharp.GUI.Controls
                     if (previousCell == null || previousCell.Coord != cell.Coord)
                     {
                         brush.MoveBrushObjectTo(cell);
-                        brush.BrushObject.MoveTo(cell);
                         previousCell = cell;
                         GlobalVar.Engine.Refresh();
                     }

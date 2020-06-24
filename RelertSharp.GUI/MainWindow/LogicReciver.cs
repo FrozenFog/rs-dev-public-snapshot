@@ -13,7 +13,9 @@ namespace RelertSharp.GUI
         {
             if (drew && cell != null)
             {
-                GlobalVar.Engine.MoveTo(cell);
+                int height = Map.GetHeightFromTile(cell);
+                GlobalVar.Engine.MoveTo(cell, height);
+                pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
                 GlobalVar.Engine.Refresh();
             }
         }
