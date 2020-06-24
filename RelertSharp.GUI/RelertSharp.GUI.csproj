@@ -141,6 +141,9 @@
     <Compile Include="Controls\PickPanel\PickPanel.Designer.cs">
       <DependentUpon>PickPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PickPanel\SmudgeObject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\PickPanel\TerrainObject.cs">
       <SubType>UserControl</SubType>
     </Compile>

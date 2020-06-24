@@ -55,6 +55,7 @@ namespace RelertSharp.GUI
                         break;
                     case MainWindowDataModel.MouseActionType.AddingObject:
                         AddBrushObjectToMap();
+                        if (pnlPick.CurrentType == PickPanelType.Smudges) pnlPick.ReloadRandomSmudge();
                         break;
                 }
             }
@@ -110,7 +111,7 @@ namespace RelertSharp.GUI
                         DrawSelectingBoxOnScene(e);
                         break;
                     case MainWindowDataModel.MouseActionType.AddingObject:
-                        pnlPick.ReloadRandomTerrain();
+                        if (pnlPick.CurrentType == PickPanelType.Terrains) pnlPick.ReloadRandomTerrain();
                         MoveBrushObjectTo(e);
                         break;
                 }

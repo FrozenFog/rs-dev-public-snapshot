@@ -39,6 +39,7 @@ namespace RelertSharp.GUI.Controls
             InitializeGeneralPanel();
             InitializeTerrainPanel();
             InitializeOverlayPanel();
+            InitializeSmudgePanel();
 
 
             initialized = true;

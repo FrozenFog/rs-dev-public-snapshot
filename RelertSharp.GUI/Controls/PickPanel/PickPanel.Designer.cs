@@ -82,16 +82,24 @@
             this.ckbRndTerrainEnable = new System.Windows.Forms.CheckBox();
             this.trvTerrain = new System.Windows.Forms.TreeView();
             this.tbpSmudge = new System.Windows.Forms.TabPage();
+            this.ckbRndSmg = new System.Windows.Forms.CheckBox();
+            this.lbxRndSmg = new System.Windows.Forms.ListBox();
+            this.trvSmudge = new System.Windows.Forms.TreeView();
             this.tbpOverlay = new System.Windows.Forms.TabPage();
             this.splitOverlay = new System.Windows.Forms.SplitContainer();
             this.trvOverlay = new System.Windows.Forms.TreeView();
+            this.lvOverlayFrames = new System.Windows.Forms.ListView();
+            this.imgOverlayFrame = new System.Windows.Forms.ImageList(this.components);
             this.tbpWaypoint = new System.Windows.Forms.TabPage();
             this.tbpCelltag = new System.Windows.Forms.TabPage();
             this.tbpBaseNode = new System.Windows.Forms.TabPage();
             this.cmsTerrainAddRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTerrAddRnd = new System.Windows.Forms.ToolStripMenuItem();
-            this.lvOverlayFrames = new System.Windows.Forms.ListView();
-            this.imgOverlayFrame = new System.Windows.Forms.ImageList(this.components);
+            this.cmsSmudgeAddRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiSmgAddRnd = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsSmudgeRemoveRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiSmgRemoveSel = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSmgRemoveAll = new System.Windows.Forms.ToolStripMenuItem();
             this.tbcMain.SuspendLayout();
             this.tbpObject.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitObjects)).BeginInit();
@@ -102,12 +110,15 @@
             this.tlpObjectProps.SuspendLayout();
             this.tbpTerrain.SuspendLayout();
             this.cmsTerrainRemoveRnd.SuspendLayout();
+            this.tbpSmudge.SuspendLayout();
             this.tbpOverlay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitOverlay)).BeginInit();
             this.splitOverlay.Panel1.SuspendLayout();
             this.splitOverlay.Panel2.SuspendLayout();
             this.splitOverlay.SuspendLayout();
             this.cmsTerrainAddRnd.SuspendLayout();
+            this.cmsSmudgeAddRnd.SuspendLayout();
+            this.cmsSmudgeRemoveRnd.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -747,12 +758,51 @@
             // 
             // tbpSmudge
             // 
+            this.tbpSmudge.Controls.Add(this.ckbRndSmg);
+            this.tbpSmudge.Controls.Add(this.lbxRndSmg);
+            this.tbpSmudge.Controls.Add(this.trvSmudge);
             this.tbpSmudge.Location = new System.Drawing.Point(4, 46);
             this.tbpSmudge.Name = "tbpSmudge";
             this.tbpSmudge.Size = new System.Drawing.Size(337, 700);
             this.tbpSmudge.TabIndex = 5;
             this.tbpSmudge.Text = "Smudges";
             this.tbpSmudge.UseVisualStyleBackColor = true;
+            // 
+            // ckbRndSmg
+            // 
+            this.ckbRndSmg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ckbRndSmg.AutoSize = true;
+            this.ckbRndSmg.Location = new System.Drawing.Point(3, 518);
+            this.ckbRndSmg.Name = "ckbRndSmg";
+            this.ckbRndSmg.Size = new System.Drawing.Size(133, 19);
+            this.ckbRndSmg.TabIndex = 2;
+            this.ckbRndSmg.Text = "Random Smudge";
+            this.ckbRndSmg.UseVisualStyleBackColor = true;
+            this.ckbRndSmg.CheckedChanged += new System.EventHandler(this.ckbRndSmg_CheckedChanged);
+            // 
+            // lbxRndSmg
+            // 
+            this.lbxRndSmg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbxRndSmg.ContextMenuStrip = this.cmsSmudgeRemoveRnd;
+            this.lbxRndSmg.Enabled = false;
+            this.lbxRndSmg.FormattingEnabled = true;
+            this.lbxRndSmg.ItemHeight = 15;
+            this.lbxRndSmg.Location = new System.Drawing.Point(3, 543);
+            this.lbxRndSmg.Name = "lbxRndSmg";
+            this.lbxRndSmg.Size = new System.Drawing.Size(331, 154);
+            this.lbxRndSmg.TabIndex = 1;
+            // 
+            // trvSmudge
+            // 
+            this.trvSmudge.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trvSmudge.Location = new System.Drawing.Point(3, 3);
+            this.trvSmudge.Name = "trvSmudge";
+            this.trvSmudge.Size = new System.Drawing.Size(331, 426);
+            this.trvSmudge.TabIndex = 0;
+            this.trvSmudge.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvSmudge_NodeMouseClick);
             // 
             // tbpOverlay
             // 
@@ -791,6 +841,25 @@
             this.trvOverlay.Size = new System.Drawing.Size(337, 369);
             this.trvOverlay.TabIndex = 0;
             this.trvOverlay.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvOverlay_NodeMouseClick);
+            // 
+            // lvOverlayFrames
+            // 
+            this.lvOverlayFrames.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvOverlayFrames.HideSelection = false;
+            this.lvOverlayFrames.LargeImageList = this.imgOverlayFrame;
+            this.lvOverlayFrames.Location = new System.Drawing.Point(0, 0);
+            this.lvOverlayFrames.MultiSelect = false;
+            this.lvOverlayFrames.Name = "lvOverlayFrames";
+            this.lvOverlayFrames.Size = new System.Drawing.Size(337, 327);
+            this.lvOverlayFrames.TabIndex = 0;
+            this.lvOverlayFrames.UseCompatibleStateImageBehavior = false;
+            this.lvOverlayFrames.SelectedIndexChanged += new System.EventHandler(this.lvOverlayFrames_SelectedIndexChanged);
+            // 
+            // imgOverlayFrame
+            // 
+            this.imgOverlayFrame.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imgOverlayFrame.ImageSize = new System.Drawing.Size(64, 64);
+            this.imgOverlayFrame.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // tbpWaypoint
             // 
@@ -834,24 +903,43 @@
             this.tsmiTerrAddRnd.Text = "Add to random terrain";
             this.tsmiTerrAddRnd.Click += new System.EventHandler(this.tsmiTerrAddRnd_Click);
             // 
-            // lvOverlayFrames
+            // cmsSmudgeAddRnd
             // 
-            this.lvOverlayFrames.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvOverlayFrames.HideSelection = false;
-            this.lvOverlayFrames.LargeImageList = this.imgOverlayFrame;
-            this.lvOverlayFrames.Location = new System.Drawing.Point(0, 0);
-            this.lvOverlayFrames.MultiSelect = false;
-            this.lvOverlayFrames.Name = "lvOverlayFrames";
-            this.lvOverlayFrames.Size = new System.Drawing.Size(337, 327);
-            this.lvOverlayFrames.TabIndex = 0;
-            this.lvOverlayFrames.UseCompatibleStateImageBehavior = false;
-            this.lvOverlayFrames.SelectedIndexChanged += new System.EventHandler(this.lvOverlayFrames_SelectedIndexChanged);
+            this.cmsSmudgeAddRnd.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsSmudgeAddRnd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiSmgAddRnd});
+            this.cmsSmudgeAddRnd.Name = "cmsSmudgeAddRnd";
+            this.cmsSmudgeAddRnd.Size = new System.Drawing.Size(254, 28);
             // 
-            // imgOverlayFrame
+            // tsmiSmgAddRnd
             // 
-            this.imgOverlayFrame.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imgOverlayFrame.ImageSize = new System.Drawing.Size(64, 64);
-            this.imgOverlayFrame.TransparentColor = System.Drawing.Color.Transparent;
+            this.tsmiSmgAddRnd.Name = "tsmiSmgAddRnd";
+            this.tsmiSmgAddRnd.Size = new System.Drawing.Size(253, 24);
+            this.tsmiSmgAddRnd.Text = "Add to random smudge";
+            this.tsmiSmgAddRnd.Click += new System.EventHandler(this.tsmiSmgAddRnd_Click);
+            // 
+            // cmsSmudgeRemoveRnd
+            // 
+            this.cmsSmudgeRemoveRnd.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsSmudgeRemoveRnd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiSmgRemoveSel,
+            this.tsmiSmgRemoveAll});
+            this.cmsSmudgeRemoveRnd.Name = "cmsSmudgeRemoveRnd";
+            this.cmsSmudgeRemoveRnd.Size = new System.Drawing.Size(242, 52);
+            // 
+            // tsmiSmgRemoveSel
+            // 
+            this.tsmiSmgRemoveSel.Name = "tsmiSmgRemoveSel";
+            this.tsmiSmgRemoveSel.Size = new System.Drawing.Size(241, 24);
+            this.tsmiSmgRemoveSel.Text = "Remove selected item";
+            this.tsmiSmgRemoveSel.Click += new System.EventHandler(this.tsmiSmgRemoveSel_Click);
+            // 
+            // tsmiSmgRemoveAll
+            // 
+            this.tsmiSmgRemoveAll.Name = "tsmiSmgRemoveAll";
+            this.tsmiSmgRemoveAll.Size = new System.Drawing.Size(241, 24);
+            this.tsmiSmgRemoveAll.Text = "Remove all";
+            this.tsmiSmgRemoveAll.Click += new System.EventHandler(this.tsmiSmgRemoveAll_Click);
             // 
             // PickPanel
             // 
@@ -874,12 +962,16 @@
             this.tbpTerrain.ResumeLayout(false);
             this.tbpTerrain.PerformLayout();
             this.cmsTerrainRemoveRnd.ResumeLayout(false);
+            this.tbpSmudge.ResumeLayout(false);
+            this.tbpSmudge.PerformLayout();
             this.tbpOverlay.ResumeLayout(false);
             this.splitOverlay.Panel1.ResumeLayout(false);
             this.splitOverlay.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitOverlay)).EndInit();
             this.splitOverlay.ResumeLayout(false);
             this.cmsTerrainAddRnd.ResumeLayout(false);
+            this.cmsSmudgeAddRnd.ResumeLayout(false);
+            this.cmsSmudgeRemoveRnd.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -949,5 +1041,13 @@
         private System.Windows.Forms.TreeView trvOverlay;
         private System.Windows.Forms.ListView lvOverlayFrames;
         private System.Windows.Forms.ImageList imgOverlayFrame;
+        private System.Windows.Forms.ListBox lbxRndSmg;
+        private System.Windows.Forms.TreeView trvSmudge;
+        private System.Windows.Forms.CheckBox ckbRndSmg;
+        private System.Windows.Forms.ContextMenuStrip cmsSmudgeAddRnd;
+        private System.Windows.Forms.ContextMenuStrip cmsSmudgeRemoveRnd;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSmgAddRnd;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSmgRemoveSel;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSmgRemoveAll;
     }
 }

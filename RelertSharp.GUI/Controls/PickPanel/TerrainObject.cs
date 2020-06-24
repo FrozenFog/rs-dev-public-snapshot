@@ -28,7 +28,7 @@ namespace RelertSharp.GUI.Controls
         {
             if (isRndTerrain)
             {
-                brush.BrushObject.Dispose();
+                brush.BrushObject?.Dispose();
                 if (lbxRndTerrain.Items.Count > 0)
                 {
                     Random r = new Random();
