@@ -41,20 +41,24 @@ namespace RelertSharp.GUI
                     Fatal("May only run 1 process.");
                     return;
                 }
+#if RELEASE
                 try
                 {
+#endif
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
                     if (!Initialization())
                     {
                         return;
                     }
-                }
+#if RELEASE
+            }
                 catch (Exception e)
                 {
                     Fatal("Initialization failed!\nTrace:\n" + e.StackTrace);
                     return;
                 }
+#endif
                 SafeRun(() =>
                 {
                     string name;
@@ -78,8 +82,9 @@ namespace RelertSharp.GUI
                     }
                     else name = args[0];
                     MapFile map = new MapFile(name);
-                    GlobalVar.GlobalRules.Override(map.Map.IniResidue.Values);
+                    GlobalVar.GlobalRules.MapIniData = map.Map.IniResidue;
                     GlobalVar.CurrentMapDocument = map;
+                    GlobalVar.CurrentMapDocument.Map.DumpStructure();
                     if (Log.HasCritical)
                     {
                         Log.Critical("These object will not show in scene(or in logic editor)");

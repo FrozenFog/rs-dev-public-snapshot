@@ -52,12 +52,12 @@ namespace RelertSharp.MapStructure
             AddObjectToTile(inf);
             return inf;
         }
-        public StructureItem AddStructure(string id, string[] args)
+        public void DumpStructure()
         {
-            StructureItem bud = new StructureItem(id, args);
-            Buildings[id] = bud;
-            AddObjectToTile(bud);
-            return bud;
+            foreach (StructureItem bud in Buildings)
+            {
+                AddObjectToTile(bud);
+            }
         }
         public AircraftItem AddAircraft(string id, string[] args)
         {

@@ -106,7 +106,8 @@ namespace RelertSharp.MapStructure
             }
             foreach (INIPair p in entStructure.DataList)
             {
-                AddStructure(p.Name, p.ParseStringList());
+                StructureItem bud = new StructureItem(p.Name, p.ParseStringList());
+                Buildings[p.Name] = bud;
             }
             foreach (INIPair p in entAircraft.DataList)
             {

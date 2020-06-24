@@ -644,6 +644,25 @@ namespace RelertSharp.IniSystem
                 return result;
             }
         }
+        public new INIEntity this[string name]
+        {
+            get
+            {
+                if (MapIniData != null && MapIniData.Keys.Contains(name))
+                {
+                    INIEntity result = MapIniData[name];
+                    if (HasIniEnt(name))
+                    {
+                        INIEntity org = IniDict[name];
+                        org.JoinWith(result);
+                        return org;
+                    }
+                    return result;
+                }
+                else if (HasIniEnt(name)) return IniDict[name];
+                else return INIEntity.NullEntity;
+            }
+        }
         #endregion
     }
 }
