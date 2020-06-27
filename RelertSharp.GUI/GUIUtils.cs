@@ -102,9 +102,17 @@ namespace RelertSharp.GUI
         {
             MessageBox.Show(content, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
+        public static void Warning(string format, params object[] obj)
+        {
+            Warning(string.Format(format, obj));
+        }
         public static void Fatal(string content)
         {
             MessageBox.Show(content, "Fatal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        public static void Fatal(string format, params object[] obj)
+        {
+            Fatal(string.Format(format, obj));
         }
         public static void InsertAt(ListBox dest, object item, ref bool locker)
         {

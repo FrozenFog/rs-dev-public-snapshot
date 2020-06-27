@@ -237,8 +237,16 @@ namespace RelertSharp.FileSystem
         {
             if (string.IsNullOrEmpty(filename)) return 0;
             if (!HasFile(filename)) return 0;
-            ShpFile shp = GetFile(filename, FileExtension.SHP);
-            return (short)shp.Count;
+            try
+            {
+                ShpFile shp = GetFile(filename, FileExtension.SHP);
+                return (short)shp.Count;
+            }
+            catch (RSException.InvalidFileException e)
+            {
+                Log.Critical("Shp corrupted! Shp name {0}", e.FileName);
+                return 0;
+            }
         }
         public dynamic GetFile(string _fileName, FileExtension _fileType, bool fromRoot = false)
         {

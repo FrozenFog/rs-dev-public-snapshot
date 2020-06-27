@@ -52,7 +52,7 @@ namespace RelertSharp.GUI
                         return;
                     }
 #if RELEASE
-            }
+                }
                 catch (Exception e)
                 {
                     Fatal("Initialization failed!\nTrace:\n" + e.StackTrace);

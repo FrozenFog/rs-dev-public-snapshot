@@ -14,6 +14,7 @@ namespace RelertSharp.MapStructure
     public class MapTheaterTileSet
     {
         private List<string> tileNameIndex = new List<string>();
+        private List<TileSet> tileSets = new List<TileSet>();
 
 
         #region Ctor - MapTheaterTileSet
@@ -63,18 +64,39 @@ namespace RelertSharp.MapStructure
             }
             INIFile _theaterIni = GlobalDir.GetFile(_theater, FileExtension.INI);
             int _cap = _theaterIni.IniData.Count;
-            for (int i = 0; i < _cap; i++)
+            int current = 0;
+            for (int i = 0; ; i++)
             {
                 string _setName = "TileSet" + string.Format("{0:D4}", i);
                 if (!_theaterIni.IniDict.Keys.Contains(_setName)) break;
-                INIEntity _tileSet = _theaterIni.PopEnt(_setName);
-                string _tileFileName = _tileSet["FileName"];
-                int _numsInSet = _tileSet.ParseInt("TilesInSet");
+                INIEntity ent = _theaterIni.PopEnt(_setName);
+                int frameworkIndex = ent.ParseInt("MarbleMadness");
+                int originalIndex = ent.ParseInt("NonMarbleMadness", -1);
+                string _tileFileName = ent["FileName"];
+                int _numsInSet = ent.ParseInt("TilesInSet");
                 if (_numsInSet == 0) continue;
+                TileSet set = new TileSet(originalIndex != -1, ent.ParseBool("AllowToPlace", true), frameworkIndex);
+                set.Offset = current;
+                set.FileName = string.Format("{0}{1}{2}.{3}", _tileFileName, "{0:D2}", "{1}", TheaterSub);
+                if (set.IsFramework) set.OriginalSet = originalIndex;
                 for (int j = 1;j<_numsInSet + 1; j++)
                 {
+                    string filename = string.Format("{0}{1:D2}", _tileFileName, j);
+                    current++;
+                    int cap = 0;
+                    for (char c = 'a'; ; c++)
+                    {
+                        string varyName = string.Format("{0}{1}.{2}", filename, c, TheaterSub);
+                        if (GlobalDir.HasFile(varyName))
+                        {
+                            cap++;
+                        }
+                        else break;
+                    }
+                    set.AddTile(cap);
                     tileNameIndex.Add(_tileFileName.ToLower() + string.Format("{0:D2}", j) + "." + TheaterSub);
                 }
+                tileSets.Add(set);
             }
         }
         #endregion
@@ -102,9 +124,16 @@ namespace RelertSharp.MapStructure
         {
             get
             {
-                if (_TileIndex == 65535) return tileNameIndex[0];
-                if (_TileIndex >= tileNameIndex.Count) return tileNameIndex[0];
-                return tileNameIndex[_TileIndex];
+                if (_TileIndex == 65535 || _TileIndex >= tileNameIndex.Count) _TileIndex = 0;
+                if (_TileIndex == 0) return tileSets[0].GetName(_TileIndex);
+                for (int i = 0; i < tileSets.Count; i++)
+                {
+                    if (_TileIndex < tileSets[i].Offset)
+                    {
+                        return tileSets[i - 1].GetName(_TileIndex);
+                    }
+                }
+                return tileNameIndex[0];
             }
         }
         #endregion

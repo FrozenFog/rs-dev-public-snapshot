@@ -20,7 +20,14 @@ namespace RelertSharp.FileSystem
         }
         public ShpFile(byte[] _rawData, string _fullName) : base(_rawData, _fullName)
         {
-            Read();
+            try
+            {
+                Read();
+            }
+            catch
+            {
+                throw new RSException.InvalidFileException(_fullName);
+            }
         }
         #endregion
 

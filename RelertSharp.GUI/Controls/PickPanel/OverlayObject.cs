@@ -75,18 +75,25 @@ namespace RelertSharp.GUI.Controls
             lvOverlayFrames.Items.Clear();
             if (GlobalDir.HasFile(file))
             {
-                PalFile p = GlobalDir.GetFile(pal, FileExtension.PAL);
-                ShpFile pic = new ShpFile(GlobalDir.GetRawByte(file), file);
-                pic.LoadColor(p);
-                Size maxSize = pic.GetMaxSize();
-                imgOverlayFrame.ImageSize = maxSize;
-
-                for (int i = 0; i < pic.Frames.Count / 2; i++)
+                try
                 {
-                    ShpFrame frame = pic.Frames[i];
-                    ListViewItem item = new ListViewItem(string.Format("{0}-Frame{1}", overlayName, i.ToString()), i.ToString());
-                    imgOverlayFrame.Images.Add(i.ToString(), Utils.Misc.ResizeImage(frame.Image, maxSize));
-                    lvOverlayFrames.Items.Add(item);
+                    PalFile p = GlobalDir.GetFile(pal, FileExtension.PAL);
+                    ShpFile pic = new ShpFile(GlobalDir.GetRawByte(file), file);
+                    pic.LoadColor(p);
+                    Size maxSize = pic.GetMaxSize();
+                    imgOverlayFrame.ImageSize = maxSize;
+
+                    for (int i = 0; i < pic.Frames.Count / 2; i++)
+                    {
+                        ShpFrame frame = pic.Frames[i];
+                        ListViewItem item = new ListViewItem(string.Format("{0}-Frame{1}", overlayName, i.ToString()), i.ToString());
+                        imgOverlayFrame.Images.Add(i.ToString(), Utils.Misc.ResizeImage(frame.Image, maxSize));
+                        lvOverlayFrames.Items.Add(item);
+                    }
+                }
+                catch (RSException.InvalidFileException e)
+                {
+                    Warning("Frame error!\nShp file may corrupted, file name: {0}", e.FileName);
                 }
             }
             updatingLvOverlayFrames = false;
