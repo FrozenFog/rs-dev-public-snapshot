@@ -34,7 +34,9 @@ namespace RelertSharp.FileSystem
             Log.Write("General mix loaded");
             if (!File.Exists(RunPath + "data.mix")) System.Windows.Forms.MessageBox.Show("Critical File Missing!");
             MixFile mx = new MixFile(RunPath + "data.mix", MixTatics.Plain, true);
+            MixFile framework = new MixFile(RunPath + "framework.mix", MixTatics.Plain);
             AddMixDir(mx);
+            AddMixDir(framework);
             Log.Write("Virtual Dir Initialization Complete");
         }
         #endregion
