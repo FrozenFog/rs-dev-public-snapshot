@@ -127,12 +127,14 @@ namespace RelertSharp.DrawingEngine
         }
         public bool DrawGeneralItem(Tile t, bool isFramework = false)
         {
-            string name;
-            int subindex;
+            string name, org;
+            int subindex = 0;
             if (isFramework)
             {
-                name = "framework.tem";
-                subindex = 0;
+                name = TileDictionary.GetFrameworkFromTile(t, out bool isHyte);
+                org = TileDictionary[t.TileIndex];
+                if (isHyte) subindex = 0;
+                else subindex = TileDictionary.IsValidTile(t.TileIndex) ? t.SubIndex : 0;
             }
             else
             {
@@ -143,18 +145,15 @@ namespace RelertSharp.DrawingEngine
             Buffer.Scenes.DrawableTiles[t.Coord] = src;
             minimap.DrawTile(src, t, subindex);
             Vec3 pos = ToVec3Iso(t);
-            if (DrawTile(src.pSelf, pos, subindex, pPalIso, out int pSelf, out int pExtra))
-            {
-                PresentTile pt = new PresentTile(pSelf, pExtra, t.Height, src, subindex, t);
-                t.SceneObject = pt;
-                t.BaseTileBuildable = pt.Buildable;
-                Color cl = src.SubTiles[subindex].RadarColor.Left;
-                Color cr = src.SubTiles[subindex].RadarColor.Right;
-                pt.RadarColor = new RadarColor(cl, cr);
-                Buffer.Scenes.Tiles[t.Coord] = pt;
-                return true;
-            }
-            return false;
+            bool success = DrawTile(src.pSelf, pos, subindex, pPalIso, out int pSelf, out int pExtra);
+            PresentTile pt = new PresentTile(pSelf, pExtra, t.Height, src, subindex, t);
+            t.SceneObject = pt;
+            t.BaseTileBuildable = pt.Buildable;
+            Color cl = src.SubTiles[subindex].RadarColor.Left;
+            Color cr = src.SubTiles[subindex].RadarColor.Right;
+            pt.RadarColor = new RadarColor(cl, cr);
+            Buffer.Scenes.Tiles[t.Coord] = pt;
+            return success;
         }
         public bool DrawGeneralItem(TerrainItem terrain, int height)
         {

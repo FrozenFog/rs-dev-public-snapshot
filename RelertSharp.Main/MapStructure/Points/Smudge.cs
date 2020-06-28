@@ -42,7 +42,7 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Public Calls - SmudgeItem
-        public string RegName { get; set; }
+        public new string RegName { get; set; }
         public bool IgnoreSmudge { get; set; }
         public int SizeX
         {

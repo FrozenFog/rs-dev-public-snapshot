@@ -84,7 +84,7 @@ namespace RelertSharp.GUI
             foreach (Tile t in Map.TilesData)
             {
                 lw.Incre();
-                if (!GlobalVar.Engine.DrawGeneralItem(t))
+                if (!GlobalVar.Engine.DrawGeneralItem(t, true))
                 {
                     _failed.Add(string.Format("Tile in {0}", t.Coord));
                 }

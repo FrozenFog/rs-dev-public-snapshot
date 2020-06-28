@@ -14,7 +14,8 @@ namespace RelertSharp.MapStructure
     public class MapTheaterTileSet
     {
         private List<string> tileNameIndex = new List<string>();
-        private List<TileSet> tileSets = new List<TileSet>();
+        private Dictionary<int, TileSet> tileSets = new Dictionary<int, TileSet>();
+        private Dictionary<string, int> general = new Dictionary<string, int>();
 
 
         #region Ctor - MapTheaterTileSet
@@ -63,6 +64,7 @@ namespace RelertSharp.MapStructure
                     return;
             }
             INIFile _theaterIni = GlobalDir.GetFile(_theater, FileExtension.INI);
+            LoadGeneral(_theaterIni["General"]);
             int _cap = _theaterIni.IniData.Count;
             int current = 0;
             for (int i = 0; ; i++)
@@ -75,9 +77,13 @@ namespace RelertSharp.MapStructure
                 string _tileFileName = ent["FileName"];
                 int _numsInSet = ent.ParseInt("TilesInSet");
                 if (_numsInSet == 0) continue;
-                TileSet set = new TileSet(originalIndex != -1, ent.ParseBool("AllowToPlace", true), frameworkIndex);
-                set.Offset = current;
-                set.FileName = string.Format("{0}{1}{2}.{3}", _tileFileName, "{0:D2}", "{1}", TheaterSub);
+                TileSet set = new TileSet(originalIndex != -1, ent.ParseBool("AllowToPlace", true), frameworkIndex)
+                {
+                    Offset = current,
+                    FileName = string.Format("{0}{1}{2}.{3}", _tileFileName, "{0:D2}", "{1}", TheaterSub),
+                    SetName = ent["SetName"],
+                    SetIndex = string.Format("{0:D2}", i)
+                };
                 if (set.IsFramework) set.OriginalSet = originalIndex;
                 for (int j = 1;j<_numsInSet + 1; j++)
                 {
@@ -96,13 +102,50 @@ namespace RelertSharp.MapStructure
                     set.AddTile(cap);
                     tileNameIndex.Add(_tileFileName.ToLower() + string.Format("{0:D2}", j) + "." + TheaterSub);
                 }
-                tileSets.Add(set);
+                tileSets[i] = set;
             }
         }
         #endregion
 
 
         #region Private Methods - MapTheaterTileSet
+        private void LoadGeneral(INIEntity entGeneral)
+        {
+            foreach (INIPair p in entGeneral)
+            {
+                general[p.Name] = p.ParseInt();
+            }
+        }
+        private TileSet GetTileSet(ref int tileIndex)
+        {
+            if (tileIndex == 65535 || tileIndex >= tileNameIndex.Count) tileIndex = 0;
+            if (tileIndex != 0)
+            {
+                for (int i = 0; i < tileSets.Count; i++)
+                {
+                    if (tileIndex < tileSets.ElementAt(i).Value.Offset)
+                    {
+                        return tileSets.ElementAt(i - 1).Value;
+                    }
+                }
+                return tileSets.Last().Value;
+            }
+            return tileSets[0];
+        }
+        private TileSet GetTileSet(int tileindex)
+        {
+            int i = tileindex;
+            return GetTileSet(ref i);
+        }
+        private string GetFrameworkNameSafe(string filename)
+        {
+            if (GlobalDir.HasFile(filename)) return filename;
+            else
+            {
+                string name = filename.Substring(0, filename.Length - 3) + "tem";
+                return name;
+            }
+        }
         #endregion
 
 
@@ -115,6 +158,19 @@ namespace RelertSharp.MapStructure
         {
             return string.Format("{0}.{1}", name.ToLower(), TheaterSub);
         }
+        public string GetFrameworkFromTile(Tile t, out bool isHyte)
+        {
+            isHyte = false;
+            TileSet set = GetTileSet(t.TileIndex);
+            if (set.FrameworkSet != 0)
+            {
+                string name = tileSets[set.FrameworkSet].GetName(t.TileIndex - set.Offset, false);
+                return GetFrameworkNameSafe(name);
+            }
+            isHyte = true;
+            string hyte = tileSets[general["HeightBase"]].GetBaseHeightName(t.Height + 1);
+            return GetFrameworkNameSafe(hyte);
+        }
         #endregion
 
 
@@ -124,16 +180,9 @@ namespace RelertSharp.MapStructure
         {
             get
             {
-                if (_TileIndex == 65535 || _TileIndex >= tileNameIndex.Count) _TileIndex = 0;
-                if (_TileIndex == 0) return tileSets[0].GetName(_TileIndex);
-                for (int i = 0; i < tileSets.Count; i++)
-                {
-                    if (_TileIndex < tileSets[i].Offset)
-                    {
-                        return tileSets[i - 1].GetName(_TileIndex);
-                    }
-                }
-                return tileNameIndex[0];
+                int i = _TileIndex;
+                TileSet set = GetTileSet(ref i);
+                return set.GetName(i);
             }
         }
         #endregion
