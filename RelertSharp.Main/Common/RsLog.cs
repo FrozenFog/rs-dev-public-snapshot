@@ -54,6 +54,10 @@ namespace RelertSharp.Common
             sw.WriteLine(string.Format("{0}: {1}", DateTime.Now, msg));
             if (!isStream) sw.Flush();
         }
+        public void Write(string format, params object[] args)
+        {
+            Write(string.Format(format, args));
+        }
         public void BeginWrite()
         {
             isStream = true;

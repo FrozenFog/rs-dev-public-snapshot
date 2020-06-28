@@ -47,6 +47,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolBtnBrush = new System.Windows.Forms.ToolStripButton();
             this.toolBtnAttributeBrush = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolBtnFramework = new System.Windows.Forms.ToolStripButton();
             this.splitSide = new System.Windows.Forms.SplitContainer();
             this.pnlMiniMap = new RelertSharp.GUI.Controls.MinimapPanel();
             this.pnlSide = new System.Windows.Forms.Panel();
@@ -294,7 +296,9 @@
             this.toolBtnSelecting,
             this.toolStripSeparator1,
             this.toolBtnBrush,
-            this.toolBtnAttributeBrush});
+            this.toolBtnAttributeBrush,
+            this.toolStripSeparator2,
+            this.toolBtnFramework});
             this.toolsMain.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
             this.toolsMain.Location = new System.Drawing.Point(0, 0);
             this.toolsMain.Name = "toolsMain";
@@ -368,6 +372,23 @@
             this.toolBtnAttributeBrush.Tag = "attribute";
             this.toolBtnAttributeBrush.Text = "RSMainToolAttBrush";
             this.toolBtnAttributeBrush.Click += new System.EventHandler(this.ToolBoxClickHandler);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(22, 6);
+            // 
+            // toolBtnFramework
+            // 
+            this.toolBtnFramework.CheckOnClick = true;
+            this.toolBtnFramework.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnFramework.Image = global::RelertSharp.GUI.Properties.Resources.btnFramework;
+            this.toolBtnFramework.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnFramework.Name = "toolBtnFramework";
+            this.toolBtnFramework.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnFramework.Tag = "framework";
+            this.toolBtnFramework.Text = "RSMainToolBtnFramework";
+            this.toolBtnFramework.Click += new System.EventHandler(this.ToolBtnCheckClick);
             // 
             // splitSide
             // 
@@ -1494,5 +1515,7 @@
         private System.Windows.Forms.Label lblSubcell;
         private Controls.RbBrushPanel rbPanelBrush;
         private System.Windows.Forms.ToolStripButton toolBtnArrow;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton toolBtnFramework;
     }
 }

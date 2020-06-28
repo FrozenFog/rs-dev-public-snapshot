@@ -16,6 +16,7 @@ namespace RelertSharp.MapStructure
         private List<string> tileNameIndex = new List<string>();
         private Dictionary<int, TileSet> tileSets = new Dictionary<int, TileSet>();
         private Dictionary<string, int> general = new Dictionary<string, int>();
+        private readonly List<string> _subs = new List<string>(){ "tem", "des", "urb", "ubn", "sno", "lun" };
 
 
         #region Ctor - MapTheaterTileSet
@@ -51,14 +52,17 @@ namespace RelertSharp.MapStructure
                 case TheaterType.Custom1:
                     _theater = GlobalConfig["INI"]["Custom1Theater"];
                     TheaterSub = GlobalConfig["CustomTheater"]["Custom1Sub"];
+                    _subs.Add(TheaterSub);
                     break;
                 case TheaterType.Custom2:
                     _theater = GlobalConfig["INI"]["Custom2Theater"];
                     TheaterSub = GlobalConfig["CustomTheater"]["Custom2Sub"];
+                    _subs.Add(TheaterSub);
                     break;
                 case TheaterType.Custom3:
                     _theater = GlobalConfig["INI"]["Custom3Theater"];
                     TheaterSub = GlobalConfig["CustomTheater"]["Custom3Sub"];
+                    _subs.Add(TheaterSub);
                     break;
                 default:
                     return;
@@ -142,8 +146,12 @@ namespace RelertSharp.MapStructure
             if (GlobalDir.HasFile(filename)) return filename;
             else
             {
-                string name = filename.Substring(0, filename.Length - 3) + "tem";
-                return name;
+                foreach (string sub in _subs)
+                {
+                    string name = filename.Substring(0, filename.Length - 3) + sub;
+                    if (GlobalDir.HasFile(name)) return name;
+                }
+                throw new RSException.InvalidFileException(filename);
             }
         }
         #endregion
@@ -160,16 +168,26 @@ namespace RelertSharp.MapStructure
         }
         public string GetFrameworkFromTile(Tile t, out bool isHyte)
         {
-            isHyte = false;
-            TileSet set = GetTileSet(t.TileIndex);
-            if (set.FrameworkSet != 0)
+            try
             {
-                string name = tileSets[set.FrameworkSet].GetName(t.TileIndex - set.Offset, false);
-                return GetFrameworkNameSafe(name);
+                isHyte = false;
+                TileSet set = GetTileSet(t.TileIndex);
+                if (set.FrameworkSet != 0)
+                {
+                    string name = tileSets[set.FrameworkSet].GetName(t.TileIndex - set.Offset, false);
+                    return GetFrameworkNameSafe(name);
+                }
+                isHyte = true;
+                string hyte = tileSets[general["HeightBase"]].GetBaseHeightName(t.Height + 1);
+                return GetFrameworkNameSafe(hyte);
             }
-            isHyte = true;
-            string hyte = tileSets[general["HeightBase"]].GetBaseHeightName(t.Height + 1);
-            return GetFrameworkNameSafe(hyte);
+            catch (RSException.InvalidFileException e)
+            {
+                Log.Write("Framework {0} has not found!", e.FileName);
+                isHyte = true;
+                string hyte = tileSets[general["HeightBase"]].GetBaseHeightName(t.Height + 1);
+                return GetFrameworkNameSafe(hyte);
+            }
         }
         #endregion
 

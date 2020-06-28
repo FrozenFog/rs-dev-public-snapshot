@@ -23,11 +23,19 @@ namespace RelertSharp.GUI
 {
     public partial class MainWindowTest
     {
+        private const string BtnNameBrush = "brush";
+        private const string BtnNameMove = "moving";
+        private const string BtnNameSelect = "selecting";
+        private const string BtnNameAttribute = "attribute";
+        private const string BtnNameArrow = "arrow";
+        private const string CkbNameFramework = "framework";
+        private readonly string[] ToolsButton = { BtnNameArrow, BtnNameBrush, BtnNameMove, BtnNameSelect, BtnNameAttribute };
+
         private void ToolBoxClick(ToolStripButton btn)
         {
             foreach (ToolStripItem item in toolsMain.Items)
             {
-                if (item.GetType() == typeof(ToolStripButton)) (item as ToolStripButton).Checked = false;
+                if (item.GetType() == typeof(ToolStripButton) && ToolsButton.Contains(item.Tag.ToString())) (item as ToolStripButton).Checked = false;
             }
             string btnName = btn.Tag.ToString();
             if (btnName != "brush" && drew)
@@ -72,6 +80,18 @@ namespace RelertSharp.GUI
             {
                 case "selecting":
                     cmsToolSelect.Show(p);
+                    break;
+            }
+        }
+        private void ToolBtnCheckClick(object sender, EventArgs e)
+        {
+            ToolStripButton btn = sender as ToolStripButton;
+            string btnName = btn.Tag.ToString();
+            switch (btnName)
+            {
+                case "framework":
+                    if (drew) SwitchToFramework(btn.Checked);
+                    else btn.Checked = false;
                     break;
             }
         }

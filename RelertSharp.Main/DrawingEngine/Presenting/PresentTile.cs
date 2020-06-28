@@ -10,8 +10,13 @@ namespace RelertSharp.DrawingEngine.Presenting
 {
     public class PresentTile : PresentBase, IPresentBase
     {
+        private bool isFramework = false;
+        private int Body { get { if (isFramework) return pFramework; else return pSelf; } }
+        private int Extra { get { if (isFramework) return pExFramework; else return pExtra; } }
+
+
         #region Ctor - PresentTile
-        internal PresentTile(int pself, int pextra, byte height, Drawables.DrawableTile tile, int subtile, I2dLocateable pos)
+        internal PresentTile(int pself, int pextra, byte height, Drawables.DrawableTile tile, int subtile, I2dLocateable pos, int frm, int frmex)
         {
             pSelf = pself;
             pExtra = pextra;
@@ -21,17 +26,41 @@ namespace RelertSharp.DrawingEngine.Presenting
             WaterPassable = tile[subtile].WaterPassable;
             Buildable = tile[subtile].Buildable;
             LandPassable = tile[subtile].LandPassable;
+            pFramework = frm;
+            pExFramework = frmex;
+            SetColor(pFramework, Vec4.HideCompletely);
+            SetColor(pExFramework, Vec4.HideCompletely);
         }
         #endregion
 
 
         #region Public Methods - PresentTile
+        public void SwitchToFramework(bool enable)
+        {
+            isFramework = enable;
+            if (enable)
+            {
+                SetColor(pSelf, Vec4.HideCompletely);
+                SetColor(pExtra, Vec4.HideCompletely);
+                SetColor(pFramework, Vec4.One);
+                SetColor(pExFramework, Vec4.One);
+            }
+            else
+            {
+                SetColor(pSelf, ColorVector);
+                SetColor(pExtra, ColorVector);
+                SetColor(pFramework, Vec4.HideCompletely);
+                SetColor(pExFramework, Vec4.HideCompletely);
+            }
+        }
         public void Dispose()
         {
             if (!Disposed)
             {
                 RemoveProp(pSelf);
                 RemoveProp(pExtra);
+                RemoveProp(pFramework);
+                RemoveProp(pExFramework);
                 Disposed = true;
             }
         }
@@ -58,8 +87,8 @@ namespace RelertSharp.DrawingEngine.Presenting
                 main = ColorVector;
                 extra = ColorVector;
             }
-            SetColor(pSelf, main);
-            SetColor(pExtra, extra);
+            SetColor(Body, main);
+            SetColor(Extra, extra);
         }
         public void SetColor(Vec4 color)
         {
@@ -123,8 +152,8 @@ namespace RelertSharp.DrawingEngine.Presenting
         #region Private Methods - PresentTile
         private void SetColorStrict(Vec4 color)
         {
-            SetColor(pSelf, color);
-            SetColor(pExtra, color);
+            SetColor(Body, color);
+            SetColor(Extra, color);
         }
         #endregion
 
@@ -132,6 +161,8 @@ namespace RelertSharp.DrawingEngine.Presenting
         #region Public Calls - PresentTile
         public byte Height { get; set; }
         public int pExtra { get; set; }
+        public int pFramework { get; set; }
+        public int pExFramework { get; set; }
         public bool IsValid { get { return pSelf != 0 || pExtra != 0; } }
         public bool Lamped { get; set; }
         public bool Buildable { get; set; }

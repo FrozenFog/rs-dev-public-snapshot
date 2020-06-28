@@ -125,28 +125,22 @@ namespace RelertSharp.DrawingEngine
             }
             return false;
         }
-        public bool DrawGeneralItem(Tile t, bool isFramework = false)
+        public bool DrawGeneralItem(Tile t)
         {
-            string name, org;
-            int subindex = 0;
-            if (isFramework)
-            {
-                name = TileDictionary.GetFrameworkFromTile(t, out bool isHyte);
-                org = TileDictionary[t.TileIndex];
-                if (isHyte) subindex = 0;
-                else subindex = TileDictionary.IsValidTile(t.TileIndex) ? t.SubIndex : 0;
-            }
-            else
-            {
-                name = TileDictionary[t.TileIndex];
-                subindex = TileDictionary.IsValidTile(t.TileIndex) ? t.SubIndex : 0;
-            }
+            string name, framework;
+            int subindex = 0, frameworkIndex = 0;
+            framework = TileDictionary.GetFrameworkFromTile(t, out bool isHyte);
+            name = TileDictionary[t.TileIndex];
+            subindex = TileDictionary.IsValidTile(t.TileIndex) ? t.SubIndex : 0;
+            if (isHyte) frameworkIndex = 0;
+            else frameworkIndex = TileDictionary.IsValidTile(t.TileIndex) ? t.SubIndex : 0;
             DrawableTile src = CreateDrawableTile(name, subindex);
-            Buffer.Scenes.DrawableTiles[t.Coord] = src;
+            DrawableTile frm = CreateDrawableTile(framework, frameworkIndex);
             minimap.DrawTile(src, t, subindex);
             Vec3 pos = ToVec3Iso(t);
             bool success = DrawTile(src.pSelf, pos, subindex, pPalIso, out int pSelf, out int pExtra);
-            PresentTile pt = new PresentTile(pSelf, pExtra, t.Height, src, subindex, t);
+            bool frmSuccess = DrawTile(frm.pSelf, pos, frameworkIndex, pPalIso, out int pfrm, out int pfrmEx);
+            PresentTile pt = new PresentTile(pSelf, pExtra, t.Height, src, subindex, t, pfrm, pfrmEx);
             t.SceneObject = pt;
             t.BaseTileBuildable = pt.Buildable;
             Color cl = src.SubTiles[subindex].RadarColor.Left;

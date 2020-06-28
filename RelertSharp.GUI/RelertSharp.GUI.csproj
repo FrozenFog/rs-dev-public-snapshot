@@ -231,6 +231,9 @@
     <Compile Include="MainWindow\Sub\UnitAttributeForm.Designer.cs">
       <DependentUpon>UnitAttributeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainWindow\TileUtils.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainWindow\ToolBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -519,6 +522,7 @@
     <None Include="Resources\nullImg.png" />
     <None Include="Resources\moving.ico" />
     <None Include="Resources\arrMoving.ico" />
+    <None Include="Resources\framework.png" />
     <Content Include="rslogo.ico" />
   </ItemGroup>
   <ItemGroup>
