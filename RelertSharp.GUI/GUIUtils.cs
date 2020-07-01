@@ -63,6 +63,10 @@ namespace RelertSharp.GUI
         }
         public static void LoadToTreeNode(TreeNode dest, IEnumerable<TreeNode> src)
         {
+            foreach (TreeNode n in src) dest.Nodes.Add(n);
+        }
+        public static void LoadToTreeNode(TreeNode dest, params TreeNode[] src)
+        {
             foreach(TreeNode n in src)
             {
                 dest.Nodes.Add(n);

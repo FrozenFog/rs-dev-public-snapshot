@@ -17,8 +17,21 @@ namespace RelertSharp.MapStructure
             AllowPlace = allowPlace;
             FrameworkSet = framework;
         }
+        public TileSet(TileSet src)
+        {
+            data = src.data;
+            IsFramework = src.IsFramework;
+            AllowPlace = src.AllowPlace;
+            FrameworkSet = src.FrameworkSet;
+            SetName = src.SetName;
+            SetIndex = src.SetIndex;
+            OriginalSet = src.OriginalSet;
+            FileName = src.FileName;
+            Offset = src.Offset;
+        }
 
 
+        #region Public Methods
         public string GetName(int totalIndex, bool fixOffset = true)
         {
             int delta = 0; ;
@@ -30,6 +43,10 @@ namespace RelertSharp.MapStructure
         {
             return string.Format(FileName, height, data[height].Suff);
         }
+        public void SetMaxIndex(int maxCount)
+        {
+            data = data.Take(maxCount).ToList();
+        }
         public void AddTile(int varitycap)
         {
             TileVaries varies = new TileVaries()
@@ -38,12 +55,28 @@ namespace RelertSharp.MapStructure
             };
             data.Add(varies);
         }
+        public IEnumerable<string> GetNames()
+        {
+            List<string> result = new List<string>();
+            for(int i = 0; i < data.Count; i++)
+            {
+                result.Add(GetName(i, false));
+            }
+            return result;
+        }
+        public bool ClassifyAs(string guessType)
+        {
+            return SetName.Contains(guessType) || SetName.Contains(guessType.ToLower());
+        }
         public override string ToString()
         {
-            return string.Format("{0} {1}", SetIndex, SetName);
+            return string.Format("{0} ({1:D4})", SetName, SetIndex);
         }
+        #endregion
 
 
+        #region Public Calls
+        public int Count { get { return data.Count; } }
         public string SetName { get; set; }
         /// <summary>
         /// 0 if not specified
@@ -53,11 +86,12 @@ namespace RelertSharp.MapStructure
         public bool IsFramework { get; private set; }
         public bool AllowPlace { get; private set; }
         public string FileName { get; set; }
-        public string SetIndex { get; set; }
+        public int SetIndex { get; set; }
         /// <summary>
         /// Tile index from beginning
         /// </summary>
         public int Offset { get; set; }
+        #endregion
 
 
 

@@ -60,6 +60,8 @@ namespace RelertSharp.GUI
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.AddingObject;
                     pnlPick.Result?.RedrawBrushObject();
                     panel1.Cursor = new Cursor(Properties.Resources.curBrush.Handle);
+                    pnlPick.Visible = true;
+                    pnlTile.Visible = false;
                     break;
                 case "attribute":
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.AttributeBrush;
@@ -90,7 +92,11 @@ namespace RelertSharp.GUI
             switch (btnName)
             {
                 case "framework":
-                    if (drew) SwitchToFramework(btn.Checked);
+                    if (drew)
+                    {
+                        SwitchToFramework(btn.Checked);
+                        pnlTile.SetFramework(btn.Checked);
+                    }
                     else btn.Checked = false;
                     break;
             }

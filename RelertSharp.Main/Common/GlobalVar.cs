@@ -11,6 +11,7 @@ namespace RelertSharp.Common
         public static IniSystem.SoundRules GlobalSound { get; set; }
         public static FileSystem.SoundBank GlobalSoundBank { get; set; }
         public static FileSystem.CsfFile GlobalCsf { get; set; }
+        public static FileSystem.PalFile TilePalette { get; set; }
         public static string PlayerSide { get; set; }
         public static MapStructure.MapTheaterTileSet TileDictionary { get; set; }
         public static DrawingEngine.Engine Engine { get; set; }

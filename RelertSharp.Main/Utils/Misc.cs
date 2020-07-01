@@ -69,12 +69,20 @@ namespace RelertSharp.Utils
         }
         public static Image ResizeImage(Image src, Size newSize)
         {
+            if (src.Width > newSize.Width || src.Height > newSize.Height) return src;
             Bitmap dest = new Bitmap(newSize.Width, newSize.Height);
             Point pos = GetResizePoint(newSize, src.Size);
             Graphics g = Graphics.FromImage(dest);
             g.DrawImage(src, pos);
             g.Dispose();
             return dest;
+        }
+        public static Size GetMaxSize(Size szA, Size szB)
+        {
+            Size result = new Size(szB.Width, szB.Height);
+            if (szA.Width > szB.Width) result.Width = szA.Width;
+            if (szA.Height > szB.Height) result.Height = szA.Height;
+            return result;
         }
         public static Point GetResizePoint(Size dest, Size src)
         {

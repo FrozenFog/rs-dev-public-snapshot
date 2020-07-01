@@ -66,6 +66,7 @@ namespace RelertSharp.GUI
                 Log.Write("Resetting...");
                 GlobalVar.Engine.SetBackgroundColor(Color.FromArgb(30, 30, 30));
                 GlobalVar.Engine.ResetMinimapWindow(panel1.Size);
+                pnlTile.Initialize();
                 Log.Write("ENGINE INITIALIZE COMPLETE");
                 return true;
             }

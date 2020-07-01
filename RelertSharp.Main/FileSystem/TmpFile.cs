@@ -58,6 +58,38 @@ namespace RelertSharp.FileSystem
             }
             Dispose();
         }
+        private void Assemble()
+        {
+            if (AssembleImage == null)
+            {
+                // Get graphic size
+                Rectangle total = new Rectangle(0, 0, blockWidthPX, blockHeightPX);
+                int sourceHeight = images.First().Height;
+                foreach (TmpImage img in images)
+                {
+                    int deltaHeight = sourceHeight - img.Height;
+                    Point src = new Point(img.X, img.Y);
+                    Point offset = new Point(src.X - img.DrawingPos.X, src.Y - img.DrawingPos.Y + deltaHeight * 15);
+                    Rectangle pic = new Rectangle(offset, img.TileBitmap.Size);
+                    total = Rectangle.Union(total, pic);
+                    //total = Misc.UnionRectangle(total, pic, zero, out Point newZero);
+                    //zero = newZero;
+                }
+
+                // Assemble
+                Bitmap result = new Bitmap(total.Width, total.Height);
+                Point zero = new Point(-total.X, -total.Y);
+                Graphics g = Graphics.FromImage(result);
+                foreach (TmpImage img in images)
+                {
+                    int deltaDrawHeight = sourceHeight - img.Height;
+                    Point pos = new Point(zero.X + img.X - img.DrawingPos.X, zero.Y + img.Y - img.DrawingPos.Y + deltaDrawHeight * 15);
+                    g.DrawImage(img.TileBitmap, pos);
+                }
+                g.Dispose();
+                AssembleImage = result;
+            }
+        }
         #endregion
 
 
@@ -68,6 +100,7 @@ namespace RelertSharp.FileSystem
             {
                 img.LoadColor(_pal, blockWidthPX, blockHeightPX);
             }
+            Assemble();
         }
         #endregion
 
@@ -79,6 +112,7 @@ namespace RelertSharp.FileSystem
             set { images[index] = value; }
         }
         public List<TmpImage> Images { get { return images; } }
+        public Bitmap AssembleImage { get; private set; }
         #endregion
     }
 
@@ -206,6 +240,7 @@ namespace RelertSharp.FileSystem
         }
         public byte TileByte(int _index)
         {
+            if (TileData == null || TileData.Count() == 0) return 0;
             return TileData[_index];
         }
         public byte ExtraByte(int _index)

@@ -8,6 +8,7 @@ using RelertSharp.Common;
 using RelertSharp.IniSystem;
 using RelertSharp.FileSystem;
 using static RelertSharp.Common.GlobalVar;
+using static RelertSharp.Language;
 
 namespace RelertSharp.MapStructure
 {
@@ -67,6 +68,7 @@ namespace RelertSharp.MapStructure
                 default:
                     return;
             }
+            SetGlobalPal();
             INIFile _theaterIni = GlobalDir.GetFile(_theater, FileExtension.INI);
             LoadGeneral(_theaterIni["General"]);
             int _cap = _theaterIni.IniData.Count;
@@ -86,7 +88,7 @@ namespace RelertSharp.MapStructure
                     Offset = current,
                     FileName = string.Format("{0}{1}{2}.{3}", _tileFileName, "{0:D2}", "{1}", TheaterSub),
                     SetName = ent["SetName"],
-                    SetIndex = string.Format("{0:D2}", i)
+                    SetIndex = i
                 };
                 if (set.IsFramework) set.OriginalSet = originalIndex;
                 for (int j = 1;j<_numsInSet + 1; j++)
@@ -113,12 +115,29 @@ namespace RelertSharp.MapStructure
 
 
         #region Private Methods - MapTheaterTileSet
+        private void SetGlobalPal()
+        {
+            string palName = string.Format("iso{0}.pal", TheaterSub);
+            PalFile pal = new PalFile(GlobalDir.GetRawByte(palName), palName);
+            TilePalette = pal;
+        }
         private void LoadGeneral(INIEntity entGeneral)
         {
             foreach (INIPair p in entGeneral)
             {
                 general[p.Name] = p.ParseInt();
             }
+            SafeLoad(Constant.TileSetClass.Clear, "ClearTile");
+            SafeLoad(Constant.TileSetClass.Rough, "RoughTile");
+            SafeLoad(Constant.TileSetClass.Ramp, "RampBase");
+            SafeLoad(Constant.TileSetClass.Pave, "PaveTile");
+            SafeLoad(Constant.TileSetClass.Green, "GreenTile");
+            SafeLoad(Constant.TileSetClass.Sand, "SandTile");
+            SafeLoad(Constant.TileSetClass.Water, "WaterSet");
+        }
+        private void SafeLoad(string DICTkey, string generalKey)
+        {
+            if (general.Keys.Contains(generalKey)) GeneralTilesets[DICT[DICTkey]] = general[generalKey];
         }
         private TileSet GetTileSet(ref int tileIndex)
         {
@@ -189,6 +208,27 @@ namespace RelertSharp.MapStructure
                 return GetFrameworkNameSafe(hyte);
             }
         }
+        /// <summary>
+        /// Tiles that exceed source set will be trimmed
+        /// </summary>
+        /// <param name="src"></param>
+        /// <param name="isHyte"></param>
+        /// <returns></returns>
+        public TileSet GetFrameworkFromSet(TileSet src, out bool isHyte)
+        {
+            isHyte = false;
+            if (src.FrameworkSet != 0)
+            {
+                TileSet framework = new TileSet(tileSets[src.FrameworkSet]);
+                framework.SetMaxIndex(src.Count);
+                return framework;
+            }
+            else
+            {
+                isHyte = true;
+                return src;
+            }
+        }
         #endregion
 
 
@@ -203,6 +243,8 @@ namespace RelertSharp.MapStructure
                 return set.GetName(i);
             }
         }
+        public IEnumerable<TileSet> TileSets { get { return tileSets.Values; } }
+        public Dictionary<string, int> GeneralTilesets { get; private set; } = new Dictionary<string, int>();
         #endregion
     }
 }

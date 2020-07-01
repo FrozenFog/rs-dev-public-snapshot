@@ -47,8 +47,7 @@ namespace RelertSharp.FileSystem
             {
                 if (img.Image != null)
                 {
-                    if (img.Image.Size.Width > sz.Width) sz.Width = img.Image.Size.Width;
-                    if (img.Image.Size.Height > sz.Height) sz.Height = img.Image.Size.Height;
+                    sz = Utils.Misc.GetMaxSize(sz, img.Image.Size);
                 }
             }
             return sz;

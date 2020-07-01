@@ -159,6 +159,18 @@
     <Compile Include="Controls\RbBrushPanel.Designer.cs">
       <DependentUpon>RbBrushPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TilePanel\AllTiles.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TilePanel\GeneralTiles.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TilePanel\TilePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TilePanel\TilePanel.Designer.cs">
+      <DependentUpon>TilePanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="LocalSettingWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -371,6 +383,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\RbBrushPanel.resx">
       <DependentUpon>RbBrushPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TilePanel\TilePanel.resx">
+      <DependentUpon>TilePanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LocalSettingWindow.resx">
       <DependentUpon>LocalSettingWindow.cs</DependentUpon>

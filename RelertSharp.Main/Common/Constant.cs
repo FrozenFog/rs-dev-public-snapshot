@@ -8,14 +8,37 @@ namespace RelertSharp.Common
 {
     public static class Constant
     {
-        public static string ReleaseDate = " - ver. 2020.06.25-0246 - UNSTABLE";
+        public const string ReleaseDate = " - ver. 2020.06.25-0246 - UNSTABLE";
+        public static class TileSetClass
+        {
+            public const string Clear = "TscClear";
+            public const string Ramp = "TscRamp";
+            public const string Rough = "TscRough";
+            public const string Green = "TscGreen";
+            public const string Sand = "TscSand";
+            public const string Pave = "TscPave";
+            public const string Water = "TscWater";
+
+            public const string OtherClass = "TscOtherClass";
+
+            public const string Ramps = "TscRampTypes";
+            public const string Cliffs = "TscCliff";
+            public const string Bridges = "TscBridges";
+            public const string Roads = "TscRoads";
+            public const string InWater = "TscInWater";
+            public const string Features = "TscFeatures";
+            public const string Railroad = "TscRail";
+            public const string Tunnel = "TscTunnel";
+            public const string Shore = "TscShore";
+            public const string Paves = "TscPaves";
+        }
         public static class MapStructure
         {
-            public static int ArgLenInfantry = 14;
-            public static int ArgLenStructure = 17;
-            public static int ArgLenUnit = 14;
-            public static int ArgLenAircraft = 12;
-            public static int ArgLenAiTrigger = 18;
+            public const int ArgLenInfantry = 14;
+            public const int ArgLenStructure = 17;
+            public const int ArgLenUnit = 14;
+            public const int ArgLenAircraft = 12;
+            public const int ArgLenAiTrigger = 18;
         }
         public static class EntName
         {
@@ -128,7 +151,7 @@ namespace RelertSharp.Common
         }
         public static class DrawingEngine
         {
-            public static int MapMaxHeight = 13;
+            public const int MapMaxHeight = 13;
             public static class Tiles
             {
                 public const int Cliff = 15;
