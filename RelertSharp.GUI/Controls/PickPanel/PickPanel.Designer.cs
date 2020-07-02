@@ -97,6 +97,8 @@
             this.tbpCelltag = new System.Windows.Forms.TabPage();
             this.splitBaseNode = new System.Windows.Forms.SplitContainer();
             this.lbxCelltags = new System.Windows.Forms.ListBox();
+            this.cmsCelltagUtil = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiTraceTag = new System.Windows.Forms.ToolStripMenuItem();
             this.cbbCelltag = new System.Windows.Forms.ComboBox();
             this.lbxSameTags = new System.Windows.Forms.ListBox();
             this.tlpCellUtil = new System.Windows.Forms.TableLayoutPanel();
@@ -119,8 +121,6 @@
             this.tsmiTerrAddRnd = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsSmudgeAddRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiSmgAddRnd = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsCelltagUtil = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmiTraceTag = new System.Windows.Forms.ToolStripMenuItem();
             this.tbcMain.SuspendLayout();
             this.tbpObject.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitObjects)).BeginInit();
@@ -143,12 +143,12 @@
             this.splitBaseNode.Panel1.SuspendLayout();
             this.splitBaseNode.Panel2.SuspendLayout();
             this.splitBaseNode.SuspendLayout();
+            this.cmsCelltagUtil.SuspendLayout();
             this.tlpCellUtil.SuspendLayout();
             this.tbpBaseNode.SuspendLayout();
             this.cmsNodeUtils.SuspendLayout();
             this.cmsTerrainAddRnd.SuspendLayout();
             this.cmsSmudgeAddRnd.SuspendLayout();
-            this.cmsCelltagUtil.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -205,6 +205,7 @@
             // 
             this.trvObject.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trvObject.HideSelection = false;
+            this.trvObject.HotTracking = true;
             this.trvObject.ImageIndex = 0;
             this.trvObject.ImageList = this.imgMain;
             this.trvObject.Location = new System.Drawing.Point(0, 0);
@@ -735,9 +736,9 @@
             this.lbxRndTerrain.Enabled = false;
             this.lbxRndTerrain.FormattingEnabled = true;
             this.lbxRndTerrain.ItemHeight = 15;
-            this.lbxRndTerrain.Location = new System.Drawing.Point(3, 543);
+            this.lbxRndTerrain.Location = new System.Drawing.Point(3, 552);
             this.lbxRndTerrain.Name = "lbxRndTerrain";
-            this.lbxRndTerrain.Size = new System.Drawing.Size(331, 154);
+            this.lbxRndTerrain.Size = new System.Drawing.Size(297, 124);
             this.lbxRndTerrain.TabIndex = 3;
             // 
             // cmsTerrainRemoveRnd
@@ -767,7 +768,7 @@
             // 
             this.ckbRndTerrainEnable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ckbRndTerrainEnable.AutoSize = true;
-            this.ckbRndTerrainEnable.Location = new System.Drawing.Point(3, 518);
+            this.ckbRndTerrainEnable.Location = new System.Drawing.Point(3, 527);
             this.ckbRndTerrainEnable.Name = "ckbRndTerrainEnable";
             this.ckbRndTerrainEnable.Size = new System.Drawing.Size(141, 19);
             this.ckbRndTerrainEnable.TabIndex = 2;
@@ -782,7 +783,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trvTerrain.Location = new System.Drawing.Point(3, 3);
             this.trvTerrain.Name = "trvTerrain";
-            this.trvTerrain.Size = new System.Drawing.Size(331, 426);
+            this.trvTerrain.Size = new System.Drawing.Size(297, 456);
             this.trvTerrain.TabIndex = 0;
             this.trvTerrain.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvTerrain_NodeMouseClick);
             // 
@@ -802,7 +803,7 @@
             // 
             this.ckbRndSmg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ckbRndSmg.AutoSize = true;
-            this.ckbRndSmg.Location = new System.Drawing.Point(3, 518);
+            this.ckbRndSmg.Location = new System.Drawing.Point(3, 527);
             this.ckbRndSmg.Name = "ckbRndSmg";
             this.ckbRndSmg.Size = new System.Drawing.Size(133, 19);
             this.ckbRndSmg.TabIndex = 2;
@@ -818,9 +819,9 @@
             this.lbxRndSmg.Enabled = false;
             this.lbxRndSmg.FormattingEnabled = true;
             this.lbxRndSmg.ItemHeight = 15;
-            this.lbxRndSmg.Location = new System.Drawing.Point(3, 543);
+            this.lbxRndSmg.Location = new System.Drawing.Point(3, 552);
             this.lbxRndSmg.Name = "lbxRndSmg";
-            this.lbxRndSmg.Size = new System.Drawing.Size(331, 154);
+            this.lbxRndSmg.Size = new System.Drawing.Size(297, 124);
             this.lbxRndSmg.TabIndex = 1;
             // 
             // cmsSmudgeRemoveRnd
@@ -853,7 +854,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trvSmudge.Location = new System.Drawing.Point(3, 3);
             this.trvSmudge.Name = "trvSmudge";
-            this.trvSmudge.Size = new System.Drawing.Size(331, 426);
+            this.trvSmudge.Size = new System.Drawing.Size(297, 456);
             this.trvSmudge.TabIndex = 0;
             this.trvSmudge.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvSmudge_NodeMouseClick);
             // 
@@ -889,6 +890,8 @@
             // trvOverlay
             // 
             this.trvOverlay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trvOverlay.HideSelection = false;
+            this.trvOverlay.HotTracking = true;
             this.trvOverlay.Location = new System.Drawing.Point(0, 0);
             this.trvOverlay.Name = "trvOverlay";
             this.trvOverlay.Size = new System.Drawing.Size(303, 348);
@@ -966,6 +969,21 @@
             this.lbxCelltags.TabIndex = 2;
             this.lbxCelltags.SelectedIndexChanged += new System.EventHandler(this.lbxCelltags_SelectedIndexChanged);
             this.lbxCelltags.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxCelltags_MouseDoubleClick);
+            // 
+            // cmsCelltagUtil
+            // 
+            this.cmsCelltagUtil.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsCelltagUtil.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiTraceTag});
+            this.cmsCelltagUtil.Name = "cmsCelltagUtil";
+            this.cmsCelltagUtil.Size = new System.Drawing.Size(256, 28);
+            // 
+            // tsmiTraceTag
+            // 
+            this.tsmiTraceTag.Name = "tsmiTraceTag";
+            this.tsmiTraceTag.Size = new System.Drawing.Size(255, 24);
+            this.tsmiTraceTag.Text = "Trace tag in Logic Editor";
+            this.tsmiTraceTag.Click += new System.EventHandler(this.tsmiTraceTag_Click);
             // 
             // cbbCelltag
             // 
@@ -1167,21 +1185,6 @@
             this.tsmiSmgAddRnd.Text = "Add to random smudge";
             this.tsmiSmgAddRnd.Click += new System.EventHandler(this.tsmiSmgAddRnd_Click);
             // 
-            // cmsCelltagUtil
-            // 
-            this.cmsCelltagUtil.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cmsCelltagUtil.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiTraceTag});
-            this.cmsCelltagUtil.Name = "cmsCelltagUtil";
-            this.cmsCelltagUtil.Size = new System.Drawing.Size(256, 28);
-            // 
-            // tsmiTraceTag
-            // 
-            this.tsmiTraceTag.Name = "tsmiTraceTag";
-            this.tsmiTraceTag.Size = new System.Drawing.Size(255, 24);
-            this.tsmiTraceTag.Text = "Trace tag in Logic Editor";
-            this.tsmiTraceTag.Click += new System.EventHandler(this.tsmiTraceTag_Click);
-            // 
             // PickPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1217,13 +1220,13 @@
             this.splitBaseNode.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitBaseNode)).EndInit();
             this.splitBaseNode.ResumeLayout(false);
+            this.cmsCelltagUtil.ResumeLayout(false);
             this.tlpCellUtil.ResumeLayout(false);
             this.tlpCellUtil.PerformLayout();
             this.tbpBaseNode.ResumeLayout(false);
             this.cmsNodeUtils.ResumeLayout(false);
             this.cmsTerrainAddRnd.ResumeLayout(false);
             this.cmsSmudgeAddRnd.ResumeLayout(false);
-            this.cmsCelltagUtil.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

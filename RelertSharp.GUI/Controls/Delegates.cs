@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.IniSystem;
 using RelertSharp.Common;
+using RelertSharp.MapStructure;
 using RelertSharp.MapStructure.Points;
 
 namespace RelertSharp.GUI
@@ -20,4 +21,5 @@ namespace RelertSharp.GUI
     internal delegate void ScriptGroupHandler(object sender, TeamScriptGroup scripts);
     internal delegate void TriggerTagItemHandler(object sender, TagItem tag);
     internal delegate void CelltagCollectionHandler(object sender, IEnumerable<CellTagItem> cells);
+    internal delegate void TileSetSelectedHandler(object sender, TileSet set, int index);
 }

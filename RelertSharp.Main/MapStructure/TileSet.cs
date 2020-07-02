@@ -34,7 +34,7 @@ namespace RelertSharp.MapStructure
         #region Public Methods
         public string GetName(int totalIndex, bool fixOffset = true)
         {
-            int delta = 0; ;
+            int delta = 0;
             if (fixOffset) delta = totalIndex - Offset;
             else delta = totalIndex;
             return string.Format(FileName, delta + 1, data[delta].Suff);

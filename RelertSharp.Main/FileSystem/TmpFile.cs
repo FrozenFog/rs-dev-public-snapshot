@@ -281,6 +281,7 @@ namespace RelertSharp.FileSystem
         public Point DrawingPos { get; private set; }
         public int WidthPX { get { return TileBitmap.Width; } }
         public int HeightPX { get { return TileBitmap.Height; } }
+        public bool IsNullTile { get { return TileData == null || TileData.Length == 0; } }
         #endregion
     }
 }

@@ -10,12 +10,11 @@ namespace RelertSharp.GUI
 {
     public partial class MainWindowTest
     {
-        public void MoveBrushObjectTo(MouseEventArgs e)
+        public void MoveBrushObjectTo(Vec3 pos, int subcell)
         {
             if (drew)
             {
                 I3dLocateable cell;
-                Vec3 pos = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
                 if (pos == Vec3.Zero)
                 {
                     cell = GlobalVar.Engine.GetPreviousLegalTile();

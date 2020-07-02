@@ -284,6 +284,7 @@ namespace RelertSharp.MapStructure
     {
         private int tileIndex;
         private List<IMapObject> objectsOnTile = new List<IMapObject>();
+        private bool isSelfHidden = false, isExtraHidden = false;
 
 
         #region Ctor - Tile
@@ -295,6 +296,14 @@ namespace RelertSharp.MapStructure
             SubIndex = _TileSubIndex;
             Height = _Level;
             IceGrowth = _IceGrowth;
+        }
+        public Tile(int tileindex, byte subindex, int x, int y, int z)
+        {
+            TileIndex = tileindex;
+            SubIndex = subindex;
+            X = x;
+            Y = y;
+            Height = (byte)z;
         }
         #endregion
 
@@ -356,6 +365,45 @@ namespace RelertSharp.MapStructure
         public void UnMarkForSimulating()
         {
             SceneObject.UnMarkForBuildable();
+        }
+        public void HideTileImg()
+        {
+            if (!isSelfHidden)
+            {
+                SceneObject.HideSelf();
+                isSelfHidden = true;
+            }
+        }
+        public void HideExtraImg()
+        {
+            if (!isExtraHidden)
+            {
+                SceneObject.HideExtra();
+                isExtraHidden = true;
+            }
+        }
+        public void RevealAllTileImg()
+        {
+            if (isSelfHidden)
+            {
+                SceneObject.RevealSelf();
+                isSelfHidden = false;
+            }
+            if (isExtraHidden)
+            {
+                SceneObject.RevealExtra();
+                isExtraHidden = false;
+            }
+        }
+        public void MoveTo(I2dLocateable pos, int height)
+        {
+            if (SceneObject != null)
+            {
+                SceneObject.MoveTo(new Pnt3(pos, height));
+                X = pos.X;
+                Y = pos.Y;
+                Height = (byte)height;
+            }
         }
         #endregion
 

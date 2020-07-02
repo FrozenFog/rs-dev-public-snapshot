@@ -64,13 +64,12 @@ namespace RelertSharp.DrawingEngine.Presenting
                 Disposed = true;
             }
         }
-        /// <summary>
-        /// Move tile will do nothing
-        /// </summary>
-        /// <param name="cell"></param>
         public override void MoveTo(I3dLocateable cell)
         {
-
+            Vec3 pos = Vec3.ToVec3Iso(cell);
+            SetLocation(pos, pSelf, pExtra);
+            SetLocation(pos, pFramework, pExFramework);
+            base.MoveTo(cell);
         }
         /// <summary>
         /// Shift tile will do nothing
@@ -129,6 +128,22 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             selected = false;
             SetColorStrict(ColorVector);
+        }
+        public void HideSelf()
+        {
+            SetColor(Body, Vec4.HideCompletely);
+        }
+        public void HideExtra()
+        {
+            SetColor(Extra, Vec4.HideCompletely);
+        }
+        public void RevealSelf()
+        {
+            SetColor(Body, ColorVector);
+        }
+        public void RevealExtra()
+        {
+            SetColor(Extra, ColorVector);
         }
         public void Hide()
         {

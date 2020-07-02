@@ -35,7 +35,10 @@
             this.splitMain = new System.Windows.Forms.SplitContainer();
             this.pnlMainAreaContainer = new System.Windows.Forms.Panel();
             this.splitPickerMain = new System.Windows.Forms.SplitContainer();
+            this.pnlPick = new RelertSharp.GUI.Controls.PickPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rbPanelBrush = new RelertSharp.GUI.Controls.RbBrushPanel();
+            this.rbPanelAttribute = new RelertSharp.GUI.Controls.RbPanelAttribute();
             this.txbCommand = new System.Windows.Forms.TextBox();
             this.toolsMain = new System.Windows.Forms.ToolStrip();
             this.toolBtnArrow = new System.Windows.Forms.ToolStripButton();
@@ -46,7 +49,10 @@
             this.toolBtnAttributeBrush = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolBtnFramework = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolBtnTileBrush = new System.Windows.Forms.ToolStripButton();
             this.splitSide = new System.Windows.Forms.SplitContainer();
+            this.pnlMiniMap = new RelertSharp.GUI.Controls.MinimapPanel();
             this.pnlSide = new System.Windows.Forms.Panel();
             this.pnlSideRank = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -103,8 +109,6 @@
             this.lblx = new System.Windows.Forms.Label();
             this.lbly = new System.Windows.Forms.Label();
             this.lblz = new System.Windows.Forms.Label();
-            this.lblMouseX = new System.Windows.Forms.Label();
-            this.lblMouseY = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.itemRectangle = new System.Windows.Forms.ToolStripMenuItem();
@@ -117,11 +121,7 @@
             this.bgwDraw = new System.ComponentModel.BackgroundWorker();
             this.bgwRmbMoving = new System.ComponentModel.BackgroundWorker();
             this.lblSubcell = new System.Windows.Forms.Label();
-            this.pnlPick = new RelertSharp.GUI.Controls.PickPanel();
             this.pnlTile = new RelertSharp.GUI.Controls.TilePanel();
-            this.rbPanelBrush = new RelertSharp.GUI.Controls.RbBrushPanel();
-            this.rbPanelAttribute = new RelertSharp.GUI.Controls.RbPanelAttribute();
-            this.pnlMiniMap = new RelertSharp.GUI.Controls.MinimapPanel();
             this.panelHost.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
@@ -229,6 +229,15 @@
             this.splitPickerMain.SplitterDistance = 238;
             this.splitPickerMain.TabIndex = 4;
             // 
+            // pnlPick
+            // 
+            this.pnlPick.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlPick.Location = new System.Drawing.Point(0, 0);
+            this.pnlPick.Name = "pnlPick";
+            this.pnlPick.Size = new System.Drawing.Size(238, 771);
+            this.pnlPick.TabIndex = 1;
+            this.pnlPick.Visible = false;
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.rbPanelBrush);
@@ -249,6 +258,25 @@
             this.panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseUp);
             this.panel1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.panel1_PreviewKeyDown);
             this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
+            // 
+            // rbPanelBrush
+            // 
+            this.rbPanelBrush.BackColor = System.Drawing.SystemColors.Control;
+            this.rbPanelBrush.Location = new System.Drawing.Point(3, 265);
+            this.rbPanelBrush.Name = "rbPanelBrush";
+            this.rbPanelBrush.Size = new System.Drawing.Size(260, 257);
+            this.rbPanelBrush.TabIndex = 1;
+            this.rbPanelBrush.Visible = false;
+            // 
+            // rbPanelAttribute
+            // 
+            this.rbPanelAttribute.BackColor = System.Drawing.SystemColors.Control;
+            this.rbPanelAttribute.Location = new System.Drawing.Point(3, 2);
+            this.rbPanelAttribute.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbPanelAttribute.Name = "rbPanelAttribute";
+            this.rbPanelAttribute.Size = new System.Drawing.Size(540, 258);
+            this.rbPanelAttribute.TabIndex = 0;
+            this.rbPanelAttribute.Visible = false;
             // 
             // txbCommand
             // 
@@ -273,7 +301,9 @@
             this.toolBtnBrush,
             this.toolBtnAttributeBrush,
             this.toolStripSeparator2,
-            this.toolBtnFramework});
+            this.toolBtnFramework,
+            this.toolStripSeparator3,
+            this.toolBtnTileBrush});
             this.toolsMain.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
             this.toolsMain.Location = new System.Drawing.Point(0, 0);
             this.toolsMain.Name = "toolsMain";
@@ -365,6 +395,22 @@
             this.toolBtnFramework.Text = "RSMainToolBtnFramework";
             this.toolBtnFramework.Click += new System.EventHandler(this.ToolBtnCheckClick);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(22, 6);
+            // 
+            // toolBtnTileBrush
+            // 
+            this.toolBtnTileBrush.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnTileBrush.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnTileBrush.Image")));
+            this.toolBtnTileBrush.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnTileBrush.Name = "toolBtnTileBrush";
+            this.toolBtnTileBrush.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnTileBrush.Tag = "tilebrush";
+            this.toolBtnTileBrush.Text = "RSMainToolBtnTileBrush";
+            this.toolBtnTileBrush.Click += new System.EventHandler(this.ToolBoxClickHandler);
+            // 
             // splitSide
             // 
             this.splitSide.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -384,6 +430,23 @@
             this.splitSide.Size = new System.Drawing.Size(204, 796);
             this.splitSide.SplitterDistance = 176;
             this.splitSide.TabIndex = 1;
+            // 
+            // pnlMiniMap
+            // 
+            this.pnlMiniMap.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.pnlMiniMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pnlMiniMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMiniMap.Location = new System.Drawing.Point(0, 0);
+            this.pnlMiniMap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlMiniMap.Name = "pnlMiniMap";
+            this.pnlMiniMap.Size = new System.Drawing.Size(204, 176);
+            this.pnlMiniMap.TabIndex = 4;
+            this.pnlMiniMap.SizeChanged += new System.EventHandler(this.pnlMiniMap_SizeChanged);
+            this.pnlMiniMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseClick);
+            this.pnlMiniMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseDown);
+            this.pnlMiniMap.MouseLeave += new System.EventHandler(this.pnlMiniMap_MouseLeave);
+            this.pnlMiniMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseMove);
+            this.pnlMiniMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseUp);
             // 
             // pnlSide
             // 
@@ -1150,7 +1213,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(175, 251);
+            this.tabPage2.Size = new System.Drawing.Size(196, 251);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1199,24 +1262,6 @@
             this.lblz.Size = new System.Drawing.Size(39, 15);
             this.lblz.TabIndex = 4;
             this.lblz.Text = "Z : ";
-            // 
-            // lblMouseX
-            // 
-            this.lblMouseX.AutoSize = true;
-            this.lblMouseX.Location = new System.Drawing.Point(655, 22);
-            this.lblMouseX.Name = "lblMouseX";
-            this.lblMouseX.Size = new System.Drawing.Size(71, 15);
-            this.lblMouseX.TabIndex = 4;
-            this.lblMouseX.Text = "MouseX :";
-            // 
-            // lblMouseY
-            // 
-            this.lblMouseY.AutoSize = true;
-            this.lblMouseY.Location = new System.Drawing.Point(813, 22);
-            this.lblMouseY.Name = "lblMouseY";
-            this.lblMouseY.Size = new System.Drawing.Size(71, 15);
-            this.lblMouseY.TabIndex = 4;
-            this.lblMouseY.Text = "MouseY :";
             // 
             // button2
             // 
@@ -1314,15 +1359,6 @@
             this.lblSubcell.TabIndex = 4;
             this.lblSubcell.Text = "Subcell:";
             // 
-            // pnlPick
-            // 
-            this.pnlPick.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPick.Location = new System.Drawing.Point(0, 0);
-            this.pnlPick.Name = "pnlPick";
-            this.pnlPick.Size = new System.Drawing.Size(238, 771);
-            this.pnlPick.TabIndex = 1;
-            this.pnlPick.Visible = false;
-            // 
             // pnlTile
             // 
             this.pnlTile.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1331,42 +1367,6 @@
             this.pnlTile.Size = new System.Drawing.Size(238, 771);
             this.pnlTile.TabIndex = 2;
             // 
-            // rbPanelBrush
-            // 
-            this.rbPanelBrush.BackColor = System.Drawing.SystemColors.Control;
-            this.rbPanelBrush.Location = new System.Drawing.Point(3, 265);
-            this.rbPanelBrush.Name = "rbPanelBrush";
-            this.rbPanelBrush.Size = new System.Drawing.Size(260, 257);
-            this.rbPanelBrush.TabIndex = 1;
-            this.rbPanelBrush.Visible = false;
-            // 
-            // rbPanelAttribute
-            // 
-            this.rbPanelAttribute.BackColor = System.Drawing.SystemColors.Control;
-            this.rbPanelAttribute.Location = new System.Drawing.Point(3, 2);
-            this.rbPanelAttribute.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rbPanelAttribute.Name = "rbPanelAttribute";
-            this.rbPanelAttribute.Size = new System.Drawing.Size(540, 258);
-            this.rbPanelAttribute.TabIndex = 0;
-            this.rbPanelAttribute.Visible = false;
-            // 
-            // pnlMiniMap
-            // 
-            this.pnlMiniMap.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.pnlMiniMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pnlMiniMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMiniMap.Location = new System.Drawing.Point(0, 0);
-            this.pnlMiniMap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pnlMiniMap.Name = "pnlMiniMap";
-            this.pnlMiniMap.Size = new System.Drawing.Size(204, 176);
-            this.pnlMiniMap.TabIndex = 4;
-            this.pnlMiniMap.SizeChanged += new System.EventHandler(this.pnlMiniMap_SizeChanged);
-            this.pnlMiniMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseClick);
-            this.pnlMiniMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseDown);
-            this.pnlMiniMap.MouseLeave += new System.EventHandler(this.pnlMiniMap_MouseLeave);
-            this.pnlMiniMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseMove);
-            this.pnlMiniMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseUp);
-            // 
             // MainWindowTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1374,8 +1374,6 @@
             this.ClientSize = new System.Drawing.Size(1269, 859);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.lblMouseY);
-            this.Controls.Add(this.lblMouseX);
             this.Controls.Add(this.lblSubcell);
             this.Controls.Add(this.lblz);
             this.Controls.Add(this.lbly);
@@ -1444,8 +1442,6 @@
         private System.Windows.Forms.Label lblx;
         private System.Windows.Forms.Label lbly;
         private System.Windows.Forms.Label lblz;
-        private System.Windows.Forms.Label lblMouseX;
-        private System.Windows.Forms.Label lblMouseY;
         private RelertSharp.GUI.Controls.MinimapPanel pnlMiniMap;
         private System.Windows.Forms.Panel pnlSideDebug;
         private System.Windows.Forms.Panel pnlSideLightning;
@@ -1528,6 +1524,8 @@
         private System.Windows.Forms.ToolStripButton toolBtnArrow;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolBtnFramework;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton toolBtnTileBrush;
         private Controls.TilePanel pnlTile;
     }
 }

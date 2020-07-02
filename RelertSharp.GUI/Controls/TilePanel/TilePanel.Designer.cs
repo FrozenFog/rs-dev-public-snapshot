@@ -33,11 +33,11 @@
             this.tbpGeneral = new System.Windows.Forms.TabPage();
             this.splitGeneral = new System.Windows.Forms.SplitContainer();
             this.trvGeneral = new System.Windows.Forms.TreeView();
-            this.lvGeneral = new System.Windows.Forms.ListView();
+            this.flpGeneral = new System.Windows.Forms.FlowLayoutPanel();
             this.tbpAll = new System.Windows.Forms.TabPage();
-            this.imgAllTiles = new System.Windows.Forms.ImageList(this.components);
-            this.cbbAllTiles = new System.Windows.Forms.ComboBox();
             this.flpAllTiles = new System.Windows.Forms.FlowLayoutPanel();
+            this.cbbAllTiles = new System.Windows.Forms.ComboBox();
+            this.imgAllTiles = new System.Windows.Forms.ImageList(this.components);
             this.tbcMain.SuspendLayout();
             this.tbpGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitGeneral)).BeginInit();
@@ -74,7 +74,7 @@
             // splitGeneral
             // 
             this.splitGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitGeneral.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitGeneral.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitGeneral.Location = new System.Drawing.Point(3, 3);
             this.splitGeneral.Name = "splitGeneral";
             this.splitGeneral.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -85,28 +85,30 @@
             // 
             // splitGeneral.Panel2
             // 
-            this.splitGeneral.Panel2.Controls.Add(this.lvGeneral);
+            this.splitGeneral.Panel2.Controls.Add(this.flpGeneral);
             this.splitGeneral.Size = new System.Drawing.Size(262, 666);
-            this.splitGeneral.SplitterDistance = 379;
+            this.splitGeneral.SplitterDistance = 310;
             this.splitGeneral.TabIndex = 0;
             // 
             // trvGeneral
             // 
             this.trvGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trvGeneral.HideSelection = false;
+            this.trvGeneral.HotTracking = true;
             this.trvGeneral.Location = new System.Drawing.Point(0, 0);
             this.trvGeneral.Name = "trvGeneral";
-            this.trvGeneral.Size = new System.Drawing.Size(262, 379);
+            this.trvGeneral.Size = new System.Drawing.Size(262, 310);
             this.trvGeneral.TabIndex = 0;
+            this.trvGeneral.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvGeneral_NodeMouseClick);
             // 
-            // lvGeneral
+            // flpGeneral
             // 
-            this.lvGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvGeneral.HideSelection = false;
-            this.lvGeneral.Location = new System.Drawing.Point(0, 0);
-            this.lvGeneral.Name = "lvGeneral";
-            this.lvGeneral.Size = new System.Drawing.Size(262, 283);
-            this.lvGeneral.TabIndex = 0;
-            this.lvGeneral.UseCompatibleStateImageBehavior = false;
+            this.flpGeneral.AutoScroll = true;
+            this.flpGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpGeneral.Location = new System.Drawing.Point(0, 0);
+            this.flpGeneral.Name = "flpGeneral";
+            this.flpGeneral.Size = new System.Drawing.Size(262, 352);
+            this.flpGeneral.TabIndex = 0;
             // 
             // tbpAll
             // 
@@ -120,11 +122,14 @@
             this.tbpAll.Text = "All available Tiles";
             this.tbpAll.UseVisualStyleBackColor = true;
             // 
-            // imgAllTiles
+            // flpAllTiles
             // 
-            this.imgAllTiles.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imgAllTiles.ImageSize = new System.Drawing.Size(16, 16);
-            this.imgAllTiles.TransparentColor = System.Drawing.Color.Transparent;
+            this.flpAllTiles.AutoScroll = true;
+            this.flpAllTiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpAllTiles.Location = new System.Drawing.Point(3, 26);
+            this.flpAllTiles.Name = "flpAllTiles";
+            this.flpAllTiles.Size = new System.Drawing.Size(262, 643);
+            this.flpAllTiles.TabIndex = 1;
             // 
             // cbbAllTiles
             // 
@@ -138,14 +143,11 @@
             this.cbbAllTiles.TabIndex = 0;
             this.cbbAllTiles.SelectedIndexChanged += new System.EventHandler(this.cbbAllTiles_SelectedIndexChanged);
             // 
-            // flpAllTiles
+            // imgAllTiles
             // 
-            this.flpAllTiles.AutoScroll = true;
-            this.flpAllTiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flpAllTiles.Location = new System.Drawing.Point(3, 26);
-            this.flpAllTiles.Name = "flpAllTiles";
-            this.flpAllTiles.Size = new System.Drawing.Size(262, 643);
-            this.flpAllTiles.TabIndex = 1;
+            this.imgAllTiles.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imgAllTiles.ImageSize = new System.Drawing.Size(16, 16);
+            this.imgAllTiles.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // TilePanel
             // 
@@ -172,9 +174,9 @@
         private System.Windows.Forms.TabPage tbpAll;
         private System.Windows.Forms.SplitContainer splitGeneral;
         private System.Windows.Forms.TreeView trvGeneral;
-        private System.Windows.Forms.ListView lvGeneral;
         private System.Windows.Forms.ComboBox cbbAllTiles;
         private System.Windows.Forms.ImageList imgAllTiles;
         private System.Windows.Forms.FlowLayoutPanel flpAllTiles;
+        private System.Windows.Forms.FlowLayoutPanel flpGeneral;
     }
 }

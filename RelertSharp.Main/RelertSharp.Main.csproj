@@ -123,6 +123,7 @@
     <Compile Include="Common\Constant.cs" />
     <Compile Include="Common\Enumerator\FoundationEnumerator.cs" />
     <Compile Include="Common\Enumerator\SceneSquare2DEnumerator.cs" />
+    <Compile Include="Common\Enumerator\TileSetEnumerator.cs" />
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\GlobalVar.cs" />
     <Compile Include="Common\Interfaces.cs" />

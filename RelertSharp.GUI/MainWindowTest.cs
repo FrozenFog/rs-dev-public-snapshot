@@ -65,6 +65,7 @@ namespace RelertSharp.GUI
             pnlPick.TraceCelltag += PnlPick_TraceCelltag;
             pnlPick.SelectCelltagCollection += PnlPick_SelectCelltagCollection;
             pnlPick.ReleaseCelltags += PnlPick_ReleaseCelltags;
+            pnlTile.NewTileSelected += PnlTile_NewTileSelected;
 
 
             initialized = true;

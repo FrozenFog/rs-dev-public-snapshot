@@ -71,6 +71,9 @@ namespace RelertSharp.GUI
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.ArrowInspect;
                     panel1.Cursor = new Cursor(Properties.Resources.cursorSolid.Handle);
                     break;
+                case "tilebrush":
+                    Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.TileBrush;
+                    break;
             }
             btn.Checked = true;
         }

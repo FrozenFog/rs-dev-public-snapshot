@@ -25,8 +25,10 @@ namespace RelertSharp.GUI.Model
             AttributeBrush = 1 << 3,
             ArrowInspect = 1 << 4,
             Moving = 1 << 5,
+            TileBrush = 1 << 6,
 
-            None = 0
+            None = 0,
+            DrawingMode = AddingObject | TileBrush
         }
 
 

@@ -45,7 +45,7 @@ namespace RelertSharp.GUI
                 prevSelectingRB = GlobalVar.Engine.GetPreviousLegalTile();
             }
         }
-        private void SelectSceneItemsInsideBox(MouseEventArgs releasePoint)
+        private void SelectSceneItemsInsideBox(Vec3 releaseCell)
         {
             if (drew && isSelecting)
             {
@@ -64,24 +64,24 @@ namespace RelertSharp.GUI
                 }
                 foreach (I2dLocateable pos in iter)
                 {
-                    SelectAt(pos, mode, releasePoint, false);
+                    SelectAt(pos, mode, releaseCell, false, 0);
                 }
                 GlobalVar.Engine.Refresh();
                 isSelecting = false;
             }
         }
-        private void PreciseSelecting(MouseEventArgs e)
+        private void PreciseSelecting(Vec3 cell, int subcell)
         {
             if (drew)
             {
                 var flag = Current.SelectingFlags;
                 if (flag == MainWindowDataModel.SelectingFlag.None) return;
-                I2dLocateable pos = GlobalVar.Engine.ClientPointToCellPos(e.Location).To2dLocateable();
-                SelectAt(pos, flag, e, true);
+                I2dLocateable pos = cell.To2dLocateable();
+                SelectAt(pos, flag, cell, true, subcell);
                 GlobalVar.Engine.Refresh();
             }
         }
-        private void SelectAt(I2dLocateable pos, MainWindowDataModel.SelectingFlag flag, MouseEventArgs e, bool isPrecise)
+        private void SelectAt(I2dLocateable pos, MainWindowDataModel.SelectingFlag flag, Vec3 cell, bool isPrecise, int subcell)
         {
             if ((flag | MainWindowDataModel.SelectingFlag.Units) != 0)
             {
@@ -91,7 +91,7 @@ namespace RelertSharp.GUI
             {
                 if (isPrecise)
                 {
-                    I2dLocateable infpos = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell).To2dLocateable();
+                    I2dLocateable infpos = cell.To2dLocateable();
                     Current.SelectInfantryAt(infpos, subcell);
                 }
                 else

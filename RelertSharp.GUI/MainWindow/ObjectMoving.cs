@@ -28,15 +28,14 @@ namespace RelertSharp.GUI
         private int previousSubcell = -1;
 
 
-        private void ObjectMovingBegin(MouseEventArgs e)
+        private void ObjectMovingBegin(Vec3 pos, int subcell)
         {
-            Vec3 pos = Engine.ClientPointToCellPos(e.Location, out int subcell);
             previousSubcell = subcell;
             if (pos == Vec3.Zero) previousObjectLocation = Vec3.FromXYZ(Engine.GetPreviousLegalTile());
             else previousObjectLocation = pos;
             if (Current.SelectedMapObjects.Count() == 0)
             {
-                PreciseSelecting(e);
+                PreciseSelecting(pos, subcell);
                 isPreciseMovingMode = true;
             }
             isObjectMoving = true;
@@ -47,12 +46,11 @@ namespace RelertSharp.GUI
             }
         }
         private bool movingInProgress = false;
-        private void OnObjectMoving(MouseEventArgs e)
+        private void OnObjectMoving(Vec3 posNow, int subcell)
         {
             if (isObjectMoving && !movingInProgress)
             {
                 movingInProgress = true;
-                Vec3 posNow = Engine.ClientPointToCellPos(e.Location, out int subcell);
                 if (posNow == Vec3.Zero) posNow = Vec3.FromXYZ(Engine.GetPreviousLegalTile());
 
                 if (posNow != previousObjectLocation)

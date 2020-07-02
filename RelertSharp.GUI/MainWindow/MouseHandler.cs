@@ -34,11 +34,12 @@ namespace RelertSharp.GUI
             }
             else
             {
+                Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
                 switch (Current.CurrentMouseAction)
                 {
                     case MainWindowDataModel.MouseActionType.BoxSelecting:
                         if (Current.SelectingBoxFlag != MainWindowDataModel.SelectingBoxMode.Precise) SceneSelectionBoxSet(e);
-                        else PreciseSelecting(e);
+                        else PreciseSelecting(cell, subcell);
                         break;
                     case MainWindowDataModel.MouseActionType.Moving:
                         if (spaceKeyMoving)
@@ -47,7 +48,7 @@ namespace RelertSharp.GUI
                         }
                         else
                         {
-                            ObjectMovingBegin(e);
+                            ObjectMovingBegin(cell, subcell);
                         }
                         break;
                     case MainWindowDataModel.MouseActionType.AttributeBrush:
@@ -100,36 +101,39 @@ namespace RelertSharp.GUI
         {
             if (initialized && drew && panel1.Focused)
             {
+                Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
                 MainPanelMoving(e);
+                bool markTile = true;
                 switch (Current.CurrentMouseAction)
                 {
                     case MainWindowDataModel.MouseActionType.Moving:
                         UpdateRmbMoveDelta(e);
-                        OnObjectMoving(e);
+                        OnObjectMoving(cell, subcell);
                         break;
                     case MainWindowDataModel.MouseActionType.BoxSelecting:
                         DrawSelectingBoxOnScene(e);
                         break;
                     case MainWindowDataModel.MouseActionType.AddingObject:
                         if (pnlPick.CurrentType == PickPanelType.Terrains) pnlPick.ReloadRandomTerrain();
-                        MoveBrushObjectTo(e);
+                        MoveBrushObjectTo(cell, subcell);
+                        break;
+                    case MainWindowDataModel.MouseActionType.TileBrush:
+                        MoveTileBrushObjectTo(cell);
+                        markTile = false;
                         break;
                 }
-                if (!onRmbMoving && !bgwRmbMoving.IsBusy) GeneralMouseMovingUpdate(e);
+                if (!onRmbMoving && !bgwRmbMoving.IsBusy) GeneralMouseMovingUpdate(cell, subcell, markTile);
             }
         }
-        private void GeneralMouseMovingUpdate(MouseEventArgs e)
+        private void GeneralMouseMovingUpdate(Vec3 pos ,int subcell, bool markTile)
         {
-            Vec3 pos = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
-            lblMouseX.Text = string.Format("MouseX : {0}", e.Location.X);
-            lblMouseY.Text = string.Format("MouseY : {0}", e.Location.Y);
             if (pos != Vec3.Zero)
             {
                 lblx.Text = string.Format("X : {0}", pos.X);
                 lbly.Text = string.Format("Y : {0}", pos.Y);
                 lblz.Text = string.Format("Z : {0}", pos.Z);
                 lblSubcell.Text = string.Format("Subcell : {0}", subcell);
-                if (GlobalVar.Engine.SelectTile(pos)) GlobalVar.Engine.Refresh();
+                if (markTile && GlobalVar.Engine.SelectTile(pos)) GlobalVar.Engine.Refresh();
             }
         }
         #endregion
@@ -138,10 +142,11 @@ namespace RelertSharp.GUI
         #region Up
         private void LmbUp(MouseEventArgs e)
         {
+            Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
             switch (Current.CurrentMouseAction)
             {
                 case MainWindowDataModel.MouseActionType.BoxSelecting:
-                    if (Current.SelectingBoxFlag != MainWindowDataModel.SelectingBoxMode.Precise) SelectSceneItemsInsideBox(e);
+                    if (Current.SelectingBoxFlag != MainWindowDataModel.SelectingBoxMode.Precise) SelectSceneItemsInsideBox(cell);
                     break;
                 case MainWindowDataModel.MouseActionType.Moving:
                     MmbUp(e);
@@ -201,7 +206,7 @@ namespace RelertSharp.GUI
         {
             if (drew)
             {
-                if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.AddingObject && !panel1.Focused)
+                if ((Current.CurrentMouseAction | MainWindowDataModel.MouseActionType.DrawingMode) != 0 && !panel1.Focused)
                 {
                     panel1.Focus();
                 }

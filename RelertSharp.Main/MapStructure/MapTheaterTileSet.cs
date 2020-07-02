@@ -177,6 +177,11 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - MapTheaterTileSet
+        public TileSet GetTileSetFromIndex(int index)
+        {
+            if (tileSets.Keys.Contains(index)) return tileSets[index];
+            return null;
+        }
         public bool IsValidTile(int _tileindex)
         {
             return tileNameIndex.Count > _tileindex;

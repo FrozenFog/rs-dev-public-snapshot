@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading.Tasks;
+using System.Drawing;
+using RelertSharp.FileSystem;
 using RelertSharp.Common;
 using RelertSharp.MapStructure;
 using static RelertSharp.Common.GlobalVar;
@@ -60,7 +62,7 @@ namespace RelertSharp.GUI.Controls
                     AddSetToNode(set, feature, x => x.ClassifyAs("Feature") || x.ClassifyAs("Farm"));
                     AddSetToNode(set, tunnel, x => x.ClassifyAs("Tunnel"));
                     AddSetToNode(set, shore, x => x.ClassifyAs("Shore"));
-                    AddSetToNode(set, rail, x => x.ClassifyAs("Rail") || x.ClassifyAs("Track"));
+                    AddSetToNode(set, rail, x => x.ClassifyAs("Rail") || x.ClassifyAs("Track") || x.ClassifyAs("Train"));
                     AddSetToNode(set, paves, x => x.ClassifyAs("Pave"));
                 }
             }
@@ -70,6 +72,44 @@ namespace RelertSharp.GUI.Controls
         private void AddSetToNode(TileSet src, TreeNode dest, Predicate<TileSet> predicate)
         {
             if (predicate.Invoke(src)) dest.Nodes.Add(src.SetIndex.ToString(), src.SetName);
+        }
+
+
+
+        TileSet currentGeneralTileset;
+        TreeNode nodeNow;
+        private void trvGeneral_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                TreeNode node = e.Node;
+                nodeNow = node;
+                if (!node.Name.StartsWith("\n"))
+                {
+                    int index = int.Parse(node.Name);
+                    currentGeneralTileset = TileDictionary.GetTileSetFromIndex(index);
+                    LoadTileSetToFlp(flpGeneral, currentGeneralTileset, GeneralPbxClicked);
+                }
+            }
+        }
+
+        private void GeneralPbxClicked(object sender, MouseEventArgs e)
+        {
+            PictureBox box = sender as PictureBox;
+            int index = (int)box.Tag;
+            if (prevBox != null)
+            {
+                prevBox.Image = prevImg;
+            }
+            prevImg = new Bitmap(box.Image);
+            prevBox = box;
+            Bitmap selected = new Bitmap(prevImg);
+            Graphics g = Graphics.FromImage(selected);
+            Pen p = new Pen(Color.Red, 1f);
+            g.DrawRectangle(p, new Rectangle(0, 0, prevImg.Width - 1, prevImg.Height - 1));
+            g.Dispose();
+            box.Image = selected;
+            NewTileSelected?.Invoke(this, currentGeneralTileset, index);
         }
     }
 }
