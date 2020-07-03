@@ -83,6 +83,11 @@ namespace RelertSharp.MapStructure.Points
             X = _x;
             Y = _y;
         }
+        public PointItemBase(I2dLocateable pos)
+        {
+            X = pos.X;
+            Y = pos.Y;
+        }
         public PointItemBase(PointItemBase src)
         {
             X = src.X;

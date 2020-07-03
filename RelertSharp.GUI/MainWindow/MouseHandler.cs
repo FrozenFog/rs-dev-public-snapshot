@@ -58,6 +58,9 @@ namespace RelertSharp.GUI
                         AddBrushObjectToMap();
                         if (pnlPick.CurrentType == PickPanelType.Smudges) pnlPick.ReloadRandomSmudge();
                         break;
+                    case MainWindowDataModel.MouseActionType.TileBrush:
+                        AddTileToPos(cell);
+                        break;
                 }
             }
         }

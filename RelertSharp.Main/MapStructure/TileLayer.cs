@@ -285,6 +285,9 @@ namespace RelertSharp.MapStructure
         private int tileIndex;
         private List<IMapObject> objectsOnTile = new List<IMapObject>();
         private bool isSelfHidden = false, isExtraHidden = false;
+        private bool isFramework, isFlat;
+        private bool marked = false;
+        private int originalHeight;
 
 
         #region Ctor - Tile
@@ -309,6 +312,83 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - Tile
+        public void Mark(bool marked)
+        {
+            this.marked = marked;
+            if (marked)
+            {
+                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.TileIndicator);
+                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.TileExIndi);
+            }
+            else
+            {
+                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Zero, true);
+                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Zero, true);
+            }
+        }
+        public void SwitchToFramework(bool enable)
+        {
+            isFramework = enable;
+            SceneObject.SwitchToFramework(enable);
+            if (isSelfHidden) SceneObject.HideSelf();
+            if (isExtraHidden) SceneObject.HideExtra();
+        }
+        public void FlatToGround(bool enable)
+        {
+            if (enable && !isFlat)
+            {
+                originalHeight = Height;
+                I3dLocateable pos = new Pnt3(this, 0);
+                foreach (IMapObject obj in objectsOnTile)
+                {
+                    if (obj is StructureItem bud)
+                    {
+                        if (bud.Coord != Coord) continue;
+                    }
+                    obj.MoveTo(pos);
+                }
+                SceneObject.MoveTo(pos);
+                Height = 0;
+                HideExtraImg();
+                isFlat = true;
+            }
+            else if (!enable && isFlat)
+            {
+                I3dLocateable pos = new Pnt3(this, originalHeight);
+                foreach (IMapObject obj in objectsOnTile)
+                {
+                    if (obj is StructureItem bud)
+                    {
+                        if (bud.Coord != Coord) continue;
+                    }
+                    obj.MoveTo(new Pnt3(this, originalHeight));
+                }
+                SceneObject.MoveTo(pos);
+                Height = (byte)originalHeight;
+                RevealExtraImg();
+                isFlat = false;
+            }
+        }
+        public void ReplaceWith(Tile newtile)
+        {
+            foreach (IMapObject obj in objectsOnTile)
+            {
+                if (obj is StructureItem bud)
+                {
+                    if (obj.Coord == newtile.Coord) obj.MoveTo(newtile); 
+                }
+                else if (obj is SmudgeItem smg)
+                {
+                    if (obj.Coord == newtile.Coord) obj.MoveTo(newtile);
+                }
+                else obj.MoveTo(newtile);
+                newtile.AddObject(obj);
+            }
+        }
+        public void Dispose()
+        {
+            SceneObject.Dispose();
+        }
         public byte[] GetBytes()
         {
             byte[] result = new byte[11];
@@ -343,18 +423,6 @@ namespace RelertSharp.MapStructure
                     break;
                 }
             }
-            //int index = 0;
-            //bool found = false;
-            //foreach(IMapObject target in objectsOnTile)
-            //{
-            //    if (target.GetType() == src.GetType() && target.RegName == src.RegName)
-            //    {
-            //        found = true;
-            //        break;
-            //    }
-            //    index++;
-            //}
-            //if (found) objectsOnTile.RemoveAt(index);
         }
         public bool MarkForSimulating()
         {
@@ -389,19 +457,28 @@ namespace RelertSharp.MapStructure
                 SceneObject.RevealSelf();
                 isSelfHidden = false;
             }
+            RevealExtraImg();
+        }
+        public void RevealExtraImg()
+        {
             if (isExtraHidden)
             {
                 SceneObject.RevealExtra();
                 isExtraHidden = false;
             }
         }
-        public void MoveTo(I2dLocateable pos, int height)
+        public void MoveTo(Tile dest, int height)
         {
             if (SceneObject != null)
             {
-                SceneObject.MoveTo(new Pnt3(pos, height));
-                X = pos.X;
-                Y = pos.Y;
+                if (isFlat)
+                {
+                    originalHeight = dest.originalHeight + height;
+                    height = 0;
+                }
+                SceneObject.MoveTo(new Pnt3(dest, height));
+                X = dest.X;
+                Y = dest.Y;
                 Height = (byte)height;
             }
         }

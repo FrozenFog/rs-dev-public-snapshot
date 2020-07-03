@@ -28,6 +28,10 @@ namespace RelertSharp.MapStructure.Points
         {
             TagID = tagid;
         }
+        public CellTagItem(I2dLocateable pos, string tagID) : base(pos)
+        {
+            TagID = TagID;
+        }
 
 
         #region Public Methods

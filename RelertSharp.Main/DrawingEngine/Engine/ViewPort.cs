@@ -11,7 +11,7 @@ namespace RelertSharp.DrawingEngine
     public partial class Engine
     {
         private TileLayer _cellFindingReferance;
-        private Vec3 previousTile = Vec3.Zero;
+        private Tile previousTile;
         private List<I2dLocateable> buildingShape = new List<I2dLocateable>();
         private bool markingBuildingShape = false;
 
@@ -107,7 +107,7 @@ namespace RelertSharp.DrawingEngine
         }
         public I3dLocateable GetPreviousLegalTile()
         {
-            return previousTile.To3dLocateable();
+            return previousTile;
         }
         /// <summary>
         /// Return true if pos changed
@@ -116,21 +116,24 @@ namespace RelertSharp.DrawingEngine
         /// <returns></returns>
         public bool SelectTile(Vec3 newpos)
         {
-            if (newpos != previousTile)
+            if (previousTile == null || newpos != previousTile)
             {
                 if (!markingBuildingShape)
                 {
-                    Buffer.Scenes.MarkTile(newpos.ToCoord(), Vec4.TileIndicator, Vec4.TileExIndi, false);
-                    Buffer.Scenes.MarkTile(previousTile.ToCoord(), Vec4.Zero, Vec4.Zero, true);
+                    if (_cellFindingReferance[newpos.To2dLocateable()] is Tile t)
+                    {
+                        t.Mark(true);
+                        previousTile?.Mark(false);
+                    }
                 }
-                previousTile = newpos;
+                previousTile = _cellFindingReferance[newpos.To2dLocateable()];
                 return true;
             }
             return false;
         }
-        private void UnmarkAllTile()
+        public void UnmarkAllTile()
         {
-            Buffer.Scenes.MarkTile(previousTile.ToCoord(), Vec4.Zero, Vec4.Zero, true);
+            previousTile?.Mark(false);
         }
         public void DrawSelectingRectangle(Pnt begin, Pnt end, bool isIsometric)
         {

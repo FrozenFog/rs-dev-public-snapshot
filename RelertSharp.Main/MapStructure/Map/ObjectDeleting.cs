@@ -50,5 +50,10 @@ namespace RelertSharp.MapStructure
             Overlays.RemoveByCoord(o);
             Tiles[o]?.RemoveObject(o);
         }
+        public void RemoveBasenode(BaseNode node)
+        {
+            node.Dispose();
+            Tiles[node]?.RemoveObject(node);
+        }
     }
 }

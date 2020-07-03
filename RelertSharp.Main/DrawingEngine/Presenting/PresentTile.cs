@@ -38,12 +38,12 @@ namespace RelertSharp.DrawingEngine.Presenting
         public void SwitchToFramework(bool enable)
         {
             isFramework = enable;
-            if (enable)
+            if (isFramework)
             {
                 SetColor(pSelf, Vec4.HideCompletely);
                 SetColor(pExtra, Vec4.HideCompletely);
-                SetColor(pFramework, Vec4.One);
-                SetColor(pExFramework, Vec4.One);
+                SetColor(pFramework, ColorVector);
+                SetColor(pExFramework, ColorVector);
             }
             else
             {
@@ -79,15 +79,25 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             
         }
-        public void Mark(Vec4 main, Vec4 extra, bool deSelect)
+        //public void Mark(Vec4 main, Vec4 extra, bool deSelect)
+        //{
+        //    if (deSelect)
+        //    {
+        //        main = ColorVector;
+        //        extra = ColorVector;
+        //    }
+        //    SetColor(Body, main);
+        //    SetColor(Extra, extra);
+        //}
+        public void MarkSelf(Vec4 color, bool deSelect = false)
         {
-            if (deSelect)
-            {
-                main = ColorVector;
-                extra = ColorVector;
-            }
-            SetColor(Body, main);
-            SetColor(Extra, extra);
+            if (deSelect) SetColor(Body, ColorVector);
+            else SetColor(Body, color);
+        }
+        public void MarkExtra(Vec4 color, bool deSelect = false)
+        {
+            if (deSelect) SetColor(Extra, ColorVector);
+            else SetColor(Extra, color);
         }
         public void SetColor(Vec4 color)
         {

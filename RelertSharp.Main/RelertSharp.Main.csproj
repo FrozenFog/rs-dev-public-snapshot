@@ -208,6 +208,7 @@
     <Compile Include="MapStructure\Map\ObjectMoving.cs" />
     <Compile Include="MapStructure\Map\ObjectSeeking.cs" />
     <Compile Include="MapStructure\Map\Reading.cs" />
+    <Compile Include="MapStructure\Map\TileAdd.cs" />
     <Compile Include="MapStructure\Map\TileUtils.cs" />
     <Compile Include="MapStructure\Objects\AircraftLayer.cs" />
     <Compile Include="MapStructure\Objects\AttributeChanger.cs" />

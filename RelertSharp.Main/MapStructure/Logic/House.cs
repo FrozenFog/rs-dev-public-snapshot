@@ -75,7 +75,8 @@ namespace RelertSharp.MapStructure.Logic
             {
                 string num = string.Format("{0:D3}", i);
                 string[] tmp = ent.PopPair(num).ParseStringList();
-                BaseNodes.Add(new BaseNode(tmp[0], int.Parse(tmp[1]), int.Parse(tmp[2])));
+                BaseNode node = new BaseNode(tmp[0], int.Parse(tmp[1]), int.Parse(tmp[2]));
+                BaseNodes.Add(node);
             }
             residual = ent.DictData;
             GetToUnit = new HouseUnit(this);

@@ -143,6 +143,7 @@ namespace RelertSharp.MapStructure
             foreach (INIPair p in _houseList)
             {
                 HouseItem item = new HouseItem(f.PopEnt(p.Value));
+                foreach (BaseNode node in item.BaseNodes) AddObjectToTile(node);
                 item.Index = p.Name;
                 Houses[p.Name] = item;
             }
@@ -198,11 +199,15 @@ namespace RelertSharp.MapStructure
             }
             foreach (INIPair p in entCelltags.DataList)
             {
-                Celltags.AddObject(new CellTagItem(p.Name, p.Value));
+                CellTagItem cell = new CellTagItem(p.Name, p.Value);
+                Celltags.AddObject(cell);
+                AddObjectToTile(cell);
             }
             foreach (INIPair p in entWaypoints.DataList)
             {
-                Waypoints.AddObject(new WaypointItem(p.Value, p.Name));
+                WaypointItem w = new WaypointItem(p.Value, p.Name);
+                Waypoints.AddObject(w);
+                AddObjectToTile(w);
             }
         }
         private void GetPreview(MapFile f)

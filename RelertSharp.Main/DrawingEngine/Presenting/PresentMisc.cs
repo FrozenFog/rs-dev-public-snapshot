@@ -36,11 +36,13 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             Vec3 delta = GetDeltaDistant(cell);
             ShiftBy(delta, pSelf, pSelfShadow);
+            foreach (int wpNum in WaypointNums) ShiftBy(delta, wpNum);
             base.MoveTo(cell);
         }
         public override void ShiftBy(I3dLocateable delta)
         {
             ShiftBy(Vec3.ToVec3Iso(delta), pSelf, pSelfShadow);
+            foreach (int wpNum in WaypointNums) ShiftBy(Vec3.ToVec3Iso(delta), wpNum);
             base.ShiftBy(delta);
         }
         public void SetColor(Vec4 color)

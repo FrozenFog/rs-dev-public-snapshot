@@ -29,6 +29,7 @@ namespace RelertSharp.GUI
         private const string BtnNameAttribute = "attribute";
         private const string BtnNameArrow = "arrow";
         private const string CkbNameFramework = "framework";
+        private const string CkbNameFlat = "flatground";
         private readonly string[] ToolsButton = { BtnNameArrow, BtnNameBrush, BtnNameMove, BtnNameSelect, BtnNameAttribute };
 
         private void ToolBoxClick(ToolStripButton btn)
@@ -38,12 +39,19 @@ namespace RelertSharp.GUI
                 if (item.GetType() == typeof(ToolStripButton) && ToolsButton.Contains(item.Tag.ToString())) (item as ToolStripButton).Checked = false;
             }
             string btnName = btn.Tag.ToString();
-            if (btnName != "brush" && drew)
+            if (drew)
             {
-                pnlPick.Result.BrushObject?.Dispose();
-                GlobalVar.Engine.UnmarkBuildingShape();
+                if (btnName != "brush")
+                {
+                    pnlPick.Result.BrushObject?.Dispose();
+                    GlobalVar.Engine.UnmarkBuildingShape();
+                }
+                if (btnName != "tilebrush")
+                {
+                    pnlTile.Result?.Dispose();
+                }
+                GlobalVar.Engine.Refresh();
             }
-            if (drew) GlobalVar.Engine.Refresh();
             switch (btnName)
             {
                 case "moving":
@@ -73,6 +81,8 @@ namespace RelertSharp.GUI
                     break;
                 case "tilebrush":
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.TileBrush;
+                    GlobalVar.Engine.UnmarkAllTile();
+                    GlobalVar.Engine.Refresh();
                     break;
             }
             btn.Checked = true;
@@ -101,6 +111,13 @@ namespace RelertSharp.GUI
                         pnlTile.SetFramework(btn.Checked);
                     }
                     else btn.Checked = false;
+                    break;
+                case "flatground":
+                    if (drew)
+                    {
+                        SwitchToFlatGround(btn.Checked);
+                        pnlTile.SetFlat(btn.Checked);
+                    }
                     break;
             }
         }

@@ -28,5 +28,15 @@ namespace RelertSharp.GUI
                 Engine.Refresh();
             }
         }
+        private void AddTileToPos(Vec3 cell)
+        {
+            if (cell != Vec3.Zero)
+            {
+                pnlTile.Result.AddTileAt(cell.To3dLocateable());
+                Engine.RedrawMinimapAll();
+                pnlMiniMap.BackgroundImage = Engine.MiniMap;
+                Engine.Refresh();
+            }
+        }
     }
 }

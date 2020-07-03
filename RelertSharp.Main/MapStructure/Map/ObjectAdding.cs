@@ -73,5 +73,12 @@ namespace RelertSharp.MapStructure
             AddObjectToTile(ter);
             return ter;
         }
+        public CellTagItem AddCellTag(I2dLocateable pos, string tagID)
+        {
+            CellTagItem cell = new CellTagItem(pos, tagID);
+            Celltags.AddObject(cell);
+            AddObjectToTile(cell);
+            return cell;
+        }
     }
 }

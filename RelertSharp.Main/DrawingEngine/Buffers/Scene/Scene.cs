@@ -63,15 +63,6 @@ namespace RelertSharp.DrawingEngine
             #endregion
 
 
-            public void MarkTile(int coord, Vec4 color, Vec4 exColor, bool deselect)
-            {
-                if (Tiles.Keys.Contains(coord))
-                {
-                    Tiles[coord].Mark(color, exColor, deselect);
-                }
-            }
-
-
             #region Remove all
             public void RemoveInfantries()
             {

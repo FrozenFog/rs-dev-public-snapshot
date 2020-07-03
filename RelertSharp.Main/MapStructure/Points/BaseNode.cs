@@ -65,7 +65,7 @@ namespace RelertSharp.MapStructure.Points
         public void Dispose()
         {
             Selected = false;
-            SceneObject.Dispose();
+            SceneObject?.Dispose();
         }
         public void Hide()
         {

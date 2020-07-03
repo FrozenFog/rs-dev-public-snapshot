@@ -35,11 +35,7 @@ namespace RelertSharp.GUI.Controls
             {
                 currentNodeHouse.BaseNodes.Remove(node);
                 lbxNodes.Items.Remove(node);
-                if (drew)
-                {
-                    node.Dispose();
-                    Engine.Refresh();
-                }
+                Map.RemoveBasenode(node);
             }
         }
 
@@ -69,6 +65,7 @@ namespace RelertSharp.GUI.Controls
         private void tsmiRemoveSelNode_Click(object sender, EventArgs e)
         {
             if (lbxNodes.SelectedItem is BaseNode n) RemoveBaseNode(n);
+            Engine.Refresh();
         }
         private void tsmiRefreshNodes_Click(object sender, EventArgs e)
         {
@@ -78,7 +75,7 @@ namespace RelertSharp.GUI.Controls
         {
             foreach (BaseNode n in currentNodeHouse.BaseNodes)
             {
-                n.Dispose();
+                Map.RemoveBasenode(n);
             }
             currentNodeHouse.BaseNodes.Clear();
             lbxNodes.Items.Clear();

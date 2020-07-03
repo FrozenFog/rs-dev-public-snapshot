@@ -15,5 +15,12 @@ namespace RelertSharp.GUI
                 Map.SwitchToFramework(enable);
             }
         }
+        private void SwitchToFlatGround(bool enable)
+        {
+            if (drew)
+            {
+                Map.SwitchFlatGround(enable);
+            }
+        }
     }
 }

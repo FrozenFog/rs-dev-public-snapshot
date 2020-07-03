@@ -34,7 +34,7 @@ namespace RelertSharp.Common
         }
         public Vec3 Rise()
         {
-            return new Vec3(X, Y, Z + 0.1f);
+            return new Vec3(X, Y, Z + 0.05f);
         }
         public Vec3 MoveX(float delta)
         {
@@ -137,9 +137,17 @@ namespace RelertSharp.Common
         {
             return a.X == b.X && a.Y == b.Y && a.Z == b.Z;
         }
+        public static bool operator ==(Vec3 a, I3dLocateable b)
+        {
+            return (int)a.X == b.X && (int)a.Y == b.Y && (int)a.Z == b.Z;
+        }
         public static bool operator !=(Vec3 a, Vec3 b)
         {
             return a.X != b.X || a.Y != b.Y || a.Z != b.Z;
+        }
+        public static bool operator !=(Vec3 a, I3dLocateable b)
+        {
+            return (int)a.X != b.X || (int)a.Y != b.Y || (int)a.Z != b.Z;
         }
         public override bool Equals(object obj)
         {

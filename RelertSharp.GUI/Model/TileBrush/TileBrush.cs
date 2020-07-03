@@ -14,10 +14,12 @@ namespace RelertSharp.GUI.Model.TileBrush
     {
         private I2dLocateable pos;
         private string filenameNow;
-        private bool isFramework;
+        private bool isFramework, isFlat;
         private List<Tile> body = new List<Tile>();
         private List<Tile> under = new List<Tile>();
         private List<I3dLocateable> posEnum = new List<I3dLocateable>();
+        private TileSet tilesetNow;
+        private int tileIndexNow;
         private Map Map { get { return CurrentMapDocument.Map; } }
 
 
@@ -27,9 +29,22 @@ namespace RelertSharp.GUI.Model.TileBrush
 
 
         #region Public Methods
-        public void Reload(TileSet set, int index)
+        public void SetFramework(bool frameworkEnable)
         {
-            foreach (Tile t in body) t.SceneObject.Dispose();
+            isFramework = frameworkEnable;
+            Reload(tilesetNow, tileIndexNow);
+        }
+        public void SetFlat(bool flatEnable)
+        {
+            isFlat = flatEnable;
+            Reload(tilesetNow, tileIndexNow);
+        }
+        public void Reload(TileSet set, int index, bool removePrev = true)
+        {
+            if (set == null) return;
+            tilesetNow = set;
+            tileIndexNow = index;
+            if (removePrev) foreach (Tile t in body) t.Dispose();
             foreach (Tile t in under) t.RevealAllTileImg();
             filenameNow = set.GetName(index, false);
             int idx = set.Offset + index;
@@ -52,13 +67,15 @@ namespace RelertSharp.GUI.Model.TileBrush
                     posEnum.Add(new Pnt3(dx, dy, z));
                     Tile t = new Tile(idx, i, x + dx, y + dy, z);
                     Engine.DrawGeneralItem(t);
+                    t.SwitchToFramework(isFramework);
+                    t.FlatToGround(isFlat);
                     body.Add(t);
                 }
             }
         }
         public void MoveTo(I3dLocateable cell)
         {
-            if (pos.Coord != cell.Coord)
+            if (pos != null && pos.Coord != cell.Coord)
             {
                 foreach (Tile t in under) t.RevealAllTileImg();
                 under.Clear();
@@ -80,9 +97,18 @@ namespace RelertSharp.GUI.Model.TileBrush
                         body[i].HideExtraImg();
                         body[i++].HideTileImg();
                     }
-                    //switcher[i++].MoveTo(dest);
                 }
             }
+        }
+        public void Dispose()
+        {
+            foreach (Tile t in body) t.Dispose();
+            foreach (Tile t in under) t.RevealAllTileImg();
+        }
+        public void AddTileAt(I3dLocateable cell)
+        {
+            foreach (Tile t in body) Map.AddTile(t);
+            Reload(tilesetNow, tileIndexNow, false);
         }
         #endregion
 
@@ -90,37 +116,5 @@ namespace RelertSharp.GUI.Model.TileBrush
         #region Private Methods
 
         #endregion
-
-
-        private class TileSwitcher
-        {
-            private int dz;
-            private Tile tNow;
-            private Tile tPrev;
-
-            public TileSwitcher(Tile t)
-            {
-                tNow = t;
-                tPrev = null;
-                dz = t.Height;
-            }
-
-            public void MoveTo(Tile dest)
-            {
-                if (tNow.Coord != dest.Coord)
-                {
-                    dest.HideTileImg();
-                    dest.HideExtraImg();
-                    if (tPrev != null) tPrev.RevealAllTileImg();
-                    tPrev = dest;
-                    tNow.MoveTo(dest, dest.Height + dz);
-                }
-            }
-            public void Dispose()
-            {
-                if (tPrev != null) tPrev.RevealAllTileImg();
-                tNow.SceneObject.Dispose();
-            }
-        }
     }
 }

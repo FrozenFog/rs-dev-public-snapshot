@@ -13,7 +13,15 @@ namespace RelertSharp.MapStructure
         {
             foreach (Tile t in TilesData)
             {
-                t.SceneObject.SwitchToFramework(enable);
+                t.SwitchToFramework(enable);
+            }
+            Engine.Refresh();
+        }
+        public void SwitchFlatGround(bool enable)
+        {
+            foreach (Tile t in TilesData)
+            {
+                t.FlatToGround(enable);
             }
             Engine.Refresh();
         }
