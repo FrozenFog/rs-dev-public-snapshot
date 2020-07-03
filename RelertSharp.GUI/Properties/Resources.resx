@@ -214,4 +214,13 @@
   <data name="btnFramework" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\framework.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="btnTBrush" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tbrush.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnFlat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dflat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="btnTileSele" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tileSele.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

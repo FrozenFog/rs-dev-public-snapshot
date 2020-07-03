@@ -61,7 +61,8 @@ namespace RelertSharp.GUI
                     case Keys.D:
                         if (e.Control)
                         {
-                            Current.ReleaseAll();
+                            if (Current.CurrentMouseAction != MainWindowDataModel.MouseActionType.TileSelecting) Current.ReleaseAll();
+                            else Current.DeSelectTileAll();
                         }
                         break;
                     case Keys.OemQuestion:
@@ -84,6 +85,12 @@ namespace RelertSharp.GUI
                             ApplyAttributeToSelected();
                             pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
                         }
+                        break;
+                    case Keys.PageUp:
+                        Current.RiseTileAll();
+                        break;
+                    case Keys.PageDown:
+                        Current.SinkTileAll();
                         break;
                 }
             }

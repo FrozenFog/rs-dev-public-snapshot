@@ -130,6 +130,7 @@ namespace RelertSharp.DrawingEngine
             string name, framework;
             int subindex = 0, frameworkIndex = 0;
             framework = TileDictionary.GetFrameworkFromTile(t, out bool isHyte);
+            t.IsHyte = isHyte;
             name = TileDictionary[t.TileIndex];
             subindex = TileDictionary.IsValidTile(t.TileIndex) ? t.SubIndex : 0;
             if (isHyte) frameworkIndex = 0;

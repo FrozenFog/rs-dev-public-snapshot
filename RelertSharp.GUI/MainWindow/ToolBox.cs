@@ -28,9 +28,11 @@ namespace RelertSharp.GUI
         private const string BtnNameSelect = "selecting";
         private const string BtnNameAttribute = "attribute";
         private const string BtnNameArrow = "arrow";
+        private const string BtnNameTileSele = "tilesele";
+        private const string BtnNameTileBrush = "tilebrush";
         private const string CkbNameFramework = "framework";
         private const string CkbNameFlat = "flatground";
-        private readonly string[] ToolsButton = { BtnNameArrow, BtnNameBrush, BtnNameMove, BtnNameSelect, BtnNameAttribute };
+        private readonly string[] ToolsButton = { BtnNameArrow, BtnNameBrush, BtnNameMove, BtnNameSelect, BtnNameAttribute, BtnNameTileBrush, BtnNameTileSele };
 
         private void ToolBoxClick(ToolStripButton btn)
         {
@@ -41,12 +43,12 @@ namespace RelertSharp.GUI
             string btnName = btn.Tag.ToString();
             if (drew)
             {
-                if (btnName != "brush")
+                if (btnName != BtnNameBrush)
                 {
                     pnlPick.Result.BrushObject?.Dispose();
                     GlobalVar.Engine.UnmarkBuildingShape();
                 }
-                if (btnName != "tilebrush")
+                if (btnName != BtnNameTileBrush)
                 {
                     pnlTile.Result?.Dispose();
                 }
@@ -54,33 +56,38 @@ namespace RelertSharp.GUI
             }
             switch (btnName)
             {
-                case "moving":
+                case BtnNameMove:
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.Moving;
                     panel1.Cursor = new Cursor(Properties.Resources.arrMoving.Handle);
                     break;
-                case "selecting":
+                case BtnNameSelect:
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.BoxSelecting;
                     if (Current.SelectingBoxFlag == MainWindowDataModel.SelectingBoxMode.ClientRectangle) panel1.Cursor = new Cursor(Properties.Resources.curRect.Handle);
                     else if (Current.SelectingBoxFlag == MainWindowDataModel.SelectingBoxMode.Precise) panel1.Cursor = new Cursor(Properties.Resources.cursorSolid.Handle);
                     else panel1.Cursor = new Cursor(Properties.Resources.curIso.Handle);
                     break;
-                case "brush":
+                case BtnNameBrush:
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.AddingObject;
                     pnlPick.Result?.RedrawBrushObject();
                     panel1.Cursor = new Cursor(Properties.Resources.curBrush.Handle);
                     pnlPick.Visible = true;
                     pnlTile.Visible = false;
                     break;
-                case "attribute":
+                case BtnNameAttribute:
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.AttributeBrush;
                     panel1.Cursor = new Cursor(Properties.Resources.curAttrib.Handle);
                     break;
-                case "arrow":
+                case BtnNameArrow:
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.ArrowInspect;
                     panel1.Cursor = new Cursor(Properties.Resources.cursorSolid.Handle);
                     break;
-                case "tilebrush":
+                case BtnNameTileBrush:
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.TileBrush;
+                    GlobalVar.Engine.UnmarkAllTile();
+                    GlobalVar.Engine.Refresh();
+                    break;
+                case BtnNameTileSele:
+                    Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.TileSelecting;
                     GlobalVar.Engine.UnmarkAllTile();
                     GlobalVar.Engine.Refresh();
                     break;
@@ -93,7 +100,7 @@ namespace RelertSharp.GUI
             string btnName = btn.Tag.ToString();
             switch (btnName)
             {
-                case "selecting":
+                case BtnNameSelect:
                     cmsToolSelect.Show(p);
                     break;
             }
@@ -104,7 +111,7 @@ namespace RelertSharp.GUI
             string btnName = btn.Tag.ToString();
             switch (btnName)
             {
-                case "framework":
+                case CkbNameFramework:
                     if (drew)
                     {
                         SwitchToFramework(btn.Checked);
@@ -112,7 +119,7 @@ namespace RelertSharp.GUI
                     }
                     else btn.Checked = false;
                     break;
-                case "flatground":
+                case CkbNameFlat:
                     if (drew)
                     {
                         SwitchToFlatGround(btn.Checked);

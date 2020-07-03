@@ -263,6 +263,7 @@
     </Compile>
     <Compile Include="Model\BrushModel\BrushModel.cs" />
     <Compile Include="Model\MainWindowDataModel\Selecting.cs" />
+    <Compile Include="Model\MainWindowDataModel\TileUtils.cs" />
     <Compile Include="Model\TileBrush\TileBrush.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -542,6 +543,9 @@
     <None Include="Resources\moving.ico" />
     <None Include="Resources\arrMoving.ico" />
     <None Include="Resources\framework.png" />
+    <None Include="Resources\tbrush.png" />
+    <None Include="Resources\dflat.png" />
+    <None Include="Resources\tileSele.png" />
     <Content Include="rslogo.ico" />
   </ItemGroup>
   <ItemGroup>

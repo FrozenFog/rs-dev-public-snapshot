@@ -311,19 +311,64 @@ namespace RelertSharp.MapStructure
         #endregion
 
 
+        #region Private Methods - Tile
+        private void MoveTileObjectsTo(I2dLocateable pos, int height)
+        {
+            foreach (IMapObject obj in objectsOnTile)
+            {
+                if (obj is StructureItem bud && bud.Coord != Coord) continue;
+                if (obj is SmudgeItem smg && smg.Coord != Coord) continue;
+                obj.MoveTo(new Pnt3(pos, height));
+            }
+        }
+        private void MoveTileTo(I2dLocateable cell, int height, bool isFlatMode = false)
+        {
+            SceneObject.MoveTo(new Pnt3(cell, height));
+            X = cell.X;
+            Y = cell.Y;
+            if (IsHyte && height != Height && !isFlatMode)
+            {
+                SceneObject.Dispose();
+                Height = (byte)height;
+                GlobalVar.Engine.DrawGeneralItem(this);
+                if (isFramework) SwitchToFramework(true);
+            }
+        }
+        #endregion
+
+
         #region Public Methods - Tile
+        public void Rise()
+        {
+            if (Height < Constant.DrawingEngine.MapMaxHeight)
+            {
+                MoveTileTo(this, Height + 1);
+                MoveTileObjectsTo(this, Height);
+            }
+        }
+        public void Sink()
+        {
+            if (Height > 0)
+            {
+                MoveTileTo(this, Height - 1);
+                MoveTileObjectsTo(this, Height);
+            }
+        }
         public void Mark(bool marked)
         {
             this.marked = marked;
-            if (marked)
+            if (!Selected)
             {
-                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.TileIndicator);
-                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.TileExIndi);
-            }
-            else
-            {
-                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Zero, true);
-                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Zero, true);
+                if (marked)
+                {
+                    if (!isSelfHidden) SceneObject.MarkSelf(Vec4.TileIndicator);
+                    if (!isExtraHidden) SceneObject.MarkExtra(Vec4.TileExIndi);
+                }
+                else
+                {
+                    if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Zero, true);
+                    if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Zero, true);
+                }
             }
         }
         public void SwitchToFramework(bool enable)
@@ -332,6 +377,11 @@ namespace RelertSharp.MapStructure
             SceneObject.SwitchToFramework(enable);
             if (isSelfHidden) SceneObject.HideSelf();
             if (isExtraHidden) SceneObject.HideExtra();
+            if (Selected)
+            {
+                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
+                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
+            }
         }
         public void FlatToGround(bool enable)
         {
@@ -339,15 +389,8 @@ namespace RelertSharp.MapStructure
             {
                 originalHeight = Height;
                 I3dLocateable pos = new Pnt3(this, 0);
-                foreach (IMapObject obj in objectsOnTile)
-                {
-                    if (obj is StructureItem bud)
-                    {
-                        if (bud.Coord != Coord) continue;
-                    }
-                    obj.MoveTo(pos);
-                }
-                SceneObject.MoveTo(pos);
+                MoveTileObjectsTo(this, 0);
+                MoveTileTo(this, 0, true);
                 Height = 0;
                 HideExtraImg();
                 isFlat = true;
@@ -355,15 +398,8 @@ namespace RelertSharp.MapStructure
             else if (!enable && isFlat)
             {
                 I3dLocateable pos = new Pnt3(this, originalHeight);
-                foreach (IMapObject obj in objectsOnTile)
-                {
-                    if (obj is StructureItem bud)
-                    {
-                        if (bud.Coord != Coord) continue;
-                    }
-                    obj.MoveTo(new Pnt3(this, originalHeight));
-                }
-                SceneObject.MoveTo(pos);
+                MoveTileObjectsTo(this, originalHeight);
+                MoveTileTo(this, originalHeight, true);
                 Height = (byte)originalHeight;
                 RevealExtraImg();
                 isFlat = false;
@@ -398,6 +434,7 @@ namespace RelertSharp.MapStructure
             result[8] = SubIndex;
             result[9] = Height;
             result[10] = IceGrowth;
+            List<char> cs = new List<char>();
             return result;
         }
         public List<IMapObject> GetObjects()
@@ -467,19 +504,34 @@ namespace RelertSharp.MapStructure
                 isExtraHidden = false;
             }
         }
-        public void MoveTo(Tile dest, int height)
+        public void MoveTo(Tile dest, int height, int alig)
         {
             if (SceneObject != null)
             {
                 if (isFlat)
                 {
-                    originalHeight = dest.originalHeight + height;
+                    originalHeight = alig + height;
                     height = 0;
                 }
-                SceneObject.MoveTo(new Pnt3(dest, height));
-                X = dest.X;
-                Y = dest.Y;
-                Height = (byte)height;
+                MoveTileTo(dest, height);
+            }
+        }
+        public void Select()
+        {
+            if (!Selected && SceneObject != null)
+            {
+                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
+                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
+                Selected = true;
+            }
+        }
+        public void DeSelect()
+        {
+            if (Selected && SceneObject != null)
+            {
+                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Zero, true);
+                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Zero, true);
+                Selected = false;
             }
         }
         #endregion
@@ -549,6 +601,8 @@ namespace RelertSharp.MapStructure
         public int Coord { get { return Misc.CoordInt(X, Y); } }
         public int ObjectCount { get { return objectsOnTile.Count; } }
         public PresentTile SceneObject { get; set; }
+        public bool Selected { get; set; }
+        public bool IsHyte { get; set; }
         #endregion
     }
 }

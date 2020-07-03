@@ -61,6 +61,9 @@ namespace RelertSharp.GUI
                     case MainWindowDataModel.MouseActionType.TileBrush:
                         AddTileToPos(cell);
                         break;
+                    case MainWindowDataModel.MouseActionType.TileSelecting:
+                        BeginTileSelecting();
+                        break;
                 }
             }
         }
@@ -91,6 +94,9 @@ namespace RelertSharp.GUI
                         rbPanelBrush.Location = e.Location;
                         rbPanelBrush.Visible = true;
                         GlobalVar.Engine.Refresh();
+                        break;
+                    case MainWindowDataModel.MouseActionType.TileSelecting:
+                        BeginTileDeSelecting();
                         break;
                 }
             }
@@ -124,6 +130,11 @@ namespace RelertSharp.GUI
                         MoveTileBrushObjectTo(cell);
                         markTile = false;
                         break;
+                    case MainWindowDataModel.MouseActionType.TileSelecting:
+                        if (isSelectingTile || isDeSelectingTile) markTile = false;
+                        if (isSelectingTile) SelectTileAt(cell);
+                        if (isDeSelectingTile) DeSelectTileAt(cell);
+                        break;
                 }
                 if (!onRmbMoving && !bgwRmbMoving.IsBusy) GeneralMouseMovingUpdate(cell, subcell, markTile);
             }
@@ -155,6 +166,9 @@ namespace RelertSharp.GUI
                     MmbUp(e);
                     ObjectMovingEnd(e);
                     break;
+                case MainWindowDataModel.MouseActionType.TileSelecting:
+                    EndTileSelecting();
+                    break;
             }
             spaceKeyMoving = false;
         }
@@ -168,6 +182,9 @@ namespace RelertSharp.GUI
             {
                 case MainWindowDataModel.MouseActionType.Moving:
                     EndRmbMove();
+                    break;
+                case MainWindowDataModel.MouseActionType.TileSelecting:
+                    EndTileDeSelecting();
                     break;
             }
         }

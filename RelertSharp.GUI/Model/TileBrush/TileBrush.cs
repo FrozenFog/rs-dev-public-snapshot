@@ -89,7 +89,7 @@ namespace RelertSharp.GUI.Model.TileBrush
                         dest.HideExtraImg();
                         dest.HideTileImg();
                         under.Add(dest);
-                        body[i].MoveTo(dest, posEnum[i].Z + cell.Z);
+                        body[i].MoveTo(dest, posEnum[i].Z + cell.Z, cell.Z);
                         body[i++].RevealAllTileImg();
                     }
                     else

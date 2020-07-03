@@ -46,8 +46,10 @@
             this.toolBtnAttributeBrush = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolBtnFramework = new System.Windows.Forms.ToolStripButton();
+            this.toolBtnFlatGround = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolBtnTileBrush = new System.Windows.Forms.ToolStripButton();
+            this.toolBtnTileSele = new System.Windows.Forms.ToolStripButton();
             this.splitSide = new System.Windows.Forms.SplitContainer();
             this.pnlSide = new System.Windows.Forms.Panel();
             this.pnlSideRank = new System.Windows.Forms.Panel();
@@ -117,7 +119,6 @@
             this.bgwDraw = new System.ComponentModel.BackgroundWorker();
             this.bgwRmbMoving = new System.ComponentModel.BackgroundWorker();
             this.lblSubcell = new System.Windows.Forms.Label();
-            this.toolBtnFlatGround = new System.Windows.Forms.ToolStripButton();
             this.pnlTile = new RelertSharp.GUI.Controls.TilePanel();
             this.pnlPick = new RelertSharp.GUI.Controls.PickPanel();
             this.rbPanelBrush = new RelertSharp.GUI.Controls.RbBrushPanel();
@@ -277,7 +278,8 @@
             this.toolBtnFramework,
             this.toolBtnFlatGround,
             this.toolStripSeparator3,
-            this.toolBtnTileBrush});
+            this.toolBtnTileBrush,
+            this.toolBtnTileSele});
             this.toolsMain.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
             this.toolsMain.Location = new System.Drawing.Point(0, 0);
             this.toolsMain.Name = "toolsMain";
@@ -369,6 +371,18 @@
             this.toolBtnFramework.Text = "RSMainToolBtnFramework";
             this.toolBtnFramework.Click += new System.EventHandler(this.ToolBtnCheckClick);
             // 
+            // toolBtnFlatGround
+            // 
+            this.toolBtnFlatGround.CheckOnClick = true;
+            this.toolBtnFlatGround.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnFlatGround.Image = global::RelertSharp.GUI.Properties.Resources.btnFlat;
+            this.toolBtnFlatGround.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnFlatGround.Name = "toolBtnFlatGround";
+            this.toolBtnFlatGround.Size = new System.Drawing.Size(37, 24);
+            this.toolBtnFlatGround.Tag = "flatground";
+            this.toolBtnFlatGround.Text = "RSMainToolBtnFlatGround";
+            this.toolBtnFlatGround.Click += new System.EventHandler(this.ToolBtnCheckClick);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -377,13 +391,24 @@
             // toolBtnTileBrush
             // 
             this.toolBtnTileBrush.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolBtnTileBrush.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnTileBrush.Image")));
+            this.toolBtnTileBrush.Image = global::RelertSharp.GUI.Properties.Resources.btnTBrush;
             this.toolBtnTileBrush.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnTileBrush.Name = "toolBtnTileBrush";
             this.toolBtnTileBrush.Size = new System.Drawing.Size(37, 24);
             this.toolBtnTileBrush.Tag = "tilebrush";
             this.toolBtnTileBrush.Text = "RSMainToolBtnTileBrush";
             this.toolBtnTileBrush.Click += new System.EventHandler(this.ToolBoxClickHandler);
+            // 
+            // toolBtnTileSele
+            // 
+            this.toolBtnTileSele.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnTileSele.Image = global::RelertSharp.GUI.Properties.Resources.btnTileSele;
+            this.toolBtnTileSele.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnTileSele.Name = "toolBtnTileSele";
+            this.toolBtnTileSele.Size = new System.Drawing.Size(37, 24);
+            this.toolBtnTileSele.Tag = "tilesele";
+            this.toolBtnTileSele.Text = "RSMainToolBtnTileSelect";
+            this.toolBtnTileSele.Click += new System.EventHandler(this.ToolBoxClickHandler);
             // 
             // splitSide
             // 
@@ -1316,18 +1341,6 @@
             this.lblSubcell.TabIndex = 4;
             this.lblSubcell.Text = "Subcell:";
             // 
-            // toolBtnFlatGround
-            // 
-            this.toolBtnFlatGround.CheckOnClick = true;
-            this.toolBtnFlatGround.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolBtnFlatGround.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnFlatGround.Image")));
-            this.toolBtnFlatGround.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolBtnFlatGround.Name = "toolBtnFlatGround";
-            this.toolBtnFlatGround.Size = new System.Drawing.Size(37, 24);
-            this.toolBtnFlatGround.Tag = "flatground";
-            this.toolBtnFlatGround.Text = "RSMainToolBtnFlatGround";
-            this.toolBtnFlatGround.Click += new System.EventHandler(this.ToolBtnCheckClick);
-            // 
             // pnlTile
             // 
             this.pnlTile.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1542,5 +1555,6 @@
         private System.Windows.Forms.ToolStripButton toolBtnTileBrush;
         private Controls.TilePanel pnlTile;
         private System.Windows.Forms.ToolStripButton toolBtnFlatGround;
+        private System.Windows.Forms.ToolStripButton toolBtnTileSele;
     }
 }

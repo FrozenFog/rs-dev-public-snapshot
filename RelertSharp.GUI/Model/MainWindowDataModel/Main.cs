@@ -21,11 +21,12 @@ namespace RelertSharp.GUI.Model
         {
             BoxSelecting = 1,
             AddingObject = 1 << 1,
-            TileEditing = 1 << 2,
+            TileSelecting = 1 << 2,
             AttributeBrush = 1 << 3,
             ArrowInspect = 1 << 4,
             Moving = 1 << 5,
             TileBrush = 1 << 6,
+
 
             None = 0,
             DrawingMode = AddingObject | TileBrush
