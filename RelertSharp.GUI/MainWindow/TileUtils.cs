@@ -54,6 +54,7 @@ namespace RelertSharp.GUI
                 {
                     Current.SelectTile(t);
                 }
+                Engine.Refresh();
             }
         }
 
@@ -80,6 +81,23 @@ namespace RelertSharp.GUI
                 if (Map.TilesData[pos] is Tile t && t.Selected)
                 {
                     Current.DeSelectTile(t);
+                }
+                Engine.Refresh();
+            }
+        }
+        private void WandSelectAt(Vec3 vec)
+        {
+            if (vec != Vec3.Zero)
+            {
+                I3dLocateable pos = vec.To3dLocateable();
+                if (Map.TilesData[pos] is Tile seed)
+                {
+                    int height = seed.RealHeight;
+                    foreach (Tile t in new Bfs2D(Map.TilesData, seed, x=>x.RealHeight == height))
+                    {
+                        if (!t.Selected) Current.SelectTile(t);
+                    }
+                    Engine.Refresh();
                 }
             }
         }

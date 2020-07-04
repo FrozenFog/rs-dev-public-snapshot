@@ -210,7 +210,7 @@ namespace RelertSharp.DrawingEngine
             src.pSelf = Buffer.Files.WaypointBase;
             PresentMisc dest = new PresentMisc(MapObjectType.Waypoint, waypoint, height);
             waypoint.SceneObject = dest;
-            Vec3 pos = ToVec3Iso(dest).Rise() + 100 * _generalOffset;
+            Vec3 pos = ToVec3Iso(dest).Rise() + Constant.DrawingEngine.WaypointHeightMultiplier * _generalOffset;
             if (DrawMisc(src, dest, pos, pPalSystem, 0, _white, ShpFlatType.Vertical) && DrawWaypointNum(dest, waypoint.Num, pos))
             {
                 Buffer.Scenes.Waypoints[dest.Coord] = dest;
@@ -225,7 +225,7 @@ namespace RelertSharp.DrawingEngine
             PresentMisc dest = new PresentMisc(MapObjectType.Celltag, cell, height);
             cell.SceneObject = dest;
             Vec3 pos = ToVec3Iso(dest).Rise();
-            if (topmost) pos += 99 * _generalOffset;
+            if (topmost) pos += Constant.DrawingEngine.CelltagHeightMultiplier * _generalOffset;
             if (DrawMisc(src, dest, pos, pPalSystem, 0, _white, ShpFlatType.FlatGround))
             {
                 Buffer.Scenes.Celltags[dest.Coord] = dest;

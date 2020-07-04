@@ -58,12 +58,25 @@ namespace RelertSharp.GUI
                     case Keys.A:
                         ToolBoxClick(toolBtnArrow);
                         break;
+                    case Keys.F:
+                        ToolBtnCheckClick(toolBtnFramework, new EventArgs());
+                        break;
+                    case Keys.N:
+                        ToolBoxClick(toolBtnTileBrush);
+                        break;
+                    case Keys.S:
+                        ToolBoxClick(toolBtnTileSele);
+                        break;
+                    case Keys.W:
+                        ToolBoxClick(toolBtnTileWand);
+                        break;
                     case Keys.D:
                         if (e.Control)
                         {
-                            if (Current.CurrentMouseAction != MainWindowDataModel.MouseActionType.TileSelecting) Current.ReleaseAll();
-                            else Current.DeSelectTileAll();
+                            if ((Current.CurrentMouseAction & MainWindowDataModel.MouseActionType.TileSelectMode) != 0) Current.DeSelectTileAll();
+                            else Current.ReleaseAll();
                         }
+                        ToolBtnCheckClick(toolBtnFlatGround, new EventArgs());
                         break;
                     case Keys.OemQuestion:
                         if (e.Control)

@@ -155,10 +155,10 @@ namespace RelertSharp.DrawingEngine
                 CppExtern.Scene.ClientPositionToScenePosition(tmp1, ref p2);
                 CppExtern.Scene.ClientPositionToScenePosition(tmp2, ref p4);
             }
-            p1 += 20 * _NormTileVec;
-            p2 += 20 * _NormTileVec;
-            p3 += 20 * _NormTileVec;
-            p4 += 20 * _NormTileVec;
+            p1 += Constant.DrawingEngine.SelectRectangleMultiplier * _NormTileVec;
+            p2 += Constant.DrawingEngine.SelectRectangleMultiplier * _NormTileVec;
+            p3 += Constant.DrawingEngine.SelectRectangleMultiplier * _NormTileVec;
+            p4 += Constant.DrawingEngine.SelectRectangleMultiplier * _NormTileVec;
             DrawRectangleLine(p1, p2, p3, p4, _white, Buffer.Scenes.RectangleLines);
             CppExtern.Scene.PresentAllObject();
         }

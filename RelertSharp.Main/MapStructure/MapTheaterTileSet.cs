@@ -128,11 +128,11 @@ namespace RelertSharp.MapStructure
                 general[p.Name] = p.ParseInt();
             }
             SafeLoad(Constant.TileSetClass.Clear, "ClearTile");
-            SafeLoad(Constant.TileSetClass.Rough, "RoughTile");
+            SafeLoad(Constant.TileSetClass.Rough, "SandTile");
             SafeLoad(Constant.TileSetClass.Ramp, "RampBase");
             SafeLoad(Constant.TileSetClass.Pave, "PaveTile");
-            SafeLoad(Constant.TileSetClass.Green, "GreenTile");
-            SafeLoad(Constant.TileSetClass.Sand, "SandTile");
+            SafeLoad(Constant.TileSetClass.Green, "RoughTile");
+            SafeLoad(Constant.TileSetClass.Sand, "GreenTile");
             SafeLoad(Constant.TileSetClass.Water, "WaterSet");
         }
         private void SafeLoad(string DICTkey, string generalKey)

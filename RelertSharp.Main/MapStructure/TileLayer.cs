@@ -109,6 +109,16 @@ namespace RelertSharp.MapStructure
         //    }
         //    return bmp;
         //}
+        public IEnumerable<Tile> GetNeighbor(Tile src)
+        {
+            List<Tile> result = new List<Tile>();
+            Pnt pos = new Pnt(src);
+            if (this[pos + Pnt.OneX] is Tile dr) result.Add(dr);
+            if (this[pos - Pnt.OneX] is Tile ul) result.Add(ul);
+            if (this[pos + Pnt.OneY] is Tile dl) result.Add(dl);
+            if (this[pos - Pnt.OneY] is Tile ur) result.Add(ur);
+            return result;
+        }
         public void AddObjectOnTile(IMapObject src)
         {
             this[src]?.AddObject(src);
@@ -583,6 +593,7 @@ namespace RelertSharp.MapStructure
             }
         }
         public byte Height { get; set; }
+        public int RealHeight { get { return originalHeight == 0 ? Height : originalHeight; } }
         public int TileIndex
         {
             get

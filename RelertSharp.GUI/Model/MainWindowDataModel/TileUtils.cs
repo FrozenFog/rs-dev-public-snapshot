@@ -17,13 +17,11 @@ namespace RelertSharp.GUI.Model
         {
             t.Select();
             selectedTile.Add(t);
-            Engine.Refresh();
         }
         public void DeSelectTile(Tile t)
         {
             t.DeSelect();
             selectedTile.Remove(t);
-            Engine.Refresh();
         }
         public void DeSelectTileAll()
         {

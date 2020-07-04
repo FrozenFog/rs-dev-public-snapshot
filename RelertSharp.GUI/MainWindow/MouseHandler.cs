@@ -194,11 +194,21 @@ namespace RelertSharp.GUI
         #region Click
         private void LmbClick(MouseEventArgs e)
         {
-            if (rbPanelAttribute.Visible)
+            //if (rbPanelAttribute.Visible)
+            //{
+            //    rbPanelAttribute.Visible = false;
+            //    panel1.Cursor = prevCur;
+            //    GlobalVar.Engine.Refresh();
+            //}
+            if (drew)
             {
-                rbPanelAttribute.Visible = false;
-                panel1.Cursor = prevCur;
-                GlobalVar.Engine.Refresh();
+                Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
+                switch (Current.CurrentMouseAction)
+                {
+                    case MainWindowDataModel.MouseActionType.TileWand:
+                        WandSelectAt(cell);
+                        break;
+                }
             }
         }
         private void RmbClick(MouseEventArgs e)
@@ -226,7 +236,7 @@ namespace RelertSharp.GUI
         {
             if (drew)
             {
-                if ((Current.CurrentMouseAction | MainWindowDataModel.MouseActionType.DrawingMode) != 0 && !panel1.Focused)
+                if ((Current.CurrentMouseAction & MainWindowDataModel.MouseActionType.DrawingMode) != 0 && !panel1.Focused)
                 {
                     panel1.Focus();
                 }
