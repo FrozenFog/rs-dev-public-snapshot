@@ -182,6 +182,10 @@ namespace RelertSharp.MapStructure
             if (tileSets.Keys.Contains(index)) return tileSets[index];
             return null;
         }
+        public int GetTileSetIndexFromTile(Tile t)
+        {
+            return GetTileSet(t.TileIndex).SetIndex;
+        }
         public bool IsValidTile(int _tileindex)
         {
             return tileNameIndex.Count > _tileindex;

@@ -336,12 +336,20 @@ namespace RelertSharp.MapStructure
             SceneObject.MoveTo(new Pnt3(cell, height));
             X = cell.X;
             Y = cell.Y;
-            if (IsHyte && height != Height && !isFlatMode)
+            if (height != Height && !isFlatMode)
             {
-                SceneObject.Dispose();
                 Height = (byte)height;
-                GlobalVar.Engine.DrawGeneralItem(this);
+                if (IsHyte)
+                {
+                    SceneObject.Dispose();
+                    GlobalVar.Engine.DrawGeneralItem(this);
+                }
                 if (isFramework) SwitchToFramework(true);
+            }
+            if (Selected)
+            {
+                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
+                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
             }
         }
         #endregion

@@ -159,6 +159,12 @@
     <Compile Include="Controls\RbBrushPanel.Designer.cs">
       <DependentUpon>RbBrushPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RbPanelWand.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RbPanelWand.Designer.cs">
+      <DependentUpon>RbPanelWand.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TilePanel\AllTiles.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -389,6 +395,9 @@
     <EmbeddedResource Include="Controls\RbBrushPanel.resx">
       <DependentUpon>RbBrushPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RbPanelWand.resx">
+      <DependentUpon>RbPanelWand.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\TilePanel\TilePanel.resx">
       <DependentUpon>TilePanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -544,8 +553,8 @@
     <None Include="Resources\arrMoving.ico" />
     <None Include="Resources\framework.png" />
     <None Include="Resources\tbrush.png" />
-    <None Include="Resources\dflat.png" />
     <None Include="Resources\tileSele.png" />
+    <None Include="Resources\dflat.png" />
     <Content Include="rslogo.ico" />
   </ItemGroup>
   <ItemGroup>

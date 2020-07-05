@@ -63,6 +63,7 @@ namespace RelertSharp.GUI
                         break;
                     case MainWindowDataModel.MouseActionType.TileSelecting:
                         BeginTileSelecting();
+                        SelectTileAt(cell);
                         break;
                 }
             }
@@ -76,6 +77,7 @@ namespace RelertSharp.GUI
             if (RbPanelVisible()) HideRbPanel();
             else
             {
+                Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
                 switch (Current.CurrentMouseAction)
                 {
                     case MainWindowDataModel.MouseActionType.AttributeBrush:
@@ -97,6 +99,14 @@ namespace RelertSharp.GUI
                         break;
                     case MainWindowDataModel.MouseActionType.TileSelecting:
                         BeginTileDeSelecting();
+                        DeSelectTileAt(cell);
+                        break;
+                    case MainWindowDataModel.MouseActionType.TileWand:
+                        prevCur = panel1.Cursor;
+                        panel1.Cursor = Cursors.Arrow;
+                        rbPanelWand.Location = e.Location;
+                        rbPanelWand.Visible = true;
+                        GlobalVar.Engine.Refresh();
                         break;
                 }
             }
@@ -200,14 +210,24 @@ namespace RelertSharp.GUI
             //    panel1.Cursor = prevCur;
             //    GlobalVar.Engine.Refresh();
             //}
-            if (drew)
+            if (!panel1.Focused || RbPanelVisible())
             {
-                Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
-                switch (Current.CurrentMouseAction)
+                panel1.Focus();
+                HideRbPanel();
+                panel1.Cursor = prevCur;
+                GlobalVar.Engine.Refresh();
+            }
+            else
+            {
+                if (drew)
                 {
-                    case MainWindowDataModel.MouseActionType.TileWand:
-                        WandSelectAt(cell);
-                        break;
+                    Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
+                    switch (Current.CurrentMouseAction)
+                    {
+                        case MainWindowDataModel.MouseActionType.TileWand:
+                            WandSelectAt(cell);
+                            break;
+                    }
                 }
             }
         }

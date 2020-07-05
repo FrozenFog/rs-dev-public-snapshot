@@ -90,6 +90,7 @@ namespace RelertSharp.GUI
                                 txbCommand.SelectionLength = 0;
                                 txbCommand.SelectionStart = 1;
                             }
+                            GlobalVar.Engine.Refresh();
                         }
                         break;
                     case Keys.Enter:

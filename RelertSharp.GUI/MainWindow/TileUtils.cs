@@ -93,7 +93,13 @@ namespace RelertSharp.GUI
                 if (Map.TilesData[pos] is Tile seed)
                 {
                     int height = seed.RealHeight;
-                    foreach (Tile t in new Bfs2D(Map.TilesData, seed, x=>x.RealHeight == height))
+                    int set = TileDictionary.GetTileSetIndexFromTile(seed);
+                    int index = seed.TileIndex;
+                    List<Predicate<Tile>> predicates = new List<Predicate<Tile>>();
+                    if (rbPanelWand.SameHeight) predicates.Add(x => x.RealHeight == height);
+                    if (rbPanelWand.SameSet) predicates.Add(x => TileDictionary.GetTileSetIndexFromTile(x) == set);
+                    if (rbPanelWand.SameIndex) predicates.Add(x => x.TileIndex == index);
+                    foreach (Tile t in new Bfs2D(Map.TilesData, seed, predicates))
                     {
                         if (!t.Selected) Current.SelectTile(t);
                     }

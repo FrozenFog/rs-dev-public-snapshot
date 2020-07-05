@@ -399,6 +399,7 @@ namespace RelertSharp.GUI
             pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
             rbPanelAttribute.Initialize(map.Houses, map.Tags);
             rbPanelBrush.Initialize();
+            rbPanelWand.Initialize();
             drew = true;
             button1.Enabled = false;
         }

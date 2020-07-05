@@ -116,13 +116,14 @@ namespace RelertSharp.GUI
         }
         private bool RbPanelVisible()
         {
-            bool b = rbPanelBrush.Visible || rbPanelAttribute.Visible;
+            bool b = rbPanelBrush.Visible || rbPanelAttribute.Visible || rbPanelWand.Visible;
             return b;
         }
         private void HideRbPanel()
         {
             rbPanelBrush.Visible = false;
             rbPanelAttribute.Visible = false;
+            rbPanelWand.Visible = false;
         }
     }
 }
