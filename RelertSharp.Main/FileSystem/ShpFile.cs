@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using RelertSharp.Common;
 using RelertSharp.Encoding;
+using RelertSharp.Utils;
 
 namespace RelertSharp.FileSystem
 {
@@ -161,27 +162,18 @@ namespace RelertSharp.FileSystem
                 return;
             }
             Bitmap bmp = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
-            BitmapData data = bmp.LockBits(new Rectangle(0, 0, Width, Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-            byte* ptr = (byte*)data.Scan0;
-            int count = 0;
-            for (int j = 0; j < Height; j++)
+            using(FastBitmap shpImage=new FastBitmap(bmp))
             {
-                for (int i = 0; i < Width; i++)
+                int count = 0;
+                for (int j = 0; j < Height; j++)
                 {
-                    if (Data[count] != 0)
+                    for (int i = 0; i < Width; i++)
                     {
-                        int pxPos = i * 4 + j * Width * 4;
-                        int px = _pal[Data[count]];
-                        //*(ptr + pxPos) = (byte)(_pal[Data[count]] & 0x00ff0000);
-                        //*(ptr + pxPos + 1) = (byte)(_pal[Data[count]] & 0x0000ff00);
-                        //*(ptr + pxPos + 2) = (byte)(_pal[Data[count]] & 0x000000ff);
-                        *(int*)(ptr + i * 4 + j * Width * 4) = (int)(px | 0xff000000);
-                        //bmp.SetPixel(i, j, Color.FromArgb(_pal[Data[count]]));
+                        shpImage.SetPixel(i, j, _pal[Data[count]]);
+                        count++;
                     }
-                    count++;
                 }
             }
-            bmp.UnlockBits(data);
             Image = bmp;
         }
         public void SetRawData(byte[] _data)

@@ -244,6 +244,7 @@
     <Compile Include="Utils\Colors.cs" />
     <Compile Include="FileSystem\BaseFile.cs" />
     <Compile Include="Common\RSException.cs" />
+    <Compile Include="Utils\FastBitmap.cs" />
     <Compile Include="Utils\Interpreter.cs" />
     <Compile Include="Utils\Lang.cs" />
     <Compile Include="Utils\Misc.cs" />
