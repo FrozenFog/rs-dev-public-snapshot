@@ -81,6 +81,7 @@ namespace RelertSharp.GUI.Controls
             //    sz.Height = (int)(sz.Height * scale);
             //}
             //imgAllTiles.ImageSize = sz;
+            dest.SuspendLayout();
             foreach (string filename in imgs.Keys)
             {
                 PictureBox box = new PictureBox
@@ -94,6 +95,7 @@ namespace RelertSharp.GUI.Controls
                 //imgAllTiles.Images.Add(filename, Utils.Misc.ResizeImage(imgs[filename], sz));
             }
             GlobalDir.DisposePreloaded();
+            dest.ResumeLayout();
         }
 
 

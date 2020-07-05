@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 using RelertSharp.Utils;
 using RelertSharp.Common;
@@ -172,9 +173,11 @@ namespace RelertSharp.FileSystem
             if (HasZData && HasExtraData && 0 < exzOffset && exzOffset < br.BaseStream.Length)
                 ExtraZData = br.ReadBytes(Math.Abs(ExtraWidth * ExtraHeight));
         }
-        public void LoadColor(PalFile _pal, int blockWidthPX = 60, int blockHeightPX = 30)
+        public unsafe void LoadColor(PalFile _pal, int blockWidthPX = 60, int blockHeightPX = 30)
         {
-            Bitmap bmp = new Bitmap(blockWidthPX, blockHeightPX, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Bitmap bmp = new Bitmap(blockWidthPX, blockHeightPX, PixelFormat.Format32bppArgb);
+            BitmapData data = bmp.LockBits(new Rectangle(0, 0, blockWidthPX, blockHeightPX), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            byte* ptr = (byte*)data.Scan0.ToPointer();
             int count = 0;
             for (int j = 0; j < blockHeightPX - 1; j++)
             {
@@ -182,24 +185,36 @@ namespace RelertSharp.FileSystem
                 int x_start = (blockWidthPX - len_line) / 2;
                 for (int i = x_start; i < len_line + x_start; i++)
                 {
-                    if (TileByte(count) != 0) bmp.SetPixel(i, j, Color.FromArgb(_pal[TileByte(count)]));
+                    if (TileByte(count) != 0)
+                    {
+                        *(int*)(ptr + j * 4 * blockWidthPX + i * 4) = _pal[TileByte(count)];
+                        //bmp.SetPixel(i, j, Color.FromArgb(_pal[TileByte(count)]));
+                    }
                     count++;
                 }
             }
+            bmp.UnlockBits(data);
             TileBitmap = bmp;
             DrawingPos = new Point(0, 0);
             if (HasExtraData)
             {
-                Bitmap extra = new Bitmap(ExtraWidth, ExtraHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                Bitmap extra = new Bitmap(ExtraWidth, ExtraHeight, PixelFormat.Format32bppArgb);
+                BitmapData exdata = extra.LockBits(new Rectangle(0, 0, ExtraWidth, ExtraHeight), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+                byte* exptr = (byte*)exdata.Scan0.ToPointer();
                 int excount = 0;
                 for (int j = 0; j < ExtraHeight; j++)
                 {
                     for (int i = 0; i < ExtraWidth; i++)
                     {
-                        if (ExtraByte(excount) != 0) extra.SetPixel(i, j, Color.FromArgb(_pal[ExtraByte(excount)]));
+                        if (ExtraByte(excount) != 0)
+                        {
+                            *(int*)(exptr + j * 4 * ExtraWidth + i * 4) = _pal[ExtraByte(excount)];
+                            //extra.SetPixel(i, j, Color.FromArgb(_pal[ExtraByte(excount)]));
+                        }
                         excount++;
                     }
                 }
+                extra.UnlockBits(exdata);
                 Rectangle _rctTile = new Rectangle(0, 0, blockWidthPX, blockHeightPX);
                 Rectangle _rctEx = new Rectangle(exX - X, exY - Y, ExtraWidth, ExtraHeight);
                 Rectangle _region = Misc.UnionRectangle(ref _rctTile, ref _rctEx);

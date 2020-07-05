@@ -54,8 +54,10 @@ namespace RelertSharp.GUI
         private bool EngineInitialize(IntPtr mainHandle, Panel minimapPanel)
         {
             Log.Write("Engine Initializing");
+#if RELEASE
             try
             {
+#endif
                 GlobalVar.Engine = new Engine();
                 Engine eg = GlobalVar.Engine;
                 Log.Write("Binding Engine Handle...");
@@ -69,13 +71,15 @@ namespace RelertSharp.GUI
                 pnlTile.Initialize();
                 Log.Write("ENGINE INITIALIZE COMPLETE");
                 return true;
-            }
+#if RELEASE
+        }
             catch (Exception e)
             {
                 GuiUtils.Fatal(string.Format("Fatal Error!\n Debug Message:{0}\n\nTrace:\n{1}", e.Message, e.StackTrace));
                 Log.Write("======CRITICAL======    Engine Initialize failed!");
                 return false;
             }
+#endif
 
         }
         private void DrawTiles()
