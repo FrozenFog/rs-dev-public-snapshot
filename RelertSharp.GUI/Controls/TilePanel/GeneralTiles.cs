@@ -76,8 +76,9 @@ namespace RelertSharp.GUI.Controls
 
 
 
-        TileSet currentGeneralTileset;
-        TreeNode nodeNow;
+        private TileSet currentGeneralTileset;
+        private TreeNode nodeNow;
+        private string nodenameNow = "\n";
         private void trvGeneral_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -86,17 +87,24 @@ namespace RelertSharp.GUI.Controls
                 nodeNow = node;
                 if (!node.Name.StartsWith("\n"))
                 {
+                    int scroll = flpGeneral.VerticalScroll.Value;
                     int index = int.Parse(node.Name);
                     currentGeneralTileset = TileDictionary.GetTileSetFromIndex(index);
                     LoadTileSetToFlp(flpGeneral, currentGeneralTileset, GeneralPbxClicked);
+                    if (nodenameNow == node.Name)
+                    {
+                        flpGeneral.VerticalScroll.Value = scroll;
+                        GeneralPbxClicked(flpGeneral.Controls[pbxIndexGeneral], new EventArgs());
+                    }
+                    nodenameNow = node.Name;
                 }
             }
         }
-
-        private void GeneralPbxClicked(object sender, MouseEventArgs e)
+        private int pbxIndexGeneral;
+        private void GeneralPbxClicked(object sender, EventArgs e)
         {
             PictureBox box = sender as PictureBox;
-            int index = (int)box.Tag;
+            pbxIndexGeneral = (int)box.Tag;
             if (prevBox != null)
             {
                 prevBox.Image = prevImg;
@@ -109,7 +117,7 @@ namespace RelertSharp.GUI.Controls
             g.DrawRectangle(p, new Rectangle(0, 0, prevImg.Width - 1, prevImg.Height - 1));
             g.Dispose();
             box.Image = selected;
-            NewTileSelected?.Invoke(this, currentGeneralTileset, index);
+            NewTileSelected?.Invoke(this, currentGeneralTileset, pbxIndexGeneral);
         }
     }
 }
