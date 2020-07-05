@@ -208,9 +208,9 @@
             // 
             this.pnlMainAreaContainer.Controls.Add(this.splitPickerMain);
             this.pnlMainAreaContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMainAreaContainer.Location = new System.Drawing.Point(25, 0);
+            this.pnlMainAreaContainer.Location = new System.Drawing.Point(40, 0);
             this.pnlMainAreaContainer.Name = "pnlMainAreaContainer";
-            this.pnlMainAreaContainer.Size = new System.Drawing.Size(1010, 796);
+            this.pnlMainAreaContainer.Size = new System.Drawing.Size(995, 796);
             this.pnlMainAreaContainer.TabIndex = 4;
             // 
             // splitPickerMain
@@ -228,7 +228,7 @@
             // splitPickerMain.Panel2
             // 
             this.splitPickerMain.Panel2.Controls.Add(this.panel1);
-            this.splitPickerMain.Size = new System.Drawing.Size(1010, 796);
+            this.splitPickerMain.Size = new System.Drawing.Size(995, 796);
             this.splitPickerMain.SplitterDistance = 238;
             this.splitPickerMain.TabIndex = 4;
             // 
@@ -259,7 +259,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(768, 796);
+            this.panel1.Size = new System.Drawing.Size(753, 796);
             this.panel1.TabIndex = 2;
             this.panel1.SizeChanged += new System.EventHandler(this.panel1_SizeChanged);
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
@@ -286,7 +286,7 @@
             this.txbCommand.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.txbCommand.Location = new System.Drawing.Point(0, 771);
             this.txbCommand.Name = "txbCommand";
-            this.txbCommand.Size = new System.Drawing.Size(768, 25);
+            this.txbCommand.Size = new System.Drawing.Size(753, 25);
             this.txbCommand.TabIndex = 3;
             this.txbCommand.Text = "/";
             this.txbCommand.Visible = false;
@@ -333,7 +333,7 @@
             this.toolsMain.Location = new System.Drawing.Point(0, 0);
             this.toolsMain.Name = "toolsMain";
             this.toolsMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolsMain.Size = new System.Drawing.Size(25, 796);
+            this.toolsMain.Size = new System.Drawing.Size(40, 796);
             this.toolsMain.TabIndex = 3;
             this.toolsMain.Text = "toolStrip1";
             // 
@@ -344,7 +344,7 @@
             this.toolBtnArrow.Image = global::RelertSharp.GUI.Properties.Resources.btnArrow;
             this.toolBtnArrow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnArrow.Name = "toolBtnArrow";
-            this.toolBtnArrow.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnArrow.Size = new System.Drawing.Size(37, 24);
             this.toolBtnArrow.Tag = "arrow";
             this.toolBtnArrow.Text = "RSMainToolBtnArrow";
             this.toolBtnArrow.Click += new System.EventHandler(this.ToolBoxClickHandler);
@@ -356,7 +356,7 @@
             this.toolBtnMoving.Image = global::RelertSharp.GUI.Properties.Resources.btnMoving;
             this.toolBtnMoving.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnMoving.Name = "toolBtnMoving";
-            this.toolBtnMoving.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnMoving.Size = new System.Drawing.Size(37, 24);
             this.toolBtnMoving.Tag = "moving";
             this.toolBtnMoving.Text = "RSMainToolBtnMoving";
             this.toolBtnMoving.Click += new System.EventHandler(this.ToolBoxClickHandler);
@@ -368,7 +368,7 @@
             this.toolBtnSelecting.Image = global::RelertSharp.GUI.Properties.Resources.btnRectSelecting;
             this.toolBtnSelecting.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnSelecting.Name = "toolBtnSelecting";
-            this.toolBtnSelecting.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnSelecting.Size = new System.Drawing.Size(37, 24);
             this.toolBtnSelecting.Tag = "selecting";
             this.toolBtnSelecting.Text = "RSMainToolBtnSelecting";
             this.toolBtnSelecting.Click += new System.EventHandler(this.ToolBoxClickHandler);
@@ -377,7 +377,7 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(22, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(37, 6);
             // 
             // toolBtnBrush
             // 
@@ -386,7 +386,7 @@
             this.toolBtnBrush.Image = global::RelertSharp.GUI.Properties.Resources.btnBrush;
             this.toolBtnBrush.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnBrush.Name = "toolBtnBrush";
-            this.toolBtnBrush.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnBrush.Size = new System.Drawing.Size(37, 24);
             this.toolBtnBrush.Tag = "brush";
             this.toolBtnBrush.Text = "RSMainToolBrush";
             this.toolBtnBrush.Click += new System.EventHandler(this.ToolBoxClickHandler);
@@ -398,7 +398,7 @@
             this.toolBtnAttributeBrush.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnAttributeBrush.Image")));
             this.toolBtnAttributeBrush.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnAttributeBrush.Name = "toolBtnAttributeBrush";
-            this.toolBtnAttributeBrush.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnAttributeBrush.Size = new System.Drawing.Size(37, 24);
             this.toolBtnAttributeBrush.Tag = "attribute";
             this.toolBtnAttributeBrush.Text = "RSMainToolAttBrush";
             this.toolBtnAttributeBrush.Click += new System.EventHandler(this.ToolBoxClickHandler);
@@ -406,7 +406,7 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(22, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(37, 6);
             // 
             // toolBtnFramework
             // 
@@ -415,7 +415,7 @@
             this.toolBtnFramework.Image = global::RelertSharp.GUI.Properties.Resources.btnFramework;
             this.toolBtnFramework.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnFramework.Name = "toolBtnFramework";
-            this.toolBtnFramework.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnFramework.Size = new System.Drawing.Size(37, 24);
             this.toolBtnFramework.Tag = "framework";
             this.toolBtnFramework.Text = "RSMainToolBtnFramework";
             this.toolBtnFramework.Click += new System.EventHandler(this.ToolBtnCheckClick);
@@ -427,7 +427,7 @@
             this.toolBtnFlatGround.Image = global::RelertSharp.GUI.Properties.Resources.btnFlat;
             this.toolBtnFlatGround.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnFlatGround.Name = "toolBtnFlatGround";
-            this.toolBtnFlatGround.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnFlatGround.Size = new System.Drawing.Size(37, 24);
             this.toolBtnFlatGround.Tag = "flatground";
             this.toolBtnFlatGround.Text = "RSMainToolBtnFlatGround";
             this.toolBtnFlatGround.Click += new System.EventHandler(this.ToolBtnCheckClick);
@@ -435,7 +435,7 @@
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(22, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(37, 6);
             // 
             // toolBtnTileBrush
             // 
@@ -443,7 +443,7 @@
             this.toolBtnTileBrush.Image = global::RelertSharp.GUI.Properties.Resources.btnTBrush;
             this.toolBtnTileBrush.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnTileBrush.Name = "toolBtnTileBrush";
-            this.toolBtnTileBrush.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnTileBrush.Size = new System.Drawing.Size(37, 24);
             this.toolBtnTileBrush.Tag = "tilebrush";
             this.toolBtnTileBrush.Text = "RSMainToolBtnTileBrush";
             this.toolBtnTileBrush.Click += new System.EventHandler(this.ToolBoxClickHandler);
@@ -454,7 +454,7 @@
             this.toolBtnTileSele.Image = global::RelertSharp.GUI.Properties.Resources.btnTileSele;
             this.toolBtnTileSele.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnTileSele.Name = "toolBtnTileSele";
-            this.toolBtnTileSele.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnTileSele.Size = new System.Drawing.Size(37, 24);
             this.toolBtnTileSele.Tag = "tilesele";
             this.toolBtnTileSele.Text = "RSMainToolBtnTileSelect";
             this.toolBtnTileSele.Click += new System.EventHandler(this.ToolBoxClickHandler);
@@ -465,7 +465,7 @@
             this.toolBtnTileWand.Image = global::RelertSharp.GUI.Properties.Resources.btnWand;
             this.toolBtnTileWand.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnTileWand.Name = "toolBtnTileWand";
-            this.toolBtnTileWand.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnTileWand.Size = new System.Drawing.Size(37, 24);
             this.toolBtnTileWand.Tag = "wand";
             this.toolBtnTileWand.Text = "RSMainToolBtnTileWand";
             this.toolBtnTileWand.Click += new System.EventHandler(this.ToolBoxClickHandler);

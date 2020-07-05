@@ -169,7 +169,7 @@ namespace RelertSharp.FileSystem
                 {
                     for (int i = 0; i < Width; i++)
                     {
-                        shpImage.SetPixel(i, j, _pal[Data[count]]);
+                        if (Data[count] != 0) shpImage.SetPixel(i, j, _pal[Data[count]]);
                         count++;
                     }
                 }

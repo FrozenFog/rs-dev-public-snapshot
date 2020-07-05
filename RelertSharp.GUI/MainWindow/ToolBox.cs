@@ -84,6 +84,8 @@ namespace RelertSharp.GUI
                     break;
                 case BtnNameTileBrush:
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.TileBrush;
+                    pnlPick.Visible = false;
+                    pnlTile.Visible = true;
                     GlobalVar.Engine.UnmarkAllTile();
                     GlobalVar.Engine.Refresh();
                     break;
