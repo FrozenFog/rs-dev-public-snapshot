@@ -75,6 +75,12 @@ namespace RelertSharp.MapStructure.Objects
             Y = pos.Y;
             SceneObject.MoveTo(pos, subcell);
         }
+        public override void MoveTo(I3dLocateable pos)
+        {
+            X = pos.X;
+            Y = pos.Y;
+            SceneObject.MoveTo(pos, subcell);
+        }
         public override void ApplyAttributeFrom(ICombatObject src)
         {
             if (src is InfantryItem inf)

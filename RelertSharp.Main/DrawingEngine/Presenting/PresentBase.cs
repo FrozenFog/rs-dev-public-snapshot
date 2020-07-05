@@ -64,6 +64,10 @@ namespace RelertSharp.DrawingEngine.Presenting
             Y += delta.Y;
             Z += delta.Z;
         }
+        public virtual bool CoordEquals(I3dLocateable pos)
+        {
+            return X == pos.X && Y == pos.Y && Z == pos.Z;
+        }
         protected Vec3 GetDeltaDistant(I3dLocateable newpos)
         {
             Vec3 delta = Vec3.ToVec3Iso(Vec3.FromXYZ(newpos) - Vec3.FromXYZ(this));
@@ -108,6 +112,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         bool IsValid { get; }
         bool Selected { get; set; }
         bool Disposed { get; }
+        bool CoordEquals(I3dLocateable pos);
         RadarColor RadarColor { get; set; }
         void Dispose();
         void SetColor(Vec4 color);

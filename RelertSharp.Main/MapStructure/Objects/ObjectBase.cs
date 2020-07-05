@@ -104,7 +104,7 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - ObjectItemBase
-        public void MoveTo(I3dLocateable pos)
+        public virtual void MoveTo(I3dLocateable pos)
         {
             X = pos.X;
             Y = pos.Y;
