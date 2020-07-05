@@ -26,13 +26,59 @@ namespace RelertSharp.FileSystem
 
 
         #region Public Methods - MapFile
-        public void SaveMap()
+        public void SaveMap(string savingPath)
         {
             IniDict = Map.IniResidue;
             Map.CompressTile();
             Map.CompressOverlay();
             DumpGeneralInfo();
-            //SaveIni(true);
+            DumpObjects();
+            SaveIni(savingPath, true);
+        }
+
+        private void DumpObjects() {
+            var entity = new INIEntity("Structures", "", "");
+
+            string handleSequencedList(List<string> list) {
+                string items = list[0];
+                list.RemoveAt(0);
+                foreach (var item in list) {
+                    items += "," + item;
+                }
+                return items;
+            }
+
+            //buildings :
+            foreach (var building in Map.Buildings) {
+                var idx = 0;
+                List<string> values = new List<string>{building.OwnerHouse,
+                              building.ID,
+                              building.HealthPoint.ToString(),
+                              building.X.ToString(),
+                              building.Y.ToString(),
+                              building.Rotation.ToString(),
+                              building.TaggedTrigger,
+                              building.AISellable.ToString(),
+                              building.BuildingOnline.ToString(),
+                              building.UpgradeNum.ToString(),
+                              building.SpotlightType.ToString(),
+                              building.Upgrade1,
+                              building.Upgrade2,
+                              building.Upgrade3,
+                              building.AIRepairable.ToString(),
+                              "0",//ShowRealName
+                };
+                
+                entity.AddPair(new INIPair(idx.ToString(), handleSequencedList(values)));
+                ++idx;
+            }
+
+            //units
+
+            //infantries
+
+            //aircrafts
+            
         }
         #endregion
 
