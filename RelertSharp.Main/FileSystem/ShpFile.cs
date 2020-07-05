@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
+using System.Drawing.Imaging;
 using RelertSharp.Common;
 using RelertSharp.Encoding;
 
@@ -152,23 +153,35 @@ namespace RelertSharp.FileSystem
 
 
         #region Public Methods - ShpFrame
-        public void SetBitmap(PalFile _pal)
+        public unsafe void SetBitmap(PalFile _pal)
         {
             if (IsNullFrame)
             {
                 Image = new Bitmap(1, 1);
                 return;
             }
-            Bitmap bmp = new Bitmap(Width, Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            Bitmap bmp = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
+            BitmapData data = bmp.LockBits(new Rectangle(0, 0, Width, Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+            byte* ptr = (byte*)data.Scan0;
             int count = 0;
             for (int j = 0; j < Height; j++)
             {
                 for (int i = 0; i < Width; i++)
                 {
-                    if (Data[count] != 0) bmp.SetPixel(i, j, Color.FromArgb(_pal[Data[count]]));
+                    if (Data[count] != 0)
+                    {
+                        int pxPos = i * 4 + j * Width * 4;
+                        int px = _pal[Data[count]];
+                        //*(ptr + pxPos) = (byte)(_pal[Data[count]] & 0x00ff0000);
+                        //*(ptr + pxPos + 1) = (byte)(_pal[Data[count]] & 0x0000ff00);
+                        //*(ptr + pxPos + 2) = (byte)(_pal[Data[count]] & 0x000000ff);
+                        *(int*)(ptr + i * 4 + j * Width * 4) = (int)(px | 0xff000000);
+                        //bmp.SetPixel(i, j, Color.FromArgb(_pal[Data[count]]));
+                    }
                     count++;
                 }
             }
+            bmp.UnlockBits(data);
             Image = bmp;
         }
         public void SetRawData(byte[] _data)
