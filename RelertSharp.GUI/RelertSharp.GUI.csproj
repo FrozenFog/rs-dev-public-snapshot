@@ -555,6 +555,7 @@
     <None Include="Resources\tbrush.png" />
     <None Include="Resources\tileSele.png" />
     <None Include="Resources\dflat.png" />
+    <None Include="Resources\wand.png" />
     <Content Include="rslogo.ico" />
   </ItemGroup>
   <ItemGroup>

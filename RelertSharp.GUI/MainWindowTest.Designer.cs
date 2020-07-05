@@ -38,6 +38,7 @@
             this.pnlTile = new RelertSharp.GUI.Controls.TilePanel();
             this.pnlPick = new RelertSharp.GUI.Controls.PickPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rbPanelWand = new RelertSharp.GUI.Controls.RbPanelWand();
             this.txbCommand = new System.Windows.Forms.TextBox();
             this.rbPanelBrush = new RelertSharp.GUI.Controls.RbBrushPanel();
             this.rbPanelAttribute = new RelertSharp.GUI.Controls.RbPanelAttribute();
@@ -125,7 +126,6 @@
             this.bgwDraw = new System.ComponentModel.BackgroundWorker();
             this.bgwRmbMoving = new System.ComponentModel.BackgroundWorker();
             this.lblSubcell = new System.Windows.Forms.Label();
-            this.rbPanelWand = new RelertSharp.GUI.Controls.RbPanelWand();
             this.panelHost.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
@@ -271,6 +271,15 @@
             this.panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseUp);
             this.panel1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.panel1_PreviewKeyDown);
             this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
+            // 
+            // rbPanelWand
+            // 
+            this.rbPanelWand.BackColor = System.Drawing.SystemColors.Control;
+            this.rbPanelWand.Location = new System.Drawing.Point(270, 265);
+            this.rbPanelWand.Name = "rbPanelWand";
+            this.rbPanelWand.Size = new System.Drawing.Size(273, 190);
+            this.rbPanelWand.TabIndex = 4;
+            this.rbPanelWand.Visible = false;
             // 
             // txbCommand
             // 
@@ -453,7 +462,7 @@
             // toolBtnTileWand
             // 
             this.toolBtnTileWand.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolBtnTileWand.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnTileWand.Image")));
+            this.toolBtnTileWand.Image = global::RelertSharp.GUI.Properties.Resources.btnWand;
             this.toolBtnTileWand.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnTileWand.Name = "toolBtnTileWand";
             this.toolBtnTileWand.Size = new System.Drawing.Size(22, 24);
@@ -1408,14 +1417,6 @@
             this.lblSubcell.Size = new System.Drawing.Size(71, 15);
             this.lblSubcell.TabIndex = 4;
             this.lblSubcell.Text = "Subcell:";
-            // 
-            // rbPanelWand
-            // 
-            this.rbPanelWand.Location = new System.Drawing.Point(270, 265);
-            this.rbPanelWand.Name = "rbPanelWand";
-            this.rbPanelWand.Size = new System.Drawing.Size(273, 190);
-            this.rbPanelWand.TabIndex = 4;
-            this.rbPanelWand.Visible = false;
             // 
             // MainWindowTest
             // 
