@@ -99,7 +99,7 @@
       <HintPath>C:\Windows\assembly\GAC\Microsoft.DirectX.DirectSound\1.0.2902.0__31bf3856ad364e35\Microsoft.DirectX.DirectSound.dll</HintPath>
     </Reference>
     <Reference Include="ObjectListView">
-      <HintPath>..\Debug\ObjectListView.dll</HintPath>
+      <HintPath>..\Reference\ObjectListView.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
