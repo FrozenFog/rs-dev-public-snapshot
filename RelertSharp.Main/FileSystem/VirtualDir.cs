@@ -226,13 +226,16 @@ namespace RelertSharp.FileSystem
                 byte[] data;
                 if (preloadInitialized && preLoadMixes.Keys.Contains(info.MixName)) data = preLoadMixes[info.MixName];
                 else data = GetRawByte(info.MixName + ".mix");
-                MemoryStream mix = new MemoryStream(data);
-                mix.Seek(info.FileOffset, SeekOrigin.Begin);
-                BinaryReader br = new BinaryReader(mix);
-                byte[] result = br.ReadBytes(info.FileSize);
-                br.Dispose();
-                mix.Dispose();
+                byte[] result = new byte[info.FileSize];
+                Array.Copy(data, info.FileOffset, result, 0, info.FileSize);
                 return result;
+                //MemoryStream mix = new MemoryStream(data);
+                //mix.Seek(info.FileOffset, SeekOrigin.Begin);
+                //BinaryReader br = new BinaryReader(mix);
+                //byte[] result = br.ReadBytes(info.FileSize);
+                //br.Dispose();
+                //mix.Dispose();
+                //return result;
             }
         }
         public short GetShpFrameCount(string filename)

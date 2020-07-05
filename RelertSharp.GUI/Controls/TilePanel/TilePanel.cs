@@ -20,7 +20,7 @@ namespace RelertSharp.GUI.Controls
         internal event TileSetSelectedHandler NewTileSelected;
 
 
-        private bool isFramework, isFlat;
+        private bool isFramework, isFlat, reserveSelection;
         private Map Map { get { return CurrentMapDocument.Map; } }
         public TilePanel()
         {
@@ -38,9 +38,11 @@ namespace RelertSharp.GUI.Controls
         public void SetFramework(bool frameworkEnable)
         {
             isFramework = frameworkEnable;
+            reserveSelection = true;
             cbbAllTiles_SelectedIndexChanged(cbbAllTiles, new EventArgs());
             if (nodeNow != null) trvGeneral_NodeMouseClick(trvGeneral, new TreeNodeMouseClickEventArgs(nodeNow, MouseButtons.Left, 1, 0, 0));
             Result.SetFramework(frameworkEnable);
+            reserveSelection = false;
         }
         public void SetFlat(bool flatEnable)
         {

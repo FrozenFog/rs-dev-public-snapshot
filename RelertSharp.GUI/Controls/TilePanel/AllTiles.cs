@@ -28,16 +28,23 @@ namespace RelertSharp.GUI.Controls
             {
                 if (cbbAllTiles.SelectedItem is TileSet set)
                 {
+                    int slide = flpAllTiles.VerticalScroll.Value;
                     LoadTileSetToFlp(flpAllTiles, set, PictureBoxClicked);
+                    if (reserveSelection)
+                    {
+                        flpAllTiles.VerticalScroll.Value = slide;
+                        PictureBoxClicked(flpAllTiles.Controls[pbxIndexAllTiles], new EventArgs());
+                    }
                 }
             }
         }
         PictureBox prevBox;
         Image prevImg;
+        private int pbxIndexAllTiles;
         private void PictureBoxClicked(object sender, EventArgs e)
         {
             PictureBox box = sender as PictureBox;
-            int index = (int)box.Tag;
+            pbxIndexAllTiles = (int)box.Tag;
             if (prevBox != null)
             {
                 prevBox.Image = prevImg;
@@ -50,7 +57,7 @@ namespace RelertSharp.GUI.Controls
             g.DrawRectangle(p, new Rectangle(0, 0, prevImg.Width - 1, prevImg.Height - 1));
             g.Dispose();
             box.Image = selected;
-            NewTileSelected?.Invoke(this, cbbAllTiles.SelectedItem as TileSet, index);
+            NewTileSelected?.Invoke(this, cbbAllTiles.SelectedItem as TileSet, pbxIndexAllTiles);
         }
     }
 }
