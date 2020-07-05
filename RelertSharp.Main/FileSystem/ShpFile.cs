@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
+using System.Drawing.Imaging;
 using RelertSharp.Common;
 using RelertSharp.Encoding;
+using RelertSharp.Utils;
 
 namespace RelertSharp.FileSystem
 {
@@ -152,21 +154,24 @@ namespace RelertSharp.FileSystem
 
 
         #region Public Methods - ShpFrame
-        public void SetBitmap(PalFile _pal)
+        public unsafe void SetBitmap(PalFile _pal)
         {
             if (IsNullFrame)
             {
                 Image = new Bitmap(1, 1);
                 return;
             }
-            Bitmap bmp = new Bitmap(Width, Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            int count = 0;
-            for (int j = 0; j < Height; j++)
+            Bitmap bmp = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
+            using(FastBitmap shpImage=new FastBitmap(bmp))
             {
-                for (int i = 0; i < Width; i++)
+                int count = 0;
+                for (int j = 0; j < Height; j++)
                 {
-                    if (Data[count] != 0) bmp.SetPixel(i, j, Color.FromArgb(_pal[Data[count]]));
-                    count++;
+                    for (int i = 0; i < Width; i++)
+                    {
+                        shpImage.SetPixel(i, j, _pal[Data[count]]);
+                        count++;
+                    }
                 }
             }
             Image = bmp;
