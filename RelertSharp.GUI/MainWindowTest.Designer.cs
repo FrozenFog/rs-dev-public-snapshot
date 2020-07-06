@@ -56,6 +56,7 @@
             this.toolBtnTileBrush = new System.Windows.Forms.ToolStripButton();
             this.toolBtnTileSele = new System.Windows.Forms.ToolStripButton();
             this.toolBtnTileWand = new System.Windows.Forms.ToolStripButton();
+            this.toolBtnTileBucket = new System.Windows.Forms.ToolStripButton();
             this.splitSide = new System.Windows.Forms.SplitContainer();
             this.pnlMiniMap = new RelertSharp.GUI.Controls.MinimapPanel();
             this.pnlSide = new System.Windows.Forms.Panel();
@@ -129,6 +130,7 @@
             this.mnsMain = new System.Windows.Forms.MenuStrip();
             this.filesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMainSaveMapAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.rbPanelBucket = new RelertSharp.GUI.Controls.RbPanelBucket();
             this.panelHost.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
@@ -255,6 +257,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.rbPanelBucket);
             this.panel1.Controls.Add(this.rbPanelWand);
             this.panel1.Controls.Add(this.txbCommand);
             this.panel1.Controls.Add(this.rbPanelBrush);
@@ -332,7 +335,8 @@
             this.toolStripSeparator3,
             this.toolBtnTileBrush,
             this.toolBtnTileSele,
-            this.toolBtnTileWand});
+            this.toolBtnTileWand,
+            this.toolBtnTileBucket});
             this.toolsMain.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
             this.toolsMain.Location = new System.Drawing.Point(0, 0);
             this.toolsMain.Name = "toolsMain";
@@ -473,6 +477,17 @@
             this.toolBtnTileWand.Tag = "wand";
             this.toolBtnTileWand.Text = "RSMainToolBtnTileWand";
             this.toolBtnTileWand.Click += new System.EventHandler(this.ToolBoxClickHandler);
+            // 
+            // toolBtnTileBucket
+            // 
+            this.toolBtnTileBucket.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnTileBucket.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnTileBucket.Image")));
+            this.toolBtnTileBucket.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnTileBucket.Name = "toolBtnTileBucket";
+            this.toolBtnTileBucket.Size = new System.Drawing.Size(22, 24);
+            this.toolBtnTileBucket.Tag = "bucket";
+            this.toolBtnTileBucket.Text = "RSMainToolBtnTileBucket";
+            this.toolBtnTileBucket.Click += new System.EventHandler(this.ToolBoxClickHandler);
             // 
             // splitSide
             // 
@@ -1444,9 +1459,17 @@
             // tsmiMainSaveMapAs
             // 
             this.tsmiMainSaveMapAs.Name = "tsmiMainSaveMapAs";
-            this.tsmiMainSaveMapAs.Size = new System.Drawing.Size(216, 26);
+            this.tsmiMainSaveMapAs.Size = new System.Drawing.Size(185, 26);
             this.tsmiMainSaveMapAs.Text = "Save map as...";
             this.tsmiMainSaveMapAs.Click += new System.EventHandler(this.tsmiMainSaveMapAs_Click);
+            // 
+            // rbPanelBucket
+            // 
+            this.rbPanelBucket.Location = new System.Drawing.Point(270, 461);
+            this.rbPanelBucket.Name = "rbPanelBucket";
+            this.rbPanelBucket.Size = new System.Drawing.Size(268, 86);
+            this.rbPanelBucket.TabIndex = 5;
+            this.rbPanelBucket.Visible = false;
             // 
             // MainWindowTest
             // 
@@ -1619,5 +1642,7 @@
         private System.Windows.Forms.MenuStrip mnsMain;
         private System.Windows.Forms.ToolStripMenuItem filesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiMainSaveMapAs;
+        private System.Windows.Forms.ToolStripButton toolBtnTileBucket;
+        private Controls.RbPanelBucket rbPanelBucket;
     }
 }

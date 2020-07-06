@@ -400,6 +400,7 @@ namespace RelertSharp.GUI
             rbPanelAttribute.Initialize(map.Houses, map.Tags);
             rbPanelBrush.Initialize();
             rbPanelWand.Initialize();
+            rbPanelBucket.Initialize();
             drew = true;
             button1.Enabled = false;
         }

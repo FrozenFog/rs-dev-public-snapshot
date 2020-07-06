@@ -15,7 +15,7 @@ namespace RelertSharp.FileSystem
 
     public class TmpFile : BaseFile
     {
-        private int WidthCount, HeightCount, blockWidthPX, blockHeightPX;
+        private int blockWidthPX, blockHeightPX;
         private List<TmpImage> images;
 
 
@@ -38,13 +38,13 @@ namespace RelertSharp.FileSystem
         #region Private Methods - TmpFile
         private void Read()
         {
-            WidthCount = ReadInt32();
-            HeightCount = ReadInt32();
+            Width = ReadInt32();
+            Height = ReadInt32();
             blockWidthPX = ReadInt32();
             blockHeightPX = ReadInt32();
-            byte[] indexs = ReadBytes(WidthCount * HeightCount * 4);
+            byte[] indexs = ReadBytes(Width * Height * 4);
             images = new List<TmpImage>();
-            for (int i = 0; i < WidthCount * HeightCount; i++)
+            for (int i = 0; i < Width * Height; i++)
             {
                 int imageOffset = BitConverter.ToInt32(indexs, i * 4);
                 if (imageOffset == 0)
@@ -107,6 +107,8 @@ namespace RelertSharp.FileSystem
 
 
         #region Public Calls - TmpFile
+        public int Width { get; private set; }
+        public int Height { get; private set; }
         public TmpImage this[int index]
         {
             get { return images[index]; }

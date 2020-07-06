@@ -27,11 +27,12 @@ namespace RelertSharp.GUI.Model
             Moving = 1 << 5,
             TileBrush = 1 << 6,
             TileWand = 1 << 7,
+            TileBucket = 1 << 8,
 
 
             None = 0,
             DrawingMode = AddingObject | TileBrush,
-            TileSelectMode = TileWand | TileSelecting
+            TileEditingMode = TileWand | TileSelecting | TileBucket
         }
 
 

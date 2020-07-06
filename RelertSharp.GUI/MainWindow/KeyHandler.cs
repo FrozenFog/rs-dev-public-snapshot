@@ -73,7 +73,7 @@ namespace RelertSharp.GUI
                     case Keys.D:
                         if (e.Control)
                         {
-                            if ((Current.CurrentMouseAction & MainWindowDataModel.MouseActionType.TileSelectMode) != 0) Current.DeSelectTileAll();
+                            if ((Current.CurrentMouseAction & MainWindowDataModel.MouseActionType.TileEditingMode) != 0) Current.DeSelectTileAll();
                             else Current.ReleaseAll();
                         }
                         ToolBtnCheckClick(toolBtnFlatGround, new EventArgs());

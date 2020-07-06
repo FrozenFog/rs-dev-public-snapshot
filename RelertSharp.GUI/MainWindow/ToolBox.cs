@@ -31,9 +31,10 @@ namespace RelertSharp.GUI
         private const string BtnNameTileSele = "tilesele";
         private const string BtnNameTileBrush = "tilebrush";
         private const string BtnNameTileWand = "wand";
+        private const string BtnNameTileBucket = "bucket";
         private const string CkbNameFramework = "framework";
         private const string CkbNameFlat = "flatground";
-        private readonly string[] ToolsButton = { BtnNameArrow, BtnNameBrush, BtnNameMove, BtnNameSelect, BtnNameAttribute, BtnNameTileBrush, BtnNameTileSele, BtnNameTileWand };
+        private readonly string[] ToolsButton = { BtnNameArrow, BtnNameBrush, BtnNameMove, BtnNameSelect, BtnNameAttribute, BtnNameTileBrush, BtnNameTileSele, BtnNameTileWand, BtnNameTileBucket };
 
         private void ToolBoxClick(ToolStripButton btn)
         {
@@ -96,6 +97,11 @@ namespace RelertSharp.GUI
                     break;
                 case BtnNameTileWand:
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.TileWand;
+                    GlobalVar.Engine.UnmarkAllTile();
+                    GlobalVar.Engine.Refresh();
+                    break;
+                case BtnNameTileBucket:
+                    Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.TileBucket;
                     GlobalVar.Engine.UnmarkAllTile();
                     GlobalVar.Engine.Refresh();
                     break;

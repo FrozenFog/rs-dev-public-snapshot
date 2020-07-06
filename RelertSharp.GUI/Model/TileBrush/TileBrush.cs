@@ -10,7 +10,7 @@ using static RelertSharp.Common.GlobalVar;
 
 namespace RelertSharp.GUI.Model.TileBrush
 {
-    public class TileBrush
+    public partial class TileBrush
     {
         private I2dLocateable pos;
         private string filenameNow;

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
+using RelertSharp.FileSystem;
 using RelertSharp.MapStructure;
 using RelertSharp.Common;
 using static RelertSharp.Common.GlobalVar;
@@ -106,6 +108,19 @@ namespace RelertSharp.GUI
                     }
                     Engine.Refresh();
                 }
+            }
+        }
+        private void FillAt(Vec3 vec)
+        {
+            if (vec != Vec3.Zero)
+            {
+                I3dLocateable pos = vec.To3dLocateable();
+                if (Map.TilesData[pos] is Tile seed && seed.Selected)
+                {
+                    TileSet set = rbPanelBucket.BucketSet;
+                    Current.FillTilesAt(seed, set);
+                }
+                Engine.Refresh();
             }
         }
     }

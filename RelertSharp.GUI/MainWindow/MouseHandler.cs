@@ -68,6 +68,9 @@ namespace RelertSharp.GUI
                     case MainWindowDataModel.MouseActionType.TileWand:
                         WandSelectAt(cell);
                         break;
+                    case MainWindowDataModel.MouseActionType.TileBucket:
+                        FillAt(cell);
+                        break;
                 }
             }
         }
@@ -109,6 +112,13 @@ namespace RelertSharp.GUI
                         panel1.Cursor = Cursors.Arrow;
                         rbPanelWand.Location = e.Location;
                         rbPanelWand.Visible = true;
+                        GlobalVar.Engine.Refresh();
+                        break;
+                    case MainWindowDataModel.MouseActionType.TileBucket:
+                        prevCur = panel1.Cursor;
+                        panel1.Cursor = Cursors.Arrow;
+                        rbPanelBucket.Location = e.Location;
+                        rbPanelBucket.Visible = true;
                         GlobalVar.Engine.Refresh();
                         break;
                 }
