@@ -35,51 +35,6 @@ namespace RelertSharp.FileSystem
             DumpObjects();
             SaveIni(savingPath, true);
         }
-
-        private void DumpObjects() {
-            var entity = new INIEntity("Structures", "", "");
-
-            string handleSequencedList(List<string> list) {
-                string items = list[0];
-                list.RemoveAt(0);
-                foreach (var item in list) {
-                    items += "," + item;
-                }
-                return items;
-            }
-
-            //buildings :
-            foreach (var building in Map.Buildings) {
-                var idx = 0;
-                List<string> values = new List<string>{building.OwnerHouse,
-                              building.ID,
-                              building.HealthPoint.ToString(),
-                              building.X.ToString(),
-                              building.Y.ToString(),
-                              building.Rotation.ToString(),
-                              building.TaggedTrigger,
-                              building.AISellable.ToString(),
-                              building.BuildingOnline.ToString(),
-                              building.UpgradeNum.ToString(),
-                              building.SpotlightType.ToString(),
-                              building.Upgrade1,
-                              building.Upgrade2,
-                              building.Upgrade3,
-                              building.AIRepairable.ToString(),
-                              "0",//ShowRealName
-                };
-                
-                entity.AddPair(new INIPair(idx.ToString(), handleSequencedList(values)));
-                ++idx;
-            }
-
-            //units
-
-            //infantries
-
-            //aircrafts
-            
-        }
         #endregion
 
 
@@ -96,6 +51,148 @@ namespace RelertSharp.FileSystem
             IniDict["Basic"] = Map.Info.Basic;
             IniDict["Map"] = Map.Info.Map;
             IniDict["SpecialFlags"] = Map.Info.SpecialFlags;
+        }
+
+        private void DumpObjects()
+        {
+            //buildings :
+            using(var structureEntity=new INIEntity("Structures", "", "")) 
+            {
+                int idx = 0;
+                foreach (var building in Map.Buildings)
+                {
+                    structureEntity.AddPair
+                        (
+                            new INIPair
+                            (
+                                idx.ToString(),
+                                Misc.ParseObjectsToString
+                                (
+                                    building.OwnerHouse,
+                                    building.ID,
+                                    building.HealthPoint,
+                                    building.X,
+                                    building.Y,
+                                    building.Rotation,
+                                    building.TaggedTrigger,
+                                    building.AISellable,
+                                    building.UpgradeNum,
+                                    building.SpotlightType,
+                                    building.Upgrade1,
+                                    building.Upgrade2,
+                                    building.Upgrade3,
+                                    building.AISellable,
+                                "0"
+                                )
+                            )
+                    );
+                    ++idx;
+                }
+                IniDict["Structures"] = structureEntity;
+            }
+
+            //units
+            using (var unitEntity = new INIEntity("Units", "", ""))
+            {
+                int idx = 0;
+                foreach (var unit in Map.Units)
+                {
+                    unitEntity.AddPair
+                        (
+                            new INIPair
+                                (
+                                    idx.ToString(),
+                                    Misc.ParseObjectsToString
+                                    (
+                                        unit.OwnerHouse,
+                                        unit.RegName,
+                                        unit.HealthPoint,
+                                        unit.X,
+                                        unit.Y,
+                                        unit.Rotation,
+                                        unit.Status,
+                                        unit.TaggedTrigger,
+                                        unit.VeterancyPercentage,
+                                        unit.Group,
+                                        unit.IsAboveGround,
+                                        unit.FollowsIndex,
+                                        unit.AutoNORecruitType,
+                                        unit.AutoYESRecruitType
+                                    )
+                                )
+                    );
+                    ++idx;
+                }
+                IniDict["Units"] = unitEntity;
+            }
+
+            //infantries
+            using (var infantryEntity = new INIEntity("Infantry", "", ""))
+            {
+                int idx = 0;
+                foreach (var infantry in Map.Infantries)
+                {
+                    infantryEntity.AddPair
+                        (
+                            new INIPair
+                                (
+                                    idx.ToString(),
+                                    Misc.ParseObjectsToString
+                                    (
+                                        infantry.OwnerHouse,
+                                        infantry.RegName,
+                                        infantry.HealthPoint,
+                                        infantry.X,
+                                        infantry.Y,
+                                        infantry.SubCells,
+                                        infantry.Status,
+                                        infantry.Rotation,
+                                        infantry.TaggedTrigger,
+                                        infantry.VeterancyPercentage,
+                                        infantry.Group,
+                                        infantry.IsAboveGround,
+                                        infantry.AutoNORecruitType,
+                                        infantry.AutoYESRecruitType
+                                    )
+                                )
+                    );
+                    ++idx;
+                }
+                IniDict["Infantry"] = infantryEntity;
+            }
+
+            //aircrafts
+            using (var aircraftEntity = new INIEntity("Aircraft", "", ""))
+            {
+                int idx = 0;
+                foreach (var aircraft in Map.Aircrafts)
+                {
+                    aircraftEntity.AddPair
+                        (
+                            new INIPair
+                                (
+                                    idx.ToString(),
+                                    Misc.ParseObjectsToString
+                                    (
+                                        aircraft.OwnerHouse,
+                                        aircraft.RegName,
+                                        aircraft.HealthPoint,
+                                        aircraft.X,
+                                        aircraft.Y,
+                                        aircraft.Rotation,
+                                        aircraft.Status,
+                                        aircraft.TaggedTrigger,
+                                        aircraft.VeterancyPercentage,
+                                        aircraft.Group,
+                                        aircraft.AutoNORecruitType,
+                                        aircraft.AutoYESRecruitType
+                                    )
+                                )
+                    );
+                    ++idx;
+                }
+                IniDict["Aircraft"] = aircraftEntity;
+            }
         }
         #endregion
     }

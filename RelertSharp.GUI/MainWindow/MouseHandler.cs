@@ -212,10 +212,13 @@ namespace RelertSharp.GUI
             //}
             if (!panel1.Focused || RbPanelVisible())
             {
-                panel1.Focus();
-                HideRbPanel();
-                panel1.Cursor = prevCur;
-                GlobalVar.Engine.Refresh();
+                if (drew)
+                {
+                    panel1.Focus();
+                    HideRbPanel();
+                    panel1.Cursor = prevCur;
+                    GlobalVar.Engine.Refresh();
+                }
             }
             else
             {

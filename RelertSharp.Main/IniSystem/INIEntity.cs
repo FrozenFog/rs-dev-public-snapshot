@@ -9,7 +9,7 @@ using RelertSharp.Common;
 namespace RelertSharp.IniSystem
 {
     [Serializable]
-    public class INIEntity : IEnumerable<INIPair>
+    public class INIEntity : IEnumerable<INIPair> , IDisposable
     {
         private string name, comment, preComment;
         private Dictionary<string, INIPair> data = new Dictionary<string, INIPair>();
@@ -278,6 +278,12 @@ namespace RelertSharp.IniSystem
         public override string ToString()
         {
             return string.Format("[{0}]:{1} items", Name, data.Count);
+        }
+
+        // Just for using, no real use
+        public void Dispose()
+        {
+            return;
         }
         #region Enumerator
         public IEnumerator<INIPair> GetEnumerator()

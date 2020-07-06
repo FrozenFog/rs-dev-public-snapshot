@@ -447,6 +447,23 @@ namespace RelertSharp.Utils
                 cbb.DropDownWidth = max;
             }
         }
+
+        public static string ParseIEnumerableToString(IEnumerable<object> pContainer)
+        {
+            string ret = "";
+            foreach (object obj in pContainer)
+                ret += obj.ToString();
+            return ret;
+        }
+
+        public static string ParseObjectsToString(params object[] pObjects)
+        {
+            string ret = "";
+            foreach (object obj in pObjects)
+                ret += obj.ToString();
+            return ret;
+        }
+
     }
 
 }

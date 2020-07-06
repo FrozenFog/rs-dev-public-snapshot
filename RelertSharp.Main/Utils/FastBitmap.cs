@@ -75,7 +75,7 @@ namespace RelertSharp.Utils
         }
         #endregion
 
-        #region FastBitmap - Protected Methods
+        #region FastBitmap - Override Methods
         protected virtual void Dispose(bool disposing)
         {
             if (IsDisposed) return;
