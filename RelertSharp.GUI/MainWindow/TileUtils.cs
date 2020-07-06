@@ -96,6 +96,7 @@ namespace RelertSharp.GUI
                     int set = TileDictionary.GetTileSetIndexFromTile(seed);
                     int index = seed.TileIndex;
                     List<Predicate<Tile>> predicates = new List<Predicate<Tile>>();
+                    predicates.Add(x => !x.Selected);
                     if (rbPanelWand.SameHeight) predicates.Add(x => x.RealHeight == height);
                     if (rbPanelWand.SameSet) predicates.Add(x => TileDictionary.GetTileSetIndexFromTile(x) == set);
                     if (rbPanelWand.SameIndex) predicates.Add(x => x.TileIndex == index);

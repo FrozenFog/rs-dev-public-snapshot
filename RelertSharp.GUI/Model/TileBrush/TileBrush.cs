@@ -20,6 +20,7 @@ namespace RelertSharp.GUI.Model.TileBrush
         private List<I3dLocateable> posEnum = new List<I3dLocateable>();
         private TileSet tilesetNow;
         private int tileIndexNow;
+        private bool brushDisposed;
         private Map Map { get { return CurrentMapDocument.Map; } }
 
 
@@ -72,11 +73,13 @@ namespace RelertSharp.GUI.Model.TileBrush
                     body.Add(t);
                 }
             }
+            brushDisposed = false;
         }
         public void MoveTo(I3dLocateable cell)
         {
             if (pos != null && pos.Coord != cell.Coord)
             {
+                RedrawImage();
                 foreach (Tile t in under) t.RevealAllTileImg();
                 under.Clear();
                 int i = 0;
@@ -104,17 +107,30 @@ namespace RelertSharp.GUI.Model.TileBrush
         {
             foreach (Tile t in body) t.Dispose();
             foreach (Tile t in under) t.RevealAllTileImg();
+            brushDisposed = true;
         }
         public void AddTileAt(I3dLocateable cell)
         {
             foreach (Tile t in body) Map.AddTile(t);
             Reload(tilesetNow, tileIndexNow, false);
         }
+        public void RedrawImage()
+        {
+            if (body.Count > 0 && brushDisposed)
+            {
+                foreach (Tile t in body)
+                {
+                    Engine.DrawGeneralItem(t);
+                    t.SwitchToFramework(isFramework);
+                    t.FlatToGround(isFlat);
+                }
+                brushDisposed = false;
+            }
+        }
         #endregion
 
 
         #region Private Methods
-
         #endregion
     }
 }

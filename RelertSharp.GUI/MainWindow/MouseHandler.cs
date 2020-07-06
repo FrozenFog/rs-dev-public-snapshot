@@ -65,6 +65,9 @@ namespace RelertSharp.GUI
                         BeginTileSelecting();
                         SelectTileAt(cell);
                         break;
+                    case MainWindowDataModel.MouseActionType.TileWand:
+                        WandSelectAt(cell);
+                        break;
                 }
             }
         }
@@ -210,29 +213,23 @@ namespace RelertSharp.GUI
             //    panel1.Cursor = prevCur;
             //    GlobalVar.Engine.Refresh();
             //}
-            if (!panel1.Focused || RbPanelVisible())
-            {
-                if (drew)
-                {
-                    panel1.Focus();
-                    HideRbPanel();
-                    panel1.Cursor = prevCur;
-                    GlobalVar.Engine.Refresh();
-                }
-            }
-            else
-            {
-                if (drew)
-                {
-                    Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
-                    switch (Current.CurrentMouseAction)
-                    {
-                        case MainWindowDataModel.MouseActionType.TileWand:
-                            WandSelectAt(cell);
-                            break;
-                    }
-                }
-            }
+            //if (!panel1.Focused || RbPanelVisible())
+            //{
+            //    if (drew)
+            //    {
+            //        panel1.Focus();
+            //        HideRbPanel();
+            //        panel1.Cursor = prevCur;
+            //        GlobalVar.Engine.Refresh();
+            //    }
+            //}
+            //else
+            //{
+            //    if (drew)
+            //    {
+            //        Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
+            //    }
+            //}
         }
         private void RmbClick(MouseEventArgs e)
         {
