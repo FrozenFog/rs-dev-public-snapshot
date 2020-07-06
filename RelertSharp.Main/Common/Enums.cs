@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.Common
 {
-    public struct EnumDisplayClass
+    public class EnumDisplayClass
     {
+        public override bool Equals(object obj) => obj is EnumDisplayClass && Value == ((EnumDisplayClass)obj).Value;
+        public override int GetHashCode() => base.GetHashCode();
+
         public int Value;
         public string Name;
         public EnumDisplayClass(int v, string n) { Value = v; Name = n; }

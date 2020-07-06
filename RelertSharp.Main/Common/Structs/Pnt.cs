@@ -8,6 +8,9 @@ namespace RelertSharp.Common
         public int Y;
 
 
+        public override bool Equals(object obj) => obj is Pnt && ((Pnt)obj) == this;
+        public override int GetHashCode() => base.GetHashCode();
+
         public Pnt(int x, int y)
         {
             X = x; Y = y;
