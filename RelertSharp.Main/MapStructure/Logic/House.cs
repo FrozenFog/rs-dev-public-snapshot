@@ -102,7 +102,7 @@ namespace RelertSharp.MapStructure.Logic
             data.AddPair(residual.Values);
             if (BaseNodes.Count > 0)
             {
-                data.AddPair("NodesCount", BaseNodes.Count);
+                data.AddPair("NodeCount", BaseNodes.Count);
                 for (int i = 0; i < BaseNodes.Count; i++)
                 {
                     data.AddPair(string.Format("{0:D3}", i), BaseNodes[i].SaveData);
