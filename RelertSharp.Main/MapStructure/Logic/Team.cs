@@ -115,7 +115,7 @@ namespace RelertSharp.MapStructure.Logic
             result.AddPair("TaskForce", TaskforceID);
             result.AddPair("Max", TeamCapacity);
             result.AddPair("Waypoint", WaypointString(Waypoint));
-            result.AddPair("VeteranLevel", VeteranLevel);
+            result.AddPair("VeteranLevel", (int)VeteranLevel);
             result.AddPair("MindControlDecision", (int)MCDecision);
             result.AddPair("Priority", Priority);
             result.AddPair("TechLevel", TechLevel);

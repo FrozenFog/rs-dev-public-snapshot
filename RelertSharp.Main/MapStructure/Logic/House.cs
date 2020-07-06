@@ -98,6 +98,7 @@ namespace RelertSharp.MapStructure.Logic
             data.AddPair("PlayerControl", Misc.YesNo(PlayerControl));
             string allies = Misc.Join(',', AlliesWith);
             data.AddPair("Allies", allies);
+            data.AddPair("Edge", Edge);
             data.AddPair(residual.Values);
             if (BaseNodes.Count > 0)
             {
