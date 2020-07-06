@@ -115,7 +115,7 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	float width = winRect.right;
 	float height = winRect.bottom;
 
-#ifdef _WINDLL
+#ifdef 上半三角形版
 	PlainVertex FixedVertecies[] =
 	{
 		{{0.0,0.0,0.0},1.0,0.0,0.0},
@@ -160,7 +160,7 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 		pDevice->SetSamplerState(1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 #endif
 
-#ifdef _WINDLL
+#ifdef 上半三角形版
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 1);
 #else
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
