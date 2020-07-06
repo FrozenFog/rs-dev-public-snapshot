@@ -70,10 +70,11 @@ namespace RelertSharp.GUI.Controls
             Dictionary<string, Image> imgs = new Dictionary<string, Image>();
             foreach (string filename in set.GetNames())
             {
-                TmpFile tmp = new TmpFile(GlobalDir.GetRawByte(filename), filename);
+                string name = TileDictionary.GetFrameworkNameSafe(filename);
+                TmpFile tmp = new TmpFile(GlobalDir.GetRawByte(name), name);
                 tmp.LoadColor(TilePalette);
                 sz = Utils.Misc.GetMaxSize(sz, tmp.AssembleImage.Size);
-                imgs[filename] = tmp.AssembleImage;
+                imgs[name] = tmp.AssembleImage;
             }
             //if (sz.Width > 256 || sz.Height > 256)
             //{

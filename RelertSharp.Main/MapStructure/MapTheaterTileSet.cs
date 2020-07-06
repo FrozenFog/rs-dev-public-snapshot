@@ -160,19 +160,6 @@ namespace RelertSharp.MapStructure
             int i = tileindex;
             return GetTileSet(ref i);
         }
-        private string GetFrameworkNameSafe(string filename)
-        {
-            if (GlobalDir.HasFile(filename)) return filename;
-            else
-            {
-                foreach (string sub in _subs)
-                {
-                    string name = filename.Substring(0, filename.Length - 3) + sub;
-                    if (GlobalDir.HasFile(name)) return name;
-                }
-                throw new RSException.InvalidFileException(filename);
-            }
-        }
         #endregion
 
 
@@ -193,6 +180,19 @@ namespace RelertSharp.MapStructure
         public string NameAsTheater(string name)
         {
             return string.Format("{0}.{1}", name.ToLower(), TheaterSub);
+        }
+        public string GetFrameworkNameSafe(string filename)
+        {
+            if (GlobalDir.HasFile(filename)) return filename;
+            else
+            {
+                foreach (string sub in _subs)
+                {
+                    string name = filename.Substring(0, filename.Length - 3) + sub;
+                    if (GlobalDir.HasFile(name)) return name;
+                }
+                throw new RSException.InvalidFileException(filename);
+            }
         }
         public string GetFrameworkFromTile(Tile t, out bool isHyte)
         {
