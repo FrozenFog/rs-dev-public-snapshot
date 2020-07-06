@@ -72,6 +72,17 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - TaskforceItem
+        public INIEntity GetSaveData()
+        {
+            INIEntity result = new INIEntity(ID);
+            result.AddPair(new INIPair("Name", Name));
+            result.AddPair(new INIPair("Group", Group.ToString()));
+            for (int i = 0; i < Members.Count; i++)
+            {
+                result.AddPair(new INIPair(i.ToString(), Members[i].SaveData));
+            }
+            return result;
+        }
         public TaskforceItem Copy(string newid)
         {
             TaskforceItem cp = new TaskforceItem();
@@ -187,6 +198,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TaskforceUnit
+        public string SaveData { get { return string.Format("{0},{1}", UnitNum, RegName); } }
         /// <summary>
         /// 0, 1, 2... etc
         /// </summary>

@@ -66,6 +66,19 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - CountryItem
+        public INIEntity GetSaveData()
+        {
+            INIEntity data = new INIEntity(Name);
+            data.AddPair("Name", Name);
+            data.AddPair("Color", ColorName);
+            data.AddPair("ParentCountry", ParentCountryName);
+            data.AddPair("SmartAI", Utils.Misc.YesNo(SmartAI));
+            data.AddPair("Suffix", Suffix);
+            data.AddPair("Prefix", Prefix);
+            data.AddPair("Side", Side);
+            data.AddPair(residual.Values);
+            return data;
+        }
         public override string ToString()
         {
             return Name;

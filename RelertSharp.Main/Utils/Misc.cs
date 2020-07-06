@@ -125,6 +125,10 @@ namespace RelertSharp.Utils
             }
             return def;
         }
+        public static string YesNo(bool src)
+        {
+            return src ? "yes" : "no";
+        }
         public static dynamic GetNonNull(object obj1, object obj2)
         {
             if (obj1.GetType() == typeof(INIKeyType))
@@ -149,6 +153,20 @@ namespace RelertSharp.Utils
                 obj[i] = obj[i].Trim();
             }
             return obj.ToList();
+        }
+        public static string Join(char joint, IEnumerable<object> objects)
+        {
+            string result = "";
+            if (objects.Count() != 0)
+            {
+                foreach (object obj in objects)
+                {
+                    if (obj.GetType() == typeof(bool)) result += ((bool)obj ? "1" : "0") + joint;
+                    else result += obj.ToString() + joint;
+                }
+                result = result.Substring(0, result.Length - 1);
+            }
+            return result;
         }
         public static string Join(List<string> sl, string joint)
         {

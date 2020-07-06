@@ -74,6 +74,17 @@ namespace RelertSharp.MapStructure.Points
         }
         public new PresentMisc SceneObject { get { return (PresentMisc)base.SceneObject; } set { base.SceneObject = value; } }
         IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
+
+        public IEnumerable<object> SaveData
+        {
+            get
+            {
+                return new List<object>
+                {
+                    RegName, X, Y, 0
+                };
+            }
+        }
         #endregion
     }
 }

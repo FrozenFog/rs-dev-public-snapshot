@@ -92,7 +92,11 @@ namespace RelertSharp.GUI
                     }
                     Application.Run(new MainWindowTest());
                 },
-                "Unhandled error!");
+                "Unhandled error!",
+                () =>
+                {
+                    GlobalVar.CurrentMapDocument.SaveMap("failsafe.map");
+                });
                 GlobalVar.GlobalConfig.Local.SaveConfig();
             }
             Log.Write("PROGRAM EXITING\n\n\n");

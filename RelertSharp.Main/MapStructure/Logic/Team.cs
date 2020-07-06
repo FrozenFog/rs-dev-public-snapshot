@@ -86,6 +86,7 @@ namespace RelertSharp.MapStructure.Logic
         public TeamItem() : base() { }
         #endregion
 
+
         #region Private Methods - TeamItem
         private void LoadAttributes()
         {
@@ -103,7 +104,29 @@ namespace RelertSharp.MapStructure.Logic
         }
         #endregion
 
+
         #region Public Methods - TeamItem
+        public INIEntity GetSaveData()
+        {
+            INIEntity result = new INIEntity(ID);
+            result.AddPair("Name", Name);
+            result.AddPair("House", House);
+            result.AddPair("Script", ScriptID);
+            result.AddPair("TaskForce", TaskforceID);
+            result.AddPair("Max", TeamCapacity);
+            result.AddPair("Waypoint", WaypointString(Waypoint));
+            result.AddPair("VeteranLevel", VeteranLevel);
+            result.AddPair("MindControlDecision", (int)MCDecision);
+            result.AddPair("Priority", Priority);
+            result.AddPair("TechLevel", TechLevel);
+            result.AddPair("Group", Group);
+            for (int i = 0; i < Constant.TeamBoolIndex.Count; i++)
+            {
+                result.AddPair(Constant.TeamBoolIndex[i], YesNo(Attributes.Get(i)));
+            }
+            result.AddPair(residual.Values);
+            return result;
+        }
         public void SetAttribute(string index, bool value)
         {
             Attributes.Set(Constant.TeamBoolIndex.IndexOf(index), value);
@@ -149,6 +172,7 @@ namespace RelertSharp.MapStructure.Logic
             return item;
         }
         #endregion
+
 
         #region Public Calls - TeamItem
         public override string ToString() { return ID + " " + Name; }

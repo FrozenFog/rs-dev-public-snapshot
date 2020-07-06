@@ -32,29 +32,61 @@ namespace RelertSharp.FileSystem
             Map.CompressTile();
             Map.CompressOverlay();
             DumpGeneralInfo();
-            DumpObjects();
+            DumpMapObjects();
+            DumpLogics();
             SaveIni(savingPath, true);
         }
         #endregion
 
 
         #region Private Methods - MapFile
+        private void DumpMapObjects()
+        {
+            IniDict["Structures"] = Map.DumpBuildingData();
+            IniDict["Infantry"] = Map.DumpInfantryData();
+            IniDict["Units"] = Map.DumpUnitData();
+            IniDict["Aircraft"] = Map.DumpAircraftData();
+            IniDict["Terrain"] = Map.DumpTerrainData();
+            IniDict["Smudge"] = Map.DumpSmudgeData();
+            IniDict["CellTags"] = Map.DumpCelltagData();
+            IniDict["Waypoints"] = Map.DumpWaypointData();
+            IniDict["VariableNames"] = Map.DumpLocalVar();
+        }
+        private void DumpLogics()
+        {
+            Map.DumpTriggerData(out INIEntity trigger, out INIEntity events, out INIEntity actions, out INIEntity tags);
+            Map.DumpAiTriggerData(out INIEntity type, out INIEntity enable);
+            Map.DumpTeam(out INIEntity team, out INIEntity[] teams);
+            Map.DumpScriptData(out INIEntity script, out INIEntity[] scripts);
+            Map.DumpHouse(out INIEntity house, out INIEntity[] houses);
+            Map.DumpCountries(out INIEntity con, out INIEntity[] cons);
+            Map.DumpTaskforce(out INIEntity task, out INIEntity[] tasks);
+            List<INIEntity> result = new List<INIEntity>
+            {
+                type, enable, trigger, events, actions, tags,
+                team, script, task, house, con
+            };
+            result.AddRange(teams.Concat(scripts).Concat(houses).Concat(cons).Concat(tasks));
+            foreach (INIEntity ent in result) IniDict[ent.Name] = ent;
+        }
         private void DumpGeneralInfo()
         {
             IniDict["IsoMapPack5"] = new INIEntity("IsoMapPack5", Map.IsoMapPack5, 1);
             IniDict["OverlayDataPack"] = new INIEntity("OverlayDataPack", Map.OverlayDataPack, 1);
             IniDict["OverlayPack"] = new INIEntity("OverlayPack", Map.OverlayPack, 1);
             IniDict["PreviewPack"] = new INIEntity("PreviewPack", Map.PreviewPack, 1);
-            INIEntity previewEnt = new INIEntity("Preview", "", "");
-            if (!Map.PreviewSize.IsEmpty) previewEnt.AddPair(new INIPair("Size", Misc.FromRectangle(Map.PreviewSize), "", ""));
+            INIEntity previewEnt = new INIEntity("Preview");
+            if (!Map.PreviewSize.IsEmpty) previewEnt.AddPair("Size", Misc.FromRectangle(Map.PreviewSize));
             IniDict["Preview"] = previewEnt;
-            IniDict["Basic"] = Map.Info.Basic;
-            IniDict["Map"] = Map.Info.Map;
+            IniDict["Basic"] = Map.Info.GetBasicEnt();
+            IniDict["Map"] = Map.Info.GetMapEnt();
             IniDict["SpecialFlags"] = Map.Info.SpecialFlags;
+            IniDict["Lighting"] = Map.LightningCollection.GetSaveData();
         }
 
         private void DumpObjects()
         {
+            INIEntity entBud = new INIEntity("Structures");
             //buildings :
             using(var structureEntity=new INIEntity("Structures", "", "")) 
             {
@@ -65,7 +97,7 @@ namespace RelertSharp.FileSystem
                         (
                             new INIPair
                             (
-                                idx.ToString(),
+                                idx++.ToString(),
                                 Misc.ParseObjectsToString
                                 (
                                     building.OwnerHouse,
@@ -86,7 +118,6 @@ namespace RelertSharp.FileSystem
                                 )
                             )
                     );
-                    ++idx;
                 }
                 IniDict["Structures"] = structureEntity;
             }
@@ -101,7 +132,7 @@ namespace RelertSharp.FileSystem
                         (
                             new INIPair
                                 (
-                                    idx.ToString(),
+                                    idx++.ToString(),
                                     Misc.ParseObjectsToString
                                     (
                                         unit.OwnerHouse,
@@ -121,7 +152,6 @@ namespace RelertSharp.FileSystem
                                     )
                                 )
                     );
-                    ++idx;
                 }
                 IniDict["Units"] = unitEntity;
             }

@@ -147,6 +147,19 @@ namespace RelertSharp.MapStructure.Logic
             if (item == null) return;
             data.Remove(item.idx);
         }
+        public string GetSaveData()
+        {
+            List<object> obj = new List<object>();
+            obj.Add(data.Count);
+            foreach (LogicItem lg in data.Values)
+            {
+                obj.Add(lg.ID);
+                string[] param = lg.Parameters;
+                if (LogicType == LogicType.EventLogic && !Constant.Logics.EventIdLength3.Contains(lg.ID)) param.Take(2);
+                obj.AddRange(param);
+            }
+            return Utils.Misc.Join(',', obj);
+        }
         #region Enumerator
         public IEnumerator<LogicItem> GetEnumerator()
         {

@@ -86,6 +86,29 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - HouseItem
+        public INIEntity GetSaveData()
+        {
+            INIEntity data = new INIEntity(Name);
+            data.AddPair("IQ", IQ);
+            data.AddPair("Color", ColorName);
+            data.AddPair("Country", Country);
+            data.AddPair("Credits", Credits);
+            data.AddPair("TechLevel", TechLevel);
+            data.AddPair("PercentBuilt", PercentBuilt);
+            data.AddPair("PlayerControl", Misc.YesNo(PlayerControl));
+            string allies = Misc.Join(',', AlliesWith);
+            data.AddPair("Allies", allies);
+            data.AddPair(residual.Values);
+            if (BaseNodes.Count > 0)
+            {
+                data.AddPair("NodesCount", BaseNodes.Count);
+                for (int i = 0; i < BaseNodes.Count; i++)
+                {
+                    data.AddPair(string.Format("{0:D3}", i), BaseNodes[i].SaveData);
+                }
+            }
+            return data;
+        }
         public override string ToString()
         {
             return Name;

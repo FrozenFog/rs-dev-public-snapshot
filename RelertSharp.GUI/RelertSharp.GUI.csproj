@@ -199,6 +199,9 @@
     <Compile Include="MainWindow\EventReciver.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MainWindow\MenuScript.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainWindow\ObjectBrush.cs">
       <SubType>Form</SubType>
     </Compile>

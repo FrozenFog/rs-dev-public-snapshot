@@ -68,6 +68,16 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Calls
+        public List<object> SaveData
+        {
+            get
+            {
+                return new List<object>()
+                {
+                    OwnerHouse, RegName, HealthPoint, X, Y, Rotation, Status, TaggedTrigger, VeterancyPercentage, Group, AutoNORecruitType, AutoYESRecruitType
+                };
+            }
+        }
         public new PresentUnit SceneObject { get { return (PresentUnit)base.SceneObject; } set { base.SceneObject = value; } }
         IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
         #endregion

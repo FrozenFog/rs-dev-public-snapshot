@@ -72,7 +72,7 @@ namespace RelertSharp.GUI
                 dest.Nodes.Add(n);
             }
         }
-        public static bool SafeRun(Action a, string errorMsg)
+        public static bool SafeRun(Action a, string errorMsg, Action failsafe = null)
         {
 #if RELEASE
             try
@@ -92,6 +92,14 @@ namespace RelertSharp.GUI
                 else
                 {
                     Fatal(string.Format("{0}\nError message: {1}\n\nTrace:\n{2}", errorMsg, e.Message, e.StackTrace));
+                }
+                try
+                {
+                    failsafe?.Invoke();
+                }
+                catch (Exception fail)
+                {
+                    Fatal(string.Format("Failsafe Error!!\nTrace:\n{0}", fail.StackTrace));
                 }
                 return false;
             }
@@ -117,6 +125,10 @@ namespace RelertSharp.GUI
         public static void Fatal(string format, params object[] obj)
         {
             Fatal(string.Format(format, obj));
+        }
+        public static void Complete(string content)
+        {
+            MessageBox.Show(content, Language.DICT["RSMainTitle"], MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
         public static void InsertAt(ListBox dest, object item, ref bool locker)
         {

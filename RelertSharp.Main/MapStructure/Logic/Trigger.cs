@@ -293,6 +293,17 @@ namespace RelertSharp.MapStructure.Logic
             set { SetProperty(ref repeattype, value); }
         }
         public string IDName { get { return ID + ":" + Name; } }
+
+        public IEnumerable<object> SaveData
+        {
+            get
+            {
+                return new List<object>()
+                {
+                    House, LinkedWith, Name, Disabled, EasyOn, NormalOn, HardOn, (int)Repeating
+                };
+            }
+        }
         #endregion
     }
 }

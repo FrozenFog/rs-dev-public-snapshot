@@ -89,6 +89,15 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Calls - StructureItem
+        public List<object> SaveData
+        {
+            get
+            {
+                return new List<object>()
+                {
+                    OwnerHouse, RegName, HealthPoint, X, Y, Rotation, TaggedTrigger, AISellable, AIRebuildable, BuildingOnline, UpgradeNum, (int)SpotlightType, Upgrade1,Upgrade2,Upgrade3,AIRepairable, Nominal };
+                }
+        }
         public bool AISellable { get; set; } = true;
         public bool AIRebuildable { get; private set; } = false;
         public bool BuildingOnline { get; set; } = true;

@@ -195,7 +195,7 @@ namespace RelertSharp.MapStructure
             foreach (INIPair p in entAITriggerEnable.DataList)
             {
                 if (AiTriggers[p.Name] != null) AiTriggers[p.Name].Enabled = ParseBool(p.Value);
-                else AiTriggers.GlobalEnables[p.Name] = ParseBool(p.Value);
+                AiTriggers.GlobalEnables[p.Name] = ParseBool(p.Value);
             }
             foreach (INIPair p in entCelltags.DataList)
             {

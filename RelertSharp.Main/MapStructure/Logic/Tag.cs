@@ -152,6 +152,16 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TagItem
+        public IEnumerable<object> SaveData
+        {
+            get
+            {
+                return new List<object>()
+                {
+                    (int)Repeating, Name, AssoTrigger
+                };
+            }
+        }
         public override string ToString() { return id + ' ' + Name; }
         public TriggerRepeatingType Repeating
         {

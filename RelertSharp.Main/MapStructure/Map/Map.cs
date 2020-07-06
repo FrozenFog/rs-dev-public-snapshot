@@ -210,12 +210,9 @@ namespace RelertSharp.MapStructure
             if (house == null) return 0;
             return 0xFF000000 | (uint)(house.DrawingColor.B << 16 | house.DrawingColor.G << 8 | house.DrawingColor.R);
         }
-        public void CompressTile()
+        public void CompressTile(bool highCompress = false)
         {
-            foreach (Tile t in Tiles.Data.Values)
-            {
-                t.Height -= Tiles.BottomLevel;
-            }
+            if (highCompress) foreach (Tile t in Tiles.Data.Values) t.Height -= Tiles.BottomLevel;
             Tiles.RemoveEmptyTiles();
             isomappack5String = Tiles.CompressToString();
         }

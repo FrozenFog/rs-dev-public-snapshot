@@ -91,6 +91,7 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Public Calls - BaseNode
+        public string SaveData { get { return string.Format("{0},{1},{2}", RegName, X, Y); } }
         public bool IsHidden { get; private set; }
         public string RegName { get; set; }
         public int X { get; set; }

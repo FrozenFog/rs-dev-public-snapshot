@@ -112,7 +112,7 @@ namespace RelertSharp.MapStructure.Logic
                 IsForSkirmish = ParseBool(_args[10]);
                 Residual = "0";
                 SideIndex = int.Parse(_args[12]);
-                IsBaseDefense = false;
+                IsBaseDefense = true;
                 Team2ID = _args[14];
                 EasyOn = ParseBool(_args[15]);
                 NormalOn = ParseBool(_args[16]);
@@ -126,6 +126,7 @@ namespace RelertSharp.MapStructure.Logic
             }
         }
         #endregion
+
 
         #region Public Methods - AITriggerItem
         public AITriggerItem Copy(string newID)
@@ -173,7 +174,16 @@ namespace RelertSharp.MapStructure.Logic
             comparator.Num1 = (int)unit.Data["OperNum"].Value;
             comparator.Operator = (AITriggerConditionOperator)unit.Data["Operator"].Value;
         }
+        public string GetSaveData()
+        {
+            List<object> objs = new List<object>();
+            objs.AddRange(new object[] { Name, Team1ID, OwnerHouse, TechLevel, (int)ConditionType, ConditionObjID });
+            string oper = Comparator.ToCmpString;
+            objs.AddRange(new object[] { oper, StartingWeight, MinimumWeight, MaximumWeight, IsForSkirmish, 0, SideIndex, IsBaseDefense, Team2ID, EasyOn, NormalOn, HardOn });
+            return Join(',', objs);
+        }
         #endregion
+
 
         #region Public Calls - AITriggerItem
         public override string ToString()

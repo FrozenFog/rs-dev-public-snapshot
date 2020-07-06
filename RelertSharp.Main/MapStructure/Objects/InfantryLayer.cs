@@ -95,6 +95,16 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Calls - InfantryItem
+        public List<object> SaveData
+        {
+            get
+            {
+                return new List<object>()
+                {
+                    OwnerHouse, RegName, HealthPoint, X,Y,subcell,Status, Rotation,TaggedTrigger,VeterancyPercentage,Group,IsAboveGround, AutoNORecruitType,AutoYESRecruitType
+                };
+            }
+        }
         public int SubCells
         {
             get { return subcell; }

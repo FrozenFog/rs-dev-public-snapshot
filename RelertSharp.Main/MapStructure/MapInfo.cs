@@ -46,6 +46,26 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - MapInfo
+        public INIEntity GetMapEnt()
+        {
+            INIEntity map = new INIEntity("Map");
+            map.AddPair("Size", FromRectangle(Size));
+            map.AddPair("LocalSize", FromRectangle(LocalSize));
+            map.AddPair("Theater", TheaterName);
+            return map;
+        }
+        public INIEntity GetBasicEnt()
+        {
+            INIEntity basic = new INIEntity("Basic");
+            basic.AddPair("Name", MapName);
+            basic.AddPair("Theme", ThemeName);
+            basic.AddPair("PostScore", PostScoreFilmName);
+            basic.AddPair("AltNextScenario", AltNextScene);
+            basic.AddPair("Player", PlayerHouseName);
+            basic.AddPair("GameMode", Join(',', GameModes));
+            basic.AddPair(BasicResidue);
+            return basic;
+        }
         //public void AddInfo(INIEntity ent)
         //{
         //    if (InfoResidue.Keys.Contains(ent.Name)) return;
@@ -99,6 +119,19 @@ namespace RelertSharp.MapStructure
         #endregion
 
 
+        #region Public Methods
+        public INIEntity GetSaveData()
+        {
+            INIEntity ent = new INIEntity("Lighting");
+            Normal.LoadToSaveData(ref ent);
+            Ion.LoadToSaveData(ref ent, "Ion");
+            Dominator.LoadToSaveData(ref ent, "Dominator");
+            ent.AddPair("DominatorAmbientChangeRate", DominatorChangeRate);
+            return ent;
+        }
+        #endregion
+
+
         #region Public Calls - Lightning
         public LightningItem Normal { get; set; }
         public LightningItem Ion { get; set; }
@@ -145,6 +178,15 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - LightningItem
+        public void LoadToSaveData(ref INIEntity dest, string prefix = "")
+        {
+            dest.AddPair(prefix + "Red", Red);
+            dest.AddPair(prefix + "Green", Green);
+            dest.AddPair(prefix + "Blue", Blue);
+            dest.AddPair(prefix + "Ambient", Ambient);
+            dest.AddPair(prefix + "Level", Level);
+            dest.AddPair(prefix + "Ground", Ground);
+        }
         #endregion
 
 

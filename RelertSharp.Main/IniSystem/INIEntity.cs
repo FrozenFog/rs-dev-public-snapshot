@@ -184,6 +184,14 @@ namespace RelertSharp.IniSystem
         {
             if (!data.Keys.Contains(p.Name)) data[p.Name] = p;
         }
+        public void AddPair(string key, object value)
+        {
+            if (!data.Keys.Contains(key)) data[key] = new INIPair(key, value.ToString());
+        }
+        public void AddPair(IEnumerable<INIPair> src)
+        {
+            foreach (INIPair p in src) AddPair(p);
+        }
         /// <summary>
         /// Discard all item index and merge the value into a list, works well with List-like Ent.
         /// Any repeated value will be discarded.

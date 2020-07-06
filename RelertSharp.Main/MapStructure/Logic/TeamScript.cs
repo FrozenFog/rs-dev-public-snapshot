@@ -74,6 +74,16 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - TeamScriptGroup
+        public INIEntity GetSaveData()
+        {
+            INIEntity result = new INIEntity(ID);
+            result.AddPair(new INIPair("Name", Name));
+            for (int i = 0; i < data.Count; i++)
+            {
+                result.AddPair(new INIPair(i.ToString(), data[i].SaveData));
+            }
+            return result;
+        }
         public TeamScriptItem NewScript(int insertIndex)
         {
             TeamScriptItem item = new TeamScriptItem(0, "0");
@@ -118,6 +128,7 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
 
         #region Public Calls - TeamScriptItem
+        public string SaveData { get { return string.Format("{0},{1}", ScriptActionIndex, ActionValue); } }
         public override string ToString() { return string.Format("ScriptType-{0:D2}", ScriptActionIndex); }
         public int ScriptActionIndex { get; set; }
         public string ActionValue { get; set; }
