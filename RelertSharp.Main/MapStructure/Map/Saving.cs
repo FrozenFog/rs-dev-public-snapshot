@@ -81,7 +81,7 @@ namespace RelertSharp.MapStructure
             INIEntity ent = new INIEntity("Waypoints");
             foreach (WaypointItem wp in Waypoints)
             {
-                ent.AddPair(new INIPair(wp.ID, wp.CoordString));
+                ent.AddPair(new INIPair(wp.Num, wp.CoordString));
             }
             return ent;
         }
