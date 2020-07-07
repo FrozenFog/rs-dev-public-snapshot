@@ -33,8 +33,7 @@ namespace RelertSharp.GUI
             if (cell != Vec3.Zero)
             {
                 pnlTile.Result.AddTileAt(cell.To3dLocateable());
-                Engine.RedrawMinimapAll();
-                pnlMiniMap.BackgroundImage = Engine.MiniMap;
+                RedrawMinimapAll();
                 Engine.Refresh();
             }
         }

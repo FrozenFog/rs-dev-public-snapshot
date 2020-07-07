@@ -122,6 +122,7 @@ namespace RelertSharp.GUI
                     TileSet set = rbPanelBucket.BucketSet;
                     Current.FillTilesAt(seed, set);
                 }
+                RedrawMinimapAll();
                 Engine.Refresh();
             }
         }

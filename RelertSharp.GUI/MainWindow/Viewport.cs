@@ -126,5 +126,10 @@ namespace RelertSharp.GUI
             rbPanelWand.Visible = false;
             rbPanelBucket.Visible = false;
         }
+        private void RedrawMinimapAll()
+        {
+            GlobalVar.Engine.RedrawMinimapAll();
+            pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
+        }
     }
 }

@@ -263,8 +263,7 @@ namespace RelertSharp.GUI
             if (initialized && drew)
             {
                 GlobalVar.Engine.ResizeMinimap(pnlMiniMap.Size);
-                GlobalVar.Engine.RedrawMinimapAll();
-                pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
+                RedrawMinimapAll();
             }
         }
 
@@ -395,8 +394,7 @@ namespace RelertSharp.GUI
             if (DrawAll(worker)) pnlPick.DrawComplete();
             GlobalVar.Engine.MoveTo(map.CenterPoint);
             GlobalVar.Engine.Refresh();
-            GlobalVar.Engine.RedrawMinimapAll();
-            pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
+            RedrawMinimapAll();
             rbPanelAttribute.Initialize(map.Houses, map.Tags);
             rbPanelBrush.Initialize();
             rbPanelWand.Initialize();

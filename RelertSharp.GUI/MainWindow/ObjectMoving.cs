@@ -73,8 +73,7 @@ namespace RelertSharp.GUI
                         }
                     }
                     previousObjectLocation = posNow;
-                    Engine.RedrawMinimapAll();
-                    pnlMiniMap.BackgroundImage = Engine.MiniMap;
+                    RedrawMinimapAll();
                     Engine.Refresh();
                 }
                 else if (subcell != -1 && isPreciseMovingMode)

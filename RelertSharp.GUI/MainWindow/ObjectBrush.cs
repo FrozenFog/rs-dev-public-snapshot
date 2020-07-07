@@ -60,8 +60,7 @@ namespace RelertSharp.GUI
                     map.AddObjectFromBrush(obj);
                 }
                 GlobalVar.Engine.Refresh();
-                GlobalVar.Engine.RedrawMinimapAll();
-                pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
+                RedrawMinimapAll();
             }
         }
     }
