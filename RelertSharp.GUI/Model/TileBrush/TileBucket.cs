@@ -48,6 +48,7 @@ namespace RelertSharp.GUI.Model.TileBrush
                         {
                             Tile t = new Tile(tileIndex, sub, pos.X, pos.Y, height);
                             Engine.DrawGeneralItem(t);
+                            t.SceneObject.SetColor(org.SceneObject.ColorVector);
                             t.SwitchToFramework(isFramework);
                             t.FlatToGround(isFlat);
                             t.Select();

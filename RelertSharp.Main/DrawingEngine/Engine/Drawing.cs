@@ -129,6 +129,11 @@ namespace RelertSharp.DrawingEngine
         {
             string name, framework;
             int subindex = 0, frameworkIndex = 0;
+            Vec4 color = Vec4.Zero;
+            if (t.SceneObject != null)
+            {
+                color = t.SceneObject.ColorVector;
+            }
             framework = TileDictionary.GetFrameworkFromTile(t, out bool isHyte);
             t.IsHyte = isHyte;
             name = TileDictionary[t.TileIndex];
@@ -142,6 +147,7 @@ namespace RelertSharp.DrawingEngine
             bool success = DrawTile(src.pSelf, pos, subindex, pPalIso, out int pSelf, out int pExtra);
             bool frmSuccess = DrawTile(frm.pSelf, pos, frameworkIndex, pPalIso, out int pfrm, out int pfrmEx);
             PresentTile pt = new PresentTile(pSelf, pExtra, t.Height, src, subindex, t, pfrm, pfrmEx);
+            if (color != Vec4.Zero) pt.SetColor(color);
             t.SceneObject = pt;
             t.BaseTileBuildable = pt.Buildable;
             Color cl = src.SubTiles[subindex].RadarColor.Left;
