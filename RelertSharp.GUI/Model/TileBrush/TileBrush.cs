@@ -17,10 +17,14 @@ namespace RelertSharp.GUI.Model.TileBrush
         private bool isFramework, isFlat;
         private List<Tile> body = new List<Tile>();
         private List<Tile> under = new List<Tile>();
+        private List<Tile> surrounding = new List<Tile>();
+        private List<Tile> surroundUnder = new List<Tile>();
         private List<I3dLocateable> posEnum = new List<I3dLocateable>();
         private TileSet tilesetNow;
         private int tileIndexNow;
         private bool brushDisposed;
+        private bool latEnable = true, isSelfLat;
+        private bool Lat { get { return latEnable && isSelfLat; } }
         private Map Map { get { return CurrentMapDocument.Map; } }
 
 
@@ -30,6 +34,10 @@ namespace RelertSharp.GUI.Model.TileBrush
 
 
         #region Public Methods
+        public void SetLatEnable(bool enable)
+        {
+            latEnable = enable;
+        }
         public void SetFramework(bool frameworkEnable)
         {
             isFramework = frameworkEnable;
@@ -45,8 +53,13 @@ namespace RelertSharp.GUI.Model.TileBrush
             if (set == null) return;
             tilesetNow = set;
             tileIndexNow = index;
-            if (removePrev) foreach (Tile t in body) t.Dispose();
+            if (removePrev)
+            {
+                foreach (Tile t in body) t.Dispose();
+                foreach (Tile t in surrounding) t.Dispose();
+            }
             foreach (Tile t in under) t.RevealAllTileImg();
+            foreach (Tile t in surroundUnder) t.RevealAllTileImg();
             filenameNow = set.GetName(index, false);
             int idx = set.Offset + index;
             TmpFile tmp = new TmpFile(GlobalDir.GetRawByte(filenameNow), filenameNow);
@@ -55,6 +68,8 @@ namespace RelertSharp.GUI.Model.TileBrush
             posEnum.Clear();
             body.Clear();
             under.Clear();
+            surroundUnder.Clear();
+            surrounding.Clear();
             for (byte i = 0; i < tmp.Images.Count; i++)
             {
                 TmpImage img = tmp.Images[i];
@@ -67,6 +82,7 @@ namespace RelertSharp.GUI.Model.TileBrush
                     int z = img.Height;
                     posEnum.Add(new Pnt3(dx, dy, z));
                     Tile t = new Tile(idx, i, x + dx, y + dy, z);
+                    isSelfLat = TileDictionary.IsLat(t);
                     Engine.DrawGeneralItem(t);
                     t.SwitchToFramework(isFramework);
                     t.FlatToGround(isFlat);
@@ -81,9 +97,12 @@ namespace RelertSharp.GUI.Model.TileBrush
             {
                 RedrawImage();
                 foreach (Tile t in under) t.RevealAllTileImg();
+                foreach (Tile t in surroundUnder) t.RevealAllTileImg();
+                foreach (Tile t in surrounding) t.Dispose();
+                surrounding.Clear();
+                surroundUnder.Clear();
                 under.Clear();
                 int i = 0;
-
                 foreach (I2dLocateable pos in new TileSet2D(cell, posEnum))
                 {
                     Tile dest = Map.TilesData[pos];
@@ -93,13 +112,31 @@ namespace RelertSharp.GUI.Model.TileBrush
                         dest.HideTileImg();
                         under.Add(dest);
                         body[i].MoveTo(dest, posEnum[i].Z + cell.Z, cell.Z);
-                        body[i++].RevealAllTileImg();
+                        body[i].RevealAllTileImg();
+                        if (Lat)
+                        {
+                            Map.TilesData.SwitchLat(body[i]);
+                            List<Tile> neb = Map.TilesData.GetNeighbor(dest, out List<WallDirection> directions);
+                            for (int nb = 0; nb < neb.Count; nb++)
+                            {
+                                if (Map.TilesData.NeedLat(neb[nb]))
+                                {
+                                    neb[nb].HideExtraImg();
+                                    neb[nb].HideTileImg();
+                                    surroundUnder.Add(neb[nb]);
+                                    Tile surround = new Tile(neb[nb]);
+                                    Map.TilesData.SwitchLat(surround, body[i], directions[nb]);
+                                    surrounding.Add(surround);
+                                }
+                            }
+                        }
                     }
                     else
                     {
                         body[i].HideExtraImg();
-                        body[i++].HideTileImg();
+                        body[i].HideTileImg();
                     }
+                    i++;
                 }
             }
         }
@@ -112,6 +149,10 @@ namespace RelertSharp.GUI.Model.TileBrush
         public void AddTileAt(I3dLocateable cell)
         {
             foreach (Tile t in body) Map.AddTile(t);
+            if (Lat)
+            {
+                foreach (Tile t in surrounding) Map.AddTile(t);
+            }
             Reload(tilesetNow, tileIndexNow, false);
         }
         public void RedrawImage()

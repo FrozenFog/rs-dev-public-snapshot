@@ -13,6 +13,7 @@ using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
 using RelertSharp.DrawingEngine.Presenting;
+using static RelertSharp.Common.GlobalVar;
 
 namespace RelertSharp.MapStructure
 {
@@ -64,6 +65,23 @@ namespace RelertSharp.MapStructure
                 xmin++;
                 ymax++;
             }
+        }
+        private void SetLatBase(Tile center, TileSet setCenter, int direction)
+        {
+            if (direction == 0 && TileDictionary.IsConnLat(setCenter.SetIndex))
+            {
+                setCenter = TileDictionary.SwapSet(setCenter);
+            }
+            else if (direction != 0 && !TileDictionary.IsConnLat(setCenter.SetIndex) && setCenter.SetIndex != Constant.LATSystem.idxClear)
+            {
+                setCenter = TileDictionary.SwapSet(setCenter);
+            }
+            else if (direction != 0 && setCenter.SetIndex == Constant.LATSystem.idxClear)
+            {
+                direction = 0;
+            }
+            center.TileIndex = setCenter.Offset + direction;
+            center.Redraw();
         }
         //private void SetTilePixelInPreview(Bitmap dest, Tile t, int bmpx, int bmpy)
         //{
@@ -118,6 +136,79 @@ namespace RelertSharp.MapStructure
             if (this[pos + Pnt.OneY] is Tile dl) result.Add(dl);
             if (this[pos - Pnt.OneY] is Tile ur) result.Add(ur);
             return result;
+        }
+        public List<Tile> GetNeighbor(Tile src, out List<WallDirection> directions)
+        {
+            List<Tile> result = new List<Tile>();
+            directions = new List<WallDirection>();
+            Pnt pos = new Pnt(src);
+            if (this[pos + Pnt.OneX] is Tile dr)
+            {
+                result.Add(dr);
+                directions.Add(WallDirection.NW);
+            }
+            if (this[pos - Pnt.OneX] is Tile ul)
+            {
+                result.Add(ul);
+                directions.Add(WallDirection.SE);
+            }
+            if (this[pos + Pnt.OneY] is Tile dl)
+            {
+                result.Add(dl);
+                directions.Add(WallDirection.NE);
+            }
+            if (this[pos - Pnt.OneY] is Tile ur)
+            {
+                result.Add(ur);
+                directions.Add(WallDirection.SW);
+            }
+            return result;
+        }
+        public bool NeedLat(Tile obj)
+        {
+            if (obj == null) return false;
+            return Constant.LATSystem.LatSet.Contains(TileDictionary.GetTileSetIndexFromTile(obj));
+        }
+        public void SwitchLat(Tile center)
+        {
+            if (center != null && TileDictionary.IsLat(center))
+            {
+                TileSet setCenter = TileDictionary.GetTileSetFromTile(center);
+                int result = 0;
+                Pnt pos = new Pnt(center);
+                if (this[pos + Pnt.OneX] is Tile dr && TileDictionary.IsClearLat(dr.TileIndex, center.TileIndex)) result += (int)WallDirection.SE;
+                if (this[pos - Pnt.OneX] is Tile ul && TileDictionary.IsClearLat(ul.TileIndex, center.TileIndex)) result += (int)WallDirection.NW;
+                if (this[pos + Pnt.OneY] is Tile dl && TileDictionary.IsClearLat(dl.TileIndex, center.TileIndex)) result += (int)WallDirection.SW;
+                if (this[pos - Pnt.OneY] is Tile ur && TileDictionary.IsClearLat(ur.TileIndex, center.TileIndex)) result += (int)WallDirection.NE;
+
+                SetLatBase(center, setCenter, result);
+                //else
+                //{
+                //    if (!TileDictionary.IsConnLat(setCenter.SetIndex)) setCenter = TileDictionary.SwapSet(setCenter);
+                //    if (Constant.LATSystem.idxClear == setCenter.SetIndex) result = 0;
+                //}
+            }
+        }
+        public void SwitchLat(Tile center, Tile referanceTile, WallDirection referanceDirection)
+        {
+            if (center != null && TileDictionary.IsLat(center))
+            {
+                TileSet setCenter = TileDictionary.GetTileSetFromTile(center);
+                TileSet referance = TileDictionary.GetTileSetFromTile(referanceTile);
+                int result = 0;
+                if (!TileDictionary.LatEqual(setCenter.SetIndex, referance.SetIndex)) referanceDirection = WallDirection.All;
+                Pnt pos = new Pnt(center);
+                if (referanceDirection != WallDirection.SE && this[pos + Pnt.OneX] is Tile dr && TileDictionary.IsClearLat(dr.TileIndex, center.TileIndex)) result += (int)WallDirection.SE;
+                if (referanceDirection != WallDirection.NW && this[pos - Pnt.OneX] is Tile ul && TileDictionary.IsClearLat(ul.TileIndex, center.TileIndex)) result += (int)WallDirection.NW;
+                if (referanceDirection != WallDirection.SW && this[pos + Pnt.OneY] is Tile dl && TileDictionary.IsClearLat(dl.TileIndex, center.TileIndex)) result += (int)WallDirection.SW;
+                if (referanceDirection != WallDirection.NE && this[pos - Pnt.OneY] is Tile ur && TileDictionary.IsClearLat(ur.TileIndex, center.TileIndex)) result += (int)WallDirection.NE;
+
+                SetLatBase(center, setCenter, result < 0 ? 0 : result);
+                //if (!TileDictionary.IsConnLat(setCenter.SetIndex)) setCenter = TileDictionary.GetTileSetFromIndex(TileDictionary.SwitchLatIndex(setCenter.SetIndex));
+                //if (Constant.LATSystem.idxClear == setCenter.SetIndex) result = 0;
+                //center.TileIndex = setCenter.Offset + result;
+                //center.Redraw();
+            }
         }
         public void AddObjectOnTile(IMapObject src)
         {
@@ -318,6 +409,21 @@ namespace RelertSharp.MapStructure
             Y = y;
             Height = (byte)z;
         }
+        public Tile(Tile src)
+        {
+            TileIndex = src.TileIndex;
+            SubIndex = src.SubIndex;
+            X = src.X;
+            Y = src.Y;
+            Height = src.Height;
+            originalHeight = src.originalHeight;
+            isFlat = src.isFlat;
+            isFramework = src.isFramework;
+            Selected = src.Selected;
+            marked = src.marked;
+            isSelfHidden = src.isSelfHidden;
+            isExtraHidden = src.isExtraHidden;
+        }
         #endregion
 
 
@@ -342,7 +448,7 @@ namespace RelertSharp.MapStructure
                 if (IsHyte)
                 {
                     SceneObject.Dispose();
-                    GlobalVar.Engine.DrawGeneralItem(this);
+                    Engine.DrawGeneralItem(this);
                 }
                 if (isFramework) SwitchToFramework(true);
             }
@@ -356,6 +462,29 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - Tile
+        public void Redraw()
+        {
+            Vec4 color = Vec4.Zero;
+            if (SceneObject != null) color = SceneObject.ColorVector;
+            SceneObject?.Dispose();
+            Engine.DrawGeneralItem(this);
+            if (color != Vec4.Zero) SceneObject.SetColor(color);
+            if (isFlat)
+            {
+                isFlat = false;
+                FlatToGround(true);
+            }
+            if (isFramework)
+            {
+                isFramework = false;
+                SwitchToFramework(true);
+            }
+            if (Selected)
+            {
+                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
+                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
+            }
+        }
         public void Rise()
         {
             if (Height < Constant.DrawingEngine.MapMaxHeight)

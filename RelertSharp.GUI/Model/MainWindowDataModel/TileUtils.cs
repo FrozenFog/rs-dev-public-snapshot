@@ -64,5 +64,6 @@ namespace RelertSharp.GUI.Model
 
 
         public TileBrush.TileBucket Bucket { get; private set; } = new TileBrush.TileBucket();
+        public bool LatEnabled { get; set; }
     }
 }

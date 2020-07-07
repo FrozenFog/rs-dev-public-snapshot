@@ -115,6 +115,21 @@ namespace RelertSharp.MapStructure
 
 
         #region Private Methods - MapTheaterTileSet
+        private void SetLatSystem()
+        {
+            Constant.LATSystem.idxClear = general[Constant.LATSystem.sClear];
+            Constant.LATSystem.idxRough = general[Constant.LATSystem.sRough];
+            Constant.LATSystem.idxGreen = general[Constant.LATSystem.sGreen];
+            Constant.LATSystem.idxPave = general[Constant.LATSystem.sPave];
+            Constant.LATSystem.idxSand = general[Constant.LATSystem.sSand];
+
+            Constant.LATSystem.idxC2S = general[Constant.LATSystem.sClearToSand];
+            Constant.LATSystem.idxC2R = general[Constant.LATSystem.sClearToRough];
+            Constant.LATSystem.idxC2G = general[Constant.LATSystem.sClearToGreen];
+            Constant.LATSystem.idxC2P = general[Constant.LATSystem.sClearToPave];
+
+            Constant.LATSystem.SetLat();
+        }
         private void SetGlobalPal()
         {
             string palName = string.Format("iso{0}.pal", TheaterSub);
@@ -134,6 +149,7 @@ namespace RelertSharp.MapStructure
             SafeLoad(Constant.TileSetClass.Green, "RoughTile");
             SafeLoad(Constant.TileSetClass.Sand, "GreenTile");
             SafeLoad(Constant.TileSetClass.Water, "WaterSet");
+            SetLatSystem();
         }
         private void SafeLoad(string DICTkey, string generalKey)
         {
@@ -164,10 +180,68 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - MapTheaterTileSet
+        public bool LatEqual(int setIndexA, int setIndexB)
+        {
+            if (Constant.LATSystem.LatFull.Contains(setIndexA))
+            {
+                if (Constant.LATSystem.LatFull.Contains(setIndexB)) return setIndexA == setIndexB;
+                else return setIndexA == SwitchLatIndex(setIndexB);
+            }
+            else
+            {
+                if (Constant.LATSystem.LatFull.Contains(setIndexB)) return setIndexA == SwitchLatIndex(setIndexB);
+                else return setIndexA == setIndexB;
+            }
+        }
+        public bool IsLat(int tileIndex)
+        {
+            int set = GetTileSet(tileIndex).SetIndex;
+            return Constant.LATSystem.LatSet.Contains(set);
+        }
+        public bool IsLat(Tile t)
+        {
+            int set = GetTileSetIndexFromTile(t);
+            return Constant.LATSystem.LatSet.Contains(set);
+        }
+        public bool IsClearLat(int index, int centerReferance)
+        {
+            int set = GetTileSet(index).SetIndex;
+            int center = GetTileSet(centerReferance).SetIndex;
+            if (set == center && center != Constant.LATSystem.idxClear) return false;
+            if (set == Constant.LATSystem.idxClear) return true;
+            if (Constant.LATSystem.LatFull.Contains(set)) return false;
+            if (LatEqual(set, center)) return false;
+            return true;
+        }
+        public bool IsConnLat(int setIndex)
+        {
+            return Constant.LATSystem.LatConnect.Contains(setIndex);
+        }
+        public int SwitchLatIndex(int setIndex)
+        {
+            if (setIndex == Constant.LATSystem.idxSand) return Constant.LATSystem.idxC2S;
+            else if (setIndex == Constant.LATSystem.idxPave) return Constant.LATSystem.idxC2P;
+            else if (setIndex == Constant.LATSystem.idxGreen) return Constant.LATSystem.idxC2G;
+            else if (setIndex == Constant.LATSystem.idxRough) return Constant.LATSystem.idxRough;
+            else if (setIndex == Constant.LATSystem.idxC2S) return Constant.LATSystem.idxSand;
+            else if (setIndex == Constant.LATSystem.idxC2P) return Constant.LATSystem.idxPave;
+            else if (setIndex == Constant.LATSystem.idxC2R) return Constant.LATSystem.idxRough;
+            else if (setIndex == Constant.LATSystem.idxC2G) return Constant.LATSystem.idxGreen;
+            return setIndex;
+        }
+        public TileSet SwapSet(TileSet src)
+        {
+            int index = SwitchLatIndex(src.SetIndex);
+            return GetTileSetFromIndex(index);
+        }
         public TileSet GetTileSetFromIndex(int index)
         {
             if (tileSets.Keys.Contains(index)) return tileSets[index];
             return null;
+        }
+        public TileSet GetTileSetFromTile(Tile t)
+        {
+            return GetTileSet(t.TileIndex);
         }
         public int GetTileSetIndexFromTile(Tile t)
         {

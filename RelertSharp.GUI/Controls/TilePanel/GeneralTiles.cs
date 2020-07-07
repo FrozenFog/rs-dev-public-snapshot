@@ -27,6 +27,7 @@ namespace RelertSharp.GUI.Controls
         private const string TNodeShore = "\nShore";
         private const string TNodeRail = "\nRail";
         private const string TNodePavs = "\nPaves";
+        private const string TNodeFix = "\nFixes";
 
 
         private void InitializeGeneralTilePanel()
@@ -50,6 +51,7 @@ namespace RelertSharp.GUI.Controls
             TreeNode tunnel = NewNode(DICT[Constant.TileSetClass.Tunnel], TNodeTunnel);
             TreeNode shore = NewNode(DICT[Constant.TileSetClass.Shore], TNodeShore);
             TreeNode paves = NewNode(DICT[Constant.TileSetClass.Paves], TNodePavs);
+            TreeNode fix = NewNode(DICT[Constant.TileSetClass.Fixes], TNodeFix);
             foreach (TileSet set in TileDictionary.TileSets)
             {
                 if (set.AllowPlace && !set.IsFramework)
@@ -57,6 +59,7 @@ namespace RelertSharp.GUI.Controls
                     AddSetToNode(set, cliff, x => x.ClassifyAs("Cliff"));
                     AddSetToNode(set, water, x => x.ClassifyAs("Water"));
                     AddSetToNode(set, ramp, x => x.ClassifyAs("Ramp") || x.ClassifyAs("Slope"));
+                    AddSetToNode(set, fix, x => x.ClassifyAs("Fix"));
                     AddSetToNode(set, bridge, x => x.ClassifyAs("Bridge"));
                     AddSetToNode(set, road, x => x.ClassifyAs("Road") || x.ClassifyAs("Highway"));
                     AddSetToNode(set, feature, x => x.ClassifyAs("Feature") || x.ClassifyAs("Farm"));
@@ -66,7 +69,7 @@ namespace RelertSharp.GUI.Controls
                     AddSetToNode(set, paves, x => x.ClassifyAs("Pave"));
                 }
             }
-            LoadToTreeNode(other, ramp, cliff, road, paves, water, bridge, shore, feature, rail, tunnel);
+            LoadToTreeNode(other, ramp, cliff, road, fix, paves, water, bridge, shore, feature, rail, tunnel);
             trvGeneral.Nodes.Add(other);
         }
         private void AddSetToNode(TileSet src, TreeNode dest, Predicate<TileSet> predicate)

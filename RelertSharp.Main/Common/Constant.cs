@@ -35,10 +35,40 @@ namespace RelertSharp.Common
             public const string Tunnel = "TscTunnel";
             public const string Shore = "TscShore";
             public const string Paves = "TscPaves";
+            public const string Fixes = "TscFixes";
         }
         public static class LATSystem
         {
-
+            public const string sClear = "ClearTile";
+            public const string sRough = "RoughTile";
+            public const string sSand = "SandTile";
+            public const string sGreen = "GreenTile";
+            public const string sPave = "PaveTile";
+            public static int idxClear, idxRough, idxSand, idxGreen, idxPave;
+            public const string sClearToRough = "ClearToRoughLat";
+            public const string sClearToSand = "ClearToSandLat";
+            public const string sClearToGreen = "ClearToGreenLat";
+            public const string sClearToPave = "ClearToPaveLat";
+            public static int idxC2R, idxC2G, idxC2S, idxC2P;
+            public static List<int> LatSet;
+            public static List<int> LatConnect;
+            public static List<int> LatFull;
+            public static void SetLat()
+            {
+                LatSet = new List<int>()
+                {
+                    idxClear,idxRough,idxSand,idxGreen,idxPave,
+                    idxC2G,idxC2P,idxC2R,idxC2S
+                };
+                LatConnect = new List<int>()
+                {
+                    idxC2G,idxC2P,idxC2R,idxC2S
+                };
+                LatFull = new List<int>()
+                {
+                    idxClear,idxRough,idxSand,idxGreen,idxPave,
+                };
+            }
         }
         public static class MapStructure
         {
