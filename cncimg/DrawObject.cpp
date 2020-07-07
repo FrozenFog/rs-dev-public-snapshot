@@ -933,10 +933,16 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 	else// Textured vertex.fvf
 	{
 		//requires pTexture, always 2 rectangles
+
 		pDevice->GetTexture(0, &pFormerTexture);
 		pDevice->GetTexture(1, &pFormer2);
 		pDevice->GetPixelShader(&pFormerShader);
 		pDevice->GetStreamSource(0, &pFormerStream, &uOffset, &uStride);
+
+		pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+		pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
+		pDevice->SetSamplerState(1, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+		pDevice->SetSamplerState(1, D3DSAMP_MINFILTER, D3DTEXF_POINT);
 
 		pDevice->SetTexture(0, this->pTexture);
 
