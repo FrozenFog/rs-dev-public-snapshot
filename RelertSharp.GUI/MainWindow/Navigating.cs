@@ -49,6 +49,7 @@ namespace RelertSharp.GUI
             {
                 GlobalVar.Engine.MinimapMoving(e.Location);
                 pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
+                pnlMiniMap.Refresh();
             }
         }
 
