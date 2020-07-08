@@ -13,6 +13,12 @@ namespace RelertSharp.DrawingEngine.Presenting
     public class PresentBase : I3dLocateable
     {
         protected bool selected = false;
+        protected enum PresentFileTypeFlag
+        {
+            Shp,
+            Tmp,
+            Vxl
+        }
 
 
         #region Ctor - PresentBase
@@ -33,6 +39,10 @@ namespace RelertSharp.DrawingEngine.Presenting
 
 
         #region Protected - PresentBase
+        protected virtual void RemoveProp(PresentFileTypeFlag flag, int pself, int pextra = 0)
+        {
+
+        }
         protected virtual void RemoveProp(int pointer, int pshadow = 0)
         {
             if (pointer != 0) CppExtern.ObjectUtils.RemoveObjectFromScene(pointer);

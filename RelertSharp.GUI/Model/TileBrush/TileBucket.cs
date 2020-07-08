@@ -62,6 +62,7 @@ namespace RelertSharp.GUI.Model.TileBrush
 
                 }
             }
+            foreach (Tile t in result) Tiles.SwitchLat(t);
             return result;
         }
         private void InitializeInfo(TileSet set, Rectangle area)
