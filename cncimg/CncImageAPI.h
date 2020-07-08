@@ -58,6 +58,12 @@ EXPORT int WINAPI CreateCommonTextureObjectAtScene(int nFileId, D3DXVECTOR3 Posi
 EXPORT void WINAPI MakeVxlFrameShot(int nFileId, LPCSTR pFileName, int idxFrame, float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor);
 
 EXPORT void WINAPI RemoveObjectFromScene(int nID);
+EXPORT void WINAPI RemoveTmpFromScene(int nID);
+EXPORT void WINAPI RemoveVxlFromScene(int nID);
+EXPORT void WINAPI RemoveShpFromScene(int nID);
+EXPORT void WINAPI RemoveCommonFromScene(int nID);
+EXPORT void WINAPI RemoveCommonTextureFromScene(int nID);
+
 
 EXPORT void WINAPI RotateObject(int nID, float RotationX, float RotationY, float RotationZ);
 
@@ -88,7 +94,6 @@ EXPORT int WINAPI CreateRectangleObjectAtScene(D3DXVECTOR3 Position, float XLeng
 
 EXPORT bool WINAPI SetSceneFont(const char* pFontName, int nSize);
 EXPORT int WINAPI CreateStringObjectAtScene(D3DXVECTOR3 Position, DWORD dwColor, const char* pString);
-
 /*
 Obsolete apis
 */

@@ -191,3 +191,13 @@ bool CommonTextureFileClass::IsLoaded()
 {
 	return pTexture != nullptr;
 }
+
+void DrawObject::RemoveCommonTextureObject(int nID)
+{
+	for (auto& file : CommonTextureFileClass::FileObjectTable) {
+		if (!file.second)
+			continue;
+		//try find and erase
+		file.second->RemoveTransperantObject(nID);
+	}
+}
