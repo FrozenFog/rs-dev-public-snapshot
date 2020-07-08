@@ -34,7 +34,9 @@ namespace RelertSharp.GUI
         private const string BtnNameTileBucket = "bucket";
         private const string CkbNameFramework = "framework";
         private const string CkbNameFlat = "flatground";
+        private const string CkbNameLAT = "lat";
         private readonly string[] ToolsButton = { BtnNameArrow, BtnNameBrush, BtnNameMove, BtnNameSelect, BtnNameAttribute, BtnNameTileBrush, BtnNameTileSele, BtnNameTileWand, BtnNameTileBucket };
+
 
         private void ToolBoxClick(ToolStripButton btn)
         {
@@ -121,25 +123,25 @@ namespace RelertSharp.GUI
         }
         private void ToolBtnCheckClick(object sender, EventArgs e)
         {
-            ToolStripButton btn = sender as ToolStripButton;
-            string btnName = btn.Tag.ToString();
-            switch (btnName)
+            if (drew)
             {
-                case CkbNameFramework:
-                    if (drew)
-                    {
+                ToolStripButton btn = sender as ToolStripButton;
+                string btnName = btn.Tag.ToString();
+                switch (btnName)
+                {
+                    case CkbNameFramework:
                         SwitchToFramework(btn.Checked);
                         pnlTile.SetFramework(btn.Checked);
-                    }
-                    else btn.Checked = false;
-                    break;
-                case CkbNameFlat:
-                    if (drew)
-                    {
+                        break;
+                    case CkbNameFlat:
                         SwitchToFlatGround(btn.Checked);
                         pnlTile.SetFlat(btn.Checked);
-                    }
-                    break;
+                        break;
+                    case CkbNameLAT:
+                        pnlTile.Result.SetLatEnable(btn.Checked);
+                        Current.Bucket.SetLAT(btn.Checked);
+                        break;
+                }
             }
         }
 

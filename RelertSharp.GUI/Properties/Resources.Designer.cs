@@ -183,6 +183,16 @@ namespace RelertSharp.GUI.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap btnBucket {
+            get {
+                object obj = ResourceManager.GetObject("btnBucket", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap btnFlat {
             get {
                 object obj = ResourceManager.GetObject("btnFlat", resourceCulture);
@@ -206,6 +216,16 @@ namespace RelertSharp.GUI.Properties {
         internal static System.Drawing.Bitmap btnIsoSelecting {
             get {
                 object obj = ResourceManager.GetObject("btnIsoSelecting", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap btnLat {
+            get {
+                object obj = ResourceManager.GetObject("btnLat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

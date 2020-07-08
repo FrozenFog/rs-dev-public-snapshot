@@ -19,7 +19,7 @@ namespace RelertSharp.GUI.Model.TileBrush
         private int numWidth, numHeight;
         private int increX, increY;
         private int maxX, maxY;
-        private bool isFramework, isFlat;
+        private bool isFramework, isFlat, isLat = true;
         public TileBucket() { }
 
 
@@ -30,6 +30,14 @@ namespace RelertSharp.GUI.Model.TileBrush
             maxX = cell.X + area.Width;
             maxY = cell.Y + area.Height;
             return Fill(new Pnt(area.X, area.Y), cell.Z);
+        }
+        public void SetFramework(bool enable)
+        {
+            isFramework = enable;
+        }
+        public void SetLAT(bool enable)
+        {
+            isLat = enable;
         }
 
 
@@ -62,7 +70,7 @@ namespace RelertSharp.GUI.Model.TileBrush
 
                 }
             }
-            foreach (Tile t in result) Tiles.SwitchLat(t);
+            if (isLat) foreach (Tile t in result) Tiles.SwitchLat(t);
             return result;
         }
         private void InitializeInfo(TileSet set, Rectangle area)

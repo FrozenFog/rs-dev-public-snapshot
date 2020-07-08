@@ -570,6 +570,8 @@
     <None Include="Resources\tileSele.png" />
     <None Include="Resources\dflat.png" />
     <None Include="Resources\wand.png" />
+    <None Include="Resources\lat.png" />
+    <None Include="Resources\bucket.png" />
     <Content Include="rslogo.ico" />
   </ItemGroup>
   <ItemGroup>
