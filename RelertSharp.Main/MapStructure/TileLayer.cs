@@ -196,7 +196,11 @@ namespace RelertSharp.MapStructure
                 TileSet setCenter = TileDictionary.GetTileSetFromTile(center);
                 TileSet referance = TileDictionary.GetTileSetFromTile(referanceTile);
                 int result = 0;
-                if (!TileDictionary.LatEqual(setCenter.SetIndex, referance.SetIndex)) referanceDirection = WallDirection.All;
+                if (!TileDictionary.LatEqual(setCenter.SetIndex, referance.SetIndex))
+                {
+                    result = (int)referanceDirection;
+                    //referanceDirection = WallDirection.All;
+                }
                 Pnt pos = new Pnt(center);
                 if (referanceDirection != WallDirection.SE && this[pos + Pnt.OneX] is Tile dr && TileDictionary.IsClearLat(dr.TileIndex, center.TileIndex)) result += (int)WallDirection.SE;
                 if (referanceDirection != WallDirection.NW && this[pos - Pnt.OneX] is Tile ul && TileDictionary.IsClearLat(ul.TileIndex, center.TileIndex)) result += (int)WallDirection.NW;

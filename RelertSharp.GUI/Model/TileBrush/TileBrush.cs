@@ -144,6 +144,8 @@ namespace RelertSharp.GUI.Model.TileBrush
         {
             foreach (Tile t in body) t.Dispose();
             foreach (Tile t in under) t.RevealAllTileImg();
+            foreach (Tile t in surrounding) t.Dispose();
+            foreach (Tile t in surroundUnder) t.RevealAllTileImg();
             brushDisposed = true;
         }
         public void AddTileAt(I3dLocateable cell)

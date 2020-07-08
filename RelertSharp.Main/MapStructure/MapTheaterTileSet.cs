@@ -207,10 +207,12 @@ namespace RelertSharp.MapStructure
         {
             int set = GetTileSet(index).SetIndex;
             int center = GetTileSet(centerReferance).SetIndex;
+            bool latEqual = LatEqual(set, center);
             if (set == center && center != Constant.LATSystem.idxClear) return false;
             if (set == Constant.LATSystem.idxClear) return true;
-            if (Constant.LATSystem.LatFull.Contains(set)) return false;
-            if (LatEqual(set, center)) return false;
+            //if (Constant.LATSystem.LatFull.Contains(set)) return false;
+            if (latEqual) return false;
+            if (Constant.LATSystem.LatSet.Contains(set) && !latEqual) return true;
             return true;
         }
         public bool IsConnLat(int setIndex)

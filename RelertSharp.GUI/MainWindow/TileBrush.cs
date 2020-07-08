@@ -20,10 +20,12 @@ namespace RelertSharp.GUI
                 pnlTile.Result.Reload(set, index);
             }
         }
+        private Vec3 prevMoveCellTileBrush = Vec3.Zero;
         private void MoveTileBrushObjectTo(Vec3 cell)
         {
-            if (cell != Vec3.Zero)
+            if (cell != Vec3.Zero && prevMoveCellTileBrush != cell)
             {
+                prevMoveCellTileBrush = cell;
                 pnlTile.Result.MoveTo(cell.To3dLocateable());
                 Engine.Refresh();
             }
