@@ -48,7 +48,13 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             if (!Disposed)
             {
-                foreach (int p in Pointers) RemoveProp(p);
+                if (VoxelTurret)
+                {
+                    RemoveProp(PresentFileTypeFlag.Vxl, pTurretAnim, pTurretBarl);
+                    pTurretAnim = 0;
+                    pTurretBarl = 0;
+                }
+                foreach (int p in Pointers) RemoveProp(PresentFileTypeFlag.Shp, p);
                 Disposed = true;
             }
         }

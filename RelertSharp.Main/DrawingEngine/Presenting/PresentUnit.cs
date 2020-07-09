@@ -24,9 +24,11 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             if (!Disposed)
             {
-                RemoveProp(pBarrel);
-                RemoveProp(pSelf);
-                RemoveProp(pTurret);
+
+                if (IsVxl) RemoveProp(PresentFileTypeFlag.Vxl, pSelf);
+                else RemoveProp(PresentFileTypeFlag.Shp, pSelf);
+                RemoveProp(PresentFileTypeFlag.Vxl, pBarrel);
+                RemoveProp(PresentFileTypeFlag.Vxl, pTurret);
                 Disposed = true;
             }
         }

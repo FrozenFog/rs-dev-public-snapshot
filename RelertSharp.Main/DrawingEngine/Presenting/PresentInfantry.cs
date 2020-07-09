@@ -23,7 +23,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             if (!Disposed)
             {
-                RemoveProp(pSelf, pSelfShadow);
+                RemoveProp(PresentFileTypeFlag.Shp, pSelf, pSelfShadow);
                 Disposed = true;
             }
         }

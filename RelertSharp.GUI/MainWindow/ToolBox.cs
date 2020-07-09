@@ -132,6 +132,7 @@ namespace RelertSharp.GUI
                     case CkbNameFramework:
                         SwitchToFramework(btn.Checked);
                         pnlTile.SetFramework(btn.Checked);
+                        Current.Bucket.SetFramework(btn.Checked);
                         break;
                     case CkbNameFlat:
                         SwitchToFlatGround(btn.Checked);

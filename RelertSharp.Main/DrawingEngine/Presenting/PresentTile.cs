@@ -57,10 +57,10 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             if (!Disposed)
             {
-                RemoveProp(pSelf);
-                RemoveProp(pExtra);
-                RemoveProp(pFramework);
-                RemoveProp(pExFramework);
+                RemoveProp(PresentFileTypeFlag.Tmp, pSelf);
+                RemoveProp(PresentFileTypeFlag.Tmp, pExtra);
+                RemoveProp(PresentFileTypeFlag.Tmp, pFramework);
+                RemoveProp(PresentFileTypeFlag.Tmp, pExFramework);
                 Disposed = true;
             }
         }

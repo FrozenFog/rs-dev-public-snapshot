@@ -23,10 +23,10 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             if (!Disposed)
             {
-                RemoveProp(pSelf, pSelfShadow);
+                RemoveProp(PresentFileTypeFlag.Shp, pSelf, pSelfShadow);
                 foreach (int id in WaypointNums)
                 {
-                    RemoveProp(id);
+                    RemoveProp(PresentFileTypeFlag.Shp, id);
                 }
                 Disposed = true;
             }

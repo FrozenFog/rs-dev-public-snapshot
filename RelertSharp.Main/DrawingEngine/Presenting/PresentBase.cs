@@ -17,7 +17,9 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             Shp,
             Tmp,
-            Vxl
+            Vxl,
+            CommonLine,
+            CommonPicture
         }
 
 
@@ -41,12 +43,29 @@ namespace RelertSharp.DrawingEngine.Presenting
         #region Protected - PresentBase
         protected virtual void RemoveProp(PresentFileTypeFlag flag, int pself, int pextra = 0)
         {
-
-        }
-        protected virtual void RemoveProp(int pointer, int pshadow = 0)
-        {
-            if (pointer != 0) CppExtern.ObjectUtils.RemoveObjectFromScene(pointer);
-            if (pshadow != 0) CppExtern.ObjectUtils.RemoveObjectFromScene(pshadow);
+            switch (flag)
+            {
+                case PresentFileTypeFlag.Shp:
+                    if (pself != 0) CppExtern.ObjectUtils.RemoveShpFromScene(pself);
+                    if (pextra != 0) CppExtern.ObjectUtils.RemoveShpFromScene(pself);
+                    break;
+                case PresentFileTypeFlag.Vxl:
+                    if (pself != 0) CppExtern.ObjectUtils.RemoveVxlFromScene(pself);
+                    if (pextra != 0) CppExtern.ObjectUtils.RemoveVxlFromScene(pself);
+                    break;
+                case PresentFileTypeFlag.Tmp:
+                    if (pself != 0) CppExtern.ObjectUtils.RemoveTmpFromScene(pself);
+                    if (pextra != 0) CppExtern.ObjectUtils.RemoveTmpFromScene(pself);
+                    break;
+                case PresentFileTypeFlag.CommonLine:
+                    if (pself != 0) CppExtern.ObjectUtils.RemoveCommonFromScene(pself);
+                    if (pextra != 0) CppExtern.ObjectUtils.RemoveCommonFromScene(pself);
+                    break;
+                case PresentFileTypeFlag.CommonPicture:
+                    if (pself != 0) CppExtern.ObjectUtils.RemoveCommonTextureFromScene(pself);
+                    if (pextra != 0) CppExtern.ObjectUtils.RemoveCommonTextureFromScene(pself);
+                    break;
+            }
         }
         protected virtual void SetColor(int pointer, Vec4 color)
         {

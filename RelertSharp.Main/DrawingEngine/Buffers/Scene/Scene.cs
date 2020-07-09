@@ -122,7 +122,7 @@ namespace RelertSharp.DrawingEngine
             {
                 foreach (int line in RectangleLines)
                 {
-                    if (line != 0) CppExtern.ObjectUtils.RemoveObjectFromScene(line);
+                    if (line != 0) CppExtern.ObjectUtils.RemoveCommonFromScene(line);
                 }
                 RectangleLines.Clear();
             }

@@ -16,6 +16,7 @@ namespace RelertSharp.MapStructure
     {
         private List<string> tileNameIndex = new List<string>();
         private Dictionary<int, TileSet> tileSets = new Dictionary<int, TileSet>();
+        private Dictionary<int, int> tileIndexToTileSet = new Dictionary<int, int>();
         private Dictionary<string, int> general = new Dictionary<string, int>();
         private readonly List<string> _subs = new List<string>(){ "tem", "des", "urb", "ubn", "sno", "lun" };
 
@@ -94,7 +95,6 @@ namespace RelertSharp.MapStructure
                 for (int j = 1;j<_numsInSet + 1; j++)
                 {
                     string filename = string.Format("{0}{1:D2}", _tileFileName, j);
-                    current++;
                     int cap = 0;
                     for (char c = 'a'; ; c++)
                     {
@@ -107,6 +107,8 @@ namespace RelertSharp.MapStructure
                     }
                     set.AddTile(cap);
                     tileNameIndex.Add(_tileFileName.ToLower() + string.Format("{0:D2}", j) + "." + TheaterSub);
+                    tileIndexToTileSet[current] = i;
+                    current++;
                 }
                 tileSets[i] = set;
             }
@@ -160,14 +162,15 @@ namespace RelertSharp.MapStructure
             if (tileIndex == 65535 || tileIndex >= tileNameIndex.Count) tileIndex = 0;
             if (tileIndex != 0)
             {
-                for (int i = 0; i < tileSets.Count; i++)
-                {
-                    if (tileIndex < tileSets.ElementAt(i).Value.Offset)
-                    {
-                        return tileSets.ElementAt(i - 1).Value;
-                    }
-                }
-                return tileSets.Last().Value;
+                return tileSets[tileIndexToTileSet[tileIndex]];
+                //for (int i = 0; i < tileSets.Count; i++)
+                //{
+                //    if (tileIndex < tileSets.ElementAt(i).Value.Offset)
+                //    {
+                //        return tileSets.ElementAt(i - 1).Value;
+                //    }
+                //}
+                //return tileSets.Last().Value;
             }
             return tileSets[0];
         }
