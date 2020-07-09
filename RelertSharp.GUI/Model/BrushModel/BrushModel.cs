@@ -58,6 +58,7 @@ namespace RelertSharp.GUI.Model.BrushModel
             }
             GlobalVar.Engine.DrawBrushObject(BrushObject);
             GlobalVar.Engine.SetObjectLightningStandalone(BrushObject.SceneObject);
+            GlobalVar.Engine.UnmarkBuildingShape();
         }
         public void Reload(string regname, MapObjectType type, ICombatObject referance = null, bool reserveOriginal = false, bool usePrevPos = false)
         {
@@ -92,6 +93,7 @@ namespace RelertSharp.GUI.Model.BrushModel
             if (referance != null) (BrushObject as ICombatObject).ApplyAttributeFrom(referance);
             GlobalVar.Engine.DrawBrushObject(BrushObject);
             GlobalVar.Engine.SetObjectLightningStandalone(BrushObject.SceneObject);
+            GlobalVar.Engine.UnmarkBuildingShape();
         }
         public void MoveBrushObjectTo(I3dLocateable pos)
         {

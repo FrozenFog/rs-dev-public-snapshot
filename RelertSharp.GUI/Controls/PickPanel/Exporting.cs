@@ -70,6 +70,12 @@ namespace RelertSharp.GUI.Controls
         }
 
 
-        public bool CanBuild { get { return canBuild && !brush.IsInvalidItem; } }
+        public bool CanBuild
+        {
+            get
+            {
+                return canBuild && !brush.IsInvalidItem;
+            }
+        }
     }
 }
