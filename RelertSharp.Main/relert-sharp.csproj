@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8597C2BD-5421-4A66-958E-240768EA8A9A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>relert_sharp</RootNamespace>
+    <AssemblyName>relert-sharp</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseLowerTriangle|AnyCPU'">
+    <OutputPath>bin\ReleaseLowerTriangle\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="OpenTK, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTK.3.1.0\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTK.GLControl.3.1.0\lib\net20\OpenTK.GLControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Constant.cs" />
+    <Compile Include="Common\Enums.cs" />
+    <Compile Include="Common\GlobalVar.cs" />
+    <Compile Include="Common\RSConfig.cs" />
+    <Compile Include="DrawingEngine\DisplayingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DrawingEngine\DrawingDevice.cs" />
+    <Compile Include="Encoding\AudEncoding.cs" />
+    <Compile Include="Encoding\Blowfish.cs" />
+    <Compile Include="Encoding\CsfEncoding.cs" />
+    <Compile Include="Encoding\Format80.cs" />
+    <Compile Include="Encoding\CRC.cs" />
+    <Compile Include="Encoding\MiniLZO.cs" />
+    <Compile Include="Encoding\PackEncoding.cs" />
+    <Compile Include="Encoding\ShpEncoding.cs" />
+    <Compile Include="Encoding\WSKeyCalc.cs" />
+    <Compile Include="FileSystem\AudFile.cs" />
+    <Compile Include="FileSystem\CsfFile.cs" />
+    <Compile Include="FileSystem\HvaFile.cs" />
+    <Compile Include="FileSystem\IdxBagFile.cs" />
+    <Compile Include="IniSystem\INIEntity.cs" />
+    <Compile Include="IniSystem\INIFile.cs" />
+    <Compile Include="IniSystem\INIPair.cs" />
+    <Compile Include="FileSystem\LangFile.cs" />
+    <Compile Include="FileSystem\MapFile.cs" />
+    <Compile Include="FileSystem\MixFile.cs" />
+    <Compile Include="FileSystem\PalFile.cs" />
+    <Compile Include="FileSystem\ShpFile.cs" />
+    <Compile Include="FileSystem\TextFile.cs" />
+    <Compile Include="FileSystem\TmpFile.cs" />
+    <Compile Include="FileSystem\VirtualDir.cs" />
+    <Compile Include="FileSystem\VxlFile.cs" />
+    <Compile Include="FileSystem\WavFile.cs" />
+    <Compile Include="IniSystem\Rules.cs" />
+    <Compile Include="IniSystem\TechnoPair.cs" />
+    <Compile Include="Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainEventHandler\MainPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MapStructure\Logic\AITrigger.cs" />
+    <Compile Include="MapStructure\Logic\Country.cs" />
+    <Compile Include="MapStructure\Logic\House.cs" />
+    <Compile Include="MapStructure\Logic\TriggerDescription.cs" />
+    <Compile Include="MapStructure\MapTheaterTileSet.cs" />
+    <Compile Include="MapStructure\Objects\AircraftLayer.cs" />
+    <Compile Include="MapStructure\Objects\InfantryLayer.cs" />
+    <Compile Include="MapStructure\Logic\Action.cs" />
+    <Compile Include="MapStructure\Logic\Event.cs" />
+    <Compile Include="MapStructure\Logic\LocalVar.cs" />
+    <Compile Include="MapStructure\Logic\LogicCollection.cs" />
+    <Compile Include="MapStructure\Logic\Tag.cs" />
+    <Compile Include="MapStructure\Logic\Taskforce.cs" />
+    <Compile Include="MapStructure\Logic\Team.cs" />
+    <Compile Include="MapStructure\Logic\TeamLogicCollection.cs" />
+    <Compile Include="MapStructure\Logic\TeamScript.cs" />
+    <Compile Include="MapStructure\Logic\Trigger.cs" />
+    <Compile Include="MapStructure\Map.cs" />
+    <Compile Include="MapStructure\MapInfo.cs" />
+    <Compile Include="MapStructure\Objects\ObjectBase.cs" />
+    <Compile Include="MapStructure\OverlayLayer.cs" />
+    <Compile Include="MapStructure\Objects\StructureLayer.cs" />
+    <Compile Include="MapStructure\Points\BaseNode.cs" />
+    <Compile Include="MapStructure\Points\CellTag.cs" />
+    <Compile Include="MapStructure\Points\PointBase.cs" />
+    <Compile Include="MapStructure\Points\Smudge.cs" />
+    <Compile Include="MapStructure\Points\Waypoint.cs" />
+    <Compile Include="MapStructure\Points\TerrainLayer.cs" />
+    <Compile Include="MapStructure\TileLayer.cs" />
+    <Compile Include="MapStructure\Objects\UnitLayer.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubWindows\LogicEditor\EventHandler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\INIComparator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\INIComparator.Designer.cs">
+      <DependentUpon>INIComparator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\LogicEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\LogicEditor.Designer.cs">
+      <DependentUpon>LogicEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\StaticHelper.cs" />
+    <Compile Include="Utils\Colors.cs" />
+    <Compile Include="FileSystem\BaseFile.cs" />
+    <Compile Include="Common\RSException.cs" />
+    <Compile Include="Utils\Interpreter.cs" />
+    <Compile Include="Utils\Lang.cs" />
+    <Compile Include="Utils\Misc.cs" />
+    <Compile Include="_run.cs" />
+    <EmbeddedResource Include="Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="SubWindows\INIComparator.resx">
+      <DependentUpon>INIComparator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\LogicEditor.resx">
+      <DependentUpon>LogicEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="OpenTK.dll.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UtilLib\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -6,6 +6,7 @@
 #include "VPLFile.h"
 #include "ShpFileClass.h"
 #include "Misc.h"
+#include "CommonTextureFileClass.h"
 
 #include "SceneClass.h"
 
