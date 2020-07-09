@@ -36,7 +36,6 @@ namespace RelertSharp.GUI
             lw.Show();
             lw.Refresh();
             lw.Begin();
-            GlobalVar.GlobalDir.BeginPreload();
             DrawTiles();
             DrawOverlays();
             DrawSmudges();
@@ -44,7 +43,6 @@ namespace RelertSharp.GUI
             DrawObjects();
             DrawWaypoints();
             DrawCelltags();
-            GlobalVar.GlobalDir.DisposePreloaded();
             lw.EndDrawing();
             lw.Close();
             worker.ReportProgress(1);

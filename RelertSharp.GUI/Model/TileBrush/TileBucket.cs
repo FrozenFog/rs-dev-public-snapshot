@@ -43,7 +43,6 @@ namespace RelertSharp.GUI.Model.TileBrush
 
         private IEnumerable<Tile> Fill(I2dLocateable beginPos, int height)
         {
-            GlobalDir.BeginPreload();
             List<Tile> result = new List<Tile>();
             for (int j = beginPos.Y; j < maxY; j += increY)
             {
@@ -72,7 +71,6 @@ namespace RelertSharp.GUI.Model.TileBrush
                 }
             }
             if (isLat) foreach (Tile t in result) Tiles.SwitchLat(t);
-            GlobalDir.DisposePreloaded();
             return result;
         }
         private void InitializeInfo(TileSet set, Rectangle area)

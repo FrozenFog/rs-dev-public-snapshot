@@ -20,8 +20,6 @@ namespace RelertSharp.FileSystem
 
         private Dictionary<uint, VirtualFileInfo> fileOrigin = new Dictionary<uint, VirtualFileInfo>();
         private Dictionary<string, MixTatics> mixTatics = new Dictionary<string, MixTatics>();
-        private Dictionary<string, byte[]> preLoadMixes = new Dictionary<string, byte[]>();
-        private bool preloadInitialized = false;
 
 
         #region Ctor - VirtualDir
@@ -65,7 +63,8 @@ namespace RelertSharp.FileSystem
                         if (GlobalConfig.CiphedMix.Contains(mixname)) mx = new MixFile(GetRawByte(mixname + ".mix"), mixname + ".mix", MixTatics.Ciphed);
                         else if (GlobalConfig.OldMix.Contains(mixname)) mx = new MixFile(GetRawByte(mixname + ".mix"), mixname + ".mix", MixTatics.Old);
                         else mx = new MixFile(GetRawByte(mixname + ".mix"), mixname + ".mix", MixTatics.Plain);
-                        AddMixDir(mx, true, GetParentPath(mixname + ".mix"));
+                        VirtualFileInfo info = fileOrigin[CRC.GetCRC(mixname + ".mix")];
+                        AddMixDir(mx, true, GetParentPath(mixname + ".mix"), info.FileOffset);
                         mx.Dispose();
                     }
                 }
@@ -85,28 +84,6 @@ namespace RelertSharp.FileSystem
                 bw.Flush();
                 bw.Dispose();
                 dump.Dispose();
-            }
-        }
-        public void BeginPreload()
-        {
-            if (!preloadInitialized)
-            {
-                Log.Write("Begin Preloading mix");
-                foreach (string name in GlobalConfig.PreloadMixes)
-                {
-                    string filename = name + ".mix";
-                    if (HasFile(filename)) preLoadMixes[name] = GetRawByte(filename);
-                }
-                preloadInitialized = true;
-            }
-        }
-        public void DisposePreloaded()
-        {
-            if (preloadInitialized)
-            {
-                preLoadMixes.Clear();
-                GC.Collect();
-                preloadInitialized = false;
             }
         }
         public Dictionary<string, Image> GetPcxImages(IEnumerable<string> src)
@@ -144,7 +121,7 @@ namespace RelertSharp.FileSystem
             }
             return null;
         }
-        public void AddMixDir(MixFile _mixfile, bool _isSub = false, string _parentMixPath = "")
+        public void AddMixDir(MixFile _mixfile, bool _isSub = false, string _parentMixPath = "", int parentOffset = 0)
         {
             if (_isSub) Log.Write(string.Format("Loading mix {0} from {1}", _mixfile.FileName, _parentMixPath));
             mixTatics[_mixfile.FileName] = _mixfile.Tatics;
@@ -153,7 +130,7 @@ namespace RelertSharp.FileSystem
                 VirtualFileInfo info;
                 if (_isSub)
                 {
-                    info = new VirtualFileInfo(_mixfile.FilePath, _mixfile.FileName, ent, _mixfile.BodyPos, _parentMixPath);
+                    info = new VirtualFileInfo(_mixfile.FilePath, _mixfile.FileName, ent, _mixfile.BodyPos + parentOffset, _parentMixPath);
                 }
                 else info = new VirtualFileInfo(_mixfile.FilePath, _mixfile.FileName, ent, _mixfile.BodyPos);
                 fileOrigin[ent.fileID] = info;
@@ -207,41 +184,23 @@ namespace RelertSharp.FileSystem
                 throw new RSException.MixEntityNotFoundException("unknown mix", _fullName);
             }
             VirtualFileInfo info = fileOrigin[fileID];
-            if (!info.HasParent)
+            if (info.HostCiphed)
             {
-                if (info.HostCiphed)
-                {
-                    MixFile mx = new MixFile(info.MixPath);
-                    byte[] b = mx.GetByte(info);
-                    mx.Dispose();
-                    return b;
-                }
-                else
-                {
-                    FileStream fs = new FileStream(info.MixPath, FileMode.Open, FileAccess.Read);
-                    fs.Seek(info.FileOffset, SeekOrigin.Begin);
-                    BinaryReader br = new BinaryReader(fs);
-                    byte[] result = br.ReadBytes(info.FileSize);
-                    br.Dispose();
-                    fs.Dispose();
-                    return result;
-                }
+                MixFile mx = new MixFile(info.MixPath);
+                byte[] b = mx.GetByte(info);
+                mx.Dispose();
+                return b;
             }
             else
             {
-                byte[] data;
-                if (preloadInitialized && preLoadMixes.Keys.Contains(info.MixName)) data = preLoadMixes[info.MixName];
-                else data = GetRawByte(info.MixName + ".mix");
-                byte[] result = new byte[info.FileSize];
-                Array.Copy(data, info.FileOffset, result, 0, info.FileSize);
+                string mxPath = info.HasParent ? info.ParentPath : info.MixPath;
+                FileStream fs = new FileStream(mxPath, FileMode.Open, FileAccess.Read);
+                fs.Seek(info.FileOffset, SeekOrigin.Begin);
+                BinaryReader br = new BinaryReader(fs);
+                byte[] result = br.ReadBytes(info.FileSize);
+                br.Dispose();
+                fs.Dispose();
                 return result;
-                //MemoryStream mix = new MemoryStream(data);
-                //mix.Seek(info.FileOffset, SeekOrigin.Begin);
-                //BinaryReader br = new BinaryReader(mix);
-                //byte[] result = br.ReadBytes(info.FileSize);
-                //br.Dispose();
-                //mix.Dispose();
-                //return result;
             }
         }
         public short GetShpFrameCount(string filename)

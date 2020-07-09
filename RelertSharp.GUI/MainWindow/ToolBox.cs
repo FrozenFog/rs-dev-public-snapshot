@@ -55,7 +55,6 @@ namespace RelertSharp.GUI
                 if (btnName != BtnNameTileBrush)
                 {
                     pnlTile.Result?.Dispose();
-                    GlobalVar.GlobalDir.DisposePreloaded();
                 }
                 GlobalVar.Engine.Refresh();
             }
@@ -90,7 +89,6 @@ namespace RelertSharp.GUI
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.TileBrush;
                     pnlPick.Visible = false;
                     pnlTile.Visible = true;
-                    GlobalVar.GlobalDir.BeginPreload();
                     GlobalVar.Engine.UnmarkAllTile();
                     GlobalVar.Engine.Refresh();
                     break;
