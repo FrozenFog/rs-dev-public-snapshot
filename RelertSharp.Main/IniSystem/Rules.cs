@@ -447,6 +447,11 @@ namespace RelertSharp.IniSystem
                     if (string.IsNullOrEmpty(AircraftRoots[planning]) && ent["Factory"] == "AircraftType") AircraftRoots[planning] = regname;
                     return planning;
                 }
+                else
+                {
+                    List<string> conyards = this["AI"].ParseStringList("BuildConst").ToList(); ;
+                    if (conyards.Contains(regname)) return conyards.IndexOf(regname);
+                }
             }
 
             //guess by root
