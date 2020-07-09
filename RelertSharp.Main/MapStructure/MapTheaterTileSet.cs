@@ -270,7 +270,9 @@ namespace RelertSharp.MapStructure
                     string name = filename.Substring(0, filename.Length - 3) + sub;
                     if (GlobalDir.HasFile(name)) return name;
                 }
-                throw new RSException.InvalidFileException(filename);
+                Log.Write(string.Format("Framework name {0} not found!", filename));
+                return string.Empty;
+                //throw new RSException.InvalidFileException(filename);
             }
         }
         public string GetFrameworkFromTile(Tile t, out bool isHyte)

@@ -245,7 +245,7 @@ namespace RelertSharp.DrawingEngine
         #region Draw - Private
         private bool DrawWaypointNum(PresentMisc dest, string waypointNum, Vec3 pos)
         {
-            int width = waypointNum.Count() * 12;
+            int width = waypointNum.Count() * Constant.DrawingEngine.WaypointNumWidth;
             pos = MoveVertical(MoveHorizontal(pos, -1 * (width / 2 - 2)), 10);
             bool result = false;
             foreach (char c in waypointNum)
@@ -254,7 +254,7 @@ namespace RelertSharp.DrawingEngine
                 int id = RenderAndPresent(Buffer.WaypointNum[num], pos.Rise(), num, _white, pPalSystem, ShpFlatType.Vertical, Vec3.Zero);
                 result = result | (id != 0);
                 dest.WaypointNums.Add(id);
-                pos = MoveHorizontal(pos, 12);
+                pos = MoveHorizontal(pos, Constant.DrawingEngine.WaypointNumWidth);
             }
             return result;
         }

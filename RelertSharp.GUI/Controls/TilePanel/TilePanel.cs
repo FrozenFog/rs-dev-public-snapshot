@@ -57,7 +57,11 @@ namespace RelertSharp.GUI.Controls
         }
         private void LoadTileSetToFlp(FlowLayoutPanel dest, TileSet set, MouseEventHandler dele)
         {
-            if (set == null) return;
+            if (set == null)
+            {
+                dest.Controls.Clear();
+                return;
+            }
             GlobalDir.BeginPreload();
             dest.Controls.Clear();
             //imgAllTiles.Images.Clear();
@@ -71,6 +75,7 @@ namespace RelertSharp.GUI.Controls
             foreach (string filename in set.GetNames())
             {
                 string name = TileDictionary.GetFrameworkNameSafe(filename);
+                if (string.IsNullOrEmpty(name)) continue;
                 TmpFile tmp = new TmpFile(GlobalDir.GetRawByte(name), name);
                 tmp.LoadColor(TilePalette);
                 sz = Utils.Misc.GetMaxSize(sz, tmp.AssembleImage.Size);

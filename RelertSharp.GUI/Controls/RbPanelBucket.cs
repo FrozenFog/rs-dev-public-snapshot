@@ -44,8 +44,8 @@ namespace RelertSharp.GUI.Controls
                 if (set != Language.DICT[Constant.TileSetClass.Ramp])
                 {
                     int index = TileDictionary.GeneralTilesets[set];
-                    string setname = TileDictionary.GetTileSetFromIndex(index).SetName;
-                    objs.Add(new SetCombo(setname, TileDictionary.GeneralTilesets[set]));
+                    TileSet tileset = TileDictionary.GetTileSetFromIndex(index);
+                    if (tileset != null) objs.Add(new SetCombo(tileset.SetName, TileDictionary.GeneralTilesets[set]));
                 }
             }
             GuiUtils.LoadToObjectCollection(cbbFillBy, objs);

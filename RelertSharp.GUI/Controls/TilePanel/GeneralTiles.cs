@@ -94,11 +94,11 @@ namespace RelertSharp.GUI.Controls
                     int index = int.Parse(node.Name);
                     currentGeneralTileset = TileDictionary.GetTileSetFromIndex(index);
                     LoadTileSetToFlp(flpGeneral, currentGeneralTileset, GeneralPbxClicked);
-                    if (nodenameNow == node.Name)
-                    {
-                        flpGeneral.VerticalScroll.Value = scroll;
-                        GeneralPbxClicked(flpGeneral.Controls[pbxIndexGeneral], new EventArgs());
-                    }
+                    //if (nodenameNow == node.Name)
+                    //{
+                    //    flpGeneral.VerticalScroll.Value = scroll;
+                    //    GeneralPbxClicked(flpGeneral.Controls[pbxIndexGeneral], new EventArgs());
+                    //}
                     nodenameNow = node.Name;
                 }
             }

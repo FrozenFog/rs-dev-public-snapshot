@@ -63,8 +63,9 @@ namespace RelertSharp.DrawingEngine
             Pnt p = Pnt.FromPoint(src);
             Vec3 pos = new Vec3();
             CppExtern.Scene.ClientPositionToScenePosition(p, ref pos);
-            pos += _NormTileVec * Constant.DrawingEngine.MapMaxHeight;
-            for (int height = 0; height < Constant.DrawingEngine.MapMaxHeight * 2; height++)
+            pos.Y += 8;
+            pos += _NormTileVec * Constant.DrawingEngine.MapMaxHeightDrawing;
+            for (int height = 0; height < Constant.DrawingEngine.MapMaxHeightDrawing * 2; height++)
             {
                 Vec3 tilepos = ScenePosToCoord(pos);
                 if (_cellFindingReferance.HasTileOn(tilepos)) return tilepos;
@@ -83,10 +84,11 @@ namespace RelertSharp.DrawingEngine
             Pnt p = Pnt.FromPoint(src);
             Vec3 scenepos = new Vec3();
             CppExtern.Scene.ClientPositionToScenePosition(p, ref scenepos);
-            scenepos += _NormTileVec * Constant.DrawingEngine.MapMaxHeight;
+            scenepos.Y += 8;
+            scenepos += _NormTileVec * Constant.DrawingEngine.MapMaxHeightDrawing;
             int height = 0;
             Vec3 tileCoord = new Vec3();
-            for (; height < Constant.DrawingEngine.MapMaxHeight * 2; height++)
+            for (; height < Constant.DrawingEngine.MapMaxHeightDrawing * 2; height++)
             {
                 tileCoord = ScenePosToCoord(scenepos);
                 if (_cellFindingReferance.HasTileOn(tileCoord))
@@ -94,7 +96,7 @@ namespace RelertSharp.DrawingEngine
                     infsubcell = GetSubCellFromCoord(scenepos, tileCoord.To2dLocateable());
                     return tileCoord;
                 }
-                scenepos -= _NormTileVec;
+                scenepos -= _NormTileVec / 2f;
             }
             infsubcell = -1;
             return Vec3.Zero;

@@ -41,7 +41,7 @@ namespace RelertSharp.MapStructure
         }
         public string GetBaseHeightName(int height)
         {
-            return string.Format(FileName, height, data[height].Suff);
+            return string.Format(FileName, height, "");
         }
         public void SetMaxIndex(int maxCount)
         {
