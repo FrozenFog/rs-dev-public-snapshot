@@ -6,6 +6,7 @@
 #include "VPLFile.h"
 #include "ShpFileClass.h"
 #include "Misc.h"
+#include "CommonTextureFileClass.h"
 
 #include "SceneClass.h"
 
@@ -115,7 +116,7 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	float width = winRect.right;
 	float height = winRect.bottom;
 
-#ifdef _WINDLL
+#ifdef 上半三角形版
 	PlainVertex FixedVertecies[] =
 	{
 		{{0.0,0.0,0.0},1.0,0.0,0.0},
@@ -160,7 +161,7 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 		pDevice->SetSamplerState(1, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 #endif
 
-#ifdef _WINDLL
+#ifdef 上半三角形版
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 1);
 #else
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
@@ -933,10 +934,16 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 	else// Textured vertex.fvf
 	{
 		//requires pTexture, always 2 rectangles
+
 		pDevice->GetTexture(0, &pFormerTexture);
 		pDevice->GetTexture(1, &pFormer2);
 		pDevice->GetPixelShader(&pFormerShader);
 		pDevice->GetStreamSource(0, &pFormerStream, &uOffset, &uStride);
+
+		pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+		pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
+		pDevice->SetSamplerState(1, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+		pDevice->SetSamplerState(1, D3DSAMP_MINFILTER, D3DTEXF_POINT);
 
 		pDevice->SetTexture(0, this->pTexture);
 

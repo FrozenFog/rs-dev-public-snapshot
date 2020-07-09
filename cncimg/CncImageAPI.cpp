@@ -268,7 +268,18 @@ void WINAPI RemoveObjectFromScene(int nID)
 	DrawObject::RemoveVxlObject(nID);
 	DrawObject::RemoveShpObject(nID);
 	DrawObject::RemoveCommonObject(nID);
+	DrawObject::RemoveCommonTextureObject(nID);
 }
+
+#define EXPORT_REMOVE_FUNCTION(cls)	\
+	void WINAPI Remove ## cls ## FromScene(int nID)	\
+	{DrawObject::Remove ## cls ## Object(nID);}
+
+EXPORT_REMOVE_FUNCTION(Tmp)
+EXPORT_REMOVE_FUNCTION(Vxl);
+EXPORT_REMOVE_FUNCTION(Shp);
+EXPORT_REMOVE_FUNCTION(Common);
+EXPORT_REMOVE_FUNCTION(CommonTexture);
 
 void WINAPI RotateObject(int nID, float RotationX, float RotationY, float RotationZ)
 {

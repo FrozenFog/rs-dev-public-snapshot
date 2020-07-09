@@ -136,6 +136,7 @@ public:
 	static void RemoveVxlObject(int nID);
 	static void RemoveShpObject(int nID);
 	static void RemoveCommonObject(int nID);
+	static void RemoveCommonTextureObject(int nID);
 
 private:
 	//the texture here cannot be released
