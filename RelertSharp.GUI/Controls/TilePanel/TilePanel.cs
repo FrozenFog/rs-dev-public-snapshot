@@ -62,7 +62,6 @@ namespace RelertSharp.GUI.Controls
                 dest.Controls.Clear();
                 return;
             }
-            GlobalDir.BeginPreload();
             dest.Controls.Clear();
             //imgAllTiles.Images.Clear();
             if (isFramework)
@@ -102,7 +101,6 @@ namespace RelertSharp.GUI.Controls
                 dest.Controls.Add(box);
                 //imgAllTiles.Images.Add(filename, Utils.Misc.ResizeImage(imgs[filename], sz));
             }
-            GlobalDir.DisposePreloaded();
             dest.ResumeLayout();
         }
 

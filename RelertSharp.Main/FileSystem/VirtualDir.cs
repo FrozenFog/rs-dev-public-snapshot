@@ -89,19 +89,25 @@ namespace RelertSharp.FileSystem
         }
         public void BeginPreload()
         {
-            Log.Write("Begin Preloading mix");
-            foreach (string name in GlobalConfig.PreloadMixes)
+            if (!preloadInitialized)
             {
-                string filename = name + ".mix";
-                if (HasFile(filename)) preLoadMixes[name] = GetRawByte(filename);
+                Log.Write("Begin Preloading mix");
+                foreach (string name in GlobalConfig.PreloadMixes)
+                {
+                    string filename = name + ".mix";
+                    if (HasFile(filename)) preLoadMixes[name] = GetRawByte(filename);
+                }
+                preloadInitialized = true;
             }
-            preloadInitialized = true;
         }
         public void DisposePreloaded()
         {
-            preLoadMixes.Clear();
-            GC.Collect();
-            preloadInitialized = false;
+            if (preloadInitialized)
+            {
+                preLoadMixes.Clear();
+                GC.Collect();
+                preloadInitialized = false;
+            }
         }
         public Dictionary<string, Image> GetPcxImages(IEnumerable<string> src)
         {
