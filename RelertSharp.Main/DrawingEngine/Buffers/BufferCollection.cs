@@ -39,7 +39,6 @@ namespace RelertSharp.DrawingEngine
             if ((flag & RemoveFlag.Infantries) != 0) Scenes.RemoveInfantries();
             if ((flag & RemoveFlag.Units) != 0) Scenes.RemoveUnits();
             if ((flag & RemoveFlag.Structures) != 0) Scenes.RemoveStructures();
-            if ((flag & RemoveFlag.Tiles) != 0) Scenes.RemoveTiles();
             if ((flag & RemoveFlag.Overlays) != 0) Scenes.RemoveOverlays();
             if ((flag & RemoveFlag.Terrains) != 0) Scenes.RemoveTerrains();
             if ((flag & RemoveFlag.Smudges) != 0) Scenes.RemoveSmudges();

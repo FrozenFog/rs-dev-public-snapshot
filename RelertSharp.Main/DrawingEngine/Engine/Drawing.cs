@@ -149,12 +149,10 @@ namespace RelertSharp.DrawingEngine
             PresentTile pt = new PresentTile(pSelf, pExtra, t.Height, src, subindex, t, pfrm, pfrmEx);
             if (color != Vec4.Zero) pt.SetColor(color);
             t.SceneObject = pt;
-            t.BaseTileBuildable = pt.Buildable;
             Color cl = src.SubTiles[subindex].RadarColor.Left;
             Color cr = src.SubTiles[subindex].RadarColor.Right;
             pt.RadarColor = new RadarColor(cl, cr);
             t.TileTerrainType = src.SubTiles[subindex].TerrainType;
-            Buffer.Scenes.Tiles[t.Coord] = pt;
             return success;
         }
         public bool DrawGeneralItem(TerrainItem terrain, int height)

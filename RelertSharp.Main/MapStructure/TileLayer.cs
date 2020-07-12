@@ -714,12 +714,11 @@ namespace RelertSharp.MapStructure
         public int X { get { return X16; } set { X16 = (short)value; } }
         public int Y { get { return Y16; } set { Y16 = (short)value; } }
         public int Z { get { return Height; } set { Height = (byte)value; } }
-        public bool BaseTileBuildable { get; set; }
         public bool Buildable
         {
             get
             {
-                if (!BaseTileBuildable) return false;
+                if (!SceneObject.Buildable) return false;
                 foreach (IMapObject obj in objectsOnTile)
                 {
                     Type t = obj.GetType();
@@ -731,6 +730,25 @@ namespace RelertSharp.MapStructure
                         t == typeof(TerrainItem)) return false;
                 }
                 return true;
+            }
+        }
+        public bool Passable
+        {
+            get
+            {
+                if (!(SceneObject.LandPassable || SceneObject.WaterPassable)) return false;
+                bool result = true;
+                foreach (IMapObject obj in objectsOnTile)
+                {
+                    Type t = obj.GetType();
+                    if (t == typeof(StructureItem)) return false;
+                    if (t == typeof(OverlayUnit))
+                    {
+                        PresentMisc p = (obj as OverlayUnit).SceneObject;
+                        result = result && (p.IsTiberiumOverlay || p.IsRubble) && !p.IsMoveBlockingOverlay;
+                    }
+                }
+                return result;
             }
         }
         public byte Height { get; set; }

@@ -24,6 +24,7 @@ namespace RelertSharp.DrawingEngine
         private readonly string[] _zeroLandType = new string[] { "Water", "Clear", "" };
         private float _width { get { return _30SQ2; } }
         private Vec3 _NormTileVec { get { return new Vec3(_15SQ2, _15SQ2, _10SQ3); } }
+        private Map Map { get { return CurrentMapDocument.Map; } }
         private float _height { get { return _10SQ3; } }
         private const uint _colorIgnore = 0x000000FF;
         private const uint _white = 0xFFFFFFFF;

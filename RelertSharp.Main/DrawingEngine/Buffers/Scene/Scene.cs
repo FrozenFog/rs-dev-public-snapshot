@@ -44,22 +44,6 @@ namespace RelertSharp.DrawingEngine
             }
 
             #region Lightnings
-            public void BeginLamp()
-            {
-                foreach (PresentTile t in Tiles.Values) t.Lamped = false;
-            }
-            public void ColoringTile(I2dLocateable pos, Vec4 color)
-            {
-                int coord = Utils.Misc.CoordInt(pos);
-                if (Tiles.Keys.Contains(coord))
-                {
-                    if (!Tiles[coord].Lamped)
-                    {
-                        Tiles[coord].MultiplyColor(color);
-                        Tiles[coord].Lamped = true;
-                    }
-                }
-            }
             #endregion
 
 
@@ -78,11 +62,6 @@ namespace RelertSharp.DrawingEngine
             {
                 foreach (PresentStructure structure in Structures.Values) structure.Dispose();
                 Structures.Clear();
-            }
-            public void RemoveTiles()
-            {
-                foreach (PresentTile tile in Tiles.Values) tile.Dispose();
-                Tiles.Clear();
             }
             public void RemoveOverlays()
             {
@@ -138,7 +117,6 @@ namespace RelertSharp.DrawingEngine
             public Dictionary<int, PresentStructure> Structures { get; private set; } = new Dictionary<int, PresentStructure>();
             public Dictionary<int, PresentUnit> Units { get; private set; } = new Dictionary<int, PresentUnit>();
             public Dictionary<int, PresentInfantry> Infantries { get; private set; } = new Dictionary<int, PresentInfantry>();
-            public Dictionary<int, PresentTile> Tiles { get; private set; } = new Dictionary<int, PresentTile>();
             public Dictionary<int, DrawableTile> DrawableTiles { get; private set; } = new Dictionary<int, DrawableTile>();
             public Dictionary<int, PresentMisc> Overlays { get; private set; } = new Dictionary<int, PresentMisc>();
             public Dictionary<int, PresentMisc> Terrains { get; private set; } = new Dictionary<int, PresentMisc>();
