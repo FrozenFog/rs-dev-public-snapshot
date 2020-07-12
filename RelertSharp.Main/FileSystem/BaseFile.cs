@@ -239,6 +239,7 @@ namespace RelertSharp.FileSystem
         public string FileName
         {
             get { return filename; }
+            protected set { filename = value; }
         }
         public string FilePath
         {

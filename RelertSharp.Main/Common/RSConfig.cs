@@ -35,6 +35,7 @@ namespace RelertSharp.Common
             ThemeName = this["INI"]["ThemeFileName"];
             AiName = this["INI"]["AIFileName"];
             EvaName = this["INI"]["EvaFileName"];
+            Ra2xxName = this["INI"]["Ra2xxName"];
             ConfigName = this["General"]["ConfigName"];
             ConfigVersion = this["General"]["ConfigVersion"];
             IgnoreBuildingTheaterArt = this["DrawingConfig"].ParseBool("IgnoreBuildingTheaterArt");
@@ -181,6 +182,7 @@ namespace RelertSharp.Common
         public string ThemeName { get; private set; }
         public string AiName { get; private set; }
         public string EvaName { get; private set; }
+        public string Ra2xxName { get; private set; }
         public string GamePath
         {
             get

@@ -101,6 +101,9 @@
     <Prefer32Bit>true</Prefer32Bit>
     <Optimize>false</Optimize>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ObjectListView, Version=2.9.1.40222, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -235,6 +238,9 @@
     <Compile Include="MainWindow\Sub\BuildingAttributeForm.Designer.cs">
       <DependentUpon>BuildingAttributeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainWindow\GameRunningSpector.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainWindow\Sub\InfantryAttributeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -252,6 +258,12 @@
     </Compile>
     <Compile Include="MainWindow\Navigating.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\RunSettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\RunSettingForm.Designer.cs">
+      <DependentUpon>RunSettingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\Sub\UnitAttributeForm.cs">
       <SubType>Form</SubType>
@@ -433,6 +445,9 @@
     <EmbeddedResource Include="MainWindow\Sub\LoadingWindow.resx">
       <DependentUpon>LoadingWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\RunSettingForm.resx">
+      <DependentUpon>RunSettingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\Sub\UnitAttributeForm.resx">
       <DependentUpon>UnitAttributeForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -498,6 +513,7 @@
       <DependentUpon>WelcomeWindow.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
+    <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

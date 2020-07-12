@@ -66,6 +66,11 @@ namespace RelertSharp.Common
             get { return this["General"]["RecentPath"]; }
             set { this["General"]["RecentPath"] = value; }
         }
+        public INIEntity RunningConfig
+        {
+            get { return this["GameRunning"]; }
+            set { this["GameRunning"] = value; }
+        }
         #endregion
     }
 }

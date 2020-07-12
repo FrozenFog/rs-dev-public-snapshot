@@ -8,7 +8,7 @@ namespace RelertSharp.Common
 {
     public static class Constant
     {
-        public const string ReleaseDate = " - ver. 2020.07.08-2123 - UNSTABLE";
+        public const string ReleaseDate = " - ver. 2020.07.12-2304 - UNSTABLE";
         public static class Logics
         {
             public static int[] EventIdLength3 = { 60, 61 };
@@ -208,6 +208,10 @@ namespace RelertSharp.Common
                 public static readonly int[] Buildables = { Roads, LAT_D, LAT_P, Clear };
                 public static readonly int[] Passable = { Track, Roads, LAT_P, LAT_D, Clear, Shore, Water };
             }
+        }
+        public static class GameRunning
+        {
+            public const int MaxGameSpeed = 6;
         }
     }
 }

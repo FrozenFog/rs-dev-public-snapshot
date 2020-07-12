@@ -31,28 +31,39 @@ namespace RelertSharp.FileSystem
             IniDict = Map.IniResidue;
             Map.CompressTile();
             Map.CompressOverlay();
-            DumpGeneralInfo();
-            DumpMapObjects();
-            DumpLogics();
+            DumpGeneralInfo(IniDict);
+            DumpMapObjects(IniDict);
+            DumpLogics(IniDict);
             SaveIni(savingPath, true);
+        }
+        public void SaveMapInfoInto(string savePath, string filename)
+        {
+            INIFile f = new INIFile(filename, true);
+            f.AddEnt(Map.IniResidue.Values);
+            Map.CompressTile();
+            Map.CompressOverlay();
+            DumpGeneralInfo(f.IniDict);
+            DumpMapObjects(f.IniDict);
+            DumpLogics(f.IniDict);
+            f.SaveIni(savePath + filename, true);
         }
         #endregion
 
 
         #region Private Methods - MapFile
-        private void DumpMapObjects()
+        private void DumpMapObjects(Dictionary<string, INIEntity> dest)
         {
-            IniDict["Structures"] = Map.DumpBuildingData();
-            IniDict["Infantry"] = Map.DumpInfantryData();
-            IniDict["Units"] = Map.DumpUnitData();
-            IniDict["Aircraft"] = Map.DumpAircraftData();
-            IniDict["Terrain"] = Map.DumpTerrainData();
-            IniDict["Smudge"] = Map.DumpSmudgeData();
-            IniDict["CellTags"] = Map.DumpCelltagData();
-            IniDict["Waypoints"] = Map.DumpWaypointData();
-            IniDict["VariableNames"] = Map.DumpLocalVar();
+            dest["Structures"] = Map.DumpBuildingData();
+            dest["Infantry"] = Map.DumpInfantryData();
+            dest["Units"] = Map.DumpUnitData();
+            dest["Aircraft"] = Map.DumpAircraftData();
+            dest["Terrain"] = Map.DumpTerrainData();
+            dest["Smudge"] = Map.DumpSmudgeData();
+            dest["CellTags"] = Map.DumpCelltagData();
+            dest["Waypoints"] = Map.DumpWaypointData();
+            dest["VariableNames"] = Map.DumpLocalVar();
         }
-        private void DumpLogics()
+        private void DumpLogics(Dictionary<string, INIEntity> dest)
         {
             Map.DumpTriggerData(out INIEntity trigger, out INIEntity events, out INIEntity actions, out INIEntity tags);
             Map.DumpAiTriggerData(out INIEntity type, out INIEntity enable);
@@ -67,24 +78,24 @@ namespace RelertSharp.FileSystem
                 team, script, task, house, con
             };
             result.AddRange(teams.Concat(scripts).Concat(houses).Concat(cons).Concat(tasks));
-            foreach (INIEntity ent in result) IniDict[ent.Name] = ent;
+            foreach (INIEntity ent in result) dest[ent.Name] = ent;
         }
-        private void DumpGeneralInfo()
+        private void DumpGeneralInfo(Dictionary<string, INIEntity> dest)
         {
-            IniDict["IsoMapPack5"] = new INIEntity("IsoMapPack5", Map.IsoMapPack5, 1);
-            IniDict["OverlayDataPack"] = new INIEntity("OverlayDataPack", Map.OverlayDataPack, 1);
-            IniDict["OverlayPack"] = new INIEntity("OverlayPack", Map.OverlayPack, 1);
-            IniDict["PreviewPack"] = new INIEntity("PreviewPack", Map.PreviewPack, 1);
+            dest["IsoMapPack5"] = new INIEntity("IsoMapPack5", Map.IsoMapPack5, 1);
+            dest["OverlayDataPack"] = new INIEntity("OverlayDataPack", Map.OverlayDataPack, 1);
+            dest["OverlayPack"] = new INIEntity("OverlayPack", Map.OverlayPack, 1);
+            dest["PreviewPack"] = new INIEntity("PreviewPack", Map.PreviewPack, 1);
             INIEntity previewEnt = new INIEntity("Preview");
             if (!Map.PreviewSize.IsEmpty) previewEnt.AddPair("Size", Misc.FromRectangle(Map.PreviewSize));
-            IniDict["Preview"] = previewEnt;
-            IniDict["Basic"] = Map.Info.GetBasicEnt();
-            IniDict["Map"] = Map.Info.GetMapEnt();
-            IniDict["SpecialFlags"] = Map.Info.SpecialFlags;
-            IniDict["Lighting"] = Map.LightningCollection.GetSaveData();
+            dest["Preview"] = previewEnt;
+            dest["Basic"] = Map.Info.GetBasicEnt();
+            dest["Map"] = Map.Info.GetMapEnt();
+            dest["SpecialFlags"] = Map.Info.SpecialFlags;
+            dest["Lighting"] = Map.LightningCollection.GetSaveData();
         }
 
-        private void DumpObjects()
+        private void DumpObjects(Dictionary<string, INIEntity> dest)
         {
             INIEntity entBud = new INIEntity("Structures");
             //buildings :

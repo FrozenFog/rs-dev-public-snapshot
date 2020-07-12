@@ -34,6 +34,10 @@ namespace RelertSharp.IniSystem
             initype = INIFileType.UnknownINI;
             this.ciphed = ciphed;
         }
+        public INIFile(string filename, bool newfile)
+        {
+            FileName = filename;
+        }
         public INIFile() { initype = INIFileType.UnknownINI; }
         #endregion
 
@@ -188,6 +192,10 @@ namespace RelertSharp.IniSystem
             if (string.IsNullOrEmpty(ent.Name)) return;
             if (!inidata.Keys.Contains(ent.Name)) inidata[ent.Name] = ent;
         }
+        public void AddEnt(IEnumerable<INIEntity> src)
+        {
+            foreach (INIEntity ent in src) AddEnt(ent);
+        }
         /// <summary>
         /// Remove an IniEnt with a specified name, will do nothing if not found
         /// </summary>
@@ -271,12 +279,7 @@ namespace RelertSharp.IniSystem
             }
             set
             {
-                if (!IniDict.Keys.Contains(name))
-                {
-                    INIEntity ent = new INIEntity(name);
-                    IniDict[name] = ent;
-                }
-                else IniDict[name] = value;
+                IniDict[name] = value;
             }
         }
         public List<INIEntity> IniData

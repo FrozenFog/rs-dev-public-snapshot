@@ -4,7 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
+using RelertSharp.FileSystem;
+using RelertSharp.IniSystem;
 using RelertSharp.Common;
+using static RelertSharp.Common.GlobalVar;
 using static RelertSharp.GUI.GuiUtils;
 
 namespace RelertSharp.GUI
@@ -15,17 +19,31 @@ namespace RelertSharp.GUI
         {
             SaveFileDialog dlg = new SaveFileDialog()
             {
-                InitialDirectory = GlobalVar.GlobalConfig.LastPath,
+                InitialDirectory = GlobalConfig.LastPath,
                 Filter = "Red Alert 2 Mission Map|*.map|Red Alert 2 YR Map File|*.yrm|Red Alert 2 General Map|*.mpr",
                 AddExtension = true,
                 Title = "Save",
-                FileName = GlobalVar.CurrentMapDocument.FileName
+                FileName = CurrentMapDocument.FileName
             };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                GlobalVar.CurrentMapDocument.SaveMap(dlg.FileName);
+                CurrentMapDocument.SaveMap(dlg.FileName);
                 Complete("Saving Complete!");
             }
+        }
+        private void tsmiMainRunMap_Click(object sender, EventArgs e)
+        {
+            RunSettingForm setting = new RunSettingForm();
+            setting.ReadSettingFromLocal();
+            if (setting.ShowDialog() == DialogResult.OK)
+            {
+                INIFile spawn = setting.GetSpawn();
+                spawn.SaveIni(GlobalConfig.GamePath + "spawn.ini");
+                CurrentMapDocument.SaveMapInfoInto(GlobalConfig.GamePath, "spawnmap.ini");
+                string injectorName = setting.UseSyringe ? "syringe.exe" : "CncnetYRInject.exe";
+                RunGame(setting.GameName, injectorName, !setting.UseSyringe);
+            }
+            setting.SaveSettingToLocal();
         }
     }
 }

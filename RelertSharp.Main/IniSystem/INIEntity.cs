@@ -46,6 +46,11 @@ namespace RelertSharp.IniSystem
         {
             this.name = name;
         }
+        public INIEntity(INIEntity src, string rename = "")
+        {
+            data = new Dictionary<string, INIPair>(src.data);
+            Name = string.IsNullOrEmpty(rename) ? src.Name : rename;
+        }
         #endregion
 
 
@@ -311,7 +316,7 @@ namespace RelertSharp.IniSystem
         public Dictionary<string, INIPair> DictData { get { return data; } }
         public string Comment { get { return comment; } }
         public string PreComment { get { return preComment; } }
-        public string Name { get { return name; } }
+        public string Name { get { return name; } private set { name = value; } }
         public bool HasComment { get { return !string.IsNullOrEmpty(comment); } }
         /// <summary>
         /// Before converting, every value is string-type
@@ -328,7 +333,7 @@ namespace RelertSharp.IniSystem
             set
             {
                 if (data.Keys.Contains(key)) data[key].Value = value;
-                else data[key] = new INIPair(key, value);
+                else data[key] = new INIPair(key, value.ToString());
             }
         }
         public List<INIPair> DataList { get { return data.Values.ToList(); } }

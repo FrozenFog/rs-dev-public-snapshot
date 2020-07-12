@@ -216,6 +216,10 @@ namespace RelertSharp.MapStructure
             Tiles.RemoveEmptyTiles();
             isomappack5String = Tiles.CompressToString();
         }
+        public string CompressTileToString()
+        {
+            return Tiles.CompressToString();
+        }
         public void CompressOverlay()
         {
             overlayString = Overlays.CompressIndex();

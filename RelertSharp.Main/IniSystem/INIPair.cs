@@ -21,6 +21,11 @@ namespace RelertSharp.IniSystem
             Value = value;
             keytype = GetKeyType(key);
         }
+        public INIPair(string key, dynamic value)
+        {
+            Name = key;
+            Value = value;
+        }
         public INIPair(string n, string val, string com, string _preComment)
         {
             Name = n;
@@ -129,6 +134,7 @@ namespace RelertSharp.IniSystem
         /// <returns></returns>
         public bool ParseBool(bool def = false)
         {
+            if (Value.GetType() == typeof(bool)) return Value;
             if ((string)Value != "")
             {
                 if (Constant.BoolTrue.Contains((string)Value)) return true;
@@ -147,6 +153,7 @@ namespace RelertSharp.IniSystem
         {
             try
             {
+                if (Value.GetType() == typeof(int)) return Value;
                 if ((string)Value != "")
                 {
                     return int.Parse(Value);
