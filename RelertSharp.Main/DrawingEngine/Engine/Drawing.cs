@@ -153,6 +153,7 @@ namespace RelertSharp.DrawingEngine
             Color cl = src.SubTiles[subindex].RadarColor.Left;
             Color cr = src.SubTiles[subindex].RadarColor.Right;
             pt.RadarColor = new RadarColor(cl, cr);
+            t.TileTerrainType = src.SubTiles[subindex].TerrainType;
             Buffer.Scenes.Tiles[t.Coord] = pt;
             return success;
         }

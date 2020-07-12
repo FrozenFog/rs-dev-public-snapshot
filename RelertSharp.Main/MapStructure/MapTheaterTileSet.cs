@@ -206,11 +206,15 @@ namespace RelertSharp.MapStructure
             int set = GetTileSetIndexFromTile(t);
             return Constant.LATSystem.LatSet.Contains(set);
         }
-        public bool IsClearLat(int index, int centerReferance)
+        public bool IsClearLat(Tile changer, Tile centerReferance)
         {
-            int set = GetTileSet(index).SetIndex;
-            int center = GetTileSet(centerReferance).SetIndex;
+            int set = GetTileSetFromTile(changer).SetIndex;
+            int center = GetTileSetFromTile(centerReferance).SetIndex;
             bool latEqual = LatEqual(set, center);
+            if (LatEqual(center, Constant.LATSystem.idxGreen))
+            {
+                if (changer.TileTerrainType == Constant.DrawingEngine.Tiles.Shore || changer.TileTerrainType == Constant.DrawingEngine.Tiles.LAT_D) return false;
+            }
             if (set == center && center != Constant.LATSystem.idxClear) return false;
             if (set == Constant.LATSystem.idxClear) return true;
             //if (Constant.LATSystem.LatFull.Contains(set)) return false;
@@ -227,7 +231,7 @@ namespace RelertSharp.MapStructure
             if (setIndex == Constant.LATSystem.idxSand) return Constant.LATSystem.idxC2S;
             else if (setIndex == Constant.LATSystem.idxPave) return Constant.LATSystem.idxC2P;
             else if (setIndex == Constant.LATSystem.idxGreen) return Constant.LATSystem.idxC2G;
-            else if (setIndex == Constant.LATSystem.idxRough) return Constant.LATSystem.idxRough;
+            else if (setIndex == Constant.LATSystem.idxRough) return Constant.LATSystem.idxC2R;
             else if (setIndex == Constant.LATSystem.idxC2S) return Constant.LATSystem.idxSand;
             else if (setIndex == Constant.LATSystem.idxC2P) return Constant.LATSystem.idxPave;
             else if (setIndex == Constant.LATSystem.idxC2R) return Constant.LATSystem.idxRough;

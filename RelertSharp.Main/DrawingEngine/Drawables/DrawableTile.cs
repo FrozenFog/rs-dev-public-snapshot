@@ -40,6 +40,7 @@ namespace RelertSharp.DrawingEngine.Drawables
             public bool Buildable { get; set; }
             public bool LandPassable { get; set; }
             public bool WaterPassable { get; set; }
+            public int TerrainType { get; set; }
             #endregion
         }
 

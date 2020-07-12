@@ -12,7 +12,7 @@ namespace RelertSharp.GUI.Model.TileBrush
 {
     public partial class TileBrush
     {
-        private I2dLocateable pos;
+        private I3dLocateable posNow;
         private string filenameNow;
         private bool isFramework, isFlat;
         private List<Tile> body = new List<Tile>();
@@ -64,7 +64,6 @@ namespace RelertSharp.GUI.Model.TileBrush
             int idx = set.Offset + index;
             TmpFile tmp = new TmpFile(GlobalDir.GetRawByte(filenameNow), filenameNow);
             short x = -100, y = -100;
-            pos = new Pnt(x, y);
             posEnum.Clear();
             body.Clear();
             under.Clear();
@@ -89,11 +88,13 @@ namespace RelertSharp.GUI.Model.TileBrush
                     body.Add(t);
                 }
             }
+            if (posNow == null) posNow = new Pnt3(x, y, 0);
+            else MoveTo(posNow, true);
             brushDisposed = false;
         }
-        public void MoveTo(I3dLocateable cell)
+        public void MoveTo(I3dLocateable cell, bool force = false)
         {
-            if (pos != null && pos.Coord != cell.Coord)
+            if (force || (posNow != null && posNow.Coord != cell.Coord))
             {
                 RedrawImage();
                 foreach (Tile t in under) t.RevealAllTileImg();
@@ -138,6 +139,7 @@ namespace RelertSharp.GUI.Model.TileBrush
                     }
                     i++;
                 }
+                posNow = cell;
             }
         }
         public void Dispose()

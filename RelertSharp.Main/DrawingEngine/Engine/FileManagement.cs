@@ -44,10 +44,11 @@ namespace RelertSharp.DrawingEngine
                 {
                     DrawableTile.SubTile subtile = new DrawableTile.SubTile();
                     subtile.RadarColor = new DrawableTile.ColorPair(img.ColorRadarLeft, img.ColorRadarRight);
-                    d.SubTiles.Add(subtile);
                     subtile.WaterPassable = img.TerrainType == Constant.DrawingEngine.Tiles.Water;
                     subtile.LandPassable = Constant.DrawingEngine.Tiles.Passable.Contains(img.TerrainType);
                     subtile.Buildable = Constant.DrawingEngine.Tiles.Buildables.Contains(img.TerrainType) && img.RampType == 0;
+                    subtile.TerrainType = img.TerrainType;
+                    d.SubTiles.Add(subtile);
                 }
                 Buffer.Buffers.Tiles[filename] = d;
             }

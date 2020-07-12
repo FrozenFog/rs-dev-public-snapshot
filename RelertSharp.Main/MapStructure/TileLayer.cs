@@ -176,10 +176,10 @@ namespace RelertSharp.MapStructure
                 TileSet setCenter = TileDictionary.GetTileSetFromTile(center);
                 int result = 0;
                 Pnt pos = new Pnt(center);
-                if (this[pos + Pnt.OneX] is Tile dr && TileDictionary.IsClearLat(dr.TileIndex, center.TileIndex)) result += (int)WallDirection.SE;
-                if (this[pos - Pnt.OneX] is Tile ul && TileDictionary.IsClearLat(ul.TileIndex, center.TileIndex)) result += (int)WallDirection.NW;
-                if (this[pos + Pnt.OneY] is Tile dl && TileDictionary.IsClearLat(dl.TileIndex, center.TileIndex)) result += (int)WallDirection.SW;
-                if (this[pos - Pnt.OneY] is Tile ur && TileDictionary.IsClearLat(ur.TileIndex, center.TileIndex)) result += (int)WallDirection.NE;
+                if (this[pos + Pnt.OneX] is Tile dr && TileDictionary.IsClearLat(dr, center)) result += (int)WallDirection.SE;
+                if (this[pos - Pnt.OneX] is Tile ul && TileDictionary.IsClearLat(ul, center)) result += (int)WallDirection.NW;
+                if (this[pos + Pnt.OneY] is Tile dl && TileDictionary.IsClearLat(dl, center)) result += (int)WallDirection.SW;
+                if (this[pos - Pnt.OneY] is Tile ur && TileDictionary.IsClearLat(ur, center)) result += (int)WallDirection.NE;
 
                 SetLatBase(center, setCenter, result);
                 //else
@@ -202,10 +202,10 @@ namespace RelertSharp.MapStructure
                     //referanceDirection = WallDirection.All;
                 }
                 Pnt pos = new Pnt(center);
-                if (referanceDirection != WallDirection.SE && this[pos + Pnt.OneX] is Tile dr && TileDictionary.IsClearLat(dr.TileIndex, center.TileIndex)) result += (int)WallDirection.SE;
-                if (referanceDirection != WallDirection.NW && this[pos - Pnt.OneX] is Tile ul && TileDictionary.IsClearLat(ul.TileIndex, center.TileIndex)) result += (int)WallDirection.NW;
-                if (referanceDirection != WallDirection.SW && this[pos + Pnt.OneY] is Tile dl && TileDictionary.IsClearLat(dl.TileIndex, center.TileIndex)) result += (int)WallDirection.SW;
-                if (referanceDirection != WallDirection.NE && this[pos - Pnt.OneY] is Tile ur && TileDictionary.IsClearLat(ur.TileIndex, center.TileIndex)) result += (int)WallDirection.NE;
+                if (referanceDirection != WallDirection.SE && this[pos + Pnt.OneX] is Tile dr && TileDictionary.IsClearLat(dr, center)) result += (int)WallDirection.SE;
+                if (referanceDirection != WallDirection.NW && this[pos - Pnt.OneX] is Tile ul && TileDictionary.IsClearLat(ul, center)) result += (int)WallDirection.NW;
+                if (referanceDirection != WallDirection.SW && this[pos + Pnt.OneY] is Tile dl && TileDictionary.IsClearLat(dl, center)) result += (int)WallDirection.SW;
+                if (referanceDirection != WallDirection.NE && this[pos - Pnt.OneY] is Tile ur && TileDictionary.IsClearLat(ur, center)) result += (int)WallDirection.NE;
 
                 SetLatBase(center, setCenter, result < 0 ? 0 : result);
                 //if (!TileDictionary.IsConnLat(setCenter.SetIndex)) setCenter = TileDictionary.GetTileSetFromIndex(TileDictionary.SwitchLatIndex(setCenter.SetIndex));
@@ -755,6 +755,7 @@ namespace RelertSharp.MapStructure
         public PresentTile SceneObject { get; set; }
         public bool Selected { get; set; }
         public bool IsHyte { get; set; }
+        public int TileTerrainType { get; set; }
         #endregion
     }
 }
