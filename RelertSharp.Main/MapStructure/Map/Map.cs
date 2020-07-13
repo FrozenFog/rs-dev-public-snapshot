@@ -60,6 +60,7 @@ namespace RelertSharp.MapStructure
         public void RemoveTrigger(TriggerItem item)
         {
             Triggers.RemoveTrigger(item);
+            Tags.RemoveRelation(item.ID);
             DelID(item.ID);
         }
         public TeamScriptGroup NewScript()

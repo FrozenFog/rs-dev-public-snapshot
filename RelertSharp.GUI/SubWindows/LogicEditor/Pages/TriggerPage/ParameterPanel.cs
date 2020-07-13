@@ -63,7 +63,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 Name = "cbbCsf"
             };
             cbbCsf.Items.AddRange(GlobalCsf.TechnoPairs.ToArray());
-            cbbCsf.SelectedIndexChanged += new EventHandler(ParamChanged);
+            cbbCsf.Validated += new EventHandler(ParamChanged);
             gpbEventParam.Controls.Add(cbbCsf);
             if (!isEvent)
             {
@@ -298,6 +298,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     }
                 }
             }
+            dest.SelectedItem = null;
             dest.Text = param;
         }
         #endregion
@@ -318,9 +319,8 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 }
                 else if (t == typeof(ComboBox))
                 {
-                    TechnoPair p = ((ComboBox)sender).SelectedItem as TechnoPair;
-                    if (p == null) p = new TechnoPair(((ComboBox)sender).Text, "");
-                    WriteParam(p, i);
+                    if (((ComboBox)sender).SelectedItem is TechnoPair p) WriteParam(p, i);
+                    else WriteParam((sender as ComboBox).Text, i);
                 }
                 else if (t == typeof(CheckBox))
                 {

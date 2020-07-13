@@ -48,6 +48,10 @@ namespace RelertSharp.MapStructure.Logic
             if (data.Keys.Contains(t.ID)) data.Remove(t.ID);
             if (trigger_tag.Keys.Contains(triggerid)) trigger_tag.Remove(triggerid);
         }
+        public void RemoveRelation(string triggerid)
+        {
+            if (trigger_tag.ContainsKey(triggerid)) trigger_tag.Remove(triggerid);
+        }
         /// <summary>
         /// return a tag with certain trigger id, return null tag if not found
         /// </summary>

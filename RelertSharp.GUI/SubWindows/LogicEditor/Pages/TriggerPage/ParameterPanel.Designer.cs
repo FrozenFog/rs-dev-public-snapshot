@@ -179,7 +179,7 @@
             // 
             // txbEP1
             // 
-            this.txbEP1.Location = new System.Drawing.Point(181, 24);
+            this.txbEP1.Location = new System.Drawing.Point(181, 23);
             this.txbEP1.Margin = new System.Windows.Forms.Padding(4);
             this.txbEP1.Name = "txbEP1";
             this.txbEP1.Size = new System.Drawing.Size(203, 25);
@@ -261,7 +261,7 @@
             this.cbbEP4.TabIndex = 4;
             this.cbbEP4.Tag = "3";
             this.cbbEP4.Visible = false;
-            this.cbbEP4.SelectedIndexChanged += new System.EventHandler(this.ParamChanged);
+            this.cbbEP4.Validated += new System.EventHandler(this.ParamChanged);
             // 
             // cbbEP3
             // 
@@ -273,7 +273,7 @@
             this.cbbEP3.TabIndex = 3;
             this.cbbEP3.Tag = "2";
             this.cbbEP3.Visible = false;
-            this.cbbEP3.SelectedIndexChanged += new System.EventHandler(this.ParamChanged);
+            this.cbbEP3.Validated += new System.EventHandler(this.ParamChanged);
             // 
             // cbbEP2
             // 
@@ -285,7 +285,7 @@
             this.cbbEP2.TabIndex = 2;
             this.cbbEP2.Tag = "1";
             this.cbbEP2.Visible = false;
-            this.cbbEP2.SelectedIndexChanged += new System.EventHandler(this.ParamChanged);
+            this.cbbEP2.Validated += new System.EventHandler(this.ParamChanged);
             // 
             // cbbEP1
             // 
@@ -297,7 +297,7 @@
             this.cbbEP1.TabIndex = 1;
             this.cbbEP1.Tag = "0";
             this.cbbEP1.Visible = false;
-            this.cbbEP1.SelectedIndexChanged += new System.EventHandler(this.ParamChanged);
+            this.cbbEP1.Validated += new System.EventHandler(this.ParamChanged);
             // 
             // lblNoParamE
             // 

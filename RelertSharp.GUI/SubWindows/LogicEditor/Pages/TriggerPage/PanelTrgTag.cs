@@ -101,9 +101,9 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 ckbEasy.Checked = CurrentTrigger.EasyOn;
                 ckbNormal.Checked = CurrentTrigger.NormalOn;
                 ckbHard.Checked = CurrentTrigger.HardOn;
-                //rdbRepeat0.Checked = false;
-                //rdbRepeat0.Checked = false;
-                //rdbRepeat0.Checked = false;
+                rdbRepeat0.Checked = false;
+                rdbRepeat0.Checked = false;
+                rdbRepeat0.Checked = false;
                 switch (CurrentTag.Repeating)
                 {
                     case TriggerRepeatingType.NoRepeating:
@@ -195,6 +195,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     CurrentTag.Name = txbTrgName.Text + " - Tag";
                 }
                 CurrentTrigger.Name = txbTrgName.Text;
+                txbTagName.Text = CurrentTag.Name;
                 OnTriggerUpdated();
             }
         }
