@@ -71,3 +71,6 @@ local.rsc
 !rslib.dll
 !voxel.vpl
 !App.config
+!cncnet5.dll
+!CncnetYRInject.exe
+!Syringe.exe

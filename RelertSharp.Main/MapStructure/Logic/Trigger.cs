@@ -199,7 +199,17 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Methods - TriggerItem
         public override string ToString()
         {
-            return innerString;
+            switch (displayintType)
+            {
+                case DisplayingType.IDandName:
+                    return string.Format("{0}:{1}", ID, Name);
+                case DisplayingType.OnlyID:
+                    return ID;
+                case DisplayingType.OnlyName:
+                    return name;
+                default:
+                    return innerString;
+            }
         }
         public void SetDisplayingString(object type)
         {
