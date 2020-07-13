@@ -50,7 +50,7 @@ namespace RelertSharp.MapStructure.Logic
         }
         public void RemoveTrigger(TriggerItem trigger)
         {
-            if (!data.Keys.Contains(trigger.ID)) data.Remove(trigger.ID);
+            if (data.Keys.Contains(trigger.ID)) data.Remove(trigger.ID);
         }
         public TriggerItem NewTrigger(string id, TriggerItem.DisplayingType _type = TriggerItem.DisplayingType.IDandName)
         {

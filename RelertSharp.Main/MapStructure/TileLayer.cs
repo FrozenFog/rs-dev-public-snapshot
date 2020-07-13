@@ -296,25 +296,23 @@ namespace RelertSharp.MapStructure
             }
             indexs = result.ToList();
         }
-        public void RemoveEmptyTiles()
+        public IEnumerable<Tile> RemoveEmptyTiles()
         {
-            int[] keys = data.Keys.ToArray();
-            foreach (int key in keys)
+            List<Tile> result = new List<Tile>();
+            foreach (Tile t in data.Values)
             {
-                if (data[key].IsRemoveable)
-                {
-                    data.Remove(key);
-                    indexs.Remove(key);
-                }
+                if (!t.IsRemoveable) result.Add(t);
             }
+            return result;
         }
         public string CompressToString()
         {
-            Sort();
-            byte[] preCompress = new byte[indexs.Count * 11];
-            for (int i = 0; i < indexs.Count; i++)
+            IEnumerable<Tile> result = RemoveEmptyTiles();
+            //Sort();
+            byte[] preCompress = new byte[result.Count() * 11];
+            for (int i = 0; i < result.Count(); i++)
             {
-                byte[] tileData = data[indexs[i]].GetBytes();
+                byte[] tileData = result.ElementAt(i).GetBytes();
                 Misc.WriteToArray(preCompress, tileData, i * 11);
             }
             byte[] lzoPack = PackEncoding.EncodeToPack(preCompress, PackType.IsoMapPack);

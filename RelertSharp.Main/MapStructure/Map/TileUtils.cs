@@ -25,5 +25,9 @@ namespace RelertSharp.MapStructure
             }
             Engine.Refresh();
         }
+        public void FixEmptyTiles()
+        {
+            Tiles.FixEmptyTiles(Info.Size.Width, info.Size.Height);
+        }
     }
 }

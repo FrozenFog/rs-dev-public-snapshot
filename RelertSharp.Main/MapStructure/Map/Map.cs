@@ -214,12 +214,7 @@ namespace RelertSharp.MapStructure
         public void CompressTile(bool highCompress = false)
         {
             if (highCompress) foreach (Tile t in Tiles.Data.Values) t.Height -= Tiles.BottomLevel;
-            Tiles.RemoveEmptyTiles();
             isomappack5String = Tiles.CompressToString();
-        }
-        public string CompressTileToString()
-        {
-            return Tiles.CompressToString();
         }
         public void CompressOverlay()
         {

@@ -27,7 +27,7 @@ namespace RelertSharp.MapStructure
             GetGeneralInfo(f);
             Tiles = new TileLayer(isomappack5String, info.Size);
             Overlays = new OverlayLayer(overlayString, overlaydataString);
-            Tiles.FixEmptyTiles(Info.Size.Width, info.Size.Height);
+            FixEmptyTiles();
             DumpOverlayToTile();
 
             GetPreview(f);
