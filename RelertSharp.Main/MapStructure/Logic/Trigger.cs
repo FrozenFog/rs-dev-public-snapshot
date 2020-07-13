@@ -54,16 +54,14 @@ namespace RelertSharp.MapStructure.Logic
         }
         public TriggerItem NewTrigger(string id, TriggerItem.DisplayingType _type = TriggerItem.DisplayingType.IDandName)
         {
-            TriggerItem t = MemCpy(TemplateTrigger);
-            t.ID = id;
-            t.SetDisplayingString(_type);
+            TriggerItem t = new TriggerItem(TemplateTrigger, id);
+            t.Name = TemplateTrigger.Name;
             this[id] = t;
             return t;
         }
         public TriggerItem NewTrigger(string id, TriggerItem src, TriggerItem.DisplayingType type = TriggerItem.DisplayingType.IDandName)
         {
             TriggerItem t = new TriggerItem(src, id);
-            t.SetDisplayingString(type);
             this[id] = t;
             return t;
         }
