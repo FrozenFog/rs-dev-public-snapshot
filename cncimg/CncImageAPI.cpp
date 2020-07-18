@@ -391,7 +391,9 @@ int WINAPI CreateStringObjectAtScene(D3DXVECTOR3 Position, DWORD dwColor, const 
 	return FontClass::GlobalFont.DrawAtScene(Position, dwColor, pString);
 }
 
-void MakeShots(const char * VxlFileName, int nTurretOffset, int nPaletteID, bool bUnion, int nDirections, DWORD dwRemapColor, int TurretOff)
+void MakeShots(const char * VxlFileName, int nTurretOffset, int nPaletteID, 
+	bool bUnion, int nDirections, DWORD dwRemapColor, int TurretOff, 
+	const char* pOutputPath, double dStartDirection)
 {
 	if (!VxlFileName || nDirections % 8)
 		return;
@@ -417,38 +419,38 @@ void MakeShots(const char * VxlFileName, int nTurretOffset, int nPaletteID, bool
 	if (pVxl && pVxl->IsLoaded() && pVxl->GetFrameCount())
 	{
 		auto anglesec = 2.0*D3DX_PI / nDirections;
-		auto angle = -0.75*D3DX_PI;
+		auto angle = -0.75*D3DX_PI + dStartDirection;
 
 		auto shadowStart = pVxl->GetFrameCount()*nDirections;
 		if (pTur->IsLoaded())
 			shadowStart += nDirections;
 
-		if (!bUnion)
+		if (!bUnion || !pTur->IsLoaded())
 			for (int i = 0; i < nDirections; i++)
 			{
 				for (int frame = 0; frame < pVxl->GetFrameCount(); frame++)
 				{
-					sprintf_s(szTargetName, "Output\\%s %04d.png", vxlBody, idxFile);
-					sprintf_s(szShadowName, "Output\\%s %04d.png", vxlBody, idxFile++ + shadowStart);
+					sprintf_s(szTargetName, "%s\\%s %04d.png", pOutputPath, vxlBody, idxFile);
+					sprintf_s(szShadowName, "%s\\%s %04d.png", pOutputPath, vxlBody, idxFile++ + shadowStart);
 					pVxl->MakeFrameScreenShot(SceneClass::Instance.GetDevice(), szTargetName, szShadowName, frame,
 						0, 0, angle, nPaletteID, dwRemapColor);
 				}
 				angle += anglesec;
 		}
 
-		angle = -0.75*D3DX_PI;
+		angle = -0.75*D3DX_PI + dStartDirection;
 		for (int i = 0; pTur->IsLoaded() && i < nDirections; i++)
 		{
-			sprintf_s(szTargetName, "Output\\%s %04d.png", vxlBody, idxFile);
+			sprintf_s(szTargetName, "%s\\%s %04d.png", pOutputPath, vxlBody, idxFile);
 			if (!bUnion)
 			{
-				sprintf_s(szShadowName, "Output\\%s %04d.png", vxlBody, idxFile++ + shadowStart);
+				sprintf_s(szShadowName, "%s\\%s %04d.png", pOutputPath, vxlBody, idxFile++ + shadowStart);
 				pTur->MakeBarlTurScreenShot(SceneClass::Instance.GetDevice(), pBarl.get(), nullptr, szTargetName, szShadowName,
 					0, 0.0, 0.0, angle, nPaletteID, dwRemapColor, TurretOff);
 			}
 			else
 			{
-				sprintf_s(szShadowName, "Output\\%s %04d.png", vxlBody, idxFile++ + shadowStart - nDirections);
+				sprintf_s(szShadowName, "%s\\%s %04d.png", pOutputPath, vxlBody, idxFile++ + shadowStart - nDirections);
 				pTur->MakeBarlTurScreenShot(SceneClass::Instance.GetDevice(), pBarl.get(), pVxl.get(), szTargetName, szShadowName,
 					0, 0.0, 0.0, angle, nPaletteID, dwRemapColor, TurretOff);
 			}

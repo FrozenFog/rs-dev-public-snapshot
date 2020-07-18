@@ -228,7 +228,10 @@ Failure:
 		free(pHvaBuffer);
 
 	CloseHandle(hFile);
-	CloseHandle(hHvaFile);
+
+	if (hHvaFile != INVALID_HANDLE_VALUE) {
+		CloseHandle(hHvaFile);
+	}
 }
 
 void VxlFile::LoadFromFileInBuffer(LPVOID pFileBuffer, ULONG nSize, LPVOID pHVABuffer, ULONG nHVASize, bool bCopy, bool bHVACopy)
