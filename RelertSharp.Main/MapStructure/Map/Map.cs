@@ -21,7 +21,7 @@ namespace RelertSharp.MapStructure
         private string mapPath;
         private string isomappack5String, overlayString, overlaydataString, previewString;
         private string digest;
-        private List<string> globalid = new List<string>();
+        private HashSet<string> globalid = new HashSet<string>();
         private int genID = 1000000;
 
         private MapInfo info;

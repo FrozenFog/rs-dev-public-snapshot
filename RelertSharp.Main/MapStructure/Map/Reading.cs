@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
+using RelertSharp.Utils;
 using RelertSharp.Common;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.MapStructure.Objects;
