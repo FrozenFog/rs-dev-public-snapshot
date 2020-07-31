@@ -243,6 +243,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DrawingEngine\CppExtern.cs" />
+    <Compile Include="Utils\ClassExtension.cs" />
     <Compile Include="Utils\Colors.cs" />
     <Compile Include="FileSystem\BaseFile.cs" />
     <Compile Include="Common\RSException.cs" />

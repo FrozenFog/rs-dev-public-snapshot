@@ -11,11 +11,17 @@ namespace Graphic
 {
 	bool TryCreateIndexedTexture();
 
-	bool Direct3DInitialize(HWND hWnd, const char* pShotFileName = nullptr, bool bUnion = false, int nDirections = 8, int TurretOff = 0);
+	bool Direct3DInitialize(HWND hWnd, const char* pShotFileName = nullptr, 
+		bool bUnion = false, int nDirections = 8, int TurretOff = 0,
+		const char* pOutputPath = nullptr, double dStartDirection = 0.0,
+		int bSkipAnim = FALSE);
 
 	void Direct3DUninitialize();
 
-	bool PrepareVertexBuffer(const char* pShotFileName = nullptr, bool bUnion = false, int nDirections = 8, int TurretOff = 0);
+	bool PrepareVertexBuffer(const char* pShotFileName = nullptr, 
+		bool bUnion = false, int nDirections = 8, int TurretOff = 0, 
+		const char* pOutputPath = nullptr, double dStartDirection = 0.0,
+		int bSkipAnim = FALSE);
 
 	void DrawScene();
 

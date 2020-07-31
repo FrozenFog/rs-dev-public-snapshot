@@ -99,7 +99,9 @@ Obsolete apis
 */
 
 void MakeShots(const char* VxlFileName, int nTurretOffset, int nPaletteID, bool bUnion = false, int nDirections = 8,
-	DWORD dwRemapColor = INVALID_COLOR_VALUE, int TurretOff = 0);
+	DWORD dwRemapColor = INVALID_COLOR_VALUE, int TurretOff = 0, 
+	const char* pOutputPath = nullptr, double dStartDirection = 0.0,
+	int bSkipAnim = FALSE);
 
 
 
