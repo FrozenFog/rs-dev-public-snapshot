@@ -31,9 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.tbcMain = new System.Windows.Forms.TabControl();
             this.tbpTriggers = new System.Windows.Forms.TabPage();
-            this.pnlAction = new RelertSharp.GUI.SubWindows.LogicEditor.PanelEvent();
-            this.pnlEvent = new RelertSharp.GUI.SubWindows.LogicEditor.PanelEvent();
-            this.pnlTriggerTag = new RelertSharp.GUI.SubWindows.LogicEditor.PanelTrgTag();
+            this.splitTriggerMain = new System.Windows.Forms.SplitContainer();
             this.lbxTriggerList = new System.Windows.Forms.ListBox();
             this.cmsTriggerList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTrgLstAscending = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,15 +41,23 @@
             this.tsmiTrgLstName = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiTrgLstIDName = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
+            this.splitTagEA = new System.Windows.Forms.SplitContainer();
+            this.pnlTriggerTag = new RelertSharp.GUI.SubWindows.LogicEditor.PanelTrgTag();
+            this.splitEA = new System.Windows.Forms.SplitContainer();
+            this.pnlEvent = new RelertSharp.GUI.SubWindows.LogicEditor.PanelEvent();
+            this.pnlAction = new RelertSharp.GUI.SubWindows.LogicEditor.PanelEvent();
             this.tbpTaskScriptPage = new System.Windows.Forms.TabPage();
+            this.splitTaskScript = new System.Windows.Forms.SplitContainer();
             this.gpbTeamTask = new System.Windows.Forms.GroupBox();
-            this.pnlTaskforce = new RelertSharp.GUI.SubWindows.LogicEditor.PanelTaskforce();
-            this.label36 = new System.Windows.Forms.Label();
+            this.splitTaskforce = new System.Windows.Forms.SplitContainer();
             this.lbxTaskList = new System.Windows.Forms.ListBox();
+            this.label36 = new System.Windows.Forms.Label();
+            this.pnlTaskforce = new RelertSharp.GUI.SubWindows.LogicEditor.PanelTaskforce();
             this.gpbTeamScript = new System.Windows.Forms.GroupBox();
-            this.pnlScript = new RelertSharp.GUI.SubWindows.LogicEditor.PanelScript();
-            this.label33 = new System.Windows.Forms.Label();
+            this.splitScript = new System.Windows.Forms.SplitContainer();
             this.lbxScriptList = new System.Windows.Forms.ListBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.pnlScript = new RelertSharp.GUI.SubWindows.LogicEditor.PanelScript();
             this.tbpTeams = new System.Windows.Forms.TabPage();
             this.gpbTeamAI = new System.Windows.Forms.GroupBox();
             this.olvAIConfig = new BrightIdeasSoftware.ObjectListView();
@@ -104,10 +110,34 @@
             this.pnlSearch = new RelertSharp.GUI.SubWindows.LogicEditor.PanelGlobalSearch();
             this.tbcMain.SuspendLayout();
             this.tbpTriggers.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitTriggerMain)).BeginInit();
+            this.splitTriggerMain.Panel1.SuspendLayout();
+            this.splitTriggerMain.Panel2.SuspendLayout();
+            this.splitTriggerMain.SuspendLayout();
             this.cmsTriggerList.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitTagEA)).BeginInit();
+            this.splitTagEA.Panel1.SuspendLayout();
+            this.splitTagEA.Panel2.SuspendLayout();
+            this.splitTagEA.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitEA)).BeginInit();
+            this.splitEA.Panel1.SuspendLayout();
+            this.splitEA.Panel2.SuspendLayout();
+            this.splitEA.SuspendLayout();
             this.tbpTaskScriptPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitTaskScript)).BeginInit();
+            this.splitTaskScript.Panel1.SuspendLayout();
+            this.splitTaskScript.Panel2.SuspendLayout();
+            this.splitTaskScript.SuspendLayout();
             this.gpbTeamTask.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitTaskforce)).BeginInit();
+            this.splitTaskforce.Panel1.SuspendLayout();
+            this.splitTaskforce.Panel2.SuspendLayout();
+            this.splitTaskforce.SuspendLayout();
             this.gpbTeamScript.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitScript)).BeginInit();
+            this.splitScript.Panel1.SuspendLayout();
+            this.splitScript.Panel2.SuspendLayout();
+            this.splitScript.SuspendLayout();
             this.tbpTeams.SuspendLayout();
             this.gpbTeamAI.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvAIConfig)).BeginInit();
@@ -129,8 +159,9 @@
             // 
             // tbcMain
             // 
-            this.tbcMain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.tbcMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbcMain.Controls.Add(this.tbpTriggers);
             this.tbcMain.Controls.Add(this.tbpTaskScriptPage);
             this.tbcMain.Controls.Add(this.tbpTeams);
@@ -145,11 +176,7 @@
             // tbpTriggers
             // 
             this.tbpTriggers.BackColor = System.Drawing.Color.Transparent;
-            this.tbpTriggers.Controls.Add(this.pnlAction);
-            this.tbpTriggers.Controls.Add(this.pnlEvent);
-            this.tbpTriggers.Controls.Add(this.pnlTriggerTag);
-            this.tbpTriggers.Controls.Add(this.lbxTriggerList);
-            this.tbpTriggers.Controls.Add(this.label1);
+            this.tbpTriggers.Controls.Add(this.splitTriggerMain);
             this.tbpTriggers.Location = new System.Drawing.Point(4, 25);
             this.tbpTriggers.Margin = new System.Windows.Forms.Padding(4);
             this.tbpTriggers.Name = "tbpTriggers";
@@ -158,40 +185,37 @@
             this.tbpTriggers.TabIndex = 0;
             this.tbpTriggers.Text = "LGCtbpTrgPage";
             // 
-            // pnlAction
+            // splitTriggerMain
             // 
-            this.pnlAction.Location = new System.Drawing.Point(907, 250);
-            this.pnlAction.Name = "pnlAction";
-            this.pnlAction.Size = new System.Drawing.Size(604, 448);
-            this.pnlAction.TabIndex = 9;
+            this.splitTriggerMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitTriggerMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitTriggerMain.Location = new System.Drawing.Point(4, 4);
+            this.splitTriggerMain.Name = "splitTriggerMain";
             // 
-            // pnlEvent
+            // splitTriggerMain.Panel1
             // 
-            this.pnlEvent.Location = new System.Drawing.Point(288, 250);
-            this.pnlEvent.Name = "pnlEvent";
-            this.pnlEvent.Size = new System.Drawing.Size(604, 448);
-            this.pnlEvent.TabIndex = 8;
+            this.splitTriggerMain.Panel1.Controls.Add(this.lbxTriggerList);
+            this.splitTriggerMain.Panel1.Controls.Add(this.label1);
             // 
-            // pnlTriggerTag
+            // splitTriggerMain.Panel2
             // 
-            this.pnlTriggerTag.Location = new System.Drawing.Point(288, 14);
-            this.pnlTriggerTag.Name = "pnlTriggerTag";
-            this.pnlTriggerTag.Size = new System.Drawing.Size(1223, 229);
-            this.pnlTriggerTag.TabIndex = 7;
+            this.splitTriggerMain.Panel2.Controls.Add(this.splitTagEA);
+            this.splitTriggerMain.Size = new System.Drawing.Size(1517, 702);
+            this.splitTriggerMain.SplitterDistance = 242;
+            this.splitTriggerMain.TabIndex = 10;
             // 
             // lbxTriggerList
             // 
-            this.lbxTriggerList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.lbxTriggerList.ContextMenuStrip = this.cmsTriggerList;
+            this.lbxTriggerList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbxTriggerList.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxTriggerList.FormattingEnabled = true;
             this.lbxTriggerList.HorizontalScrollbar = true;
             this.lbxTriggerList.ItemHeight = 15;
-            this.lbxTriggerList.Location = new System.Drawing.Point(11, 32);
+            this.lbxTriggerList.Location = new System.Drawing.Point(0, 15);
             this.lbxTriggerList.Margin = new System.Windows.Forms.Padding(4);
             this.lbxTriggerList.Name = "lbxTriggerList";
-            this.lbxTriggerList.Size = new System.Drawing.Size(269, 649);
+            this.lbxTriggerList.Size = new System.Drawing.Size(242, 687);
             this.lbxTriggerList.Sorted = true;
             this.lbxTriggerList.TabIndex = 2;
             this.lbxTriggerList.SelectedValueChanged += new System.EventHandler(this.lbxTriggerList_SelectedValueChanged);
@@ -252,18 +276,79 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 14);
+            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(111, 15);
             this.label1.TabIndex = 1;
             this.label1.Text = "LGClblTrgList";
             // 
+            // splitTagEA
+            // 
+            this.splitTagEA.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitTagEA.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitTagEA.Location = new System.Drawing.Point(0, 0);
+            this.splitTagEA.Name = "splitTagEA";
+            this.splitTagEA.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitTagEA.Panel1
+            // 
+            this.splitTagEA.Panel1.Controls.Add(this.pnlTriggerTag);
+            // 
+            // splitTagEA.Panel2
+            // 
+            this.splitTagEA.Panel2.Controls.Add(this.splitEA);
+            this.splitTagEA.Size = new System.Drawing.Size(1271, 702);
+            this.splitTagEA.SplitterDistance = 236;
+            this.splitTagEA.TabIndex = 0;
+            // 
+            // pnlTriggerTag
+            // 
+            this.pnlTriggerTag.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTriggerTag.Location = new System.Drawing.Point(0, 0);
+            this.pnlTriggerTag.Name = "pnlTriggerTag";
+            this.pnlTriggerTag.Size = new System.Drawing.Size(1271, 236);
+            this.pnlTriggerTag.TabIndex = 7;
+            // 
+            // splitEA
+            // 
+            this.splitEA.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitEA.Location = new System.Drawing.Point(0, 0);
+            this.splitEA.Name = "splitEA";
+            // 
+            // splitEA.Panel1
+            // 
+            this.splitEA.Panel1.Controls.Add(this.pnlEvent);
+            // 
+            // splitEA.Panel2
+            // 
+            this.splitEA.Panel2.Controls.Add(this.pnlAction);
+            this.splitEA.Size = new System.Drawing.Size(1271, 462);
+            this.splitEA.SplitterDistance = 619;
+            this.splitEA.TabIndex = 0;
+            this.splitEA.Resize += new System.EventHandler(this.splitEA_Resize);
+            // 
+            // pnlEvent
+            // 
+            this.pnlEvent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlEvent.Location = new System.Drawing.Point(0, 0);
+            this.pnlEvent.Name = "pnlEvent";
+            this.pnlEvent.Size = new System.Drawing.Size(619, 462);
+            this.pnlEvent.TabIndex = 8;
+            // 
+            // pnlAction
+            // 
+            this.pnlAction.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlAction.Location = new System.Drawing.Point(0, 0);
+            this.pnlAction.Name = "pnlAction";
+            this.pnlAction.Size = new System.Drawing.Size(648, 462);
+            this.pnlAction.TabIndex = 9;
+            // 
             // tbpTaskScriptPage
             // 
             this.tbpTaskScriptPage.BackColor = System.Drawing.Color.Transparent;
-            this.tbpTaskScriptPage.Controls.Add(this.gpbTeamTask);
-            this.tbpTaskScriptPage.Controls.Add(this.gpbTeamScript);
+            this.tbpTaskScriptPage.Controls.Add(this.splitTaskScript);
             this.tbpTaskScriptPage.Location = new System.Drawing.Point(4, 25);
             this.tbpTaskScriptPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbpTaskScriptPage.Name = "tbpTaskScriptPage";
@@ -272,91 +357,150 @@
             this.tbpTaskScriptPage.TabIndex = 3;
             this.tbpTaskScriptPage.Text = "LGCtbpTaskScriptPage";
             // 
+            // splitTaskScript
+            // 
+            this.splitTaskScript.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitTaskScript.Location = new System.Drawing.Point(3, 2);
+            this.splitTaskScript.Name = "splitTaskScript";
+            // 
+            // splitTaskScript.Panel1
+            // 
+            this.splitTaskScript.Panel1.Controls.Add(this.gpbTeamTask);
+            // 
+            // splitTaskScript.Panel2
+            // 
+            this.splitTaskScript.Panel2.Controls.Add(this.gpbTeamScript);
+            this.splitTaskScript.Size = new System.Drawing.Size(1519, 706);
+            this.splitTaskScript.SplitterDistance = 740;
+            this.splitTaskScript.TabIndex = 6;
+            this.splitTaskScript.Resize += new System.EventHandler(this.splitTaskScript_Resize);
+            // 
             // gpbTeamTask
             // 
-            this.gpbTeamTask.Controls.Add(this.pnlTaskforce);
-            this.gpbTeamTask.Controls.Add(this.label36);
-            this.gpbTeamTask.Controls.Add(this.lbxTaskList);
-            this.gpbTeamTask.Location = new System.Drawing.Point(3, 4);
+            this.gpbTeamTask.Controls.Add(this.splitTaskforce);
+            this.gpbTeamTask.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gpbTeamTask.Location = new System.Drawing.Point(0, 0);
             this.gpbTeamTask.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gpbTeamTask.Name = "gpbTeamTask";
             this.gpbTeamTask.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gpbTeamTask.Size = new System.Drawing.Size(754, 702);
+            this.gpbTeamTask.Size = new System.Drawing.Size(740, 706);
             this.gpbTeamTask.TabIndex = 5;
             this.gpbTeamTask.TabStop = false;
             this.gpbTeamTask.Text = "LGCgpbTeamTask";
             // 
-            // pnlTaskforce
+            // splitTaskforce
             // 
-            this.pnlTaskforce.Location = new System.Drawing.Point(284, 22);
-            this.pnlTaskforce.Name = "pnlTaskforce";
-            this.pnlTaskforce.Size = new System.Drawing.Size(453, 667);
-            this.pnlTaskforce.TabIndex = 2;
+            this.splitTaskforce.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitTaskforce.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitTaskforce.Location = new System.Drawing.Point(3, 20);
+            this.splitTaskforce.Name = "splitTaskforce";
+            // 
+            // splitTaskforce.Panel1
+            // 
+            this.splitTaskforce.Panel1.Controls.Add(this.lbxTaskList);
+            this.splitTaskforce.Panel1.Controls.Add(this.label36);
+            // 
+            // splitTaskforce.Panel2
+            // 
+            this.splitTaskforce.Panel2.Controls.Add(this.pnlTaskforce);
+            this.splitTaskforce.Size = new System.Drawing.Size(734, 684);
+            this.splitTaskforce.SplitterDistance = 244;
+            this.splitTaskforce.TabIndex = 3;
+            // 
+            // lbxTaskList
+            // 
+            this.lbxTaskList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbxTaskList.FormattingEnabled = true;
+            this.lbxTaskList.HorizontalScrollbar = true;
+            this.lbxTaskList.ItemHeight = 15;
+            this.lbxTaskList.Location = new System.Drawing.Point(0, 15);
+            this.lbxTaskList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lbxTaskList.Name = "lbxTaskList";
+            this.lbxTaskList.Size = new System.Drawing.Size(244, 669);
+            this.lbxTaskList.Sorted = true;
+            this.lbxTaskList.TabIndex = 0;
+            this.lbxTaskList.SelectedValueChanged += new System.EventHandler(this.lbxTaskList_SelectedValueChanged);
             // 
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(5, 22);
+            this.label36.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label36.Location = new System.Drawing.Point(0, 0);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(119, 15);
             this.label36.TabIndex = 1;
             this.label36.Text = "LGClblTaskList";
             // 
-            // lbxTaskList
+            // pnlTaskforce
             // 
-            this.lbxTaskList.FormattingEnabled = true;
-            this.lbxTaskList.HorizontalScrollbar = true;
-            this.lbxTaskList.ItemHeight = 15;
-            this.lbxTaskList.Location = new System.Drawing.Point(9, 40);
-            this.lbxTaskList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.lbxTaskList.Name = "lbxTaskList";
-            this.lbxTaskList.Size = new System.Drawing.Size(269, 649);
-            this.lbxTaskList.Sorted = true;
-            this.lbxTaskList.TabIndex = 0;
-            this.lbxTaskList.SelectedValueChanged += new System.EventHandler(this.lbxTaskList_SelectedValueChanged);
+            this.pnlTaskforce.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTaskforce.Location = new System.Drawing.Point(0, 0);
+            this.pnlTaskforce.Name = "pnlTaskforce";
+            this.pnlTaskforce.Size = new System.Drawing.Size(486, 684);
+            this.pnlTaskforce.TabIndex = 2;
             // 
             // gpbTeamScript
             // 
-            this.gpbTeamScript.Controls.Add(this.pnlScript);
-            this.gpbTeamScript.Controls.Add(this.label33);
-            this.gpbTeamScript.Controls.Add(this.lbxScriptList);
-            this.gpbTeamScript.Location = new System.Drawing.Point(763, 4);
+            this.gpbTeamScript.Controls.Add(this.splitScript);
+            this.gpbTeamScript.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gpbTeamScript.Location = new System.Drawing.Point(0, 0);
             this.gpbTeamScript.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gpbTeamScript.Name = "gpbTeamScript";
             this.gpbTeamScript.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gpbTeamScript.Size = new System.Drawing.Size(754, 702);
+            this.gpbTeamScript.Size = new System.Drawing.Size(775, 706);
             this.gpbTeamScript.TabIndex = 4;
             this.gpbTeamScript.TabStop = false;
             this.gpbTeamScript.Text = "LGCgpbTeamScript";
             // 
-            // pnlScript
+            // splitScript
             // 
-            this.pnlScript.Location = new System.Drawing.Point(281, 22);
-            this.pnlScript.Name = "pnlScript";
-            this.pnlScript.Size = new System.Drawing.Size(461, 671);
-            this.pnlScript.TabIndex = 2;
+            this.splitScript.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitScript.Location = new System.Drawing.Point(3, 20);
+            this.splitScript.Name = "splitScript";
+            // 
+            // splitScript.Panel1
+            // 
+            this.splitScript.Panel1.Controls.Add(this.lbxScriptList);
+            this.splitScript.Panel1.Controls.Add(this.label33);
+            // 
+            // splitScript.Panel2
+            // 
+            this.splitScript.Panel2.Controls.Add(this.pnlScript);
+            this.splitScript.Size = new System.Drawing.Size(769, 684);
+            this.splitScript.SplitterDistance = 285;
+            this.splitScript.TabIndex = 3;
+            // 
+            // lbxScriptList
+            // 
+            this.lbxScriptList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbxScriptList.FormattingEnabled = true;
+            this.lbxScriptList.HorizontalScrollbar = true;
+            this.lbxScriptList.ItemHeight = 15;
+            this.lbxScriptList.Location = new System.Drawing.Point(0, 15);
+            this.lbxScriptList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lbxScriptList.Name = "lbxScriptList";
+            this.lbxScriptList.Size = new System.Drawing.Size(285, 669);
+            this.lbxScriptList.Sorted = true;
+            this.lbxScriptList.TabIndex = 0;
+            this.lbxScriptList.SelectedValueChanged += new System.EventHandler(this.lbxScriptList_SelectedValueChanged);
             // 
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(6, 22);
+            this.label33.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label33.Location = new System.Drawing.Point(0, 0);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(135, 15);
             this.label33.TabIndex = 1;
             this.label33.Text = "LGClblScriptList";
             // 
-            // lbxScriptList
+            // pnlScript
             // 
-            this.lbxScriptList.FormattingEnabled = true;
-            this.lbxScriptList.HorizontalScrollbar = true;
-            this.lbxScriptList.ItemHeight = 15;
-            this.lbxScriptList.Location = new System.Drawing.Point(6, 40);
-            this.lbxScriptList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.lbxScriptList.Name = "lbxScriptList";
-            this.lbxScriptList.Size = new System.Drawing.Size(269, 649);
-            this.lbxScriptList.Sorted = true;
-            this.lbxScriptList.TabIndex = 0;
-            this.lbxScriptList.SelectedValueChanged += new System.EventHandler(this.lbxScriptList_SelectedValueChanged);
+            this.pnlScript.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlScript.Location = new System.Drawing.Point(0, 0);
+            this.pnlScript.Name = "pnlScript";
+            this.pnlScript.Size = new System.Drawing.Size(480, 684);
+            this.pnlScript.TabIndex = 2;
             // 
             // tbpTeams
             // 
@@ -958,6 +1102,8 @@
             // 
             // pnlSearch
             // 
+            this.pnlSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlSearch.Location = new System.Drawing.Point(1552, 66);
             this.pnlSearch.Name = "pnlSearch";
             this.pnlSearch.Size = new System.Drawing.Size(353, 710);
@@ -970,10 +1116,7 @@
             this.ClientSize = new System.Drawing.Size(1920, 791);
             this.Controls.Add(this.pnlSearch);
             this.Controls.Add(this.tbcMain);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "LogicEditor";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -981,13 +1124,37 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogicEditor_FormClosing);
             this.tbcMain.ResumeLayout(false);
             this.tbpTriggers.ResumeLayout(false);
-            this.tbpTriggers.PerformLayout();
+            this.splitTriggerMain.Panel1.ResumeLayout(false);
+            this.splitTriggerMain.Panel1.PerformLayout();
+            this.splitTriggerMain.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitTriggerMain)).EndInit();
+            this.splitTriggerMain.ResumeLayout(false);
             this.cmsTriggerList.ResumeLayout(false);
+            this.splitTagEA.Panel1.ResumeLayout(false);
+            this.splitTagEA.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitTagEA)).EndInit();
+            this.splitTagEA.ResumeLayout(false);
+            this.splitEA.Panel1.ResumeLayout(false);
+            this.splitEA.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitEA)).EndInit();
+            this.splitEA.ResumeLayout(false);
             this.tbpTaskScriptPage.ResumeLayout(false);
+            this.splitTaskScript.Panel1.ResumeLayout(false);
+            this.splitTaskScript.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitTaskScript)).EndInit();
+            this.splitTaskScript.ResumeLayout(false);
             this.gpbTeamTask.ResumeLayout(false);
-            this.gpbTeamTask.PerformLayout();
+            this.splitTaskforce.Panel1.ResumeLayout(false);
+            this.splitTaskforce.Panel1.PerformLayout();
+            this.splitTaskforce.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitTaskforce)).EndInit();
+            this.splitTaskforce.ResumeLayout(false);
             this.gpbTeamScript.ResumeLayout(false);
-            this.gpbTeamScript.PerformLayout();
+            this.splitScript.Panel1.ResumeLayout(false);
+            this.splitScript.Panel1.PerformLayout();
+            this.splitScript.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitScript)).EndInit();
+            this.splitScript.ResumeLayout(false);
             this.tbpTeams.ResumeLayout(false);
             this.gpbTeamAI.ResumeLayout(false);
             this.gpbTeamAI.PerformLayout();
@@ -1089,5 +1256,11 @@
         private System.Windows.Forms.ListBox lbxTaskList;
         private PanelTaskforce pnlTaskforce;
         private PanelScript pnlScript;
+        private System.Windows.Forms.SplitContainer splitTriggerMain;
+        private System.Windows.Forms.SplitContainer splitTagEA;
+        private System.Windows.Forms.SplitContainer splitEA;
+        private System.Windows.Forms.SplitContainer splitTaskScript;
+        private System.Windows.Forms.SplitContainer splitTaskforce;
+        private System.Windows.Forms.SplitContainer splitScript;
     }
 }

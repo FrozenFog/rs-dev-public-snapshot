@@ -99,6 +99,10 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 }
             }
         }
+        private void splitEA_Resize(object sender, EventArgs e)
+        {
+            splitEA.SplitterDistance = splitEA.Width / 2;
+        }
         private void tsmiTrgLstAscending_Click(object sender, EventArgs e)
         {
             map.Triggers.AscendingSort();

@@ -84,5 +84,9 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 pnlScript.Reload(item);
             }
         }
+        private void splitTaskScript_Resize(object sender, EventArgs e)
+        {
+            splitTaskScript.SplitterDistance = splitTaskScript.Width / 2;
+        }
     }
 }
