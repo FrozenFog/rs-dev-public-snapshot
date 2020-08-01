@@ -166,9 +166,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
 
         #region Private Calls - LogicEditor
-        //private TaskforceItem _CurrentTaskforce { get { return map.TaskForces[txbTaskID.Text]; } }
-        //private TaskforceUnit _CurrentBoxTaskforceUnit { get { return TaskforceUnit.FromListviewItem(lvTaskforceUnits.SelectedItems[0]); } }
-        //private TaskforceUnit _CurrentTaskforceUnit { get { return _CurrentTaskforce.Members[lvTaskforceUnits.SelectedIndices[0]]; } }
         private TeamItem _CurrentTeam { get { return lbxTeamList.SelectedItem as TeamItem; } }
         private TeamUnit _CurrentTeamUnit { get { return _CurrentTeam.GetToUnit; } set { _CurrentTeam.GetToUnit = value; } }
         private AITriggerItem _CurrentAITrigger { get { return lbxAIList.SelectedItem as AITriggerItem; } }

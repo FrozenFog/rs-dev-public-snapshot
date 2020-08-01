@@ -153,6 +153,7 @@ namespace RelertSharp.GUI
             if (drew)
             {
                 saved = false;
+                panel1.Focus();
                 if (e.Button == MouseButtons.Middle)
                 {
                     MmbDown(e);

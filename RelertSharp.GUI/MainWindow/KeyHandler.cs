@@ -106,6 +106,34 @@ namespace RelertSharp.GUI
                     case Keys.PageDown:
                         Current.SinkTileAll();
                         break;
+                    case Keys.Up:
+                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.TileBrush)
+                        {
+                            pnlTile.Result.ShiftOffsetY(-1);
+                            e.IsInputKey = true;
+                        }
+                        break;
+                    case Keys.Down:
+                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.TileBrush)
+                        {
+                            pnlTile.Result.ShiftOffsetY(1);
+                            e.IsInputKey = true;
+                        }
+                        break;
+                    case Keys.Left:
+                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.TileBrush)
+                        {
+                            pnlTile.Result.ShiftOffsetX(-1);
+                            e.IsInputKey = true;
+                        }
+                        break;
+                    case Keys.Right:
+                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.TileBrush)
+                        {
+                            pnlTile.Result.ShiftOffsetX(1);
+                            e.IsInputKey = true;
+                        }
+                        break;
                 }
             }
         }
