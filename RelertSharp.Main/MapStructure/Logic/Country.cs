@@ -87,6 +87,11 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - CountryItem
+        public override string ID
+        {
+            get { return Index; }
+            set { Index = value; }
+        }
         public string Index { get; set; }
         public string Name { get; set; }
         public string Side { get; set; }

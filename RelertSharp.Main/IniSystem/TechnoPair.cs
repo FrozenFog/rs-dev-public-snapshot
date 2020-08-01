@@ -10,6 +10,7 @@ namespace RelertSharp.IniSystem
     public class TechnoPair : ILogicItem
     {
         private string abst = "";
+        private string name = "";
         public enum AbstractType
         {
             Default = 0,
@@ -118,8 +119,19 @@ namespace RelertSharp.IniSystem
 
         #region Public Calls - TechnoPair
         public string Index { get; set; } = "";
-        public string Name { get; set; } = "";
-        public string ID { get { return RegName; } }
+        public string Name
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(name)) return RegName;
+                return name;
+            }
+            set
+            {
+                name = value;
+            }
+        }
+        public string ID { get { return Index; } }
         public string RegName { get; set; } = "";
         public string UIName { get; set; } = "";
         public static TechnoPair NonePair
