@@ -27,6 +27,7 @@ namespace RelertSharp.GUI
         private static RsLog Log { get { return GlobalVar.Log; } }
         private Map map;
         private bool initialized = false;
+        private bool saved = true;
         private MainWindowDataModel Current = new MainWindowDataModel();
 
         private LogicEditor logicEditor = new LogicEditor();
@@ -100,6 +101,7 @@ namespace RelertSharp.GUI
                 dest.Ambient = (float)nmbxLightningAmbient.Value;
                 dest.Ground = (float)nmbxLightningGround.Value;
                 dest.Level = (float)nmbxLightningLevel.Value;
+                saved = false;
             }
         }
         private void ApplyLightning(LightningItem color)
@@ -150,6 +152,7 @@ namespace RelertSharp.GUI
         {
             if (drew)
             {
+                saved = false;
                 if (e.Button == MouseButtons.Middle)
                 {
                     MmbDown(e);
@@ -427,6 +430,19 @@ namespace RelertSharp.GUI
         private void panel1_MouseEnter_1(object sender, EventArgs e)
         {
             PanelMouseEnter();
+        }
+
+        private void MainWindowTest_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!saved || !logicEditor.ChangeSaved)
+            {
+                DialogResult d = MessageBox.Show("Save changes to map file?", "Relert Sharp", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                if (d == DialogResult.Cancel) e.Cancel = true;
+                else if (d == DialogResult.Yes)
+                {
+                    tsmiMainSaveMapAs_Click(null, null);
+                }
+            }
         }
     }
 }

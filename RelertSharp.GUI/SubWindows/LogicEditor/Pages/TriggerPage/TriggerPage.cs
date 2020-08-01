@@ -88,6 +88,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             if (!updatingLbxTriggerList)
             {
+                ChangeSaved = false;
                 TriggerItem item = lbxTriggerList.SelectedItem as TriggerItem;
                 if (item != null)
                 {

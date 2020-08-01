@@ -29,6 +29,8 @@ namespace RelertSharp.GUI
             {
                 CurrentMapDocument.SaveMap(dlg.FileName);
                 Complete("Saving Complete!");
+                saved = true;
+                logicEditor.ChangeSaved = true;
             }
         }
         private void tsmiMainRunMap_Click(object sender, EventArgs e)

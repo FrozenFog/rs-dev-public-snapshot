@@ -176,5 +176,10 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private HouseItem _CurrentHouse { get { return lbxHouses.SelectedItem as HouseItem; } }
         private HouseUnit _CurrentHouseUnit { get { return _CurrentHouse.GetToUnit; } set { _CurrentHouse.GetToUnit = value; } }
         #endregion
+
+
+        #region Public Calls
+        public bool ChangeSaved { get; set; } = true;
+        #endregion
     }
 }
