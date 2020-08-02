@@ -88,6 +88,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             if (!updatingLbxTriggerList)
             {
+                ChangeSaved = false;
                 TriggerItem item = lbxTriggerList.SelectedItem as TriggerItem;
                 if (item != null)
                 {
@@ -97,6 +98,10 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     pnlAction.Reload(item);
                 }
             }
+        }
+        private void splitEA_Resize(object sender, EventArgs e)
+        {
+            splitEA.SplitterDistance = splitEA.Width / 2;
         }
         private void tsmiTrgLstAscending_Click(object sender, EventArgs e)
         {

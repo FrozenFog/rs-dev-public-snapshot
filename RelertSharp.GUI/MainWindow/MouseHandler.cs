@@ -25,9 +25,10 @@ namespace RelertSharp.GUI
         #region Down
         private void LmbDown(MouseEventArgs e)
         {
-            if (!panel1.Focused || RbPanelVisible())
+            panel1.Focus();
+            if (/*!panel1.Focused ||*/ RbPanelVisible())
             {
-                panel1.Focus();
+                //panel1.Focus();
                 HideRbPanel();
                 panel1.Cursor = prevCur;
                 GlobalVar.Engine.Refresh();
@@ -131,7 +132,7 @@ namespace RelertSharp.GUI
         #region Moving
         private void MouseMoving(MouseEventArgs e)
         {
-            if (initialized && drew && panel1.Focused)
+            if (initialized && drew && !RbPanelVisible())
             {
                 Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
                 MainPanelMoving(e);
@@ -266,10 +267,10 @@ namespace RelertSharp.GUI
         {
             if (drew)
             {
-                if ((Current.CurrentMouseAction & MainWindowDataModel.MouseActionType.DrawingMode) != 0 && !panel1.Focused)
-                {
-                    panel1.Focus();
-                }
+                //if ((Current.CurrentMouseAction & MainWindowDataModel.MouseActionType.DrawingMode) != 0 && TopLevel)
+                //{
+                //    panel1.Focus();
+                //}
             }
         }
         #endregion

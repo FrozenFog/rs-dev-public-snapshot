@@ -23,11 +23,11 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         internal event SoundPlayingHandler NeedPlayingShound;
         internal event TriggerUpdateHandler TriggerTracing;
         internal event I2dLocateableHandler JumpToWaypoint;
-        private ComboBox cbbCsf, cbbPrev;
 
 
         internal LogicItem CurrentItem { get; set; }
         internal List<TriggerParam> CurrentParams { get { return (cbbEventAbst.SelectedItem as TriggerDescription).Parameters; } }
+        private IEnumerable<Control> paramControls { get { return lkls.Concat<Control>(txbs).Concat(ckbs).Concat(cbbs); } }
         private Map Map { get { return CurrentMapDocument.Map; } }
 
 
@@ -53,18 +53,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             txbs = new TextBox[4] { txbEP1, txbEP2, txbEP3, txbEP4 };
             ckbs = new CheckBox[4] { ckbEP1, ckbEP2, ckbEP3, ckbEP4 };
             cbbs = new ComboBox[4] { cbbEP1, cbbEP2, cbbEP3, cbbEP4 };
-            lblNoParamE.Location = new Point(gpbEventParam.Size.Width / 2 - lblNoParamE.Size.Width / 2, gpbEventParam.Size.Height / 2 - lblNoParamE.Size.Height);
             lbxReferance = refer;
-            cbbCsf = new ComboBox()
-            {
-                Location = cbbEP1.Location,
-                Size = cbbEP1.Size,
-                Visible = false,
-                Name = "cbbCsf"
-            };
-            cbbCsf.Items.AddRange(GlobalCsf.TechnoPairs.ToArray());
-            cbbCsf.Validated += new EventHandler(ParamChanged);
-            gpbEventParam.Controls.Add(cbbCsf);
             if (!isEvent)
             {
                 mtxbEventID.Mask = "000";
@@ -128,14 +117,16 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private void RefreshParam()
         {
             isParamRefreshing = true;
+            tlpParam.Visible = false;
             toolTip.RemoveAll();
             TriggerDescription desc = cbbEventAbst.SelectedItem as TriggerDescription;
             string[] parameters = CurrentItem.Parameters;
-            foreach(Control c in gpbEventParam.Controls)
+            foreach(Control c in paramControls)
             {
                 c.Visible = false;
                 c.Enabled = true;
             }
+            lblNoParamE.Visible = false;
             if (desc.Parameters.Count == 0) lblNoParamE.Visible = true;
             else
             {
@@ -161,28 +152,10 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 }
             }
             isParamRefreshing = false;
+            tlpParam.Visible = true;
         }
         private int indexPrev = -1;
         private bool csfEnabled = false;
-        private void SwapCombobox(bool isCsfNow, int indexNow)
-        {
-            if (isCsfNow && !csfEnabled)
-            {
-                csfEnabled = true;
-                cbbPrev = cbbs[indexNow];
-                cbbs[indexNow] = cbbCsf;
-                indexPrev = indexNow;
-                cbbCsf.Tag = cbbPrev.Tag;
-            }
-            else if (!isCsfNow && csfEnabled)
-            {
-                if (indexPrev != -1)
-                {
-                    csfEnabled = false;
-                    cbbs[indexPrev] = cbbPrev;
-                }
-            }
-        }
         private void SetParamControls(Control[] controls, TriggerParam param, string[] paramData, int controlIndex)
         {
             if (controls.GetType() == typeof(LinkLabel[]))
@@ -192,17 +165,9 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             }
             else if (controls.GetType() == typeof(ComboBox[]))
             {
-                if (param.ComboType == TriggerParam.ComboContent.CsfLabel)
-                {
-                    SwapCombobox(true, controlIndex);
-                }
-                else
-                {
-                    SwapCombobox(false, controlIndex);
-                    Cursor = Cursors.WaitCursor;
-                    IList<object> data = Map.GetComboCollections(param).ToList();
-                    LoadToObjectCollection((ComboBox)controls[controlIndex], data);
-                }
+                Cursor = Cursors.WaitCursor;
+                IList<object> data = Map.GetComboCollections(param).ToList();
+                LoadToObjectCollection((ComboBox)controls[controlIndex], data);
                 SelectCombo((ComboBox)controls[controlIndex], param.GetParameter(paramData), param);
                 Cursor = Cursors.Arrow;
             }
@@ -417,6 +382,13 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 OnWaypointJump(wp);
             }
         }
+
+        private void gpbEventParam_Resize(object sender, EventArgs e)
+        {
+            lblNoParamE.Location = new Point(gpbEventParam.Size.Width / 2 - lblNoParamE.Size.Width / 2, gpbEventParam.Size.Height / 2 - lblNoParamE.Size.Height);
+            LinkLabel[] lk = lkls;
+        }
+
         private void ManageCsfToolTip(LinkLabel sender, TechnoPair p)
         {
             string csf = GlobalCsf[p.Index].ContentString;

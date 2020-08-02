@@ -203,9 +203,10 @@ Failed:
 
 bool Graphic::Direct3DInitialize(HWND hWnd, const char* pShotFileName,
 	bool bUnion, int nDirections, int TurretOff, 
-	const char* pOutputPath, double dStartDirection)
+	const char* pOutputPath, double dStartDirection,
+	int bSkipAnim)
 {
-	return SetUpScene(hWnd) && PrepareVertexBuffer(pShotFileName, bUnion, nDirections, TurretOff, pOutputPath, dStartDirection);
+	return SetUpScene(hWnd) && PrepareVertexBuffer(pShotFileName, bUnion, nDirections, TurretOff, pOutputPath, dStartDirection, bSkipAnim);
 }
 
 void Graphic::Direct3DUninitialize()
@@ -215,7 +216,8 @@ void Graphic::Direct3DUninitialize()
 
 bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, 
 	int nDirections, int TurretOff, 
-	const char* pOutputPath, double dStartDirection)
+	const char* pOutputPath, double dStartDirection,
+	int bSkipAnim)
 {
 	const float TileLength = 30.0f*sqrt(2.0);
 	const float CellHeight = 10.0f * sqrt(3.0);
@@ -258,7 +260,7 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion,
 
 	//MakeVxlFrameShot(VxlFiles[0], "Shot.png", 0, 0.0, 0.0, 0.0, UnitPalette, INVALID_COLOR_VALUE);
 	if (pShotFileName) {
-		MakeShots(pShotFileName, 0.0, UnitPalette, bUnion, nDirections, INVALID_COLOR_VALUE, TurretOff, pOutputPath, dStartDirection);
+		MakeShots(pShotFileName, 0.0, UnitPalette, bUnion, nDirections, INVALID_COLOR_VALUE, TurretOff, pOutputPath, dStartDirection, bSkipAnim);
 	}
 
 	if (roadTileFile = CreateTmpFile("tile\\proad01a.tem")) {

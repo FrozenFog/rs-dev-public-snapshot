@@ -69,6 +69,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             if (!updatingLbxTaskList)
             {
+                ChangeSaved = false;
                 TaskforceItem item = lbxTaskList.SelectedItem as TaskforceItem;
                 pnlTaskforce.Reload(item);
             }
@@ -78,9 +79,14 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             if (!updatingLbxScriptList)
             {
+                ChangeSaved = false;
                 TeamScriptGroup item = lbxScriptList.SelectedItem as TeamScriptGroup;
                 pnlScript.Reload(item);
             }
+        }
+        private void splitTaskScript_Resize(object sender, EventArgs e)
+        {
+            splitTaskScript.SplitterDistance = splitTaskScript.Width / 2;
         }
     }
 }

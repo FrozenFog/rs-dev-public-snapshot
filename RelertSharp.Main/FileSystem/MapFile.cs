@@ -36,7 +36,7 @@ namespace RelertSharp.FileSystem
             DumpLogics(IniDict);
             SaveIni(savingPath, true);
         }
-        public void SaveMapInfoInto(string savePath, string filename)
+        public void SaveMapAs(string savePath, string filename)
         {
             INIFile f = new INIFile(filename, true);
             f.AddEnt(Map.IniResidue.Values);

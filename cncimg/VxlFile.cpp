@@ -966,6 +966,7 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, V
 							else
 							{
 								int nIndex = 31 - int(fAngle / (D3DX_PI / 2)*32.0);
+								if (nIndex > 31 || nIndex < 0) nIndex = 31;
 								auto& Color = Entries[Vpl[nIndex].Table[Buffer.nColor]];
 								dwColor = D3DCOLOR_XRGB(Color.R, Color.G, Color.B);
 							}

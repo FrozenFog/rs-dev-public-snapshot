@@ -1573,6 +1573,7 @@
             this.MainMenuStrip = this.mnsMain;
             this.Name = "MainWindowTest";
             this.Text = "RSMainTitle";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindowTest_FormClosing);
             this.panelHost.ResumeLayout(false);
             this.splitMain.Panel1.ResumeLayout(false);
             this.splitMain.Panel1.PerformLayout();

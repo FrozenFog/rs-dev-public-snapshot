@@ -108,22 +108,25 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		int nDirections;
 		int nTurretOff;
 		int bUnion;
+		int bSkipAnim;
 		double dStartDirection;
 
-		sscanf_s(lpCmdLine, "%d %d %d %lf %s %s", &nDirections, &nTurretOff, &bUnion, &dStartDirection, szFileName, sizeof szFileName, szOutPath, sizeof szOutPath);
+		sscanf_s(lpCmdLine, "%d %d %d %d %lf %s %s", &nDirections, &nTurretOff, &bUnion, &bSkipAnim, &dStartDirection, szFileName, sizeof szFileName, szOutPath, sizeof szOutPath);
 		printf_s("szFileName = %s \n", szFileName);
 		printf_s("dStartDirection = %lf \n", dStartDirection);
 		printf_s("szOutPath = %s \n", szOutPath);
 		//getchar();
-		if (!Graphic::Direct3DInitialize(hWnd, szFileName, bUnion, nDirections, nTurretOff, szOutPath, dStartDirection))
+		if (!Graphic::Direct3DInitialize(hWnd, szFileName, bUnion, nDirections, nTurretOff, szOutPath, dStartDirection, bSkipAnim))
 		{
 			printf_s("d3d creation failed.\n");
 			DestroyWindow(hWnd);
 			UnregisterClass("D3DWIN", hInstance);
+			Sleep(2000);
 			return 0;
 		}
 		else
 		{
+			printf_s("render complete .\n");
 			DestroyWindow(hWnd);
 		}
 	}

@@ -27,8 +27,10 @@ namespace RelertSharp.GUI
             };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                CurrentMapDocument.SaveMap(dlg.FileName);
+                CurrentMapDocument.SaveMapAs(GlobalConfig.GamePath, dlg.FileName);
                 Complete("Saving Complete!");
+                saved = true;
+                logicEditor.ChangeSaved = true;
             }
         }
         private void tsmiMainRunMap_Click(object sender, EventArgs e)
@@ -39,7 +41,7 @@ namespace RelertSharp.GUI
             {
                 INIFile spawn = setting.GetSpawn();
                 spawn.SaveIni(GlobalConfig.GamePath + "spawn.ini");
-                CurrentMapDocument.SaveMapInfoInto(GlobalConfig.GamePath, "spawnmap.ini");
+                CurrentMapDocument.SaveMapAs(GlobalConfig.GamePath, "spawnmap.ini");
                 string injectorName = setting.UseSyringe ? "syringe.exe" : "CncnetYRInject.exe";
                 RunGame(setting.GameName, injectorName, !setting.UseSyringe);
             }

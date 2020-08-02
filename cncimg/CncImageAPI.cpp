@@ -393,7 +393,7 @@ int WINAPI CreateStringObjectAtScene(D3DXVECTOR3 Position, DWORD dwColor, const 
 
 void MakeShots(const char * VxlFileName, int nTurretOffset, int nPaletteID, 
 	bool bUnion, int nDirections, DWORD dwRemapColor, int TurretOff, 
-	const char* pOutputPath, double dStartDirection)
+	const char* pOutputPath, double dStartDirection, int bSkipAnim)
 {
 	if (!VxlFileName || nDirections % 8)
 		return;
@@ -407,7 +407,13 @@ void MakeShots(const char * VxlFileName, int nTurretOffset, int nPaletteID,
 	strcpy(barlName + strlen(VxlFileName) - 4, "barl.vxl");
 
 	strcpy_s(vxlBody, VxlFileName);
-	strtok(vxlBody, ".");
+
+	char szDrive[4], szDir[MAX_PATH], szFileName[0x20], szExt[4];
+
+	_splitpath(vxlBody, szDrive, szDir, szFileName, szExt);
+
+	//strtok(vxlBody, ".");
+	strcpy_s(vxlBody, szFileName);
 
 	auto pVxl = std::make_unique<VxlFile>(VxlFileName);
 	auto pTur = std::make_unique<VxlFile>(turName);
@@ -434,6 +440,10 @@ void MakeShots(const char * VxlFileName, int nTurretOffset, int nPaletteID,
 					sprintf_s(szShadowName, "%s\\%s %04d.png", pOutputPath, vxlBody, idxFile++ + shadowStart);
 					pVxl->MakeFrameScreenShot(SceneClass::Instance.GetDevice(), szTargetName, szShadowName, frame,
 						0, 0, angle, nPaletteID, dwRemapColor);
+
+					if (bSkipAnim) {
+						break;
+					}
 				}
 				angle += anglesec;
 		}
