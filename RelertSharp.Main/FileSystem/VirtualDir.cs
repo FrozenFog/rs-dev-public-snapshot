@@ -141,8 +141,9 @@ namespace RelertSharp.FileSystem
         {
             VFileInfo result = new VFileInfo();
             byte[] buf = GetRawByte(filename);
-            result.ptr = Marshal.AllocHGlobal(buf.Length);
-            Marshal.Copy(buf, 0, result.ptr, buf.Length);
+            //result.ptr = Marshal.AllocHGlobal(buf.Length);
+            //Marshal.Copy(buf, 0, result.ptr, buf.Length);
+            result.ptr = Marshal.UnsafeAddrOfPinnedArrayElement(buf, 0);
             result.size = (uint)buf.Length;
             return result;
         }

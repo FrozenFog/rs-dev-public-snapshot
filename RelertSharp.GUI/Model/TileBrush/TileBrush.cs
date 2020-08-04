@@ -13,6 +13,7 @@ namespace RelertSharp.GUI.Model.TileBrush
     public partial class TileBrush
     {
         private I3dLocateable posNow;
+        private Pnt offset = new Pnt(0, 0);
         private string filenameNow;
         private bool isFramework, isFlat;
         private List<Tile> body = new List<Tile>();
@@ -104,7 +105,8 @@ namespace RelertSharp.GUI.Model.TileBrush
                 surroundUnder.Clear();
                 under.Clear();
                 int i = 0;
-                foreach (I2dLocateable pos in new TileSet2D(cell, posEnum))
+                Pnt beginPos = new Pnt(cell);
+                foreach (I2dLocateable pos in new TileSet2D(beginPos + offset, posEnum))
                 {
                     Tile dest = Map.TilesData[pos];
                     if (dest != null)
@@ -171,6 +173,14 @@ namespace RelertSharp.GUI.Model.TileBrush
                 }
                 brushDisposed = false;
             }
+        }
+        public void ShiftOffsetX(int num)
+        {
+            offset.X += num;
+        }
+        public void ShiftOffsetY(int num)
+        {
+            offset.Y += num;
         }
         #endregion
 

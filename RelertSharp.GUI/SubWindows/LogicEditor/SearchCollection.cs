@@ -41,6 +41,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     SearchItem item = new SearchItem(reg.ID);
                     item.Type = type;
                     item.Value = reg.Name;
+                    
                     data[item.Regname] = item;
                     result.Add((ListViewItem)item);
                 }

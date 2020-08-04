@@ -24,7 +24,14 @@ namespace RelertSharp.Common
         {
             X = src.X;Y = src.Y;Z = src.Z;
         }
-
+        public static Pnt3 operator+(Pnt3 a, Pnt b)
+        {
+            return new Pnt3(a.X + b.X, a.Y + b.Y, a.Z);
+        }
+        public static Pnt3 operator-(Pnt3 a, Pnt b)
+        {
+            return new Pnt3(a.X - b.X, a.Y - b.Y, a.Z);
+        }
         public int Coord => Utils.Misc.CoordInt(X, Y);
 
         int I3dLocateable.Z { get { return Z; } set { Z = value; } }

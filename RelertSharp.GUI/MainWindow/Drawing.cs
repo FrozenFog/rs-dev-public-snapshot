@@ -36,6 +36,7 @@ namespace RelertSharp.GUI
             lw.Show();
             lw.Refresh();
             lw.Begin();
+            System.Runtime.GCSettings.LatencyMode = System.Runtime.GCLatencyMode.Batch;
             DrawTiles();
             DrawOverlays();
             DrawSmudges();
@@ -43,6 +44,7 @@ namespace RelertSharp.GUI
             DrawObjects();
             DrawWaypoints();
             DrawCelltags();
+            System.Runtime.GCSettings.LatencyMode = System.Runtime.GCLatencyMode.Interactive;
             lw.EndDrawing();
             lw.Close();
             worker.ReportProgress(1);

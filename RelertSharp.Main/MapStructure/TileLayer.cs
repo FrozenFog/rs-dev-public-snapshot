@@ -610,11 +610,12 @@ namespace RelertSharp.MapStructure
                 }
             }
         }
-        public bool MarkForSimulating()
+        public bool MarkForSimulating(bool waterBound = false)
         {
-            if (Buildable) SceneObject.MarkForBuildable(Vec4.BuildableTile);
+            bool b = waterBound ? WaterBuildable : Buildable;
+            if (b) SceneObject.MarkForBuildable(Vec4.BuildableTile);
             else SceneObject.MarkForBuildable(Vec4.UnBuildableTile);
-            return Buildable;
+            return b;
         }
         public void UnMarkForSimulating()
         {
@@ -717,6 +718,24 @@ namespace RelertSharp.MapStructure
             get
             {
                 if (!SceneObject.Buildable) return false;
+                foreach (IMapObject obj in objectsOnTile)
+                {
+                    Type t = obj.GetType();
+                    if (t == typeof(UnitItem) ||
+                        t == typeof(StructureItem) ||
+                        t == typeof(InfantryItem) ||
+                        t == typeof(AircraftItem) ||
+                        t == typeof(OverlayUnit) ||
+                        t == typeof(TerrainItem)) return false;
+                }
+                return true;
+            }
+        }
+        public bool WaterBuildable
+        {
+            get
+            {
+                if (!SceneObject.WaterPassable) return false;
                 foreach (IMapObject obj in objectsOnTile)
                 {
                     Type t = obj.GetType();

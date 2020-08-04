@@ -25,7 +25,6 @@ namespace RelertSharp.GUI
         #region Down
         private void LmbDown(MouseEventArgs e)
         {
-            panel1.Focus();
             if (/*!panel1.Focused ||*/ RbPanelVisible())
             {
                 //panel1.Focus();

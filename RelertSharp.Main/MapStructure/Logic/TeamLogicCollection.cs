@@ -86,7 +86,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TeamLogicItem
-        public string ID
+        public virtual string ID
         {
             get { return id; }
             set { SetProperty(ref id, value); }

@@ -81,10 +81,10 @@ namespace RelertSharp.DrawingEngine
         {
             TileDictionary = new MapTheaterTileSet(type);
             CurrentTheater = type;
-            VFileInfo pal = GlobalDir.GetFilePtr(string.Format("iso{0}.pal", TileDictionary.TheaterSub));
-            VFileInfo upal = GlobalDir.GetFilePtr(string.Format("unit{0}.pal", TileDictionary.TheaterSub));
-            VFileInfo thpal = GlobalDir.GetFilePtr(string.Format("{0}.pal", GlobalConfig.GetTheaterPalName(type)));
-            VFileInfo syspal = GlobalDir.GetFilePtr("rs.pal");
+            VFileInfo pal = GetPtrFromGlobalDir(string.Format("iso{0}.pal", TileDictionary.TheaterSub));
+            VFileInfo upal = GetPtrFromGlobalDir(string.Format("unit{0}.pal", TileDictionary.TheaterSub));
+            VFileInfo thpal = GetPtrFromGlobalDir(string.Format("{0}.pal", GlobalConfig.GetTheaterPalName(type)));
+            VFileInfo syspal = GetPtrFromGlobalDir("rs.pal");
             if (pPalIso != 0) CppExtern.Files.RemovePalette(pPalIso);
             if (pPalUnit != 0) CppExtern.Files.RemovePalette(pPalUnit);
             if (pPalTheater != 0) CppExtern.Files.RemovePalette(pPalTheater);
