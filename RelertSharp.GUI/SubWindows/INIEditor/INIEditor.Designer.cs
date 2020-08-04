@@ -28,134 +28,217 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(INIEditor));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.cmsSections = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiSectionInsert = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSectionRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsKeys = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiKeyInsert = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiKeyRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.miniToolStrip = new System.Windows.Forms.ToolStrip();
+            this.btnImport = new System.Windows.Forms.ToolStripButton();
+            this.btnSave = new System.Windows.Forms.ToolStripButton();
+            this.tbcINI = new System.Windows.Forms.TabControl();
+            this.tbpStandard = new System.Windows.Forms.TabPage();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gpbSections = new System.Windows.Forms.GroupBox();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.lbxSectionList = new System.Windows.Forms.ListBox();
-            this.txbSectionSearch = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.btnDelSection = new System.Windows.Forms.Button();
-            this.btnNewSection = new System.Windows.Forms.Button();
+            this.lbxSections = new System.Windows.Forms.ListBox();
             this.gpbKeys = new System.Windows.Forms.GroupBox();
             this.dgvKeys = new System.Windows.Forms.DataGridView();
-            this.lbxKeyList = new System.Windows.Forms.ListBox();
-            this.rtxbKeyDesc = new System.Windows.Forms.RichTextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.btnNewKey = new System.Windows.Forms.Button();
-            this.btnDelKey = new System.Windows.Forms.Button();
-            this.txbKey = new System.Windows.Forms.TextBox();
-            this.txbValue = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.dgvColHeaderKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvColHeaderValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tbpRaw = new System.Windows.Forms.TabPage();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.tspMenu = new System.Windows.Forms.ToolStrip();
+            this.stsINI = new System.Windows.Forms.StatusStrip();
+            this.stsSectionInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.cmsSections.SuspendLayout();
+            this.cmsKeys.SuspendLayout();
+            this.tbcINI.SuspendLayout();
+            this.tbpStandard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.gpbSections.SuspendLayout();
             this.gpbKeys.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKeys)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            this.tspMenu.SuspendLayout();
+            this.stsINI.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+            this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.Panel2.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // cmsSections
+            // 
+            this.cmsSections.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiSectionInsert,
+            this.tsmiSectionRemove});
+            this.cmsSections.Name = "cmsSections";
+            this.cmsSections.Size = new System.Drawing.Size(253, 48);
+            // 
+            // tsmiSectionInsert
+            // 
+            this.tsmiSectionInsert.Name = "tsmiSectionInsert";
+            this.tsmiSectionInsert.ShortcutKeys = System.Windows.Forms.Keys.Insert;
+            this.tsmiSectionInsert.Size = new System.Drawing.Size(252, 22);
+            this.tsmiSectionInsert.Text = "INItsmiSectionInsert";
+            this.tsmiSectionInsert.Click += new System.EventHandler(this.tsmiSectionInsert_Click);
+            // 
+            // tsmiSectionRemove
+            // 
+            this.tsmiSectionRemove.Name = "tsmiSectionRemove";
+            this.tsmiSectionRemove.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.tsmiSectionRemove.Size = new System.Drawing.Size(252, 22);
+            this.tsmiSectionRemove.Text = "INItsmiSectionRemove";
+            this.tsmiSectionRemove.Click += new System.EventHandler(this.tsmiSectionRemove_Click);
+            // 
+            // cmsKeys
+            // 
+            this.cmsKeys.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiKeyInsert,
+            this.tsmiKeyRemove});
+            this.cmsKeys.Name = "cmsKeys";
+            this.cmsKeys.Size = new System.Drawing.Size(187, 48);
+            // 
+            // tsmiKeyInsert
+            // 
+            this.tsmiKeyInsert.Name = "tsmiKeyInsert";
+            this.tsmiKeyInsert.Size = new System.Drawing.Size(186, 22);
+            this.tsmiKeyInsert.Text = "INItsmiKeyInsert";
+            this.tsmiKeyInsert.Click += new System.EventHandler(this.tsmiKeyInsert_Click);
+            // 
+            // tsmiKeyRemove
+            // 
+            this.tsmiKeyRemove.Name = "tsmiKeyRemove";
+            this.tsmiKeyRemove.Size = new System.Drawing.Size(186, 22);
+            this.tsmiKeyRemove.Text = "INItsmiKeyRemove";
+            this.tsmiKeyRemove.Click += new System.EventHandler(this.tsmiKeyRemove_Click);
+            // 
+            // miniToolStrip
+            // 
+            this.miniToolStrip.AccessibleName = "新项选择";
+            this.miniToolStrip.AccessibleRole = System.Windows.Forms.AccessibleRole.ButtonDropDown;
+            this.miniToolStrip.AutoSize = false;
+            this.miniToolStrip.CanOverflow = false;
+            this.miniToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.miniToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.miniToolStrip.Location = new System.Drawing.Point(46, 3);
+            this.miniToolStrip.Name = "miniToolStrip";
+            this.miniToolStrip.Size = new System.Drawing.Size(49, 25);
+            this.miniToolStrip.TabIndex = 1;
+            // 
+            // btnImport
+            // 
+            this.btnImport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnImport.Image = ((System.Drawing.Image)(resources.GetObject("btnImport.Image")));
+            this.btnImport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(23, 22);
+            this.btnImport.Text = "INItsbImport";
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
+            this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(23, 22);
+            this.btnSave.Text = "INItsbSave";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // tbcINI
+            // 
+            this.tbcINI.Controls.Add(this.tbpStandard);
+            this.tbcINI.Controls.Add(this.tbpRaw);
+            this.tbcINI.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbcINI.Location = new System.Drawing.Point(0, 0);
+            this.tbcINI.Name = "tbcINI";
+            this.tbcINI.SelectedIndex = 0;
+            this.tbcINI.Size = new System.Drawing.Size(800, 391);
+            this.tbcINI.TabIndex = 0;
+            // 
+            // tbpStandard
+            // 
+            this.tbpStandard.Controls.Add(this.splitContainer1);
+            this.tbpStandard.Location = new System.Drawing.Point(4, 22);
+            this.tbpStandard.Name = "tbpStandard";
+            this.tbpStandard.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpStandard.Size = new System.Drawing.Size(792, 365);
+            this.tbpStandard.TabIndex = 0;
+            this.tbpStandard.Text = "INItbpStandard";
+            this.tbpStandard.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.gpbSections);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.gpbKeys);
+            this.splitContainer1.Size = new System.Drawing.Size(786, 359);
+            this.splitContainer1.SplitterDistance = 127;
+            this.splitContainer1.TabIndex = 0;
             // 
             // gpbSections
             // 
-            this.gpbSections.BackColor = System.Drawing.Color.Transparent;
-            this.gpbSections.Controls.Add(this.btnSearch);
-            this.gpbSections.Controls.Add(this.lbxSectionList);
-            this.gpbSections.Controls.Add(this.txbSectionSearch);
-            this.gpbSections.Controls.Add(this.label1);
-            this.gpbSections.Controls.Add(this.btnDelSection);
-            this.gpbSections.Controls.Add(this.btnNewSection);
-            this.gpbSections.Location = new System.Drawing.Point(12, 12);
+            this.gpbSections.AutoSize = true;
+            this.gpbSections.Controls.Add(this.lbxSections);
+            this.gpbSections.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gpbSections.Location = new System.Drawing.Point(0, 0);
             this.gpbSections.Name = "gpbSections";
-            this.gpbSections.Size = new System.Drawing.Size(255, 657);
-            this.gpbSections.TabIndex = 0;
+            this.gpbSections.Size = new System.Drawing.Size(127, 359);
+            this.gpbSections.TabIndex = 1;
             this.gpbSections.TabStop = false;
             this.gpbSections.Text = "INIgpbSections";
             // 
-            // btnSearch
+            // lbxSections
             // 
-            this.btnSearch.Location = new System.Drawing.Point(185, 61);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(64, 21);
-            this.btnSearch.TabIndex = 5;
-            this.btnSearch.Text = "INIbtnSearch";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // lbxSectionList
-            // 
-            this.lbxSectionList.FormattingEnabled = true;
-            this.lbxSectionList.ItemHeight = 12;
-            this.lbxSectionList.Location = new System.Drawing.Point(5, 88);
-            this.lbxSectionList.Name = "lbxSectionList";
-            this.lbxSectionList.Size = new System.Drawing.Size(244, 556);
-            this.lbxSectionList.TabIndex = 4;
-            this.lbxSectionList.SelectedIndexChanged += new System.EventHandler(this.lbxSectionList_SelectedIndexChanged);
-            // 
-            // txbSectionSearch
-            // 
-            this.txbSectionSearch.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.txbSectionSearch.Location = new System.Drawing.Point(6, 61);
-            this.txbSectionSearch.Name = "txbSectionSearch";
-            this.txbSectionSearch.Size = new System.Drawing.Size(173, 21);
-            this.txbSectionSearch.TabIndex = 3;
-            this.txbSectionSearch.Text = "INIlblFakeSearch";
-            this.txbSectionSearch.Enter += new System.EventHandler(this.txbSectionSearch_Enter);
-            this.txbSectionSearch.Leave += new System.EventHandler(this.txbSectionSearch_Leave);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 46);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(119, 12);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "INIlblSectionSearch";
-            // 
-            // btnDelSection
-            // 
-            this.btnDelSection.Location = new System.Drawing.Point(136, 20);
-            this.btnDelSection.Name = "btnDelSection";
-            this.btnDelSection.Size = new System.Drawing.Size(113, 23);
-            this.btnDelSection.TabIndex = 1;
-            this.btnDelSection.Text = "INIbtnDelSection";
-            this.btnDelSection.UseVisualStyleBackColor = true;
-            this.btnDelSection.Click += new System.EventHandler(this.btnDelSection_Click);
-            // 
-            // btnNewSection
-            // 
-            this.btnNewSection.Location = new System.Drawing.Point(6, 20);
-            this.btnNewSection.Name = "btnNewSection";
-            this.btnNewSection.Size = new System.Drawing.Size(113, 23);
-            this.btnNewSection.TabIndex = 0;
-            this.btnNewSection.Text = "INIbtnNewSection";
-            this.btnNewSection.UseVisualStyleBackColor = true;
-            this.btnNewSection.Click += new System.EventHandler(this.btnNewSection_Click);
+            this.lbxSections.ContextMenuStrip = this.cmsSections;
+            this.lbxSections.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbxSections.FormattingEnabled = true;
+            this.lbxSections.ItemHeight = 12;
+            this.lbxSections.Location = new System.Drawing.Point(3, 17);
+            this.lbxSections.Name = "lbxSections";
+            this.lbxSections.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lbxSections.Size = new System.Drawing.Size(121, 339);
+            this.lbxSections.TabIndex = 0;
+            this.lbxSections.SelectedIndexChanged += new System.EventHandler(this.lbxSections_SelectedIndexChanged);
             // 
             // gpbKeys
             // 
-            this.gpbKeys.BackColor = System.Drawing.Color.Transparent;
             this.gpbKeys.Controls.Add(this.dgvKeys);
-            this.gpbKeys.Controls.Add(this.lbxKeyList);
-            this.gpbKeys.Controls.Add(this.rtxbKeyDesc);
-            this.gpbKeys.Controls.Add(this.label4);
-            this.gpbKeys.Controls.Add(this.btnNewKey);
-            this.gpbKeys.Controls.Add(this.btnDelKey);
-            this.gpbKeys.Controls.Add(this.txbKey);
-            this.gpbKeys.Controls.Add(this.txbValue);
-            this.gpbKeys.Controls.Add(this.label3);
-            this.gpbKeys.Controls.Add(this.label2);
-            this.gpbKeys.Location = new System.Drawing.Point(273, 12);
+            this.gpbKeys.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gpbKeys.Location = new System.Drawing.Point(0, 0);
             this.gpbKeys.Name = "gpbKeys";
-            this.gpbKeys.Size = new System.Drawing.Size(979, 657);
-            this.gpbKeys.TabIndex = 1;
+            this.gpbKeys.Size = new System.Drawing.Size(655, 359);
+            this.gpbKeys.TabIndex = 0;
             this.gpbKeys.TabStop = false;
             this.gpbKeys.Text = "INIgpbKeys";
             // 
             // dgvKeys
             // 
-            this.dgvKeys.AllowUserToAddRows = false;
-            this.dgvKeys.AllowUserToDeleteRows = false;
-            this.dgvKeys.AllowUserToResizeColumns = false;
-            this.dgvKeys.AllowUserToResizeRows = false;
-            this.dgvKeys.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvKeys.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvKeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.dgvKeys.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -164,144 +247,182 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvKeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvKeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvKeys.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
-            this.dgvKeys.Location = new System.Drawing.Point(14, 20);
-            this.dgvKeys.MultiSelect = false;
+            this.dgvKeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvColHeaderKey,
+            this.dgvColHeaderValue});
+            this.dgvKeys.ContextMenuStrip = this.cmsKeys;
+            this.dgvKeys.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvKeys.Location = new System.Drawing.Point(3, 17);
             this.dgvKeys.Name = "dgvKeys";
             this.dgvKeys.RowHeadersVisible = false;
-            this.dgvKeys.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvKeys.RowTemplate.Height = 23;
-            this.dgvKeys.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvKeys.Size = new System.Drawing.Size(959, 434);
-            this.dgvKeys.TabIndex = 25;
-            this.dgvKeys.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dgvKeys_RowStateChanged);
+            this.dgvKeys.Size = new System.Drawing.Size(649, 339);
+            this.dgvKeys.TabIndex = 0;
+            this.dgvKeys.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKeys_CellValueChanged);
             // 
-            // lbxKeyList
+            // dgvColHeaderKey
             // 
-            this.lbxKeyList.FormattingEnabled = true;
-            this.lbxKeyList.ItemHeight = 12;
-            this.lbxKeyList.Location = new System.Drawing.Point(14, 508);
-            this.lbxKeyList.Name = "lbxKeyList";
-            this.lbxKeyList.Size = new System.Drawing.Size(228, 136);
-            this.lbxKeyList.TabIndex = 23;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvColHeaderKey.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvColHeaderKey.HeaderText = "INIdgvColHeaderKey";
+            this.dgvColHeaderKey.Name = "dgvColHeaderKey";
+            this.dgvColHeaderKey.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dgvColHeaderKey.Width = 280;
             // 
-            // rtxbKeyDesc
+            // dgvColHeaderValue
             // 
-            this.rtxbKeyDesc.Enabled = false;
-            this.rtxbKeyDesc.Font = new System.Drawing.Font("Verdana", 9F);
-            this.rtxbKeyDesc.Location = new System.Drawing.Point(254, 508);
-            this.rtxbKeyDesc.Name = "rtxbKeyDesc";
-            this.rtxbKeyDesc.ReadOnly = true;
-            this.rtxbKeyDesc.Size = new System.Drawing.Size(719, 136);
-            this.rtxbKeyDesc.TabIndex = 24;
-            this.rtxbKeyDesc.Text = "";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvColHeaderValue.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvColHeaderValue.HeaderText = "INIdgvColHeaderValue";
+            this.dgvColHeaderValue.Name = "dgvColHeaderValue";
+            this.dgvColHeaderValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dgvColHeaderValue.Width = 360;
             // 
-            // label4
+            // tbpRaw
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 489);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(101, 12);
-            this.label4.TabIndex = 21;
-            this.label4.Text = "INIlblKeyUseable";
+            this.tbpRaw.Location = new System.Drawing.Point(4, 22);
+            this.tbpRaw.Name = "tbpRaw";
+            this.tbpRaw.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpRaw.Size = new System.Drawing.Size(792, 365);
+            this.tbpRaw.TabIndex = 1;
+            this.tbpRaw.Text = "INItbpRaw";
+            this.tbpRaw.UseVisualStyleBackColor = true;
             // 
-            // btnNewKey
+            // splitContainer2
             // 
-            this.btnNewKey.Location = new System.Drawing.Point(14, 463);
-            this.btnNewKey.Name = "btnNewKey";
-            this.btnNewKey.Size = new System.Drawing.Size(111, 23);
-            this.btnNewKey.TabIndex = 16;
-            this.btnNewKey.Text = "INIbtnNewKey";
-            this.btnNewKey.UseVisualStyleBackColor = true;
-            this.btnNewKey.Click += new System.EventHandler(this.btnNewKey_Click);
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer2.IsSplitterFixed = true;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // btnDelKey
+            // splitContainer2.Panel1
             // 
-            this.btnDelKey.Location = new System.Drawing.Point(131, 463);
-            this.btnDelKey.Name = "btnDelKey";
-            this.btnDelKey.Size = new System.Drawing.Size(111, 23);
-            this.btnDelKey.TabIndex = 20;
-            this.btnDelKey.Text = "INIbtnDelKey";
-            this.btnDelKey.UseVisualStyleBackColor = true;
-            this.btnDelKey.Click += new System.EventHandler(this.btnDelKey_Click);
+            this.splitContainer2.Panel1.Controls.Add(this.tspMenu);
             // 
-            // txbKey
+            // splitContainer2.Panel2
             // 
-            this.txbKey.Location = new System.Drawing.Point(254, 463);
-            this.txbKey.Name = "txbKey";
-            this.txbKey.Size = new System.Drawing.Size(263, 21);
-            this.txbKey.TabIndex = 17;
+            this.splitContainer2.Panel2.Controls.Add(this.tbcINI);
+            this.splitContainer2.Size = new System.Drawing.Size(800, 420);
+            this.splitContainer2.SplitterDistance = 25;
+            this.splitContainer2.TabIndex = 2;
+            this.splitContainer2.TabStop = false;
             // 
-            // txbValue
+            // tspMenu
             // 
-            this.txbValue.Location = new System.Drawing.Point(540, 463);
-            this.txbValue.Name = "txbValue";
-            this.txbValue.Size = new System.Drawing.Size(433, 21);
-            this.txbValue.TabIndex = 19;
+            this.tspMenu.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tspMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnImport,
+            this.btnSave});
+            this.tspMenu.Location = new System.Drawing.Point(0, 0);
+            this.tspMenu.Name = "tspMenu";
+            this.tspMenu.Size = new System.Drawing.Size(800, 25);
+            this.tspMenu.TabIndex = 1;
+            this.tspMenu.Text = "toolStrip1";
             // 
-            // label3
+            // stsINI
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(523, 466);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(11, 12);
-            this.label3.TabIndex = 18;
-            this.label3.Text = "=";
+            this.stsINI.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stsINI.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stsSectionInfo});
+            this.stsINI.Location = new System.Drawing.Point(0, 0);
+            this.stsINI.Name = "stsINI";
+            this.stsINI.Size = new System.Drawing.Size(800, 26);
+            this.stsINI.TabIndex = 3;
+            this.stsINI.Text = "INIstsINI";
             // 
-            // label2
+            // stsSectionInfo
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(255, 493);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 12);
-            this.label2.TabIndex = 22;
-            this.label2.Text = "INIlblKeyDesc";
+            this.stsSectionInfo.Name = "stsSectionInfo";
+            this.stsSectionInfo.Size = new System.Drawing.Size(0, 21);
+            // 
+            // splitContainer3
+            // 
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Name = "splitContainer3";
+            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.splitContainer2);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.stsINI);
+            this.splitContainer3.Size = new System.Drawing.Size(800, 450);
+            this.splitContainer3.SplitterDistance = 420;
+            this.splitContainer3.TabIndex = 4;
+            this.splitContainer3.TabStop = false;
             // 
             // INIEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 681);
-            this.Controls.Add(this.gpbKeys);
-            this.Controls.Add(this.gpbSections);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.splitContainer3);
             this.Name = "INIEditor";
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "INITitle";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.INIEditor_FormClosing);
+            this.cmsSections.ResumeLayout(false);
+            this.cmsKeys.ResumeLayout(false);
+            this.tbcINI.ResumeLayout(false);
+            this.tbpStandard.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.gpbSections.ResumeLayout(false);
-            this.gpbSections.PerformLayout();
             this.gpbKeys.ResumeLayout(false);
-            this.gpbKeys.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKeys)).EndInit();
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
+            this.tspMenu.ResumeLayout(false);
+            this.tspMenu.PerformLayout();
+            this.stsINI.ResumeLayout(false);
+            this.stsINI.PerformLayout();
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            this.splitContainer3.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+            this.splitContainer3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
+        private System.Windows.Forms.ContextMenuStrip cmsSections;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSectionInsert;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSectionRemove;
+        private System.Windows.Forms.ContextMenuStrip cmsKeys;
+        private System.Windows.Forms.ToolStripMenuItem tsmiKeyInsert;
+        private System.Windows.Forms.ToolStripMenuItem tsmiKeyRemove;
+        private System.Windows.Forms.ToolStrip miniToolStrip;
+        private System.Windows.Forms.ToolStripButton btnImport;
+        private System.Windows.Forms.ToolStripButton btnSave;
+        private System.Windows.Forms.TabControl tbcINI;
+        private System.Windows.Forms.TabPage tbpStandard;
+        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox gpbSections;
-        private System.Windows.Forms.Button btnDelSection;
-        private System.Windows.Forms.Button btnNewSection;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txbSectionSearch;
-        private System.Windows.Forms.ListBox lbxSectionList;
+        private System.Windows.Forms.ListBox lbxSections;
         private System.Windows.Forms.GroupBox gpbKeys;
-        private System.Windows.Forms.ListBox lbxKeyList;
-        private System.Windows.Forms.RichTextBox rtxbKeyDesc;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button btnNewKey;
-        private System.Windows.Forms.Button btnDelKey;
-        private System.Windows.Forms.TextBox txbKey;
-        private System.Windows.Forms.TextBox txbValue;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.DataGridView dgvKeys;
+        private System.Windows.Forms.TabPage tbpRaw;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.ToolStrip tspMenu;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvColHeaderKey;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvColHeaderValue;
+        private System.Windows.Forms.StatusStrip stsINI;
+        private System.Windows.Forms.ToolStripStatusLabel stsSectionInfo;
+        private System.Windows.Forms.SplitContainer splitContainer3;
     }
 }
