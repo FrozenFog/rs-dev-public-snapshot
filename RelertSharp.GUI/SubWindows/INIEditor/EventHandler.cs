@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace RelertSharp.SubWindows.INIEditor
 {
@@ -52,8 +53,9 @@ namespace RelertSharp.SubWindows.INIEditor
                     {
                         INIEntity entity = new INIEntity(sectionName);
                         Data[sectionName] = entity;
-                        UpdateSectionList();
-                        lbxSections.SelectedIndex = lbxSections.Items.IndexOf(sectionName);
+                        UpdateSectionList(false, false);
+                        lbxSections.SelectedItem = sectionName;
+                        UpdateKeyList();
                     }
                 }
             }
@@ -100,20 +102,31 @@ namespace RelertSharp.SubWindows.INIEditor
         #region Keys
         private void tsmiKeyInsert_Click(object sender, EventArgs e)
         {
-
+            if (_CurrentSection == null) return;
+            string keyName = "NewKey";
+            int i = 0;
+            while (_CurrentSection.DictData.ContainsKey(keyName + i))  ++i;
+            INIPair pair = new INIPair(keyName + i, "NULL");
+            _CurrentSection.AddPair(pair);
+            UpdateKeyList();
         }
         private void tsmiKeyRemove_Click(object sender, EventArgs e)
         {
-
+            List<string> src = new List<string>();
+            foreach (DataGridViewRow row in dgvKeys.SelectedRows)
+                src.Add(row.Cells[0].Value as string);
+            foreach(string key in src)
+                _CurrentSection.RemovePair(key);
+            UpdateKeyList();
         }
-
         private void dgvKeys_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            if (_CurrentSection == null) return;
             if (dgvKeys.SelectedCells.Count == 0) return;
             switch(e.ColumnIndex)
             {
                 case 0:
-                    OnKeyChanged(dgvKeys[0, e.RowIndex].Value as string, dgvKeys[1, e.RowIndex].Value as string);
+                    OnKeyChanged(_CurrentSection.ElementAt(e.RowIndex).Name, dgvKeys[0, e.RowIndex].Value as string);
                     break;
                 case 1:
                     OnValueChanged(dgvKeys[0, e.RowIndex].Value as string, dgvKeys[1, e.RowIndex].Value as string);
@@ -125,11 +138,6 @@ namespace RelertSharp.SubWindows.INIEditor
             }
 
             return;
-        }
-
-        private void dgvKeys_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            // MessageBox.Show("RowAdded");
         }
         #endregion
 

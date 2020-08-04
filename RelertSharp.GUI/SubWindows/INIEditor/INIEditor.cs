@@ -55,7 +55,7 @@ namespace RelertSharp.SubWindows.INIEditor
         /// BeginUpdate & EndUpdate should be called in other functions manually
         /// </summary>
         /// <param name="isUpdating"></param>
-        private void UpdateSectionList(bool isUpdating = false)
+        private void UpdateSectionList(bool isUpdating = false, bool jumpOrigin = true)
         {
             if(!isUpdating)
             {
@@ -64,6 +64,7 @@ namespace RelertSharp.SubWindows.INIEditor
             }
 
             string selectedSection = lbxSections.SelectedItem as string;
+            lbxSections.SelectedIndices.Clear();
             lbxSections.Items.Clear();
             
             var keys = Data.Keys.ToList();
@@ -71,7 +72,7 @@ namespace RelertSharp.SubWindows.INIEditor
             
             foreach (string section in keys)
                 lbxSections.Items.Add(section);
-            if (!string.IsNullOrEmpty(selectedSection) && Data.ContainsKey(selectedSection))
+            if (jumpOrigin && !string.IsNullOrEmpty(selectedSection) && Data.ContainsKey(selectedSection))
             {
                 lbxSections.SelectedIndex = lbxSections.Items.IndexOf(selectedSection);
                 UpdateKeyList(selectedSection);
@@ -122,14 +123,22 @@ namespace RelertSharp.SubWindows.INIEditor
 
             dgvKeys.EndUpdate();
         }
-
-        private void OnValueChanged(string Key,string Value)
+        private void UpdateKeyList()
         {
-            
+            if (lbxSections.SelectedItem != null)
+                UpdateKeyList(lbxSections.SelectedItem as string);
         }
-        private void OnKeyChanged(string Key,string Value)
+        private void OnValueChanged(string key,string value)
         {
-
+            _CurrentSection.SetPair(key, value);
+        }
+        private void OnKeyChanged(string origin, string key)
+        {
+            INIPair pair = new INIPair(_CurrentSection.GetPair(origin));
+            pair.Name = key;
+            _CurrentSection.RemovePair(origin);
+            _CurrentSection.AddPair(pair);
+            UpdateKeyList();
         }
 
 
@@ -147,7 +156,14 @@ namespace RelertSharp.SubWindows.INIEditor
         #endregion
 
         #region Private Calls - INIEditor
-        private INIEntity _CurrentSection { get { return Data[lbxSections.SelectedItem as string]; } }
+        private INIEntity _CurrentSection 
+        {
+            get
+            {
+                if (lbxSections.SelectedItem == null) return null;
+                return Data[lbxSections.SelectedItem as string];
+            }
+        }
 
 
 

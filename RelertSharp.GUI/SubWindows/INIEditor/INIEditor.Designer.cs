@@ -30,16 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(INIEditor));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cmsSections = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiSectionInsert = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSectionRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSectionRename = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsKeys = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiKeyInsert = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiKeyRemove = new System.Windows.Forms.ToolStripMenuItem();
-            this.miniToolStrip = new System.Windows.Forms.ToolStrip();
             this.btnImport = new System.Windows.Forms.ToolStripButton();
             this.btnSave = new System.Windows.Forms.ToolStripButton();
             this.tbcINI = new System.Windows.Forms.TabControl();
@@ -57,7 +57,6 @@
             this.stsINI = new System.Windows.Forms.StatusStrip();
             this.stsSectionInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.tsmiSectionRename = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsSections.SuspendLayout();
             this.cmsKeys.SuspendLayout();
             this.tbcINI.SuspendLayout();
@@ -88,7 +87,7 @@
             this.tsmiSectionRemove,
             this.tsmiSectionRename});
             this.cmsSections.Name = "cmsSections";
-            this.cmsSections.Size = new System.Drawing.Size(253, 92);
+            this.cmsSections.Size = new System.Drawing.Size(253, 70);
             // 
             // tsmiSectionInsert
             // 
@@ -106,40 +105,37 @@
             this.tsmiSectionRemove.Text = "INItsmiSectionRemove";
             this.tsmiSectionRemove.Click += new System.EventHandler(this.tsmiSectionRemove_Click);
             // 
+            // tsmiSectionRename
+            // 
+            this.tsmiSectionRename.Name = "tsmiSectionRename";
+            this.tsmiSectionRename.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.tsmiSectionRename.Size = new System.Drawing.Size(252, 22);
+            this.tsmiSectionRename.Text = "INItsmiSectionRename";
+            this.tsmiSectionRename.Click += new System.EventHandler(this.tsmiSectionRename_Click);
+            // 
             // cmsKeys
             // 
             this.cmsKeys.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiKeyInsert,
             this.tsmiKeyRemove});
             this.cmsKeys.Name = "cmsKeys";
-            this.cmsKeys.Size = new System.Drawing.Size(187, 48);
+            this.cmsKeys.Size = new System.Drawing.Size(232, 48);
             // 
             // tsmiKeyInsert
             // 
             this.tsmiKeyInsert.Name = "tsmiKeyInsert";
-            this.tsmiKeyInsert.Size = new System.Drawing.Size(186, 22);
+            this.tsmiKeyInsert.ShortcutKeys = System.Windows.Forms.Keys.Insert;
+            this.tsmiKeyInsert.Size = new System.Drawing.Size(231, 22);
             this.tsmiKeyInsert.Text = "INItsmiKeyInsert";
             this.tsmiKeyInsert.Click += new System.EventHandler(this.tsmiKeyInsert_Click);
             // 
             // tsmiKeyRemove
             // 
             this.tsmiKeyRemove.Name = "tsmiKeyRemove";
-            this.tsmiKeyRemove.Size = new System.Drawing.Size(186, 22);
+            this.tsmiKeyRemove.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.tsmiKeyRemove.Size = new System.Drawing.Size(231, 22);
             this.tsmiKeyRemove.Text = "INItsmiKeyRemove";
             this.tsmiKeyRemove.Click += new System.EventHandler(this.tsmiKeyRemove_Click);
-            // 
-            // miniToolStrip
-            // 
-            this.miniToolStrip.AccessibleName = "新项选择";
-            this.miniToolStrip.AccessibleRole = System.Windows.Forms.AccessibleRole.ButtonDropDown;
-            this.miniToolStrip.AutoSize = false;
-            this.miniToolStrip.CanOverflow = false;
-            this.miniToolStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.miniToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.miniToolStrip.Location = new System.Drawing.Point(46, 3);
-            this.miniToolStrip.Name = "miniToolStrip";
-            this.miniToolStrip.Size = new System.Drawing.Size(49, 25);
-            this.miniToolStrip.TabIndex = 1;
             // 
             // btnImport
             // 
@@ -242,14 +238,14 @@
             this.dgvKeys.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvKeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.dgvKeys.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvKeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvKeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvKeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvColHeaderKey,
             this.dgvColHeaderValue});
@@ -259,15 +255,15 @@
             this.dgvKeys.Name = "dgvKeys";
             this.dgvKeys.RowHeadersVisible = false;
             this.dgvKeys.RowTemplate.Height = 23;
+            this.dgvKeys.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvKeys.Size = new System.Drawing.Size(649, 339);
             this.dgvKeys.TabIndex = 0;
             this.dgvKeys.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKeys_CellValueChanged);
-            this.dgvKeys.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvKeys_RowsAdded);
             // 
             // dgvColHeaderKey
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvColHeaderKey.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvColHeaderKey.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvColHeaderKey.HeaderText = "INIdgvColHeaderKey";
             this.dgvColHeaderKey.Name = "dgvColHeaderKey";
             this.dgvColHeaderKey.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -275,8 +271,8 @@
             // 
             // dgvColHeaderValue
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvColHeaderValue.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvColHeaderValue.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvColHeaderValue.HeaderText = "INIdgvColHeaderValue";
             this.dgvColHeaderValue.Name = "dgvColHeaderValue";
             this.dgvColHeaderValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -362,14 +358,6 @@
             this.splitContainer3.TabIndex = 4;
             this.splitContainer3.TabStop = false;
             // 
-            // tsmiSectionRename
-            // 
-            this.tsmiSectionRename.Name = "tsmiSectionRename";
-            this.tsmiSectionRename.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.tsmiSectionRename.Size = new System.Drawing.Size(252, 22);
-            this.tsmiSectionRename.Text = "INItsmiSectionRename";
-            this.tsmiSectionRename.Click += new System.EventHandler(this.tsmiSectionRename_Click);
-            // 
             // INIEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -418,7 +406,6 @@
         private System.Windows.Forms.ContextMenuStrip cmsKeys;
         private System.Windows.Forms.ToolStripMenuItem tsmiKeyInsert;
         private System.Windows.Forms.ToolStripMenuItem tsmiKeyRemove;
-        private System.Windows.Forms.ToolStrip miniToolStrip;
         private System.Windows.Forms.ToolStripButton btnImport;
         private System.Windows.Forms.ToolStripButton btnSave;
         private System.Windows.Forms.TabControl tbcINI;

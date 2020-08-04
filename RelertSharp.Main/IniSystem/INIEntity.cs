@@ -249,10 +249,38 @@ namespace RelertSharp.IniSystem
         /// <summary>
         /// Remove a specified IniPair
         /// </summary>
+        /// <param name="key"></param>
+        public void RemovePair(string key)
+        {
+            data.Remove(key);
+        }
+        /// <summary>
+        /// Remove a specified IniPair
+        /// </summary>
         /// <param name="p"></param>
         public void RemovePair(INIPair p)
         {
             data.Remove(p.Name);
+        }
+        /// <summary>
+        /// Set a specified IniPair's Value
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        public void SetPair(string key,dynamic val)
+        {
+            if (data.ContainsKey(key))
+                data[key].Value = val;
+        }
+        /// <summary>
+        /// Set a specified IniPair's Value
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="val"></param>
+        public void SetPair(INIPair p , dynamic val)
+        {
+            if (data.ContainsKey(p.Name))
+                data[p.Name].Value = val;
         }
         /// <summary>
         /// Discard all item index and merge all value into a single string, dedicated for IsoMapPack-like Ent
