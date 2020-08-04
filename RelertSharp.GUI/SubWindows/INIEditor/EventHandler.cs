@@ -1,4 +1,5 @@
 ﻿using RelertSharp.Common;
+using RelertSharp.IniSystem;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,11 +34,29 @@ namespace RelertSharp.SubWindows.INIEditor
             {
                 if (lbxSections.SelectedItem == null) return;
                 UpdateKeyList(_CurrentSection);
+                if (lbxSections.SelectedIndex == -1) stsSectionInfo.Text = "";
             }
         }
         private void tsmiSectionInsert_Click(object sender, EventArgs e)
         {
-
+            string origin = "NewSection";
+            int i = 0;
+            while (Data.ContainsKey(origin + i)) ++i;
+            using (dlgEditSection editForm = new dlgEditSection(origin + i))
+            {
+                if (editForm.ShowDialog() == DialogResult.OK)
+                {
+                    string sectionName = editForm.txbSectionName.Text.Trim();
+                    if (string.IsNullOrEmpty(sectionName)) return;
+                    if (!Data.ContainsKey(sectionName))
+                    {
+                        INIEntity entity = new INIEntity(sectionName);
+                        Data[sectionName] = entity;
+                        UpdateSectionList();
+                        lbxSections.SelectedIndex = lbxSections.Items.IndexOf(sectionName);
+                    }
+                }
+            }
         }
         private void tsmiSectionRemove_Click(object sender, EventArgs e)
         {
@@ -54,6 +73,27 @@ namespace RelertSharp.SubWindows.INIEditor
 
             lbxSections.EndUpdate();
             isSectionsUpdating = false;
+        }
+        private void tsmiSectionRename_Click(object sender, EventArgs e)
+        {
+            string origin = lbxSections.SelectedItem as string;
+            if (string.IsNullOrEmpty(origin)) return;
+            using (dlgEditSection editForm = new dlgEditSection(origin))
+            {
+                if(editForm.ShowDialog()==DialogResult.OK)
+                {
+                    string sectionName = editForm.txbSectionName.Text.Trim();
+                    if (string.IsNullOrEmpty(sectionName)) return;
+                    if (!Data.ContainsKey(sectionName))
+                    {
+                        INIEntity entity = new INIEntity(Data[origin], sectionName);
+                        Data[sectionName] = entity;
+                        Data.Remove(origin);
+                        UpdateSectionList();
+                        lbxSections.SelectedIndex = lbxSections.Items.IndexOf(sectionName);
+                    }
+                }
+            }
         }
         #endregion
 

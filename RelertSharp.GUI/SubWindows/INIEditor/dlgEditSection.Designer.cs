@@ -48,7 +48,7 @@
             this.btnCancel.Location = new System.Drawing.Point(12, 51);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(103, 27);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "INIbtnCancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -58,7 +58,7 @@
             this.txbSectionName.Location = new System.Drawing.Point(12, 24);
             this.txbSectionName.Name = "txbSectionName";
             this.txbSectionName.Size = new System.Drawing.Size(225, 21);
-            this.txbSectionName.TabIndex = 2;
+            this.txbSectionName.TabIndex = 1;
             this.txbSectionName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbSectionName_KeyDown);
             // 
             // btnConfirm

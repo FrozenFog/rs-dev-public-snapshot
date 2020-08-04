@@ -65,7 +65,11 @@ namespace RelertSharp.SubWindows.INIEditor
 
             string selectedSection = lbxSections.SelectedItem as string;
             lbxSections.Items.Clear();
-            foreach (string section in Data.Keys)
+            
+            var keys = Data.Keys.ToList();
+            keys.Sort();
+            
+            foreach (string section in keys)
                 lbxSections.Items.Add(section);
             if (!string.IsNullOrEmpty(selectedSection) && Data.ContainsKey(selectedSection))
             {
@@ -77,8 +81,9 @@ namespace RelertSharp.SubWindows.INIEditor
                 lbxSections.SelectedIndex = -1;
                 UpdateKeyList(null as INIEntity);
             }
-            
-            if(!isUpdating)
+            if (lbxSections.SelectedIndex == -1) stsSectionInfo.Text = "";
+
+            if (!isUpdating)
             {
                 lbxSections.EndUpdate();
                 isSectionsUpdating = false;
