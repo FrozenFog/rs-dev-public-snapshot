@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,9 @@ namespace RelertSharp.Utils
     {
         public static Dictionary<string,INIEntity> Clone(this Dictionary<string,INIEntity> src)
         {
-            Dictionary<string, INIEntity> ret = new Dictionary<string, INIEntity>(src);
+            Dictionary<string, INIEntity> ret = new Dictionary<string, INIEntity>();
+            foreach(var pair in src)
+                ret.Add(pair.Key, new INIEntity(pair.Value));
             return ret;
         }
     }

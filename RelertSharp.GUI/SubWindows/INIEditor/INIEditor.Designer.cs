@@ -54,6 +54,7 @@
             this.tbpRaw = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tspMenu = new System.Windows.Forms.ToolStrip();
+            this.tsbReload = new System.Windows.Forms.ToolStripButton();
             this.stsINI = new System.Windows.Forms.StatusStrip();
             this.stsSectionInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
@@ -235,6 +236,9 @@
             // dgvKeys
             // 
             this.dgvKeys.AllowUserToAddRows = false;
+            this.dgvKeys.AllowUserToDeleteRows = false;
+            this.dgvKeys.AllowUserToResizeColumns = false;
+            this.dgvKeys.AllowUserToResizeRows = false;
             this.dgvKeys.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvKeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.dgvKeys.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -315,12 +319,23 @@
             this.tspMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tspMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnImport,
-            this.btnSave});
+            this.btnSave,
+            this.tsbReload});
             this.tspMenu.Location = new System.Drawing.Point(0, 0);
             this.tspMenu.Name = "tspMenu";
             this.tspMenu.Size = new System.Drawing.Size(800, 25);
             this.tspMenu.TabIndex = 1;
             this.tspMenu.Text = "toolStrip1";
+            // 
+            // tsbReload
+            // 
+            this.tsbReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbReload.Image = ((System.Drawing.Image)(resources.GetObject("tsbReload.Image")));
+            this.tsbReload.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbReload.Name = "tsbReload";
+            this.tsbReload.Size = new System.Drawing.Size(23, 22);
+            this.tsbReload.Text = "INItsbReload";
+            this.tsbReload.Click += new System.EventHandler(this.tsbReload_Click);
             // 
             // stsINI
             // 
@@ -424,5 +439,6 @@
         private System.Windows.Forms.ToolStripStatusLabel stsSectionInfo;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.ToolStripMenuItem tsmiSectionRename;
+        private System.Windows.Forms.ToolStripButton tsbReload;
     }
 }

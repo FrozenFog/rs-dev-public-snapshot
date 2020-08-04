@@ -20,8 +20,6 @@ namespace RelertSharp.SubWindows.INIEditor
         private RsLog Logger = GlobalVar.Log;
         private string stsHeader, stsEntityCount;
 
-        private bool isSaved = false;
-
         #region Ctor - INIEditor
         public INIEditor()
         {
@@ -144,13 +142,49 @@ namespace RelertSharp.SubWindows.INIEditor
 
         private void SaveINI()
         {
-            MessageBox.Show("SAVE");
+            if (
+                MessageBox.Show(
+                    DICT["INISaveMessage"], 
+                    DICT["INITitle"], 
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Information
+                    )
+                == DialogResult.Yes
+                )
+                GlobalVar.CurrentMapDocument.Map.IniResidue = Data.Clone();
         }
         private void ImportINI()
         {
-            MessageBox.Show("IMPORT");
+            dlgImportFile dlgImport = new dlgImportFile();
+            if(dlgImport.ShowDialog()==DialogResult.OK)
+            {
+                foreach(INIEntity entity in dlgImport.lbxSelected.Items)
+                {
+                    if (Data.ContainsKey(entity.Name)) 
+                        Data[entity.Name].JoinWith(entity);
+                    else 
+                        Data[entity.Name] = entity;
+                }
+            }
+            UpdateSectionList();
         }
+        private void ReloadINI()
+        {
+            {
+                if (
+                    MessageBox.Show(
+                        DICT["INIReloadMessage"],
+                        DICT["INITitle"],
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Information
+                        )
+                    == DialogResult.Yes
+                    )
+                    Data = GlobalVar.CurrentMapDocument.Map.IniResidue.Clone();
+                UpdateSectionList();
 
+            }
+        }
 
 
         #endregion
@@ -164,9 +198,6 @@ namespace RelertSharp.SubWindows.INIEditor
                 return Data[lbxSections.SelectedItem as string];
             }
         }
-
-
-
         #endregion
 
         #region Public Calls - INIEditor

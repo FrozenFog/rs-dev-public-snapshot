@@ -24,6 +24,7 @@ namespace RelertSharp.SubWindows.INIEditor
         }
         private void btnImport_Click(object sender, EventArgs e) => ImportINI();
         private void btnSave_Click(object sender, EventArgs e) => SaveINI();
+        private void tsbReload_Click(object sender, EventArgs e) => ReloadINI();
         #endregion
 
         #region Sections
