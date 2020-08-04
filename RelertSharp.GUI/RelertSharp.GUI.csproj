@@ -312,12 +312,6 @@
     <Compile Include="SubWindows\INIComparator.Designer.cs">
       <DependentUpon>INIComparator.cs</DependentUpon>
     </Compile>
-    <Compile Include="SubWindows\INIEditor\dlgNewSection.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubWindows\INIEditor\dlgNewSection.Designer.cs">
-      <DependentUpon>dlgNewSection.cs</DependentUpon>
-    </Compile>
     <Compile Include="SubWindows\INIEditor\EventHandler.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -409,11 +403,6 @@
       <DependentUpon>MainWindowTest.cs</DependentUpon>
     </Compile>
     <Compile Include="GUIUtils.cs" />
-    <Compile Include="SubWindows\WPF\INIEditor\Data\CompletionData.cs" />
-    <Compile Include="SubWindows\WPF\INIEditor\Data\Extension.cs" />
-    <Compile Include="SubWindows\WPF\INIEditor\INIEditor.xaml.cs">
-      <DependentUpon>INIEditor.xaml</DependentUpon>
-    </Compile>
     <Compile Include="WelcomeWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -478,9 +467,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\INIComparator.resx">
       <DependentUpon>INIComparator.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubWindows\INIEditor\dlgNewSection.resx">
-      <DependentUpon>dlgNewSection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\INIEditor\INIEditor.resx">
       <DependentUpon>INIEditor.cs</DependentUpon>
@@ -568,7 +554,6 @@
     <None Include="Resources\Arrow7.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SubWindows\WPF\INIEditor\INIRule.xml" />
     <None Include="Resources\load0.png" />
     <None Include="Resources\load1.png" />
     <None Include="Resources\load-1.png" />
@@ -612,12 +597,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="SubWindows\WPF\INIEditor\INIEditor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

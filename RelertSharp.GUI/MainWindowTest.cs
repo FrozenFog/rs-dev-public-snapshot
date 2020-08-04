@@ -432,14 +432,6 @@ namespace RelertSharp.GUI
             PanelMouseEnter();
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            SubWindows.WPF.INIEditor.INIEditor iNIEditor = new SubWindows.WPF.INIEditor.INIEditor();
-
-            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(iNIEditor);
-            iNIEditor.Show();
-        }
-
         private void MainWindowTest_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!saved || !logicEditor.ChangeSaved)

@@ -140,7 +140,6 @@
     <Compile Include="Common\Structs\Vec3.cs" />
     <Compile Include="Common\Structs\Vec4.cs" />
     <Compile Include="Common\Structs\VFileInfo.cs" />
-    <Compile Include="DataStructures\Graph.cs" />
     <Compile Include="DrawingEngine\Buffers\BufferCollection.cs" />
     <Compile Include="DrawingEngine\Buffers\Buffers.cs" />
     <Compile Include="DrawingEngine\Buffers\Files.cs" />

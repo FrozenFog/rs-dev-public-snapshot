@@ -135,7 +135,6 @@
             this.testingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMainRunMap = new System.Windows.Forms.ToolStripMenuItem();
             this.bgwMonitor = new System.ComponentModel.BackgroundWorker();
-            this.button4 = new System.Windows.Forms.Button();
             this.panelHost.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
@@ -189,7 +188,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelHost.Controls.Add(this.splitMain);
             this.panelHost.Location = new System.Drawing.Point(10, 54);
-            this.panelHost.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelHost.Margin = new System.Windows.Forms.Padding(2);
             this.panelHost.Name = "panelHost";
             this.panelHost.Size = new System.Drawing.Size(932, 570);
             this.panelHost.TabIndex = 3;
@@ -199,7 +198,7 @@
             this.splitMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitMain.Location = new System.Drawing.Point(0, 0);
-            this.splitMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitMain.Margin = new System.Windows.Forms.Padding(2);
             this.splitMain.Name = "splitMain";
             // 
             // splitMain.Panel1
@@ -211,7 +210,7 @@
             // 
             this.splitMain.Panel2.Controls.Add(this.splitSide);
             this.splitMain.Size = new System.Drawing.Size(932, 570);
-            this.splitMain.SplitterDistance = 725;
+            this.splitMain.SplitterDistance = 726;
             this.splitMain.SplitterWidth = 3;
             this.splitMain.TabIndex = 5;
             // 
@@ -220,9 +219,9 @@
             this.pnlMainAreaContainer.Controls.Add(this.splitPickerMain);
             this.pnlMainAreaContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMainAreaContainer.Location = new System.Drawing.Point(25, 0);
-            this.pnlMainAreaContainer.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlMainAreaContainer.Margin = new System.Windows.Forms.Padding(2);
             this.pnlMainAreaContainer.Name = "pnlMainAreaContainer";
-            this.pnlMainAreaContainer.Size = new System.Drawing.Size(700, 570);
+            this.pnlMainAreaContainer.Size = new System.Drawing.Size(701, 570);
             this.pnlMainAreaContainer.TabIndex = 4;
             // 
             // splitPickerMain
@@ -230,7 +229,7 @@
             this.splitPickerMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitPickerMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitPickerMain.Location = new System.Drawing.Point(0, 0);
-            this.splitPickerMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitPickerMain.Margin = new System.Windows.Forms.Padding(2);
             this.splitPickerMain.Name = "splitPickerMain";
             // 
             // splitPickerMain.Panel1
@@ -241,7 +240,7 @@
             // splitPickerMain.Panel2
             // 
             this.splitPickerMain.Panel2.Controls.Add(this.panel1);
-            this.splitPickerMain.Size = new System.Drawing.Size(700, 570);
+            this.splitPickerMain.Size = new System.Drawing.Size(701, 570);
             this.splitPickerMain.SplitterDistance = 238;
             this.splitPickerMain.SplitterWidth = 3;
             this.splitPickerMain.TabIndex = 4;
@@ -274,9 +273,9 @@
             this.panel1.Controls.Add(this.rbPanelAttribute);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(459, 570);
+            this.panel1.Size = new System.Drawing.Size(460, 570);
             this.panel1.TabIndex = 2;
             this.panel1.SizeChanged += new System.EventHandler(this.panel1_SizeChanged);
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
@@ -313,9 +312,9 @@
             // 
             this.txbCommand.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.txbCommand.Location = new System.Drawing.Point(0, 549);
-            this.txbCommand.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txbCommand.Margin = new System.Windows.Forms.Padding(2);
             this.txbCommand.Name = "txbCommand";
-            this.txbCommand.Size = new System.Drawing.Size(459, 21);
+            this.txbCommand.Size = new System.Drawing.Size(460, 21);
             this.txbCommand.TabIndex = 3;
             this.txbCommand.Text = "/";
             this.txbCommand.Visible = false;
@@ -532,7 +531,7 @@
             this.splitSide.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitSide.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitSide.Location = new System.Drawing.Point(0, 0);
-            this.splitSide.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitSide.Margin = new System.Windows.Forms.Padding(2);
             this.splitSide.Name = "splitSide";
             this.splitSide.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -543,7 +542,7 @@
             // splitSide.Panel2
             // 
             this.splitSide.Panel2.Controls.Add(this.pnlSide);
-            this.splitSide.Size = new System.Drawing.Size(204, 570);
+            this.splitSide.Size = new System.Drawing.Size(203, 570);
             this.splitSide.SplitterDistance = 176;
             this.splitSide.SplitterWidth = 3;
             this.splitSide.TabIndex = 1;
@@ -554,9 +553,9 @@
             this.pnlMiniMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pnlMiniMap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMiniMap.Location = new System.Drawing.Point(0, 0);
-            this.pnlMiniMap.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlMiniMap.Margin = new System.Windows.Forms.Padding(2);
             this.pnlMiniMap.Name = "pnlMiniMap";
-            this.pnlMiniMap.Size = new System.Drawing.Size(204, 176);
+            this.pnlMiniMap.Size = new System.Drawing.Size(203, 176);
             this.pnlMiniMap.TabIndex = 4;
             this.pnlMiniMap.SizeChanged += new System.EventHandler(this.pnlMiniMap_SizeChanged);
             this.pnlMiniMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseClick);
@@ -575,9 +574,9 @@
             this.pnlSide.Controls.Add(this.pnlSideObjects);
             this.pnlSide.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlSide.Location = new System.Drawing.Point(0, 0);
-            this.pnlSide.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlSide.Margin = new System.Windows.Forms.Padding(2);
             this.pnlSide.Name = "pnlSide";
-            this.pnlSide.Size = new System.Drawing.Size(204, 391);
+            this.pnlSide.Size = new System.Drawing.Size(203, 391);
             this.pnlSide.TabIndex = 5;
             // 
             // pnlSideRank
@@ -588,9 +587,9 @@
             this.pnlSideRank.Controls.Add(this.ckbRankPanel);
             this.pnlSideRank.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSideRank.Location = new System.Drawing.Point(0, 748);
-            this.pnlSideRank.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlSideRank.Margin = new System.Windows.Forms.Padding(2);
             this.pnlSideRank.Name = "pnlSideRank";
-            this.pnlSideRank.Size = new System.Drawing.Size(187, 193);
+            this.pnlSideRank.Size = new System.Drawing.Size(186, 193);
             this.pnlSideRank.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -616,7 +615,7 @@
             this.tableLayoutPanel1.Controls.Add(this.comboBox4, 1, 6);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 22);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 7;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -628,7 +627,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(187, 171);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(186, 171);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // comboBox1
@@ -636,20 +635,20 @@
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(137, 77);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(48, 20);
+            this.comboBox1.Size = new System.Drawing.Size(47, 20);
             this.comboBox1.TabIndex = 1;
             // 
             // maskedTextBox1
             // 
             this.maskedTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.maskedTextBox1.Location = new System.Drawing.Point(137, 2);
-            this.maskedTextBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.maskedTextBox1.Margin = new System.Windows.Forms.Padding(2);
             this.maskedTextBox1.Mask = "00:00:00";
             this.maskedTextBox1.Name = "maskedTextBox1";
             this.maskedTextBox1.PromptChar = '0';
-            this.maskedTextBox1.Size = new System.Drawing.Size(48, 21);
+            this.maskedTextBox1.Size = new System.Drawing.Size(47, 21);
             this.maskedTextBox1.TabIndex = 1;
             this.maskedTextBox1.ValidatingType = typeof(System.DateTime);
             // 
@@ -734,22 +733,22 @@
             // 
             this.maskedTextBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.maskedTextBox2.Location = new System.Drawing.Point(137, 27);
-            this.maskedTextBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.maskedTextBox2.Margin = new System.Windows.Forms.Padding(2);
             this.maskedTextBox2.Mask = "00:00:00";
             this.maskedTextBox2.Name = "maskedTextBox2";
             this.maskedTextBox2.PromptChar = '0';
-            this.maskedTextBox2.Size = new System.Drawing.Size(48, 21);
+            this.maskedTextBox2.Size = new System.Drawing.Size(47, 21);
             this.maskedTextBox2.TabIndex = 1;
             // 
             // maskedTextBox3
             // 
             this.maskedTextBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.maskedTextBox3.Location = new System.Drawing.Point(137, 52);
-            this.maskedTextBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.maskedTextBox3.Margin = new System.Windows.Forms.Padding(2);
             this.maskedTextBox3.Mask = "00:00:00";
             this.maskedTextBox3.Name = "maskedTextBox3";
             this.maskedTextBox3.PromptChar = '0';
-            this.maskedTextBox3.Size = new System.Drawing.Size(48, 21);
+            this.maskedTextBox3.Size = new System.Drawing.Size(47, 21);
             this.maskedTextBox3.TabIndex = 1;
             // 
             // comboBox2
@@ -757,9 +756,9 @@
             this.comboBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(137, 101);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBox2.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(48, 20);
+            this.comboBox2.Size = new System.Drawing.Size(47, 20);
             this.comboBox2.TabIndex = 1;
             // 
             // comboBox3
@@ -767,9 +766,9 @@
             this.comboBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Location = new System.Drawing.Point(137, 125);
-            this.comboBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBox3.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(48, 20);
+            this.comboBox3.Size = new System.Drawing.Size(47, 20);
             this.comboBox3.TabIndex = 1;
             // 
             // comboBox4
@@ -777,9 +776,9 @@
             this.comboBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox4.FormattingEnabled = true;
             this.comboBox4.Location = new System.Drawing.Point(137, 149);
-            this.comboBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBox4.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(48, 20);
+            this.comboBox4.Size = new System.Drawing.Size(47, 20);
             this.comboBox4.TabIndex = 1;
             // 
             // ckbRankPanel
@@ -791,9 +790,9 @@
             this.ckbRankPanel.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckbRankPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.ckbRankPanel.Location = new System.Drawing.Point(0, 0);
-            this.ckbRankPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ckbRankPanel.Margin = new System.Windows.Forms.Padding(2);
             this.ckbRankPanel.Name = "ckbRankPanel";
-            this.ckbRankPanel.Size = new System.Drawing.Size(187, 22);
+            this.ckbRankPanel.Size = new System.Drawing.Size(186, 22);
             this.ckbRankPanel.TabIndex = 1;
             this.ckbRankPanel.Text = "RSMainSideCkbRank";
             this.ckbRankPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -808,9 +807,9 @@
             this.pnlSideDebug.Controls.Add(this.ckbDebugPanel);
             this.pnlSideDebug.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSideDebug.Location = new System.Drawing.Point(0, 542);
-            this.pnlSideDebug.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlSideDebug.Margin = new System.Windows.Forms.Padding(2);
             this.pnlSideDebug.Name = "pnlSideDebug";
-            this.pnlSideDebug.Size = new System.Drawing.Size(187, 206);
+            this.pnlSideDebug.Size = new System.Drawing.Size(186, 206);
             this.pnlSideDebug.TabIndex = 5;
             // 
             // listBox1
@@ -820,9 +819,9 @@
             this.listBox1.HorizontalScrollbar = true;
             this.listBox1.ItemHeight = 12;
             this.listBox1.Location = new System.Drawing.Point(0, 22);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.listBox1.Margin = new System.Windows.Forms.Padding(2);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(187, 184);
+            this.listBox1.Size = new System.Drawing.Size(186, 184);
             this.listBox1.TabIndex = 3;
             this.listBox1.Visible = false;
             // 
@@ -833,9 +832,9 @@
             this.ckbDebugPanel.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ckbDebugPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.ckbDebugPanel.Location = new System.Drawing.Point(0, 0);
-            this.ckbDebugPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ckbDebugPanel.Margin = new System.Windows.Forms.Padding(2);
             this.ckbDebugPanel.Name = "ckbDebugPanel";
-            this.ckbDebugPanel.Size = new System.Drawing.Size(187, 22);
+            this.ckbDebugPanel.Size = new System.Drawing.Size(186, 22);
             this.ckbDebugPanel.TabIndex = 4;
             this.ckbDebugPanel.Text = "RSMainSideCkbDebug";
             this.ckbDebugPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -850,9 +849,9 @@
             this.pnlSideLightning.Controls.Add(this.ckbLightningPanel);
             this.pnlSideLightning.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSideLightning.Location = new System.Drawing.Point(0, 304);
-            this.pnlSideLightning.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlSideLightning.Margin = new System.Windows.Forms.Padding(2);
             this.pnlSideLightning.Name = "pnlSideLightning";
-            this.pnlSideLightning.Size = new System.Drawing.Size(187, 238);
+            this.pnlSideLightning.Size = new System.Drawing.Size(186, 238);
             this.pnlSideLightning.TabIndex = 2;
             // 
             // tlpLightning
@@ -881,7 +880,7 @@
             this.tlpLightning.Controls.Add(this.nmbxLightningLevel, 1, 7);
             this.tlpLightning.Dock = System.Windows.Forms.DockStyle.Top;
             this.tlpLightning.Location = new System.Drawing.Point(0, 22);
-            this.tlpLightning.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tlpLightning.Margin = new System.Windows.Forms.Padding(2);
             this.tlpLightning.Name = "tlpLightning";
             this.tlpLightning.RowCount = 9;
             this.tlpLightning.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -894,7 +893,7 @@
             this.tlpLightning.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpLightning.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpLightning.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tlpLightning.Size = new System.Drawing.Size(187, 216);
+            this.tlpLightning.Size = new System.Drawing.Size(186, 216);
             this.tlpLightning.TabIndex = 1;
             // 
             // btnLightningRefresh
@@ -903,9 +902,9 @@
             this.btnLightningRefresh.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnLightningRefresh.Enabled = false;
             this.btnLightningRefresh.Location = new System.Drawing.Point(2, 194);
-            this.btnLightningRefresh.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnLightningRefresh.Margin = new System.Windows.Forms.Padding(2);
             this.btnLightningRefresh.Name = "btnLightningRefresh";
-            this.btnLightningRefresh.Size = new System.Drawing.Size(183, 20);
+            this.btnLightningRefresh.Size = new System.Drawing.Size(182, 20);
             this.btnLightningRefresh.TabIndex = 6;
             this.btnLightningRefresh.Text = "RSMainSideLblRefreshLight";
             this.btnLightningRefresh.UseVisualStyleBackColor = true;
@@ -927,9 +926,9 @@
             this.ckbLightningEnable.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ckbLightningEnable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ckbLightningEnable.Location = new System.Drawing.Point(125, 2);
-            this.ckbLightningEnable.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ckbLightningEnable.Margin = new System.Windows.Forms.Padding(2);
             this.ckbLightningEnable.Name = "ckbLightningEnable";
-            this.ckbLightningEnable.Size = new System.Drawing.Size(60, 14);
+            this.ckbLightningEnable.Size = new System.Drawing.Size(59, 14);
             this.ckbLightningEnable.TabIndex = 1;
             this.ckbLightningEnable.UseVisualStyleBackColor = true;
             this.ckbLightningEnable.CheckedChanged += new System.EventHandler(this.ckbLight_CheckedChanged);
@@ -955,9 +954,9 @@
             "LightningStorm",
             "Dominator"});
             this.cbbLightningType.Location = new System.Drawing.Point(125, 20);
-            this.cbbLightningType.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbbLightningType.Margin = new System.Windows.Forms.Padding(2);
             this.cbbLightningType.Name = "cbbLightningType";
-            this.cbbLightningType.Size = new System.Drawing.Size(60, 20);
+            this.cbbLightningType.Size = new System.Drawing.Size(59, 20);
             this.cbbLightningType.TabIndex = 3;
             this.cbbLightningType.SelectedIndexChanged += new System.EventHandler(this.ckbLightningType_SelectedIndexChanged);
             // 
@@ -1005,14 +1004,14 @@
             0,
             131072});
             this.nmbxLightningRed.Location = new System.Drawing.Point(125, 44);
-            this.nmbxLightningRed.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.nmbxLightningRed.Margin = new System.Windows.Forms.Padding(2);
             this.nmbxLightningRed.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
             this.nmbxLightningRed.Name = "nmbxLightningRed";
-            this.nmbxLightningRed.Size = new System.Drawing.Size(60, 21);
+            this.nmbxLightningRed.Size = new System.Drawing.Size(59, 21);
             this.nmbxLightningRed.TabIndex = 5;
             this.nmbxLightningRed.Value = new decimal(new int[] {
             1,
@@ -1032,14 +1031,14 @@
             0,
             131072});
             this.nmbxLightningGreen.Location = new System.Drawing.Point(125, 69);
-            this.nmbxLightningGreen.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.nmbxLightningGreen.Margin = new System.Windows.Forms.Padding(2);
             this.nmbxLightningGreen.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
             this.nmbxLightningGreen.Name = "nmbxLightningGreen";
-            this.nmbxLightningGreen.Size = new System.Drawing.Size(60, 21);
+            this.nmbxLightningGreen.Size = new System.Drawing.Size(59, 21);
             this.nmbxLightningGreen.TabIndex = 5;
             this.nmbxLightningGreen.Value = new decimal(new int[] {
             1,
@@ -1059,14 +1058,14 @@
             0,
             131072});
             this.nmbxLightningBlue.Location = new System.Drawing.Point(125, 94);
-            this.nmbxLightningBlue.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.nmbxLightningBlue.Margin = new System.Windows.Forms.Padding(2);
             this.nmbxLightningBlue.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
             this.nmbxLightningBlue.Name = "nmbxLightningBlue";
-            this.nmbxLightningBlue.Size = new System.Drawing.Size(60, 21);
+            this.nmbxLightningBlue.Size = new System.Drawing.Size(59, 21);
             this.nmbxLightningBlue.TabIndex = 5;
             this.nmbxLightningBlue.Value = new decimal(new int[] {
             1,
@@ -1119,14 +1118,14 @@
             0,
             131072});
             this.nmbxLightningAmbient.Location = new System.Drawing.Point(125, 119);
-            this.nmbxLightningAmbient.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.nmbxLightningAmbient.Margin = new System.Windows.Forms.Padding(2);
             this.nmbxLightningAmbient.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
             this.nmbxLightningAmbient.Name = "nmbxLightningAmbient";
-            this.nmbxLightningAmbient.Size = new System.Drawing.Size(60, 21);
+            this.nmbxLightningAmbient.Size = new System.Drawing.Size(59, 21);
             this.nmbxLightningAmbient.TabIndex = 5;
             this.nmbxLightningAmbient.Value = new decimal(new int[] {
             1,
@@ -1146,14 +1145,14 @@
             0,
             131072});
             this.nmbxLightningGround.Location = new System.Drawing.Point(125, 144);
-            this.nmbxLightningGround.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.nmbxLightningGround.Margin = new System.Windows.Forms.Padding(2);
             this.nmbxLightningGround.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
             this.nmbxLightningGround.Name = "nmbxLightningGround";
-            this.nmbxLightningGround.Size = new System.Drawing.Size(60, 21);
+            this.nmbxLightningGround.Size = new System.Drawing.Size(59, 21);
             this.nmbxLightningGround.TabIndex = 5;
             this.nmbxLightningGround.Value = new decimal(new int[] {
             1,
@@ -1173,14 +1172,14 @@
             0,
             196608});
             this.nmbxLightningLevel.Location = new System.Drawing.Point(125, 169);
-            this.nmbxLightningLevel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.nmbxLightningLevel.Margin = new System.Windows.Forms.Padding(2);
             this.nmbxLightningLevel.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
             this.nmbxLightningLevel.Name = "nmbxLightningLevel";
-            this.nmbxLightningLevel.Size = new System.Drawing.Size(60, 21);
+            this.nmbxLightningLevel.Size = new System.Drawing.Size(59, 21);
             this.nmbxLightningLevel.TabIndex = 5;
             this.nmbxLightningLevel.Value = new decimal(new int[] {
             1,
@@ -1198,9 +1197,9 @@
             this.ckbLightningPanel.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckbLightningPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.ckbLightningPanel.Location = new System.Drawing.Point(0, 0);
-            this.ckbLightningPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ckbLightningPanel.Margin = new System.Windows.Forms.Padding(2);
             this.ckbLightningPanel.Name = "ckbLightningPanel";
-            this.ckbLightningPanel.Size = new System.Drawing.Size(187, 22);
+            this.ckbLightningPanel.Size = new System.Drawing.Size(186, 22);
             this.ckbLightningPanel.TabIndex = 0;
             this.ckbLightningPanel.Text = "RSMainSideCkbLight";
             this.ckbLightningPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1215,9 +1214,9 @@
             this.pnlSideChecking.Controls.Add(this.cbbCheckingPanel);
             this.pnlSideChecking.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSideChecking.Location = new System.Drawing.Point(0, 246);
-            this.pnlSideChecking.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlSideChecking.Margin = new System.Windows.Forms.Padding(2);
             this.pnlSideChecking.Name = "pnlSideChecking";
-            this.pnlSideChecking.Size = new System.Drawing.Size(187, 58);
+            this.pnlSideChecking.Size = new System.Drawing.Size(186, 58);
             this.pnlSideChecking.TabIndex = 3;
             // 
             // tlpChecking
@@ -1233,12 +1232,12 @@
             this.tlpChecking.Controls.Add(this.ckbGroundPassableTiles, 1, 1);
             this.tlpChecking.Dock = System.Windows.Forms.DockStyle.Top;
             this.tlpChecking.Location = new System.Drawing.Point(0, 22);
-            this.tlpChecking.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tlpChecking.Margin = new System.Windows.Forms.Padding(2);
             this.tlpChecking.Name = "tlpChecking";
             this.tlpChecking.RowCount = 2;
             this.tlpChecking.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpChecking.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpChecking.Size = new System.Drawing.Size(187, 36);
+            this.tlpChecking.Size = new System.Drawing.Size(186, 36);
             this.tlpChecking.TabIndex = 1;
             // 
             // label17
@@ -1268,9 +1267,9 @@
             this.ckbBuildableTiles.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ckbBuildableTiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ckbBuildableTiles.Location = new System.Drawing.Point(143, 2);
-            this.ckbBuildableTiles.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ckbBuildableTiles.Margin = new System.Windows.Forms.Padding(2);
             this.ckbBuildableTiles.Name = "ckbBuildableTiles";
-            this.ckbBuildableTiles.Size = new System.Drawing.Size(42, 14);
+            this.ckbBuildableTiles.Size = new System.Drawing.Size(41, 14);
             this.ckbBuildableTiles.TabIndex = 2;
             this.ckbBuildableTiles.UseVisualStyleBackColor = true;
             this.ckbBuildableTiles.CheckedChanged += new System.EventHandler(this.ckbBuildableTiles_CheckedChanged);
@@ -1280,9 +1279,9 @@
             this.ckbGroundPassableTiles.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ckbGroundPassableTiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ckbGroundPassableTiles.Location = new System.Drawing.Point(143, 20);
-            this.ckbGroundPassableTiles.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ckbGroundPassableTiles.Margin = new System.Windows.Forms.Padding(2);
             this.ckbGroundPassableTiles.Name = "ckbGroundPassableTiles";
-            this.ckbGroundPassableTiles.Size = new System.Drawing.Size(42, 14);
+            this.ckbGroundPassableTiles.Size = new System.Drawing.Size(41, 14);
             this.ckbGroundPassableTiles.TabIndex = 2;
             this.ckbGroundPassableTiles.UseVisualStyleBackColor = true;
             this.ckbGroundPassableTiles.CheckedChanged += new System.EventHandler(this.ckbGroundPassableTiles_CheckedChanged);
@@ -1296,9 +1295,9 @@
             this.cbbCheckingPanel.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbbCheckingPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.cbbCheckingPanel.Location = new System.Drawing.Point(0, 0);
-            this.cbbCheckingPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbbCheckingPanel.Margin = new System.Windows.Forms.Padding(2);
             this.cbbCheckingPanel.Name = "cbbCheckingPanel";
-            this.cbbCheckingPanel.Size = new System.Drawing.Size(187, 22);
+            this.cbbCheckingPanel.Size = new System.Drawing.Size(186, 22);
             this.cbbCheckingPanel.TabIndex = 0;
             this.cbbCheckingPanel.Text = "RSMainSideCkbCheck";
             this.cbbCheckingPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1313,9 +1312,9 @@
             this.pnlSideObjects.Controls.Add(this.ckbObjectsPanel);
             this.pnlSideObjects.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSideObjects.Location = new System.Drawing.Point(0, 0);
-            this.pnlSideObjects.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlSideObjects.Margin = new System.Windows.Forms.Padding(2);
             this.pnlSideObjects.Name = "pnlSideObjects";
-            this.pnlSideObjects.Size = new System.Drawing.Size(187, 246);
+            this.pnlSideObjects.Size = new System.Drawing.Size(186, 246);
             this.pnlSideObjects.TabIndex = 0;
             // 
             // tabControl1
@@ -1324,19 +1323,19 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControl1.Location = new System.Drawing.Point(0, 22);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(187, 224);
+            this.tabControl1.Size = new System.Drawing.Size(186, 224);
             this.tabControl1.TabIndex = 2;
             // 
             // tabPage1
             // 
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tabPage1.Size = new System.Drawing.Size(179, 198);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage1.Size = new System.Drawing.Size(178, 198);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -1344,10 +1343,10 @@
             // tabPage2
             // 
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tabPage2.Size = new System.Drawing.Size(145, 198);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage2.Size = new System.Drawing.Size(195, 198);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1361,9 +1360,9 @@
             this.ckbObjectsPanel.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckbObjectsPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.ckbObjectsPanel.Location = new System.Drawing.Point(0, 0);
-            this.ckbObjectsPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ckbObjectsPanel.Margin = new System.Windows.Forms.Padding(2);
             this.ckbObjectsPanel.Name = "ckbObjectsPanel";
-            this.ckbObjectsPanel.Size = new System.Drawing.Size(187, 22);
+            this.ckbObjectsPanel.Size = new System.Drawing.Size(186, 22);
             this.ckbObjectsPanel.TabIndex = 1;
             this.ckbObjectsPanel.Text = "RSMainSideCkbMapObj";
             this.ckbObjectsPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1544,22 +1543,11 @@
             this.bgwMonitor.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwMonitor_DoWork);
             this.bgwMonitor.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgwMonitor_ProgressChanged);
             // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(564, 26);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(212, 23);
-            this.button4.TabIndex = 8;
-            this.button4.Text = "WPF INI Editor - Developing";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
             // MainWindowTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(952, 633);
-            this.Controls.Add(this.button4);
             this.Controls.Add(this.mnsMain);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -1732,6 +1720,5 @@
         private System.Windows.Forms.ToolStripMenuItem testingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiMainRunMap;
         private System.ComponentModel.BackgroundWorker bgwMonitor;
-        private System.Windows.Forms.Button button4;
     }
 }
