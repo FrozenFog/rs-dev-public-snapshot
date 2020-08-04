@@ -132,6 +132,13 @@ namespace RelertSharp.MapStructure.Objects
                 return sizeY;
             }
         }
+        public bool IsNaval
+        {
+            get
+            {
+                return GlobalVar.GlobalRules.GetEnt(RegName).ParseBool("WaterBound");
+            }
+        }
         private List<bool> shape;
         public List<bool> BuildingShape
         {

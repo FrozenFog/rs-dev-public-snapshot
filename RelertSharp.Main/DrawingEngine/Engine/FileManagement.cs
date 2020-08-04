@@ -20,6 +20,10 @@ namespace RelertSharp.DrawingEngine
 {
     public partial class Engine
     {
+        private List<VFileInfo> infoHGlobal = new List<VFileInfo>();
+        private bool autoFreeHGlobal = false;
+
+
         #region Create File
         private int CreateTileFile(string name)
         {
@@ -333,7 +337,7 @@ namespace RelertSharp.DrawingEngine
             if (!Buffer.Files.Tmp.Keys.Contains(filename))
             {
                 if (!GlobalDir.HasFile(filename)) return 0;
-                VFileInfo info = GlobalDir.GetFilePtr(filename);
+                VFileInfo info = GetPtrFromGlobalDir(filename);
                 id = CppExtern.Files.CreateTmpFileFromFileInMemory(info.ptr, info.size);
                 CppExtern.Files.LoadTmpTextures(id);
                 Buffer.Files.Tmp[filename] = id;
@@ -348,7 +352,7 @@ namespace RelertSharp.DrawingEngine
             if (!Buffer.Files.Shp.Keys.Contains(lookup))
             {
                 if (!GlobalDir.HasFile(filename)) return 0;
-                VFileInfo info = GlobalDir.GetFilePtr(filename);
+                VFileInfo info = GetPtrFromGlobalDir(filename);
                 id = CppExtern.Files.CreateShpFileFromFileInMemory(info.ptr, info.size);
                 CppExtern.Files.LoadShpTextures(id, shpframe);
                 Buffer.Files.Shp[lookup] = id;
@@ -362,8 +366,8 @@ namespace RelertSharp.DrawingEngine
             if (!Buffer.Files.Vxl.Keys.Contains(filename))
             {
                 if (!GlobalDir.HasFile(filename)) return 0;
-                VFileInfo info = GlobalDir.GetFilePtr(filename);
-                VFileInfo hva = GlobalDir.GetFilePtr(filename.Replace("vxl", "hva"));
+                VFileInfo info = GetPtrFromGlobalDir(filename);
+                VFileInfo hva = GetPtrFromGlobalDir(filename.Replace("vxl", "hva"));
                 id = CppExtern.Files.CreateVxlFileFromFileInMemory(info.ptr, info.size, hva.ptr, hva.size);
                 Buffer.Files.Vxl[filename] = id;
             }
@@ -376,12 +380,29 @@ namespace RelertSharp.DrawingEngine
             int id;
             if (!Buffer.Files.Pal.Keys.Contains(filename))
             {
-                VFileInfo info = GlobalDir.GetFilePtr(filename);
+                VFileInfo info = GetPtrFromGlobalDir(filename);
                 id = CppExtern.Files.CreatePaletteFromFileInBuffer(info.ptr);
                 Buffer.Files.Pal[filename] = id;
             }
             else id = Buffer.Files.Pal[filename];
             return id;
+        }
+        private VFileInfo GetPtrFromGlobalDir(string filename)
+        {
+            VFileInfo info = GlobalDir.GetFilePtr(filename);
+            if (autoFreeHGlobal && infoHGlobal.Count > 50)
+            {
+                DisposeHGlobal();
+            }
+            infoHGlobal.Add(info);
+            return info;
+        }
+        public void DisposeHGlobal()
+        {
+            foreach (VFileInfo vf in infoHGlobal) vf.Dispose();
+            infoHGlobal.Clear();
+            GC.Collect();
+            autoFreeHGlobal = true;
         }
         #endregion
     }

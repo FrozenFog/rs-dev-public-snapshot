@@ -29,6 +29,7 @@ namespace RelertSharp.DrawingEngine
                 }
                 buildingShape.Clear();
             }
+            bool waterbound = bud.IsNaval;
             foreach (I2dLocateable pos in new Foundation2D(bud))
             {
                 if (!markingBuildingShape)
@@ -39,7 +40,7 @@ namespace RelertSharp.DrawingEngine
                 buildingShape.Add(pos);
                 bool b;
                 if (!_cellFindingReferance.HasTileOn(pos)) b = false;
-                else b = _cellFindingReferance[pos].MarkForSimulating();
+                else b = _cellFindingReferance[pos].MarkForSimulating(waterbound);
                 result = result && b;
             }
             return result;

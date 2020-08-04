@@ -28,9 +28,9 @@ namespace RelertSharp.GUI
                 switch (e.KeyCode)
                 {
                     case Keys.Escape:
-                        if (rbPanelAttribute.Visible)
+                        if (RbPanelVisible())
                         {
-                            rbPanelAttribute.Visible = false;
+                            HideRbPanel();
                             GlobalVar.Engine.Refresh();
                             panel1.Cursor = prevCur;
                         }
@@ -107,32 +107,16 @@ namespace RelertSharp.GUI
                         Current.SinkTileAll();
                         break;
                     case Keys.Up:
-                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.TileBrush)
-                        {
-                            pnlTile.Result.ShiftOffsetY(-1);
-                            e.IsInputKey = true;
-                        }
+                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.TileBrush) pnlTile.Result.ShiftOffsetY(-1);
                         break;
                     case Keys.Down:
-                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.TileBrush)
-                        {
-                            pnlTile.Result.ShiftOffsetY(1);
-                            e.IsInputKey = true;
-                        }
+                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.TileBrush) pnlTile.Result.ShiftOffsetY(1);
                         break;
                     case Keys.Left:
-                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.TileBrush)
-                        {
-                            pnlTile.Result.ShiftOffsetX(-1);
-                            e.IsInputKey = true;
-                        }
+                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.TileBrush) pnlTile.Result.ShiftOffsetX(-1);
                         break;
                     case Keys.Right:
-                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.TileBrush)
-                        {
-                            pnlTile.Result.ShiftOffsetX(1);
-                            e.IsInputKey = true;
-                        }
+                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.TileBrush) pnlTile.Result.ShiftOffsetX(1);
                         break;
                 }
             }

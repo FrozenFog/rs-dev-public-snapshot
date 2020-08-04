@@ -280,6 +280,7 @@ namespace RelertSharp.GUI
         }
         private void panel1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
+            e.IsInputKey = true;
             HandlingKey(e);
         }
         private void panel1_KeyDown(object sender, KeyEventArgs e)
@@ -289,11 +290,6 @@ namespace RelertSharp.GUI
         private void panel1_KeyUp(object sender, KeyEventArgs e)
         {
             HandlingKeyUp(e);
-        }
-
-        private void panel1_MouseEnter(object sender, EventArgs e)
-        {
-            panel1.Focus();
         }
 
         private void pnlMiniMap_MouseDown(object sender, MouseEventArgs e)
@@ -396,6 +392,7 @@ namespace RelertSharp.GUI
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             if (DrawAll(worker)) pnlPick.DrawComplete();
+            GlobalVar.Engine.DisposeHGlobal();
             GlobalVar.Engine.MoveTo(map.CenterPoint);
             GlobalVar.Engine.Refresh();
             RedrawMinimapAll();
