@@ -236,6 +236,7 @@
             // 
             // dgvKeys
             // 
+            this.dgvKeys.AllowUserToAddRows = false;
             this.dgvKeys.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvKeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.dgvKeys.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -259,6 +260,7 @@
             this.dgvKeys.Size = new System.Drawing.Size(649, 339);
             this.dgvKeys.TabIndex = 0;
             this.dgvKeys.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKeys_CellValueChanged);
+            this.dgvKeys.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvKeys_RowsAdded);
             // 
             // dgvColHeaderKey
             // 

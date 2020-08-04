@@ -312,6 +312,12 @@
     <Compile Include="SubWindows\INIComparator.Designer.cs">
       <DependentUpon>INIComparator.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\INIEditor\dlgEditSection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\INIEditor\dlgEditSection.Designer.cs">
+      <DependentUpon>dlgEditSection.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\INIEditor\EventHandler.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -467,6 +473,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\INIComparator.resx">
       <DependentUpon>INIComparator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\INIEditor\dlgEditSection.resx">
+      <DependentUpon>dlgEditSection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\INIEditor\INIEditor.resx">
       <DependentUpon>INIEditor.cs</DependentUpon>

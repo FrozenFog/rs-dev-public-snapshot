@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RelertSharp.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -68,20 +69,27 @@ namespace RelertSharp.SubWindows.INIEditor
 
         private void dgvKeys_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            if (dgvKeys.SelectedCells.Count == 0) return;
             switch(e.ColumnIndex)
             {
                 case 0:
-                    OnKeyChanged((sender as DataGridView)[e.ColumnIndex, e.RowIndex].Value as string);
+                    OnKeyChanged(dgvKeys[0, e.RowIndex].Value as string, dgvKeys[1, e.RowIndex].Value as string);
                     break;
                 case 1:
-                    OnValueChanged((sender as DataGridView)[e.ColumnIndex, e.RowIndex].Value as string);
+                    OnValueChanged(dgvKeys[0, e.RowIndex].Value as string, dgvKeys[1, e.RowIndex].Value as string);
                     break;
                 default:
+                    Logger.Write("dgvKeys_CellValueChanged meet an invalid EventArgs!");
                     // Notice! This shouldn't happen
                     break;
             }
 
             return;
+        }
+
+        private void dgvKeys_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            // MessageBox.Show("RowAdded");
         }
         #endregion
 

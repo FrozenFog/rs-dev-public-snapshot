@@ -16,6 +16,8 @@ namespace RelertSharp.SubWindows.INIEditor
 {
     public partial class INIEditor : Form
     {
+
+        private RsLog Logger = GlobalVar.Log;
         private string stsHeader, stsEntityCount;
 
         private bool isSaved = false;
@@ -116,11 +118,11 @@ namespace RelertSharp.SubWindows.INIEditor
             dgvKeys.EndUpdate();
         }
 
-        private void OnValueChanged(string Value)
+        private void OnValueChanged(string Key,string Value)
         {
             
         }
-        private void OnKeyChanged(string Key)
+        private void OnKeyChanged(string Key,string Value)
         {
 
         }
