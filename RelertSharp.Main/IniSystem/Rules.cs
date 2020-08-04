@@ -281,8 +281,9 @@ namespace RelertSharp.IniSystem
             direction >>= 5;
             if (sequence.Name == "") return direction;
             int[] ready = sequence.ParseIntList("Ready");
-            int result = ready[0];
-            return 7 - direction;
+            //int result = ready[0];
+            int result = 7 - direction;
+            return result < 0 ? 0 : result;
         }
         public string GetArtEntityName(string nameID, bool isinfantry = false)
         {
