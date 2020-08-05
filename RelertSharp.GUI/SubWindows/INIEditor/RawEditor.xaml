@@ -10,8 +10,8 @@
              Height="Auto" Width="Auto"
     >
     <Grid>
-        <avalonedit:TextEditor x:Name="rawEditor" FontSize="20" FontFamily="Fira Code" Background="Black" Foreground="White">
-            
-        </avalonedit:TextEditor>
+        <avalonedit:TextEditor x:Name="rawEditor" FontSize="20" FontFamily="Fira Code" Background="Black" Foreground="White"
+                               Text="Hey I'm still working on this, the raw text editing.&#13;So it's obsolete for now... Don't mind it :P"/>
     </Grid>
+
 </UserControl>
