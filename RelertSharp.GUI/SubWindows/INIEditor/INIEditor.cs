@@ -18,8 +18,7 @@ namespace RelertSharp.SubWindows.INIEditor
     {
 
         private RsLog Logger = GlobalVar.Log;
-        private string stsHeader, stsEntityCount;
-
+        
         #region Ctor - INIEditor
         public INIEditor()
         {
@@ -44,8 +43,6 @@ namespace RelertSharp.SubWindows.INIEditor
         {
             foreach (Control c in Controls) SetControlLanguage(c);
             Text = DICT[Text];
-            stsHeader = DICT["INIstsSectionInfoHeader"];
-            stsEntityCount = DICT["INIstsSectionInfoEntityCount"];
         }
 
         /// <summary>
@@ -105,7 +102,7 @@ namespace RelertSharp.SubWindows.INIEditor
                 return;
             }
 
-            stsSectionInfo.Text = stsHeader + " " + entity.Name + " " + stsEntityCount + " " + entity.DictData.Count;
+            stsSectionInfo.Text = entity.ToString();
 
             foreach(INIPair pair in _CurrentSection)
             {

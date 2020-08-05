@@ -52,6 +52,8 @@
             this.dgvColHeaderKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvColHeaderValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tbpRaw = new System.Windows.Forms.TabPage();
+            this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
+            this.rawEditor1 = new RelertSharp.SubWindows.INIEditor.RawEditor();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tspMenu = new System.Windows.Forms.ToolStrip();
             this.tsbReload = new System.Windows.Forms.ToolStripButton();
@@ -69,6 +71,7 @@
             this.gpbSections.SuspendLayout();
             this.gpbKeys.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKeys)).BeginInit();
+            this.tbpRaw.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -237,7 +240,6 @@
             // 
             this.dgvKeys.AllowUserToAddRows = false;
             this.dgvKeys.AllowUserToDeleteRows = false;
-            this.dgvKeys.AllowUserToResizeColumns = false;
             this.dgvKeys.AllowUserToResizeRows = false;
             this.dgvKeys.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvKeys.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
@@ -250,6 +252,7 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvKeys.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvKeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvKeys.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvColHeaderKey,
             this.dgvColHeaderValue});
@@ -284,6 +287,7 @@
             // 
             // tbpRaw
             // 
+            this.tbpRaw.Controls.Add(this.elementHost1);
             this.tbpRaw.Location = new System.Drawing.Point(4, 22);
             this.tbpRaw.Name = "tbpRaw";
             this.tbpRaw.Padding = new System.Windows.Forms.Padding(3);
@@ -291,6 +295,16 @@
             this.tbpRaw.TabIndex = 1;
             this.tbpRaw.Text = "INItbpRaw";
             this.tbpRaw.UseVisualStyleBackColor = true;
+            // 
+            // elementHost1
+            // 
+            this.elementHost1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.elementHost1.Location = new System.Drawing.Point(3, 3);
+            this.elementHost1.Name = "elementHost1";
+            this.elementHost1.Size = new System.Drawing.Size(786, 359);
+            this.elementHost1.TabIndex = 0;
+            this.elementHost1.Text = "elementHost1";
+            this.elementHost1.Child = this.rawEditor1;
             // 
             // splitContainer2
             // 
@@ -396,6 +410,7 @@
             this.gpbSections.ResumeLayout(false);
             this.gpbKeys.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvKeys)).EndInit();
+            this.tbpRaw.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
@@ -440,5 +455,8 @@
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.ToolStripMenuItem tsmiSectionRename;
         private System.Windows.Forms.ToolStripButton tsbReload;
+        private RelertSharp.SubWindows.INIEditor.RawEditor codeEditor1;
+        private System.Windows.Forms.Integration.ElementHost elementHost1;
+        private RawEditor rawEditor1;
     }
 }

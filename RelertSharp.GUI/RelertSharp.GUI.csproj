@@ -312,6 +312,9 @@
     <Compile Include="SubWindows\INIComparator.Designer.cs">
       <DependentUpon>INIComparator.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\INIEditor\RawEditor.xaml.cs">
+      <DependentUpon>RawEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\INIEditor\dlgEditSection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -615,6 +618,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="SubWindows\INIEditor\RawEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
