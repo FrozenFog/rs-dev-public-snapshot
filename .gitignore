@@ -74,3 +74,5 @@ local.rsc
 !cncnet5.dll
 !CncnetYRInject.exe
 !Syringe.exe
+/RelertSharp.Main/bin/OnPublic
+/RelertSharp.GUI/bin/OnPublic
