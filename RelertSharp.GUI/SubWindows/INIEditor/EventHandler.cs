@@ -1,5 +1,6 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
+using RelertSharp.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,6 +26,19 @@ namespace RelertSharp.SubWindows.INIEditor
         private void btnImport_Click(object sender, EventArgs e) => ImportINI();
         private void btnSave_Click(object sender, EventArgs e) => SaveINI();
         private void tsbReload_Click(object sender, EventArgs e) => ReloadINI();
+        private void tbcINI_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tbcINI.SelectedIndex == 0) // Raw to Standard
+            {
+                INIFile file = new INIFile(System.Text.Encoding.UTF8.GetBytes(reMain.rawEditor.Text), "$rs.inieditor.name");
+                Data = file.IniDict.Clone();
+                UpdateSectionList();
+                stsSectionInfo.Text =
+                    "Successfully parsed " + reMain.rawEditor.LineCount + " lines into " + Data.Count + " sections";
+            }
+            else // Standard to Raw
+                UpdateRaw();
+        }
         #endregion
 
         #region Sections
@@ -140,6 +154,10 @@ namespace RelertSharp.SubWindows.INIEditor
 
             return;
         }
+        #endregion
+
+        #region Raw
+        // I don't know, maybe for further use?
         #endregion
 
     }

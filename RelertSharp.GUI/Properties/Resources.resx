@@ -232,4 +232,82 @@
   <data name="btnBucket" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bucket.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="INIRuleXml" xml:space="preserve">
+    <value>&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;!--
+See also: http://en.wikipedia.org/wiki/INI_file
+
+The INI file format is an informal standard for configuration files for some platforms or software.
+INI files are simple text files with a basic structure composed of "sections" and "properties".
+
+They are a deprecated standard on the Windows operating system. The use of the "INI file" has been
+changed in Windows in favor of the registry, and deprecated in .NET in favor of XML .config files.
+The name "INI file" comes from the filename extension usually used, ".INI", that stands for "initialization".
+Sometimes a different file extension will be used instead of .ini, such as ".CFG", ".conf", or ".TXT".
+--&gt;
+&lt;SyntaxDefinition name="INI" extensions=".cfg;.conf;.ini;.iss"
+      xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008"&gt;
+
+  &lt;Color name="Digits"       foreground="#FFb5cea8" fontStyle="italic"/&gt;
+  &lt;Color name="Comment"      foreground="#FF57A64A"/&gt;
+  &lt;Color name="Punctuation"  foreground="White"/&gt;
+  &lt;Color name="String"       foreground="#FFD69D85"/&gt;
+  &lt;Color name="String2"      foreground="#FFD69D85"/&gt;
+
+  &lt;Color name="Section"      foreground="#FF00A0FF"/&gt;
+
+  &lt;Color name="PropertyName" foreground="#FF559CD6"/&gt;
+    
+  &lt;!--&lt;Color name="Digits"       foreground="Blue" fontStyle="italic" fontWeight="normal" /&gt;
+  &lt;Color name="Comment"      foreground="Green"/&gt;
+  &lt;Color name="Punctuation"  foreground="Red"/&gt;
+  &lt;Color name="String"       foreground="Olive"/&gt;
+  &lt;Color name="String2"      foreground="Red"/&gt;
+
+  &lt;Color name="Section"      foreground="Purple"/&gt;
+
+  &lt;Color name="PropertyName" foreground="Blue"/&gt;--&gt;
+
+  &lt;RuleSet ignoreCase="true"&gt;
+
+    &lt;Span color="String" multiline="false" &gt;
+      &lt;Begin&gt;'&lt;/Begin&gt;
+      &lt;End&gt;'&lt;/End&gt;
+    &lt;/Span&gt;
+
+    &lt;Span color="String2" multiline="false"  &gt;
+      &lt;Begin&gt;"&lt;/Begin&gt;
+      &lt;End&gt;"&lt;/End&gt;
+    &lt;/Span&gt;
+
+    &lt;!-- span for escape sequences --&gt;
+    &lt;Span  color="Comment" multiline="false"&gt;
+      &lt;Begin&gt;;&lt;/Begin&gt;
+    &lt;/Span&gt;
+    &lt;Span  color="Comment" multiline="false"&gt;
+      &lt;Begin&gt;\#&lt;/Begin&gt;
+    &lt;/Span&gt;
+
+    &lt;Span  color="Section" multiline="false"&gt;
+      &lt;Begin&gt;\[&lt;/Begin&gt;
+      &lt;End&gt;\]&lt;/End&gt;
+    &lt;/Span&gt;
+
+    &lt;Span  color="PropertyName" multiline="false"&gt;
+      &lt;Begin&gt;^[0-9A-Z\-]+&lt;/Begin&gt;
+      &lt;End&gt;=&lt;/End&gt;
+    &lt;/Span&gt;
+
+    &lt;Rule color="Punctuation"&gt;
+      [?,.;()\[\]{}+\-/%*&amp;lt;&amp;gt;^+~!|&amp;amp;]+
+    &lt;/Rule&gt;
+
+    &lt;Rule color="Digits"&gt;
+      [?,.;()\[\]{}+\-/%*&amp;lt;&amp;gt;^+~!|&amp;amp;]+[0-9]+[ ?,.;()\[\]{}+\-/%*&amp;lt;&amp;gt;^+~!|&amp;amp;]+\n
+    &lt;/Rule&gt;
+
+  &lt;/RuleSet&gt;
+
+&lt;/SyntaxDefinition&gt;</value>
+  </data>
 </root>

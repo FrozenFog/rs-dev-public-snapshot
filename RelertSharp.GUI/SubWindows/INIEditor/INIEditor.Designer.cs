@@ -52,8 +52,8 @@
             this.dgvColHeaderKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvColHeaderValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tbpRaw = new System.Windows.Forms.TabPage();
-            this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            this.rawEditor1 = new RelertSharp.SubWindows.INIEditor.RawEditor();
+            this.reHolder = new System.Windows.Forms.Integration.ElementHost();
+            this.reMain = new RelertSharp.SubWindows.INIEditor.RawEditor();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tspMenu = new System.Windows.Forms.ToolStrip();
             this.tsbReload = new System.Windows.Forms.ToolStripButton();
@@ -171,6 +171,7 @@
             this.tbcINI.SelectedIndex = 0;
             this.tbcINI.Size = new System.Drawing.Size(800, 391);
             this.tbcINI.TabIndex = 0;
+            this.tbcINI.SelectedIndexChanged += new System.EventHandler(this.tbcINI_SelectedIndexChanged);
             // 
             // tbpStandard
             // 
@@ -287,7 +288,7 @@
             // 
             // tbpRaw
             // 
-            this.tbpRaw.Controls.Add(this.elementHost1);
+            this.tbpRaw.Controls.Add(this.reHolder);
             this.tbpRaw.Location = new System.Drawing.Point(4, 22);
             this.tbpRaw.Name = "tbpRaw";
             this.tbpRaw.Padding = new System.Windows.Forms.Padding(3);
@@ -296,15 +297,15 @@
             this.tbpRaw.Text = "INItbpRaw";
             this.tbpRaw.UseVisualStyleBackColor = true;
             // 
-            // elementHost1
+            // reHolder
             // 
-            this.elementHost1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.elementHost1.Location = new System.Drawing.Point(3, 3);
-            this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(786, 359);
-            this.elementHost1.TabIndex = 0;
-            this.elementHost1.Text = "elementHost1";
-            this.elementHost1.Child = this.rawEditor1;
+            this.reHolder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reHolder.Location = new System.Drawing.Point(3, 3);
+            this.reHolder.Name = "reHolder";
+            this.reHolder.Size = new System.Drawing.Size(786, 359);
+            this.reHolder.TabIndex = 0;
+            this.reHolder.Text = "INIreHolder";
+            this.reHolder.Child = this.reMain;
             // 
             // splitContainer2
             // 
@@ -457,7 +458,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiSectionRename;
         private System.Windows.Forms.ToolStripButton tsbReload;
         private RelertSharp.SubWindows.INIEditor.RawEditor codeEditor1;
-        private System.Windows.Forms.Integration.ElementHost elementHost1;
-        private RawEditor rawEditor1;
+        private System.Windows.Forms.Integration.ElementHost reHolder;
+        private RawEditor reMain;
     }
 }

@@ -18,7 +18,7 @@ namespace RelertSharp.SubWindows.INIEditor
     {
 
         private RsLog Logger = GlobalVar.Log;
-        
+
         #region Ctor - INIEditor
         public INIEditor()
         {
@@ -123,6 +123,33 @@ namespace RelertSharp.SubWindows.INIEditor
             if (lbxSections.SelectedItem != null)
                 UpdateKeyList(lbxSections.SelectedItem as string);
         }
+
+        private void UpdateRaw()
+        {
+            string content = "";
+
+            foreach (var kvPair in Data)
+            {
+                content += ("[" + kvPair.Key + "]\n"); // "[%s]\n", kvPair.Key
+                foreach (INIPair pair in kvPair.Value)
+                {
+                    if (!string.IsNullOrEmpty(pair.PreComment))
+                        content += pair.PreComment;
+                    content += (pair.Name + " = " + pair.Value);
+                    if (pair.HasComment)
+                        content += (" ;" + pair.Comment + "\n"); // " ; %s\n", pair.Comment
+                    else
+                        content += "\n";
+                }
+                content += "\n";
+            }
+
+            reMain.rawEditor.Text = content;
+
+            stsSectionInfo.Text =
+                "Successfully parsed " + Data.Count + " sections into " + reMain.rawEditor.LineCount + " lines";
+        }
+
         private void OnValueChanged(string key,string value)
         {
             _CurrentSection.SetPair(key, value);
@@ -178,11 +205,12 @@ namespace RelertSharp.SubWindows.INIEditor
                     == DialogResult.Yes
                     )
                     Data = GlobalVar.CurrentMapDocument.Map.IniResidue.Clone();
-                UpdateSectionList();
+
+                if (tbcINI.SelectedIndex == 0) UpdateSectionList();
+                else UpdateRaw();
 
             }
         }
-
 
         #endregion
 
