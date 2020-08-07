@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ICSharpCode.AvalonEdit.CodeCompletion;
+using RelertSharp.Common;
+using RelertSharp.IniSystem;
+using RelertSharp.Utils;
 
 namespace RelertSharp.SubWindows.INIEditor
 {
@@ -17,9 +21,19 @@ namespace RelertSharp.SubWindows.INIEditor
             // Initialize Intelligense Dictionary
             // SAMPLE
             // completionData.Add("Completion content","Description");
-            completionData.Add("Key1", "Desc1");
-            completionData.Add("Key2", "Desc2");
-            completionData.Add("Key3", "Desc3");
+            
+            if(File.Exists("intelligence.lang"))
+            {
+                INIFile pFile = new INIFile(File.ReadAllBytes("intelligence.lang"), "rs.inieditor.languageFile");
+                INIEntity pEntity = pFile["Intelligence"];
+                foreach (var pPair in pEntity)
+                    completionData.Add(pPair.Name, pPair.Value);
+                GlobalVar.Log.Write("[INIEditor] Successfully loaded {0} entities for intelligence.", completionData.Count);
+            }
+            else
+                GlobalVar.Log.Write("[INIEditor] Failed to read intelligence.lang, initialize intelligence failed!");
+
+
         }
 
         public static void ShowCompletionWindow(this ICSharpCode.AvalonEdit.TextEditor editor, string s)
