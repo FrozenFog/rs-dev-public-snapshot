@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
+using static RelertSharp.Language;
 
 namespace RelertSharp.SubWindows.INIEditor
 {
@@ -36,6 +38,7 @@ namespace RelertSharp.SubWindows.INIEditor
             LoadHightLighting();
             LoadEvents();
             LoadFoldingManager();
+            LoadSearchBox();
         }
 
         private void LoadHightLighting()
@@ -64,6 +67,33 @@ namespace RelertSharp.SubWindows.INIEditor
             UpdateEditor();
         }
 
+        private void LoadSearchBox()
+        {
+            searchBox.btnSearch.Click += SearchBox_BtnSearch_Click;
+            searchBox.btnSearch.ToolTip = DICT["INIbtnSearch"];
+            searchBox.txbContent.KeyDown += (o,e) => 
+            {
+                if (e.Key == Key.Enter)
+                    SearchBox_BtnSearch_Click(o, e);
+            };
+
+            // Disable regex control characters
+            searchRegHelper.Add('^');
+            searchRegHelper.Add('[');
+            searchRegHelper.Add(']');
+            searchRegHelper.Add('$');
+            searchRegHelper.Add('.');
+            searchRegHelper.Add('*');
+            searchRegHelper.Add('\\');
+            searchRegHelper.Add('?');
+            searchRegHelper.Add('+');
+            searchRegHelper.Add('{');
+            searchRegHelper.Add('}');
+            searchRegHelper.Add('|');
+            searchRegHelper.Add('(');
+            searchRegHelper.Add(')');
+        }
+
         private void UpdateEditor()
         {
             rawEditor.Dispatcher.Invoke(() => foldingStrategy.UpdateFoldings(foldingManager, rawEditor.Document));
@@ -73,6 +103,42 @@ namespace RelertSharp.SubWindows.INIEditor
         {
             rawEditor.ShowCompletionWindow(rawEditor.GetCursorWord());
             Task.Run(UpdateEditor);
+        }
+
+        HashSet<char> searchRegHelper = new HashSet<char>();
+        private void SearchBox_BtnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            string input = searchBox.txbContent.Text;
+            StringBuilder sb = new StringBuilder();
+            foreach(char c in input)
+            {
+                if (searchRegHelper.Contains(c))
+                    sb.Append('\\');
+                sb.Append(c);
+            }
+
+            Regex regex = new Regex(sb.ToString(), RegexOptions.IgnoreCase);
+            Match match = regex.Match(rawEditor.Text, rawEditor.CaretOffset);
+
+            Action foundAction = delegate
+            {
+                rawEditor.CaretOffset = match.Index;
+                var lineNum = rawEditor.Document.GetLineByOffset(match.Index);
+                rawEditor.ScrollTo(lineNum.LineNumber, 1);
+                rawEditor.Select(match.Index, match.Length);
+                FocusManager.SetFocusedElement(searchBox, searchBox.txbContent);
+            };
+
+            if (match.Success)
+                foundAction();
+            else
+            {
+                match = regex.Match(rawEditor.Text);
+                if (match.Success)
+                    foundAction();
+                else
+                    MessageBox.Show("NOT FOUND");
+            }
         }
     }
 }

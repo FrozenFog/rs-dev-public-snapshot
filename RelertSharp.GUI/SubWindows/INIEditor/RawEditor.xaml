@@ -9,10 +9,10 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Height="Auto" Width="Auto"
     >
-    <Grid>
+    <Grid ScrollViewer.HorizontalScrollBarVisibility="Hidden">
         <avalonedit:TextEditor x:Name="rawEditor" FontSize="20" FontFamily="Fira Code" Background="Black" Foreground="White"
-                               ShowLineNumbers="True" LineNumbersForeground="Aqua" 
-                               Text="Hey I'm still working on this, the raw text editing.&#13;So it's obsolete for now... Don't mind it :P"/>
+                               ShowLineNumbers="True" LineNumbersForeground="Aqua"/>
+        <local:SearchBox x:Name="searchBox" VerticalAlignment="Top" HorizontalAlignment="Right"/>
     </Grid>
 
 </UserControl>

@@ -339,6 +339,9 @@
     <Compile Include="SubWindows\INIEditor\INIEditor.Designer.cs">
       <DependentUpon>INIEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\INIEditor\SearchBox.xaml.cs">
+      <DependentUpon>SearchBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\LogicEditor\dlgCopy.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -624,6 +627,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="SubWindows\INIEditor\RawEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\INIEditor\SearchBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
