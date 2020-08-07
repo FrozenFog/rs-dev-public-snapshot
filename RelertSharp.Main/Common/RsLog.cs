@@ -33,7 +33,7 @@ namespace RelertSharp.Common
         public void Critical(string msg)
         {
             HasCritical = true;
-            sw.WriteLine(string.Format("{0}: {1}", DateTime.Now, msg));
+            sw.WriteLineAsync(string.Format("{0}: {1}", DateTime.Now, msg));
             if (!isStream) sw.Flush();
             criticalMsg.AppendLine(msg);
         }
@@ -51,7 +51,7 @@ namespace RelertSharp.Common
         }
         public void Write(string msg)
         {
-            sw.WriteLine(string.Format("{0}: {1}", DateTime.Now, msg));
+            sw.WriteLineAsync(string.Format("{0}: {1}", DateTime.Now, msg));
             if (!isStream) sw.Flush();
         }
         public void Write(string format, params object[] args)
