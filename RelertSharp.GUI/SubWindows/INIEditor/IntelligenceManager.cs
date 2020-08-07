@@ -17,10 +17,6 @@ namespace RelertSharp.SubWindows.INIEditor
 
         static IntelligenceManager()
         {
-            // TODO 
-            // Initialize Intelligense Dictionary
-            // SAMPLE
-            // completionData.Add("Completion content","Description");
             
             if(File.Exists("intelligence.lang"))
             {
