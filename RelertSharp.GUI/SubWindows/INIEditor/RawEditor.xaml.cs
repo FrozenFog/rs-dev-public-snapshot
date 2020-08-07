@@ -55,6 +55,11 @@ namespace RelertSharp.SubWindows.INIEditor
             rawEditor.TextArea.TextEntered += TextArea_TextEntered;
             rawEditor.TextArea.KeyUp += (o, e) => Task.Run(UpdateEditor);
             rawEditor.TextArea.MouseMove += (o, e) => Task.Run(UpdateEditor);
+            rawEditor.TextArea.PreviewKeyDown += (o, e) =>
+              {
+                  if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.F)
+                      searchBox.txbContent.Focus();
+              };
         }
 
 
@@ -126,7 +131,7 @@ namespace RelertSharp.SubWindows.INIEditor
                 var lineNum = rawEditor.Document.GetLineByOffset(match.Index);
                 rawEditor.ScrollTo(lineNum.LineNumber, 1);
                 rawEditor.Select(match.Index, match.Length);
-                FocusManager.SetFocusedElement(searchBox, searchBox.txbContent);
+                searchBox.txbContent.Focus();
             };
 
             if (match.Success)
