@@ -312,6 +312,9 @@
     <Compile Include="SubWindows\INIComparator.Designer.cs">
       <DependentUpon>INIComparator.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\INIEditor\CompletionData.cs" />
+    <Compile Include="SubWindows\INIEditor\FoldingStrategy.cs" />
+    <Compile Include="SubWindows\INIEditor\IntelligenceManager.cs" />
     <Compile Include="SubWindows\INIEditor\RawEditor.xaml.cs">
       <DependentUpon>RawEditor.xaml</DependentUpon>
     </Compile>
