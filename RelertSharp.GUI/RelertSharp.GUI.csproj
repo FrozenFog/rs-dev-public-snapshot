@@ -339,6 +339,7 @@
     <Compile Include="SubWindows\INIEditor\INIEditor.Designer.cs">
       <DependentUpon>INIEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\INIEditor\ScrollBarConverter.cs" />
     <Compile Include="SubWindows\INIEditor\SearchBox.xaml.cs">
       <DependentUpon>SearchBox.xaml</DependentUpon>
     </Compile>
