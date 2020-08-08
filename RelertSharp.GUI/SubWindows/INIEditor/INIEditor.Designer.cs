@@ -400,6 +400,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "INITitle";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.INIEditor_FormClosing);
+            this.ResizeBegin += INIEditor_ResizeBegin;
+            this.ResizeEnd += INIEditor_ResizeEnd;
             this.cmsSections.ResumeLayout(false);
             this.cmsKeys.ResumeLayout(false);
             this.tbcINI.ResumeLayout(false);
