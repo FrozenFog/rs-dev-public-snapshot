@@ -134,6 +134,17 @@ namespace RelertSharp.FileSystem
         public ushort Width { get; private set; }
         public ushort Height { get; private set; }
         public List<ShpFrame> Frames { get { return data; } }
+        public bool IsEmpty
+        {
+            get
+            {
+                foreach (ShpFrame frm in data)
+                {
+                    if (!frm.IsNullFrame) return false;
+                }
+                return true;
+            }
+        }
         #endregion
     }
 

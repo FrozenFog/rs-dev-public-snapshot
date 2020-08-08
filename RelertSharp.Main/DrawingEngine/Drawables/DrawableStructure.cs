@@ -46,6 +46,7 @@ namespace RelertSharp.DrawingEngine.Drawables
         public short BibCount { get; set; }
         public bool VoxelTurret { get; set; }
         public bool FlatSelf { get { return pTurretAnim != 0; } }
+        public bool IsValid { get { return pSelf != 0 || pActivateAnim != 0 || pBib != 0 || pIdleAnim != 0; } }
         #endregion
     }
 }

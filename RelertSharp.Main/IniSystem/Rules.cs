@@ -247,8 +247,8 @@ namespace RelertSharp.IniSystem
                 bufferedBuildingShape[nameid] = sz;
             }
             else sz = bufferedBuildingShape[nameid];
-            foundX = (int)sz.X;
-            foundY = (int)sz.Y;
+            foundX = (int)sz.X == 0 ? 1 : (int)sz.X;
+            foundY = (int)sz.Y == 0 ? 1 : (int)sz.Y;
             height = (int)sz.Z;
         }
         public Vec4 GetBuildingLampData(string nameid, out float intensity, out int visibility)
@@ -319,7 +319,8 @@ namespace RelertSharp.IniSystem
             return Art[turanim];
         }
         public string GetObjectImgName(string id, ref string anim, ref string turret, ref string bib, ref bool isVox, ref string idle, ref string anim2, ref string anim3, ref string barl, ref string super,
-            out short nSelf, out short nAnim, out short nTurret, out short nBib, out short nIdle, out short nAnim2, out short nAnim3, out short nSuper, out string alpha)
+            out short nSelf, out short nAnim, out short nTurret, out short nBib, out short nIdle, out short nAnim2, out short nAnim3, out short nSuper, out string alpha,
+            out bool isEmpty)
         {
             string artname = GetArtEntityName(id);
             INIEntity art = Art[artname];
@@ -348,22 +349,23 @@ namespace RelertSharp.IniSystem
             }
             else turret = GuessStructureName(Art[this[id]["TurretAnim"]]);
 
-            nSelf = GlobalDir.GetShpFrameCount(img);
-            if (!isVox) nTurret = GlobalDir.GetShpFrameCount(turret);
+            nSelf = GlobalDir.GetShpFrameCount(img, out bool bSelf);
+            if (!isVox) nTurret = GlobalDir.GetShpFrameCount(turret, out bool bTurret);
             else nTurret = 0;
-            nAnim = GlobalDir.GetShpFrameCount(anim);
-            nAnim2 = GlobalDir.GetShpFrameCount(anim2);
-            nAnim3 = GlobalDir.GetShpFrameCount(anim3);
-            nIdle = GlobalDir.GetShpFrameCount(idle);
-            nSuper = GlobalDir.GetShpFrameCount(super);
-            nBib = GlobalDir.GetShpFrameCount(bib);
+            nAnim = GlobalDir.GetShpFrameCount(anim, out bool bAnim);
+            nAnim2 = GlobalDir.GetShpFrameCount(anim2, out bool bAnim2);
+            nAnim3 = GlobalDir.GetShpFrameCount(anim3, out bool bAnim3);
+            nIdle = GlobalDir.GetShpFrameCount(idle, out bool bIdle);
+            nSuper = GlobalDir.GetShpFrameCount(super, out bool bSuper);
+            nBib = GlobalDir.GetShpFrameCount(bib, out bool bBib);
+            isEmpty = bSelf && bAnim && bAnim2 && bAnim3 && bIdle && bSuper && bBib;
             return img;
         }
         public string GetObjectImgName(ObjectItemBase inf, out short frame)
         {
             frame = 0;
             string img = GetArtEntityName(inf.RegName) + ".shp";
-            frame = GlobalDir.GetShpFrameCount(img);
+            frame = GlobalDir.GetShpFrameCount(img, out bool b);
             return img;
         }
         public void LoadArt(INIFile f)

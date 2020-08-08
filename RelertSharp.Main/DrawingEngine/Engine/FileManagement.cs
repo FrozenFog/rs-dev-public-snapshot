@@ -20,9 +20,6 @@ namespace RelertSharp.DrawingEngine
 {
     public partial class Engine
     {
-        private bool autoFreeHGlobal = false;
-
-
         #region Create File
         private int CreateTileFile(string name)
         {
@@ -92,7 +89,7 @@ namespace RelertSharp.DrawingEngine
                 string self = "", turret = "", barl = "";
                 bool vxl = true;
                 self = GlobalRules.GetUnitImgName(name, ref turret, ref barl, ref vxl);
-                if (!vxl) d.Framecount = GlobalDir.GetShpFrameCount(self);
+                if (!vxl) d.Framecount = GlobalDir.GetShpFrameCount(self, out bool b);
                 d.IsVxl = vxl;
                 d.RemapColor = color;
                 string customPalName = GlobalRules.GetCustomPaletteName(name);
@@ -119,7 +116,7 @@ namespace RelertSharp.DrawingEngine
             if (!Buffer.Buffers.Miscs.Keys.Contains(name))
             {
                 d = new DrawableMisc(MapObjectType.Terrain, name);
-                d.Framecount = GlobalDir.GetShpFrameCount(name);
+                d.Framecount = GlobalDir.GetShpFrameCount(name, out bool b);
                 d.RadarColor = ToColor(GlobalRules[terrain.RegName].ParseStringList("RadarColor"));
                 bool isTibTree = ParseBool(GlobalRules[terrain.RegName]["SpawnsTiberium"]);
                 d.pPal = pPalIso;
@@ -216,7 +213,7 @@ namespace RelertSharp.DrawingEngine
 
                 if (d.FlatType == ShpFlatType.FlatGround) d.IsFlatOnly = true;
 
-                d.Framecount = GlobalDir.GetShpFrameCount(filename);
+                d.Framecount = GlobalDir.GetShpFrameCount(filename, out bool b);
                 d.pSelf = CreateFile(filename, DrawableType.Shp, overlay.Frame);
                 if (wall || !rubble || !isTiberium) d.pShadow = CreateFile(filename, DrawableType.Shp, overlay.Frame + d.Framecount / 2);
                 Buffer.Buffers.Miscs[lookup] = d;
@@ -227,6 +224,10 @@ namespace RelertSharp.DrawingEngine
         private DrawableStructure CreateDrawableStructure(string name, uint color, int pPal, int direction, bool isBaseNode = false)
         {
             DrawableStructure d;
+            if (name == "INGALITE")
+            {
+                int i = 0;
+            }
             string lookup = string.Format("{0}{1}.in{2}", name, color, direction);
             if (isBaseNode) lookup += "n";
             if (!Buffer.Buffers.Structures.Keys.Contains(lookup))
@@ -236,7 +237,8 @@ namespace RelertSharp.DrawingEngine
                 bool vox = false;
                 self = GlobalRules.GetObjectImgName(name, ref anim, ref turret, ref bib, ref vox, ref idle, ref anim2, ref anim3, ref barl, ref super,
                                                     out short nSelf, out short nAnim, out short nTurret, out short nBib, out short nIdle, out short nAnim2, out short nAnim3, out short nSuper,
-                                                    out string alphaName);
+                                                    out string alphaName,
+                                                    out bool isEmpty);
                 GlobalRules.GetBuildingShapeData(name, out int height, out int foundx, out int foundy);
                 #region framecount
                 d.Framecount = nSelf;
@@ -311,6 +313,8 @@ namespace RelertSharp.DrawingEngine
                         d.pShadowTurretAnim = CreateFile(turret, DrawableType.Shp, direction + d.TurretAnimCount / 2);
                     }
                 }
+
+                if (isEmpty) d.pSelf = CreateFile("unkObj.shp", DrawableType.Shp);
                 Buffer.Buffers.Structures[lookup] = d;
             }
             else d = Buffer.Buffers.Structures[lookup];
@@ -388,6 +392,10 @@ namespace RelertSharp.DrawingEngine
         }
         private VFileInfo GetPtrFromGlobalDir(string filename)
         {
+            if (filename == "GALITE.shp")
+            {
+                int i = 0;
+            }
             VFileInfo info = GlobalDir.GetFilePtr(filename);
             return info;
         }
