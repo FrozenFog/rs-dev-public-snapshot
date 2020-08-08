@@ -126,25 +126,25 @@ namespace RelertSharp.SubWindows.INIEditor
 
         private void UpdateRaw()
         {
-            string content = "";
+            StringBuilder sb = new StringBuilder();
 
             foreach (var kvPair in Data)
             {
-                content += ("[" + kvPair.Key + "]\n"); // "[%s]\n", kvPair.Key
+                sb.AppendFormat("[{0}]\n", kvPair.Key);
                 foreach (INIPair pair in kvPair.Value)
                 {
                     if (!string.IsNullOrEmpty(pair.PreComment))
-                        content += pair.PreComment;
-                    content += (pair.Name + " = " + pair.Value);
+                        sb.Append(pair.PreComment);
+                    sb.AppendFormat("{0} = {1}", pair.Name, pair.Value);
                     if (pair.HasComment)
-                        content += (" ;" + pair.Comment + "\n"); // " ; %s\n", pair.Comment
+                        sb.AppendFormat(" ;{0}\n", pair.Comment);
                     else
-                        content += "\n";
+                        sb.Append('\n');
                 }
-                content += "\n";
+                sb.Append('\n');
             }
 
-            reMain.rawEditor.Text = content;
+            reMain.rawEditor.Text = sb.ToString();
 
             stsSectionInfo.Text =
                 "Successfully parsed " + Data.Count + " sections into " + reMain.rawEditor.LineCount + " lines";
