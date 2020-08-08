@@ -178,5 +178,15 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         #region Public Calls
         public bool ChangeSaved { get; set; } = true;
         #endregion
+
+        private void LogicEditor_ResizeBegin(object sender, EventArgs e)
+        {
+            SuspendLayout();
+        }
+
+        private void LogicEditor_ResizeEnd(object sender, EventArgs e)
+        {
+            ResumeLayout();
+        }
     }
 }
