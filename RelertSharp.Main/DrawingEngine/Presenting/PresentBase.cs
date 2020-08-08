@@ -47,23 +47,23 @@ namespace RelertSharp.DrawingEngine.Presenting
             {
                 case PresentFileTypeFlag.Shp:
                     if (pself != 0) CppExtern.ObjectUtils.RemoveShpFromScene(pself);
-                    if (pextra != 0) CppExtern.ObjectUtils.RemoveShpFromScene(pself);
+                    if (pextra != 0) CppExtern.ObjectUtils.RemoveShpFromScene(pextra);
                     break;
                 case PresentFileTypeFlag.Vxl:
                     if (pself != 0) CppExtern.ObjectUtils.RemoveVxlFromScene(pself);
-                    if (pextra != 0) CppExtern.ObjectUtils.RemoveVxlFromScene(pself);
+                    if (pextra != 0) CppExtern.ObjectUtils.RemoveVxlFromScene(pextra);
                     break;
                 case PresentFileTypeFlag.Tmp:
                     if (pself != 0) CppExtern.ObjectUtils.RemoveTmpFromScene(pself);
-                    if (pextra != 0) CppExtern.ObjectUtils.RemoveTmpFromScene(pself);
+                    if (pextra != 0) CppExtern.ObjectUtils.RemoveTmpFromScene(pextra);
                     break;
                 case PresentFileTypeFlag.CommonLine:
                     if (pself != 0) CppExtern.ObjectUtils.RemoveCommonFromScene(pself);
-                    if (pextra != 0) CppExtern.ObjectUtils.RemoveCommonFromScene(pself);
+                    if (pextra != 0) CppExtern.ObjectUtils.RemoveCommonFromScene(pextra);
                     break;
                 case PresentFileTypeFlag.CommonPicture:
                     if (pself != 0) CppExtern.ObjectUtils.RemoveCommonTextureFromScene(pself);
-                    if (pextra != 0) CppExtern.ObjectUtils.RemoveCommonTextureFromScene(pself);
+                    if (pextra != 0) CppExtern.ObjectUtils.RemoveCommonTextureFromScene(pextra);
                     break;
             }
         }
