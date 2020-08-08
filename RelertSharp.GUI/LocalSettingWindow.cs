@@ -99,7 +99,7 @@ namespace RelertSharp.GUI
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            Close();
+            
         }
 
         public string ConfigPath { get; private set; }
