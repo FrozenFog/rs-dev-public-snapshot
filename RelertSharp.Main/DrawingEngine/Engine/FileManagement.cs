@@ -20,7 +20,6 @@ namespace RelertSharp.DrawingEngine
 {
     public partial class Engine
     {
-        private List<VFileInfo> infoHGlobal = new List<VFileInfo>();
         private bool autoFreeHGlobal = false;
 
 
@@ -390,19 +389,7 @@ namespace RelertSharp.DrawingEngine
         private VFileInfo GetPtrFromGlobalDir(string filename)
         {
             VFileInfo info = GlobalDir.GetFilePtr(filename);
-            if (autoFreeHGlobal && infoHGlobal.Count > 50)
-            {
-                DisposeHGlobal();
-            }
-            infoHGlobal.Add(info);
             return info;
-        }
-        public void DisposeHGlobal()
-        {
-            foreach (VFileInfo vf in infoHGlobal) vf.Dispose();
-            infoHGlobal.Clear();
-            GC.Collect();
-            autoFreeHGlobal = true;
         }
         #endregion
     }
