@@ -15,6 +15,7 @@ using static RelertSharp.GUI.GuiUtils;
 using BrightIdeasSoftware;
 using RelertSharp.SubWindows.LogicEditor;
 using System.CodeDom;
+using RelertSharp.Utils;
 
 namespace RelertSharp.GUI.SubWindows.LogicEditor
 {
@@ -797,6 +798,14 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             e.Cancel = true;
             Hide();
+        }
+        private void LogicEditor_ResizeBegin(object sender, EventArgs e)
+        {
+            this.BeginUpdate();
+        }
+        private void LogicEditor_ResizeEnd(object sender, EventArgs e)
+        {
+            this.EndUpdate();
         }
         #endregion
     }
