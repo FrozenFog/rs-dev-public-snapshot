@@ -101,6 +101,7 @@ namespace RelertSharp.GUI.Controls
                 dest.Controls.Add(box);
                 //imgAllTiles.Images.Add(filename, Utils.Misc.ResizeImage(imgs[filename], sz));
             }
+            if (dest.Controls.Count > 0) dele.Invoke(dest.Controls[0], null);
             dest.ResumeLayout();
         }
 
