@@ -118,6 +118,9 @@ namespace RelertSharp.GUI
                     case Keys.Right:
                         if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.TileBrush) pnlTile.Result.ShiftOffsetX(1);
                         break;
+                    case Keys.Home:
+                        if (Current.CurrentMouseAction == MainWindowDataModel.MouseActionType.TileBrush) pnlTile.Result.ResetOffset();
+                        break;
                 }
             }
         }

@@ -186,6 +186,10 @@ namespace RelertSharp.GUI.Model.TileBrush
         {
             offset.Y += num;
         }
+        public void ResetOffset()
+        {
+            offset = new Pnt(0, 0);
+        }
         #endregion
 
 
