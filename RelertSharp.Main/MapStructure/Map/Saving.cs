@@ -128,13 +128,21 @@ namespace RelertSharp.MapStructure
         {
             toc = new INIEntity(tocName);
             List<INIEntity> data = new List<INIEntity>();
-            int i = 0;
-            foreach (T item in srcReferance)
+            try
             {
-                toc.AddPair(i++.ToString(), funcID.Invoke(item));
-                data.Add(funcForT(item));
+                int i = 0;
+                foreach (T item in srcReferance)
+                {
+                    toc.AddPair(i++.ToString(), funcID.Invoke(item));
+                    data.Add(funcForT(item));
+                }
+                result = data.ToArray();
             }
-            result = data.ToArray();
+            catch
+            {
+                Common.GlobalVar.Log.Critical("Save error in {0}, some item will not save!", tocName);
+                result = data.ToArray();
+            }
         }
         public void DumpScriptData(out INIEntity toc, out INIEntity[] allScripts)
         {

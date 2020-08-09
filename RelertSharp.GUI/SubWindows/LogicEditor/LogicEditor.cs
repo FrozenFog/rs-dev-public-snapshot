@@ -132,7 +132,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 if (!_CurrentHouse.AlliesWith.Exists(s => s == house.Name) && _CurrentHouse.Name != house.Name)
                     enemies.Add(house.Name);
             lbxHouseEnemy.Items.AddRange(enemies.ToArray());
-
             lbxHouseAllie.EndUpdate();
             lbxHouseEnemy.EndUpdate();
         }

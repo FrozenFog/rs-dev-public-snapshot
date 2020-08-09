@@ -46,6 +46,7 @@ namespace RelertSharp.FileSystem
             DumpMapObjects(f.IniDict);
             DumpLogics(f.IniDict);
             f.SaveIni(savePath + filename, true);
+            if (GlobalVar.Log.HasCritical) GlobalVar.Log.ShowCritical();
         }
         #endregion
 
