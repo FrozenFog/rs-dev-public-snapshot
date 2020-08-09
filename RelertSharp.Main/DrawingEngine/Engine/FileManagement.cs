@@ -74,6 +74,8 @@ namespace RelertSharp.DrawingEngine
                 d.Framecount = frame;
                 d.pSelf = CreateFile(nameid, DrawableType.Shp, idxFrame);
                 d.pShadow = CreateFile(nameid, DrawableType.Shp, idxFrame + frame / 2);
+
+                if (d.IsEmpty) d.pSelf = CreateFile("unkInf.shp", DrawableType.Shp);
                 Buffer.Buffers.Infantries[lookup] = d;
             }
             else d = Buffer.Buffers.Infantries[lookup];
@@ -104,6 +106,12 @@ namespace RelertSharp.DrawingEngine
                 if (!string.IsNullOrEmpty(self)) d.pSelf = CreateFile(self, t, idxFrame);
                 if (!string.IsNullOrEmpty(turret)) d.pTurret = CreateFile(turret, DrawableType.Vxl);
                 if (!string.IsNullOrEmpty(barl)) d.pBarrel = CreateFile(barl, DrawableType.Vxl);
+
+                if (d.IsEmpty)
+                {
+                    d.pSelf = CreateFile("unkObj.shp", DrawableType.Shp);
+                    d.IsVxl = false;
+                }
                 Buffer.Buffers.Units[lookup] = d;
             }
             else d = Buffer.Buffers.Units[lookup];
