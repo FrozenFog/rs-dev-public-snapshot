@@ -154,8 +154,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             isParamRefreshing = false;
             tlpParam.Visible = true;
         }
-        private int indexPrev = -1;
-        private bool csfEnabled = false;
         private void SetParamControls(Control[] controls, TriggerParam param, string[] paramData, int controlIndex)
         {
             if (controls.GetType() == typeof(LinkLabel[]))

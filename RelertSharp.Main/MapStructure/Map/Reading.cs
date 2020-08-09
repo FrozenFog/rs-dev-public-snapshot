@@ -41,6 +41,7 @@ namespace RelertSharp.MapStructure
             globalid.AddRange(Teams.Keys);
             globalid.AddRange(TaskForces.Keys);
             globalid.AddRange(Tags.Keys);
+            globalid.AddRange(Scripts.Keys);
 
             residual = new Dictionary<string, INIEntity>(f.IniDict);
 

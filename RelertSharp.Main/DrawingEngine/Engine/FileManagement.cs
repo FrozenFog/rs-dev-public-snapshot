@@ -232,10 +232,6 @@ namespace RelertSharp.DrawingEngine
         private DrawableStructure CreateDrawableStructure(string name, uint color, int pPal, int direction, bool isBaseNode = false)
         {
             DrawableStructure d;
-            if (name == "INGALITE")
-            {
-                int i = 0;
-            }
             string lookup = string.Format("{0}{1}.in{2}", name, color, direction);
             if (isBaseNode) lookup += "n";
             if (!Buffer.Buffers.Structures.Keys.Contains(lookup))
@@ -400,10 +396,6 @@ namespace RelertSharp.DrawingEngine
         }
         private VFileInfo GetPtrFromGlobalDir(string filename)
         {
-            if (filename == "GALITE.shp")
-            {
-                int i = 0;
-            }
             VFileInfo info = GlobalDir.GetFilePtr(filename);
             return info;
         }

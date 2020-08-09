@@ -26,7 +26,6 @@ namespace RelertSharp.GUI.Controls
         private static string[] OverlayRootNode = { TNodeOvHiBrg, TNodeOvLoBrg, TNodeOvOther, TNodeOvRail, TNodeOvResource, TNodeOvWall, TNodeOvRock };
 
 
-        private bool isResourceMode = false;
         private string overlayName = string.Empty;
         private byte overlayFrame = 0;
 
