@@ -188,6 +188,9 @@
     <Compile Include="Controls\RbPanelWand.Designer.cs">
       <DependentUpon>RbPanelWand.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Controls\TilePanel\AllTiles.cs">
       <SubType>UserControl</SubType>
     </Compile>
