@@ -98,8 +98,8 @@ namespace RelertSharp.GUI.Model.TileBrush
             if (force || (posNow != null && posNow.Coord != cell.Coord))
             {
                 RedrawImage();
-                foreach (Tile t in under) t.RevealAllTileImg();
-                foreach (Tile t in surroundUnder) t.RevealAllTileImg();
+                foreach (Tile t in under) t.RevealAsStd(isFlat);
+                foreach (Tile t in surroundUnder) t.RevealAsStd(isFlat);
                 foreach (Tile t in surrounding) t.Dispose();
                 surrounding.Clear();
                 surroundUnder.Clear();

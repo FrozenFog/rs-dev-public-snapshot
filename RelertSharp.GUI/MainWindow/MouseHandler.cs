@@ -35,6 +35,7 @@ namespace RelertSharp.GUI
             else
             {
                 Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
+                isBusy = true;
                 switch (Current.CurrentMouseAction)
                 {
                     case MainWindowDataModel.MouseActionType.BoxSelecting:
@@ -72,6 +73,7 @@ namespace RelertSharp.GUI
                         FillAt(cell);
                         break;
                 }
+                isBusy = false;
             }
         }
         private void MmbDown(MouseEventArgs e)
@@ -166,10 +168,13 @@ namespace RelertSharp.GUI
         {
             if (pos != Vec3.Zero)
             {
-                lblx.Text = string.Format("X : {0}", pos.X);
-                lbly.Text = string.Format("Y : {0}", pos.Y);
-                lblz.Text = string.Format("Z : {0}", pos.Z);
-                lblSubcell.Text = string.Format("Subcell : {0}", subcell);
+                if (Map.TilesData[pos.To2dLocateable()] is Tile t)
+                {
+                    lblx.Text = string.Format("X : {0}", t.X);
+                    lbly.Text = string.Format("Y : {0}", t.Y);
+                    lblz.Text = string.Format("Z : {0}", t.RealHeight);
+                    lblSubcell.Text = string.Format("Subcell : {0}", subcell);
+                }
                 if (markTile && GlobalVar.Engine.SelectTile(pos)) GlobalVar.Engine.Refresh();
             }
         }

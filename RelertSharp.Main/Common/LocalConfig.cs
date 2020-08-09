@@ -71,6 +71,11 @@ namespace RelertSharp.Common
             get { return this["GameRunning"]; }
             set { this["GameRunning"] = value; }
         }
+        public int AutoSaveTimeMilSec
+        {
+            get { return this["General"].ParseInt("AutosaveTime", 60) * 1000; }
+            set { this["General"]["AutosaveTime"] = (value / 1000).ToString(); }
+        }
         #endregion
     }
 }

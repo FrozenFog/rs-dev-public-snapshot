@@ -505,6 +505,7 @@ namespace RelertSharp.MapStructure
         }
         public void Mark(bool marked)
         {
+            if (Disposed) return;
             this.marked = marked;
             if (!Selected)
             {
@@ -573,6 +574,7 @@ namespace RelertSharp.MapStructure
         public void Dispose()
         {
             SceneObject.Dispose();
+            Disposed = true;
         }
         public byte[] GetBytes()
         {
@@ -639,6 +641,7 @@ namespace RelertSharp.MapStructure
         }
         public void RevealAllTileImg()
         {
+            if (Disposed) return;
             if (isSelfHidden)
             {
                 SceneObject.RevealSelf();
@@ -646,8 +649,24 @@ namespace RelertSharp.MapStructure
             }
             RevealExtraImg();
         }
+        public void RevealAsStd(bool flat = false)
+        {
+            if (Disposed) return;
+            SceneObject.RevealSelf();
+            isSelfHidden = false;
+            if (!flat)
+            {
+                RevealExtraImg();
+            }
+            if (Selected)
+            {
+                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
+                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
+            }
+        }
         public void RevealExtraImg()
         {
+            if (Disposed) return;
             if (isExtraHidden)
             {
                 SceneObject.RevealExtra();
@@ -668,6 +687,7 @@ namespace RelertSharp.MapStructure
         }
         public void Select()
         {
+            if (Disposed) return;
             if (!Selected && SceneObject != null)
             {
                 if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
@@ -677,6 +697,7 @@ namespace RelertSharp.MapStructure
         }
         public void DeSelect()
         {
+            if (Disposed) return;
             if (Selected && SceneObject != null)
             {
                 if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Zero, true);
@@ -791,6 +812,7 @@ namespace RelertSharp.MapStructure
         public bool Selected { get; set; }
         public bool IsHyte { get; set; }
         public int TileTerrainType { get; set; }
+        public bool Disposed { get; private set; }
         #endregion
     }
 }

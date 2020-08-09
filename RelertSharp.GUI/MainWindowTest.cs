@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using RelertSharp.DrawingEngine;
 using RelertSharp.FileSystem;
 using RelertSharp.MapStructure;
@@ -29,6 +30,7 @@ namespace RelertSharp.GUI
         private bool initialized = false;
         private bool saved = true;
         private bool requireFocus = false;
+        private bool isBusy = false;
         private MainWindowDataModel Current = new MainWindowDataModel();
 
         private LogicEditor logicEditor = new LogicEditor();
@@ -68,7 +70,8 @@ namespace RelertSharp.GUI
             pnlPick.SelectCelltagCollection += PnlPick_SelectCelltagCollection;
             pnlPick.ReleaseCelltags += PnlPick_ReleaseCelltags;
             pnlTile.NewTileSelected += PnlTile_NewTileSelected;
-
+            tmrAutosave.Interval = GlobalVar.GlobalConfig.Local.AutoSaveTimeMilSec;
+            tmrAutosave.Enabled = true;
 
             initialized = true;
         }
@@ -440,6 +443,18 @@ namespace RelertSharp.GUI
                 {
                     tsmiMainSaveMapAs_Click(null, null);
                 }
+            }
+        }
+
+        private void tmrAutosave_Tick(object sender, EventArgs e)
+        {
+            if (!isBusy)
+            {
+                DateTime now = DateTime.Now;
+                string path = string.Format("{0}\\AutoSave\\", Application.StartupPath);
+                string name = string.Format("{0}-{1}-{2} {3}-{4}-{5}.map", now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                GlobalVar.CurrentMapDocument.SaveMapAs(path, name);
             }
         }
     }
