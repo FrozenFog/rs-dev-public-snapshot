@@ -84,7 +84,10 @@ namespace RelertSharp.MapStructure.Logic
             LoadAttributes();
             GetToUnit = new TeamUnit(this);
         }
-        public TeamItem() : base() { }
+        public TeamItem() : base()
+        {
+
+        }
         #endregion
 
 

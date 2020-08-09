@@ -34,6 +34,14 @@ namespace RelertSharp.MapStructure.Points
             }
             data[item.ID] = item;
         }
+        public virtual T GetItemByPos(I2dLocateable pos)
+        {
+            foreach (T item in this)
+            {
+                if (item.Coord == pos.Coord) return item;
+            }
+            return null;
+        }
         public void RemoveObjectByID(T item)
         {
             if (data.Keys.Contains(item.ID)) data.Remove(item.ID);
@@ -42,21 +50,6 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Public Calls - PointCollectionBase
-        public T this[I2dLocateable pos]
-        {
-            get
-            {
-                string coord = CoordString(pos.Y, pos.X);
-                if (data.Keys.Contains(coord)) return data[coord];
-                return null;
-            }
-            set
-            {
-                string coord = CoordString(pos.Y, pos.X);
-                data[coord] = value;
-            }
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
             return data.Values.GetEnumerator();

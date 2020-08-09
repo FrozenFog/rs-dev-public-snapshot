@@ -48,6 +48,10 @@ namespace RelertSharp.MapStructure
                     Tiles[pos].RemoveObject(smg);
                 }
             }
+            else if (t == typeof(WaypointItem))
+            {
+                return;
+            }
             else
             {
                 Tiles[obj].RemoveObject(obj);
@@ -72,6 +76,7 @@ namespace RelertSharp.MapStructure
                     Tiles[pos].AddObject(smg);
                 }
             }
+            else if (t == typeof(WaypointItem)) return;
             else
             {
                 Tiles[obj].AddObject(obj);
@@ -154,10 +159,6 @@ namespace RelertSharp.MapStructure
         {
             UpdateObject(inf);
             Infantries[inf.ID] = inf;
-        }
-        public TerrainItem GetTerrain(I2dLocateable pos)
-        {
-            return Terrains[pos];
         }
         #endregion
     }

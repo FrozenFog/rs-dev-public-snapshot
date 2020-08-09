@@ -86,7 +86,8 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         }
         private void splitTaskScript_Resize(object sender, EventArgs e)
         {
-            splitTaskScript.SplitterDistance = splitTaskScript.Width / 2;
+            int width = splitTaskScript.Width / 2;
+            if (splitTaskScript.Panel1MinSize < width && width < splitTaskScript.Width - splitTaskScript.Panel2MinSize) splitTaskScript.SplitterDistance = width;
         }
     }
 }
