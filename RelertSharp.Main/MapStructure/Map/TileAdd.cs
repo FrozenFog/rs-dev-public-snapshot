@@ -14,6 +14,7 @@ namespace RelertSharp.MapStructure
             if (Tiles[t] is Tile org)
             {
                 t.SceneObject.SetColor(org.SceneObject.ColorVector);
+                t.Selected = org.Selected;
                 org.Dispose();
                 org.ReplaceWith(t);
                 Tiles[t] = t;
