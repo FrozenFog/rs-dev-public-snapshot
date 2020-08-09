@@ -12,14 +12,14 @@ namespace RelertSharp.MapStructure.Points
 {
     public class PointCollectionBase<T> : IEnumerable<T> where T : PointItemBase
     {
-        private Dictionary<string, T> data = new Dictionary<string, T>();
+        protected Dictionary<string, T> data = new Dictionary<string, T>();
 
 
         public PointCollectionBase() { }
 
 
         #region Public Methods - ObjectBase
-        public void AddObject(T item)
+        public virtual void AddObject(T item)
         {
             if (string.IsNullOrEmpty(item.ID))
             {

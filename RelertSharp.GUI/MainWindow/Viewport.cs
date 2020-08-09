@@ -113,6 +113,10 @@ namespace RelertSharp.GUI
             {
                 Current.SelectOverlayAt(pos);
             }
+            if ((flag | MainWindowDataModel.SelectingFlag.Waypoints) != 0)
+            {
+                Current.SelectWaypointAt(pos);
+            }
         }
         private bool RbPanelVisible()
         {

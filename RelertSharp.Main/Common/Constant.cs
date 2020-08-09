@@ -8,7 +8,7 @@ namespace RelertSharp.Common
 {
     public static class Constant
     {
-        public const string ReleaseDate = " - ver. 2020.08.09-1505 - UNSTABLE";
+        public const string ReleaseDate = " - ver. 2020.08.09-1902 - UNSTABLE";
         public static class TileSetClass
         {
             public const string Clear = "TscClear";

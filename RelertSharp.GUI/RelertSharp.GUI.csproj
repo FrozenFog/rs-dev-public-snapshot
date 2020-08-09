@@ -131,6 +131,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\Delegates.cs" />
+    <Compile Include="Controls\InputWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\InputWindow.Designer.cs">
+      <DependentUpon>InputWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MinimapPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -159,6 +165,9 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\PickPanel\TerrainObject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PickPanel\WaypointObject.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\RbBrushPanel.cs">
@@ -432,6 +441,9 @@
       <DependentUpon>WelcomeWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="_Test.cs" />
+    <EmbeddedResource Include="Controls\InputWindow.resx">
+      <DependentUpon>InputWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\PickPanel\PickPanel.resx">
       <DependentUpon>PickPanel.cs</DependentUpon>
     </EmbeddedResource>

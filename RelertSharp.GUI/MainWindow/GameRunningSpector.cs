@@ -23,7 +23,7 @@ namespace RelertSharp.GUI
             gameProcessName = gameexeName.Substring(0, gameexeName.Length - 4);
             if (ps.Where(x => x.ProcessName.ToLower() == gameProcessName).Count() == 0)
             {
-                ProcessStartInfo info = new ProcessStartInfo(injectorName, string.Format("\"{0}\" -SPAWN", gameexeName));
+                ProcessStartInfo info = new ProcessStartInfo(injectorName, string.Format("\"{0}\" -SPAWN -SPEEDCONTROL", gameexeName));
                 info.WorkingDirectory = GlobalConfig.GamePath;
                 info.UseShellExecute = false;
 #if RELEASE
