@@ -30,15 +30,15 @@ namespace RelertSharp.GUI.Model
             selectedTile.Clear();
             Engine.Refresh();
         }
-
-
         public void RiseTileAll()
         {
+            RemoveDisposedTileFromSelecting();
             foreach (Tile t in selectedTile) t.Rise();
             Engine.Refresh();
         }
         public void SinkTileAll()
         {
+            RemoveDisposedTileFromSelecting();
             foreach (Tile t in selectedTile) t.Sink();
             Engine.Refresh();
         }
@@ -56,10 +56,23 @@ namespace RelertSharp.GUI.Model
         }
         public void FillTilesAt(I3dLocateable cell, TileSet set)
         {
+            RemoveDisposedTileFromSelecting();
             Rectangle area = GetSelectedRegionSize();
             IEnumerable<Tile> newtiles = Bucket.FillTilesAt(cell, area, set);
             selectedTile.Clear();
             selectedTile.AddRange(newtiles);
+        }
+
+        private void RemoveDisposedTileFromSelecting()
+        {
+            List<Tile> tmp = new List<Tile>(selectedTile);
+            foreach (Tile t in tmp)
+            {
+                if (t.Disposed)
+                {
+                    selectedTile.Remove(t);
+                }
+            }
         }
 
 
