@@ -35,6 +35,7 @@ namespace RelertSharp.GUI
             else
             {
                 Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
+                isBusy = true;
                 switch (Current.CurrentMouseAction)
                 {
                     case MainWindowDataModel.MouseActionType.BoxSelecting:
@@ -72,6 +73,7 @@ namespace RelertSharp.GUI
                         FillAt(cell);
                         break;
                 }
+                isBusy = false;
             }
         }
         private void MmbDown(MouseEventArgs e)
