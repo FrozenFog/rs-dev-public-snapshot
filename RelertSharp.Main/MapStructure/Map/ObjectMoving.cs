@@ -22,6 +22,10 @@ namespace RelertSharp.MapStructure
         }
         public void ShiftObjectBy(IMapObject target, I3dLocateable delta)
         {
+            if (Math.Abs(delta.X) > 1 || Math.Abs(delta.Y) > 1)
+            {
+                int i = 0;
+            }
             EraseObjectTileData(target);
             target.ShiftBy(delta);
             AddObjectInfoInTile(target);

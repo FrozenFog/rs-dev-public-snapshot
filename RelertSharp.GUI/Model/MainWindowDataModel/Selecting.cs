@@ -84,7 +84,7 @@ namespace RelertSharp.GUI.Model
         }
         public void SelectTerrainAt(I2dLocateable pos)
         {
-            TerrainItem terr = map.Terrains[pos];
+            TerrainItem terr = map.Terrains.GetItemByPos(pos);
             if (terr != null && !Terrains.Contains(terr))
             {
                 Terrains.Add(terr);
@@ -103,7 +103,7 @@ namespace RelertSharp.GUI.Model
         public void SelectWaypointAt(I2dLocateable pos)
         {
             WaypointItem wp = map.Waypoints.FindByPos(pos);
-            if (wp != null)
+            if (wp != null && !Waypoints.Contains(wp))
             {
                 Waypoints.Add(wp);
                 wp.Select();
@@ -184,7 +184,7 @@ namespace RelertSharp.GUI.Model
         /// <summary>
         /// Aircraft, Infantries, Units, Buildings, Terrains
         /// </summary>
-        public IEnumerable<IMapObject> SelectedMapObjects { get { return Aircrafts.Concat<IMapObject>(Infantries).Concat(Units).Concat(Buildings).Concat(Terrains); } }
+        public IEnumerable<IMapObject> SelectedMapObjects { get { return Aircrafts.Concat<IMapObject>(Infantries).Concat(Units).Concat(Buildings).Concat(Terrains).Concat(Waypoints); } }
         #endregion
     }
 }
