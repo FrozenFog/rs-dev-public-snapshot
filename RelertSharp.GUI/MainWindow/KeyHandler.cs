@@ -42,6 +42,7 @@ namespace RelertSharp.GUI
                     case Keys.Delete:
                         Current.RemoveAll();
                         pnlMiniMap.BackgroundImage = GlobalVar.Engine.MiniMap;
+                        pnlPick.RefreshContainerMember();
                         break;
                     case Keys.M:
                         ToolBoxClick(toolBtnSelecting);

@@ -118,6 +118,10 @@ namespace RelertSharp.GUI.Model.BrushModel
             Reload(currentName, ObjectType, obj as ICombatObject, true);
             return obj;
         }
+        public void ReleaseWaypoint()
+        {
+
+        }
 
 
         public IMapObject BrushObject { get; set; }

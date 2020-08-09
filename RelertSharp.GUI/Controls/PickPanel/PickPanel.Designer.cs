@@ -94,6 +94,11 @@
             this.lvOverlayFrames = new System.Windows.Forms.ListView();
             this.imgOverlayFrame = new System.Windows.Forms.ImageList(this.components);
             this.tbpWaypoint = new System.Windows.Forms.TabPage();
+            this.lbxWaypoint = new System.Windows.Forms.ListBox();
+            this.tlpWpMode = new System.Windows.Forms.TableLayoutPanel();
+            this.rdbWpNone = new System.Windows.Forms.RadioButton();
+            this.rdbWpDesignated = new System.Windows.Forms.RadioButton();
+            this.rdbWpNum = new System.Windows.Forms.RadioButton();
             this.tbpCelltag = new System.Windows.Forms.TabPage();
             this.splitBaseNode = new System.Windows.Forms.SplitContainer();
             this.lbxCelltags = new System.Windows.Forms.ListBox();
@@ -138,6 +143,8 @@
             this.splitOverlay.Panel1.SuspendLayout();
             this.splitOverlay.Panel2.SuspendLayout();
             this.splitOverlay.SuspendLayout();
+            this.tbpWaypoint.SuspendLayout();
+            this.tlpWpMode.SuspendLayout();
             this.tbpCelltag.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitBaseNode)).BeginInit();
             this.splitBaseNode.Panel1.SuspendLayout();
@@ -919,12 +926,85 @@
             // 
             // tbpWaypoint
             // 
+            this.tbpWaypoint.Controls.Add(this.lbxWaypoint);
+            this.tbpWaypoint.Controls.Add(this.tlpWpMode);
             this.tbpWaypoint.Location = new System.Drawing.Point(4, 67);
             this.tbpWaypoint.Name = "tbpWaypoint";
             this.tbpWaypoint.Size = new System.Drawing.Size(303, 679);
             this.tbpWaypoint.TabIndex = 7;
             this.tbpWaypoint.Text = "Waypoints";
             this.tbpWaypoint.UseVisualStyleBackColor = true;
+            // 
+            // lbxWaypoint
+            // 
+            this.lbxWaypoint.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbxWaypoint.FormattingEnabled = true;
+            this.lbxWaypoint.ItemHeight = 15;
+            this.lbxWaypoint.Location = new System.Drawing.Point(0, 75);
+            this.lbxWaypoint.Name = "lbxWaypoint";
+            this.lbxWaypoint.Size = new System.Drawing.Size(303, 604);
+            this.lbxWaypoint.TabIndex = 1;
+            this.lbxWaypoint.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxWaypoint_MouseDoubleClick);
+            // 
+            // tlpWpMode
+            // 
+            this.tlpWpMode.AutoSize = true;
+            this.tlpWpMode.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tlpWpMode.ColumnCount = 2;
+            this.tlpWpMode.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpWpMode.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpWpMode.Controls.Add(this.rdbWpNone, 0, 0);
+            this.tlpWpMode.Controls.Add(this.rdbWpDesignated, 0, 2);
+            this.tlpWpMode.Controls.Add(this.rdbWpNum, 0, 1);
+            this.tlpWpMode.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tlpWpMode.Location = new System.Drawing.Point(0, 0);
+            this.tlpWpMode.Name = "tlpWpMode";
+            this.tlpWpMode.RowCount = 3;
+            this.tlpWpMode.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpWpMode.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpWpMode.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpWpMode.Size = new System.Drawing.Size(303, 75);
+            this.tlpWpMode.TabIndex = 0;
+            // 
+            // rdbWpNone
+            // 
+            this.rdbWpNone.AutoSize = true;
+            this.rdbWpNone.Checked = true;
+            this.tlpWpMode.SetColumnSpan(this.rdbWpNone, 2);
+            this.rdbWpNone.Location = new System.Drawing.Point(3, 3);
+            this.rdbWpNone.Name = "rdbWpNone";
+            this.rdbWpNone.Size = new System.Drawing.Size(60, 19);
+            this.rdbWpNone.TabIndex = 1;
+            this.rdbWpNone.TabStop = true;
+            this.rdbWpNone.Tag = "0";
+            this.rdbWpNone.Text = "None";
+            this.rdbWpNone.UseVisualStyleBackColor = true;
+            this.rdbWpNone.CheckedChanged += new System.EventHandler(this.rdbWpNum_CheckedChanged);
+            // 
+            // rdbWpDesignated
+            // 
+            this.rdbWpDesignated.AutoSize = true;
+            this.rdbWpDesignated.Location = new System.Drawing.Point(3, 53);
+            this.rdbWpDesignated.Name = "rdbWpDesignated";
+            this.rdbWpDesignated.Size = new System.Drawing.Size(140, 19);
+            this.rdbWpDesignated.TabIndex = 1;
+            this.rdbWpDesignated.Tag = "2";
+            this.rdbWpDesignated.Text = "Designated Num";
+            this.rdbWpDesignated.UseVisualStyleBackColor = true;
+            this.rdbWpDesignated.CheckedChanged += new System.EventHandler(this.rdbWpNum_CheckedChanged);
+            // 
+            // rdbWpNum
+            // 
+            this.rdbWpNum.AutoSize = true;
+            this.tlpWpMode.SetColumnSpan(this.rdbWpNum, 2);
+            this.rdbWpNum.Location = new System.Drawing.Point(3, 28);
+            this.rdbWpNum.Name = "rdbWpNum";
+            this.rdbWpNum.Size = new System.Drawing.Size(252, 19);
+            this.rdbWpNum.TabIndex = 1;
+            this.rdbWpNum.Tag = "1";
+            this.rdbWpNum.Text = "Add with First Available Num";
+            this.rdbWpNum.UseVisualStyleBackColor = true;
+            this.rdbWpNum.CheckedChanged += new System.EventHandler(this.rdbWpNum_CheckedChanged);
             // 
             // tbpCelltag
             // 
@@ -1214,6 +1294,10 @@
             this.splitOverlay.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitOverlay)).EndInit();
             this.splitOverlay.ResumeLayout(false);
+            this.tbpWaypoint.ResumeLayout(false);
+            this.tbpWaypoint.PerformLayout();
+            this.tlpWpMode.ResumeLayout(false);
+            this.tlpWpMode.PerformLayout();
             this.tbpCelltag.ResumeLayout(false);
             this.splitBaseNode.Panel1.ResumeLayout(false);
             this.splitBaseNode.Panel2.ResumeLayout(false);
@@ -1325,5 +1409,10 @@
         private System.Windows.Forms.TableLayoutPanel tlpCellUtil;
         private System.Windows.Forms.ContextMenuStrip cmsCelltagUtil;
         private System.Windows.Forms.ToolStripMenuItem tsmiTraceTag;
+        private System.Windows.Forms.ListBox lbxWaypoint;
+        private System.Windows.Forms.TableLayoutPanel tlpWpMode;
+        private System.Windows.Forms.RadioButton rdbWpNone;
+        private System.Windows.Forms.RadioButton rdbWpDesignated;
+        private System.Windows.Forms.RadioButton rdbWpNum;
     }
 }

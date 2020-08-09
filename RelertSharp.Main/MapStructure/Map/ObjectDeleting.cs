@@ -55,5 +55,10 @@ namespace RelertSharp.MapStructure
             node.Dispose();
             Tiles[node]?.RemoveObject(node);
         }
+        public void RemoveWaypoint(WaypointItem wp)
+        {
+            wp.Dispose();
+            Waypoints.RemoveWaypoint(wp);
+        }
     }
 }

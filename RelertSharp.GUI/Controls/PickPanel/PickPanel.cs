@@ -44,12 +44,18 @@ namespace RelertSharp.GUI.Controls
             InitializeSmudgePanel();
             InitializeNodePanel();
             InitializeCelltagPanel();
+            InitializeWpPanel();
 
             initialized = true;
         }
         public void DrawComplete()
         {
             drew = true;
+        }
+        public void RefreshContainerMember()
+        {
+            LoadWaypointAll();
+            cbbNodeHouse_SelectedIndexChanged(null, null);
         }
         public void ShiftHide()
         {
@@ -76,6 +82,8 @@ namespace RelertSharp.GUI.Controls
         private void tbcMain_SelectedIndexChanged(object sender, EventArgs e)
         {
             CurrentType = (PickPanelType)tbcMain.SelectedIndex;
+            rdbWpNone.Checked = true;
+            if (CurrentType == PickPanelType.Waypoints) LoadWaypointAll();
         }
         public BrushModel Result { get { return brush; } }
         public PickPanelType CurrentType { get; private set; }

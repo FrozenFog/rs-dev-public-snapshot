@@ -100,6 +100,15 @@ namespace RelertSharp.GUI.Model
                 ov.Select();
             }
         }
+        public void SelectWaypointAt(I2dLocateable pos)
+        {
+            WaypointItem wp = map.Waypoints.FindByPos(pos);
+            if (wp != null)
+            {
+                Waypoints.Add(wp);
+                wp.Select();
+            }
+        }
         public void ReleaseAll()
         {
             foreach (UnitItem unit in Units) unit.UnSelect();
@@ -114,6 +123,8 @@ namespace RelertSharp.GUI.Model
             Overlays.Clear();
             foreach (CellTagItem cell in Celltags) cell.UnSelect();
             Celltags.Clear();
+            foreach (WaypointItem wp in Waypoints) wp.UnSelect();
+            Waypoints.Clear();
 
 
             Engine.Refresh();
@@ -146,7 +157,11 @@ namespace RelertSharp.GUI.Model
                 map.RemoveOverlay(ov);
             }
             Overlays.Clear();
-
+            foreach (WaypointItem wp in Waypoints)
+            {
+                map.RemoveWaypoint(wp);
+            }
+            Waypoints.Clear();
 
             Engine.RemoveDisposedObjects();
             Engine.Refresh();
@@ -155,7 +170,7 @@ namespace RelertSharp.GUI.Model
 
 
         #region Public Calls - MainWindowDataModel
-        public SelectingFlag SelectingFlags { get; set; } = SelectingFlag.Units | SelectingFlag.Infantries | SelectingFlag.Buildings | SelectingFlag.Terrains | SelectingFlag.Overlays;
+        public SelectingFlag SelectingFlags { get; set; } = SelectingFlag.Units | SelectingFlag.Infantries | SelectingFlag.Buildings | SelectingFlag.Terrains | SelectingFlag.Overlays | SelectingFlag.Waypoints;
         public SelectingBoxMode SelectingBoxFlag { get; set; } = SelectingBoxMode.ClientRectangle;
         public List<AircraftItem> Aircrafts { get; private set; } = new List<AircraftItem>();
         public List<InfantryItem> Infantries { get; private set; } = new List<InfantryItem>();
@@ -164,6 +179,7 @@ namespace RelertSharp.GUI.Model
         public List<TerrainItem> Terrains { get; private set; } = new List<TerrainItem>();
         public List<OverlayUnit> Overlays { get; private set; } = new List<OverlayUnit>();
         public List<CellTagItem> Celltags { get; private set; } = new List<CellTagItem>();
+        public List<WaypointItem> Waypoints { get; private set; } = new List<WaypointItem>();
         public IEnumerable<ICombatObject> CombatObjects { get { return Infantries.Concat<ICombatObject>(Units).Concat(Buildings); } }
         /// <summary>
         /// Aircraft, Infantries, Units, Buildings, Terrains

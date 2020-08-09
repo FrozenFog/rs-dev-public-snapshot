@@ -73,6 +73,16 @@ namespace RelertSharp.MapStructure
             TeamScriptGroup g = Scripts.NewScript(src, NewID);
             return g;
         }
+        public WaypointItem NewWaypoint(I2dLocateable pos, bool designated = false, int num = 0)
+        {
+            if (!designated)
+            {
+                num = Waypoints.NewID();
+            }
+            WaypointItem wp = new WaypointItem(pos, num);
+            Waypoints.AddObject(wp);
+            return wp;
+        }
         public void RemoveScript(TeamScriptGroup group)
         {
             Scripts.Remove(group.ID);
