@@ -39,7 +39,7 @@ namespace RelertSharp.GUI.Controls
         {
             isFramework = frameworkEnable;
             reserveSelection = true;
-            cbbAllTiles_SelectedIndexChanged(cbbAllTiles, new EventArgs());
+            if (tbcMain.SelectedIndex == 1) cbbAllTiles_SelectedIndexChanged(cbbAllTiles, new EventArgs());
             if (nodeNow != null) trvGeneral_NodeMouseClick(trvGeneral, new TreeNodeMouseClickEventArgs(nodeNow, MouseButtons.Left, 1, 0, 0));
             Result.SetFramework(frameworkEnable);
             reserveSelection = false;
