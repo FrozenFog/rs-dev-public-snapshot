@@ -9,10 +9,6 @@ namespace RelertSharp.Common
     public static class Constant
     {
         public const string ReleaseDate = " - ver. 2020.08.08-1024 - UNSTABLE";
-        public static class Logics
-        {
-            public static int[] EventIdLength3 = { 60, 61 };
-        }
         public static class TileSetClass
         {
             public const string Clear = "TscClear";

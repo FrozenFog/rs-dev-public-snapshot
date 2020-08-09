@@ -155,7 +155,7 @@ namespace RelertSharp.MapStructure.Logic
             {
                 obj.Add(lg.ID);
                 string[] param = lg.Parameters;
-                if (LogicType == LogicType.EventLogic && !Constant.Logics.EventIdLength3.Contains(lg.ID)) param = param.Take(2).ToArray();
+                if (LogicType == LogicType.EventLogic && param[0] != "2") param = param.Take(2).ToArray();
                 obj.AddRange(param);
             }
             return Utils.Misc.Join(',', obj);
