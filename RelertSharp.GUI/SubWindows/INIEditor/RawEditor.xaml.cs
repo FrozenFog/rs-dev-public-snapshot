@@ -53,8 +53,8 @@ namespace RelertSharp.SubWindows.INIEditor
         private void LoadEvents()
         {
             rawEditor.TextArea.TextEntered += TextArea_TextEntered;
-            rawEditor.TextArea.KeyUp += (o, e) => Task.Run((Action)UpdateEditor);
-            rawEditor.TextArea.MouseMove += (o, e) => Task.Run((Action)UpdateEditor);
+            rawEditor.TextArea.KeyUp += (o, e) => Task.Run(UpdateEditor);
+            rawEditor.TextArea.MouseMove += (o, e) => Task.Run(UpdateEditor);
             rawEditor.TextArea.PreviewKeyDown += (o, e) =>
               {
                   if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.F)
@@ -107,7 +107,7 @@ namespace RelertSharp.SubWindows.INIEditor
         private void TextArea_TextEntered(object sender, TextCompositionEventArgs e)
         {
             rawEditor.ShowCompletionWindow(rawEditor.GetCursorWord());
-            Task.Run((Action)UpdateEditor);
+            Task.Run(UpdateEditor);
         }
 
         HashSet<char> searchRegHelper = new HashSet<char>();

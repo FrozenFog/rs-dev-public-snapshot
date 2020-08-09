@@ -52,7 +52,7 @@ namespace RelertSharp.SubWindows.INIEditor
         /// <param name="isUpdating"></param>
         private void UpdateSectionList(bool isUpdating = false, bool jumpOrigin = true)
         {
-            if(!isUpdating)
+            if (!isUpdating)
             {
                 isSectionsUpdating = true;
                 lbxSections.BeginUpdate();
@@ -61,10 +61,10 @@ namespace RelertSharp.SubWindows.INIEditor
             string selectedSection = lbxSections.SelectedItem as string;
             lbxSections.SelectedIndices.Clear();
             lbxSections.Items.Clear();
-            
+
             var keys = Data.Keys.ToList();
             keys.Sort();
-            
+
             foreach (string section in keys)
                 lbxSections.Items.Add(section);
             if (jumpOrigin && !string.IsNullOrEmpty(selectedSection) && Data.ContainsKey(selectedSection))
@@ -104,7 +104,7 @@ namespace RelertSharp.SubWindows.INIEditor
 
             stsSectionInfo.Text = entity.ToString();
 
-            foreach(INIPair pair in _CurrentSection)
+            foreach (INIPair pair in _CurrentSection)
             {
                 DataGridViewRow row = new DataGridViewRow();
                 DataGridViewTextBoxCell keyCell = new DataGridViewTextBoxCell();
@@ -150,7 +150,7 @@ namespace RelertSharp.SubWindows.INIEditor
                 "Successfully parsed " + Data.Count + " sections into " + reMain.rawEditor.LineCount + " lines";
         }
 
-        private void OnValueChanged(string key,string value)
+        private void OnValueChanged(string key, string value)
         {
             _CurrentSection.SetPair(key, value);
         }
@@ -168,8 +168,8 @@ namespace RelertSharp.SubWindows.INIEditor
         {
             if (
                 MessageBox.Show(
-                    DICT["INISaveMessage"], 
-                    DICT["INITitle"], 
+                    DICT["INISaveMessage"],
+                    DICT["INITitle"],
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Information
                     )
@@ -180,13 +180,13 @@ namespace RelertSharp.SubWindows.INIEditor
         private void ImportINI()
         {
             dlgImportFile dlgImport = new dlgImportFile();
-            if(dlgImport.ShowDialog()==DialogResult.OK)
+            if (dlgImport.ShowDialog() == DialogResult.OK)
             {
-                foreach(INIEntity entity in dlgImport.lbxSelected.Items)
+                foreach (INIEntity entity in dlgImport.lbxSelected.Items)
                 {
-                    if (Data.ContainsKey(entity.Name)) 
+                    if (Data.ContainsKey(entity.Name))
                         Data[entity.Name].JoinWith(entity);
-                    else 
+                    else
                         Data[entity.Name] = entity;
                 }
             }
@@ -215,7 +215,7 @@ namespace RelertSharp.SubWindows.INIEditor
         #endregion
 
         #region Private Calls - INIEditor
-        private INIEntity _CurrentSection 
+        private INIEntity _CurrentSection
         {
             get
             {
@@ -226,7 +226,7 @@ namespace RelertSharp.SubWindows.INIEditor
         #endregion
 
         #region Public Calls - INIEditor
-        public Dictionary<string,INIEntity> Data { get; private set; }
+        public Dictionary<string, INIEntity> Data { get; private set; }
 
 
 
