@@ -330,11 +330,13 @@ namespace RelertSharp.GUI
         private void button2_Click(object sender, EventArgs e)
         {
             logicEditor.Show();
+            logicEditor.BringToFront();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             iNIEditor.Show();
+            iNIEditor.BringToFront();
         }
 
         private void pnlMiniMap_MouseClick(object sender, MouseEventArgs e)
