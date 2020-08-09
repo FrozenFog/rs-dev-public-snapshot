@@ -52,7 +52,8 @@ namespace RelertSharp.MapStructure.Logic
                             ));
                             break;
                         case LogicType.EventLogic:
-                            steplen = (logicID == 60 || logicID == 61) ? 4 : 3;
+                            string flag = l[i + 1];
+                            steplen = flag == "2" ? 4 : 3;
                             Add(new LogicItem(
                                 logicID,
                                 new string[] { l[i + 1], l[i + 2], steplen == 4 ? l[i + 3] : "0" },
