@@ -23,6 +23,14 @@ namespace RelertSharp.SubWindows.INIEditor
             e.Cancel = true;
             Hide();
         }
+        private void INIEditor_ResizeBegin(object sender, EventArgs e)
+        {
+            this.BeginUpdate();
+        }
+        private void INIEditor_ResizeEnd(object sender, System.EventArgs e)
+        {
+            this.EndUpdate();
+        }
         private void btnImport_Click(object sender, EventArgs e) => ImportINI();
         private void btnSave_Click(object sender, EventArgs e) => SaveINI();
         private void tsbReload_Click(object sender, EventArgs e) => ReloadINI();
