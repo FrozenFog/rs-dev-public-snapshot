@@ -307,6 +307,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         }
         #endregion
         #endregion
+
         #region AI Trigger
         #region btn
         private void btnNewAI_Click(object sender, EventArgs e)
@@ -807,6 +808,8 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             this.EndUpdate();
         }
+
+        
         #endregion
     }
 }

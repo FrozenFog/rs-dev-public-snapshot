@@ -13,6 +13,7 @@ using RelertSharp.Common;
 using RelertSharp.IniSystem;
 using static RelertSharp.Language;
 using static RelertSharp.GUI.GuiUtils;
+using RelertSharp.GUI.Controls;
 
 namespace RelertSharp.GUI.SubWindows.LogicEditor
 {

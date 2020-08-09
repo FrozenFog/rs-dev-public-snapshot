@@ -178,7 +178,7 @@
             this.tbpTriggers.Controls.Add(this.splitTriggerMain);
             this.tbpTriggers.Location = new System.Drawing.Point(4, 22);
             this.tbpTriggers.Name = "tbpTriggers";
-            this.tbpTriggers.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpTriggers.Padding = new System.Windows.Forms.Padding(3);
             this.tbpTriggers.Size = new System.Drawing.Size(726, 565);
             this.tbpTriggers.TabIndex = 0;
             this.tbpTriggers.Text = "LGCtbpTrgPage";
@@ -188,7 +188,7 @@
             this.splitTriggerMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitTriggerMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitTriggerMain.Location = new System.Drawing.Point(3, 3);
-            this.splitTriggerMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitTriggerMain.Margin = new System.Windows.Forms.Padding(2);
             this.splitTriggerMain.Name = "splitTriggerMain";
             // 
             // splitTriggerMain.Panel1
@@ -287,7 +287,7 @@
             this.splitTagEA.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitTagEA.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitTagEA.Location = new System.Drawing.Point(0, 0);
-            this.splitTagEA.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitTagEA.Margin = new System.Windows.Forms.Padding(2);
             this.splitTagEA.Name = "splitTagEA";
             this.splitTagEA.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -316,7 +316,7 @@
             // 
             this.splitEA.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitEA.Location = new System.Drawing.Point(0, 0);
-            this.splitEA.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitEA.Margin = new System.Windows.Forms.Padding(2);
             this.splitEA.Name = "splitEA";
             // 
             // splitEA.Panel1
@@ -355,9 +355,9 @@
             this.tbpTaskScriptPage.BackColor = System.Drawing.Color.Transparent;
             this.tbpTaskScriptPage.Controls.Add(this.splitTaskScript);
             this.tbpTaskScriptPage.Location = new System.Drawing.Point(4, 22);
-            this.tbpTaskScriptPage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbpTaskScriptPage.Margin = new System.Windows.Forms.Padding(2);
             this.tbpTaskScriptPage.Name = "tbpTaskScriptPage";
-            this.tbpTaskScriptPage.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbpTaskScriptPage.Padding = new System.Windows.Forms.Padding(2);
             this.tbpTaskScriptPage.Size = new System.Drawing.Size(726, 565);
             this.tbpTaskScriptPage.TabIndex = 3;
             this.tbpTaskScriptPage.Text = "LGCtbpTaskScriptPage";
@@ -366,7 +366,7 @@
             // 
             this.splitTaskScript.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitTaskScript.Location = new System.Drawing.Point(2, 2);
-            this.splitTaskScript.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitTaskScript.Margin = new System.Windows.Forms.Padding(2);
             this.splitTaskScript.Name = "splitTaskScript";
             // 
             // splitTaskScript.Panel1
@@ -387,9 +387,9 @@
             this.gpbTeamTask.Controls.Add(this.splitTaskforce);
             this.gpbTeamTask.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gpbTeamTask.Location = new System.Drawing.Point(0, 0);
-            this.gpbTeamTask.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamTask.Margin = new System.Windows.Forms.Padding(2);
             this.gpbTeamTask.Name = "gpbTeamTask";
-            this.gpbTeamTask.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamTask.Padding = new System.Windows.Forms.Padding(2);
             this.gpbTeamTask.Size = new System.Drawing.Size(350, 561);
             this.gpbTeamTask.TabIndex = 5;
             this.gpbTeamTask.TabStop = false;
@@ -400,7 +400,7 @@
             this.splitTaskforce.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitTaskforce.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitTaskforce.Location = new System.Drawing.Point(2, 16);
-            this.splitTaskforce.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitTaskforce.Margin = new System.Windows.Forms.Padding(2);
             this.splitTaskforce.Name = "splitTaskforce";
             // 
             // splitTaskforce.Panel1
@@ -423,7 +423,7 @@
             this.lbxTaskList.HorizontalScrollbar = true;
             this.lbxTaskList.ItemHeight = 12;
             this.lbxTaskList.Location = new System.Drawing.Point(0, 12);
-            this.lbxTaskList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lbxTaskList.Margin = new System.Windows.Forms.Padding(2);
             this.lbxTaskList.Name = "lbxTaskList";
             this.lbxTaskList.Size = new System.Drawing.Size(244, 531);
             this.lbxTaskList.Sorted = true;
@@ -455,9 +455,9 @@
             this.gpbTeamScript.Controls.Add(this.splitScript);
             this.gpbTeamScript.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gpbTeamScript.Location = new System.Drawing.Point(0, 0);
-            this.gpbTeamScript.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamScript.Margin = new System.Windows.Forms.Padding(2);
             this.gpbTeamScript.Name = "gpbTeamScript";
-            this.gpbTeamScript.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamScript.Padding = new System.Windows.Forms.Padding(2);
             this.gpbTeamScript.Size = new System.Drawing.Size(369, 561);
             this.gpbTeamScript.TabIndex = 4;
             this.gpbTeamScript.TabStop = false;
@@ -467,7 +467,7 @@
             // 
             this.splitScript.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitScript.Location = new System.Drawing.Point(2, 16);
-            this.splitScript.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitScript.Margin = new System.Windows.Forms.Padding(2);
             this.splitScript.Name = "splitScript";
             // 
             // splitScript.Panel1
@@ -490,7 +490,7 @@
             this.lbxScriptList.HorizontalScrollbar = true;
             this.lbxScriptList.ItemHeight = 12;
             this.lbxScriptList.Location = new System.Drawing.Point(0, 12);
-            this.lbxScriptList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lbxScriptList.Margin = new System.Windows.Forms.Padding(2);
             this.lbxScriptList.Name = "lbxScriptList";
             this.lbxScriptList.Size = new System.Drawing.Size(134, 531);
             this.lbxScriptList.Sorted = true;
@@ -524,7 +524,7 @@
             this.tbpTeams.Controls.Add(this.gpbTeamTeam);
             this.tbpTeams.Location = new System.Drawing.Point(4, 22);
             this.tbpTeams.Name = "tbpTeams";
-            this.tbpTeams.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpTeams.Padding = new System.Windows.Forms.Padding(3);
             this.tbpTeams.Size = new System.Drawing.Size(726, 565);
             this.tbpTeams.TabIndex = 1;
             this.tbpTeams.Text = "LGCtbpTeamPage";
@@ -538,9 +538,9 @@
             this.gpbTeamAI.Controls.Add(this.btnDelAI);
             this.gpbTeamAI.Controls.Add(this.label22);
             this.gpbTeamAI.Location = new System.Drawing.Point(571, 8);
-            this.gpbTeamAI.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamAI.Margin = new System.Windows.Forms.Padding(2);
             this.gpbTeamAI.Name = "gpbTeamAI";
-            this.gpbTeamAI.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamAI.Padding = new System.Windows.Forms.Padding(2);
             this.gpbTeamAI.Size = new System.Drawing.Size(566, 557);
             this.gpbTeamAI.TabIndex = 3;
             this.gpbTeamAI.TabStop = false;
@@ -560,7 +560,7 @@
             this.olvAIConfig.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.olvAIConfig.HideSelection = false;
             this.olvAIConfig.Location = new System.Drawing.Point(253, 14);
-            this.olvAIConfig.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.olvAIConfig.Margin = new System.Windows.Forms.Padding(2);
             this.olvAIConfig.MultiSelect = false;
             this.olvAIConfig.Name = "olvAIConfig";
             this.olvAIConfig.ShowGroups = false;
@@ -601,7 +601,7 @@
             // btnCopyAI
             // 
             this.btnCopyAI.Location = new System.Drawing.Point(171, 530);
-            this.btnCopyAI.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCopyAI.Margin = new System.Windows.Forms.Padding(2);
             this.btnCopyAI.Name = "btnCopyAI";
             this.btnCopyAI.Size = new System.Drawing.Size(78, 24);
             this.btnCopyAI.TabIndex = 5;
@@ -612,7 +612,7 @@
             // btnNewAI
             // 
             this.btnNewAI.Location = new System.Drawing.Point(6, 531);
-            this.btnNewAI.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnNewAI.Margin = new System.Windows.Forms.Padding(2);
             this.btnNewAI.Name = "btnNewAI";
             this.btnNewAI.Size = new System.Drawing.Size(77, 23);
             this.btnNewAI.TabIndex = 3;
@@ -623,7 +623,7 @@
             // btnDelAI
             // 
             this.btnDelAI.Location = new System.Drawing.Point(87, 530);
-            this.btnDelAI.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDelAI.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelAI.Name = "btnDelAI";
             this.btnDelAI.Size = new System.Drawing.Size(80, 24);
             this.btnDelAI.TabIndex = 4;
@@ -650,9 +650,9 @@
             this.gpbTeamTeam.Controls.Add(this.btnDelTeam);
             this.gpbTeamTeam.Controls.Add(this.label28);
             this.gpbTeamTeam.Location = new System.Drawing.Point(5, 5);
-            this.gpbTeamTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamTeam.Margin = new System.Windows.Forms.Padding(2);
             this.gpbTeamTeam.Name = "gpbTeamTeam";
-            this.gpbTeamTeam.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamTeam.Padding = new System.Windows.Forms.Padding(2);
             this.gpbTeamTeam.Size = new System.Drawing.Size(562, 557);
             this.gpbTeamTeam.TabIndex = 2;
             this.gpbTeamTeam.TabStop = false;
@@ -672,7 +672,7 @@
             this.olvTeamConfig.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.olvTeamConfig.HideSelection = false;
             this.olvTeamConfig.Location = new System.Drawing.Point(253, 14);
-            this.olvTeamConfig.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.olvTeamConfig.Margin = new System.Windows.Forms.Padding(2);
             this.olvTeamConfig.MultiSelect = false;
             this.olvTeamConfig.Name = "olvTeamConfig";
             this.olvTeamConfig.ShowGroups = false;
@@ -714,7 +714,7 @@
             // btnCopyTeam
             // 
             this.btnCopyTeam.Location = new System.Drawing.Point(171, 530);
-            this.btnCopyTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCopyTeam.Margin = new System.Windows.Forms.Padding(2);
             this.btnCopyTeam.Name = "btnCopyTeam";
             this.btnCopyTeam.Size = new System.Drawing.Size(78, 24);
             this.btnCopyTeam.TabIndex = 5;
@@ -725,7 +725,7 @@
             // btnNewTeam
             // 
             this.btnNewTeam.Location = new System.Drawing.Point(6, 530);
-            this.btnNewTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnNewTeam.Margin = new System.Windows.Forms.Padding(2);
             this.btnNewTeam.Name = "btnNewTeam";
             this.btnNewTeam.Size = new System.Drawing.Size(77, 23);
             this.btnNewTeam.TabIndex = 3;
@@ -736,7 +736,7 @@
             // btnDelTeam
             // 
             this.btnDelTeam.Location = new System.Drawing.Point(87, 530);
-            this.btnDelTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDelTeam.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelTeam.Name = "btnDelTeam";
             this.btnDelTeam.Size = new System.Drawing.Size(80, 24);
             this.btnDelTeam.TabIndex = 4;
@@ -762,7 +762,7 @@
             this.tbpMiscs.Controls.Add(this.gpbLocalVar);
             this.tbpMiscs.Location = new System.Drawing.Point(4, 22);
             this.tbpMiscs.Name = "tbpMiscs";
-            this.tbpMiscs.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpMiscs.Padding = new System.Windows.Forms.Padding(3);
             this.tbpMiscs.Size = new System.Drawing.Size(726, 565);
             this.tbpMiscs.TabIndex = 2;
             this.tbpMiscs.Text = "LGCtbpMiscPage";
