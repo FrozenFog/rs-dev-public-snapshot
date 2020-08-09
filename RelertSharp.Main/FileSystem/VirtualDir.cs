@@ -204,13 +204,15 @@ namespace RelertSharp.FileSystem
                 return result;
             }
         }
-        public short GetShpFrameCount(string filename)
+        public short GetShpFrameCount(string filename, out bool isEmpty)
         {
+            isEmpty = true;
             if (string.IsNullOrEmpty(filename)) return 0;
             if (!HasFile(filename)) return 0;
             try
             {
                 ShpFile shp = GetFile(filename, FileExtension.SHP);
+                isEmpty = shp.IsEmpty;
                 return (short)shp.Count;
             }
             catch (RSException.InvalidFileException e)

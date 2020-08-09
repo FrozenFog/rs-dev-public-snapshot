@@ -101,7 +101,8 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         }
         private void splitEA_Resize(object sender, EventArgs e)
         {
-            splitEA.SplitterDistance = splitEA.Width / 2;
+            int width = splitEA.Width / 2;
+            if (splitEA.Panel1MinSize < width && width < splitEA.Width - splitEA.Panel2MinSize) splitEA.SplitterDistance = width;
         }
         private void tsmiTrgLstAscending_Click(object sender, EventArgs e)
         {

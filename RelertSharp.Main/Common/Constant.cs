@@ -8,7 +8,7 @@ namespace RelertSharp.Common
 {
     public static class Constant
     {
-        public const string ReleaseDate = " - ver. 2020.07.12-2304 - UNSTABLE";
+        public const string ReleaseDate = " - ver. 2020.08.08-1024 - UNSTABLE";
         public static class Logics
         {
             public static int[] EventIdLength3 = { 60, 61 };

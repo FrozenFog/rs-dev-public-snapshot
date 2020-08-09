@@ -392,7 +392,6 @@ namespace RelertSharp.GUI
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             if (DrawAll(worker)) pnlPick.DrawComplete();
-            GlobalVar.Engine.DisposeHGlobal();
             GlobalVar.Engine.MoveTo(map.CenterPoint);
             GlobalVar.Engine.Refresh();
             RedrawMinimapAll();
