@@ -55,7 +55,7 @@ namespace RelertSharp.GUI
         {
             if (drew)
             {
-                panel1.Focus();
+                requireFocus = true;
             }
         }
     }

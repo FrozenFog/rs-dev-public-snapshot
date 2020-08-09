@@ -264,12 +264,10 @@ namespace RelertSharp.GUI
         #region Enter
         private void PanelMouseEnter()
         {
-            if (drew)
+            if (drew && requireFocus)
             {
-                //if ((Current.CurrentMouseAction & MainWindowDataModel.MouseActionType.DrawingMode) != 0 && TopLevel)
-                //{
-                //    panel1.Focus();
-                //}
+                panel1.Focus();
+                requireFocus = false;
             }
         }
         #endregion

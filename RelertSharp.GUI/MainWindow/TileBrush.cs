@@ -18,6 +18,7 @@ namespace RelertSharp.GUI
             if (drew)
             {
                 pnlTile.Result.Reload(set, index);
+                requireFocus = true;
             }
         }
         private Vec3 prevMoveCellTileBrush = Vec3.Zero;

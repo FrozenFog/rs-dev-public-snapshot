@@ -109,6 +109,7 @@ namespace RelertSharp.GUI
                     break;
             }
             btn.Checked = true;
+            requireFocus = true;
         }
 
         private void ToolBoxRightClick(ToolStripButton btn, Point p)
@@ -143,6 +144,7 @@ namespace RelertSharp.GUI
                         Current.Bucket.SetLAT(btn.Checked);
                         break;
                 }
+                requireFocus = true;
             }
         }
 

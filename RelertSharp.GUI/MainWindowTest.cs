@@ -28,6 +28,7 @@ namespace RelertSharp.GUI
         private Map map;
         private bool initialized = false;
         private bool saved = true;
+        private bool requireFocus = false;
         private MainWindowDataModel Current = new MainWindowDataModel();
 
         private LogicEditor logicEditor = new LogicEditor();
