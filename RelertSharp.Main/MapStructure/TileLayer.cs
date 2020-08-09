@@ -581,7 +581,7 @@ namespace RelertSharp.MapStructure
             Misc.WriteToArray(result, BitConverter.GetBytes(Y), 2);
             Misc.WriteToArray(result, BitConverter.GetBytes(tileIndex), 4);
             result[8] = SubIndex;
-            result[9] = Height;
+            result[9] = (byte)RealHeight;
             result[10] = IceGrowth;
             List<char> cs = new List<char>();
             return result;
@@ -694,7 +694,7 @@ namespace RelertSharp.MapStructure
         }
         public bool IsDefault
         {
-            get { return (tileIndex == 65535 || tileIndex == 0) && Height == 0 && SubIndex == 0; }
+            get { return (tileIndex == 65535 || tileIndex == 0) && RealHeight == 0 && SubIndex == 0; }
         }
         public bool IsRemoveable
         {
