@@ -45,6 +45,7 @@ namespace RelertSharp.MapStructure.Logic
             item.Group = -1;
             item.Attributes = new System.Collections.BitArray(21);
             item.GetToUnit = new TeamUnit(item);
+            item.Residue = new Dictionary<string, INIPair>();
             return item;
         }
         public IEnumerable<TechnoPair> ToTechno()
@@ -196,6 +197,7 @@ namespace RelertSharp.MapStructure.Logic
         public string House { get; set; }
         public int Waypoint { get; set; }
         public BitArray Attributes { get; set; } = new BitArray(21);
+        public Dictionary<String,INIPair> Residue { get; set; }
         public TeamUnit GetToUnit { get; set; }
         #endregion
     }

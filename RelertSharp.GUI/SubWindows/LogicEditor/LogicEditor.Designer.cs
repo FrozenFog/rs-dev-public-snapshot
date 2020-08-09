@@ -159,29 +159,27 @@
             // 
             // tbcMain
             // 
-            this.tbcMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.tbcMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbcMain.Controls.Add(this.tbpTriggers);
             this.tbcMain.Controls.Add(this.tbpTaskScriptPage);
             this.tbcMain.Controls.Add(this.tbpTeams);
             this.tbcMain.Controls.Add(this.tbpMiscs);
-            this.tbcMain.Location = new System.Drawing.Point(16, 41);
-            this.tbcMain.Margin = new System.Windows.Forms.Padding(4);
+            this.tbcMain.Location = new System.Drawing.Point(12, 33);
             this.tbcMain.Name = "tbcMain";
             this.tbcMain.SelectedIndex = 0;
-            this.tbcMain.Size = new System.Drawing.Size(978, 739);
+            this.tbcMain.Size = new System.Drawing.Size(734, 591);
             this.tbcMain.TabIndex = 0;
             // 
             // tbpTriggers
             // 
             this.tbpTriggers.BackColor = System.Drawing.Color.Transparent;
             this.tbpTriggers.Controls.Add(this.splitTriggerMain);
-            this.tbpTriggers.Location = new System.Drawing.Point(4, 25);
-            this.tbpTriggers.Margin = new System.Windows.Forms.Padding(4);
+            this.tbpTriggers.Location = new System.Drawing.Point(4, 22);
             this.tbpTriggers.Name = "tbpTriggers";
-            this.tbpTriggers.Padding = new System.Windows.Forms.Padding(4);
-            this.tbpTriggers.Size = new System.Drawing.Size(970, 710);
+            this.tbpTriggers.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpTriggers.Size = new System.Drawing.Size(726, 565);
             this.tbpTriggers.TabIndex = 0;
             this.tbpTriggers.Text = "LGCtbpTrgPage";
             // 
@@ -189,8 +187,8 @@
             // 
             this.splitTriggerMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitTriggerMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitTriggerMain.Location = new System.Drawing.Point(4, 4);
-            this.splitTriggerMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.splitTriggerMain.Location = new System.Drawing.Point(3, 3);
+            this.splitTriggerMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.splitTriggerMain.Name = "splitTriggerMain";
             // 
             // splitTriggerMain.Panel1
@@ -201,8 +199,9 @@
             // splitTriggerMain.Panel2
             // 
             this.splitTriggerMain.Panel2.Controls.Add(this.splitTagEA);
-            this.splitTriggerMain.Size = new System.Drawing.Size(962, 702);
+            this.splitTriggerMain.Size = new System.Drawing.Size(720, 559);
             this.splitTriggerMain.SplitterDistance = 242;
+            this.splitTriggerMain.SplitterWidth = 3;
             this.splitTriggerMain.TabIndex = 10;
             // 
             // lbxTriggerList
@@ -212,11 +211,10 @@
             this.lbxTriggerList.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxTriggerList.FormattingEnabled = true;
             this.lbxTriggerList.HorizontalScrollbar = true;
-            this.lbxTriggerList.ItemHeight = 15;
-            this.lbxTriggerList.Location = new System.Drawing.Point(0, 15);
-            this.lbxTriggerList.Margin = new System.Windows.Forms.Padding(4);
+            this.lbxTriggerList.ItemHeight = 12;
+            this.lbxTriggerList.Location = new System.Drawing.Point(0, 12);
             this.lbxTriggerList.Name = "lbxTriggerList";
-            this.lbxTriggerList.Size = new System.Drawing.Size(242, 687);
+            this.lbxTriggerList.Size = new System.Drawing.Size(242, 547);
             this.lbxTriggerList.Sorted = true;
             this.lbxTriggerList.TabIndex = 2;
             this.lbxTriggerList.SelectedValueChanged += new System.EventHandler(this.lbxTriggerList_SelectedValueChanged);
@@ -232,45 +230,45 @@
             this.tsmiTrgLstName,
             this.tsmiTrgLstIDName});
             this.cmsTriggerList.Name = "cmsTriggerList";
-            this.cmsTriggerList.Size = new System.Drawing.Size(264, 130);
+            this.cmsTriggerList.Size = new System.Drawing.Size(225, 120);
             // 
             // tsmiTrgLstAscending
             // 
             this.tsmiTrgLstAscending.Name = "tsmiTrgLstAscending";
-            this.tsmiTrgLstAscending.Size = new System.Drawing.Size(263, 24);
+            this.tsmiTrgLstAscending.Size = new System.Drawing.Size(224, 22);
             this.tsmiTrgLstAscending.Text = "LGCtsmiAscend";
             this.tsmiTrgLstAscending.Click += new System.EventHandler(this.tsmiTrgLstAscending_Click);
             // 
             // tsmiTrgLstDecending
             // 
             this.tsmiTrgLstDecending.Name = "tsmiTrgLstDecending";
-            this.tsmiTrgLstDecending.Size = new System.Drawing.Size(263, 24);
+            this.tsmiTrgLstDecending.Size = new System.Drawing.Size(224, 22);
             this.tsmiTrgLstDecending.Text = "LGCtsmiDecend";
             this.tsmiTrgLstDecending.Click += new System.EventHandler(this.tsmiTrgLstDecending_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(260, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
             // 
             // tsmiTrgLstID
             // 
             this.tsmiTrgLstID.Name = "tsmiTrgLstID";
-            this.tsmiTrgLstID.Size = new System.Drawing.Size(263, 24);
+            this.tsmiTrgLstID.Size = new System.Drawing.Size(224, 22);
             this.tsmiTrgLstID.Text = "LGCtsmiShowID";
             this.tsmiTrgLstID.Click += new System.EventHandler(this.tsmiTrgLstID_Click);
             // 
             // tsmiTrgLstName
             // 
             this.tsmiTrgLstName.Name = "tsmiTrgLstName";
-            this.tsmiTrgLstName.Size = new System.Drawing.Size(263, 24);
+            this.tsmiTrgLstName.Size = new System.Drawing.Size(224, 22);
             this.tsmiTrgLstName.Text = "LGCtsmiShowName";
             this.tsmiTrgLstName.Click += new System.EventHandler(this.tsmiTrgLstName_Click);
             // 
             // tsmiTrgLstIDName
             // 
             this.tsmiTrgLstIDName.Name = "tsmiTrgLstIDName";
-            this.tsmiTrgLstIDName.Size = new System.Drawing.Size(263, 24);
+            this.tsmiTrgLstIDName.Size = new System.Drawing.Size(224, 22);
             this.tsmiTrgLstIDName.Text = "LGCtsmiShowIDandName";
             this.tsmiTrgLstIDName.Click += new System.EventHandler(this.tsmiTrgLstIDName_Click);
             // 
@@ -279,9 +277,8 @@
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Top;
             this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(111, 15);
+            this.label1.Size = new System.Drawing.Size(83, 12);
             this.label1.TabIndex = 1;
             this.label1.Text = "LGClblTrgList";
             // 
@@ -290,7 +287,7 @@
             this.splitTagEA.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitTagEA.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitTagEA.Location = new System.Drawing.Point(0, 0);
-            this.splitTagEA.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.splitTagEA.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.splitTagEA.Name = "splitTagEA";
             this.splitTagEA.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -301,24 +298,25 @@
             // splitTagEA.Panel2
             // 
             this.splitTagEA.Panel2.Controls.Add(this.splitEA);
-            this.splitTagEA.Size = new System.Drawing.Size(716, 702);
+            this.splitTagEA.Size = new System.Drawing.Size(475, 559);
             this.splitTagEA.SplitterDistance = 236;
+            this.splitTagEA.SplitterWidth = 3;
             this.splitTagEA.TabIndex = 0;
             // 
             // pnlTriggerTag
             // 
             this.pnlTriggerTag.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTriggerTag.Location = new System.Drawing.Point(0, 0);
-            this.pnlTriggerTag.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlTriggerTag.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pnlTriggerTag.Name = "pnlTriggerTag";
-            this.pnlTriggerTag.Size = new System.Drawing.Size(716, 236);
+            this.pnlTriggerTag.Size = new System.Drawing.Size(475, 236);
             this.pnlTriggerTag.TabIndex = 7;
             // 
             // splitEA
             // 
             this.splitEA.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitEA.Location = new System.Drawing.Point(0, 0);
-            this.splitEA.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.splitEA.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.splitEA.Name = "splitEA";
             // 
             // splitEA.Panel1
@@ -328,8 +326,9 @@
             // splitEA.Panel2
             // 
             this.splitEA.Panel2.Controls.Add(this.pnlAction);
-            this.splitEA.Size = new System.Drawing.Size(716, 462);
-            this.splitEA.SplitterDistance = 374;
+            this.splitEA.Size = new System.Drawing.Size(475, 320);
+            this.splitEA.SplitterDistance = 248;
+            this.splitEA.SplitterWidth = 3;
             this.splitEA.TabIndex = 0;
             this.splitEA.Resize += new System.EventHandler(this.splitEA_Resize);
             // 
@@ -337,37 +336,37 @@
             // 
             this.pnlEvent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlEvent.Location = new System.Drawing.Point(0, 0);
-            this.pnlEvent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlEvent.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pnlEvent.Name = "pnlEvent";
-            this.pnlEvent.Size = new System.Drawing.Size(374, 462);
+            this.pnlEvent.Size = new System.Drawing.Size(248, 320);
             this.pnlEvent.TabIndex = 8;
             // 
             // pnlAction
             // 
             this.pnlAction.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlAction.Location = new System.Drawing.Point(0, 0);
-            this.pnlAction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlAction.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pnlAction.Name = "pnlAction";
-            this.pnlAction.Size = new System.Drawing.Size(338, 462);
+            this.pnlAction.Size = new System.Drawing.Size(224, 320);
             this.pnlAction.TabIndex = 9;
             // 
             // tbpTaskScriptPage
             // 
             this.tbpTaskScriptPage.BackColor = System.Drawing.Color.Transparent;
             this.tbpTaskScriptPage.Controls.Add(this.splitTaskScript);
-            this.tbpTaskScriptPage.Location = new System.Drawing.Point(4, 25);
-            this.tbpTaskScriptPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbpTaskScriptPage.Location = new System.Drawing.Point(4, 22);
+            this.tbpTaskScriptPage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbpTaskScriptPage.Name = "tbpTaskScriptPage";
-            this.tbpTaskScriptPage.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tbpTaskScriptPage.Size = new System.Drawing.Size(970, 710);
+            this.tbpTaskScriptPage.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbpTaskScriptPage.Size = new System.Drawing.Size(726, 565);
             this.tbpTaskScriptPage.TabIndex = 3;
             this.tbpTaskScriptPage.Text = "LGCtbpTaskScriptPage";
             // 
             // splitTaskScript
             // 
             this.splitTaskScript.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitTaskScript.Location = new System.Drawing.Point(3, 2);
-            this.splitTaskScript.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.splitTaskScript.Location = new System.Drawing.Point(2, 2);
+            this.splitTaskScript.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.splitTaskScript.Name = "splitTaskScript";
             // 
             // splitTaskScript.Panel1
@@ -377,8 +376,9 @@
             // splitTaskScript.Panel2
             // 
             this.splitTaskScript.Panel2.Controls.Add(this.gpbTeamScript);
-            this.splitTaskScript.Size = new System.Drawing.Size(964, 706);
-            this.splitTaskScript.SplitterDistance = 468;
+            this.splitTaskScript.Size = new System.Drawing.Size(722, 561);
+            this.splitTaskScript.SplitterDistance = 350;
+            this.splitTaskScript.SplitterWidth = 3;
             this.splitTaskScript.TabIndex = 6;
             this.splitTaskScript.Resize += new System.EventHandler(this.splitTaskScript_Resize);
             // 
@@ -387,10 +387,10 @@
             this.gpbTeamTask.Controls.Add(this.splitTaskforce);
             this.gpbTeamTask.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gpbTeamTask.Location = new System.Drawing.Point(0, 0);
-            this.gpbTeamTask.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gpbTeamTask.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.gpbTeamTask.Name = "gpbTeamTask";
-            this.gpbTeamTask.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gpbTeamTask.Size = new System.Drawing.Size(468, 706);
+            this.gpbTeamTask.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamTask.Size = new System.Drawing.Size(350, 561);
             this.gpbTeamTask.TabIndex = 5;
             this.gpbTeamTask.TabStop = false;
             this.gpbTeamTask.Text = "LGCgpbTeamTask";
@@ -399,8 +399,8 @@
             // 
             this.splitTaskforce.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitTaskforce.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitTaskforce.Location = new System.Drawing.Point(3, 20);
-            this.splitTaskforce.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.splitTaskforce.Location = new System.Drawing.Point(2, 16);
+            this.splitTaskforce.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.splitTaskforce.Name = "splitTaskforce";
             // 
             // splitTaskforce.Panel1
@@ -411,8 +411,9 @@
             // splitTaskforce.Panel2
             // 
             this.splitTaskforce.Panel2.Controls.Add(this.pnlTaskforce);
-            this.splitTaskforce.Size = new System.Drawing.Size(462, 684);
+            this.splitTaskforce.Size = new System.Drawing.Size(346, 543);
             this.splitTaskforce.SplitterDistance = 244;
+            this.splitTaskforce.SplitterWidth = 3;
             this.splitTaskforce.TabIndex = 3;
             // 
             // lbxTaskList
@@ -420,11 +421,11 @@
             this.lbxTaskList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbxTaskList.FormattingEnabled = true;
             this.lbxTaskList.HorizontalScrollbar = true;
-            this.lbxTaskList.ItemHeight = 15;
-            this.lbxTaskList.Location = new System.Drawing.Point(0, 15);
-            this.lbxTaskList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lbxTaskList.ItemHeight = 12;
+            this.lbxTaskList.Location = new System.Drawing.Point(0, 12);
+            this.lbxTaskList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.lbxTaskList.Name = "lbxTaskList";
-            this.lbxTaskList.Size = new System.Drawing.Size(244, 669);
+            this.lbxTaskList.Size = new System.Drawing.Size(244, 531);
             this.lbxTaskList.Sorted = true;
             this.lbxTaskList.TabIndex = 0;
             this.lbxTaskList.SelectedValueChanged += new System.EventHandler(this.lbxTaskList_SelectedValueChanged);
@@ -434,8 +435,9 @@
             this.label36.AutoSize = true;
             this.label36.Dock = System.Windows.Forms.DockStyle.Top;
             this.label36.Location = new System.Drawing.Point(0, 0);
+            this.label36.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(119, 15);
+            this.label36.Size = new System.Drawing.Size(89, 12);
             this.label36.TabIndex = 1;
             this.label36.Text = "LGClblTaskList";
             // 
@@ -443,9 +445,9 @@
             // 
             this.pnlTaskforce.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTaskforce.Location = new System.Drawing.Point(0, 0);
-            this.pnlTaskforce.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlTaskforce.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pnlTaskforce.Name = "pnlTaskforce";
-            this.pnlTaskforce.Size = new System.Drawing.Size(214, 684);
+            this.pnlTaskforce.Size = new System.Drawing.Size(99, 543);
             this.pnlTaskforce.TabIndex = 2;
             // 
             // gpbTeamScript
@@ -453,10 +455,10 @@
             this.gpbTeamScript.Controls.Add(this.splitScript);
             this.gpbTeamScript.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gpbTeamScript.Location = new System.Drawing.Point(0, 0);
-            this.gpbTeamScript.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gpbTeamScript.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.gpbTeamScript.Name = "gpbTeamScript";
-            this.gpbTeamScript.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gpbTeamScript.Size = new System.Drawing.Size(492, 706);
+            this.gpbTeamScript.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamScript.Size = new System.Drawing.Size(369, 561);
             this.gpbTeamScript.TabIndex = 4;
             this.gpbTeamScript.TabStop = false;
             this.gpbTeamScript.Text = "LGCgpbTeamScript";
@@ -464,8 +466,8 @@
             // splitScript
             // 
             this.splitScript.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitScript.Location = new System.Drawing.Point(3, 20);
-            this.splitScript.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.splitScript.Location = new System.Drawing.Point(2, 16);
+            this.splitScript.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.splitScript.Name = "splitScript";
             // 
             // splitScript.Panel1
@@ -476,8 +478,9 @@
             // splitScript.Panel2
             // 
             this.splitScript.Panel2.Controls.Add(this.pnlScript);
-            this.splitScript.Size = new System.Drawing.Size(486, 684);
-            this.splitScript.SplitterDistance = 179;
+            this.splitScript.Size = new System.Drawing.Size(365, 543);
+            this.splitScript.SplitterDistance = 134;
+            this.splitScript.SplitterWidth = 3;
             this.splitScript.TabIndex = 3;
             // 
             // lbxScriptList
@@ -485,11 +488,11 @@
             this.lbxScriptList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbxScriptList.FormattingEnabled = true;
             this.lbxScriptList.HorizontalScrollbar = true;
-            this.lbxScriptList.ItemHeight = 15;
-            this.lbxScriptList.Location = new System.Drawing.Point(0, 15);
-            this.lbxScriptList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lbxScriptList.ItemHeight = 12;
+            this.lbxScriptList.Location = new System.Drawing.Point(0, 12);
+            this.lbxScriptList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.lbxScriptList.Name = "lbxScriptList";
-            this.lbxScriptList.Size = new System.Drawing.Size(179, 669);
+            this.lbxScriptList.Size = new System.Drawing.Size(134, 531);
             this.lbxScriptList.Sorted = true;
             this.lbxScriptList.TabIndex = 0;
             this.lbxScriptList.SelectedValueChanged += new System.EventHandler(this.lbxScriptList_SelectedValueChanged);
@@ -499,8 +502,9 @@
             this.label33.AutoSize = true;
             this.label33.Dock = System.Windows.Forms.DockStyle.Top;
             this.label33.Location = new System.Drawing.Point(0, 0);
+            this.label33.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(135, 15);
+            this.label33.Size = new System.Drawing.Size(101, 12);
             this.label33.TabIndex = 1;
             this.label33.Text = "LGClblScriptList";
             // 
@@ -508,9 +512,9 @@
             // 
             this.pnlScript.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlScript.Location = new System.Drawing.Point(0, 0);
-            this.pnlScript.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlScript.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pnlScript.Name = "pnlScript";
-            this.pnlScript.Size = new System.Drawing.Size(303, 684);
+            this.pnlScript.Size = new System.Drawing.Size(228, 543);
             this.pnlScript.TabIndex = 2;
             // 
             // tbpTeams
@@ -518,11 +522,10 @@
             this.tbpTeams.BackColor = System.Drawing.Color.Transparent;
             this.tbpTeams.Controls.Add(this.gpbTeamAI);
             this.tbpTeams.Controls.Add(this.gpbTeamTeam);
-            this.tbpTeams.Location = new System.Drawing.Point(4, 25);
-            this.tbpTeams.Margin = new System.Windows.Forms.Padding(4);
+            this.tbpTeams.Location = new System.Drawing.Point(4, 22);
             this.tbpTeams.Name = "tbpTeams";
-            this.tbpTeams.Padding = new System.Windows.Forms.Padding(4);
-            this.tbpTeams.Size = new System.Drawing.Size(970, 710);
+            this.tbpTeams.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpTeams.Size = new System.Drawing.Size(726, 565);
             this.tbpTeams.TabIndex = 1;
             this.tbpTeams.Text = "LGCtbpTeamPage";
             // 
@@ -534,11 +537,11 @@
             this.gpbTeamAI.Controls.Add(this.btnNewAI);
             this.gpbTeamAI.Controls.Add(this.btnDelAI);
             this.gpbTeamAI.Controls.Add(this.label22);
-            this.gpbTeamAI.Location = new System.Drawing.Point(761, 10);
-            this.gpbTeamAI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gpbTeamAI.Location = new System.Drawing.Point(571, 8);
+            this.gpbTeamAI.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.gpbTeamAI.Name = "gpbTeamAI";
-            this.gpbTeamAI.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gpbTeamAI.Size = new System.Drawing.Size(755, 696);
+            this.gpbTeamAI.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamAI.Size = new System.Drawing.Size(566, 557);
             this.gpbTeamAI.TabIndex = 3;
             this.gpbTeamAI.TabStop = false;
             this.gpbTeamAI.Text = "LGCgpbTeamAI";
@@ -556,12 +559,12 @@
             this.olvAIConfig.FullRowSelect = true;
             this.olvAIConfig.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.olvAIConfig.HideSelection = false;
-            this.olvAIConfig.Location = new System.Drawing.Point(337, 18);
-            this.olvAIConfig.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.olvAIConfig.Location = new System.Drawing.Point(253, 14);
+            this.olvAIConfig.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.olvAIConfig.MultiSelect = false;
             this.olvAIConfig.Name = "olvAIConfig";
             this.olvAIConfig.ShowGroups = false;
-            this.olvAIConfig.Size = new System.Drawing.Size(411, 673);
+            this.olvAIConfig.Size = new System.Drawing.Size(309, 539);
             this.olvAIConfig.TabIndex = 0;
             this.olvAIConfig.UseCompatibleStateImageBehavior = false;
             this.olvAIConfig.View = System.Windows.Forms.View.Details;
@@ -588,20 +591,19 @@
             // 
             this.lbxAIList.FormattingEnabled = true;
             this.lbxAIList.HorizontalScrollbar = true;
-            this.lbxAIList.ItemHeight = 15;
-            this.lbxAIList.Location = new System.Drawing.Point(1, 36);
-            this.lbxAIList.Margin = new System.Windows.Forms.Padding(4);
+            this.lbxAIList.ItemHeight = 12;
+            this.lbxAIList.Location = new System.Drawing.Point(1, 29);
             this.lbxAIList.Name = "lbxAIList";
-            this.lbxAIList.Size = new System.Drawing.Size(328, 619);
+            this.lbxAIList.Size = new System.Drawing.Size(247, 496);
             this.lbxAIList.TabIndex = 6;
             this.lbxAIList.SelectedIndexChanged += new System.EventHandler(this.lbxAIList_SelectedIndexChanged);
             // 
             // btnCopyAI
             // 
-            this.btnCopyAI.Location = new System.Drawing.Point(228, 662);
-            this.btnCopyAI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCopyAI.Location = new System.Drawing.Point(171, 530);
+            this.btnCopyAI.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCopyAI.Name = "btnCopyAI";
-            this.btnCopyAI.Size = new System.Drawing.Size(104, 30);
+            this.btnCopyAI.Size = new System.Drawing.Size(78, 24);
             this.btnCopyAI.TabIndex = 5;
             this.btnCopyAI.Text = "LGCbtnCopyAI";
             this.btnCopyAI.UseVisualStyleBackColor = true;
@@ -609,10 +611,10 @@
             // 
             // btnNewAI
             // 
-            this.btnNewAI.Location = new System.Drawing.Point(8, 664);
-            this.btnNewAI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnNewAI.Location = new System.Drawing.Point(6, 531);
+            this.btnNewAI.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnNewAI.Name = "btnNewAI";
-            this.btnNewAI.Size = new System.Drawing.Size(103, 29);
+            this.btnNewAI.Size = new System.Drawing.Size(77, 23);
             this.btnNewAI.TabIndex = 3;
             this.btnNewAI.Text = "LGCbtnNewAI";
             this.btnNewAI.UseVisualStyleBackColor = true;
@@ -620,10 +622,10 @@
             // 
             // btnDelAI
             // 
-            this.btnDelAI.Location = new System.Drawing.Point(116, 662);
-            this.btnDelAI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnDelAI.Location = new System.Drawing.Point(87, 530);
+            this.btnDelAI.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnDelAI.Name = "btnDelAI";
-            this.btnDelAI.Size = new System.Drawing.Size(107, 30);
+            this.btnDelAI.Size = new System.Drawing.Size(80, 24);
             this.btnDelAI.TabIndex = 4;
             this.btnDelAI.Text = "LGCbtnDelAI";
             this.btnDelAI.UseVisualStyleBackColor = true;
@@ -632,9 +634,10 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(5, 18);
+            this.label22.Location = new System.Drawing.Point(4, 14);
+            this.label22.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(103, 15);
+            this.label22.Size = new System.Drawing.Size(77, 12);
             this.label22.TabIndex = 1;
             this.label22.Text = "LGClblAIList";
             // 
@@ -646,11 +649,11 @@
             this.gpbTeamTeam.Controls.Add(this.btnNewTeam);
             this.gpbTeamTeam.Controls.Add(this.btnDelTeam);
             this.gpbTeamTeam.Controls.Add(this.label28);
-            this.gpbTeamTeam.Location = new System.Drawing.Point(7, 6);
-            this.gpbTeamTeam.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gpbTeamTeam.Location = new System.Drawing.Point(5, 5);
+            this.gpbTeamTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.gpbTeamTeam.Name = "gpbTeamTeam";
-            this.gpbTeamTeam.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gpbTeamTeam.Size = new System.Drawing.Size(749, 696);
+            this.gpbTeamTeam.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gpbTeamTeam.Size = new System.Drawing.Size(562, 557);
             this.gpbTeamTeam.TabIndex = 2;
             this.gpbTeamTeam.TabStop = false;
             this.gpbTeamTeam.Text = "LGCgpbTeamTeam";
@@ -668,12 +671,12 @@
             this.olvTeamConfig.FullRowSelect = true;
             this.olvTeamConfig.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.olvTeamConfig.HideSelection = false;
-            this.olvTeamConfig.Location = new System.Drawing.Point(337, 18);
-            this.olvTeamConfig.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.olvTeamConfig.Location = new System.Drawing.Point(253, 14);
+            this.olvTeamConfig.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.olvTeamConfig.MultiSelect = false;
             this.olvTeamConfig.Name = "olvTeamConfig";
             this.olvTeamConfig.ShowGroups = false;
-            this.olvTeamConfig.Size = new System.Drawing.Size(405, 673);
+            this.olvTeamConfig.Size = new System.Drawing.Size(305, 539);
             this.olvTeamConfig.TabIndex = 0;
             this.olvTeamConfig.UseCompatibleStateImageBehavior = false;
             this.olvTeamConfig.View = System.Windows.Forms.View.Details;
@@ -700,21 +703,20 @@
             // 
             this.lbxTeamList.FormattingEnabled = true;
             this.lbxTeamList.HorizontalScrollbar = true;
-            this.lbxTeamList.ItemHeight = 15;
-            this.lbxTeamList.Location = new System.Drawing.Point(1, 36);
-            this.lbxTeamList.Margin = new System.Windows.Forms.Padding(4);
+            this.lbxTeamList.ItemHeight = 12;
+            this.lbxTeamList.Location = new System.Drawing.Point(1, 29);
             this.lbxTeamList.Name = "lbxTeamList";
-            this.lbxTeamList.Size = new System.Drawing.Size(328, 619);
+            this.lbxTeamList.Size = new System.Drawing.Size(247, 496);
             this.lbxTeamList.Sorted = true;
             this.lbxTeamList.TabIndex = 6;
             this.lbxTeamList.SelectedIndexChanged += new System.EventHandler(this.lbxTeamList_SelectedIndexChanged);
             // 
             // btnCopyTeam
             // 
-            this.btnCopyTeam.Location = new System.Drawing.Point(228, 662);
-            this.btnCopyTeam.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCopyTeam.Location = new System.Drawing.Point(171, 530);
+            this.btnCopyTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCopyTeam.Name = "btnCopyTeam";
-            this.btnCopyTeam.Size = new System.Drawing.Size(104, 30);
+            this.btnCopyTeam.Size = new System.Drawing.Size(78, 24);
             this.btnCopyTeam.TabIndex = 5;
             this.btnCopyTeam.Text = "LGCbtnCopyTeam";
             this.btnCopyTeam.UseVisualStyleBackColor = true;
@@ -722,10 +724,10 @@
             // 
             // btnNewTeam
             // 
-            this.btnNewTeam.Location = new System.Drawing.Point(8, 662);
-            this.btnNewTeam.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnNewTeam.Location = new System.Drawing.Point(6, 530);
+            this.btnNewTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnNewTeam.Name = "btnNewTeam";
-            this.btnNewTeam.Size = new System.Drawing.Size(103, 29);
+            this.btnNewTeam.Size = new System.Drawing.Size(77, 23);
             this.btnNewTeam.TabIndex = 3;
             this.btnNewTeam.Text = "LGCbtnNewTeam";
             this.btnNewTeam.UseVisualStyleBackColor = true;
@@ -733,10 +735,10 @@
             // 
             // btnDelTeam
             // 
-            this.btnDelTeam.Location = new System.Drawing.Point(116, 662);
-            this.btnDelTeam.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnDelTeam.Location = new System.Drawing.Point(87, 530);
+            this.btnDelTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnDelTeam.Name = "btnDelTeam";
-            this.btnDelTeam.Size = new System.Drawing.Size(107, 30);
+            this.btnDelTeam.Size = new System.Drawing.Size(80, 24);
             this.btnDelTeam.TabIndex = 4;
             this.btnDelTeam.Text = "LGCbtnDelTeam";
             this.btnDelTeam.UseVisualStyleBackColor = true;
@@ -745,9 +747,10 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(5, 18);
+            this.label28.Location = new System.Drawing.Point(4, 14);
+            this.label28.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(119, 15);
+            this.label28.Size = new System.Drawing.Size(89, 12);
             this.label28.TabIndex = 1;
             this.label28.Text = "LGClblTeamList";
             // 
@@ -757,22 +760,19 @@
             this.tbpMiscs.Controls.Add(this.gpbMap);
             this.tbpMiscs.Controls.Add(this.gpbHouses);
             this.tbpMiscs.Controls.Add(this.gpbLocalVar);
-            this.tbpMiscs.Location = new System.Drawing.Point(4, 25);
-            this.tbpMiscs.Margin = new System.Windows.Forms.Padding(4);
+            this.tbpMiscs.Location = new System.Drawing.Point(4, 22);
             this.tbpMiscs.Name = "tbpMiscs";
-            this.tbpMiscs.Padding = new System.Windows.Forms.Padding(4);
-            this.tbpMiscs.Size = new System.Drawing.Size(970, 710);
+            this.tbpMiscs.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbpMiscs.Size = new System.Drawing.Size(726, 565);
             this.tbpMiscs.TabIndex = 2;
             this.tbpMiscs.Text = "LGCtbpMiscPage";
             // 
             // gpbMap
             // 
             this.gpbMap.Controls.Add(this.splitContainer1);
-            this.gpbMap.Location = new System.Drawing.Point(789, 9);
-            this.gpbMap.Margin = new System.Windows.Forms.Padding(4);
+            this.gpbMap.Location = new System.Drawing.Point(592, 7);
             this.gpbMap.Name = "gpbMap";
-            this.gpbMap.Padding = new System.Windows.Forms.Padding(4);
-            this.gpbMap.Size = new System.Drawing.Size(725, 690);
+            this.gpbMap.Size = new System.Drawing.Size(544, 552);
             this.gpbMap.TabIndex = 4;
             this.gpbMap.TabStop = false;
             this.gpbMap.Text = "LGCgpbMap";
@@ -780,8 +780,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(4, 22);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
+            this.splitContainer1.Location = new System.Drawing.Point(3, 17);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -792,9 +791,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel1);
-            this.splitContainer1.Size = new System.Drawing.Size(717, 664);
-            this.splitContainer1.SplitterDistance = 322;
-            this.splitContainer1.SplitterWidth = 5;
+            this.splitContainer1.Size = new System.Drawing.Size(538, 532);
+            this.splitContainer1.SplitterDistance = 257;
             this.splitContainer1.TabIndex = 0;
             // 
             // olvBasic
@@ -804,9 +802,8 @@
             this.olvBasic.Dock = System.Windows.Forms.DockStyle.Fill;
             this.olvBasic.HideSelection = false;
             this.olvBasic.Location = new System.Drawing.Point(0, 0);
-            this.olvBasic.Margin = new System.Windows.Forms.Padding(4);
             this.olvBasic.Name = "olvBasic";
-            this.olvBasic.Size = new System.Drawing.Size(717, 322);
+            this.olvBasic.Size = new System.Drawing.Size(538, 257);
             this.olvBasic.TabIndex = 0;
             this.olvBasic.UseCompatibleStateImageBehavior = false;
             this.olvBasic.View = System.Windows.Forms.View.Details;
@@ -819,19 +816,17 @@
             this.panel1.Controls.Add(this.chklbxBasic);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(717, 337);
+            this.panel1.Size = new System.Drawing.Size(538, 271);
             this.panel1.TabIndex = 0;
             // 
             // label26
             // 
             this.label26.AutoSize = true;
             this.label26.Dock = System.Windows.Forms.DockStyle.Right;
-            this.label26.Location = new System.Drawing.Point(566, 0);
-            this.label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label26.Location = new System.Drawing.Point(425, 0);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(151, 15);
+            this.label26.Size = new System.Drawing.Size(113, 12);
             this.label26.TabIndex = 7;
             this.label26.Text = "LGClblSpecialFlags";
             // 
@@ -840,9 +835,8 @@
             this.label25.AutoSize = true;
             this.label25.Dock = System.Windows.Forms.DockStyle.Left;
             this.label25.Location = new System.Drawing.Point(0, 0);
-            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(143, 15);
+            this.label25.Size = new System.Drawing.Size(107, 12);
             this.label25.TabIndex = 6;
             this.label25.Text = "LGClblBasicChecks";
             // 
@@ -850,19 +844,17 @@
             // 
             this.chklbxSpecialFlag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chklbxSpecialFlag.FormattingEnabled = true;
-            this.chklbxSpecialFlag.Location = new System.Drawing.Point(363, 22);
-            this.chklbxSpecialFlag.Margin = new System.Windows.Forms.Padding(4);
+            this.chklbxSpecialFlag.Location = new System.Drawing.Point(272, 18);
             this.chklbxSpecialFlag.Name = "chklbxSpecialFlag";
-            this.chklbxSpecialFlag.Size = new System.Drawing.Size(349, 304);
+            this.chklbxSpecialFlag.Size = new System.Drawing.Size(263, 244);
             this.chklbxSpecialFlag.TabIndex = 5;
             // 
             // chklbxBasic
             // 
             this.chklbxBasic.FormattingEnabled = true;
-            this.chklbxBasic.Location = new System.Drawing.Point(4, 22);
-            this.chklbxBasic.Margin = new System.Windows.Forms.Padding(4);
+            this.chklbxBasic.Location = new System.Drawing.Point(3, 18);
             this.chklbxBasic.Name = "chklbxBasic";
-            this.chklbxBasic.Size = new System.Drawing.Size(349, 304);
+            this.chklbxBasic.Size = new System.Drawing.Size(263, 244);
             this.chklbxBasic.TabIndex = 4;
             // 
             // gpbHouses
@@ -872,11 +864,9 @@
             this.gpbHouses.Controls.Add(this.btnDelHouse);
             this.gpbHouses.Controls.Add(this.btnNewHouse);
             this.gpbHouses.Controls.Add(this.lbxHouses);
-            this.gpbHouses.Location = new System.Drawing.Point(8, 8);
-            this.gpbHouses.Margin = new System.Windows.Forms.Padding(4);
+            this.gpbHouses.Location = new System.Drawing.Point(6, 6);
             this.gpbHouses.Name = "gpbHouses";
-            this.gpbHouses.Padding = new System.Windows.Forms.Padding(4);
-            this.gpbHouses.Size = new System.Drawing.Size(773, 474);
+            this.gpbHouses.Size = new System.Drawing.Size(580, 379);
             this.gpbHouses.TabIndex = 3;
             this.gpbHouses.TabStop = false;
             this.gpbHouses.Text = "LGCgpbHouses";
@@ -894,12 +884,11 @@
             this.olvHouse.FullRowSelect = true;
             this.olvHouse.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.olvHouse.HideSelection = false;
-            this.olvHouse.Location = new System.Drawing.Point(249, 24);
-            this.olvHouse.Margin = new System.Windows.Forms.Padding(4);
+            this.olvHouse.Location = new System.Drawing.Point(187, 19);
             this.olvHouse.MultiSelect = false;
             this.olvHouse.Name = "olvHouse";
             this.olvHouse.ShowGroups = false;
-            this.olvHouse.Size = new System.Drawing.Size(511, 222);
+            this.olvHouse.Size = new System.Drawing.Size(384, 178);
             this.olvHouse.TabIndex = 4;
             this.olvHouse.UseCompatibleStateImageBehavior = false;
             this.olvHouse.View = System.Windows.Forms.View.Details;
@@ -933,20 +922,17 @@
             this.LGCgpbHouseAllies.Controls.Add(this.label23);
             this.LGCgpbHouseAllies.Controls.Add(this.lbxHouseAllie);
             this.LGCgpbHouseAllies.Controls.Add(this.txbHouseAllies);
-            this.LGCgpbHouseAllies.Location = new System.Drawing.Point(249, 242);
-            this.LGCgpbHouseAllies.Margin = new System.Windows.Forms.Padding(4);
+            this.LGCgpbHouseAllies.Location = new System.Drawing.Point(187, 194);
             this.LGCgpbHouseAllies.Name = "LGCgpbHouseAllies";
-            this.LGCgpbHouseAllies.Padding = new System.Windows.Forms.Padding(4);
-            this.LGCgpbHouseAllies.Size = new System.Drawing.Size(516, 224);
+            this.LGCgpbHouseAllies.Size = new System.Drawing.Size(387, 179);
             this.LGCgpbHouseAllies.TabIndex = 3;
             this.LGCgpbHouseAllies.TabStop = false;
             // 
             // btnGoAllie
             // 
-            this.btnGoAllie.Location = new System.Drawing.Point(209, 129);
-            this.btnGoAllie.Margin = new System.Windows.Forms.Padding(4);
+            this.btnGoAllie.Location = new System.Drawing.Point(157, 103);
             this.btnGoAllie.Name = "btnGoAllie";
-            this.btnGoAllie.Size = new System.Drawing.Size(81, 29);
+            this.btnGoAllie.Size = new System.Drawing.Size(61, 23);
             this.btnGoAllie.TabIndex = 6;
             this.btnGoAllie.Text = "<-";
             this.btnGoAllie.UseVisualStyleBackColor = true;
@@ -954,10 +940,9 @@
             // 
             // btnGoEnemy
             // 
-            this.btnGoEnemy.Location = new System.Drawing.Point(209, 92);
-            this.btnGoEnemy.Margin = new System.Windows.Forms.Padding(4);
+            this.btnGoEnemy.Location = new System.Drawing.Point(157, 74);
             this.btnGoEnemy.Name = "btnGoEnemy";
-            this.btnGoEnemy.Size = new System.Drawing.Size(81, 29);
+            this.btnGoEnemy.Size = new System.Drawing.Size(61, 23);
             this.btnGoEnemy.TabIndex = 5;
             this.btnGoEnemy.Text = "->";
             this.btnGoEnemy.UseVisualStyleBackColor = true;
@@ -967,12 +952,11 @@
             // 
             this.lbxHouseEnemy.FormattingEnabled = true;
             this.lbxHouseEnemy.HorizontalScrollbar = true;
-            this.lbxHouseEnemy.ItemHeight = 15;
-            this.lbxHouseEnemy.Location = new System.Drawing.Point(299, 40);
-            this.lbxHouseEnemy.Margin = new System.Windows.Forms.Padding(4);
+            this.lbxHouseEnemy.ItemHeight = 12;
+            this.lbxHouseEnemy.Location = new System.Drawing.Point(224, 32);
             this.lbxHouseEnemy.Name = "lbxHouseEnemy";
             this.lbxHouseEnemy.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbxHouseEnemy.Size = new System.Drawing.Size(208, 139);
+            this.lbxHouseEnemy.Size = new System.Drawing.Size(157, 112);
             this.lbxHouseEnemy.TabIndex = 4;
             this.lbxHouseEnemy.Enter += new System.EventHandler(this.lbxHouseEnemy_Enter);
             // 
@@ -980,10 +964,9 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Dock = System.Windows.Forms.DockStyle.Right;
-            this.label24.Location = new System.Drawing.Point(417, 22);
-            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label24.Location = new System.Drawing.Point(313, 17);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(95, 15);
+            this.label24.Size = new System.Drawing.Size(71, 12);
             this.label24.TabIndex = 3;
             this.label24.Text = "LGClblEnemy";
             // 
@@ -991,10 +974,9 @@
             // 
             this.label23.AutoSize = true;
             this.label23.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label23.Location = new System.Drawing.Point(4, 22);
-            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label23.Location = new System.Drawing.Point(3, 17);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(95, 15);
+            this.label23.Size = new System.Drawing.Size(71, 12);
             this.label23.TabIndex = 2;
             this.label23.Text = "LGClblAllie";
             // 
@@ -1002,31 +984,28 @@
             // 
             this.lbxHouseAllie.FormattingEnabled = true;
             this.lbxHouseAllie.HorizontalScrollbar = true;
-            this.lbxHouseAllie.ItemHeight = 15;
-            this.lbxHouseAllie.Location = new System.Drawing.Point(8, 40);
-            this.lbxHouseAllie.Margin = new System.Windows.Forms.Padding(4);
+            this.lbxHouseAllie.ItemHeight = 12;
+            this.lbxHouseAllie.Location = new System.Drawing.Point(6, 32);
             this.lbxHouseAllie.Name = "lbxHouseAllie";
             this.lbxHouseAllie.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbxHouseAllie.Size = new System.Drawing.Size(192, 139);
+            this.lbxHouseAllie.Size = new System.Drawing.Size(145, 112);
             this.lbxHouseAllie.TabIndex = 1;
             this.lbxHouseAllie.Enter += new System.EventHandler(this.lbxHouseAllie_Enter);
             // 
             // txbHouseAllies
             // 
-            this.txbHouseAllies.Location = new System.Drawing.Point(8, 190);
-            this.txbHouseAllies.Margin = new System.Windows.Forms.Padding(4);
+            this.txbHouseAllies.Location = new System.Drawing.Point(6, 152);
             this.txbHouseAllies.Name = "txbHouseAllies";
-            this.txbHouseAllies.Size = new System.Drawing.Size(499, 25);
+            this.txbHouseAllies.Size = new System.Drawing.Size(375, 21);
             this.txbHouseAllies.TabIndex = 0;
             this.txbHouseAllies.Validating += new System.ComponentModel.CancelEventHandler(this.txbHouseAllies_Validating);
             this.txbHouseAllies.Validated += new System.EventHandler(this.txbHouseAllies_Validated);
             // 
             // btnDelHouse
             // 
-            this.btnDelHouse.Location = new System.Drawing.Point(132, 438);
-            this.btnDelHouse.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDelHouse.Location = new System.Drawing.Point(99, 350);
             this.btnDelHouse.Name = "btnDelHouse";
-            this.btnDelHouse.Size = new System.Drawing.Size(109, 29);
+            this.btnDelHouse.Size = new System.Drawing.Size(82, 23);
             this.btnDelHouse.TabIndex = 2;
             this.btnDelHouse.Text = "LGCbtnDelHouse";
             this.btnDelHouse.UseVisualStyleBackColor = true;
@@ -1034,10 +1013,9 @@
             // 
             // btnNewHouse
             // 
-            this.btnNewHouse.Location = new System.Drawing.Point(12, 438);
-            this.btnNewHouse.Margin = new System.Windows.Forms.Padding(4);
+            this.btnNewHouse.Location = new System.Drawing.Point(9, 350);
             this.btnNewHouse.Name = "btnNewHouse";
-            this.btnNewHouse.Size = new System.Drawing.Size(109, 29);
+            this.btnNewHouse.Size = new System.Drawing.Size(82, 23);
             this.btnNewHouse.TabIndex = 1;
             this.btnNewHouse.Text = "LGCbtnNewHouse";
             this.btnNewHouse.UseVisualStyleBackColor = true;
@@ -1047,11 +1025,10 @@
             // 
             this.lbxHouses.FormattingEnabled = true;
             this.lbxHouses.HorizontalScrollbar = true;
-            this.lbxHouses.ItemHeight = 15;
-            this.lbxHouses.Location = new System.Drawing.Point(12, 25);
-            this.lbxHouses.Margin = new System.Windows.Forms.Padding(4);
+            this.lbxHouses.ItemHeight = 12;
+            this.lbxHouses.Location = new System.Drawing.Point(9, 20);
             this.lbxHouses.Name = "lbxHouses";
-            this.lbxHouses.Size = new System.Drawing.Size(228, 409);
+            this.lbxHouses.Size = new System.Drawing.Size(172, 328);
             this.lbxHouses.TabIndex = 0;
             this.lbxHouses.SelectedIndexChanged += new System.EventHandler(this.lbxHouses_SelectedIndexChanged);
             // 
@@ -1061,40 +1038,35 @@
             this.gpbLocalVar.Controls.Add(this.label35);
             this.gpbLocalVar.Controls.Add(this.btnNewLocalVar);
             this.gpbLocalVar.Controls.Add(this.chklbxLocalVar);
-            this.gpbLocalVar.Location = new System.Drawing.Point(8, 489);
-            this.gpbLocalVar.Margin = new System.Windows.Forms.Padding(4);
+            this.gpbLocalVar.Location = new System.Drawing.Point(6, 391);
             this.gpbLocalVar.Name = "gpbLocalVar";
-            this.gpbLocalVar.Padding = new System.Windows.Forms.Padding(4);
-            this.gpbLocalVar.Size = new System.Drawing.Size(773, 210);
+            this.gpbLocalVar.Size = new System.Drawing.Size(580, 168);
             this.gpbLocalVar.TabIndex = 1;
             this.gpbLocalVar.TabStop = false;
             this.gpbLocalVar.Text = "LGCgpbLocalVar";
             // 
             // txbLocalName
             // 
-            this.txbLocalName.Location = new System.Drawing.Point(339, 178);
-            this.txbLocalName.Margin = new System.Windows.Forms.Padding(4);
+            this.txbLocalName.Location = new System.Drawing.Point(254, 142);
             this.txbLocalName.Name = "txbLocalName";
-            this.txbLocalName.Size = new System.Drawing.Size(425, 25);
+            this.txbLocalName.Size = new System.Drawing.Size(320, 21);
             this.txbLocalName.TabIndex = 4;
             this.txbLocalName.TextChanged += new System.EventHandler(this.txbLocalName_TextChanged);
             // 
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(180, 184);
-            this.label35.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label35.Location = new System.Drawing.Point(135, 147);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(151, 15);
+            this.label35.Size = new System.Drawing.Size(113, 12);
             this.label35.TabIndex = 3;
             this.label35.Text = "LGClblLocalVarName";
             // 
             // btnNewLocalVar
             // 
-            this.btnNewLocalVar.Location = new System.Drawing.Point(8, 178);
-            this.btnNewLocalVar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnNewLocalVar.Location = new System.Drawing.Point(6, 142);
             this.btnNewLocalVar.Name = "btnNewLocalVar";
-            this.btnNewLocalVar.Size = new System.Drawing.Size(164, 29);
+            this.btnNewLocalVar.Size = new System.Drawing.Size(123, 23);
             this.btnNewLocalVar.TabIndex = 1;
             this.btnNewLocalVar.Text = "LGCbtnNewLocalVar";
             this.btnNewLocalVar.UseVisualStyleBackColor = true;
@@ -1103,32 +1075,30 @@
             // chklbxLocalVar
             // 
             this.chklbxLocalVar.FormattingEnabled = true;
-            this.chklbxLocalVar.Location = new System.Drawing.Point(8, 25);
-            this.chklbxLocalVar.Margin = new System.Windows.Forms.Padding(4);
+            this.chklbxLocalVar.Location = new System.Drawing.Point(6, 20);
             this.chklbxLocalVar.Name = "chklbxLocalVar";
-            this.chklbxLocalVar.Size = new System.Drawing.Size(756, 144);
+            this.chklbxLocalVar.Size = new System.Drawing.Size(568, 116);
             this.chklbxLocalVar.TabIndex = 0;
             this.chklbxLocalVar.SelectedIndexChanged += new System.EventHandler(this.chklbxLocalVar_SelectedIndexChanged);
             this.chklbxLocalVar.Leave += new System.EventHandler(this.chklbxLocalVar_Leave);
             // 
             // pnlSearch
             // 
-            this.pnlSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.pnlSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlSearch.Location = new System.Drawing.Point(1001, 66);
-            this.pnlSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlSearch.Location = new System.Drawing.Point(751, 53);
+            this.pnlSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pnlSearch.Name = "pnlSearch";
-            this.pnlSearch.Size = new System.Drawing.Size(353, 710);
+            this.pnlSearch.Size = new System.Drawing.Size(265, 568);
             this.pnlSearch.TabIndex = 1;
             // 
             // LogicEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1379, 791);
+            this.ClientSize = new System.Drawing.Size(1034, 633);
             this.Controls.Add(this.pnlSearch);
             this.Controls.Add(this.tbcMain);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "LogicEditor";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
