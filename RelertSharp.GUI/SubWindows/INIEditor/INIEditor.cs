@@ -175,6 +175,12 @@ namespace RelertSharp.SubWindows.INIEditor
                     )
                 == DialogResult.Yes
                 )
+                if (tbcINI.SelectedIndex == 1) 
+                {
+                    INIFile file = new INIFile(System.Text.Encoding.UTF8.GetBytes(reMain.rawEditor.Text), "$rs.inieditor.name");
+                    Data = file.IniDict.Clone();
+                }
+
                 GlobalVar.CurrentMapDocument.Map.IniResidue = Data.Clone();
         }
         private void ImportINI()
