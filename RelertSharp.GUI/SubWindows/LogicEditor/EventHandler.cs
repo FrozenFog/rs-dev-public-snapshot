@@ -64,6 +64,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             if (e.SubItemIndex != 1) return;
             KeyValuePair<string, TeamUnit.TeamUnitNode> valuePair = (KeyValuePair<string, TeamUnit.TeamUnitNode>)e.RowObject;
             ComboBox cmb = new ComboBox();
+            /*
             if (e.Control.GetType().FullName == "BrightIdeasSoftware.BooleanCellEditor2")
             {
                 cmb.FlatStyle = FlatStyle.Flat;
@@ -74,7 +75,8 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 cmb.SelectedIndex = ((bool)e.Value == false) ? 0 : 1;
                 e.Control = cmb;
             }
-            else if (e.Control.GetType().FullName == "BrightIdeasSoftware.EnumCellEditor")
+            
+            else */if (e.Control.GetType().FullName == "BrightIdeasSoftware.EnumCellEditor")
             {
                 cmb.FlatStyle = FlatStyle.Flat;
                 cmb.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -183,8 +185,11 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 // _CurrentTeamUnit.Data[valuePair.Key].Value;
                 if (Constant.TeamBoolIndex.Contains(valuePair.Key))
                 {
-                    ComboBox cmb = e.Control as ComboBox;
-                    ret.Value = cmb.SelectedIndex == 0 ? false : true;
+                    //ComboBox cmb = e.Control as ComboBox;
+                    //ret.Value = cmb.SelectedIndex == 0 ? false : true;
+                    //_CurrentTeamUnit.Data[valuePair.Key] = ret;
+                    CheckBox ckb = e.Control as CheckBox;
+                    ret.Value = ckb.Checked;
                     _CurrentTeamUnit.Data[valuePair.Key] = ret;
                 }
                 else if (valuePair.Key == "Waypoint")
@@ -348,7 +353,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private void olvAIConfig_CellEditStarting(object sender, BrightIdeasSoftware.CellEditEventArgs e)
         {
             KeyValuePair<string, AITriggerUnit.AITriggerShowItem> valuePair = (KeyValuePair<string, AITriggerUnit.AITriggerShowItem>)e.RowObject;
-            if (e.Control.GetType().FullName == "BrightIdeasSoftware.BooleanCellEditor2")
+            /*if (e.Control.GetType().FullName == "BrightIdeasSoftware.BooleanCellEditor2")
             {
                 ComboBox boolCbb = new ComboBox();
                 boolCbb.FlatStyle = FlatStyle.Flat;
@@ -359,7 +364,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 boolCbb.SelectedIndex = ((bool)e.Value == false) ? 0 : 1;
                 e.Control = boolCbb;
             }
-            else if (e.Control.GetType().FullName == "BrightIdeasSoftware.EnumCellEditor")
+            else */if (e.Control.GetType().FullName == "BrightIdeasSoftware.EnumCellEditor")
             {
                 ComboBox enumCbb = new ComboBox();
                 enumCbb.FlatStyle = FlatStyle.Flat;
@@ -492,7 +497,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     case "Easy":
                     case "Normal":
                     case "Hard":
-                        ret.Value = e.Control.Text == "True";
+                        ret.Value = ((CheckBox)e.Control).Checked;
                         break;
                     case "Operator":
                         ret.Value = (AITriggerConditionOperator)((EnumDisplayClass)((ComboBox)e.Control).SelectedItem).Value;
