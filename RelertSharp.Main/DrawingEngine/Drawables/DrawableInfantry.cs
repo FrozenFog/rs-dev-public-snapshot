@@ -14,6 +14,7 @@ namespace RelertSharp.DrawingEngine.Drawables
 
 
         #region Public Calls - DrawableInfantry
+        public bool IsEmpty { get { return pSelf == 0 && pShadow == 0; } }
         #endregion
     }
 }

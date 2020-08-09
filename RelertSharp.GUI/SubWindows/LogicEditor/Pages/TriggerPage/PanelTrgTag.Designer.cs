@@ -113,7 +113,7 @@
             this.splitMain.Panel2.Controls.Add(this.tlpRight);
             this.splitMain.Panel2.Controls.Add(this.panel1);
             this.splitMain.Size = new System.Drawing.Size(1538, 222);
-            this.splitMain.SplitterDistance = 996;
+            this.splitMain.SplitterDistance = 1116;
             this.splitMain.TabIndex = 18;
             // 
             // tableLayoutPanel1
@@ -144,7 +144,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(844, 222);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(964, 222);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // txbTagName
@@ -154,7 +154,7 @@
             this.txbTagName.Margin = new System.Windows.Forms.Padding(4);
             this.txbTagName.Name = "txbTagName";
             this.txbTagName.ReadOnly = true;
-            this.txbTagName.Size = new System.Drawing.Size(706, 25);
+            this.txbTagName.Size = new System.Drawing.Size(826, 25);
             this.txbTagName.TabIndex = 5;
             // 
             // txbTrgName
@@ -163,7 +163,7 @@
             this.txbTrgName.Location = new System.Drawing.Point(134, 64);
             this.txbTrgName.Margin = new System.Windows.Forms.Padding(4);
             this.txbTrgName.Name = "txbTrgName";
-            this.txbTrgName.Size = new System.Drawing.Size(706, 25);
+            this.txbTrgName.Size = new System.Drawing.Size(826, 25);
             this.txbTrgName.TabIndex = 5;
             this.txbTrgName.Validated += new System.EventHandler(this.txbTrgName_Validated);
             // 
@@ -184,7 +184,7 @@
             this.tlpCkb.Name = "tlpCkb";
             this.tlpCkb.RowCount = 1;
             this.tlpCkb.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpCkb.Size = new System.Drawing.Size(838, 76);
+            this.tlpCkb.Size = new System.Drawing.Size(958, 76);
             this.tlpCkb.TabIndex = 1;
             // 
             // ckbEasy
@@ -194,7 +194,7 @@
             this.ckbEasy.Location = new System.Drawing.Point(4, 4);
             this.ckbEasy.Margin = new System.Windows.Forms.Padding(4);
             this.ckbEasy.Name = "ckbEasy";
-            this.ckbEasy.Size = new System.Drawing.Size(176, 19);
+            this.ckbEasy.Size = new System.Drawing.Size(202, 19);
             this.ckbEasy.TabIndex = 15;
             this.ckbEasy.Tag = "e";
             this.ckbEasy.Text = "LGCckbEasy";
@@ -205,10 +205,10 @@
             // 
             this.ckbNormal.AutoSize = true;
             this.ckbNormal.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ckbNormal.Location = new System.Drawing.Point(188, 4);
+            this.ckbNormal.Location = new System.Drawing.Point(214, 4);
             this.ckbNormal.Margin = new System.Windows.Forms.Padding(4);
             this.ckbNormal.Name = "ckbNormal";
-            this.ckbNormal.Size = new System.Drawing.Size(176, 19);
+            this.ckbNormal.Size = new System.Drawing.Size(202, 19);
             this.ckbNormal.TabIndex = 15;
             this.ckbNormal.Tag = "n";
             this.ckbNormal.Text = "LGCckbNormal";
@@ -219,10 +219,10 @@
             // 
             this.ckbHard.AutoSize = true;
             this.ckbHard.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ckbHard.Location = new System.Drawing.Point(372, 4);
+            this.ckbHard.Location = new System.Drawing.Point(424, 4);
             this.ckbHard.Margin = new System.Windows.Forms.Padding(4);
             this.ckbHard.Name = "ckbHard";
-            this.ckbHard.Size = new System.Drawing.Size(176, 19);
+            this.ckbHard.Size = new System.Drawing.Size(202, 19);
             this.ckbHard.TabIndex = 15;
             this.ckbHard.Tag = "h";
             this.ckbHard.Text = "LGCckbHard";
@@ -233,7 +233,7 @@
             // 
             this.ckbDisabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ckbDisabled.AutoSize = true;
-            this.ckbDisabled.Location = new System.Drawing.Point(693, 4);
+            this.ckbDisabled.Location = new System.Drawing.Point(813, 4);
             this.ckbDisabled.Margin = new System.Windows.Forms.Padding(4);
             this.ckbDisabled.Name = "ckbDisabled";
             this.ckbDisabled.Size = new System.Drawing.Size(141, 19);
@@ -294,7 +294,7 @@
             this.label7.Location = new System.Drawing.Point(134, 95);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(706, 15);
+            this.label7.Size = new System.Drawing.Size(826, 15);
             this.label7.TabIndex = 7;
             this.label7.Text = "LGClblTagName";
             // 
@@ -326,7 +326,7 @@
             this.tlpBtn.RowCount = 1;
             this.tlpBtn.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpBtn.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tlpBtn.Size = new System.Drawing.Size(838, 34);
+            this.tlpBtn.Size = new System.Drawing.Size(958, 34);
             this.tlpBtn.TabIndex = 0;
             // 
             // btnNewTrigger
@@ -336,7 +336,7 @@
             this.btnNewTrigger.Location = new System.Drawing.Point(4, 4);
             this.btnNewTrigger.Margin = new System.Windows.Forms.Padding(4);
             this.btnNewTrigger.Name = "btnNewTrigger";
-            this.btnNewTrigger.Size = new System.Drawing.Size(271, 26);
+            this.btnNewTrigger.Size = new System.Drawing.Size(311, 26);
             this.btnNewTrigger.TabIndex = 3;
             this.btnNewTrigger.Text = "LGCbtnNewTrg";
             this.btnNewTrigger.UseVisualStyleBackColor = true;
@@ -360,10 +360,10 @@
             // btnDelTrigger
             // 
             this.btnDelTrigger.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnDelTrigger.Location = new System.Drawing.Point(283, 4);
+            this.btnDelTrigger.Location = new System.Drawing.Point(323, 4);
             this.btnDelTrigger.Margin = new System.Windows.Forms.Padding(4);
             this.btnDelTrigger.Name = "btnDelTrigger";
-            this.btnDelTrigger.Size = new System.Drawing.Size(271, 26);
+            this.btnDelTrigger.Size = new System.Drawing.Size(311, 26);
             this.btnDelTrigger.TabIndex = 3;
             this.btnDelTrigger.Text = "LGCbtnDelTrg";
             this.btnDelTrigger.UseVisualStyleBackColor = true;
@@ -372,10 +372,10 @@
             // btnCopyTrigger
             // 
             this.btnCopyTrigger.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCopyTrigger.Location = new System.Drawing.Point(562, 4);
+            this.btnCopyTrigger.Location = new System.Drawing.Point(642, 4);
             this.btnCopyTrigger.Margin = new System.Windows.Forms.Padding(4);
             this.btnCopyTrigger.Name = "btnCopyTrigger";
-            this.btnCopyTrigger.Size = new System.Drawing.Size(272, 26);
+            this.btnCopyTrigger.Size = new System.Drawing.Size(312, 26);
             this.btnCopyTrigger.TabIndex = 3;
             this.btnCopyTrigger.Text = "LGCbtnCopyTrg";
             this.btnCopyTrigger.UseVisualStyleBackColor = true;
@@ -399,7 +399,7 @@
             this.label3.Location = new System.Drawing.Point(134, 45);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(706, 15);
+            this.label3.Size = new System.Drawing.Size(826, 15);
             this.label3.TabIndex = 7;
             this.label3.Text = "LGClblTrgName";
             // 
@@ -407,7 +407,7 @@
             // 
             this.gpbRepeat.Controls.Add(this.tlpRepeat);
             this.gpbRepeat.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gpbRepeat.Location = new System.Drawing.Point(844, 0);
+            this.gpbRepeat.Location = new System.Drawing.Point(964, 0);
             this.gpbRepeat.Margin = new System.Windows.Forms.Padding(4);
             this.gpbRepeat.Name = "gpbRepeat";
             this.gpbRepeat.Padding = new System.Windows.Forms.Padding(4);
@@ -499,7 +499,7 @@
             this.tlpRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tlpRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tlpRight.Size = new System.Drawing.Size(368, 222);
+            this.tlpRight.Size = new System.Drawing.Size(248, 222);
             this.tlpRight.TabIndex = 6;
             // 
             // cbbCustomGroup
@@ -510,7 +510,7 @@
             this.cbbCustomGroup.Location = new System.Drawing.Point(4, 74);
             this.cbbCustomGroup.Margin = new System.Windows.Forms.Padding(4);
             this.cbbCustomGroup.Name = "cbbCustomGroup";
-            this.cbbCustomGroup.Size = new System.Drawing.Size(360, 23);
+            this.cbbCustomGroup.Size = new System.Drawing.Size(240, 23);
             this.cbbCustomGroup.TabIndex = 14;
             // 
             // cbbAttatchedTrg
@@ -521,7 +521,7 @@
             this.cbbAttatchedTrg.Location = new System.Drawing.Point(4, 24);
             this.cbbAttatchedTrg.Margin = new System.Windows.Forms.Padding(4);
             this.cbbAttatchedTrg.Name = "cbbAttatchedTrg";
-            this.cbbAttatchedTrg.Size = new System.Drawing.Size(360, 23);
+            this.cbbAttatchedTrg.Size = new System.Drawing.Size(240, 23);
             this.cbbAttatchedTrg.TabIndex = 13;
             this.cbbAttatchedTrg.SelectedIndexChanged += new System.EventHandler(this.cbbAttatchedTrg_SelectedIndexChanged);
             // 
@@ -565,10 +565,10 @@
             this.lklTraceTrigger.AutoSize = true;
             this.lklTraceTrigger.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lklTraceTrigger.Enabled = false;
-            this.lklTraceTrigger.Location = new System.Drawing.Point(155, 5);
+            this.lklTraceTrigger.Location = new System.Drawing.Point(155, 0);
             this.lklTraceTrigger.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lklTraceTrigger.Name = "lklTraceTrigger";
-            this.lklTraceTrigger.Size = new System.Drawing.Size(209, 15);
+            this.lklTraceTrigger.Size = new System.Drawing.Size(89, 20);
             this.lklTraceTrigger.TabIndex = 16;
             this.lklTraceTrigger.TabStop = true;
             this.lklTraceTrigger.Text = "LGClklTrace";

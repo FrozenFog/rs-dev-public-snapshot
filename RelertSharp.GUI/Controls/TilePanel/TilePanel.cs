@@ -39,7 +39,7 @@ namespace RelertSharp.GUI.Controls
         {
             isFramework = frameworkEnable;
             reserveSelection = true;
-            cbbAllTiles_SelectedIndexChanged(cbbAllTiles, new EventArgs());
+            if (tbcMain.SelectedIndex == 1) cbbAllTiles_SelectedIndexChanged(cbbAllTiles, new EventArgs());
             if (nodeNow != null) trvGeneral_NodeMouseClick(trvGeneral, new TreeNodeMouseClickEventArgs(nodeNow, MouseButtons.Left, 1, 0, 0));
             Result.SetFramework(frameworkEnable);
             reserveSelection = false;
@@ -101,6 +101,7 @@ namespace RelertSharp.GUI.Controls
                 dest.Controls.Add(box);
                 //imgAllTiles.Images.Add(filename, Utils.Misc.ResizeImage(imgs[filename], sz));
             }
+            if (dest.Controls.Count > 0) dele.Invoke(dest.Controls[0], null);
             dest.ResumeLayout();
         }
 

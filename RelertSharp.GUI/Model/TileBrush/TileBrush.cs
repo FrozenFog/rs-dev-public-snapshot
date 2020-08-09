@@ -42,7 +42,7 @@ namespace RelertSharp.GUI.Model.TileBrush
         public void SetFramework(bool frameworkEnable)
         {
             isFramework = frameworkEnable;
-            Reload(tilesetNow, tileIndexNow);
+            //Reload(tilesetNow, tileIndexNow);
         }
         public void SetFlat(bool flatEnable)
         {
@@ -84,7 +84,7 @@ namespace RelertSharp.GUI.Model.TileBrush
                     Tile t = new Tile(idx, i, x + dx, y + dy, z);
                     isSelfLat = TileDictionary.IsLat(t);
                     Engine.DrawGeneralItem(t);
-                    t.SwitchToFramework(isFramework);
+                    //t.SwitchToFramework(isFramework);
                     t.FlatToGround(isFlat);
                     body.Add(t);
                 }
@@ -114,7 +114,7 @@ namespace RelertSharp.GUI.Model.TileBrush
                         dest.HideExtraImg();
                         dest.HideTileImg();
                         under.Add(dest);
-                        body[i].MoveTo(dest, posEnum[i].Z + cell.Z, cell.Z);
+                        body[i].MoveTo(dest, posEnum[i].Z + cell.Z, dest.RealHeight);
                         body[i].RevealAllTileImg();
                         if (Lat)
                         {
@@ -154,7 +154,11 @@ namespace RelertSharp.GUI.Model.TileBrush
         }
         public void AddTileAt(I3dLocateable cell)
         {
-            foreach (Tile t in body) Map.AddTile(t);
+            foreach (Tile t in body)
+            {
+                t.SwitchToFramework(isFramework);
+                Map.AddTile(t);
+            }
             if (Lat)
             {
                 foreach (Tile t in surrounding) Map.AddTile(t);
@@ -168,7 +172,7 @@ namespace RelertSharp.GUI.Model.TileBrush
                 foreach (Tile t in body)
                 {
                     Engine.DrawGeneralItem(t);
-                    t.SwitchToFramework(isFramework);
+                    //t.SwitchToFramework(isFramework);
                     t.FlatToGround(isFlat);
                 }
                 brushDisposed = false;

@@ -27,7 +27,8 @@ namespace RelertSharp.GUI
             };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                CurrentMapDocument.SaveMapAs(GlobalConfig.GamePath, dlg.FileName.Split('\\').Last());
+                string path = dlg.FileName.Substring(0, dlg.FileName.LastIndexOf('\\') + 1);
+                CurrentMapDocument.SaveMapAs(path, dlg.FileName.Split('\\').Last());
                 Complete("Saving Complete!");
                 saved = true;
                 logicEditor.ChangeSaved = true;

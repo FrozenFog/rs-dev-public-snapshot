@@ -17,6 +17,7 @@ namespace RelertSharp.DrawingEngine.Drawables
         public int pBarrel { get; set; }
         public Vec3 TurretOffset { get; set; }
         public bool IsVxl { get; set; } = true;
+        public bool IsEmpty { get { return pSelf == 0 && pTurret == 0; } }
         #endregion
     }
 }

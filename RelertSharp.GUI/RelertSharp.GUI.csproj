@@ -612,6 +612,9 @@
     <None Include="Resources\wand.png" />
     <None Include="Resources\lat.png" />
     <None Include="Resources\bucket.png" />
+    <None Include="Resources\iniopen.png" />
+    <None Include="Resources\Open.png" />
+    <None Include="Resources\Save.png" />
     <Content Include="rslogo.ico" />
   </ItemGroup>
   <ItemGroup>
