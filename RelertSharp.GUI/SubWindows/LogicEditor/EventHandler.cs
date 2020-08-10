@@ -508,7 +508,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     case "OperNum":
                     case "TechLevel":
                     case "SideIndex":
-                        try { ret.Value = int.Parse(e.Control.Text); }
+                        try { ret.Value = int.Parse(e.Control.Text.Split(' ').First()); }
                         catch { ret.Value = 0; }
                         break;
                     case "StartingWeight":
@@ -623,6 +623,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     e.Control = iqCbb;
                     break;
                 case "PlayerControl":
+                    /*
                     ComboBox boolCombobox = new ComboBox();
                     boolCombobox.FlatStyle = FlatStyle.Flat;
                     boolCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -631,12 +632,15 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     boolCombobox.SelectedIndex = (bool)keyValuePair.Value.Value ? 1 : 0;
                     Utils.Misc.AdjustComboBoxDropDownWidth(ref boolCombobox);
                     e.Control = boolCombobox;
+                    */
                     break;
                 case "Edge":
                     ComboBox enumCbb = new ComboBox();
                     enumCbb.FlatStyle = FlatStyle.Flat;
                     enumCbb.DropDownStyle = ComboBoxStyle.DropDownList;
                     StaticHelper.LoadToObjectCollection(enumCbb, typeof(HouseEdges));
+                    try { enumCbb.SelectedIndex = (int)((HouseEdges)keyValuePair.Value.Value) - 1; }
+                    catch { enumCbb.SelectedIndex = 0; }
                     e.Control = enumCbb;
                     break;
                 case "Country":
@@ -685,7 +689,8 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                         _CurrentHouseUnit.Data["IQ"] = ret;
                         break;
                     case "PlayerControl":
-                        ret.Value = ((ComboBox)e.Control).SelectedIndex == 0 ? false : true;
+                        // ret.Value = ((ComboBox)e.Control).SelectedIndex == 0 ? false : true;
+                        ret.Value = ((CheckBox)e.Control).Checked;
                         _CurrentHouseUnit.Data["PlayerControl"] = ret;
                         break;
                     case "Country":
