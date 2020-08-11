@@ -213,7 +213,10 @@ namespace RelertSharp.MapStructure
             bool latEqual = LatEqual(set, center);
             if (LatEqual(center, Constant.LATSystem.idxGreen))
             {
-                if (changer.TileTerrainType == Constant.DrawingEngine.Tiles.Shore || changer.TileTerrainType == Constant.DrawingEngine.Tiles.LAT_D) return false;
+                if (!Constant.LATSystem.LatSet.Contains(set))
+                {
+                    if (changer.TileTerrainType == Constant.DrawingEngine.Tiles.Shore || changer.TileTerrainType == Constant.DrawingEngine.Tiles.LAT_D) return false;
+                }
             }
             if (set == center && center != Constant.LATSystem.idxClear) return false;
             if (set == Constant.LATSystem.idxClear) return true;
