@@ -111,6 +111,7 @@ namespace RelertSharp.GUI.Model.TileBrush
                     Tile dest = Map.TilesData[pos];
                     if (dest != null)
                     {
+                        body[i].IsLeagalTile = true;
                         dest.HideExtraImg();
                         dest.HideTileImg();
                         under.Add(dest);
@@ -138,6 +139,7 @@ namespace RelertSharp.GUI.Model.TileBrush
                     {
                         body[i].HideExtraImg();
                         body[i].HideTileImg();
+                        body[i].IsLeagalTile = false;
                     }
                     i++;
                 }
@@ -156,8 +158,11 @@ namespace RelertSharp.GUI.Model.TileBrush
         {
             foreach (Tile t in body)
             {
-                t.SwitchToFramework(isFramework);
-                Map.AddTile(t);
+                if (t.IsLeagalTile)
+                {
+                    t.SwitchToFramework(isFramework);
+                    Map.AddTile(t);
+                }
             }
             if (Lat)
             {

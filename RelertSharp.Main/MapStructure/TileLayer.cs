@@ -813,6 +813,7 @@ namespace RelertSharp.MapStructure
         public bool IsHyte { get; set; }
         public int TileTerrainType { get; set; }
         public bool Disposed { get; private set; }
+        public bool IsLeagalTile { get; set; }
         #endregion
     }
 }
