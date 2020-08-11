@@ -37,6 +37,8 @@ namespace RelertSharp.GUI.Controls
             LoadToObjectCollection(cbbOwner, Map.Houses);
             if (cbbOwner.Items.Count > 0) cbbOwner.SelectedIndex = 0;
             LoadToObjectCollection(cbbAttTag, TagItem.NullTag, Map.Tags);
+            LoadToObjectCollection(cbbStat, Constant.MapStructure.ObjectStatus);
+            cbbStat.SelectedIndex = 0;
             cbbSpotlight.Items.Add(BuildingSpotlightType.None);
             cbbSpotlight.Items.Add(BuildingSpotlightType.Arcing);
             cbbSpotlight.Items.Add(BuildingSpotlightType.Circular);

@@ -41,6 +41,7 @@ namespace RelertSharp.GUI
             cbbOwnerHouse.Items.AddRange(houses.ToArray());
             cbbTags.Items.Add(new TechnoPair("None", ""));
             cbbTags.Items.AddRange(tags.ToArray());
+            LoadToObjectCollection(cbbStatus, Constant.MapStructure.ObjectStatus);
             UpdateComboboxText(cbbOwnerHouse, changer.Host.OwnerHouse);
             houseMX = houses.Max(x => x.ToString().Length) * 7;
             if (tags.Count() > 0) tagMX = tags.Max(x => x.ToString().Length) * 7;
