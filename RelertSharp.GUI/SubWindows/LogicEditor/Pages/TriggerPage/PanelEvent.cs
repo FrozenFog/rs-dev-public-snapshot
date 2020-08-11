@@ -46,7 +46,11 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             lbxTriggerList = lbx;
             this.isEvent = isEvent;
             IEnumerable<TriggerDescription> desc;
-            if (isEvent) desc = coll.Events;
+            if (isEvent)
+            {
+                desc = coll.Events;
+
+            }
             else desc = coll.Actions;
             pnlParameter.Initialize(desc, lbxEventList, isEvent);
             pnlParameter.ItemUpdated += PnlParameter_ItemUpdated;
@@ -154,16 +158,26 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private void SetActionLabel(Control c)
         {
             Type t = c.GetType();
-            if (t == typeof(ParameterPanel) || t == typeof(GroupBox))
+            if (c is ParameterPanel pnl)
             {
-                ControlCollection iter;
-                ParameterPanel pnl = c as ParameterPanel;
-                if (pnl == null) iter = (c as GroupBox).Controls;
-                else iter = pnl.Controls;
-                foreach (Control child in iter)
-                {
-                    SetActionLabel(child);
-                }
+                foreach (Control sub in pnl.Controls) SetActionLabel(sub);
+            }
+            else if (c is GroupBox gpb)
+            {
+                foreach (Control gsub in gpb.Controls) SetActionLabel(gsub);
+            }
+            else if (c is SplitContainer split)
+            {
+                foreach (Control ssub in split.Panel1.Controls) SetActionLabel(ssub);
+                foreach (Control ssub in split.Panel2.Controls) SetActionLabel(ssub);
+            }
+            else if (c is Panel panel)
+            {
+                foreach (Control psub in panel.Controls) SetActionLabel(psub);
+            }
+            else if (c is TableLayoutPanel tlp)
+            {
+                foreach (Control tsub in tlp.Controls) SetActionLabel(tsub);
             }
             else c.Text = c.Text.Replace("Event", "Action");
         }
