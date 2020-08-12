@@ -311,6 +311,7 @@
     <Compile Include="Model\TileBrush\TileBrush.cs" />
     <Compile Include="Model\TileBrush\TileBucket.cs" />
     <Compile Include="Model\UndoRedo\UndoRedo.cs" />
+    <Compile Include="Model\UndoRedo\UndoRedoCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\RbPanelAttribute.cs">
