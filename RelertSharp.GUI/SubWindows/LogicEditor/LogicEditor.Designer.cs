@@ -42,36 +42,44 @@
             this.tsmiTrgLstIDName = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.splitTagEA = new System.Windows.Forms.SplitContainer();
+            this.pnlTriggerTag = new RelertSharp.GUI.SubWindows.LogicEditor.PanelTrgTag();
             this.splitEA = new System.Windows.Forms.SplitContainer();
+            this.pnlEvent = new RelertSharp.GUI.SubWindows.LogicEditor.PanelEvent();
+            this.pnlAction = new RelertSharp.GUI.SubWindows.LogicEditor.PanelEvent();
             this.tbpTaskScriptPage = new System.Windows.Forms.TabPage();
             this.splitTaskScript = new System.Windows.Forms.SplitContainer();
             this.gpbTeamTask = new System.Windows.Forms.GroupBox();
             this.splitTaskforce = new System.Windows.Forms.SplitContainer();
             this.lbxTaskList = new System.Windows.Forms.ListBox();
             this.label36 = new System.Windows.Forms.Label();
+            this.pnlTaskforce = new RelertSharp.GUI.SubWindows.LogicEditor.PanelTaskforce();
             this.gpbTeamScript = new System.Windows.Forms.GroupBox();
             this.splitScript = new System.Windows.Forms.SplitContainer();
             this.lbxScriptList = new System.Windows.Forms.ListBox();
             this.label33 = new System.Windows.Forms.Label();
+            this.pnlScript = new RelertSharp.GUI.SubWindows.LogicEditor.PanelScript();
             this.tbpTeams = new System.Windows.Forms.TabPage();
-            this.gpbTeamAI = new System.Windows.Forms.GroupBox();
-            this.olvAIConfig = new BrightIdeasSoftware.ObjectListView();
-            this.olvColAIKey = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColAIValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.lbxAIList = new System.Windows.Forms.ListBox();
-            this.btnCopyAI = new System.Windows.Forms.Button();
-            this.btnNewAI = new System.Windows.Forms.Button();
-            this.btnDelAI = new System.Windows.Forms.Button();
-            this.label22 = new System.Windows.Forms.Label();
+            this.splitTeamAI = new System.Windows.Forms.SplitContainer();
             this.gpbTeamTeam = new System.Windows.Forms.GroupBox();
+            this.splitTeam = new System.Windows.Forms.SplitContainer();
+            this.lbxTeamList = new System.Windows.Forms.ListBox();
+            this.label28 = new System.Windows.Forms.Label();
             this.olvTeamConfig = new BrightIdeasSoftware.ObjectListView();
             this.olvColTeamKey = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColTeamValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.lbxTeamList = new System.Windows.Forms.ListBox();
             this.btnCopyTeam = new System.Windows.Forms.Button();
             this.btnNewTeam = new System.Windows.Forms.Button();
             this.btnDelTeam = new System.Windows.Forms.Button();
-            this.label28 = new System.Windows.Forms.Label();
+            this.gpbTeamAI = new System.Windows.Forms.GroupBox();
+            this.splitAI = new System.Windows.Forms.SplitContainer();
+            this.lbxAIList = new System.Windows.Forms.ListBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.olvAIConfig = new BrightIdeasSoftware.ObjectListView();
+            this.olvColAIKey = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColAIValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.btnCopyAI = new System.Windows.Forms.Button();
+            this.btnNewAI = new System.Windows.Forms.Button();
+            this.btnDelAI = new System.Windows.Forms.Button();
             this.tbpMiscs = new System.Windows.Forms.TabPage();
             this.gpbMap = new System.Windows.Forms.GroupBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -103,14 +111,6 @@
             this.chklbxLocalVar = new System.Windows.Forms.CheckedListBox();
             this.ttTrg = new System.Windows.Forms.ToolTip(this.components);
             this.pnlSearch = new RelertSharp.GUI.SubWindows.LogicEditor.PanelGlobalSearch();
-            this.pnlTriggerTag = new RelertSharp.GUI.SubWindows.LogicEditor.PanelTrgTag();
-            this.pnlEvent = new RelertSharp.GUI.SubWindows.LogicEditor.PanelEvent();
-            this.pnlAction = new RelertSharp.GUI.SubWindows.LogicEditor.PanelEvent();
-            this.pnlTaskforce = new RelertSharp.GUI.SubWindows.LogicEditor.PanelTaskforce();
-            this.pnlScript = new RelertSharp.GUI.SubWindows.LogicEditor.PanelScript();
-            this.splitTeamAI = new System.Windows.Forms.SplitContainer();
-            this.splitTeam = new System.Windows.Forms.SplitContainer();
-            this.splitAI = new System.Windows.Forms.SplitContainer();
             this.tbcMain.SuspendLayout();
             this.tbpTriggers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitTriggerMain)).BeginInit();
@@ -142,10 +142,22 @@
             this.splitScript.Panel2.SuspendLayout();
             this.splitScript.SuspendLayout();
             this.tbpTeams.SuspendLayout();
-            this.gpbTeamAI.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.olvAIConfig)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitTeamAI)).BeginInit();
+            this.splitTeamAI.Panel1.SuspendLayout();
+            this.splitTeamAI.Panel2.SuspendLayout();
+            this.splitTeamAI.SuspendLayout();
             this.gpbTeamTeam.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitTeam)).BeginInit();
+            this.splitTeam.Panel1.SuspendLayout();
+            this.splitTeam.Panel2.SuspendLayout();
+            this.splitTeam.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvTeamConfig)).BeginInit();
+            this.gpbTeamAI.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitAI)).BeginInit();
+            this.splitAI.Panel1.SuspendLayout();
+            this.splitAI.Panel2.SuspendLayout();
+            this.splitAI.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.olvAIConfig)).BeginInit();
             this.tbpMiscs.SuspendLayout();
             this.gpbMap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -158,18 +170,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.olvHouse)).BeginInit();
             this.LGCgpbHouseAllies.SuspendLayout();
             this.gpbLocalVar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitTeamAI)).BeginInit();
-            this.splitTeamAI.Panel1.SuspendLayout();
-            this.splitTeamAI.Panel2.SuspendLayout();
-            this.splitTeamAI.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitTeam)).BeginInit();
-            this.splitTeam.Panel1.SuspendLayout();
-            this.splitTeam.Panel2.SuspendLayout();
-            this.splitTeam.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitAI)).BeginInit();
-            this.splitAI.Panel1.SuspendLayout();
-            this.splitAI.Panel2.SuspendLayout();
-            this.splitAI.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbcMain
@@ -182,7 +182,7 @@
             this.tbcMain.Controls.Add(this.tbpTeams);
             this.tbcMain.Controls.Add(this.tbpMiscs);
             this.tbcMain.Location = new System.Drawing.Point(16, 41);
-            this.tbcMain.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbcMain.Margin = new System.Windows.Forms.Padding(4);
             this.tbcMain.Name = "tbcMain";
             this.tbcMain.SelectedIndex = 0;
             this.tbcMain.Size = new System.Drawing.Size(979, 739);
@@ -193,9 +193,9 @@
             this.tbpTriggers.BackColor = System.Drawing.Color.Transparent;
             this.tbpTriggers.Controls.Add(this.splitTriggerMain);
             this.tbpTriggers.Location = new System.Drawing.Point(4, 25);
-            this.tbpTriggers.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbpTriggers.Margin = new System.Windows.Forms.Padding(4);
             this.tbpTriggers.Name = "tbpTriggers";
-            this.tbpTriggers.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbpTriggers.Padding = new System.Windows.Forms.Padding(4);
             this.tbpTriggers.Size = new System.Drawing.Size(971, 710);
             this.tbpTriggers.TabIndex = 0;
             this.tbpTriggers.Text = "LGCtbpTrgPage";
@@ -229,7 +229,7 @@
             this.lbxTriggerList.HorizontalScrollbar = true;
             this.lbxTriggerList.ItemHeight = 15;
             this.lbxTriggerList.Location = new System.Drawing.Point(0, 15);
-            this.lbxTriggerList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lbxTriggerList.Margin = new System.Windows.Forms.Padding(4);
             this.lbxTriggerList.Name = "lbxTriggerList";
             this.lbxTriggerList.Size = new System.Drawing.Size(242, 687);
             this.lbxTriggerList.Sorted = true;
@@ -320,6 +320,15 @@
             this.splitTagEA.SplitterDistance = 236;
             this.splitTagEA.TabIndex = 0;
             // 
+            // pnlTriggerTag
+            // 
+            this.pnlTriggerTag.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTriggerTag.Location = new System.Drawing.Point(0, 0);
+            this.pnlTriggerTag.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlTriggerTag.Name = "pnlTriggerTag";
+            this.pnlTriggerTag.Size = new System.Drawing.Size(717, 236);
+            this.pnlTriggerTag.TabIndex = 7;
+            // 
             // splitEA
             // 
             this.splitEA.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -338,6 +347,24 @@
             this.splitEA.SplitterDistance = 374;
             this.splitEA.TabIndex = 0;
             this.splitEA.Resize += new System.EventHandler(this.splitEA_Resize);
+            // 
+            // pnlEvent
+            // 
+            this.pnlEvent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlEvent.Location = new System.Drawing.Point(0, 0);
+            this.pnlEvent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlEvent.Name = "pnlEvent";
+            this.pnlEvent.Size = new System.Drawing.Size(374, 462);
+            this.pnlEvent.TabIndex = 8;
+            // 
+            // pnlAction
+            // 
+            this.pnlAction.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlAction.Location = new System.Drawing.Point(0, 0);
+            this.pnlAction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlAction.Name = "pnlAction";
+            this.pnlAction.Size = new System.Drawing.Size(339, 462);
+            this.pnlAction.TabIndex = 9;
             // 
             // tbpTaskScriptPage
             // 
@@ -427,6 +454,15 @@
             this.label36.TabIndex = 1;
             this.label36.Text = "LGClblTaskList";
             // 
+            // pnlTaskforce
+            // 
+            this.pnlTaskforce.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTaskforce.Location = new System.Drawing.Point(0, 0);
+            this.pnlTaskforce.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlTaskforce.Name = "pnlTaskforce";
+            this.pnlTaskforce.Size = new System.Drawing.Size(213, 684);
+            this.pnlTaskforce.TabIndex = 2;
+            // 
             // gpbTeamScript
             // 
             this.gpbTeamScript.Controls.Add(this.splitScript);
@@ -483,131 +519,43 @@
             this.label33.TabIndex = 1;
             this.label33.Text = "LGClblScriptList";
             // 
+            // pnlScript
+            // 
+            this.pnlScript.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlScript.Location = new System.Drawing.Point(0, 0);
+            this.pnlScript.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlScript.Name = "pnlScript";
+            this.pnlScript.Size = new System.Drawing.Size(305, 684);
+            this.pnlScript.TabIndex = 2;
+            // 
             // tbpTeams
             // 
             this.tbpTeams.BackColor = System.Drawing.Color.Transparent;
             this.tbpTeams.Controls.Add(this.splitTeamAI);
             this.tbpTeams.Location = new System.Drawing.Point(4, 25);
-            this.tbpTeams.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbpTeams.Margin = new System.Windows.Forms.Padding(4);
             this.tbpTeams.Name = "tbpTeams";
-            this.tbpTeams.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbpTeams.Padding = new System.Windows.Forms.Padding(4);
             this.tbpTeams.Size = new System.Drawing.Size(971, 710);
             this.tbpTeams.TabIndex = 1;
             this.tbpTeams.Text = "LGCtbpTeamPage";
             // 
-            // gpbTeamAI
+            // splitTeamAI
             // 
-            this.gpbTeamAI.Controls.Add(this.splitAI);
-            this.gpbTeamAI.Controls.Add(this.btnCopyAI);
-            this.gpbTeamAI.Controls.Add(this.btnNewAI);
-            this.gpbTeamAI.Controls.Add(this.btnDelAI);
-            this.gpbTeamAI.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gpbTeamAI.Location = new System.Drawing.Point(0, 0);
-            this.gpbTeamAI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gpbTeamAI.Name = "gpbTeamAI";
-            this.gpbTeamAI.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gpbTeamAI.Size = new System.Drawing.Size(471, 702);
-            this.gpbTeamAI.TabIndex = 3;
-            this.gpbTeamAI.TabStop = false;
-            this.gpbTeamAI.Text = "LGCgpbTeamAI";
+            this.splitTeamAI.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitTeamAI.Location = new System.Drawing.Point(4, 4);
+            this.splitTeamAI.Name = "splitTeamAI";
             // 
-            // olvAIConfig
+            // splitTeamAI.Panel1
             // 
-            this.olvAIConfig.AllColumns.Add(this.olvColAIKey);
-            this.olvAIConfig.AllColumns.Add(this.olvColAIValue);
-            this.olvAIConfig.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.SingleClickAlways;
-            this.olvAIConfig.CellEditUseWholeCell = false;
-            this.olvAIConfig.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.olvColAIKey,
-            this.olvColAIValue});
-            this.olvAIConfig.Cursor = System.Windows.Forms.Cursors.Default;
-            this.olvAIConfig.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.olvAIConfig.FullRowSelect = true;
-            this.olvAIConfig.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.olvAIConfig.HideSelection = false;
-            this.olvAIConfig.Location = new System.Drawing.Point(0, 0);
-            this.olvAIConfig.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.olvAIConfig.MultiSelect = false;
-            this.olvAIConfig.Name = "olvAIConfig";
-            this.olvAIConfig.ShowGroups = false;
-            this.olvAIConfig.Size = new System.Drawing.Size(306, 680);
-            this.olvAIConfig.TabIndex = 0;
-            this.olvAIConfig.UseCompatibleStateImageBehavior = false;
-            this.olvAIConfig.View = System.Windows.Forms.View.Details;
-            this.olvAIConfig.CellEditFinished += new BrightIdeasSoftware.CellEditEventHandler(this.olvAIConfig_CellEditFinished);
-            this.olvAIConfig.CellEditFinishing += new BrightIdeasSoftware.CellEditEventHandler(this.olvAIConfig_CellEditFinishing);
-            this.olvAIConfig.CellEditStarting += new BrightIdeasSoftware.CellEditEventHandler(this.olvAIConfig_CellEditStarting);
+            this.splitTeamAI.Panel1.Controls.Add(this.gpbTeamTeam);
             // 
-            // olvColAIKey
+            // splitTeamAI.Panel2
             // 
-            this.olvColAIKey.AspectName = "Value.ShowName";
-            this.olvColAIKey.IsEditable = false;
-            this.olvColAIKey.Text = "LGColvColAIKey";
-            this.olvColAIKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.olvColAIKey.Width = 133;
-            // 
-            // olvColAIValue
-            // 
-            this.olvColAIValue.AspectName = "Value.Value";
-            this.olvColAIValue.Text = "LGColvColAIValue";
-            this.olvColAIValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.olvColAIValue.Width = 152;
-            // 
-            // lbxAIList
-            // 
-            this.lbxAIList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbxAIList.FormattingEnabled = true;
-            this.lbxAIList.HorizontalScrollbar = true;
-            this.lbxAIList.ItemHeight = 15;
-            this.lbxAIList.Location = new System.Drawing.Point(0, 15);
-            this.lbxAIList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.lbxAIList.Name = "lbxAIList";
-            this.lbxAIList.Size = new System.Drawing.Size(155, 665);
-            this.lbxAIList.TabIndex = 6;
-            this.lbxAIList.SelectedIndexChanged += new System.EventHandler(this.lbxAIList_SelectedIndexChanged);
-            // 
-            // btnCopyAI
-            // 
-            this.btnCopyAI.Location = new System.Drawing.Point(228, 662);
-            this.btnCopyAI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnCopyAI.Name = "btnCopyAI";
-            this.btnCopyAI.Size = new System.Drawing.Size(104, 30);
-            this.btnCopyAI.TabIndex = 5;
-            this.btnCopyAI.Text = "LGCbtnCopyAI";
-            this.btnCopyAI.UseVisualStyleBackColor = true;
-            this.btnCopyAI.Click += new System.EventHandler(this.btnCopyAI_Click);
-            // 
-            // btnNewAI
-            // 
-            this.btnNewAI.Location = new System.Drawing.Point(8, 664);
-            this.btnNewAI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnNewAI.Name = "btnNewAI";
-            this.btnNewAI.Size = new System.Drawing.Size(103, 29);
-            this.btnNewAI.TabIndex = 3;
-            this.btnNewAI.Text = "LGCbtnNewAI";
-            this.btnNewAI.UseVisualStyleBackColor = true;
-            this.btnNewAI.Click += new System.EventHandler(this.btnNewAI_Click);
-            // 
-            // btnDelAI
-            // 
-            this.btnDelAI.Location = new System.Drawing.Point(116, 662);
-            this.btnDelAI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnDelAI.Name = "btnDelAI";
-            this.btnDelAI.Size = new System.Drawing.Size(107, 30);
-            this.btnDelAI.TabIndex = 4;
-            this.btnDelAI.Text = "LGCbtnDelAI";
-            this.btnDelAI.UseVisualStyleBackColor = true;
-            this.btnDelAI.Click += new System.EventHandler(this.btnDelAI_Click);
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label22.Location = new System.Drawing.Point(0, 0);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(103, 15);
-            this.label22.TabIndex = 1;
-            this.label22.Text = "LGClblAIList";
+            this.splitTeamAI.Panel2.Controls.Add(this.gpbTeamAI);
+            this.splitTeamAI.Size = new System.Drawing.Size(963, 702);
+            this.splitTeamAI.SplitterDistance = 488;
+            this.splitTeamAI.TabIndex = 4;
             // 
             // gpbTeamTeam
             // 
@@ -624,6 +572,48 @@
             this.gpbTeamTeam.TabIndex = 2;
             this.gpbTeamTeam.TabStop = false;
             this.gpbTeamTeam.Text = "LGCgpbTeamTeam";
+            // 
+            // splitTeam
+            // 
+            this.splitTeam.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitTeam.Location = new System.Drawing.Point(3, 20);
+            this.splitTeam.Name = "splitTeam";
+            // 
+            // splitTeam.Panel1
+            // 
+            this.splitTeam.Panel1.Controls.Add(this.lbxTeamList);
+            this.splitTeam.Panel1.Controls.Add(this.label28);
+            // 
+            // splitTeam.Panel2
+            // 
+            this.splitTeam.Panel2.Controls.Add(this.olvTeamConfig);
+            this.splitTeam.Size = new System.Drawing.Size(482, 680);
+            this.splitTeam.SplitterDistance = 160;
+            this.splitTeam.TabIndex = 3;
+            // 
+            // lbxTeamList
+            // 
+            this.lbxTeamList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbxTeamList.FormattingEnabled = true;
+            this.lbxTeamList.HorizontalScrollbar = true;
+            this.lbxTeamList.ItemHeight = 15;
+            this.lbxTeamList.Location = new System.Drawing.Point(0, 15);
+            this.lbxTeamList.Margin = new System.Windows.Forms.Padding(4);
+            this.lbxTeamList.Name = "lbxTeamList";
+            this.lbxTeamList.Size = new System.Drawing.Size(160, 665);
+            this.lbxTeamList.Sorted = true;
+            this.lbxTeamList.TabIndex = 6;
+            this.lbxTeamList.SelectedIndexChanged += new System.EventHandler(this.lbxTeamList_SelectedIndexChanged);
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label28.Location = new System.Drawing.Point(0, 0);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(119, 15);
+            this.label28.TabIndex = 1;
+            this.label28.Text = "LGClblTeamList";
             // 
             // olvTeamConfig
             // 
@@ -667,20 +657,6 @@
             this.olvColTeamValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.olvColTeamValue.Width = 165;
             // 
-            // lbxTeamList
-            // 
-            this.lbxTeamList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbxTeamList.FormattingEnabled = true;
-            this.lbxTeamList.HorizontalScrollbar = true;
-            this.lbxTeamList.ItemHeight = 15;
-            this.lbxTeamList.Location = new System.Drawing.Point(0, 15);
-            this.lbxTeamList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.lbxTeamList.Name = "lbxTeamList";
-            this.lbxTeamList.Size = new System.Drawing.Size(160, 665);
-            this.lbxTeamList.Sorted = true;
-            this.lbxTeamList.TabIndex = 6;
-            this.lbxTeamList.SelectedIndexChanged += new System.EventHandler(this.lbxTeamList_SelectedIndexChanged);
-            // 
             // btnCopyTeam
             // 
             this.btnCopyTeam.Location = new System.Drawing.Point(228, 662);
@@ -714,15 +690,137 @@
             this.btnDelTeam.UseVisualStyleBackColor = true;
             this.btnDelTeam.Click += new System.EventHandler(this.btnDelTeam_Click);
             // 
-            // label28
+            // gpbTeamAI
             // 
-            this.label28.AutoSize = true;
-            this.label28.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label28.Location = new System.Drawing.Point(0, 0);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(119, 15);
-            this.label28.TabIndex = 1;
-            this.label28.Text = "LGClblTeamList";
+            this.gpbTeamAI.Controls.Add(this.splitAI);
+            this.gpbTeamAI.Controls.Add(this.btnCopyAI);
+            this.gpbTeamAI.Controls.Add(this.btnNewAI);
+            this.gpbTeamAI.Controls.Add(this.btnDelAI);
+            this.gpbTeamAI.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gpbTeamAI.Location = new System.Drawing.Point(0, 0);
+            this.gpbTeamAI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gpbTeamAI.Name = "gpbTeamAI";
+            this.gpbTeamAI.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gpbTeamAI.Size = new System.Drawing.Size(471, 702);
+            this.gpbTeamAI.TabIndex = 3;
+            this.gpbTeamAI.TabStop = false;
+            this.gpbTeamAI.Text = "LGCgpbTeamAI";
+            // 
+            // splitAI
+            // 
+            this.splitAI.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitAI.Location = new System.Drawing.Point(3, 20);
+            this.splitAI.Name = "splitAI";
+            // 
+            // splitAI.Panel1
+            // 
+            this.splitAI.Panel1.Controls.Add(this.lbxAIList);
+            this.splitAI.Panel1.Controls.Add(this.label22);
+            // 
+            // splitAI.Panel2
+            // 
+            this.splitAI.Panel2.Controls.Add(this.olvAIConfig);
+            this.splitAI.Size = new System.Drawing.Size(465, 680);
+            this.splitAI.SplitterDistance = 155;
+            this.splitAI.TabIndex = 4;
+            // 
+            // lbxAIList
+            // 
+            this.lbxAIList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbxAIList.FormattingEnabled = true;
+            this.lbxAIList.HorizontalScrollbar = true;
+            this.lbxAIList.ItemHeight = 15;
+            this.lbxAIList.Location = new System.Drawing.Point(0, 15);
+            this.lbxAIList.Margin = new System.Windows.Forms.Padding(4);
+            this.lbxAIList.Name = "lbxAIList";
+            this.lbxAIList.Size = new System.Drawing.Size(155, 665);
+            this.lbxAIList.TabIndex = 6;
+            this.lbxAIList.SelectedIndexChanged += new System.EventHandler(this.lbxAIList_SelectedIndexChanged);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label22.Location = new System.Drawing.Point(0, 0);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(103, 15);
+            this.label22.TabIndex = 1;
+            this.label22.Text = "LGClblAIList";
+            // 
+            // olvAIConfig
+            // 
+            this.olvAIConfig.AllColumns.Add(this.olvColAIKey);
+            this.olvAIConfig.AllColumns.Add(this.olvColAIValue);
+            this.olvAIConfig.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.SingleClickAlways;
+            this.olvAIConfig.CellEditUseWholeCell = false;
+            this.olvAIConfig.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColAIKey,
+            this.olvColAIValue});
+            this.olvAIConfig.Cursor = System.Windows.Forms.Cursors.Default;
+            this.olvAIConfig.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.olvAIConfig.FullRowSelect = true;
+            this.olvAIConfig.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.olvAIConfig.HideSelection = false;
+            this.olvAIConfig.Location = new System.Drawing.Point(0, 0);
+            this.olvAIConfig.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.olvAIConfig.MultiSelect = false;
+            this.olvAIConfig.Name = "olvAIConfig";
+            this.olvAIConfig.ShowGroups = false;
+            this.olvAIConfig.Size = new System.Drawing.Size(306, 680);
+            this.olvAIConfig.TabIndex = 0;
+            this.olvAIConfig.UseCompatibleStateImageBehavior = false;
+            this.olvAIConfig.View = System.Windows.Forms.View.Details;
+            this.olvAIConfig.CellEditFinished += new BrightIdeasSoftware.CellEditEventHandler(this.olvAIConfig_CellEditFinished);
+            this.olvAIConfig.CellEditFinishing += new BrightIdeasSoftware.CellEditEventHandler(this.olvAIConfig_CellEditFinishing);
+            this.olvAIConfig.CellEditStarting += new BrightIdeasSoftware.CellEditEventHandler(this.olvAIConfig_CellEditStarting);
+            // 
+            // olvColAIKey
+            // 
+            this.olvColAIKey.AspectName = "Value.ShowName";
+            this.olvColAIKey.IsEditable = false;
+            this.olvColAIKey.Text = "LGColvColAIKey";
+            this.olvColAIKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColAIKey.Width = 133;
+            // 
+            // olvColAIValue
+            // 
+            this.olvColAIValue.AspectName = "Value.Value";
+            this.olvColAIValue.Text = "LGColvColAIValue";
+            this.olvColAIValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.olvColAIValue.Width = 152;
+            // 
+            // btnCopyAI
+            // 
+            this.btnCopyAI.Location = new System.Drawing.Point(228, 662);
+            this.btnCopyAI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCopyAI.Name = "btnCopyAI";
+            this.btnCopyAI.Size = new System.Drawing.Size(104, 30);
+            this.btnCopyAI.TabIndex = 5;
+            this.btnCopyAI.Text = "LGCbtnCopyAI";
+            this.btnCopyAI.UseVisualStyleBackColor = true;
+            this.btnCopyAI.Click += new System.EventHandler(this.btnCopyAI_Click);
+            // 
+            // btnNewAI
+            // 
+            this.btnNewAI.Location = new System.Drawing.Point(8, 664);
+            this.btnNewAI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnNewAI.Name = "btnNewAI";
+            this.btnNewAI.Size = new System.Drawing.Size(103, 29);
+            this.btnNewAI.TabIndex = 3;
+            this.btnNewAI.Text = "LGCbtnNewAI";
+            this.btnNewAI.UseVisualStyleBackColor = true;
+            this.btnNewAI.Click += new System.EventHandler(this.btnNewAI_Click);
+            // 
+            // btnDelAI
+            // 
+            this.btnDelAI.Location = new System.Drawing.Point(116, 662);
+            this.btnDelAI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnDelAI.Name = "btnDelAI";
+            this.btnDelAI.Size = new System.Drawing.Size(107, 30);
+            this.btnDelAI.TabIndex = 4;
+            this.btnDelAI.Text = "LGCbtnDelAI";
+            this.btnDelAI.UseVisualStyleBackColor = true;
+            this.btnDelAI.Click += new System.EventHandler(this.btnDelAI_Click);
             // 
             // tbpMiscs
             // 
@@ -731,9 +829,9 @@
             this.tbpMiscs.Controls.Add(this.gpbHouses);
             this.tbpMiscs.Controls.Add(this.gpbLocalVar);
             this.tbpMiscs.Location = new System.Drawing.Point(4, 25);
-            this.tbpMiscs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbpMiscs.Margin = new System.Windows.Forms.Padding(4);
             this.tbpMiscs.Name = "tbpMiscs";
-            this.tbpMiscs.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbpMiscs.Padding = new System.Windows.Forms.Padding(4);
             this.tbpMiscs.Size = new System.Drawing.Size(971, 710);
             this.tbpMiscs.TabIndex = 2;
             this.tbpMiscs.Text = "LGCtbpMiscPage";
@@ -742,9 +840,9 @@
             // 
             this.gpbMap.Controls.Add(this.splitContainer1);
             this.gpbMap.Location = new System.Drawing.Point(789, 9);
-            this.gpbMap.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbMap.Margin = new System.Windows.Forms.Padding(4);
             this.gpbMap.Name = "gpbMap";
-            this.gpbMap.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbMap.Padding = new System.Windows.Forms.Padding(4);
             this.gpbMap.Size = new System.Drawing.Size(725, 690);
             this.gpbMap.TabIndex = 4;
             this.gpbMap.TabStop = false;
@@ -754,7 +852,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(4, 22);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -777,7 +875,7 @@
             this.olvBasic.Dock = System.Windows.Forms.DockStyle.Fill;
             this.olvBasic.HideSelection = false;
             this.olvBasic.Location = new System.Drawing.Point(0, 0);
-            this.olvBasic.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.olvBasic.Margin = new System.Windows.Forms.Padding(4);
             this.olvBasic.Name = "olvBasic";
             this.olvBasic.Size = new System.Drawing.Size(717, 320);
             this.olvBasic.TabIndex = 0;
@@ -792,7 +890,7 @@
             this.panel1.Controls.Add(this.chklbxBasic);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(717, 339);
             this.panel1.TabIndex = 0;
@@ -824,7 +922,7 @@
             this.chklbxSpecialFlag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chklbxSpecialFlag.FormattingEnabled = true;
             this.chklbxSpecialFlag.Location = new System.Drawing.Point(363, 22);
-            this.chklbxSpecialFlag.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chklbxSpecialFlag.Margin = new System.Windows.Forms.Padding(4);
             this.chklbxSpecialFlag.Name = "chklbxSpecialFlag";
             this.chklbxSpecialFlag.Size = new System.Drawing.Size(349, 304);
             this.chklbxSpecialFlag.TabIndex = 5;
@@ -833,7 +931,7 @@
             // 
             this.chklbxBasic.FormattingEnabled = true;
             this.chklbxBasic.Location = new System.Drawing.Point(4, 22);
-            this.chklbxBasic.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chklbxBasic.Margin = new System.Windows.Forms.Padding(4);
             this.chklbxBasic.Name = "chklbxBasic";
             this.chklbxBasic.Size = new System.Drawing.Size(349, 304);
             this.chklbxBasic.TabIndex = 4;
@@ -846,9 +944,9 @@
             this.gpbHouses.Controls.Add(this.btnNewHouse);
             this.gpbHouses.Controls.Add(this.lbxHouses);
             this.gpbHouses.Location = new System.Drawing.Point(8, 8);
-            this.gpbHouses.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbHouses.Margin = new System.Windows.Forms.Padding(4);
             this.gpbHouses.Name = "gpbHouses";
-            this.gpbHouses.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbHouses.Padding = new System.Windows.Forms.Padding(4);
             this.gpbHouses.Size = new System.Drawing.Size(773, 474);
             this.gpbHouses.TabIndex = 3;
             this.gpbHouses.TabStop = false;
@@ -868,7 +966,7 @@
             this.olvHouse.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.olvHouse.HideSelection = false;
             this.olvHouse.Location = new System.Drawing.Point(249, 24);
-            this.olvHouse.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.olvHouse.Margin = new System.Windows.Forms.Padding(4);
             this.olvHouse.MultiSelect = false;
             this.olvHouse.Name = "olvHouse";
             this.olvHouse.ShowGroups = false;
@@ -907,9 +1005,9 @@
             this.LGCgpbHouseAllies.Controls.Add(this.lbxHouseAllie);
             this.LGCgpbHouseAllies.Controls.Add(this.txbHouseAllies);
             this.LGCgpbHouseAllies.Location = new System.Drawing.Point(249, 242);
-            this.LGCgpbHouseAllies.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LGCgpbHouseAllies.Margin = new System.Windows.Forms.Padding(4);
             this.LGCgpbHouseAllies.Name = "LGCgpbHouseAllies";
-            this.LGCgpbHouseAllies.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LGCgpbHouseAllies.Padding = new System.Windows.Forms.Padding(4);
             this.LGCgpbHouseAllies.Size = new System.Drawing.Size(516, 224);
             this.LGCgpbHouseAllies.TabIndex = 3;
             this.LGCgpbHouseAllies.TabStop = false;
@@ -917,7 +1015,7 @@
             // btnGoAllie
             // 
             this.btnGoAllie.Location = new System.Drawing.Point(209, 129);
-            this.btnGoAllie.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnGoAllie.Margin = new System.Windows.Forms.Padding(4);
             this.btnGoAllie.Name = "btnGoAllie";
             this.btnGoAllie.Size = new System.Drawing.Size(81, 29);
             this.btnGoAllie.TabIndex = 6;
@@ -928,7 +1026,7 @@
             // btnGoEnemy
             // 
             this.btnGoEnemy.Location = new System.Drawing.Point(209, 92);
-            this.btnGoEnemy.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnGoEnemy.Margin = new System.Windows.Forms.Padding(4);
             this.btnGoEnemy.Name = "btnGoEnemy";
             this.btnGoEnemy.Size = new System.Drawing.Size(81, 29);
             this.btnGoEnemy.TabIndex = 5;
@@ -942,7 +1040,7 @@
             this.lbxHouseEnemy.HorizontalScrollbar = true;
             this.lbxHouseEnemy.ItemHeight = 15;
             this.lbxHouseEnemy.Location = new System.Drawing.Point(299, 40);
-            this.lbxHouseEnemy.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lbxHouseEnemy.Margin = new System.Windows.Forms.Padding(4);
             this.lbxHouseEnemy.Name = "lbxHouseEnemy";
             this.lbxHouseEnemy.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbxHouseEnemy.Size = new System.Drawing.Size(208, 139);
@@ -977,7 +1075,7 @@
             this.lbxHouseAllie.HorizontalScrollbar = true;
             this.lbxHouseAllie.ItemHeight = 15;
             this.lbxHouseAllie.Location = new System.Drawing.Point(8, 40);
-            this.lbxHouseAllie.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lbxHouseAllie.Margin = new System.Windows.Forms.Padding(4);
             this.lbxHouseAllie.Name = "lbxHouseAllie";
             this.lbxHouseAllie.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbxHouseAllie.Size = new System.Drawing.Size(192, 139);
@@ -987,7 +1085,7 @@
             // txbHouseAllies
             // 
             this.txbHouseAllies.Location = new System.Drawing.Point(8, 190);
-            this.txbHouseAllies.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txbHouseAllies.Margin = new System.Windows.Forms.Padding(4);
             this.txbHouseAllies.Name = "txbHouseAllies";
             this.txbHouseAllies.Size = new System.Drawing.Size(499, 25);
             this.txbHouseAllies.TabIndex = 0;
@@ -997,7 +1095,7 @@
             // btnDelHouse
             // 
             this.btnDelHouse.Location = new System.Drawing.Point(132, 438);
-            this.btnDelHouse.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDelHouse.Margin = new System.Windows.Forms.Padding(4);
             this.btnDelHouse.Name = "btnDelHouse";
             this.btnDelHouse.Size = new System.Drawing.Size(109, 29);
             this.btnDelHouse.TabIndex = 2;
@@ -1008,7 +1106,7 @@
             // btnNewHouse
             // 
             this.btnNewHouse.Location = new System.Drawing.Point(12, 438);
-            this.btnNewHouse.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnNewHouse.Margin = new System.Windows.Forms.Padding(4);
             this.btnNewHouse.Name = "btnNewHouse";
             this.btnNewHouse.Size = new System.Drawing.Size(109, 29);
             this.btnNewHouse.TabIndex = 1;
@@ -1022,7 +1120,7 @@
             this.lbxHouses.HorizontalScrollbar = true;
             this.lbxHouses.ItemHeight = 15;
             this.lbxHouses.Location = new System.Drawing.Point(12, 25);
-            this.lbxHouses.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lbxHouses.Margin = new System.Windows.Forms.Padding(4);
             this.lbxHouses.Name = "lbxHouses";
             this.lbxHouses.Size = new System.Drawing.Size(228, 409);
             this.lbxHouses.TabIndex = 0;
@@ -1035,9 +1133,9 @@
             this.gpbLocalVar.Controls.Add(this.btnNewLocalVar);
             this.gpbLocalVar.Controls.Add(this.chklbxLocalVar);
             this.gpbLocalVar.Location = new System.Drawing.Point(8, 489);
-            this.gpbLocalVar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbLocalVar.Margin = new System.Windows.Forms.Padding(4);
             this.gpbLocalVar.Name = "gpbLocalVar";
-            this.gpbLocalVar.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbLocalVar.Padding = new System.Windows.Forms.Padding(4);
             this.gpbLocalVar.Size = new System.Drawing.Size(773, 210);
             this.gpbLocalVar.TabIndex = 1;
             this.gpbLocalVar.TabStop = false;
@@ -1046,7 +1144,7 @@
             // txbLocalName
             // 
             this.txbLocalName.Location = new System.Drawing.Point(339, 178);
-            this.txbLocalName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txbLocalName.Margin = new System.Windows.Forms.Padding(4);
             this.txbLocalName.Name = "txbLocalName";
             this.txbLocalName.Size = new System.Drawing.Size(425, 25);
             this.txbLocalName.TabIndex = 4;
@@ -1065,7 +1163,7 @@
             // btnNewLocalVar
             // 
             this.btnNewLocalVar.Location = new System.Drawing.Point(8, 178);
-            this.btnNewLocalVar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnNewLocalVar.Margin = new System.Windows.Forms.Padding(4);
             this.btnNewLocalVar.Name = "btnNewLocalVar";
             this.btnNewLocalVar.Size = new System.Drawing.Size(164, 29);
             this.btnNewLocalVar.TabIndex = 1;
@@ -1077,7 +1175,7 @@
             // 
             this.chklbxLocalVar.FormattingEnabled = true;
             this.chklbxLocalVar.Location = new System.Drawing.Point(8, 25);
-            this.chklbxLocalVar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chklbxLocalVar.Margin = new System.Windows.Forms.Padding(4);
             this.chklbxLocalVar.Name = "chklbxLocalVar";
             this.chklbxLocalVar.Size = new System.Drawing.Size(756, 144);
             this.chklbxLocalVar.TabIndex = 0;
@@ -1094,104 +1192,6 @@
             this.pnlSearch.Size = new System.Drawing.Size(353, 710);
             this.pnlSearch.TabIndex = 1;
             // 
-            // pnlTriggerTag
-            // 
-            this.pnlTriggerTag.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTriggerTag.Location = new System.Drawing.Point(0, 0);
-            this.pnlTriggerTag.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pnlTriggerTag.Name = "pnlTriggerTag";
-            this.pnlTriggerTag.Size = new System.Drawing.Size(717, 236);
-            this.pnlTriggerTag.TabIndex = 7;
-            // 
-            // pnlEvent
-            // 
-            this.pnlEvent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlEvent.Location = new System.Drawing.Point(0, 0);
-            this.pnlEvent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pnlEvent.Name = "pnlEvent";
-            this.pnlEvent.Size = new System.Drawing.Size(374, 462);
-            this.pnlEvent.TabIndex = 8;
-            // 
-            // pnlAction
-            // 
-            this.pnlAction.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlAction.Location = new System.Drawing.Point(0, 0);
-            this.pnlAction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pnlAction.Name = "pnlAction";
-            this.pnlAction.Size = new System.Drawing.Size(339, 462);
-            this.pnlAction.TabIndex = 9;
-            // 
-            // pnlTaskforce
-            // 
-            this.pnlTaskforce.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTaskforce.Location = new System.Drawing.Point(0, 0);
-            this.pnlTaskforce.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pnlTaskforce.Name = "pnlTaskforce";
-            this.pnlTaskforce.Size = new System.Drawing.Size(213, 684);
-            this.pnlTaskforce.TabIndex = 2;
-            // 
-            // pnlScript
-            // 
-            this.pnlScript.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlScript.Location = new System.Drawing.Point(0, 0);
-            this.pnlScript.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pnlScript.Name = "pnlScript";
-            this.pnlScript.Size = new System.Drawing.Size(305, 684);
-            this.pnlScript.TabIndex = 2;
-            // 
-            // splitTeamAI
-            // 
-            this.splitTeamAI.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitTeamAI.Location = new System.Drawing.Point(4, 4);
-            this.splitTeamAI.Name = "splitTeamAI";
-            // 
-            // splitTeamAI.Panel1
-            // 
-            this.splitTeamAI.Panel1.Controls.Add(this.gpbTeamTeam);
-            // 
-            // splitTeamAI.Panel2
-            // 
-            this.splitTeamAI.Panel2.Controls.Add(this.gpbTeamAI);
-            this.splitTeamAI.Size = new System.Drawing.Size(963, 702);
-            this.splitTeamAI.SplitterDistance = 488;
-            this.splitTeamAI.TabIndex = 4;
-            // 
-            // splitTeam
-            // 
-            this.splitTeam.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitTeam.Location = new System.Drawing.Point(3, 20);
-            this.splitTeam.Name = "splitTeam";
-            // 
-            // splitTeam.Panel1
-            // 
-            this.splitTeam.Panel1.Controls.Add(this.lbxTeamList);
-            this.splitTeam.Panel1.Controls.Add(this.label28);
-            // 
-            // splitTeam.Panel2
-            // 
-            this.splitTeam.Panel2.Controls.Add(this.olvTeamConfig);
-            this.splitTeam.Size = new System.Drawing.Size(482, 680);
-            this.splitTeam.SplitterDistance = 160;
-            this.splitTeam.TabIndex = 3;
-            // 
-            // splitAI
-            // 
-            this.splitAI.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitAI.Location = new System.Drawing.Point(3, 20);
-            this.splitAI.Name = "splitAI";
-            // 
-            // splitAI.Panel1
-            // 
-            this.splitAI.Panel1.Controls.Add(this.lbxAIList);
-            this.splitAI.Panel1.Controls.Add(this.label22);
-            // 
-            // splitAI.Panel2
-            // 
-            this.splitAI.Panel2.Controls.Add(this.olvAIConfig);
-            this.splitAI.Size = new System.Drawing.Size(465, 680);
-            this.splitAI.SplitterDistance = 155;
-            this.splitAI.TabIndex = 4;
-            // 
             // LogicEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1199,7 +1199,7 @@
             this.ClientSize = new System.Drawing.Size(1379, 791);
             this.Controls.Add(this.pnlSearch);
             this.Controls.Add(this.tbcMain);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "LogicEditor";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -1241,10 +1241,24 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitScript)).EndInit();
             this.splitScript.ResumeLayout(false);
             this.tbpTeams.ResumeLayout(false);
-            this.gpbTeamAI.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.olvAIConfig)).EndInit();
+            this.splitTeamAI.Panel1.ResumeLayout(false);
+            this.splitTeamAI.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitTeamAI)).EndInit();
+            this.splitTeamAI.ResumeLayout(false);
             this.gpbTeamTeam.ResumeLayout(false);
+            this.splitTeam.Panel1.ResumeLayout(false);
+            this.splitTeam.Panel1.PerformLayout();
+            this.splitTeam.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitTeam)).EndInit();
+            this.splitTeam.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.olvTeamConfig)).EndInit();
+            this.gpbTeamAI.ResumeLayout(false);
+            this.splitAI.Panel1.ResumeLayout(false);
+            this.splitAI.Panel1.PerformLayout();
+            this.splitAI.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitAI)).EndInit();
+            this.splitAI.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.olvAIConfig)).EndInit();
             this.tbpMiscs.ResumeLayout(false);
             this.gpbMap.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -1260,20 +1274,6 @@
             this.LGCgpbHouseAllies.PerformLayout();
             this.gpbLocalVar.ResumeLayout(false);
             this.gpbLocalVar.PerformLayout();
-            this.splitTeamAI.Panel1.ResumeLayout(false);
-            this.splitTeamAI.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitTeamAI)).EndInit();
-            this.splitTeamAI.ResumeLayout(false);
-            this.splitTeam.Panel1.ResumeLayout(false);
-            this.splitTeam.Panel1.PerformLayout();
-            this.splitTeam.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitTeam)).EndInit();
-            this.splitTeam.ResumeLayout(false);
-            this.splitAI.Panel1.ResumeLayout(false);
-            this.splitAI.Panel1.PerformLayout();
-            this.splitAI.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitAI)).EndInit();
-            this.splitAI.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
