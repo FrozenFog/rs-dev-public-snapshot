@@ -146,7 +146,7 @@ namespace RelertSharp.DrawingEngine
             else frameworkIndex = TileDictionary.IsValidTile(t.TileIndex) ? t.SubIndex : 0;
             DrawableTile src = CreateDrawableTile(name, subindex);
             DrawableTile frm = CreateDrawableTile(framework, frameworkIndex);
-            minimap.DrawTile(src, t, subindex);
+            //minimap.DrawTile(src, t, subindex);
             Vec3 pos = ToVec3Iso(t);
             bool success = DrawTile(src.pSelf, pos, subindex, pPalIso, out int pSelf, out int pExtra);
             bool frmSuccess = DrawTile(frm.pSelf, pos, frameworkIndex, pPalIso, out int pfrm, out int pfrmEx);
