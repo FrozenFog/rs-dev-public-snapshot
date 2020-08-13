@@ -60,6 +60,10 @@ namespace RelertSharp.DrawingEngine
             {
                 return DrawCelltag(obj as CellTagItem, heightFix, true);
             }
+            else if (t == typeof(WaypointItem))
+            {
+                return DrawWaypoint(obj as WaypointItem, heightFix);
+            }
             return false;
         }
         public bool DrawObject(InfantryItem inf, int height, uint color)

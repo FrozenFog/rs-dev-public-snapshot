@@ -132,36 +132,52 @@ namespace RelertSharp.GUI.Model
 
         public void RemoveAll()
         {
+            List<object> paramPrev = new List<object>() { true };
+            List<object> paramNow = new List<object>() { false };
             foreach (UnitItem unit in Units)
             {
                 map.RemoveUnit(unit);
+                paramPrev.Add(unit);
+                paramNow.Add(unit);
             }
             Units.Clear();
             foreach (InfantryItem inf in Infantries)
             {
                 map.RemoveInfantry(inf);
+                paramPrev.Add(inf);
+                paramNow.Add(inf);
             }
             Infantries.Clear();
             foreach (StructureItem st in Buildings)
             {
                 map.RemoveBuilding(st);
+                paramPrev.Add(st);
+                paramNow.Add(st);
             }
             Buildings.Clear();
             foreach (TerrainItem terr in Terrains)
             {
                 map.RemoveTerrains(terr);
+                paramPrev.Add(terr);
+                paramNow.Add(terr);
             }
             Terrains.Clear();
             foreach (OverlayUnit ov in Overlays)
             {
                 map.RemoveOverlay(ov);
+                paramPrev.Add(ov);
+                paramNow.Add(ov);
             }
             Overlays.Clear();
             foreach (WaypointItem wp in Waypoints)
             {
                 map.RemoveWaypoint(wp);
+                paramPrev.Add(wp);
+                paramNow.Add(wp);
             }
             Waypoints.Clear();
+
+            UndoRedo.PushCommand(UndoRedoCommandType.DrawObject, paramPrev, paramNow);
 
             Engine.RemoveDisposedObjects();
             Engine.Refresh();

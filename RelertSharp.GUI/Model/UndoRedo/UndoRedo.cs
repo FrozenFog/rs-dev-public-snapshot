@@ -76,7 +76,7 @@ namespace RelertSharp.GUI.Model
                         foreach (object obj in param.Skip(1))
                         {
                             IMapObject mapobj = obj as IMapObject;
-                            Engine.DrawBrushObject(mapobj);
+                            Engine.DrawBrushObject(mapobj, Map.GetHeightFromTile(mapobj));
                             Engine.SetObjectLightningStandalone(mapobj.SceneObject);
                             Map.AddObjectFromBrush(mapobj);
                         }
