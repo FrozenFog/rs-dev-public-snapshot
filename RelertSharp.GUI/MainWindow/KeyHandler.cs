@@ -79,6 +79,20 @@ namespace RelertSharp.GUI
                         }
                         ToolBtnCheckClick(toolBtnFlatGround, new EventArgs());
                         break;
+                    case Keys.Z:
+                        if (e.Control)
+                        {
+                            Current.UndoRedo.Undo();
+                            GlobalVar.Engine.Refresh();
+                        }
+                        break;
+                    case Keys.Y:
+                        if (e.Control)
+                        {
+                            Current.UndoRedo.Redo();
+                            GlobalVar.Engine.Refresh();
+                        }
+                        break;
                     case Keys.OemQuestion:
                         if (e.Control)
                         {

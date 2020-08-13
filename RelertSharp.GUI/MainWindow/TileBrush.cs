@@ -35,7 +35,8 @@ namespace RelertSharp.GUI
         {
             if (cell != Vec3.Zero)
             {
-                pnlTile.Result.AddTileAt(cell.To3dLocateable());
+                pnlTile.Result.AddTileAt(cell.To3dLocateable(), out List<object> newtiles, out List<object> orgTiles);
+                Current.UndoRedo.PushCommand(Model.UndoRedoCommandType.DrawTile, orgTiles, newtiles);
                 RedrawMinimapAll();
                 Engine.Refresh();
             }

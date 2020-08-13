@@ -52,6 +52,7 @@ namespace RelertSharp.GUI.Model
         #region Public Calls - MainWindowDataModel
         public MouseActionType CurrentMouseAction { get; set; } = MouseActionType.BoxSelecting;
         public LightningItem LightningItem { get; set; }
+        internal UndoRedo UndoRedo { get; private set; } = new UndoRedo();
         #endregion
     }
 }

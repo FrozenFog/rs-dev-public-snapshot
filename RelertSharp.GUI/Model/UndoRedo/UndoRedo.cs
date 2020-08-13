@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.MapStructure;
+using RelertSharp.Common;
+using static RelertSharp.Common.GlobalVar;
 
 namespace RelertSharp.GUI.Model
 {
@@ -55,7 +58,16 @@ namespace RelertSharp.GUI.Model
 
         private void ExecuteCommand(UndoRedoCommandType type, IEnumerable<object> param)
         {
-
+            switch (type)
+            {
+                case UndoRedoCommandType.DrawTile:
+                    foreach (object tile in param)
+                    {
+                        Engine.DrawGeneralItem(tile as Tile);
+                        CurrentMapDocument.Map.AddTile(tile as Tile, out Tile _);
+                    }
+                    break;
+            }
         }
     }
 }

@@ -154,19 +154,34 @@ namespace RelertSharp.GUI.Model.TileBrush
             foreach (Tile t in surroundUnder) t.RevealAllTileImg();
             brushDisposed = true;
         }
-        public void AddTileAt(I3dLocateable cell)
+        public void AddTileAt(I3dLocateable cell, out List<object> newTiles, out List<object> orgTiles)
         {
+            newTiles = new List<object>();
+            orgTiles = new List<object>();
             foreach (Tile t in body)
             {
                 if (t.IsLeagalTile)
                 {
                     t.SwitchToFramework(isFramework);
-                    Map.AddTile(t);
+                    Map.AddTile(t, out Tile org);
+                    if (org != null)
+                    {
+                        orgTiles.Add(new Tile(org));
+                        newTiles.Add(new Tile(t));
+                    }
                 }
             }
             if (Lat)
             {
-                foreach (Tile t in surrounding) Map.AddTile(t);
+                foreach (Tile t in surrounding)
+                {
+                    Map.AddTile(t, out Tile org);
+                    if (org != null)
+                    {
+                        orgTiles.Add(new Tile(org));
+                        newTiles.Add(new Tile(t));
+                    }
+                }
             }
             Reload(tilesetNow, tileIndexNow, false);
         }
