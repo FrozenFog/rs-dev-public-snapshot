@@ -21,6 +21,7 @@ namespace RelertSharp.GUI.Model
     {
         private readonly LinkedList<UndoRedoCommand> _UndoList = new LinkedList<UndoRedoCommand>();
         private readonly LinkedList<UndoRedoCommand> _RedoList = new LinkedList<UndoRedoCommand>();
+        private Map Map { get { return CurrentMapDocument.Map; } }
 
         public UndoRedo() { }
 
@@ -28,10 +29,11 @@ namespace RelertSharp.GUI.Model
         {
             if (_UndoList.Count > 0)
             {
-                UndoRedoCommand cmd = _UndoList.Last();_UndoList.RemoveLast();
+                UndoRedoCommand cmd = _UndoList.Last(); _UndoList.RemoveLast();
                 _RedoList.AddLast(cmd);
                 ExecuteCommand(cmd.CommandType, cmd.PrevParam);
             }
+            else GuiUtils.Warning("No available action can be undo.");
         }
 
         public void Redo()
@@ -42,6 +44,7 @@ namespace RelertSharp.GUI.Model
                 _UndoList.AddLast(cmd);
                 ExecuteCommand(cmd.CommandType, cmd.NowParam);
             }
+            else GuiUtils.Warning("No available action can be redo.");
         }
 
         public void PushCommand(UndoRedoCommand cmd)
@@ -64,7 +67,26 @@ namespace RelertSharp.GUI.Model
                     foreach (object tile in param)
                     {
                         Engine.DrawGeneralItem(tile as Tile);
-                        CurrentMapDocument.Map.AddTile(tile as Tile, out Tile _);
+                        Map.AddTile(tile as Tile, out Tile _);
+                    }
+                    break;
+                case UndoRedoCommandType.DrawObject:
+                    if ((bool)param.First())
+                    {
+                        foreach (object obj in param.Skip(1))
+                        {
+                            IMapObject mapobj = obj as IMapObject;
+                            Engine.DrawBrushObject(mapobj);
+                            Engine.SetObjectLightningStandalone(mapobj.SceneObject);
+                            Map.AddObjectFromBrush(mapobj);
+                        }
+                    }
+                    else
+                    {
+                        foreach (object obj in param.Skip(1))
+                        {
+                            Map.RemoveObject(obj as IMapObject);
+                        }
                     }
                     break;
             }

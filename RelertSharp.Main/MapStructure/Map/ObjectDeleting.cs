@@ -11,6 +11,17 @@ namespace RelertSharp.MapStructure
 {
     public partial class Map
     {
+        public void RemoveObject(IMapObject obj)
+        {
+            if (obj is InfantryItem inf) RemoveInfantry(inf);
+            else if (obj is UnitItem unit) RemoveUnit(unit);
+            else if (obj is StructureItem bud) RemoveBuilding(bud);
+            else if (obj is AircraftItem air) RemoveAircraft(air);
+            else if (obj is TerrainItem terr) RemoveTerrains(terr);
+            else if (obj is OverlayUnit o) RemoveOverlay(o);
+            else if (obj is BaseNode node) RemoveBasenode(node);
+            else if (obj is WaypointItem wp) RemoveWaypoint(wp);
+        }
         public void RemoveInfantry(InfantryItem inf)
         {
             inf.Dispose();

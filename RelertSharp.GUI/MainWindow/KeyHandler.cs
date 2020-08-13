@@ -84,6 +84,7 @@ namespace RelertSharp.GUI
                         {
                             Current.UndoRedo.Undo();
                             GlobalVar.Engine.Refresh();
+                            RedrawMinimapAll();
                         }
                         break;
                     case Keys.Y:
@@ -91,6 +92,7 @@ namespace RelertSharp.GUI
                         {
                             Current.UndoRedo.Redo();
                             GlobalVar.Engine.Refresh();
+                            RedrawMinimapAll();
                         }
                         break;
                     case Keys.OemQuestion:

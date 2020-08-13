@@ -70,13 +70,13 @@ namespace RelertSharp.GUI.Controls
             ownerHouse = "";
             return null;
         }
-        public void ReleaseWaypoint()
+        public void ReleaseWaypoint(out WaypointItem wp)
         {
+            wp = null;
             try
             {
                 if (Map.Waypoints.FindByPos(previousCell) == null)
                 {
-                    WaypointItem wp = null;
                     if (IsWpDesignatedNum)
                     {
                         InputWindow input = new InputWindow();
