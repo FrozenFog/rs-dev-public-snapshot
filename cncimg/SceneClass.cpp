@@ -28,7 +28,7 @@ SceneClass::SceneClass(HWND hWnd) :SceneClass()
 
 SceneClass::~SceneClass()
 {
-	this->ClearScene();
+	//this->ClearScene();
 	this->ClearDevice();
 }
 
