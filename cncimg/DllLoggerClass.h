@@ -19,7 +19,7 @@ public:
 	template<typename... TArgs>
 	static void Log(const char* pFormat, TArgs&&... args)
 	{
-		Instance.Log(pFormat, std::forward<TArgs>(args)...);
+		Instance.AddLog(pFormat, std::forward<TArgs>(args)...);
 	}
 
 	static void WriteLine(const char* pString)
