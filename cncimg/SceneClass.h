@@ -36,6 +36,8 @@ struct ShaderStruct
 	bool SetRemapColor(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR4 Color = D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
 	bool SetConstantVector(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR4 Vector = D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
 	bool SetConstantMatrix(LPDIRECT3DDEVICE9 pDevice, D3DXMATRIX Matrix);
+	bool SetVector(LPDIRECT3DDEVICE9 pDevice, LPCSTR pName, D3DXVECTOR4 Vector);
+	bool SetMatrix(LPDIRECT3DDEVICE9 pDevice, LPCSTR pName, D3DXMATRIX Matrix);
 	bool CreateShader(LPDIRECT3DDEVICE9 pDevice);
 	bool CreateVertexShader(LPDIRECT3DDEVICE9 pDevice);
 	LPDIRECT3DPIXELSHADER9 GetShaderObject();
@@ -97,9 +99,12 @@ public:
 	void InitializeDeviceState();
 	bool ResetDevice();
 	void SetUpCamera();
+	void SetUpCamera(D3DXVECTOR3 Eye, D3DXVECTOR3 At);
 	void SetBackgroundColor(DWORD dwColor);
 	void ResetShaderMatrix();
 	DWORD GetBackgroundColor();
+	void EnableZWrite();
+	void DisableZWrite();
 
 	//alpha specifics
 	void RefillAlphaImageSurface();

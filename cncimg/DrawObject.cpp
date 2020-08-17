@@ -837,10 +837,16 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 	if (BufferedNormals)
 		Object.BufferedNormals = *BufferedNormals;
 
+	Object.SetZTexture();
 	Object.SetColorCoefficient(D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
 	Object.SetCompareOffset(D3DXVECTOR3(0.0, 0.0, 0.0));
 	Object.SetPlainArtAttributes(nullptr);
 	Object.InitializeVisualRect();
+}
+
+void PaintingStruct::SetZTexture(LPDIRECT3DTEXTURE9 pTexture)
+{
+	this->pZTexture = pTexture;
 }
 
 //should BeginScene() at first
@@ -948,7 +954,8 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->SetTexture(0, this->pTexture);
 
 		if (this->cSpecialDrawType == SPECIAL_NORMAL)
-			pDevice->SetTexture(1, this->pPaletteTexture);
+			pDevice->SetTexture(1, this->pPaletteTexture),
+			pDevice->SetTexture(2, this->pZTexture);
 		else if (this->cSpecialDrawType == SPECIAL_SHADOW)
 			pDevice->SetTexture(1, nullptr);
 		else if (this->cSpecialDrawType == SPECIAL_ALPHA)
@@ -957,10 +964,14 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->SetFVF(Desc.FVF);
 		pDevice->SetStreamSource(0, this->pVertexBuffer, 0, sizeof TexturedVertex);
 
+		auto ViewPort = Scene.GetWindowRect();
+		auto ScreenDm = D3DXVECTOR4(ViewPort.left, ViewPort.top, ViewPort.right, ViewPort.bottom);
+
 		if (this->cSpecialDrawType == SPECIAL_NORMAL)
 		{
 			PlainShader.SetConstantVector(pDevice, this->ColorCoefficient);
 			PlainShader.SetRemapColor(pDevice, this->ShaderRemapColor);
+			PlainShader.SetVector(pDevice, "screen_dimension", ScreenDm);
 		}
 		else
 		{
@@ -968,6 +979,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 			//AlphaShader.SetConstantVector(pDevice, this->ColorCoefficient);
 		}
 
+		
 		if (this->cSpecialDrawType == SPECIAL_SHADOW)
 			pDevice->SetPixelShader(ShadowShader.GetShaderObject());
 		else if (this->cSpecialDrawType == SPECIAL_ALPHA)

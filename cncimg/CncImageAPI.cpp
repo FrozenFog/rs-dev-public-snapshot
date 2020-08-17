@@ -316,6 +316,16 @@ bool WINAPI ResetSceneView()
 	return SceneClass::Instance.ResetDevice();
 }
 
+void WINAPI EnableZWrite()
+{
+	SceneClass::Instance.EnableZWrite();
+}
+
+void WINAPI DisableZWrite()
+{
+	SceneClass::Instance.DisableZWrite();
+}
+
 void WINAPI PresentAllObject()
 {
 	DrawObject::UpdateScene(SceneClass::Instance.GetDevice(), SceneClass::Instance.GetBackgroundColor());

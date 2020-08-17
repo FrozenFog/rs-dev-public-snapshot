@@ -1,6 +1,7 @@
 #include "D3dPrepare.h"
 #include "BitmapExtractClass.h"
 #include "TmpFile.h"
+#include "DllLoggerClass.h"
 
 #include <Windows.h>
 #include <stdio.h>
@@ -150,9 +151,34 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	return 0;
 }
 
+void HandleDeleter(PHANDLE hObject)
+{
+	CloseHandle(hObject);
+}
+
+void PrepareLogFile()
+{
+	char szFileName[0x80];
+	SYSTEMTIME time;
+
+	if (!CreateDirectory(TEXT(".\\DllDebug"), nullptr) && GetLastError() != ERROR_ALREADY_EXISTS)
+		return;
+
+	GetLocalTime(&time);
+	_snprintf_s(szFileName, _TRUNCATE, "DllDebug\\Debug-%04u%02u%02u-%02u%02u%02u-%05u.LOG",
+		time.wYear, time.wMonth, time.wDay, time.wHour, time.wMinute, time.wSecond, time.wMilliseconds);
+
+	Logger::Instance.OpenLogFile(szFileName);
+	Logger::WriteLine("Log file created.");
+}
+
 bool WINAPI DllMain(HANDLE hInstance, DWORD dwReason, LPVOID v)
 {
-	//PrepareConsole();
+	if (dwReason == DLL_PROCESS_ATTACH)
+		PrepareLogFile();
+	else if (dwReason == DLL_PROCESS_DETACH)
+		Logger::Instance.CloseLogFile();
+
 	return true;
 }
 

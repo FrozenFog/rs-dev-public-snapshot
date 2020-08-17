@@ -49,6 +49,7 @@ struct PaintingStruct
 	D3DXVECTOR3 Position, CompareOffset;
 
 	//for shps & tmps and should be released by class
+	LPDIRECT3DTEXTURE9 pZTexture;
 	LPDIRECT3DTEXTURE9 pTexture;
 	LPDIRECT3DTEXTURE9 pPaletteTexture;
 	D3DXVECTOR4 ShaderRemapColor;
@@ -67,6 +68,7 @@ struct PaintingStruct
 	std::string String;
 
 	//should BeginScene() at first
+	void SetZTexture(LPDIRECT3DTEXTURE9 pTexture = nullptr);
 	bool Draw(LPDIRECT3DDEVICE9 pDevice);
 	void InitializeVisualRect();
 	bool IsWithinSight();

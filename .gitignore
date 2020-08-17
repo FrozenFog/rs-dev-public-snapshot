@@ -13,3 +13,8 @@ OpenTKIntro
 RelertSharp.Main/obj
 RelertSharp.Main/bin
 RelertSharp.Main/_*.*
+Release
+ReleaseLowerTriangle
+*.rar
+cncimg/compiled_version
+cncimg/x64
