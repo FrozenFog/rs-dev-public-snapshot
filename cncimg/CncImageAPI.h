@@ -47,6 +47,8 @@ EXPORT bool WINAPI RemoveCommonTextureFile(int nFileId);
 //image object
 EXPORT int WINAPI CreateVxlObjectAtScene(int nFileId, D3DXVECTOR3 Position,
 	float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor);
+EXPORT bool WINAPI CreateVxlObjectCached(int nFileID, D3DXVECTOR3 Position, D3DXVECTOR3 ShadowPosition,
+	float RotationZ, int nPaletteID, DWORD dwRemapColor, int& nID, int& nShadowId);
 
 EXPORT bool WINAPI CreateTmpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int nPaletteID, int nTileIndex, int& OutTileIndex, int& OutExtraIndex);
 

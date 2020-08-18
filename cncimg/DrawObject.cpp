@@ -855,7 +855,6 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 	if (!pDevice)
 		return false;
 
-
 	bool Result = false;
 	D3DVERTEXBUFFER_DESC Desc;
 	LPDIRECT3DBASETEXTURE9 pFormerTexture, pFormer2;
