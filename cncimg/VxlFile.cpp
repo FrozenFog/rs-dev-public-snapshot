@@ -800,7 +800,7 @@ bool VxlFile::MakeSingleFrameCaches(LPDIRECT3DDEVICE9 pDevice, int idxFrame,
 		int x = ScreenPos.x;
 		int y = ScreenPos.y;
 
-		Cache[y][x] = 0xFFu;
+		Cache[y][x] = 0x1u;
 		if (LowX > x)LowX = x;
 		if (HighX < x)HighX = x;
 		if (LowY > y)LowY = y;
@@ -1595,5 +1595,6 @@ void DrawObject::RemoveVxlObject(int nID)
 			continue;
 		//try find and erase
 		file.second->RemoveOpaqueObject(nID);
+		file.second->RemoveTransperantObject(nID);
 	}
 }

@@ -20,7 +20,7 @@ namespace Graphic
 	int roadTileFile;
 	int roadObject[3];
 	int alphaObject1, alphaObject2;
-	int nCachedObject;
+	int nCachedObject, nCachedShadow;  
 }
 
 bool Graphic::TryCreateIndexedTexture()
@@ -283,7 +283,7 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion, int nD
 		}*/
 		int nShadowID;
 		if (CreateVxlObjectCached(VxlFiles[0], { 0.0,0.0,30.3 }, { 0.0,0.0,0.3 }, 
-			D3DX_PI / 2.0, UnitPalette, RGB(252, 0, 252), nCachedObject, nShadowID))
+			D3DX_PI / 2.0, UnitPalette, RGB(252, 0, 252), nCachedObject, nCachedShadow))
 		{
 			printf_s("All Successful!.\n");
 		}
@@ -437,15 +437,30 @@ void Graphic::DrawScene()
 
 void Graphic::WorldRotation()
 {
-	static float height = 0.3;
+	static float height = 30.3;
+	static float angle = D3DX_PI / 2.0;
+
 	if (SceneObjects.size() >= 2) {
 		RotateObject(SceneObjects[0], 0.0, 0.0, 0.01);
 		MoveObject(SceneObjects[1], { 0.0,0.05f,0.0 });
 	}
-	SetObjectLocation(nCachedObject, { 0.0,0.0,height });
-	height += 0.5;
-	if (height >= 200.0)
-		height -= 200.0;
+	//SetObjectLocation(nCachedObject, { 0.0,0.0,height });
+	if (!VxlFiles.empty())
+	{
+		RemoveObjectFromScene(nCachedObject);
+		RemoveObjectFromScene(nCachedShadow);
+		CreateVxlObjectCached(VxlFiles[0], 
+			{ 0.0,0.0,height + 0.3f }, { 0.0,0.0,1.0f }, angle, UnitPalette, RGB(0, 252, 252),
+			nCachedObject, nCachedShadow);
+
+		if (!nCachedShadow)
+			printf_s("No shadow.\n");
+		//height += 0.5;
+		if (height >= 200.0)
+			height -= 200.0;
+
+		angle += 0.005;
+	}
 }
 
 bool Graphic::PrepareTileGround()
