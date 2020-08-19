@@ -554,17 +554,21 @@ void VxlFile::DrawCached(LPDIRECT3DDEVICE9 pDevice,
 		float wd = sqrt(2.0) / 4.0 * w;
 		float xo = (Cache.nOffsetX + w / 2 - 128);
 		float yo = -(Cache.nOffsetY + h / 2 - 128);
-		float xd = xo / sqrt(2.0) - sqrt(2.0) * yo;
-		float yd = -xo / sqrt(2.0) - sqrt(2.0) * yo;
+		float xd = xo / sqrt(2.0);// -sqrt(2.0) * yo;
+		float yd = -xo / sqrt(2.0);// -sqrt(2.0) * yo;
+		float zd = 2.0 / sqrt(3.0) * yo;
+		x += xd;
+		y += yd;
+		z += zd;
 
 		//CDA DAB
-		Vertex[0] = { {x + hd - wd + xd,y + hd + wd + yd,z + 0.75f * h}, 0.0f,0.0f };
-		Vertex[1] = { {x + hd + wd + xd,y + hd - wd + yd,z + 0.75f * h}, 1.0f,0.0f };
-		Vertex[2] = { {x + 2 * hd - wd + xd,y + 2 * hd + wd + yd,z}, 0.0f,1.0f };
+		Vertex[0] = { {x + hd - wd,y + hd + wd,z + 0.75f * h}, 0.0f,0.0f };
+		Vertex[1] = { {x + hd + wd,y + hd - wd,z + 0.75f * h}, 1.0f,0.0f };
+		Vertex[2] = { {x + 2 * hd - wd,y + 2 * hd + wd,z}, 0.0f,1.0f };
 
-		Vertex[3] = { {x + hd + wd + xd,y + hd - wd + yd,z + 0.75f * h}, 1.0f,0.0f };
-		Vertex[4] = { {x + 2 * hd - wd + xd,y + 2 * hd + wd + yd,z}, 0.0f,1.0f };
-		Vertex[5] = { {x + 2 * hd + wd + xd,y + 2 * hd - wd + yd,z},1.0f,1.0f };
+		Vertex[3] = { {x + hd + wd,y + hd - wd,z + 0.75f * h}, 1.0f,0.0f };
+		Vertex[4] = { {x + 2 * hd - wd,y + 2 * hd + wd,z}, 0.0f,1.0f };
+		Vertex[5] = { {x + 2 * hd + wd,y + 2 * hd - wd,z},1.0f,1.0f };
 
 		D3DXVECTOR3 Offset(2 * hd, 2 * hd, 0);
 		if (SUCCEEDED(pDevice->CreateVertexBuffer(sizeof Vertex, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,
@@ -597,16 +601,20 @@ void VxlFile::DrawCached(LPDIRECT3DDEVICE9 pDevice,
 		float wd = sqrt(2.0) / 4.0 * w;
 		float xo = (ShadowCache.nOffsetX + w / 2 - 128);
 		float yo = -(ShadowCache.nOffsetY + h / 2 - 128);
-		float xd = xo / sqrt(2.0) - sqrt(2.0) * yo;
-		float yd = -xo / sqrt(2.0) - sqrt(2.0) * yo;
+		float xd = xo / sqrt(2.0);// -sqrt(2.0) * yo;
+		float yd = -xo / sqrt(2.0);// -sqrt(2.0) * yo;
+		float zd = 2.0 / sqrt(3.0) * yo;
+		x += xd;
+		y += yd;
+		z += zd;
 
-		Vertex[0] = { {x - hd - wd + xd,y - hd + wd + yd,z}, 0.0f,0.0f };
-		Vertex[1] = { {x - hd + wd + xd,y - hd - wd + yd,z}, 1.0f,0.0f };
-		Vertex[2] = { {x + hd - wd + xd,y + hd + wd + yd,z}, 0.0f,1.0f };
+		Vertex[0] = { {x - hd - wd,y - hd + wd,z}, 0.0f,0.0f };
+		Vertex[1] = { {x - hd + wd,y - hd - wd,z}, 1.0f,0.0f };
+		Vertex[2] = { {x + hd - wd,y + hd + wd,z}, 0.0f,1.0f };
 
-		Vertex[3] = { {x - hd + wd + xd,y - hd - wd + yd,z}, 1.0f,0.0f };
-		Vertex[4] = { {x + hd - wd + xd,y + hd + wd + yd,z}, 0.0f,1.0f };
-		Vertex[5] = { {x + hd + wd + xd,y + hd - wd + yd,z}, 1.0f,1.0f };
+		Vertex[3] = { {x - hd + wd,y - hd - wd,z}, 1.0f,0.0f };
+		Vertex[4] = { {x + hd - wd,y + hd + wd,z}, 0.0f,1.0f };
+		Vertex[5] = { {x + hd + wd,y + hd - wd,z}, 1.0f,1.0f };
 
 		D3DXVECTOR3 Offset(hd, hd, 0); 
 		if (SUCCEEDED(pDevice->CreateVertexBuffer(sizeof Vertex, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,
