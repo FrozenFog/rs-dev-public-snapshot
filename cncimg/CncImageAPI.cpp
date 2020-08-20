@@ -309,9 +309,19 @@ void WINAPI SetObjectLocation(int nID, D3DXVECTOR3 Position)
 	DrawObject::ObjectMove(nID, Position);
 }
 
+void WINAPI GetObjectLocation(int nID, D3DXVECTOR3& ReturnedLocation)
+{
+	ReturnedLocation = DrawObject::ObjectLocation(nID);
+}
+
 void WINAPI SetObjectColorCoefficient(int nID, D3DXVECTOR4 Coefficient)
 {
 	DrawObject::SetObjectColorCoefficient(nID, Coefficient);
+}
+
+void __stdcall SetObjectZAdjust(int nID, float zAdjust)
+{
+	DrawObject::ObjectZAdjust(nID, zAdjust);
 }
 
 bool WINAPI SetUpScene(HWND hWnd)

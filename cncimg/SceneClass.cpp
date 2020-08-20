@@ -672,6 +672,14 @@ bool ShaderStruct::SetMatrix(LPDIRECT3DDEVICE9 pDevice, LPCSTR pName, D3DXMATRIX
 	return SUCCEEDED(this->pConstantTable->SetMatrix(pDevice, pName, &Matrix));
 }
 
+bool ShaderStruct::SetConstantF(LPDIRECT3DDEVICE9 pDevice, LPCSTR pName, const FLOAT fValue)
+{
+	if (!pDevice || !this->IsLoaded())
+		return false;
+
+	return SUCCEEDED(this->pConstantTable->SetFloat(pDevice, pName, fValue));
+}
+
 bool ShaderStruct::CreateShader(LPDIRECT3DDEVICE9 pDevice)
 {
 	if (!pDevice || !this->IsLoaded())

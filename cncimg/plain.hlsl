@@ -5,6 +5,7 @@ sampler2D zshade_samlper : register(s2);
 uniform vector plain_cof : register(c1);
 uniform vector remap_color : register(c2);
 uniform vector screen_dimension;
+uniform float z_adjust;
 
 static const float zdistance = 5000.0;
 
@@ -33,7 +34,7 @@ vector pmain(in float2 texcoords : TEXCOORD, in vector position : TEXCOORD2, out
 	if (outcolor.a == 0.0f)
 		discard;
 
-    float distance_adjust = zadjust * sqrt(3.0) / zdistance;
+    float distance_adjust = (zadjust + z_adjust) * sqrt(3.0) / zdistance;
 	
     position.z += distance_adjust;
     outZ = position.z / position.w;

@@ -209,16 +209,27 @@ bool DrawObject::CanIsolatedTextureUnloadNow(LPDIRECT3DTEXTURE9 pTexture)
 {
 	unsigned long reference = 0;
 	for (auto& item : GlobalTransperantObjects) {
-		if (item.second->pTexture == pTexture || item.second->pPaletteTexture == pTexture)
-			reference++;
+		if (item.second->pTexture == pTexture ||
+			item.second->pPaletteTexture == pTexture ||
+			item.second->pZTexture == pTexture)
+			return false;
 	}
 
 	for (auto& item : GlobalOpaqueObjects) {
-		if (item.second->pTexture == pTexture || item.second->pPaletteTexture == pTexture)
-			reference++;
+		if (item.second->pTexture == pTexture ||
+			item.second->pPaletteTexture == pTexture ||
+			item.second->pZTexture == pTexture)
+			return false;
 	}
 
-	return reference == 0;
+	for (auto& item : GlobalTopObjects) {
+		if (item.second->pTexture == pTexture ||
+			item.second->pPaletteTexture == pTexture ||
+			item.second->pZTexture == pTexture)
+			return false;
+	}
+
+	return true;
 }
 
 void DrawObject::UnloadIsolatedTexture(LPDIRECT3DTEXTURE9 pTexture)
@@ -645,6 +656,14 @@ PaintingStruct * DrawObject::FindObjectById(int nID)
 	return nullptr;
 }
 
+void DrawObject::ObjectZAdjust(int nID, float zAdjust)
+{
+	auto pFind = FindObjectById(nID);
+	if (!pFind)
+		return;
+	pFind->SetZAdjust(zAdjust);
+}
+
 void DrawObject::ObjectTransformation(int nID, D3DXMATRIX & Matrix)
 {
 	D3DVERTEXBUFFER_DESC Desc;
@@ -777,6 +796,15 @@ void DrawObject::ObjectMove(int nID, D3DXVECTOR3 Target)
 	ObjectDisplacement(nID, Displacement);
 }
 
+D3DXVECTOR3 DrawObject::ObjectLocation(int nID)
+{
+	D3DXVECTOR3 Result = { 0.0,0.0,0.0 };
+	auto pFind = FindObjectById(nID);
+	if (!pFind)
+		return Result;
+	return pFind->Position;
+}
+
 //do not rotate plane arts
 void DrawObject::ObjectRotation(int nID, float RotationX, float RotationY, float RotationZ)
 {
@@ -830,6 +858,7 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 	Object.dwRemapColor = dwRemapColor;
 	Object.cSpecialDrawType = cSpecialDrawType;
 	Object.String = String;
+	Object.zAdjust = 0.0f;
 
 	if (BufferedVoxels)
 		Object.BufferedVoxels = *BufferedVoxels;
@@ -971,6 +1000,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 			PlainShader.SetConstantVector(pDevice, this->ColorCoefficient);
 			PlainShader.SetRemapColor(pDevice, this->ShaderRemapColor);
 			PlainShader.SetVector(pDevice, "screen_dimension", ScreenDm);
+			PlainShader.SetConstantF(pDevice, "z_adjust", this->zAdjust);
 		}
 		else
 		{
@@ -993,7 +1023,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->SetPixelShader(pFormerShader);
 		pDevice->SetStreamSource(0, pFormerStream, uOffset, uStride);
 
-		if (!this->cSpecialDrawType)
+		if (this->cSpecialDrawType == SPECIAL_NORMAL)
 		{
 			PlainShader.SetConstantVector(pDevice);
 			PlainShader.SetRemapColor(pDevice);
@@ -1096,4 +1126,9 @@ void PaintingStruct::SetPlainArtAttributes(LPDIRECT3DTEXTURE9 pPaletteTexture, D
 {
 	this->pPaletteTexture = pPaletteTexture;
 	this->ShaderRemapColor = ShaderRemap;
+}
+
+void PaintingStruct::SetZAdjust(float zAdjust)
+{
+	this->zAdjust = zAdjust;
 }

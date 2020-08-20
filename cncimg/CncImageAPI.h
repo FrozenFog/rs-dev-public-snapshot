@@ -72,8 +72,10 @@ EXPORT void WINAPI RotateObject(int nID, float RotationX, float RotationY, float
 EXPORT void WINAPI MoveObject(int nID, D3DXVECTOR3 Displacement);
 
 EXPORT void WINAPI SetObjectLocation(int nID, D3DXVECTOR3 Position);
+EXPORT void WINAPI GetObjectLocation(int nID, D3DXVECTOR3& ReturnedLocation);
 
 EXPORT void WINAPI SetObjectColorCoefficient(int nID, D3DXVECTOR4 Coefficient);
+EXPORT void WINAPI SetObjectZAdjust(int nID, float zAdjust);
 
 //scene api
 EXPORT bool WINAPI SetUpScene(HWND hWnd);

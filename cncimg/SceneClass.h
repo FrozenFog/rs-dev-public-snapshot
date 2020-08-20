@@ -38,6 +38,7 @@ struct ShaderStruct
 	bool SetConstantMatrix(LPDIRECT3DDEVICE9 pDevice, D3DXMATRIX Matrix);
 	bool SetVector(LPDIRECT3DDEVICE9 pDevice, LPCSTR pName, D3DXVECTOR4 Vector);
 	bool SetMatrix(LPDIRECT3DDEVICE9 pDevice, LPCSTR pName, D3DXMATRIX Matrix);
+	bool SetConstantF(LPDIRECT3DDEVICE9 pDevice, LPCSTR pName, const FLOAT fValue);
 	bool CreateShader(LPDIRECT3DDEVICE9 pDevice);
 	bool CreateVertexShader(LPDIRECT3DDEVICE9 pDevice);
 	LPDIRECT3DPIXELSHADER9 GetShaderObject();
