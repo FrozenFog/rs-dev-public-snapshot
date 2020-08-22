@@ -8,6 +8,7 @@ using System.Collections;
 using RelertSharp.Common;
 using RelertSharp.Encoding;
 using RelertSharp.IniSystem;
+using System.Runtime.InteropServices;
 
 namespace RelertSharp.FileSystem
 {
@@ -64,6 +65,21 @@ namespace RelertSharp.FileSystem
                             string _valueEx = ReadString(_lenEx);
                             data[labelName].ExtraString = _valueEx;
                             break;
+                    }
+                    for (int j = 1; j < _numPairs; ++j) 
+                    {
+                        ReadString(ReadInt32());
+                        int sub = ReadInt32();
+                        ReadBytes(ReadInt32() * 2);
+                        switch (sub)
+                        {
+                            case 0x53545220://" RTS"
+                                break;
+                            case 0x53545257://"WRTS"
+                                ReadString(ReadInt32());
+                                break;
+                        }
+
                     }
                 }
             }
