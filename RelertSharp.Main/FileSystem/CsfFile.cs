@@ -68,18 +68,14 @@ namespace RelertSharp.FileSystem
                     }
                     for (int j = 1; j < _numPairs; ++j) 
                     {
-                        ReadString(ReadInt32());
                         int sub = ReadInt32();
-                        ReadBytes(ReadInt32() * 2);
-                        switch (sub)
+                        int tmp = ReadInt32();
+                        ReadBytes(tmp << 1);
+                        if(sub== 0x53545257)
                         {
-                            case 0x53545220://" RTS"
-                                break;
-                            case 0x53545257://"WRTS"
-                                ReadString(ReadInt32());
-                                break;
+                            tmp = ReadInt32();
+                            ReadString(tmp);
                         }
-
                     }
                 }
             }
