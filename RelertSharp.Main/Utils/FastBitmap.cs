@@ -4,7 +4,7 @@ using System.Drawing.Imaging;
 
 namespace RelertSharp.Utils
 {
-    unsafe class FastBitmap : IDisposable
+    unsafe public class FastBitmap : IDisposable
     {
         #region FastBitmap - Ctor
         public FastBitmap(Image img)
@@ -52,22 +52,12 @@ namespace RelertSharp.Utils
             pixelBase = null;
 
         }
-
-        public int GetPixel(int x, int y)
-        {
-            return *(int*)(pixelBase + (y * bytesPerRow) + (x * 4));
-        }
-
-        public void SetPixel(int x,int y,int pColor)
-        {
-            *(int*)(pixelBase + (y * bytesPerRow) + (x * 4)) = pColor;
-        }
-
-        public void SetPixel(int x,int y,Color pColor)
-        {
-            *(int*)(pixelBase + (y * bytesPerRow) + (x * 4)) = pColor.ToArgb();
-        }
-
+        public int GetPixel(int x, int y) =>
+            *(int*)(pixelBase + (y * bytesPerRow) + (x << 2));
+        public void SetPixel(int x, int y, int pColor) =>
+            *(int*)(pixelBase + (y * bytesPerRow) + (x << 2)) = pColor;
+        public void SetPixel(int x, int y, Color pColor) =>
+            *(int*)(pixelBase + (y * bytesPerRow) + (x << 2)) = pColor.ToArgb();
         public void Dispose()
         {
             Dispose(true);
@@ -94,12 +84,29 @@ namespace RelertSharp.Utils
         #endregion
 
         #region FastBitmap - Public Calls
+        // Get the source pointer, don't use unless you need to iterate it
+        public byte* PixelBase { get => pixelBase; private set { pixelBase = value; } }
         public int Width { get; private set; }
         public int Height { get; private set; }
         public bool IsDisposed { get; private set; }
+        public int this[int x,int y] 
+        {
+            get => GetPixel(x, y);
+            private set { }
+        }
 
         public static implicit operator Bitmap(FastBitmap fastBitmap) => fastBitmap.theBitmap;
         public static implicit operator Image(FastBitmap fastBitmap) => fastBitmap.theBitmap;
         #endregion
+
     }
 }
+
+/*
+ * This class can be used to replace bitmap for most situations.
+ * However, as it forces to use 32bppArgb, the memory cost will be larger.
+ * Though you can get a pixel quickly now, but it's still slow while 
+ * iterating and that's why I leave a port for you to get it's pointer.
+ * If you really want to iterate a bitmap, use this pointer will make the
+ * program run faster (maybe)
+ */
