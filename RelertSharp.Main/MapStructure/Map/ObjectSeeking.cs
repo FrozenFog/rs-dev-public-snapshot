@@ -24,7 +24,7 @@ namespace RelertSharp.MapStructure
             }
             return null;
         }
-        private void UpdateObject<T>(T src) where T : ObjectItemBase, IMapObject
+        private void UpdateObject<T>(T src) where T : ObjectItemBase, ICombatObject
         {
             Tiles[src].RemoveObject(src);
             Tiles[src].AddObject(src);

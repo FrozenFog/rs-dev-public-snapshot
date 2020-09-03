@@ -612,6 +612,21 @@ namespace RelertSharp.MapStructure
                 }
             }
         }
+        public void RemoveObject(ICombatObject src)
+        {
+            int i = 0;
+            for (; i < objectsOnTile.Count; i++)
+            {
+                if (objectsOnTile[i] is ICombatObject target)
+                {
+                    if (target.RegName == src.RegName && target.ID == src.ID)
+                    {
+                        objectsOnTile.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+        }
         public bool MarkForSimulating(bool waterBound = false)
         {
             bool b = waterBound ? WaterBuildable : Buildable;
