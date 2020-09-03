@@ -15,7 +15,10 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             IsVxl = vxl;
         }
-        public PresentUnit(AircraftItem air, int height) : base(air, height) { }
+        public PresentUnit(AircraftItem air, int height) : base(air, height)
+        {
+            IsVxl = true;
+        }
         #endregion
 
 
@@ -24,7 +27,6 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             if (!Disposed)
             {
-
                 if (IsVxl) RemoveProp(PresentFileTypeFlag.Vxl, pSelf);
                 else RemoveProp(PresentFileTypeFlag.Shp, pSelf);
                 RemoveProp(PresentFileTypeFlag.Vxl, pBarrel);
