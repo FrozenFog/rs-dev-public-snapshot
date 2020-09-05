@@ -26,6 +26,7 @@ namespace RelertSharp.GUI
         [STAThread]
         static void Main(string[] args)
         {
+            if (NoWinXP()) return;
             SetDllDirectory(Application.StartupPath);
             GlobalVar.Log = new RsLog();
             if (!File.Exists("CncVxlRenderText.dll"))
@@ -191,6 +192,15 @@ namespace RelertSharp.GUI
                 }
             }
             else GlobalVar.GlobalCsf = new CsfFile();
+        }
+        static bool NoWinXP()
+        {
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major < 6)
+            {
+                MessageBox.Show("Operating system not support.", "Relert Sharp", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            return false;
         }
     }
 }
