@@ -118,18 +118,6 @@ namespace RelertSharp.GUI
                 Current.SelectWaypointAt(pos);
             }
         }
-        private bool RbPanelVisible()
-        {
-            bool b = rbPanelBrush.Visible || rbPanelAttribute.Visible || rbPanelWand.Visible || rbPanelBucket.Visible;
-            return b;
-        }
-        private void HideRbPanel()
-        {
-            rbPanelBrush.Visible = false;
-            rbPanelAttribute.Visible = false;
-            rbPanelWand.Visible = false;
-            rbPanelBucket.Visible = false;
-        }
         private void RedrawMinimapAll()
         {
             GlobalVar.Engine.RedrawMinimapAll();

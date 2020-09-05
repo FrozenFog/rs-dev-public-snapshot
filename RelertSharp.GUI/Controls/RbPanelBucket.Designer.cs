@@ -30,50 +30,57 @@
         {
             this.cbbFillBy = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.gpbMain = new System.Windows.Forms.GroupBox();
-            this.gpbMain.SuspendLayout();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbbFillBy
             // 
+            this.cbbFillBy.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbbFillBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbFillBy.FormattingEnabled = true;
-            this.cbbFillBy.Location = new System.Drawing.Point(120, 38);
+            this.cbbFillBy.Location = new System.Drawing.Point(96, 3);
             this.cbbFillBy.Name = "cbbFillBy";
-            this.cbbFillBy.Size = new System.Drawing.Size(121, 23);
+            this.cbbFillBy.Size = new System.Drawing.Size(113, 23);
             this.cbbFillBy.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 41);
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 15);
+            this.label1.Size = new System.Drawing.Size(87, 29);
             this.label1.TabIndex = 1;
             this.label1.Text = "Fill With:";
             // 
-            // gpbMain
+            // tableLayoutPanel1
             // 
-            this.gpbMain.Controls.Add(this.label1);
-            this.gpbMain.Controls.Add(this.cbbFillBy);
-            this.gpbMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gpbMain.Location = new System.Drawing.Point(0, 0);
-            this.gpbMain.Name = "gpbMain";
-            this.gpbMain.Size = new System.Drawing.Size(268, 86);
-            this.gpbMain.TabIndex = 2;
-            this.gpbMain.TabStop = false;
-            this.gpbMain.Text = "Bucket Control";
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.cbbFillBy, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(212, 61);
+            this.tableLayoutPanel1.TabIndex = 3;
             // 
             // RbPanelBucket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = false;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.Controls.Add(this.gpbMain);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "RbPanelBucket";
-            this.Size = new System.Drawing.Size(268, 86);
-            this.gpbMain.ResumeLayout(false);
-            this.gpbMain.PerformLayout();
+            this.Size = new System.Drawing.Size(212, 61);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -82,6 +89,6 @@
 
         private System.Windows.Forms.ComboBox cbbFillBy;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox gpbMain;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

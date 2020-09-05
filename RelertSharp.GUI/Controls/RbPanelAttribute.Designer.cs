@@ -46,22 +46,30 @@
             this.ckbTags = new System.Windows.Forms.CheckBox();
             this.ckbOwnerHouse = new System.Windows.Forms.CheckBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.ckbToAircraft = new System.Windows.Forms.CheckBox();
             this.ckbToBuilding = new System.Windows.Forms.CheckBox();
             this.ckbToUnit = new System.Windows.Forms.CheckBox();
             this.ckbToInfantry = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pboxFacing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkbVeteran)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkbHP)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // txbGroup
             // 
-            this.txbGroup.Location = new System.Drawing.Point(205, 219);
+            this.txbGroup.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txbGroup.Location = new System.Drawing.Point(142, 296);
             this.txbGroup.Name = "txbGroup";
-            this.txbGroup.Size = new System.Drawing.Size(173, 25);
+            this.txbGroup.Size = new System.Drawing.Size(113, 25);
             this.txbGroup.TabIndex = 22;
             this.txbGroup.TextChanged += new System.EventHandler(this.txbGroup_TextChanged);
             // 
@@ -69,7 +77,7 @@
             // 
             this.pboxFacing.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pboxFacing.Image = global::RelertSharp.GUI.Properties.Resources.rotationBase;
-            this.pboxFacing.Location = new System.Drawing.Point(205, 103);
+            this.pboxFacing.Location = new System.Drawing.Point(142, 180);
             this.pboxFacing.Name = "pboxFacing";
             this.pboxFacing.Size = new System.Drawing.Size(52, 52);
             this.pboxFacing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -81,28 +89,31 @@
             // 
             // mtxbVeteran
             // 
-            this.mtxbVeteran.Location = new System.Drawing.Point(309, 74);
+            this.mtxbVeteran.Dock = System.Windows.Forms.DockStyle.Right;
+            this.mtxbVeteran.Location = new System.Drawing.Point(73, 0);
             this.mtxbVeteran.Name = "mtxbVeteran";
-            this.mtxbVeteran.Size = new System.Drawing.Size(69, 25);
+            this.mtxbVeteran.Size = new System.Drawing.Size(40, 25);
             this.mtxbVeteran.TabIndex = 19;
             this.mtxbVeteran.Validated += new System.EventHandler(this.mtxbVeteran_Validated);
             // 
             // mtxbHP
             // 
-            this.mtxbHP.Location = new System.Drawing.Point(309, 43);
+            this.mtxbHP.Dock = System.Windows.Forms.DockStyle.Right;
+            this.mtxbHP.Location = new System.Drawing.Point(73, 0);
             this.mtxbHP.Name = "mtxbHP";
-            this.mtxbHP.Size = new System.Drawing.Size(69, 25);
+            this.mtxbHP.Size = new System.Drawing.Size(40, 25);
             this.mtxbHP.TabIndex = 20;
             this.mtxbHP.Validated += new System.EventHandler(this.mtxbHP_Validated);
             // 
             // trkbVeteran
             // 
             this.trkbVeteran.AutoSize = false;
+            this.trkbVeteran.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trkbVeteran.LargeChange = 100;
-            this.trkbVeteran.Location = new System.Drawing.Point(205, 74);
+            this.trkbVeteran.Location = new System.Drawing.Point(0, 0);
             this.trkbVeteran.Maximum = 200;
             this.trkbVeteran.Name = "trkbVeteran";
-            this.trkbVeteran.Size = new System.Drawing.Size(98, 23);
+            this.trkbVeteran.Size = new System.Drawing.Size(73, 27);
             this.trkbVeteran.TabIndex = 17;
             this.trkbVeteran.TickFrequency = 32;
             this.trkbVeteran.Scroll += new System.EventHandler(this.trkbVeteran_Scroll);
@@ -110,12 +121,13 @@
             // trkbHP
             // 
             this.trkbHP.AutoSize = false;
+            this.trkbHP.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trkbHP.LargeChange = 64;
-            this.trkbHP.Location = new System.Drawing.Point(205, 43);
+            this.trkbHP.Location = new System.Drawing.Point(0, 0);
             this.trkbHP.Maximum = 256;
             this.trkbHP.Minimum = 1;
             this.trkbHP.Name = "trkbHP";
-            this.trkbHP.Size = new System.Drawing.Size(98, 23);
+            this.trkbHP.Size = new System.Drawing.Size(73, 29);
             this.trkbHP.TabIndex = 18;
             this.trkbHP.TickFrequency = 32;
             this.trkbHP.Value = 256;
@@ -123,28 +135,31 @@
             // 
             // cbbStatus
             // 
+            this.cbbStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbbStatus.FormattingEnabled = true;
-            this.cbbStatus.Location = new System.Drawing.Point(205, 190);
+            this.cbbStatus.Location = new System.Drawing.Point(142, 267);
             this.cbbStatus.Name = "cbbStatus";
-            this.cbbStatus.Size = new System.Drawing.Size(173, 23);
+            this.cbbStatus.Size = new System.Drawing.Size(113, 23);
             this.cbbStatus.TabIndex = 14;
             this.cbbStatus.SelectedIndexChanged += new System.EventHandler(this.cbbStatus_SelectedIndexChanged);
             // 
             // cbbTags
             // 
+            this.cbbTags.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbbTags.FormattingEnabled = true;
-            this.cbbTags.Location = new System.Drawing.Point(205, 161);
+            this.cbbTags.Location = new System.Drawing.Point(142, 238);
             this.cbbTags.Name = "cbbTags";
-            this.cbbTags.Size = new System.Drawing.Size(173, 23);
+            this.cbbTags.Size = new System.Drawing.Size(113, 23);
             this.cbbTags.TabIndex = 15;
             this.cbbTags.SelectedIndexChanged += new System.EventHandler(this.cbbTags_SelectedIndexChanged);
             // 
             // cbbOwnerHouse
             // 
+            this.cbbOwnerHouse.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbbOwnerHouse.FormattingEnabled = true;
-            this.cbbOwnerHouse.Location = new System.Drawing.Point(205, 14);
+            this.cbbOwnerHouse.Location = new System.Drawing.Point(142, 83);
             this.cbbOwnerHouse.Name = "cbbOwnerHouse";
-            this.cbbOwnerHouse.Size = new System.Drawing.Size(173, 23);
+            this.cbbOwnerHouse.Size = new System.Drawing.Size(113, 23);
             this.cbbOwnerHouse.TabIndex = 16;
             this.cbbOwnerHouse.SelectedIndexChanged += new System.EventHandler(this.cbbOwnerHouse_SelectedIndexChanged);
             // 
@@ -152,9 +167,10 @@
             // 
             this.ckbFacing.AutoSize = true;
             this.ckbFacing.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ckbFacing.Location = new System.Drawing.Point(122, 121);
+            this.ckbFacing.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ckbFacing.Location = new System.Drawing.Point(59, 180);
             this.ckbFacing.Name = "ckbFacing";
-            this.ckbFacing.Size = new System.Drawing.Size(77, 19);
+            this.ckbFacing.Size = new System.Drawing.Size(77, 52);
             this.ckbFacing.TabIndex = 7;
             this.ckbFacing.Text = "Facing";
             this.ckbFacing.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -164,11 +180,12 @@
             // 
             this.ckbVeteran.AutoSize = true;
             this.ckbVeteran.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ckbVeteran.Location = new System.Drawing.Point(10, 76);
+            this.ckbVeteran.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ckbVeteran.Location = new System.Drawing.Point(35, 147);
             this.ckbVeteran.Name = "ckbVeteran";
-            this.ckbVeteran.Size = new System.Drawing.Size(189, 19);
+            this.ckbVeteran.Size = new System.Drawing.Size(101, 27);
             this.ckbVeteran.TabIndex = 8;
-            this.ckbVeteran.Text = "Veterancy Percentage";
+            this.ckbVeteran.Text = "Veterancy";
             this.ckbVeteran.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.ckbVeteran.UseVisualStyleBackColor = true;
             // 
@@ -176,9 +193,10 @@
             // 
             this.ckbHP.AutoSize = true;
             this.ckbHP.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ckbHP.Location = new System.Drawing.Point(74, 45);
+            this.ckbHP.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ckbHP.Location = new System.Drawing.Point(11, 112);
             this.ckbHP.Name = "ckbHP";
-            this.ckbHP.Size = new System.Drawing.Size(125, 19);
+            this.ckbHP.Size = new System.Drawing.Size(125, 29);
             this.ckbHP.TabIndex = 9;
             this.ckbHP.Text = "Health Point";
             this.ckbHP.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -188,9 +206,10 @@
             // 
             this.ckbGroup.AutoSize = true;
             this.ckbGroup.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ckbGroup.Location = new System.Drawing.Point(74, 221);
+            this.ckbGroup.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ckbGroup.Location = new System.Drawing.Point(3, 296);
             this.ckbGroup.Name = "ckbGroup";
-            this.ckbGroup.Size = new System.Drawing.Size(125, 19);
+            this.ckbGroup.Size = new System.Drawing.Size(133, 25);
             this.ckbGroup.TabIndex = 10;
             this.ckbGroup.Text = "Group Number";
             this.ckbGroup.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -200,9 +219,10 @@
             // 
             this.ckbStat.AutoSize = true;
             this.ckbStat.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ckbStat.Location = new System.Drawing.Point(82, 192);
+            this.ckbStat.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ckbStat.Location = new System.Drawing.Point(19, 267);
             this.ckbStat.Name = "ckbStat";
-            this.ckbStat.Size = new System.Drawing.Size(117, 19);
+            this.ckbStat.Size = new System.Drawing.Size(117, 23);
             this.ckbStat.TabIndex = 11;
             this.ckbStat.Text = "Unit Status";
             this.ckbStat.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -212,9 +232,10 @@
             // 
             this.ckbTags.AutoSize = true;
             this.ckbTags.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ckbTags.Location = new System.Drawing.Point(66, 163);
+            this.ckbTags.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ckbTags.Location = new System.Drawing.Point(3, 238);
             this.ckbTags.Name = "ckbTags";
-            this.ckbTags.Size = new System.Drawing.Size(133, 19);
+            this.ckbTags.Size = new System.Drawing.Size(133, 23);
             this.ckbTags.TabIndex = 12;
             this.ckbTags.Text = "Attatched Tag";
             this.ckbTags.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -224,33 +245,22 @@
             // 
             this.ckbOwnerHouse.AutoSize = true;
             this.ckbOwnerHouse.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ckbOwnerHouse.Location = new System.Drawing.Point(82, 16);
+            this.ckbOwnerHouse.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ckbOwnerHouse.Location = new System.Drawing.Point(19, 83);
             this.ckbOwnerHouse.Name = "ckbOwnerHouse";
-            this.ckbOwnerHouse.Size = new System.Drawing.Size(117, 19);
+            this.ckbOwnerHouse.Size = new System.Drawing.Size(117, 23);
             this.ckbOwnerHouse.TabIndex = 13;
             this.ckbOwnerHouse.Text = "Owner House";
             this.ckbOwnerHouse.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.ckbOwnerHouse.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.ckbToAircraft);
-            this.groupBox1.Controls.Add(this.ckbToBuilding);
-            this.groupBox1.Controls.Add(this.ckbToUnit);
-            this.groupBox1.Controls.Add(this.ckbToInfantry);
-            this.groupBox1.Location = new System.Drawing.Point(384, 14);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(146, 230);
-            this.groupBox1.TabIndex = 23;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Apply To";
-            // 
             // ckbToAircraft
             // 
             this.ckbToAircraft.AutoSize = true;
-            this.ckbToAircraft.Location = new System.Drawing.Point(6, 189);
+            this.ckbToAircraft.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ckbToAircraft.Location = new System.Drawing.Point(0, 0);
             this.ckbToAircraft.Name = "ckbToAircraft";
-            this.ckbToAircraft.Size = new System.Drawing.Size(101, 19);
+            this.ckbToAircraft.Size = new System.Drawing.Size(111, 19);
             this.ckbToAircraft.TabIndex = 0;
             this.ckbToAircraft.Text = "Aircrafts";
             this.ckbToAircraft.UseVisualStyleBackColor = true;
@@ -258,9 +268,10 @@
             // ckbToBuilding
             // 
             this.ckbToBuilding.AutoSize = true;
-            this.ckbToBuilding.Location = new System.Drawing.Point(6, 134);
+            this.ckbToBuilding.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ckbToBuilding.Location = new System.Drawing.Point(0, 19);
             this.ckbToBuilding.Name = "ckbToBuilding";
-            this.ckbToBuilding.Size = new System.Drawing.Size(101, 19);
+            this.ckbToBuilding.Size = new System.Drawing.Size(111, 19);
             this.ckbToBuilding.TabIndex = 0;
             this.ckbToBuilding.Text = "Buildings";
             this.ckbToBuilding.UseVisualStyleBackColor = true;
@@ -268,9 +279,10 @@
             // ckbToUnit
             // 
             this.ckbToUnit.AutoSize = true;
-            this.ckbToUnit.Location = new System.Drawing.Point(6, 79);
+            this.ckbToUnit.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ckbToUnit.Location = new System.Drawing.Point(0, 38);
             this.ckbToUnit.Name = "ckbToUnit";
-            this.ckbToUnit.Size = new System.Drawing.Size(69, 19);
+            this.ckbToUnit.Size = new System.Drawing.Size(111, 19);
             this.ckbToUnit.TabIndex = 0;
             this.ckbToUnit.Text = "Units";
             this.ckbToUnit.UseVisualStyleBackColor = true;
@@ -278,44 +290,113 @@
             // ckbToInfantry
             // 
             this.ckbToInfantry.AutoSize = true;
-            this.ckbToInfantry.Location = new System.Drawing.Point(6, 24);
+            this.ckbToInfantry.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ckbToInfantry.Location = new System.Drawing.Point(0, 57);
             this.ckbToInfantry.Name = "ckbToInfantry";
-            this.ckbToInfantry.Size = new System.Drawing.Size(109, 19);
+            this.ckbToInfantry.Size = new System.Drawing.Size(111, 19);
             this.ckbToInfantry.TabIndex = 0;
             this.ckbToInfantry.Text = "Infantries";
             this.ckbToInfantry.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.panel3, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.ckbGroup, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.txbGroup, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.cbbStatus, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.pboxFacing, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.cbbTags, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.ckbStat, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.ckbOwnerHouse, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.cbbOwnerHouse, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.ckbTags, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.ckbFacing, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.ckbHP, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.ckbVeteran, 0, 3);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 8;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(258, 323);
+            this.tableLayoutPanel1.TabIndex = 24;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.trkbVeteran);
+            this.panel3.Controls.Add(this.mtxbVeteran);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(142, 147);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(113, 27);
+            this.panel3.TabIndex = 25;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.trkbHP);
+            this.panel2.Controls.Add(this.mtxbHP);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(142, 112);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(113, 29);
+            this.panel2.TabIndex = 25;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.ckbToInfantry);
+            this.panel1.Controls.Add(this.ckbToUnit);
+            this.panel1.Controls.Add(this.ckbToBuilding);
+            this.panel1.Controls.Add(this.ckbToAircraft);
+            this.panel1.Location = new System.Drawing.Point(142, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(111, 74);
+            this.panel1.TabIndex = 25;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label1.Location = new System.Drawing.Point(41, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(95, 80);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "Apply To...";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // RbPanelAttribute
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = false;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.txbGroup);
-            this.Controls.Add(this.pboxFacing);
-            this.Controls.Add(this.mtxbVeteran);
-            this.Controls.Add(this.mtxbHP);
-            this.Controls.Add(this.trkbVeteran);
-            this.Controls.Add(this.trkbHP);
-            this.Controls.Add(this.cbbStatus);
-            this.Controls.Add(this.cbbTags);
-            this.Controls.Add(this.cbbOwnerHouse);
-            this.Controls.Add(this.ckbFacing);
-            this.Controls.Add(this.ckbVeteran);
-            this.Controls.Add(this.ckbHP);
-            this.Controls.Add(this.ckbGroup);
-            this.Controls.Add(this.ckbStat);
-            this.Controls.Add(this.ckbTags);
-            this.Controls.Add(this.ckbOwnerHouse);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "RbPanelAttribute";
-            this.Size = new System.Drawing.Size(551, 300);
+            this.Size = new System.Drawing.Size(258, 323);
             ((System.ComponentModel.ISupportInitialize)(this.pboxFacing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkbVeteran)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkbHP)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -338,10 +419,14 @@
         private System.Windows.Forms.CheckBox ckbTags;
         private System.Windows.Forms.CheckBox ckbOwnerHouse;
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox ckbToAircraft;
         private System.Windows.Forms.CheckBox ckbToBuilding;
         private System.Windows.Forms.CheckBox ckbToUnit;
         private System.Windows.Forms.CheckBox ckbToInfantry;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label1;
     }
 }

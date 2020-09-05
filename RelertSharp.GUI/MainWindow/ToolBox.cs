@@ -108,6 +108,7 @@ namespace RelertSharp.GUI
                     GlobalVar.Engine.Refresh();
                     break;
             }
+            SwitchToolPanel(Current.CurrentMouseAction);
             btn.Checked = true;
             requireFocus = true;
         }

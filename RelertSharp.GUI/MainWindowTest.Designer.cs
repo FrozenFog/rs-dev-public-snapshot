@@ -35,14 +35,8 @@
             this.splitMain = new System.Windows.Forms.SplitContainer();
             this.pnlMainAreaContainer = new System.Windows.Forms.Panel();
             this.splitPickerMain = new System.Windows.Forms.SplitContainer();
-            this.pnlTile = new RelertSharp.GUI.Controls.TilePanel();
-            this.pnlPick = new RelertSharp.GUI.Controls.PickPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.rbPanelBucket = new RelertSharp.GUI.Controls.RbPanelBucket();
-            this.rbPanelWand = new RelertSharp.GUI.Controls.RbPanelWand();
             this.txbCommand = new System.Windows.Forms.TextBox();
-            this.rbPanelBrush = new RelertSharp.GUI.Controls.RbBrushPanel();
-            this.rbPanelAttribute = new RelertSharp.GUI.Controls.RbPanelAttribute();
             this.toolsMain = new System.Windows.Forms.ToolStrip();
             this.toolBtnArrow = new System.Windows.Forms.ToolStripButton();
             this.toolBtnMoving = new System.Windows.Forms.ToolStripButton();
@@ -60,7 +54,6 @@
             this.toolBtnTileWand = new System.Windows.Forms.ToolStripButton();
             this.toolBtnTileBucket = new System.Windows.Forms.ToolStripButton();
             this.splitSide = new System.Windows.Forms.SplitContainer();
-            this.pnlMiniMap = new RelertSharp.GUI.Controls.MinimapPanel();
             this.pnlSide = new System.Windows.Forms.Panel();
             this.pnlSideRank = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -114,6 +107,9 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.ckbObjectsPanel = new System.Windows.Forms.CheckBox();
+            this.pnlSideToolsOption = new System.Windows.Forms.Panel();
+            this.pnlToolsOptionContainer = new System.Windows.Forms.Panel();
+            this.ckbToolsOptionPanel = new System.Windows.Forms.CheckBox();
             this.lblx = new System.Windows.Forms.Label();
             this.lbly = new System.Windows.Forms.Label();
             this.lblz = new System.Windows.Forms.Label();
@@ -136,6 +132,13 @@
             this.tsmiMainRunMap = new System.Windows.Forms.ToolStripMenuItem();
             this.bgwMonitor = new System.ComponentModel.BackgroundWorker();
             this.tmrAutosave = new System.Windows.Forms.Timer(this.components);
+            this.pnlTile = new RelertSharp.GUI.Controls.TilePanel();
+            this.pnlPick = new RelertSharp.GUI.Controls.PickPanel();
+            this.pnlMiniMap = new RelertSharp.GUI.Controls.MinimapPanel();
+            this.rbPanelWand = new RelertSharp.GUI.Controls.RbPanelWand();
+            this.rbPanelBucket = new RelertSharp.GUI.Controls.RbPanelBucket();
+            this.rbPanelBrush = new RelertSharp.GUI.Controls.RbBrushPanel();
+            this.rbPanelAttribute = new RelertSharp.GUI.Controls.RbPanelAttribute();
             this.panelHost.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
@@ -168,6 +171,8 @@
             this.tlpChecking.SuspendLayout();
             this.pnlSideObjects.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.pnlSideToolsOption.SuspendLayout();
+            this.pnlToolsOptionContainer.SuspendLayout();
             this.cmsToolSelect.SuspendLayout();
             this.mnsMain.SuspendLayout();
             this.SuspendLayout();
@@ -245,32 +250,9 @@
             this.splitPickerMain.SplitterDistance = 238;
             this.splitPickerMain.TabIndex = 4;
             // 
-            // pnlTile
-            // 
-            this.pnlTile.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTile.Location = new System.Drawing.Point(0, 0);
-            this.pnlTile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pnlTile.Name = "pnlTile";
-            this.pnlTile.Size = new System.Drawing.Size(238, 712);
-            this.pnlTile.TabIndex = 2;
-            // 
-            // pnlPick
-            // 
-            this.pnlPick.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPick.Location = new System.Drawing.Point(0, 0);
-            this.pnlPick.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pnlPick.Name = "pnlPick";
-            this.pnlPick.Size = new System.Drawing.Size(238, 712);
-            this.pnlPick.TabIndex = 1;
-            this.pnlPick.Visible = false;
-            // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.rbPanelBucket);
-            this.panel1.Controls.Add(this.rbPanelWand);
             this.panel1.Controls.Add(this.txbCommand);
-            this.panel1.Controls.Add(this.rbPanelBrush);
-            this.panel1.Controls.Add(this.rbPanelAttribute);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -288,26 +270,6 @@
             this.panel1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.panel1_PreviewKeyDown);
             this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
             // 
-            // rbPanelBucket
-            // 
-            this.rbPanelBucket.BackColor = System.Drawing.SystemColors.Control;
-            this.rbPanelBucket.Location = new System.Drawing.Point(269, 461);
-            this.rbPanelBucket.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rbPanelBucket.Name = "rbPanelBucket";
-            this.rbPanelBucket.Size = new System.Drawing.Size(268, 86);
-            this.rbPanelBucket.TabIndex = 5;
-            this.rbPanelBucket.Visible = false;
-            // 
-            // rbPanelWand
-            // 
-            this.rbPanelWand.BackColor = System.Drawing.SystemColors.Control;
-            this.rbPanelWand.Location = new System.Drawing.Point(269, 265);
-            this.rbPanelWand.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rbPanelWand.Name = "rbPanelWand";
-            this.rbPanelWand.Size = new System.Drawing.Size(273, 190);
-            this.rbPanelWand.TabIndex = 4;
-            this.rbPanelWand.Visible = false;
-            // 
             // txbCommand
             // 
             this.txbCommand.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -319,26 +281,6 @@
             this.txbCommand.Text = "/";
             this.txbCommand.Visible = false;
             this.txbCommand.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbCommand_KeyDown);
-            // 
-            // rbPanelBrush
-            // 
-            this.rbPanelBrush.BackColor = System.Drawing.SystemColors.Control;
-            this.rbPanelBrush.Location = new System.Drawing.Point(3, 265);
-            this.rbPanelBrush.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rbPanelBrush.Name = "rbPanelBrush";
-            this.rbPanelBrush.Size = new System.Drawing.Size(260, 258);
-            this.rbPanelBrush.TabIndex = 1;
-            this.rbPanelBrush.Visible = false;
-            // 
-            // rbPanelAttribute
-            // 
-            this.rbPanelAttribute.BackColor = System.Drawing.SystemColors.Control;
-            this.rbPanelAttribute.Location = new System.Drawing.Point(3, 2);
-            this.rbPanelAttribute.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rbPanelAttribute.Name = "rbPanelAttribute";
-            this.rbPanelAttribute.Size = new System.Drawing.Size(540, 258);
-            this.rbPanelAttribute.TabIndex = 0;
-            this.rbPanelAttribute.Visible = false;
             // 
             // toolsMain
             // 
@@ -546,23 +488,6 @@
             this.splitSide.SplitterDistance = 176;
             this.splitSide.TabIndex = 1;
             // 
-            // pnlMiniMap
-            // 
-            this.pnlMiniMap.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.pnlMiniMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pnlMiniMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMiniMap.Location = new System.Drawing.Point(0, 0);
-            this.pnlMiniMap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pnlMiniMap.Name = "pnlMiniMap";
-            this.pnlMiniMap.Size = new System.Drawing.Size(201, 176);
-            this.pnlMiniMap.TabIndex = 4;
-            this.pnlMiniMap.SizeChanged += new System.EventHandler(this.pnlMiniMap_SizeChanged);
-            this.pnlMiniMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseClick);
-            this.pnlMiniMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseDown);
-            this.pnlMiniMap.MouseLeave += new System.EventHandler(this.pnlMiniMap_MouseLeave);
-            this.pnlMiniMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseMove);
-            this.pnlMiniMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseUp);
-            // 
             // pnlSide
             // 
             this.pnlSide.AutoScroll = true;
@@ -571,6 +496,7 @@
             this.pnlSide.Controls.Add(this.pnlSideLightning);
             this.pnlSide.Controls.Add(this.pnlSideChecking);
             this.pnlSide.Controls.Add(this.pnlSideObjects);
+            this.pnlSide.Controls.Add(this.pnlSideToolsOption);
             this.pnlSide.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlSide.Location = new System.Drawing.Point(0, 0);
             this.pnlSide.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -585,7 +511,7 @@
             this.pnlSideRank.Controls.Add(this.tableLayoutPanel1);
             this.pnlSideRank.Controls.Add(this.ckbRankPanel);
             this.pnlSideRank.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlSideRank.Location = new System.Drawing.Point(0, 905);
+            this.pnlSideRank.Location = new System.Drawing.Point(0, 1171);
             this.pnlSideRank.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlSideRank.Name = "pnlSideRank";
             this.pnlSideRank.Size = new System.Drawing.Size(180, 220);
@@ -798,7 +724,7 @@
             this.pnlSideDebug.Controls.Add(this.listBox1);
             this.pnlSideDebug.Controls.Add(this.ckbDebugPanel);
             this.pnlSideDebug.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlSideDebug.Location = new System.Drawing.Point(0, 651);
+            this.pnlSideDebug.Location = new System.Drawing.Point(0, 917);
             this.pnlSideDebug.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlSideDebug.Name = "pnlSideDebug";
             this.pnlSideDebug.Size = new System.Drawing.Size(180, 254);
@@ -840,7 +766,7 @@
             this.pnlSideLightning.Controls.Add(this.tlpLightning);
             this.pnlSideLightning.Controls.Add(this.ckbLightningPanel);
             this.pnlSideLightning.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlSideLightning.Location = new System.Drawing.Point(0, 374);
+            this.pnlSideLightning.Location = new System.Drawing.Point(0, 640);
             this.pnlSideLightning.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlSideLightning.Name = "pnlSideLightning";
             this.pnlSideLightning.Size = new System.Drawing.Size(180, 277);
@@ -1197,7 +1123,7 @@
             this.pnlSideChecking.Controls.Add(this.tlpChecking);
             this.pnlSideChecking.Controls.Add(this.cbbCheckingPanel);
             this.pnlSideChecking.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlSideChecking.Location = new System.Drawing.Point(0, 305);
+            this.pnlSideChecking.Location = new System.Drawing.Point(0, 571);
             this.pnlSideChecking.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlSideChecking.Name = "pnlSideChecking";
             this.pnlSideChecking.Size = new System.Drawing.Size(180, 69);
@@ -1293,7 +1219,7 @@
             this.pnlSideObjects.Controls.Add(this.tabControl1);
             this.pnlSideObjects.Controls.Add(this.ckbObjectsPanel);
             this.pnlSideObjects.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlSideObjects.Location = new System.Drawing.Point(0, 0);
+            this.pnlSideObjects.Location = new System.Drawing.Point(0, 266);
             this.pnlSideObjects.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlSideObjects.Name = "pnlSideObjects";
             this.pnlSideObjects.Size = new System.Drawing.Size(180, 305);
@@ -1328,7 +1254,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(193, 251);
+            this.tabPage2.Size = new System.Drawing.Size(172, 251);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1350,6 +1276,49 @@
             this.ckbObjectsPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ckbObjectsPanel.UseVisualStyleBackColor = true;
             this.ckbObjectsPanel.CheckedChanged += new System.EventHandler(this.Panelchecker_CheckedChanged0);
+            // 
+            // pnlSideToolsOption
+            // 
+            this.pnlSideToolsOption.AutoSize = true;
+            this.pnlSideToolsOption.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.pnlSideToolsOption.Controls.Add(this.pnlToolsOptionContainer);
+            this.pnlSideToolsOption.Controls.Add(this.ckbToolsOptionPanel);
+            this.pnlSideToolsOption.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlSideToolsOption.Location = new System.Drawing.Point(0, 0);
+            this.pnlSideToolsOption.Name = "pnlSideToolsOption";
+            this.pnlSideToolsOption.Size = new System.Drawing.Size(180, 266);
+            this.pnlSideToolsOption.TabIndex = 6;
+            // 
+            // pnlToolsOptionContainer
+            // 
+            this.pnlToolsOptionContainer.AutoScroll = true;
+            this.pnlToolsOptionContainer.Controls.Add(this.rbPanelWand);
+            this.pnlToolsOptionContainer.Controls.Add(this.rbPanelBucket);
+            this.pnlToolsOptionContainer.Controls.Add(this.rbPanelBrush);
+            this.pnlToolsOptionContainer.Controls.Add(this.rbPanelAttribute);
+            this.pnlToolsOptionContainer.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlToolsOptionContainer.Location = new System.Drawing.Point(0, 25);
+            this.pnlToolsOptionContainer.Name = "pnlToolsOptionContainer";
+            this.pnlToolsOptionContainer.Size = new System.Drawing.Size(180, 241);
+            this.pnlToolsOptionContainer.TabIndex = 0;
+            // 
+            // ckbToolsOptionPanel
+            // 
+            this.ckbToolsOptionPanel.Appearance = System.Windows.Forms.Appearance.Button;
+            this.ckbToolsOptionPanel.AutoSize = true;
+            this.ckbToolsOptionPanel.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ckbToolsOptionPanel.Checked = true;
+            this.ckbToolsOptionPanel.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbToolsOptionPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ckbToolsOptionPanel.Location = new System.Drawing.Point(0, 0);
+            this.ckbToolsOptionPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ckbToolsOptionPanel.Name = "ckbToolsOptionPanel";
+            this.ckbToolsOptionPanel.Size = new System.Drawing.Size(180, 25);
+            this.ckbToolsOptionPanel.TabIndex = 2;
+            this.ckbToolsOptionPanel.Text = "RSMainSideCkbToolsControl";
+            this.ckbToolsOptionPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ckbToolsOptionPanel.UseVisualStyleBackColor = true;
+            this.ckbToolsOptionPanel.CheckedChanged += new System.EventHandler(this.Panelchecker_CheckedChanged0);
             // 
             // lblx
             // 
@@ -1527,6 +1496,90 @@
             // 
             this.tmrAutosave.Tick += new System.EventHandler(this.tmrAutosave_Tick);
             // 
+            // pnlTile
+            // 
+            this.pnlTile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTile.Location = new System.Drawing.Point(0, 0);
+            this.pnlTile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlTile.Name = "pnlTile";
+            this.pnlTile.Size = new System.Drawing.Size(238, 712);
+            this.pnlTile.TabIndex = 2;
+            // 
+            // pnlPick
+            // 
+            this.pnlPick.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlPick.Location = new System.Drawing.Point(0, 0);
+            this.pnlPick.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlPick.Name = "pnlPick";
+            this.pnlPick.Size = new System.Drawing.Size(238, 712);
+            this.pnlPick.TabIndex = 1;
+            this.pnlPick.Visible = false;
+            // 
+            // pnlMiniMap
+            // 
+            this.pnlMiniMap.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.pnlMiniMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pnlMiniMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMiniMap.Location = new System.Drawing.Point(0, 0);
+            this.pnlMiniMap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlMiniMap.Name = "pnlMiniMap";
+            this.pnlMiniMap.Size = new System.Drawing.Size(201, 176);
+            this.pnlMiniMap.TabIndex = 4;
+            this.pnlMiniMap.SizeChanged += new System.EventHandler(this.pnlMiniMap_SizeChanged);
+            this.pnlMiniMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseClick);
+            this.pnlMiniMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseDown);
+            this.pnlMiniMap.MouseLeave += new System.EventHandler(this.pnlMiniMap_MouseLeave);
+            this.pnlMiniMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseMove);
+            this.pnlMiniMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlMiniMap_MouseUp);
+            // 
+            // rbPanelWand
+            // 
+            this.rbPanelWand.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.rbPanelWand.BackColor = System.Drawing.SystemColors.Control;
+            this.rbPanelWand.Dock = System.Windows.Forms.DockStyle.Top;
+            this.rbPanelWand.Location = new System.Drawing.Point(0, 432);
+            this.rbPanelWand.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbPanelWand.Name = "rbPanelWand";
+            this.rbPanelWand.Size = new System.Drawing.Size(159, 66);
+            this.rbPanelWand.TabIndex = 4;
+            this.rbPanelWand.Visible = false;
+            // 
+            // rbPanelBucket
+            // 
+            this.rbPanelBucket.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.rbPanelBucket.BackColor = System.Drawing.SystemColors.Control;
+            this.rbPanelBucket.Dock = System.Windows.Forms.DockStyle.Top;
+            this.rbPanelBucket.Location = new System.Drawing.Point(0, 400);
+            this.rbPanelBucket.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbPanelBucket.Name = "rbPanelBucket";
+            this.rbPanelBucket.Size = new System.Drawing.Size(159, 32);
+            this.rbPanelBucket.TabIndex = 5;
+            this.rbPanelBucket.Visible = false;
+            // 
+            // rbPanelBrush
+            // 
+            this.rbPanelBrush.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.rbPanelBrush.BackColor = System.Drawing.SystemColors.Control;
+            this.rbPanelBrush.Dock = System.Windows.Forms.DockStyle.Top;
+            this.rbPanelBrush.Location = new System.Drawing.Point(0, 322);
+            this.rbPanelBrush.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbPanelBrush.Name = "rbPanelBrush";
+            this.rbPanelBrush.Size = new System.Drawing.Size(159, 78);
+            this.rbPanelBrush.TabIndex = 1;
+            this.rbPanelBrush.Visible = false;
+            // 
+            // rbPanelAttribute
+            // 
+            this.rbPanelAttribute.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.rbPanelAttribute.BackColor = System.Drawing.SystemColors.Control;
+            this.rbPanelAttribute.Dock = System.Windows.Forms.DockStyle.Top;
+            this.rbPanelAttribute.Location = new System.Drawing.Point(0, 0);
+            this.rbPanelAttribute.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbPanelAttribute.Name = "rbPanelAttribute";
+            this.rbPanelAttribute.Size = new System.Drawing.Size(159, 322);
+            this.rbPanelAttribute.TabIndex = 0;
+            this.rbPanelAttribute.Visible = false;
+            // 
             // MainWindowTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1593,6 +1646,9 @@
             this.pnlSideObjects.ResumeLayout(false);
             this.pnlSideObjects.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            this.pnlSideToolsOption.ResumeLayout(false);
+            this.pnlSideToolsOption.PerformLayout();
+            this.pnlToolsOptionContainer.ResumeLayout(false);
             this.cmsToolSelect.ResumeLayout(false);
             this.mnsMain.ResumeLayout(false);
             this.mnsMain.PerformLayout();
@@ -1708,5 +1764,8 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiMainRunMap;
         private System.ComponentModel.BackgroundWorker bgwMonitor;
         private System.Windows.Forms.Timer tmrAutosave;
+        private System.Windows.Forms.Panel pnlSideToolsOption;
+        private System.Windows.Forms.CheckBox ckbToolsOptionPanel;
+        private System.Windows.Forms.Panel pnlToolsOptionContainer;
     }
 }

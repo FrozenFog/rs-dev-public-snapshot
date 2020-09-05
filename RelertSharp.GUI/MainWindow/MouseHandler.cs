@@ -25,56 +25,46 @@ namespace RelertSharp.GUI
         #region Down
         private void LmbDown(MouseEventArgs e)
         {
-            if (/*!panel1.Focused ||*/ RbPanelVisible())
+            Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
+            isBusy = true;
+            switch (Current.CurrentMouseAction)
             {
-                //panel1.Focus();
-                HideRbPanel();
-                panel1.Cursor = prevCur;
-                GlobalVar.Engine.Refresh();
+                case MainWindowDataModel.MouseActionType.BoxSelecting:
+                    if (Current.SelectingBoxFlag != MainWindowDataModel.SelectingBoxMode.Precise) SceneSelectionBoxSet(e);
+                    else PreciseSelecting(cell, subcell);
+                    break;
+                case MainWindowDataModel.MouseActionType.Moving:
+                    if (spaceKeyMoving)
+                    {
+                        BeginMove(e);
+                    }
+                    else
+                    {
+                        ObjectMovingBegin(cell, subcell);
+                    }
+                    break;
+                case MainWindowDataModel.MouseActionType.AttributeBrush:
+                    ApplyAttributeToPrecise(e);
+                    break;
+                case MainWindowDataModel.MouseActionType.AddingObject:
+                    AddBrushObjectToMap();
+                    if (pnlPick.CurrentType == PickPanelType.Smudges) pnlPick.ReloadRandomSmudge();
+                    break;
+                case MainWindowDataModel.MouseActionType.TileBrush:
+                    AddTileToPos(cell);
+                    break;
+                case MainWindowDataModel.MouseActionType.TileSelecting:
+                    BeginTileSelecting();
+                    SelectTileAt(cell);
+                    break;
+                case MainWindowDataModel.MouseActionType.TileWand:
+                    WandSelectAt(cell);
+                    break;
+                case MainWindowDataModel.MouseActionType.TileBucket:
+                    FillAt(cell);
+                    break;
             }
-            else
-            {
-                Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
-                isBusy = true;
-                switch (Current.CurrentMouseAction)
-                {
-                    case MainWindowDataModel.MouseActionType.BoxSelecting:
-                        if (Current.SelectingBoxFlag != MainWindowDataModel.SelectingBoxMode.Precise) SceneSelectionBoxSet(e);
-                        else PreciseSelecting(cell, subcell);
-                        break;
-                    case MainWindowDataModel.MouseActionType.Moving:
-                        if (spaceKeyMoving)
-                        {
-                            BeginMove(e);
-                        }
-                        else
-                        {
-                            ObjectMovingBegin(cell, subcell);
-                        }
-                        break;
-                    case MainWindowDataModel.MouseActionType.AttributeBrush:
-                        ApplyAttributeToPrecise(e);
-                        break;
-                    case MainWindowDataModel.MouseActionType.AddingObject:
-                        AddBrushObjectToMap();
-                        if (pnlPick.CurrentType == PickPanelType.Smudges) pnlPick.ReloadRandomSmudge();
-                        break;
-                    case MainWindowDataModel.MouseActionType.TileBrush:
-                        AddTileToPos(cell);
-                        break;
-                    case MainWindowDataModel.MouseActionType.TileSelecting:
-                        BeginTileSelecting();
-                        SelectTileAt(cell);
-                        break;
-                    case MainWindowDataModel.MouseActionType.TileWand:
-                        WandSelectAt(cell);
-                        break;
-                    case MainWindowDataModel.MouseActionType.TileBucket:
-                        FillAt(cell);
-                        break;
-                }
-                isBusy = false;
-            }
+            isBusy = false;
         }
         private void MmbDown(MouseEventArgs e)
         {
@@ -82,50 +72,20 @@ namespace RelertSharp.GUI
         }
         private void RmbDown(MouseEventArgs e)
         {
-            if (RbPanelVisible()) HideRbPanel();
-            else
+            Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
+            switch (Current.CurrentMouseAction)
             {
-                Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
-                switch (Current.CurrentMouseAction)
-                {
-                    case MainWindowDataModel.MouseActionType.AttributeBrush:
-                        prevCur = panel1.Cursor;
-                        panel1.Cursor = Cursors.Arrow;
-                        rbPanelAttribute.Location = e.Location;
-                        rbPanelAttribute.Visible = true;
-                        GlobalVar.Engine.Refresh();
-                        break;
-                    case MainWindowDataModel.MouseActionType.Moving:
-                        BeginRmbMove(e);
-                        break;
-                    case MainWindowDataModel.MouseActionType.AddingObject:
-                        prevCur = panel1.Cursor;
-                        panel1.Cursor = Cursors.Arrow;
-                        rbPanelBrush.Location = e.Location;
-                        rbPanelBrush.Visible = true;
-                        GlobalVar.Engine.Refresh();
-                        break;
-                    case MainWindowDataModel.MouseActionType.TileSelecting:
-                        BeginTileDeSelecting();
-                        DeSelectTileAt(cell);
-                        break;
-                    case MainWindowDataModel.MouseActionType.TileWand:
-                        prevCur = panel1.Cursor;
-                        panel1.Cursor = Cursors.Arrow;
-                        rbPanelWand.Location = e.Location;
-                        rbPanelWand.Visible = true;
-                        GlobalVar.Engine.Refresh();
-                        break;
-                    case MainWindowDataModel.MouseActionType.TileBucket:
-                        prevCur = panel1.Cursor;
-                        panel1.Cursor = Cursors.Arrow;
-                        rbPanelBucket.Location = e.Location;
-                        rbPanelBucket.Visible = true;
-                        GlobalVar.Engine.Refresh();
-                        break;
-                }
+                case MainWindowDataModel.MouseActionType.ArrowInspect:
+                    BeginRmbMove(e);
+                    break;
+                case MainWindowDataModel.MouseActionType.TileSelecting:
+                    BeginTileDeSelecting();
+                    DeSelectTileAt(cell);
+                    break;
+                default:
+                    ToolBoxClick(toolBtnArrow);
+                    break;
             }
-
         }
         #endregion
 
@@ -133,15 +93,15 @@ namespace RelertSharp.GUI
         #region Moving
         private void MouseMoving(MouseEventArgs e)
         {
-            if (initialized && drew && !RbPanelVisible())
+            if (initialized && drew)
             {
                 Vec3 cell = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
                 MainPanelMoving(e);
                 bool markTile = true;
+                UpdateRmbMoveDelta(e);
                 switch (Current.CurrentMouseAction)
                 {
                     case MainWindowDataModel.MouseActionType.Moving:
-                        UpdateRmbMoveDelta(e);
                         OnObjectMoving(cell, subcell);
                         break;
                     case MainWindowDataModel.MouseActionType.BoxSelecting:
@@ -208,7 +168,7 @@ namespace RelertSharp.GUI
         {
             switch (Current.CurrentMouseAction)
             {
-                case MainWindowDataModel.MouseActionType.Moving:
+                case MainWindowDataModel.MouseActionType.ArrowInspect:
                     EndRmbMove();
                     break;
                 case MainWindowDataModel.MouseActionType.TileSelecting:

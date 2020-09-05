@@ -296,6 +296,9 @@
     <Compile Include="MainWindow\ToolBox.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MainWindow\ToolsControlPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainWindow\Viewport.cs">
       <SubType>Form</SubType>
     </Compile>

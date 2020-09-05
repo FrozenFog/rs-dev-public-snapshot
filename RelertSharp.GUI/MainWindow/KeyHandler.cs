@@ -28,16 +28,7 @@ namespace RelertSharp.GUI
                 switch (e.KeyCode)
                 {
                     case Keys.Escape:
-                        if (RbPanelVisible())
-                        {
-                            HideRbPanel();
-                            GlobalVar.Engine.Refresh();
-                            panel1.Cursor = prevCur;
-                        }
-                        else
-                        {
-                            ToolBoxClick(toolBtnArrow);
-                        }
+                        ToolBoxClick(toolBtnArrow);
                         break;
                     case Keys.Delete:
                         Current.RemoveAll();
