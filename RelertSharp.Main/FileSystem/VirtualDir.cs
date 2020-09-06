@@ -174,7 +174,7 @@ namespace RelertSharp.FileSystem
         public byte[] GetRawByte(string _fullName, bool fromRoot = false)
         {
             Log.Write("Finding " + _fullName);
-            if (fromRoot)
+            if (fromRoot || GlobalConfig.Local.DevMode)
             {
                 byte[] b = GetFromRoot(_fullName);
                 if (b != null) return b;

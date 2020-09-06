@@ -72,6 +72,7 @@ namespace RelertSharp.GUI
             pnlTile.NewTileSelected += PnlTile_NewTileSelected;
             tmrAutosave.Interval = GlobalVar.GlobalConfig.Local.AutoSaveTimeMilSec;
             tmrAutosave.Enabled = true;
+            tsmiMainDevMode.Checked = GlobalVar.GlobalConfig.Local.DevMode;
 
             initialized = true;
         }

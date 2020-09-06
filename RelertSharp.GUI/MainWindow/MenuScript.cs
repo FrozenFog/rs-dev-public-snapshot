@@ -48,5 +48,14 @@ namespace RelertSharp.GUI
             }
             setting.SaveSettingToLocal();
         }
+        private void tsmiMainDevMode_Click(object sender, EventArgs e)
+        {
+            GlobalConfig.Local.DevMode = tsmiMainDevMode.Checked;
+            if (YesNoWarning("Dev mode changed! Program must restart to reload virtual directory.\nRestart Now?") == DialogResult.Yes)
+            {
+                Process.Start("rsdata.exe", "/reboot");
+                Close();
+            }
+        }
     }
 }

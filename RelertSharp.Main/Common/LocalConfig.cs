@@ -44,6 +44,17 @@ namespace RelertSharp.Common
 
 
         #region Public Calls
+        public bool DevMode
+        {
+            get
+            {
+                return this["General"].ParseBool("DevMode");
+            }
+            set
+            {
+                this["General"]["DevMode"] = value;
+            }
+        }
         public bool IsValid { get { return !(string.IsNullOrEmpty(GamePath) || string.IsNullOrEmpty(PrimaryConfigName)); } }
         public string GamePath
         {
