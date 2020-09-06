@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RelertSharp.Common;
 using RelertSharp.IniSystem;
 using static RelertSharp.Common.GlobalVar.Scripts;
 using static RelertSharp.Language;
@@ -20,7 +21,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Constructor - DescriptCollection
         public DescriptCollection()
         {
-            INIFile f = new INIFile(@"Triggers.tgc", Common.INIFileType.DefaultINI, true);
+            INIFile f = new INIFile(GlobalVar.GlobalConfig.TriggerConfig, INIFileType.DefaultINI, true);
             INIEntity ev = f["EventParams"];
             INIEntity ac = f["ActionParams"];
             INIEntity sc = f["Scripts"];

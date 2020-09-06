@@ -29,6 +29,7 @@ namespace RelertSharp.Common
         private void LoadAttribute()
         {
             BagNameList = this["SoundConfigs"].ParseStringList("Bags");
+            TriggerConfig = this["INI"]["TriggerConfigFile"];
             RulesName = this["INI"]["RulesFileName"];
             ArtName = this["INI"]["ArtFileName"];
             SoundName = this["INI"]["SoundFileName"];
@@ -176,6 +177,7 @@ namespace RelertSharp.Common
         #region Public Calls - RSConfig
         public LocalConfig Local { get; set; }
         public bool IgnoreBuildingTheaterArt { get; private set; }
+        public string TriggerConfig { get; private set; }
         public string RulesName { get; private set; }
         public string ArtName { get; private set; }
         public string SoundName { get; private set; }

@@ -84,7 +84,10 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             {
                 Image pcx = GlobalVar.GlobalDir.GetPcxImage(regname);
                 pcxDictionary[pcxName] = pcx;
-                imglstPcx.Images.Add(pcxName, pcx);
+                if (pcx != null)
+                    imglstPcx.Images.Add(pcxName, pcx);
+                else
+                    imglstPcx.Images.Add(pcxName, new Bitmap(60, 30));
             }
         }
         private void ClearPcx()
