@@ -634,6 +634,7 @@
     <None Include="Resources\bucket.png" />
     <None Include="Resources\Open.png" />
     <None Include="Resources\Save.png" />
+    <None Include="Resources\inireset.png" />
     <Content Include="rslogo.ico" />
   </ItemGroup>
   <ItemGroup>
