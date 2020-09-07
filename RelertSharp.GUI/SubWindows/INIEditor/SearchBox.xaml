@@ -14,7 +14,8 @@
         <TextBox x:Name="txbContent" Grid.Column="0" FontSize="24" FontFamily="Fira Code"
                  Background="#3F3F46" Foreground="#F1F1F1" BorderThickness="1" BorderBrush="#434346"
                  />
-        <Button x:Name="btnSearch" Background="Transparent" BorderThickness="0"  Margin="0,0,0,0" FontSize="15" Grid.Column="1"/>
-        
+        <Button x:Name="btnSearch" Background="Transparent" BorderThickness="0"  Margin="0,0,0,0" FontSize="15" Grid.Column="1">
+        </Button>
+
     </Grid>
 </UserControl>

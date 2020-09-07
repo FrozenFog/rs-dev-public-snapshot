@@ -159,17 +159,10 @@ namespace RelertSharp.FileSystem
         private byte[] GetFromRoot(string _filename)
         {
             string path = GlobalConfig.GamePath + _filename;
-            if (File.Exists(GlobalConfig.GamePath + _filename))
-            {
-                FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-                MemoryStream ms = new MemoryStream();
-                fs.CopyTo(ms);
-                fs.Dispose();
-                byte[] b = ms.ToArray();
-                ms.Dispose();
-                return b;
-            }
-            return null;
+            if (File.Exists(path))
+                return File.ReadAllBytes(path);
+            else
+                return null;
         }
         public byte[] GetRawByte(string _fullName, bool fromRoot = false)
         {
