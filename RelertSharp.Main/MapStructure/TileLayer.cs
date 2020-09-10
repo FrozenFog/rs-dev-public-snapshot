@@ -579,8 +579,8 @@ namespace RelertSharp.MapStructure
         public byte[] GetBytes()
         {
             byte[] result = new byte[11];
-            Misc.WriteToArray(result, BitConverter.GetBytes(X), 0);
-            Misc.WriteToArray(result, BitConverter.GetBytes(Y), 2);
+            Misc.WriteToArray(result, BitConverter.GetBytes(X16), 0);
+            Misc.WriteToArray(result, BitConverter.GetBytes(Y16), 2);
             Misc.WriteToArray(result, BitConverter.GetBytes(tileIndex), 4);
             result[8] = SubIndex;
             result[9] = (byte)RealHeight;
@@ -594,6 +594,10 @@ namespace RelertSharp.MapStructure
         }
         public void AddObject(IMapObject src)
         {
+            if (src.ObjectType == MapObjectType.Overlay && objectsOnTile.Any(x => x.ObjectType == MapObjectType.Overlay))
+            {
+                objectsOnTile.Remove(objectsOnTile.First(x => x.ObjectType == MapObjectType.Overlay));
+            }
             objectsOnTile.Add(src);
         }
         /// <summary>
@@ -822,7 +826,7 @@ namespace RelertSharp.MapStructure
         public byte SubIndex { get; set; }
         public byte IceGrowth { get; set; }
         public int Coord { get { return Misc.CoordInt(X, Y); } }
-        public int ObjectCount { get { return objectsOnTile.Count; } }
+        public int MinimapRenderableObjectCount { get { return objectsOnTile.Where(x => (x.ObjectType & MapObjectType.MinimapRenderable) != 0).Count(); } }
         public PresentTile SceneObject { get; set; }
         public bool Selected { get; set; }
         public bool IsHyte { get; set; }

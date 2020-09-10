@@ -32,10 +32,12 @@ namespace RelertSharp.MapStructure.Objects
                 Group = int.Parse(_args[9]);
                 AutoNORecruitType = ParseBool(_args[10]);
                 AutoYESRecruitType = ParseBool(_args[11]);
+                ObjectType = MapObjectType.Aircraft;
             }
             catch
             {
                 GlobalVar.Log.Critical(string.Format("Aircraft item id: {0} has unreadable data, please verify in map file!", _id));
+                ObjectType = MapObjectType.Aircraft;
             }
         }
         public AircraftItem(AircraftItem src) : base(src)
@@ -47,10 +49,12 @@ namespace RelertSharp.MapStructure.Objects
             Group = src.Group;
             AutoNORecruitType = src.AutoNORecruitType;
             AutoYESRecruitType = src.AutoYESRecruitType;
+            ObjectType = MapObjectType.Aircraft;
         }
         public AircraftItem(string regname)
         {
             RegName = regname;
+            ObjectType = MapObjectType.Aircraft;
         }
 
 

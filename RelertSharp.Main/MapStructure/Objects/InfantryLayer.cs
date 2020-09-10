@@ -41,10 +41,12 @@ namespace RelertSharp.MapStructure.Objects
                 IsAboveGround = ParseBool(_args[11]);
                 AutoNORecruitType = ParseBool(_args[12]);
                 AutoYESRecruitType = ParseBool(_args[13]);
+                ObjectType = MapObjectType.Infantry;
             }
             catch
             {
                 GlobalVar.Log.Critical(string.Format("Infantry item id: {0} has unreadable data, please verify in map file!", _id));
+                ObjectType = MapObjectType.Infantry;
             }
         }
         public InfantryItem(InfantryItem src) : base(src)
@@ -58,12 +60,17 @@ namespace RelertSharp.MapStructure.Objects
             IsAboveGround = src.IsAboveGround;
             AutoNORecruitType = src.AutoNORecruitType;
             AutoYESRecruitType = src.AutoYESRecruitType;
+            ObjectType = MapObjectType.Infantry;
         }
         public InfantryItem(string regname)
         {
             RegName = regname;
+            ObjectType = MapObjectType.Infantry;
         }
-        public InfantryItem() { }
+        public InfantryItem()
+        {
+            ObjectType = MapObjectType.Infantry;
+        }
         #endregion
 
 

@@ -23,48 +23,31 @@ namespace RelertSharp.DrawingEngine
         #region Draw - Public
         public bool DrawBrushObject(IMapObject obj, int heightFix = 0, string houseName = "")
         {
-            Type t = obj.GetType();
-            if (t == typeof(InfantryItem))
+            switch (obj.ObjectType)
             {
-                return DrawObject(obj as InfantryItem, heightFix, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
+                case MapObjectType.Infantry:
+                    return DrawObject(obj as InfantryItem, heightFix, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
+                case MapObjectType.Unit:
+                    return DrawObject(obj as UnitItem, heightFix, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
+                case MapObjectType.Building:
+                    return DrawObject(obj as StructureItem, heightFix, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
+                case MapObjectType.Aircraft:
+                    return DrawObject(obj as AircraftItem, heightFix, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
+                case MapObjectType.Terrain:
+                    return DrawGeneralItem(obj as TerrainItem, heightFix);
+                case MapObjectType.Smudge:
+                    return DrawGeneralItem(obj as SmudgeItem, heightFix);
+                case MapObjectType.Overlay:
+                    return DrawGeneralItem(obj as OverlayUnit, heightFix);
+                case MapObjectType.Celltag:
+                    return DrawCelltag(obj as CellTagItem, heightFix, true);
+                case MapObjectType.BaseNode:
+                    return DrawObject(obj as BaseNode, heightFix, CurrentMapDocument.Map.GetHouseColor(houseName));
+                case MapObjectType.Waypoint:
+                    return DrawWaypoint(obj as WaypointItem, heightFix);
+                default:
+                    return false;
             }
-            else if (t == typeof(UnitItem))
-            {
-                return DrawObject(obj as UnitItem, heightFix, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
-            }
-            else if (t == typeof(StructureItem))
-            {
-                return DrawObject(obj as StructureItem, heightFix, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
-            }
-            else if (t == typeof(AircraftItem))
-            {
-                return DrawObject(obj as AircraftItem, heightFix, CurrentMapDocument.Map.GetHouseColor(obj as ICombatObject));
-            }
-            else if (t == typeof(TerrainItem))
-            {
-                return DrawGeneralItem(obj as TerrainItem, heightFix);
-            }
-            else if (t == typeof(SmudgeItem))
-            {
-                return DrawGeneralItem(obj as SmudgeItem, heightFix);
-            }
-            else if (t == typeof(OverlayUnit))
-            {
-                return DrawGeneralItem(obj as OverlayUnit, heightFix);
-            }
-            else if (t == typeof(BaseNode))
-            {
-                return DrawObject(obj as BaseNode, heightFix, CurrentMapDocument.Map.GetHouseColor(houseName));
-            }
-            else if (t == typeof(CellTagItem))
-            {
-                return DrawCelltag(obj as CellTagItem, heightFix, true);
-            }
-            else if (t == typeof(WaypointItem))
-            {
-                return DrawWaypoint(obj as WaypointItem, heightFix);
-            }
-            return false;
         }
         public bool DrawObject(InfantryItem inf, int height, uint color)
         {

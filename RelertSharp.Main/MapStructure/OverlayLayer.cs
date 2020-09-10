@@ -194,6 +194,7 @@ namespace RelertSharp.MapStructure
         public int Coord { get { return Misc.CoordInt(X, Y); } }
         public bool Selected { get; set; }
         public string RegName { get; set; }
+        public MapObjectType ObjectType { get { return MapObjectType.Overlay; } }
         #endregion
 
 

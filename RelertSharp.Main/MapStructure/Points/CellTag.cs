@@ -19,18 +19,22 @@ namespace RelertSharp.MapStructure.Points
         public CellTagItem(string _coord, string _tagID) : base(_coord)
         {
             TagID = _tagID;
+            ObjectType = MapObjectType.Celltag;
         }
         public CellTagItem(CellTagItem src) : base(src)
         {
             TagID = src.TagID;
+            ObjectType = MapObjectType.Celltag;
         }
         public CellTagItem(string tagid)
         {
             TagID = tagid;
+            ObjectType = MapObjectType.Celltag;
         }
         public CellTagItem(I2dLocateable pos, string tagID) : base(pos)
         {
             TagID = TagID;
+            ObjectType = MapObjectType.Celltag;
         }
 
 

@@ -39,10 +39,12 @@ namespace RelertSharp.MapStructure.Objects
                 FollowsIndex = _args[11];
                 AutoNORecruitType = ParseBool(_args[12]);
                 AutoYESRecruitType = ParseBool(_args[13]);
+                ObjectType = MapObjectType.Unit;
             }
             catch
             {
                 GlobalVar.Log.Critical(string.Format("Unit item id: {0} has unreadable data, please verify in map file!", _id));
+                ObjectType = MapObjectType.Unit;
             }
         }
         public UnitItem(UnitItem src) : base(src)
@@ -56,12 +58,17 @@ namespace RelertSharp.MapStructure.Objects
             IsAboveGround = src.IsAboveGround;
             AutoNORecruitType = src.AutoNORecruitType;
             AutoYESRecruitType = src.AutoYESRecruitType;
+            ObjectType = MapObjectType.Unit;
         }
         public UnitItem(string regname)
         {
             RegName = regname;
+            ObjectType = MapObjectType.Unit;
         }
-        public UnitItem() { }
+        public UnitItem()
+        {
+            ObjectType = MapObjectType.Unit;
+        }
 
 
         #region Public Methods

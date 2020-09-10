@@ -100,6 +100,7 @@ namespace RelertSharp.MapStructure.Points
         public bool Selected { get; set; }
         public PresentStructure SceneObject { get; set; }
         IPresentBase IMapScenePresentable.SceneObject { get { return SceneObject; } set { SceneObject = (PresentStructure)value; } }
+        public MapObjectType ObjectType { get { return MapObjectType.BaseNode; } }
         #endregion
     }
 }

@@ -48,6 +48,7 @@ namespace RelertSharp.Common
     {
         void Hide();
         void Reveal();
+        MapObjectType ObjectType { get; }
     }
 
     public interface ICombatObject : IMapObject

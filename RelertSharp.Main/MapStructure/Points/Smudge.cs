@@ -21,14 +21,17 @@ namespace RelertSharp.MapStructure.Points
         {
             RegName = _name;
             IgnoreSmudge = _ignore;
+            ObjectType = MapObjectType.Smudge;
         }
         public SmudgeItem(string regname)
         {
             RegName = regname;
+            ObjectType = MapObjectType.Smudge;
         }
         public SmudgeItem(SmudgeItem src) : base(src)
         {
             RegName = src.RegName;
+            ObjectType = MapObjectType.Smudge;
         }
 
 

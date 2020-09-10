@@ -19,14 +19,17 @@ namespace RelertSharp.MapStructure.Points
         public TerrainItem(string _coord, string _name) : base(_coord)
         {
             RegName = _name;
+            ObjectType = MapObjectType.Terrain;
         }
         public TerrainItem(string regname)
         {
             RegName = regname;
+            ObjectType = MapObjectType.Terrain;
         }
         public TerrainItem(TerrainItem src) : base(src)
         {
             RegName = src.RegName;
+            ObjectType = MapObjectType.Terrain;
         }
 
 

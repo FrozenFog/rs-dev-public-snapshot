@@ -63,6 +63,8 @@ namespace RelertSharp.Common
     [Flags]
     public enum MapObjectType
     {
+        Undefined = -1,
+
         Building = 1,
         Vehicle = 2,
         Infantry = 4,
@@ -77,7 +79,9 @@ namespace RelertSharp.Common
         AllBuilding = Building | BaseNode,
         Celltag = 512,
         Waypoint = 1024,
-        LogicObject = Celltag | Waypoint
+        LogicObject = Celltag | Waypoint,
+
+        MinimapRenderable = Building | Unit | Overlay | Terrain | Smudge
     }
     [Flags]
     public enum AudType

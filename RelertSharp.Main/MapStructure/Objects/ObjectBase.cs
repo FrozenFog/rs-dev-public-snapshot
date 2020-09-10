@@ -205,6 +205,7 @@ namespace RelertSharp.MapStructure.Objects
         public bool AutoNORecruitType { get; set; } = false;
         public bool AutoYESRecruitType { get; set; } = true;
         public bool Selected { get; set; } = false;
+        public MapObjectType ObjectType { get; protected set; } = MapObjectType.Undefined;
         #endregion
 
 

@@ -36,7 +36,7 @@ namespace RelertSharp.GUI
             {
                 foreach (IMapObject obj in objects)
                 {
-                    if (obj.GetType() == typeof(UnitItem))
+                    if (obj.ObjectType == MapObjectType.Unit)
                     {
                         if (unitForm == null) unitForm = new UnitAttributeForm(obj as UnitItem);
                         else unitForm.Reload(obj as UnitItem);
@@ -50,7 +50,7 @@ namespace RelertSharp.GUI
                         }
                         break;
                     }
-                    else if (obj.GetType() == typeof(InfantryItem))
+                    else if (obj.ObjectType == MapObjectType.Infantry)
                     {
                         foreach (InfantryItem inf in objects)
                         {
@@ -71,7 +71,7 @@ namespace RelertSharp.GUI
                         }
                         break;
                     }
-                    else if (obj.GetType() == typeof(StructureItem))
+                    else if (obj.ObjectType == MapObjectType.Building)
                     {
                         if (budForm == null) budForm = new BuildingAttributeForm(obj as StructureItem);
                         else budForm.Reload(obj as StructureItem);
@@ -85,7 +85,7 @@ namespace RelertSharp.GUI
                         }
                         break;
                     }
-                    else if (obj.GetType() == typeof(AircraftItem))
+                    else if (obj.ObjectType == MapObjectType.Aircraft)
                     {
                         if (airForm == null) airForm = new AircraftAttributeForm(obj as AircraftItem);
                         else airForm.Reload(obj as AircraftItem);

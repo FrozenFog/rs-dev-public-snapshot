@@ -34,11 +34,11 @@ namespace RelertSharp.DrawingEngine
             TileLayer tiles = GlobalVar.CurrentMapDocument.Map.TilesData;
             foreach (Tile t in tiles)
             {
-                if (t.ObjectCount == 0) minimap.DrawTile(t.SceneObject);
+                if (t.MinimapRenderableObjectCount == 0) minimap.DrawTile(t.SceneObject);
                 else
                 {
-                    IPresentBase c = t.GetObjects()[t.ObjectCount - 1].SceneObject;
-                    minimap.DrawColorable(t, c);
+                    IMapObject obj = t.GetObjects()[t.MinimapRenderableObjectCount - 1];
+                    minimap.DrawColorable(t, obj);
                 }
             }
         }

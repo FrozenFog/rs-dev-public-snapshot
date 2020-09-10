@@ -43,10 +43,12 @@ namespace RelertSharp.MapStructure.Objects
                 Upgrade2 = _args[13];
                 Upgrade3 = _args[14];
                 AIRepairable = ParseBool(_args[15]);
+                ObjectType = MapObjectType.Building;
             }
             catch
             {
                 GlobalVar.Log.Critical(string.Format("Building item id: {0} has unreadable data, please verify in map file!", _id));
+                ObjectType = MapObjectType.Building;
             }
         }
         public StructureItem(StructureItem src) : base(src)
@@ -61,10 +63,12 @@ namespace RelertSharp.MapStructure.Objects
             Upgrade2 = src.Upgrade2;
             Upgrade3 = src.Upgrade3;
             AIRepairable = src.AIRepairable;
+            ObjectType = MapObjectType.Building;
         }
         public StructureItem(string regname)
         {
             RegName = regname;
+            ObjectType = MapObjectType.Building;
         }
         #endregion
 
