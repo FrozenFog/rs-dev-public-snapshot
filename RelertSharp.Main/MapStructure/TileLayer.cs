@@ -596,7 +596,9 @@ namespace RelertSharp.MapStructure
         {
             if (src.ObjectType == MapObjectType.Overlay && objectsOnTile.Any(x => x.ObjectType == MapObjectType.Overlay))
             {
-                objectsOnTile.Remove(objectsOnTile.First(x => x.ObjectType == MapObjectType.Overlay));
+                OverlayUnit o = objectsOnTile.First(x => x.ObjectType == MapObjectType.Overlay) as OverlayUnit;
+                o.Dispose();
+                bool b = objectsOnTile.Remove(o);
             }
             objectsOnTile.Add(src);
         }

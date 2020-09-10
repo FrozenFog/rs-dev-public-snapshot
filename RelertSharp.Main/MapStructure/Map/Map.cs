@@ -232,6 +232,17 @@ namespace RelertSharp.MapStructure
             globalid.Remove(ID);
             return true;
         }
+        public void DumpOverlayFromTile()
+        {
+            foreach (Tile t in TilesData)
+            {
+                if (t.GetObjects().Any(x => x.ObjectType == MapObjectType.Overlay))
+                {
+                    OverlayUnit o = t.GetObjects().First(x => x.ObjectType == MapObjectType.Overlay) as OverlayUnit;
+                    Overlays[o.X, o.Y] = o;
+                }
+            }
+        }
         #endregion
 
 

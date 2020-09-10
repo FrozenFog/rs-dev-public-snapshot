@@ -115,7 +115,8 @@ namespace RelertSharp.GUI.Model.BrushModel
         public IMapObject ReleaseObject()
         {
             IMapObject obj = BrushObject;
-            Reload(currentName, ObjectType, obj as ICombatObject, true);
+            if ((obj.ObjectType & MapObjectType.Overlay) == 0) Reload(currentName, ObjectType, obj as ICombatObject, true);
+            else Reload(BrushObject, MapObjectType.Overlay, true);
             return obj;
         }
         public void ReleaseWaypoint()
