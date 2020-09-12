@@ -381,6 +381,7 @@ namespace RelertSharp.DrawingEngine
                 //minimap.DrawStructure(src, dest, dest.IsBaseNode);
                 dest.RadarColor = new RadarColor(src.MinimapColor);
             }
+            dest.SetZAdjust();
             return dest.IsValid;
         }
         private bool DrawUnit(DrawableUnit src, PresentUnit dest, Vec3 pos, Vec3 rotation, int pPal)
@@ -490,7 +491,7 @@ namespace RelertSharp.DrawingEngine
         {
             if (isVxl)
             {
-                facing = facing >> 5;
+                facing >>= 5;
                 return new Vec3() { X = 0, Y = 0, Z = (facing - 2) * _rad45 };
             }
             else

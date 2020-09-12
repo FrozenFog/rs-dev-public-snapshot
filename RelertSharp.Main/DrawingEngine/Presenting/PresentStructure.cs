@@ -144,7 +144,8 @@ namespace RelertSharp.DrawingEngine.Presenting
         #region Internal
         internal void SetZAdjust()
         {
-            foreach (int pshadow in Shadows) CppExtern.ObjectUtils.SetObjectZAdjust(pshadow, 10);
+            foreach (int p in Pointers) if (p != 0) CppExtern.ObjectUtils.SetObjectZAdjust(p, -1);
+            foreach (int pshadow in Shadows) if (pshadow != 0) CppExtern.ObjectUtils.SetObjectZAdjust(pshadow, 1);
         }
         #endregion
 

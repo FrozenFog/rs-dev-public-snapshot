@@ -350,15 +350,24 @@ namespace RelertSharp.IniSystem
             else turret = GuessStructureName(Art[this[id]["TurretAnim"]]);
 
             nSelf = GlobalDir.GetShpFrameCount(img, out bool bSelf);
-            if (!isVox) nTurret = GlobalDir.GetShpFrameCount(turret, out bool bTurret);
-            else nTurret = 0;
+            bool bTurret = true;
+            if (!isVox)
+            {
+                nTurret = GlobalDir.GetShpFrameCount(turret, out bool turrEmpty);
+                bTurret = turrEmpty;
+            }
+            else
+            {
+                nTurret = 0;
+                bTurret = false;
+            }
             nAnim = GlobalDir.GetShpFrameCount(anim, out bool bAnim);
             nAnim2 = GlobalDir.GetShpFrameCount(anim2, out bool bAnim2);
             nAnim3 = GlobalDir.GetShpFrameCount(anim3, out bool bAnim3);
             nIdle = GlobalDir.GetShpFrameCount(idle, out bool bIdle);
             nSuper = GlobalDir.GetShpFrameCount(super, out bool bSuper);
             nBib = GlobalDir.GetShpFrameCount(bib, out bool bBib);
-            isEmpty = bSelf && bAnim && bAnim2 && bAnim3 && bIdle && bSuper && bBib;
+            isEmpty = bSelf && bAnim && bAnim2 && bAnim3 && bIdle && bSuper && bBib && bTurret;
             return img;
         }
         public string GetObjectImgName(ObjectItemBase inf, out short frame)
