@@ -190,23 +190,30 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 
 void DrawObject::CommitIsotatedTexture(LPDIRECT3DTEXTURE9 pTexture)
 {
+#ifdef ISOLATED_THREAD
 	if (IsTextureIsolated(pTexture))
 		return;
 
 	IsolatedTextures.push_back(pTexture);
+#endif
 }
 
 bool DrawObject::IsTextureIsolated(LPDIRECT3DTEXTURE9 pTexture)
 {
+#ifdef ISOLATED_THREAD
 	auto find = std::find_if(IsolatedTextures.begin(), IsolatedTextures.end(), [pTexture](LPDIRECT3DTEXTURE9& item)->bool {
 		return item == pTexture;
 	});
 
 	return find != IsolatedTextures.end();
+#else
+	return false;
+#endif
 }
 
 bool DrawObject::CanIsolatedTextureUnloadNow(LPDIRECT3DTEXTURE9 pTexture)
 {
+#ifdef ISOLATED_THREAD
 	unsigned long reference = 0;
 	for (auto& item : GlobalTransperantObjects) {
 		if (item.second->pTexture == pTexture ||
@@ -228,12 +235,13 @@ bool DrawObject::CanIsolatedTextureUnloadNow(LPDIRECT3DTEXTURE9 pTexture)
 			item.second->pZTexture == pTexture)
 			return false;
 	}
-
+#endif
 	return true;
 }
 
 void DrawObject::UnloadIsolatedTexture(LPDIRECT3DTEXTURE9 pTexture)
 {
+#ifdef ISOLATED_THREAD
 	auto find = std::find_if(IsolatedTextures.begin(), IsolatedTextures.end(), [pTexture](LPDIRECT3DTEXTURE9& item)->bool {
 		return item == pTexture;
 	});
@@ -242,6 +250,7 @@ void DrawObject::UnloadIsolatedTexture(LPDIRECT3DTEXTURE9 pTexture)
 		IsolatedTextures.erase(find);
 		pTexture->Release();
 	}
+#endif
 }
 
 DWORD WINAPI DrawObject::TextureManagementThreadProc(LPVOID pNothing)
@@ -568,6 +577,7 @@ int DrawObject::CommitTopObject(PaintingStruct & Object)
 
 void DrawObject::ClearAllObjects()
 {
+#ifdef ISOLATED_THREAD
 	for (auto&pair : this->TransperantImageTable) {
 		GlobalTransperantObjects.erase(pair.first);
 		SAFE_RELEASE(pair.second.pVertexBuffer);
@@ -582,6 +592,7 @@ void DrawObject::ClearAllObjects()
 		TopObjectTable.erase(pair.first);
 		SAFE_RELEASE(pair.second.pVertexBuffer);
 	}
+#endif
 
 	this->TransperantImageTable.clear();
 	this->OpaqueImageTable.clear();
@@ -592,7 +603,9 @@ void DrawObject::RemoveTransperantObject(int nID)
 {
 	auto find = this->TransperantImageTable.find(nID);
 	if (find != this->TransperantImageTable.end()) {
+#ifdef ISOLATED_THREAD
 		find->second.pVertexBuffer->Release();
+#endif
 
 		this->TransperantImageTable.erase(nID);
 		GlobalTransperantObjects.erase(nID);
@@ -603,7 +616,9 @@ void DrawObject::RemoveOpaqueObject(int nID)
 {
 	auto find = this->OpaqueImageTable.find(nID);
 	if (find != this->OpaqueImageTable.end()) {
+#ifdef ISOLATED_THREAD
 		find->second.pVertexBuffer->Release();
+#endif
 
 		this->OpaqueImageTable.erase(nID);
 		GlobalOpaqueObjects.erase(nID);
@@ -614,7 +629,9 @@ void DrawObject::RemoveTopObject(int nID)
 {
 	auto find = this->TopObjectTable.find(nID);
 	if (find != this->TopObjectTable.end()) {
+#ifdef ISOLATED_THREAD
 		SAFE_RELEASE(find->second.pVertexBuffer);
+#endif
 
 		this->TopObjectTable.erase(nID);
 		GlobalTopObjects.erase(nID);
@@ -851,9 +868,11 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 	std::string String
 )
 {
+#ifdef ISOLATED_THREAD
 	Object.pVertexBuffer = pVertexBuffer;
-	Object.Position = Position;
 	Object.pTexture = pTexture;
+#endif
+	Object.Position = Position;
 	Object.nPaletteID = nPaletteID;
 	Object.dwRemapColor = dwRemapColor;
 	Object.cSpecialDrawType = cSpecialDrawType;
@@ -866,6 +885,24 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 	if (BufferedNormals)
 		Object.BufferedNormals = *BufferedNormals;
 
+#ifndef ISOLATED_THREAD
+	if (pTexture)
+		pTexture->AddRef();
+
+	if (Object.pTexture)
+		Object.pTexture->Release();
+
+	Object.pTexture = pTexture;
+
+	if (pVertexBuffer)
+		pVertexBuffer->AddRef();
+
+	if (Object.pVertexBuffer)
+		Object.pVertexBuffer->Release();
+
+	Object.pVertexBuffer = pVertexBuffer;
+#endif
+
 	Object.SetZTexture();
 	Object.SetColorCoefficient(D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
 	Object.SetCompareOffset(D3DXVECTOR3(0.0, 0.0, 0.0));
@@ -875,7 +912,17 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 
 void PaintingStruct::SetZTexture(LPDIRECT3DTEXTURE9 pTexture)
 {
+#ifdef ISOLATED_THREAD
 	this->pZTexture = pTexture;
+#else ISOLATED_THREAD
+	if (pTexture)
+		pTexture->AddRef();
+
+	if (this->pZTexture)
+		this->pZTexture->Release();
+
+	this->pZTexture = pTexture;
+#endif
 }
 
 //should BeginScene() at first
@@ -972,7 +1019,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->GetTexture(0, &pFormerTexture);
 		pDevice->GetTexture(1, &pFormer2);
 		pDevice->GetPixelShader(&pFormerShader);
-		pDevice->GetStreamSource(0, &pFormerStream, &uOffset, &uStride);
+		//pDevice->GetStreamSource(0, &pFormerStream, &uOffset, &uStride);
 
 		pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
 		pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
@@ -1021,7 +1068,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->SetTexture(0, pFormerTexture);
 		pDevice->SetTexture(1, pFormer2);
 		pDevice->SetPixelShader(pFormerShader);
-		pDevice->SetStreamSource(0, pFormerStream, uOffset, uStride);
+		//pDevice->SetStreamSource(0, pFormerStream, uOffset, uStride);
 
 		if (this->cSpecialDrawType == SPECIAL_NORMAL)
 		{

@@ -109,10 +109,14 @@ bool SceneClass::SetUpScene(HWND hWnd)
 	this->InitializeDeviceState();
 	this->GetDevice()->SetVertexShader(this->VertexShader.GetVertexShader());
 
+#ifdef ISOLATED_THREAD
 	DrawObject::hTextureManagementThread =
 		CreateThread(nullptr, 0, DrawObject::TextureManagementThreadProc, nullptr, NULL, &DrawObject::idTextureManagementThread);
 
 	return DrawObject::hTextureManagementThread != INVALID_HANDLE_VALUE;
+#else
+	return true;
+#endif
 }
 
 bool SceneClass::IsDeviceLoaded()
@@ -439,12 +443,34 @@ void SceneClass::SetUpCamera()
 	this->SetUpCamera(Eye, Target);
 }
 
-void SceneClass::SetUpCamera(D3DXVECTOR3 Eye, D3DXVECTOR3 At)
+void SceneClass::SetUpCamera(const D3DXVECTOR3& Eye, const D3DXVECTOR3& At)
 {
 	D3DXMATRIX View;
 	D3DXVECTOR3 Up{ 0.0,0.0,1.0 };
 	D3DXMatrixLookAtLH(&View, &Eye, &At, &Up);
 
+	this->pDevice->SetTransform(D3DTS_VIEW, &View);
+}
+
+void SceneClass::SetUpCameraPerspective()
+{
+	D3DXVECTOR3 Target = this->GetFocus();
+	D3DXVECTOR3 Eye = Target + D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f * sqrt(2.0) / sqrt(3.0));
+
+	this->SetUpCameraPerspective(Eye, Target);
+}
+
+void SceneClass::SetUpCameraPerspective(const D3DXVECTOR3& Eye, const D3DXVECTOR3& At)
+{
+	D3DXMATRIX View, Proj;
+	D3DXVECTOR3 Up{ 0.0,0.0,1.0f };
+	RECT Window = this->GetWindowRect();
+
+	//D3DXMatrixOrthoLH(&Proj, Window.right, Window.bottom, 0.0f, 50000.0f);
+	D3DXMatrixPerspectiveFovLH(&Proj, D3DX_PI /2.0f, (float)Window.right / Window.bottom, 0.0f, 500.0f);
+	D3DXMatrixLookAtLH(&View, &Eye, &At, &Up);
+
+	this->pDevice->SetTransform(D3DTS_PROJECTION, &Proj);
 	this->pDevice->SetTransform(D3DTS_VIEW, &View);
 }
 
@@ -510,7 +536,7 @@ void SceneClass::RefillAlphaImageSurface()
 	AlphaSurface->UnlockRect(0);
 }
 
-void SceneClass::DrawAlphaImageToAlphaSurface(PaintingStruct& paint)
+void SceneClass::DrawAlphaImageToAlphaSurface(const PaintingStruct& paint)
 {
 	auto AlphaSurface = this->GetAlphaSurface();
 	auto Texture = paint.pTexture;

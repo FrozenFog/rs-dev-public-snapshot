@@ -5,6 +5,9 @@
 #include "CncImageAPI.h"
 #include "DemoCellClass.h"
 
+#include <math.h>
+#include <Windows.h>
+
 namespace Graphic
 {
 	std::vector<int> VxlFiles;
@@ -13,14 +16,18 @@ namespace Graphic
 
 	std::vector<int> SceneObjects;
 
-	int MouseObject;
-	int CliffObject, CliffExtraObject;
-	int UnitPalette, TmpPalette, SnoPalette, DesPalette;
-	int ShpFile;
-	int roadTileFile;
-	int roadObject[3];
-	int alphaObject1, alphaObject2;
-	int nCachedObject, nCachedShadow;  
+	int MouseObject = 0;
+	int CliffObject = 0, CliffExtraObject = 0;
+	int UnitPalette = 0, TmpPalette = 0, SnoPalette = 0, DesPalette = 0;
+	int ShpFile = 0;
+	int roadTileFile = 0;
+	int roadObject[3]{ 0 };
+	int alphaObject1 = 0, alphaObject2 = 0;
+	int nCachedObject = 0, nCachedShadow = 0;
+	HWND hWnd = NULL;
+
+	D3DXVECTOR3 CurrentDir = { -1.0f,-1.0f,0.0f };
+	D3DXVECTOR3 CurrentEye = { 50.0f,50.0f,50.0f * sqrt(2.0f) / sqrt(3.0f) };
 }
 
 bool Graphic::TryCreateIndexedTexture()
@@ -249,10 +256,10 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion,
 		printf_s("Line success.\n");
 	}
 
-	if (MouseObject = CreateRectangleObjectAtScene({ 0.0,0.0,0.1f },88,88,D3DCOLOR_XRGB(76,76,100)))
-	{
-		printf_s("Rect success.\n");
-	}
+	//if (MouseObject = CreateRectangleObjectAtScene({ 0.0,0.0,0.1f },88,88,D3DCOLOR_XRGB(76,76,100)))
+	//{
+	//	printf_s("Rect success.\n");
+	//}
 
 	SetBackgroundColor(0, 0, 0);
 
@@ -308,14 +315,15 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion,
 	//}
 
 
-	if (auto sid = CreateShpFile("images\\repring.shp")) {
-		if (LoadShpTextures(sid, 0)) {
-			alphaObject1 = CreateShpObjectAtScene(sid, { 0.0,0.0,0.1f }, 0,
-				UnitPalette, RGB(0, 252, 252), 0, 4, 4, 8, SPECIAL_ALPHA);
-			alphaObject2 = CreateShpObjectAtScene(sid, { 0.0,-200.0,0.1f }, 0,
-				UnitPalette, RGB(0, 252, 252), 0, 4, 4, 8, SPECIAL_ALPHA);
-		}
-	}
+	//if (auto sid = CreateShpFile("images\\repring.shp")) {
+	//	if (LoadShpTextures(sid, 0)) {
+	//		alphaObject1 = CreateShpObjectAtScene(sid, { 0.0,0.0,0.1f }, 0,
+	//			UnitPalette, RGB(0, 252, 252), 0, 4, 4, 8, SPECIAL_ALPHA);
+	//		alphaObject2 = CreateShpObjectAtScene(sid, { 0.0,-200.0,0.1f }, 0,
+	//			UnitPalette, RGB(0, 252, 252), 0, 4, 4, 8, SPECIAL_ALPHA);
+	//	}
+	//}
+
 	if (auto vid = CreateVxlFile("images\\ytnk.vxl"))
 	{
 		if (auto tid = CreateVxlFile("images\\ytnktur.vxl"))
@@ -563,4 +571,78 @@ void Graphic::RemoveAlphaObjects()
 {
 	RemoveObjectFromScene(alphaObject1);
 	RemoveObjectFromScene(alphaObject2);
+}
+
+void Graphic::MouseMovePerspective(const POINTS& Position)
+{
+	POINT LastPosition{ SceneClass::Instance.GetWindowRect().right / 2,SceneClass::Instance.GetWindowRect().bottom / 2 };
+
+	D3DXMATRIX PlainRotation, PitchRotation;
+	D3DXVECTOR3 Axis = { CurrentDir.y,-CurrentDir.x,CurrentDir.z };
+	float deltaX = (Position.x - LastPosition.x) / 200.0f;
+	float deltaY = (Position.y - LastPosition.y) / 200.0f;
+
+	D3DXMatrixRotationZ(&PlainRotation, deltaX);
+	D3DXVec3TransformNormal(&CurrentDir, &CurrentDir, &PlainRotation);
+	//D3DXMatrixRotationAxis(&PitchRotation, &Axis, deltaY);
+	//D3DXVec3TransformNormal(&CurrentDir, &CurrentDir, &PitchRotation);
+	float length = std::sqrtf(CurrentDir.x * CurrentDir.x + CurrentDir.y * CurrentDir.y);
+	float angle = std::atanf(CurrentDir.z / length);
+
+	if (length >= 0.0001f)
+	{
+		angle -= deltaY / 2.0f;
+		if (angle <= -D3DX_PI * 0.5f)
+			CurrentDir.z = -1.0f;
+		else if (angle >= D3DX_PI * 0.5f)
+			CurrentDir.z = 1.0f;
+		else
+			CurrentDir.z = std::tanf(angle) * std::sqrtf(CurrentDir.x * CurrentDir.x + CurrentDir.y * CurrentDir.y);
+	}
+
+	D3DXVec3Normalize(&CurrentDir, &CurrentDir);
+	ClientToScreen(hWnd, &LastPosition);
+	SetCursorPos(LastPosition.x, LastPosition.y);
+	SceneClass::Instance.SetUpCameraPerspective(CurrentEye, CurrentEye + CurrentDir);
+}
+
+void Graphic::KeyDownMoveCamera(const int x, const int y)
+{
+	D3DXMATRIX Rotation;
+	D3DXVECTOR3 Direction(0, 0, 0);
+	D3DXVECTOR3 Plain(CurrentDir.x, CurrentDir.y, 0.0f);
+
+	D3DXMatrixIdentity(&Rotation);
+	
+	if (x == 1)
+	{
+		Direction = CurrentDir;
+	}
+	if (x == -1)
+	{
+		Direction = -CurrentDir;
+	}
+	else if (y == 1)
+	{
+		D3DXMatrixRotationZ(&Rotation, D3DX_PI * 0.5f);
+		D3DXVec3TransformNormal(&Direction, &Plain, &Rotation);
+	}
+	else if (y == -1)
+	{
+		D3DXMatrixRotationZ(&Rotation, D3DX_PI * 1.5f);
+		D3DXVec3TransformNormal(&Direction, &Plain, &Rotation);
+	}
+
+	D3DXVec3Normalize(&Direction, &Direction);
+	CurrentEye += 0.5f*Direction;
+	SceneClass::Instance.SetUpCameraPerspective(CurrentEye, CurrentEye + CurrentDir);
+
+}
+
+void Graphic::KeyDownLiftCamera(const int z)
+{
+	D3DXVECTOR3 Direction = { 0.0f,0.0f,(float)z };
+
+	CurrentEye += 0.5f*Direction;
+	SceneClass::Instance.SetUpCameraPerspective(CurrentEye, CurrentEye + CurrentDir);
 }
