@@ -77,6 +77,15 @@ struct PaintingStruct
 	void SetColorCoefficient(D3DXVECTOR4 Coefficient);
 	void SetPlainArtAttributes(LPDIRECT3DTEXTURE9 pPaletteTexture, D3DXVECTOR4 ShaderRemap = D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
 	void SetZAdjust(float zAdjust);
+
+	~PaintingStruct()
+	{
+#ifndef ISOLATED_THREAD
+		SAFE_RELEASE(pVertexBuffer);
+		SAFE_RELEASE(pTexture);
+		SAFE_RELEASE(pZTexture);
+#endif
+	}
 };
 
 class DrawObject

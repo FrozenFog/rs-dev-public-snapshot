@@ -5,7 +5,7 @@ sampler2D zshade_samlper : register(s2);
 uniform vector plain_cof : register(c1);
 uniform vector remap_color : register(c2);
 uniform vector screen_dimension;
-uniform float z_adjust;
+uniform float z_adjust = 0.0f;
 
 static const float zdistance = 5000.0;
 
@@ -20,7 +20,7 @@ vector pmain(in float2 texcoords : TEXCOORD, in vector position : TEXCOORD2, out
     float zadjust = tex2D(zshade_samlper, texcoords).r * 255.0;
 	vector incolor = tex1D(palette_sampler, inindex);
 
-	if (remap_color.a == 0.0 && inindex*256.0 >= 16.0 && inindex*256.0 <= 31.0)
+    if (remap_color.a == 0.0 && inindex * 256.0 >= 16.0 && inindex * 256.0 <= 31.0)
 	{
 		float rto = (32.0 - inindex*256.0) / 16.0;
 		incolor.rgb = mul(remap_color.rgb, rto);

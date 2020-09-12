@@ -66,7 +66,6 @@ EXPORT void WINAPI RemoveShpFromScene(int nID);
 EXPORT void WINAPI RemoveCommonFromScene(int nID);
 EXPORT void WINAPI RemoveCommonTextureFromScene(int nID);
 
-
 EXPORT void WINAPI RotateObject(int nID, float RotationX, float RotationY, float RotationZ);
 
 EXPORT void WINAPI MoveObject(int nID, D3DXVECTOR3 Displacement);

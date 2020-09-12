@@ -184,7 +184,10 @@ bool WINAPI DllMain(HANDLE hInstance, DWORD dwReason, LPVOID v)
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	static int x, y, z;
 	POINTS Position;
+
+
 	switch (uMsg)
 	{
 	case WM_PAINT:
@@ -197,13 +200,14 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		Graphic::PlaceVXL(POINT{ Position.x,Position.y });
 		break;
 
-	case WM_MOUSEMOVE:
+	case WM_MOUSEMOVE:/*
 		Position = MAKEPOINTS(lParam);
 		Graphic::MouseMove(POINT{ Position.x,Position.y });
 
 		if (wParam == MK_MBUTTON)
-			Graphic::SceneRotation();
+			Graphic::SceneRotation();*/
 
+		Graphic::MouseMovePerspective(MAKEPOINTS(lParam));
 		break;
 
 	case WM_SIZE:
@@ -214,26 +218,62 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		switch (wParam)
 		{
 		case VK_SPACE:
-			printf_s("deleting alpha objects.\n");
-			Graphic::RemoveAlphaObjects();
+			z = 1;
 			break;
+
 		case VK_UP:
-			Graphic::MoveFocus(0.0, -1.0);
+		case 'W':
+			x = 1;
 			break;
+
 		case VK_DOWN:
-			Graphic::MoveFocus(0.0, 1.0);
+		case 'S':
+			x = -1;
 			break;
+
 		case VK_LEFT:
-			Graphic::MoveFocus(-1.0, 0.0);
+		case 'A':
+			y = -1;
 			break;
+
 		case VK_RIGHT:
-			Graphic::MoveFocus(1.0, 0.0);
+		case 'D':
+			y = 1;
 			break;
+
+		case VK_SHIFT:
+			z = -1;
+			break;
+
 		case VK_ESCAPE:
 			Graphic::ClearScene();
 			break;
 		case VK_RETURN:
 			Graphic::RemoveLastTmp();
+			break;
+		default:
+			break;
+		}
+		break;
+
+	case WM_KEYUP:
+		switch (wParam)
+		{
+		case VK_SPACE:
+		case VK_SHIFT:
+			z = 0;
+			break;
+		case VK_LEFT:
+		case VK_RIGHT:
+		case 'A':
+		case 'D':
+			y = 0;
+			break;
+		case VK_DOWN:
+		case VK_UP:
+		case 'W':
+		case 'S':
+			x = 0;
 			break;
 		default:
 			break;
@@ -254,6 +294,20 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	default:
 		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
+
+	if (x)
+	{
+		Graphic::KeyDownMoveCamera(x, 0);
+	}
+	if (y)
+	{
+		Graphic::KeyDownMoveCamera(0, y);
+	}
+	if (z)
+	{
+		Graphic::KeyDownLiftCamera(z);
+	}
+
 	return 0;
 }
 

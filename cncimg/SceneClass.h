@@ -100,7 +100,9 @@ public:
 	void InitializeDeviceState();
 	bool ResetDevice();
 	void SetUpCamera();
-	void SetUpCamera(D3DXVECTOR3 Eye, D3DXVECTOR3 At);
+	void SetUpCamera(const D3DXVECTOR3& Eye, const D3DXVECTOR3& At);
+	void SetUpCameraPerspective();
+	void SetUpCameraPerspective(const D3DXVECTOR3& Eye, const D3DXVECTOR3& At);
 	void SetBackgroundColor(DWORD dwColor);
 	void ResetShaderMatrix();
 	DWORD GetBackgroundColor();
@@ -109,7 +111,7 @@ public:
 
 	//alpha specifics
 	void RefillAlphaImageSurface();
-	void DrawAlphaImageToAlphaSurface(PaintingStruct& paint);
+	void DrawAlphaImageToAlphaSurface(const PaintingStruct& paint);
 
 private:
 	//for color & calculation
