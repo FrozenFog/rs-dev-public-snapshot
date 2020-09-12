@@ -27,6 +27,7 @@ ressrc/
 /Debug/shader
 cncimg/Debug
 /Debug/release
+/Debug/DllDebug
 OpenTKIntro
 RelertSharp.GUI.WPF/bin
 RelertSharp.Main/obj

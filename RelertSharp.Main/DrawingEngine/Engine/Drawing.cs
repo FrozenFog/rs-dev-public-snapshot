@@ -328,8 +328,17 @@ namespace RelertSharp.DrawingEngine
             {
                 if (src.VoxelTurret)
                 {
-                    dest.pTurretAnim = RenderAndPresent(src.pTurretAnim, pos + src.offsetTurret, turRotation, src.RemapColor, pPal);
-                    if (src.pTurretBarl != 0) dest.pTurretBarl = RenderAndPresent(src.pTurretBarl, pos + src.offsetTurret, turRotation, src.RemapColor, pPal);
+                    RenderAndPresent(src.pTurretAnim, pos + src.offsetTurret, turRotation, src.RemapColor, pPal, out int vid, out int sid);
+                    dest.pTurretAnimShadow = sid;
+                    dest.pTurretAnim = vid;
+                    if (src.pTurretBarl != 0)
+                    {
+                        RenderAndPresent(src.pTurretBarl, pos + src.offsetTurret, turRotation, src.RemapColor, pPal, out int turBarrel, out int turBarrShadow);
+                        dest.pTurretBarl = turBarrel;
+                        dest.pTurretBarlShadow = turBarrShadow;
+                    }
+                    SetVxlZAdjust(0, dest.pTurretAnim, dest.pTurretAnimShadow, dest.pTurretBarl, dest.pTurretBarlShadow);
+                    
                 }
                 else
                 {
@@ -379,9 +388,25 @@ namespace RelertSharp.DrawingEngine
             if (src.pPalCustom != 0) pPal = src.pPalCustom;
             if (src.IsVxl)
             {
-                if (src.pSelf != 0) dest.pSelf = RenderAndPresent(src.pSelf, pos, rotation, src.RemapColor, pPal);
-                if (src.pBarrel != 0) dest.pBarrel = RenderAndPresent(src.pBarrel, pos, rotation, src.RemapColor, pPal);
-                if (src.pTurret != 0) dest.pTurret = RenderAndPresent(src.pTurret, pos, rotation, src.RemapColor, pPal);
+                if (src.pSelf != 0)
+                {
+                    RenderAndPresent(src.pSelf, pos, rotation, src.RemapColor, pPal, out int selfId, out int selfShadow);
+                    dest.pSelf = selfId;
+                    dest.pSelfShadow = selfShadow;
+                }
+                if (src.pBarrel != 0)
+                {
+                    RenderAndPresent(src.pBarrel, pos, rotation, src.RemapColor, pPal, out int barlId, out int barlShadow);
+                    dest.pBarrel = barlId;
+                    dest.pBarrelShadow = barlShadow;
+                }
+                if (src.pTurret != 0)
+                {
+                    RenderAndPresent(src.pTurret, pos, rotation, src.RemapColor, pPal, out int turId, out int turShadow);
+                    dest.pTurret = turId;
+                    dest.pTurretShadow = turShadow;
+                }
+                SetVxlZAdjust(dest.pSelfShadow, dest.pTurret, dest.pTurretShadow, dest.pBarrel, dest.pBarrelShadow);
             }
             else
             {
@@ -417,9 +442,31 @@ namespace RelertSharp.DrawingEngine
         {
             return CppExtern.ObjectUtils.CreateShpObjectAtScene(id, pos, framecount / 2, pPal, src.RemapColor, (int)flat, src.FoundationX, src.FoundationY, src.Height, (byte)shade);
         }
+        /// <summary>
+        /// obsolete
+        /// </summary>
+        /// <param name="vxlID"></param>
+        /// <param name="pos"></param>
+        /// <param name="ro"></param>
+        /// <param name="color"></param>
+        /// <param name="pPal"></param>
+        /// <returns></returns>
         private int RenderAndPresent(int vxlID, Vec3 pos, Vec3 ro, uint color, int pPal)
         {
             return CppExtern.ObjectUtils.CreateVxlObjectAtScene(vxlID, pos, ro.X, ro.Y, ro.Z, pPal, color);
+        }
+        private void RenderAndPresent(int vxlFile, Vec3 pos, Vec3 rotation, uint color, int pPal, out int vxlId, out int shadowId)
+        {
+            vxlId = 0; shadowId = 0;
+            CppExtern.ObjectUtils.CreateVxlObjectCached(vxlFile, pos, pos, rotation.Z, pPal, color, ref vxlId, ref shadowId);
+        }
+        private void SetVxlZAdjust(int selfShadow, int turret = 0, int turrShadow = 0, int barl = 0, int barlShadow = 0)
+        {
+            if (selfShadow != 0) CppExtern.ObjectUtils.SetObjectZAdjust(selfShadow, 5);
+            if (turret != 0) CppExtern.ObjectUtils.SetObjectZAdjust(turret, -5);
+            if (turrShadow != 0) CppExtern.ObjectUtils.SetObjectZAdjust(turrShadow, 10);
+            if (barl != 0) CppExtern.ObjectUtils.SetObjectZAdjust(barl, -10);
+            if (barlShadow != 0) CppExtern.ObjectUtils.SetObjectZAdjust(barlShadow, 15);
         }
         private Vec3 BuildingRotation(string nameid, int facing, bool isVxl)
         {

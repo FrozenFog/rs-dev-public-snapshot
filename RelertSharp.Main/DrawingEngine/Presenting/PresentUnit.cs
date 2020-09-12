@@ -27,10 +27,10 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             if (!Disposed)
             {
-                if (IsVxl) RemoveProp(PresentFileTypeFlag.Vxl, pSelf);
+                if (IsVxl) RemoveProp(PresentFileTypeFlag.Vxl, pSelf, pSelfShadow);
                 else RemoveProp(PresentFileTypeFlag.Shp, pSelf);
-                RemoveProp(PresentFileTypeFlag.Vxl, pBarrel);
-                RemoveProp(PresentFileTypeFlag.Vxl, pTurret);
+                RemoveProp(PresentFileTypeFlag.Vxl, pBarrel, pBarrelShadow);
+                RemoveProp(PresentFileTypeFlag.Vxl, pTurret, pTurretShadow);
                 Disposed = true;
             }
         }
@@ -38,16 +38,16 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             Vec3 delta = GetDeltaDistant(cell);
             ShiftBy(delta, pSelf, pSelfShadow);
-            ShiftBy(delta, pBarrel);
-            ShiftBy(delta, pTurret);
+            ShiftBy(delta, pBarrel, pBarrelShadow);
+            ShiftBy(delta, pTurret, pTurretShadow);
             base.MoveTo(cell);
         }
         public override void ShiftBy(I3dLocateable delta)
         {
             Vec3 distant = Vec3.ToVec3Iso(delta);
             ShiftBy(distant, pSelf, pSelfShadow);
-            ShiftBy(distant, pBarrel);
-            ShiftBy(distant, pTurret);
+            ShiftBy(distant, pBarrel, pBarrelShadow);
+            ShiftBy(distant, pTurret, pTurretShadow);
             base.ShiftBy(delta);
         }
         public void SetColor(Vec4 color)
@@ -104,7 +104,9 @@ namespace RelertSharp.DrawingEngine.Presenting
 
         #region Public Calls - PresentUnit
         public int pBarrel { get; set; }
+        public int pBarrelShadow { get; set; }
         public int pTurret { get; set; }
+        public int pTurretShadow { get; set; }
         public bool IsValid { get { return !((pSelf | pBarrel | pTurret) == 0); } }
         public bool IsVxl { get; private set; }
         #endregion
