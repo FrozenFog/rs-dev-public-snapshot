@@ -36,6 +36,10 @@ namespace RelertSharp.Common
         {
             return new Vec3(X, Y, Z + 0.05f);
         }
+        public Vec3 Sink()
+        {
+            return new Vec3(X, Y, Z - 0.05f);
+        }
         public Vec3 MoveX(float delta)
         {
             return new Vec3(X + delta, Y, Z);

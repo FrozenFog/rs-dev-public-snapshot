@@ -47,6 +47,12 @@ namespace RelertSharp.DrawingEngine.Drawables
         public bool VoxelTurret { get; set; }
         public bool FlatSelf { get { return pTurretAnim != 0; } }
         public bool IsValid { get { return pSelf != 0 || pActivateAnim != 0 || pBib != 0 || pIdleAnim != 0; } }
+        public int TurretZAdjust { get; set; }
+        public int ActivateZAdjust { get; set; }
+        public int Activate2ZAdjust { get; set; }
+        public int Activate3ZAdjust { get; set; }
+        public int SuperZAdjust { get; set; }
+        public int IdleZAdjust { get; set; }
         #endregion
     }
 }

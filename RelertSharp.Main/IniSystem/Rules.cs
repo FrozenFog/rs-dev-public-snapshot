@@ -38,6 +38,12 @@ namespace RelertSharp.IniSystem
             }
         }
         private Dictionary<string, Vec3> bufferedBuildingShape = new Dictionary<string, Vec3>();
+        private const string EX_SHP = ".shp";
+        private const string EX_VXL = ".vxl";
+        private const string EX_HVA = ".hva";
+        private const string SUFF_BARREL = "barr";
+        private const string SUFF_TURRET = "tur";
+        private const string NULL_ICON = "xxicon.shp";
 
 
         #region Ctor - Rules
@@ -159,8 +165,8 @@ namespace RelertSharp.IniSystem
             string shp = Art[art]["Cameo"].ToLower();
             if (string.IsNullOrEmpty(pcx))
             {
-                if (string.IsNullOrEmpty(shp)) return "xxicon.shp";
-                else return shp + ".shp";
+                if (string.IsNullOrEmpty(shp)) return NULL_ICON;
+                else return shp + EX_SHP;
             }
             return pcx;
         }
@@ -213,43 +219,6 @@ namespace RelertSharp.IniSystem
             }
             else SetListValue<bool>(ref shape, true);
             return shape;
-        }
-        public void GetBuildingShapeData(string nameid, out int height, out int foundX, out int foundY)
-        {
-            Vec3 sz;
-            if (!bufferedBuildingShape.Keys.Contains(nameid))
-            {
-                sz = new Vec3();
-                string artname = GetArtEntityName(nameid);
-                INIEntity art = Art[artname];
-
-                string foundation = (string)art["Foundation"].ToLower();
-                if (!string.IsNullOrEmpty(foundation))
-                {
-                    if (foundation == "custom")
-                    {
-                        sz.X = art.ParseInt("Foundation.X", 1);
-                        sz.Y = art.ParseInt("Foundation.Y", 1);
-                    }
-                    else
-                    {
-                        string[] tmp = foundation.Split('x');
-                        sz.X = int.Parse(tmp[0]);
-                        sz.Y = int.Parse(tmp[1]);
-                    }
-                }
-                else
-                {
-                    sz.X = 1;
-                    sz.Y = 1;
-                }
-                sz.Z = art.ParseInt("Height", 5) + 5;
-                bufferedBuildingShape[nameid] = sz;
-            }
-            else sz = bufferedBuildingShape[nameid];
-            foundX = (int)sz.X == 0 ? 1 : (int)sz.X;
-            foundY = (int)sz.Y == 0 ? 1 : (int)sz.Y;
-            height = (int)sz.Z;
         }
         public Vec4 GetBuildingLampData(string nameid, out float intensity, out int visibility)
         {
@@ -317,58 +286,6 @@ namespace RelertSharp.IniSystem
         {
             string turanim = this[nameid]["TurretAnim"];
             return Art[turanim];
-        }
-        public string GetObjectImgName(string id, ref string anim, ref string turret, ref string bib, ref bool isVox, ref string idle, ref string anim2, ref string anim3, ref string barl, ref string super,
-            out short nSelf, out short nAnim, out short nTurret, out short nBib, out short nIdle, out short nAnim2, out short nAnim3, out short nSuper, out string alpha,
-            out bool isEmpty)
-        {
-            string artname = GetArtEntityName(id);
-            INIEntity art = Art[artname];
-            string img;
-            if (string.IsNullOrEmpty(art.Name)) img = id + ".shp";
-            else img = GuessStructureName(art);
-            alpha = this[id]["AlphaImage"];
-            if (!string.IsNullOrEmpty(alpha)) alpha += ".shp";
-            if (!GlobalConfig.DeactiveAnimList.Contains(artname))
-            {
-                anim = GuessStructureName(Art[art["ActiveAnim"]]);
-                anim2 = GuessStructureName(Art[art["ActiveAnimTwo"]]);
-                anim3 = GuessStructureName(Art[art["ActiveAnimThree"]]);
-            }
-            idle = GuessStructureName(Art[art["IdleAnim"]]);
-            super = GuessStructureName(Art[art["SuperAnim"]]);
-            if (!GlobalConfig.DeactiveBibList.Contains(artname))
-            {
-                bib = GuessStructureName(art["BibShape"]);
-            }
-            isVox = ParseBool(this[id]["TurretAnimIsVoxel"]);
-            if (isVox)
-            {
-                turret = this[id]["TurretAnim"] + ".vxl";
-                barl = turret.ToLower().Replace("tur", "barl");
-            }
-            else turret = GuessStructureName(Art[this[id]["TurretAnim"]]);
-
-            nSelf = GlobalDir.GetShpFrameCount(img, out bool bSelf);
-            bool bTurret = true;
-            if (!isVox)
-            {
-                nTurret = GlobalDir.GetShpFrameCount(turret, out bool turrEmpty);
-                bTurret = turrEmpty;
-            }
-            else
-            {
-                nTurret = 0;
-                bTurret = false;
-            }
-            nAnim = GlobalDir.GetShpFrameCount(anim, out bool bAnim);
-            nAnim2 = GlobalDir.GetShpFrameCount(anim2, out bool bAnim2);
-            nAnim3 = GlobalDir.GetShpFrameCount(anim3, out bool bAnim3);
-            nIdle = GlobalDir.GetShpFrameCount(idle, out bool bIdle);
-            nSuper = GlobalDir.GetShpFrameCount(super, out bool bSuper);
-            nBib = GlobalDir.GetShpFrameCount(bib, out bool bBib);
-            isEmpty = bSelf && bAnim && bAnim2 && bAnim3 && bIdle && bSuper && bBib && bTurret;
-            return img;
         }
         public string GetObjectImgName(ObjectItemBase inf, out short frame)
         {
@@ -515,6 +432,110 @@ namespace RelertSharp.IniSystem
                 return string.Format("{0}({1})",
                     this[regname]["Name"],
                     regname);
+        }
+        #endregion
+
+
+        #region Internal - Rules
+        internal void GetBuildingShapeData(string nameid, out int height, out int foundX, out int foundY)
+        {
+            Vec3 sz;
+            if (!bufferedBuildingShape.Keys.Contains(nameid))
+            {
+                sz = new Vec3();
+                string artname = GetArtEntityName(nameid);
+                INIEntity art = Art[artname];
+
+                string foundation = (string)art["Foundation"].ToLower();
+                if (!string.IsNullOrEmpty(foundation))
+                {
+                    if (foundation == "custom")
+                    {
+                        sz.X = art.ParseInt("Foundation.X", 1);
+                        sz.Y = art.ParseInt("Foundation.Y", 1);
+                    }
+                    else
+                    {
+                        string[] tmp = foundation.Split('x');
+                        sz.X = int.Parse(tmp[0]);
+                        sz.Y = int.Parse(tmp[1]);
+                    }
+                }
+                else
+                {
+                    sz.X = 1;
+                    sz.Y = 1;
+                }
+                sz.Z = art.ParseInt("Height", 5) + 5;
+                bufferedBuildingShape[nameid] = sz;
+            }
+            else sz = bufferedBuildingShape[nameid];
+            foundX = (int)sz.X == 0 ? 1 : (int)sz.X;
+            foundY = (int)sz.Y == 0 ? 1 : (int)sz.Y;
+            height = (int)sz.Z;
+        }
+        internal BuildingData GetBuildingData(string name)
+        {
+            BuildingData data = new BuildingData();
+            string artname = GetArtEntityName(name);
+            INIEntity art = Art[artname];
+            if (string.IsNullOrEmpty(art.Name)) data.SelfId = name + EX_SHP;
+            else data.SelfId = GuessStructureName(art);
+
+            data.AlphaImage = this[name]["AlphaImage"];
+            if (!string.IsNullOrEmpty(data.AlphaImage)) data.AlphaImage += EX_SHP;
+
+            if (!GlobalConfig.DeactiveAnimList.Contains(artname))
+            {
+                data.ActivateAnim = GuessStructureName(Art[art["ActiveAnim"]]);
+                data.ActivateAnimTwo = GuessStructureName(Art[art["ActiveAnimTwo"]]);
+                data.ActivateAnimThree = GuessStructureName(Art[art["ActiveAnimThree"]]);
+            }
+
+            data.IdleAnim = GuessStructureName(Art[art["IdleAnim"]]);
+            data.SuperAnim = GuessStructureName(Art[art["SuperAnim"]]);
+            if (!GlobalConfig.DeactiveBibList.Contains(artname))
+            {
+                data.BibAnim = GuessStructureName(art["BibShape"]);
+            }
+
+            data.TurretAnimIsVoxel = this[name].ParseBool("TurretAnimIsVoxel");
+            if (data.TurretAnimIsVoxel)
+            {
+                data.TurretAnim = this[name]["TurretAnim"] + EX_VXL;
+                data.TurretBarrel = data.TurretAnim.ToLower().Replace("tur", "barl");
+            }
+            else data.TurretAnim = GuessStructureName(Art[this[name]["TurretAnim"]]);
+
+            data.nSelf = GlobalDir.GetShpFrameCount(data.SelfId, out bool bSelf);
+            bool bTurret = true;
+            if (!data.TurretAnimIsVoxel)
+            {
+                data.nTurretAnim = GlobalDir.GetShpFrameCount(data.TurretAnim, out bool turrEmpty);
+                bTurret = turrEmpty;
+            }
+            else
+            {
+                data.nTurretAnim = 0;
+                bTurret = false;
+            }
+
+            data.TurretAnimZAdjust = this[name].ParseInt("TurretAnimZAdjust");
+            data.ActiveAnimZAdjust = art.ParseInt("ActiveAnimZAdjust");
+            data.ActiveAnimTwoZAdjust = art.ParseInt("ActiveAnimTwoZAdjust");
+            data.ActiveAnimThreeZAdjust = art.ParseInt("ActiveAnimThreeZAdjust");
+            data.ActiveAnimFourZAdjust = art.ParseInt("ActiveAnimZFourAdjust");
+            data.IdleAnimZAdjust = art.ParseInt("IdleAnimZAdjust");
+            data.SuperAnimZAdjust = art.ParseInt("SuperAnimZAdjust");
+
+            data.nActivateAnim = GlobalDir.GetShpFrameCount(data.ActivateAnim, out bool bAnim);
+            data.nActivateAnimTwo = GlobalDir.GetShpFrameCount(data.ActivateAnimTwo, out bool bAnim2);
+            data.nActivateAnimThree = GlobalDir.GetShpFrameCount(data.ActivateAnimThree, out bool bAnim3);
+            data.nIdleAnim = GlobalDir.GetShpFrameCount(data.IdleAnim, out bool bIdle);
+            data.nSuperAnim = GlobalDir.GetShpFrameCount(data.SuperAnim, out bool bSuper);
+            data.nBibAnim = GlobalDir.GetShpFrameCount(data.BibAnim, out bool bBib);
+            data.IsEmpty = bSelf && bAnim && bAnim2 && bAnim3 && bIdle && bSuper && bBib && bTurret;
+            return data;
         }
         #endregion
 
