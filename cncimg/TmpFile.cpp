@@ -48,6 +48,10 @@ void TmpFileClass::Clear()
 		CommitIsotatedTexture(Pair.second);
 	this->ExtraTextures.clear();
 
+	for (auto& Pair : this->ExtraZTextures)
+		CommitIsotatedTexture(Pair.second);
+	this->ExtraZTextures.clear();
+
 	if (pFileData)
 		free(pFileData);
 	pFileData = nullptr;
@@ -382,7 +386,7 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice)
 		return false;
 
 	RECT SizeRect, ExtraSizeRect;
-	LPDIRECT3DTEXTURE9 pTexture, pExtraTexture;
+	LPDIRECT3DTEXTURE9 pTexture, pExtraTexture, pExtraZTexture;
 	D3DLOCKED_RECT LockedRect;
 	PBYTE pData, pFileData;
 
@@ -391,6 +395,10 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice)
 	}
 
 	for (auto item : this->ExtraTextures) {
+		DrawObject::CommitIsotatedTexture(item.second);
+	}
+
+	for (auto item : this->ExtraZTextures) {
 		DrawObject::CommitIsotatedTexture(item.second);
 	}
 
@@ -520,6 +528,7 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice)
 			continue;
 		}
 
+		
 		if (FAILED(pExtraTexture->LockRect(0, &LockedRect, &ExtraSizeRect, NULL)))
 		{
 			SAFE_RELEASE(pExtraTexture);
@@ -560,6 +569,54 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice)
 
 		pExtraTexture->UnlockRect(0);
 		this->AddExtraTexture(i, pExtraTexture);
+
+		if (FAILED(pDevice->CreateTexture(ExtraSizeRect.right, ExtraSizeRect.bottom, 0, NULL,
+			D3DFMT_L8, D3DPOOL_MANAGED, &pExtraZTexture, nullptr)))
+		{
+			SAFE_RELEASE(pExtraZTexture);
+			continue;
+		}
+
+		if (FAILED(pExtraZTexture->LockRect(0, &LockedRect, &ExtraSizeRect, NULL)))
+		{
+			SAFE_RELEASE(pExtraZTexture);
+			continue;
+		}
+
+		pData = reinterpret_cast<PBYTE>(LockedRect.pBits);
+		pFileData = this->GetExtraZShapeData(i);
+		for (int nLine = 0; nLine < ExtraSizeRect.bottom; nLine++)
+		{
+			RtlZeroMemory(pData, ExtraSizeRect.right);
+			auto pColorData = reinterpret_cast<PBYTE>(pData);
+			bool bEnter;
+
+			bEnter = true;
+			for (int i = 0; i < ExtraSizeRect.right; i++)
+			{
+				if (auto nColor = *pFileData++)
+				{
+					pColorData[i] = nColor;
+					if (bEnter) {
+						if (i >= 1)
+							pColorData[i - 1] = nColor;
+						if (i >= 2)
+							pColorData[i - 2] = nColor;
+						bEnter = false;
+					}
+					if (!bEnter && *pFileData == 0 && i < ExtraSizeRect.right - 1) {
+						pColorData[i + 1] = nColor;
+						if (i < ExtraSizeRect.right - 2)
+							pColorData[i + 2] = nColor;
+						bEnter = true;
+					}
+				}
+			}
+			pData += LockedRect.Pitch;
+		}
+
+		pExtraZTexture->UnlockRect(0);
+		this->AddZTexture(i, pExtraZTexture);
 /*
 		sprintf_s(szFileName, "dump\\tile_%p_%d.png", this, i);
 		D3DXSaveTextureToFile(szFileName, D3DXIFF_PNG, pExtraTexture, nullptr);*/
@@ -586,12 +643,12 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 
 	PaintingStruct PaintObject;
 	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer, pExtraVertexBuffer;
-	LPDIRECT3DTEXTURE9 pTexture, pExtraTexture;
+	LPDIRECT3DTEXTURE9 pTexture, pExtraTexture, pZTexture;
 	RECT CoordsRect, CellRect, ExtraRect, CellSizeRect;
 	LPVOID pVertexData;
 	D3DXVECTOR3 HeightPoint(PixelCellVisualHeight / sqrt(2.0), PixelCellVisualHeight / sqrt(2.0), 0.0);
 
-	pTexture = pExtraTexture = nullptr;
+	pZTexture = pTexture = pExtraTexture = nullptr;
 	pVertexBuffer = pExtraVertexBuffer = nullptr;
 
 	pTexture = this->FindCellTexture(nTileIndex);
@@ -639,8 +696,9 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 	{
 		this->GetExtraBlockRect(nTileIndex, ExtraRect);
 		pExtraTexture = this->FindExtraTexture(nTileIndex);
+		pZTexture = this->FindZTexture(nTileIndex);
 
-		if (!pExtraTexture)
+		if (!pExtraTexture || !pZTexture)
 			goto DrawScene;
 
 		float dx = CellRect.left - ExtraRect.left + PixelCellVisualWidth / 2.0;
@@ -708,13 +766,14 @@ DrawScene:
 		OutTileIndex =  this->CommitOpaqueObject(PaintObject);
 	}
 
-	if (pExtraTexture)
+	if (pExtraTexture && pZTexture)
 	{
 		//this->AddDrawnExtraObject(pExtraVertexBuffer, Position);
 		//this->AddExtraTextureAtPosition(Position, pExtraTexture);
 		PaintingStruct::InitializePaintingStruct(PaintObject, pExtraVertexBuffer, Position/* - HeightPoint*/, pExtraTexture);
 		PaintObject.SetCompareOffset(-HeightPoint);
 		PaintObject.SetPlainArtAttributes(palette->GetPaletteTexture());
+		PaintObject.SetZTexture(pZTexture);
 		OutExtraIndex = this->CommitTransperantObject(PaintObject);
 	}
 	
@@ -743,6 +802,17 @@ LPDIRECT3DTEXTURE9 TmpFileClass::FindExtraTexture(int nIndex)
 	return nullptr;
 }
 
+LPDIRECT3DTEXTURE9 TmpFileClass::FindZTexture(int nIndex)
+{
+	if (!this->ExtraZTextures.size())
+		return nullptr;
+
+	auto Find = this->ExtraZTextures.find(nIndex);
+	if (Find != this->ExtraZTextures.end())
+		return Find->second;
+	return nullptr;
+}
+
 
 void TmpFileClass::AddTexture(int nIndex, LPDIRECT3DTEXTURE9 pTexture)
 {
@@ -758,6 +828,14 @@ void TmpFileClass::AddExtraTexture(int nIndex, LPDIRECT3DTEXTURE9 pTexture)
 		return;
 
 	this->ExtraTextures[nIndex] = pTexture;
+}
+
+void TmpFileClass::AddZTexture(int nIndex, LPDIRECT3DTEXTURE9 pTexture)
+{
+	if (this->FindZTexture(nIndex))
+		return;
+
+	this->ExtraZTextures[nIndex] = pTexture;
 }
 
 void TmpFileClass::RemoveTexture(int nIndex)
@@ -778,6 +856,15 @@ void TmpFileClass::RemoveExtraTexture(int nIndex)
 	}
 }
 
+void TmpFileClass::RemoveZTexture(int nIndex)
+{
+	auto find = this->ExtraZTextures.find(nIndex);
+	if (find != this->ExtraZTextures.end()) {
+		find->second->Release();
+		this->ExtraZTextures.erase(nIndex);
+	}
+}
+
 void TmpFileClass::RemoveAllTextures()
 {/*
 	for (auto pair : this->CellTextures) {
@@ -789,6 +876,7 @@ void TmpFileClass::RemoveAllTextures()
 	}*/
 	this->CellTextures.clear();
 	this->ExtraTextures.clear();
+	this->ExtraZTextures.clear();
 }
 
 bool operator==(const RECT & Left, const RECT & Right)

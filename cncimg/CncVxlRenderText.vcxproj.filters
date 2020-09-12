@@ -63,6 +63,9 @@
     <ClCompile Include="Misc.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="DllLoggerClass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VxlFile.h">
@@ -114,6 +117,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Misc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DllLoggerClass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="com_ptr.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

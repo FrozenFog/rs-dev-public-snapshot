@@ -20,6 +20,7 @@ namespace Graphic
 	int roadTileFile;
 	int roadObject[3];
 	int alphaObject1, alphaObject2;
+	int nCachedObject, nCachedShadow;  
 }
 
 bool Graphic::TryCreateIndexedTexture()
@@ -281,24 +282,30 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion,
 	*/
 
 	if (VxlFiles.size() >= 2)
-	{
+	{/*
 		if (auto vxlid = CreateVxlObjectAtScene(VxlFiles[0], { 0.0,0.0,0.0 }, 0.0, 0.0, 0.0, UnitPalette, RGB(0, 252, 0))) {
 			SceneObjects.push_back(vxlid);
 			SetObjectColorCoefficient(vxlid, { 1.0f,0.6f,0.6f,1.0f });
+		}*/
+		int nShadowID;
+		if (CreateVxlObjectCached(VxlFiles[0], { 0.0,0.0,30.3 }, { 0.0,0.0,0.3 }, 
+			D3DX_PI / 2.0, UnitPalette, RGB(252, 0, 252), nCachedObject, nCachedShadow))
+		{
+			printf_s("All Successful!.\n");
 		}
 
-		if (auto vxlid = CreateVxlObjectAtScene(VxlFiles[1], { 0.0,0.0,0.0 }, 0.0, 0.0, D3DX_PI / 2.0f, UnitPalette, RGB(0, 0, 252))) {
-			SceneObjects.push_back(vxlid);
-			//SetObjectColorCoefficient(vxlid, { 0.6f,1.0f,0.6f,0.2f });
-		}
+		//if (auto vxlid = CreateVxlObjectAtScene(VxlFiles[1], { 0.0,0.0,0.0 }, 0.0, 0.0, D3DX_PI / 2.0f, UnitPalette, RGB(0, 0, 252))) {
+		//	SceneObjects.push_back(vxlid);
+		//	//SetObjectColorCoefficient(vxlid, { 0.6f,1.0f,0.6f,0.2f });
+		//}
 	}
 
-	if (ShpFile = CreateShpFile("images\\ggcnst.shp")) {
-		if (LoadShpTextures(ShpFile, 2) && LoadShpTextures(ShpFile, 4)) {
-			/*MouseObject = */CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 2, UnitPalette, RGB(0, 252, 252), 2, 4, 4, 8, SPECIAL_NORMAL);
-			CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 4, UnitPalette, RGB(0, 252, 252), 1, 4, 4, 8, SPECIAL_SHADOW);
-		}
-	}
+	//if (ShpFile = CreateShpFile("images\\ggcnst.shp")) {
+	//	if (LoadShpTextures(ShpFile, 2) && LoadShpTextures(ShpFile, 4)) {
+	//		/*MouseObject = */CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 2, UnitPalette, RGB(0, 252, 252), 2, 4, 4, 8, SPECIAL_NORMAL);
+	//		CreateShpObjectAtScene(ShpFile, { 0.0,0.0,0.1f }, 4, UnitPalette, RGB(0, 252, 252), 1, 4, 4, 8, SPECIAL_SHADOW);
+	//	}
+	//}
 
 
 	if (auto sid = CreateShpFile("images\\repring.shp")) {
@@ -436,9 +443,29 @@ void Graphic::DrawScene()
 
 void Graphic::WorldRotation()
 {
+	static float height = 30.3;
+	static float angle = D3DX_PI / 2.0;
+
 	if (SceneObjects.size() >= 2) {
 		RotateObject(SceneObjects[0], 0.0, 0.0, 0.01);
 		MoveObject(SceneObjects[1], { 0.0,0.05f,0.0 });
+	}
+	//SetObjectLocation(nCachedObject, { 0.0,0.0,height });
+	if (!VxlFiles.empty())
+	{
+		RemoveObjectFromScene(nCachedObject);
+		RemoveObjectFromScene(nCachedShadow);
+		CreateVxlObjectCached(VxlFiles[0], 
+			{ 0.0,0.0,height + 0.3f }, { 0.0,0.0,1.0f }, angle, UnitPalette, RGB(0, 252, 252),
+			nCachedObject, nCachedShadow);
+
+		if (!nCachedShadow)
+			printf_s("No shadow.\n");
+		//height += 0.5;
+		if (height >= 200.0)
+			height -= 200.0;
+
+		angle += 0.005;
 	}
 }
 

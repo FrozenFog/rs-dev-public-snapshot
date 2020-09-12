@@ -5,6 +5,8 @@
 
 #include "SceneClass.h"
 
+#include "com_ptr.hpp"
+
 #define SAFE_DELETE_ARRAY(arr) if(arr)delete[] arr, arr=nullptr;
 //
 //Palette VxlFile::RANormals();
@@ -167,6 +169,15 @@ void VxlFile::Clear()
 	this->BodyData.clear();
 	this->LimbHeaders.clear();
 	this->LimbTailers.clear();
+
+	for (auto item : this->CachedVoxels)
+		DrawObject::CommitIsotatedTexture(item.pCache);
+	this->CachedVoxels.clear();
+
+	for (auto item : this->CachedShadows)
+		DrawObject::CommitIsotatedTexture(item.pCache);
+
+	this->CachedVoxels.clear();
 
 	SAFE_DELETE_ARRAY(this->pFileBuffer);
 }
@@ -490,8 +501,343 @@ int VxlFile::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
 	return this->CommitOpaqueObject(PaintObject);
 }
 
-void VxlFile::MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, const char* pDestFile, const char* pShadow, int idxFrame, 
-	float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor, VPLFile & Vpl)
+void VxlFile::DrawCached(LPDIRECT3DDEVICE9 pDevice, 
+	D3DXVECTOR3 Position, D3DXVECTOR3 ShadowPosition, float RotationZ, 
+	int nPaletteID, DWORD dwRemapColor,
+	int& returnedID, int& returnedShadowID,
+	VPLFile& Vpl)
+{
+	returnedID = returnedShadowID = 0;
+
+	if (!this->IsLoaded() || !pDevice)
+		return;
+
+	Palette* Palette = Palette::FindPaletteByID(nPaletteID);
+	if (!Palette)
+		return;
+
+	float Red = (dwRemapColor & 0x000000FF) / 255.0f;
+	float Green = ((dwRemapColor & 0x0000FF00) >> 8) / 255.0f;
+	float Blue = ((dwRemapColor & 0x00FF0000) >> 16) / 255.0f;
+
+	LPDIRECT3DTEXTURE9 pCache, pShadowCache;
+	pCache = pShadowCache = nullptr;
+
+	if (this->CachedVoxels.empty() || this->CachedShadows.empty())
+		this->MakeAllCache(pDevice);
+
+	RotationZ /= D3DX_PI * 2;
+	RotationZ -= std::floor(RotationZ);
+	RotationZ = std::abs(RotationZ);
+
+	size_t nCacheIndex = RotationZ * 32;
+	if (nCacheIndex == 32)
+		nCacheIndex--;
+	
+	auto& Cache = this->CachedVoxels[nCacheIndex];
+	auto& ShadowCache = this->CachedShadows[nCacheIndex];
+	pCache = Cache.pCache;
+	pShadowCache = ShadowCache.pCache;
+	
+	float x = Position.x;
+	float y = Position.y;
+	float z = Position.z;
+
+	PaintingStruct Object, ShadowObject;
+	TexturedVertex Vertex[6];
+	D3DSURFACE_DESC CacheDesc;
+	com_ptr<IDirect3DVertexBuffer9> pCacheVertex, pShadowVertex;
+	void* Buffer = nullptr;
+	
+	if (pCache)
+	{
+		pCache->GetLevelDesc(0, &CacheDesc);
+		float w = CacheDesc.Width;
+		float h = CacheDesc.Height;
+		float hd = sqrt(2.0) / 4.0 * h;
+		float wd = sqrt(2.0) / 4.0 * w;
+		float xo = (Cache.nOffsetX + w / 2 - 128);
+		float yo = -(Cache.nOffsetY + h / 2 - 128);
+		float xd = xo / sqrt(2.0);// -sqrt(2.0) * yo;
+		float yd = -xo / sqrt(2.0);// -sqrt(2.0) * yo;
+		float zd = 2.0 / sqrt(3.0) * yo;
+		x += xd;
+		y += yd;
+		z += zd;
+
+		//CDA DAB
+		Vertex[0] = { {x + hd - wd,y + hd + wd,z + 0.75f * h}, 0.0f,0.0f };
+		Vertex[1] = { {x + hd + wd,y + hd - wd,z + 0.75f * h}, 1.0f,0.0f };
+		Vertex[2] = { {x + 2 * hd - wd,y + 2 * hd + wd,z}, 0.0f,1.0f };
+
+		Vertex[3] = { {x + hd + wd,y + hd - wd,z + 0.75f * h}, 1.0f,0.0f };
+		Vertex[4] = { {x + 2 * hd - wd,y + 2 * hd + wd,z}, 0.0f,1.0f };
+		Vertex[5] = { {x + 2 * hd + wd,y + 2 * hd - wd,z},1.0f,1.0f };
+
+		D3DXVECTOR3 Offset(2 * hd, 2 * hd, 0);
+		if (SUCCEEDED(pDevice->CreateVertexBuffer(sizeof Vertex, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,
+			D3DPOOL_SYSTEMMEM, &pCacheVertex, nullptr)))
+		{
+			pCacheVertex->Lock(0, 0, &Buffer, NULL);
+			memcpy(Buffer, Vertex, sizeof Vertex);
+			pCacheVertex->Unlock();
+			pCacheVertex->AddRef();
+
+			PaintingStruct::InitializePaintingStruct(Object, pCacheVertex.get(), Position, pCache, SPECIAL_NORMAL);
+			if (dwRemapColor == INVALID_COLOR_VALUE)
+				Object.SetPlainArtAttributes(Palette->GetPaletteTexture());
+			else
+				Object.SetPlainArtAttributes(Palette->GetPaletteTexture(), D3DXVECTOR4(Red, Green, Blue, 0.0));
+			Object.SetCompareOffset(Offset);
+			returnedID = this->CommitTransperantObject(Object);
+		}
+	}
+
+	x = ShadowPosition.x;
+	y = ShadowPosition.y;
+	z = ShadowPosition.z;
+	if (pShadowCache)
+	{
+		pShadowCache->GetLevelDesc(0, &CacheDesc);
+		float w = CacheDesc.Width;
+		float h = CacheDesc.Height;
+		float hd = sqrt(2.0) / 2.0 * h;
+		float wd = sqrt(2.0) / 4.0 * w;
+		float xo = (ShadowCache.nOffsetX + w / 2 - 128);
+		float yo = -(ShadowCache.nOffsetY + h / 2 - 128);
+		float xd = xo / sqrt(2.0);// -sqrt(2.0) * yo;
+		float yd = -xo / sqrt(2.0);// -sqrt(2.0) * yo;
+		float zd = 2.0 / sqrt(3.0) * yo;
+		x += xd;
+		y += yd;
+		z += zd;
+
+		Vertex[0] = { {x - hd - wd,y - hd + wd,z}, 0.0f,0.0f };
+		Vertex[1] = { {x - hd + wd,y - hd - wd,z}, 1.0f,0.0f };
+		Vertex[2] = { {x + hd - wd,y + hd + wd,z}, 0.0f,1.0f };
+
+		Vertex[3] = { {x - hd + wd,y - hd - wd,z}, 1.0f,0.0f };
+		Vertex[4] = { {x + hd - wd,y + hd + wd,z}, 0.0f,1.0f };
+		Vertex[5] = { {x + hd + wd,y + hd - wd,z}, 1.0f,1.0f };
+
+		D3DXVECTOR3 Offset(hd, hd, 0); 
+		if (SUCCEEDED(pDevice->CreateVertexBuffer(sizeof Vertex, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,
+			D3DPOOL_SYSTEMMEM, &pShadowVertex, nullptr)))
+		{
+			pShadowVertex->Lock(0, 0, &Buffer, NULL);
+			memcpy(Buffer, Vertex, sizeof Vertex);
+			pShadowVertex->Unlock();
+			pShadowVertex->AddRef();
+
+			PaintingStruct::InitializePaintingStruct(ShadowObject, pShadowVertex.get(), ShadowPosition, pShadowCache, SPECIAL_SHADOW);
+			if (dwRemapColor == INVALID_COLOR_VALUE)
+				ShadowObject.SetPlainArtAttributes(Palette->GetPaletteTexture());
+			else
+				ShadowObject.SetPlainArtAttributes(Palette->GetPaletteTexture(), D3DXVECTOR4(Red, Green, Blue, 0.0));
+			ShadowObject.SetCompareOffset(Offset);
+			returnedShadowID = this->CommitTransperantObject(ShadowObject);
+		}
+	}
+}
+
+bool VxlFile::MakeSingleFrameCaches(LPDIRECT3DDEVICE9 pDevice, int idxFrame, 
+	float RotationX, float RotationY, float RotationZ, 
+	VxlCacheStruct& pReturnedCache, VxlCacheStruct& pReturnedShadow, 
+	VPLFile& Vpl)
+{
+	if (!this->IsLoaded() || !pDevice)
+		return false;
+
+	if (idxFrame >= this->AssociatedHVA.GetFrameCount())
+		return false;
+
+	//this->RemoveFromScene(Position);
+
+	D3DXMATRIX Matrix, Scale, RotateX, RotateY, RotateZ, Identity, NormalMatrix, Origin, TranslationCenter;
+	//LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
+	com_ptr<IDirect3DTexture9> pTexture, pShadowT;
+	LPVOID pVertexData;
+
+	std::vector<Vertex> UsedVertecies;
+	std::vector<Voxel> BufferedVoxels;
+	std::vector<D3DXVECTOR3> BufferedNormals;
+	Voxel Buffer;
+
+	auto& Scene = SceneClass::Instance;
+
+	for (int i = 0; i < this->FileHeader.nNumberOfLimbs; i++)
+	{
+		auto& TailerInfo = this->LimbTailers[i];
+
+		D3DXMatrixRotationX(&RotateX, RotationX);
+		D3DXMatrixRotationY(&RotateY, RotationY);
+		D3DXMatrixRotationZ(&RotateZ, RotationZ);
+		D3DXMatrixIdentity(&Identity);
+
+		auto MinBounds = TailerInfo.MinBounds;
+		auto MaxBounds = TailerInfo.MaxBounds;
+
+		FLOAT xScale = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
+		FLOAT yScale = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
+		FLOAT zScale = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
+		D3DXMatrixScaling(&Scale, xScale, yScale, zScale);
+
+		//Origin is multiplied before Hva
+		TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
+		Origin = TailerInfo.Matrix.AsD3dMatrix(TailerInfo.fScale);
+		Matrix = this->AssociatedHVA.GetTransformMatrix(idxFrame, i)->AsD3dMatrix(TailerInfo.fScale);
+		Matrix = Identity * Scale * TranslationCenter * Origin * Matrix * RotateX * RotateY * RotateZ;
+		NormalMatrix = Matrix;
+
+		NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
+
+		//this->AssociatedHVA.GetTransformMatrix(0, i)->Print();
+
+		for (int x = 0; x < TailerInfo.nXSize; x++)
+		{
+			for (int y = 0; y < TailerInfo.nYSize; y++)
+			{
+				for (int z = 0; z < TailerInfo.nZSize; z++)
+				{
+					if (!this->GetVoxelRH(i, x, y, z, Buffer))
+						continue;
+
+					if (Buffer.nColor)
+					{
+						auto pNormalTable = NormalTableDirectory[static_cast<int>(TailerInfo.nNormalType)];
+
+						if (!pNormalTable)
+							continue;
+
+						D3DXVECTOR3 NormalVec = pNormalTable[Buffer.nNormal];//{ (float)Normal.R - 128.0f,(float)Normal.G - 128.0f,(float)Normal.B - 128.0f };
+						D3DCOLOR dwColor;
+						NormalVec *= NormalMatrix;
+
+						auto fAngle = std::acos((VxlFile::LightReversed * NormalVec) /
+							D3DXVec3Length(&VxlFile::LightReversed) / D3DXVec3Length(&NormalVec));
+
+						if (fAngle >= D3DX_PI / 2)
+						{
+							auto& Color = Vpl[0].Table[Buffer.nColor];
+							dwColor = Color;
+						}
+						else
+						{
+							int nIndex = 31 - int(fAngle / (D3DX_PI / 2) * 32.0);
+							auto& Color = Vpl[nIndex].Table[Buffer.nColor];
+							dwColor = Color;
+						}
+
+						UsedVertecies.push_back({
+							(float)x,(float)y,(float)z,
+							dwColor });
+
+						UsedVertecies.back().Vector *= Matrix;
+						BufferedNormals.push_back(NormalVec);
+						BufferedVoxels.push_back(Buffer);
+					}
+				}
+			}
+		}
+	}
+
+	RECT FrameRect{ 0,0,256,256 };
+	std::unique_ptr<float[][256]> ZBuffer(new float[256][256]);
+	std::unique_ptr<BYTE[][256]> Cache(new BYTE[256][256]);
+	D3DLOCKED_RECT LockedRect;
+	int LowX, LowY, HighX, HighY;
+
+	LowX = LowY = 255;
+	HighX = HighY = 0;
+
+	if (!ZBuffer)
+		return false;
+
+	for (int i = 0; i < 256; i++)
+		for (int j = 0; j < 256; j++)
+			ZBuffer[i][j] = 1.0;
+
+	memset(Cache.get(), 0, 256 * 256);
+
+	for (auto vertex : UsedVertecies)
+	{
+		auto ScreenPos = SceneClass::FructumTransformation(FrameRect, vertex.Vector);
+
+		int x = ScreenPos.x, y = ScreenPos.y;
+		float sx = ScreenPos.x, sy = ScreenPos.y;
+
+		if (ScreenPos.z < ZBuffer[y][x] && ScreenPos.z > 0.0)
+		{
+			ZBuffer[y][x] = ScreenPos.z;
+			Cache[y][x] = vertex.dwColor;
+
+			if (LowX > x)LowX = x;
+			if (HighX < x)HighX = x;
+			if (LowY > y)LowY = y;
+			if (HighY < y)HighY = y;
+		}
+	}
+
+	if (FAILED(pDevice->CreateTexture(HighX - LowX + 1, HighY - LowY + 1, 1, NULL, D3DFMT_L8, D3DPOOL_MANAGED, &pTexture, nullptr)))
+		return false;
+
+	if (FAILED(pTexture->LockRect(0, &LockedRect, nullptr, D3DLOCK_DISCARD)))
+		return false;
+
+	for (int l = LowY; l <= HighY; l++)
+	{
+		memcpy(reinterpret_cast<BYTE*>(LockedRect.pBits) + (l - LowY) * LockedRect.Pitch, &Cache[l][LowX], HighX - LowX + 1);
+	}
+	pTexture->UnlockRect(0);
+
+	int CacheOffsetX = LowX, CacheOffsetY = LowY;
+	LowX = LowY = 255;
+	HighX = HighY = 0;
+	memset(Cache.get(), 0, 256 * 256);
+
+	for (auto vertex : UsedVertecies)
+	{
+		D3DXVECTOR3 ShadowPos = vertex.Vector;
+		ShadowPos.z = 0.0;
+
+		auto ScreenPos = SceneClass::FructumTransformation(FrameRect, ShadowPos);
+		int x = ScreenPos.x;
+		int y = ScreenPos.y;
+
+		Cache[y][x] = 0x1u;
+		if (LowX > x)LowX = x;
+		if (HighX < x)HighX = x;
+		if (LowY > y)LowY = y;
+		if (HighY < y)HighY = y;
+	}
+
+	if (FAILED(pDevice->CreateTexture(HighX - LowX + 1, HighY - LowY + 1, 1, NULL, D3DFMT_L8, D3DPOOL_MANAGED, &pShadowT, nullptr)))
+		return false;
+
+	if (FAILED(pShadowT->LockRect(0, &LockedRect, nullptr, D3DLOCK_DISCARD)))
+		return false;
+
+	for (int l = LowY; l <= HighY; l++)
+	{
+		memcpy(reinterpret_cast<BYTE*>(LockedRect.pBits) + (l - LowY) * LockedRect.Pitch, &Cache[l][LowX], HighX - LowX + 1);
+	}
+	pShadowT->UnlockRect(0);
+
+	pReturnedCache = { pTexture.get(),CacheOffsetX,CacheOffsetY };
+	pReturnedShadow = { pShadowT.get(),LowX,LowY };
+
+	//they will be released when the function return
+	pTexture->AddRef();
+	pShadowT->AddRef();
+
+	return true;
+}
+
+void VxlFile::MakeFrameScreenShot(
+	LPDIRECT3DDEVICE9 pDevice, const char* pDestFile, const char* pShadow, int idxFrame, 
+	float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor,
+	VPLFile & Vpl
+)
 {
 	if (!this->IsLoaded() || !pDevice)
 		return;
@@ -1101,6 +1447,46 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, V
 	delete[] ZBuffer;
 }
 
+bool VxlFile::MakeAllCache(LPDIRECT3DDEVICE9 pDevice, VPLFile& Vpl)
+{
+	const int idxFrame = 0;
+
+	if (!this->IsLoaded() || !pDevice)
+		return false;
+
+	bool Result = true;
+	VxlCacheStruct pCache, pShadowCache;
+	pCache.pCache = pShadowCache.pCache = nullptr;
+
+	for (auto item : this->CachedVoxels)
+		DrawObject::CommitIsotatedTexture(item.pCache);
+	this->CachedVoxels.clear();
+
+	for (auto item : this->CachedShadows)
+		DrawObject::CommitIsotatedTexture(item.pCache);
+	this->CachedShadows.clear();
+
+	this->CachedShadows.resize(32u);
+	this->CachedVoxels.resize(32u);
+
+	for (size_t i = 0; i < 32u; i++)
+	{
+		float RotationZ = (i / 32.0) * (2.0 * D3DX_PI);
+		Result &= MakeSingleFrameCaches(pDevice, idxFrame, 0.0, 0.0, RotationZ, pCache, pShadowCache, Vpl);
+
+		if (!Result)
+		{
+			SAFE_RELEASE(pCache.pCache);
+			SAFE_RELEASE(pShadowCache.pCache);
+		}
+
+		this->CachedVoxels[i] = pCache;
+		this->CachedShadows[i] = pShadowCache;
+	}
+
+	return Result;
+}
+
 HVAStruct::HVAStruct() : FrameMatrices(nullptr),
 	nSectionCount(0),
 	nFrameCount(0)
@@ -1214,5 +1600,6 @@ void DrawObject::RemoveVxlObject(int nID)
 			continue;
 		//try find and erase
 		file.second->RemoveOpaqueObject(nID);
+		file.second->RemoveTransperantObject(nID);
 	}
 }

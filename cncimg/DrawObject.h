@@ -44,11 +44,13 @@ struct PaintingStruct
 	static long ID;
 
 	//general
+	float zAdjust;
 	RECT VisualRect;
 	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
 	D3DXVECTOR3 Position, CompareOffset;
 
 	//for shps & tmps and should be released by class
+	LPDIRECT3DTEXTURE9 pZTexture;
 	LPDIRECT3DTEXTURE9 pTexture;
 	LPDIRECT3DTEXTURE9 pPaletteTexture;
 	D3DXVECTOR4 ShaderRemapColor;
@@ -68,11 +70,13 @@ struct PaintingStruct
 
 	//should BeginScene() at first
 	bool Draw(LPDIRECT3DDEVICE9 pDevice);
+	void SetZTexture(LPDIRECT3DTEXTURE9 pTexture = nullptr);
 	void InitializeVisualRect();
 	bool IsWithinSight();
 	void SetCompareOffset(D3DXVECTOR3 Offset);
 	void SetColorCoefficient(D3DXVECTOR4 Coefficient);
 	void SetPlainArtAttributes(LPDIRECT3DTEXTURE9 pPaletteTexture, D3DXVECTOR4 ShaderRemap = D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
+	void SetZAdjust(float zAdjust);
 };
 
 class DrawObject
@@ -127,9 +131,11 @@ public:
 
 	//static methods for object transformation
 	static PaintingStruct* FindObjectById(int nID);
+	static void ObjectZAdjust(int nID, float zAdjust);
 	static void ObjectTransformation(int nID, D3DXMATRIX& Matrix);
 	static void ObjectDisplacement(int nID, D3DXVECTOR3 Displacement);
 	static void ObjectMove(int nID, D3DXVECTOR3 Target);
+	static D3DXVECTOR3 ObjectLocation(int nID);
 	static void ObjectRotation(int nID, float RotationX, float RotationY, float RotationZ);
 	static void SetObjectColorCoefficient(int nID, D3DXVECTOR4 Coefficient);
 	static void RemoveTmpObject(int nID);

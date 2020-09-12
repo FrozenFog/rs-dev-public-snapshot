@@ -47,6 +47,8 @@ EXPORT bool WINAPI RemoveCommonTextureFile(int nFileId);
 //image object
 EXPORT int WINAPI CreateVxlObjectAtScene(int nFileId, D3DXVECTOR3 Position,
 	float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor);
+EXPORT bool WINAPI CreateVxlObjectCached(int nFileID, D3DXVECTOR3 Position, D3DXVECTOR3 ShadowPosition,
+	float RotationZ, int nPaletteID, DWORD dwRemapColor, int& nID, int& nShadowId);
 
 EXPORT bool WINAPI CreateTmpObjectAtScene(int nFileId, D3DXVECTOR3 Position, int nPaletteID, int nTileIndex, int& OutTileIndex, int& OutExtraIndex);
 
@@ -70,13 +72,17 @@ EXPORT void WINAPI RotateObject(int nID, float RotationX, float RotationY, float
 EXPORT void WINAPI MoveObject(int nID, D3DXVECTOR3 Displacement);
 
 EXPORT void WINAPI SetObjectLocation(int nID, D3DXVECTOR3 Position);
+EXPORT void WINAPI GetObjectLocation(int nID, D3DXVECTOR3& ReturnedLocation);
 
 EXPORT void WINAPI SetObjectColorCoefficient(int nID, D3DXVECTOR4 Coefficient);
+EXPORT void WINAPI SetObjectZAdjust(int nID, float zAdjust);
 
 //scene api
 EXPORT bool WINAPI SetUpScene(HWND hWnd);
 EXPORT void WINAPI SetBackgroundColor(BYTE R, BYTE G, BYTE B);
 EXPORT bool WINAPI ResetSceneView();
+EXPORT void WINAPI EnableZWrite();
+EXPORT void WINAPI DisableZWrite();
 
 EXPORT void WINAPI PresentAllObject();
 
