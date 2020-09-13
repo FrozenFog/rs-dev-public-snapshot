@@ -35,13 +35,13 @@ namespace RelertSharp.SubWindows.INIEditor
 
         private void Initialize()
         {
-            LoadHightLighting();
+            LoadHighLighting();
             LoadEvents();
             LoadFoldingManager();
             LoadSearchBox();
         }
 
-        private void LoadHightLighting()
+        private void LoadHighLighting()
         {
             string INIRuleXml = GUI.Properties.Resources.ResourceManager.GetString("INIRuleXml");
             MemoryStream ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(INIRuleXml));
