@@ -209,6 +209,10 @@ namespace RelertSharp.Common
                 public static readonly int[] Buildables = { Roads, LAT_D, LAT_P, Clear };
                 public static readonly int[] Passable = { Track, Roads, LAT_P, LAT_D, Clear, Shore, Water };
             }
+            public static class ZAdjust
+            {
+                public const float HiBridgeZAdjust = -60;
+            }
         }
         public static class GameRunning
         {

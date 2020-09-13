@@ -252,7 +252,7 @@ namespace RelertSharp.DrawingEngine
                 if (src.IsOffsetBridge) pos = ToVec3Zero(pos);
                 if (src.IsHiBridge)
                 {
-                    type = ShpFlatType.Vertical;
+                    type = ShpFlatType.FlatGround;
                 }
                 if (type == ShpFlatType.FlatGround) pos = pos.Rise();
                 dest.pSelf = RenderAndPresent(src.pSelf, pos, frame, color, pPal, type, box);
@@ -265,6 +265,7 @@ namespace RelertSharp.DrawingEngine
             if (dest.IsValid)
             {
                 //minimap.DrawMisc(src, dest);
+                if (src.IsHiBridge) CppExtern.ObjectUtils.SetObjectZAdjust(dest.pSelf, Constant.DrawingEngine.ZAdjust.HiBridgeZAdjust);
                 dest.RadarColor = new RadarColor(src.RadarColor);
             }
             return dest.IsValid;
