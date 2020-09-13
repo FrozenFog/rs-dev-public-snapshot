@@ -14,6 +14,7 @@ namespace RelertSharp.SubWindows.INIEditor
     public static class IntelligenceManager
     {
         private static Dictionary<string, string> completionData = new Dictionary<string, string>();
+        private static bool allowPrev = false; // TODO?
 
         static IntelligenceManager()
         {
@@ -21,7 +22,9 @@ namespace RelertSharp.SubWindows.INIEditor
             if(File.Exists("intelligence.lang"))
             {
                 INIFile pFile = new INIFile(File.ReadAllBytes("intelligence.lang"), "rs.inieditor.languageFile");
-                INIEntity pEntity = pFile["Intelligence"];
+                INIEntity pGeneral = pFile["Intelligence"];
+                string lpValue = pGeneral["CurrentLanguage"];
+                INIEntity pEntity = pFile[lpValue];
                 foreach (var pPair in pEntity)
                     completionData.Add(pPair.Name, pPair.Value);
                 GlobalVar.Log.Write("[INIEditor] Successfully loaded {0} entities for intelligence.", completionData.Count);
