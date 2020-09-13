@@ -118,21 +118,25 @@ public:
 
 private:
 	LPDIRECT3DTEXTURE9 FindCellTexture(int nIndex);
-	LPDIRECT3DTEXTURE9 FindExtraTexture(int nIndex);
 	LPDIRECT3DTEXTURE9 FindZTexture(int nIndex);
+	LPDIRECT3DTEXTURE9 FindExtraTexture(int nIndex);
+	LPDIRECT3DTEXTURE9 FindExtraZTexture(int nIndex);
 
 	void AddTexture(int nIndex, LPDIRECT3DTEXTURE9 pTexture);
-	void AddExtraTexture(int nIndex, LPDIRECT3DTEXTURE9 pTexture);
 	void AddZTexture(int nIndex, LPDIRECT3DTEXTURE9 pTexture);
+	void AddExtraTexture(int nIndex, LPDIRECT3DTEXTURE9 pTexture);
+	void AddExtraZTexture(int nIndex, LPDIRECT3DTEXTURE9 pTexture);
 
 	void RemoveTexture(int nIndex);
-	void RemoveExtraTexture(int nIndex);
 	void RemoveZTexture(int nIndex);
+	void RemoveExtraTexture(int nIndex);
+	void RemoveExtraZTexture(int nIndex);
 
 	void RemoveAllTextures();
 
 	TmpFile* pFileData;
 	std::unordered_map<int, LPDIRECT3DTEXTURE9> CellTextures;
+	std::unordered_map<int, LPDIRECT3DTEXTURE9> CellZTextures;
 	std::unordered_map<int, LPDIRECT3DTEXTURE9> ExtraTextures;
 	std::unordered_map<int, LPDIRECT3DTEXTURE9> ExtraZTextures;
 

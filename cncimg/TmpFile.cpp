@@ -51,6 +51,10 @@ void TmpFileClass::Clear()
 		CommitIsotatedTexture(Pair.second);
 	this->ExtraZTextures.clear();
 
+	for (auto& Pair : this->CellZTextures)
+		CommitIsotatedTexture(Pair.second);
+	this->CellZTextures.clear();
+
 	if (pFileData)
 		free(pFileData);
 	pFileData = nullptr;
@@ -228,7 +232,7 @@ PBYTE TmpFileClass::GetZShapeData(int nIndex)
 {
 	auto pPixels = this->GetPixelData(nIndex);
 	//1*width*height/2
-	return pPixels && this->HasExtraData(nIndex) ? &pPixels[pFileData->Header.nBlocksHeight*pFileData->Header.nBlocksWidth / 2] : nullptr;
+	return pPixels ? &pPixels[pFileData->Header.nBlocksHeight*pFileData->Header.nBlocksWidth / 2] : nullptr;
 }
 
 PBYTE TmpFileClass::GetExtraZShapeData(int nIndex)
@@ -385,9 +389,9 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice)
 		return false;
 
 	RECT SizeRect, ExtraSizeRect;
-	LPDIRECT3DTEXTURE9 pTexture, pExtraTexture, pExtraZTexture;
-	D3DLOCKED_RECT LockedRect;
-	PBYTE pData, pFileData;
+	LPDIRECT3DTEXTURE9 pTexture, pZTexture, pExtraTexture, pExtraZTexture;
+	D3DLOCKED_RECT LockedRect, LockedRectZ;
+	PBYTE pData, pFileData, pDataZ, pFileDataZ;
 
 	for (auto item : this->CellTextures) {
 		DrawObject::CommitIsotatedTexture(item.second);
@@ -401,6 +405,10 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice)
 		DrawObject::CommitIsotatedTexture(item.second);
 	}
 
+	for (auto item : this->CellZTextures) {
+		DrawObject::CommitIsotatedTexture(item.second);
+	}
+
 	this->RemoveAllTextures();
 
 	for (int i = 0; i < this->GetMaxBlockCount(); i++)
@@ -409,106 +417,149 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice)
 			continue;
 
 		if (FAILED(pDevice->CreateTexture(this->GetFileData()->Header.nBlocksWidth, this->GetFileData()->Header.nBlocksHeight, 1, NULL,
-			D3DFMT_L8, D3DPOOL_MANAGED, &pTexture, nullptr)))
+			D3DFMT_L8, D3DPOOL_MANAGED, &pTexture, nullptr))||
+			FAILED(pDevice->CreateTexture(this->GetFileData()->Header.nBlocksWidth, this->GetFileData()->Header.nBlocksHeight, 1, NULL,
+				D3DFMT_L8, D3DPOOL_MANAGED, &pZTexture, nullptr)))
 		{
 			SAFE_RELEASE(pTexture);
+			SAFE_RELEASE(pZTexture);
 			continue;
 		}
 
-		if (FAILED(pTexture->LockRect(0, &LockedRect, &SizeRect, NULL)))
+		if (FAILED(pTexture->LockRect(0, &LockedRect, &SizeRect, NULL))||
+			FAILED(pZTexture->LockRect(0, &LockedRectZ, &SizeRect, NULL)))
 		{
 			SAFE_RELEASE(pTexture);
+			SAFE_RELEASE(pZTexture);
 			continue;
 		}
 
 		pData = reinterpret_cast<PBYTE>(LockedRect.pBits);
+		pDataZ = reinterpret_cast<PBYTE>(LockedRectZ.pBits);
 		pFileData = this->GetPixelData(i);
+		pFileDataZ = this->GetZShapeData(i);
 		
 		int y = 0;
 		for (int x = this->GetFileData()->Header.nBlocksWidth / 2 - 2; x > 0; x -= 2, y++)
 		{
 			auto pTextureData = pData + y*LockedRect.Pitch;// +x * sizeof(D3DCOLOR_ARGB(0, 0, 0, 0));
+			auto pTextureDataZ = pDataZ + y * LockedRectZ.Pitch;
 			auto nSize = this->GetFileData()->Header.nBlocksWidth - 2 * x;
 			bool bFirstEnter = true;
 
 			RtlZeroMemory(pTextureData, this->GetFileData()->Header.nBlocksWidth);
 			pTextureData += x;
+			RtlZeroMemory(pTextureDataZ, this->GetFileData()->Header.nBlocksWidth);
+			pTextureDataZ += x;
 
 			for (int i = 0; i < nSize; i++)
 			{
 				auto pColorData = reinterpret_cast<PBYTE>(pTextureData);
+				auto pZData = reinterpret_cast<PBYTE>(pTextureDataZ);
 				auto nColor = *pFileData++;
+				auto nZVal = *pFileDataZ++;
 
 				if (nColor) {
 					pColorData[0] = nColor;
+					pZData[0] = nZVal;
 					if (bFirstEnter && x + i >= 1) {
 						pColorData[-1] = nColor;
+						pZData[-1] = nZVal;
 						if (x + i >= 2)
+						{
 							pColorData[-2] = nColor;
+							pZData[-2] = nZVal;
+						}
 
 						bFirstEnter = false;
 					}
 					if (!bFirstEnter && x + i <= this->GetFileData()->Header.nBlocksWidth - 1 && (*pFileData == 0 || i == nSize - 1)) {
 						pColorData[1] = nColor;
+						pZData[1] = nZVal;
 						if (x + i <= this->GetFileData()->Header.nBlocksWidth - 2)
+						{
 							pColorData[2] = nColor;
+							pZData[2] = nZVal;
+						}
 
 						bFirstEnter = true;
 					}
 				}
 				pTextureData++;
+				pTextureDataZ++;
 			}
 		}
 
 		for (int x = 0; x <= this->GetFileData()->Header.nBlocksWidth / 2; x += 2, y++)
 		{
 			auto pTextureData = pData + y*LockedRect.Pitch;
+			auto pTextureDataZ = pDataZ + y * LockedRectZ.Pitch;
 			auto nSize = this->GetFileData()->Header.nBlocksWidth - 2 * x;
 			bool bFirstEnter;
 
 			bFirstEnter = true;
 			RtlZeroMemory(pTextureData, this->GetFileData()->Header.nBlocksWidth);
 			pTextureData += x;
+			RtlZeroMemory(pTextureDataZ, this->GetFileData()->Header.nBlocksWidth);
+			pTextureDataZ += x;
 
 			if (!nSize)
 			{
 				auto pColorData = reinterpret_cast<PBYTE>(pTextureData);
-				BYTE nColor = 0;
+				auto pColorDataZ = reinterpret_cast<PBYTE>(pTextureDataZ);
+				BYTE nColor = 0, nZVal = 0;
 				int i = 0;
 				while (!nColor)
 				{
 					i++;
 					nColor = *(pFileData - i);
+					nZVal = *(pFileDataZ - i);
 				}
 
 				pColorData[-2] = pColorData[-1] = pColorData[0] = pColorData[1] = nColor;
+				pColorDataZ[-2] = pColorDataZ[-1] = pColorDataZ[0] = pColorDataZ[1] = nZVal;
 			}
 			for (int i = 0; i < nSize; i++)
 			{
 				auto pColorData = reinterpret_cast<PBYTE>(pTextureData);
+				auto pColorDataZ = reinterpret_cast<PBYTE>(pTextureDataZ);
 				auto nColor = *pFileData++;
+				auto nZVal = *pFileDataZ++;
 
 				if (nColor) {
 					pColorData[0] = nColor;
+					pColorDataZ[0] = nZVal;
 					if (bFirstEnter && x + i >= 1) {
 						pColorData[-1] = nColor;
+						pColorDataZ[-1] = nZVal;
 						if (x + i >= 2)
+						{
 							pColorData[-2] = nColor;
+							pColorDataZ[-2] = nZVal;
+						}
+
 						bFirstEnter = false;
 					}
 					if (!bFirstEnter && x + i <= this->GetFileData()->Header.nBlocksWidth - 1 && (*pFileData == 0 || i == nSize - 1)) {
 						pColorData[1] = nColor;
+						pColorDataZ[1] = nZVal;
 						if (x + i <= this->GetFileData()->Header.nBlocksWidth - 2)
+						{
 							pColorData[2] = nColor;
+							pColorDataZ[2] = nZVal;
+						}
 						bFirstEnter = true;
 					}
 				}
 				pTextureData++;
+				pTextureDataZ++;
 			}
 		}
 
 		pTexture->UnlockRect(0);
+		pZTexture->UnlockRect(0);
 		this->AddTexture(i, pTexture);
+		this->AddZTexture(i, pZTexture);
 /*
 		char szFileName[MAX_PATH];
 		sprintf_s(szFileName, "dump\\Otile_%p_%d.png", this, i);
@@ -615,7 +666,7 @@ bool TmpFileClass::MakeTextures(LPDIRECT3DDEVICE9 pDevice)
 		}
 
 		pExtraZTexture->UnlockRect(0);
-		this->AddZTexture(i, pExtraZTexture);
+		this->AddExtraZTexture(i, pExtraZTexture);
 /*
 		sprintf_s(szFileName, "dump\\tile_%p_%d.png", this, i);
 		D3DXSaveTextureToFile(szFileName, D3DXIFF_PNG, pExtraTexture, nullptr);*/
@@ -635,23 +686,24 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 
 	//this->RemoveFromScene(Position);
 
-	float PixelCellLength = this->GetFileData()->Header.nBlocksWidth / 2.0 * sqrt(2.0);
+	float PixelCellLength = this->GetFileData()->Header.nBlocksWidth * sqrtf(0.5f);
 	float PixelCellVisualHeight = this->GetFileData()->Header.nBlocksHeight;
 	float PixelCellVisualWidth = this->GetFileData()->Header.nBlocksWidth;
 	const float StretchAdjustment = 0.0f;
 
 	PaintingStruct PaintObject;
 	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer, pExtraVertexBuffer;
-	LPDIRECT3DTEXTURE9 pTexture, pExtraTexture, pZTexture;
-	RECT CoordsRect, CellRect, ExtraRect, CellSizeRect;
+	LPDIRECT3DTEXTURE9 pTexture, pZTexture,pExtraTexture, pExtraZTexture;
+	RECT CoordsRect, CellRect, ExtraRect, CellSizeRect, PureCellRect;
 	LPVOID pVertexData;
 	D3DXVECTOR3 HeightPoint(PixelCellVisualHeight / sqrt(2.0), PixelCellVisualHeight / sqrt(2.0), 0.0);
 
-	pZTexture = pTexture = pExtraTexture = nullptr;
+	pExtraZTexture = pZTexture = pTexture = pExtraTexture = nullptr;
 	pVertexBuffer = pExtraVertexBuffer = nullptr;
 
 	pTexture = this->FindCellTexture(nTileIndex);
-	if (!pTexture)
+	pZTexture = this->FindZTexture(nTileIndex);
+	if (!pTexture || !pZTexture)
 		return false;
 
 	auto palette = Palette::FindPaletteByID(nPaletteID);
@@ -661,18 +713,28 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 	this->GetWholeRectWithHeight(CoordsRect);
 	this->GetBlockRectWithHeight(nTileIndex, CellRect);
 	this->GetBlockSizeRect(nTileIndex, CellSizeRect);
+	this->GetBlockRect(nTileIndex, PureCellRect);
 
-	float CellStartX = Position.x - PixelCellLength / 2.0;
-	float CellStartY = Position.y - PixelCellLength / 2.0;
+	float CellStartX = Position.x + PixelCellLength / 2.0;
+	float CellStartY = Position.y + PixelCellLength / 2.0;
+	float dh = PixelCellVisualHeight * sqrtf(0.1875f);//sqrt(3)/4
+	float dL = PixelCellLength * 0.5f;
+	float dH = PixelCellVisualHeight / sqrtf(32.0f);
 
 	TexturedVertex CellVertecies[] =
-	{
+	{/*
 		{ {CellStartX - StretchAdjustment,CellStartY - StretchAdjustment,Position.z},0.50f,0.00f },
 		{ {CellStartX + PixelCellLength + StretchAdjustment,CellStartY - StretchAdjustment,Position.z},1.0f,0.50f },
 		{ {CellStartX - StretchAdjustment,CellStartY + PixelCellLength + StretchAdjustment,Position.z},0.0f,0.5f },
 		{ { CellStartX + PixelCellLength + StretchAdjustment,CellStartY - StretchAdjustment,Position.z },1.0f,0.50f },
 		{ { CellStartX - StretchAdjustment,CellStartY + PixelCellLength + StretchAdjustment,Position.z },0.0f,0.5f },
-		{ {CellStartX + PixelCellLength + StretchAdjustment,CellStartY + PixelCellLength + StretchAdjustment,Position.z},0.50f,1.0f },
+		{ {CellStartX + PixelCellLength + StretchAdjustment,CellStartY + PixelCellLength + StretchAdjustment,Position.z},0.50f,1.0f },*/
+		{{CellStartX - 2.0f * dH,CellStartY - 2.0f * dH,Position.z + 2.0f * dh},0.5f,0.0f},
+		{{CellStartX + dL - dH,CellStartY - dL - dH,Position.z + dh},1.0f,0.5f},
+		{{CellStartX - dL - dH,CellStartY + dL - dH,Position.z + dh},0.0f,0.5f},
+		{{CellStartX + dL - dH,CellStartY - dL - dH,Position.z + dh},1.0f,0.5f},
+		{{CellStartX - dL - dH,CellStartY + dL - dH,Position.z + dh},0.0f,0.5f},
+		{{CellStartX,CellStartY,Position.z},0.5f,1.0f},
 	};
 
 	if (FAILED(pDevice->CreateVertexBuffer(sizeof CellVertecies, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,
@@ -695,9 +757,9 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 	{
 		this->GetExtraBlockRect(nTileIndex, ExtraRect);
 		pExtraTexture = this->FindExtraTexture(nTileIndex);
-		pZTexture = this->FindZTexture(nTileIndex);
+		pExtraZTexture = this->FindExtraZTexture(nTileIndex);
 
-		if (!pExtraTexture || !pZTexture)
+		if (!pExtraTexture || !pExtraZTexture)
 			goto DrawScene;
 
 		float dx = CellRect.left - ExtraRect.left + PixelCellVisualWidth / 2.0;
@@ -722,19 +784,31 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 		}
 		else
 		{
-			float h = (ExtraRect.bottom - ExtraRect.top)*2.0 / sqrt(3.0);
-			float l = (ExtraRect.right - ExtraRect.left) / sqrt(2.0);
+			//float h = (ExtraRect.bottom - ExtraRect.top)*2.0 / sqrt(3.0);
+			//float l = (ExtraRect.right - ExtraRect.left) / sqrt(2.0);
+			float dy2 = PureCellRect.bottom - ExtraRect.bottom - 1;// -PixelCellVisualHeight / 2.0f;
+			float dx2 = PureCellRect.left - ExtraRect.left - (ExtraRect.right - ExtraRect.left) * 0.5f +PixelCellVisualWidth / 2.0f;
+			float dw = (ExtraRect.right - ExtraRect.left) * sqrtf(0.125f);
+			float dh = (ExtraRect.bottom - ExtraRect.top) * sqrtf(0.125f);
+			float dz = sqrtf(0.75f) * (ExtraRect.bottom - ExtraRect.top + 2);
 
-			float ExtraStartX = Position.x - dx / sqrt(2.0);// -dy*sqrt(2.0);
-			float ExtraStartY = Position.y + dx / sqrt(2.0);// -dy*sqrt(2.0);
-			float ExtraStartZ = Position.z + dy*2.0 / sqrt(3.0);
+			float ExtraStartX = Position.x + dL - dx2 * sqrtf(0.5f) - dy2 * sqrtf(0.125f);// -dy2 * sqrtf(2.0f);
+			float ExtraStartY = Position.y + dL + dx2 * sqrtf(0.5f) - dy2 * sqrtf(0.125f);// -dy2 * sqrtf(2.0f);
+			float ExtraStartZ = Position.z + dy2 * sqrtf(0.75f);
 
-			ExtraVertecies[0] = { { ExtraStartX - StretchAdjustment,ExtraStartY + StretchAdjustment,ExtraStartZ + 1 },0.0,0.0 };
-			ExtraVertecies[1] = { { ExtraStartX + l + StretchAdjustment, ExtraStartY - l - StretchAdjustment, ExtraStartZ + 1 }, 1.0, 0.0 };
-			ExtraVertecies[2] = { { ExtraStartX - StretchAdjustment,ExtraStartY + StretchAdjustment,ExtraStartZ - h - 1 },0.0,1.0 };
-			ExtraVertecies[3] = { { ExtraStartX + l + StretchAdjustment, ExtraStartY - l - StretchAdjustment, ExtraStartZ + 1 }, 1.0, 0.0 };
-			ExtraVertecies[4] = { { ExtraStartX - StretchAdjustment,ExtraStartY + StretchAdjustment,ExtraStartZ - h - 1 },0.0,1.0 };
-			ExtraVertecies[5] = { { ExtraStartX + l + StretchAdjustment,ExtraStartY - l - StretchAdjustment,ExtraStartZ - h - 1},1.0,1.0 };
+			//ExtraVertecies[0] = { { ExtraStartX - StretchAdjustment,ExtraStartY + StretchAdjustment,ExtraStartZ + 1 },0.0,0.0 };
+			//ExtraVertecies[1] = { { ExtraStartX + l + StretchAdjustment, ExtraStartY - l - StretchAdjustment, ExtraStartZ + 1 }, 1.0, 0.0 };
+			//ExtraVertecies[2] = { { ExtraStartX - StretchAdjustment,ExtraStartY + StretchAdjustment,ExtraStartZ - h - 1 },0.0,1.0 };
+			//ExtraVertecies[3] = { { ExtraStartX + l + StretchAdjustment, ExtraStartY - l - StretchAdjustment, ExtraStartZ + 1 }, 1.0, 0.0 };
+			//ExtraVertecies[4] = { { ExtraStartX - StretchAdjustment,ExtraStartY + StretchAdjustment,ExtraStartZ - h - 1 },0.0,1.0 };
+			//ExtraVertecies[5] = { { ExtraStartX + l + StretchAdjustment,ExtraStartY - l - StretchAdjustment,ExtraStartZ - h - 1},1.0,1.0 };
+
+			ExtraVertecies[0] = { {ExtraStartX - dw - dh,ExtraStartY + dw - dh,ExtraStartZ + dz},0.0f,0.0f };
+			ExtraVertecies[1] = { {ExtraStartX + dw - dh,ExtraStartY - dw - dh,ExtraStartZ + dz},1.0f,0.0f };
+			ExtraVertecies[2] = { {ExtraStartX - dw,ExtraStartY + dw,ExtraStartZ},0.0f,1.0f };
+			ExtraVertecies[3] = { {ExtraStartX + dw - dh,ExtraStartY - dw - dh,ExtraStartZ + dz},1.0f,0.0f };
+			ExtraVertecies[4] = { {ExtraStartX - dw,ExtraStartY + dw,ExtraStartZ},0.0f,1.0f };
+			ExtraVertecies[5] = { {ExtraStartX + dw,ExtraStartY - dw,ExtraStartZ},1.0f,1.0f };
 		}
 
 		if (FAILED(pDevice->CreateVertexBuffer(sizeof ExtraVertecies, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,
@@ -755,24 +829,25 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 	}
 
 DrawScene:
-	if (pTexture)
+	if (pTexture && pZTexture)
 	{
 		//this->AddDrawnObject(pVertexBuffer, Position);
 		//this->AddTextureAtPosition(Position, pTexture);
 
 		PaintingStruct::InitializePaintingStruct(PaintObject, pVertexBuffer, Position, pTexture);
 		PaintObject.SetPlainArtAttributes(palette->GetPaletteTexture());
+		PaintObject.SetZTexture(pZTexture);
 		OutTileIndex =  this->CommitOpaqueObject(PaintObject);
 	}
 
-	if (pExtraTexture && pZTexture)
+	if (pExtraTexture && pExtraZTexture)
 	{
 		//this->AddDrawnExtraObject(pExtraVertexBuffer, Position);
 		//this->AddExtraTextureAtPosition(Position, pExtraTexture);
 		PaintingStruct::InitializePaintingStruct(PaintObject, pExtraVertexBuffer, Position/* - HeightPoint*/, pExtraTexture);
 		PaintObject.SetCompareOffset(-HeightPoint);
 		PaintObject.SetPlainArtAttributes(palette->GetPaletteTexture());
-		PaintObject.SetZTexture(pZTexture);
+		PaintObject.SetZTexture(pExtraZTexture);
 		OutExtraIndex = this->CommitTransperantObject(PaintObject);
 	}
 	
@@ -801,13 +876,24 @@ LPDIRECT3DTEXTURE9 TmpFileClass::FindExtraTexture(int nIndex)
 	return nullptr;
 }
 
-LPDIRECT3DTEXTURE9 TmpFileClass::FindZTexture(int nIndex)
+LPDIRECT3DTEXTURE9 TmpFileClass::FindExtraZTexture(int nIndex)
 {
 	if (!this->ExtraZTextures.size())
 		return nullptr;
 
 	auto Find = this->ExtraZTextures.find(nIndex);
 	if (Find != this->ExtraZTextures.end())
+		return Find->second;
+	return nullptr;
+}
+
+LPDIRECT3DTEXTURE9 TmpFileClass::FindZTexture(int nIndex)
+{
+	if (!this->CellZTextures.size())
+		return nullptr;
+
+	auto Find = this->CellZTextures.find(nIndex);
+	if (Find != this->CellZTextures.end())
 		return Find->second;
 	return nullptr;
 }
@@ -821,6 +907,14 @@ void TmpFileClass::AddTexture(int nIndex, LPDIRECT3DTEXTURE9 pTexture)
 	this->CellTextures[nIndex] = pTexture;
 }
 
+void TmpFileClass::AddZTexture(int nIndex, LPDIRECT3DTEXTURE9 pTexture)
+{
+	if (this->FindZTexture(nIndex))
+		return;
+
+	this->CellZTextures[nIndex] = pTexture;
+}
+
 void TmpFileClass::AddExtraTexture(int nIndex, LPDIRECT3DTEXTURE9 pTexture)
 {
 	if (this->FindExtraTexture(nIndex))
@@ -829,9 +923,9 @@ void TmpFileClass::AddExtraTexture(int nIndex, LPDIRECT3DTEXTURE9 pTexture)
 	this->ExtraTextures[nIndex] = pTexture;
 }
 
-void TmpFileClass::AddZTexture(int nIndex, LPDIRECT3DTEXTURE9 pTexture)
+void TmpFileClass::AddExtraZTexture(int nIndex, LPDIRECT3DTEXTURE9 pTexture)
 {
-	if (this->FindZTexture(nIndex))
+	if (this->FindExtraZTexture(nIndex))
 		return;
 
 	this->ExtraZTextures[nIndex] = pTexture;
@@ -846,6 +940,15 @@ void TmpFileClass::RemoveTexture(int nIndex)
 	}
 }
 
+void TmpFileClass::RemoveZTexture(int nIndex)
+{
+	auto find = this->CellZTextures.find(nIndex);
+	if (find != this->CellZTextures.end()) {
+		find->second->Release();
+		this->CellZTextures.erase(nIndex);
+	}
+}
+
 void TmpFileClass::RemoveExtraTexture(int nIndex)
 {
 	auto find = this->ExtraTextures.find(nIndex);
@@ -855,7 +958,7 @@ void TmpFileClass::RemoveExtraTexture(int nIndex)
 	}
 }
 
-void TmpFileClass::RemoveZTexture(int nIndex)
+void TmpFileClass::RemoveExtraZTexture(int nIndex)
 {
 	auto find = this->ExtraZTextures.find(nIndex);
 	if (find != this->ExtraZTextures.end()) {
@@ -874,6 +977,7 @@ void TmpFileClass::RemoveAllTextures()
 		pair.second->Release();
 	}*/
 	this->CellTextures.clear();
+	this->CellZTextures.clear();
 	this->ExtraTextures.clear();
 	this->ExtraZTextures.clear();
 }
