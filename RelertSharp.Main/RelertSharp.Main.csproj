@@ -133,6 +133,7 @@
     <Compile Include="Common\RsLog.cs" />
     <Compile Include="Common\SoundManager.cs" />
     <Compile Include="Common\Enumerator\Square2DEnumerator.cs" />
+    <Compile Include="Common\Structs\BuildingData.cs" />
     <Compile Include="Common\Structs\Pnt.cs" />
     <Compile Include="Common\Structs\Pnt3.cs" />
     <Compile Include="Common\Structs\RadarColor.cs" />

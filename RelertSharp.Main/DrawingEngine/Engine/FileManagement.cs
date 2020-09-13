@@ -237,88 +237,95 @@ namespace RelertSharp.DrawingEngine
             if (!Buffer.Buffers.Structures.Keys.Contains(lookup))
             {
                 d = new DrawableStructure(name);
-                string self = "", turret = "", anim = "", bib = "", idle = "", anim2 = "", anim3 = "", barl = "", super = "";
-                bool vox = false;
-                self = GlobalRules.GetObjectImgName(name, ref anim, ref turret, ref bib, ref vox, ref idle, ref anim2, ref anim3, ref barl, ref super,
-                                                    out short nSelf, out short nAnim, out short nTurret, out short nBib, out short nIdle, out short nAnim2, out short nAnim3, out short nSuper,
-                                                    out string alphaName,
-                                                    out bool isEmpty);
+                BuildingData data = GlobalRules.GetBuildingData(name);
                 GlobalRules.GetBuildingShapeData(name, out int height, out int foundx, out int foundy);
+
                 #region framecount
-                d.Framecount = nSelf;
-                d.ActivateAnimCount = nAnim;
-                d.ActivateAnim2Count = nAnim2;
-                d.ActivateAnim3Count = nAnim3;
-                d.IdleAnimCount = nIdle;
-                d.BibCount = nBib;
-                d.SuperAnimCount = nSuper;
-                d.TurretAnimCount = nTurret;
+                d.Framecount = data.nSelf;
+                d.ActivateAnimCount = data.nActivateAnim;
+                d.ActivateAnim2Count = data.nActivateAnimTwo;
+                d.ActivateAnim3Count = data.nActivateAnimThree;
+                d.IdleAnimCount = data.nIdleAnim;
+                d.BibCount = data.nBibAnim;
+                d.SuperAnimCount = data.nSuperAnim;
+                d.TurretAnimCount = data.nTurretAnim;
                 #endregion
+
                 d.Height = height; d.FoundationX = foundx; d.FoundationY = foundy;
-                d.VoxelTurret = vox;
+                d.VoxelTurret = data.TurretAnimIsVoxel;
                 d.RemapColor = color;
                 d.MinimapColor = ToColor(color);
+
+                #region ZAdjust
+                d.TurretZAdjust = data.TurretAnimZAdjust;
+                d.ActivateZAdjust = data.ActiveAnimZAdjust;
+                d.Activate2ZAdjust = data.ActiveAnimTwoZAdjust;
+                d.Activate3ZAdjust = data.ActiveAnimThreeZAdjust;
+                d.IdleZAdjust = data.IdleAnimZAdjust;
+                d.SuperZAdjust = data.SuperAnimZAdjust;
+                #endregion
+
                 string customPalName = GlobalRules.GetCustomPaletteName(name);
                 if (!string.IsNullOrEmpty(customPalName))
                 {
                     pPal = CreatePalette(customPalName);
                     d.pPalCustom = pPal;
                 }
-                if (!string.IsNullOrEmpty(self))
+                if (!string.IsNullOrEmpty(data.SelfId))
                 {
-                    d.pSelf = CreateFile(self, DrawableType.Shp);
-                    if (!GlobalConfig.DeactiveShadow.Contains(name)) d.pShadow = CreateFile(self, DrawableType.Shp, d.Framecount / 2);
+                    d.pSelf = CreateFile(data.SelfId, DrawableType.Shp);
+                    if (!GlobalConfig.DeactiveShadow.Contains(name)) d.pShadow = CreateFile(data.SelfId, DrawableType.Shp, d.Framecount / 2);
                 }
-                if (!string.IsNullOrEmpty(anim))
+                if (!string.IsNullOrEmpty(data.ActivateAnim))
                 {
-                    d.pActivateAnim = CreateFile(anim, DrawableType.Shp);
-                    d.pShadowActivateAnim = CreateFile(anim, DrawableType.Shp, d.ActivateAnimCount / 2);
+                    d.pActivateAnim = CreateFile(data.ActivateAnim, DrawableType.Shp);
+                    d.pShadowActivateAnim = CreateFile(data.ActivateAnim, DrawableType.Shp, d.ActivateAnimCount / 2);
                 }
-                if (!string.IsNullOrEmpty(anim2))
+                if (!string.IsNullOrEmpty(data.ActivateAnimTwo))
                 {
-                    d.pActivateAnim2 = CreateFile(anim2, DrawableType.Shp);
-                    d.pShadowActivateAnim2 = CreateFile(anim2, DrawableType.Shp, d.ActivateAnim2Count / 2);
+                    d.pActivateAnim2 = CreateFile(data.ActivateAnimTwo, DrawableType.Shp);
+                    d.pShadowActivateAnim2 = CreateFile(data.ActivateAnimTwo, DrawableType.Shp, d.ActivateAnim2Count / 2);
                 }
-                if (!string.IsNullOrEmpty(anim3))
+                if (!string.IsNullOrEmpty(data.ActivateAnimThree))
                 {
-                    d.pActivateAnim3 = CreateFile(anim3, DrawableType.Shp);
-                    d.pShadowActivateAnim3 = CreateFile(anim3, DrawableType.Shp, d.ActivateAnim3Count / 2);
+                    d.pActivateAnim3 = CreateFile(data.ActivateAnimThree, DrawableType.Shp);
+                    d.pShadowActivateAnim3 = CreateFile(data.ActivateAnimThree, DrawableType.Shp, d.ActivateAnim3Count / 2);
                 }
-                if (!string.IsNullOrEmpty(super))
+                if (!string.IsNullOrEmpty(data.SuperAnim))
                 {
-                    d.pSuperAnim = CreateFile(super, DrawableType.Shp);
-                    d.pShadowSuperAnim = CreateFile(super, DrawableType.Shp, d.SuperAnimCount / 2);
+                    d.pSuperAnim = CreateFile(data.SuperAnim, DrawableType.Shp);
+                    d.pShadowSuperAnim = CreateFile(data.SuperAnim, DrawableType.Shp, d.SuperAnimCount / 2);
                 }
-                if (!string.IsNullOrEmpty(idle))
+                if (!string.IsNullOrEmpty(data.IdleAnim))
                 {
-                    d.pIdleAnim = CreateFile(idle, DrawableType.Shp);
-                    d.pShadowIdleAnim = CreateFile(idle, DrawableType.Shp, d.IdleAnimCount / 2);
+                    d.pIdleAnim = CreateFile(data.IdleAnim, DrawableType.Shp);
+                    d.pShadowIdleAnim = CreateFile(data.IdleAnim, DrawableType.Shp, d.IdleAnimCount / 2);
                 }
-                if (!string.IsNullOrEmpty(bib))
+                if (!string.IsNullOrEmpty(data.BibAnim))
                 {
-                    d.pBib = CreateFile(bib, DrawableType.Shp);
-                    d.pShadowBib = CreateFile(bib, DrawableType.Shp, d.BibCount / 2);
+                    d.pBib = CreateFile(data.BibAnim, DrawableType.Shp);
+                    d.pShadowBib = CreateFile(data.BibAnim, DrawableType.Shp, d.BibCount / 2);
                 }
-                if (!string.IsNullOrEmpty(alphaName))
+                if (!string.IsNullOrEmpty(data.AlphaImage))
                 {
-                    d.pAlphaImg = CreateFile(alphaName, DrawableType.Shp);
+                    d.pAlphaImg = CreateFile(data.AlphaImage, DrawableType.Shp);
                 }
-                if (!string.IsNullOrEmpty(turret))
+                if (!string.IsNullOrEmpty(data.TurretAnim))
                 {
                     d.offsetTurret = GlobalRules.GetVoxTurOffset(name);
                     if (d.VoxelTurret)
                     {
-                        d.pTurretAnim = CreateFile(turret, DrawableType.Vxl);
-                        if (!string.IsNullOrEmpty(barl)) d.pTurretBarl = CreateFile(barl, DrawableType.Vxl);
+                        d.pTurretAnim = CreateFile(data.TurretAnim, DrawableType.Vxl);
+                        if (!string.IsNullOrEmpty(data.TurretBarrel)) d.pTurretBarl = CreateFile(data.TurretBarrel, DrawableType.Vxl);
                     }
                     else
                     {
-                        d.pTurretAnim = CreateFile(turret, DrawableType.Shp, direction);
-                        d.pShadowTurretAnim = CreateFile(turret, DrawableType.Shp, direction + d.TurretAnimCount / 2);
+                        d.pTurretAnim = CreateFile(data.TurretAnim, DrawableType.Shp, direction);
+                        d.pShadowTurretAnim = CreateFile(data.TurretAnim, DrawableType.Shp, direction + d.TurretAnimCount / 2);
                     }
                 }
 
-                if (isEmpty) d.pSelf = CreateFile("unkObj.shp", DrawableType.Shp);
+                if (data.IsEmpty) d.pSelf = CreateFile("unkObj.shp", DrawableType.Shp);
                 Buffer.Buffers.Structures[lookup] = d;
             }
             else d = Buffer.Buffers.Structures[lookup];

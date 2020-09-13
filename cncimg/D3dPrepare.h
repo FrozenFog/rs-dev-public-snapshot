@@ -52,4 +52,10 @@ namespace Graphic
 	void SceneRotation();
 
 	void RemoveAlphaObjects();
+
+	void MouseMovePerspective(const POINTS& Position);
+
+	void KeyDownMoveCamera(const int x, const int y);//wasd
+
+	void KeyDownLiftCamera(const int z);//shift space
 };

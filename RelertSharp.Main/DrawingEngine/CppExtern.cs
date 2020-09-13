@@ -80,6 +80,8 @@ namespace RelertSharp.DrawingEngine
             [DllImport("CncVxlRenderText.dll")]
             public static extern int CreateVxlObjectAtScene(int idVxl, Vec3 pos, float rotateX, float rotateY, float rotateZ, int idPal, uint dwRemapColor);
             [DllImport("CncVxlRenderText.dll")]
+            public static extern bool CreateVxlObjectCached(int idVxl, Vec3 pos, Vec3 shadowPos, float rotateZ, int idPal, uint dwRemapColor, ref int outId, ref int outShadowId);
+            [DllImport("CncVxlRenderText.dll")]
             public static extern bool CreateTmpObjectAtScene(int idTmp, Vec3 pos, int pPal, int tileIndex, ref int outTileIndex, ref int outExIndex);
             [DllImport("CncVxlRenderText.dll")]
             public static extern int CreateShpObjectAtScene(int idShp, Vec3 pos, int idFrame, int idPal, uint dwRemapColor, int flatType, int foundationX, int foundationY, int height, byte shaderType);
@@ -107,6 +109,8 @@ namespace RelertSharp.DrawingEngine
             public static extern void SetObjectLocation(int id, Vec3 Pos);
             [DllImport("CncVxlRenderText.dll")]
             public static extern void SetObjectColorCoefficient(int id, Vec4 color);
+            [DllImport("CncVxlRenderText.dll")]
+            public static extern void SetObjectZAdjust(int id, float zAdjust);
         }
     }
 }

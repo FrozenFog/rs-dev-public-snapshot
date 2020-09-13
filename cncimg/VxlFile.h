@@ -100,6 +100,12 @@ struct VxlLimbBody
 	void LoadFromBuffer(PBYTE pBuffer, VxlLimbTailer& TailerInfo);
 };
 
+struct VxlCacheStruct
+{
+	LPDIRECT3DTEXTURE9 pCache;
+	int nOffsetX, nOffsetY;
+};
+
 class VxlFile : public DrawObject
 {
 public:
@@ -129,8 +135,22 @@ public:
 	int DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
 		float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor, VPLFile& Vpl = VPLFile::GlobalVPL);
 
-	void MakeFrameScreenShot(LPDIRECT3DDEVICE9 pDevice, const char* pDestFile, const char* pShadow, int idxFrame, float RotationX, float RotationY, 
-		float RotationZ, int nPaletteID, DWORD dwRemapColor, VPLFile& Vpl = VPLFile::GlobalVPL);
+	void DrawCached(LPDIRECT3DDEVICE9 pDevice,
+		D3DXVECTOR3 Position, D3DXVECTOR3 ShadowPosition, float RotationZ,
+		int nPaletteID, DWORD dwRemapColor,
+		int& returnedID, int& returnedShadowID, 
+		VPLFile& Vpl = VPLFile::GlobalVPL);
+	
+	bool MakeSingleFrameCaches(
+		LPDIRECT3DDEVICE9 pDevice, int idxFrame,
+		float RotationX, float RotationY, float RotationZ,
+		VxlCacheStruct& pReturnedCache, VxlCacheStruct& pReturnedShadow,
+		VPLFile& Vpl = VPLFile::GlobalVPL);
+
+	void MakeFrameScreenShot(
+		LPDIRECT3DDEVICE9 pDevice, const char* pDestFile, const char* pShadow, int idxFrame,
+		float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor,
+		VPLFile& Vpl = VPLFile::GlobalVPL);
 
 	void MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile* Barl, VxlFile* Body, const char* pDestFile, const char* pShadow, int idxFrame, float RotationX, float RotationY, 
 		float RotationZ, int nPaletteID, DWORD dwRemapColor, int TurretOff = 0, VPLFile&Vpl = VPLFile::GlobalVPL);
@@ -141,6 +161,8 @@ public:
 private:
 #endif
 
+	bool MakeAllCache(LPDIRECT3DDEVICE9 pDevice, VPLFile& Vpl = VPLFile::GlobalVPL);
+
 	PBYTE pFileBuffer;
 	VxlFileHeader FileHeader;
 	std::vector<VxlLimbBody> BodyData;
@@ -148,4 +170,7 @@ private:
 	std::vector<VxlLimbTailer> LimbTailers;
 
 	HVAStruct AssociatedHVA;
+
+	std::vector<VxlCacheStruct> CachedVoxels;
+	std::vector<VxlCacheStruct> CachedShadows;
 };

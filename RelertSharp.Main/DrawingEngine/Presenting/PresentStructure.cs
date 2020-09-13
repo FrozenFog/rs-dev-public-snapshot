@@ -51,8 +51,10 @@ namespace RelertSharp.DrawingEngine.Presenting
                 if (VoxelTurret)
                 {
                     RemoveProp(PresentFileTypeFlag.Vxl, pTurretAnim, pTurretBarl);
+                    RemoveProp(PresentFileTypeFlag.Vxl, pTurretAnimShadow, pTurretBarlShadow);
                     pTurretAnim = 0;
                     pTurretBarl = 0;
+                    pTurretAnimShadow = 0; pTurretBarlShadow = 0;
                 }
                 foreach (int p in Pointers) RemoveProp(PresentFileTypeFlag.Shp, p);
                 Disposed = true;
@@ -139,13 +141,28 @@ namespace RelertSharp.DrawingEngine.Presenting
         #endregion
 
 
+        #region Internal
+        internal void SetZAdjust()
+        {
+            foreach (int p in Pointers) if (p != 0) CppExtern.ObjectUtils.SetObjectZAdjust(p, -2);
+            foreach (int pshadow in Shadows) if (pshadow != 0) CppExtern.ObjectUtils.SetObjectZAdjust(pshadow, 5);
+            CppExtern.ObjectUtils.SetObjectZAdjust(pTurretAnim, -3);
+        }
+        internal void SetBasenodeZ()
+        {
+            foreach (int p in Pointers.Except(Shadows)) if (p != 0) CppExtern.ObjectUtils.SetObjectZAdjust(p, -4);
+            CppExtern.ObjectUtils.SetObjectZAdjust(pTurretAnim, -5);
+        }
+        #endregion
+
+
         #region Public Calls - PresentStructure
         public int[] Pointers
         {
             get
             {
                 return new int[] { pSelf, pActivateAnim, pActivateAnim2, pActivateAnim3, pBib, pIdleAnim, pSuperAnim, pTurretAnim, pTurretBarl,
-                pSelfShadow, pActivateAnimShadow, pActivateAnim2Shadow, pActivateAnim3Shadow, pBibShadow, pIdleAnimShadow, pSuperAnimShadow, pTurretAnimShadow,
+                pSelfShadow, pActivateAnimShadow, pActivateAnim2Shadow, pActivateAnim3Shadow, pBibShadow, pIdleAnimShadow, pSuperAnimShadow, pTurretAnimShadow, pTurretBarlShadow,
                 pPlug1, pPlug1Shadow, pPlug2, pPlug2Shadow, pPlug3, pPlug3Shadow,
                 pAlphaImg};
             }
@@ -154,7 +171,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         {
             get
             {
-                return new int[] {pSelfShadow, pActivateAnimShadow,pActivateAnim2Shadow,pActivateAnim3Shadow,pBibShadow,pIdleAnimShadow,pSuperAnimShadow,pTurretAnimShadow,
+                return new int[] {pSelfShadow, pActivateAnimShadow,pActivateAnim2Shadow,pActivateAnim3Shadow,pBibShadow,pIdleAnimShadow,pSuperAnimShadow,pTurretAnimShadow, pTurretBarlShadow,
                 pPlug1Shadow,pPlug2Shadow,pPlug3Shadow };
             }
         }
@@ -177,6 +194,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         public int pTurretAnim { get; set; }
         public int pTurretAnimShadow { get; set; }
         public int pTurretBarl { get; set; }
+        public int pTurretBarlShadow { get; set; }
         public int pBib { get; set; }
         public int pBibShadow { get; set; }
         public int pAlphaImg { get; set; }

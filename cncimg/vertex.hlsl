@@ -5,6 +5,7 @@ struct VSHandler
     vector position : POSITION;
     vector texcoords : TEXCOORD;
     vector screenpos : TEXCOORD1;
+    vector out_position : TEXCOORD2;
 	vector color : COLOR;
 };
 
@@ -12,7 +13,7 @@ VSHandler vmain(in vector position : POSITION, in vector texcoord : TEXCOORD, in
 {
 	VSHandler output_data = (VSHandler)0;
 
-	output_data.position = mul(position, vpmatrix);
+    output_data.position = output_data.out_position = mul(position, vpmatrix);
     output_data.screenpos = output_data.position;
 	
     output_data.screenpos.xy += float2(1.0, 1.0);

@@ -7,6 +7,8 @@
 #include "CommonTextureFileClass.h"
 #include "Misc.h"
 
+#include "DllLoggerClass.h"
+
 SceneClass SceneClass::Instance;
 
 SceneClass::SceneClass() :pResource(nullptr),
@@ -28,7 +30,7 @@ SceneClass::SceneClass(HWND hWnd) :SceneClass()
 
 SceneClass::~SceneClass()
 {
-	this->ClearScene();
+	//this->ClearScene();
 	this->ClearDevice();
 }
 
@@ -107,10 +109,14 @@ bool SceneClass::SetUpScene(HWND hWnd)
 	this->InitializeDeviceState();
 	this->GetDevice()->SetVertexShader(this->VertexShader.GetVertexShader());
 
+#ifdef ISOLATED_THREAD
 	DrawObject::hTextureManagementThread =
 		CreateThread(nullptr, 0, DrawObject::TextureManagementThreadProc, nullptr, NULL, &DrawObject::idTextureManagementThread);
 
 	return DrawObject::hTextureManagementThread != INVALID_HANDLE_VALUE;
+#else
+	return true;
+#endif
 }
 
 bool SceneClass::IsDeviceLoaded()
@@ -368,7 +374,7 @@ void SceneClass::InitializeDeviceState()
 	D3DXMATRIX Project, View;
 
 	auto WindowRect = this->GetWindowRect();
-	D3DXMatrixOrthoLH(&Project, WindowRect.right, WindowRect.bottom, 0.0, 1000000.0);
+	D3DXMatrixOrthoLH(&Project, WindowRect.right, WindowRect.bottom, 0.0, 5000.0);
 
 	this->pDevice->SetTransform(D3DTS_PROJECTION, &Project);
 
@@ -431,12 +437,40 @@ bool SceneClass::ResetDevice()
 
 void SceneClass::SetUpCamera()
 {
-	D3DXMATRIX View;
-	D3DXVECTOR3 Up{ 0.0,0.0,1.0 };
 	D3DXVECTOR3 Target = this->GetFocus();
 	D3DXVECTOR3 Eye = Target + D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f*sqrt(2.0) / sqrt(3.0));
-	D3DXMatrixLookAtLH(&View, &Eye, &Target, &Up);
 
+	this->SetUpCamera(Eye, Target);
+}
+
+void SceneClass::SetUpCamera(const D3DXVECTOR3& Eye, const D3DXVECTOR3& At)
+{
+	D3DXMATRIX View;
+	D3DXVECTOR3 Up{ 0.0,0.0,1.0 };
+	D3DXMatrixLookAtLH(&View, &Eye, &At, &Up);
+
+	this->pDevice->SetTransform(D3DTS_VIEW, &View);
+}
+
+void SceneClass::SetUpCameraPerspective()
+{
+	D3DXVECTOR3 Target = this->GetFocus();
+	D3DXVECTOR3 Eye = Target + D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f * sqrt(2.0) / sqrt(3.0));
+
+	this->SetUpCameraPerspective(Eye, Target);
+}
+
+void SceneClass::SetUpCameraPerspective(const D3DXVECTOR3& Eye, const D3DXVECTOR3& At)
+{
+	D3DXMATRIX View, Proj;
+	D3DXVECTOR3 Up{ 0.0,0.0,1.0f };
+	RECT Window = this->GetWindowRect();
+
+	//D3DXMatrixOrthoLH(&Proj, Window.right, Window.bottom, 0.0f, 50000.0f);
+	D3DXMatrixPerspectiveFovLH(&Proj, D3DX_PI /2.0f, (float)Window.right / Window.bottom, 0.0f, 500.0f);
+	D3DXMatrixLookAtLH(&View, &Eye, &At, &Up);
+
+	this->pDevice->SetTransform(D3DTS_PROJECTION, &Proj);
 	this->pDevice->SetTransform(D3DTS_VIEW, &View);
 }
 
@@ -464,6 +498,20 @@ DWORD SceneClass::GetBackgroundColor()
 	return this->dwBackgroundColor;
 }
 
+void SceneClass::EnableZWrite()
+{
+	if (!this->IsDeviceLoaded())
+		return;
+	this->GetDevice()->SetRenderState(D3DRS_ZENABLE, TRUE);
+}
+
+void SceneClass::DisableZWrite()
+{
+	if (!this->IsDeviceLoaded())
+		return;
+	this->GetDevice()->SetRenderState(D3DRS_ZENABLE, FALSE);
+}
+
 void SceneClass::RefillAlphaImageSurface()
 {
 	auto AlphaSurface = this->GetAlphaSurface();
@@ -488,7 +536,7 @@ void SceneClass::RefillAlphaImageSurface()
 	AlphaSurface->UnlockRect(0);
 }
 
-void SceneClass::DrawAlphaImageToAlphaSurface(PaintingStruct& paint)
+void SceneClass::DrawAlphaImageToAlphaSurface(const PaintingStruct& paint)
 {
 	auto AlphaSurface = this->GetAlphaSurface();
 	auto Texture = paint.pTexture;
@@ -572,7 +620,7 @@ bool ShaderStruct::CompileFromFile(const char * pSource, const char * pEntry, bo
 		NULL, &this->pShader, &pErrorBuffer, &this->pConstantTable);
 
 	if (pErrorBuffer) {
-		printf_s("compile error : %s\n", pErrorBuffer->GetBufferPointer());
+		Logger::Log("compile error : %s\n", pErrorBuffer->GetBufferPointer());
 		pErrorBuffer->Release();
 	}
 
@@ -632,6 +680,30 @@ bool ShaderStruct::SetConstantMatrix(LPDIRECT3DDEVICE9 pDevice, D3DXMATRIX Matri
 		return false;
 
 	return SUCCEEDED(this->pConstantTable->SetMatrix(pDevice, hConstant, &Matrix));
+}
+
+bool ShaderStruct::SetVector(LPDIRECT3DDEVICE9 pDevice, LPCSTR pName, D3DXVECTOR4 Vector)
+{
+	if (!pDevice || !this->IsLoaded())
+		return false;
+
+	return SUCCEEDED(this->pConstantTable->SetVector(pDevice, pName, &Vector));
+}
+
+bool ShaderStruct::SetMatrix(LPDIRECT3DDEVICE9 pDevice, LPCSTR pName, D3DXMATRIX Matrix)
+{
+	if (!pDevice || !this->IsLoaded())
+		return false;
+
+	return SUCCEEDED(this->pConstantTable->SetMatrix(pDevice, pName, &Matrix));
+}
+
+bool ShaderStruct::SetConstantF(LPDIRECT3DDEVICE9 pDevice, LPCSTR pName, const FLOAT fValue)
+{
+	if (!pDevice || !this->IsLoaded())
+		return false;
+
+	return SUCCEEDED(this->pConstantTable->SetFloat(pDevice, pName, fValue));
 }
 
 bool ShaderStruct::CreateShader(LPDIRECT3DDEVICE9 pDevice)

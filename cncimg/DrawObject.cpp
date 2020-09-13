@@ -190,39 +190,58 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 
 void DrawObject::CommitIsotatedTexture(LPDIRECT3DTEXTURE9 pTexture)
 {
+#ifdef ISOLATED_THREAD
 	if (IsTextureIsolated(pTexture))
 		return;
 
 	IsolatedTextures.push_back(pTexture);
+#endif
 }
 
 bool DrawObject::IsTextureIsolated(LPDIRECT3DTEXTURE9 pTexture)
 {
+#ifdef ISOLATED_THREAD
 	auto find = std::find_if(IsolatedTextures.begin(), IsolatedTextures.end(), [pTexture](LPDIRECT3DTEXTURE9& item)->bool {
 		return item == pTexture;
 	});
 
 	return find != IsolatedTextures.end();
+#else
+	return false;
+#endif
 }
 
 bool DrawObject::CanIsolatedTextureUnloadNow(LPDIRECT3DTEXTURE9 pTexture)
 {
+#ifdef ISOLATED_THREAD
 	unsigned long reference = 0;
 	for (auto& item : GlobalTransperantObjects) {
-		if (item.second->pTexture == pTexture || item.second->pPaletteTexture == pTexture)
-			reference++;
+		if (item.second->pTexture == pTexture ||
+			item.second->pPaletteTexture == pTexture ||
+			item.second->pZTexture == pTexture)
+			return false;
 	}
 
 	for (auto& item : GlobalOpaqueObjects) {
-		if (item.second->pTexture == pTexture || item.second->pPaletteTexture == pTexture)
-			reference++;
+		if (item.second->pTexture == pTexture ||
+			item.second->pPaletteTexture == pTexture ||
+			item.second->pZTexture == pTexture)
+			return false;
 	}
 
-	return reference == 0;
+	for (auto& item : GlobalTopObjects) {
+		if (item.second->pTexture == pTexture ||
+			item.second->pPaletteTexture == pTexture ||
+			item.second->pZTexture == pTexture)
+			return false;
+	}
+#endif
+	return true;
 }
 
 void DrawObject::UnloadIsolatedTexture(LPDIRECT3DTEXTURE9 pTexture)
 {
+#ifdef ISOLATED_THREAD
 	auto find = std::find_if(IsolatedTextures.begin(), IsolatedTextures.end(), [pTexture](LPDIRECT3DTEXTURE9& item)->bool {
 		return item == pTexture;
 	});
@@ -231,6 +250,7 @@ void DrawObject::UnloadIsolatedTexture(LPDIRECT3DTEXTURE9 pTexture)
 		IsolatedTextures.erase(find);
 		pTexture->Release();
 	}
+#endif
 }
 
 DWORD WINAPI DrawObject::TextureManagementThreadProc(LPVOID pNothing)
@@ -557,6 +577,7 @@ int DrawObject::CommitTopObject(PaintingStruct & Object)
 
 void DrawObject::ClearAllObjects()
 {
+#ifdef ISOLATED_THREAD
 	for (auto&pair : this->TransperantImageTable) {
 		GlobalTransperantObjects.erase(pair.first);
 		SAFE_RELEASE(pair.second.pVertexBuffer);
@@ -571,6 +592,7 @@ void DrawObject::ClearAllObjects()
 		TopObjectTable.erase(pair.first);
 		SAFE_RELEASE(pair.second.pVertexBuffer);
 	}
+#endif
 
 	this->TransperantImageTable.clear();
 	this->OpaqueImageTable.clear();
@@ -581,7 +603,9 @@ void DrawObject::RemoveTransperantObject(int nID)
 {
 	auto find = this->TransperantImageTable.find(nID);
 	if (find != this->TransperantImageTable.end()) {
+#ifdef ISOLATED_THREAD
 		find->second.pVertexBuffer->Release();
+#endif
 
 		this->TransperantImageTable.erase(nID);
 		GlobalTransperantObjects.erase(nID);
@@ -592,7 +616,9 @@ void DrawObject::RemoveOpaqueObject(int nID)
 {
 	auto find = this->OpaqueImageTable.find(nID);
 	if (find != this->OpaqueImageTable.end()) {
+#ifdef ISOLATED_THREAD
 		find->second.pVertexBuffer->Release();
+#endif
 
 		this->OpaqueImageTable.erase(nID);
 		GlobalOpaqueObjects.erase(nID);
@@ -603,7 +629,9 @@ void DrawObject::RemoveTopObject(int nID)
 {
 	auto find = this->TopObjectTable.find(nID);
 	if (find != this->TopObjectTable.end()) {
+#ifdef ISOLATED_THREAD
 		SAFE_RELEASE(find->second.pVertexBuffer);
+#endif
 
 		this->TopObjectTable.erase(nID);
 		GlobalTopObjects.erase(nID);
@@ -643,6 +671,14 @@ PaintingStruct * DrawObject::FindObjectById(int nID)
 		return find->second;
 
 	return nullptr;
+}
+
+void DrawObject::ObjectZAdjust(int nID, float zAdjust)
+{
+	auto pFind = FindObjectById(nID);
+	if (!pFind)
+		return;
+	pFind->SetZAdjust(zAdjust);
 }
 
 void DrawObject::ObjectTransformation(int nID, D3DXMATRIX & Matrix)
@@ -777,6 +813,15 @@ void DrawObject::ObjectMove(int nID, D3DXVECTOR3 Target)
 	ObjectDisplacement(nID, Displacement);
 }
 
+D3DXVECTOR3 DrawObject::ObjectLocation(int nID)
+{
+	D3DXVECTOR3 Result = { 0.0,0.0,0.0 };
+	auto pFind = FindObjectById(nID);
+	if (!pFind)
+		return Result;
+	return pFind->Position;
+}
+
 //do not rotate plane arts
 void DrawObject::ObjectRotation(int nID, float RotationX, float RotationY, float RotationZ)
 {
@@ -823,13 +868,16 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 	std::string String
 )
 {
+#ifdef ISOLATED_THREAD
 	Object.pVertexBuffer = pVertexBuffer;
-	Object.Position = Position;
 	Object.pTexture = pTexture;
+#endif
+	Object.Position = Position;
 	Object.nPaletteID = nPaletteID;
 	Object.dwRemapColor = dwRemapColor;
 	Object.cSpecialDrawType = cSpecialDrawType;
 	Object.String = String;
+	Object.zAdjust = 0.0f;
 
 	if (BufferedVoxels)
 		Object.BufferedVoxels = *BufferedVoxels;
@@ -837,10 +885,44 @@ void PaintingStruct::InitializePaintingStruct(PaintingStruct & Object,
 	if (BufferedNormals)
 		Object.BufferedNormals = *BufferedNormals;
 
+#ifndef ISOLATED_THREAD
+	if (pTexture)
+		pTexture->AddRef();
+
+	if (Object.pTexture)
+		Object.pTexture->Release();
+
+	Object.pTexture = pTexture;
+
+	if (pVertexBuffer)
+		pVertexBuffer->AddRef();
+
+	if (Object.pVertexBuffer)
+		Object.pVertexBuffer->Release();
+
+	Object.pVertexBuffer = pVertexBuffer;
+#endif
+
+	Object.SetZTexture();
 	Object.SetColorCoefficient(D3DXVECTOR4(1.0, 1.0, 1.0, 1.0));
 	Object.SetCompareOffset(D3DXVECTOR3(0.0, 0.0, 0.0));
 	Object.SetPlainArtAttributes(nullptr);
 	Object.InitializeVisualRect();
+}
+
+void PaintingStruct::SetZTexture(LPDIRECT3DTEXTURE9 pTexture)
+{
+#ifdef ISOLATED_THREAD
+	this->pZTexture = pTexture;
+#else ISOLATED_THREAD
+	if (pTexture)
+		pTexture->AddRef();
+
+	if (this->pZTexture)
+		this->pZTexture->Release();
+
+	this->pZTexture = pTexture;
+#endif
 }
 
 //should BeginScene() at first
@@ -848,7 +930,6 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 {
 	if (!pDevice)
 		return false;
-
 
 	bool Result = false;
 	D3DVERTEXBUFFER_DESC Desc;
@@ -938,7 +1019,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->GetTexture(0, &pFormerTexture);
 		pDevice->GetTexture(1, &pFormer2);
 		pDevice->GetPixelShader(&pFormerShader);
-		pDevice->GetStreamSource(0, &pFormerStream, &uOffset, &uStride);
+		//pDevice->GetStreamSource(0, &pFormerStream, &uOffset, &uStride);
 
 		pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
 		pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
@@ -948,7 +1029,8 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->SetTexture(0, this->pTexture);
 
 		if (this->cSpecialDrawType == SPECIAL_NORMAL)
-			pDevice->SetTexture(1, this->pPaletteTexture);
+			pDevice->SetTexture(1, this->pPaletteTexture),
+			pDevice->SetTexture(2, this->pZTexture);
 		else if (this->cSpecialDrawType == SPECIAL_SHADOW)
 			pDevice->SetTexture(1, nullptr);
 		else if (this->cSpecialDrawType == SPECIAL_ALPHA)
@@ -957,10 +1039,15 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->SetFVF(Desc.FVF);
 		pDevice->SetStreamSource(0, this->pVertexBuffer, 0, sizeof TexturedVertex);
 
+		auto ViewPort = Scene.GetWindowRect();
+		auto ScreenDm = D3DXVECTOR4(ViewPort.left, ViewPort.top, ViewPort.right, ViewPort.bottom);
+
 		if (this->cSpecialDrawType == SPECIAL_NORMAL)
 		{
 			PlainShader.SetConstantVector(pDevice, this->ColorCoefficient);
 			PlainShader.SetRemapColor(pDevice, this->ShaderRemapColor);
+			PlainShader.SetVector(pDevice, "screen_dimension", ScreenDm);
+			PlainShader.SetConstantF(pDevice, "z_adjust", this->zAdjust);
 		}
 		else
 		{
@@ -968,6 +1055,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 			//AlphaShader.SetConstantVector(pDevice, this->ColorCoefficient);
 		}
 
+		
 		if (this->cSpecialDrawType == SPECIAL_SHADOW)
 			pDevice->SetPixelShader(ShadowShader.GetShaderObject());
 		else if (this->cSpecialDrawType == SPECIAL_ALPHA)
@@ -980,9 +1068,9 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->SetTexture(0, pFormerTexture);
 		pDevice->SetTexture(1, pFormer2);
 		pDevice->SetPixelShader(pFormerShader);
-		pDevice->SetStreamSource(0, pFormerStream, uOffset, uStride);
+		//pDevice->SetStreamSource(0, pFormerStream, uOffset, uStride);
 
-		if (!this->cSpecialDrawType)
+		if (this->cSpecialDrawType == SPECIAL_NORMAL)
 		{
 			PlainShader.SetConstantVector(pDevice);
 			PlainShader.SetRemapColor(pDevice);
@@ -1085,4 +1173,9 @@ void PaintingStruct::SetPlainArtAttributes(LPDIRECT3DTEXTURE9 pPaletteTexture, D
 {
 	this->pPaletteTexture = pPaletteTexture;
 	this->ShaderRemapColor = ShaderRemap;
+}
+
+void PaintingStruct::SetZAdjust(float zAdjust)
+{
+	this->zAdjust = zAdjust;
 }
