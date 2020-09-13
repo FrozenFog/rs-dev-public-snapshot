@@ -90,13 +90,13 @@
             this.tsmiSectionRemove,
             this.tsmiSectionRename});
             this.cmsSections.Name = "cmsSections";
-            this.cmsSections.Size = new System.Drawing.Size(302, 76);
+            this.cmsSections.Size = new System.Drawing.Size(253, 70);
             // 
             // tsmiSectionInsert
             // 
             this.tsmiSectionInsert.Name = "tsmiSectionInsert";
             this.tsmiSectionInsert.ShortcutKeys = System.Windows.Forms.Keys.Insert;
-            this.tsmiSectionInsert.Size = new System.Drawing.Size(301, 24);
+            this.tsmiSectionInsert.Size = new System.Drawing.Size(252, 22);
             this.tsmiSectionInsert.Text = "INItsmiSectionInsert";
             this.tsmiSectionInsert.Click += new System.EventHandler(this.tsmiSectionInsert_Click);
             // 
@@ -104,7 +104,7 @@
             // 
             this.tsmiSectionRemove.Name = "tsmiSectionRemove";
             this.tsmiSectionRemove.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.tsmiSectionRemove.Size = new System.Drawing.Size(301, 24);
+            this.tsmiSectionRemove.Size = new System.Drawing.Size(252, 22);
             this.tsmiSectionRemove.Text = "INItsmiSectionRemove";
             this.tsmiSectionRemove.Click += new System.EventHandler(this.tsmiSectionRemove_Click);
             // 
@@ -112,7 +112,7 @@
             // 
             this.tsmiSectionRename.Name = "tsmiSectionRename";
             this.tsmiSectionRename.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.tsmiSectionRename.Size = new System.Drawing.Size(301, 24);
+            this.tsmiSectionRename.Size = new System.Drawing.Size(252, 22);
             this.tsmiSectionRename.Text = "INItsmiSectionRename";
             this.tsmiSectionRename.Click += new System.EventHandler(this.tsmiSectionRename_Click);
             // 
@@ -123,13 +123,13 @@
             this.tsmiKeyInsert,
             this.tsmiKeyRemove});
             this.cmsKeys.Name = "cmsKeys";
-            this.cmsKeys.Size = new System.Drawing.Size(274, 52);
+            this.cmsKeys.Size = new System.Drawing.Size(232, 48);
             // 
             // tsmiKeyInsert
             // 
             this.tsmiKeyInsert.Name = "tsmiKeyInsert";
             this.tsmiKeyInsert.ShortcutKeys = System.Windows.Forms.Keys.Insert;
-            this.tsmiKeyInsert.Size = new System.Drawing.Size(273, 24);
+            this.tsmiKeyInsert.Size = new System.Drawing.Size(231, 22);
             this.tsmiKeyInsert.Text = "INItsmiKeyInsert";
             this.tsmiKeyInsert.Click += new System.EventHandler(this.tsmiKeyInsert_Click);
             // 
@@ -137,7 +137,7 @@
             // 
             this.tsmiKeyRemove.Name = "tsmiKeyRemove";
             this.tsmiKeyRemove.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.tsmiKeyRemove.Size = new System.Drawing.Size(273, 24);
+            this.tsmiKeyRemove.Size = new System.Drawing.Size(231, 22);
             this.tsmiKeyRemove.Text = "INItsmiKeyRemove";
             this.tsmiKeyRemove.Click += new System.EventHandler(this.tsmiKeyRemove_Click);
             // 
@@ -167,10 +167,10 @@
             this.tbcINI.Controls.Add(this.tbpRaw);
             this.tbcINI.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbcINI.Location = new System.Drawing.Point(0, 0);
-            this.tbcINI.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbcINI.Margin = new System.Windows.Forms.Padding(4);
             this.tbcINI.Name = "tbcINI";
             this.tbcINI.SelectedIndex = 0;
-            this.tbcINI.Size = new System.Drawing.Size(1067, 501);
+            this.tbcINI.Size = new System.Drawing.Size(1067, 500);
             this.tbcINI.TabIndex = 0;
             this.tbcINI.SelectedIndexChanged += new System.EventHandler(this.tbcINI_SelectedIndexChanged);
             // 
@@ -178,10 +178,10 @@
             // 
             this.tbpStandard.Controls.Add(this.splitContainer1);
             this.tbpStandard.Location = new System.Drawing.Point(4, 25);
-            this.tbpStandard.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbpStandard.Margin = new System.Windows.Forms.Padding(4);
             this.tbpStandard.Name = "tbpStandard";
-            this.tbpStandard.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tbpStandard.Size = new System.Drawing.Size(1059, 472);
+            this.tbpStandard.Padding = new System.Windows.Forms.Padding(4);
+            this.tbpStandard.Size = new System.Drawing.Size(1059, 471);
             this.tbpStandard.TabIndex = 0;
             this.tbpStandard.Text = "INItbpStandard";
             this.tbpStandard.UseVisualStyleBackColor = true;
@@ -190,7 +190,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(4, 4);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -200,7 +200,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gpbKeys);
-            this.splitContainer1.Size = new System.Drawing.Size(1051, 464);
+            this.splitContainer1.Size = new System.Drawing.Size(1051, 463);
             this.splitContainer1.SplitterDistance = 169;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 0;
@@ -211,10 +211,10 @@
             this.gpbSections.Controls.Add(this.lbxSections);
             this.gpbSections.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gpbSections.Location = new System.Drawing.Point(0, 0);
-            this.gpbSections.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbSections.Margin = new System.Windows.Forms.Padding(4);
             this.gpbSections.Name = "gpbSections";
-            this.gpbSections.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.gpbSections.Size = new System.Drawing.Size(169, 464);
+            this.gpbSections.Padding = new System.Windows.Forms.Padding(4);
+            this.gpbSections.Size = new System.Drawing.Size(169, 463);
             this.gpbSections.TabIndex = 1;
             this.gpbSections.TabStop = false;
             this.gpbSections.Text = "INIgpbSections";
@@ -226,10 +226,10 @@
             this.lbxSections.FormattingEnabled = true;
             this.lbxSections.ItemHeight = 15;
             this.lbxSections.Location = new System.Drawing.Point(4, 22);
-            this.lbxSections.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lbxSections.Margin = new System.Windows.Forms.Padding(4);
             this.lbxSections.Name = "lbxSections";
             this.lbxSections.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbxSections.Size = new System.Drawing.Size(161, 438);
+            this.lbxSections.Size = new System.Drawing.Size(161, 437);
             this.lbxSections.TabIndex = 0;
             this.lbxSections.SelectedIndexChanged += new System.EventHandler(this.lbxSections_SelectedIndexChanged);
             // 
@@ -238,10 +238,10 @@
             this.gpbKeys.Controls.Add(this.dgvKeys);
             this.gpbKeys.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gpbKeys.Location = new System.Drawing.Point(0, 0);
-            this.gpbKeys.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpbKeys.Margin = new System.Windows.Forms.Padding(4);
             this.gpbKeys.Name = "gpbKeys";
-            this.gpbKeys.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.gpbKeys.Size = new System.Drawing.Size(877, 464);
+            this.gpbKeys.Padding = new System.Windows.Forms.Padding(4);
+            this.gpbKeys.Size = new System.Drawing.Size(877, 463);
             this.gpbKeys.TabIndex = 0;
             this.gpbKeys.TabStop = false;
             this.gpbKeys.Text = "INIgpbKeys";
@@ -269,12 +269,12 @@
             this.dgvKeys.ContextMenuStrip = this.cmsKeys;
             this.dgvKeys.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvKeys.Location = new System.Drawing.Point(4, 22);
-            this.dgvKeys.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvKeys.Margin = new System.Windows.Forms.Padding(4);
             this.dgvKeys.Name = "dgvKeys";
             this.dgvKeys.RowHeadersVisible = false;
             this.dgvKeys.RowTemplate.Height = 23;
             this.dgvKeys.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvKeys.Size = new System.Drawing.Size(869, 438);
+            this.dgvKeys.Size = new System.Drawing.Size(869, 437);
             this.dgvKeys.TabIndex = 0;
             this.dgvKeys.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKeys_CellValueChanged);
             // 
@@ -300,10 +300,10 @@
             // 
             this.tbpRaw.Controls.Add(this.reHolder);
             this.tbpRaw.Location = new System.Drawing.Point(4, 25);
-            this.tbpRaw.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbpRaw.Margin = new System.Windows.Forms.Padding(4);
             this.tbpRaw.Name = "tbpRaw";
-            this.tbpRaw.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tbpRaw.Size = new System.Drawing.Size(1059, 460);
+            this.tbpRaw.Padding = new System.Windows.Forms.Padding(4);
+            this.tbpRaw.Size = new System.Drawing.Size(1059, 471);
             this.tbpRaw.TabIndex = 1;
             this.tbpRaw.Text = "INItbpRaw";
             this.tbpRaw.UseVisualStyleBackColor = true;
@@ -312,12 +312,12 @@
             // 
             this.reHolder.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reHolder.Location = new System.Drawing.Point(4, 4);
-            this.reHolder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.reHolder.Margin = new System.Windows.Forms.Padding(4);
             this.reHolder.Name = "reHolder";
-            this.reHolder.Size = new System.Drawing.Size(1051, 452);
+            this.reHolder.Size = new System.Drawing.Size(1051, 463);
             this.reHolder.TabIndex = 0;
             this.reHolder.Text = "INIreHolder";
-            this.reHolder.Child = null;
+            this.reHolder.Child = reMain;
             // 
             // splitContainer2
             // 
@@ -325,7 +325,7 @@
             this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer2.IsSplitterFixed = true;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer2.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -336,7 +336,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tbcINI);
-            this.splitContainer2.Size = new System.Drawing.Size(1067, 531);
+            this.splitContainer2.Size = new System.Drawing.Size(1067, 530);
             this.splitContainer2.SplitterDistance = 25;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 2;
@@ -376,14 +376,14 @@
             this.stsINI.Location = new System.Drawing.Point(0, 0);
             this.stsINI.Name = "stsINI";
             this.stsINI.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.stsINI.Size = new System.Drawing.Size(1067, 26);
+            this.stsINI.Size = new System.Drawing.Size(1067, 27);
             this.stsINI.TabIndex = 3;
             this.stsINI.Text = "INIstsINI";
             // 
             // stsSectionInfo
             // 
             this.stsSectionInfo.Name = "stsSectionInfo";
-            this.stsSectionInfo.Size = new System.Drawing.Size(0, 21);
+            this.stsSectionInfo.Size = new System.Drawing.Size(0, 22);
             // 
             // splitContainer3
             // 
@@ -391,7 +391,7 @@
             this.splitContainer3.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainer3.IsSplitterFixed = true;
             this.splitContainer3.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer3.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer3.Name = "splitContainer3";
             this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -403,7 +403,7 @@
             // 
             this.splitContainer3.Panel2.Controls.Add(this.stsINI);
             this.splitContainer3.Size = new System.Drawing.Size(1067, 562);
-            this.splitContainer3.SplitterDistance = 531;
+            this.splitContainer3.SplitterDistance = 530;
             this.splitContainer3.SplitterWidth = 5;
             this.splitContainer3.TabIndex = 4;
             this.splitContainer3.TabStop = false;
@@ -414,7 +414,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 562);
             this.Controls.Add(this.splitContainer3);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "INIEditor";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -479,6 +479,6 @@
         private System.Windows.Forms.ToolStripButton tsbReload;
         private RelertSharp.SubWindows.INIEditor.RawEditor codeEditor1;
         private System.Windows.Forms.Integration.ElementHost reHolder;
-        private RawEditor reMain;
+        private RawEditor reMain = new RawEditor();
     }
 }
