@@ -540,7 +540,7 @@ void VxlFile::DrawCached(LPDIRECT3DDEVICE9 pDevice,
 	float z = Position.z;
 
 	PaintingStruct Object, ShadowObject;
-	TexturedVertex Vertex[6];
+	TexturedVertex Vertex[12];
 	D3DSURFACE_DESC CacheDesc;
 	com_ptr<IDirect3DVertexBuffer9> pCacheVertex, pShadowVertex;
 	void* Buffer = nullptr;
@@ -552,23 +552,28 @@ void VxlFile::DrawCached(LPDIRECT3DDEVICE9 pDevice,
 		float h = CacheDesc.Height;
 		float hd = sqrt(2.0) / 4.0 * h;
 		float wd = sqrt(2.0) / 4.0 * w;
-		float xo = (Cache.nOffsetX + w / 2 - 128);
-		float yo = -(Cache.nOffsetY + h / 2 - 128);
-		float xd = xo / sqrt(2.0);// -sqrt(2.0) * yo;
-		float yd = -xo / sqrt(2.0);// -sqrt(2.0) * yo;
-		float zd = 2.0 / sqrt(3.0) * yo;
-		x += xd;
-		y += yd;
-		z += zd;
+		float u = 256.0f / w;
+		float v = 256.0f / h;
+		float su = -Cache.nOffsetX / w;
+		float sv = -Cache.nOffsetY / h;
+		float dp = 64.0f * sqrtf(2.0f);
+		float dh = 256.0f / sqrtf(3.0f);
 
-		//CDA DAB
-		Vertex[0] = { {x + hd - wd,y + hd + wd,z + 0.75f * h}, 0.0f,0.0f };
-		Vertex[1] = { {x + hd + wd,y + hd - wd,z + 0.75f * h}, 1.0f,0.0f };
-		Vertex[2] = { {x + 2 * hd - wd,y + 2 * hd + wd,z}, 0.0f,1.0f };
+		Vertex[0] = { {x - dp,y + dp,z + dh},su,sv };//A
+		Vertex[1] = { {x + dp,y - dp,z + dh},su + u,sv };//B
+		Vertex[2] = { {x - dp,y + dp,z},su,sv + v / 2.0f };//C
 
-		Vertex[3] = { {x + hd + wd,y + hd - wd,z + 0.75f * h}, 1.0f,0.0f };
-		Vertex[4] = { {x + 2 * hd - wd,y + 2 * hd + wd,z}, 0.0f,1.0f };
-		Vertex[5] = { {x + 2 * hd + wd,y + 2 * hd - wd,z},1.0f,1.0f };
+		Vertex[3] = { {x + dp,y - dp,z + dh},su + u,sv };//B
+		Vertex[4] = { {x - dp,y + dp,z},su,sv + v / 2.0f };//C
+		Vertex[5] = { {x + dp,y - dp,z},su + u,sv + v / 2.0f };//D
+
+		Vertex[6] = { {x - dp,y + dp,z},su,sv + v / 2.0f };//C
+		Vertex[7] = { {x + dp,y - dp,z},su + u,sv + v / 2.0f };//D
+		Vertex[8] = { {x + dp,y + 3 * dp,z},su,sv + v };//E
+
+		Vertex[9] = { {x + dp,y - dp,z},su + u,sv + v / 2.0f };//D
+		Vertex[10] = { {x + dp,y + 3 * dp,z},su,sv + v };//E
+		Vertex[11] = { {x + 3 * dp,y + dp,z},su + u,sv + v };//F
 
 		D3DXVECTOR3 Offset(2 * hd, 2 * hd, 0);
 		if (SUCCEEDED(pDevice->CreateVertexBuffer(sizeof Vertex, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,
@@ -601,9 +606,9 @@ void VxlFile::DrawCached(LPDIRECT3DDEVICE9 pDevice,
 		float wd = sqrt(2.0) / 4.0 * w;
 		float xo = (ShadowCache.nOffsetX + w / 2 - 128);
 		float yo = -(ShadowCache.nOffsetY + h / 2 - 128);
-		float xd = xo / sqrt(2.0);// -sqrt(2.0) * yo;
-		float yd = -xo / sqrt(2.0);// -sqrt(2.0) * yo;
-		float zd = 2.0 / sqrt(3.0) * yo;
+		float xd = xo / sqrt(2.0) -sqrt(2.0) * yo;
+		float yd = -xo / sqrt(2.0) -sqrt(2.0) * yo;
+		float zd = 0.0f;// 2.0 / sqrt(3.0) * yo;
 		x += xd;
 		y += yd;
 		z += zd;
@@ -617,11 +622,11 @@ void VxlFile::DrawCached(LPDIRECT3DDEVICE9 pDevice,
 		Vertex[5] = { {x + hd + wd,y + hd - wd,z}, 1.0f,1.0f };
 
 		D3DXVECTOR3 Offset(hd, hd, 0); 
-		if (SUCCEEDED(pDevice->CreateVertexBuffer(sizeof Vertex, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,
+		if (SUCCEEDED(pDevice->CreateVertexBuffer(sizeof Vertex / 2, D3DUSAGE_DYNAMIC, TexturedVertex::dwFVFType,
 			D3DPOOL_SYSTEMMEM, &pShadowVertex, nullptr)))
 		{
 			pShadowVertex->Lock(0, 0, &Buffer, NULL);
-			memcpy(Buffer, Vertex, sizeof Vertex);
+			memcpy(Buffer, Vertex, sizeof Vertex / 2);
 			pShadowVertex->Unlock();
 			pShadowVertex->AddRef();
 
