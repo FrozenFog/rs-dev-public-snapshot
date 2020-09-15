@@ -11,11 +11,13 @@ using RelertSharp.Common;
 using RelertSharp.GUI.SubWindows.LogicEditor;
 using System.Runtime.InteropServices;
 using static RelertSharp.GUI.GuiUtils;
+using System.Threading;
 
 namespace RelertSharp.GUI
 {
     static class Program
     {
+        private static string _guid = "c0a76b5a-12ab-45c5-b9d9-d693faa6e7b9";
         private static RsLog Log { get { return GlobalVar.Log; } }
         [DllImport("kernel32.dll")]
         static extern bool SetDllDirectory(string pathname);
@@ -36,12 +38,13 @@ namespace RelertSharp.GUI
             }
             if (args.Length < 1)
             {
-                Process[] ps = Process.GetProcesses();
-                if (ps.Count(x=>x.ProcessName == "RelertSharp") > 1)
+                using (Mutex mutex = new Mutex(false, _guid))
                 {
-                    Fatal("May only run 1 process.");
-                    return;
-                }
+                    if (!mutex.WaitOne(0, false))
+                    {
+                        Fatal("May only run 1 process.");
+                        return;
+                    }
 #if RELEASE
                 try
                 {
@@ -60,48 +63,49 @@ namespace RelertSharp.GUI
                     return;
                 }
 #endif
-                SafeRun(() =>
-                {
-                    string name;
-                    if (args.Count() == 0)
+                    SafeRun(() =>
                     {
-                        WelcomeWindow welcome = new WelcomeWindow();
-                        Application.Run(welcome);
-                        if (welcome.DialogResult == DialogResult.OK)
+                        string name;
+                        if (args.Count() == 0)
                         {
-                            if (welcome.Reboot)
+                            WelcomeWindow welcome = new WelcomeWindow();
+                            Application.Run(welcome);
+                            if (welcome.DialogResult == DialogResult.OK)
                             {
-                                Process.Start("rsdata.exe", "/reboot");
-                                return;
+                                if (welcome.Reboot)
+                                {
+                                    Process.Start("rsdata.exe", "/reboot");
+                                    return;
+                                }
+                                else
+                                {
+                                    name = welcome.MapName;
+                                }
                             }
-                            else
-                            {
-                                name = welcome.MapName;
-                            }
+                            else return;
                         }
-                        else return;
-                    }
-                    else name = args[0];
-                    MapFile map = new MapFile(name);
-                    GlobalVar.GlobalRules.MapIniData = map.Map.IniResidue;
-                    GlobalVar.CurrentMapDocument = map;
-                    GlobalVar.CurrentMapDocument.Map.DumpStructure();
-                    if (Log.HasCritical)
+                        else name = args[0];
+                        MapFile map = new MapFile(name);
+                        GlobalVar.GlobalRules.MapIniData = map.Map.IniResidue;
+                        GlobalVar.CurrentMapDocument = map;
+                        GlobalVar.CurrentMapDocument.Map.DumpStructure();
+                        if (Log.HasCritical)
+                        {
+                            Log.Critical("These object will not show in scene(or in logic editor)");
+                            Warning(Log.ShowCritical());
+                        }
+                        Application.Run(new MainWindowTest());
+                    },
+                    "Unhandled error!",
+                    () =>
                     {
-                        Log.Critical("These object will not show in scene(or in logic editor)");
-                        Warning(Log.ShowCritical());
-                    }
-                    Application.Run(new MainWindowTest());
-                },
-                "Unhandled error!",
-                () =>
-                {
-                    GlobalVar.CurrentMapDocument.SaveMap("failsafe.map");
-                });
-                GlobalVar.GlobalConfig.Local.SaveConfig();
+                        GlobalVar.CurrentMapDocument.SaveMap("failsafe.map");
+                    });
+                    GlobalVar.GlobalConfig.Local.SaveConfig();
+                    Log.Write("PROGRAM EXITING\n\n\n");
+                    Log.Dispose();
+                }
             }
-            Log.Write("PROGRAM EXITING\n\n\n");
-            Log.Dispose();
         }
 
 
