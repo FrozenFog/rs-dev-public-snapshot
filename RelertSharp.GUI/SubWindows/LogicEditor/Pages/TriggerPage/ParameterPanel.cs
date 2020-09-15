@@ -135,6 +135,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 {
                     switch (param.Type)
                     {
+                        case TriggerParam.ParamType.NestedFloat:
                         case TriggerParam.ParamType.PlainString:
                         case TriggerParam.ParamType.Waypoint:
                         case TriggerParam.ParamType.PlainWaypoint:
@@ -274,11 +275,10 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 int paramsindex = int.Parse(((Control)sender).Tag.ToString());
                 TriggerParam param = (cbbEventAbst.SelectedItem as TriggerDescription).Parameters[paramsindex];
                 int i = param.ParamPos;
-                bool isBase26 = param.Type == TriggerParam.ParamType.Waypoint;
                 if (t == typeof(TextBox))
                 {
                     string text = ((TextBox)sender).Text;
-                    WriteParam(text, i, isBase26);
+                    WriteParam(text, i, param.Type);
                 }
                 else if (t == typeof(ComboBox))
                 {
@@ -291,19 +291,32 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 }
             }
         }
-        private void WriteParam(string value, int pos, bool base26 = false)
+        private void WriteParam(string value, int pos, TriggerParam.ParamType type = TriggerParam.ParamType.PlainString)
         {
-            if (base26)
+            switch (type)
             {
-                try
-                {
-                    int v = int.Parse(value);
-                    value = Utils.Misc.WaypointString(v);
-                }
-                catch
-                {
-                    value = "A";
-                }
+                case TriggerParam.ParamType.Waypoint:
+                    try
+                    {
+                        int v = int.Parse(value);
+                        value = Utils.Misc.WaypointString(v);
+                    }
+                    catch
+                    {
+                        value = "A";
+                    }
+                    break;
+                case TriggerParam.ParamType.NestedFloat:
+                    try
+                    {
+                        float v = float.Parse(value);
+                        value = Utils.Misc.ToNestedFloat(v);
+                    }
+                    catch
+                    {
+                        value = "0";
+                    }
+                    break;
             }
             CurrentItem.Parameters[pos] = value;
         }

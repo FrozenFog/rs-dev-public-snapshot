@@ -301,6 +301,18 @@ namespace RelertSharp.Utils
             }
             return result - 1;
         }
+        public static unsafe float FromNestedFloat(string hexData)
+        {
+            if (uint.TryParse(hexData, out uint u))
+            {
+                return *(float*)&u;
+            }
+            return 0;
+        }
+        public static unsafe string ToNestedFloat(float src)
+        {
+            return (*(uint*)&src).ToString();
+        }
         /// <summary>
         /// Return waypoint in alphabet format, [0, 701]
         /// </summary>
@@ -423,16 +435,6 @@ namespace RelertSharp.Utils
             int s = seconds % 60;
             return string.Format("{0:D2}:{0:D2}:{0:D2}", h, m, s);
         }
-        public static byte[] GetBytes(short[] data)
-        {
-            byte[] result = new byte[sizeof(short) * data.Length];
-            for (int i = 0; i < result.Length; i++)
-            {
-                result[i++] = (byte)data[i / sizeof(short)];
-                result[i] = (byte)(data[i / sizeof(short)] >> 4);
-            }
-            return result;
-        }
         public static Point DeltaPoint(Point pre, Point now)
         {
             return new Point(now.X - pre.X, now.Y - pre.Y);
@@ -469,14 +471,6 @@ namespace RelertSharp.Utils
                     max = i.ToString().Length * 7 > max ? i.ToString().Length * 7 : max;
                 cbb.DropDownWidth = max;
             }
-        }
-
-        public static string ParseIEnumerableToString(IEnumerable<object> pContainer)
-        {
-            string ret = "";
-            foreach (object obj in pContainer)
-                ret += obj.ToString();
-            return ret;
         }
 
         public static string ParseObjectsToString(params object[] pObjects)

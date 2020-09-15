@@ -159,7 +159,8 @@ namespace RelertSharp.MapStructure.Logic
             Bool = 2,
             Waypoint = 3,
             CellPos = 4,
-            PlainWaypoint = 5
+            PlainWaypoint = 5,
+            NestedFloat = 6
         }
         public enum ComboContent
         {
@@ -220,6 +221,7 @@ namespace RelertSharp.MapStructure.Logic
             else
             {
                 if (Type == ParamType.Waypoint) return Utils.Misc.WaypointInt(paramSrc[ParamPos]).ToString();
+                else if (Type == ParamType.NestedFloat) return Utils.Misc.FromNestedFloat(paramSrc[ParamPos]).ToString();
                 return paramSrc[ParamPos];
             }
         }
