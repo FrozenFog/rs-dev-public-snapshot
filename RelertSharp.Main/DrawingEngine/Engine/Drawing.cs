@@ -262,6 +262,7 @@ namespace RelertSharp.DrawingEngine
             {
                 //minimap.DrawMisc(src, dest);
                 if (src.IsHiBridge) CppExtern.ObjectUtils.SetObjectZAdjust(dest.pSelf, ZAdjust.HiBridgeZAdjust);
+                CppExtern.ObjectUtils.SetObjectZAdjust(dest.pSelfShadow, ZAdjust.Shadow);
                 dest.RadarColor = new RadarColor(src.RadarColor);
             }
             return dest.IsValid;

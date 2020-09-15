@@ -208,11 +208,11 @@ namespace RelertSharp.Common
             public static class ZAdjust
             {
                 public const float HiBridgeZAdjust = -60;
-                public const float Shadow = 10;
+                public const float Shadow = 1;
             }
             public static class Offset
             {
-                public static float Ground = -2f;
+                public static float Ground = -3f;
                 public static float ShadowSelf = -1f;
                 public static float Smudge = -0.8f;
 
@@ -228,20 +228,20 @@ namespace RelertSharp.Common
                 public static float ShadowPlug2 = -0.3f;
                 public static float ShadowPlug1 = -0.25f;
 
-                public static float Self = 1f;
-                public static float AAnim1 = 1.15f;
-                public static float AAnim2 = 1.2f;
-                public static float AAnim3 = 1.25f;
-                public static float Idle = 1.3f;
-                public static float Super = 1.35f;
-                public static float Turret = 1.4f;
-                public static float Barrel = 1.5f;
-                public static float Bib = 1.55f;
-                public static float Plug1 = 1.6f;
-                public static float Plug2 = 1.65f;
-                public static float Plug3 = 1.7f;
+                public static float Self = 3f;
+                public static float AAnim1 = 3.15f;
+                public static float AAnim2 = 3.2f;
+                public static float AAnim3 = 3.25f;
+                public static float Idle = 3.3f;
+                public static float Super = 3.35f;
+                public static float Turret = 3.4f;
+                public static float Barrel = 3.5f;
+                public static float Bib = 3.55f;
+                public static float Plug1 = 3.6f;
+                public static float Plug2 = 3.65f;
+                public static float Plug3 = 3.7f;
 
-                public static float BaseNode = 4;
+                public static float BaseNode = 6;
             }
         }
         public static class GameRunning
