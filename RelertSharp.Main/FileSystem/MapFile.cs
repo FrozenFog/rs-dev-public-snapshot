@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
-using RelertSharp.Common;
 using RelertSharp.MapStructure;
 using RelertSharp.Utils;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RelertSharp.FileSystem
 {
@@ -102,7 +99,7 @@ namespace RelertSharp.FileSystem
         {
             INIEntity entBud = new INIEntity("Structures");
             //buildings :
-            using(var structureEntity=new INIEntity("Structures", "", "")) 
+            using (var structureEntity = new INIEntity("Structures", "", ""))
             {
                 int idx = 0;
                 foreach (var building in Map.Buildings)

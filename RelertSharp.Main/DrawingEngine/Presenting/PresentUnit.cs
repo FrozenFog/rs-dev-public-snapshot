@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.Common;
+﻿using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.DrawingEngine.Presenting
@@ -88,6 +83,17 @@ namespace RelertSharp.DrawingEngine.Presenting
                 SetColorStrict(Vec4.HideCompletely);
                 IsHidden = false;
             }
+        }
+        #endregion
+
+
+        #region Internal
+        internal void SetUnitShadowZAdjust()
+        {
+            float zAdjust = Constant.DrawingEngine.ZAdjust.Shadow;
+            CppExtern.ObjectUtils.SetObjectZAdjust(pSelfShadow, zAdjust);
+            CppExtern.ObjectUtils.SetObjectZAdjust(pTurretShadow, zAdjust);
+            CppExtern.ObjectUtils.SetObjectZAdjust(pBarrelShadow, zAdjust);
         }
         #endregion
 

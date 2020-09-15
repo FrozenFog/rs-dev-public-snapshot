@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
-using RelertSharp.Common;
+using System.Linq;
 
 namespace RelertSharp.DrawingEngine.Presenting
 {
@@ -142,11 +138,9 @@ namespace RelertSharp.DrawingEngine.Presenting
 
 
         #region Internal
-        internal void SetZAdjust()
+        internal void SetShadowZAdjust()
         {
-            foreach (int p in Pointers) if (p != 0) CppExtern.ObjectUtils.SetObjectZAdjust(p, -2);
-            foreach (int pshadow in Shadows) if (pshadow != 0) CppExtern.ObjectUtils.SetObjectZAdjust(pshadow, 5);
-            CppExtern.ObjectUtils.SetObjectZAdjust(pTurretAnim, -3);
+            foreach (int pshadow in Shadows) if (pshadow != 0) CppExtern.ObjectUtils.SetObjectZAdjust(pshadow, Constant.DrawingEngine.ZAdjust.Shadow);
         }
         internal void SetBasenodeZ()
         {

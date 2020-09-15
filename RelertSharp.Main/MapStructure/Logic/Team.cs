@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
-using RelertSharp.Common;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Logic
@@ -211,9 +208,9 @@ namespace RelertSharp.MapStructure.Logic
         {
             public object Value;
             public string ShowName;
-            public TeamUnitNode(string showName,object value) { Value = value;ShowName = showName; }
+            public TeamUnitNode(string showName, object value) { Value = value; ShowName = showName; }
         }
-        
+
         #region Ctor - TeamUnit
         public TeamUnit(TeamItem item)
         {

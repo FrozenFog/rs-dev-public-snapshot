@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Drawing;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
-using RelertSharp.FileSystem;
-using RelertSharp.IniSystem;
+﻿using RelertSharp.Common;
 using RelertSharp.MapStructure;
-using RelertSharp.MapStructure.Points;
-using RelertSharp.MapStructure.Objects;
-using RelertSharp.DrawingEngine.Drawables;
-using RelertSharp.DrawingEngine.Presenting;
-using RelertSharp.Common;
-using static RelertSharp.Utils.Misc;
+using System;
+using System.Drawing;
 using static RelertSharp.Common.GlobalVar;
 
 namespace RelertSharp.DrawingEngine
@@ -28,7 +16,7 @@ namespace RelertSharp.DrawingEngine
         private float _height { get { return _10SQ3; } }
         private const uint _colorIgnore = 0x000000FF;
         private const uint _white = 0xFFFFFFFF;
-        private static Vec3 _generalOffset = new Vec3() { X = 1, Y = 1, Z = (float)Math.Sqrt(2f/3f) };
+        private static Vec3 _generalOffset = new Vec3() { X = 1, Y = 1, Z = (float)Math.Sqrt(2f / 3f) };
         private BufferCollection Buffer = new BufferCollection();
         private int pPalIso = 0;
         private int pPalUnit = 0;

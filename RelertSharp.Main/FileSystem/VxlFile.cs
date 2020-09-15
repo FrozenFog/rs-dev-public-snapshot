@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace RelertSharp.FileSystem
 {
@@ -39,7 +35,7 @@ namespace RelertSharp.FileSystem
             ReadBytes(2);//unknown
             pal = ReadBytes(768);
 
-            for(int i = 0; i < SectionCount; i++)
+            for (int i = 0; i < SectionCount; i++)
             {
                 //header
                 VoxelSection sec = new VoxelSection(ReadString(16), ReadInt32());

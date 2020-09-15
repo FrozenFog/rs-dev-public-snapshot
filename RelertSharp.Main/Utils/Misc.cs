@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using RelertSharp.Common;
 using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
-using RelertSharp.Common;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 
 namespace RelertSharp.Utils
 {
@@ -437,7 +435,7 @@ namespace RelertSharp.Utils
         }
         public static Point DeltaPoint(Point pre, Point now)
         {
-           return new Point(now.X - pre.X, now.Y - pre.Y);
+            return new Point(now.X - pre.X, now.Y - pre.Y);
         }
         public static void DebugSave(byte[] data, string filename)
         {

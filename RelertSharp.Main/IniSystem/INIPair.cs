@@ -1,9 +1,7 @@
-﻿using System;
+﻿using RelertSharp.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.Common;
 
 namespace RelertSharp.IniSystem
 {
@@ -199,8 +197,8 @@ namespace RelertSharp.IniSystem
             if (tmp.Count() == 0) return result.ToArray();
             foreach (string s in tmp)
             {
-                if (!string.IsNullOrEmpty(s)) 
-                result.Add(int.Parse(s));
+                if (!string.IsNullOrEmpty(s))
+                    result.Add(int.Parse(s));
             }
             return result.ToArray();
         }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RelertSharp.Common
+﻿namespace RelertSharp.Common
 {
     public struct Pnt3 : I3dLocateable
     {
@@ -18,17 +12,17 @@ namespace RelertSharp.Common
         }
         public Pnt3(I2dLocateable d2, int height)
         {
-            X = d2.X;Y = d2.Y;Z = height;
+            X = d2.X; Y = d2.Y; Z = height;
         }
         public Pnt3(I3dLocateable src)
         {
-            X = src.X;Y = src.Y;Z = src.Z;
+            X = src.X; Y = src.Y; Z = src.Z;
         }
-        public static Pnt3 operator+(Pnt3 a, Pnt b)
+        public static Pnt3 operator +(Pnt3 a, Pnt b)
         {
             return new Pnt3(a.X + b.X, a.Y + b.Y, a.Z);
         }
-        public static Pnt3 operator-(Pnt3 a, Pnt b)
+        public static Pnt3 operator -(Pnt3 a, Pnt b)
         {
             return new Pnt3(a.X - b.X, a.Y - b.Y, a.Z);
         }

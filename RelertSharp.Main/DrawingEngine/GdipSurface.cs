@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using RelertSharp.Common;
 using RelertSharp.DrawingEngine.Drawables;
 using RelertSharp.DrawingEngine.Presenting;
-using RelertSharp.Common;
+using System;
+using System.Drawing;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.DrawingEngine
@@ -120,7 +116,7 @@ namespace RelertSharp.DrawingEngine
             scaledMinimapPos.X = (panelSize.Width - scaledMinimapSize.Width) / 2;
             scaledMinimapPos.Y = (panelSize.Height - scaledMinimapSize.Height) / 2;
         }
-        private void SetMinimapColorAt(int x,int y, Color color)
+        private void SetMinimapColorAt(int x, int y, Color color)
         {
             if (x < 0 || y < 0 || x >= minimap.Width || y >= minimap.Height) return;
             if (color == nullcolor) return;
@@ -169,7 +165,7 @@ namespace RelertSharp.DrawingEngine
 
 
         #region Public Calls - GdipSurface
-        public Bitmap MiniMap { get { return ResizeTo(minimap, panelSize); }  }
+        public Bitmap MiniMap { get { return ResizeTo(minimap, panelSize); } }
         public Point ClientPos { get; set; }
         #endregion
     }

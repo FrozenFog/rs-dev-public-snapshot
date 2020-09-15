@@ -1,14 +1,10 @@
-﻿using System;
+﻿using RelertSharp.Utils;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Windows.Forms;
-using RelertSharp.Utils;
-using RelertSharp.Common;
+using System.IO;
+using System.Linq;
 
 namespace RelertSharp.FileSystem
 {
@@ -178,7 +174,7 @@ namespace RelertSharp.FileSystem
         public unsafe void LoadColor(PalFile _pal, int blockWidthPX = 60, int blockHeightPX = 30)
         {
             Bitmap bmp = new Bitmap(blockWidthPX, blockHeightPX, PixelFormat.Format32bppArgb);
-            using(FastBitmap normalImage = new FastBitmap(bmp))
+            using (FastBitmap normalImage = new FastBitmap(bmp))
             {
                 int count = 0;
                 for (int j = 0; j < blockHeightPX - 1; j++)
@@ -195,13 +191,13 @@ namespace RelertSharp.FileSystem
                     }
                 }
             }
-            
+
             TileBitmap = bmp;
             DrawingPos = new Point(0, 0);
             if (HasExtraData)
             {
                 Bitmap extra = new Bitmap(ExtraWidth, ExtraHeight, PixelFormat.Format32bppArgb);
-                using(FastBitmap extraImage = new FastBitmap(extra))
+                using (FastBitmap extraImage = new FastBitmap(extra))
                 {
                     int excount = 0;
                     for (int j = 0; j < ExtraHeight; j++)

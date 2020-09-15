@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using RelertSharp.Common;
+﻿using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine.Presenting
 {
@@ -77,7 +71,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         /// <param name="delta"></param>
         public override void ShiftBy(I3dLocateable delta)
         {
-            
+
         }
         //public void Mark(Vec4 main, Vec4 extra, bool deSelect)
         //{

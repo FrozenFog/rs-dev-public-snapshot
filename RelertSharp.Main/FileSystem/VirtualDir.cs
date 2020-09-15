@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Drawing;
-using System.Runtime.InteropServices;
+﻿using RelertSharp.Common;
 using RelertSharp.Encoding;
-using RelertSharp.Common;
 using RelertSharp.IniSystem;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using static RelertSharp.Common.GlobalVar;
 
 namespace RelertSharp.FileSystem
@@ -89,7 +86,7 @@ namespace RelertSharp.FileSystem
         public Dictionary<string, Image> GetPcxImages(IEnumerable<string> src)
         {
             Dictionary<string, Image> result = new Dictionary<string, Image>();
-            foreach(string pcx in src)
+            foreach (string pcx in src)
             {
                 string key = pcx.ToLower();
                 if (string.IsNullOrEmpty(key)) key = "xxicon.shp";

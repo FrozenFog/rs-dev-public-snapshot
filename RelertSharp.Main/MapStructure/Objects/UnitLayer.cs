@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.FileSystem;
-using RelertSharp.Common;
+﻿using RelertSharp.Common;
 using RelertSharp.DrawingEngine.Presenting;
+using System;
+using System.Collections.Generic;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Objects
@@ -89,7 +85,8 @@ namespace RelertSharp.MapStructure.Objects
         #region Public Calls
         public List<object> SaveData
         {
-            get {
+            get
+            {
                 return new List<object>()
                 {
                     OwnerHouse, RegName, HealthPoint, X, Y, Rotation, Status, TaggedTrigger, VeterancyPercentage, Group, IsAboveGround, FollowsIndex, AutoNORecruitType,AutoYESRecruitType

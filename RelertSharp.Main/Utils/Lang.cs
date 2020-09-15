@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using RelertSharp.FileSystem;
 
 namespace RelertSharp.Utils
 {
@@ -56,7 +52,7 @@ namespace RelertSharp
             }
             else if (t == typeof(Panel))
             {
-                foreach(Control c in ((Panel)p).Controls)
+                foreach (Control c in ((Panel)p).Controls)
                 {
                     SetControlLanguage(c);
                 }
@@ -94,9 +90,9 @@ namespace RelertSharp
                     col.HeaderText = DICT[col.HeaderText];
                 }
             }
-            else if (t == typeof(BrightIdeasSoftware.ObjectListView)) 
+            else if (t == typeof(BrightIdeasSoftware.ObjectListView))
             {
-                foreach(BrightIdeasSoftware.OLVColumn col in ((BrightIdeasSoftware.ObjectListView)p).Columns)
+                foreach (BrightIdeasSoftware.OLVColumn col in ((BrightIdeasSoftware.ObjectListView)p).Columns)
                 {
                     col.Text = DICT[col.Text];
                 }

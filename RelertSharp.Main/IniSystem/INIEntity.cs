@@ -1,15 +1,14 @@
-﻿using System;
+﻿using RelertSharp.Common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.Common;
 
 namespace RelertSharp.IniSystem
 {
     [Serializable]
-    public class INIEntity : IEnumerable<INIPair> , IDisposable
+    public class INIEntity : IEnumerable<INIPair>, IDisposable
     {
         private string name, comment, preComment;
         private Dictionary<string, INIPair> data = new Dictionary<string, INIPair>();
@@ -42,7 +41,7 @@ namespace RelertSharp.IniSystem
             }
             entitytype = INIEntType.ListType;
         }
-        public INIEntity (string name)
+        public INIEntity(string name)
         {
             this.name = name;
         }
@@ -94,7 +93,7 @@ namespace RelertSharp.IniSystem
         public INIEntity ReorganizeTo(int firstindex = 0)
         {
             INIEntity result = new INIEntity();
-            foreach(INIPair p in data.Values)
+            foreach (INIPair p in data.Values)
             {
                 INIPair np = new INIPair(p);
                 np.Name = firstindex++.ToString();
@@ -111,7 +110,7 @@ namespace RelertSharp.IniSystem
             if (entitytype == INIEntType.ListType)
             {
                 int maxindex = Reorganize();
-                foreach(INIPair p in src)
+                foreach (INIPair p in src)
                 {
                     p.Name = maxindex++.ToString();
                     data[p.Name] = p;
@@ -119,7 +118,7 @@ namespace RelertSharp.IniSystem
             }
             else
             {
-                foreach(INIPair p in src)
+                foreach (INIPair p in src)
                 {
                     if (data.Keys.Contains(p.Name)) continue;
                     else data[p.Name] = p;
@@ -206,7 +205,7 @@ namespace RelertSharp.IniSystem
         public List<string> TakeValuesToList()
         {
             List<string> result = new List<string>();
-            foreach(INIPair p in data.Values) if(!result.Contains(p.Value)) result.Add(p.Value);
+            foreach (INIPair p in data.Values) if (!result.Contains(p.Value)) result.Add(p.Value);
             return result;
         }
         public INIPair GetPair(int index)
@@ -267,7 +266,7 @@ namespace RelertSharp.IniSystem
         /// </summary>
         /// <param name="key"></param>
         /// <param name="val"></param>
-        public void SetPair(string key,dynamic val)
+        public void SetPair(string key, dynamic val)
         {
             if (data.ContainsKey(key))
                 data[key].Value = val;
@@ -277,7 +276,7 @@ namespace RelertSharp.IniSystem
         /// </summary>
         /// <param name="p"></param>
         /// <param name="val"></param>
-        public void SetPair(INIPair p , dynamic val)
+        public void SetPair(INIPair p, dynamic val)
         {
             if (data.ContainsKey(p.Name))
                 data[p.Name].Value = val;
@@ -292,7 +291,7 @@ namespace RelertSharp.IniSystem
             StringBuilder sb = new StringBuilder(num);
             foreach (INIPair p in data.Values)
             {
-               sb.Append(p.Value.ToString());
+                sb.Append(p.Value.ToString());
             }
             return sb.ToString();
         }
@@ -365,7 +364,7 @@ namespace RelertSharp.IniSystem
             }
         }
         public List<INIPair> DataList { get { return data.Values.ToList(); } }
-        public static INIEntity NullEntity { get { return new INIEntity("","",""); } }
+        public static INIEntity NullEntity { get { return new INIEntity("", "", ""); } }
         #endregion
     }
 }

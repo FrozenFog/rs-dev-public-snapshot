@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using RelertSharp.Common;
+﻿using RelertSharp.Common;
 using RelertSharp.Encoding;
 using RelertSharp.Utils;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace RelertSharp.FileSystem
 {
@@ -22,11 +20,11 @@ namespace RelertSharp.FileSystem
             this.ciphed = ciphed;
             Initialize(tatics);
         }
-        public MixFile(byte[] rawData, string fileName, MixTatics tatics) :base(rawData,fileName)
+        public MixFile(byte[] rawData, string fileName, MixTatics tatics) : base(rawData, fileName)
         {
             Initialize(tatics);
         }
-        public MixFile(string path): base(path, FileMode.Open, FileAccess.Read, false, true)
+        public MixFile(string path) : base(path, FileMode.Open, FileAccess.Read, false, true)
         {
 
         }
@@ -133,7 +131,7 @@ namespace RelertSharp.FileSystem
         {
             numOfFiles = num;
             BinaryReader br = new BinaryReader(new MemoryStream(rawData));
-            for(int i = 0; i < num; i++)
+            for (int i = 0; i < num; i++)
             {
                 uint id = br.ReadUInt32();
                 entries[id] = new MixEntry(id, br.ReadInt32(), br.ReadInt32(), ciphed);

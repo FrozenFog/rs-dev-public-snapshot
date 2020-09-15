@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Runtime.InteropServices;
-using RelertSharp.Common;
+﻿using RelertSharp.Common;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace RelertSharp.IniSystem
 {
@@ -18,7 +14,7 @@ namespace RelertSharp.IniSystem
 
 
         #region Ctor - INIFile
-        public INIFile(string path,  INIFileType itype = INIFileType.DefaultINI, bool ciphed = false) : base(path, FileMode.Open, FileAccess.Read, false, ciphed)
+        public INIFile(string path, INIFileType itype = INIFileType.DefaultINI, bool ciphed = false) : base(path, FileMode.Open, FileAccess.Read, false, ciphed)
         {
             initype = itype;
             this.ciphed = ciphed;
@@ -116,7 +112,7 @@ namespace RelertSharp.IniSystem
         /// <param name="src"></param>
         public void Merge(IEnumerable<INIEntity> src)
         {
-            foreach(INIEntity ent in src)
+            foreach (INIEntity ent in src)
             {
                 if (HasIniEnt(ent))
                 {

@@ -1,10 +1,6 @@
-﻿using System;
+﻿using RelertSharp.MapStructure.Objects;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.Common
 {
@@ -64,7 +60,7 @@ namespace RelertSharp.Common
         }
         private void NextCell()
         {
-            pos++;xNow++;
+            pos++; xNow++;
             if (xNow >= xMax)
             {
                 xNow = begin.X;

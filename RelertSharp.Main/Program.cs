@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 
 namespace RelertSharp
@@ -22,7 +22,7 @@ namespace RelertSharp
                         while (true)
                         {
                             Process[] ps = Process.GetProcesses();
-                            if (ps.Count(x=>x.ProcessName == "RelertSharp") == 0)
+                            if (ps.Count(x => x.ProcessName == "RelertSharp") == 0)
                             {
                                 Process.Start("RelertSharp.exe");
                                 return;

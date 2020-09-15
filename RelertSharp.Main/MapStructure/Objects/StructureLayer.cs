@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.Common;
+﻿using RelertSharp.Common;
 using RelertSharp.DrawingEngine.Presenting;
+using System;
+using System.Collections.Generic;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Objects
@@ -100,7 +97,7 @@ namespace RelertSharp.MapStructure.Objects
                 return new List<object>()
                 {
                     OwnerHouse, RegName, HealthPoint, X, Y, Rotation, TaggedTrigger, AISellable, AIRebuildable, BuildingOnline, UpgradeNum, (int)SpotlightType, Upgrade1,Upgrade2,Upgrade3,AIRepairable, Nominal };
-                }
+            }
         }
         public bool AISellable { get; set; } = true;
         public bool AIRebuildable { get; private set; } = false;

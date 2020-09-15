@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
-using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure
 {
@@ -45,7 +40,7 @@ namespace RelertSharp.MapStructure
             AddObjectToTile(unit);
             return unit;
         }
-        public InfantryItem AddInfantry(string id, string [] args)
+        public InfantryItem AddInfantry(string id, string[] args)
         {
             InfantryItem inf = new InfantryItem(id, args);
             Infantries[id] = inf;

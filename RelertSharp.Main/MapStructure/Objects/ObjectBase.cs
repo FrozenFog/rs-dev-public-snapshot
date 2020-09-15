@@ -1,12 +1,8 @@
-﻿using System;
+﻿using RelertSharp.Common;
+using RelertSharp.DrawingEngine.Presenting;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.IniSystem;
-using RelertSharp.Common;
-using RelertSharp.DrawingEngine.Presenting;
 
 namespace RelertSharp.MapStructure.Objects
 {

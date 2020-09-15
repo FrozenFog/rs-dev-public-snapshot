@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.IniSystem;
-using RelertSharp.MapStructure.Objects;
+﻿using RelertSharp.IniSystem;
 using RelertSharp.MapStructure.Logic;
+using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
+using System;
+using System.Collections.Generic;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure
@@ -106,7 +103,7 @@ namespace RelertSharp.MapStructure
                 events.AddPair(new INIPair(trg.ID, trg.Events.GetSaveData()));
                 actions.AddPair(new INIPair(trg.ID, trg.Actions.GetSaveData()));
             }
-            foreach(TagItem tag in Tags)
+            foreach (TagItem tag in Tags)
             {
                 tags.AddPair(new INIPair(tag.ID, Join(',', tag.SaveData)));
             }

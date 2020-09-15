@@ -1,11 +1,7 @@
-﻿using System;
+﻿using RelertSharp.DrawingEngine.Drawables;
+using RelertSharp.DrawingEngine.Presenting;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.DrawingEngine.Drawables;
-using RelertSharp.DrawingEngine.Presenting;
-using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine
 {
@@ -22,7 +18,7 @@ namespace RelertSharp.DrawingEngine
             private void RemoveDisposedObject<T>(Dictionary<int, T> src) where T : PresentBase, IPresentBase
             {
                 Dictionary<int, T> refer = new Dictionary<int, T>(src);
-                foreach(int id in refer.Keys)
+                foreach (int id in refer.Keys)
                 {
                     if (refer[id].Disposed) src.Remove(id);
                 }

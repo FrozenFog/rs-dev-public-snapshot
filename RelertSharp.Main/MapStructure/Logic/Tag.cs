@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
-using RelertSharp.Common;
 using RelertSharp.Model;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RelertSharp.MapStructure.Logic
 {
     public class TagCollection : IEnumerable<TagItem>
     {
-        private Dictionary<string,TagItem> data = new Dictionary<string,TagItem>();
+        private Dictionary<string, TagItem> data = new Dictionary<string, TagItem>();
         private Dictionary<string, List<string>> trigger_tag = new Dictionary<string, List<string>>();
 
 
@@ -63,7 +60,7 @@ namespace RelertSharp.MapStructure.Logic
         /// <returns></returns>
         public List<TagItem> GetTagFromTrigger(string triggerID, TriggerItem item = null)
         {
-            if (triggerID == "TEMPLATE") return new List<TagItem>(new TagItem[]{new TagItem(item, "TGMPLATE")});
+            if (triggerID == "TEMPLATE") return new List<TagItem>(new TagItem[] { new TagItem(item, "TGMPLATE") });
             List<TagItem> ret = new List<TagItem>();
             if (trigger_tag.ContainsKey(triggerID))
                 foreach (var i in trigger_tag[triggerID])

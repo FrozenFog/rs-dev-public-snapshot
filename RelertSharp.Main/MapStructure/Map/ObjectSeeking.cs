@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
-using RelertSharp.Common;
+using System;
 
 namespace RelertSharp.MapStructure
 {
@@ -35,7 +31,7 @@ namespace RelertSharp.MapStructure
             if (t == typeof(StructureItem))
             {
                 StructureItem bud = obj as StructureItem;
-                foreach(I2dLocateable pos in new Square2D(bud, bud.SizeX, bud.SizeY))
+                foreach (I2dLocateable pos in new Square2D(bud, bud.SizeX, bud.SizeY))
                 {
                     Tiles[pos].RemoveObject(bud);
                 }
@@ -43,7 +39,7 @@ namespace RelertSharp.MapStructure
             else if (t == typeof(SmudgeItem))
             {
                 SmudgeItem smg = obj as SmudgeItem;
-                foreach(I2dLocateable pos in new Square2D(smg, smg.SizeX, smg.SizeY))
+                foreach (I2dLocateable pos in new Square2D(smg, smg.SizeX, smg.SizeY))
                 {
                     Tiles[pos].RemoveObject(smg);
                 }

@@ -17,7 +17,7 @@ vector pmain(in float2 texcoords : TEXCOORD, in vector position : TEXCOORD2, out
 		discard;
 
 	float inindex = tex2D(default_sampler, texcoords).r * (255. / 256) + (0.5 / 256);
-    float zadjust = 0.0f;//tex2D(zshade_samlper, texcoords).r * 255.0;
+    float zadjust = tex2D(zshade_samlper, texcoords).r * 255;
 	vector incolor = tex1D(palette_sampler, inindex);
 
     if (remap_color.a == 0.0 && inindex * 256.0 >= 16.0 && inindex * 256.0 <= 31.0)
@@ -31,10 +31,13 @@ vector pmain(in float2 texcoords : TEXCOORD, in vector position : TEXCOORD2, out
 	if (outcolor.a == 0.0f)
 		discard;
 
-    float distance_adjust = (zadjust + z_adjust) * sqrt(3.0) / zdistance;
+    float distance_adjust = (zadjust + z_adjust) * sqrt(3.0f) / zdistance;
 	
     position.z += distance_adjust;
     outZ = position.z / position.w;
+	
+    //if (outZ)
+    //    outcolor = vector(outZ, outZ, outZ, 1.0f);
 	
     return saturate(outcolor);
 }

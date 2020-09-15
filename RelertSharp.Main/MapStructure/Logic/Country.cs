@@ -1,10 +1,7 @@
-﻿using System;
+﻿using RelertSharp.Common;
+using RelertSharp.IniSystem;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.IniSystem;
-using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure.Logic
 {
@@ -24,7 +21,7 @@ namespace RelertSharp.MapStructure.Logic
             {
                 result.Add(new TechnoPair(item.Index, item.Name));
             }
-            return result.OrderBy(x=>int.Parse(x.Index));
+            return result.OrderBy(x => int.Parse(x.Index));
         }
         public CountryItem GetCountry(string name)
         {

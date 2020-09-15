@@ -1,12 +1,8 @@
-﻿using System;
+﻿using RelertSharp.Common;
+using RelertSharp.FileSystem;
+using RelertSharp.IniSystem;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using RelertSharp.Common;
-using RelertSharp.IniSystem;
-using RelertSharp.FileSystem;
 using static RelertSharp.Common.GlobalVar;
 using static RelertSharp.Language;
 
@@ -18,7 +14,7 @@ namespace RelertSharp.MapStructure
         private Dictionary<int, TileSet> tileSets = new Dictionary<int, TileSet>();
         private Dictionary<int, int> tileIndexToTileSet = new Dictionary<int, int>();
         private Dictionary<string, int> general = new Dictionary<string, int>();
-        private readonly List<string> _subs = new List<string>(){ "tem", "des", "urb", "ubn", "sno", "lun" };
+        private readonly List<string> _subs = new List<string>() { "tem", "des", "urb", "ubn", "sno", "lun" };
 
 
         #region Ctor - MapTheaterTileSet
@@ -92,7 +88,7 @@ namespace RelertSharp.MapStructure
                     SetIndex = i
                 };
                 if (set.IsFramework) set.OriginalSet = originalIndex;
-                for (int j = 1;j<_numsInSet + 1; j++)
+                for (int j = 1; j < _numsInSet + 1; j++)
                 {
                     string filename = string.Format("{0}{1:D2}", _tileFileName, j);
                     int cap = 0;

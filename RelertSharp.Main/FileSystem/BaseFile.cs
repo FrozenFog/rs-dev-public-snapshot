@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
-using System.IO;
+﻿using CipherLib;
 using RelertSharp.Common;
-using CipherLib;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace RelertSharp.FileSystem
 {
@@ -171,7 +167,7 @@ namespace RelertSharp.FileSystem
         protected uint ReadUInt32() { return br.ReadUInt32(); }
         protected ushort ReadUInt16() { return br.ReadUInt16(); }
         protected byte[] ReadBytes(int count) { return br.ReadBytes(count); }
-        protected byte[] ReadBytes(byte[] _dest, int _offset, int _count) { br.Read(_dest, _offset, _count);return new byte[0]; }
+        protected byte[] ReadBytes(byte[] _dest, int _offset, int _count) { br.Read(_dest, _offset, _count); return new byte[0]; }
         protected byte ReadByte() { return br.ReadByte(); }
         protected float ReadFloat() { return br.ReadSingle(); }
         protected float[] ReadFloats(int _count)
@@ -185,7 +181,7 @@ namespace RelertSharp.FileSystem
         protected byte[] ReadAll() { return br.ReadBytes((int)br.BaseStream.Length); }
         protected bool CanRead() { return !sr.EndOfStream; }
         protected bool CanWrite() { return ms.CanWrite; }
-        protected void Write(string s) { sw.Write(s);sw.Flush(); }
+        protected void Write(string s) { sw.Write(s); sw.Flush(); }
         protected void ReadSeek(uint offset, SeekOrigin origin) { br.BaseStream.Seek(offset, origin); }
         protected void ReadSeek(int _offset, SeekOrigin _origin) { br.BaseStream.Seek(_offset, _origin); }
         protected void WriteSeek(int offset, SeekOrigin origin) { ms.Seek(offset, origin); }
@@ -206,7 +202,7 @@ namespace RelertSharp.FileSystem
                 sw.Dispose();
                 bw.Dispose();
             }
-            if(_fs != null)_fs.Dispose();
+            if (_fs != null) _fs.Dispose();
             ms.Dispose();
             memoryRead.Dispose();
         }

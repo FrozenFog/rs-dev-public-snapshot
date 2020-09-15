@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RelertSharp.MapStructure
 {
@@ -58,7 +56,7 @@ namespace RelertSharp.MapStructure
         public IEnumerable<string> GetNames()
         {
             List<string> result = new List<string>();
-            for(int i = 0; i < data.Count; i++)
+            for (int i = 0; i < data.Count; i++)
             {
                 result.Add(GetName(i, false));
             }

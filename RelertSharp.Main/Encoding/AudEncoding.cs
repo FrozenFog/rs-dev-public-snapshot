@@ -1,12 +1,11 @@
 ﻿using System;
 using System.IO;
-using RelertSharp.Common;
 
 namespace RelertSharp.Encoding
 {
     public static class AudEncoding
     {
-        private static readonly int[] tb_step = 
+        private static readonly int[] tb_step =
         {
             7, 8, 9, 10, 11, 12, 13, 14, 16, 17,
             19, 21, 23, 25, 28, 31, 34, 37, 41, 45,

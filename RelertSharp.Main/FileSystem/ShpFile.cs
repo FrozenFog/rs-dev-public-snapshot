@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Drawing;
-using System.Drawing.Imaging;
-using RelertSharp.Common;
+﻿using RelertSharp.Common;
 using RelertSharp.Encoding;
 using RelertSharp.Utils;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 
 namespace RelertSharp.FileSystem
 {
@@ -90,7 +86,7 @@ namespace RelertSharp.FileSystem
                 else
                 {
                     while (j + i < Count && data[i + j].Offset == 0) j++;
-                    if (j+i == Count)
+                    if (j + i == Count)
                     {
                         ReadFrame(data[i], (int)FileLength);
                         continue;
@@ -173,7 +169,7 @@ namespace RelertSharp.FileSystem
                 return;
             }
             Bitmap bmp = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
-            using(FastBitmap shpImage=new FastBitmap(bmp))
+            using (FastBitmap shpImage = new FastBitmap(bmp))
             {
                 int count = 0;
                 for (int j = 0; j < Height; j++)

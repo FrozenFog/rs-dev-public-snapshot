@@ -1,10 +1,6 @@
-﻿using System;
+﻿using RelertSharp.IniSystem;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using RelertSharp.IniSystem;
 
 namespace RelertSharp.Common
 {

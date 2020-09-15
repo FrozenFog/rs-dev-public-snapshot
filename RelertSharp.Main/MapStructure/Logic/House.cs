@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
-using RelertSharp.Common;
 using RelertSharp.MapStructure.Points;
 using RelertSharp.Utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RelertSharp.MapStructure.Logic
 {
@@ -45,7 +43,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class HouseItem : TeamLogicItem,ILogicItem
+    public class HouseItem : TeamLogicItem, ILogicItem
     {
         private List<string> alliesWith;
         private Dictionary<string, INIPair> residual;
@@ -160,7 +158,7 @@ namespace RelertSharp.MapStructure.Logic
         {
             public object Value;
             public string ShowName;
-            public HouseShowUnit(string displayName, object value) { Value = value;ShowName = displayName; }
+            public HouseShowUnit(string displayName, object value) { Value = value; ShowName = displayName; }
         }
 
         #region Ctor - HouseUnit

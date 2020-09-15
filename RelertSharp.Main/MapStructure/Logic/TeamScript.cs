@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
-using RelertSharp.Common;
+using System.Collections.Generic;
 
 namespace RelertSharp.MapStructure.Logic
 {
@@ -18,7 +14,7 @@ namespace RelertSharp.MapStructure.Logic
         {
             List<TechnoPair> result = new List<TechnoPair>();
             int i = 0;
-            foreach(TeamScriptGroup g in this)
+            foreach (TeamScriptGroup g in this)
             {
                 TechnoPair p = new TechnoPair(i.ToString(), string.Format("{0} - {1}", g.ID, g.Name));
                 result.Add(p);

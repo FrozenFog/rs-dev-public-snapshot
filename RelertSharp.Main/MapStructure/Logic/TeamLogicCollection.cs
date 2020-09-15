@@ -1,11 +1,8 @@
-﻿using System;
+﻿using RelertSharp.IniSystem;
+using RelertSharp.Model;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.Model;
-using RelertSharp.IniSystem;
 
 namespace RelertSharp.MapStructure.Logic
 {

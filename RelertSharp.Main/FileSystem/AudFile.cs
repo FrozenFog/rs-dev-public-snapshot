@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using RelertSharp.Common;
 using RelertSharp.Encoding;
-using RelertSharp.Common;
-using RelertSharp.Utils;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace RelertSharp.FileSystem
 {
@@ -35,7 +31,7 @@ namespace RelertSharp.FileSystem
         {
             sampleRate = _sampleRate;
         }
-        public AudFile(byte[] _compressedData, string _filename, ushort _sampleRate, uint _flag, int _chunkSize) : base(_compressedData,_filename)
+        public AudFile(byte[] _compressedData, string _filename, ushort _sampleRate, uint _flag, int _chunkSize) : base(_compressedData, _filename)
         {
             sampleRate = _sampleRate;
             //dataSize = _compressedData.Length;

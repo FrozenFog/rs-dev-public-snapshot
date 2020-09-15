@@ -1,9 +1,5 @@
-﻿using System;
+﻿using RelertSharp.DrawingEngine.Drawables;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.DrawingEngine.Drawables;
 
 namespace RelertSharp.DrawingEngine
 {

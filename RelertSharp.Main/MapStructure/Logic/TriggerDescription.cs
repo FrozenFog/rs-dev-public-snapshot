@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using RelertSharp.Common;
+using RelertSharp.IniSystem;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.Common;
-using RelertSharp.IniSystem;
 using static RelertSharp.Common.GlobalVar.Scripts;
 using static RelertSharp.Language;
 
@@ -77,7 +73,7 @@ namespace RelertSharp.MapStructure.Logic
         }
         private void ReadScriptSubCombo(List<TechnoPair> dest, INIEntity src)
         {
-            foreach(INIPair p in src)
+            foreach (INIPair p in src)
             {
                 dest.Add(new TechnoPair(p.Name, DICT[p.Value]));
             }

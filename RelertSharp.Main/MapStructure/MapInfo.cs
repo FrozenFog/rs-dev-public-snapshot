@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using RelertSharp.FileSystem;
+﻿using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
-using RelertSharp.Common;
+using System.Drawing;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure
@@ -108,9 +102,9 @@ namespace RelertSharp.MapStructure
         #region Ctor - Lightning
         public Lightning(INIEntity ent)
         {
-            Normal = new LightningItem(ent["Red"], ent["Green"], ent["Blue"], 
+            Normal = new LightningItem(ent["Red"], ent["Green"], ent["Blue"],
                 ent["Level"], ent["Ground"], ent["Ambient"]);
-            Ion = new LightningItem(ent["IonRed"], ent["IonGreen"], ent["IonBlue"], 
+            Ion = new LightningItem(ent["IonRed"], ent["IonGreen"], ent["IonBlue"],
                 ent["IonLevel"], ent["IonGround"], ent["IonAmbient"]);
             Dominator = new LightningItem(ent["DominatorRed"], ent["DominatorGreen"], ent["DominatorBlue"],
                 ent["DominatorLevel"], ent["DominatorGround"], ent["DominatorAmbient"]);

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RelertSharp.Common
 {
@@ -26,7 +22,7 @@ namespace RelertSharp.Common
         }
         public Vec3(I3dLocateable src)
         {
-            X = src.X;Y = src.Y;Z = src.Z;
+            X = src.X; Y = src.Y; Z = src.Z;
         }
         public int ToCoord()
         {
@@ -64,6 +60,10 @@ namespace RelertSharp.Common
         {
             get { return new Vec3(1, 1, 5); }
         }
+        public static Vec3 ZOne
+        {
+            get { return new Vec3(0, 0, 1); }
+        }
         public static Vec3 ToVec3Iso(I3dLocateable src)
         {
             return ToVec3Iso(src.X, src.Y, src.Z);
@@ -92,7 +92,7 @@ namespace RelertSharp.Common
             return new Vec3(x * _30SQ2 - _15SQ2, y * _30SQ2 - _15SQ2, z * _10SQ3);
         }
         #region operator
-        public static Vec3 operator-(Vec3 a)
+        public static Vec3 operator -(Vec3 a)
         {
             return Zero - a;
         }
@@ -115,6 +115,14 @@ namespace RelertSharp.Common
         public static Vec3 operator *(Vec3 a, int b)
         {
             return new Vec3() { X = a.X * b, Y = a.Y * b, Z = a.Z * b };
+        }
+        public static Vec3 operator *(Vec3 a, float b)
+        {
+            return new Vec3 { X = a.X * b, Y = a.Y * b, Z = a.Z * b };
+        }
+        public static Vec3 operator *(float b, Vec3 a)
+        {
+            return a * b;
         }
         public static Vec3 operator *(int a, Vec3 b)
         {

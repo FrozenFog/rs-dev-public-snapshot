@@ -1,21 +1,19 @@
-﻿using System;
+﻿using RelertSharp.Common;
+using RelertSharp.IniSystem;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using RelertSharp.IniSystem;
-using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure.Logic
 {
     public class TaskforceShowItem
     {
         public override string ToString() { return Number + " " + Name; }
-        public TaskforceShowItem(Tuple<string,int> pair)
+        public TaskforceShowItem(Tuple<string, int> pair)
         {
             Number = pair.Item2;
-            RegName= pair.Item1;
+            RegName = pair.Item1;
             Name = GlobalVar.GlobalRules.GetCsfUIName(RegName);
         }
         public int Number { get; set; }

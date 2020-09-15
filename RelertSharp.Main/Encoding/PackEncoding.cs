@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using RelertSharp.Common;
+using System;
 using System.IO;
-using RelertSharp.Common;
+using System.Linq;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.Encoding

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 namespace RelertSharp.Utils
@@ -31,25 +27,25 @@ namespace RelertSharp.Utils
                 switch (num)
                 {
                     case 0:
-                        r = _b;g = t;b = p;
+                        r = _b; g = t; b = p;
                         break;
                     case 1:
-                        r = q;g = _b;b = p;
+                        r = q; g = _b; b = p;
                         break;
                     case 2:
-                        r = p;g = _b;b = t;
+                        r = p; g = _b; b = t;
                         break;
                     case 3:
-                        r = p;g = q;b = _b;
+                        r = p; g = q; b = _b;
                         break;
                     case 4:
-                        r = t;g = p;b = _b;
+                        r = t; g = p; b = _b;
                         break;
                     case 5:
-                        r = _b;g = p;b = q;
+                        r = _b; g = p; b = q;
                         break;
                     default:
-                        r = 0;g = 0;b = 0;
+                        r = 0; g = 0; b = 0;
                         break;
                 }
             }

@@ -1,19 +1,14 @@
 ﻿using RelertSharp.IniSystem;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
 
 namespace RelertSharp.Utils
 {
     public static class HashSetExtension
     {
-        public static void AddRange(this HashSet<string> hashset,IEnumerable<string> src)
+        public static void AddRange(this HashSet<string> hashset, IEnumerable<string> src)
         {
             foreach (var obj in src)
                 hashset.Add(obj);
@@ -22,10 +17,10 @@ namespace RelertSharp.Utils
 
     public static class DictionaryExtension
     {
-        public static Dictionary<string,INIEntity> Clone(this Dictionary<string,INIEntity> src)
+        public static Dictionary<string, INIEntity> Clone(this Dictionary<string, INIEntity> src)
         {
             Dictionary<string, INIEntity> ret = new Dictionary<string, INIEntity>();
-            foreach(var pair in src)
+            foreach (var pair in src)
                 ret.Add(pair.Key, new INIEntity(pair.Value));
             return ret;
         }

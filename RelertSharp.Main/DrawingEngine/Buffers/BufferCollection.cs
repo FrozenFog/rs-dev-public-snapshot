@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.DrawingEngine.Drawables;
-using RelertSharp.DrawingEngine.Presenting;
-using RelertSharp.Common;
 
 namespace RelertSharp.DrawingEngine
 {
@@ -15,20 +9,20 @@ namespace RelertSharp.DrawingEngine
         public enum RemoveFlag
         {
             Tiles = 1,
-            Structures = 1<<1,
-            Units = 1<<2,
-            Infantries = 1<<3,
-            Overlays = 1<<4,
-            Terrains = 1<<5,
-            Smudges = 1<<6,
-            Waypoints = 1<<7,
-            Celltags = 1<<8,
-            All = Tiles|Structures|Units|Infantries|Overlays|Terrains|Smudges|Waypoints|Celltags
+            Structures = 1 << 1,
+            Units = 1 << 2,
+            Infantries = 1 << 3,
+            Overlays = 1 << 4,
+            Terrains = 1 << 5,
+            Smudges = 1 << 6,
+            Waypoints = 1 << 7,
+            Celltags = 1 << 8,
+            All = Tiles | Structures | Units | Infantries | Overlays | Terrains | Smudges | Waypoints | Celltags
         }
         #region Ctor - BufferCollection
         public BufferCollection()
         {
-            
+
         }
         #endregion
 

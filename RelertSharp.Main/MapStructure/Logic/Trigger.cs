@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
+﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
-using RelertSharp.Common;
 using RelertSharp.Model;
-using static RelertSharp.Utils.Misc;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Logic
 {
@@ -35,7 +33,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Methods - TriggerCollection
         public void SetToString(TriggerItem.DisplayingType type)
         {
-            foreach(TriggerItem t in this)
+            foreach (TriggerItem t in this)
             {
                 t.SetDisplayingString(type);
             }

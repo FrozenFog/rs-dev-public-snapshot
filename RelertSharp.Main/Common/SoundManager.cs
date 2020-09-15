@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RelertSharp.Encoding;
+using RelertSharp.FileSystem;
+using RelertSharp.IniSystem;
+using System;
+using System.Diagnostics;
 using System.IO;
 using System.Media;
-using System.Diagnostics;
-using RelertSharp.IniSystem;
-using RelertSharp.FileSystem;
-using RelertSharp.Encoding;
 
 namespace RelertSharp.Common
 {

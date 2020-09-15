@@ -1,8 +1,6 @@
-﻿using System.Drawing;
-using System.Collections.Generic;
+﻿using RelertSharp.Common;
 using RelertSharp.MapStructure;
-using RelertSharp.DrawingEngine.Presenting;
-using RelertSharp.Common;
+using System.Drawing;
 
 namespace RelertSharp.DrawingEngine
 {
@@ -42,7 +40,7 @@ namespace RelertSharp.DrawingEngine
                 }
             }
         }
-        
+
 
         private void SetMinimapClientPos()
         {

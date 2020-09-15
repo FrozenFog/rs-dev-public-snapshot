@@ -1,14 +1,11 @@
-﻿using System;
+﻿using RelertSharp.Common;
+using RelertSharp.DrawingEngine.Presenting;
+using RelertSharp.Encoding;
+using RelertSharp.Utils;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using RelertSharp.Encoding;
-using RelertSharp.Common;
-using RelertSharp.Utils;
-using System.Collections;
-using RelertSharp.DrawingEngine.Presenting;
 
 namespace RelertSharp.MapStructure
 {
@@ -91,7 +88,7 @@ namespace RelertSharp.MapStructure
                 data[(y << 9) + x] = value;
             }
         }
-    #endregion
+        #endregion
     }
 
 

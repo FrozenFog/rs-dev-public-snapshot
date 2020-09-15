@@ -83,14 +83,14 @@ namespace RelertSharp.Encoding
             uint m_off;
             uint m_len;
 
-            for (;;)
+            for (; ; )
             {
 
                 uint dv;
                 uint dindex;
-                literal:
+            literal:
                 ip += 1 + ((ip - ii) >> 5);
-                next:
+            next:
                 if (ip >= ip_end)
                     break;
                 dv = (*(uint*)(void*)(ip));
@@ -163,7 +163,7 @@ namespace RelertSharp.Encoding
                     }
                     m_len += (uint)lzo_bitops_ctz32(v) / 8;
                 }
-                m_len_done:
+            m_len_done:
                 m_off = ((uint)((ip) - (m_pos)));
                 ip += m_len;
                 ii = ip;
@@ -340,7 +340,7 @@ namespace RelertSharp.Encoding
                     else
                         do *op++ = *ip++; while (--t > 0);
                 }
-                first_literal_run:
+            first_literal_run:
                 t = *ip++;
                 if (t >= 16)
                     goto match;
@@ -351,7 +351,7 @@ namespace RelertSharp.Encoding
                 *op++ = *m_pos++; *op++ = *m_pos++; *op++ = *m_pos;
                 gt_match_done = true;
 
-                match:
+            match:
                 do
                 {
                     if (gt_match_done)
@@ -432,7 +432,7 @@ namespace RelertSharp.Encoding
                         *op++ = *m_pos++; *op++ = *m_pos++;
                         do *op++ = *m_pos++; while (--t > 0);
                     }
-                    match_done:
+                match_done:
                     t = (uint)(ip[-2] & 3);
                     if (t == 0)
                         break;
@@ -442,7 +442,7 @@ namespace RelertSharp.Encoding
                     t = *ip++;
                 } while (true);
             }
-            eof_found:
+        eof_found:
 
             out_len = ((uint)((op) - (@out)));
             return (ip == ip_end ? 0 :

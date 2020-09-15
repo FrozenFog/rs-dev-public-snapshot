@@ -22,7 +22,7 @@ namespace RelertSharp.Utils
             LockBitmap();
         }
 
-        public FastBitmap(int width,int height)
+        public FastBitmap(int width, int height)
         {
             theBitmap = new Bitmap(width, height, PixelFormat.Format32bppArgb);
             LockBitmap();
@@ -89,7 +89,7 @@ namespace RelertSharp.Utils
         public int Width { get; private set; }
         public int Height { get; private set; }
         public bool IsDisposed { get; private set; }
-        public int this[int x,int y] 
+        public int this[int x, int y]
         {
             get => GetPixel(x, y);
             private set { }

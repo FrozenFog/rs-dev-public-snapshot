@@ -1,18 +1,15 @@
-﻿using System;
-using System.Drawing;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using RelertSharp.Common;
+using RelertSharp.DrawingEngine.Presenting;
 using RelertSharp.Encoding;
-using System.Collections;
-using RelertSharp.FileSystem;
-using RelertSharp.Utils;
-using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
-using RelertSharp.DrawingEngine.Presenting;
+using RelertSharp.Utils;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using static RelertSharp.Common.GlobalVar;
 
 namespace RelertSharp.MapStructure
@@ -394,7 +391,7 @@ namespace RelertSharp.MapStructure
 
 
         #region Ctor - Tile
-        public Tile(short _x, short _y, int _TileIndex, byte _TileSubIndex,  byte _Level, byte _IceGrowth)
+        public Tile(short _x, short _y, int _TileIndex, byte _TileSubIndex, byte _Level, byte _IceGrowth)
         {
             X16 = _x;
             Y16 = _y;
@@ -561,7 +558,7 @@ namespace RelertSharp.MapStructure
             {
                 if (obj is StructureItem bud)
                 {
-                    if (obj.Coord == newtile.Coord) obj.MoveTo(newtile); 
+                    if (obj.Coord == newtile.Coord) obj.MoveTo(newtile);
                 }
                 else if (obj is SmudgeItem smg)
                 {
@@ -609,7 +606,7 @@ namespace RelertSharp.MapStructure
         public void RemoveObject(IMapObject src)
         {
             int i = 0;
-            for (; i< objectsOnTile.Count; i++)
+            for (; i < objectsOnTile.Count; i++)
             {
                 if (objectsOnTile[i].GetType() == src.GetType() && objectsOnTile[i].RegName == src.RegName)
                 {

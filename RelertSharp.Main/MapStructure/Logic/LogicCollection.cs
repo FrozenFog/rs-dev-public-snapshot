@@ -1,12 +1,10 @@
-﻿using System;
+﻿using RelertSharp.Common;
+using RelertSharp.IniSystem;
+using RelertSharp.Model;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.IniSystem;
-using RelertSharp.Common;
-using RelertSharp.Model;
-using System.Collections;
 
 namespace RelertSharp.MapStructure.Logic
 {
@@ -126,7 +124,7 @@ namespace RelertSharp.MapStructure.Logic
         }
         public void Multiply(string[] command, LogicItem template, List<TriggerParam> lookups)
         {
-            foreach(string s in command)
+            foreach (string s in command)
             {
                 if (string.IsNullOrEmpty(s)) continue;
                 string[] sl = s.Split(new char[] { ',' });

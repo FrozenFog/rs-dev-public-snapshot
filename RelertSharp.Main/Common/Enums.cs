@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RelertSharp.Common
 {
@@ -106,7 +102,7 @@ namespace RelertSharp.Common
         German = 2,
         French = 3,
         Spanish = 4,
-        Italian = 5, 
+        Italian = 5,
         Japanese = 6,
         Jabberwockie = 7,
         Korean = 8,

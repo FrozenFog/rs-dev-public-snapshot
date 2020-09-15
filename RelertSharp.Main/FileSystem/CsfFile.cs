@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Collections;
-using RelertSharp.Common;
+﻿using RelertSharp.Common;
 using RelertSharp.Encoding;
 using RelertSharp.IniSystem;
-using System.Runtime.InteropServices;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace RelertSharp.FileSystem
 {
@@ -43,7 +39,7 @@ namespace RelertSharp.FileSystem
             if (langID > 9 || langID < 0) langID = -1;
             Language = (CsfLanguage)langID;
             //labels
-            for(int i = 0; i < LabelCount; i++)
+            for (int i = 0; i < LabelCount; i++)
             {
                 int _identifier = ReadInt32();
                 if (_identifier == 0x4C424C20)//" LBL"
@@ -66,12 +62,12 @@ namespace RelertSharp.FileSystem
                             data[labelName].ExtraString = _valueEx;
                             break;
                     }
-                    for (int j = 1; j < _numPairs; ++j) 
+                    for (int j = 1; j < _numPairs; ++j)
                     {
                         int sub = ReadInt32();
                         int tmp = ReadInt32();
                         ReadBytes(tmp << 1);
-                        if(sub== 0x53545257)
+                        if (sub == 0x53545257)
                         {
                             tmp = ReadInt32();
                             ReadString(tmp);

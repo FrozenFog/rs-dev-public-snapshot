@@ -1,12 +1,9 @@
-﻿using System;
+﻿using RelertSharp.Common;
+using RelertSharp.Model;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.Common;
-using RelertSharp.Model;
-using RelertSharp.Utils;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Logic
@@ -141,7 +138,7 @@ namespace RelertSharp.MapStructure.Logic
             item.tech = tech;
             item.sideindex = sideindex;
             item.startwg = startwg;
-            item.minwg = minwg; 
+            item.minwg = minwg;
             item.maxwg = maxwg;
             item.enabled = enabled;
             item.skirmish = skirmish;
@@ -166,9 +163,9 @@ namespace RelertSharp.MapStructure.Logic
             maxwg = (double)unit.Data["MaximumWeight"].Value;
             enabled = (bool)unit.Data["Enabled"].Value;
             ez = (bool)unit.Data["Easy"].Value;
-            nm= (bool)unit.Data["Normal"].Value;
+            nm = (bool)unit.Data["Normal"].Value;
             hd = (bool)unit.Data["Hard"].Value;
-            skirmish= (bool)unit.Data["Skirmish"].Value;
+            skirmish = (bool)unit.Data["Skirmish"].Value;
             condObjID = (string)unit.Data["CondObj"].Value;
             condtype = (AITriggerConditionType)unit.Data["Condition"].Value;
             comparator.Num1 = (int)unit.Data["OperNum"].Value;
@@ -293,7 +290,7 @@ namespace RelertSharp.MapStructure.Logic
         {
             public string ShowName;
             public object Value;
-            public AITriggerShowItem(string displayName,object value) { ShowName = displayName;Value = value; }
+            public AITriggerShowItem(string displayName, object value) { ShowName = displayName; Value = value; }
         }
 
         #region Ctor - AITriggerUnit
@@ -304,7 +301,7 @@ namespace RelertSharp.MapStructure.Logic
             Data["Team2"] = new AITriggerShowItem(Language.DICT["LGColvRowAITeam2"], item.Team2ID);
             Data["Owner"] = new AITriggerShowItem(Language.DICT["LGColvRowAIOwner"], item.OwnerHouse);
             Data["TechLevel"] = new AITriggerShowItem(Language.DICT["LGColvRowAITechLevel"], item.TechLevel);
-            Data["SideIndex"]= new AITriggerShowItem(Language.DICT["LGColvRowAISideIndex"], item.SideIndex);
+            Data["SideIndex"] = new AITriggerShowItem(Language.DICT["LGColvRowAISideIndex"], item.SideIndex);
             Data["StartingWeight"] = new AITriggerShowItem(Language.DICT["LGColvRowAIStartingWeight"], item.StartingWeight);
             Data["MinimumWeight"] = new AITriggerShowItem(Language.DICT["LGColvRowAIMinimumWeight"], item.MinimumWeight);
             Data["MaximumWeight"] = new AITriggerShowItem(Language.DICT["LGColvRowAIMaximumWeight"], item.MaximumWeight);

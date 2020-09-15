@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RelertSharp.Common
 {
@@ -11,7 +8,7 @@ namespace RelertSharp.Common
     {
         private I2dLocateable pos;
         private int range;
-        public Circle2D(I2dLocateable src, int r) { pos = src;range = r; }
+        public Circle2D(I2dLocateable src, int r) { pos = src; range = r; }
         public IEnumerator GetEnumerator() { return new Circle2DEnumerator(pos, range); }
     }
 
@@ -21,7 +18,7 @@ namespace RelertSharp.Common
         private Pnt data;
         private int range;
         private int thetadeg;
-        private int ox,oy;
+        private int ox, oy;
 
 
         public Circle2DEnumerator(I2dLocateable src, int r)

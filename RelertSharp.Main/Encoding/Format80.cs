@@ -12,8 +12,8 @@
 #endregion
 
 using System;
-using System.Linq;
 using System.IO;
+using System.Linq;
 
 namespace RelertSharp.Encoding
 {
@@ -109,7 +109,7 @@ namespace RelertSharp.Encoding
             BinaryWriter bw = new BinaryWriter(dest);
             byte[] buffer = new byte[63];
             int wBuffer = 0;
-            for(int i = 0; i < src.Length - 1; i++)
+            for (int i = 0; i < src.Length - 1; i++)
             {
                 if (src[i] == src[i + 1]) // single byte repeating, type 4
                 {
@@ -124,7 +124,7 @@ namespace RelertSharp.Encoding
                     }
                     byte _savedByte = src[i++];
                     ushort count = 2;
-                    while (i < src.Length - 1 && src[i+1] == _savedByte)
+                    while (i < src.Length - 1 && src[i + 1] == _savedByte)
                     {
                         count++;
                         i++;

@@ -1,10 +1,7 @@
-﻿using System;
+﻿using RelertSharp.Common;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure.Logic
 {
@@ -58,11 +55,12 @@ namespace RelertSharp.MapStructure.Logic
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public LocalVarItem this[string name] { 
+        public LocalVarItem this[string name]
+        {
             get { return data.Keys.Contains(name) ? data[name] : null; }
             set { data[name] = value; }
         }
-        
+
         #endregion
     }
 

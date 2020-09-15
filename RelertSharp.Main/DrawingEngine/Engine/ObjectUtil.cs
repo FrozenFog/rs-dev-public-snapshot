@@ -1,20 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Drawing;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
-using RelertSharp.FileSystem;
-using RelertSharp.IniSystem;
-using RelertSharp.MapStructure;
-using RelertSharp.MapStructure.Points;
+﻿using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
-using RelertSharp.DrawingEngine.Drawables;
-using RelertSharp.DrawingEngine.Presenting;
-using RelertSharp.Common;
-using static RelertSharp.Utils.Misc;
-using static RelertSharp.Common.GlobalVar;
 
 namespace RelertSharp.DrawingEngine
 {

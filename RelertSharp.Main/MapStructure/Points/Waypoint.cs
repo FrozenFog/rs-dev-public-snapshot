@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.Common;
+﻿using RelertSharp.Common;
 using RelertSharp.DrawingEngine.Presenting;
+using System.Collections.Generic;
 
 namespace RelertSharp.MapStructure.Points
 {
@@ -15,7 +11,7 @@ namespace RelertSharp.MapStructure.Points
 
         public WaypointCollection() { }
 
-        
+
         public WaypointItem FindByID(string id)
         {
             foreach (WaypointItem item in this)
@@ -82,7 +78,7 @@ namespace RelertSharp.MapStructure.Points
         {
             return string.Format("{0} - ({1}, {2})", Num, X, Y);
         }
-        public string Num { get { return ID; }set { ID = value; } }
+        public string Num { get { return ID; } set { ID = value; } }
         public new PresentMisc SceneObject { get { return (PresentMisc)base.SceneObject; } set { base.SceneObject = value; } }
         IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
         #endregion

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RelertSharp.Common
 {
@@ -11,7 +7,7 @@ namespace RelertSharp.Common
     {
         private I2dLocateable src;
         private int x, y;
-        public Square2D(I2dLocateable pos, int lenX, int lenY) { src = pos;x = lenX;y = lenY; }
+        public Square2D(I2dLocateable pos, int lenX, int lenY) { src = pos; x = lenX; y = lenY; }
         public Square2D(I2dLocateable up, I2dLocateable down)
         {
             if (up.X >= down.X && up.Y >= down.Y)

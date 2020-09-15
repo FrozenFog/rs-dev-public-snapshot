@@ -1,14 +1,9 @@
-﻿using System;
+﻿using RelertSharp.Common;
+using RelertSharp.MapStructure.Objects;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using RelertSharp.Common;
-using RelertSharp.MapStructure.Objects;
-using RelertSharp.FileSystem;
-using static RelertSharp.Utils.Misc;
 using static RelertSharp.Common.GlobalVar;
+using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.IniSystem
 {
@@ -542,10 +537,10 @@ namespace RelertSharp.IniSystem
 
         #region Public Calls - Rules
         public List<string> BuildingRoots { get; private set; }
-        public List<string> InfantryRoots { get; private set; } 
-        public List<string> UnitRoots { get; private set; } 
-        public List<string> NavalRoots { get; private set; } 
-        public List<string> AircraftRoots { get; private set; } 
+        public List<string> InfantryRoots { get; private set; }
+        public List<string> UnitRoots { get; private set; }
+        public List<string> NavalRoots { get; private set; }
+        public List<string> AircraftRoots { get; private set; }
         public Dictionary<string, INIEntity> MapIniData { get; set; }
         public INIFile Art { get; private set; }
         public List<TechnoPair> VehicleList

@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using RelertSharp.MapStructure;
+﻿using RelertSharp.Common;
 using RelertSharp.DrawingEngine.Presenting;
-using RelertSharp.Common;
-using static RelertSharp.Utils.Misc;
+using RelertSharp.MapStructure;
 using static RelertSharp.Common.GlobalVar;
 
 namespace RelertSharp.DrawingEngine

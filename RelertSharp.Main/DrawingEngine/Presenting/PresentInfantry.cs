@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RelertSharp.Common;
+﻿using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.DrawingEngine.Presenting
@@ -29,7 +24,7 @@ namespace RelertSharp.DrawingEngine.Presenting
         }
         public void MoveTo(I3dLocateable cell, int subcell)
         {
-            if (subcell >0 && subcell < 4 && !(subcell == SubCell && CoordEquals(cell)))
+            if (subcell > 0 && subcell < 4 && !(subcell == SubCell && CoordEquals(cell)))
             {
                 Vec3 delta = GetDeltaDistant(cell, subcell, SubCell);
                 ShiftBy(delta, pSelf, pSelfShadow);
