@@ -1109,7 +1109,7 @@ void PaintingStruct::InitializeVisualRect()
 	else if (this->pVertexBuffer)
 	{
 		this->pVertexBuffer->GetDesc(&Desc);
-		if (Desc.FVF == Vertex::dwFVFType)
+		if (!this->BufferedVoxels.empty())
 		{
 			//is vxl buffer
 			auto Point = Scene.CoordsToScreen(this->Position);
@@ -1119,16 +1119,30 @@ void PaintingStruct::InitializeVisualRect()
 		else if (this->pVertexBuffer)
 		{
 			//is plane art
-			TexturedVertex* pTexturedVertexData;
+			TexturedVertex* pTexturedVertexData = nullptr;
+			Vertex* pCommonVertex = nullptr;
 			if (FAILED(this->pVertexBuffer->Lock(0, 0, (void**)&pTexturedVertexData, D3DLOCK_READONLY)))
 				return;
 
+			if (Desc.FVF == Vertex::dwFVFType)
+				pCommonVertex = reinterpret_cast<Vertex*>(pTexturedVertexData);
+
 			int MinX, MinY, MaxX, MaxY;
-			auto FirstPoint = Scene.CoordsToScreen(pTexturedVertexData[0].Vector);
+			POINT FirstPoint;
+			if (pCommonVertex)
+				FirstPoint = Scene.CoordsToScreen(pCommonVertex[0].Vector);
+			else
+				FirstPoint = Scene.CoordsToScreen(pTexturedVertexData[0].Vector);
+
 			MinX = MaxX = FirstPoint.x;
 			MinY = MaxY = FirstPoint.y;
-			for (int i = 0; i < Desc.Size / sizeof TexturedVertex; i++) {
-				auto Point = Scene.CoordsToScreen(pTexturedVertexData[i].Vector);
+			for (int i = 0; i < Desc.Size / (pCommonVertex ? sizeof(Vertex) : sizeof(TexturedVertex)); i++) {
+				POINT Point;
+				if (pCommonVertex)
+					Point = Scene.CoordsToScreen(pCommonVertex[i].Vector);
+				else
+					Point = Scene.CoordsToScreen(pTexturedVertexData[i].Vector);
+
 				if (Point.x < MinX)
 					MinX = Point.x;
 				if (Point.x > MaxX)
