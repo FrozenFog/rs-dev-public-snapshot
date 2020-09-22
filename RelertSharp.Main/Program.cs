@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Windows.Forms;
+using RelertSharp.FileSystem;
+using RelertSharp.MapStructure;
 
 namespace RelertSharp
 {
@@ -15,8 +19,9 @@ namespace RelertSharp
         {
             if (args.Length > 0)
             {
-                foreach (string a in args)
+                for (int i = 0; i < args.Length; i++)
                 {
+                    string a = args[i];
                     if (a == "/reboot")
                     {
                         while (true)
@@ -32,6 +37,21 @@ namespace RelertSharp
                                 Thread.Sleep(200);
                             }
                         }
+                    }
+                    else if (a == "/trimOverlay")
+                    {
+                        string filename = args[++i];
+                        MapFile m = new MapFile(filename);
+                        int maxNum = int.Parse(args[++i]);
+                        int max = m.Map.Overlays.Max(x => x.Index);
+                        List<OverlayUnit> toRemove = new List<OverlayUnit>();
+                        foreach (OverlayUnit o in m.Map.Overlays)
+                        {
+                            if (o.Index >= maxNum) toRemove.Add(o);
+                            if (m.Map.IsOutOfSize(o, null)) toRemove.Add(o);
+                        }
+                        foreach (OverlayUnit o in toRemove) m.Map.RemoveOverlay(o);
+                        m.SaveMapAs(Application.StartupPath, filename);
                     }
                 }
             }

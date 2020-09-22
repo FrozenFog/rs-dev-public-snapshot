@@ -193,6 +193,7 @@ namespace RelertSharp.MapStructure
         }
         public bool IsOutOfSize(I2dLocateable objectLocation, I2dLocateable delta)
         {
+            if (delta == null) return !TilesData.HasTileOn(objectLocation);
             Pnt tmp = new Pnt(objectLocation.X + delta.X, objectLocation.Y + delta.Y);
             return !TilesData.HasTileOn(tmp);
         }

@@ -465,12 +465,12 @@ namespace RelertSharp.DrawingEngine
         }
         private void SetVxlZAdjust(int self, int selfShadow, int turret = 0, int turrShadow = 0, int barl = 0, int barlShadow = 0)
         {
-            CppExtern.ObjectUtils.SetObjectZAdjust(self, -3);
-            if (selfShadow != 0) CppExtern.ObjectUtils.SetObjectZAdjust(selfShadow, 5);
-            if (turret != 0) CppExtern.ObjectUtils.SetObjectZAdjust(turret, -5);
-            if (turrShadow != 0) CppExtern.ObjectUtils.SetObjectZAdjust(turrShadow, 10);
-            if (barl != 0) CppExtern.ObjectUtils.SetObjectZAdjust(barl, -10);
-            if (barlShadow != 0) CppExtern.ObjectUtils.SetObjectZAdjust(barlShadow, 15);
+            //CppExtern.ObjectUtils.SetObjectZAdjust(self, -3);
+            //if (selfShadow != 0) CppExtern.ObjectUtils.SetObjectZAdjust(selfShadow, 5);
+            //if (turret != 0) CppExtern.ObjectUtils.SetObjectZAdjust(turret, -5);
+            //if (turrShadow != 0) CppExtern.ObjectUtils.SetObjectZAdjust(turrShadow, 10);
+            //if (barl != 0) CppExtern.ObjectUtils.SetObjectZAdjust(barl, -10);
+            //if (barlShadow != 0) CppExtern.ObjectUtils.SetObjectZAdjust(barlShadow, 15);
         }
         /// <summary>
         /// Currently disable

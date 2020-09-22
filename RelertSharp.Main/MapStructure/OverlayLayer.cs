@@ -156,7 +156,7 @@ namespace RelertSharp.MapStructure
         public void Dispose()
         {
             Selected = false;
-            SceneObject.Dispose();
+            SceneObject?.Dispose();
         }
         public IMapObject CopyNew()
         {
