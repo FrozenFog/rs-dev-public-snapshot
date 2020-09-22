@@ -1,4 +1,5 @@
-﻿using RelertSharp.IniSystem;
+﻿using RelertSharp.Common;
+using RelertSharp.IniSystem;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
@@ -52,6 +53,15 @@ namespace RelertSharp.MapStructure
             foreach (TerrainItem terr in Terrains)
             {
                 ent.AddPair(new INIPair(terr.CoordString, terr.RegName));
+            }
+            return ent;
+        }
+        public INIEntity DumpLightSourceData()
+        {
+            INIEntity ent = new INIEntity(Constant.MapStructure.CustomComponents.LightsourceTitle);
+            foreach (LightSource l in LightSources)
+            {
+                ent.AddPair(l.SaveToPair());
             }
             return ent;
         }

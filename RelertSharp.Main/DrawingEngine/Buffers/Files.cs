@@ -36,6 +36,7 @@ namespace RelertSharp.DrawingEngine
             public Dictionary<string, int> Pal { get; private set; } = new Dictionary<string, int>();
             public int WaypointBase { get; set; }
             public int CelltagBase { get; set; }
+            public int LightSourceBase { get; set; }
             #endregion
         }
     }

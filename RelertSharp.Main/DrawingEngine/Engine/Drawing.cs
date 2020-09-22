@@ -40,6 +40,8 @@ namespace RelertSharp.DrawingEngine
                     return DrawObject(obj as BaseNode, heightFix, CurrentMapDocument.Map.GetHouseColor(houseName));
                 case MapObjectType.Waypoint:
                     return DrawWaypoint(obj as WaypointItem, heightFix);
+                case MapObjectType.LightSource:
+                    return DrawLightSource(obj as LightSource, heightFix);
                 default:
                     return false;
             }
@@ -218,6 +220,15 @@ namespace RelertSharp.DrawingEngine
                 return true;
             }
             return false;
+        }
+        public bool DrawLightSource(LightSource light, int height)
+        {
+            DrawableMisc src = new DrawableMisc(MapObjectType.LightSource, "");
+            src.pSelf = Buffer.Files.LightSourceBase;
+            PresentMisc dest = new PresentMisc(MapObjectType.LightSource, light, height);
+            light.SceneObject = dest;
+            Vec3 pos = ToVec3Iso(dest) + LightSourceHeightMultiplier * _generalOffset;
+            return DrawMisc(src, dest, pos, pPalSystem, 0, _white, ShpFlatType.FlatGround);
         }
         #endregion
 

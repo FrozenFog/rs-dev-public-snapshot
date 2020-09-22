@@ -83,6 +83,7 @@ namespace RelertSharp.DrawingEngine
 
             Buffer.Files.CelltagBase = CreateFile("celltag.shp", DrawableType.Shp);
             Buffer.Files.WaypointBase = CreateFile("waypoint.shp", DrawableType.Shp);
+            Buffer.Files.LightSourceBase = CreateFile("lightsource.shp", DrawableType.Shp);
         }
         public void Refresh()
         {

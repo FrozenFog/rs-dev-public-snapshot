@@ -1,6 +1,7 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.DrawingEngine.Presenting;
 using RelertSharp.MapStructure;
+using RelertSharp.MapStructure.Points;
 using static RelertSharp.Common.GlobalVar;
 
 namespace RelertSharp.DrawingEngine
@@ -77,6 +78,14 @@ namespace RelertSharp.DrawingEngine
             if (enableLightning && intensity == 0f || lampcolor == Vec4.One) return;
             int range = visibility >> 8;
             ApplyLampAt(item, lampcolor * Vec4.Unit3(1f + intensity * 1.5f), range + 1);
+        }
+        public void SetObjectLampLightning(LightSource src)
+        {
+            Vec4 color = src.ToVec4();
+            if (src.IsEnable && src.Intensity == 0f || color == Vec4.One)
+            {
+                ApplyLampAt(src, color, src.Range);
+            }
         }
         public void SetSceneLightning(LightningItem light)
         {

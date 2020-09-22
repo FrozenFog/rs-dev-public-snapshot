@@ -76,6 +76,7 @@ namespace RelertSharp.Common
         Celltag = 512,
         Waypoint = 1024,
         LogicObject = Celltag | Waypoint,
+        LightSource = 2048,
 
         MinimapRenderable = Building | Unit | Overlay | Terrain | Smudge
     }

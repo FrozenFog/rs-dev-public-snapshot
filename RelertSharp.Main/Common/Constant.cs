@@ -69,11 +69,16 @@ namespace RelertSharp.Common
             public const int ArgLenUnit = 14;
             public const int ArgLenAircraft = 12;
             public const int ArgLenAiTrigger = 18;
+            public const int ArgLenLightSource = 5;
             public static readonly string[] ObjectStatus =
             {
                 "Area Guard", "Attack", "Capture", "Construction", "Enter", "Guard", "Harmless", "Harvest", "Hunt", "Missile", "Move", "Open", "Patrol", "QMove", "Repair", "Rescue",
                 "Retreat", "Sabotage", "Selling", "Sleep", "Sticky", "Stop", "Unload"
             };
+            public static class CustomComponents
+            {
+                public const string LightsourceTitle = "Rs_LightSource";
+            }
         }
         public static class EntName
         {
@@ -190,6 +195,7 @@ namespace RelertSharp.Common
             public const int MapMaxHeightDrawing = 17;
             public const int WaypointHeightMultiplier = 100;
             public const int CelltagHeightMultiplier = 99;
+            public const int LightSourceHeightMultiplier = 110;
             public const int SelectRectangleMultiplier = 20;
             public const int WaypointNumWidth = 13;
             public static class Tiles

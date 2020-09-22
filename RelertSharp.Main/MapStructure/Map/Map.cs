@@ -259,6 +259,7 @@ namespace RelertSharp.MapStructure
         public UnitLayer Units { get; private set; } = new UnitLayer();
         public TerrainLayer Terrains { get; private set; } = new TerrainLayer();
         public SmudgeLayer Smudges { get; private set; } = new SmudgeLayer();
+        public LightSourceCollection LightSources { get; private set; } = new LightSourceCollection();
         public AITriggerCollection AiTriggers { get; private set; } = new AITriggerCollection();
         public TeamScriptCollection Scripts { get; private set; } = new TeamScriptCollection();
         public TaskforceCollection TaskForces { get; private set; } = new TaskforceCollection();

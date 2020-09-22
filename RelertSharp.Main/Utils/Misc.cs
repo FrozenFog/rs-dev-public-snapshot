@@ -178,15 +178,23 @@ namespace RelertSharp.Utils
             }
             return result;
         }
+        public static int ParseInt(string src, int def = 0)
+        {
+            if (string.IsNullOrEmpty(src)) return def;
+            if (int.TryParse(src, out int result)) return result;
+            return def;
+        }
         public static float ParseFloat(string src, float def = 0)
         {
             if (string.IsNullOrEmpty(src)) return def;
-            return float.Parse(src);
+            if (float.TryParse(src, out float result)) return result;
+            return def;
         }
         public static double ParseDouble(string src, double def = 0)
         {
             if (string.IsNullOrEmpty(src)) return def;
-            return double.Parse(src);
+            if (double.TryParse(src, out double result)) return result;
+            return def;
         }
         public static string CoordString(int x, int y)
         {

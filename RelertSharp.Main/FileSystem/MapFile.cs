@@ -32,6 +32,7 @@ namespace RelertSharp.FileSystem
             DumpGeneralInfo(IniDict);
             DumpMapObjects(IniDict);
             DumpLogics(IniDict);
+            DumpCustomComponents(IniDict);
             SaveIni(savingPath, true);
         }
         public void SaveMapAs(string savePath, string filename)
@@ -44,6 +45,7 @@ namespace RelertSharp.FileSystem
             DumpGeneralInfo(f.IniDict);
             DumpMapObjects(f.IniDict);
             DumpLogics(f.IniDict);
+            DumpCustomComponents(f.IniDict);
             f.SaveIni(savePath + filename, true);
             if (GlobalVar.Log.HasCritical) GlobalVar.Log.ShowCritical();
         }
@@ -51,6 +53,10 @@ namespace RelertSharp.FileSystem
 
 
         #region Private Methods - MapFile
+        private void DumpCustomComponents(Dictionary<string, INIEntity> dest)
+        {
+            dest[Constant.MapStructure.CustomComponents.LightsourceTitle] = Map.DumpLightSourceData();
+        }
         private void DumpMapObjects(Dictionary<string, INIEntity> dest)
         {
             dest["Structures"] = Map.DumpBuildingData();

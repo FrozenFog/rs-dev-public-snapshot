@@ -219,6 +219,11 @@ namespace RelertSharp.GUI
                         _failed.Add("Node " + node.RegName);
                 }
             }
+            foreach (LightSource light in Map.LightSources)
+            {
+                if (!GlobalVar.Engine.DrawLightSource(light, map.GetHeightFromTile(light)))
+                    _failed.Add("Light source at " + light.CoordString);
+            }
             lw.EndItems(LoadingWindow.LoadingFlag.BaseNodes);
         }
     }

@@ -235,6 +235,7 @@
     <Compile Include="MapStructure\Points\Smudge.cs" />
     <Compile Include="MapStructure\Points\Waypoint.cs" />
     <Compile Include="MapStructure\Points\TerrainLayer.cs" />
+    <Compile Include="MapStructure\RsObject\LightSource.cs" />
     <Compile Include="MapStructure\TileSet.cs" />
     <Compile Include="MapStructure\TileLayer.cs" />
     <Compile Include="MapStructure\Objects\UnitLayer.cs" />

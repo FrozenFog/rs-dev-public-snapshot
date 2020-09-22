@@ -87,6 +87,7 @@ namespace RelertSharp.MapStructure
             INIEntity entAircraft = f.PopEnt("Aircraft");
             INIEntity entTerrain = f.PopEnt("Terrain");
             INIEntity entSmudge = f.PopEnt("Smudge");
+            INIEntity entLight = f.PopEnt(Constant.MapStructure.CustomComponents.LightsourceTitle);
 
             foreach (INIPair p in entSmudge.DataList)
             {
@@ -115,6 +116,10 @@ namespace RelertSharp.MapStructure
             foreach (INIPair p in entTerrain.DataList)
             {
                 AddTerrain(p.Name, p.Value);
+            }
+            foreach (INIPair p in entLight.DataList)
+            {
+                LightSources.AddObject(new LightSource(p));
             }
         }
         private void GetTeam(MapFile f)
