@@ -1,12 +1,13 @@
 ﻿using RelertSharp.IniSystem;
 using RelertSharp.Model;
+using RelertSharp.Common;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class TeamLogicCollection<T> : IEnumerable<T>
+    public class TeamLogicCollection<T> : IEnumerable<T>, IGlobalIdContainer
     {
         private Dictionary<string, T> data = new Dictionary<string, T>();
 
@@ -38,6 +39,10 @@ namespace RelertSharp.MapStructure.Logic
         {
             return data.ContainsValue(Value);
         }
+        public bool HasId(string id)
+        {
+            return data.Keys.Contains(id);
+        }
         #region Enumerator
         public IEnumerator<T> GetEnumerator()
         {
@@ -65,7 +70,7 @@ namespace RelertSharp.MapStructure.Logic
                 data[_ID] = value;
             }
         }
-        public Dictionary<string, T>.KeyCollection Keys { get { return data.Keys; } }
+        public IEnumerable<string> AllId { get { return data.Keys; } }
         #endregion
     }
     public class TeamLogicItem : BindableBase

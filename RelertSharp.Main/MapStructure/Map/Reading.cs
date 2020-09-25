@@ -34,11 +34,11 @@ namespace RelertSharp.MapStructure
             GetObjects(f);
             LoadHouseColor();
 
-            globalid.AddRange(Triggers.Keys);
-            globalid.AddRange(Teams.Keys);
-            globalid.AddRange(TaskForces.Keys);
-            globalid.AddRange(Tags.Keys);
-            globalid.AddRange(Scripts.Keys);
+            globalid.AddRange(Triggers.AllId);
+            globalid.AddRange(Teams.AllId);
+            globalid.AddRange(TaskForces.AllId);
+            globalid.AddRange(Tags.AllId);
+            globalid.AddRange(Scripts.AllId);
 
             residual = new Dictionary<string, INIEntity>(f.IniDict);
 
@@ -180,11 +180,11 @@ namespace RelertSharp.MapStructure
                 Triggers.LoadTriggerCommand(p);
                 if (entEvent.DictData.Keys.Contains(p.Name))
                 {
-                    Triggers[p.Name].Events = new LogicGroup(entEvent.GetPair(p.Name), LogicType.EventLogic);
+                    Triggers[p.Name].Events = new LogicGroup(entEvent.GetPair(p.Name), TriggerSubType.EventLogic);
                 }
                 if (entAction.DictData.Keys.Contains(p.Name))
                 {
-                    Triggers[p.Name].Actions = new LogicGroup(entAction.GetPair(p.Name), LogicType.ActionLogic);
+                    Triggers[p.Name].Actions = new LogicGroup(entAction.GetPair(p.Name), TriggerSubType.ActionLogic);
                 }
             }
             foreach (INIPair p in entVar.DataList)

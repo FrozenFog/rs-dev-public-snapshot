@@ -80,6 +80,17 @@ namespace RelertSharp.Common
 
         MinimapRenderable = Building | Unit | Overlay | Terrain | Smudge
     }
+    public enum LogicType
+    {
+        Team = 0,
+        Taskforce = 1,
+        Script = 2,
+        Trigger = 3,
+        Tag = 4,
+        AiTrigger = 5,
+        LocalVar = 6,
+        House = 7
+    }
     [Flags]
     public enum AudType
     {
@@ -165,7 +176,7 @@ namespace RelertSharp.Common
         Veteran = 2,
         Elite = 3
     }
-    public enum LogicType
+    public enum TriggerSubType
     {
         ActionLogic,
         EventLogic

@@ -109,6 +109,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TaskforceItem
+        public bool IsEmpty { get { return Members.Count == 0; } }
         public List<TaskforceUnit> Members { get; private set; } = new List<TaskforceUnit>();
         public override string ToString() { return ID + " " + Name; }
         public IEnumerable<string> MemberPcxNames

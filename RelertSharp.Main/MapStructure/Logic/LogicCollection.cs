@@ -20,7 +20,7 @@ namespace RelertSharp.MapStructure.Logic
             data = new Dictionary<int, LogicItem>(src.data);
             ParentID = src.ParentID;
         }
-        public LogicGroup(INIPair p, LogicType type)
+        public LogicGroup(INIPair p, TriggerSubType type)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace RelertSharp.MapStructure.Logic
                     int logicID = int.Parse(l[i]);
                     switch (type)
                     {
-                        case LogicType.ActionLogic:
+                        case TriggerSubType.ActionLogic:
                             steplen = 8;
                             Add(new LogicItem(
                                 logicID,
@@ -49,7 +49,7 @@ namespace RelertSharp.MapStructure.Logic
                                 num++
                             ));
                             break;
-                        case LogicType.EventLogic:
+                        case TriggerSubType.EventLogic:
                             string flag = l[i + 1];
                             steplen = flag == "2" ? 4 : 3;
                             Add(new LogicItem(
@@ -64,7 +64,7 @@ namespace RelertSharp.MapStructure.Logic
             }
             catch
             {
-                string sType = type == LogicType.EventLogic ? "Event" : "Action";
+                string sType = type == TriggerSubType.EventLogic ? "Event" : "Action";
                 GlobalVar.Log.Critical(string.Format("{1} item id: {0} has unreadable data, please verify in map file!", p.Name, sType));
             }
             /*
@@ -112,13 +112,13 @@ namespace RelertSharp.MapStructure.Logic
         }
         public LogicItem NewEvent()
         {
-            LogicItem item = new LogicItem(LogicType.EventLogic, GetCount());
+            LogicItem item = new LogicItem(TriggerSubType.EventLogic, GetCount());
             Add(item);
             return item;
         }
         public LogicItem NewAction()
         {
-            LogicItem item = new LogicItem(LogicType.ActionLogic, GetCount());
+            LogicItem item = new LogicItem(TriggerSubType.ActionLogic, GetCount());
             Add(item);
             return item;
         }
@@ -154,7 +154,7 @@ namespace RelertSharp.MapStructure.Logic
             {
                 obj.Add(lg.ID);
                 string[] param = lg.Parameters;
-                if (LogicType == LogicType.EventLogic && param[0] != "2") param = param.Take(2).ToArray();
+                if (LogicType == TriggerSubType.EventLogic && param[0] != "2") param = param.Take(2).ToArray();
                 obj.AddRange(param);
             }
             return Utils.Misc.Join(',', obj);
@@ -175,7 +175,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Internal - LogicGroup
         internal int Num { get; set; }
         internal string[] Params { get; set; }
-        internal LogicType LogicType { get; set; }
+        internal TriggerSubType LogicType { get; set; }
         #endregion
 
 
@@ -189,7 +189,7 @@ namespace RelertSharp.MapStructure.Logic
 
     public class LogicItem : BindableBase
     {
-        private LogicType type;
+        private TriggerSubType type;
         public int idx;
         private int id;
         private string comment;
@@ -197,7 +197,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Ctor - LogicItem
-        public LogicItem(int _typeID, string[] _param, LogicType _type, int num, string _comment = "")
+        public LogicItem(int _typeID, string[] _param, TriggerSubType _type, int num, string _comment = "")
         {
             ID = _typeID;
             type = _type;
@@ -205,12 +205,12 @@ namespace RelertSharp.MapStructure.Logic
             Comment = _comment;
             idx = num;
         }
-        public LogicItem(LogicType _type, int num)
+        public LogicItem(TriggerSubType _type, int num)
         {
             ID = 0;
             type = _type;
             idx = num;
-            if (_type == LogicType.EventLogic) Parameters = new string[] { "0", "0", "0" };
+            if (_type == TriggerSubType.EventLogic) Parameters = new string[] { "0", "0", "0" };
             else Parameters = new string[] { "0", "0", "0", "0", "0", "0", "A" };
         }
         public LogicItem(LogicItem src, int num)
@@ -219,7 +219,7 @@ namespace RelertSharp.MapStructure.Logic
             comment = src.comment;
             type = src.type;
             idx = num;
-            if (src.type == LogicType.EventLogic) Parameters = new string[] { "0", "0", "0" };
+            if (src.type == TriggerSubType.EventLogic) Parameters = new string[] { "0", "0", "0" };
             else Parameters = new string[] { "0", "0", "0", "0", "0", "0", "A" };
             Array.Copy(src.parameters, parameters, parameters.Length);
         }
@@ -232,7 +232,7 @@ namespace RelertSharp.MapStructure.Logic
             if (!string.IsNullOrEmpty(Comment)) return Comment;
             else
             {
-                if (type == LogicType.ActionLogic) return string.Format("Action{0:D2}-ID:{1:D2}", idx, ID);
+                if (type == TriggerSubType.ActionLogic) return string.Format("Action{0:D2}-ID:{1:D2}", idx, ID);
                 else return string.Format("Event{0:D2}-ID:{1:D2}", idx, ID);
             }
 

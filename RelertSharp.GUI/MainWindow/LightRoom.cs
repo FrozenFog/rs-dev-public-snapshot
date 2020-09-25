@@ -62,7 +62,7 @@ namespace RelertSharp.GUI
             {
                 GlobalVar.Engine.SetSceneLightning(Current.LightningItem);
                 foreach (StructureItem s in map.Buildings) GlobalVar.Engine.SetObjectLampLightning(s, ckbLightningEnable.Checked);
-                foreach (LightSource src in )
+                foreach (LightSource src in Map.LightSources) GlobalVar.Engine.SetObjectLampLightning(src);
             }
         }
     }

@@ -10,7 +10,7 @@ using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class TriggerCollection : IEnumerable<TriggerItem>, IListSource
+    public class TriggerCollection : IEnumerable<TriggerItem>, IListSource, IGlobalIdContainer
     {
         private Dictionary<string, TriggerItem> data = new Dictionary<string, TriggerItem>();
 
@@ -31,6 +31,10 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - TriggerCollection
+        public bool HasId(string id)
+        {
+            return data.Keys.Contains(id);
+        }
         public void SetToString(TriggerItem.DisplayingType type)
         {
             foreach (TriggerItem t in this)
@@ -119,14 +123,14 @@ namespace RelertSharp.MapStructure.Logic
                 data[_id] = value;
             }
         }
-        public Dictionary<string, TriggerItem>.KeyCollection Keys { get { return data.Keys; } }
-
+        public IEnumerable<string> AllId { get { return data.Keys; } }
 
         #endregion
 
 
         #region Enumerator
         public bool ContainsListCollection => data.Values.Count > 0;
+
         public IEnumerator<TriggerItem> GetEnumerator()
         {
             return data.Values.GetEnumerator();

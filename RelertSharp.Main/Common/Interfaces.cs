@@ -1,8 +1,14 @@
 ﻿using RelertSharp.DrawingEngine.Presenting;
 using RelertSharp.MapStructure.Objects;
+using System.Collections.Generic;
 
 namespace RelertSharp.Common
 {
+    public interface IGlobalIdContainer
+    {
+        bool HasId(string id);
+        IEnumerable<string> AllId { get; }
+    }
     public interface ILogicItem
     {
         string ID { get; }
