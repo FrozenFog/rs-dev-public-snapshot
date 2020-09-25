@@ -49,10 +49,8 @@ namespace RelertSharp.GUI
             if (drew)
             {
                 GlobalVar.Engine.SetSceneLightning(color);
-                foreach (StructureItem s in map.Buildings)
-                {
-                    GlobalVar.Engine.SetObjectLampLightning(s, ckbLightningEnable.Checked);
-                }
+                foreach (StructureItem s in map.Buildings) GlobalVar.Engine.SetObjectLampLightning(s, ckbLightningEnable.Checked);
+                foreach (LightSource src in Map.LightSources) GlobalVar.Engine.SetObjectLampLightning(src, ckbLightningEnable.Checked);
                 GlobalVar.Engine.Refresh();
             }
         }
@@ -62,7 +60,7 @@ namespace RelertSharp.GUI
             {
                 GlobalVar.Engine.SetSceneLightning(Current.LightningItem);
                 foreach (StructureItem s in map.Buildings) GlobalVar.Engine.SetObjectLampLightning(s, ckbLightningEnable.Checked);
-                foreach (LightSource src in Map.LightSources) GlobalVar.Engine.SetObjectLampLightning(src);
+                foreach (LightSource src in Map.LightSources) GlobalVar.Engine.SetObjectLampLightning(src, ckbLightningEnable.Checked);
             }
         }
     }

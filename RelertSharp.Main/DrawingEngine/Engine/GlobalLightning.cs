@@ -79,10 +79,10 @@ namespace RelertSharp.DrawingEngine
             int range = visibility >> 8;
             ApplyLampAt(item, lampcolor * Vec4.Unit3(1f + intensity * 1.5f), range + 1);
         }
-        public void SetObjectLampLightning(LightSource src)
+        public void SetObjectLampLightning(LightSource src, bool enableLightning)
         {
             Vec4 color = src.ToVec4();
-            if (src.IsEnable && src.Intensity == 0f || color == Vec4.One)
+            if (enableLightning && src.IsEnable && src.Intensity == 0f || color == Vec4.One)
             {
                 ApplyLampAt(src, color, src.Range);
             }
