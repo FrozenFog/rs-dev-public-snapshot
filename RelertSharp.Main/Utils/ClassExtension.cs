@@ -19,10 +19,7 @@ namespace RelertSharp.Utils
     {
         public static Dictionary<string, INIEntity> Clone(this Dictionary<string, INIEntity> src)
         {
-            Dictionary<string, INIEntity> ret = new Dictionary<string, INIEntity>();
-            foreach (var pair in src)
-                ret.Add(pair.Key, new INIEntity(pair.Value));
-            return ret;
+            return new Dictionary<string, INIEntity>(src);
         }
     }
 
