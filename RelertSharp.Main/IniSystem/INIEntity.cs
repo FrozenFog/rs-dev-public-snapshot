@@ -86,18 +86,26 @@ namespace RelertSharp.IniSystem
             return firstindex;
         }
         /// <summary>
-        /// Similar to Reorganize, but returns the reorganized entity result
+        /// Similar to Reorganize, but returns the reorganized entity result, 
+        /// will not modify the original
         /// </summary>
         /// <param name="firstindex"></param>
         /// <returns></returns>
         public INIEntity ReorganizeTo(int firstindex = 0)
         {
             INIEntity result = new INIEntity();
+            HashSet<string> values = new HashSet<string>();
             foreach (INIPair p in data.Values)
             {
-                INIPair np = new INIPair(p);
-                np.Name = firstindex++.ToString();
-                result.AddPair(np);
+                if (!values.Contains(p.Value))
+                {
+                    INIPair np = new INIPair(p)
+                    {
+                        Name = firstindex++.ToString()
+                    };
+                    result.AddPair(np);
+                    values.Add(p.Value);
+                }
             }
             return result;
         }
