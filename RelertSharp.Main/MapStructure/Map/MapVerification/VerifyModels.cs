@@ -21,11 +21,18 @@ namespace RelertSharp.MapStructure
         SigleCellOverlap = 1,
         BuildingBasePosOverlap = 2,
         CombatObjectOverlap = 3,
-        EmptyTaskforce = 4,
+        TaskforceEmpty = 4,
         EmptyScript = 5,
         TeamInvalidTaskforce = 6,
         TeamInvalidScript = 7,
-        CombatObjectLowHealth = 8
+        CombatObjectLowHealth = 8,
+        TaskforceOverflow = 9,
+        TaskforceMemberRepeated = 10,
+        TriggerHasNoTagAsso = 11,
+        TagHasNoTrigger = 12,
+        TriggerHasNoAction = 13,
+        TriggerHasNoEvent = 14,
+        TriggerParameterInvalid = 15
     }
 
     public class VerifyResultItem

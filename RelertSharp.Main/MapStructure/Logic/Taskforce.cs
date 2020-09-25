@@ -29,7 +29,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Methods - TaskforceCollection
         public void RemoveTaskforce(string id)
         {
-            if (Keys.Contains(id)) Remove(id);
+            if (AllId.Contains(id)) Remove(id);
         }
         public TaskforceItem NewTaskforce(string id, string name = "New Taskforce")
         {
@@ -139,7 +139,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class TaskforceUnit
+    public class TaskforceUnit : IEquatable<TaskforceUnit>
     {
         #region Ctor - TaskforceUnit
         public TaskforceUnit(INIPair p)
@@ -192,6 +192,17 @@ namespace RelertSharp.MapStructure.Logic
         public override string ToString()
         {
             return string.Format("{0}({1}):{2}", UiName, RegName, UnitNum);
+        }
+
+        public bool Equals(TaskforceUnit other)
+        {
+            if (other is null) return false;
+            if (ReferenceEquals(other, this)) return true;
+            return RegName == other.RegName;
+        }
+        public override int GetHashCode()
+        {
+            return RegName == null ? 0 : RegName.GetHashCode();
         }
         #endregion
 

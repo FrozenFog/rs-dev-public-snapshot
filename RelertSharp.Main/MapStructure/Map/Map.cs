@@ -105,7 +105,7 @@ namespace RelertSharp.MapStructure
             AiTriggers.Remove(item.ID);
             DelID(item.ID);
         }
-        public IEnumerable<object> GetComboCollections(TriggerParam param)
+        public IEnumerable<TechnoPair> GetComboCollections(TriggerParam param)
         {
             switch (param.ComboType)
             {

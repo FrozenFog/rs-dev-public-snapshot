@@ -28,7 +28,8 @@ namespace RelertSharp.IniSystem
             int i = 0;
             foreach (INIPair p in ent)
             {
-                SoundList.Add(sound[p.Value as string].ToTechno(p.Name));
+                //SoundList.Add(sound[p.Value as string].ToTechno(p.Value));
+                SoundList.Add(new TechnoPair(p.Value, ""));
                 SoundList0.Add(new TechnoPair(i.ToString(), p.Value));
                 i++;
             }
@@ -36,7 +37,8 @@ namespace RelertSharp.IniSystem
             ent = eva["DialogList"];
             foreach (INIPair p in ent)
             {
-                EvaList.Add(eva[p.Value as string].ToTechno(p.Name));
+                //EvaList.Add(eva[p.Value as string].ToTechno(p.Value));
+                EvaList.Add(new TechnoPair(p.Value, ""));
                 EvaList0.Add(new TechnoPair(i.ToString(), p.Value));
                 i++;
             }
@@ -44,7 +46,8 @@ namespace RelertSharp.IniSystem
             ent = theme["Themes"];
             foreach (INIPair p in ent)
             {
-                ThemeList.Add(theme[p.Value as string].ToTechno(p.Name));
+                //ThemeList.Add(theme[p.Value as string].ToTechno(p.Value));
+                ThemeList.Add(new TechnoPair(p.Value, ""));
                 ThemeList0.Add(new TechnoPair(i.ToString(), p.Value));
                 i++;
             }

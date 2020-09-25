@@ -8,6 +8,7 @@ using System.Diagnostics;
 using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
 using RelertSharp.Common;
+using RelertSharp.MapStructure;
 using static RelertSharp.Common.GlobalVar;
 using static RelertSharp.GUI.GuiUtils;
 
@@ -17,6 +18,7 @@ namespace RelertSharp.GUI
     {
         private void tsmiMainSaveMapAs_Click(object sender, EventArgs e)
         {
+            Map.Verify();
             SaveFileDialog dlg = new SaveFileDialog()
             {
                 InitialDirectory = GlobalConfig.LastPath,

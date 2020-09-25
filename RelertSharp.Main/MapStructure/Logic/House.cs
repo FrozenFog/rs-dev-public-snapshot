@@ -19,7 +19,7 @@ namespace RelertSharp.MapStructure.Logic
         public IEnumerable<TechnoPair> ToTechno()
         {
             List<TechnoPair> result = new List<TechnoPair>();
-            foreach (string id in Keys)
+            foreach (string id in AllId)
             {
                 result.Add(new TechnoPair(id, this[id].ID));
             }

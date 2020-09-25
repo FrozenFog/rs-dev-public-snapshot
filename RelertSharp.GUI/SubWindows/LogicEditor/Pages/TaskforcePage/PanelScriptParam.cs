@@ -135,7 +135,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                         break;
                     case TriggerParam.ParamType.SelectableString:
                         cbbParam.Visible = true;
-                        IEnumerable<object> data = Map.GetComboCollections(CurrentDesc.Parameters[0]);
+                        IEnumerable<TechnoPair> data = Map.GetComboCollections(CurrentDesc.Parameters[0]);
                         LoadToObjectCollection(cbbParam, data);
                         cbbParam.Text = CurrentScript.ActionValue;
                         break;
