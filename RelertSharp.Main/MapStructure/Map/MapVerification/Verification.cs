@@ -155,7 +155,7 @@ namespace RelertSharp.MapStructure
                     result.Add(new VerifyResultItem
                     {
                         Level = VerifyAlertLevel.Critical,
-                        Message = string.Format("Taskforce {0}({1}) member num larger tham 5! This taskforce will surely crash the game.",
+                        Message = string.Format("Taskforce {0}({1}) member num larger than 5! This taskforce will surely crash the game.",
                             tf.ID, tf.Name),
                         IdNavigator = tf.ID,
                         LogicType = LogicType.Taskforce,

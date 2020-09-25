@@ -146,7 +146,13 @@ namespace RelertSharp.FileSystem
         }
         public bool HasFile(string _fullName)
         {
-            return fileOrigin.Keys.Contains(CRC.GetCRC(_fullName));
+            bool b = fileOrigin.Keys.Contains(CRC.GetCRC(_fullName));
+            if (GlobalConfig.Local.DevMode)
+            {
+                string path = GlobalConfig.GamePath + _fullName;
+                b |= File.Exists(path);
+            }
+            return b;
         }
         public string GetParentPath(string _fileFullName)
         {
