@@ -6,6 +6,16 @@ using System.Windows.Forms;
 
 namespace RelertSharp.Utils
 {
+    public static class RSPointExtension
+    {
+
+    }
+
+    public static class RSRectangleExtension
+    {
+
+    }
+
     public static class HashSetExtension
     {
         public static void AddRange(this HashSet<string> hashset, IEnumerable<string> src)

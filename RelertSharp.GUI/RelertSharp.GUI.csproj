@@ -451,7 +451,6 @@
     <Compile Include="WelcomeWindow.Designer.cs">
       <DependentUpon>WelcomeWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="_Test.cs" />
     <EmbeddedResource Include="Controls\InputWindow.resx">
       <DependentUpon>InputWindow.cs</DependentUpon>
     </EmbeddedResource>
