@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using RelertSharp.IniSystem;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Common;
@@ -14,8 +15,8 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
     {
         private void InitialTaskforcePage()
         {
-            LoadToObjectCollection(lbxTaskList, map.TaskForces);
-            LoadToObjectCollection(lbxScriptList, map.Scripts);
+            lbxTaskList.LoadAs(map.TaskForces);
+            lbxScriptList.LoadAs(map.Scripts);
             pnlTaskforce.Initialize(lbxTaskList);
             pnlTaskforce.TaskforceNameUpdated += PnlTaskforce_TaskforceNameUpdated;
             pnlTaskforce.TaskforceAdded += PnlTaskforce_TaskforceAdded;
@@ -32,17 +33,17 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         private void PnlScript_ScriptRemoved(object sender, EventArgs e)
         {
-            RemoveAt(lbxScriptList, ref updatingLbxScriptList);
+            lbxScriptList.RemoveAt(ref updatingLbxScriptList);
         }
 
         private void PnlScript_NewScriptAdded(object sender, TeamScriptGroup scripts)
         {
-            AddTo(lbxScriptList, scripts, ref updatingLbxScriptList);
+            lbxScriptList.Add(scripts, ref updatingLbxScriptList);
         }
 
         private void PnlScript_ScriptNameUpdated(object sender, TeamScriptGroup scripts)
         {
-            UpdateAt(lbxScriptList, scripts, ref updatingLbxScriptList);
+            lbxScriptList.UpdateAt(scripts, ref updatingLbxScriptList);
         }
 
         private void PnlScript_NeedPlayingSound(object sender, TriggerParam param, TechnoPair p)
@@ -52,17 +53,17 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         private void PnlTaskforce_TaskforceDeleted(object sender, TaskforceItem taskforce)
         {
-            RemoveAt(lbxTaskList, ref updatingLbxTaskList);
+            lbxTaskList.RemoveAt(ref updatingLbxTaskList);
         }
 
         private void PnlTaskforce_TaskforceAdded(object sender, TaskforceItem taskforce)
         {
-            AddTo(lbxTaskList, taskforce, ref updatingLbxTaskList);
+            lbxTaskList.Add(taskforce, ref updatingLbxTaskList);
         }
 
         private void PnlTaskforce_TaskforceNameUpdated(object sender, TaskforceItem taskforce)
         {
-            UpdateAt(lbxTaskList, taskforce, ref updatingLbxTaskList);
+            lbxTaskList.UpdateAt(taskforce, ref updatingLbxTaskList);
         }
         private bool updatingLbxTaskList = false;
         private void lbxTaskList_SelectedValueChanged(object sender, EventArgs e)

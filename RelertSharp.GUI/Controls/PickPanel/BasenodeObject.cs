@@ -25,7 +25,7 @@ namespace RelertSharp.GUI.Controls
         private void LoadNodeHouse()
         {
             updatingCbbNodeHouse = true;
-            LoadToObjectCollection(cbbNodeHouse, CurrentMapDocument.Map.Houses);
+            cbbNodeHouse.LoadAs(CurrentMapDocument.Map.Houses);
             updatingCbbNodeHouse = false;
             if (CurrentMapDocument.Map.Houses.Count() > 0) cbbNodeHouse.SelectedIndex = 0;
         }
@@ -48,7 +48,7 @@ namespace RelertSharp.GUI.Controls
                 if (cbbNodeHouse.SelectedItem is HouseItem house)
                 {
                     currentNodeHouse = house;
-                    LoadToObjectCollection(lbxNodes, house.BaseNodes);
+                    lbxNodes.LoadAs(house.BaseNodes);
                 }
             }
         }
@@ -69,7 +69,7 @@ namespace RelertSharp.GUI.Controls
         }
         private void tsmiRefreshNodes_Click(object sender, EventArgs e)
         {
-            LoadToObjectCollection(lbxNodes, currentNodeHouse.BaseNodes);
+            lbxNodes.LoadAs(currentNodeHouse.BaseNodes);
         }
         private void tsmiRemoveAllNodes_Click(object sender, EventArgs e)
         {
@@ -85,8 +85,8 @@ namespace RelertSharp.GUI.Controls
         {
             if (lbxNodes.SelectedItem is BaseNode n)
             {
-                RepositionItemInCollection(lbxNodes, 0);
-                Utils.Misc.RepositionItemInList(currentNodeHouse.BaseNodes, n, 0, lbxNodes.SelectedIndex);
+                lbxNodes.RepositionCurrentItemTo(0);
+                currentNodeHouse.BaseNodes.Reposition(n, 0, lbxNodes.SelectedIndex);
             }
         }
 
@@ -97,8 +97,8 @@ namespace RelertSharp.GUI.Controls
                 int index = lbxNodes.SelectedIndex;
                 if (index != 0)
                 {
-                    RepositionItemInCollection(lbxNodes, index - 1);
-                    Utils.Misc.RepositionItemInList(currentNodeHouse.BaseNodes, n, index - 1, index);
+                    lbxNodes.RepositionCurrentItemTo(index - 1);
+                    currentNodeHouse.BaseNodes.Reposition(n, index - 1, index);
                 }
             }
         }
@@ -110,8 +110,8 @@ namespace RelertSharp.GUI.Controls
                 int index = lbxNodes.SelectedIndex;
                 if (index < lbxNodes.Items.Count - 1)
                 {
-                    RepositionItemInCollection(lbxNodes, index + 1);
-                    Utils.Misc.RepositionItemInList(currentNodeHouse.BaseNodes, n, index + 1, index);
+                    lbxNodes.RepositionCurrentItemTo(index + 1);
+                    currentNodeHouse.BaseNodes.Reposition(n, index + 1, index);
                 }
             }
         }
@@ -120,8 +120,8 @@ namespace RelertSharp.GUI.Controls
         {
             if (lbxNodes.SelectedItem is BaseNode n)
             {
-                RepositionItemInCollection(lbxNodes, lbxNodes.Items.Count - 1);
-                Utils.Misc.RepositionItemInList(currentNodeHouse.BaseNodes, n, lbxNodes.Items.Count - 1, lbxNodes.SelectedIndex);
+                lbxNodes.RepositionCurrentItemTo(lbxNodes.Items.Count - 1);
+                currentNodeHouse.BaseNodes.Reposition(n, lbxNodes.Items.Count - 1, lbxNodes.SelectedIndex);
             }
         }
     }

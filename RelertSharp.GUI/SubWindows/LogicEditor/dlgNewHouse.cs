@@ -27,7 +27,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             btnHouseNewConfirm.Text = DICT[btnHouseNewConfirm.Text];
             List<string> stdCountries = new List<string>();
             foreach (INIPair pair in GlobalVar.GlobalRules["Countries"]) stdCountries.Add(pair.Value);
-            LoadToObjectCollection(cbbParent, stdCountries);
+            cbbParent.LoadAs(stdCountries);
         }
 
         private void btnHouseNewConfirm_Click(object sender, EventArgs e)

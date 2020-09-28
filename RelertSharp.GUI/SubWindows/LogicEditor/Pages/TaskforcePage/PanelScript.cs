@@ -47,13 +47,13 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         private void PnlParam_ScriptDeleted(object sender, EventArgs e)
         {
-            RemoveAt(lbxScriptList, ref updatingLbxScriptList);
+            lbxScriptList.RemoveAt(ref updatingLbxScriptList);
             if (lbxScriptList.Items.Count == 0) pnlParam.Reload(null, CurrentCollection, -1);
         }
 
         private void PnlParam_NewScriptAdded(object sender, TeamScriptItem script)
         {
-            InsertAt(lbxScriptList, script, ref updatingLbxScriptList);
+            lbxScriptList.InsertAt(script, ref updatingLbxScriptList);
         }
 
         private void PnlParam_JumpToWaypoint(object sender, I2dLocateable pos)
@@ -68,7 +68,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         private void PnlParam_ScriptUpdating(object sender, TeamScriptItem script)
         {
-            UpdateAt(lbxScriptList, script, ref updatingLbxScriptList);
+            lbxScriptList.UpdateAt(script, ref updatingLbxScriptList);
         }
 
         public void Reload(TeamScriptGroup item)
@@ -104,13 +104,13 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             isControlRefreshing = true;
             if (CurrentCollection == null)
             {
-                foreach (Control c in Controls) ClearControlContent(c);
+                foreach (Control c in Controls) c.ClearContent();
             }
             else
             {
                 txbScriptID.Text = CurrentCollection.ID;
                 txbScriptName.Text = CurrentCollection.Name;
-                LoadToObjectCollection(lbxScriptList, CurrentCollection.Data);
+                lbxScriptList.LoadAs(CurrentCollection.Data);
             }
             isControlRefreshing = false;
             if (CurrentCollection.Data.Count > 0) lbxScriptList.SelectedIndex = 0;

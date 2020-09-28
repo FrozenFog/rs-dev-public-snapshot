@@ -45,7 +45,7 @@ namespace RelertSharp.FileSystem
             {
                 if (img.Image != null)
                 {
-                    sz = Utils.Misc.GetMaxSize(sz, img.Image.Size);
+                    sz = sz.Union(img.Image.Size);
                 }
             }
             return sz;

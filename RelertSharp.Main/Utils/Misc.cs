@@ -44,73 +44,14 @@ namespace RelertSharp.Utils
             Language.DICT = new Lang(dict);
             Log.Write("Language Init complete");
         }
-        public static void RepositionItemInList<T>(List<T> dest, T item, int indexTarget, int indexNow)
-        {
-            dest.RemoveAt(indexNow);
-            dest.Insert(indexTarget, item);
-        }
         public static List<T> InitializeListWithCap<T>(int size)
         {
             List<T> result = new List<T>();
             for (int i = 0; i < size; i++)
             {
-                result.Add(default(T));
+                result.Add(default);
             }
             return result;
-        }
-        public static void SetListValue<T>(ref List<T> src, T value)
-        {
-            for (int i = 0; i < src.Count; i++)
-            {
-                src[i] = value;
-            }
-        }
-        public static Image ResizeImage(Image src, Size newSize)
-        {
-            if (src.Width > newSize.Width || src.Height > newSize.Height) return src;
-            Bitmap dest = new Bitmap(newSize.Width, newSize.Height);
-            Point pos = GetResizePoint(newSize, src.Size);
-            Graphics g = Graphics.FromImage(dest);
-            g.DrawImage(src, pos);
-            g.Dispose();
-            return dest;
-        }
-        public static Size GetMaxSize(Size szA, Size szB)
-        {
-            Size result = new Size(szB.Width, szB.Height);
-            if (szA.Width > szB.Width) result.Width = szA.Width;
-            if (szA.Height > szB.Height) result.Height = szA.Height;
-            return result;
-        }
-        public static Point GetResizePoint(Size dest, Size src)
-        {
-            int x = (dest.Width - src.Width) / 2;
-            int y = (dest.Height - src.Height) / 2;
-            return new Point(x, y);
-        }
-        public static T MemCpy<T>(T src)
-        {
-            T dest = Activator.CreateInstance<T>();
-            Type tIn = src.GetType();
-            foreach (var itemDest in dest.GetType().GetProperties())
-            {
-                var itemSrc = tIn.GetProperty(itemDest.Name);
-                if (itemSrc != null && itemDest.CanWrite)
-                {
-                    itemDest.SetValue(dest, itemSrc.GetValue(src));
-                }
-            }
-            return dest;
-        }
-        public static int Region(int _floor, int _ceil, int _src)
-        {
-            if (_src >= _ceil) return _ceil;
-            if (_src <= _floor) return _floor;
-            return _src;
-        }
-        public static string Replace(string src, int pos, char c)
-        {
-            return src.Remove(pos, 1).Insert(pos, c.ToString());
         }
         public static bool ParseBool(string s, bool def = false)
         {
@@ -266,15 +207,6 @@ namespace RelertSharp.Utils
             {
                 dest[i + offset] = src[i];
             }
-        }
-        /// <summary>
-        /// Return x,y,w,h string for ini key-value
-        /// </summary>
-        /// <param name="rect"></param>
-        /// <returns></returns>
-        public static string FromRectangle(Rectangle rect)
-        {
-            return rect.X.ToString() + "," + rect.Y.ToString() + "," + rect.Width.ToString() + "," + rect.Height.ToString();
         }
         /// <summary>
         /// Return waypoint in int, must between A - ZZ
@@ -443,10 +375,6 @@ namespace RelertSharp.Utils
             int s = seconds % 60;
             return string.Format("{0:D2}:{0:D2}:{0:D2}", h, m, s);
         }
-        public static Point DeltaPoint(Point pre, Point now)
-        {
-            return new Point(now.X - pre.X, now.Y - pre.Y);
-        }
         public static void DebugSave(byte[] data, string filename)
         {
             System.IO.FileStream fs = new System.IO.FileStream(filename, System.IO.FileMode.Create, System.IO.FileAccess.Write);
@@ -469,16 +397,6 @@ namespace RelertSharp.Utils
             T tmp = src1;
             src1 = src2;
             src2 = tmp;
-        }
-        public static void AdjustComboBoxDropDownWidth(ref System.Windows.Forms.ComboBox cbb)
-        {
-            if (cbb != null && cbb.Items.Count != 0)
-            {
-                int max = cbb.Width;
-                foreach (var i in cbb.Items)
-                    max = i.ToString().Length * 7 > max ? i.ToString().Length * 7 : max;
-                cbb.DropDownWidth = max;
-            }
         }
 
         public static string ParseObjectsToString(params object[] pObjects)

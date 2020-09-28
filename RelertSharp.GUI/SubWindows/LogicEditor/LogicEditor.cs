@@ -74,17 +74,17 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             lbxTriggerList.Tag = (int)type;
             map.Triggers.SetToString(type);
-            LoadToObjectCollection(lbxTriggerList, map.Triggers);
+            lbxTriggerList.LoadAs(map.Triggers);
             pnlTriggerTag.RefreshAttatchedList();
         }
         private void LoadTeamList()
         {
-            LoadToObjectCollection(lbxTeamList, map.Teams);
+            lbxTeamList.LoadAs(map.Teams);
             if (lbxTeamList.Items.Count > 0) lbxTeamList.SelectedIndex = 0;
         }
         private void LoadAITrgList()
         {
-            LoadToObjectCollection(lbxAIList, map.AiTriggers);
+            lbxAIList.LoadAs(map.AiTriggers);
             if (lbxAIList.Items.Count > 0) lbxAIList.SelectedIndex = 0;
         }
         private void LoadLocalVariables()
@@ -99,7 +99,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         }
         private void LoadHouseList()
         {
-            LoadToObjectCollection(lbxHouses, map.Houses);
+            lbxHouses.LoadAs(map.Houses);
             if (lbxHouses.Items.Count > 0) lbxHouses.SelectedIndex = 0;
         }
         #endregion

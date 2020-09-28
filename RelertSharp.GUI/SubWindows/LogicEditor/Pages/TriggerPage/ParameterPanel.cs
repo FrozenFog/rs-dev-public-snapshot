@@ -48,7 +48,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         public void Initialize(IEnumerable<TriggerDescription> descriptions, ListBox refer, bool isEvent)
         {
             SetLanguage();
-            LoadToObjectCollection(cbbEventAbst, descriptions);
+            cbbEventAbst.LoadAs(descriptions);
             lkls = new LinkLabel[4] { lklEP1, lklEP2, lklEP3, lklEP4 };
             txbs = new TextBox[4] { txbEP1, txbEP2, txbEP3, txbEP4 };
             ckbs = new CheckBox[4] { ckbEP1, ckbEP2, ckbEP3, ckbEP4 };
@@ -162,11 +162,11 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 ((LinkLabel)controls[controlIndex]).Text = param.Name;
                 if (!param.Traceable) ((LinkLabel)controls[controlIndex]).Enabled = false;
             }
-            else if (controls.GetType() == typeof(ComboBox[]))
+            else if (controls is ComboBox[] cbbs)
             {
                 Cursor = Cursors.WaitCursor;
                 IList<TechnoPair> data = Map.GetComboCollections(param).ToList();
-                LoadToObjectCollection((ComboBox)controls[controlIndex], data);
+                cbbs[controlIndex].LoadAs(data);
                 SelectCombo((ComboBox)controls[controlIndex], param.GetParameter(paramData), param);
                 Cursor = Cursors.Arrow;
             }

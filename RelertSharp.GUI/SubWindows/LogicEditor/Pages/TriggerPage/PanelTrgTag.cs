@@ -65,12 +65,12 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         }
         public void RefreshAttatchedList()
         {
-            LoadToObjectCollection(cbbAttatchedTrg, TriggerItem.NullTrigger, Map.Triggers);
+            cbbAttatchedTrg.LoadAs(TriggerItem.NullTrigger, Map.Triggers);
         }
         public void RefreshHouseList()
         {
             if (Map.Countries.Count() == 0) Warning(Language.DICT["WarHouseEmpty"]);
-            LoadToObjectCollection(lbxTriggerHouses, Map.Countries);
+            lbxTriggerHouses.LoadAs(Map.Countries);
         }
         #endregion
 
@@ -95,7 +95,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 txbTrgID.Text = CurrentTrigger.ID;
                 txbTrgName.Text = CurrentTrigger.Name;
                 txbTagName.Text = CurrentTag.Name;
-                LoadToObjectCollection(cbbTagID, CurrentTagCollection);
+                cbbTagID.LoadAs(CurrentTagCollection);
                 cbbTagID.SelectedItem = CurrentTag;
                 ckbDisabled.Checked = CurrentTrigger.Disabled;
                 ckbEasy.Checked = CurrentTrigger.EasyOn;
@@ -119,7 +119,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 lbxTriggerHouses.SelectedItem = Map.Countries.GetCountry(CurrentTrigger.House);
                 if (CurrentTrigger.LinkedWith != "<none>")
                 {
-                    SelectComboboxItem<TriggerItem>(cbbAttatchedTrg, x => x.ID == CurrentTrigger.LinkedWith);
+                    cbbAttatchedTrg.SelectFirst<TriggerItem>(x => x.ID == CurrentTrigger.LinkedWith);
                     lklTraceTrigger.Enabled = true;
                 }
                 else cbbAttatchedTrg.Text = "<none>";

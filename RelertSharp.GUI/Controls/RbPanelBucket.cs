@@ -48,7 +48,7 @@ namespace RelertSharp.GUI.Controls
                     if (tileset != null) objs.Add(new SetCombo(tileset.SetName, TileDictionary.GeneralTilesets[set]));
                 }
             }
-            GuiUtils.LoadToObjectCollection(cbbFillBy, objs);
+            cbbFillBy.LoadAs(objs);
             cbbFillBy.SelectedIndex = 0;
         }
 

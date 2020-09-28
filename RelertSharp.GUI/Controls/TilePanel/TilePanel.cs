@@ -77,7 +77,7 @@ namespace RelertSharp.GUI.Controls
                 if (string.IsNullOrEmpty(name)) continue;
                 TmpFile tmp = new TmpFile(GlobalDir.GetRawByte(name), name);
                 tmp.LoadColor(TilePalette);
-                sz = Utils.Misc.GetMaxSize(sz, tmp.AssembleImage.Size);
+                sz = sz.Union(tmp.AssembleImage.Size);
                 imgs[name] = tmp.AssembleImage;
             }
             //if (sz.Width > 256 || sz.Height > 256)
@@ -94,7 +94,7 @@ namespace RelertSharp.GUI.Controls
                 PictureBox box = new PictureBox
                 {
                     Size = sz,
-                    Image = Utils.Misc.ResizeImage(imgs[filename], sz),
+                    Image = imgs[filename].ResizeDraw(sz),
                     Tag = i++,
                 };
                 box.MouseClick += dele;

@@ -48,7 +48,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         }
         private void TriggerRefreshing(object sender, TriggerItem trigger)
         {
-            UpdateAt(lbxTriggerList, trigger, ref updatingLbxTriggerList);
+            lbxTriggerList.UpdateAt(trigger, ref updatingLbxTriggerList);
             lbxTriggerList_SelectedValueChanged(null, null);
         }
 
@@ -69,17 +69,17 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         private void PnlTriggerTag_TriggerUpdated(object sender, TriggerItem trigger)
         {
-            UpdateAt(lbxTriggerList, trigger, ref updatingLbxTriggerList);
+            lbxTriggerList.UpdateAt(trigger, ref updatingLbxTriggerList);
         }
 
         private void PnlTriggerTag_TriggerDeleted(object sender, EventArgs e)
         {
-            RemoveAt(lbxTriggerList, ref updatingLbxTriggerList);
+            lbxTriggerList.RemoveAt(ref updatingLbxTriggerList);
         }
 
         private void PnlTriggerTag_NewTriggerFired(object sender, TriggerItem trigger)
         {
-            AddTo(lbxTriggerList, trigger, ref updatingLbxTriggerList);
+            lbxTriggerList.Add(trigger, ref updatingLbxTriggerList);
         }
 
 

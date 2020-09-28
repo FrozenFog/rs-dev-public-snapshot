@@ -5,6 +5,7 @@ using RelertSharp.MapStructure;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
 using System.Linq;
+using System;
 using static RelertSharp.Common.GlobalVar;
 using static RelertSharp.Utils.Misc;
 
@@ -198,7 +199,7 @@ namespace RelertSharp.DrawingEngine
                 if (GlobalDir.HasFile(filename + ".shp")) filename = filename.ToLower() + ".shp";
                 else if (wall)
                 {
-                    filename = Replace(filename, 1, 'G').ToLower() + ".shp";
+                    filename = filename.Replace(1, 'G').ToLower() + ".shp";
                 }
                 else
                 {

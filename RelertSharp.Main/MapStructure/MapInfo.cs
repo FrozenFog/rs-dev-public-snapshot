@@ -43,8 +43,8 @@ namespace RelertSharp.MapStructure
         public INIEntity GetMapEnt()
         {
             INIEntity map = new INIEntity("Map");
-            map.AddPair("Size", FromRectangle(Size));
-            map.AddPair("LocalSize", FromRectangle(LocalSize));
+            map.AddPair("Size", Size.ParseString());
+            map.AddPair("LocalSize", LocalSize.ParseString());
             map.AddPair("Theater", TheaterName);
             return map;
         }

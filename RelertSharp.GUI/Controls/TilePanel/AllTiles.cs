@@ -16,7 +16,7 @@ namespace RelertSharp.GUI.Controls
     {
         private void InitializeAllTilePanel()
         {
-            LoadToObjectCollection(cbbAllTiles, TileDictionary.TileSets.Where(x=>!x.IsFramework && x.AllowPlace));
+            cbbAllTiles.LoadAs(TileDictionary.TileSets.Where(x => !x.IsFramework && x.AllowPlace));
             cbbAllTiles.SelectedIndex = 0;
         }
 

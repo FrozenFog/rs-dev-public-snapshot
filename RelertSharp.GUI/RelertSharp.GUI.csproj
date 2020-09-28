@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\Delegates.cs" />
+    <Compile Include="Controls\Extensions.cs" />
     <Compile Include="Controls\InputWindow.cs">
       <SubType>Form</SubType>
     </Compile>

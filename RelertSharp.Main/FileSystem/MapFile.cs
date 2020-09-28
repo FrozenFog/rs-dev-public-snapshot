@@ -4,6 +4,7 @@ using RelertSharp.MapStructure;
 using RelertSharp.Utils;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
 
 namespace RelertSharp.FileSystem
 {
@@ -93,7 +94,7 @@ namespace RelertSharp.FileSystem
             dest["OverlayPack"] = new INIEntity("OverlayPack", Map.OverlayPack, 1);
             dest["PreviewPack"] = new INIEntity("PreviewPack", Map.PreviewPack, 1);
             INIEntity previewEnt = new INIEntity("Preview");
-            if (!Map.PreviewSize.IsEmpty) previewEnt.AddPair("Size", Misc.FromRectangle(Map.PreviewSize));
+            if (!Map.PreviewSize.IsEmpty) previewEnt.AddPair("Size", Map.PreviewSize.ParseString());
             dest["Preview"] = previewEnt;
             dest["Basic"] = Map.Info.GetBasicEnt();
             dest["Map"] = Map.Info.GetMapEnt();

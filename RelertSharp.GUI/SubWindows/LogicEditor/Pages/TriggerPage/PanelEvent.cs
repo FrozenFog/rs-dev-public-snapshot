@@ -77,7 +77,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private int previousIndex = 0;
         private void PnlParameter_ItemUpdated(object sender, LogicItem item)
         {
-            UpdateAt(lbxEventList, item, ref updatingLbxEventList);
+            lbxEventList.UpdateAt(item, ref updatingLbxEventList);
             previousIndex = lbxEventList.SelectedIndex;
         }
 
@@ -132,7 +132,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             isControlRefreshing = true;
             EventCollection.Sort();
-            LoadToObjectCollection(lbxEventList, EventCollection);
+            lbxEventList.LoadAs(EventCollection);
             if (EventCollection.Count() > 0)
             {
                 lbxEventList.SelectedIndex = 0;
@@ -190,7 +190,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             LogicItem item;
             if (isEvent) item = EventCollection.NewEvent();
             else item = EventCollection.NewAction();
-            AddTo(lbxEventList, item, ref updatingLbxEventList);
+            lbxEventList.Add(item, ref updatingLbxEventList);
             pnlParameter.Reload(item);
             isControlRefreshing = false;
         }
@@ -201,7 +201,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             LogicItem ev = pnlParameter.CurrentItem;
             EventCollection.Remove(ev);
             pnlParameter.CurrentItem = null;
-            RemoveAt(lbxEventList, lbxEventList.SelectedIndex, ref updatingLbxEventList);
+            lbxEventList.RemoveAt(lbxEventList.SelectedIndex, ref updatingLbxEventList);
             if (lbxEventList.Items.Count == 0) pnlParameter.Reload(null);
         }
 
@@ -232,7 +232,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 int num = EventCollection.GetCount();
                 LogicItem lg = new LogicItem(CurrentEvent, num);
                 EventCollection.Add(lg);
-                AddTo(lbxEventList, lg, ref updatingLbxEventList);
+                lbxEventList.Add(lg, ref updatingLbxEventList);
             }
         }
     }

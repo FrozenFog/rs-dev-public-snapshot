@@ -34,10 +34,10 @@ namespace RelertSharp.GUI.Controls
         }
         private void InitializeAttributePanel()
         {
-            LoadToObjectCollection(cbbOwner, Map.Houses);
+            cbbOwner.LoadAs(Map.Houses);
             if (cbbOwner.Items.Count > 0) cbbOwner.SelectedIndex = 0;
-            LoadToObjectCollection(cbbAttTag, TagItem.NullTag, Map.Tags);
-            LoadToObjectCollection(cbbStat, Constant.MapStructure.ObjectStatus);
+            cbbAttTag.LoadAs(TagItem.NullTag, Map.Tags);
+            cbbStat.LoadAs(Constant.MapStructure.ObjectStatus);
             cbbStat.SelectedIndex = 0;
             cbbSpotlight.Items.Add(BuildingSpotlightType.None);
             cbbSpotlight.Items.Add(BuildingSpotlightType.Arcing);
@@ -88,7 +88,7 @@ namespace RelertSharp.GUI.Controls
                 }
             }
             budSides.Insert(budSides.Count - 1, tech);
-            LoadToTreeNode(building, budSides);
+            building.LoadAs(budSides);
             trvObject.Nodes.Add(building);
         }
         private void LoadOtherCombatObjects(TreeNode dest, string rulesListName, CombatObjectType type)
@@ -100,7 +100,7 @@ namespace RelertSharp.GUI.Controls
                 if (side >= 0) AddObjectToNode(sides[side], p.Value);
                 else AddObjectToNode(sides.Last(), p.Value);
             }
-            LoadToTreeNode(dest, sides);
+            dest.LoadAs(sides);
             trvObject.Nodes.Add(dest);
         }
         private void LoadUnits()
@@ -126,8 +126,8 @@ namespace RelertSharp.GUI.Controls
                     else AddObjectToNode(units.Last(), p.Value);
                 }
             }
-            LoadToTreeNode(unit, units);
-            LoadToTreeNode(naval, navals);
+            unit.LoadAs(units);
+            naval.LoadAs(navals);
             trvObject.Nodes.Add(unit);
             trvObject.Nodes.Add(naval);
         }
@@ -158,13 +158,13 @@ namespace RelertSharp.GUI.Controls
                 TreeNode node = e.Node;
                 if (!string.IsNullOrEmpty(node.Name) && !ObjectRootNodes.Contains(node.Name))
                 {
-                    TreeNode root = GetRootNode(node);
+                    TreeNode root = node.GetRoot();
                     combatRootName = root.Name;
                     initialized = false;
                     IEnumerable<TechnoPair> upgrades = GlobalRules.GetBuildingUpgradeList(node.Name);
-                    LoadToObjectCollection(cbbUpg1, new TechnoPair("None", ""), upgrades);
-                    LoadToObjectCollection(cbbUpg2, new TechnoPair("None", ""), upgrades);
-                    LoadToObjectCollection(cbbUpg3, new TechnoPair("None", ""), upgrades);
+                    cbbUpg1.LoadAs(new TechnoPair("None", ""), upgrades);
+                    cbbUpg2.LoadAs(new TechnoPair("None", ""), upgrades);
+                    cbbUpg3.LoadAs(new TechnoPair("None", ""), upgrades);
                     if (upgrades == null)
                     {
                         cbbUpg1.SelectedIndex = 0;
@@ -227,7 +227,7 @@ namespace RelertSharp.GUI.Controls
                 AISellable = ckbSell.Checked,
                 BuildingOnline = ckbPowered.Checked,
                 SpotlightType = (BuildingSpotlightType)cbbSpotlight.SelectedIndex,
-                UpgradeNum = TrimMaskedTextbox(mtxbUpgNum, 0, 3),
+                UpgradeNum = mtxbUpgNum.TrimValue(0, 3),
                 Upgrade1 = p1 != null ? p1.Index : "None",
                 Upgrade2 = p2 != null ? p2.Index : "None",
                 Upgrade3 = p3 != null ? p3.Index : "None",
@@ -268,12 +268,12 @@ namespace RelertSharp.GUI.Controls
                 HouseItem house = cbbOwner.SelectedItem as HouseItem;
                 TagItem tag = cbbAttTag.SelectedItem as TagItem;
                 src.OwnerHouse = house != null ? house.Name : CurrentMapDocument.Map.Houses.First().Name;
-                src.HealthPoint = TrimMaskedTextbox(mtxbHp, 1, 256);
-                src.VeterancyPercentage = TrimMaskedTextbox(mtxbVeteran, 0, 200);
-                src.Rotation = TrimMaskedTextbox(mtxbFacing, 0, 256);
+                src.HealthPoint = mtxbHp.TrimValue(1, 256);
+                src.VeterancyPercentage = mtxbVeteran.TrimValue(0, 200);
+                src.Rotation = mtxbFacing.TrimValue(0, 256);
                 src.TaggedTrigger = tag != null ? tag.ID : "None";
                 src.Status = cbbStat.Text;
-                src.Group = TryParseTextBox(txbGroup, -1);
+                src.Group = txbGroup.ParseInt(-1);
             }
         }
         private bool mtxbUpgLocker = false;
@@ -282,7 +282,7 @@ namespace RelertSharp.GUI.Controls
             if (initialized && !mtxbUpgLocker)
             {
                 mtxbUpgLocker = true;
-                int num = TrimMaskedTextbox(mtxbUpgNum, 0, 3);
+                int num = mtxbUpgNum.TrimValue(0, 3);
                 mtxbUpgNum.Text = num.ToString();
                 mtxbUpgLocker = false;
             }

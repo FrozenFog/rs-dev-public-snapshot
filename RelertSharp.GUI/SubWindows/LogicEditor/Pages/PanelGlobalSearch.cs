@@ -54,7 +54,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         }
         private void LoadSearch(IEnumerable<ILogicItem> src, SearchItem.SearchType type)
         {
-            LoadToObjectCollection(lvSearchResult, SearchResult.SearchIn(src, type));
+            lvSearchResult.LoadAs(SearchResult.SearchIn(src, type));
         }
         private void txbSearchName_KeyDown(object sender, KeyEventArgs e)
         {

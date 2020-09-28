@@ -41,8 +41,8 @@ namespace RelertSharp.GUI
             cbbOwnerHouse.Items.AddRange(houses.ToArray());
             cbbTags.Items.Add(new TechnoPair("None", ""));
             cbbTags.Items.AddRange(tags.ToArray());
-            LoadToObjectCollection(cbbStatus, Constant.MapStructure.ObjectStatus);
-            UpdateComboboxText(cbbOwnerHouse, changer.Host.OwnerHouse);
+            cbbStatus.LoadAs(Constant.MapStructure.ObjectStatus);
+            cbbOwnerHouse.UpdateTextAs(changer.Host.OwnerHouse);
             houseMX = houses.Max(x => x.ToString().Length) * 7;
             if (tags.Count() > 0) tagMX = tags.Max(x => x.ToString().Length) * 7;
             cbbOwnerHouse.DropDownWidth = houseMX;
@@ -51,15 +51,15 @@ namespace RelertSharp.GUI
         protected virtual void UpdateGuiFromHost()
         {
             SetFacing(changer.Host.Rotation);
-            int hp = Utils.Misc.Region(1, 256, changer.Host.HealthPoint);
-            int veteran = Utils.Misc.Region(0, 200, changer.Host.VeterancyPercentage);
+            int hp = changer.Host.HealthPoint.TrimTo(1, 256);
+            int veteran = changer.Host.VeterancyPercentage.TrimTo(0, 200);
             trkbHP.Value = hp;
             trkbVeteran.Value = veteran;
             mtxbHP.Text = changer.Host.HealthPoint.ToString();
             mtxbVeteran.Text = changer.Host.VeterancyPercentage.ToString();
-            UpdateComboboxText(cbbTags, changer.Host.TaggedTrigger);
-            UpdateComboboxText(cbbStatus, changer.Host.Status);
-            UpdateComboboxText(cbbOwnerHouse, changer.Host.OwnerHouse);
+            cbbTags.UpdateTextAs(changer.Host.TaggedTrigger);
+            cbbStatus.UpdateTextAs(changer.Host.Status);
+            cbbOwnerHouse.UpdateTextAs(changer.Host.OwnerHouse);
             txbGroup.Text = changer.Host.Group.ToString();
         }
         protected virtual void SetLanguage()

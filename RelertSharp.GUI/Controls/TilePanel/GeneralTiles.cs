@@ -69,7 +69,7 @@ namespace RelertSharp.GUI.Controls
                     AddSetToNode(set, paves, x => x.ClassifyAs("Pave"));
                 }
             }
-            LoadToTreeNode(other, ramp, cliff, road, fix, paves, water, bridge, shore, feature, rail, tunnel);
+            other.LoadAs(ramp, cliff, road, fix, paves, water, bridge, shore, feature, rail, tunnel);
             trvGeneral.Nodes.Add(other);
         }
         private void AddSetToNode(TileSet src, TreeNode dest, Predicate<TileSet> predicate)

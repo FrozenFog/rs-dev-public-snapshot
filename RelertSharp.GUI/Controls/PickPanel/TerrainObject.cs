@@ -64,7 +64,7 @@ namespace RelertSharp.GUI.Controls
                 }
                 else AddObjectToNode(other, p.Value, false);
             }
-            LoadToObjectCollection(trvTerrain, tree, pole, resource, other);
+            trvTerrain.LoadAs(tree, pole, resource, other);
         }
         private void ReloadTerrain()
         {
@@ -125,7 +125,7 @@ namespace RelertSharp.GUI.Controls
             if (lbxRndTerrain.SelectedItem != null)
             {
                 bool b = false;
-                RemoveAt(lbxRndTerrain, ref b);
+                lbxRndTerrain.RemoveAt(ref b);
             }
         }
 

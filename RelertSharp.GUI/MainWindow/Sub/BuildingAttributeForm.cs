@@ -99,9 +99,9 @@ namespace RelertSharp.GUI
             lblUnitID.Text = string.Format("Building ID : {0}", budhost.ID);
             lblUnitRegName.Text = string.Format("Building Registion Name : {0}", budhost.RegName);
             lklTrace.Enabled = budhost.TaggedTrigger != "None";
-            UpdateComboboxText(cbbUpg1, budhost.Upgrade1);
-            UpdateComboboxText(cbbUpg1, budhost.Upgrade1);
-            UpdateComboboxText(cbbUpg1, budhost.Upgrade1);
+            cbbUpg1.UpdateTextAs(budhost.Upgrade1);
+            cbbUpg1.UpdateTextAs(budhost.Upgrade1);
+            cbbUpg1.UpdateTextAs(budhost.Upgrade1);
             cbbSpotlight.SelectedIndex = (int)budhost.SpotlightType;
             mtxbUpCount.Text = budhost.UpgradeNum.ToString();
             RefreshUpgradeCombobox();

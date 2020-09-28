@@ -42,7 +42,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             isControlRefreshing = true;
             SetLanguage();
-            LoadToObjectCollection(cbbScriptType, scripts);
+            cbbScriptType.LoadAs(scripts);
             cbbScriptType.SelectedIndex = 0;
             isControlRefreshing = false;
         }
@@ -98,7 +98,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 lblParamName.Text = Language.DICT["LGClblScriptCurPara"];
                 lblParamName.Visible = true;
                 currentIndex = -1;
-                foreach (Control c in Controls) ClearControlContent(c);
+                foreach (Control c in Controls) c.ClearContent();
             }
             else
             {
@@ -136,7 +136,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     case TriggerParam.ParamType.SelectableString:
                         cbbParam.Visible = true;
                         IEnumerable<TechnoPair> data = Map.GetComboCollections(CurrentDesc.Parameters[0]);
-                        LoadToObjectCollection(cbbParam, data);
+                        cbbParam.LoadAs(data);
                         cbbParam.Text = CurrentScript.ActionValue;
                         break;
                 }

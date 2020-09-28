@@ -54,7 +54,7 @@ namespace RelertSharp.GUI.Controls
                 else if (item.ParseBool("IsARock")) AddObjectToNode(rock, p.Value, false);
                 else AddObjectToNode(other, p.Value, false);
             }
-            LoadToObjectCollection(trvOverlay, wall, resource, low, hi, rock, rail, other);
+            trvOverlay.LoadAs(wall, resource, low, hi, rock, rail, other);
         }
         private void ReloadOverlay()
         {
@@ -86,7 +86,7 @@ namespace RelertSharp.GUI.Controls
                     {
                         ShpFrame frame = pic.Frames[i];
                         ListViewItem item = new ListViewItem(string.Format("{0}-Frame{1}", overlayName, i.ToString()), i.ToString());
-                        imgOverlayFrame.Images.Add(i.ToString(), Utils.Misc.ResizeImage(frame.Image, maxSize));
+                        imgOverlayFrame.Images.Add(i.ToString(), frame.Image.ResizeDraw(maxSize));
                         lvOverlayFrames.Items.Add(item);
                     }
                 }

@@ -124,8 +124,9 @@ namespace RelertSharp.Encoding
             code &= 0x7;
             short delta = (short)(tb_step[index] * code / 4 + (tb_step[index] / 8));
             if (signingbit == 1) delta *= -1;
-            sample = (short)Utils.Misc.Region(-32768, 32767, sample + delta);
-            index = Utils.Misc.Region(0, 88, index + tb_adjust[code]);
+            short tmp = (short)(sample + delta);
+            sample = tmp.TrimTo(-32768, 32767);
+            index = (index + tb_adjust[code]).TrimTo(0, 88);
         }
         private static int GetCode(byte _src, ref bool _isLow)
         {
@@ -163,9 +164,9 @@ namespace RelertSharp.Encoding
                 else signingBit = 0;
                 int code = Math.Min(4 * delta / tb_step[index], 7);
                 index += tb_adjust[code];
-                index = Utils.Misc.Region(0, 88, index);
+                index = index.TrimTo(0, 88);
                 int predictDelta = (tb_step[index] * code) / 4 + (tb_step[index] / 8);
-                previousSample = Utils.Misc.Region(-32768, 32767, previousSample + predictDelta);
+                previousSample = (previousSample + predictDelta).TrimTo(-32768, 32767);
                 Write4Bit(code + signingBit << 3, ref result, ref low, ref i);
             }
             br.Dispose();

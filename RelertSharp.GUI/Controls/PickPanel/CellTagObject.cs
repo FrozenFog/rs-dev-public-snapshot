@@ -25,8 +25,8 @@ namespace RelertSharp.GUI.Controls
         private void InitializeCelltagPanel()
         {
             updatingCbbCelltag = true;
-            LoadToObjectCollection(cbbCelltag, Map.Tags);
-            LoadToObjectCollection(lbxCelltags, Map.Celltags);
+            cbbCelltag.LoadAs(Map.Tags);
+            lbxCelltags.LoadAs(Map.Celltags);
             updatingCbbCelltag = false;
         }
         private void ReloadCellTag()
@@ -71,7 +71,7 @@ namespace RelertSharp.GUI.Controls
                     ReleaseCelltags?.Invoke(this, new EventArgs());
                 }
                 IEnumerable<CellTagItem> same = Map.Celltags.Where(x => x.TagID == cell.TagID);
-                LoadToObjectCollection(lbxSameTags, same);
+                lbxSameTags.LoadAs(same);
             }
         }
         private void btnSelectAllSameCell_Click(object sender, EventArgs e)

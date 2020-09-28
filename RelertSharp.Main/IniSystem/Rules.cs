@@ -2,6 +2,7 @@
 using RelertSharp.MapStructure.Objects;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using static RelertSharp.Common.GlobalVar;
 using static RelertSharp.Utils.Misc;
 
@@ -93,9 +94,9 @@ namespace RelertSharp.IniSystem
         {
             if (string.IsNullOrEmpty(id)) return "";
             string name = id + ".shp";
-            if (!GlobalConfig.IgnoreBuildingTheaterArt) name = Replace(id + ".shp", 1, _suff);
+            if (!GlobalConfig.IgnoreBuildingTheaterArt) name = id.Replace(1, _suff) + ".shp";
             if (GlobalDir.HasFile(name)) return name;
-            if (GlobalDir.HasFile(Replace(name, 1, 'G'))) return Replace(name, 1, 'G');
+            if (GlobalDir.HasFile(name.Replace(1, 'G'))) return name.Replace(1, 'G');
             if (GlobalDir.HasFile(id + ".shp")) return id + ".shp";
             return "";
         }
@@ -130,7 +131,7 @@ namespace RelertSharp.IniSystem
         {
             if (!GlobalConfig.IgnoreBuildingTheaterArt)
             {
-                filename = Replace(filename, 1, _suff);
+                filename = filename.Replace(1, _suff);
             }
         }
         private bool powerupInitialize = false;
@@ -197,7 +198,7 @@ namespace RelertSharp.IniSystem
                         if (tmp.Length != 2)
                         {
                             Log.Critical("Building foundation error! Item {0} has unreadable foundation!", regname);
-                            SetListValue<bool>(ref shape, true);
+                            shape.SetValueAll(true);
                             return shape;
                         }
                         try
@@ -207,12 +208,12 @@ namespace RelertSharp.IniSystem
                         catch
                         {
                             Log.Critical("Building foundation error! Item {0}: size {1},{2} has unreadable foundation!", regname, sizeX, sizeY);
-                            SetListValue<bool>(ref shape, true);
+                            shape.SetValueAll(true);
                         }
                     }
                 }
             }
-            else SetListValue<bool>(ref shape, true);
+            else shape.SetValueAll(true);
             return shape;
         }
         public Vec4 GetBuildingLampData(string nameid, out float intensity, out int visibility)
@@ -309,7 +310,7 @@ namespace RelertSharp.IniSystem
             if (wall) FixWallOverlayName(ref filename);
             if (!string.IsNullOrEmpty(img) && regName != img) filename = img;
             if (GlobalDir.HasFile(filename + ".shp")) return filename.ToLower() + ".shp";
-            else if (wall) return Replace(filename, 1, 'G').ToLower() + ".shp";
+            else if (wall) return filename.Replace(1, 'G').ToLower() + ".shp";
             else return string.Format("{0}.{1}", filename.ToLower(), TileDictionary.TheaterSub);
         }
         public string GetOverlayName(byte overlayid)

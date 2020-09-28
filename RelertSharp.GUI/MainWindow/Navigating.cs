@@ -71,7 +71,7 @@ namespace RelertSharp.GUI
         {
             if (onRmbMoving)
             {
-                rmbMoveDelta = Utils.Misc.DeltaPoint(rmbMoveDownLocation, e.Location);
+                rmbMoveDelta = rmbMoveDownLocation.Delta(e.Location);
             }
         }
         private void EndRmbMove()

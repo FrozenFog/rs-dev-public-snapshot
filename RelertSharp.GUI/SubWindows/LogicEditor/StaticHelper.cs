@@ -25,7 +25,7 @@ namespace RelertSharp.SubWindows.LogicEditor
             {
                 dest.Items.Add(new EnumDisplayClass(values[i], Language.DICT[type.Name + "." + names[i]]));
             }
-            Utils.Misc.AdjustComboBoxDropDownWidth(ref dest);
+            dest.AutoDropdownWidth();
             dest.EndUpdate();
         }
         public static void LoadToObjectCollection<T>(ComboBox dest, IList<T> src)

@@ -45,7 +45,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             technoPairs.AddRange(GlobalVar.GlobalRules.AircraftList);
             technoPairs.AddRange(GlobalVar.GlobalRules.VehicleList);
             technoPairs.ForEach(x => x.ResetAbst(TechnoPair.AbstractType.CsfName, TechnoPair.IndexType.RegName));
-            LoadToObjectCollection(cbbTaskType, technoPairs);
+            cbbTaskType.LoadAs(technoPairs);
             SetLanguage();
             lbxTaskList = lbx;
         }
@@ -116,7 +116,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     }
                     IEnumerable<TaskforceUnit> units = CurrentCollection.Members;
                     IEnumerable<ListViewItem> items = TaskforceItem.ToListViewItems(units);
-                    LoadToObjectCollection(lvTaskforceUnits, items);
+                    lvTaskforceUnits.LoadAs(items);
                     lvTaskforceUnits.SelectedIndices.Add(0);
                     cbbTaskType.Text = CurrentUnit.RegName;
                     mtxbTaskNum.Text = CurrentUnit.UnitNum.ToString();
@@ -124,7 +124,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             }
             else
             {
-                foreach (Control c in Controls) ClearControlContent(c);
+                foreach (Control c in Controls) c.ClearContent();
             }
             isControlRefreshing = false;
         }
@@ -169,7 +169,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             int index = lvTaskforceUnits.SelectedIndices[0];
             CurrentCollection.Members.RemoveAt(lvTaskforceUnits.SelectedIndices[0]);
             CurrentUnit = null;
-            RemoveAt(lvTaskforceUnits, index, ref updatingLvTaskforceUnits);
+            lvTaskforceUnits.RemoveAt(index, ref updatingLvTaskforceUnits);
         }
 
         private void btnCopyTaskMem_Click(object sender, EventArgs e)
@@ -218,7 +218,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 {
                     CurrentUnit.RegName = p.RegName;
                     GetPcx(CurrentUnit.RegName);
-                    UpdateAt(lvTaskforceUnits, CurrentUnit.ToListviewItem(), ref updatingLvTaskforceUnits);
+                    lvTaskforceUnits.UpdateAt(CurrentUnit.ToListviewItem(), ref updatingLvTaskforceUnits);
                 }
             }
         }
@@ -230,7 +230,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 if (CurrentUnit != null)
                 {
                     CurrentUnit.UnitNum = int.Parse(mtxbTaskNum.Text);
-                    UpdateAt(lvTaskforceUnits, CurrentUnit.ToListviewItem(), ref updatingLvTaskforceUnits);
+                    lvTaskforceUnits.UpdateAt(CurrentUnit.ToListviewItem(), ref updatingLvTaskforceUnits);
                 }
             }
         }

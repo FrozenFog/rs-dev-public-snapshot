@@ -26,7 +26,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private void btnNewTeam_Click(object sender, EventArgs e)
         {
             TeamItem item = map.NewTeam();
-            AddTo(lbxTeamList, item, ref updatingLbxTeamList);
+            lbxTeamList.Add(item, ref updatingLbxTeamList);
         }
 
         private void btnDelTeam_Click(object sender, EventArgs e)
@@ -35,7 +35,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             int index = lbxTeamList.SelectedIndex;
             TeamItem item = lbxTeamList.SelectedItem as TeamItem;
             map.RemoveTeam(item);
-            RemoveAt(lbxTeamList, index, ref updatingLbxTeamList);
+            lbxTeamList.RemoveAt(index, ref updatingLbxTeamList);
         }
 
         private void btnCopyTeam_Click(object sender, EventArgs e)
@@ -43,7 +43,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             if (lbxTeamList.SelectedItem == null) return;
             TeamItem copied = _CurrentTeam.Copy(map.NewID);
             map.Teams[copied.ID] = copied;
-            AddTo(lbxTeamList, copied, ref updatingLbxTeamList);
+            lbxTeamList.Add(copied, ref updatingLbxTeamList);
         }
         #endregion
         #region lbx
@@ -107,7 +107,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 cmb.Bounds = e.CellBounds;
                 var waypoints = GlobalVar.CurrentMapDocument.Map.Waypoints.ToList();
                 waypoints.Sort((a, b) => int.Parse(a.Num) - int.Parse(b.Num));
-                LoadToObjectCollection(cmb, waypoints.AsEnumerable());
+                cmb.LoadAs(waypoints.AsEnumerable());
                 cmb.SelectedItem = waypoints.Find(s => s.Num == e.Control.Text);
                 if (cmb.SelectedItem == null && waypoints.Count > 0)  cmb.SelectedIndex = 0;
                 e.Control = cmb;
@@ -166,14 +166,14 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                         CountryItem country = map.Countries.GetCountry((string)valuePair.Value.Value);
                         if (country == null) cmb.SelectedIndex = 0;
                         else cmb.SelectedItem = country;
-                        Utils.Misc.AdjustComboBoxDropDownWidth(ref cmb);
+                        cmb.AutoDropdownWidth();
                         e.Control = cmb;
                         break;
                     default:
                         e.Control.Bounds = e.CellBounds;
                         break;
                 }
-            Utils.Misc.AdjustComboBoxDropDownWidth(ref cmb);
+            cmb.AutoDropdownWidth();
         }
         private void olvTeamConfig_CellEditFinishing(object sender, BrightIdeasSoftware.CellEditEventArgs e)
         {
@@ -308,7 +308,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             olvTeamConfig.ClearObjects();
             olvTeamConfig.AddObjects(_CurrentTeamUnit.Data);
             _CurrentTeam.SetFromUnit(_CurrentTeamUnit);
-            UpdateAt(lbxTeamList, _CurrentTeam, ref updatingLbxTeamList);
+            lbxTeamList.UpdateAt(_CurrentTeam, ref updatingLbxTeamList);
         }
         #endregion
         #endregion
@@ -318,7 +318,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         private void btnNewAI_Click(object sender, EventArgs e)
         {
             AITriggerItem item = map.NewAITrigger();
-            AddTo(lbxAIList, item, ref updatingLbxAIList);
+            lbxAIList.Add(item, ref updatingLbxAIList);
         }
         private void btnDelAI_Click(object sender, EventArgs e)
         {
@@ -326,14 +326,14 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             int index = lbxAIList.SelectedIndex;
             AITriggerItem item = lbxAIList.SelectedItem as AITriggerItem;
             map.RemoveAITrigger(item);
-            RemoveAt(lbxAIList, index, ref updatingLbxAIList);
+            lbxAIList.RemoveAt(index, ref updatingLbxAIList);
         }
         private void btnCopyAI_Click(object sender, EventArgs e)
         {
             if (lbxAIList.SelectedItem == null) return;
             AITriggerItem copied = _CurrentAITrigger.Copy(map.NewID);
             map.AiTriggers[copied.ID] = copied;
-            AddTo(lbxAIList, copied, ref updatingLbxAIList);
+            lbxAIList.Add(copied, ref updatingLbxAIList);
         }
         #endregion
         #region lbx
@@ -426,7 +426,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                             if (idxT == teamCbb.Items.Count) idxT = 0;
                         }
                         try { teamCbb.SelectedIndex = idxT; } catch { }
-                        Utils.Misc.AdjustComboBoxDropDownWidth(ref teamCbb);
+                        teamCbb.AutoDropdownWidth();
                         e.Control = teamCbb;
                         break;
                     case "Owner":
@@ -442,7 +442,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                             if (country == null) houseCbb.SelectedIndex = 0;
                             else houseCbb.SelectedItem = country;
                         }
-                        Utils.Misc.AdjustComboBoxDropDownWidth(ref houseCbb);
+                        houseCbb.AutoDropdownWidth();
                         e.Control = houseCbb;
                         break;
                     case "SideIndex":
@@ -458,7 +458,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                             if (idxS == (int)valuePair.Value.Value)
                                 break;
                         try { sideCbb.SelectedIndex = idxS; } catch { }
-                        Utils.Misc.AdjustComboBoxDropDownWidth(ref sideCbb);
+                        sideCbb.AutoDropdownWidth();
                         e.Control = sideCbb;
                         break;
                     case "CondObj":
@@ -473,7 +473,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                         foreach (TechnoPair techno in technoPairs)
                             techno.ResetAbst(TechnoPair.AbstractType.CsfName, TechnoPair.IndexType.RegName);
                         technoPairs.Add(TechnoPair.NonePair);
-                        LoadToObjectCollection(objCbb, technoPairs.AsEnumerable());
+                        objCbb.LoadAs(technoPairs.AsEnumerable());
                         objCbb.SelectedIndex = technoPairs.FindIndex(p => p.RegName == (string)valuePair.Value.Value);
                         if (objCbb.SelectedItem == null && objCbb.Items.Count > 0) objCbb.SelectedIndex = technoPairs.Count - 1;
                         e.Control = objCbb;
@@ -536,7 +536,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             olvAIConfig.ClearObjects();
             olvAIConfig.AddObjects(_CurrentAITriggerUnit.Data);
             _CurrentAITrigger.SetFromUnit(_CurrentAITriggerUnit);
-            UpdateAt(lbxAIList, _CurrentAITrigger, ref updatingLbxTeamList);
+            lbxAIList.UpdateAt(_CurrentAITrigger, ref updatingLbxTeamList);
         }
         #endregion
         #endregion
@@ -619,7 +619,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     iqCbb.Items.Add("5");
                     if ((int)keyValuePair.Value.Value > 5 || (int)keyValuePair.Value.Value < 0) iqCbb.SelectedIndex = 0;
                     else iqCbb.SelectedIndex = (int)keyValuePair.Value.Value;
-                    Utils.Misc.AdjustComboBoxDropDownWidth(ref iqCbb);
+                    iqCbb.AutoDropdownWidth();
                     e.Control = iqCbb;
                     break;
                 case "PlayerControl":
@@ -647,10 +647,10 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     ComboBox countryCbb = new ComboBox();
                     countryCbb.FlatStyle = FlatStyle.Flat;
                     countryCbb.DropDownStyle = ComboBoxStyle.DropDownList;
-                    LoadToObjectCollection(countryCbb, map.Countries);
+                    countryCbb.LoadAs(map.Countries);
                     CountryItem countryItem = map.Countries.GetCountry((string)keyValuePair.Value.Value);
                     countryCbb.SelectedItem = countryItem;
-                    Utils.Misc.AdjustComboBoxDropDownWidth(ref countryCbb);
+                    countryCbb.AutoDropdownWidth();
                     e.Control = countryCbb;
                     break;
                 case "ColorName":
@@ -663,7 +663,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     colorCbb.Items.AddRange(colorList.ToArray());
                     if (colorList.Exists(s => s == (string)keyValuePair.Value.Value))
                         colorCbb.SelectedItem = (string)keyValuePair.Value.Value;
-                    Utils.Misc.AdjustComboBoxDropDownWidth(ref colorCbb);
+                    colorCbb.AutoDropdownWidth();
                     e.Control = colorCbb;
                     break;
                 case "NodeCounts":
@@ -733,7 +733,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             olvHouse.ClearObjects();
             olvHouse.AddObjects(_CurrentHouseUnit.Data);
             _CurrentHouse.SetFromUnit(_CurrentHouseUnit);
-            UpdateAt(lbxHouses, _CurrentHouse, ref updatingLbxHousesList);
+            lbxHouses.UpdateAt(_CurrentHouse, ref updatingLbxHousesList);
         }
         #endregion
         #region btn
@@ -758,7 +758,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 map.Countries.Remove(map.Countries.GetCountry(_CurrentHouse.Country).Index);
                 map.Houses.Remove(_CurrentHouse.Index);
                 int idx = lbxHouses.SelectedIndex;
-                RemoveAt(lbxHouses, idx, ref updatingLbxHousesList);
+                lbxHouses.RemoveAt(idx, ref updatingLbxHousesList);
             }
                 
         }
@@ -768,7 +768,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             dlgNewHouse dlgNew = new dlgNewHouse();
             if (dlgNew.ShowDialog() == DialogResult.OK)
-                AddTo(lbxHouses, retHouse, ref updatingLbxHousesList);
+                lbxHouses.Add(retHouse, ref updatingLbxHousesList);
         }
         #endregion
         #region txb

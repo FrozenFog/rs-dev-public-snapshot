@@ -54,7 +54,7 @@ namespace RelertSharp.GUI.Controls
                 if (item.ParseInt("Width", 1) > 1 || item.ParseInt("Height", 1) > 1) AddObjectToNode(multi, p.Value, false);
                 else AddObjectToNode(single, p.Value, false);
             }
-            LoadToObjectCollection(trvSmudge, single, multi);
+            trvSmudge.LoadAs(single, multi);
         }
         private void ReloadSmudge()
         {
@@ -113,7 +113,7 @@ namespace RelertSharp.GUI.Controls
             if (lbxRndSmg.SelectedItem != null)
             {
                 bool b = false;
-                RemoveAt(lbxRndSmg, ref b);
+                lbxRndSmg.RemoveAt(ref b);
             }
         }
         private void tsmiSmgRemoveAll_Click(object sender, EventArgs e)
