@@ -88,7 +88,7 @@ namespace System.Collections.Generic
 
     public static class HashSetExtension
     {
-        public static void AddRange(this HashSet<string> hashset, IEnumerable<string> src)
+        public static void AddRange<T>(this HashSet<T> hashset, IEnumerable<T> src)
         {
             foreach (var obj in src)
                 hashset.Add(obj);
@@ -101,9 +101,9 @@ namespace System.Collections.Generic
 
     public static class DictionaryExtension
     {
-        public static Dictionary<string, INIEntity> Clone(this Dictionary<string, INIEntity> src)
+        public static Dictionary<TKey, TValue> Clone<TKey, TValue>(this Dictionary<TKey, TValue> src)
         {
-            return new Dictionary<string, INIEntity>(src);
+            return new Dictionary<TKey, TValue>(src);
         }
     }
 }
