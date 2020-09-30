@@ -54,7 +54,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         #region Initialization Utils
         private void SetLanguage()
         {
-            foreach (Control c in Controls) SetControlLanguage(c);
+            foreach (Control c in Controls) c.SetLanguage();
             Text = DICT[Text];
         }
         private void SetGlobal()

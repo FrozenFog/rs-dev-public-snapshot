@@ -77,7 +77,7 @@ namespace RelertSharp.GUI.Controls
         }
         private void SetLanguage()
         {
-            foreach (Control c in Controls) Language.SetControlLanguage(c);
+            foreach (Control c in Controls) c.SetLanguage();
         }
         private void tbcMain_SelectedIndexChanged(object sender, EventArgs e)
         {

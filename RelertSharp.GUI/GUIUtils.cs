@@ -12,7 +12,7 @@ namespace RelertSharp.GUI
     {
         public static TreeNode NewNode(string text, string name)
         {
-            TreeNode n = new TreeNode(Language.DICT[text]);
+            TreeNode n = new TreeNode(text.ToLang());
             n.Name = name;
             return n;
         }

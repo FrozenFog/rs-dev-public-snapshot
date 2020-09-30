@@ -77,7 +77,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         public void SetLanguage()
         {
-            foreach (Control c in Controls) Language.SetControlLanguage(c);
+            foreach (Control c in Controls) c.SetLanguage();
         }
         private bool isControlRefreshing = false;
         private void RefreshControl()

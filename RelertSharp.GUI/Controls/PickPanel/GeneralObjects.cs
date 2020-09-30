@@ -22,6 +22,8 @@ namespace RelertSharp.GUI.Controls
         private const string TNodeUnit = "\nUnit";
         private const string TNodeNaval = "\nNaval";
         private const string TNodeAircraft = "\nAircraft";
+        private const string NodenameTech = "NoSideTech";
+        private const string NodenameMisc = "NoSideMisc";
         private readonly string[] ObjectRootNodes = { TNodeBuilding, TNodeInfantry, TNodeUnit, TNodeNaval, TNodeAircraft};
         private IMapObject InnerSource;
 
@@ -73,7 +75,7 @@ namespace RelertSharp.GUI.Controls
             TreeNode building = new TreeNode("Buildings", 1, 1);
             building.Name = TNodeBuilding;
             List<TreeNode> budSides = InitializeSideNode();
-            TreeNode tech = new TreeNode(Language.DICT["NoSideTech"]);
+            TreeNode tech = new TreeNode(NodenameTech.ToLang());
             foreach (INIPair p in GlobalRules["BuildingTypes"])
             {
                 if (GlobalRules.IsTechBuilding(p.Value))
@@ -145,9 +147,9 @@ namespace RelertSharp.GUI.Controls
             List<TreeNode> nodes = new List<TreeNode>();
             for (int i = 0; i < num; i++)
             {
-                nodes.Add(new TreeNode(Language.DICT[GlobalRules.GetSideName(i)]));
+                nodes.Add(new TreeNode(GlobalRules.GetSideName(i).ToLang()));
             }
-            nodes.Add(new TreeNode(Language.DICT["NoSideMisc"]));
+            nodes.Add(new TreeNode(NodenameMisc.ToLang()));
             return nodes;
         }
 

@@ -582,7 +582,6 @@ namespace RelertSharp.MapStructure
             result[8] = SubIndex;
             result[9] = (byte)RealHeight;
             result[10] = IceGrowth;
-            List<char> cs = new List<char>();
             return result;
         }
         public List<IMapObject> GetObjects()

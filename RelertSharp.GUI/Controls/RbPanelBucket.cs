@@ -41,7 +41,7 @@ namespace RelertSharp.GUI.Controls
             List<object> objs = new List<object>();
             foreach (string set in TileDictionary.GeneralTilesets.Keys)
             {
-                if (set != Language.DICT[Constant.TileSetClass.Ramp])
+                if (set != Constant.TileSetClass.Ramp.ToLang())
                 {
                     int index = TileDictionary.GeneralTilesets[set];
                     TileSet tileset = TileDictionary.GetTileSetFromIndex(index);

@@ -41,7 +41,7 @@ namespace RelertSharp.SubWindows.INIEditor
 
         private void InitializeLanguage()
         {
-            foreach (Control c in Controls) SetControlLanguage(c);
+            foreach (Control c in Controls) c.SetLanguage();
             Text = DICT[Text];
         }
 

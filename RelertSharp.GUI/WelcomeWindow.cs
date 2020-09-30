@@ -27,8 +27,8 @@ namespace RelertSharp.GUI
 
         private void SetLanguage()
         {
-            foreach (Control c in Controls) Language.SetControlLanguage(c);
-            Text = Language.DICT[Text] + Constant.ReleaseDate;
+            foreach (Control c in Controls) c.SetLanguage();
+            Text = Text.ToLang() + Constant.ReleaseDate;
         }
         private void SetControl(bool reboot = false)
         {

@@ -37,8 +37,8 @@ namespace RelertSharp.GUI
 
         private void SetLanguage()
         {
-            foreach (Control c in Controls) Language.SetControlLanguage(c);
-            Text = Language.DICT[Text];
+            foreach (Control c in Controls) c.SetLanguage();
+            Text = Text.ToLang();
         }
         private void CheckValidConfig(string configPath)
         {

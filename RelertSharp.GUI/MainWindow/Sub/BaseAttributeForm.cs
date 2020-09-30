@@ -64,10 +64,7 @@ namespace RelertSharp.GUI
         }
         protected virtual void SetLanguage()
         {
-            foreach (Control c in Controls)
-            {
-                Language.SetControlLanguage(c);
-            }
+            foreach (Control c in Controls) c.SetLanguage();
         }
 
         #region Facing

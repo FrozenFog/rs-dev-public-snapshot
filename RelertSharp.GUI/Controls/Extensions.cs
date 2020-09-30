@@ -50,9 +50,101 @@ namespace System.Windows.Forms
                 foreach (Control child in gpb.Controls) child.ClearContent();
             }
         }
+        public static void SetLanguage(this Control p)
+        {
+            var t = p.GetType();
+            if (t == typeof(GroupBox))
+            {
+                foreach (Control c in ((GroupBox)p).Controls)
+                {
+                    c.SetLanguage();
+                }
+            }
+            else if (t == typeof(Panel))
+            {
+                foreach (Control c in ((Panel)p).Controls)
+                {
+                    c.SetLanguage();
+                }
+            }
+            else if (t == typeof(SplitContainer))
+            {
+                foreach (Control c in ((SplitContainer)p).Panel1.Controls) c.SetLanguage();
+                foreach (Control c in ((SplitContainer)p).Panel2.Controls) c.SetLanguage();
+            }
+            else if (t == typeof(TabPage))
+            {
+                foreach (Control c in ((TabPage)p).Controls)
+                {
+                    c.SetLanguage();
+                }
+            }
+            else if (t == typeof(TabControl))
+            {
+                foreach (TabPage pg in ((TabControl)p).TabPages)
+                {
+                    pg.SetLanguage();
+                }
+            }
+            else if (t == typeof(ListView))
+            {
+                foreach (ColumnHeader col in ((ListView)p).Columns)
+                {
+                    col.Text = col.Text.ToLang();
+                }
+            }
+            else if (t == typeof(DataGridView))
+            {
+                foreach (DataGridViewTextBoxColumn col in ((DataGridView)p).Columns)
+                {
+                    col.HeaderText = col.HeaderText.ToLang();
+                }
+            }
+            else if (t == typeof(BrightIdeasSoftware.ObjectListView))
+            {
+                foreach (BrightIdeasSoftware.OLVColumn col in ((BrightIdeasSoftware.ObjectListView)p).Columns)
+                {
+                    col.Text = col.Text.ToLang();
+                }
+            }
+            else if (t == typeof(TableLayoutPanel))
+            {
+                foreach (Control c in (p as TableLayoutPanel).Controls)
+                {
+                    c.SetLanguage();
+                }
+            }
+            else if (t == typeof(ToolStrip))
+            {
+                foreach (ToolStripItem c in (p as ToolStrip).Items)
+                {
+                    c.Text = c.Text.ToLang();
+                }
+            }
+            else if (t == typeof(ContextMenuStrip))
+            {
+                foreach (ToolStripMenuItem tsmi in (p as ContextMenuStrip).Items)
+                {
+                    tsmi.Text = tsmi.Text.ToLang();
+                }
+            }
+            if (p.ContextMenuStrip != null)
+            {
+                foreach (ToolStripItem item in p.ContextMenuStrip.Items)
+                {
+                    item.Text = item.Text.ToLang();
+                }
+            }
+            p.Text = p.Text.ToLang();
+        }
         public static int ParseInt(this Control src, int def = 0)
         {
             if (int.TryParse(src.Text, out int value)) return value;
+            return def;
+        }
+        public static float ParseFloat(this Control src, float def = 0f)
+        {
+            if (float.TryParse(src.Text, out float value)) return value;
             return def;
         }
         #endregion

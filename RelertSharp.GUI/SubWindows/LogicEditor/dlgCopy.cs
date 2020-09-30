@@ -16,7 +16,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         public dlgCopy()
         {
             InitializeComponent();
-            foreach (Control c in Controls) SetControlLanguage(c);
+            foreach (Control c in Controls) c.SetLanguage();
             Text = DICT[Text];
         }
         public string Result { get { return rtxbData.Text; } }

@@ -40,18 +40,18 @@ namespace RelertSharp.GUI.Controls
         }
         private void LoadOtherNodes()
         {
-            TreeNode other = NewNode(DICT[Constant.TileSetClass.OtherClass], TNodeOther);
-            TreeNode cliff = NewNode(DICT[Constant.TileSetClass.Cliffs], TNodeCliff);
-            TreeNode water = NewNode(DICT[Constant.TileSetClass.InWater], TNodeInWater);
-            TreeNode ramp = NewNode(DICT[Constant.TileSetClass.Ramps], TNodeRamps);
-            TreeNode bridge = NewNode(DICT[Constant.TileSetClass.Bridges], TNodeBridge);
-            TreeNode road = NewNode(DICT[Constant.TileSetClass.Roads], TNodeRoad);
-            TreeNode feature = NewNode(DICT[Constant.TileSetClass.Features], TNodeFeat);
-            TreeNode rail = NewNode(DICT[Constant.TileSetClass.Railroad], TNodeRail);
-            TreeNode tunnel = NewNode(DICT[Constant.TileSetClass.Tunnel], TNodeTunnel);
-            TreeNode shore = NewNode(DICT[Constant.TileSetClass.Shore], TNodeShore);
-            TreeNode paves = NewNode(DICT[Constant.TileSetClass.Paves], TNodePavs);
-            TreeNode fix = NewNode(DICT[Constant.TileSetClass.Fixes], TNodeFix);
+            TreeNode other = NewNode(Constant.TileSetClass.OtherClass.ToLang(), TNodeOther);
+            TreeNode cliff = NewNode(Constant.TileSetClass.Cliffs.ToLang(), TNodeCliff);
+            TreeNode water = NewNode(Constant.TileSetClass.InWater.ToLang(), TNodeInWater);
+            TreeNode ramp = NewNode(Constant.TileSetClass.Ramps.ToLang(), TNodeRamps);
+            TreeNode bridge = NewNode(Constant.TileSetClass.Bridges.ToLang(), TNodeBridge);
+            TreeNode road = NewNode(Constant.TileSetClass.Roads.ToLang(), TNodeRoad);
+            TreeNode feature = NewNode(Constant.TileSetClass.Features.ToLang(), TNodeFeat);
+            TreeNode rail = NewNode(Constant.TileSetClass.Railroad.ToLang(), TNodeRail);
+            TreeNode tunnel = NewNode(Constant.TileSetClass.Tunnel.ToLang(), TNodeTunnel);
+            TreeNode shore = NewNode(Constant.TileSetClass.Shore.ToLang(), TNodeShore);
+            TreeNode paves = NewNode(Constant.TileSetClass.Paves.ToLang(), TNodePavs);
+            TreeNode fix = NewNode(Constant.TileSetClass.Fixes.ToLang(), TNodeFix);
             foreach (TileSet set in TileDictionary.TileSets)
             {
                 if (set.AllowPlace && !set.IsFramework)

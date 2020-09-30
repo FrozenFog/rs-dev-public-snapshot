@@ -150,10 +150,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     SetActionLabel(c);
                 }
             }
-            foreach (Control c in Controls)
-            {
-                Language.SetControlLanguage(c);
-            }
+            foreach (Control c in Controls) c.SetLanguage();
         }
         private void SetActionLabel(Control c)
         {

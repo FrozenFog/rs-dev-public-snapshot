@@ -25,7 +25,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         }
         public void Initialize()
         {
-            foreach (Control c in Controls) SetControlLanguage(c);
+            foreach (Control c in Controls) c.SetLanguage();
         }
         private void btnSearch_Click(object sender, EventArgs e)
         {

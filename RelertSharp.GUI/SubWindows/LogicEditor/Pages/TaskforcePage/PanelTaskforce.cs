@@ -75,7 +75,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
         private void SetLanguage()
         {
-            foreach (Control c in Controls) Language.SetControlLanguage(c);
+            foreach (Control c in Controls) c.SetLanguage();
         }
         private void GetPcx(string regname)
         {
