@@ -12,7 +12,26 @@ namespace RelertSharp.GUI
 {
     public partial class MainWindowTest
     {
-        private void LogicJumpToWaypoint(object logic, I2dLocateable cell)
+        private void InitializeHandler()
+        {
+            logicEditor.JumpToWaypoint += JumpToWaypoint;
+            pnlPick.BrushObjectSelected += FocusOnMainPanel;
+            pnlPick.BaseNodeTracing += JumpToWaypoint;
+            pnlPick.TraceCelltag += PnlPick_TraceCelltag;
+            pnlPick.SelectCelltagCollection += PnlPick_SelectCelltagCollection;
+            pnlPick.ReleaseCelltags += PnlPick_ReleaseCelltags;
+            pnlTile.NewTileSelected += PnlTile_NewTileSelected;
+            verifyForm.TraceLogic += VerifyForm_TraceLogic;
+            verifyForm.TraceMapPosition += JumpToWaypoint;
+        }
+
+        private void VerifyForm_TraceLogic(object sender, LogicType logicType, string id)
+        {
+            logicEditor.Show();
+            logicEditor.TraceLogicItem(logicType, id);
+        }
+
+        private void JumpToWaypoint(object logic, I2dLocateable cell)
         {
             if (drew && cell != null)
             {

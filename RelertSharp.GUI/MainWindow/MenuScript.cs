@@ -18,22 +18,26 @@ namespace RelertSharp.GUI
     {
         private void tsmiMainSaveMapAs_Click(object sender, EventArgs e)
         {
-            Map.Verify();
-            SaveFileDialog dlg = new SaveFileDialog()
+            verifyForm.CheckMap();
+            verifyForm.Show();
+            if (verifyForm.DialogResult == DialogResult.OK)
             {
-                InitialDirectory = GlobalConfig.LastPath,
-                Filter = "Red Alert 2 Mission Map|*.map|Red Alert 2 YR Map File|*.yrm|Red Alert 2 General Map|*.mpr",
-                AddExtension = true,
-                Title = "Save",
-                FileName = CurrentMapDocument.FileName
-            };
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                string path = dlg.FileName.Substring(0, dlg.FileName.LastIndexOf('\\') + 1);
-                CurrentMapDocument.SaveMapAs(path, dlg.FileName.Split('\\').Last());
-                Complete("Saving Complete!");
-                saved = true;
-                logicEditor.ChangeSaved = true;
+                SaveFileDialog dlg = new SaveFileDialog()
+                {
+                    InitialDirectory = GlobalConfig.LastPath,
+                    Filter = "Red Alert 2 Mission Map|*.map|Red Alert 2 YR Map File|*.yrm|Red Alert 2 General Map|*.mpr",
+                    AddExtension = true,
+                    Title = "Save",
+                    FileName = CurrentMapDocument.FileName
+                };
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    string path = dlg.FileName.Substring(0, dlg.FileName.LastIndexOf('\\') + 1);
+                    CurrentMapDocument.SaveMapAs(path, dlg.FileName.Split('\\').Last());
+                    Complete("Saving Complete!");
+                    saved = true;
+                    logicEditor.ChangeSaved = true;
+                }
             }
         }
         private void tsmiMainRunMap_Click(object sender, EventArgs e)

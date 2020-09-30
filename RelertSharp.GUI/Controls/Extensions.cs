@@ -114,7 +114,7 @@ namespace System.Windows.Forms
                 dest.SelectedIndex = targetDest;
             }
         }
-        public static void LoadAs(this ListBox dest, params object[] src)
+        public static void LoadAs(this ListBox dest, IEnumerable<object> src)
         {
             dest.Items.Clear();
             dest.BeginUpdate();
@@ -262,6 +262,13 @@ namespace System.Windows.Forms
             locker = false;
             if (index != 0) dest.SelectedIndices.Add(index - 1);
             else if (dest.Items.Count > 0) dest.SelectedIndices.Add(0);
+        }
+        public static void AutoColumnWidth(this ListView dest)
+        {
+            foreach (ColumnHeader col in dest.Columns)
+            {
+                col.Width = -2;
+            }
         }
         #endregion
     }

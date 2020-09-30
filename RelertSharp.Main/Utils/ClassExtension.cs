@@ -1,4 +1,5 @@
-﻿using RelertSharp.IniSystem;
+﻿using RelertSharp.Common;
+using RelertSharp.IniSystem;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;

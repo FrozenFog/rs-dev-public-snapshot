@@ -46,6 +46,6 @@ namespace RelertSharp.MapStructure
         public VerifyType VerifyType { get; set; }
         public I2dLocateable Pos { get; set; }
         public string IdNavigator { get; set; }
-        public LogicType LogicType { get; set; }
+        public LogicType? LogicType { get; set; }
     }
 }

@@ -22,4 +22,5 @@ namespace RelertSharp.GUI
     internal delegate void TriggerTagItemHandler(object sender, TagItem tag);
     internal delegate void CelltagCollectionHandler(object sender, IEnumerable<CellTagItem> cells);
     internal delegate void TileSetSelectedHandler(object sender, TileSet set, int index);
+    internal delegate void LogicTraceHandler(object sender, LogicType logicType, string id);
 }

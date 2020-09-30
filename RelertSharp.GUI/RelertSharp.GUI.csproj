@@ -279,6 +279,12 @@
     <Compile Include="MainWindow\Navigating.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MainWindow\Sub\MapVerifyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\MapVerifyForm.Designer.cs">
+      <DependentUpon>MapVerifyForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow\Sub\RunSettingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -487,6 +493,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\Sub\LoadingWindow.resx">
       <DependentUpon>LoadingWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\MapVerifyForm.resx">
+      <DependentUpon>MapVerifyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\Sub\RunSettingForm.resx">
       <DependentUpon>RunSettingForm.cs</DependentUpon>

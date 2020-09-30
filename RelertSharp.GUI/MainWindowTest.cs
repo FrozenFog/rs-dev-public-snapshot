@@ -33,8 +33,9 @@ namespace RelertSharp.GUI
         private bool isBusy = false;
         private MainWindowDataModel Current = new MainWindowDataModel();
 
-        private LogicEditor logicEditor = new LogicEditor();
-        private INIEditor iNIEditor = new INIEditor();
+        private readonly LogicEditor logicEditor = new LogicEditor();
+        private readonly INIEditor iNIEditor = new INIEditor();
+        private readonly MapVerifyForm verifyForm = new MapVerifyForm();
 
         public MainWindowTest()
         {
@@ -61,15 +62,9 @@ namespace RelertSharp.GUI
             Language.SetControlLanguage(cmsToolSelect);
             Text = Language.DICT[Text] + Constant.ReleaseDate;
 
+            InitializeHandler();
 
             pnlPick.Initialize();
-            logicEditor.JumpToWaypoint += LogicJumpToWaypoint;
-            pnlPick.BrushObjectSelected += FocusOnMainPanel;
-            pnlPick.BaseNodeTracing += LogicJumpToWaypoint;
-            pnlPick.TraceCelltag += PnlPick_TraceCelltag;
-            pnlPick.SelectCelltagCollection += PnlPick_SelectCelltagCollection;
-            pnlPick.ReleaseCelltags += PnlPick_ReleaseCelltags;
-            pnlTile.NewTileSelected += PnlTile_NewTileSelected;
             tmrAutosave.Interval = GlobalVar.GlobalConfig.Local.AutoSaveTimeMilSec;
             tmrAutosave.Enabled = true;
             tsmiMainDevMode.Checked = GlobalVar.GlobalConfig.Local.DevMode;
