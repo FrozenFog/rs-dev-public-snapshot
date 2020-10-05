@@ -193,10 +193,10 @@ namespace RelertSharp.Common
         {
             public const int MapMaxHeight = 13;
             public const int MapMaxHeightDrawing = 17;
-            public const int WaypointHeightMultiplier = 100;
+            public const int WaypointHeightMultiplier = 150;
             public const int CelltagHeightMultiplier = 99;
             public const int LightSourceHeightMultiplier = 110;
-            public const int SelectRectangleMultiplier = 20;
+            public const int SelectRectangleMultiplier = 200;
             public const int WaypointNumWidth = 13;
             public static class Tiles
             {
@@ -215,6 +215,8 @@ namespace RelertSharp.Common
             {
                 public const float HiBridgeZAdjust = -60;
                 public const float Shadow = 1;
+                public const float Waypoint = -100f;
+                public const float CellTag = -99f;
             }
             public static class Offset
             {

@@ -179,7 +179,6 @@ namespace RelertSharp.GUI.Model
 
             UndoRedo.PushCommand(UndoRedoCommandType.DrawObject, paramPrev, paramNow);
 
-            Engine.RemoveDisposedObjects();
             Engine.Refresh();
             Engine.RedrawMinimapAll();
         }

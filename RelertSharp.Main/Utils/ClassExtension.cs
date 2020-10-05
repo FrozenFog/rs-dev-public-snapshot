@@ -9,7 +9,7 @@ namespace System.Drawing
 {
     public static class PointExtension
     {
-        public static Point Delta(this Point now, Point prev)
+        public static Point Delta(this Point prev, Point now)
         {
             return new Point(now.X - prev.X, now.Y - prev.Y);
         }

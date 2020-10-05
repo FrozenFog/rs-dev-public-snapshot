@@ -16,10 +16,15 @@ namespace RelertSharp.GUI
 {
     public partial class MainWindowTest
     {
-        private void tsmiMainSaveMapAs_Click(object sender, EventArgs e)
+        private async void tsmiMainSaveMapAs_Click(object sender, EventArgs e)
         {
             verifyForm.CheckMap();
             verifyForm.Show();
+            requireFocus = false;
+            await Task.Run(() =>
+            {
+                while (verifyForm.Wait) ;
+            });
             if (verifyForm.DialogResult == DialogResult.OK)
             {
                 SaveFileDialog dlg = new SaveFileDialog()
@@ -62,6 +67,12 @@ namespace RelertSharp.GUI
                 Process.Start("rsdata.exe", "/reboot");
                 Close();
             }
+        }
+        private void tsmiCheckMap_Click(object sender, EventArgs e)
+        {
+            verifyForm.CheckMap();
+            verifyForm.Show();
+            requireFocus = false;
         }
     }
 }

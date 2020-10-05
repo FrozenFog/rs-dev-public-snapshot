@@ -27,7 +27,6 @@ namespace RelertSharp.GUI.Model.BrushModel
             if (BrushObject != null && BrushObject.SceneObject != null && !reserveOriginal)
             {
                 BrushObject.Dispose();
-                GlobalVar.Engine.RemoveDisposedObjects();
             }
             switch (type)
             {
@@ -67,7 +66,6 @@ namespace RelertSharp.GUI.Model.BrushModel
             if (BrushObject != null && BrushObject.SceneObject != null && !reserveOriginal)
             {
                 BrushObject.Dispose();
-                GlobalVar.Engine.RemoveDisposedObjects();
             }
             switch (type)
             {
@@ -107,7 +105,6 @@ namespace RelertSharp.GUI.Model.BrushModel
                 int fix = prevPos != null ? prevPos.Z : 0;
                 BrushObject.SceneObject.Dispose();
                 BrushObject.SceneObject = null;
-                GlobalVar.Engine.RemoveDisposedObjects();
                 GlobalVar.Engine.DrawBrushObject(BrushObject, fix);
                 GlobalVar.Engine.SetObjectLightningStandalone(BrushObject.SceneObject);
             }

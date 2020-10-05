@@ -146,6 +146,7 @@
             this.Name = "MapVerifyForm";
             this.ShowIcon = false;
             this.Text = "RSMapVerify";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MapVerifyForm_FormClosing);
             this.tlpMain.ResumeLayout(false);
             this.ResumeLayout(false);
 

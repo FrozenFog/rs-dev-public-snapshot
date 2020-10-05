@@ -144,7 +144,6 @@
     <Compile Include="DrawingEngine\Buffers\BufferCollection.cs" />
     <Compile Include="DrawingEngine\Buffers\Buffers.cs" />
     <Compile Include="DrawingEngine\Buffers\Files.cs" />
-    <Compile Include="DrawingEngine\Buffers\Scene\ObjectAdding.cs" />
     <Compile Include="DrawingEngine\Buffers\Scene\Scene.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableBase.cs" />
     <Compile Include="DrawingEngine\Drawables\DrawableInfantry.cs" />

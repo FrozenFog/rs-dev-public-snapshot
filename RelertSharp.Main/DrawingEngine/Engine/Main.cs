@@ -95,8 +95,6 @@ namespace RelertSharp.DrawingEngine
         }
         public void Dispose()
         {
-            Buffer.RemoveSceneItem(BufferCollection.RemoveFlag.All);
-            Buffer.ReleaseFiles();
             CppExtern.Scene.ResetSceneView();
             CppExtern.Scene.PresentAllObject();
         }

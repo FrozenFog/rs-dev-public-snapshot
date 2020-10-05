@@ -51,10 +51,6 @@ namespace RelertSharp.DrawingEngine
             if (c != Vec4.Zero) bud.SceneObject.SetColor(c);
             if (selected) bud.Select();
         }
-        public void RemoveDisposedObjects()
-        {
-            Buffer.Scenes.RemoveDisposedObject();
-        }
         #endregion
 
 

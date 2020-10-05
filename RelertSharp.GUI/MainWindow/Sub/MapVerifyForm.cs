@@ -30,6 +30,7 @@ namespace RelertSharp.GUI
 
         public void CheckMap()
         {
+            Wait = true;
             lvVerifyResult.BeginUpdate();
             lvVerifyResult.Items.Clear();
             List<VerifyResultItem> items = Map.Verify();
@@ -111,12 +112,25 @@ namespace RelertSharp.GUI
         {
             DialogResult = DialogResult.OK;
             Hide();
+            Wait = false;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Hide();
+            Wait = false;
         }
+        private void MapVerifyForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
+        }
+
+
+
+
+        public bool Wait { get; private set; } = true;
+
     }
 }

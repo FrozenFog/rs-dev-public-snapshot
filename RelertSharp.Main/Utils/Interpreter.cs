@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace RelertSharp.Utils
 {
+    /// <summary>
+    /// NLP
+    /// </summary>
     public class Interpreter
     {
         protected List<string> SightLike(object older, object newer, string itemName)

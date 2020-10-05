@@ -150,7 +150,6 @@ namespace RelertSharp.DrawingEngine
             else pos = ToVec3Iso(terrain, height);
             if (DrawMisc(src, dest, pos, src.pPal, 0, _white, ShpFlatType.Vertical, src.Framecount))
             {
-                Buffer.Scenes.AddTerrain(dest);
                 return true;
             }
             return false;
@@ -165,7 +164,6 @@ namespace RelertSharp.DrawingEngine
             Vec3 pos = ToVec3Zero(smg, height);
             if (DrawMisc(src, dest, pos, pPalIso, 0, _white, ShpFlatType.FlatGround))
             {
-                Buffer.Scenes.AddSmudge(dest);
                 return true;
             }
             return false;
@@ -187,7 +185,6 @@ namespace RelertSharp.DrawingEngine
             ShpFlatType type = src.FlatType;
             if (DrawMisc(src, dest, pos, src.pPal, o.Frame, _white, type, src.Framecount))
             {
-                Buffer.Scenes.AddOverlay(dest);
                 return true;
             }
             return false;
@@ -201,7 +198,8 @@ namespace RelertSharp.DrawingEngine
             Vec3 pos = ToVec3Iso(dest).Rise() + WaypointHeightMultiplier * _generalOffset;
             if (DrawMisc(src, dest, pos, pPalSystem, 0, _white, ShpFlatType.Vertical) && DrawWaypointNum(dest, waypoint.Num, pos))
             {
-                Buffer.Scenes.Waypoints[dest.Coord] = dest;
+                CppExtern.ObjectUtils.SetObjectZAdjust(dest.pSelf, ZAdjust.Waypoint);
+                dest.WaypointNums.ForEach(x => CppExtern.ObjectUtils.SetObjectZAdjust(x, ZAdjust.Waypoint));
                 return true;
             }
             return false;
@@ -216,7 +214,7 @@ namespace RelertSharp.DrawingEngine
             if (topmost) pos += CelltagHeightMultiplier * _generalOffset;
             if (DrawMisc(src, dest, pos, pPalSystem, 0, _white, ShpFlatType.FlatGround))
             {
-                Buffer.Scenes.Celltags[dest.Coord] = dest;
+                if (topmost) CppExtern.ObjectUtils.SetObjectZAdjust(dest.pSelf, ZAdjust.CellTag);
                 return true;
             }
             return false;
@@ -286,7 +284,6 @@ namespace RelertSharp.DrawingEngine
                 dest.pSelf = RenderAndPresent(src.pSelf, pos + OffsetTo(Offset.Self), frame, src.RemapColor, pPal, ShpFlatType.Vertical, Vec3.DefaultBox);
                 dest.pSelfShadow = RenderAndPresent(src.pShadow, pos + OffsetTo(Offset.ShadowSelf), frame + src.Framecount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, Vec3.DefaultBox, ShaderType.Shadow);
             }
-            Buffer.Scenes.AddInfantry(dest);
             if (dest.IsValid)
             {
                 //minimap.DrawObject(src, dest, out Color c);
@@ -385,7 +382,6 @@ namespace RelertSharp.DrawingEngine
                     dest.pPlug3Shadow = RenderAndPresent(src, upg3.pShadow, pos + OffsetTo(Offset.ShadowPlug3), pPal, ShpFlatType.FlatGround, upg3.Framecount, ShaderType.Shadow);
                 }
             }
-            Buffer.Scenes.AddBuilding(dest);
             if (dest.IsValid)
             {
                 //minimap.DrawStructure(src, dest, dest.IsBaseNode);
@@ -428,7 +424,6 @@ namespace RelertSharp.DrawingEngine
                     dest.pSelfShadow = RenderAndPresent(src.pSelf, pos + OffsetTo(Offset.ShadowSelf), (int)rotation.X + src.Framecount / 2, src.RemapColor, pPal, ShpFlatType.FlatGround, Vec3.DefaultBox, ShaderType.Shadow);
                 }
             }
-            Buffer.Scenes.AddUnit(dest);
             if (dest.IsValid)
             {
                 //minimap.DrawObject(src, dest, out Color c);
