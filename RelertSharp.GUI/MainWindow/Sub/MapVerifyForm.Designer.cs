@@ -52,11 +52,11 @@
             this.lvVerifyResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvVerifyResult.FullRowSelect = true;
             this.lvVerifyResult.HideSelection = false;
-            this.lvVerifyResult.Location = new System.Drawing.Point(2, 2);
-            this.lvVerifyResult.Margin = new System.Windows.Forms.Padding(2);
+            this.lvVerifyResult.Location = new System.Drawing.Point(3, 2);
+            this.lvVerifyResult.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lvVerifyResult.MultiSelect = false;
             this.lvVerifyResult.Name = "lvVerifyResult";
-            this.lvVerifyResult.Size = new System.Drawing.Size(570, 297);
+            this.lvVerifyResult.Size = new System.Drawing.Size(759, 372);
             this.lvVerifyResult.SmallImageList = this.imgErrors;
             this.lvVerifyResult.TabIndex = 0;
             this.lvVerifyResult.UseCompatibleStateImageBehavior = false;
@@ -66,22 +66,22 @@
             // 
             // colLevel
             // 
-            this.colLevel.Text = "Warning Level";
+            this.colLevel.Text = "VERColType";
             this.colLevel.Width = 90;
             // 
             // colMessage
             // 
-            this.colMessage.Text = "Message";
+            this.colMessage.Text = "VERColMsg";
             this.colMessage.Width = 54;
             // 
             // colType
             // 
-            this.colType.Text = "Error Type";
+            this.colType.Text = "VERColLevel";
             this.colType.Width = 72;
             // 
             // colLocation
             // 
-            this.colLocation.Text = "Location / Id";
+            this.colLocation.Text = "VERColTrace";
             this.colLocation.Width = 350;
             // 
             // imgErrors
@@ -102,23 +102,24 @@
             this.tlpMain.Controls.Add(this.lvVerifyResult, 0, 0);
             this.tlpMain.Controls.Add(this.btnOK, 0, 1);
             this.tlpMain.Controls.Add(this.btnCancel, 2, 1);
-            this.tlpMain.Location = new System.Drawing.Point(19, 10);
-            this.tlpMain.Margin = new System.Windows.Forms.Padding(2);
+            this.tlpMain.Location = new System.Drawing.Point(25, 12);
+            this.tlpMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tlpMain.Name = "tlpMain";
             this.tlpMain.RowCount = 2;
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tlpMain.Size = new System.Drawing.Size(574, 333);
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tlpMain.Size = new System.Drawing.Size(765, 416);
             this.tlpMain.TabIndex = 1;
             // 
             // btnOK
             // 
             this.btnOK.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOK.Location = new System.Drawing.Point(3, 304);
+            this.btnOK.Location = new System.Drawing.Point(4, 380);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(137, 26);
+            this.btnOK.Size = new System.Drawing.Size(183, 32);
             this.btnOK.TabIndex = 1;
-            this.btnOK.Text = "Continue";
+            this.btnOK.Text = "DLGContinue";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
@@ -126,26 +127,27 @@
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCancel.Location = new System.Drawing.Point(433, 304);
+            this.btnCancel.Location = new System.Drawing.Point(577, 380);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(138, 26);
+            this.btnCancel.Size = new System.Drawing.Size(184, 32);
             this.btnCancel.TabIndex = 2;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "DLGCancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // MapVerifyForm
             // 
             this.AcceptButton = this.btnOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(608, 353);
+            this.ClientSize = new System.Drawing.Size(811, 441);
             this.Controls.Add(this.tlpMain);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MapVerifyForm";
             this.ShowIcon = false;
-            this.Text = "RSMapVerify";
+            this.Text = "VERTitle";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MapVerifyForm_FormClosing);
             this.tlpMain.ResumeLayout(false);
             this.ResumeLayout(false);

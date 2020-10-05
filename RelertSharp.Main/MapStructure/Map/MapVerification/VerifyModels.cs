@@ -22,7 +22,7 @@ namespace RelertSharp.MapStructure
         BuildingBasePosOverlap = 2,
         CombatObjectOverlap = 3,
         TaskforceEmpty = 4,
-        EmptyScript = 5,
+        ScriptEmpty = 5,
         TeamInvalidTaskforce = 6,
         TeamInvalidScript = 7,
         CombatObjectLowHealth = 8,

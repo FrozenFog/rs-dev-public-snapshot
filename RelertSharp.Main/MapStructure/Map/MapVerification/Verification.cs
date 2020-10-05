@@ -186,7 +186,7 @@ namespace RelertSharp.MapStructure
                     {
                         Level = VerifyAlertLevel.Suggest,
                         Message = string.Format("Empty Script. Name: {0}, Id: {1}", sc.Name, sc.ID),
-                        VerifyType = VerifyType.EmptyScript,
+                        VerifyType = VerifyType.ScriptEmpty,
                         IdNavigator = sc.ID,
                         LogicType = LogicType.Script
                     });

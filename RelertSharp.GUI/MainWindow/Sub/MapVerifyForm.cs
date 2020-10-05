@@ -39,7 +39,7 @@ namespace RelertSharp.GUI
                 VerifyViewItem lvi = new VerifyViewItem
                 {
                     ImageKey = v.Level.ToString(),
-                    Text = v.VerifyType.ToString()
+                    Text = v.VerifyType.ToString().ToLang()
                 };
                 lvi.SubItems.Add(v.Message);
                 lvi.SubItems.Add(v.Level.ToString());
@@ -65,6 +65,8 @@ namespace RelertSharp.GUI
 
             lvComparer = new ListViewComparer();
             lvVerifyResult.ListViewItemSorter = lvComparer;
+            foreach (Control c in this.Controls) c.SetLanguage();
+            this.SetLanguage();
         }
 
         private void lvVerifyResult_ColumnClick(object sender, ColumnClickEventArgs e)
