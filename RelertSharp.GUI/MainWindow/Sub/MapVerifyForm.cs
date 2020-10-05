@@ -57,11 +57,11 @@ namespace RelertSharp.GUI
 
         private void InitializeControl()
         {
-            imgErrors.Images.Add("Success", Properties.Resources.headAir);
-            imgErrors.Images.Add("Suggest", Properties.Resources.headAir);
-            imgErrors.Images.Add("Warning", Properties.Resources.headAir);
-            imgErrors.Images.Add("Critical", Properties.Resources.headAir);
-            imgErrors.Images.Add("CannotBeSaved", Properties.Resources.headAir);
+            imgErrors.Images.Add("Success", Properties.Resources.verifyInform);
+            imgErrors.Images.Add("Suggest", Properties.Resources.verifyInform);
+            imgErrors.Images.Add("Warning", Properties.Resources.verifyWarning);
+            imgErrors.Images.Add("Critical", Properties.Resources.verifyError);
+            imgErrors.Images.Add("CannotBeSaved", Properties.Resources.verifyFatal);
 
             lvComparer = new ListViewComparer();
             lvVerifyResult.ListViewItemSorter = lvComparer;

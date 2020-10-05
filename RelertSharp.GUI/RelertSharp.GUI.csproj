@@ -647,6 +647,10 @@
     <None Include="Resources\Open.png" />
     <None Include="Resources\Save.png" />
     <None Include="Resources\inireset.png" />
+    <None Include="Resources\verifyError.png" />
+    <None Include="Resources\verifyFatal.png" />
+    <None Include="Resources\verifyInform.png" />
+    <None Include="Resources\verifyWarning.png" />
     <Content Include="rslogo.ico" />
   </ItemGroup>
   <ItemGroup>
