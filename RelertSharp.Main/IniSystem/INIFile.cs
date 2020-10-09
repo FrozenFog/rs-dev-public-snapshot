@@ -154,18 +154,7 @@ namespace RelertSharp.IniSystem
             StreamWriter sw = new StreamWriter(msbuffer);
             foreach (INIEntity ent in IniData)
             {
-                if (!ignoreComment) sw.Write(ent.PreComment);
-                sw.Write("[" + ent.Name + "]");
-                if (!ignoreComment && ent.HasComment) sw.Write(";" + ent.Comment);
-                sw.Write("\n");
-                foreach (INIPair p in ent.DataList)
-                {
-                    if (!ignoreComment) sw.Write(p.PreComment);
-                    sw.Write(p.Name + "=" + p.Value.ToString());
-                    if (!ignoreComment && p.HasComment) sw.Write(";" + p.Comment);
-                    sw.Write("\n");
-                }
-                sw.Write("\n");
+                sw.Write(ent.SaveString(ignoreComment));
                 sw.Flush();
             }
             if (ciphed)

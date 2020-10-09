@@ -206,6 +206,17 @@ namespace RelertSharp.IniSystem
         {
             return string.Format("{0}={1};{2}", Name, Value, comment);
         }
+        public string SaveString(bool ignoreComment = false)
+        {
+            string result = string.Format("{0}={1}", Name, Value);
+            if (ignoreComment) return result;
+            else
+            {
+                if (!PreComment.IsNullOrEmpty()) result = PreComment + result;
+                if (!Comment.IsNullOrEmpty()) result += string.Format(";{0}", Comment);
+                return result;
+            }
+        }
         #endregion
 
 

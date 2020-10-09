@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RelertSharp.IniSystem;
 using RelertSharp.Common;
+using RelertSharp.MapStructure;
+using RelertSharp.MapStructure.Logic;
+using RelertSharp.MapStructure.Objects;
+using RelertSharp.MapStructure.Points;
 using static RelertSharp.Language;
 
 namespace RelertSharp.GUI.SubWindows.LogicEditor
@@ -41,47 +45,13 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                     SearchItem item = new SearchItem(reg.ID);
                     item.Type = type;
                     item.Value = reg.Name;
-                    
+
+                    item.DumpSubitems();
                     data[item.Regname] = item;
-                    result.Add((ListViewItem)item);
+                    result.Add(item);
                 }
             }
             return result;
-        }
-        public ListViewItem[] SortBy(int index)
-        {
-            IEnumerable<SearchItem> result;
-            Func<SearchItem, string> sort;
-            switch (index)
-            {
-                case 0:
-                    sort = x => x.Regname;
-                    break;
-                case 1:
-                    sort = x => x.SType;
-                    break;
-                case 2:
-                    sort = x => x.Value;
-                    break;
-                case 3:
-                    sort = x => x.ExValue;
-                    break;
-                default:
-                    sort = null;
-                    break;
-            }
-            if (index != previousIndex || decend)
-            {
-                result = data.Values.OrderBy(sort);
-                decend = false;
-            }
-            else
-            {
-                result = data.Values.OrderByDescending(sort);
-                decend = true;
-            }
-            previousIndex = index;
-            return CastFrom(result);
         }
         #region Enumerator
         public IEnumerator<SearchItem> GetEnumerator()
@@ -98,15 +68,6 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
 
         #region Private Methods - SearchCollection
-        private ListViewItem[] CastFrom(IEnumerable<SearchItem> src)
-        {
-            List<ListViewItem> result = new List<ListViewItem>();
-            foreach (SearchItem item in src)
-            {
-                result.Add((ListViewItem)item);
-            }
-            return result.ToArray(); ;
-        }
         #endregion
 
 
@@ -116,8 +77,9 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
     }
 
 
-    internal class SearchItem
+    internal class SearchItem : ListViewItem
     {
+        private Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
         public enum SearchType
         {
             LGCckbTrig, LGCckbTag, LGCckbLocal, LGCckbTeam, LGCckbTF, LGCckbTScp, LGCckbAiTrg, LGCckbHouse,
@@ -135,32 +97,46 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
 
 
         #region Public Methods - SearchItem
-        public static explicit operator ListViewItem(SearchItem src)
+        public void DumpSubitems()
         {
-            return Cast(src);
+            Text = Regname;
+            SubItems.Add(DICT[Type.ToString()]);
+            SubItems.Add(Value);
+            SubItems.Add(ExValue);
         }
         #endregion
 
 
         #region Private Methods - SearchItem
-        private static ListViewItem Cast(SearchItem src)
+        private string FindDetailInformation()
         {
-            ListViewItem dest = new ListViewItem();
-            dest.Text = src.Regname;
-            dest.SubItems.Add(DICT[src.Type.ToString()]);
-            dest.SubItems.Add(src.Value);
-            dest.SubItems.Add(src.ExValue);
-            return dest;
+            switch (Type)
+            {
+                case SearchType.LGCckbAiTrg:
+                    AITriggerItem ai = Map.AiTriggers[Regname];
+                    TeamItem t1 = Map.Teams[ai.Team1ID];
+                    TeamItem t2 = Map.Teams[ai.Team2ID];
+                    return string.Format("Use team:\nTeam1:{0} - {1}\nTeam2:{2} - {3}",
+                        t1 == null ? "None" : t1.ID, t1 == null ? "" : t1.Name,
+                        t2 == null ? "None" : t2.ID, t2 == null ? "" : t2.Name);
+                case SearchType.LGCckbCsf:
+                    return string.Format("ID:{0}\nContent:{1}", Regname, GlobalVar.GlobalCsf[Regname].ContentString);
+                case SearchType.LGCckbSuper:
+                case SearchType.LGCckbTechno:
+                    return GlobalVar.GlobalRules[Regname].SaveString();
+                default:
+                    return string.Empty;
+            }
         }
         #endregion
 
 
         #region Public Calls - SearchItem
-        public string SType { get { return DICT[Type.ToString()]; } }
         public SearchType Type { get; set; }
         public string Regname { get; set; }
         public string Value { get; set; }
         public string ExValue { get; set; }
+        public string DetailDescription { get { return FindDetailInformation(); } }
         #endregion
     }
 }

@@ -327,7 +327,18 @@ namespace RelertSharp.IniSystem
         {
             return string.Format("[{0}]:{1} items", Name, data.Count);
         }
-
+        public string SaveString(bool ignoreComment = false)
+        {
+            string result = string.Format("[{0}]", Name);
+            if (!ignoreComment)
+            {
+                result = preComment + result;
+                if (!comment.IsNullOrEmpty()) result += string.Format(";{0}", comment);
+            }
+            result += "\n";
+            foreach (INIPair p in this) result += p.SaveString(ignoreComment) + "\n";
+            return result + "\n";
+        }
         // Just for using, no real use
         public void Dispose()
         {

@@ -71,19 +71,7 @@ namespace RelertSharp.GUI
 
         private void lvVerifyResult_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            if (e.Column == lvComparer.TargetCol)
-            {
-                if (lvComparer.Order == SortOrder.Ascending) 
-                    lvComparer.Order = SortOrder.Descending;
-                else 
-                    lvComparer.Order = SortOrder.Ascending;
-            }
-            else
-            {
-                lvComparer.TargetCol = e.Column;
-                lvComparer.Order = SortOrder.Ascending;
-            }
-            lvVerifyResult.Sort();
+            lvVerifyResult.SordWithSorter(lvComparer, e);
         }
 
         private void lvVerifyResult_MouseDoubleClick(object sender, MouseEventArgs e)

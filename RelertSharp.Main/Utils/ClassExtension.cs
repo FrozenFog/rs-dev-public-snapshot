@@ -144,5 +144,9 @@ namespace System
         {
             return RelertSharp.Language.DICT[src];
         }
+        public static bool IsNullOrEmpty(this string src)
+        {
+            return string.IsNullOrEmpty(src);
+        }
     }
 }

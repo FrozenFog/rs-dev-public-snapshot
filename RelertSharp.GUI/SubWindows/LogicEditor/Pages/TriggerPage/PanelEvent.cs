@@ -11,7 +11,6 @@ using RelertSharp.Common;
 using RelertSharp.MapStructure;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.IniSystem;
-using static RelertSharp.GUI.GuiUtils;
 
 namespace RelertSharp.GUI.SubWindows.LogicEditor
 {

@@ -19,6 +19,9 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
     {
         internal SearchCollection SearchResult { get; private set; } = new SearchCollection();
         private Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private ListViewComparer lvComparer;
+
+
         public PanelGlobalSearch()
         {
             InitializeComponent();
@@ -26,6 +29,8 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         public void Initialize()
         {
             foreach (Control c in Controls) c.SetLanguage();
+            lvComparer = new ListViewComparer();
+            lvSearchResult.ListViewItemSorter = lvComparer;
         }
         private void btnSearch_Click(object sender, EventArgs e)
         {
@@ -80,10 +85,15 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         }
         private void lvSearchResult_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            lvSearchResult.BeginUpdate();
-            lvSearchResult.Items.Clear();
-            lvSearchResult.Items.AddRange(SearchResult.SortBy(e.Column));
-            lvSearchResult.EndUpdate();
+            lvSearchResult.SordWithSorter(lvComparer, e);
+        }
+
+        private void lvSearchResult_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvSearchResult.SelectedItem<SearchItem>() is SearchItem result)
+            {
+                rtxbSearchInspector.Text = result.DetailDescription;
+            }
         }
     }
 }

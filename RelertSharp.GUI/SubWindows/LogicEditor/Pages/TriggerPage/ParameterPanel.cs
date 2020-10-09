@@ -165,7 +165,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
             else if (controls is ComboBox[] cbbs)
             {
                 Cursor = Cursors.WaitCursor;
-                IList<TechnoPair> data = Map.GetComboCollections(param).ToList();
+                IEnumerable<TechnoPair> data = Map.GetComboCollections(param);
                 cbbs[controlIndex].LoadAs(data);
                 SelectCombo((ComboBox)controls[controlIndex], param.GetParameter(paramData), param);
                 Cursor = Cursors.Arrow;

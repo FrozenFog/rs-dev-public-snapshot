@@ -331,6 +331,7 @@
             this.lvSearchResult.UseCompatibleStateImageBehavior = false;
             this.lvSearchResult.View = System.Windows.Forms.View.Details;
             this.lvSearchResult.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvSearchResult_ColumnClick);
+            this.lvSearchResult.SelectedIndexChanged += new System.EventHandler(this.lvSearchResult_SelectedIndexChanged);
             // 
             // hdRegID
             // 

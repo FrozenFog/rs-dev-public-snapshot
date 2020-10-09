@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class TeamLogicCollection<T> : IEnumerable<T>, IGlobalIdContainer
+    public class TeamLogicCollection<T> : IEnumerable<T>, IGlobalIdContainer where T : class
     {
         private Dictionary<string, T> data = new Dictionary<string, T>();
 
@@ -63,7 +63,7 @@ namespace RelertSharp.MapStructure.Logic
             get
             {
                 if (data.Keys.Contains(_ID)) return data[_ID];
-                return default(T);
+                return null;
             }
             set
             {

@@ -140,7 +140,12 @@ namespace RelertSharp.MapStructure
                 case TriggerParam.ComboContent.Teams:
                     return Teams.ToTechno();
                 case TriggerParam.ComboContent.Houses:
-                    return Countries.ToTechno();
+                    List<TechnoPair> countries = new List<TechnoPair>
+                    {
+                        new TechnoPair("-1", "ANY HOUSE")
+                    };
+                    countries.AddRange(Countries.ToTechno());
+                    return countries;
                 case TriggerParam.ComboContent.Animations:
                     return GlobalRules.AnimationList;
                 case TriggerParam.ComboContent.ParticalAnim:

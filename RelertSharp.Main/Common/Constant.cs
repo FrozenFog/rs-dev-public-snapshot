@@ -4,7 +4,7 @@ namespace RelertSharp.Common
 {
     public static class Constant
     {
-        public const string ReleaseDate = " - ver. 2020.08.14-0204 - UNSTABLE";
+        public const string ReleaseDate = " - ver. 2020.10.05-1741 - UNSTABLE";
         public static class TileSetClass
         {
             public const string Clear = "TscClear";

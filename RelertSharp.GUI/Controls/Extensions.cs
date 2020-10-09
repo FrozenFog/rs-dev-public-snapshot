@@ -49,6 +49,18 @@ namespace System.Windows.Forms
             {
                 foreach (Control child in gpb.Controls) child.ClearContent();
             }
+            else if (c is Panel pnl)
+            {
+                foreach (Control child in pnl.Controls) child.ClearContent();
+            }
+            else if (c is TabPage tbp)
+            {
+                foreach (Control child in tbp.Controls) child.ClearContent();
+            }
+            else if (c is TabControl tbc)
+            {
+                foreach (TabPage pg in tbc.TabPages) pg.ClearContent();
+            }
         }
         public static void SetLanguage(this Control p)
         {
@@ -361,6 +373,27 @@ namespace System.Windows.Forms
             {
                 col.Width = -2;
             }
+        }
+        public static void SordWithSorter(this ListView src, RelertSharp.Common.ListViewComparer comparer, ColumnClickEventArgs e)
+        {
+            if (e.Column == comparer.TargetCol)
+            {
+                if (comparer.Order == SortOrder.Ascending)
+                    comparer.Order = SortOrder.Descending;
+                else
+                    comparer.Order = SortOrder.Ascending;
+            }
+            else
+            {
+                comparer.TargetCol = e.Column;
+                comparer.Order = SortOrder.Ascending;
+            }
+            src.Sort();
+        }
+        public static T SelectedItem<T>(this ListView src) where T : ListViewItem
+        {
+            if (src.SelectedItems.Count > 0 && src.SelectedItems[0] is ListViewItem lvi) return (T)lvi;
+            return null;
         }
         #endregion
     }
