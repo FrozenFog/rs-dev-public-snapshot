@@ -32,7 +32,10 @@ namespace RelertSharp.MapStructure
         TagHasNoTrigger = 12,
         TriggerHasNoAction = 13,
         TriggerHasNoEvent = 14,
-        TriggerParameterInvalid = 15
+        TriggerParameterInvalid = 15,
+        CombatObjectInvalid = 16,
+        TriggerEventOverflow = 17,
+        TriggerActionOverflow = 18
     }
 
     public class VerifyResultItem

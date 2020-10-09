@@ -15,13 +15,13 @@ namespace RelertSharp.MapStructure
     public static class Verification
     {
         private static readonly List<VerifyResultItem> result = new List<VerifyResultItem>();
-        private static Map map { get; set; }
+        private static Map Map { get; set; }
 
 
         public static List<VerifyResultItem> Verify(this Map _map)
         {
             result.Clear();
-            map = _map;
+            Map = _map;
 
 
             VerifyCelltag();
@@ -37,11 +37,11 @@ namespace RelertSharp.MapStructure
 
 
 
-            map = null;
+            Map = null;
             if (result.Count == 0) result.Add(new VerifyResultItem
             {
                 Level = VerifyAlertLevel.Success,
-                Message = string.Format("Your map {0} is clear for publish!", map.Info.MapName)
+                Message = string.Format("Your map {0} is clear for publish!", Map.Info.MapName)
             });
             List<VerifyResultItem> rr = new List<VerifyResultItem>(result);
             return result;
@@ -49,9 +49,9 @@ namespace RelertSharp.MapStructure
 
         private static void VerifyCelltag()
         {
-            foreach (CellTagItem cell in map.Celltags)
+            foreach (CellTagItem cell in Map.Celltags)
             {
-                if (!map.Tags.HasId(cell.TagID))
+                if (!Map.Tags.HasId(cell.TagID))
                 {
                     result.Add(new VerifyResultItem
                     {
@@ -84,15 +84,15 @@ namespace RelertSharp.MapStructure
                 }
             }
 
-            func(map.Celltags, "Celltags");
-            func(map.Terrains, "Terrains");
-            func(map.Waypoints, "Waypoints");
-            func(map.Smudges, "Smudges");
+            func(Map.Celltags, "Celltags");
+            func(Map.Terrains, "Terrains");
+            func(Map.Waypoints, "Waypoints");
+            func(Map.Smudges, "Smudges");
         }
         private static void VerifyBuilding()
         {
             HashSet<int> positions = new HashSet<int>();
-            foreach (StructureItem bud in map.Buildings)
+            foreach (StructureItem bud in Map.Buildings)
             {
                 foreach (I2dLocateable pos in new Foundation2D(bud))
                 {
@@ -131,13 +131,13 @@ namespace RelertSharp.MapStructure
                 }
             }
 
-            func(map.Units, "Units");
-            func(map.Infantries, "Infantries");
-            func(map.Aircrafts, "Aircrafts");
+            func(Map.Units, "Units");
+            func(Map.Infantries, "Infantries");
+            func(Map.Aircrafts, "Aircrafts");
         }
         private static void VerifyTaskforce()
         {
-            foreach (TaskforceItem tf in map.TaskForces)
+            foreach (TaskforceItem tf in Map.TaskForces)
             {
                 if (tf.IsEmpty)
                 {
@@ -178,7 +178,7 @@ namespace RelertSharp.MapStructure
         }
         private static void VerifyScript()
         {
-            foreach (TeamScriptGroup sc in map.Scripts)
+            foreach (TeamScriptGroup sc in Map.Scripts)
             {
                 if (sc.IsEmpty)
                 {
@@ -195,9 +195,9 @@ namespace RelertSharp.MapStructure
         }
         private static void VerifyTeam()
         {
-            foreach (TeamItem team in map.Teams)
+            foreach (TeamItem team in Map.Teams)
             {
-                if (!map.TaskForces.HasId(team.TaskforceID))
+                if (!Map.TaskForces.HasId(team.TaskforceID))
                 {
                     result.Add(new VerifyResultItem
                     {
@@ -208,7 +208,7 @@ namespace RelertSharp.MapStructure
                         LogicType = LogicType.Team
                     });
                 }
-                if (!map.Scripts.HasId(team.ScriptID))
+                if (!Map.Scripts.HasId(team.ScriptID))
                 {
                     result.Add(new VerifyResultItem
                     {
@@ -223,153 +223,196 @@ namespace RelertSharp.MapStructure
         }
         private static void VerifyCombatLogic()
         {
-            CombatObjectLowHealth();
-
-        }
-        #region Combat Logic
-        private static void CombatObjectLowHealth()
-        {
             void func(IEnumerable<ICombatObject> src, string type)
             {
                 foreach (ICombatObject comb in src)
                 {
-                    int maxHealth = GlobalVar.GlobalRules[comb.RegName].ParseInt("Strength", 1);
-                    float current = maxHealth / 256f * comb.HealthPoint;
-                    if (current <= 1f)
-                    {
-                        int lowest = Math.Min(512 / maxHealth, 256);
-                        result.Add(new VerifyResultItem
-                        {
-                            Level = VerifyAlertLevel.Suggest,
-                            Message = string.Format("{4} {0} at {1},{2} has health point lower than 1, will be destroyed upon game just begin. Suggested hp is {3}",
-                                comb.RegName, comb.X, comb.Y, lowest, type),
-                            Pos = comb,
-                            VerifyType = VerifyType.CombatObjectLowHealth
-                        });
-                    }
+                    CombatObjectLowHealth(comb, type);
+                    CombatObjectInvalid(comb, type);
                 }
             }
 
-            func(map.Buildings, "Building");
-            func(map.Units, "Unit");
-            func(map.Infantries, "Infantry");
-            func(map.Aircrafts, "Aircraft");
+            func(Map.Buildings, "Building");
+            func(Map.Units, "Unit");
+            func(Map.Infantries, "Infantry");
+            func(Map.Aircrafts, "Aircraft");
         }
-        #endregion
         private static void VerifyTriggerLogic()
         {
             DescriptCollection descs = new DescriptCollection();
 
-            foreach (TriggerItem trg in map.Triggers)
+            foreach (TriggerItem trg in Map.Triggers)
             {
-                // orphan trigger
-                if (!map.Tags.Any(x => x.AssoTrigger == trg.ID))
+                OrphanTrigger(trg);
+                EmptyLogic(trg);
+                InvalidParam(trg, descs);
+                TriggerTooLong(trg);
+            }
+        }
+        #region Combat Logic
+        private static void CombatObjectLowHealth(ICombatObject comb, string type)
+        {
+            int maxHealth = GlobalVar.GlobalRules[comb.RegName].ParseInt("Strength");
+            float current = maxHealth / 256f * comb.HealthPoint;
+            if (current <= 1f && maxHealth > 0)
+            {
+                int lowest = (int)Math.Min(Math.Ceiling(512f / maxHealth), 256f);
+                result.Add(new VerifyResultItem
                 {
-                    result.Add(new VerifyResultItem
-                    {
-                        Level = VerifyAlertLevel.Warning,
-                        VerifyType = VerifyType.TriggerHasNoTagAsso,
-                        IdNavigator = trg.ID,
-                        LogicType = LogicType.Trigger,
-                        Message = string.Format("Trigger {0}({1}) has no tag linked with, this trigger will never activate during the game.",
-                            trg.ID, trg.Name)
-                    });
-                }
-
-                // empty action
-                if (trg.Actions.Count() == 0)
+                    Level = VerifyAlertLevel.Suggest,
+                    Message = string.Format("{4} {0} at {1},{2} has health point lower than 1, will be destroyed upon game just begin. Suggested hp is {3} (now {5})",
+                        comb.RegName, comb.X, comb.Y, lowest, type, comb.HealthPoint),
+                    Pos = comb,
+                    VerifyType = VerifyType.CombatObjectLowHealth
+                });
+            }
+        }
+        private static void CombatObjectInvalid(ICombatObject comb, string type)
+        {
+            if (!GlobalVar.GlobalRules.HasIniEntAll(comb.RegName))
+            {
+                result.Add(new VerifyResultItem
                 {
-                    result.Add(new VerifyResultItem
-                    {
-                        Level = VerifyAlertLevel.Suggest,
-                        VerifyType = VerifyType.TriggerHasNoAction,
-                        IdNavigator = trg.ID,
-                        LogicType = LogicType.Trigger,
-                        Message = string.Format("Trigger {0}({1}) has no action, consider removing it.",
-                            trg.ID, trg.Name)
-                    });
-                }
-
-                // check action
-                else
+                    Level = VerifyAlertLevel.Warning,
+                    Message = string.Format("{3} {0} at {1}, {2} is invalid / unregisted, please specify this {3} in map rules or global rules",
+                        comb.RegName, comb.X, comb.Y, type),
+                    Pos = comb,
+                    VerifyType = VerifyType.CombatObjectInvalid
+                });
+            }
+        }
+        #endregion
+        #region Trigger Logic
+        private static void TriggerTooLong(TriggerItem trg)
+        {
+            int baseLength = trg.ID.Length + 1;
+            if (trg.Events.GetSaveData().Length + baseLength > Constant.IniMaxLineLength)
+            {
+                result.Add(new VerifyResultItem
                 {
-                    foreach (LogicItem lg in trg.Actions)
+                    Level = VerifyAlertLevel.Critical,
+                    VerifyType = VerifyType.TriggerEventOverflow,
+                    IdNavigator = trg.ID,
+                    LogicType = LogicType.Trigger,
+                    Message = string.Format("Trigger {0}({1})'s event has overflowed! Please split the trigger event into smaller group, otherwise it will surely crash the game!",
+                        trg.ID, trg.Name)
+                });
+            }
+            if (trg.Actions.GetSaveData().Length + baseLength > Constant.IniMaxLineLength)
+            {
+                result.Add(new VerifyResultItem
+                {
+                    Level = VerifyAlertLevel.Critical,
+                    VerifyType = VerifyType.TriggerActionOverflow,
+                    IdNavigator = trg.ID,
+                    LogicType = LogicType.Trigger,
+                    Message = string.Format("Trigger {0}({1})'s action has overflowed! Please split the trigger action into smaller group, otherwise it will surely crash the game!",
+                        trg.ID, trg.Name)
+                });
+            }
+        }
+        private static void OrphanTrigger(TriggerItem trg)
+        {
+            if (!Map.Tags.Any(x => x.AssoTrigger == trg.ID))
+            {
+                result.Add(new VerifyResultItem
+                {
+                    Level = VerifyAlertLevel.Warning,
+                    VerifyType = VerifyType.TriggerHasNoTagAsso,
+                    IdNavigator = trg.ID,
+                    LogicType = LogicType.Trigger,
+                    Message = string.Format("Trigger {0}({1}) has no tag linked with, this trigger will never activate during the game.",
+                        trg.ID, trg.Name)
+                });
+            }
+        }
+        private static void EmptyLogic(TriggerItem trg)
+        {
+            if (trg.Actions.Count() == 0)
+            {
+                result.Add(new VerifyResultItem
+                {
+                    Level = VerifyAlertLevel.Suggest,
+                    VerifyType = VerifyType.TriggerHasNoAction,
+                    IdNavigator = trg.ID,
+                    LogicType = LogicType.Trigger,
+                    Message = string.Format("Trigger {0}({1}) has no action, consider removing it.",
+                        trg.ID, trg.Name)
+                });
+            }
+            if (trg.Events.Count() == 0)
+            {
+                result.Add(new VerifyResultItem
+                {
+                    Level = VerifyAlertLevel.Warning,
+                    VerifyType = VerifyType.TriggerHasNoEvent,
+                    IdNavigator = trg.ID,
+                    LogicType = LogicType.Trigger,
+                    Message = string.Format("Trigger {0}({1}) has no event, this trigger will never be fired.",
+                        trg.ID, trg.Name)
+                });
+            }
+        }
+        private static void InvalidParam(TriggerItem trg, DescriptCollection descs)
+        {
+            foreach (LogicItem lg in trg.Actions)
+            {
+                if (descs.Action(lg.ID) is TriggerDescription desc)
+                {
+                    foreach (TriggerParam param in desc.Parameters)
                     {
-                        if (descs.Action(lg.ID) is TriggerDescription desc)
+                        if (param.Type == TriggerParam.ParamType.SelectableString)
                         {
-                            foreach (TriggerParam param in desc.Parameters)
+                            IEnumerable<TechnoPair> data = Map.GetComboCollections(param);
+                            if (!data.Any(x => x.Index.ToLower() == param.GetParameter(lg.Parameters).ToString().ToLower()))
                             {
-                                if (param.Type == TriggerParam.ParamType.SelectableString)
+                                result.Add(new VerifyResultItem
                                 {
-                                    IEnumerable<TechnoPair> data = map.GetComboCollections(param);
-                                    if (!data.Any(x => x.Index.ToLower() == param.GetParameter(lg.Parameters).ToString().ToLower()))
-                                    {
-                                        result.Add(new VerifyResultItem
-                                        {
-                                            Level = VerifyAlertLevel.Warning,
-                                            VerifyType = VerifyType.TriggerParameterInvalid,
-                                            IdNavigator = trg.ID,
-                                            LogicType = LogicType.Trigger,
-                                            Message = string.Format("Trigger {0}({1}) action{2}(Action-{3}) has unrecognizeable parameter value, it may cause severe crash to the game. It's adviced to double-check your parameter.",
-                                                trg.ID, trg.Name, lg.idx, lg.ID)
-                                        });
-                                    }
-                                }
+                                    Level = VerifyAlertLevel.Warning,
+                                    VerifyType = VerifyType.TriggerParameterInvalid,
+                                    IdNavigator = trg.ID,
+                                    LogicType = LogicType.Trigger,
+                                    Message = string.Format("Trigger {0}({1}) action{2}(Action-{3}) has unrecognizeable parameter value, it may cause severe crash to the game. It's adviced to double-check your parameter.",
+                                        trg.ID, trg.Name, lg.idx, lg.ID)
+                                });
                             }
                         }
                     }
                 }
-
-                // empty event
-                if (trg.Events.Count() == 0)
+            }
+            foreach (LogicItem lg in trg.Events)
+            {
+                if (descs.Event(lg.ID) is TriggerDescription desc)
                 {
-                    result.Add(new VerifyResultItem
+                    foreach (TriggerParam param in desc.Parameters)
                     {
-                        Level = VerifyAlertLevel.Warning,
-                        VerifyType = VerifyType.TriggerHasNoEvent,
-                        IdNavigator = trg.ID,
-                        LogicType = LogicType.Trigger,
-                        Message = string.Format("Trigger {0}({1}) has no event, this trigger will never be fired.",
-                            trg.ID, trg.Name)
-                    });
-                }
-                // check evnt
-                else
-                {
-                    foreach (LogicItem lg in trg.Events)
-                    {
-                        if (descs.Event(lg.ID) is TriggerDescription desc)
+                        if (param.Type == TriggerParam.ParamType.SelectableString)
                         {
-                            foreach (TriggerParam param in desc.Parameters)
+                            IEnumerable<TechnoPair> data = Map.GetComboCollections(param);
+                            if (!data.Any(x => x.Index == param.GetParameter(lg.Parameters).ToString()))
                             {
-                                if (param.Type == TriggerParam.ParamType.SelectableString)
+                                result.Add(new VerifyResultItem
                                 {
-                                    IEnumerable<TechnoPair> data = map.GetComboCollections(param);
-                                    if (!data.Any(x => x.Index == param.GetParameter(lg.Parameters).ToString()))
-                                    {
-                                        result.Add(new VerifyResultItem
-                                        {
-                                            Level = VerifyAlertLevel.Warning,
-                                            VerifyType = VerifyType.TriggerParameterInvalid,
-                                            IdNavigator = trg.ID,
-                                            LogicType = LogicType.Trigger,
-                                            Message = string.Format("Trigger {0}({1}) event{2}(Event-{3}) has unrecognizeable parameter value, it may cause severe crash to the game. It's adviced to double-check your parameter.",
-                                                trg.ID, trg.Name, lg.idx, lg.ID)
-                                        });
-                                    }
-                                }
+                                    Level = VerifyAlertLevel.Warning,
+                                    VerifyType = VerifyType.TriggerParameterInvalid,
+                                    IdNavigator = trg.ID,
+                                    LogicType = LogicType.Trigger,
+                                    Message = string.Format("Trigger {0}({1}) event{2}(Event-{3}) has unrecognizeable parameter value, it may cause severe crash to the game. It's adviced to double-check your parameter.",
+                                        trg.ID, trg.Name, lg.idx, lg.ID)
+                                });
                             }
                         }
                     }
                 }
             }
         }
+        #endregion
         private static void VerifyTagLogic()
         {
-            foreach (TagItem tag in map.Tags)
+            foreach (TagItem tag in Map.Tags)
             {
                 // orphan tag
-                if (!map.Triggers.HasId(tag.AssoTrigger))
+                if (!Map.Triggers.HasId(tag.AssoTrigger))
                 {
                     result.Add(new VerifyResultItem
                     {

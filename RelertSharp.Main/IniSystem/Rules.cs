@@ -429,6 +429,15 @@ namespace RelertSharp.IniSystem
                     this[regname]["Name"],
                     regname);
         }
+        /// <summary>
+        /// include internal rules carried by map
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public bool HasIniEntAll(string name)
+        {
+            return HasIniEnt(name) || (MapIniData == null ? false : MapIniData.Keys.Contains(name));
+        }
         #endregion
 
 
