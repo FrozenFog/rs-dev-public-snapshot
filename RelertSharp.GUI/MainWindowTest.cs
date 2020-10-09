@@ -26,7 +26,6 @@ namespace RelertSharp.GUI
     public partial class MainWindowTest : Form
     {
         private static RsLog Log { get { return GlobalVar.Log; } }
-        private Map map;
         private bool initialized = false;
         private bool saved = true;
         private bool requireFocus = false;
@@ -42,8 +41,7 @@ namespace RelertSharp.GUI
             Log.Write("Mainwindow Initializing");
             InitializeComponent();
             InitializeControl();
-            map = GlobalVar.CurrentMapDocument.Map;
-            GlobalVar.GlobalRules.MapIniData = map.IniResidue;
+            GlobalVar.GlobalRules.MapIniData = Map.IniResidue;
             panel1.BackColor = Color.FromArgb(30, 30, 30);
             cbbLightningType.SelectedIndex = 0;
             Log.Write("Mainwindow Initialized");
@@ -78,7 +76,7 @@ namespace RelertSharp.GUI
             }
         }
 
-        private Map Map { get { return map; } }
+        private Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -156,13 +154,13 @@ namespace RelertSharp.GUI
             switch (s)
             {
                 case "LightningStorm":
-                    Current.LightningItem = map.LightningCollection.Ion;
+                    Current.LightningItem = Map.LightningCollection.Ion;
                     break;
                 case "Normal":
-                    Current.LightningItem = map.LightningCollection.Normal;
+                    Current.LightningItem = Map.LightningCollection.Normal;
                     break;
                 case "Dominator":
-                    Current.LightningItem = map.LightningCollection.Dominator;
+                    Current.LightningItem = Map.LightningCollection.Dominator;
                     break;
                 default:
                     return;
@@ -182,13 +180,13 @@ namespace RelertSharp.GUI
             switch (cbbLightningType.Text)
             {
                 case "LightningStorm":
-                    WriteLightningSide(map.LightningCollection.Ion);
+                    WriteLightningSide(Map.LightningCollection.Ion);
                     break;
                 case "Normal":
-                    WriteLightningSide(map.LightningCollection.Normal);
+                    WriteLightningSide(Map.LightningCollection.Normal);
                     break;
                 case "Dominator":
-                    WriteLightningSide(map.LightningCollection.Dominator);
+                    WriteLightningSide(Map.LightningCollection.Dominator);
                     break;
             }
             WriteLightningSide(Current.LightningItem);
@@ -348,10 +346,10 @@ namespace RelertSharp.GUI
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             if (DrawAll(worker)) pnlPick.DrawComplete();
-            GlobalVar.Engine.MoveTo(map.CenterPoint);
+            GlobalVar.Engine.MoveTo(Map.CenterPoint);
             GlobalVar.Engine.Refresh();
             RedrawMinimapAll();
-            rbPanelAttribute.Initialize(map.Houses, map.Tags);
+            rbPanelAttribute.Initialize(Map.Houses, Map.Tags);
             rbPanelBrush.Initialize();
             rbPanelWand.Initialize();
             rbPanelBucket.Initialize();

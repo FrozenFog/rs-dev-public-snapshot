@@ -81,7 +81,7 @@ namespace RelertSharp.GUI
                     else
                     {
                         IMapObject obj = pnlPick.ReleaseBrushObject(false, out bool build);
-                        map.AddObjectFromBrush(obj);
+                        Map.AddObjectFromBrush(obj);
                         Current.UndoRedo.PushCommand(Model.UndoRedoCommandType.DrawObject, new object[] { false, obj }, new object[] { true, obj });
                     }
                     GlobalVar.Engine.Refresh();

@@ -24,8 +24,8 @@ namespace RelertSharp.GUI.Controls
         public void Initialize(IEnumerable<HouseItem> houses, IEnumerable<TagItem> tags)
         {
             SetFacing(0);
-            cbbOwnerHouse.Items.AddRange(houses.ToArray());
-            cbbTags.Items.AddRange(tags.ToArray());
+            cbbOwnerHouse.LoadAs(houses);
+            cbbTags.LoadAs(tags);
             cbbOwnerHouse.SelectedIndex = 0;
             cbbOwnerHouse.Text = changer.Host.OwnerHouse;
             UpdateGuiFromHost();

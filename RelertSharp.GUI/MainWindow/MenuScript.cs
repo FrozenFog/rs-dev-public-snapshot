@@ -74,5 +74,41 @@ namespace RelertSharp.GUI
             verifyForm.Show();
             requireFocus = false;
         }
+        private void tsmiOpenMap_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog()
+            {
+                Title = Language.DICT["OpenMapDlgTitle"],
+                InitialDirectory = string.IsNullOrEmpty(GlobalConfig.Local.RecentPath) ? Application.StartupPath : GlobalConfig.Local.RecentPath,
+                Filter = "Red Alert 2 Map File|*.map;*.yrm;*.mpr",
+                AddExtension = true,
+                CheckFileExists = true,
+            };
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                drew = false;
+                pnlPick.DisableDrawing();
+                Engine?.Dispose();
+                string mapname = dlg.FileName;
+                GlobalConfig.Local.RecentPath = mapname.Substring(0, mapname.Length - mapname.LastIndexOf('\\'));
+                MapFile map = new MapFile(mapname);
+                GlobalRules.MapIniData = map.Map.IniResidue;
+                CurrentMapDocument = map;
+                CurrentMapDocument.Map.DumpStructure();
+                if (Log.HasCritical)
+                {
+                    Log.Critical("These object will not show in scene(or in logic editor)");
+                    Warning(Log.ShowCritical());
+                }
+                if (EngineInitialize(panel1.Handle, pnlMiniMap))
+                {
+                    bgwDraw.RunWorkerAsync();
+                }
+                else
+                {
+                    Fatal("Engine Initialize Failed!!");
+                }
+            }
+        }
     }
 }

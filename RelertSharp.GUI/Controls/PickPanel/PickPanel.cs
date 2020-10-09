@@ -52,6 +52,10 @@ namespace RelertSharp.GUI.Controls
         {
             drew = true;
         }
+        public void DisableDrawing()
+        {
+            drew = false;
+        }
         public void RefreshContainerMember()
         {
             LoadWaypointAll();

@@ -95,7 +95,7 @@ namespace RelertSharp.DrawingEngine
         }
         public void Dispose()
         {
-            CppExtern.Scene.ResetSceneView();
+            CppExtern.Scene.ClearSceneObjects();
             CppExtern.Scene.PresentAllObject();
         }
         #endregion

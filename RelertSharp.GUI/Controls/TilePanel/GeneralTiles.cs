@@ -32,6 +32,7 @@ namespace RelertSharp.GUI.Controls
 
         private void InitializeGeneralTilePanel()
         {
+            trvGeneral.Nodes.Clear();
             foreach (string name in TileDictionary.GeneralTilesets.Keys)
             {
                 trvGeneral.Nodes.Add(TileDictionary.GeneralTilesets[name].ToString(), name);

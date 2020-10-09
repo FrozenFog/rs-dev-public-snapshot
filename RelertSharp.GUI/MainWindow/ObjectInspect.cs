@@ -30,7 +30,7 @@ namespace RelertSharp.GUI
         {
             Vec3 pos = GlobalVar.Engine.ClientPointToCellPos(e.Location, out int subcell);
             //map.DumpStructures();
-            Tile t = map.TilesData[pos.To2dLocateable()];
+            Tile t = Map.TilesData[pos.To2dLocateable()];
             IEnumerable<IMapObject> objects = t.GetObjects();
             if (t != null && objects.Count() > 0)
             {
@@ -44,8 +44,8 @@ namespace RelertSharp.GUI
                         {
                             Current.RemoveItemFromSelectList(obj);
                             UnitItem newitem = unitForm.Result;
-                            map.UpdateUnit(newitem);
-                            GlobalVar.Engine.UpdateUnitAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse));
+                            Map.UpdateUnit(newitem);
+                            GlobalVar.Engine.UpdateUnitAttribute(newitem, Map.GetHeightFromTile(newitem), Map.GetHouseColor(newitem.OwnerHouse));
                             if (newitem.Selected) Current.SelectUnitAt(newitem);
                         }
                         break;
@@ -62,8 +62,8 @@ namespace RelertSharp.GUI
                                 {
                                     Current.RemoveItemFromSelectList(obj);
                                     InfantryItem newitem = infForm.Result;
-                                    map.UpdateInfantry(newitem);
-                                    GlobalVar.Engine.UpdateInfantryAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse), subcell);
+                                    Map.UpdateInfantry(newitem);
+                                    GlobalVar.Engine.UpdateInfantryAttribute(newitem, Map.GetHeightFromTile(newitem), Map.GetHouseColor(newitem.OwnerHouse), subcell);
                                     if (newitem.Selected) Current.SelectInfantryAt(newitem, newitem.SubCells);
                                 }
                                 break;
@@ -79,8 +79,8 @@ namespace RelertSharp.GUI
                         {
                             Current.RemoveItemFromSelectList(obj);
                             StructureItem newitem = budForm.Result;
-                            map.UpdateBuilding(newitem);
-                            GlobalVar.Engine.UpdateBuildingAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse));
+                            Map.UpdateBuilding(newitem);
+                            GlobalVar.Engine.UpdateBuildingAttribute(newitem, Map.GetHeightFromTile(newitem), Map.GetHouseColor(newitem.OwnerHouse));
                             if (newitem.Selected) Current.SelectBuildingAt(newitem);
                         }
                         break;
@@ -93,8 +93,8 @@ namespace RelertSharp.GUI
                         {
                             Current.RemoveItemFromSelectList(obj);
                             AircraftItem newitem = airForm.Result;
-                            map.UpdateAircraft(newitem);
-                            GlobalVar.Engine.UpdateAircraftAttribute(newitem, map.GetHeightFromTile(newitem), map.GetHouseColor(newitem.OwnerHouse));
+                            Map.UpdateAircraft(newitem);
+                            GlobalVar.Engine.UpdateAircraftAttribute(newitem, Map.GetHeightFromTile(newitem), Map.GetHouseColor(newitem.OwnerHouse));
                             if (newitem.Selected) Current.SelectAircraftAt(newitem);
                         }
                         break;

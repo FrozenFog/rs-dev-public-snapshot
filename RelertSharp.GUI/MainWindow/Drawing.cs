@@ -62,9 +62,9 @@ namespace RelertSharp.GUI
                 Engine eg = GlobalVar.Engine;
                 Log.Write("Binding Engine Handle...");
                 Log.Write(string.Format("MAINHANDLE-{0}, MINIHANDLE-{1}", mainHandle.ToString(), minimapPanel.Handle.ToString()));
-                initialized = GlobalVar.Engine.Initialize(mainHandle, minimapPanel.Size, map.Info.Size, map.TilesData);
+                initialized = GlobalVar.Engine.Initialize(mainHandle, minimapPanel.Size, Map.Info.Size, Map.TilesData);
                 Log.Write("Initializing Theater");
-                GlobalVar.Engine.SetTheater(GlobalVar.GlobalConfig.GetTheater(map.Info.TheaterName));
+                GlobalVar.Engine.SetTheater(GlobalVar.GlobalConfig.GetTheater(Map.Info.TheaterName));
                 Log.Write("Resetting...");
                 GlobalVar.Engine.SetBackgroundColor(Color.FromArgb(30, 30, 30));
                 GlobalVar.Engine.ResetMinimapWindow(panel1.Size);
@@ -85,7 +85,7 @@ namespace RelertSharp.GUI
         private void DrawTiles()
         {
             Log.Write("Drawing Tiles");
-            lw.StartDrawing(map.TilesData.Count(), "Tiles");
+            lw.StartDrawing(Map.TilesData.Count(), "Tiles");
             foreach (Tile t in Map.TilesData)
             {
                 lw.Incre();
@@ -99,7 +99,7 @@ namespace RelertSharp.GUI
         private void DrawTerrains()
         {
             Log.Write("Drawing Terrain");
-            lw.StartDrawing(map.Terrains.Count(), "Terrain");
+            lw.StartDrawing(Map.Terrains.Count(), "Terrain");
             foreach (TerrainItem terr in Map.Terrains)
             {
                 lw.Incre();
@@ -113,7 +113,7 @@ namespace RelertSharp.GUI
         private void DrawSmudges()
         {
             Log.Write("Drawing Smudges");
-            lw.StartDrawing(map.Smudges.Count(), "Smudges");
+            lw.StartDrawing(Map.Smudges.Count(), "Smudges");
             foreach (SmudgeItem smg in Map.Smudges)
             {
                 lw.Incre();
@@ -127,7 +127,7 @@ namespace RelertSharp.GUI
         private void DrawOverlays()
         {
             Log.Write("Drawing Overlays");
-            lw.StartDrawing(map.Overlays.Count(), "Overlays");
+            lw.StartDrawing(Map.Overlays.Count(), "Overlays");
             foreach (OverlayUnit o in Map.Overlays)
             {
                 lw.Incre();
@@ -141,11 +141,11 @@ namespace RelertSharp.GUI
         private void DrawWaypoints()
         {
             Log.Write("Drawing Waypoints");
-            lw.StartDrawing(map.Waypoints.Count(), "Waypoints");
-            foreach (WaypointItem w in map.Waypoints)
+            lw.StartDrawing(Map.Waypoints.Count(), "Waypoints");
+            foreach (WaypointItem w in Map.Waypoints)
             {
                 lw.Incre();
-                if (!GlobalVar.Engine.DrawWaypoint(w, map.GetHeightFromTile(w)))
+                if (!GlobalVar.Engine.DrawWaypoint(w, Map.GetHeightFromTile(w)))
                 {
                     _failed.Add(string.Format("Waypoint in {0}", w.CoordString));
                 }
@@ -155,11 +155,11 @@ namespace RelertSharp.GUI
         private void DrawCelltags()
         {
             Log.Write("Drawing Celltags");
-            lw.StartDrawing(map.Celltags.Count(), "Celltags");
-            foreach (CellTagItem c in map.Celltags)
+            lw.StartDrawing(Map.Celltags.Count(), "Celltags");
+            foreach (CellTagItem c in Map.Celltags)
             {
                 lw.Incre();
-                if (!GlobalVar.Engine.DrawCelltag(c, map.GetHeightFromTile(c), true))
+                if (!GlobalVar.Engine.DrawCelltag(c, Map.GetHeightFromTile(c), true))
                 {
                     _failed.Add(string.Format("Cellta at {0}", c.CoordString));
                 }
@@ -169,7 +169,7 @@ namespace RelertSharp.GUI
         private void DrawObjects()
         {
             Log.Write("Drawing Infantries");
-            lw.StartDrawing(map.Infantries.Count(), "Infantries");
+            lw.StartDrawing(Map.Infantries.Count(), "Infantries");
             foreach (InfantryItem inf in Map.Infantries)
             {
                 lw.Incre();
@@ -179,7 +179,7 @@ namespace RelertSharp.GUI
             lw.EndItems(LoadingWindow.LoadingFlag.Infantries);
 
             Log.Write("Drawing Buildings");
-            lw.StartDrawing(map.Buildings.Count(), "Buildings");
+            lw.StartDrawing(Map.Buildings.Count(), "Buildings");
             foreach (StructureItem structure in Map.Buildings)
             {
                 lw.Incre();
@@ -188,7 +188,7 @@ namespace RelertSharp.GUI
             }
 
             Log.Write("Drawing Units");
-            lw.StartDrawing(map.Units.Count(), "Units");
+            lw.StartDrawing(Map.Units.Count(), "Units");
             lw.EndItems(LoadingWindow.LoadingFlag.Buildings);
             foreach (UnitItem unit in Map.Units)
             {
@@ -199,7 +199,7 @@ namespace RelertSharp.GUI
             lw.EndItems(LoadingWindow.LoadingFlag.Units);
 
             Log.Write("Drawing Aircrafts");
-            lw.StartDrawing(map.Aircrafts.Count(), "Aircrafts");
+            lw.StartDrawing(Map.Aircrafts.Count(), "Aircrafts");
             foreach (AircraftItem air in Map.Aircrafts)
             {
                 lw.Incre();
@@ -209,7 +209,7 @@ namespace RelertSharp.GUI
             lw.EndItems(LoadingWindow.LoadingFlag.Aircrafts);
 
             Log.Write("Drawing BaseNodes");
-            lw.StartDrawing(map.Houses.Count(), "BaseNodes");
+            lw.StartDrawing(Map.Houses.Count(), "BaseNodes");
             foreach (HouseItem house in Map.Houses)
             {
                 lw.Incre();
@@ -221,7 +221,7 @@ namespace RelertSharp.GUI
             }
             foreach (LightSource light in Map.LightSources)
             {
-                if (!GlobalVar.Engine.DrawLightSource(light, map.GetHeightFromTile(light)))
+                if (!GlobalVar.Engine.DrawLightSource(light, Map.GetHeightFromTile(light)))
                     _failed.Add("Light source at " + light.CoordString);
             }
             lw.EndItems(LoadingWindow.LoadingFlag.BaseNodes);

@@ -56,7 +56,7 @@ namespace RelertSharp.GUI
                 {
                     Point LT = GlobalVar.Engine.CellPosToClientPos(prevSelectingLT);
                     Point RB = GlobalVar.Engine.CellPosToClientPos(prevSelectingRB);
-                    iter = new SceneSquare2D(LT, RB, map.Info.Size.Width);
+                    iter = new SceneSquare2D(LT, RB, Map.Info.Size.Width);
                 }
                 else
                 {

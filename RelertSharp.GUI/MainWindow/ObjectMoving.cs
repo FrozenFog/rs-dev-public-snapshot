@@ -58,17 +58,17 @@ namespace RelertSharp.GUI
                     if (isPreciseMovingMode && subcell != -1)
                     {
                         IMapObject obj = Current.SelectedMapObjects.First();
-                        map.MoveObjectTo(obj, posNow.To3dLocateable(), subcell);
+                        Map.MoveObjectTo(obj, posNow.To3dLocateable(), subcell);
                     }
                     else
                     {
                         Vec3 delta = posNow - previousObjectLocation;
                         foreach (IMapObject obj in Current.SelectedMapObjects)
                         {
-                            I3dLocateable deltaCell = map.ReferanceDeltaCell(obj, delta.To2dLocateable());
-                            if (!map.IsOutOfSize(obj, deltaCell))
+                            I3dLocateable deltaCell = Map.ReferanceDeltaCell(obj, delta.To2dLocateable());
+                            if (!Map.IsOutOfSize(obj, deltaCell))
                             {
-                                map.ShiftObjectBy(obj, deltaCell);
+                                Map.ShiftObjectBy(obj, deltaCell);
                             }
                         }
                     }
@@ -79,7 +79,7 @@ namespace RelertSharp.GUI
                 else if (subcell != -1 && isPreciseMovingMode)
                 {
                     IMapObject obj = Current.SelectedMapObjects.First();
-                    map.MoveObjectTo(obj, posNow.To3dLocateable(), subcell);
+                    Map.MoveObjectTo(obj, posNow.To3dLocateable(), subcell);
                 }
                 movingInProgress = false;
             }
