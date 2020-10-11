@@ -43,7 +43,6 @@ namespace RelertSharp.MapStructure
                 Level = VerifyAlertLevel.Success,
                 Message = string.Format("Your map {0} is clear for publish!", Map.Info.MapName)
             });
-            List<VerifyResultItem> rr = new List<VerifyResultItem>(result);
             return result;
         }
 
@@ -180,45 +179,14 @@ namespace RelertSharp.MapStructure
         {
             foreach (TeamScriptGroup sc in Map.Scripts)
             {
-                if (sc.IsEmpty)
-                {
-                    result.Add(new VerifyResultItem
-                    {
-                        Level = VerifyAlertLevel.Suggest,
-                        Message = string.Format("Empty Script. Name: {0}, Id: {1}", sc.Name, sc.ID),
-                        VerifyType = VerifyType.ScriptEmpty,
-                        IdNavigator = sc.ID,
-                        LogicType = LogicType.Script
-                    });
-                }
+                EmptyScript(sc);
             }
         }
         private static void VerifyTeam()
         {
             foreach (TeamItem team in Map.Teams)
             {
-                if (!Map.TaskForces.HasId(team.TaskforceID))
-                {
-                    result.Add(new VerifyResultItem
-                    {
-                        Level = VerifyAlertLevel.Warning,
-                        Message = string.Format("Team {0}(1) has no available Taskforce and cannot operate properly.", team.ID, team.Name),
-                        VerifyType = VerifyType.TeamInvalidTaskforce,
-                        IdNavigator = team.ID,
-                        LogicType = LogicType.Team
-                    });
-                }
-                if (!Map.Scripts.HasId(team.ScriptID))
-                {
-                    result.Add(new VerifyResultItem
-                    {
-                        Level = VerifyAlertLevel.Warning,
-                        Message = string.Format("Team {0}(1) has no available Script and cannot operate properly.", team.ID, team.Name),
-                        VerifyType = VerifyType.TeamInvalidScript,
-                        IdNavigator = team.ID,
-                        LogicType = LogicType.Team
-                    });
-                }
+                InvalidTeamComponent(team);
             }
         }
         private static void VerifyCombatLogic()
@@ -249,6 +217,33 @@ namespace RelertSharp.MapStructure
                 TriggerTooLong(trg);
             }
         }
+        #region Team Logic
+        private static void InvalidTeamComponent(TeamItem team)
+        {
+            if (!Map.TaskForces.HasId(team.TaskforceID))
+            {
+                result.Add(new VerifyResultItem
+                {
+                    Level = VerifyAlertLevel.Warning,
+                    Message = string.Format("Team {0}(1) has no available Taskforce and cannot operate properly.", team.ID, team.Name),
+                    VerifyType = VerifyType.TeamInvalidTaskforce,
+                    IdNavigator = team.ID,
+                    LogicType = LogicType.Team
+                });
+            }
+            if (!Map.Scripts.HasId(team.ScriptID))
+            {
+                result.Add(new VerifyResultItem
+                {
+                    Level = VerifyAlertLevel.Warning,
+                    Message = string.Format("Team {0}(1) has no available Script and cannot operate properly.", team.ID, team.Name),
+                    VerifyType = VerifyType.TeamInvalidScript,
+                    IdNavigator = team.ID,
+                    LogicType = LogicType.Team
+                });
+            }
+        }
+        #endregion
         #region Combat Logic
         private static void CombatObjectLowHealth(ICombatObject comb, string type)
         {
@@ -404,6 +399,22 @@ namespace RelertSharp.MapStructure
                         }
                     }
                 }
+            }
+        }
+        #endregion
+        #region Taskforce & Script
+        private static void EmptyScript(TeamScriptGroup script)
+        {
+            if (script.IsEmpty)
+            {
+                result.Add(new VerifyResultItem
+                {
+                    Level = VerifyAlertLevel.Suggest,
+                    Message = string.Format("Empty Script. Name: {0}, Id: {1}", script.Name, script.ID),
+                    VerifyType = VerifyType.ScriptEmpty,
+                    IdNavigator = script.ID,
+                    LogicType = LogicType.Script
+                });
             }
         }
         #endregion
