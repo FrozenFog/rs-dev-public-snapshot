@@ -157,7 +157,7 @@ namespace RelertSharp.MapStructure.Logic
                 if (LogicType == TriggerSubType.EventLogic && param[0] != "2") param = param.Take(2).ToArray();
                 obj.AddRange(param);
             }
-            return Utils.Misc.Join(',', obj);
+            return obj.JoinBy();
         }
         #region Enumerator
         public IEnumerator<LogicItem> GetEnumerator()

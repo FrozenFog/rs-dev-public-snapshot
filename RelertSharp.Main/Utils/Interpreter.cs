@@ -207,8 +207,8 @@ namespace RelertSharp.Utils
                 }
             }
             removeditems = sl1;
-            string resultRemoved = Misc.Join(removeditems, "\",\"");
-            string resultNew = Misc.Join(newitems, "\",\"");
+            string resultRemoved = removeditems.JoinBy("\",\"");
+            string resultNew = newitems.JoinBy("\",\"");
             List<string> result = new List<string>() { itemName, ":\r\n\t\t\t-" };
             if (resultRemoved != "")
             {

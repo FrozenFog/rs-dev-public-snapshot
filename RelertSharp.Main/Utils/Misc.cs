@@ -93,32 +93,6 @@ namespace RelertSharp.Utils
             }
             return obj.ToList();
         }
-        public static string Join(char joint, IEnumerable<object> objects)
-        {
-            string result = "";
-            if (objects.Count() != 0)
-            {
-                foreach (object obj in objects)
-                {
-                    if (obj.GetType() == typeof(bool)) result += ((bool)obj ? "1" : "0") + joint;
-                    else result += obj.ToString() + joint;
-                }
-                result = result.Substring(0, result.Length - 1);
-            }
-            return result;
-        }
-        public static string Join(List<string> sl, string joint)
-        {
-            if (sl.Count == 0) return "";
-            int i = 0;
-            string result = sl[i];
-            i++;
-            for (; i < sl.Count(); i++)
-            {
-                result += joint + sl[i];
-            }
-            return result;
-        }
         public static int ParseInt(string src, int def = 0)
         {
             if (string.IsNullOrEmpty(src)) return def;
@@ -407,6 +381,10 @@ namespace RelertSharp.Utils
             return ret;
         }
 
+        public static T MaxItem<T>(params T[] objects)
+        {
+            return objects.Max();
+        }
     }
 
 }

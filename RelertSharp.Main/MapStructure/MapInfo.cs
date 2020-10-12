@@ -1,5 +1,6 @@
 ﻿using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
+using System.Collections.Generic;
 using System.Drawing;
 using static RelertSharp.Utils.Misc;
 
@@ -56,7 +57,7 @@ namespace RelertSharp.MapStructure
             basic.AddPair("PostScore", PostScoreFilmName);
             basic.AddPair("AltNextScenario", AltNextScene);
             basic.AddPair("Player", PlayerHouseName);
-            basic.AddPair("GameMode", Join(',', GameModes));
+            basic.AddPair("GameMode", GameModes.JoinBy());
             basic.AddPair(BasicResidue);
             return basic;
         }

@@ -177,7 +177,7 @@ namespace RelertSharp.MapStructure.Logic
             objs.AddRange(new object[] { Name, Team1ID, OwnerHouse, TechLevel, (int)ConditionType, ConditionObjID });
             string oper = Comparator.ToCmpString;
             objs.AddRange(new object[] { oper, StartingWeight, MinimumWeight, MaximumWeight, IsForSkirmish, 0, SideIndex, IsBaseDefense, Team2ID, EasyOn, NormalOn, HardOn });
-            return Join(',', objs);
+            return objs.JoinBy();
         }
         #endregion
 

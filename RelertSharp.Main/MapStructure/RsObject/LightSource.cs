@@ -24,12 +24,20 @@ namespace RelertSharp.MapStructure.Points
         {
             data[item.Name] = item;
         }
+
+        public LightSource this[string name]
+        {
+            get { return data[name]; }
+        }
     }
 
 
 
     public class LightSource : PointItemBase, IMapObject
     {
+        private object[] SaveData { get { return new object[] { Visibility, Intensity, Red, Green, Blue, IsEnable ? 1 : 0 }; } }
+
+
         #region Ctor
         public LightSource(Color color, string name)
         {
@@ -55,18 +63,37 @@ namespace RelertSharp.MapStructure.Points
             Red = ParseFloat(tmp[2], 0.05f);
             Green = ParseFloat(tmp[3], 0.05f);
             Blue = ParseFloat(tmp[4], 0.05f);
+            IsEnable = ParseBool(tmp[5], true);
+        }
+        public LightSource(LightSource src) : base(src)
+        {
+            Name = src.Name;
+            Visibility = src.Visibility;
+            Intensity = src.Intensity;
+            Red = src.Red;
+            Green = src.Green;
+            Blue = src.Blue;
         }
         #endregion
 
 
         #region Public Methods
+        public void FromColor(Color c)
+        {
+            Red = c.R / 256f;
+            Green = c.G / 256f;
+            Blue = c.B / 256f;
+        }
         public Color ToColor()
         {
-            return Color.FromArgb(ToByte(Red), ToByte(Green), ToByte(Blue));
+            float max = MaxItem(Red, Green, Blue);
+            float scale = 255 / max;
+            return Color.FromArgb(ToByte(Red, scale), ToByte(Green, scale), ToByte(Blue, scale));
         }
         public Vec4 ToVec4()
         {
-            return new Vec4(Red + 1, Green + 1, Blue + 1, 1);
+            Vec4 color = new Vec4(Red + 1, Green + 1, Blue + 1, 1);
+            return color * Vec4.Unit3(1f + Intensity * 1.5f);
         }
         public string FormatString()
         {
@@ -80,20 +107,16 @@ namespace RelertSharp.MapStructure.Points
         }
         public INIPair SaveToPair()
         {
-            string value = string.Format("{0},{1},{2},{3},{4}", Visibility, Intensity, Red, Green, Blue);
+            string value = SaveData.JoinBy();
             return new INIPair(Name, value);
         }
         #endregion
 
 
         #region Private Methods
-        private byte ToByte(float color)
+        private byte ToByte(float color, float scale)
         {
-            return (byte)(color * 256);
-        }
-        public float ToFloat(byte color)
-        {
-            return color / 256f;
+            return (byte)Math.Min(Math.Floor(color * scale), 255);
         }
         #endregion
 
@@ -106,7 +129,7 @@ namespace RelertSharp.MapStructure.Points
         public float Intensity { get; set; } = 0.2f;
         public int Visibility { get; set; } = 5000;
         public int Range { get { return (Visibility >> 8) + 1; } }
-        public bool IsEnable { get; set; }
+        public bool IsEnable { get; set; } = true;
         public new PresentMisc SceneObject { get; set; }
         IPresentBase IMapScenePresentable.SceneObject { get { return SceneObject; } set { SceneObject = (PresentMisc)value; } }
         #endregion

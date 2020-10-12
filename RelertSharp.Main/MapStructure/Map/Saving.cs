@@ -16,7 +16,7 @@ namespace RelertSharp.MapStructure
             INIEntity ent = new INIEntity("Structures");
             foreach (StructureItem bud in Buildings)
             {
-                ent.AddPair(new INIPair(bud.ID, Join(',', bud.SaveData)));
+                ent.AddPair(new INIPair(bud.ID, bud.SaveData.JoinBy()));
             }
             return ent;
         }
@@ -25,7 +25,7 @@ namespace RelertSharp.MapStructure
             INIEntity ent = new INIEntity("Infantry");
             foreach (InfantryItem inf in Infantries)
             {
-                ent.AddPair(new INIPair(inf.ID, Join(',', inf.SaveData)));
+                ent.AddPair(new INIPair(inf.ID, inf.SaveData.JoinBy()));
             }
             return ent;
         }
@@ -34,7 +34,7 @@ namespace RelertSharp.MapStructure
             INIEntity ent = new INIEntity("Units");
             foreach (UnitItem u in Units)
             {
-                ent.AddPair(new INIPair(u.ID, Join(',', u.SaveData)));
+                ent.AddPair(new INIPair(u.ID, u.SaveData.JoinBy()));
             }
             return ent;
         }
@@ -43,7 +43,7 @@ namespace RelertSharp.MapStructure
             INIEntity ent = new INIEntity("Aircraft");
             foreach (AircraftItem a in Aircrafts)
             {
-                ent.AddPair(new INIPair(a.ID, Join(',', a.SaveData)));
+                ent.AddPair(new INIPair(a.ID, a.SaveData.JoinBy()));
             }
             return ent;
         }
@@ -79,7 +79,7 @@ namespace RelertSharp.MapStructure
             INIEntity ent = new INIEntity("Smudge");
             foreach (SmudgeItem smg in Smudges)
             {
-                ent.AddPair(new INIPair(smg.ID, Join(',', smg.SaveData)));
+                ent.AddPair(new INIPair(smg.ID, smg.SaveData.JoinBy()));
             }
             return ent;
         }
@@ -109,13 +109,13 @@ namespace RelertSharp.MapStructure
             tags = new INIEntity("Tags");
             foreach (TriggerItem trg in Triggers)
             {
-                trigger.AddPair(new INIPair(trg.ID, Join(',', trg.SaveData)));
+                trigger.AddPair(new INIPair(trg.ID, trg.SaveData.JoinBy()));
                 events.AddPair(new INIPair(trg.ID, trg.Events.GetSaveData()));
                 actions.AddPair(new INIPair(trg.ID, trg.Actions.GetSaveData()));
             }
             foreach (TagItem tag in Tags)
             {
-                tags.AddPair(new INIPair(tag.ID, Join(',', tag.SaveData)));
+                tags.AddPair(new INIPair(tag.ID, tag.SaveData.JoinBy()));
             }
         }
         public void DumpAiTriggerData(out INIEntity aitypes, out INIEntity aienable)

@@ -84,7 +84,7 @@ namespace RelertSharp.DrawingEngine
             Vec4 color = src.ToVec4();
             if (enableLightning && src.IsEnable && src.Intensity == 0f || color == Vec4.One)
             {
-                ApplyLampAt(src, color, src.Range);
+                ApplyLampAt(src, color * Vec4.Unit3(1f + src.Intensity * 1.5f), src.Range);
             }
         }
         public void SetSceneLightning(LightningItem light)

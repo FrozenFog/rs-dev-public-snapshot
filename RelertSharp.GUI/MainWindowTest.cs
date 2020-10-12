@@ -354,13 +354,14 @@ namespace RelertSharp.GUI
             rbPanelWand.Initialize();
             rbPanelBucket.Initialize();
             drew = true;
-            button1.Enabled = false;
+            
         }
 
         private void bgwDraw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             if (e.ProgressPercentage == 1) // basic drawing done
             {
+                button1.Enabled = false;
                 listBox1.Items.Clear();
                 listBox1.Items.AddRange(_failed.ToArray());
                 ToolBoxClick(toolBtnArrow);

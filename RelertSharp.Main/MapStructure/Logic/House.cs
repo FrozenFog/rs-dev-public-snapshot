@@ -94,7 +94,7 @@ namespace RelertSharp.MapStructure.Logic
             data.AddPair("TechLevel", TechLevel);
             data.AddPair("PercentBuilt", PercentBuilt);
             data.AddPair("PlayerControl", Misc.YesNo(PlayerControl));
-            string allies = Misc.Join(',', AlliesWith);
+            string allies = AlliesWith.JoinBy();
             data.AddPair("Allies", allies);
             data.AddPair("Edge", Edge);
             data.AddPair(residual.Values);

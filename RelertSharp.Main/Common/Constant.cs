@@ -71,7 +71,7 @@ namespace RelertSharp.Common
             public const int ArgLenUnit = 14;
             public const int ArgLenAircraft = 12;
             public const int ArgLenAiTrigger = 18;
-            public const int ArgLenLightSource = 5;
+            public const int ArgLenLightSource = 6;
             public static readonly string[] ObjectStatus =
             {
                 "Area Guard", "Attack", "Capture", "Construction", "Enter", "Guard", "Harmless", "Harvest", "Hunt", "Missile", "Move", "Open", "Patrol", "QMove", "Repair", "Rescue",

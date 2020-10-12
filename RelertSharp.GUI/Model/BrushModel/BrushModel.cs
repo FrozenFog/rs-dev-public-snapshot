@@ -54,6 +54,9 @@ namespace RelertSharp.GUI.Model.BrushModel
                 case MapObjectType.Celltag:
                     BrushObject = new CellTagItem(src as CellTagItem);
                     break;
+                case MapObjectType.LightSource:
+                    BrushObject = new LightSource(src as LightSource);
+                    break;
             }
             GlobalVar.Engine.DrawBrushObject(BrushObject);
             GlobalVar.Engine.SetObjectLightningStandalone(BrushObject.SceneObject);

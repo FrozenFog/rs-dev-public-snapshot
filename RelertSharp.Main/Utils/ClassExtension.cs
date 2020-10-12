@@ -57,7 +57,7 @@ namespace System.Drawing
         }
         public static Size Union(this Size szA, Size szB)
         {
-            Size result = new Size(szA.Width, szB.Height);
+            Size result = new Size(szB.Width, szB.Height);
             if (szA.Width > szB.Width) result.Width = szA.Width;
             if (szA.Height > szB.Height) result.Height = szA.Height;
             return result;
@@ -80,6 +80,18 @@ namespace System.Collections.Generic
             {
                 src[i] = value;
             }
+        }
+        public static string JoinBy<T>(this IEnumerable<T> src, string joint = ",")
+        {
+            string result = "";
+            bool empty = true;
+            foreach (T item in src)
+            {
+                empty = false;
+                result += item.ToString() + joint;
+            }
+            if (!empty) result = result.Substring(0, result.Length - joint.Length);
+            return result;
         }
     }
 
