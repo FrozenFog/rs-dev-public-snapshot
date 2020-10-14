@@ -59,7 +59,7 @@ namespace RelertSharp.Common
     [Flags]
     public enum MapObjectType
     {
-        Undefined = -1,
+        Undefined = 0,
 
         Building = 1,
         Vehicle = 2,

@@ -341,7 +341,6 @@ namespace RelertSharp.GUI
                 LmbDoubleClicked(e);
             }
         }
-
         private void bgwDraw_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;

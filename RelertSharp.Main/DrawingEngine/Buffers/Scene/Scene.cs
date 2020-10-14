@@ -14,19 +14,6 @@ namespace RelertSharp.DrawingEngine
             #endregion
 
 
-            #region Private Methods - CScene
-            #endregion
-
-
-            #region Public Methods - CScene
-
-            #region Lightnings
-            #endregion
-
-
-            #region Mark
-
-            #endregion
 
 
             #region ViewPort
@@ -39,12 +26,6 @@ namespace RelertSharp.DrawingEngine
                 RectangleLines.Clear();
             }
             #endregion
-            #endregion
-
-
-            #region Private Methods - Scene
-            #endregion
-
 
             #region Public Calls - Scene
             public List<int> RectangleLines { get; private set; } = new List<int>();

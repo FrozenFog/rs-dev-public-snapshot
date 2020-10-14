@@ -32,10 +32,12 @@ namespace RelertSharp.GUI
         private const string BtnNameTileBrush = "tilebrush";
         private const string BtnNameTileWand = "wand";
         private const string BtnNameTileBucket = "bucket";
+        private const string BtnNameLight = "light";
         private const string CkbNameFramework = "framework";
         private const string CkbNameFlat = "flatground";
         private const string CkbNameLAT = "lat";
-        private readonly string[] ToolsButton = { BtnNameArrow, BtnNameBrush, BtnNameMove, BtnNameSelect, BtnNameAttribute, BtnNameTileBrush, BtnNameTileSele, BtnNameTileWand, BtnNameTileBucket };
+        private readonly HashSet<string> ToolsButton = new HashSet<string>()
+        { BtnNameArrow, BtnNameBrush, BtnNameMove, BtnNameSelect, BtnNameAttribute, BtnNameTileBrush, BtnNameTileSele, BtnNameTileWand, BtnNameTileBucket, BtnNameLight};
 
 
         private void ToolBoxClick(ToolStripButton btn)

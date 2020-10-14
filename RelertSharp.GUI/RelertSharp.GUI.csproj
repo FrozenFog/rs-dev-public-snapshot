@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>RelertSharp.GUI</RootNamespace>
     <AssemblyName>RelertSharp</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -171,22 +171,28 @@
     <Compile Include="Controls\PickPanel\WaypointObject.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\RbBrushPanel.cs">
+    <Compile Include="Controls\RbPanel\RbBrushPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\RbBrushPanel.Designer.cs">
+    <Compile Include="Controls\RbPanel\RbBrushPanel.Designer.cs">
       <DependentUpon>RbBrushPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RbPanelBucket.cs">
+    <Compile Include="Controls\RbPanel\RbPanelBucket.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\RbPanelBucket.Designer.cs">
+    <Compile Include="Controls\RbPanel\RbPanelBucket.Designer.cs">
       <DependentUpon>RbPanelBucket.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RbPanelWand.cs">
+    <Compile Include="Controls\RbPanel\RbPanelLightRoom.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\RbPanelWand.Designer.cs">
+    <Compile Include="Controls\RbPanel\RbPanelLightRoom.Designer.cs">
+      <DependentUpon>RbPanelLightRoom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RbPanel\RbPanelWand.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RbPanel\RbPanelWand.Designer.cs">
       <DependentUpon>RbPanelWand.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\RsForm.cs">
@@ -312,10 +318,10 @@
     <Compile Include="MainWindow\Viewport.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\RbPanelBase.cs">
+    <Compile Include="Controls\RbPanel\RbPanelBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\RbPanelBase.Designer.cs">
+    <Compile Include="Controls\RbPanel\RbPanelBase.Designer.cs">
       <DependentUpon>RbPanelBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\BrushModel\BrushModel.cs" />
@@ -327,10 +333,10 @@
     <Compile Include="Model\UndoRedo\UndoRedoCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controls\RbPanelAttribute.cs">
+    <Compile Include="Controls\RbPanel\RbPanelAttribute.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\RbPanelAttribute.Designer.cs">
+    <Compile Include="Controls\RbPanel\RbPanelAttribute.Designer.cs">
       <DependentUpon>RbPanelAttribute.cs</DependentUpon>
     </Compile>
     <Compile Include="SubWindows\INIComparator.cs">
@@ -464,13 +470,16 @@
     <EmbeddedResource Include="Controls\PickPanel\PickPanel.resx">
       <DependentUpon>PickPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RbBrushPanel.resx">
+    <EmbeddedResource Include="Controls\RbPanel\RbBrushPanel.resx">
       <DependentUpon>RbBrushPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RbPanelBucket.resx">
+    <EmbeddedResource Include="Controls\RbPanel\RbPanelBucket.resx">
       <DependentUpon>RbPanelBucket.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RbPanelWand.resx">
+    <EmbeddedResource Include="Controls\RbPanel\RbPanelLightRoom.resx">
+      <DependentUpon>RbPanelLightRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RbPanel\RbPanelWand.resx">
       <DependentUpon>RbPanelWand.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TilePanel\TilePanel.resx">
@@ -503,7 +512,7 @@
     <EmbeddedResource Include="MainWindow\Sub\UnitAttributeForm.resx">
       <DependentUpon>UnitAttributeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RbPanelBase.resx">
+    <EmbeddedResource Include="Controls\RbPanel\RbPanelBase.resx">
       <DependentUpon>RbPanelBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -516,7 +525,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Controls\RbPanelAttribute.resx">
+    <EmbeddedResource Include="Controls\RbPanel\RbPanelAttribute.resx">
       <DependentUpon>RbPanelAttribute.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\INIComparator.resx">

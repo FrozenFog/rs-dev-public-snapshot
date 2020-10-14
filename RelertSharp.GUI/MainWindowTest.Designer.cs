@@ -48,8 +48,8 @@
             this.toolBtnAttributeBrush = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolBtnFramework = new System.Windows.Forms.ToolStripButton();
-            this.toolBtnFlatGround = new System.Windows.Forms.ToolStripButton();
             this.toolBtnLAT = new System.Windows.Forms.ToolStripButton();
+            this.toolBtnFlatGround = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolBtnTileBrush = new System.Windows.Forms.ToolStripButton();
             this.toolBtnTileSele = new System.Windows.Forms.ToolStripButton();
@@ -134,6 +134,7 @@
             this.lblSubcell = new System.Windows.Forms.Label();
             this.mnsMain = new System.Windows.Forms.MenuStrip();
             this.filesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiOpenMap = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMainSaveMapAs = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCheckMap = new System.Windows.Forms.ToolStripMenuItem();
             this.testingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -142,7 +143,6 @@
             this.tsmiMainDevMode = new System.Windows.Forms.ToolStripMenuItem();
             this.bgwMonitor = new System.ComponentModel.BackgroundWorker();
             this.tmrAutosave = new System.Windows.Forms.Timer(this.components);
-            this.tsmiOpenMap = new System.Windows.Forms.ToolStripMenuItem();
             this.panelHost.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
@@ -184,7 +184,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(13, 32);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 29);
             this.button1.TabIndex = 1;
@@ -318,8 +318,8 @@
             this.toolBtnAttributeBrush,
             this.toolStripSeparator2,
             this.toolBtnFramework,
-            this.toolBtnFlatGround,
             this.toolBtnLAT,
+            this.toolBtnFlatGround,
             this.toolStripSeparator3,
             this.toolBtnTileBrush,
             this.toolBtnTileSele,
@@ -416,18 +416,6 @@
             this.toolBtnFramework.Text = "RSMainToolBtnFramework";
             this.toolBtnFramework.Click += new System.EventHandler(this.ToolBtnCheckClick);
             // 
-            // toolBtnFlatGround
-            // 
-            this.toolBtnFlatGround.CheckOnClick = true;
-            this.toolBtnFlatGround.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolBtnFlatGround.Image = global::RelertSharp.GUI.Properties.Resources.btnFlat;
-            this.toolBtnFlatGround.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolBtnFlatGround.Name = "toolBtnFlatGround";
-            this.toolBtnFlatGround.Size = new System.Drawing.Size(27, 24);
-            this.toolBtnFlatGround.Tag = "flatground";
-            this.toolBtnFlatGround.Text = "RSMainToolBtnFlatGround";
-            this.toolBtnFlatGround.Click += new System.EventHandler(this.ToolBtnCheckClick);
-            // 
             // toolBtnLAT
             // 
             this.toolBtnLAT.Checked = true;
@@ -441,6 +429,18 @@
             this.toolBtnLAT.Tag = "lat";
             this.toolBtnLAT.Text = "RSMainToolBtnLAT";
             this.toolBtnLAT.Click += new System.EventHandler(this.ToolBtnCheckClick);
+            // 
+            // toolBtnFlatGround
+            // 
+            this.toolBtnFlatGround.CheckOnClick = true;
+            this.toolBtnFlatGround.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolBtnFlatGround.Image = global::RelertSharp.GUI.Properties.Resources.btnFlat;
+            this.toolBtnFlatGround.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBtnFlatGround.Name = "toolBtnFlatGround";
+            this.toolBtnFlatGround.Size = new System.Drawing.Size(27, 24);
+            this.toolBtnFlatGround.Tag = "flatground";
+            this.toolBtnFlatGround.Text = "RSMainToolBtnFlatGround";
+            this.toolBtnFlatGround.Click += new System.EventHandler(this.ToolBtnCheckClick);
             // 
             // toolStripSeparator3
             // 
@@ -1294,7 +1294,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(259, 251);
+            this.tabPage2.Size = new System.Drawing.Size(192, 251);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1441,7 +1441,7 @@
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.Location = new System.Drawing.Point(1043, 32);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(100, 29);
             this.button2.TabIndex = 5;
@@ -1453,7 +1453,7 @@
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button3.Location = new System.Drawing.Point(1149, 32);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(100, 29);
             this.button3.TabIndex = 6;
@@ -1557,17 +1557,24 @@
             this.filesToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.filesToolStripMenuItem.Text = "Files";
             // 
+            // tsmiOpenMap
+            // 
+            this.tsmiOpenMap.Name = "tsmiOpenMap";
+            this.tsmiOpenMap.Size = new System.Drawing.Size(193, 26);
+            this.tsmiOpenMap.Text = "Open map...";
+            this.tsmiOpenMap.Click += new System.EventHandler(this.tsmiOpenMap_Click);
+            // 
             // tsmiMainSaveMapAs
             // 
             this.tsmiMainSaveMapAs.Name = "tsmiMainSaveMapAs";
-            this.tsmiMainSaveMapAs.Size = new System.Drawing.Size(224, 26);
+            this.tsmiMainSaveMapAs.Size = new System.Drawing.Size(193, 26);
             this.tsmiMainSaveMapAs.Text = "Save map as...";
             this.tsmiMainSaveMapAs.Click += new System.EventHandler(this.tsmiMainSaveMapAs_Click);
             // 
             // tsmiCheckMap
             // 
             this.tsmiCheckMap.Name = "tsmiCheckMap";
-            this.tsmiCheckMap.Size = new System.Drawing.Size(224, 26);
+            this.tsmiCheckMap.Size = new System.Drawing.Size(193, 26);
             this.tsmiCheckMap.Text = "Check map";
             this.tsmiCheckMap.Click += new System.EventHandler(this.tsmiCheckMap_Click);
             // 
@@ -1612,13 +1619,6 @@
             // 
             this.tmrAutosave.Tick += new System.EventHandler(this.tmrAutosave_Tick);
             // 
-            // tsmiOpenMap
-            // 
-            this.tsmiOpenMap.Name = "tsmiOpenMap";
-            this.tsmiOpenMap.Size = new System.Drawing.Size(224, 26);
-            this.tsmiOpenMap.Text = "Open map...";
-            this.tsmiOpenMap.Click += new System.EventHandler(this.tsmiOpenMap_Click);
-            // 
             // MainWindowTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1635,7 +1635,7 @@
             this.Controls.Add(this.button1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mnsMain;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainWindowTest";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RSMainTitle";
