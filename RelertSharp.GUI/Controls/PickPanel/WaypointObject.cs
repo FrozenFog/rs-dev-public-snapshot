@@ -19,7 +19,7 @@ namespace RelertSharp.GUI.Controls
         }
         private void LoadWaypointAll()
         {
-            lbxWaypoint.LoadAs(CurrentMapDocument.Map.Waypoints);
+            lbxWaypoint.LoadAs(Map.Waypoints);
         }
 
 

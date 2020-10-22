@@ -19,8 +19,7 @@ namespace RelertSharp.MapStructure
         }
         public void AddBaseNode(IMapObject obj, string ownerHouse)
         {
-            BaseNode node = obj as BaseNode;
-            if (node != null) Houses.GetHouse(ownerHouse)?.BaseNodes.Add(node);
+            if (obj is BaseNode node) Houses.GetHouse(ownerHouse)?.BaseNodes.Add(node);
         }
     }
 }

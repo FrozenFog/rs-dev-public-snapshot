@@ -110,6 +110,10 @@ namespace RelertSharp.MapStructure.Points
             string value = SaveData.JoinBy();
             return new INIPair(Name, value);
         }
+        public override string ToString()
+        {
+            return string.Format("{0}: {1}, {2}", Name, X, Y);
+        }
         #endregion
 
 

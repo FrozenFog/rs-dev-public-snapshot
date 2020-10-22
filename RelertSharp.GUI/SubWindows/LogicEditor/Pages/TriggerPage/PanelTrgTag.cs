@@ -212,8 +212,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             if (!isControlRefreshing && CurrentTrigger != null && CurrentTag != null)
             {
-                TriggerItem trg = cbbAttatchedTrg.SelectedItem as TriggerItem;
-                if (trg != null)
+                if (cbbAttatchedTrg.SelectedItem is TriggerItem trg)
                 {
                     CurrentTrigger.LinkedWith = trg.ID;
                     lklTraceTrigger.Enabled = trg.ID != "<none>";
@@ -258,8 +257,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             if (CurrentTrigger != null && CurrentTag != null)
             {
-                TriggerItem asso = cbbAttatchedTrg.SelectedItem as TriggerItem;
-                if (asso != null) OnTraceFired(asso);
+                if (cbbAttatchedTrg.SelectedItem is TriggerItem asso) OnTraceFired(asso);
             }
         }
 

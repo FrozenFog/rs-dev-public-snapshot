@@ -60,8 +60,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         }
         protected virtual void OnSoundPlaying()
         {
-            TechnoPair p = cbbParam.SelectedItem as TechnoPair;
-            if (p != null)
+            if (cbbParam.SelectedItem is TechnoPair p)
             {
                 NeedPlayingSound?.Invoke(this, CurrentDesc.Parameters[0], p);
             }
@@ -201,8 +200,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
                 else
                 {
                     ComboBox cbb = sender as ComboBox;
-                    TechnoPair p = cbb.SelectedItem as TechnoPair;
-                    if (p != null)
+                    if (cbb.SelectedItem is TechnoPair p)
                     {
                         CurrentScript.ActionValue = p.Index;
                     }

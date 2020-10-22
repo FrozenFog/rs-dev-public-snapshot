@@ -213,8 +213,7 @@ namespace RelertSharp.GUI.SubWindows.LogicEditor
         {
             if (!isControlRefreshing)
             {
-                TechnoPair p = cbbTaskType.SelectedItem as TechnoPair;
-                if (p != null && CurrentUnit != null)
+                if (cbbTaskType.SelectedItem is TechnoPair p && CurrentUnit != null)
                 {
                     CurrentUnit.RegName = p.RegName;
                     GetPcx(CurrentUnit.RegName);

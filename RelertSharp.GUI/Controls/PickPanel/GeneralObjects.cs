@@ -220,9 +220,6 @@ namespace RelertSharp.GUI.Controls
         }
         private void CreateInnerBuilding(string regname)
         {
-            TechnoPair p1 = cbbUpg1.SelectedItem as TechnoPair;
-            TechnoPair p2 = cbbUpg2.SelectedItem as TechnoPair;
-            TechnoPair p3 = cbbUpg3.SelectedItem as TechnoPair;
             InnerSource = new StructureItem(regname)
             {
                 AIRepairable = ckbRepair.Checked,
@@ -230,9 +227,9 @@ namespace RelertSharp.GUI.Controls
                 BuildingOnline = ckbPowered.Checked,
                 SpotlightType = (BuildingSpotlightType)cbbSpotlight.SelectedIndex,
                 UpgradeNum = mtxbUpgNum.TrimValue(0, 3),
-                Upgrade1 = p1 != null ? p1.Index : "None",
-                Upgrade2 = p2 != null ? p2.Index : "None",
-                Upgrade3 = p3 != null ? p3.Index : "None",
+                Upgrade1 = cbbUpg1.SelectedItem is TechnoPair p1 ? p1.Index : "None",
+                Upgrade2 = cbbUpg2.SelectedItem is TechnoPair p2 ? p2.Index : "None",
+                Upgrade3 = cbbUpg3.SelectedItem is TechnoPair p3 ? p3.Index : "None",
             };
             ApplyGeneralAttribute();
         }
@@ -267,13 +264,11 @@ namespace RelertSharp.GUI.Controls
             if ((InnerSource as ICombatObject) != null)
             {
                 ICombatObject src = InnerSource as ICombatObject;
-                HouseItem house = cbbOwner.SelectedItem as HouseItem;
-                TagItem tag = cbbAttTag.SelectedItem as TagItem;
-                src.OwnerHouse = house != null ? house.Name : CurrentMapDocument.Map.Houses.First().Name;
+                src.OwnerHouse = cbbOwner.SelectedItem is HouseItem house ? house.Name : CurrentMapDocument.Map.Houses.First().Name;
                 src.HealthPoint = mtxbHp.TrimValue(1, 256);
                 src.VeterancyPercentage = mtxbVeteran.TrimValue(0, 200);
                 src.Rotation = mtxbFacing.TrimValue(0, 256);
-                src.TaggedTrigger = tag != null ? tag.ID : "None";
+                src.TaggedTrigger = cbbAttTag.SelectedItem is TagItem tag ? tag.ID : "None";
                 src.Status = cbbStat.Text;
                 src.Group = txbGroup.ParseInt(-1);
             }

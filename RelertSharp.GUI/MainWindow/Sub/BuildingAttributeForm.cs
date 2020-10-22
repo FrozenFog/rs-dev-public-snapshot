@@ -126,8 +126,7 @@ namespace RelertSharp.GUI
         {
             if (initialized)
             {
-                TechnoPair p = cbbUpg1.SelectedItem as TechnoPair;
-                if (p != null) budhost.Upgrade1 = p.Index;
+                if (cbbUpg1.SelectedItem is TechnoPair p) budhost.Upgrade1 = p.Index;
             }
         }
 
@@ -135,8 +134,7 @@ namespace RelertSharp.GUI
         {
             if (initialized)
             {
-                TechnoPair p = cbbUpg2.SelectedItem as TechnoPair;
-                if (p != null) budhost.Upgrade2 = p.Index;
+                if (cbbUpg2.SelectedItem is TechnoPair p) budhost.Upgrade2 = p.Index;
             }
         }
 
@@ -144,8 +142,7 @@ namespace RelertSharp.GUI
         {
             if (initialized)
             {
-                TechnoPair p = cbbUpg3.SelectedItem as TechnoPair;
-                if (p != null) budhost.Upgrade3 = p.Index;
+                if (cbbUpg3.SelectedItem is TechnoPair p) budhost.Upgrade3 = p.Index;
             }
         }
 

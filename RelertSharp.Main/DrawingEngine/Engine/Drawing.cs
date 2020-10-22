@@ -414,7 +414,6 @@ namespace RelertSharp.DrawingEngine
                     dest.pTurret = turId;
                     dest.pTurretShadow = turShadow;
                 }
-                SetVxlZAdjust(dest.pSelf, dest.pSelfShadow, dest.pTurret, dest.pTurretShadow, dest.pBarrel, dest.pBarrelShadow);
             }
             else
             {

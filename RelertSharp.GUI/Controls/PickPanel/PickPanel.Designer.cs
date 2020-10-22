@@ -122,6 +122,8 @@
             this.tsmiRemoveSelNode = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRemoveAllNodes = new System.Windows.Forms.ToolStripMenuItem();
             this.cbbNodeHouse = new System.Windows.Forms.ComboBox();
+            this.tbpLightSource = new System.Windows.Forms.TabPage();
+            this.lbxLightSource = new System.Windows.Forms.ListBox();
             this.cmsTerrainAddRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTerrAddRnd = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsSmudgeAddRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -154,6 +156,7 @@
             this.tlpCellUtil.SuspendLayout();
             this.tbpBaseNode.SuspendLayout();
             this.cmsNodeUtils.SuspendLayout();
+            this.tbpLightSource.SuspendLayout();
             this.cmsTerrainAddRnd.SuspendLayout();
             this.cmsSmudgeAddRnd.SuspendLayout();
             this.SuspendLayout();
@@ -167,6 +170,7 @@
             this.tbcMain.Controls.Add(this.tbpWaypoint);
             this.tbcMain.Controls.Add(this.tbpCelltag);
             this.tbcMain.Controls.Add(this.tbpBaseNode);
+            this.tbcMain.Controls.Add(this.tbpLightSource);
             this.tbcMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbcMain.Location = new System.Drawing.Point(0, 0);
             this.tbcMain.Multiline = true;
@@ -1235,6 +1239,26 @@
             this.cbbNodeHouse.TabIndex = 2;
             this.cbbNodeHouse.SelectedIndexChanged += new System.EventHandler(this.cbbNodeHouse_SelectedIndexChanged);
             // 
+            // tbpLightSource
+            // 
+            this.tbpLightSource.Controls.Add(this.lbxLightSource);
+            this.tbpLightSource.Location = new System.Drawing.Point(4, 67);
+            this.tbpLightSource.Name = "tbpLightSource";
+            this.tbpLightSource.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpLightSource.Size = new System.Drawing.Size(303, 679);
+            this.tbpLightSource.TabIndex = 10;
+            this.tbpLightSource.Text = "Light Sources";
+            this.tbpLightSource.UseVisualStyleBackColor = true;
+            // 
+            // lbxLightSource
+            // 
+            this.lbxLightSource.FormattingEnabled = true;
+            this.lbxLightSource.ItemHeight = 15;
+            this.lbxLightSource.Location = new System.Drawing.Point(90, 201);
+            this.lbxLightSource.Name = "lbxLightSource";
+            this.lbxLightSource.Size = new System.Drawing.Size(116, 214);
+            this.lbxLightSource.TabIndex = 0;
+            // 
             // cmsTerrainAddRnd
             // 
             this.cmsTerrainAddRnd.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -1309,6 +1333,7 @@
             this.tlpCellUtil.PerformLayout();
             this.tbpBaseNode.ResumeLayout(false);
             this.cmsNodeUtils.ResumeLayout(false);
+            this.tbpLightSource.ResumeLayout(false);
             this.cmsTerrainAddRnd.ResumeLayout(false);
             this.cmsSmudgeAddRnd.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -1414,5 +1439,7 @@
         private System.Windows.Forms.RadioButton rdbWpNone;
         private System.Windows.Forms.RadioButton rdbWpDesignated;
         private System.Windows.Forms.RadioButton rdbWpNum;
+        private System.Windows.Forms.TabPage tbpLightSource;
+        private System.Windows.Forms.ListBox lbxLightSource;
     }
 }

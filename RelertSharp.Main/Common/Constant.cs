@@ -217,6 +217,9 @@ namespace RelertSharp.Common
             {
                 public const float HiBridgeZAdjust = -60;
                 public const float Shadow = 1;
+                public const float VxlSelf = -1;
+                public const float VxlBarrel = -3;
+                public const float VxlTurret = -2;
                 public const float Waypoint = -100f;
                 public const float CellTag = -99f;
             }

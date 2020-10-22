@@ -176,8 +176,7 @@ namespace RelertSharp.GUI
         {
             if (initialized)
             {
-                HouseItem h = cbbOwnerHouse.SelectedItem as HouseItem;
-                if (h != null) changer.Host.OwnerHouse = h.ID;
+                if (cbbOwnerHouse.SelectedItem is HouseItem h) changer.Host.OwnerHouse = h.ID;
             }
         }
 
@@ -255,8 +254,7 @@ namespace RelertSharp.GUI
         {
             if (initialized)
             {
-                TagItem tag = cbbTags.SelectedItem as TagItem;
-                if (tag != null) changer.Host.TaggedTrigger = tag.ID;
+                if (cbbTags.SelectedItem is TagItem tag) changer.Host.TaggedTrigger = tag.ID;
             }
         }
 

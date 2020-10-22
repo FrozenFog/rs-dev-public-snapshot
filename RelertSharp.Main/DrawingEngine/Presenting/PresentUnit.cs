@@ -94,6 +94,9 @@ namespace RelertSharp.DrawingEngine.Presenting
             CppExtern.ObjectUtils.SetObjectZAdjust(pSelfShadow, zAdjust);
             CppExtern.ObjectUtils.SetObjectZAdjust(pTurretShadow, zAdjust);
             CppExtern.ObjectUtils.SetObjectZAdjust(pBarrelShadow, zAdjust);
+            CppExtern.ObjectUtils.SetObjectZAdjust(pSelf, Constant.DrawingEngine.ZAdjust.VxlSelf);
+            CppExtern.ObjectUtils.SetObjectZAdjust(pTurret, Constant.DrawingEngine.ZAdjust.VxlTurret);
+            CppExtern.ObjectUtils.SetObjectZAdjust(pBarrel, Constant.DrawingEngine.ZAdjust.VxlBarrel);
         }
         #endregion
 
