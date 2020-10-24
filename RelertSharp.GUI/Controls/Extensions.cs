@@ -310,6 +310,14 @@ namespace System.Windows.Forms
             }
             return floor;
         }
+        public static int Int(this NumericUpDown src)
+        {
+            return (int)src.Value;
+        }
+        public static float Float(this NumericUpDown src)
+        {
+            return (float)src.Value;
+        }
         #endregion
 
 
@@ -393,6 +401,18 @@ namespace System.Windows.Forms
         public static T SelectedItem<T>(this ListView src) where T : ListViewItem
         {
             if (src.SelectedItems.Count > 0 && src.SelectedItems[0] is ListViewItem lvi) return (T)lvi;
+            return null;
+        }
+        #endregion
+
+
+        #region Panel
+        public static T FirstChild<T>(this Panel src, Func<Control, bool> predicate) where T : Control
+        {
+            foreach (Control c in src.Controls)
+            {
+                if (predicate(c)) return c as T;
+            }
             return null;
         }
         #endregion

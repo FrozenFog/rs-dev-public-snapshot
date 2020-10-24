@@ -28,6 +28,7 @@ namespace RelertSharp.GUI.Model
             TileBrush = 1 << 6,
             TileWand = 1 << 7,
             TileBucket = 1 << 8,
+            Lightroom = 1 << 9,
 
 
             None = 0,

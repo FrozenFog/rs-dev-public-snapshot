@@ -142,11 +142,6 @@ namespace RelertSharp.GUI
             ApplyLightning(color);
             UpdateLightningSide(color, enable);
         }
-        private void Panelchecker_CheckedChanged0(object sender, EventArgs e)
-        {
-            Panel parent = (Panel)((CheckBox)sender).Parent;
-            parent.Controls[0].Visible = ((CheckBox)sender).Checked;
-        }
 
         private void ckbLightningType_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -352,8 +347,8 @@ namespace RelertSharp.GUI
             rbPanelBrush.Initialize();
             rbPanelWand.Initialize();
             rbPanelBucket.Initialize();
+            rbPanelLightRoom.Initialize();
             drew = true;
-            
         }
 
         private void bgwDraw_ProgressChanged(object sender, ProgressChangedEventArgs e)

@@ -63,7 +63,10 @@ namespace RelertSharp.MapStructure.Points
 
     public class PointItemBase : I2dLocateable
     {
-        public PointItemBase() { }
+        public PointItemBase()
+        {
+
+        }
         public PointItemBase(string _coord)
         {
             Coord = int.Parse(_coord);

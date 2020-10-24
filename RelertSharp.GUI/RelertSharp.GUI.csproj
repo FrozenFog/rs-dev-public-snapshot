@@ -153,9 +153,6 @@
     <Compile Include="Controls\PickPanel\GeneralObjects.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\PickPanel\LightRoom.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Controls\PickPanel\OverlayObject.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -247,6 +244,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow\ObjectMoving.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sidebar.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow\Sub\AircraftAttributeForm.cs">

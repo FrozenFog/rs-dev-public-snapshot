@@ -32,7 +32,7 @@ namespace RelertSharp.GUI
         private const string BtnNameTileBrush = "tilebrush";
         private const string BtnNameTileWand = "wand";
         private const string BtnNameTileBucket = "bucket";
-        private const string BtnNameLight = "light";
+        private const string BtnNameLight = "lightroom";
         private const string CkbNameFramework = "framework";
         private const string CkbNameFlat = "flatground";
         private const string CkbNameLAT = "lat";
@@ -107,6 +107,10 @@ namespace RelertSharp.GUI
                 case BtnNameTileBucket:
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.TileBucket;
                     GlobalVar.Engine.UnmarkAllTile();
+                    GlobalVar.Engine.Refresh();
+                    break;
+                case BtnNameLight:
+                    Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.Lightroom;
                     GlobalVar.Engine.Refresh();
                     break;
             }

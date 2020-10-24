@@ -122,8 +122,6 @@
             this.tsmiRemoveSelNode = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRemoveAllNodes = new System.Windows.Forms.ToolStripMenuItem();
             this.cbbNodeHouse = new System.Windows.Forms.ComboBox();
-            this.tbpLightSource = new System.Windows.Forms.TabPage();
-            this.lbxLightSource = new System.Windows.Forms.ListBox();
             this.cmsTerrainAddRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiTerrAddRnd = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsSmudgeAddRnd = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -156,7 +154,6 @@
             this.tlpCellUtil.SuspendLayout();
             this.tbpBaseNode.SuspendLayout();
             this.cmsNodeUtils.SuspendLayout();
-            this.tbpLightSource.SuspendLayout();
             this.cmsTerrainAddRnd.SuspendLayout();
             this.cmsSmudgeAddRnd.SuspendLayout();
             this.SuspendLayout();
@@ -170,9 +167,9 @@
             this.tbcMain.Controls.Add(this.tbpWaypoint);
             this.tbcMain.Controls.Add(this.tbpCelltag);
             this.tbcMain.Controls.Add(this.tbpBaseNode);
-            this.tbcMain.Controls.Add(this.tbpLightSource);
             this.tbcMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbcMain.Location = new System.Drawing.Point(0, 0);
+            this.tbcMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbcMain.Multiline = true;
             this.tbcMain.Name = "tbcMain";
             this.tbcMain.SelectedIndex = 0;
@@ -185,8 +182,9 @@
             // 
             this.tbpObject.Controls.Add(this.splitObjects);
             this.tbpObject.Location = new System.Drawing.Point(4, 67);
+            this.tbpObject.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbpObject.Name = "tbpObject";
-            this.tbpObject.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpObject.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbpObject.Size = new System.Drawing.Size(303, 679);
             this.tbpObject.TabIndex = 0;
             this.tbpObject.Text = "General Objects";
@@ -196,7 +194,8 @@
             // 
             this.splitObjects.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitObjects.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitObjects.Location = new System.Drawing.Point(3, 3);
+            this.splitObjects.Location = new System.Drawing.Point(3, 2);
+            this.splitObjects.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.splitObjects.Name = "splitObjects";
             this.splitObjects.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -208,8 +207,8 @@
             // 
             this.splitObjects.Panel2.AutoScroll = true;
             this.splitObjects.Panel2.Controls.Add(this.pnlObjectProp);
-            this.splitObjects.Size = new System.Drawing.Size(297, 673);
-            this.splitObjects.SplitterDistance = 485;
+            this.splitObjects.Size = new System.Drawing.Size(297, 675);
+            this.splitObjects.SplitterDistance = 490;
             this.splitObjects.TabIndex = 1;
             // 
             // trvObject
@@ -220,10 +219,11 @@
             this.trvObject.ImageIndex = 0;
             this.trvObject.ImageList = this.imgMain;
             this.trvObject.Location = new System.Drawing.Point(0, 0);
+            this.trvObject.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.trvObject.Name = "trvObject";
             this.trvObject.SelectedImageIndex = 0;
             this.trvObject.ShowNodeToolTips = true;
-            this.trvObject.Size = new System.Drawing.Size(297, 485);
+            this.trvObject.Size = new System.Drawing.Size(297, 490);
             this.trvObject.TabIndex = 0;
             this.trvObject.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvObject_NodeMouseClick);
             // 
@@ -240,8 +240,9 @@
             this.pnlObjectProp.Controls.Add(this.tlpObjectProps);
             this.pnlObjectProp.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlObjectProp.Location = new System.Drawing.Point(0, 0);
+            this.pnlObjectProp.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlObjectProp.Name = "pnlObjectProp";
-            this.pnlObjectProp.Size = new System.Drawing.Size(276, 527);
+            this.pnlObjectProp.Size = new System.Drawing.Size(276, 489);
             this.pnlObjectProp.TabIndex = 1;
             // 
             // tlpObjectProps
@@ -291,6 +292,7 @@
             this.tlpObjectProps.Controls.Add(this.cbbUpg3, 1, 20);
             this.tlpObjectProps.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpObjectProps.Location = new System.Drawing.Point(0, 0);
+            this.tlpObjectProps.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tlpObjectProps.Name = "tlpObjectProps";
             this.tlpObjectProps.RowCount = 21;
             this.tlpObjectProps.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -314,14 +316,14 @@
             this.tlpObjectProps.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpObjectProps.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpObjectProps.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpObjectProps.Size = new System.Drawing.Size(276, 527);
+            this.tlpObjectProps.Size = new System.Drawing.Size(276, 489);
             this.tlpObjectProps.TabIndex = 0;
             // 
             // label9
             // 
             this.label9.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(51, 7);
+            this.label9.Location = new System.Drawing.Point(51, 6);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(143, 15);
             this.label9.TabIndex = 2;
@@ -331,7 +333,7 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(75, 37);
+            this.label1.Location = new System.Drawing.Point(75, 34);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(119, 15);
             this.label1.TabIndex = 2;
@@ -341,7 +343,7 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(35, 68);
+            this.label2.Location = new System.Drawing.Point(35, 63);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(159, 15);
             this.label2.TabIndex = 2;
@@ -351,7 +353,7 @@
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(27, 99);
+            this.label3.Location = new System.Drawing.Point(27, 92);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(167, 15);
             this.label3.TabIndex = 2;
@@ -361,7 +363,7 @@
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(67, 129);
+            this.label4.Location = new System.Drawing.Point(67, 120);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(127, 15);
             this.label4.TabIndex = 2;
@@ -371,7 +373,7 @@
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(59, 158);
+            this.label5.Location = new System.Drawing.Point(59, 147);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(135, 15);
             this.label5.TabIndex = 2;
@@ -381,7 +383,7 @@
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(51, 188);
+            this.label6.Location = new System.Drawing.Point(51, 175);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(143, 15);
             this.label6.TabIndex = 2;
@@ -391,7 +393,7 @@
             // 
             this.lblBridge.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblBridge.AutoSize = true;
-            this.lblBridge.Location = new System.Drawing.Point(51, 215);
+            this.lblBridge.Location = new System.Drawing.Point(51, 200);
             this.lblBridge.Name = "lblBridge";
             this.lblBridge.Size = new System.Drawing.Size(143, 15);
             this.lblBridge.TabIndex = 2;
@@ -401,7 +403,7 @@
             // 
             this.lblRecruit.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblRecruit.AutoSize = true;
-            this.lblRecruit.Location = new System.Drawing.Point(35, 238);
+            this.lblRecruit.Location = new System.Drawing.Point(35, 221);
             this.lblRecruit.Name = "lblRecruit";
             this.lblRecruit.Size = new System.Drawing.Size(159, 15);
             this.lblRecruit.TabIndex = 2;
@@ -411,7 +413,7 @@
             // 
             this.lblUnitRebuild.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblUnitRebuild.AutoSize = true;
-            this.lblUnitRebuild.Location = new System.Drawing.Point(3, 261);
+            this.lblUnitRebuild.Location = new System.Drawing.Point(3, 242);
             this.lblUnitRebuild.Name = "lblUnitRebuild";
             this.lblUnitRebuild.Size = new System.Drawing.Size(191, 15);
             this.lblUnitRebuild.TabIndex = 2;
@@ -421,7 +423,7 @@
             // 
             this.lblSell.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblSell.AutoSize = true;
-            this.lblSell.Location = new System.Drawing.Point(59, 284);
+            this.lblSell.Location = new System.Drawing.Point(59, 263);
             this.lblSell.Name = "lblSell";
             this.lblSell.Size = new System.Drawing.Size(135, 15);
             this.lblSell.TabIndex = 2;
@@ -431,7 +433,7 @@
             // 
             this.lblFollow.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblFollow.AutoSize = true;
-            this.lblFollow.Location = new System.Drawing.Point(43, 311);
+            this.lblFollow.Location = new System.Drawing.Point(43, 288);
             this.lblFollow.Name = "lblFollow";
             this.lblFollow.Size = new System.Drawing.Size(151, 15);
             this.lblFollow.TabIndex = 2;
@@ -441,7 +443,7 @@
             // 
             this.lblRepair.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblRepair.AutoSize = true;
-            this.lblRepair.Location = new System.Drawing.Point(43, 338);
+            this.lblRepair.Location = new System.Drawing.Point(43, 313);
             this.lblRepair.Name = "lblRepair";
             this.lblRepair.Size = new System.Drawing.Size(151, 15);
             this.lblRepair.TabIndex = 2;
@@ -451,7 +453,7 @@
             // 
             this.lblPower.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblPower.AutoSize = true;
-            this.lblPower.Location = new System.Drawing.Point(51, 361);
+            this.lblPower.Location = new System.Drawing.Point(51, 334);
             this.lblPower.Name = "lblPower";
             this.lblPower.Size = new System.Drawing.Size(143, 15);
             this.lblPower.TabIndex = 2;
@@ -461,7 +463,7 @@
             // 
             this.lblSpotlight.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblSpotlight.AutoSize = true;
-            this.lblSpotlight.Location = new System.Drawing.Point(19, 387);
+            this.lblSpotlight.Location = new System.Drawing.Point(19, 358);
             this.lblSpotlight.Name = "lblSpotlight";
             this.lblSpotlight.Size = new System.Drawing.Size(175, 15);
             this.lblSpotlight.TabIndex = 2;
@@ -471,7 +473,7 @@
             // 
             this.lblUpNum.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblUpNum.AutoSize = true;
-            this.lblUpNum.Location = new System.Drawing.Point(11, 417);
+            this.lblUpNum.Location = new System.Drawing.Point(11, 386);
             this.lblUpNum.Name = "lblUpNum";
             this.lblUpNum.Size = new System.Drawing.Size(183, 15);
             this.lblUpNum.TabIndex = 2;
@@ -481,7 +483,7 @@
             // 
             this.lblUp1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblUp1.AutoSize = true;
-            this.lblUp1.Location = new System.Drawing.Point(67, 447);
+            this.lblUp1.Location = new System.Drawing.Point(67, 414);
             this.lblUp1.Name = "lblUp1";
             this.lblUp1.Size = new System.Drawing.Size(127, 15);
             this.lblUp1.TabIndex = 2;
@@ -491,7 +493,7 @@
             // 
             this.lblUp2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblUp2.AutoSize = true;
-            this.lblUp2.Location = new System.Drawing.Point(67, 476);
+            this.lblUp2.Location = new System.Drawing.Point(67, 441);
             this.lblUp2.Name = "lblUp2";
             this.lblUp2.Size = new System.Drawing.Size(127, 15);
             this.lblUp2.TabIndex = 2;
@@ -501,7 +503,7 @@
             // 
             this.lblUp3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblUp3.AutoSize = true;
-            this.lblUp3.Location = new System.Drawing.Point(67, 505);
+            this.lblUp3.Location = new System.Drawing.Point(67, 468);
             this.lblUp3.Name = "lblUp3";
             this.lblUp3.Size = new System.Drawing.Size(127, 15);
             this.lblUp3.TabIndex = 2;
@@ -512,7 +514,8 @@
             this.cbbOwner.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbbOwner.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbOwner.FormattingEnabled = true;
-            this.cbbOwner.Location = new System.Drawing.Point(200, 3);
+            this.cbbOwner.Location = new System.Drawing.Point(200, 2);
+            this.cbbOwner.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbbOwner.Name = "cbbOwner";
             this.cbbOwner.Size = new System.Drawing.Size(73, 23);
             this.cbbOwner.TabIndex = 3;
@@ -521,7 +524,8 @@
             // mtxbHp
             // 
             this.mtxbHp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mtxbHp.Location = new System.Drawing.Point(200, 32);
+            this.mtxbHp.Location = new System.Drawing.Point(200, 29);
+            this.mtxbHp.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.mtxbHp.Mask = "000";
             this.mtxbHp.Name = "mtxbHp";
             this.mtxbHp.PromptChar = ' ';
@@ -534,7 +538,8 @@
             // mtxbVeteran
             // 
             this.mtxbVeteran.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mtxbVeteran.Location = new System.Drawing.Point(200, 63);
+            this.mtxbVeteran.Location = new System.Drawing.Point(200, 58);
+            this.mtxbVeteran.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.mtxbVeteran.Mask = "000";
             this.mtxbVeteran.Name = "mtxbVeteran";
             this.mtxbVeteran.PromptChar = ' ';
@@ -547,7 +552,8 @@
             // mtxbFacing
             // 
             this.mtxbFacing.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mtxbFacing.Location = new System.Drawing.Point(200, 94);
+            this.mtxbFacing.Location = new System.Drawing.Point(200, 87);
+            this.mtxbFacing.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.mtxbFacing.Name = "mtxbFacing";
             this.mtxbFacing.Size = new System.Drawing.Size(73, 25);
             this.mtxbFacing.TabIndex = 5;
@@ -558,7 +564,8 @@
             // 
             this.cbbAttTag.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbbAttTag.FormattingEnabled = true;
-            this.cbbAttTag.Location = new System.Drawing.Point(200, 125);
+            this.cbbAttTag.Location = new System.Drawing.Point(200, 116);
+            this.cbbAttTag.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbbAttTag.Name = "cbbAttTag";
             this.cbbAttTag.Size = new System.Drawing.Size(73, 23);
             this.cbbAttTag.TabIndex = 3;
@@ -569,7 +576,8 @@
             this.cbbStat.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbbStat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbStat.FormattingEnabled = true;
-            this.cbbStat.Location = new System.Drawing.Point(200, 154);
+            this.cbbStat.Location = new System.Drawing.Point(200, 143);
+            this.cbbStat.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbbStat.Name = "cbbStat";
             this.cbbStat.Size = new System.Drawing.Size(73, 23);
             this.cbbStat.TabIndex = 3;
@@ -578,7 +586,8 @@
             // txbGroup
             // 
             this.txbGroup.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txbGroup.Location = new System.Drawing.Point(200, 183);
+            this.txbGroup.Location = new System.Drawing.Point(200, 170);
+            this.txbGroup.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txbGroup.Name = "txbGroup";
             this.txbGroup.Size = new System.Drawing.Size(73, 25);
             this.txbGroup.TabIndex = 6;
@@ -589,7 +598,8 @@
             // 
             this.ckbBridge.AutoSize = true;
             this.ckbBridge.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ckbBridge.Location = new System.Drawing.Point(200, 214);
+            this.ckbBridge.Location = new System.Drawing.Point(200, 199);
+            this.ckbBridge.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ckbBridge.Name = "ckbBridge";
             this.ckbBridge.Size = new System.Drawing.Size(73, 17);
             this.ckbBridge.TabIndex = 7;
@@ -600,7 +610,8 @@
             // 
             this.ckbRecruit.AutoSize = true;
             this.ckbRecruit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ckbRecruit.Location = new System.Drawing.Point(200, 237);
+            this.ckbRecruit.Location = new System.Drawing.Point(200, 220);
+            this.ckbRecruit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ckbRecruit.Name = "ckbRecruit";
             this.ckbRecruit.Size = new System.Drawing.Size(73, 17);
             this.ckbRecruit.TabIndex = 7;
@@ -613,7 +624,8 @@
             this.ckbUnitRebuild.Checked = true;
             this.ckbUnitRebuild.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckbUnitRebuild.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ckbUnitRebuild.Location = new System.Drawing.Point(200, 260);
+            this.ckbUnitRebuild.Location = new System.Drawing.Point(200, 241);
+            this.ckbUnitRebuild.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ckbUnitRebuild.Name = "ckbUnitRebuild";
             this.ckbUnitRebuild.Size = new System.Drawing.Size(73, 17);
             this.ckbUnitRebuild.TabIndex = 7;
@@ -626,7 +638,8 @@
             this.ckbSell.Checked = true;
             this.ckbSell.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckbSell.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ckbSell.Location = new System.Drawing.Point(200, 283);
+            this.ckbSell.Location = new System.Drawing.Point(200, 262);
+            this.ckbSell.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ckbSell.Name = "ckbSell";
             this.ckbSell.Size = new System.Drawing.Size(73, 17);
             this.ckbSell.TabIndex = 7;
@@ -636,7 +649,8 @@
             // txbFollow
             // 
             this.txbFollow.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txbFollow.Location = new System.Drawing.Point(200, 306);
+            this.txbFollow.Location = new System.Drawing.Point(200, 283);
+            this.txbFollow.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txbFollow.Name = "txbFollow";
             this.txbFollow.Size = new System.Drawing.Size(73, 25);
             this.txbFollow.TabIndex = 6;
@@ -649,7 +663,8 @@
             this.ckbRepair.Checked = true;
             this.ckbRepair.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckbRepair.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ckbRepair.Location = new System.Drawing.Point(200, 337);
+            this.ckbRepair.Location = new System.Drawing.Point(200, 312);
+            this.ckbRepair.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ckbRepair.Name = "ckbRepair";
             this.ckbRepair.Size = new System.Drawing.Size(73, 17);
             this.ckbRepair.TabIndex = 7;
@@ -662,7 +677,8 @@
             this.ckbPowered.Checked = true;
             this.ckbPowered.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckbPowered.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ckbPowered.Location = new System.Drawing.Point(200, 360);
+            this.ckbPowered.Location = new System.Drawing.Point(200, 333);
+            this.ckbPowered.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ckbPowered.Name = "ckbPowered";
             this.ckbPowered.Size = new System.Drawing.Size(73, 17);
             this.ckbPowered.TabIndex = 7;
@@ -674,7 +690,8 @@
             this.cbbSpotlight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbbSpotlight.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbSpotlight.FormattingEnabled = true;
-            this.cbbSpotlight.Location = new System.Drawing.Point(200, 383);
+            this.cbbSpotlight.Location = new System.Drawing.Point(200, 354);
+            this.cbbSpotlight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbbSpotlight.Name = "cbbSpotlight";
             this.cbbSpotlight.Size = new System.Drawing.Size(73, 23);
             this.cbbSpotlight.TabIndex = 3;
@@ -683,7 +700,8 @@
             // mtxbUpgNum
             // 
             this.mtxbUpgNum.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mtxbUpgNum.Location = new System.Drawing.Point(200, 412);
+            this.mtxbUpgNum.Location = new System.Drawing.Point(200, 381);
+            this.mtxbUpgNum.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.mtxbUpgNum.Mask = "0";
             this.mtxbUpgNum.Name = "mtxbUpgNum";
             this.mtxbUpgNum.PromptChar = ' ';
@@ -698,7 +716,8 @@
             // 
             this.cbbUpg1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbbUpg1.FormattingEnabled = true;
-            this.cbbUpg1.Location = new System.Drawing.Point(200, 443);
+            this.cbbUpg1.Location = new System.Drawing.Point(200, 410);
+            this.cbbUpg1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbbUpg1.Name = "cbbUpg1";
             this.cbbUpg1.Size = new System.Drawing.Size(73, 23);
             this.cbbUpg1.TabIndex = 3;
@@ -709,7 +728,8 @@
             // 
             this.cbbUpg2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbbUpg2.FormattingEnabled = true;
-            this.cbbUpg2.Location = new System.Drawing.Point(200, 472);
+            this.cbbUpg2.Location = new System.Drawing.Point(200, 437);
+            this.cbbUpg2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbbUpg2.Name = "cbbUpg2";
             this.cbbUpg2.Size = new System.Drawing.Size(73, 23);
             this.cbbUpg2.TabIndex = 3;
@@ -720,7 +740,8 @@
             // 
             this.cbbUpg3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbbUpg3.FormattingEnabled = true;
-            this.cbbUpg3.Location = new System.Drawing.Point(200, 501);
+            this.cbbUpg3.Location = new System.Drawing.Point(200, 464);
+            this.cbbUpg3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbbUpg3.Name = "cbbUpg3";
             this.cbbUpg3.Size = new System.Drawing.Size(73, 23);
             this.cbbUpg3.TabIndex = 3;
@@ -732,9 +753,10 @@
             this.tbpTerrain.Controls.Add(this.lbxRndTerrain);
             this.tbpTerrain.Controls.Add(this.ckbRndTerrainEnable);
             this.tbpTerrain.Controls.Add(this.trvTerrain);
-            this.tbpTerrain.Location = new System.Drawing.Point(4, 67);
+            this.tbpTerrain.Location = new System.Drawing.Point(4, 25);
+            this.tbpTerrain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbpTerrain.Name = "tbpTerrain";
-            this.tbpTerrain.Size = new System.Drawing.Size(303, 679);
+            this.tbpTerrain.Size = new System.Drawing.Size(303, 721);
             this.tbpTerrain.TabIndex = 4;
             this.tbpTerrain.Text = "Terrains";
             this.tbpTerrain.UseVisualStyleBackColor = true;
@@ -747,7 +769,8 @@
             this.lbxRndTerrain.Enabled = false;
             this.lbxRndTerrain.FormattingEnabled = true;
             this.lbxRndTerrain.ItemHeight = 15;
-            this.lbxRndTerrain.Location = new System.Drawing.Point(3, 552);
+            this.lbxRndTerrain.Location = new System.Drawing.Point(3, 594);
+            this.lbxRndTerrain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lbxRndTerrain.Name = "lbxRndTerrain";
             this.lbxRndTerrain.Size = new System.Drawing.Size(297, 124);
             this.lbxRndTerrain.TabIndex = 3;
@@ -779,7 +802,8 @@
             // 
             this.ckbRndTerrainEnable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ckbRndTerrainEnable.AutoSize = true;
-            this.ckbRndTerrainEnable.Location = new System.Drawing.Point(3, 527);
+            this.ckbRndTerrainEnable.Location = new System.Drawing.Point(3, 569);
+            this.ckbRndTerrainEnable.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ckbRndTerrainEnable.Name = "ckbRndTerrainEnable";
             this.ckbRndTerrainEnable.Size = new System.Drawing.Size(141, 19);
             this.ckbRndTerrainEnable.TabIndex = 2;
@@ -792,9 +816,10 @@
             this.trvTerrain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.trvTerrain.Location = new System.Drawing.Point(3, 3);
+            this.trvTerrain.Location = new System.Drawing.Point(3, 2);
+            this.trvTerrain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.trvTerrain.Name = "trvTerrain";
-            this.trvTerrain.Size = new System.Drawing.Size(297, 456);
+            this.trvTerrain.Size = new System.Drawing.Size(297, 498);
             this.trvTerrain.TabIndex = 0;
             this.trvTerrain.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvTerrain_NodeMouseClick);
             // 
@@ -803,9 +828,10 @@
             this.tbpSmudge.Controls.Add(this.ckbRndSmg);
             this.tbpSmudge.Controls.Add(this.lbxRndSmg);
             this.tbpSmudge.Controls.Add(this.trvSmudge);
-            this.tbpSmudge.Location = new System.Drawing.Point(4, 67);
+            this.tbpSmudge.Location = new System.Drawing.Point(4, 25);
+            this.tbpSmudge.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbpSmudge.Name = "tbpSmudge";
-            this.tbpSmudge.Size = new System.Drawing.Size(303, 679);
+            this.tbpSmudge.Size = new System.Drawing.Size(303, 721);
             this.tbpSmudge.TabIndex = 5;
             this.tbpSmudge.Text = "Smudges";
             this.tbpSmudge.UseVisualStyleBackColor = true;
@@ -814,7 +840,8 @@
             // 
             this.ckbRndSmg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ckbRndSmg.AutoSize = true;
-            this.ckbRndSmg.Location = new System.Drawing.Point(3, 527);
+            this.ckbRndSmg.Location = new System.Drawing.Point(3, 569);
+            this.ckbRndSmg.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ckbRndSmg.Name = "ckbRndSmg";
             this.ckbRndSmg.Size = new System.Drawing.Size(133, 19);
             this.ckbRndSmg.TabIndex = 2;
@@ -830,7 +857,8 @@
             this.lbxRndSmg.Enabled = false;
             this.lbxRndSmg.FormattingEnabled = true;
             this.lbxRndSmg.ItemHeight = 15;
-            this.lbxRndSmg.Location = new System.Drawing.Point(3, 552);
+            this.lbxRndSmg.Location = new System.Drawing.Point(3, 594);
+            this.lbxRndSmg.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lbxRndSmg.Name = "lbxRndSmg";
             this.lbxRndSmg.Size = new System.Drawing.Size(297, 124);
             this.lbxRndSmg.TabIndex = 1;
@@ -863,18 +891,20 @@
             this.trvSmudge.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.trvSmudge.Location = new System.Drawing.Point(3, 3);
+            this.trvSmudge.Location = new System.Drawing.Point(3, 2);
+            this.trvSmudge.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.trvSmudge.Name = "trvSmudge";
-            this.trvSmudge.Size = new System.Drawing.Size(297, 456);
+            this.trvSmudge.Size = new System.Drawing.Size(297, 498);
             this.trvSmudge.TabIndex = 0;
             this.trvSmudge.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvSmudge_NodeMouseClick);
             // 
             // tbpOverlay
             // 
             this.tbpOverlay.Controls.Add(this.splitOverlay);
-            this.tbpOverlay.Location = new System.Drawing.Point(4, 67);
+            this.tbpOverlay.Location = new System.Drawing.Point(4, 46);
+            this.tbpOverlay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbpOverlay.Name = "tbpOverlay";
-            this.tbpOverlay.Size = new System.Drawing.Size(303, 679);
+            this.tbpOverlay.Size = new System.Drawing.Size(303, 700);
             this.tbpOverlay.TabIndex = 6;
             this.tbpOverlay.Text = "Overlays";
             this.tbpOverlay.UseVisualStyleBackColor = true;
@@ -884,6 +914,7 @@
             this.splitOverlay.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitOverlay.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitOverlay.Location = new System.Drawing.Point(0, 0);
+            this.splitOverlay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.splitOverlay.Name = "splitOverlay";
             this.splitOverlay.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -894,8 +925,8 @@
             // splitOverlay.Panel2
             // 
             this.splitOverlay.Panel2.Controls.Add(this.lvOverlayFrames);
-            this.splitOverlay.Size = new System.Drawing.Size(303, 679);
-            this.splitOverlay.SplitterDistance = 348;
+            this.splitOverlay.Size = new System.Drawing.Size(303, 700);
+            this.splitOverlay.SplitterDistance = 372;
             this.splitOverlay.TabIndex = 0;
             // 
             // trvOverlay
@@ -904,8 +935,9 @@
             this.trvOverlay.HideSelection = false;
             this.trvOverlay.HotTracking = true;
             this.trvOverlay.Location = new System.Drawing.Point(0, 0);
+            this.trvOverlay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.trvOverlay.Name = "trvOverlay";
-            this.trvOverlay.Size = new System.Drawing.Size(303, 348);
+            this.trvOverlay.Size = new System.Drawing.Size(303, 372);
             this.trvOverlay.TabIndex = 0;
             this.trvOverlay.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvOverlay_NodeMouseClick);
             // 
@@ -915,9 +947,10 @@
             this.lvOverlayFrames.HideSelection = false;
             this.lvOverlayFrames.LargeImageList = this.imgOverlayFrame;
             this.lvOverlayFrames.Location = new System.Drawing.Point(0, 0);
+            this.lvOverlayFrames.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lvOverlayFrames.MultiSelect = false;
             this.lvOverlayFrames.Name = "lvOverlayFrames";
-            this.lvOverlayFrames.Size = new System.Drawing.Size(303, 327);
+            this.lvOverlayFrames.Size = new System.Drawing.Size(303, 324);
             this.lvOverlayFrames.TabIndex = 0;
             this.lvOverlayFrames.UseCompatibleStateImageBehavior = false;
             this.lvOverlayFrames.SelectedIndexChanged += new System.EventHandler(this.lvOverlayFrames_SelectedIndexChanged);
@@ -932,9 +965,10 @@
             // 
             this.tbpWaypoint.Controls.Add(this.lbxWaypoint);
             this.tbpWaypoint.Controls.Add(this.tlpWpMode);
-            this.tbpWaypoint.Location = new System.Drawing.Point(4, 67);
+            this.tbpWaypoint.Location = new System.Drawing.Point(4, 46);
+            this.tbpWaypoint.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbpWaypoint.Name = "tbpWaypoint";
-            this.tbpWaypoint.Size = new System.Drawing.Size(303, 679);
+            this.tbpWaypoint.Size = new System.Drawing.Size(303, 700);
             this.tbpWaypoint.TabIndex = 7;
             this.tbpWaypoint.Text = "Waypoints";
             this.tbpWaypoint.UseVisualStyleBackColor = true;
@@ -944,9 +978,10 @@
             this.lbxWaypoint.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbxWaypoint.FormattingEnabled = true;
             this.lbxWaypoint.ItemHeight = 15;
-            this.lbxWaypoint.Location = new System.Drawing.Point(0, 75);
+            this.lbxWaypoint.Location = new System.Drawing.Point(0, 69);
+            this.lbxWaypoint.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lbxWaypoint.Name = "lbxWaypoint";
-            this.lbxWaypoint.Size = new System.Drawing.Size(303, 604);
+            this.lbxWaypoint.Size = new System.Drawing.Size(303, 631);
             this.lbxWaypoint.TabIndex = 1;
             this.lbxWaypoint.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxWaypoint_MouseDoubleClick);
             // 
@@ -962,12 +997,13 @@
             this.tlpWpMode.Controls.Add(this.rdbWpNum, 0, 1);
             this.tlpWpMode.Dock = System.Windows.Forms.DockStyle.Top;
             this.tlpWpMode.Location = new System.Drawing.Point(0, 0);
+            this.tlpWpMode.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tlpWpMode.Name = "tlpWpMode";
             this.tlpWpMode.RowCount = 3;
             this.tlpWpMode.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpWpMode.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpWpMode.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpWpMode.Size = new System.Drawing.Size(303, 75);
+            this.tlpWpMode.Size = new System.Drawing.Size(303, 69);
             this.tlpWpMode.TabIndex = 0;
             // 
             // rdbWpNone
@@ -975,7 +1011,8 @@
             this.rdbWpNone.AutoSize = true;
             this.rdbWpNone.Checked = true;
             this.tlpWpMode.SetColumnSpan(this.rdbWpNone, 2);
-            this.rdbWpNone.Location = new System.Drawing.Point(3, 3);
+            this.rdbWpNone.Location = new System.Drawing.Point(3, 2);
+            this.rdbWpNone.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rdbWpNone.Name = "rdbWpNone";
             this.rdbWpNone.Size = new System.Drawing.Size(60, 19);
             this.rdbWpNone.TabIndex = 1;
@@ -988,7 +1025,8 @@
             // rdbWpDesignated
             // 
             this.rdbWpDesignated.AutoSize = true;
-            this.rdbWpDesignated.Location = new System.Drawing.Point(3, 53);
+            this.rdbWpDesignated.Location = new System.Drawing.Point(3, 48);
+            this.rdbWpDesignated.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rdbWpDesignated.Name = "rdbWpDesignated";
             this.rdbWpDesignated.Size = new System.Drawing.Size(140, 19);
             this.rdbWpDesignated.TabIndex = 1;
@@ -1001,7 +1039,8 @@
             // 
             this.rdbWpNum.AutoSize = true;
             this.tlpWpMode.SetColumnSpan(this.rdbWpNum, 2);
-            this.rdbWpNum.Location = new System.Drawing.Point(3, 28);
+            this.rdbWpNum.Location = new System.Drawing.Point(3, 25);
+            this.rdbWpNum.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rdbWpNum.Name = "rdbWpNum";
             this.rdbWpNum.Size = new System.Drawing.Size(252, 19);
             this.rdbWpNum.TabIndex = 1;
@@ -1013,9 +1052,10 @@
             // tbpCelltag
             // 
             this.tbpCelltag.Controls.Add(this.splitBaseNode);
-            this.tbpCelltag.Location = new System.Drawing.Point(4, 67);
+            this.tbpCelltag.Location = new System.Drawing.Point(4, 46);
+            this.tbpCelltag.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbpCelltag.Name = "tbpCelltag";
-            this.tbpCelltag.Size = new System.Drawing.Size(303, 679);
+            this.tbpCelltag.Size = new System.Drawing.Size(303, 700);
             this.tbpCelltag.TabIndex = 8;
             this.tbpCelltag.Text = "Celltags";
             this.tbpCelltag.UseVisualStyleBackColor = true;
@@ -1025,6 +1065,7 @@
             this.splitBaseNode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitBaseNode.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitBaseNode.Location = new System.Drawing.Point(0, 0);
+            this.splitBaseNode.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.splitBaseNode.Name = "splitBaseNode";
             this.splitBaseNode.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -1037,8 +1078,8 @@
             // 
             this.splitBaseNode.Panel2.Controls.Add(this.lbxSameTags);
             this.splitBaseNode.Panel2.Controls.Add(this.tlpCellUtil);
-            this.splitBaseNode.Size = new System.Drawing.Size(303, 679);
-            this.splitBaseNode.SplitterDistance = 335;
+            this.splitBaseNode.Size = new System.Drawing.Size(303, 700);
+            this.splitBaseNode.SplitterDistance = 359;
             this.splitBaseNode.TabIndex = 0;
             // 
             // lbxCelltags
@@ -1048,8 +1089,9 @@
             this.lbxCelltags.FormattingEnabled = true;
             this.lbxCelltags.ItemHeight = 15;
             this.lbxCelltags.Location = new System.Drawing.Point(0, 23);
+            this.lbxCelltags.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lbxCelltags.Name = "lbxCelltags";
-            this.lbxCelltags.Size = new System.Drawing.Size(303, 312);
+            this.lbxCelltags.Size = new System.Drawing.Size(303, 336);
             this.lbxCelltags.TabIndex = 2;
             this.lbxCelltags.SelectedIndexChanged += new System.EventHandler(this.lbxCelltags_SelectedIndexChanged);
             this.lbxCelltags.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxCelltags_MouseDoubleClick);
@@ -1074,6 +1116,7 @@
             this.cbbCelltag.Dock = System.Windows.Forms.DockStyle.Top;
             this.cbbCelltag.FormattingEnabled = true;
             this.cbbCelltag.Location = new System.Drawing.Point(0, 0);
+            this.cbbCelltag.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbbCelltag.Name = "cbbCelltag";
             this.cbbCelltag.Size = new System.Drawing.Size(303, 23);
             this.cbbCelltag.TabIndex = 1;
@@ -1084,9 +1127,10 @@
             this.lbxSameTags.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbxSameTags.FormattingEnabled = true;
             this.lbxSameTags.ItemHeight = 15;
-            this.lbxSameTags.Location = new System.Drawing.Point(0, 37);
+            this.lbxSameTags.Location = new System.Drawing.Point(0, 36);
+            this.lbxSameTags.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lbxSameTags.Name = "lbxSameTags";
-            this.lbxSameTags.Size = new System.Drawing.Size(303, 303);
+            this.lbxSameTags.Size = new System.Drawing.Size(303, 301);
             this.lbxSameTags.Sorted = true;
             this.lbxSameTags.TabIndex = 1;
             this.lbxSameTags.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxCelltags_MouseDoubleClick);
@@ -1102,18 +1146,20 @@
             this.tlpCellUtil.Controls.Add(this.label7, 0, 0);
             this.tlpCellUtil.Dock = System.Windows.Forms.DockStyle.Top;
             this.tlpCellUtil.Location = new System.Drawing.Point(0, 0);
+            this.tlpCellUtil.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tlpCellUtil.Name = "tlpCellUtil";
             this.tlpCellUtil.RowCount = 1;
             this.tlpCellUtil.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpCellUtil.Size = new System.Drawing.Size(303, 37);
+            this.tlpCellUtil.Size = new System.Drawing.Size(303, 36);
             this.tlpCellUtil.TabIndex = 0;
             // 
             // btnSelectAllSameCell
             // 
             this.btnSelectAllSameCell.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSelectAllSameCell.Location = new System.Drawing.Point(179, 3);
+            this.btnSelectAllSameCell.Location = new System.Drawing.Point(179, 2);
+            this.btnSelectAllSameCell.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSelectAllSameCell.Name = "btnSelectAllSameCell";
-            this.btnSelectAllSameCell.Size = new System.Drawing.Size(121, 31);
+            this.btnSelectAllSameCell.Size = new System.Drawing.Size(121, 32);
             this.btnSelectAllSameCell.TabIndex = 1;
             this.btnSelectAllSameCell.Text = "Select All";
             this.btnSelectAllSameCell.UseVisualStyleBackColor = true;
@@ -1125,7 +1171,7 @@
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label7.Location = new System.Drawing.Point(3, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(170, 37);
+            this.label7.Size = new System.Drawing.Size(170, 36);
             this.label7.TabIndex = 0;
             this.label7.Text = "Tag also used by:";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1135,6 +1181,7 @@
             this.tbpBaseNode.Controls.Add(this.lbxNodes);
             this.tbpBaseNode.Controls.Add(this.cbbNodeHouse);
             this.tbpBaseNode.Location = new System.Drawing.Point(4, 67);
+            this.tbpBaseNode.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbpBaseNode.Name = "tbpBaseNode";
             this.tbpBaseNode.Size = new System.Drawing.Size(303, 679);
             this.tbpBaseNode.TabIndex = 9;
@@ -1148,6 +1195,7 @@
             this.lbxNodes.FormattingEnabled = true;
             this.lbxNodes.ItemHeight = 15;
             this.lbxNodes.Location = new System.Drawing.Point(0, 23);
+            this.lbxNodes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lbxNodes.Name = "lbxNodes";
             this.lbxNodes.Size = new System.Drawing.Size(303, 656);
             this.lbxNodes.TabIndex = 3;
@@ -1234,30 +1282,11 @@
             this.cbbNodeHouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbNodeHouse.FormattingEnabled = true;
             this.cbbNodeHouse.Location = new System.Drawing.Point(0, 0);
+            this.cbbNodeHouse.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbbNodeHouse.Name = "cbbNodeHouse";
             this.cbbNodeHouse.Size = new System.Drawing.Size(303, 23);
             this.cbbNodeHouse.TabIndex = 2;
             this.cbbNodeHouse.SelectedIndexChanged += new System.EventHandler(this.cbbNodeHouse_SelectedIndexChanged);
-            // 
-            // tbpLightSource
-            // 
-            this.tbpLightSource.Controls.Add(this.lbxLightSource);
-            this.tbpLightSource.Location = new System.Drawing.Point(4, 67);
-            this.tbpLightSource.Name = "tbpLightSource";
-            this.tbpLightSource.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpLightSource.Size = new System.Drawing.Size(303, 679);
-            this.tbpLightSource.TabIndex = 10;
-            this.tbpLightSource.Text = "Light Sources";
-            this.tbpLightSource.UseVisualStyleBackColor = true;
-            // 
-            // lbxLightSource
-            // 
-            this.lbxLightSource.FormattingEnabled = true;
-            this.lbxLightSource.ItemHeight = 15;
-            this.lbxLightSource.Location = new System.Drawing.Point(90, 201);
-            this.lbxLightSource.Name = "lbxLightSource";
-            this.lbxLightSource.Size = new System.Drawing.Size(116, 214);
-            this.lbxLightSource.TabIndex = 0;
             // 
             // cmsTerrainAddRnd
             // 
@@ -1294,6 +1323,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tbcMain);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "PickPanel";
             this.Size = new System.Drawing.Size(311, 750);
             this.tbcMain.ResumeLayout(false);
@@ -1333,7 +1363,6 @@
             this.tlpCellUtil.PerformLayout();
             this.tbpBaseNode.ResumeLayout(false);
             this.cmsNodeUtils.ResumeLayout(false);
-            this.tbpLightSource.ResumeLayout(false);
             this.cmsTerrainAddRnd.ResumeLayout(false);
             this.cmsSmudgeAddRnd.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -1439,7 +1468,5 @@
         private System.Windows.Forms.RadioButton rdbWpNone;
         private System.Windows.Forms.RadioButton rdbWpDesignated;
         private System.Windows.Forms.RadioButton rdbWpNum;
-        private System.Windows.Forms.TabPage tbpLightSource;
-        private System.Windows.Forms.ListBox lbxLightSource;
     }
 }

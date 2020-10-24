@@ -13,6 +13,7 @@ namespace RelertSharp.MapStructure.Points
 {
     public class LightSourceCollection : PointCollectionBase<LightSource>
     {
+        private int _i = 0;
         public LightSourceCollection()
         {
 
@@ -22,7 +23,8 @@ namespace RelertSharp.MapStructure.Points
 
         public override void AddObject(LightSource item)
         {
-            data[item.Name] = item;
+            item.index = _i++.ToString();
+            data[item.index] = item;
         }
 
         public LightSource this[string name]
@@ -35,7 +37,8 @@ namespace RelertSharp.MapStructure.Points
 
     public class LightSource : PointItemBase, IMapObject
     {
-        private object[] SaveData { get { return new object[] { Visibility, Intensity, Red, Green, Blue, IsEnable ? 1 : 0 }; } }
+        private object[] SaveData { get { return new object[] { Name, Visibility, Intensity, Red, Green, Blue, IsEnable ? 1 : 0 }; } }
+        internal string index;
 
 
         #region Ctor
@@ -45,6 +48,8 @@ namespace RelertSharp.MapStructure.Points
             Green = color.G / 256f;
             Blue = color.B / 256f;
             Name = name;
+            X = -1000;
+            Y = -1000;
         }
         public LightSource(float r, float g, float b, string name)
         {
@@ -55,15 +60,18 @@ namespace RelertSharp.MapStructure.Points
         }
         public LightSource(INIPair p)
         {
-            Name = p.Name;
+            int coord = p.ParseInt();
+            X = CoordIntX(coord);
+            Y = CoordIntY(coord);
             string[] tmp = p.ParseStringList();
             if (tmp.Length != Constant.MapStructure.ArgLenLightSource) throw new Exception();
-            Visibility = ParseInt(tmp[0], 5000);
-            Intensity = ParseFloat(tmp[1], 0.2f);
-            Red = ParseFloat(tmp[2], 0.05f);
-            Green = ParseFloat(tmp[3], 0.05f);
-            Blue = ParseFloat(tmp[4], 0.05f);
-            IsEnable = ParseBool(tmp[5], true);
+            Name = tmp[0];
+            Visibility = ParseInt(tmp[1], 5000);
+            Intensity = ParseFloat(tmp[2], 0.2f);
+            Red = ParseFloat(tmp[3], 0.05f);
+            Green = ParseFloat(tmp[4], 0.05f);
+            Blue = ParseFloat(tmp[5], 0.05f);
+            IsEnable = ParseBool(tmp[6], true);
         }
         public LightSource(LightSource src) : base(src)
         {
@@ -108,11 +116,20 @@ namespace RelertSharp.MapStructure.Points
         public INIPair SaveToPair()
         {
             string value = SaveData.JoinBy();
-            return new INIPair(Name, value);
+            return new INIPair(Coord.ToString(), value);
         }
         public override string ToString()
         {
+            if (!IsLocationSetted) return string.Format("{0}: Not set in map", Name);
             return string.Format("{0}: {1}, {2}", Name, X, Y);
+        }
+        public bool Equal(LightSource dest)
+        {
+            return Red == dest.Red &&
+                Green == dest.Green &&
+                Blue == dest.Blue &&
+                Intensity == dest.Intensity &&
+                Visibility == dest.Visibility;
         }
         #endregion
 
@@ -135,6 +152,7 @@ namespace RelertSharp.MapStructure.Points
         public int Range { get { return (Visibility >> 8) + 1; } }
         public bool IsEnable { get; set; } = true;
         public new PresentMisc SceneObject { get; set; }
+        public bool IsLocationSetted { get { return X > 0 && Y > 0; } }
         IPresentBase IMapScenePresentable.SceneObject { get { return SceneObject; } set { SceneObject = (PresentMisc)value; } }
         #endregion
     }

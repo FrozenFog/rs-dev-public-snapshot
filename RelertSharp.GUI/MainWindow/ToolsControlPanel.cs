@@ -27,6 +27,9 @@ namespace RelertSharp.GUI
                 case MainWindowDataModel.MouseActionType.TileWand:
                     rbPanelWand.Visible = true;
                     break;
+                case MainWindowDataModel.MouseActionType.Lightroom:
+                    rbPanelLightRoom.Visible = true;
+                    break;
             }
         }
         private void HideControlPanel()
@@ -35,6 +38,7 @@ namespace RelertSharp.GUI
             rbPanelBrush.Visible = false;
             rbPanelBucket.Visible = false;
             rbPanelWand.Visible = false;
+            rbPanelLightRoom.Visible = false;
         }
     }
 }

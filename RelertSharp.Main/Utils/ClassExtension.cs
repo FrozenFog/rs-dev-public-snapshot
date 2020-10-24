@@ -145,6 +145,11 @@ namespace System
             return src;
         }
 
+        public static decimal AsDecimal(this float src)
+        {
+            return (decimal)src;
+        }
+
 
 
         public static string Replace(this string src, int pos, char c)
