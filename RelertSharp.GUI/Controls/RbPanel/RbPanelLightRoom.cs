@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using RelertSharp.MapStructure.Points;
 using RelertSharp.MapStructure;
+using RelertSharp.Common;
 
 namespace RelertSharp.GUI.Controls
 {
@@ -18,6 +19,9 @@ namespace RelertSharp.GUI.Controls
         private LightSource current = null;
         private Map Map { get { return Common.GlobalVar.CurrentMapDocument.Map; } }
         internal event I2dLocateableHandler TraceLight;
+        internal event EventHandler LightItemChanged;
+        private LightSource Relocator { get; set; }
+        internal bool Relocating = false;
 
 
         public RbPanelLightRoom()
@@ -30,6 +34,14 @@ namespace RelertSharp.GUI.Controls
             updatingGui = true;
             lbxAllLight.LoadAs(Map.LightSources);
             updatingGui = false;
+        }
+        public void RelocateTo(I2dLocateable pos)
+        {
+            Relocator.X = pos.X;
+            Relocator.Y = pos.Y;
+            Relocating = false;
+            lbxAllLight.UpdateAt(Relocator, ref updatingGui);
+            lbxAllLight.Enabled = true;
         }
 
 
@@ -48,6 +60,7 @@ namespace RelertSharp.GUI.Controls
             nmbxBlue.Value = current.Blue.AsDecimal();
             nmbxIntensity.Value = current.Intensity.AsDecimal();
             nmbxVisibility.Value = current.Visibility;
+            ckbEnabled.Checked = current.IsEnable;
             UpdateColorPreview();
             updatingGui = false;
         }
@@ -70,8 +83,9 @@ namespace RelertSharp.GUI.Controls
                 current.Green = nmbxGreen.Float();
                 current.Blue = nmbxBlue.Float();
                 current.Intensity = nmbxIntensity.Float();
-                current.Visibility = nmbxIntensity.Int();
+                current.Visibility = nmbxVisibility.Int();
                 current.IsEnable = ckbEnabled.Checked;
+                LightItemChanged.Invoke(this, new EventArgs());
             }
         }
 
@@ -105,6 +119,7 @@ namespace RelertSharp.GUI.Controls
             if (lbxAllLight.SelectedItem is LightSource src && !updatingGui)
             {
                 LoadEntity(src);
+                cmsLightItem.Enabled = true;
             }
         }
 
@@ -119,6 +134,25 @@ namespace RelertSharp.GUI.Controls
             Map.LightSources.AddObject(src);
             lbxAllLight.Items.Add(src);
             lbxAllLight.SelectedItem = src;
+        }
+
+        private void tsmiSetSourcePos_Click(object sender, EventArgs e)
+        {
+            if (lbxAllLight.SelectedItem is LightSource src)
+            {
+                Relocating = true;
+                Relocator = src;
+                lbxAllLight.Enabled = false;
+            }
+        }
+
+        private void EndEdit(object sender ,EventArgs e)
+        {
+            if (!updatingGui)
+            {
+                SaveEntity();
+                lbxAllLight.UpdateAt(current, ref updatingGui);
+            }
         }
     }
 }

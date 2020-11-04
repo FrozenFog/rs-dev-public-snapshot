@@ -8,6 +8,7 @@ using RelertSharp.Common;
 using RelertSharp.IniSystem;
 using static RelertSharp.Utils.Misc;
 using RelertSharp.DrawingEngine.Presenting;
+using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.MapStructure.Points
 {
@@ -20,17 +21,52 @@ namespace RelertSharp.MapStructure.Points
         }
 
 
-
+        #region Public Methods
         public override void AddObject(LightSource item)
         {
             item.index = _i++.ToString();
             data[item.index] = item;
         }
+        public void Compile(out Dictionary<string, INIEntity> compiledLightPost, INIEntity toc, out List<StructureItem> entities)
+        {
+            int i = 0;
+            compiledLightPost = new Dictionary<string, INIEntity>();
+            entities = new List<StructureItem>();
+            foreach (LightSource light in this)
+            {
+                if (light.IsEnable)
+                {
+                    string name = string.Format("{0}_{1}", Constant.EntName.RsLightCompileHead, i);
+                    string index = string.Format("{0}{1}", Constant.EntName.RsLightTocIndex, i);
+                    INIEntity template = new INIEntity(GlobalVar.GlobalConfig.LightPostTemplate, name);
+                    template["LightVisibility"] = light.Visibility;
+                    template["LightIntensity"] = light.Intensity;
+                    template["LightRedTint"] = light.Red;
+                    template["LightGreenTint"] = light.Green;
+                    template["LightBlueTint"] = light.Blue;
+                    template["Name"] = string.Format("{0} {1} - {2}", Constant.EntName.RsLightCompileName, i, light.Name);
+                    compiledLightPost[name] = template;
+                    toc[index] = name;
 
+                    StructureItem bud = new StructureItem(name)
+                    {
+                        X = light.X,
+                        Y = light.Y
+                    };
+                    bud.OwnerHouse = GlobalVar.CurrentMapDocument.Map.GetCivilianHouse() ?? Constant.MapStructure.DefaultCivilianHouse;
+                    entities.Add(bud);
+                    i++;
+                }
+            }
+        }
+        #endregion
+
+        #region Public Calls
         public LightSource this[string name]
         {
             get { return data[name]; }
         }
+        #endregion
     }
 
 
@@ -44,9 +80,7 @@ namespace RelertSharp.MapStructure.Points
         #region Ctor
         public LightSource(Color color, string name)
         {
-            Red = color.R / 256f;
-            Green = color.G / 256f;
-            Blue = color.B / 256f;
+            FromColor(color);
             Name = name;
             X = -1000;
             Y = -1000;
@@ -88,9 +122,9 @@ namespace RelertSharp.MapStructure.Points
         #region Public Methods
         public void FromColor(Color c)
         {
-            Red = c.R / 256f;
-            Green = c.G / 256f;
-            Blue = c.B / 256f;
+            Red = c.R / 1024f;
+            Green = c.G / 1024f;
+            Blue = c.B / 1024f;
         }
         public Color ToColor()
         {
@@ -147,7 +181,7 @@ namespace RelertSharp.MapStructure.Points
         public float Red { get; set; } = 0.05f;
         public float Green { get; set; } = 0.05f;
         public float Blue { get; set; } = 0.05f;
-        public float Intensity { get; set; } = 0.2f;
+        public float Intensity { get; set; } = 0.02f;
         public int Visibility { get; set; } = 5000;
         public int Range { get { return (Visibility >> 8) + 1; } }
         public bool IsEnable { get; set; } = true;

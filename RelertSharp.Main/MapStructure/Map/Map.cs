@@ -214,6 +214,17 @@ namespace RelertSharp.MapStructure
             if (house == null) return 0;
             return 0xFF000000 | (uint)(house.DrawingColor.B << 16 | house.DrawingColor.G << 8 | house.DrawingColor.R);
         }
+        public string GetCivilianHouse()
+        {
+            if (Countries.Length == 0 || Houses.Length == 0) return null; 
+            CountryItem con = Countries.First(x => x.Side == Constant.MapStructure.CivilianCountrySide);
+            if (con != null)
+            {
+                HouseItem house = Houses.First(x => x.Country == con.Name);
+                if (house != null) return house.Name;
+            }
+            return null;
+        }
         public void CompressTile(bool highCompress = false)
         {
             if (highCompress) foreach (Tile t in Tiles.Data.Values) t.Height -= Tiles.BottomLevel;

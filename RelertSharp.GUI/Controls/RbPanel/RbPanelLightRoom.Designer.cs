@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.txbName = new System.Windows.Forms.TextBox();
@@ -47,12 +48,15 @@
             this.btnColor = new System.Windows.Forms.Button();
             this.btnAddNew = new System.Windows.Forms.Button();
             this.lbxAllLight = new System.Windows.Forms.ListBox();
+            this.cmsLightItem = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiSetSourcePos = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmbxRed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmbxGreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmbxBlue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmbxIntensity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmbxVisibility)).BeginInit();
+            this.cmsLightItem.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpMain
@@ -93,7 +97,7 @@
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpMain.Size = new System.Drawing.Size(250, 472);
+            this.tlpMain.Size = new System.Drawing.Size(250, 439);
             this.tlpMain.TabIndex = 0;
             // 
             // label1
@@ -113,6 +117,7 @@
             this.txbName.Name = "txbName";
             this.txbName.Size = new System.Drawing.Size(120, 25);
             this.txbName.TabIndex = 1;
+            this.txbName.Validated += new System.EventHandler(this.EndEdit);
             // 
             // label2
             // 
@@ -186,6 +191,7 @@
             0,
             0,
             131072});
+            this.nmbxRed.Validated += new System.EventHandler(this.EndEdit);
             // 
             // label7
             // 
@@ -206,6 +212,7 @@
             this.ckbEnabled.Size = new System.Drawing.Size(120, 17);
             this.ckbEnabled.TabIndex = 3;
             this.ckbEnabled.UseVisualStyleBackColor = true;
+            this.ckbEnabled.Validated += new System.EventHandler(this.EndEdit);
             // 
             // nmbxGreen
             // 
@@ -229,6 +236,7 @@
             0,
             0,
             131072});
+            this.nmbxGreen.Validated += new System.EventHandler(this.EndEdit);
             // 
             // nmbxBlue
             // 
@@ -252,6 +260,7 @@
             0,
             0,
             131072});
+            this.nmbxBlue.Validated += new System.EventHandler(this.EndEdit);
             // 
             // nmbxIntensity
             // 
@@ -280,6 +289,7 @@
             0,
             0,
             65536});
+            this.nmbxIntensity.Validated += new System.EventHandler(this.EndEdit);
             // 
             // nmbxVisibility
             // 
@@ -302,6 +312,7 @@
             0,
             0,
             0});
+            this.nmbxVisibility.Validated += new System.EventHandler(this.EndEdit);
             // 
             // label8
             // 
@@ -339,16 +350,32 @@
             // lbxAllLight
             // 
             this.tlpMain.SetColumnSpan(this.lbxAllLight, 2);
+            this.lbxAllLight.ContextMenuStrip = this.cmsLightItem;
             this.lbxAllLight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbxAllLight.FormattingEnabled = true;
             this.lbxAllLight.HorizontalScrollbar = true;
             this.lbxAllLight.ItemHeight = 15;
             this.lbxAllLight.Location = new System.Drawing.Point(3, 279);
             this.lbxAllLight.Name = "lbxAllLight";
-            this.lbxAllLight.Size = new System.Drawing.Size(244, 170);
+            this.lbxAllLight.Size = new System.Drawing.Size(244, 137);
             this.lbxAllLight.TabIndex = 6;
             this.lbxAllLight.SelectedValueChanged += new System.EventHandler(this.lbxAllLight_SelectedValueChanged);
             this.lbxAllLight.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxAllLight_MouseDoubleClick);
+            // 
+            // cmsLightItem
+            // 
+            this.cmsLightItem.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsLightItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiSetSourcePos});
+            this.cmsLightItem.Name = "cmsLightItem";
+            this.cmsLightItem.Size = new System.Drawing.Size(256, 28);
+            // 
+            // tsmiSetSourcePos
+            // 
+            this.tsmiSetSourcePos.Name = "tsmiSetSourcePos";
+            this.tsmiSetSourcePos.Size = new System.Drawing.Size(255, 24);
+            this.tsmiSetSourcePos.Text = "Set light source location";
+            this.tsmiSetSourcePos.Click += new System.EventHandler(this.tsmiSetSourcePos_Click);
             // 
             // RbPanelLightRoom
             // 
@@ -357,7 +384,7 @@
             this.AutoSize = false;
             this.Controls.Add(this.tlpMain);
             this.Name = "RbPanelLightRoom";
-            this.Size = new System.Drawing.Size(250, 472);
+            this.Size = new System.Drawing.Size(250, 439);
             this.Leave += new System.EventHandler(this.RbPanelLightRoom_Leave);
             this.tlpMain.ResumeLayout(false);
             this.tlpMain.PerformLayout();
@@ -366,6 +393,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nmbxBlue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmbxIntensity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmbxVisibility)).EndInit();
+            this.cmsLightItem.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -391,5 +419,7 @@
         private System.Windows.Forms.Button btnColor;
         private System.Windows.Forms.Button btnAddNew;
         private System.Windows.Forms.ListBox lbxAllLight;
+        private System.Windows.Forms.ContextMenuStrip cmsLightItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSetSourcePos;
     }
 }

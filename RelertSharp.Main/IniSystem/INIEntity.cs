@@ -47,13 +47,23 @@ namespace RelertSharp.IniSystem
         }
         public INIEntity(INIEntity src, string rename = "")
         {
-            data = new Dictionary<string, INIPair>(src.data);
+            foreach (var kvpair in src.data) data[kvpair.Key] = new INIPair(kvpair.Value);
             Name = string.IsNullOrEmpty(rename) ? src.Name : rename;
         }
         #endregion
 
 
         #region Public Methods - INIEntity
+        public int GetMaxIndex()
+        {
+            int mx = 0;
+            foreach (string index in data.Keys)
+            {
+                if (!int.TryParse(index, out int i)) break;
+                mx = Math.Max(mx, i);
+            }
+            return mx;
+        }
         /// <summary>
         /// Returns the index of the designated pair VALUE. Return -1 when not found
         /// </summary>

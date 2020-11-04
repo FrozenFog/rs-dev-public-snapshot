@@ -72,6 +72,8 @@ namespace RelertSharp.Common
             public const int ArgLenAircraft = 12;
             public const int ArgLenAiTrigger = 18;
             public const int ArgLenLightSource = 7;
+            public const string CivilianCountrySide = "Civilian";
+            public const string DefaultCivilianHouse = "Neutral";
             public static readonly string[] ObjectStatus =
             {
                 "Area Guard", "Attack", "Capture", "Construction", "Enter", "Guard", "Harmless", "Harvest", "Hunt", "Missile", "Move", "Open", "Patrol", "QMove", "Repair", "Rescue",
@@ -84,6 +86,9 @@ namespace RelertSharp.Common
         }
         public static class EntName
         {
+            public const string RsLightCompileHead = "GARSLSRC";
+            public const string RsLightCompileName = "RS Compiled LightSource No.";
+            public const string RsLightTocIndex = "RSCLT";
             public static readonly string[] SystemEntity =
             {
                 "General","JumpjetControls","SpecialWeapons","GenericPrerequisites","AudioVisual","CrateRules","Powerups","CombatDamage","Radiation","ElevationModel",

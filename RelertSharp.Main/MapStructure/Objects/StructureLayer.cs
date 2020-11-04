@@ -96,7 +96,9 @@ namespace RelertSharp.MapStructure.Objects
             {
                 return new List<object>()
                 {
-                    OwnerHouse, RegName, HealthPoint, X, Y, Rotation, TaggedTrigger, AISellable, AIRebuildable, BuildingOnline, UpgradeNum, (int)SpotlightType, Upgrade1,Upgrade2,Upgrade3,AIRepairable, Nominal };
+                    OwnerHouse, RegName, HealthPoint, X, Y, Rotation, TaggedTrigger, AISellable.ToInt(), AIRebuildable.ToInt(), BuildingOnline.ToInt(), 
+                    UpgradeNum, (int)SpotlightType, Upgrade1,Upgrade2,Upgrade3,AIRepairable.ToInt(), Nominal.ToInt() 
+                };
             }
         }
         public bool AISellable { get; set; } = true;

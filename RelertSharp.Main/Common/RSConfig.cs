@@ -18,11 +18,17 @@ namespace RelertSharp.Common
             GetOldMixList();
             GetStringtable();
             LoadAttribute();
+
+            LoadTemplate();
         }
         #endregion
 
 
         #region Private Methods - RSConfig
+        private void LoadTemplate()
+        {
+            LightPostTemplate = this["LightPostTemplate"];
+        }
         private void LoadAttribute()
         {
             BagNameList = this["SoundConfigs"].ParseStringList("Bags");
@@ -206,6 +212,7 @@ namespace RelertSharp.Common
         public List<string> TheaterMixList { get; private set; }
         public List<int> BridgeOffsetFrames { get; private set; }
         public List<string> PreloadMixes { get; private set; }
+        public INIEntity LightPostTemplate { get; private set; }
         #endregion
     }
 }

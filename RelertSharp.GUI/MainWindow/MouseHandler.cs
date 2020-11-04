@@ -63,6 +63,9 @@ namespace RelertSharp.GUI
                 case MainWindowDataModel.MouseActionType.TileBucket:
                     FillAt(cell);
                     break;
+                case MainWindowDataModel.MouseActionType.Lightroom:
+                    SetLightningPos(cell);
+                    break;
             }
             isBusy = false;
         }

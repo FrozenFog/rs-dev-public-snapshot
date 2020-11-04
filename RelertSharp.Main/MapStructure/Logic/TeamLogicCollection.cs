@@ -71,6 +71,7 @@ namespace RelertSharp.MapStructure.Logic
             }
         }
         public IEnumerable<string> AllId { get { return data.Keys; } }
+        public int Length { get { return data.Count; } }
         #endregion
     }
     public class TeamLogicItem : BindableBase

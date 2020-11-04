@@ -39,6 +39,8 @@ namespace RelertSharp.GUI
         private readonly HashSet<string> ToolsButton = new HashSet<string>()
         { BtnNameArrow, BtnNameBrush, BtnNameMove, BtnNameSelect, BtnNameAttribute, BtnNameTileBrush, BtnNameTileSele, BtnNameTileWand, BtnNameTileBucket, BtnNameLight};
 
+        private bool ForceLight = false;
+
 
         private void ToolBoxClick(ToolStripButton btn)
         {
@@ -57,6 +59,12 @@ namespace RelertSharp.GUI
                 if (btnName != BtnNameTileBrush)
                 {
                     pnlTile.Result?.Dispose();
+                }
+                if (btnName != BtnNameLight && ForceLight)
+                {
+                    ForceLight = false;
+                    ckbLightningEnable.Enabled = true;
+                    ckbLightningEnable.Checked = false;
                 }
                 GlobalVar.Engine.Refresh();
             }
@@ -111,6 +119,9 @@ namespace RelertSharp.GUI
                     break;
                 case BtnNameLight:
                     Current.CurrentMouseAction = MainWindowDataModel.MouseActionType.Lightroom;
+                    ckbLightningEnable.Enabled = false;
+                    ckbLightningEnable.Checked = true;
+                    ForceLight = true;
                     GlobalVar.Engine.Refresh();
                     break;
             }

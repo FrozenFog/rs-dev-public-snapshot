@@ -15,14 +15,20 @@ namespace RelertSharp.GUI
         private void InitializeHandler()
         {
             logicEditor.JumpToWaypoint += JumpToWaypoint;
+
             pnlPick.BrushObjectSelected += FocusOnMainPanel;
             pnlPick.BaseNodeTracing += JumpToWaypoint;
             pnlPick.TraceCelltag += PnlPick_TraceCelltag;
             pnlPick.SelectCelltagCollection += PnlPick_SelectCelltagCollection;
             pnlPick.ReleaseCelltags += PnlPick_ReleaseCelltags;
+
             pnlTile.NewTileSelected += PnlTile_NewTileSelected;
+
             verifyForm.TraceLogic += VerifyForm_TraceLogic;
             verifyForm.TraceMapPosition += JumpToWaypoint;
+
+            rbPanelLightRoom.LightItemChanged += LightChanged;
+            rbPanelLightRoom.TraceLight += JumpToWaypoint;
         }
 
         private void VerifyForm_TraceLogic(object sender, LogicType logicType, string id)
@@ -75,6 +81,14 @@ namespace RelertSharp.GUI
             if (drew)
             {
                 requireFocus = true;
+            }
+        }
+
+        private void LightChanged(object sender, EventArgs e)
+        {
+            if (drew)
+            {
+                RefreshLightningSilent();
             }
         }
     }

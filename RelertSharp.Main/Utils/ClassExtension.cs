@@ -118,6 +118,14 @@ namespace System.Collections.Generic
         {
             return new Dictionary<TKey, TValue>(src);
         }
+
+        public static void JoinWith<TKey, TValue>(this Dictionary<TKey, TValue> src, Dictionary<TKey, TValue> target)
+        {
+            foreach (TKey k in target.Keys)
+            {
+                src[k] = target[k];
+            }
+        }
     }
 }
 
@@ -164,6 +172,11 @@ namespace System
         public static bool IsNullOrEmpty(this string src)
         {
             return string.IsNullOrEmpty(src);
+        }
+
+        public static int ToInt(this bool src)
+        {
+            return src ? 1 : 0;
         }
     }
 }

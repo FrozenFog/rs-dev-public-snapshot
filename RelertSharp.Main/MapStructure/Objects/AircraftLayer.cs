@@ -75,7 +75,8 @@ namespace RelertSharp.MapStructure.Objects
             {
                 return new List<object>()
                 {
-                    OwnerHouse, RegName, HealthPoint, X, Y, Rotation, Status, TaggedTrigger, VeterancyPercentage, Group, AutoNORecruitType, AutoYESRecruitType
+                    OwnerHouse, RegName, HealthPoint, X, Y, Rotation, Status, TaggedTrigger, VeterancyPercentage, Group, 
+                    AutoNORecruitType.ToInt(), AutoYESRecruitType.ToInt()
                 };
             }
         }

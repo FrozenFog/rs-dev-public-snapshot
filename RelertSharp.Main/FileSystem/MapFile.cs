@@ -57,6 +57,18 @@ namespace RelertSharp.FileSystem
         private void DumpCustomComponents(Dictionary<string, INIEntity> dest)
         {
             dest[Constant.MapStructure.CustomComponents.LightsourceTitle] = Map.DumpLightSourceData();
+            if (!dest.TryGetValue("BuildingTypes", out INIEntity toc))
+            {
+                toc = new INIEntity("BuildingTypes");
+                dest["BuildingTypes"] = toc;
+            }
+            Map.LightSources.Compile(out Dictionary<string, INIEntity> lightposts, toc, out var entities);
+            dest.JoinWith(lightposts);
+            int i = dest["Structures"].GetMaxIndex() + 1;
+            foreach (var bud in entities)
+            {
+                dest["Structures"].AddPair(new INIPair(i++.ToString(), bud.SaveData.JoinBy()));
+            }
         }
         private void DumpMapObjects(Dictionary<string, INIEntity> dest)
         {

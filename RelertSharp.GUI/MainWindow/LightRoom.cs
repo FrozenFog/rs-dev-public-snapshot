@@ -54,6 +54,14 @@ namespace RelertSharp.GUI
                 GlobalVar.Engine.Refresh();
             }
         }
+        private void SetLightningPos(Vec3 pos)
+        {
+            if (rbPanelLightRoom.Relocating)
+            {
+                rbPanelLightRoom.RelocateTo(pos.To2dLocateable());
+                RefreshLightningSilent();
+            }
+        }
         private void RefreshLightningSilent()
         {
             if (drew && ckbLightningEnable.Checked)
@@ -61,6 +69,7 @@ namespace RelertSharp.GUI
                 GlobalVar.Engine.SetSceneLightning(Current.LightningItem);
                 foreach (StructureItem s in Map.Buildings) GlobalVar.Engine.SetObjectLampLightning(s, ckbLightningEnable.Checked);
                 foreach (LightSource src in Map.LightSources) GlobalVar.Engine.SetObjectLampLightning(src, ckbLightningEnable.Checked);
+                GlobalVar.Engine.Refresh();
             }
         }
     }
