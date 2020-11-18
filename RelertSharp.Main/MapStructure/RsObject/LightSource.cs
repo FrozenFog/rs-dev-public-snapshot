@@ -122,20 +122,24 @@ namespace RelertSharp.MapStructure.Points
         #region Public Methods
         public void FromColor(Color c)
         {
-            Red = c.R / 1024f;
-            Green = c.G / 1024f;
-            Blue = c.B / 1024f;
+            Red = c.R / 256f;
+            Green = c.G / 256f;
+            Blue = c.B / 128f;
         }
         public Color ToColor()
         {
-            float max = MaxItem(Red, Green, Blue);
+            byte r = (byte)(Red * 256f);
+            byte g = (byte)(Green * 256f);
+            byte b = (byte)(Blue * 128f);
+            float max = MaxItem(r, g, b);
             float scale = 255 / max;
-            return Color.FromArgb(ToByte(Red, scale), ToByte(Green, scale), ToByte(Blue, scale));
+            return Color.FromArgb((byte)(r * scale), (byte)(g * scale), (byte)(b * scale));
         }
         public Vec4 ToVec4()
         {
             Vec4 color = new Vec4(Red + 1, Green + 1, Blue + 1, 1);
-            return color * Vec4.Unit3(1f + Intensity * 1.5f);
+            float shift = LightSource.IntensityShift(Intensity);
+            return color * Vec4.Unit3(shift);
         }
         public string FormatString()
         {
@@ -164,6 +168,11 @@ namespace RelertSharp.MapStructure.Points
                 Blue == dest.Blue &&
                 Intensity == dest.Intensity &&
                 Visibility == dest.Visibility;
+        }
+
+        public static float IntensityShift(float intensity)
+        {
+            return intensity >= 0 ? 1 + intensity * 1.5f : 0.9384f + 0.44f * intensity;
         }
         #endregion
 

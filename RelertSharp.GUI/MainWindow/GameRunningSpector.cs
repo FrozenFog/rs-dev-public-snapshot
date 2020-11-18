@@ -17,6 +17,8 @@ namespace RelertSharp.GUI
     {
         private string gameProcessName;
         private bool replaceCncnet5, useRsCncnet5;
+        private bool gameRunning;
+        private int gamePid;
         private void RunGame(string gameexeName, string injectorName, bool reserveCncnet5)
         {
             Process[] ps = Process.GetProcesses();
@@ -68,6 +70,8 @@ namespace RelertSharp.GUI
             {
                 Fatal("Game initialize may failed!\nPlease check your game path and locate cncnet5.dll");
             }
+            gameRunning = true;
+            gamePid = Process.GetProcesses().Where(x => x.ProcessName.ToLower() == gameProcessName).First().Id;
             while (true)
             {
                 Process[] ps = Process.GetProcesses();
@@ -80,6 +84,7 @@ namespace RelertSharp.GUI
         {
             if (e.ProgressPercentage == 1)
             {
+                gameRunning = false;
                 WindowState = FormWindowState.Normal;
                 if (drew) Engine.Refresh();
                 if (useRsCncnet5)

@@ -380,6 +380,15 @@ namespace RelertSharp.GUI
 
         private void MainWindowTest_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (gameRunning)
+            {
+                DialogResult d = GuiUtils.YesNoWarning("Game is still running, do you wish to terminate game process?");
+                if (d == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process game = System.Diagnostics.Process.GetProcessById(gamePid);
+                    game?.Kill();
+                }
+            }
             if (!saved || !logicEditor.ChangeSaved)
             {
                 DialogResult d = MessageBox.Show("Save changes to map file?", "Relert Sharp", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);

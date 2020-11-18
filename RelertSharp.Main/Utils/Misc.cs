@@ -385,6 +385,11 @@ namespace RelertSharp.Utils
         {
             return objects.Max();
         }
+
+        public static T MinItem<T>(params T[] objects)
+        {
+            return objects.Min();
+        }
     }
 
 }

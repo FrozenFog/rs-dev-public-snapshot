@@ -102,6 +102,7 @@ namespace RelertSharp.GUI.Controls
             {
                 current.FromColor(dlg.Color);
                 UpdateGui();
+                LightItemChanged.Invoke(this, new EventArgs());
             }
         }
 
