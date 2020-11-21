@@ -227,6 +227,7 @@ namespace RelertSharp.Common
                 public const float VxlTurret = -2;
                 public const float Waypoint = -100f;
                 public const float CellTag = -99f;
+                public const float SelectingRectangle = -1000f;
             }
             public static class Offset
             {

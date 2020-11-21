@@ -43,7 +43,7 @@ namespace RelertSharp.MapStructure.Points
                     template["LightIntensity"] = light.Intensity;
                     template["LightRedTint"] = light.Red;
                     template["LightGreenTint"] = light.Green;
-                    template["LightBlueTint"] = light.Blue;
+                    template["LightBlueTint"] = light.Blue * 2;
                     template["Name"] = string.Format("{0} {1} - {2}", Constant.EntName.RsLightCompileName, i, light.Name);
                     compiledLightPost[name] = template;
                     toc[index] = name;
@@ -122,15 +122,15 @@ namespace RelertSharp.MapStructure.Points
         #region Public Methods
         public void FromColor(Color c)
         {
-            Red = c.R / 256f;
-            Green = c.G / 256f;
-            Blue = c.B / 128f;
+            Red = c.R / 255f;
+            Green = c.G / 255f;
+            Blue = c.B / 127f;
         }
         public Color ToColor()
         {
-            byte r = (byte)(Red * 256f);
-            byte g = (byte)(Green * 256f);
-            byte b = (byte)(Blue * 128f);
+            float r = Red * 255f;
+            float g = Green * 255f;
+            float b = Blue * 127f;
             float max = MaxItem(r, g, b);
             float scale = 255 / max;
             return Color.FromArgb((byte)(r * scale), (byte)(g * scale), (byte)(b * scale));
@@ -194,9 +194,10 @@ namespace RelertSharp.MapStructure.Points
         public int Visibility { get; set; } = 5000;
         public int Range { get { return (Visibility >> 8) + 1; } }
         public bool IsEnable { get; set; } = true;
-        public new PresentMisc SceneObject { get; set; }
         public bool IsLocationSetted { get { return X > 0 && Y > 0; } }
-        IPresentBase IMapScenePresentable.SceneObject { get { return SceneObject; } set { SceneObject = (PresentMisc)value; } }
+        public new PresentMisc SceneObject { get { return (PresentMisc)base.SceneObject; } set { base.SceneObject = value; } }
+        IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
+        public override MapObjectType ObjectType { get { return MapObjectType.LightSource; } }
         #endregion
     }
 }

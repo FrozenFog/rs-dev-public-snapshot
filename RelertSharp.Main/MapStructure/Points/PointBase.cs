@@ -165,7 +165,7 @@ namespace RelertSharp.MapStructure.Points
         }
         public bool Selected { get; set; }
         public string RegName { get { return string.Empty; } }
-        public MapObjectType ObjectType { get; protected set; } = MapObjectType.Undefined;
+        public virtual MapObjectType ObjectType { get; protected set; } = MapObjectType.Undefined;
         #endregion
 
 

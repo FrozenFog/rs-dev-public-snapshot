@@ -5,6 +5,55 @@ namespace RelertSharp.Utils
 {
     public static class HSBColor
     {
+        public static void ToHsl(decimal r, decimal g, decimal b, out decimal h, out decimal s, out decimal l)
+        {
+            decimal max = Misc.MaxItem(r, g, b);
+            decimal min = Misc.MinItem(r, g, b);
+            decimal delta = max - min;
+
+            h = 0;
+            if (max == r) h = (g - b) / delta % 6 * 60;
+            else if (max == g) h = ((b - r) / delta + 2) * 60;
+            else if (max == b) h = ((r - g) / delta + 4) * 60;
+
+            l = (max + min) / 2;
+
+            s = delta == 0 ? 0 : delta / (1 - Math.Abs(2 * l - 1));
+        }
+        public static void FromHsl(decimal h, decimal s, decimal l, out decimal r, out decimal g, out decimal b)
+        {
+            decimal c = (1 - Math.Abs(2 * l - 1)) * s;
+            decimal x = c * (1 - Math.Abs((h / 60) % 2 - 1));
+            decimal m = l - c / 2;
+            if (0 <= h && h < 60)
+            {
+                r = c; g = x; b = 0;
+            }
+            else if (60 <= h && h < 120)
+            {
+                r = x; g = c; b = 0;
+            }
+            else if (120 <= h && h < 180)
+            {
+                r = 0; g = c; b = x;
+            }
+            else if (180 <= h && h < 240)
+            {
+                r = 0; g = x; b = c;
+            }
+            else if (240 <= h && h < 300)
+            {
+                r = x; g = 0; b = c;
+            }
+            else
+            {
+                r = c; g = 0; b = x;
+            }
+
+            r += m;
+            g += m;
+            b += m;
+        }
         public static Color FromHSB(int _h, int _s, int _b, bool base256 = true)
         {
             if (base256)

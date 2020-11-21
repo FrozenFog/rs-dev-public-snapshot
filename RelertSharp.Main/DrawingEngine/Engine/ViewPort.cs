@@ -211,6 +211,7 @@ namespace RelertSharp.DrawingEngine
             dest.Add(CppExtern.ObjectUtils.CreateLineObjectAtScene(p2, p3, color, color));
             dest.Add(CppExtern.ObjectUtils.CreateLineObjectAtScene(p3, p4, color, color));
             dest.Add(CppExtern.ObjectUtils.CreateLineObjectAtScene(p4, p1, color, color));
+            dest.ForEach(x => CppExtern.ObjectUtils.SetObjectZAdjust(x, Constant.DrawingEngine.ZAdjust.SelectingRectangle));
         }
         private Vec3 ScenePosToCoord(Vec3 px)
         {

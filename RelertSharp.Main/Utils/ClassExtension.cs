@@ -63,6 +63,14 @@ namespace System.Drawing
             return result;
         }
     }
+
+    public static class ColorExtension
+    {
+        public static string HexCode(this Color c)
+        {
+            return "#" + c.ToArgb().ToString("X").Substring(2);
+        }
+    }
 }
 
 namespace System.Collections.Generic
@@ -146,6 +154,14 @@ namespace System
         }
 
         public static short TrimTo(this short src, short floor, short ceil)
+        {
+            if (floor > ceil) throw new ArgumentException("Floor is grater than Ceil");
+            if (src >= ceil) return ceil;
+            if (src <= floor) return floor;
+            return src;
+        }
+
+        public static decimal TrimTo(this decimal src, decimal floor, decimal ceil)
         {
             if (floor > ceil) throw new ArgumentException("Floor is grater than Ceil");
             if (src >= ceil) return ceil;

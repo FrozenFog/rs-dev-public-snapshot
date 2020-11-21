@@ -11,6 +11,7 @@ using System.Drawing;
 using RelertSharp.MapStructure.Points;
 using RelertSharp.MapStructure;
 using RelertSharp.Common;
+using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.GUI.Controls
 {
@@ -35,10 +36,9 @@ namespace RelertSharp.GUI.Controls
             lbxAllLight.LoadAs(Map.LightSources);
             updatingGui = false;
         }
-        public void RelocateTo(I2dLocateable pos)
+        public void RelocateTo(I3dLocateable pos)
         {
-            Relocator.X = pos.X;
-            Relocator.Y = pos.Y;
+            Relocator.MoveTo(pos);
             Relocating = false;
             lbxAllLight.UpdateAt(Relocator, ref updatingGui);
             lbxAllLight.Enabled = true;
@@ -62,6 +62,7 @@ namespace RelertSharp.GUI.Controls
             nmbxVisibility.Value = current.Visibility;
             ckbEnabled.Checked = current.IsEnable;
             UpdateColorPreview();
+            UpdateSatTracker();
             updatingGui = false;
         }
         private void UpdateColorPreview()
@@ -73,6 +74,7 @@ namespace RelertSharp.GUI.Controls
                 g.Clear(c);
             }
             btnColor.Image = img;
+            txbHex.Text = c.HexCode();
         }
         private void SaveEntity()
         {
@@ -87,6 +89,12 @@ namespace RelertSharp.GUI.Controls
                 current.IsEnable = ckbEnabled.Checked;
                 LightItemChanged.Invoke(this, new EventArgs());
             }
+        }
+
+        private void UpdateSatTracker()
+        {
+            orgColor = new Vec3(nmbxRed.Value, nmbxGreen.Value, nmbxBlue.Value);
+            tkbSaturation.Value = 50;
         }
 
 
@@ -133,6 +141,7 @@ namespace RelertSharp.GUI.Controls
         {
             LightSource src = new LightSource(Color.White, "DefaultLight");
             Map.LightSources.AddObject(src);
+            if (src.SceneObject == null) GlobalVar.Engine.DrawBrushObject(src);
             lbxAllLight.Items.Add(src);
             lbxAllLight.SelectedItem = src;
         }
@@ -151,8 +160,61 @@ namespace RelertSharp.GUI.Controls
         {
             if (!updatingGui)
             {
-                SaveEntity();
-                lbxAllLight.UpdateAt(current, ref updatingGui);
+                updatingGui = true;
+                tmrUpdater.Enabled = true;
+                tmrUpdater.Start();
+            }
+        }
+
+        private Vec3 orgColor;
+        private bool scrollingTracker = false;
+        private void tkbSaturation_Scroll(object sender, EventArgs e)
+        {
+            if (!scrollingTracker)
+            {
+                scrollingTracker = true;
+                tmrUpdater.Enabled = true;
+                tmrUpdater.Start();
+                Vec3 newColor = orgColor * (tkbSaturation.Value / 50f);
+                nmbxRed.Value = (decimal)newColor.X;
+                nmbxGreen.Value = (decimal)newColor.Y;
+                nmbxBlue.Value = (decimal)newColor.Z;
+                scrollingTracker = false;
+            }
+        }
+
+        private void tmrUpdater_Tick(object sender, EventArgs e)
+        {
+            updatingGui = true;
+            SaveEntity();
+            lbxAllLight.UpdateAt(current, ref updatingGui);
+            UpdateColorPreview();
+            updatingGui = false;
+            tmrUpdater.Enabled = false;
+            tmrUpdater.Stop();
+        }
+
+        private void txbHex_Validated(object sender, EventArgs e)
+        {
+            if (!updatingGui)
+            {
+                string text = txbHex.Text;
+                Color c = Color.White;
+                if (text.StartsWith("#"))
+                {
+                    try
+                    {
+                        int value = Convert.ToInt32(text.Substring(1), 16);
+                        c = Color.FromArgb(value);
+                    }
+                    catch
+                    {
+                        c = Color.White;
+                    }
+                    current.FromColor(c);
+                    UpdateGui();
+                    LightItemChanged.Invoke(this, new EventArgs());
+                }
             }
         }
     }

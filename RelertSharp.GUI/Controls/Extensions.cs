@@ -318,6 +318,12 @@ namespace System.Windows.Forms
         {
             return (float)src.Value;
         }
+        public static void AddValue(this NumericUpDown src, decimal delta)
+        {
+            decimal value = src.Value + delta;
+            value = value.TrimTo(src.Minimum, src.Maximum);
+            src.Value = value;
+        }
         #endregion
 
 

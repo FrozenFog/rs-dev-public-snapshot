@@ -663,6 +663,7 @@
     <None Include="Resources\verifyFatal.png" />
     <None Include="Resources\verifyInform.png" />
     <None Include="Resources\verifyWarning.png" />
+    <None Include="Resources\lightSource.png" />
     <Content Include="rslogo.ico" />
   </ItemGroup>
   <ItemGroup>

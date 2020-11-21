@@ -50,6 +50,11 @@
             this.lbxAllLight = new System.Windows.Forms.ListBox();
             this.cmsLightItem = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiSetSourcePos = new System.Windows.Forms.ToolStripMenuItem();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tkbSaturation = new System.Windows.Forms.TrackBar();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txbHex = new System.Windows.Forms.TextBox();
+            this.tmrUpdater = new System.Windows.Forms.Timer(this.components);
             this.tlpMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmbxRed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmbxGreen)).BeginInit();
@@ -57,6 +62,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nmbxIntensity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmbxVisibility)).BeginInit();
             this.cmsLightItem.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tkbSaturation)).BeginInit();
             this.SuspendLayout();
             // 
             // tlpMain
@@ -69,23 +75,29 @@
             this.tlpMain.Controls.Add(this.label2, 0, 1);
             this.tlpMain.Controls.Add(this.label3, 0, 2);
             this.tlpMain.Controls.Add(this.label4, 0, 3);
-            this.tlpMain.Controls.Add(this.label5, 0, 4);
-            this.tlpMain.Controls.Add(this.label6, 0, 5);
+            this.tlpMain.Controls.Add(this.label5, 0, 5);
+            this.tlpMain.Controls.Add(this.label6, 0, 6);
             this.tlpMain.Controls.Add(this.nmbxRed, 1, 1);
-            this.tlpMain.Controls.Add(this.label7, 0, 6);
-            this.tlpMain.Controls.Add(this.ckbEnabled, 1, 6);
+            this.tlpMain.Controls.Add(this.label7, 0, 7);
+            this.tlpMain.Controls.Add(this.ckbEnabled, 1, 7);
             this.tlpMain.Controls.Add(this.nmbxGreen, 1, 2);
             this.tlpMain.Controls.Add(this.nmbxBlue, 1, 3);
-            this.tlpMain.Controls.Add(this.nmbxIntensity, 1, 4);
-            this.tlpMain.Controls.Add(this.nmbxVisibility, 1, 5);
-            this.tlpMain.Controls.Add(this.label8, 0, 7);
-            this.tlpMain.Controls.Add(this.btnColor, 1, 7);
-            this.tlpMain.Controls.Add(this.btnAddNew, 0, 8);
-            this.tlpMain.Controls.Add(this.lbxAllLight, 0, 9);
+            this.tlpMain.Controls.Add(this.nmbxIntensity, 1, 5);
+            this.tlpMain.Controls.Add(this.nmbxVisibility, 1, 6);
+            this.tlpMain.Controls.Add(this.label8, 0, 8);
+            this.tlpMain.Controls.Add(this.btnColor, 1, 8);
+            this.tlpMain.Controls.Add(this.btnAddNew, 0, 10);
+            this.tlpMain.Controls.Add(this.lbxAllLight, 0, 11);
+            this.tlpMain.Controls.Add(this.label9, 0, 4);
+            this.tlpMain.Controls.Add(this.tkbSaturation, 1, 4);
+            this.tlpMain.Controls.Add(this.label10, 0, 9);
+            this.tlpMain.Controls.Add(this.txbHex, 1, 9);
             this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpMain.Location = new System.Drawing.Point(0, 0);
             this.tlpMain.Name = "tlpMain";
-            this.tlpMain.RowCount = 11;
+            this.tlpMain.RowCount = 13;
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -117,7 +129,7 @@
             this.txbName.Name = "txbName";
             this.txbName.Size = new System.Drawing.Size(120, 25);
             this.txbName.TabIndex = 1;
-            this.txbName.Validated += new System.EventHandler(this.EndEdit);
+            this.txbName.TextChanged += new System.EventHandler(this.EndEdit);
             // 
             // label2
             // 
@@ -153,7 +165,7 @@
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(42, 132);
+            this.label5.Location = new System.Drawing.Point(42, 162);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(79, 15);
             this.label5.TabIndex = 0;
@@ -163,7 +175,7 @@
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(34, 163);
+            this.label6.Location = new System.Drawing.Point(34, 193);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(87, 15);
             this.label6.TabIndex = 0;
@@ -191,13 +203,13 @@
             0,
             0,
             131072});
-            this.nmbxRed.Validated += new System.EventHandler(this.EndEdit);
+            this.nmbxRed.ValueChanged += new System.EventHandler(this.EndEdit);
             // 
             // label7
             // 
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(58, 190);
+            this.label7.Location = new System.Drawing.Point(58, 220);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(63, 15);
             this.label7.TabIndex = 0;
@@ -207,12 +219,12 @@
             // 
             this.ckbEnabled.AutoSize = true;
             this.ckbEnabled.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ckbEnabled.Location = new System.Drawing.Point(127, 189);
+            this.ckbEnabled.Location = new System.Drawing.Point(127, 219);
             this.ckbEnabled.Name = "ckbEnabled";
             this.ckbEnabled.Size = new System.Drawing.Size(120, 17);
             this.ckbEnabled.TabIndex = 3;
             this.ckbEnabled.UseVisualStyleBackColor = true;
-            this.ckbEnabled.Validated += new System.EventHandler(this.EndEdit);
+            this.ckbEnabled.CheckedChanged += new System.EventHandler(this.EndEdit);
             // 
             // nmbxGreen
             // 
@@ -236,7 +248,7 @@
             0,
             0,
             131072});
-            this.nmbxGreen.Validated += new System.EventHandler(this.EndEdit);
+            this.nmbxGreen.ValueChanged += new System.EventHandler(this.EndEdit);
             // 
             // nmbxBlue
             // 
@@ -260,7 +272,7 @@
             0,
             0,
             131072});
-            this.nmbxBlue.Validated += new System.EventHandler(this.EndEdit);
+            this.nmbxBlue.ValueChanged += new System.EventHandler(this.EndEdit);
             // 
             // nmbxIntensity
             // 
@@ -270,7 +282,7 @@
             0,
             0,
             131072});
-            this.nmbxIntensity.Location = new System.Drawing.Point(127, 127);
+            this.nmbxIntensity.Location = new System.Drawing.Point(127, 157);
             this.nmbxIntensity.Maximum = new decimal(new int[] {
             10,
             0,
@@ -289,7 +301,7 @@
             0,
             0,
             65536});
-            this.nmbxIntensity.Validated += new System.EventHandler(this.EndEdit);
+            this.nmbxIntensity.ValueChanged += new System.EventHandler(this.EndEdit);
             // 
             // nmbxVisibility
             // 
@@ -298,7 +310,7 @@
             0,
             0,
             0});
-            this.nmbxVisibility.Location = new System.Drawing.Point(127, 158);
+            this.nmbxVisibility.Location = new System.Drawing.Point(127, 188);
             this.nmbxVisibility.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -312,13 +324,13 @@
             0,
             0,
             0});
-            this.nmbxVisibility.Validated += new System.EventHandler(this.EndEdit);
+            this.nmbxVisibility.ValueChanged += new System.EventHandler(this.EndEdit);
             // 
             // label8
             // 
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(10, 217);
+            this.label8.Location = new System.Drawing.Point(10, 247);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(111, 15);
             this.label8.TabIndex = 0;
@@ -328,7 +340,7 @@
             // 
             this.btnColor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnColor.Location = new System.Drawing.Point(127, 212);
+            this.btnColor.Location = new System.Drawing.Point(127, 242);
             this.btnColor.Name = "btnColor";
             this.btnColor.Size = new System.Drawing.Size(120, 25);
             this.btnColor.TabIndex = 4;
@@ -339,7 +351,7 @@
             // 
             this.tlpMain.SetColumnSpan(this.btnAddNew, 2);
             this.btnAddNew.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnAddNew.Location = new System.Drawing.Point(3, 243);
+            this.btnAddNew.Location = new System.Drawing.Point(3, 304);
             this.btnAddNew.Name = "btnAddNew";
             this.btnAddNew.Size = new System.Drawing.Size(244, 30);
             this.btnAddNew.TabIndex = 5;
@@ -355,9 +367,9 @@
             this.lbxAllLight.FormattingEnabled = true;
             this.lbxAllLight.HorizontalScrollbar = true;
             this.lbxAllLight.ItemHeight = 15;
-            this.lbxAllLight.Location = new System.Drawing.Point(3, 279);
+            this.lbxAllLight.Location = new System.Drawing.Point(3, 340);
             this.lbxAllLight.Name = "lbxAllLight";
-            this.lbxAllLight.Size = new System.Drawing.Size(244, 137);
+            this.lbxAllLight.Size = new System.Drawing.Size(244, 76);
             this.lbxAllLight.TabIndex = 6;
             this.lbxAllLight.SelectedValueChanged += new System.EventHandler(this.lbxAllLight_SelectedValueChanged);
             this.lbxAllLight.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxAllLight_MouseDoubleClick);
@@ -377,6 +389,53 @@
             this.tsmiSetSourcePos.Text = "Set light source location";
             this.tsmiSetSourcePos.Click += new System.EventHandler(this.tsmiSetSourcePos_Click);
             // 
+            // label9
+            // 
+            this.label9.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(34, 131);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(87, 15);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Saturation";
+            // 
+            // tkbSaturation
+            // 
+            this.tkbSaturation.AutoSize = false;
+            this.tkbSaturation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tkbSaturation.LargeChange = 10;
+            this.tkbSaturation.Location = new System.Drawing.Point(127, 127);
+            this.tkbSaturation.Maximum = 100;
+            this.tkbSaturation.Name = "tkbSaturation";
+            this.tkbSaturation.Size = new System.Drawing.Size(120, 24);
+            this.tkbSaturation.TabIndex = 7;
+            this.tkbSaturation.TickFrequency = 10;
+            this.tkbSaturation.Scroll += new System.EventHandler(this.tkbSaturation_Scroll);
+            // 
+            // label10
+            // 
+            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(50, 278);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(71, 15);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "Hex Code";
+            // 
+            // txbHex
+            // 
+            this.txbHex.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txbHex.Location = new System.Drawing.Point(127, 273);
+            this.txbHex.Name = "txbHex";
+            this.txbHex.Size = new System.Drawing.Size(120, 25);
+            this.txbHex.TabIndex = 8;
+            this.txbHex.Validated += new System.EventHandler(this.txbHex_Validated);
+            // 
+            // tmrUpdater
+            // 
+            this.tmrUpdater.Interval = 500;
+            this.tmrUpdater.Tick += new System.EventHandler(this.tmrUpdater_Tick);
+            // 
             // RbPanelLightRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -394,6 +453,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nmbxIntensity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmbxVisibility)).EndInit();
             this.cmsLightItem.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.tkbSaturation)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -421,5 +481,10 @@
         private System.Windows.Forms.ListBox lbxAllLight;
         private System.Windows.Forms.ContextMenuStrip cmsLightItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiSetSourcePos;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TrackBar tkbSaturation;
+        private System.Windows.Forms.Timer tmrUpdater;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txbHex;
     }
 }

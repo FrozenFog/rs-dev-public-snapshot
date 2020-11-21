@@ -58,7 +58,7 @@ namespace RelertSharp.GUI
         {
             if (rbPanelLightRoom.Relocating)
             {
-                rbPanelLightRoom.RelocateTo(pos.To2dLocateable());
+                rbPanelLightRoom.RelocateTo(pos.To3dLocateable());
                 RefreshLightningSilent();
             }
         }

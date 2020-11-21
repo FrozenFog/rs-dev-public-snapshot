@@ -20,6 +20,10 @@ namespace RelertSharp.Common
         {
             X = (float)x; Y = (float)y; Z = (float)z;
         }
+        public Vec3(decimal r, decimal g, decimal b)
+        {
+            X = (float)r; Y = (float)g; Z = (float)b;
+        }
         public Vec3(I3dLocateable src)
         {
             X = src.X; Y = src.Y; Z = src.Z;

@@ -390,6 +390,18 @@ namespace RelertSharp.Utils
         {
             return objects.Min();
         }
+
+        public static decimal Average(params decimal[] objects)
+        {
+            decimal avg = 0;
+            int i = 0;
+            foreach(decimal item in objects)
+            {
+                avg += item;
+                i++;
+            }
+            return avg / i;
+        }
     }
 
 }
