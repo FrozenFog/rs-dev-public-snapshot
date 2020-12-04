@@ -53,20 +53,22 @@
             this.tbcMain.Controls.Add(this.tbpAll);
             this.tbcMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbcMain.Location = new System.Drawing.Point(0, 0);
+            this.tbcMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbcMain.Multiline = true;
             this.tbcMain.Name = "tbcMain";
             this.tbcMain.SelectedIndex = 0;
-            this.tbcMain.Size = new System.Drawing.Size(276, 722);
+            this.tbcMain.Size = new System.Drawing.Size(207, 578);
             this.tbcMain.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tbcMain.TabIndex = 0;
             // 
             // tbpGeneral
             // 
             this.tbpGeneral.Controls.Add(this.splitGeneral);
-            this.tbpGeneral.Location = new System.Drawing.Point(4, 46);
+            this.tbpGeneral.Location = new System.Drawing.Point(4, 40);
+            this.tbpGeneral.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbpGeneral.Name = "tbpGeneral";
-            this.tbpGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpGeneral.Size = new System.Drawing.Size(268, 672);
+            this.tbpGeneral.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbpGeneral.Size = new System.Drawing.Size(199, 534);
             this.tbpGeneral.TabIndex = 0;
             this.tbpGeneral.Text = "General Tiles";
             this.tbpGeneral.UseVisualStyleBackColor = true;
@@ -75,7 +77,8 @@
             // 
             this.splitGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitGeneral.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitGeneral.Location = new System.Drawing.Point(3, 3);
+            this.splitGeneral.Location = new System.Drawing.Point(2, 2);
+            this.splitGeneral.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.splitGeneral.Name = "splitGeneral";
             this.splitGeneral.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -86,8 +89,9 @@
             // splitGeneral.Panel2
             // 
             this.splitGeneral.Panel2.Controls.Add(this.flpGeneral);
-            this.splitGeneral.Size = new System.Drawing.Size(262, 666);
+            this.splitGeneral.Size = new System.Drawing.Size(195, 530);
             this.splitGeneral.SplitterDistance = 310;
+            this.splitGeneral.SplitterWidth = 3;
             this.splitGeneral.TabIndex = 0;
             // 
             // trvGeneral
@@ -96,8 +100,9 @@
             this.trvGeneral.HideSelection = false;
             this.trvGeneral.HotTracking = true;
             this.trvGeneral.Location = new System.Drawing.Point(0, 0);
+            this.trvGeneral.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.trvGeneral.Name = "trvGeneral";
-            this.trvGeneral.Size = new System.Drawing.Size(262, 310);
+            this.trvGeneral.Size = new System.Drawing.Size(195, 310);
             this.trvGeneral.TabIndex = 0;
             this.trvGeneral.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvGeneral_NodeMouseClick);
             // 
@@ -106,18 +111,20 @@
             this.flpGeneral.AutoScroll = true;
             this.flpGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpGeneral.Location = new System.Drawing.Point(0, 0);
+            this.flpGeneral.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.flpGeneral.Name = "flpGeneral";
-            this.flpGeneral.Size = new System.Drawing.Size(262, 352);
+            this.flpGeneral.Size = new System.Drawing.Size(195, 217);
             this.flpGeneral.TabIndex = 0;
             // 
             // tbpAll
             // 
             this.tbpAll.Controls.Add(this.flpAllTiles);
             this.tbpAll.Controls.Add(this.cbbAllTiles);
-            this.tbpAll.Location = new System.Drawing.Point(4, 46);
+            this.tbpAll.Location = new System.Drawing.Point(4, 40);
+            this.tbpAll.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbpAll.Name = "tbpAll";
-            this.tbpAll.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpAll.Size = new System.Drawing.Size(268, 672);
+            this.tbpAll.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbpAll.Size = new System.Drawing.Size(199, 534);
             this.tbpAll.TabIndex = 1;
             this.tbpAll.Text = "All available Tiles";
             this.tbpAll.UseVisualStyleBackColor = true;
@@ -126,9 +133,10 @@
             // 
             this.flpAllTiles.AutoScroll = true;
             this.flpAllTiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flpAllTiles.Location = new System.Drawing.Point(3, 26);
+            this.flpAllTiles.Location = new System.Drawing.Point(2, 22);
+            this.flpAllTiles.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.flpAllTiles.Name = "flpAllTiles";
-            this.flpAllTiles.Size = new System.Drawing.Size(262, 643);
+            this.flpAllTiles.Size = new System.Drawing.Size(195, 510);
             this.flpAllTiles.TabIndex = 1;
             // 
             // cbbAllTiles
@@ -136,10 +144,10 @@
             this.cbbAllTiles.Dock = System.Windows.Forms.DockStyle.Top;
             this.cbbAllTiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbAllTiles.FormattingEnabled = true;
-            this.cbbAllTiles.Location = new System.Drawing.Point(3, 3);
+            this.cbbAllTiles.Location = new System.Drawing.Point(2, 2);
+            this.cbbAllTiles.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cbbAllTiles.Name = "cbbAllTiles";
-            this.cbbAllTiles.Size = new System.Drawing.Size(262, 23);
-            this.cbbAllTiles.Sorted = true;
+            this.cbbAllTiles.Size = new System.Drawing.Size(195, 20);
             this.cbbAllTiles.TabIndex = 0;
             this.cbbAllTiles.SelectedIndexChanged += new System.EventHandler(this.cbbAllTiles_SelectedIndexChanged);
             // 
@@ -151,11 +159,12 @@
             // 
             // TilePanel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tbcMain);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "TilePanel";
-            this.Size = new System.Drawing.Size(276, 722);
+            this.Size = new System.Drawing.Size(207, 578);
             this.tbcMain.ResumeLayout(false);
             this.tbpGeneral.ResumeLayout(false);
             this.splitGeneral.Panel1.ResumeLayout(false);
