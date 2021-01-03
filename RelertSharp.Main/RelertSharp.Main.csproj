@@ -71,7 +71,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'OnPublic|AnyCPU'">
-    <OutputPath>bin\OnPublic\</OutputPath>
+    <OutputPath>..\Release\</OutputPath>
     <DefineConstants>TRACE;RELEASE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>

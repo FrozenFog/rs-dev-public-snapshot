@@ -4,7 +4,7 @@ namespace RelertSharp.Common
 {
     public static class Constant
     {
-        public const string ReleaseDate = " - ver. 2020.10.05-1741 - UNSTABLE";
+        public const string ReleaseDate = " - ver. 2020.11.21-1907 - UNSTABLE";
 
         public const int IniMaxLineLength = 512;
         public static class TileSetClass
