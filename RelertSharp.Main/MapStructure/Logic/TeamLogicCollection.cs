@@ -1,5 +1,4 @@
 ﻿using RelertSharp.IniSystem;
-using RelertSharp.Model;
 using RelertSharp.Common;
 using System.Collections;
 using System.Collections.Generic;
@@ -62,7 +61,7 @@ namespace RelertSharp.MapStructure.Logic
         {
             get
             {
-                if (data.Keys.Contains(_ID)) return data[_ID];
+                if (!string.IsNullOrEmpty(_ID) && data.Keys.Contains(_ID)) return data[_ID];
                 return null;
             }
             set
@@ -74,11 +73,8 @@ namespace RelertSharp.MapStructure.Logic
         public int Length { get { return data.Count; } }
         #endregion
     }
-    public class TeamLogicItem : BindableBase
+    public class TeamLogicItem
     {
-        private string id;
-
-
         #region Ctor - TeamLogicItem
         public TeamLogicItem(INIEntity ent)
         {
@@ -89,11 +85,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TeamLogicItem
-        public virtual string ID
-        {
-            get { return id; }
-            set { SetProperty(ref id, value); }
-        }
+        public virtual string ID { get; set; }
         public static TeamLogicItem Empty
         {
             get { return new TeamLogicItem(); }

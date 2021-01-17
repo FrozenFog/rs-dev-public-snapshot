@@ -6,7 +6,7 @@ namespace RelertSharp.Common
 {
     public class RSConfig : INIFile
     {
-
+        private ModConfig modConfig;
 
         #region ContruCtor - RSConfig
         public RSConfig(string configFileName) : base(configFileName, INIFileType.DefaultINI, true)

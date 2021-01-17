@@ -267,5 +267,9 @@ namespace RelertSharp.Common
         {
             public const int MaxGameSpeed = 6;
         }
+        public static class Config
+        {
+            public const string Path = "./configs/default.xml";
+        }
     }
 }

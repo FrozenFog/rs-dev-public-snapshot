@@ -1,6 +1,5 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
-using RelertSharp.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -149,15 +148,10 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class TriggerItem : BindableBase, ILogicItem
+    public class TriggerItem : ILogicItem
     {
+        private DisplayingType displayingType;
         private string innerString;
-        private string id, house, linkedwith, name;
-        private bool disabled, ez, nm, hd;
-        private TriggerRepeatingType repeattype;
-        private LogicGroup events, actions;
-        private DisplayingType displayintType = DisplayingType.IDandName;
-
         [Flags]
         public enum DisplayingType { OnlyID = 0x1, OnlyName = 0x2, IDandName = OnlyID | OnlyName, Remain = 0x4 }
 
@@ -179,7 +173,7 @@ namespace RelertSharp.MapStructure.Logic
         public TriggerItem(TriggerItem src, string id)
         {
             ID = id;
-            House = src.house;
+            House = src.House;
             LinkedWith = src.LinkedWith;
             Name = src.Name + " - Clone";
             Disabled = src.Disabled;
@@ -187,9 +181,9 @@ namespace RelertSharp.MapStructure.Logic
             NormalOn = src.NormalOn;
             HardOn = src.HardOn;
             Repeating = src.Repeating;
-            SetDisplayingString(src.displayintType);
-            Events = new LogicGroup(src.events);
-            Actions = new LogicGroup(src.actions);
+            SetDisplayingString(src.displayingType);
+            Events = new LogicGroup(src.Events);
+            Actions = new LogicGroup(src.Actions);
 
         }
         public TriggerItem() { }
@@ -199,14 +193,14 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Methods - TriggerItem
         public override string ToString()
         {
-            switch (displayintType)
+            switch (displayingType)
             {
                 case DisplayingType.IDandName:
                     return string.Format("{0}:{1}", ID, Name);
                 case DisplayingType.OnlyID:
                     return ID;
                 case DisplayingType.OnlyName:
-                    return name;
+                    return Name;
                 default:
                     return innerString;
             }
@@ -218,7 +212,7 @@ namespace RelertSharp.MapStructure.Logic
         }
         public void SetDisplayingString(DisplayingType type)
         {
-            displayintType = type;
+            displayingType = type;
             switch (type)
             {
                 case DisplayingType.OnlyID:
@@ -238,16 +232,8 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TriggerItem
-        public LogicGroup Events
-        {
-            get { return events; }
-            set { SetProperty(ref events, value); }
-        }
-        public LogicGroup Actions
-        {
-            get { return actions; }
-            set { SetProperty(ref actions, value); }
-        }
+        public LogicGroup Events { get; set; }
+        public LogicGroup Actions { get; set; }
         public static TriggerItem NullTrigger
         {
             get
@@ -257,51 +243,15 @@ namespace RelertSharp.MapStructure.Logic
                 return item;
             }
         }
-        public string ID
-        {
-            get { return id; }
-            set { SetProperty(ref id, value); }
-        }
-        public string House
-        {
-            get { return house; }
-            set { SetProperty(ref house, value); }
-        }
-        public string LinkedWith
-        {
-            get { return linkedwith; }
-            set { SetProperty(ref linkedwith, value); }
-        }
-        public string Name
-        {
-            get { return name; }
-            set { SetProperty(ref name, value); }
-        }
-        public bool Disabled
-        {
-            get { return disabled; }
-            set { SetProperty(ref disabled, value); }
-        }
-        public bool EasyOn
-        {
-            get { return ez; }
-            set { SetProperty(ref ez, value); }
-        }
-        public bool NormalOn
-        {
-            get { return nm; }
-            set { SetProperty(ref nm, value); }
-        }
-        public bool HardOn
-        {
-            get { return hd; }
-            set { SetProperty(ref hd, value); }
-        }
-        public TriggerRepeatingType Repeating
-        {
-            get { return repeattype; }
-            set { SetProperty(ref repeattype, value); }
-        }
+        public string ID { get; set; }
+        public string House { get; set; }
+        public string LinkedWith { get; set; }
+        public string Name { get; set; }
+        public bool Disabled { get; set; }
+        public bool EasyOn { get; set; }
+        public bool NormalOn { get; set; }
+        public bool HardOn { get; set; }
+        public TriggerRepeatingType Repeating { get; set; }
         public string IDName { get { return ID + ":" + Name; } }
 
         public IEnumerable<object> SaveData

@@ -1,6 +1,5 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
-using RelertSharp.Model;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,12 +118,8 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class TagItem : BindableBase, ILogicItem
+    public class TagItem : ILogicItem
     {
-        private string name, asso, id;
-        private TriggerRepeatingType repeatingType;
-
-
         #region Ctor - TagItem
         public TagItem(string _id, string[] dataList)
         {
@@ -171,27 +166,11 @@ namespace RelertSharp.MapStructure.Logic
                 };
             }
         }
-        public override string ToString() { return id + ' ' + Name; }
-        public TriggerRepeatingType Repeating
-        {
-            get { return repeatingType; }
-            set { SetProperty(ref repeatingType, value); }
-        }
-        public string Name
-        {
-            get { return name; }
-            set { SetProperty(ref name, value); }
-        }
-        public string AssoTrigger
-        {
-            get { return asso; }
-            set { SetProperty(ref asso, value); }
-        }
-        public string ID
-        {
-            get { return id; }
-            set { SetProperty(ref id, value); }
-        }
+        public override string ToString() { return ID + ' ' + Name; }
+        public TriggerRepeatingType Repeating { get; set; }
+        public string Name { get; set; }
+        public string AssoTrigger { get; set; }
+        public string ID { get; set; }
         public static TagItem NullTag { get { return new TagItem("None", ""); } }
         public bool Binded { get; set; } = true;
         #endregion

@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/Brushes.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    <Style x:Key="gsplitDark" TargetType="{x:Type GridSplitter}">
+        <Setter Property="Background" Value="{StaticResource dimBack}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource dimDisable}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+</ResourceDictionary>

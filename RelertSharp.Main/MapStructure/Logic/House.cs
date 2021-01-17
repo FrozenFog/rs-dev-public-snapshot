@@ -77,7 +77,7 @@ namespace RelertSharp.MapStructure.Logic
                 BaseNodes.Add(node);
             }
             residual = ent.DictData;
-            GetToUnit = new HouseUnit(this);
+            //GetToUnit = new HouseUnit(this);
         }
         public HouseItem() { }
         #endregion

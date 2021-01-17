@@ -47,8 +47,8 @@ namespace RelertSharp.Properties {
         }
         
         /// <summary>
-        ///   重写当前线程的 CurrentUICulture 属性
-        ///   重写当前线程的 CurrentUICulture 属性。
+        ///   重写当前线程的 CurrentUICulture 属性，对
+        ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture {
@@ -57,6 +57,28 @@ namespace RelertSharp.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;RsModConfig&gt;
+        ///  &lt;ComboList&gt;
+        ///    &lt;cb type=&quot;Waypoints&quot; default=&quot;true&quot;/&gt;
+        ///    &lt;cb type=&quot;Houses&quot; default=&quot;true&quot;/&gt;
+        ///    &lt;cb type=&quot;Scripts&quot; default=&quot;true&quot;/&gt;
+        ///    &lt;cb type=&quot;Teams&quot; default=&quot;true&quot;/&gt;
+        ///    &lt;cb type=&quot;Taskforces&quot; default=&quot;true&quot;/&gt;
+        ///    &lt;cb type=&quot;Triggers&quot; default=&quot;true&quot;/&gt;
+        ///    &lt;cb type=&quot;TechType&quot; default=&quot;true&quot;/&gt;
+        ///    &lt;cb type=&quot;Side&quot; default=&quot;true&quot;/&gt;
+        ///    &lt;cb type=&quot;Tags&quot; default=&quot;true&quot;/&gt;
+        ///    &lt;cb type=&quot;BuildingUpgrade&quot; default=&quot;true&quot;/&gt;
+        ///    &lt;cb type=&quot;MapObjectTag [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string _default {
+            get {
+                return ResourceManager.GetString("_default", resourceCulture);
             }
         }
     }

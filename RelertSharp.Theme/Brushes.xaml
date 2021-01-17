@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--Main-->
+    <SolidColorBrush x:Key="textFront" Color="#FFF1F1F1"/>
+    <SolidColorBrush x:Key="dimBack" Color="#FF2E2E2E"/>
+    <SolidColorBrush x:Key="textDisable" Color="#FF7D7D7D"/>
+    <SolidColorBrush x:Key="dimDisable" Color="#FF222222"/>
+
+    <!--Buttons-->
+    <SolidColorBrush x:Key="btnBack" Color="#FF464646"/>
+    <SolidColorBrush x:Key="btnBorder" Color="#FF555555"/>
+    
+    <!--Textboxes-->
+    <SolidColorBrush x:Key="txbBorder" Color="#FF555555"/>
+    <SolidColorBrush x:Key="txbBack" Color="#FF2E2E2E"/>
+    <SolidColorBrush x:Key="txbDisable" Color="#FF525252"/>
+</ResourceDictionary>

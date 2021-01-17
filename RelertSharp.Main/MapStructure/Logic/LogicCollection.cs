@@ -1,6 +1,5 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
-using RelertSharp.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -187,13 +186,10 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class LogicItem : BindableBase
+    public class LogicItem
     {
         private TriggerSubType type;
         public int idx;
-        private int id;
-        private string comment;
-        private string[] parameters;
 
 
         #region Ctor - LogicItem
@@ -215,13 +211,13 @@ namespace RelertSharp.MapStructure.Logic
         }
         public LogicItem(LogicItem src, int num)
         {
-            id = src.id;
-            comment = src.comment;
+            ID = src.ID;
+            Comment = src.Comment;
             type = src.type;
             idx = num;
             if (src.type == TriggerSubType.EventLogic) Parameters = new string[] { "0", "0", "0" };
             else Parameters = new string[] { "0", "0", "0", "0", "0", "0", "A" };
-            Array.Copy(src.parameters, parameters, parameters.Length);
+            Array.Copy(src.Parameters, Parameters, Parameters.Length);
         }
         #endregion
 
@@ -241,21 +237,9 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - LogicItem
-        public int ID
-        {
-            get { return id; }
-            set { SetProperty(ref id, value); }
-        }
-        public string Comment
-        {
-            get { return comment; }
-            set { SetProperty(ref comment, value); }
-        }
-        public string[] Parameters
-        {
-            get { return parameters; }
-            set { SetProperty(ref parameters, value); }
-        }
+        public int ID { get; set; }
+        public string Comment { get; set; }
+        public string[] Parameters { get; set; }
         #endregion
     }
 }

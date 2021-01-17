@@ -79,7 +79,7 @@ namespace RelertSharp.MapStructure.Logic
             Group = ent.PopPair("Group").ParseInt(-1);
             residual = ent.DictData;
             LoadAttributes();
-            GetToUnit = new TeamUnit(this);
+            //GetToUnit = new TeamUnit(this);
         }
         public TeamItem() : base()
         {

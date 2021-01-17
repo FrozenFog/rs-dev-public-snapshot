@@ -1,0 +1,56 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel" xmlns:local="clr-namespace:RelertSharp.Wpf.Views" x:Class="RelertSharp.Wpf.Views.AiTriggerView"
+             mc:Ignorable="d">
+    <UserControl.DataContext>
+        <ViewModel:AiTriggerVm/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="3" />
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Left" Width="3" Style="{DynamicResource gsplitDark}"/>
+        <Label Content="Name" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
+        <TextBox x:Name="txbName" Grid.Column="2" Height="23" Margin="10,10,10,0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.ColumnSpan="3"/>
+        <Label Content="Main Team" HorizontalAlignment="Right" Margin="0,38,10,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
+        <ComboBox x:Name="cbbTeam1" Grid.Column="2" Margin="10,38,65,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" VerticalContentAlignment="Center" Grid.ColumnSpan="3" IsEditable="True" ItemsSource="{Binding TeamCollections}" SelectedItem="{Binding Team1Item}"/>
+        <Button x:Name="btnAddTeam1" Content="+" Grid.Column="4" HorizontalAlignment="Right" Margin="0,38,10,0" VerticalAlignment="Top" Width="23" Style="{DynamicResource btnDark}"/>
+        <Label Content="Support Team" HorizontalAlignment="Right" Margin="0,66,10,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" HorizontalContentAlignment="Right"/>
+        <ComboBox x:Name="cbbTeam2" Grid.Column="2" Margin="10,66,65,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" VerticalContentAlignment="Center" Grid.ColumnSpan="3" IsEditable="True" ItemsSource="{Binding TeamCollections}" SelectedItem="{Binding Team2Item}"/>
+        <Button x:Name="btnAddTeam2" Content="+" Grid.Column="4" HorizontalAlignment="Right" Margin="0,66,10,0" VerticalAlignment="Top" Width="23" Style="{DynamicResource btnDark}"/>
+        <Label Content="Side" HorizontalAlignment="Right" Margin="0,94,10,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" HorizontalContentAlignment="Right"/>
+        <Label Content="Owner Country" HorizontalAlignment="Right" Margin="0,122,10,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" HorizontalContentAlignment="Right"/>
+        <Label Content="Tech Level" HorizontalAlignment="Right" Margin="0,150,10,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" HorizontalContentAlignment="Right"/>
+        <Button x:Name="btnTeam1" Content="←" Grid.Column="4" HorizontalAlignment="Right" Margin="0,38,37.4,0" VerticalAlignment="Top" Width="23" Style="{DynamicResource btnDark}"/>
+        <Button x:Name="btnTeam2" Content="←" Grid.Column="4" HorizontalAlignment="Right" Margin="0,66,37.4,0" VerticalAlignment="Top" Width="23" Style="{DynamicResource btnDark}"/>
+        <ComboBox x:Name="cbbSide" Grid.Column="2" Margin="10,94,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" Grid.ColumnSpan="3" VerticalContentAlignment="Center"/>
+        <ComboBox x:Name="cbbCountry" Grid.Column="2" Margin="10,122,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" Grid.ColumnSpan="3" VerticalContentAlignment="Center"/>
+        <Label Content="Condition" HorizontalAlignment="Right" Margin="0,178,10,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" HorizontalContentAlignment="Right"/>
+        <Label Content="Tech Type" HorizontalAlignment="Right" Margin="0,206,10,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" HorizontalContentAlignment="Right"/>
+        <Label Content="Operator" HorizontalAlignment="Right" Margin="0,234,10,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" HorizontalContentAlignment="Right"/>
+        <Label Content="Amount" HorizontalAlignment="Right" Margin="0,262,9.8,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" HorizontalContentAlignment="Right"/>
+        <Label Content="Weight" HorizontalAlignment="Right" Margin="0,290,9.8,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" HorizontalContentAlignment="Right"/>
+        <Label Content="Difficulty" HorizontalAlignment="Right" Margin="0,318,9.8,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" HorizontalContentAlignment="Right"/>
+        <ComboBox x:Name="cbbCondition" Grid.ColumnSpan="3" Grid.Column="2" Margin="10,178,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" VerticalContentAlignment="Center"/>
+        <ComboBox x:Name="cbbTechType" Grid.ColumnSpan="3" Grid.Column="2" Margin="10,206,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" VerticalContentAlignment="Center"/>
+        <ComboBox x:Name="cbbOperator" Grid.ColumnSpan="3" Grid.Column="2" Margin="10,234,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txbWeightMin" Grid.Column="2" Height="23" Margin="10,290,10,0" TextWrapping="Wrap" Text="{Binding WeightMin}" VerticalAlignment="Top" Style="{DynamicResource txbDark}"/>
+        <TextBox x:Name="txbWeightInit" Grid.Column="3" Height="23" Margin="10,290,10,0" TextWrapping="Wrap" Text="{Binding WeightInit}" VerticalAlignment="Top" Style="{DynamicResource txbDark}"/>
+        <TextBox x:Name="txbWeightMax" Grid.Column="4" Height="23" Margin="10,290,10,0" TextWrapping="Wrap" Text="{Binding WeightMax}" VerticalAlignment="Top" Style="{DynamicResource txbDark}"/>
+        <CheckBox x:Name="ckbEasy" Content="Easy" Grid.Column="2" HorizontalAlignment="Left" Margin="10,323,0,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding EasyOn}"/>
+        <CheckBox x:Name="ckbNormal" Content="Normal" Grid.Column="3" HorizontalAlignment="Left" Margin="10,323,0,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding NormalOn}"/>
+        <CheckBox x:Name="ckbHard" Content="Hard" Grid.Column="4" HorizontalAlignment="Left" Margin="10,323,0,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding HardOn}"/>
+        <CheckBox x:Name="ckbSkirmish" Content="Skirmish" Grid.Column="2" HorizontalAlignment="Left" Margin="10,351,0,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding Skirmish}"/>
+        <Label Content="Etc" HorizontalAlignment="Right" Margin="0,346,9.8,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" HorizontalContentAlignment="Right"/>
+        <CheckBox x:Name="ckbDefense" Content="Is for base defense" Grid.Column="3" HorizontalAlignment="Left" Margin="10,351,0,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" Grid.ColumnSpan="2" IsChecked="{Binding BaseDefense}"/>
+        <TextBox x:Name="txbTechLevel" Grid.Column="2" Height="23" Margin="10,150,10,0" TextWrapping="Wrap" Text="{Binding TechLevel}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.ColumnSpan="3"/>
+        <TextBox x:Name="txbAmount" Grid.Column="2" Height="23" Margin="10,262,10,0" TextWrapping="Wrap" Text="{Binding ConditionAmount}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.ColumnSpan="3"/>
+    </Grid>
+</UserControl>

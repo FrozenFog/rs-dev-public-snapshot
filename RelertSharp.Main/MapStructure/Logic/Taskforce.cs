@@ -42,8 +42,6 @@ namespace RelertSharp.MapStructure.Logic
 
     public class TaskforceItem : TeamLogicItem, ILogicItem
     {
-        private int group;
-        private string name;
         private int memberid = 0;
 
 
@@ -87,7 +85,7 @@ namespace RelertSharp.MapStructure.Logic
             cp.ID = newid;
             cp.Name = Name + " Copy";
             cp.Members = Members;
-            cp.Group = group;
+            cp.Group = Group;
             return cp;
         }
         public static IEnumerable<ListViewItem> ToListViewItems(IEnumerable<TaskforceUnit> src)
@@ -125,16 +123,8 @@ namespace RelertSharp.MapStructure.Logic
             }
         }
         //public Dictionary<string, int> MemberData { get { return memberData; } set { memberData = value; } }
-        public int Group
-        {
-            get { return group; }
-            set { SetProperty(ref group, value); }
-        }
-        public string Name
-        {
-            get { return name; }
-            set { SetProperty(ref name, value); }
-        }
+        public int Group { get; set; }
+        public string Name { get; set; }
         #endregion
     }
 

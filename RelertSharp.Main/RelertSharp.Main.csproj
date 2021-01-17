@@ -129,8 +129,7 @@
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\GlobalVar.cs" />
     <Compile Include="Common\Interfaces.cs" />
-    <Compile Include="Common\LocalConfig.cs" />
-    <Compile Include="Common\RSConfig.cs" />
+    <Compile Include="Common\Config\ModConfig.cs" />
     <Compile Include="Common\RsLog.cs" />
     <Compile Include="Common\SoundManager.cs" />
     <Compile Include="Common\Enumerator\Square2DEnumerator.cs" />
@@ -199,6 +198,7 @@
     <Compile Include="IniSystem\Rules.cs" />
     <Compile Include="IniSystem\SoundRules.cs" />
     <Compile Include="IniSystem\TechnoPair.cs" />
+    <Compile Include="Common\LocalConfig.cs" />
     <Compile Include="MapStructure\Logic\AITrigger.cs" />
     <Compile Include="MapStructure\Logic\Country.cs" />
     <Compile Include="MapStructure\Logic\House.cs" />
@@ -239,11 +239,10 @@
     <Compile Include="MapStructure\TileSet.cs" />
     <Compile Include="MapStructure\TileLayer.cs" />
     <Compile Include="MapStructure\Objects\UnitLayer.cs" />
-    <Compile Include="Model\BindableBase.cs" />
-    <Compile Include="Model\ViewModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DrawingEngine\CppExtern.cs" />
+    <Compile Include="Common\RSConfig.cs" />
     <Compile Include="Utils\ClassExtension.cs" />
     <Compile Include="Utils\CMemory.cs" />
     <Compile Include="Utils\Colors.cs" />
@@ -278,7 +277,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\default.xml" />
+  </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
