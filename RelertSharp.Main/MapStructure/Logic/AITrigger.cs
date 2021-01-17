@@ -21,7 +21,7 @@ namespace RelertSharp.MapStructure.Logic
         public AITriggerItem NewAITrigger(string id)
         {
             AITriggerItem item = new AITriggerItem();
-            item.ID = id;
+            item.Id = id;
             item.Name = "New AI Trigger";
             item.Team1ID = item.Team2ID = "<none>";
             item.OwnerHouse = "<all>";
@@ -73,7 +73,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class AITriggerItem : ILogicItem
+    public class AITriggerItem : IndexableItem
     {
         #region Ctor - AITriggerItem
         public AITriggerItem()
@@ -88,7 +88,7 @@ namespace RelertSharp.MapStructure.Logic
                 {
                     throw new Exception();
                 }
-                ID = _id;
+                Id = _id;
                 Name = _args[0];
                 Team1ID = _args[1];
                 OwnerHouse = _args[2];
@@ -130,13 +130,8 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - AITriggerItem
-        public override string ToString()
-        {
-            return ID + " " + Name;
-        }
+
         public bool Enabled { get; set; }
-        public string Name { get; set; }
-        public string ID { get; set; }
         public string Team1ID { get; set; }
         public string OwnerHouse { get; set; }
         public int TechLevel { get; set; }

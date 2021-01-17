@@ -1,0 +1,25 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RelertSharp.Wpf.Views"
+             xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel" x:Class="RelertSharp.Wpf.Views.TeamListView"
+             mc:Ignorable="d">
+    <UserControl.DataContext>
+        <ViewModel:GlobalTeamVm/>
+    </UserControl.DataContext>
+    <Grid>
+        <ListBox Margin="10,10,10.4,9.4" Style="{DynamicResource lbxDark}" ItemsSource="{Binding Mode=OneWay}">
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Show Team Id" IsCheckable="True" Unchecked="TeamIdUnchecked" Checked="TeamIdChecked"/>
+                    <Separator/>
+                    <MenuItem Header="Ascending Sort" Click="AscendingSort"/>
+                    <MenuItem Header="Descending Sort" Click="DescendingSort"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+
+    </Grid>
+</UserControl>

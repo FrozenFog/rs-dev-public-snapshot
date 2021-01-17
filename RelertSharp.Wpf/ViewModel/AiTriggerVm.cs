@@ -27,7 +27,7 @@ namespace RelertSharp.Wpf.ViewModel
         }
         public string Id
         {
-            get { return data.ID; }
+            get { return data.Id; }
         }
         public string PrimaryTeamId
         {
@@ -187,7 +187,7 @@ namespace RelertSharp.Wpf.ViewModel
             get { return MapTeam[data.Team1ID]; }
             set
             {
-                data.Team1ID = value.ID;
+                data.Team1ID = value?.Id;
                 SetProperty();
             }
         }
@@ -196,7 +196,7 @@ namespace RelertSharp.Wpf.ViewModel
             get { return MapTeam[data.Team2ID]; }
             set
             {
-                data.Team2ID = value.ID;
+                data.Team2ID = value?.Id;
                 SetProperty();
             }
         }

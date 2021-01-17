@@ -16,7 +16,7 @@ namespace RelertSharp.MapStructure.Logic
             int i = 0;
             foreach (TeamScriptGroup g in this)
             {
-                TechnoPair p = new TechnoPair(i.ToString(), string.Format("{0} - {1}", g.ID, g.Name));
+                TechnoPair p = new TechnoPair(i.ToString(), string.Format("{0} - {1}", g.Id, g.Name));
                 result.Add(p);
                 i++;
             }
@@ -26,7 +26,7 @@ namespace RelertSharp.MapStructure.Logic
         {
             TeamScriptGroup g = new TeamScriptGroup()
             {
-                ID = id,
+                Id = id,
                 Name = name
             };
             this[id] = g;
@@ -41,7 +41,7 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
     }
 
-    public class TeamScriptGroup : TeamLogicItem, ILogicItem
+    public class TeamScriptGroup : TeamLogicItem, IIndexableItem
     {
         private List<TeamScriptItem> data = new List<TeamScriptItem>();
 
@@ -62,7 +62,7 @@ namespace RelertSharp.MapStructure.Logic
         public TeamScriptGroup(TeamScriptGroup src, string id)
         {
             Name = src.Name + " - Clone";
-            ID = id;
+            Id = id;
             data = new List<TeamScriptItem>(src.data);
         }
         public TeamScriptGroup() : base() { }
@@ -72,7 +72,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Methods - TeamScriptGroup
         public INIEntity GetSaveData()
         {
-            INIEntity result = new INIEntity(ID);
+            INIEntity result = new INIEntity(Id);
             result.AddPair(new INIPair("Name", Name));
             for (int i = 0; i < data.Count; i++)
             {
@@ -104,7 +104,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Calls - TeamScriptGroup
         public bool IsEmpty { get { return data.Count == 0; } }
         public List<TeamScriptItem> Data { get { return data; } set { data = value; } }
-        public override string ToString() { return ID + " " + Name; }
+        public override string ToString() { return Id + " " + Name; }
         public string Name { get; set; }
         #endregion
     }

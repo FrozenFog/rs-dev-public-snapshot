@@ -135,7 +135,7 @@ namespace RelertSharp.FileSystem
     }
 
 
-    public class CsfString : ILogicItem
+    public class CsfString : IIndexableItem
     {
 
 
@@ -153,11 +153,17 @@ namespace RelertSharp.FileSystem
         {
             return UIName;
         }
+
+        public void ChangeDisplay(IndexableDisplayType type)
+        {
+            // csf always show id and name
+            return;
+        }
         #endregion
 
 
         #region Public Calls - CSFString
-        public string ID { get { return UIName; } }
+        public string Id { get { return UIName; } }
         public string Name { get { return ContentString; } }
         public string UIName { get; set; } = "";
         public string ContentString { get; set; } = "";

@@ -21,7 +21,7 @@ namespace RelertSharp.MapStructure.Logic
             List<TechnoPair> result = new List<TechnoPair>();
             foreach (string id in AllId)
             {
-                result.Add(new TechnoPair(id, this[id].ID));
+                result.Add(new TechnoPair(id, this[id].Id));
             }
             return result;
         }
@@ -43,7 +43,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class HouseItem : TeamLogicItem, ILogicItem
+    public class HouseItem : TeamLogicItem, IIndexableItem
     {
         private List<string> alliesWith;
         private Dictionary<string, INIPair> residual;
@@ -146,7 +146,7 @@ namespace RelertSharp.MapStructure.Logic
         public int NodeCounts { get; set; }
         public double PercentBuilt { get; set; }
         public System.Drawing.Color DrawingColor { get; set; }
-        public string Name { get { return ID; } set { ID = value; } }
+        public string Name { get { return Id; } set { Id = value; } }
         public HouseUnit GetToUnit { get; set; }
         #endregion
     }

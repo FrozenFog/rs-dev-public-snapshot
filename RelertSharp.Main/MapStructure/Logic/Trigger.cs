@@ -51,7 +51,7 @@ namespace RelertSharp.MapStructure.Logic
         }
         public void RemoveTrigger(TriggerItem trigger)
         {
-            if (data.Keys.Contains(trigger.ID)) data.Remove(trigger.ID);
+            if (data.Keys.Contains(trigger.Id)) data.Remove(trigger.Id);
         }
         public TriggerItem NewTrigger(string id, TriggerItem.DisplayingType _type = TriggerItem.DisplayingType.IDandName)
         {
@@ -71,7 +71,7 @@ namespace RelertSharp.MapStructure.Logic
             List<TechnoPair> result = new List<TechnoPair>();
             foreach (TriggerItem trigger in data.Values)
             {
-                TechnoPair p = new TechnoPair(trigger.ID, trigger.Name);
+                TechnoPair p = new TechnoPair(trigger.Id, trigger.Name);
                 result.Add(p);
             }
             return result;
@@ -87,7 +87,7 @@ namespace RelertSharp.MapStructure.Logic
             tmp = tmp.OrderBy(x => x.Key).ToDictionary(x => x.Key, y => y.Value);
             foreach (TriggerItem item in tmp.Values)
             {
-                data[item.ID] = item;
+                data[item.Id] = item;
             }
         }
         public void DecendingSort()
@@ -101,7 +101,7 @@ namespace RelertSharp.MapStructure.Logic
             tmp = tmp.OrderByDescending(x => x.Key).ToDictionary(x => x.Key, y => y.Value);
             foreach (TriggerItem item in tmp.Values)
             {
-                data[item.ID] = item;
+                data[item.Id] = item;
             }
         }
         #endregion
@@ -148,7 +148,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class TriggerItem : ILogicItem
+    public class TriggerItem : IndexableItem
     {
         private DisplayingType displayingType;
         private string innerString;
@@ -159,7 +159,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Ctor - TriggerItem
         public TriggerItem(string id, string house, string linkedTriggerID, string name, bool disabled, bool e, bool n, bool h, int repeating)
         {
-            ID = id;
+            Id = id;
             House = house;
             LinkedWith = linkedTriggerID;
             Name = name;
@@ -172,7 +172,7 @@ namespace RelertSharp.MapStructure.Logic
         }
         public TriggerItem(TriggerItem src, string id)
         {
-            ID = id;
+            Id = id;
             House = src.House;
             LinkedWith = src.LinkedWith;
             Name = src.Name + " - Clone";
@@ -196,9 +196,9 @@ namespace RelertSharp.MapStructure.Logic
             switch (displayingType)
             {
                 case DisplayingType.IDandName:
-                    return string.Format("{0}:{1}", ID, Name);
+                    return string.Format("{0}:{1}", Id, Name);
                 case DisplayingType.OnlyID:
-                    return ID;
+                    return Id;
                 case DisplayingType.OnlyName:
                     return Name;
                 default:
@@ -216,13 +216,13 @@ namespace RelertSharp.MapStructure.Logic
             switch (type)
             {
                 case DisplayingType.OnlyID:
-                    innerString = ID;
+                    innerString = Id;
                     break;
                 case DisplayingType.OnlyName:
                     innerString = Name;
                     break;
                 case DisplayingType.IDandName:
-                    innerString = ID + ":" + Name;
+                    innerString = Id + ":" + Name;
                     break;
                 case DisplayingType.Remain:
                     break;
@@ -243,16 +243,14 @@ namespace RelertSharp.MapStructure.Logic
                 return item;
             }
         }
-        public string ID { get; set; }
         public string House { get; set; }
         public string LinkedWith { get; set; }
-        public string Name { get; set; }
         public bool Disabled { get; set; }
         public bool EasyOn { get; set; }
         public bool NormalOn { get; set; }
         public bool HardOn { get; set; }
         public TriggerRepeatingType Repeating { get; set; }
-        public string IDName { get { return ID + ":" + Name; } }
+        public string IDName { get { return Id + ":" + Name; } }
 
         public IEnumerable<object> SaveData
         {

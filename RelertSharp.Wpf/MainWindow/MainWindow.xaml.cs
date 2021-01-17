@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AvalonDock.Layout;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RelertSharp.Wpf.ViewModel;
+using RelertSharp.Wpf.Views;
 
 namespace RelertSharp.Wpf
 {
@@ -20,9 +23,19 @@ namespace RelertSharp.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        private AiTriggerView aiTrigger = new AiTriggerView();
+        private TeamListView teamList = new TeamListView();
+
         public MainWindow()
         {
             InitializeComponent();
+            AddToolPage();
+        }
+
+        private void AddToolPage()
+        {
+            dockMain.AddToolToRight("Ai Trigger Edit", aiTrigger);
+            dockMain.AddToolToRight("Team List", teamList);
         }
     }
 }

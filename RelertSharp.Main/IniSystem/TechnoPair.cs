@@ -2,7 +2,7 @@
 
 namespace RelertSharp.IniSystem
 {
-    public class TechnoPair : ILogicItem
+    public class TechnoPair : IIndexableItem
     {
         private string abst = "";
         private string name = "";
@@ -109,6 +109,11 @@ namespace RelertSharp.IniSystem
                     break;
             }
         }
+
+        public void ChangeDisplay(IndexableDisplayType type)
+        {
+            // TODO: need?
+        }
         #endregion
 
 
@@ -126,7 +131,7 @@ namespace RelertSharp.IniSystem
                 name = value;
             }
         }
-        public string ID { get { return Index; } }
+        public string Id { get { return Index; } }
         public string RegName { get; set; } = "";
         public string UIName { get; set; } = "";
         public static TechnoPair NonePair

@@ -143,9 +143,9 @@ namespace RelertSharp.MapStructure
                     result.Add(new VerifyResultItem
                     {
                         Level = VerifyAlertLevel.Suggest,
-                        Message = string.Format("Empty Taskforce. Name: {0}, Id: {1}", tf.Name, tf.ID),
+                        Message = string.Format("Empty Taskforce. Name: {0}, Id: {1}", tf.Name, tf.Id),
                         VerifyType = VerifyType.TaskforceEmpty,
-                        IdNavigator = tf.ID,
+                        IdNavigator = tf.Id,
                         LogicType = LogicType.Taskforce
                     });
                 }
@@ -155,8 +155,8 @@ namespace RelertSharp.MapStructure
                     {
                         Level = VerifyAlertLevel.Critical,
                         Message = string.Format("Taskforce {0}({1}) member num larger than 5! This taskforce will surely crash the game.",
-                            tf.ID, tf.Name),
-                        IdNavigator = tf.ID,
+                            tf.Id, tf.Name),
+                        IdNavigator = tf.Id,
                         LogicType = LogicType.Taskforce,
                         VerifyType = VerifyType.TaskforceOverflow
                     });
@@ -167,10 +167,10 @@ namespace RelertSharp.MapStructure
                     {
                         Level = VerifyAlertLevel.Critical,
                         Message = string.Format("Taskforce {0}({1}) has repeated member! This taskforce will surely crash the game.",
-                            tf.ID, tf.Name),
+                            tf.Id, tf.Name),
                         VerifyType = VerifyType.TaskforceMemberRepeated,
                         LogicType = LogicType.Taskforce,
-                        IdNavigator = tf.ID
+                        IdNavigator = tf.Id
                     });
                 }
             }
@@ -225,9 +225,9 @@ namespace RelertSharp.MapStructure
                 result.Add(new VerifyResultItem
                 {
                     Level = VerifyAlertLevel.Warning,
-                    Message = string.Format("Team {0}(1) has no available Taskforce and cannot operate properly.", team.ID, team.Name),
+                    Message = string.Format("Team {0}(1) has no available Taskforce and cannot operate properly.", team.Id, team.Name),
                     VerifyType = VerifyType.TeamInvalidTaskforce,
-                    IdNavigator = team.ID,
+                    IdNavigator = team.Id,
                     LogicType = LogicType.Team
                 });
             }
@@ -236,9 +236,9 @@ namespace RelertSharp.MapStructure
                 result.Add(new VerifyResultItem
                 {
                     Level = VerifyAlertLevel.Warning,
-                    Message = string.Format("Team {0}(1) has no available Script and cannot operate properly.", team.ID, team.Name),
+                    Message = string.Format("Team {0}(1) has no available Script and cannot operate properly.", team.Id, team.Name),
                     VerifyType = VerifyType.TeamInvalidScript,
-                    IdNavigator = team.ID,
+                    IdNavigator = team.Id,
                     LogicType = LogicType.Team
                 });
             }
@@ -280,17 +280,17 @@ namespace RelertSharp.MapStructure
         #region Trigger Logic
         private static void TriggerTooLong(TriggerItem trg)
         {
-            int baseLength = trg.ID.Length + 1;
+            int baseLength = trg.Id.Length + 1;
             if (trg.Events.GetSaveData().Length + baseLength > Constant.IniMaxLineLength)
             {
                 result.Add(new VerifyResultItem
                 {
                     Level = VerifyAlertLevel.Critical,
                     VerifyType = VerifyType.TriggerEventOverflow,
-                    IdNavigator = trg.ID,
+                    IdNavigator = trg.Id,
                     LogicType = LogicType.Trigger,
                     Message = string.Format("Trigger {0}({1})'s event has overflowed! Please split the trigger event into smaller group, otherwise it will surely crash the game!",
-                        trg.ID, trg.Name)
+                        trg.Id, trg.Name)
                 });
             }
             if (trg.Actions.GetSaveData().Length + baseLength > Constant.IniMaxLineLength)
@@ -299,25 +299,25 @@ namespace RelertSharp.MapStructure
                 {
                     Level = VerifyAlertLevel.Critical,
                     VerifyType = VerifyType.TriggerActionOverflow,
-                    IdNavigator = trg.ID,
+                    IdNavigator = trg.Id,
                     LogicType = LogicType.Trigger,
                     Message = string.Format("Trigger {0}({1})'s action has overflowed! Please split the trigger action into smaller group, otherwise it will surely crash the game!",
-                        trg.ID, trg.Name)
+                        trg.Id, trg.Name)
                 });
             }
         }
         private static void OrphanTrigger(TriggerItem trg)
         {
-            if (!Map.Tags.Any(x => x.AssoTrigger == trg.ID))
+            if (!Map.Tags.Any(x => x.AssoTrigger == trg.Id))
             {
                 result.Add(new VerifyResultItem
                 {
                     Level = VerifyAlertLevel.Warning,
                     VerifyType = VerifyType.TriggerHasNoTagAsso,
-                    IdNavigator = trg.ID,
+                    IdNavigator = trg.Id,
                     LogicType = LogicType.Trigger,
                     Message = string.Format("Trigger {0}({1}) has no tag linked with, this trigger will never activate during the game.",
-                        trg.ID, trg.Name)
+                        trg.Id, trg.Name)
                 });
             }
         }
@@ -329,10 +329,10 @@ namespace RelertSharp.MapStructure
                 {
                     Level = VerifyAlertLevel.Suggest,
                     VerifyType = VerifyType.TriggerHasNoAction,
-                    IdNavigator = trg.ID,
+                    IdNavigator = trg.Id,
                     LogicType = LogicType.Trigger,
                     Message = string.Format("Trigger {0}({1}) has no action, consider removing it.",
-                        trg.ID, trg.Name)
+                        trg.Id, trg.Name)
                 });
             }
             if (trg.Events.Count() == 0)
@@ -341,10 +341,10 @@ namespace RelertSharp.MapStructure
                 {
                     Level = VerifyAlertLevel.Warning,
                     VerifyType = VerifyType.TriggerHasNoEvent,
-                    IdNavigator = trg.ID,
+                    IdNavigator = trg.Id,
                     LogicType = LogicType.Trigger,
                     Message = string.Format("Trigger {0}({1}) has no event, this trigger will never be fired.",
-                        trg.ID, trg.Name)
+                        trg.Id, trg.Name)
                 });
             }
         }
@@ -365,10 +365,10 @@ namespace RelertSharp.MapStructure
                                 {
                                     Level = VerifyAlertLevel.Warning,
                                     VerifyType = VerifyType.TriggerParameterInvalid,
-                                    IdNavigator = trg.ID,
+                                    IdNavigator = trg.Id,
                                     LogicType = LogicType.Trigger,
                                     Message = string.Format("Trigger {0}({1}) action{2}(Action-{3}) has unrecognizeable parameter value, it may cause severe crash to the game. It's adviced to double-check your parameter.",
-                                        trg.ID, trg.Name, lg.idx, lg.ID)
+                                        trg.Id, trg.Name, lg.idx, lg.ID)
                                 });
                             }
                         }
@@ -390,10 +390,10 @@ namespace RelertSharp.MapStructure
                                 {
                                     Level = VerifyAlertLevel.Warning,
                                     VerifyType = VerifyType.TriggerParameterInvalid,
-                                    IdNavigator = trg.ID,
+                                    IdNavigator = trg.Id,
                                     LogicType = LogicType.Trigger,
                                     Message = string.Format("Trigger {0}({1}) event{2}(Event-{3}) has unrecognizeable parameter value, it may cause severe crash to the game. It's adviced to double-check your parameter.",
-                                        trg.ID, trg.Name, lg.idx, lg.ID)
+                                        trg.Id, trg.Name, lg.idx, lg.ID)
                                 });
                             }
                         }
@@ -410,9 +410,9 @@ namespace RelertSharp.MapStructure
                 result.Add(new VerifyResultItem
                 {
                     Level = VerifyAlertLevel.Suggest,
-                    Message = string.Format("Empty Script. Name: {0}, Id: {1}", script.Name, script.ID),
+                    Message = string.Format("Empty Script. Name: {0}, Id: {1}", script.Name, script.Id),
                     VerifyType = VerifyType.ScriptEmpty,
-                    IdNavigator = script.ID,
+                    IdNavigator = script.Id,
                     LogicType = LogicType.Script
                 });
             }
@@ -429,10 +429,10 @@ namespace RelertSharp.MapStructure
                     {
                         Level = VerifyAlertLevel.Suggest,
                         VerifyType = VerifyType.TagHasNoTrigger,
-                        IdNavigator = tag.ID,
+                        IdNavigator = tag.Id,
                         LogicType = LogicType.Tag,
                         Message = string.Format("Tag {0}({1}) linked with an invalid trigger, consider removing it.",
-                            tag.ID, tag.Name)
+                            tag.Id, tag.Name)
                     });
                 }
             }

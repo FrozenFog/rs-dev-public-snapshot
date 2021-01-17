@@ -97,7 +97,7 @@ namespace RelertSharp.MapStructure
             INIEntity ent = new INIEntity("VariableNames");
             foreach (LocalVarItem v in LocalVariables)
             {
-                ent.AddPair(new INIPair(v.ID, v.Name + (v.InitState ? ",1" : ",0")));
+                ent.AddPair(new INIPair(v.Id, v.Name + (v.InitState ? ",1" : ",0")));
             }
             return ent;
         }
@@ -109,13 +109,13 @@ namespace RelertSharp.MapStructure
             tags = new INIEntity("Tags");
             foreach (TriggerItem trg in Triggers)
             {
-                trigger.AddPair(new INIPair(trg.ID, trg.SaveData.JoinBy()));
-                events.AddPair(new INIPair(trg.ID, trg.Events.GetSaveData()));
-                actions.AddPair(new INIPair(trg.ID, trg.Actions.GetSaveData()));
+                trigger.AddPair(new INIPair(trg.Id, trg.SaveData.JoinBy()));
+                events.AddPair(new INIPair(trg.Id, trg.Events.GetSaveData()));
+                actions.AddPair(new INIPair(trg.Id, trg.Actions.GetSaveData()));
             }
             foreach (TagItem tag in Tags)
             {
-                tags.AddPair(new INIPair(tag.ID, tag.SaveData.JoinBy()));
+                tags.AddPair(new INIPair(tag.Id, tag.SaveData.JoinBy()));
             }
         }
         public void DumpAiTriggerData(out INIEntity aitypes, out INIEntity aienable)
@@ -124,7 +124,7 @@ namespace RelertSharp.MapStructure
             aienable = new INIEntity("AITriggerTypesEnable");
             foreach (AITriggerItem t in AiTriggers)
             {
-                aitypes.AddPair(new INIPair(t.ID, t.GetSaveData()));
+                aitypes.AddPair(new INIPair(t.Id, t.GetSaveData()));
             }
             foreach (string key in AiTriggers.GlobalEnables.Keys)
             {
@@ -153,15 +153,15 @@ namespace RelertSharp.MapStructure
         }
         public void DumpScriptData(out INIEntity toc, out INIEntity[] allScripts)
         {
-            DumpRegularTocItem("ScriptTypes", Scripts, x => x.GetSaveData(), x => x.ID, out toc, out allScripts);
+            DumpRegularTocItem("ScriptTypes", Scripts, x => x.GetSaveData(), x => x.Id, out toc, out allScripts);
         }
         public void DumpTaskforce(out INIEntity toc, out INIEntity[] allTaskforce)
         {
-            DumpRegularTocItem("TaskForces", TaskForces, x => x.GetSaveData(), x => x.ID, out toc, out allTaskforce);
+            DumpRegularTocItem("TaskForces", TaskForces, x => x.GetSaveData(), x => x.Id, out toc, out allTaskforce);
         }
         public void DumpTeam(out INIEntity toc, out INIEntity[] allTeams)
         {
-            DumpRegularTocItem("TeamTypes", Teams, x => x.GetSaveData(), x => x.ID, out toc, out allTeams);
+            DumpRegularTocItem("TeamTypes", Teams, x => x.GetSaveData(), x => x.Id, out toc, out allTeams);
         }
         public void DumpHouse(out INIEntity toc, out INIEntity[] allHouses)
         {

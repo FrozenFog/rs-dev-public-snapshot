@@ -2,20 +2,10 @@
 
 namespace RelertSharp.Common
 {
-    public class EnumDisplayClass
+    public enum IndexableDisplayType
     {
-        public override bool Equals(object obj) => obj is EnumDisplayClass && Value == ((EnumDisplayClass)obj).Value;
-        public override int GetHashCode() => base.GetHashCode();
-
-        public int Value;
-        public string Name;
-        public EnumDisplayClass(int v, string n) { Value = v; Name = n; }
-        public override string ToString()
-        {
-            return Value + " " + Name;
-        }
-        public static bool operator ==(EnumDisplayClass a, int b) { return b == a.Value; }
-        public static bool operator !=(EnumDisplayClass a, int b) { return b != a.Value; }
+        NameOnly = 0,
+        IdAndName = 1
     }
     [Flags]
     public enum WallDirection
@@ -36,16 +26,6 @@ namespace RelertSharp.Common
         TriNW = SW | NW | NE,
         TriSW = SE | SW | NW,
         All = NE | SE | SW | NW
-    }
-    public enum PickPanelType
-    {
-        CombatObject = 0,
-        Terrains = 1,
-        Smudges = 2,
-        Overlays = 3,
-        Waypoints = 4,
-        Celltags = 5,
-        BaseNodes = 6
     }
     [Flags]
     public enum CombatObjectType
@@ -195,7 +175,6 @@ namespace RelertSharp.Common
     {
         MissionMap, MultiplayerMap
     }
-    public enum ChangeStatus { Changed, New, Removed }
     public enum ELanguage
     {
         EnglishUS, Chinese

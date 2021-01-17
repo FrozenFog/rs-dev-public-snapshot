@@ -41,7 +41,7 @@ namespace RelertSharp.MapStructure.Logic
         }
         public void Remove(TagItem t, string triggerid)
         {
-            if (data.Keys.Contains(t.ID)) data.Remove(t.ID);
+            if (data.Keys.Contains(t.Id)) data.Remove(t.Id);
             if (trigger_tag.Keys.Contains(triggerid)) trigger_tag.Remove(triggerid);
         }
         public bool HasId(string id)
@@ -78,7 +78,7 @@ namespace RelertSharp.MapStructure.Logic
             List<TechnoPair> result = new List<TechnoPair>();
             foreach (TagItem tag in this)
             {
-                result.Add(new TechnoPair(tag.ID, tag.Name));
+                result.Add(new TechnoPair(tag.Id, tag.Name));
             }
             return result;
         }
@@ -109,7 +109,7 @@ namespace RelertSharp.MapStructure.Logic
             {
                 data[_id] = value;
                 if (!trigger_tag.ContainsKey(value.AssoTrigger)) trigger_tag[value.AssoTrigger] = new List<string>();
-                trigger_tag[value.AssoTrigger].Add(value.ID);
+                trigger_tag[value.AssoTrigger].Add(value.Id);
             }
         }
         public IEnumerable<string> AllId { get { return data.Keys; } }
@@ -118,12 +118,12 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class TagItem : ILogicItem
+    public class TagItem : IndexableItem
     {
         #region Ctor - TagItem
         public TagItem(string _id, string[] dataList)
         {
-            ID = _id;
+            Id = _id;
             if (dataList.Length != 3)
             {
                 //logger
@@ -135,21 +135,21 @@ namespace RelertSharp.MapStructure.Logic
         }
         public TagItem(TagItem src, string id)
         {
-            ID = id;
+            Id = id;
             Repeating = src.Repeating;
             Name = src.Name + " - Clone";
             AssoTrigger = src.AssoTrigger;
         }
         public TagItem(TriggerItem trg, string _id)
         {
-            ID = _id;
+            Id = _id;
             Repeating = trg.Repeating;
             Name = trg.Name + " - Tag";
-            AssoTrigger = trg.ID;
+            AssoTrigger = trg.Id;
         }
         public TagItem(string id, string name)
         {
-            ID = id;
+            Id = id;
             Name = name;
         }
         #endregion
@@ -166,11 +166,9 @@ namespace RelertSharp.MapStructure.Logic
                 };
             }
         }
-        public override string ToString() { return ID + ' ' + Name; }
+        public override string ToString() { return Id + ' ' + Name; }
         public TriggerRepeatingType Repeating { get; set; }
-        public string Name { get; set; }
         public string AssoTrigger { get; set; }
-        public string ID { get; set; }
         public static TagItem NullTag { get { return new TagItem("None", ""); } }
         public bool Binded { get; set; } = true;
         #endregion

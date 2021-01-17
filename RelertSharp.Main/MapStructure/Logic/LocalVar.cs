@@ -22,7 +22,7 @@ namespace RelertSharp.MapStructure.Logic
             if (localVars == null) return false;
             data.Clear();
             foreach (LocalVarItem localVar in localVars)
-                data.Add(localVar.Index.ToString(), localVar);
+                data.Add(localVar.Id, localVar);
             return true;
         }
         public List<IniSystem.TechnoPair> ToTechno()
@@ -30,7 +30,7 @@ namespace RelertSharp.MapStructure.Logic
             List<IniSystem.TechnoPair> result = new List<IniSystem.TechnoPair>();
             foreach (LocalVarItem var in this)
             {
-                IniSystem.TechnoPair p = new IniSystem.TechnoPair(var.Index.ToString(), var.Name);
+                IniSystem.TechnoPair p = new IniSystem.TechnoPair(var.Id, var.Name);
                 result.Add(p);
             }
             return result;
@@ -65,7 +65,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class LocalVarItem : ILogicItem
+    public class LocalVarItem : IndexableItem
     {
         #region Ctor - LocalVarItem
         public LocalVarItem(string name, bool init, string index) : this(name, init, int.Parse(index)) { }
@@ -73,17 +73,14 @@ namespace RelertSharp.MapStructure.Logic
         {
             Name = name;
             InitState = init;
-            Index = index;
+            Id = index.ToString();
         }
         #endregion
 
 
         #region Public Calls - LocalVarItem
-        public override string ToString() { return ID + ' ' + Name; }
-        public string Name { get; set; }
+        public override string ToString() { return Id + ' ' + Name; }
         public bool InitState { get; set; }
-        public int Index { get; set; }
-        public string ID { get { return Index.ToString(); } }
         #endregion
     }
 }

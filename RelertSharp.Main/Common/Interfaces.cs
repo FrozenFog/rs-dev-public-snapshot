@@ -9,10 +9,11 @@ namespace RelertSharp.Common
         bool HasId(string id);
         IEnumerable<string> AllId { get; }
     }
-    public interface ILogicItem
+    public interface IIndexableItem
     {
-        string ID { get; }
+        string Id { get; }
         string Name { get; }
+        void ChangeDisplay(IndexableDisplayType type);
     }
 
     public interface IRegistable

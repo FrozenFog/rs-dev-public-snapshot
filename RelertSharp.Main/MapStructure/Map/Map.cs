@@ -57,8 +57,8 @@ namespace RelertSharp.MapStructure
         public void RemoveTrigger(TriggerItem item)
         {
             Triggers.RemoveTrigger(item);
-            Tags.RemoveRelation(item.ID);
-            DelID(item.ID);
+            Tags.RemoveRelation(item.Id);
+            DelID(item.Id);
         }
         public TeamScriptGroup NewScript()
         {
@@ -72,8 +72,8 @@ namespace RelertSharp.MapStructure
         }
         public void RemoveScript(TeamScriptGroup group)
         {
-            Scripts.Remove(group.ID);
-            DelID(group.ID);
+            Scripts.Remove(group.Id);
+            DelID(group.Id);
         }
         public TaskforceItem NewTaskforce()
         {
@@ -82,8 +82,8 @@ namespace RelertSharp.MapStructure
         }
         public void RemoveTaskforce(TaskforceItem item)
         {
-            TaskForces.Remove(item.ID);
-            DelID(item.ID);
+            TaskForces.Remove(item.Id);
+            DelID(item.Id);
         }
         public TeamItem NewTeam()
         {
@@ -92,8 +92,8 @@ namespace RelertSharp.MapStructure
         }
         public void RemoveTeam(TeamItem item)
         {
-            Teams.Remove(item.ID);
-            DelID(item.ID);
+            Teams.Remove(item.Id);
+            DelID(item.Id);
         }
         public AITriggerItem NewAITrigger()
         {
@@ -102,8 +102,8 @@ namespace RelertSharp.MapStructure
         }
         public void RemoveAITrigger(AITriggerItem item)
         {
-            AiTriggers.Remove(item.ID);
-            DelID(item.ID);
+            AiTriggers.Remove(item.Id);
+            DelID(item.Id);
         }
         public IEnumerable<TechnoPair> GetComboCollections(TriggerParam param)
         {

@@ -40,7 +40,7 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
     }
 
-    public class TaskforceItem : TeamLogicItem, ILogicItem
+    public class TaskforceItem : TeamLogicItem, IIndexableItem
     {
         private int memberid = 0;
 
@@ -61,7 +61,7 @@ namespace RelertSharp.MapStructure.Logic
         {
             Name = name;
             Group = group;
-            ID = id;
+            Id = id;
         }
         public TaskforceItem() : base() { }
         #endregion
@@ -70,7 +70,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Methods - TaskforceItem
         public INIEntity GetSaveData()
         {
-            INIEntity result = new INIEntity(ID);
+            INIEntity result = new INIEntity(Id);
             result.AddPair(new INIPair("Name", Name));
             result.AddPair(new INIPair("Group", Group.ToString()));
             for (int i = 0; i < Members.Count; i++)
@@ -82,7 +82,7 @@ namespace RelertSharp.MapStructure.Logic
         public TaskforceItem Copy(string newid)
         {
             TaskforceItem cp = new TaskforceItem();
-            cp.ID = newid;
+            cp.Id = newid;
             cp.Name = Name + " Copy";
             cp.Members = Members;
             cp.Group = Group;
@@ -109,7 +109,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Calls - TaskforceItem
         public bool IsEmpty { get { return Members.Count == 0; } }
         public List<TaskforceUnit> Members { get; private set; } = new List<TaskforceUnit>();
-        public override string ToString() { return ID + " " + Name; }
+        public override string ToString() { return Id + " " + Name; }
         public IEnumerable<string> MemberPcxNames
         {
             get

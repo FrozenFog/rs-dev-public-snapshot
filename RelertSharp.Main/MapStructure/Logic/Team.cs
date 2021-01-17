@@ -18,15 +18,15 @@ namespace RelertSharp.MapStructure.Logic
         public TeamItem NewTeam(string id)
         {
             TeamItem item = new TeamItem();
-            item.ID = id;
-            item.TeamName = "New Team";
+            item.Id = id;
+            item.Name = "New Team";
             item.TaskforceID =
                 GlobalVar.CurrentMapDocument.Map.TaskForces.Count() > 0 ?
-                GlobalVar.CurrentMapDocument.Map.TaskForces.ElementAt(0).ID :
+                GlobalVar.CurrentMapDocument.Map.TaskForces.ElementAt(0).Id :
                 string.Empty;
             item.ScriptID =
                 GlobalVar.CurrentMapDocument.Map.Scripts.Count() > 0 ?
-                GlobalVar.CurrentMapDocument.Map.Scripts.ElementAt(0).ID :
+                GlobalVar.CurrentMapDocument.Map.Scripts.ElementAt(0).Id :
                 string.Empty;
             item.TagID = string.Empty;
             item.Waypoint = 0;
@@ -50,7 +50,7 @@ namespace RelertSharp.MapStructure.Logic
             List<TechnoPair> result = new List<TechnoPair>();
             foreach (TeamItem team in this)
             {
-                result.Add(new TechnoPair(team.ID, team.TeamName));
+                result.Add(new TechnoPair(team.Id, team.Name));
             }
             return result;
         }
@@ -58,14 +58,14 @@ namespace RelertSharp.MapStructure.Logic
 
     }
 
-    public class TeamItem : TeamLogicItem, ILogicItem
+    public class TeamItem : TeamLogicItem
     {
         private Dictionary<string, INIPair> residual;
 
         #region Ctor - TeamItem
         public TeamItem(INIEntity ent) : base(ent)
         {
-            TeamName = ent.PopPair("Name").Value;
+            Name = ent.PopPair("Name").Value;
             TaskforceID = ent.PopPair("TaskForce").Value;
             ScriptID = ent.PopPair("Script").Value;
             TagID = ent.PopPair("Tag").Value;
@@ -109,7 +109,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Methods - TeamItem
         public INIEntity GetSaveData()
         {
-            INIEntity result = new INIEntity(ID);
+            INIEntity result = new INIEntity(Id);
             result.AddPair("Name", Name);
             result.AddPair("House", House);
             result.AddPair("Script", ScriptID);
@@ -138,7 +138,7 @@ namespace RelertSharp.MapStructure.Logic
         }
         public void SetFromUnit(TeamUnit teamUnit)
         {
-            TeamName = (string)teamUnit.Data["TeamName"].Value;
+            Name = (string)teamUnit.Data["TeamName"].Value;
             TaskforceID = (string)teamUnit.Data["TaskforceID"].Value;
             ScriptID = (string)teamUnit.Data["ScriptID"].Value;
             TagID = (string)teamUnit.Data["TagID"].Value;
@@ -155,8 +155,8 @@ namespace RelertSharp.MapStructure.Logic
         public TeamItem Copy(string newid)
         {
             TeamItem item = new TeamItem();
-            item.ID = newid;
-            item.TeamName = TeamName += " Clone";
+            item.Id = newid;
+            item.Name = Name += " Clone";
             item.TaskforceID = TaskforceID;
             item.ScriptID = ScriptID;
             item.TagID = TagID;
@@ -176,7 +176,6 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TeamItem
-        public override string ToString() { return ID + " " + Name; }
         public int Group { get; set; }
         public int TechLevel { get; set; }
         /// <summary>
@@ -189,8 +188,6 @@ namespace RelertSharp.MapStructure.Logic
         public int TeamCapacity { get; set; }
         public TeamMCDecision MCDecision { get; set; }
         public TeamVeteranLevel VeteranLevel { get; set; }
-        public string TeamName { get; set; }
-        public string Name { get { return TeamName; } }
         public string TaskforceID { get; set; }
         public string ScriptID { get; set; }
         public string TagID { get; set; }
@@ -215,7 +212,7 @@ namespace RelertSharp.MapStructure.Logic
         public TeamUnit(TeamItem item)
         {
             // A new config could be added to decide the name displayed on the screen.
-            Data["TeamName"] = new TeamUnitNode(Language.DICT["LGColvRowTeamName"], item.TeamName);
+            Data["TeamName"] = new TeamUnitNode(Language.DICT["LGColvRowTeamName"], item.Name);
             Data["TaskforceID"] = new TeamUnitNode(Language.DICT["LGColvRowTeamTaskforce"], item.TaskforceID);
             Data["ScriptID"] = new TeamUnitNode(Language.DICT["LGColvRowTeamScript"], item.ScriptID);
             Data["TagID"] = new TeamUnitNode(Language.DICT["LGColvRowTeamTag"], item.TagID);

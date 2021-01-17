@@ -16,5 +16,10 @@ namespace RelertSharp.Wpf.ViewModel
             if (GlobalVar.CurrentMapDocument != null) return GlobalVar.CurrentMapDocument.Map.Teams.GetEnumerator();
             return EmptyEnumerator;
         }
+
+        public void UpdateAll()
+        {
+            OnReset();
+        }
     }
 }

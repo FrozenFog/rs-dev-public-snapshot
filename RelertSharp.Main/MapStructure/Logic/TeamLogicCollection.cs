@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class TeamLogicCollection<T> : IEnumerable<T>, IGlobalIdContainer where T : class
+    public class TeamLogicCollection<T> : IEnumerable<T>, IGlobalIdContainer where T : IndexableItem
     {
         private Dictionary<string, T> data = new Dictionary<string, T>();
 
@@ -19,11 +19,18 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Methods - TeamLogicCollection
         public void AscendingSort()
         {
-            data = data.OrderBy(x => int.Parse(x.Key)).ToDictionary(x => x.Key, y => y.Value);
+            data = data.OrderBy(x => x.Value.ToString()).ToDictionary(x => x.Key, x => x.Value);
         }
         public void DescendingSort()
         {
-            data = data.OrderByDescending(x => x.Key).ToDictionary(x => x.Key, y => y.Value);
+            data = data.OrderByDescending(x => x.Value.ToString()).ToDictionary(x => x.Key, x => x.Value);
+        }
+        public void ChangeDisplay(IndexableDisplayType type)
+        {
+            foreach (T item in data.Values)
+            {
+                item.ChangeDisplay(type);
+            }
         }
         public bool Remove(string ID)
         {
@@ -73,19 +80,18 @@ namespace RelertSharp.MapStructure.Logic
         public int Length { get { return data.Count; } }
         #endregion
     }
-    public class TeamLogicItem
+    public class TeamLogicItem : IndexableItem
     {
         #region Ctor - TeamLogicItem
         public TeamLogicItem(INIEntity ent)
         {
-            ID = ent.Name;
+            Id = ent.Name;
         }
         public TeamLogicItem() { }
         #endregion
 
 
         #region Public Calls - TeamLogicItem
-        public virtual string ID { get; set; }
         public static TeamLogicItem Empty
         {
             get { return new TeamLogicItem(); }

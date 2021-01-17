@@ -41,7 +41,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class CountryItem : TeamLogicItem, ILogicItem
+    public class CountryItem : TeamLogicItem, IIndexableItem
     {
         private Dictionary<string, INIPair> residual = new Dictionary<string, INIPair>();
 
@@ -84,7 +84,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - CountryItem
-        public override string ID
+        public override string Id
         {
             get { return Index; }
             set { Index = value; }
