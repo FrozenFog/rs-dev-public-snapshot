@@ -5,10 +5,15 @@ using System.Runtime.CompilerServices;
 
 namespace RelertSharp.Wpf.ViewModel
 {
-    internal abstract class BaseVm<Tdata> : INotifyPropertyChanged
+    internal abstract class BaseVm<Tdata> : INotifyPropertyChanged where Tdata : class
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected Tdata data;
+
+        public BaseVm(object obj = null)
+        {
+            data = obj as Tdata;
+        }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

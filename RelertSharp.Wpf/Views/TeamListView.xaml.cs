@@ -29,6 +29,8 @@ namespace RelertSharp.Wpf.Views
             DataContext = GlobalCollectionVm.Teams;
         }
 
+        public event ContentCarrierHandler ItemSelected;
+
         private void IdUnchecked(object sender, RoutedEventArgs e)
         {
             GlobalVar.CurrentMapDocument?.Map.Teams.ChangeDisplay(IndexableDisplayType.NameOnly);

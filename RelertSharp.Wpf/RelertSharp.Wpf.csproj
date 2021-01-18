@@ -59,11 +59,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GuiExtensions.cs" />
+    <Compile Include="Common\Delegates.cs" />
+    <Compile Include="Common\GuiExtensions.cs" />
     <Compile Include="Views\AiTriggerListView.xaml.cs">
       <DependentUpon>AiTriggerListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Interfaces.cs" />
+    <Compile Include="Common\Interfaces.cs" />
     <Compile Include="Views\ScriptListView.xaml.cs">
       <DependentUpon>ScriptListView.xaml</DependentUpon>
     </Compile>
@@ -77,7 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="GuiUtil.cs" />
+    <Compile Include="Common\GuiUtil.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ViewModel\AiTriggerVm.cs" />
     <Compile Include="ViewModel\BaseNotifyCollectionVm.cs" />

@@ -16,6 +16,7 @@ namespace RelertSharp.Wpf.ViewModel
         {
             data = new AITriggerItem();
         }
+        public AiTriggerVm(object obj) : base(obj) { }
         public string Name
         {
             get { return data.Name; }
@@ -182,21 +183,63 @@ namespace RelertSharp.Wpf.ViewModel
                 SetProperty();
             }
         }
-        public TeamItem Team1Item
+        public string Team1String
         {
-            get { return MapTeam[data.Team1ID]; }
+            get
+            {
+                TeamItem team = MapTeam[data.Team1ID];
+                if (team == null) return data.Team1ID;
+                return team.ToString();
+            }
+            set { }
+        }
+        public string Team2String
+        {
+            get
+            {
+                TeamItem team = MapTeam[data.Team2ID];
+                if (team == null) return data.Team2ID;
+                return team.ToString();
+            }
+            set { }
+        }
+        public object Team1Item
+        {
+            get
+            {
+                TeamItem team = MapTeam[data.Team1ID];
+                if (team == null) return data.Team1ID;
+                return team;
+            }
             set
             {
-                data.Team1ID = value?.Id;
+                if (value == null) data.Team1ID = Constant.ITEM_NONE;
+                else if (value is TeamItem item) data.Team1ID = item.Id;
+                else if (value is string s)
+                {
+                    if (string.IsNullOrEmpty(s)) data.Team1ID = Constant.ITEM_NONE;
+                    else data.Team1ID = s;
+                }
                 SetProperty();
             }
         }
-        public TeamItem Team2Item
+        public object Team2Item
         {
-            get { return MapTeam[data.Team2ID]; }
+            get
+            {
+                TeamItem team = MapTeam[data.Team2ID];
+                if (team == null) return data.Team2ID;
+                return team;
+            }
             set
             {
-                data.Team2ID = value?.Id;
+                if (value == null) data.Team2ID = Constant.ITEM_NONE;
+                else if (value is TeamItem item) data.Team2ID = item.Id;
+                else if (value is string s)
+                {
+                    if (string.IsNullOrEmpty(s)) data.Team2ID = Constant.ITEM_NONE;
+                    else data.Team2ID = s;
+                }
                 SetProperty();
             }
         }

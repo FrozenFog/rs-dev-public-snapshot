@@ -33,6 +33,7 @@ namespace RelertSharp.Wpf
         {
             InitializeComponent();
             AddToolPage();
+            AddReciveListener();
         }
 
         private void AddToolPage()
@@ -43,5 +44,16 @@ namespace RelertSharp.Wpf
             dockMain.AddToolToRight("Script List", scriptList);
             dockMain.AddToolToRight("Taskforce List", taskforceList);
         }
+
+        #region Reciver Logics
+        private void AddReciveListener()
+        {
+            BindListener(aiTrigger, aiTriggerList);
+        }
+        private void BindListener(IObjectReciver reciver, IListToolPageContent sender)
+        {
+            sender.ItemSelected += reciver.ReciveObject;
+        }
+        #endregion
     }
 }

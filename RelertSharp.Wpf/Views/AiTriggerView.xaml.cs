@@ -19,12 +19,18 @@ namespace RelertSharp.Wpf.Views
     /// <summary>
     /// AiTriggerView.xaml 的交互逻辑
     /// </summary>
-    public partial class AiTriggerView : UserControl
+    public partial class AiTriggerView : UserControl, IObjectReciver
     {
+        private AiTriggerVm context { get { return DataContext as AiTriggerVm; } }
         public AiTriggerView()
         {
             InitializeComponent();
             DataContext = new AiTriggerVm();
+        }
+
+        public void ReciveObject(object sender, object recived)
+        {
+            DataContext = new AiTriggerVm(recived);
         }
     }
 }

@@ -28,6 +28,8 @@ namespace RelertSharp.Wpf.Views
             DataContext = GlobalCollectionVm.AiTriggers;
         }
 
+        public event ContentCarrierHandler ItemSelected;
+
         private void IdUnchecked(object sender, RoutedEventArgs e)
         {
             GlobalVar.CurrentMapDocument?.Map.AiTriggers.ChangeDisplay(IndexableDisplayType.NameOnly);
@@ -75,6 +77,11 @@ namespace RelertSharp.Wpf.Views
             {
                 IdUnchecked(null, null);
             }
+        }
+
+        private void SelectedItemChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ItemSelected?.Invoke(this, lbxMain.SelectedItem);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace RelertSharp.Common
         public const string ReleaseDate = " - ver. 2020.11.21-1907 - UNSTABLE";
 
         public const int IniMaxLineLength = 512;
+        public const string ITEM_NONE = "<none>";
         public static class TileSetClass
         {
             public const string Clear = "TscClear";

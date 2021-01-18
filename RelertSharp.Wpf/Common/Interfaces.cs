@@ -11,5 +11,11 @@ namespace RelertSharp.Wpf.Views
     {
         void SortBy(bool ascending);
         void ShowingId(bool enable);
+        event ContentCarrierHandler ItemSelected;
+    }
+
+    interface IObjectReciver
+    {
+        void ReciveObject(object sender, object recived);
     }
 }

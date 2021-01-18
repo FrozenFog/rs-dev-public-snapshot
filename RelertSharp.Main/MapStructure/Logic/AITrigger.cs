@@ -111,7 +111,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Calls - AITriggerItem
 
         public bool Enabled { get; set; }
-        public string Team1ID { get; set; }
+        public string Team1ID { get; set; } = Constant.ITEM_NONE;
         public string OwnerHouse { get; set; }
         public int TechLevel { get; set; }
         public AITriggerConditionType ConditionType { get; set; }
@@ -124,7 +124,7 @@ namespace RelertSharp.MapStructure.Logic
         public string Residual { get; private set; }
         public int SideIndex { get; set; }
         public bool IsBaseDefense { get; set; }
-        public string Team2ID { get; set; }
+        public string Team2ID { get; set; } = Constant.ITEM_NONE;
         public bool EasyOn { get; set; }
         public bool NormalOn { get; set; }
         public bool HardOn { get; set; }

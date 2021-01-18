@@ -28,6 +28,8 @@ namespace RelertSharp.Wpf.Views
             DataContext = GlobalCollectionVm.Taskforces;
         }
 
+        public event ContentCarrierHandler ItemSelected;
+
         private void IdUnchecked(object sender, RoutedEventArgs e)
         {
             GlobalVar.CurrentMapDocument?.Map.Taskforces.ChangeDisplay(IndexableDisplayType.NameOnly);
