@@ -23,8 +23,11 @@ namespace RelertSharp.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        private AiTriggerView aiTrigger = new AiTriggerView();
-        private TeamListView teamList = new TeamListView();
+        private readonly AiTriggerView aiTrigger = new AiTriggerView();
+        private readonly TeamListView teamList = new TeamListView();
+        private readonly AiTriggerListView aiTriggerList = new AiTriggerListView();
+        private readonly ScriptListView scriptList = new ScriptListView();
+        private readonly TaskforceListView taskforceList = new TaskforceListView();
 
         public MainWindow()
         {
@@ -36,6 +39,9 @@ namespace RelertSharp.Wpf
         {
             dockMain.AddToolToRight("Ai Trigger Edit", aiTrigger);
             dockMain.AddToolToRight("Team List", teamList);
+            dockMain.AddToolToRight("Ai Trigger List", aiTriggerList);
+            dockMain.AddToolToRight("Script List", scriptList);
+            dockMain.AddToolToRight("Taskforce List", taskforceList);
         }
     }
 }

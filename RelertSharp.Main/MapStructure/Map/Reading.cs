@@ -36,7 +36,7 @@ namespace RelertSharp.MapStructure
 
             globalid.AddRange(Triggers.AllId);
             globalid.AddRange(Teams.AllId);
-            globalid.AddRange(TaskForces.AllId);
+            globalid.AddRange(Taskforces.AllId);
             globalid.AddRange(Tags.AllId);
             globalid.AddRange(Scripts.AllId);
 
@@ -134,7 +134,7 @@ namespace RelertSharp.MapStructure
             }
             foreach (string tfID in _taskforceList)
             {
-                TaskForces[tfID] = new TaskforceItem(f.PopEnt(tfID));
+                Taskforces[tfID] = new TaskforceItem(f.PopEnt(tfID));
             }
             foreach (string scptID in _scriptList)
             {

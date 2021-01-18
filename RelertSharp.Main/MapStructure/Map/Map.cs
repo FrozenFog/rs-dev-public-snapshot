@@ -42,13 +42,13 @@ namespace RelertSharp.MapStructure
 
 
         #region Collection Utils
-        public TriggerItem NewTrigger(TriggerItem.DisplayingType type, out TagItem tag)
+        public TriggerItem NewTrigger(out TagItem tag)
         {
             TriggerItem t = Triggers.NewTrigger(NewID);
             tag = Tags.NewTag(t, NewID);
             return t;
         }
-        public TriggerItem NewTrigger(TriggerItem src, TriggerItem.DisplayingType type, out TagItem tag)
+        public TriggerItem NewTrigger(TriggerItem src, out TagItem tag)
         {
             TriggerItem t = Triggers.NewTrigger(NewID, src);
             tag = Tags.NewTag(t, NewID);
@@ -77,12 +77,12 @@ namespace RelertSharp.MapStructure
         }
         public TaskforceItem NewTaskforce()
         {
-            TaskforceItem t = TaskForces.NewTaskforce(NewID);
+            TaskforceItem t = Taskforces.NewTaskforce(NewID);
             return t;
         }
         public void RemoveTaskforce(TaskforceItem item)
         {
-            TaskForces.Remove(item.Id);
+            Taskforces.Remove(item.Id);
             DelID(item.Id);
         }
         public TeamItem NewTeam()
@@ -278,7 +278,7 @@ namespace RelertSharp.MapStructure
         public LightSourceCollection LightSources { get; private set; } = new LightSourceCollection();
         public AITriggerCollection AiTriggers { get; private set; } = new AITriggerCollection();
         public TeamScriptCollection Scripts { get; private set; } = new TeamScriptCollection();
-        public TaskforceCollection TaskForces { get; private set; } = new TaskforceCollection();
+        public TaskforceCollection Taskforces { get; private set; } = new TaskforceCollection();
         public HouseCollection Houses { get; private set; } = new HouseCollection();
         public LocalVarCollection LocalVariables { get; private set; } = new LocalVarCollection();
         public TeamCollection Teams { get; private set; } = new TeamCollection();

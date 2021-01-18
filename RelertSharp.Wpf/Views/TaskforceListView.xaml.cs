@@ -12,46 +12,46 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using RelertSharp.MapStructure.Logic;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Common;
 
 namespace RelertSharp.Wpf.Views
 {
     /// <summary>
-    /// TeamListView.xaml 的交互逻辑
+    /// TaskforceListView.xaml 的交互逻辑
     /// </summary>
-    public partial class TeamListView : UserControl, IListToolPageContent
+    public partial class TaskforceListView : UserControl, IListToolPageContent
     {
-        public TeamListView()
+        public TaskforceListView()
         {
             InitializeComponent();
-            DataContext = GlobalCollectionVm.Teams;
+            DataContext = GlobalCollectionVm.Taskforces;
         }
 
         private void IdUnchecked(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Teams.ChangeDisplay(IndexableDisplayType.NameOnly);
-            GlobalCollectionVm.Teams.UpdateAll();
+            GlobalVar.CurrentMapDocument?.Map.Taskforces.ChangeDisplay(IndexableDisplayType.NameOnly);
+            GlobalCollectionVm.Taskforces.UpdateAll();
         }
 
         private void IdChecked(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Teams.ChangeDisplay(IndexableDisplayType.IdAndName);
-            GlobalCollectionVm.Teams.UpdateAll();
+            GlobalVar.CurrentMapDocument?.Map.Taskforces.ChangeDisplay(IndexableDisplayType.IdAndName);
+            GlobalCollectionVm.Taskforces.UpdateAll();
         }
 
         private void AscendingSort(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Teams.AscendingSort();
-            GlobalCollectionVm.Teams.UpdateAll();
+            GlobalVar.CurrentMapDocument?.Map.Taskforces.AscendingSort();
+            GlobalCollectionVm.Taskforces.UpdateAll();
         }
 
         private void DescendingSort(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Teams.DescendingSort();
-            GlobalCollectionVm.Teams.UpdateAll();
+            GlobalVar.CurrentMapDocument?.Map.Taskforces.DescendingSort();
+            GlobalCollectionVm.Scripts.UpdateAll();
         }
+
 
         public void SortBy(bool ascending)
         {

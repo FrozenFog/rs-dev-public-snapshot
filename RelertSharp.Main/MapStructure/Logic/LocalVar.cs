@@ -7,7 +7,6 @@ namespace RelertSharp.MapStructure.Logic
 {
     public class LocalVarCollection : IEnumerable<LocalVarItem>
     {
-        //private Dictionary<string, bool> data = new Dictionary<string, bool>();
         private Dictionary<string, LocalVarItem> data = new Dictionary<string, LocalVarItem>();
 
 

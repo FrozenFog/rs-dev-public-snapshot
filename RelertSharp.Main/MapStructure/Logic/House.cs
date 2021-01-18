@@ -146,7 +146,6 @@ namespace RelertSharp.MapStructure.Logic
         public int NodeCounts { get; set; }
         public double PercentBuilt { get; set; }
         public System.Drawing.Color DrawingColor { get; set; }
-        public string Name { get { return Id; } set { Id = value; } }
         public HouseUnit GetToUnit { get; set; }
         #endregion
     }

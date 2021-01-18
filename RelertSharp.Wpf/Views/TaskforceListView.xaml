@@ -4,22 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RelertSharp.Wpf.Views"
-             xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel" x:Class="RelertSharp.Wpf.Views.TeamListView"
-             mc:Ignorable="d">
+             xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel" x:Class="RelertSharp.Wpf.Views.TaskforceListView"
+             mc:Ignorable="d" Height="Auto" Width="Auto">
     <UserControl.DataContext>
-        <ViewModel:GlobalTeamVm/>
+        <ViewModel:GlobalTaskforceVm/>
     </UserControl.DataContext>
     <Grid>
-        <ListBox x:Name="lbxMain" Margin="10,10,10.4,9.4" Style="{DynamicResource lbxDark}" ItemsSource="{Binding Mode=OneWay}">
+        <ListBox Margin="10,10,9.6,9.8" Style="{DynamicResource lbxDark}" ItemsSource="{Binding Mode=OneWay}">
             <ListBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Show Team Id" IsCheckable="True" Unchecked="IdUnchecked" Checked="IdChecked"/>
+                    <MenuItem Header="Show Taskforce Id" IsCheckable="True" Unchecked="IdUnchecked" Checked="IdChecked"/>
                     <Separator/>
                     <MenuItem Header="Ascending Sort" Click="AscendingSort"/>
                     <MenuItem Header="Descending Sort" Click="DescendingSort"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
-
     </Grid>
 </UserControl>

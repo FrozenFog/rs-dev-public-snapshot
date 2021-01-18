@@ -21,8 +21,8 @@ namespace RelertSharp.MapStructure.Logic
             item.Id = id;
             item.Name = "New Team";
             item.TaskforceID =
-                GlobalVar.CurrentMapDocument.Map.TaskForces.Count() > 0 ?
-                GlobalVar.CurrentMapDocument.Map.TaskForces.ElementAt(0).Id :
+                GlobalVar.CurrentMapDocument.Map.Taskforces.Count() > 0 ?
+                GlobalVar.CurrentMapDocument.Map.Taskforces.ElementAt(0).Id :
                 string.Empty;
             item.ScriptID =
                 GlobalVar.CurrentMapDocument.Map.Scripts.Count() > 0 ?

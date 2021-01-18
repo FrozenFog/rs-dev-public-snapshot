@@ -60,6 +60,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GuiExtensions.cs" />
+    <Compile Include="Views\AiTriggerListView.xaml.cs">
+      <DependentUpon>AiTriggerListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Interfaces.cs" />
+    <Compile Include="Views\ScriptListView.xaml.cs">
+      <DependentUpon>ScriptListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TaskforceListView.xaml.cs">
+      <DependentUpon>TaskforceListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TeamListView.xaml.cs">
       <DependentUpon>TeamListView.xaml</DependentUpon>
     </Compile>
@@ -99,7 +109,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\AiTriggerListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AiTriggerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ScriptListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TaskforceListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

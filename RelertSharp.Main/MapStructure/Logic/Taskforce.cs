@@ -7,19 +7,19 @@ using System.Windows.Forms;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class TaskforceShowItem
-    {
-        public override string ToString() { return Number + " " + Name; }
-        public TaskforceShowItem(Tuple<string, int> pair)
-        {
-            Number = pair.Item2;
-            RegName = pair.Item1;
-            Name = GlobalVar.GlobalRules.GetCsfUIName(RegName);
-        }
-        public int Number { get; set; }
-        public string RegName { get; set; }
-        public string Name { get; set; }
-    }
+    //public class TaskforceShowItem
+    //{
+    //    public override string ToString() { return Number + " " + Name; }
+    //    public TaskforceShowItem(Tuple<string, int> pair)
+    //    {
+    //        Number = pair.Item2;
+    //        RegName = pair.Item1;
+    //        Name = GlobalVar.GlobalRules.GetCsfUIName(RegName);
+    //    }
+    //    public int Number { get; set; }
+    //    public string RegName { get; set; }
+    //    public string Name { get; set; }
+    //}
 
     public class TaskforceCollection : TeamLogicCollection<TaskforceItem>
     {
@@ -109,7 +109,6 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Calls - TaskforceItem
         public bool IsEmpty { get { return Members.Count == 0; } }
         public List<TaskforceUnit> Members { get; private set; } = new List<TaskforceUnit>();
-        public override string ToString() { return Id + " " + Name; }
         public IEnumerable<string> MemberPcxNames
         {
             get
@@ -124,7 +123,6 @@ namespace RelertSharp.MapStructure.Logic
         }
         //public Dictionary<string, int> MemberData { get { return memberData; } set { memberData = value; } }
         public int Group { get; set; }
-        public string Name { get; set; }
         #endregion
     }
 

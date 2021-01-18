@@ -12,46 +12,46 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using RelertSharp.MapStructure.Logic;
-using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Common;
+using RelertSharp.Wpf.ViewModel;
 
 namespace RelertSharp.Wpf.Views
 {
     /// <summary>
-    /// TeamListView.xaml 的交互逻辑
+    /// AiTriggerListView.xaml 的交互逻辑
     /// </summary>
-    public partial class TeamListView : UserControl, IListToolPageContent
+    public partial class AiTriggerListView : UserControl, IListToolPageContent
     {
-        public TeamListView()
+        public AiTriggerListView()
         {
             InitializeComponent();
-            DataContext = GlobalCollectionVm.Teams;
+            DataContext = GlobalCollectionVm.AiTriggers;
         }
 
         private void IdUnchecked(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Teams.ChangeDisplay(IndexableDisplayType.NameOnly);
-            GlobalCollectionVm.Teams.UpdateAll();
+            GlobalVar.CurrentMapDocument?.Map.AiTriggers.ChangeDisplay(IndexableDisplayType.NameOnly);
+            GlobalCollectionVm.AiTriggers.UpdateAll();
         }
 
         private void IdChecked(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Teams.ChangeDisplay(IndexableDisplayType.IdAndName);
-            GlobalCollectionVm.Teams.UpdateAll();
+            GlobalVar.CurrentMapDocument?.Map.AiTriggers.ChangeDisplay(IndexableDisplayType.IdAndName);
+            GlobalCollectionVm.AiTriggers.UpdateAll();
         }
 
         private void AscendingSort(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Teams.AscendingSort();
-            GlobalCollectionVm.Teams.UpdateAll();
+            GlobalVar.CurrentMapDocument?.Map.AiTriggers.AscendingSort();
+            GlobalCollectionVm.AiTriggers.UpdateAll();
         }
 
         private void DescendingSort(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Teams.DescendingSort();
-            GlobalCollectionVm.Teams.UpdateAll();
+            GlobalVar.CurrentMapDocument?.Map.AiTriggers.DescendingSort();
+            GlobalCollectionVm.AiTriggers.UpdateAll();
         }
+
 
         public void SortBy(bool ascending)
         {

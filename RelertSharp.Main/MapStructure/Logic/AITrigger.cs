@@ -7,9 +7,8 @@ using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class AITriggerCollection : IEnumerable<AITriggerItem>
+    public class AITriggerCollection : IndexableItemCollection<AITriggerItem>
     {
-        private Dictionary<string, AITriggerItem> localTriggers = new Dictionary<string, AITriggerItem>();
         private Dictionary<string, bool> globalEnables = new Dictionary<string, bool>();
 
 
@@ -38,37 +37,17 @@ namespace RelertSharp.MapStructure.Logic
         }
         public bool Remove(string ID)
         {
-            if (!localTriggers.ContainsKey(ID)) return false;
-            return localTriggers.Remove(ID);
+            if (!data.ContainsKey(ID)) return false;
+            return data.Remove(ID);
         }
         #endregion
 
         #region Public Calls - AITriggerCollection
-        public AITriggerItem this[string id]
-        {
-            get
-            {
-                if (localTriggers.Keys.Contains(id)) return localTriggers[id];
-                return null;
-            }
-            set { localTriggers[id] = value; }
-        }
         public Dictionary<string, bool> GlobalEnables
         {
             get { return globalEnables; }
             set { globalEnables = value; }
         }
-        #region Enumerator
-        public IEnumerator<AITriggerItem> GetEnumerator()
-        {
-            return localTriggers.Values.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return localTriggers.Values.GetEnumerator();
-        }
-        #endregion
         #endregion
     }
 

@@ -104,8 +104,6 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Calls - TeamScriptGroup
         public bool IsEmpty { get { return data.Count == 0; } }
         public List<TeamScriptItem> Data { get { return data; } set { data = value; } }
-        public override string ToString() { return Id + " " + Name; }
-        public string Name { get; set; }
         #endregion
     }
 

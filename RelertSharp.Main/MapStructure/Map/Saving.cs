@@ -157,7 +157,7 @@ namespace RelertSharp.MapStructure
         }
         public void DumpTaskforce(out INIEntity toc, out INIEntity[] allTaskforce)
         {
-            DumpRegularTocItem("TaskForces", TaskForces, x => x.GetSaveData(), x => x.Id, out toc, out allTaskforce);
+            DumpRegularTocItem("TaskForces", Taskforces, x => x.GetSaveData(), x => x.Id, out toc, out allTaskforce);
         }
         public void DumpTeam(out INIEntity toc, out INIEntity[] allTeams)
         {

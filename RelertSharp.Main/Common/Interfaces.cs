@@ -6,8 +6,12 @@ namespace RelertSharp.Common
 {
     public interface IGlobalIdContainer
     {
+        int Length { get; }
         bool HasId(string id);
         IEnumerable<string> AllId { get; }
+        void AscendingSort();
+        void DescendingSort();
+        void ChangeDisplay(IndexableDisplayType type);
     }
     public interface IIndexableItem
     {

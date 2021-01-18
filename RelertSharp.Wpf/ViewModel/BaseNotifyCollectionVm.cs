@@ -12,6 +12,15 @@ namespace RelertSharp.Wpf.ViewModel
     {
         public event NotifyCollectionChangedEventHandler CollectionChanged;
 
+        #region Public 
+        public virtual void UpdateAll()
+        {
+            OnReset();
+        }
+        #endregion
+
+
+        #region Protected
         protected virtual void OnAdd(Titem item, int visualIndex)
         {
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, visualIndex));
@@ -31,6 +40,7 @@ namespace RelertSharp.Wpf.ViewModel
         {
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
+        #endregion
 
         protected static IEnumerator EmptyEnumerator { get { return new List<object>().GetEnumerator(); } }
     }

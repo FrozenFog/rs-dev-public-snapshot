@@ -6,9 +6,8 @@ using System.Linq;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class TagCollection : IEnumerable<TagItem>, IGlobalIdContainer
+    public class TagCollection : IndexableItemCollection<TagItem>, IEnumerable<TagItem>
     {
-        private Dictionary<string, TagItem> data = new Dictionary<string, TagItem>();
         private Dictionary<string, List<string>> trigger_tag = new Dictionary<string, List<string>>();
 
 
@@ -43,10 +42,6 @@ namespace RelertSharp.MapStructure.Logic
         {
             if (data.Keys.Contains(t.Id)) data.Remove(t.Id);
             if (trigger_tag.Keys.Contains(triggerid)) trigger_tag.Remove(triggerid);
-        }
-        public bool HasId(string id)
-        {
-            return data.Keys.Contains(id);
         }
         public void RemoveRelation(string triggerid)
         {
@@ -112,7 +107,6 @@ namespace RelertSharp.MapStructure.Logic
                 trigger_tag[value.AssoTrigger].Add(value.Id);
             }
         }
-        public IEnumerable<string> AllId { get { return data.Keys; } }
         public TagItem TemplateTag { get; set; }
         #endregion
     }

@@ -136,7 +136,7 @@ namespace RelertSharp.MapStructure
         }
         private static void VerifyTaskforce()
         {
-            foreach (TaskforceItem tf in Map.TaskForces)
+            foreach (TaskforceItem tf in Map.Taskforces)
             {
                 if (tf.IsEmpty)
                 {
@@ -220,7 +220,7 @@ namespace RelertSharp.MapStructure
         #region Team Logic
         private static void InvalidTeamComponent(TeamItem team)
         {
-            if (!Map.TaskForces.HasId(team.TaskforceID))
+            if (!Map.Taskforces.HasId(team.TaskforceID))
             {
                 result.Add(new VerifyResultItem
                 {
