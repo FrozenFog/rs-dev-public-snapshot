@@ -5,13 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.IO;
+using RelertSharp.MapStructure.Logic;
 
 namespace RelertSharp.Common
 {
-    public class ModConfig
+    public partial class ModConfig
     {
         private XmlDocument doc;
         private string path;
+        private XmlNode Root { get { return doc.SelectSingleNode("RsModConfig"); } }
 
         public ModConfig(string path)
         {
@@ -45,5 +47,17 @@ namespace RelertSharp.Common
         #region Public Calls
 
         #endregion
+    }
+}
+
+
+namespace RelertSharp.Common
+{
+    internal static class XmlNodeExtension
+    {
+        public static string GetAttribute(this XmlNode src, string key)
+        {
+            return (src as XmlElement).GetAttribute(key);
+        }
     }
 }

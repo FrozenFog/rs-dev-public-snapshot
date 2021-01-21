@@ -79,7 +79,7 @@ namespace RelertSharp.MapStructure
             INIEntity ent = new INIEntity("Smudge");
             foreach (SmudgeItem smg in Smudges)
             {
-                ent.AddPair(new INIPair(smg.ID, smg.SaveData.JoinBy()));
+                ent.AddPair(new INIPair(smg.Id, smg.SaveData.JoinBy()));
             }
             return ent;
         }

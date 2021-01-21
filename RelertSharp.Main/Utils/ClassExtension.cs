@@ -194,5 +194,10 @@ namespace System
         {
             return src ? 1 : 0;
         }
+        public static bool ParseBool(this string src, bool def = false)
+        {
+            if (bool.TryParse(src, out bool b)) return b;
+            return def;
+        }
     }
 }

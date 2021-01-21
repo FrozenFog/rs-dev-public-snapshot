@@ -75,6 +75,8 @@ namespace RelertSharp.MapStructure.Logic
 
         public virtual string Name { get; set; }
 
+        public virtual string Value { get { return Id; } }
+
         public override string ToString()
         {
             if (displayType == IndexableDisplayType.IdAndName) return string.Format(format, Id, Name);

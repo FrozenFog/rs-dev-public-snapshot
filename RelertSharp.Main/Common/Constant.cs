@@ -271,6 +271,20 @@ namespace RelertSharp.Common
         public static class Config
         {
             public const string Path = "./configs/default.xml";
+            public static class DefaultComboType
+            {
+                public const string TYPE_WAYPOINT = "Waypoints";
+                public const string TYPE_HOUSES = "Houses";
+                public const string TYPE_OWNERCOUNTRY = "OwnerCountry";
+                public const string TYPE_SCRIPTS = "Scripts";
+                public const string TYPE_TEAMS = "Teams";
+                public const string TYPE_TASKFORCES = "Taskforces";
+                public const string TYPE_TRIGGERS = "Triggers";
+                public const string TYPE_TECHTYPE = "TechType";
+                public const string TYPE_TAGS = "Tags";
+                public const string TYPE_SIDEINDEX = "SideIndex";
+                public const string TYPE_BUDUPG = "BuildingUpgrade";
+            }
         }
     }
 }

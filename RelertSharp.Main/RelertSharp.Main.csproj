@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Comparer\ListViewComparer.cs" />
+    <Compile Include="Common\Config\ComboReading.cs" />
     <Compile Include="Common\Enumerator\Bfs2DEnumerator.cs" />
     <Compile Include="Common\Enumerator\Circle2DEnumerator.cs" />
     <Compile Include="Common\Constant.cs" />

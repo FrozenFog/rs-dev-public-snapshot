@@ -1,5 +1,6 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.DrawingEngine.Presenting;
+using RelertSharp.MapStructure.Logic;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,18 +19,18 @@ namespace RelertSharp.MapStructure.Points
         #region Public Methods - ObjectBase
         public virtual void AddObject(T item)
         {
-            if (string.IsNullOrEmpty(item.ID))
+            if (string.IsNullOrEmpty(item.Id))
             {
                 for (int i = 0; i < 10000; i++)
                 {
                     if (!data.Keys.Contains(i.ToString()))
                     {
-                        item.ID = i.ToString();
+                        item.Id = i.ToString();
                         break;
                     }
                 }
             }
-            data[item.ID] = item;
+            data[item.Id] = item;
         }
         public virtual T GetItemByPos(I2dLocateable pos)
         {
@@ -41,7 +42,7 @@ namespace RelertSharp.MapStructure.Points
         }
         public void RemoveObjectByID(T item)
         {
-            if (data.Keys.Contains(item.ID)) data.Remove(item.ID);
+            if (data.Keys.Contains(item.Id)) data.Remove(item.Id);
         }
         #endregion
 
@@ -61,7 +62,7 @@ namespace RelertSharp.MapStructure.Points
 
 
 
-    public class PointItemBase : I2dLocateable
+    public class PointItemBase : IndexableItem, I2dLocateable
     {
         public PointItemBase()
         {
@@ -153,7 +154,6 @@ namespace RelertSharp.MapStructure.Points
         }
         public int X { get; set; }
         public int Y { get; set; }
-        public string ID { get; set; }
         public int Coord
         {
             get { return CoordInt(X, Y); }

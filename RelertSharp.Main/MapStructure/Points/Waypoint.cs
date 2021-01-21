@@ -34,7 +34,7 @@ namespace RelertSharp.MapStructure.Points
         }
         public override void AddObject(WaypointItem item)
         {
-            wpnum.Add(item.ID);
+            wpnum.Add(item.Id);
             base.AddObject(item);
         }
         public int NewID()
@@ -78,7 +78,7 @@ namespace RelertSharp.MapStructure.Points
         {
             return string.Format("{0} - ({1}, {2})", Num, X, Y);
         }
-        public string Num { get { return ID; } set { ID = value; } }
+        public string Num { get { return Id; } set { Id = value; } }
         public new PresentMisc SceneObject { get { return (PresentMisc)base.SceneObject; } set { base.SceneObject = value; } }
         IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
         #endregion

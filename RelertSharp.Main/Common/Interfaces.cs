@@ -18,6 +18,7 @@ namespace RelertSharp.Common
         string Id { get; }
         string Name { get; }
         void ChangeDisplay(IndexableDisplayType type);
+        string Value { get; }
     }
 
     public interface IRegistable

@@ -6,8 +6,6 @@ namespace RelertSharp.Common
 {
     public class RSConfig : INIFile
     {
-        private ModConfig modConfig;
-
         #region ContruCtor - RSConfig
         public RSConfig(string configFileName) : base(configFileName, INIFileType.DefaultINI, true)
         {
@@ -20,6 +18,7 @@ namespace RelertSharp.Common
             LoadAttribute();
 
             LoadTemplate();
+            ModConfig = new ModConfig(Constant.Config.Path);
         }
         #endregion
 
@@ -179,6 +178,7 @@ namespace RelertSharp.Common
 
         #region Public Calls - RSConfig
         public LocalConfig Local { get; set; }
+        public ModConfig ModConfig { get; set; }
         public bool IgnoreBuildingTheaterArt { get; private set; }
         public string TriggerConfig { get; private set; }
         public string RulesName { get; private set; }
