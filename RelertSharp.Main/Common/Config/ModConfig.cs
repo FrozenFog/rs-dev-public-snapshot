@@ -11,7 +11,7 @@ namespace RelertSharp.Common
 {
     public partial class ModConfig
     {
-        private XmlDocument doc;
+        private XmlDocument doc = new XmlDocument();
         private string path;
         private XmlNode Root { get { return doc.SelectSingleNode("RsModConfig"); } }
 
@@ -20,16 +20,19 @@ namespace RelertSharp.Common
             if (File.Exists(path))
             {
                 this.path = path;
-                doc.Load(path);
+                XmlReaderSettings setting = new XmlReaderSettings();
+                setting.IgnoreComments = true;
+                XmlReader r = XmlReader.Create(path, setting);
+                doc.Load(r);
             }
             else CreateDefaultConfig();
 
+            ReadAttributeInfo();
         }
 
         #region Private Methods
         private void CreateDefaultConfig()
         {
-            doc = new XmlDocument();
             this.path = Constant.Config.Path;
             doc.LoadXml(Properties.Resources._default);
             SaveConfig();

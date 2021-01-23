@@ -74,6 +74,9 @@
     <Compile Include="Views\TeamListView.xaml.cs">
       <DependentUpon>TeamListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TeamView.xaml.cs">
+      <DependentUpon>TeamView.xaml</DependentUpon>
+    </Compile>
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -127,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TeamListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TeamView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

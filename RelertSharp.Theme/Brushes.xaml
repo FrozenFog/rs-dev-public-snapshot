@@ -14,4 +14,9 @@
     <SolidColorBrush x:Key="txbBorder" Color="#FF555555"/>
     <SolidColorBrush x:Key="txbBack" Color="#FF2E2E2E"/>
     <SolidColorBrush x:Key="txbDisable" Color="#FF525252"/>
+    
+    <!--ScrollBar-->
+    <SolidColorBrush x:Key="scrLight" Color="#686868"/>
+    <SolidColorBrush x:Key="scrBack" Color="#3E3E3E"/>
+    <SolidColorBrush x:Key="scrMark" Color="#999999"/>
 </ResourceDictionary>

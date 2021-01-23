@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using AvalonDock;
 using AvalonDock.Layout;
 
@@ -16,6 +17,18 @@ namespace RelertSharp.Wpf
         {
             src.DataContext = null;
             src.DataContext = context;
+        }
+        public static void SetColumn(this FrameworkElement src, int column)
+        {
+            src.SetValue(Grid.ColumnProperty, column);
+        }
+        public static void AddControls(this Panel src, params FrameworkElement[] elements)
+        {
+            foreach (FrameworkElement c in elements) src.Children.Add(c);
+        }
+        public static void SetStyle(this FrameworkElement src, FrameworkElement provider, string key)
+        {
+            src.Style = provider.FindResource(key) as Style;
         }
         #endregion
 
