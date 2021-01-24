@@ -117,7 +117,27 @@ namespace RelertSharp.Wpf.Views
             container.AddControls(head, grd, blank);
             return container;
         }
-
+        private void CkbUpdate(object sender, RoutedEventArgs e)
+        {
+            if (!isLoading)
+            {
+                context[GetFrmElemTagAtribute(sender).Name].Value = (sender as CheckBox).IsChecked.Value.YesNo();
+            }
+        }
+        private void CbbUpdate(object sender, SelectionChangedEventArgs e)
+        {
+            if (!isLoading)
+            {
+                context[GetFrmElemTagAtribute(sender).Name].Value = ((sender as ComboBox).SelectedItem as IIndexableItem).Value;
+            }
+        }
+        private void TxbUpdate(object sender, RoutedEventArgs e)
+        {
+            if (!isLoading)
+            {
+                context[GetFrmElemTagAtribute(sender).Name].Value = (sender as TextBox).Text;
+            }
+        }
         private FrameworkElement AcquireControlFromAttribute(AttributeItem src, out double yOffset)
         {
             FrameworkElement r;
@@ -132,13 +152,7 @@ namespace RelertSharp.Wpf.Views
                     };
                     ckb.SetStyle(this, "ckbDark");
                     yOffset = 6;
-                    ckb.Click += (o, e) =>
-                    {
-                        if (!isLoading)
-                        {
-                            context[GetFrmElemTagAtribute(o).Name].Value = ckb.IsChecked.Value.YesNo();
-                        }
-                    };
+                    ckb.Click += CkbUpdate;
                     r = ckb;
                     break;
                 case AttributeItem.TYPE_INT:
@@ -151,10 +165,7 @@ namespace RelertSharp.Wpf.Views
                     txb.SetStyle(this, "txbDark");
                     txb.MouseLeave += (o, e) =>
                     {
-                        if (!isLoading)
-                        {
-                            context[GetFrmElemTagAtribute(o).Name].Value = txb.Text;
-                        }
+
                     };
                     r = txb;
                     break;
@@ -167,13 +178,7 @@ namespace RelertSharp.Wpf.Views
                     cbb.SetStyle(this, "cbbDark");
                     IEnumerable<IIndexableItem> items = ModConfig.GetCombo(src.ValueType);
                     cbb.ItemsSource = items;
-                    cbb.SelectionChanged += (o, e) =>
-                    {
-                        if (!isLoading)
-                        {
-                            context[GetFrmElemTagAtribute(o).Name].Value = (cbb.SelectedItem as IIndexableItem).Value;
-                        }
-                    };
+                    cbb.SelectionChanged += CbbUpdate;
                     r = cbb;
                     break;
             }

@@ -12,9 +12,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="3" />
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" MinWidth="46"/>
+            <ColumnDefinition Width="*" MinWidth="46"/>
+            <ColumnDefinition Width="*" MinWidth="46"/>
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="1" HorizontalAlignment="Left" Width="3" Style="{DynamicResource gsplitDark}"/>
         <Label Content="Name" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
