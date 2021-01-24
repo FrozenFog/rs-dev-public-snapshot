@@ -93,7 +93,7 @@ namespace RelertSharp.MapStructure.Logic
             data.AddPair("Credits", Credits);
             data.AddPair("TechLevel", TechLevel);
             data.AddPair("PercentBuilt", PercentBuilt);
-            data.AddPair("PlayerControl", Misc.YesNo(PlayerControl));
+            data.AddPair("PlayerControl", PlayerControl.YesNo());
             string allies = AlliesWith.JoinBy();
             data.AddPair("Allies", allies);
             data.AddPair("Edge", Edge);
@@ -147,6 +147,7 @@ namespace RelertSharp.MapStructure.Logic
         public double PercentBuilt { get; set; }
         public System.Drawing.Color DrawingColor { get; set; }
         public HouseUnit GetToUnit { get; set; }
+        public override string Value { get { return Id; } }
         #endregion
     }
 

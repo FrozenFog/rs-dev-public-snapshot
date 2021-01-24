@@ -2,6 +2,7 @@
 using RelertSharp.IniSystem;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -198,6 +199,21 @@ namespace System
         {
             if (bool.TryParse(src, out bool b)) return b;
             return def;
+        }
+        public static bool IniParseBool(this string s, bool def = false)
+        {
+            if (s != "")
+            {
+                if (Constant.BoolTrue.Contains(s)) return true;
+                else if (Constant.BoolFalse.Contains(s)) return false;
+                else if (int.Parse(s) == 1) return true;
+                else if (int.Parse(s) == 0) return false;
+            }
+            return def;
+        }
+        public static string YesNo(this bool src)
+        {
+            return src ? "yes" : "no";
         }
     }
 }

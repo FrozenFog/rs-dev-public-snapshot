@@ -6,7 +6,14 @@ namespace RelertSharp.MapStructure.Logic
 {
     public class TeamScriptCollection : TeamLogicCollection<TeamScriptGroup>
     {
-        public TeamScriptCollection() : base() { }
+        public TeamScriptCollection() : base()
+        {
+            this[Constant.ITEM_NONE] = new TeamScriptGroup()
+            {
+                Id = Constant.ITEM_NONE,
+                Name = Constant.ITEM_NONE
+            };
+        }
 
 
         #region Public Methods - TeamScriptCollection

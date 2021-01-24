@@ -14,6 +14,10 @@ namespace RelertSharp.MapStructure.Logic
         #region Ctor - TagCollection
         public TagCollection(INIEntity entTag)
         {
+            this[Constant.ITEM_NONE] = new TagItem(Constant.ITEM_NONE, Constant.ITEM_NONE)
+            {
+                AssoTrigger = Constant.ITEM_NONE
+            };
             foreach (INIPair p in entTag.DataList)
             {
                 if (!data.Keys.Contains(p.Name))

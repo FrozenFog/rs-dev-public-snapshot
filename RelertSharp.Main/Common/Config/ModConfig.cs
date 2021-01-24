@@ -44,7 +44,9 @@ namespace RelertSharp.Common
         #region Public Methods
         public void SaveConfig()
         {
+#if RELEASE
             doc.Save(this.path);
+#endif
         }
         #endregion
         #region Public Calls

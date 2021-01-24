@@ -19,6 +19,10 @@ namespace RelertSharp.Wpf.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        protected virtual void OnDesignatedPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public virtual void LoadData(Tdata data)
         {
             this.data = data;

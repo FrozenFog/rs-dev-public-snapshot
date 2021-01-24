@@ -94,7 +94,7 @@ namespace RelertSharp.MapStructure
                 string[] tmp = p.ParseStringList();
                 int x = int.Parse(tmp[1]);
                 int y = int.Parse(tmp[2]);
-                AddSmudge(tmp[0], x, y, ParseBool(tmp[3]));
+                AddSmudge(tmp[0], x, y, IniParseBool(tmp[3]));
             }
             foreach (INIPair p in entUnit.DataList)
             {
@@ -190,7 +190,7 @@ namespace RelertSharp.MapStructure
             foreach (INIPair p in entVar.DataList)
             {
                 string[] tmp = p.ParseStringList();
-                LocalVariables[p.Name] = new LocalVarItem(tmp[0], ParseBool(tmp[1]), p.Name);
+                LocalVariables[p.Name] = new LocalVarItem(tmp[0], IniParseBool(tmp[1]), p.Name);
             }
             foreach (INIPair p in entAITrigger.DataList)
             {
@@ -198,8 +198,8 @@ namespace RelertSharp.MapStructure
             }
             foreach (INIPair p in entAITriggerEnable.DataList)
             {
-                if (AiTriggers[p.Name] != null) AiTriggers[p.Name].Enabled = ParseBool(p.Value);
-                AiTriggers.GlobalEnables[p.Name] = ParseBool(p.Value);
+                if (AiTriggers[p.Name] != null) AiTriggers[p.Name].Enabled = IniParseBool(p.Value);
+                AiTriggers.GlobalEnables[p.Name] = IniParseBool(p.Value);
             }
             foreach (INIPair p in entCelltags.DataList)
             {

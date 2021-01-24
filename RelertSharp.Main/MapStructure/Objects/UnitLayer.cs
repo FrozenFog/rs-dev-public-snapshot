@@ -31,10 +31,10 @@ namespace RelertSharp.MapStructure.Objects
                 TaggedTrigger = _args[7];
                 VeterancyPercentage = int.Parse(_args[8]);
                 Group = int.Parse(_args[9]);
-                IsAboveGround = ParseBool(_args[10]);
+                IsAboveGround = IniParseBool(_args[10]);
                 FollowsIndex = _args[11];
-                AutoNORecruitType = ParseBool(_args[12]);
-                AutoYESRecruitType = ParseBool(_args[13]);
+                AutoNORecruitType = IniParseBool(_args[12]);
+                AutoYESRecruitType = IniParseBool(_args[13]);
                 ObjectType = MapObjectType.Unit;
             }
             catch

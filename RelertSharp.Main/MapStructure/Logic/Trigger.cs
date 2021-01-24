@@ -32,7 +32,7 @@ namespace RelertSharp.MapStructure.Logic
             if (!data.Keys.Contains(p.Name))
             {
                 string[] l = p.ParseStringList();
-                data[p.Name] = new TriggerItem(p.Name, l[0], l[1], l[2], ParseBool(l[3]), ParseBool(l[4]), ParseBool(l[5]), ParseBool(l[6]), int.Parse(l[7]));
+                data[p.Name] = new TriggerItem(p.Name, l[0], l[1], l[2], IniParseBool(l[3]), IniParseBool(l[4]), IniParseBool(l[5]), IniParseBool(l[6]), int.Parse(l[7]));
             }
         }
         public void RemoveTrigger(TriggerItem trigger)

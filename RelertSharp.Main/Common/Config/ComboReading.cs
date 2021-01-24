@@ -56,7 +56,7 @@ namespace RelertSharp.Common
             }
             return new List<IIndexableItem>();
         }
-        private IEnumerable<IIndexableItem> GetCombo(string type)
+        public IEnumerable<IIndexableItem> GetCombo(string type)
         {
             switch (type)
             {
@@ -77,7 +77,7 @@ namespace RelertSharp.Common
                 case TYPE_TAGS:
                     return Map.Tags;
                 case TYPE_HOUSES:
-                    return null;
+                    return Map.Houses;
                 case TYPE_OWNERCOUNTRY:
                     return Map.Countries;
                 default:

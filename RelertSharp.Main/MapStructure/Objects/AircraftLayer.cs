@@ -27,8 +27,8 @@ namespace RelertSharp.MapStructure.Objects
                 TaggedTrigger = _args[7];
                 VeterancyPercentage = int.Parse(_args[8]);
                 Group = int.Parse(_args[9]);
-                AutoNORecruitType = ParseBool(_args[10]);
-                AutoYESRecruitType = ParseBool(_args[11]);
+                AutoNORecruitType = IniParseBool(_args[10]);
+                AutoYESRecruitType = IniParseBool(_args[11]);
                 ObjectType = MapObjectType.Aircraft;
             }
             catch

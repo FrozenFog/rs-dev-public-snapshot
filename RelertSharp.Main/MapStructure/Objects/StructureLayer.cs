@@ -32,14 +32,14 @@ namespace RelertSharp.MapStructure.Objects
                 }
                 Rotation = int.Parse(_args[5]);
                 TaggedTrigger = _args[6];
-                AISellable = ParseBool(_args[7]);
-                BuildingOnline = ParseBool(_args[9]);
+                AISellable = IniParseBool(_args[7]);
+                BuildingOnline = IniParseBool(_args[9]);
                 UpgradeNum = int.Parse(_args[10]);
                 SpotlightType = (BuildingSpotlightType)(int.Parse(_args[11]));
                 Upgrade1 = _args[12];
                 Upgrade2 = _args[13];
                 Upgrade3 = _args[14];
-                AIRepairable = ParseBool(_args[15]);
+                AIRepairable = IniParseBool(_args[15]);
                 ObjectType = MapObjectType.Building;
             }
             catch

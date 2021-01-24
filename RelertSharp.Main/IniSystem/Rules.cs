@@ -237,7 +237,7 @@ namespace RelertSharp.IniSystem
         }
         public bool IsVxl(string id)
         {
-            return ParseBool(Art[id]["Voxel"]);
+            return IniParseBool(Art[id]["Voxel"]);
         }
         public int GetFrameFromDirection(int direction, string nameID)
         {
@@ -254,7 +254,7 @@ namespace RelertSharp.IniSystem
         {
             string artname = this[nameID]["Image"];
             if (string.IsNullOrEmpty(artname)) artname = nameID;
-            if (isinfantry && ParseBool(this[nameID]["AlternateTheaterArt"]))
+            if (isinfantry && IniParseBool(this[nameID]["AlternateTheaterArt"]))
             {
                 if (GlobalDir.HasFile(artname + _suff + ".shp")) artname += _suff;
             }

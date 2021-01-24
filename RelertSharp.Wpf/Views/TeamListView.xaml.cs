@@ -78,5 +78,10 @@ namespace RelertSharp.Wpf.Views
                 IdUnchecked(null, null);
             }
         }
+
+        private void SelectedItemChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ItemSelected?.Invoke(this, lbxMain.SelectedItem);
+        }
     }
 }

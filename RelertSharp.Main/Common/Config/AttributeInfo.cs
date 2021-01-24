@@ -34,12 +34,16 @@ namespace RelertSharp.Common
                 string desc = nItem.GetAttribute("desc");
                 string valueType = nItem.GetAttribute("type");
                 string classId = nItem.GetAttribute("class");
+                string label = nItem.GetAttribute("label");
+                string parse = nItem.GetAttribute("parsing");
                 destItems[name] = new AttributeItem()
                 {
                     ClassId = classId,
                     Desc = desc,
                     Name = name,
-                    ValueType = valueType
+                    ValueType = valueType,
+                    Label = label,
+                    ParseMethod = parse
                 };
             }
         }
@@ -50,10 +54,17 @@ namespace RelertSharp.Common
     }
     public class AttributeItem
     {
+        public const string TYPE_BOOL = "bool";
+        public const string TYPE_INT = "int";
+        public const string TYPE_STRING = "string";
+        public const string PARSE_WP = "WPIndex";
         public string Name { get; set; }
         public string ValueType { get; set; }
         public string ClassId { get; set; }
+        public string ParseMethod { get; set; }
         public string Desc { get; set; }
+        private string label;
+        public string Label { get { return label.IsNullOrEmpty() ? Name : label; } set { label = value; } }
     }
     public class AttributeClass
     {

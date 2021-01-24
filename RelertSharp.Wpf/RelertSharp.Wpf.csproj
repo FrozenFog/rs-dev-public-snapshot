@@ -59,8 +59,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Converter.cs" />
     <Compile Include="Common\Delegates.cs" />
     <Compile Include="Common\GuiExtensions.cs" />
+    <Compile Include="ViewModel\TeamVm.cs" />
     <Compile Include="Views\AiTriggerListView.xaml.cs">
       <DependentUpon>AiTriggerListView.xaml</DependentUpon>
     </Compile>

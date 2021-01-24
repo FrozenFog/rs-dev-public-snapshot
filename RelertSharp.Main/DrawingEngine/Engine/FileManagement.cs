@@ -119,7 +119,7 @@ namespace RelertSharp.DrawingEngine
                 d = new DrawableMisc(MapObjectType.Terrain, name);
                 d.Framecount = GlobalDir.GetShpFrameCount(name, out bool b);
                 d.RadarColor = ToColor(GlobalRules[terrain.RegName].ParseStringList("RadarColor"));
-                bool isTibTree = ParseBool(GlobalRules[terrain.RegName]["SpawnsTiberium"]);
+                bool isTibTree = IniParseBool(GlobalRules[terrain.RegName]["SpawnsTiberium"]);
                 d.pPal = pPalIso;
                 d.IsZeroVec = false;
                 if (isTibTree)
@@ -162,11 +162,11 @@ namespace RelertSharp.DrawingEngine
                 d.IsZeroVec = true;
                 d.pPal = pPalUnit;
                 string filename = name;
-                bool flat = ParseBool(GlobalRules[name]["DrawFlat"], true);
-                bool overrides = ParseBool(GlobalRules[name]["Overrides"]);
-                bool isTiberium = ParseBool(GlobalRules[name]["Tiberium"]);
-                bool rubble = ParseBool(GlobalRules[name]["IsRubble"]);
-                bool wall = ParseBool(GlobalRules[name]["Wall"]);
+                bool flat = IniParseBool(GlobalRules[name]["DrawFlat"], true);
+                bool overrides = IniParseBool(GlobalRules[name]["Overrides"]);
+                bool isTiberium = IniParseBool(GlobalRules[name]["Tiberium"]);
+                bool rubble = IniParseBool(GlobalRules[name]["IsRubble"]);
+                bool wall = IniParseBool(GlobalRules[name]["Wall"]);
                 string img = GlobalRules[name]["Image"];
                 string land = GlobalRules[name]["Land"];
                 string[] colors = GlobalRules[name].ParseStringList("RadarColor");

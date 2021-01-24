@@ -1,5 +1,6 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -69,13 +70,14 @@ namespace RelertSharp.MapStructure.Logic
             data.AddPair("Name", Name);
             data.AddPair("Color", ColorName);
             data.AddPair("ParentCountry", ParentCountryName);
-            data.AddPair("SmartAI", Utils.Misc.YesNo(SmartAI));
+            data.AddPair("SmartAI", SmartAI.YesNo());
             data.AddPair("Suffix", Suffix);
             data.AddPair("Prefix", Prefix);
             data.AddPair("Side", Side);
             data.AddPair(residual.Values);
             return data;
         }
+        public override string Value { get { return Name; } }
         public override string ToString()
         {
             return Name;

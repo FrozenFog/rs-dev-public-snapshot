@@ -15,7 +15,6 @@
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/GridSplitter.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/RadioButton.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/CheckBox.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/ScrollBar.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

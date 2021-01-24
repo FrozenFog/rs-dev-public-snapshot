@@ -105,7 +105,7 @@ namespace RelertSharp.MapStructure.Points
             Red = ParseFloat(tmp[3], 0.05f);
             Green = ParseFloat(tmp[4], 0.05f);
             Blue = ParseFloat(tmp[5], 0.05f);
-            IsEnable = ParseBool(tmp[6], true);
+            IsEnable = IniParseBool(tmp[6], true);
         }
         public LightSource(LightSource src) : base(src)
         {

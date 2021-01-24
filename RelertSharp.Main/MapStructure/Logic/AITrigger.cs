@@ -78,14 +78,14 @@ namespace RelertSharp.MapStructure.Logic
                 StartingWeight = (int)double.Parse(_args[7]);
                 MinimumWeight = (int)double.Parse(_args[8]);
                 MaximumWeight = (int)double.Parse(_args[9]);
-                IsForSkirmish = ParseBool(_args[10]);
+                IsForSkirmish = IniParseBool(_args[10]);
                 Residual = "0";
                 SideIndex = int.Parse(_args[12]);
                 IsBaseDefense = true;
                 Team2ID = _args[14];
-                EasyOn = ParseBool(_args[15]);
-                NormalOn = ParseBool(_args[16]);
-                HardOn = ParseBool(_args[17]);
+                EasyOn = IniParseBool(_args[15]);
+                NormalOn = IniParseBool(_args[16]);
+                HardOn = IniParseBool(_args[17]);
                 Enabled = false;
             }
             catch

@@ -45,12 +45,14 @@ namespace RelertSharp.Wpf
             //dockMain.AddToolToRight("Script List", scriptList);
             //dockMain.AddToolToRight("Taskforce List", taskforceList);
             dockMain.AddToolToRight("Team", team);
+            dockMain.AddToolToRight("Team List", teamList);
         }
 
         #region Reciver Logics
         private void AddReciveListener()
         {
             BindListener(aiTrigger, aiTriggerList);
+            BindListener(team, teamList);
         }
         private void BindListener(IObjectReciver reciver, IListToolPageContent sender)
         {

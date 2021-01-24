@@ -76,5 +76,6 @@ local.rsc
 !CncnetYRInject.exe
 !Syringe.exe
 !packages.config
+!/RelertSharp.Main/Resources/default.xml
 /RelertSharp.Main/bin/OnPublic
 /RelertSharp.GUI/bin/OnPublic

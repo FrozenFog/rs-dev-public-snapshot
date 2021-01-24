@@ -40,6 +40,12 @@ namespace RelertSharp.IniSystem
             Value = src.Value;
             keytype = src.keytype;
         }
+        public INIPair(string key)
+        {
+            Name = key;
+            Value = "";
+            keytype = INIKeyType.DefaultString;
+        }
         #endregion
 
 

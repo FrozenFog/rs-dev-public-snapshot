@@ -35,9 +35,9 @@ namespace RelertSharp.MapStructure.Objects
                 TaggedTrigger = _args[8];
                 VeterancyPercentage = int.Parse(_args[9]);
                 Group = int.Parse(_args[10]);
-                IsAboveGround = ParseBool(_args[11]);
-                AutoNORecruitType = ParseBool(_args[12]);
-                AutoYESRecruitType = ParseBool(_args[13]);
+                IsAboveGround = IniParseBool(_args[11]);
+                AutoNORecruitType = IniParseBool(_args[12]);
+                AutoYESRecruitType = IniParseBool(_args[13]);
                 ObjectType = MapObjectType.Infantry;
             }
             catch

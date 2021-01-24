@@ -53,7 +53,7 @@ namespace RelertSharp.Utils
             }
             return result;
         }
-        public static bool ParseBool(string s, bool def = false)
+        public static bool IniParseBool(string s, bool def = false)
         {
             if (s != "")
             {
@@ -63,10 +63,6 @@ namespace RelertSharp.Utils
                 else if (int.Parse(s) == 0) return false;
             }
             return def;
-        }
-        public static string YesNo(bool src)
-        {
-            return src ? "yes" : "no";
         }
         public static dynamic GetNonNull(object obj1, object obj2)
         {

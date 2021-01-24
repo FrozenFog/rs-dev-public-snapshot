@@ -23,7 +23,14 @@ namespace RelertSharp.MapStructure.Logic
 
     public class TaskforceCollection : TeamLogicCollection<TaskforceItem>
     {
-        public TaskforceCollection() : base() { }
+        public TaskforceCollection() : base()
+        {
+            this[Constant.ITEM_NONE] = new TaskforceItem()
+            {
+                Id = Constant.ITEM_NONE,
+                Name = Constant.ITEM_NONE
+            };
+        }
 
 
         #region Public Methods - TaskforceCollection

@@ -84,7 +84,7 @@ namespace RelertSharp.MapStructure.Logic
         }
         public TeamItem() : base()
         {
-
+            Residue = new Dictionary<string, INIPair>();
         }
         #endregion
 
@@ -196,6 +196,18 @@ namespace RelertSharp.MapStructure.Logic
         public int Waypoint { get; set; }
         //public BitArray Attributes { get; set; } = new BitArray(21);
         public Dictionary<string, INIPair> Residue { get; set; }
+        public INIPair this[string key]
+        {
+            get
+            {
+                if (Residue.ContainsKey(key)) return Residue[key];
+                else return new INIPair(key);
+            }
+            set
+            {
+                Residue[key] = value;
+            }
+        }
         //public TeamUnit GetToUnit { get; set; }
         #endregion
     }
