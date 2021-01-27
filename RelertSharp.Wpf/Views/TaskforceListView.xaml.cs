@@ -20,7 +20,7 @@ namespace RelertSharp.Wpf.Views
     /// <summary>
     /// TaskforceListView.xaml 的交互逻辑
     /// </summary>
-    public partial class TaskforceListView : UserControl, IListToolPageContent
+    public partial class TaskforceListView : UserControl, IListContainer
     {
         public TaskforceListView()
         {

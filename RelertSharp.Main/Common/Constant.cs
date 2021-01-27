@@ -9,6 +9,7 @@ namespace RelertSharp.Common
         public const int IniMaxLineLength = 512;
         public const string ITEM_NONE = "<none>";
         public const string ITEM_ALL = "<all>";
+        public const string KEY_NAME = "Name";
         public static class TileSetClass
         {
             public const string Clear = "TscClear";

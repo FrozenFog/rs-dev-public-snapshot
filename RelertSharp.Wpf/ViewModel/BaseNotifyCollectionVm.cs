@@ -17,6 +17,10 @@ namespace RelertSharp.Wpf.ViewModel
         {
             OnReset();
         }
+        public virtual void UpdateName(Titem item, Titem old, int visualIndex)
+        {
+            OnUpdate(item, old, visualIndex);
+        }
         #endregion
 
 
@@ -31,9 +35,9 @@ namespace RelertSharp.Wpf.ViewModel
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, visualIndex));
         }
 
-        protected virtual void OnUpdate(Titem item, int visualIndex)
+        protected virtual void OnUpdate(Titem item, Titem old, int visualIndex)
         {
-            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, item, visualIndex));
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, item, old, visualIndex));
         }
 
         protected virtual void OnReset()

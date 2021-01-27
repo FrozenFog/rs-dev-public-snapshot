@@ -20,7 +20,7 @@ namespace RelertSharp.Wpf.Views
     /// <summary>
     /// ScriptListView.xaml 的交互逻辑
     /// </summary>
-    public partial class ScriptListView : UserControl, IListToolPageContent
+    public partial class ScriptListView : UserControl, IListContainer
     {
         public ScriptListView()
         {
@@ -82,6 +82,7 @@ namespace RelertSharp.Wpf.Views
         private void SelectedItemChanged(object sender, SelectionChangedEventArgs e)
         {
             ItemSelected?.Invoke(this, lbxMain.SelectedItem);
+            
         }
     }
 }

@@ -78,7 +78,11 @@ namespace RelertSharp.Common
 
         public override string ToString()
         {
-            if (displayType == IndexableDisplayType.IdAndName) return string.Format(format, Id, Name);
+            if (displayType == IndexableDisplayType.IdAndName)
+            {
+                if (Name.IsNullOrEmpty()) return Id;
+                return string.Format(format, Id, Name);
+            }
             else return Name;
         }
         public void ChangeDisplay(IndexableDisplayType type)

@@ -26,13 +26,16 @@ namespace RelertSharp.Wpf.Views
         private const double ROW_DELTA = 28;
         private const double ROW_HEIGHT = 23;
         private ModConfig ModConfig { get { return GlobalVar.GlobalConfig.ModConfig; } }
-        private TeamItem context;
+        private TeamVm context;
+        private TeamItem Team { get { return context.Data; } }
         private bool isLoading = false;
+
+        public event ContentCarrierHandler NameChanged;
 
         public TeamView()
         {
             InitializeComponent();
-            context = new TeamItem();
+            context = new TeamVm();
             InitializeTeamClasses();
             RefreshControl();
         }
@@ -121,21 +124,31 @@ namespace RelertSharp.Wpf.Views
         {
             if (!isLoading)
             {
-                context[GetFrmElemTagAtribute(sender).Name].Value = (sender as CheckBox).IsChecked.Value.YesNo();
+                Team[GetFrmElemTagAtribute(sender).Name].Value = (sender as CheckBox).IsChecked.Value.YesNo();
             }
         }
         private void CbbUpdate(object sender, SelectionChangedEventArgs e)
         {
             if (!isLoading)
             {
-                context[GetFrmElemTagAtribute(sender).Name].Value = ((sender as ComboBox).SelectedItem as IIndexableItem).Value;
+                Team[GetFrmElemTagAtribute(sender).Name].Value = ((sender as ComboBox).SelectedItem as IIndexableItem).Value;
             }
         }
         private void TxbUpdate(object sender, RoutedEventArgs e)
         {
             if (!isLoading)
             {
-                context[GetFrmElemTagAtribute(sender).Name].Value = (sender as TextBox).Text;
+                string key = GetFrmElemTagAtribute(sender).Name;
+                string text = (sender as TextBox).Text;
+                if (key == Constant.KEY_NAME && text != Team[key].Value)
+                {
+                    Team[key].Value = text;
+                    GlobalCollectionVm.Teams.UpdateAll();
+                }
+                else
+                {
+                    Team[key].Value = text;
+                }
             }
         }
         private FrameworkElement AcquireControlFromAttribute(AttributeItem src, out double yOffset)
@@ -163,10 +176,7 @@ namespace RelertSharp.Wpf.Views
                         HorizontalAlignment = HorizontalAlignment.Stretch
                     };
                     txb.SetStyle(this, "txbDark");
-                    txb.MouseLeave += (o, e) =>
-                    {
-
-                    };
+                    txb.MouseLeave += TxbUpdate;
                     r = txb;
                     break;
                 default:
@@ -201,16 +211,16 @@ namespace RelertSharp.Wpf.Views
                                 string tag = GetFrmElemTagAtribute(c)?.Name;
                                 if (c is CheckBox ckb)
                                 {
-                                    string sb = context[tag].Value;
+                                    string sb = Team[tag].Value;
                                     ckb.IsChecked = sb.IniParseBool();
                                 }
                                 else if (c is TextBox txb)
                                 {
-                                    txb.Text = context[tag].Value;
+                                    txb.Text = Team[tag].Value;
                                 }
                                 else if (c is ComboBox cbb)
                                 {
-                                    IIndexableItem item = cbb.ItemsSource.OfType<IIndexableItem>().Where(x => x.Value == context[tag].Value).FirstOrDefault();
+                                    IIndexableItem item = cbb.ItemsSource.OfType<IIndexableItem>().Where(x => x.Value == Team[tag].Value).FirstOrDefault();
                                     if (item == null) cbb.SelectedIndex = 0;
                                     else cbb.SelectedItem = item;
                                 }
@@ -224,7 +234,7 @@ namespace RelertSharp.Wpf.Views
 
         public void ReciveObject(object sender, object recived)
         {
-            context = recived as TeamItem;
+            context = new TeamVm(recived as TeamItem);
             RefreshControl();
         }
     }

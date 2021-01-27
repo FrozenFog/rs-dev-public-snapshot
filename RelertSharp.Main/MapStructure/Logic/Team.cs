@@ -66,7 +66,6 @@ namespace RelertSharp.MapStructure.Logic
         #region Ctor - TeamItem
         public TeamItem(INIEntity ent) : base(ent)
         {
-            Name = ent["Name"];
             //TaskforceID = ent.PopPair("TaskForce").Value;
             //ScriptID = ent.PopPair("Script").Value;
             //TagID = ent.PopPair("Tag").Value;
@@ -108,6 +107,14 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - TeamItem
+        public override string Name
+        {
+            get { return this[Constant.KEY_NAME].Value; }
+            set
+            {
+                this[Constant.KEY_NAME] = new INIPair(Constant.KEY_NAME, Value);
+            }
+        }
         public INIEntity GetSaveData()
         {
             INIEntity result = new INIEntity(Id);

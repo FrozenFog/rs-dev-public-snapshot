@@ -21,7 +21,7 @@ namespace RelertSharp.Wpf.Views
     /// <summary>
     /// TeamListView.xaml 的交互逻辑
     /// </summary>
-    public partial class TeamListView : UserControl, IListToolPageContent
+    public partial class TeamListView : UserControl, IListContainer
     {
         public TeamListView()
         {

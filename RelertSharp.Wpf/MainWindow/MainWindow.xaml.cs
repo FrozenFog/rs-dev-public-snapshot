@@ -41,12 +41,12 @@ namespace RelertSharp.Wpf
         private void AddToolPage()
         {
             dockMain.AddToolToRight("Ai Trigger Edit", aiTrigger);
-            //dockMain.AddToolToRight("Team List", teamList);
+            dockMain.AddToolToRight("Team List", teamList);
             dockMain.AddToolToRight("Ai Trigger List", aiTriggerList);
-            dockMain.AddToolToRight("Script List", scriptList);
+            //dockMain.AddToolToRight("Script List", scriptList);
             //dockMain.AddToolToRight("Taskforce List", taskforceList);
-            //dockMain.AddToolToRight("Team", team);
-            dockMain.AddToolToRight("Script", script);
+            dockMain.AddToolToRight("Team", team);
+            //dockMain.AddToolToRight("Script", script);
         }
 
         #region Reciver Logics
@@ -54,8 +54,9 @@ namespace RelertSharp.Wpf
         {
             BindListener(aiTrigger, aiTriggerList);
             BindListener(script, scriptList);
+            BindListener(team, teamList);
         }
-        private void BindListener(IObjectReciver reciver, IListToolPageContent sender)
+        private void BindListener(IObjectReciver reciver, IListContainer sender)
         {
             sender.ItemSelected += reciver.ReciveObject;
         }

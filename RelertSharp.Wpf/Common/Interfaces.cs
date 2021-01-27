@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace RelertSharp.Wpf.Views
 {
-    interface IListToolPageContent
+    interface IListContainer
     {
         void SortBy(bool ascending);
         void ShowingId(bool enable);

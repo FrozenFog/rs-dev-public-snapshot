@@ -14,14 +14,16 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RelertSharp.Common;
 using RelertSharp.Wpf.ViewModel;
+using RelertSharp.MapStructure.Logic;
 
 namespace RelertSharp.Wpf.Views
 {
     /// <summary>
     /// AiTriggerListView.xaml 的交互逻辑
     /// </summary>
-    public partial class AiTriggerListView : UserControl, IListToolPageContent
+    public partial class AiTriggerListView : UserControl, IListContainer
     {
+        private GlobalAiTriggerVm context { get { return DataContext as GlobalAiTriggerVm; } }
         public AiTriggerListView()
         {
             InitializeComponent();

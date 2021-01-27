@@ -17,15 +17,7 @@ namespace RelertSharp.Wpf.ViewModel
             data = new TeamItem();
         }
         public TeamVm(object obj) : base(obj) { }
-        public Dictionary<string, INIPair> Data
-        {
-            get { return data.Residue; }
-            set
-            {
-                data.Residue = value;
-                SetProperty();
-            }
-        }
+        public TeamItem Data { get { return data; } }
         //public bool GetBool(string key)
         //{
         //    return data.Residue[key].ParseBool();
