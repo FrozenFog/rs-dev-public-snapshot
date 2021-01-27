@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RelertSharp.Common;
 
-namespace RelertSharp.MapStructure.Logic
+namespace RelertSharp.Common
 {
     public abstract class IndexableItemCollection<TItem> : IGlobalIdContainer, IEnumerable<TItem> where TItem : IndexableItem
     {
@@ -86,5 +85,37 @@ namespace RelertSharp.MapStructure.Logic
         {
             displayType = type;
         }
+    }
+
+    public class ComboItem : IndexableItem
+    {
+        public ComboItem()
+        {
+
+        }
+        public ComboItem(string key)
+        {
+            Id = key;
+        }
+        public ComboItem(string key, string desc, string value = null)
+        {
+            Id = key;
+            Name = desc;
+            this.value = value;
+        }
+        public override bool Equals(object obj)
+        {
+            if (obj is ComboItem item) return item.Value == Value;
+            return false;
+        }
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
+        }
+
+        private string value;
+        public override string Value { get { if (value.IsNullOrEmpty()) return Id; return value; } }
+        public static ComboItem NoneItem = new ComboItem(Constant.ITEM_NONE);
+        public static ComboItem AllItem = new ComboItem(Constant.ITEM_ALL);
     }
 }

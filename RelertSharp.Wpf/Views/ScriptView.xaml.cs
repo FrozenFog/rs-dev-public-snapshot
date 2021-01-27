@@ -1,6 +1,4 @@
-﻿using RelertSharp.Common;
-using RelertSharp.Wpf.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,25 +12,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RelertSharp.Wpf.ViewModel;
 
 namespace RelertSharp.Wpf.Views
 {
     /// <summary>
-    /// AiTriggerView.xaml 的交互逻辑
+    /// ScriptView.xaml 的交互逻辑
     /// </summary>
-    public partial class AiTriggerView : UserControl, IObjectReciver
+    public partial class ScriptView : UserControl, IObjectReciver
     {
-        private AiTriggerVm context { get { return DataContext as AiTriggerVm; } }
-        private ModConfig config { get { return GlobalVar.GlobalConfig.ModConfig; } }
-        public AiTriggerView()
+        private ScriptVm context { get { return DataContext as ScriptVm; } }
+        public ScriptView()
         {
             InitializeComponent();
-            DataContext = new AiTriggerVm();
+            DataContext = new ScriptVm();
         }
 
         public void ReciveObject(object sender, object recived)
         {
-            DataContext = new AiTriggerVm(recived);
+            DataContext = new ScriptVm(recived);
         }
     }
 }

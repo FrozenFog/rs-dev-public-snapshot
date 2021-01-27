@@ -674,26 +674,6 @@ namespace RelertSharp.IniSystem
                 return result;
             }
         }
-        private List<IIndexableItem> Sides;
-        public List<IIndexableItem> SideIndexes
-        {
-            get
-            {
-                if (Sides == null)
-                {
-                    Sides = new List<IIndexableItem>();
-                    int i = 1;
-                    foreach (INIPair pSideName in this["Sides"])
-                    {
-                        if (pSideName.Value == "Neutral" || pSideName.Value == "Civilian") continue;
-                        ComboItem item = new ComboItem(i.ToString(), pSideName.PreComment ?? pSideName.Name);
-                        Sides.Add(item);
-                        i++;
-                    }
-                }
-                return Sides;
-            }
-        }
         public List<TechnoPair> GlobalVar
         {
             get

@@ -102,6 +102,22 @@ namespace System.Collections.Generic
             if (!empty) result = result.Substring(0, result.Length - joint.Length);
             return result;
         }
+        public static IIndexableItem ValueEqual(this IEnumerable<IIndexableItem> src, string target)
+        {
+            if (target == Constant.ITEM_ALL) return ComboItem.AllItem;
+            if (target == Constant.ITEM_NONE) return ComboItem.NoneItem;
+            return src.Where(x => x.Value == target).FirstOrDefault();
+        }
+        public static IIndexableItem IndexEqual(this IEnumerable<IIndexableItem> src, string target)
+        {
+            if (target == Constant.ITEM_ALL) return ComboItem.AllItem;
+            if (target == Constant.ITEM_NONE) return ComboItem.NoneItem;
+            return src.Where(x => x.Id == target).FirstOrDefault();
+        }
+        public static IIndexableItem ValueEqual(this IEnumerable<IIndexableItem> src, int target)
+        {
+            return src.Where(x => x.Value == target.ToString()).FirstOrDefault();
+        }
     }
 
 
@@ -198,6 +214,11 @@ namespace System
         public static bool ParseBool(this string src, bool def = false)
         {
             if (bool.TryParse(src, out bool b)) return b;
+            return def;
+        }
+        public static int ParseInt(this string src, int def = 0)
+        {
+            if (int.TryParse(src, out int i)) return i;
             return def;
         }
         public static bool IniParseBool(this string s, bool def = false)

@@ -57,7 +57,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Ctor - AITriggerItem
         public AITriggerItem()
         {
-            Comparator = new AITriggerComparator();
+
         }
         public AITriggerItem(string _id, string[] _args)
         {
@@ -114,9 +114,10 @@ namespace RelertSharp.MapStructure.Logic
         public string Team1ID { get; set; } = Constant.ITEM_NONE;
         public string OwnerHouse { get; set; }
         public int TechLevel { get; set; }
-        public AITriggerConditionType ConditionType { get; set; }
+        public AITriggerConditionType ConditionType { get; set; } = AITriggerConditionType.ConditionTrue;
         public string ConditionObjID { get; set; }
-        public AITriggerComparator Comparator { get; set; }
+        public AITriggerConditionOperator Operator { get { return Comparator.Operator; } set { Comparator.Operator = value; } }
+        public AITriggerComparator Comparator { get; set; } = new AITriggerComparator();
         public int StartingWeight { get; set; }
         public int MinimumWeight { get; set; }
         public int MaximumWeight { get; set; }
@@ -150,8 +151,8 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - AITriggerComparator
-        public int Num1 { get; set; }
-        public AITriggerConditionOperator Operator { get; set; }
+        public int Num1 { get; set; } = 0;
+        public AITriggerConditionOperator Operator { get; set; } = AITriggerConditionOperator.LessThan;
         public string ToCmpString { get { return ToLEByteString(Num1) + ToLEByteString((int)Operator) + Zeros; } }
         public static string Zeros { get { return @"000000000000000000000000000000000000000000000000"; } }
         #endregion

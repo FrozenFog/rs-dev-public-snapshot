@@ -9,9 +9,14 @@
     <cb type="Taskforces" default="true"/>
     <cb type="Triggers" default="true"/>
     <cb type="TechType" default="true"/>
-    <cb type="SideIndex" default="true"/>
     <cb type="Tags" default="true"/>
     <cb type="BuildingUpgrade" default="true"/>
+    <cb type="SideIndex">
+      <item key="1" desc="Allies"/>
+      <item key="2" desc="Soviets"/>
+      <item key="3" desc="Epsilon"/>
+      <item key="4" desc="Foehn"/>
+    </cb>
     <cb type="WaypointWithNone" base="Waypoints">
       <item key="None" front="true"/>
     </cb>

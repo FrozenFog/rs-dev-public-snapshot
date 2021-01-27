@@ -157,7 +157,7 @@ namespace RelertSharp.MapStructure
                 CountryItem item = new CountryItem(f.PopEnt(p.Value));
                 if (string.IsNullOrEmpty(item.Name)) item.Name = p.Value;
                 item.Index = p.Name;
-                Countries[p.Name] = item;
+                Countries[item.Name] = item;
             }
         }
         private void GetAbstractLogics(MapFile f)

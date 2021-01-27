@@ -131,7 +131,7 @@ namespace RelertSharp.IniSystem
                 name = value;
             }
         }
-        public string Value { get { return Name; } }
+        public string Value { get { return Id; } }
         public string Id { get { return Index; } }
         public string RegName { get; set; } = "";
         public string UIName { get; set; } = "";

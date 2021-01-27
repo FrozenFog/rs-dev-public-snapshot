@@ -5,12 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Common;
+using static RelertSharp.Common.Constant;
 
 namespace RelertSharp.Wpf.ViewModel
 {
     internal class AiTriggerVm : BaseVm<AITriggerItem>
     {
+        private ModConfig config { get { return GlobalVar.GlobalConfig.ModConfig; } }
         public GlobalTeamVm TeamCollections { get { return GlobalCollectionVm.Teams; } }
+        public StaticCollectionVm StaticCollections { get { return GlobalCollectionVm.StaticCollections; } }
+        public GlobalCountryVm OwnerCountries { get { return GlobalCollectionVm.Countries; } }
         private TeamCollection MapTeam { get { return GlobalVar.CurrentMapDocument.Map.Teams; } }
         public AiTriggerVm()
         {
@@ -48,24 +52,6 @@ namespace RelertSharp.Wpf.ViewModel
                 SetProperty();
             }
         }
-        public int SideIndex
-        {
-            get { return data.SideIndex; }
-            set
-            {
-                data.SideIndex = value;
-                SetProperty();
-            }
-        }
-        public string Owner
-        {
-            get { return data.OwnerHouse; }
-            set
-            {
-                data.OwnerHouse = value;
-                SetProperty();
-            }
-        }
         public int TechLevel
         {
             get { return data.TechLevel; }
@@ -75,30 +61,12 @@ namespace RelertSharp.Wpf.ViewModel
                 SetProperty();
             }
         }
-        public AITriggerConditionType Condition
-        {
-            get { return data.ConditionType; }
-            set
-            {
-                data.ConditionType = value;
-                SetProperty();
-            }
-        }
         public string TechType
         {
             get { return data.ConditionObjID; }
             set
             {
                 data.ConditionObjID = value;
-                SetProperty();
-            }
-        }
-        public AITriggerConditionOperator Operator
-        {
-            get { return data.Comparator.Operator; }
-            set
-            {
-                data.Comparator.Operator = value;
                 SetProperty();
             }
         }
@@ -183,41 +151,89 @@ namespace RelertSharp.Wpf.ViewModel
                 SetProperty();
             }
         }
-        public string Team1String
+        public object ConditionItem
         {
             get
             {
-                TeamItem team = MapTeam[data.Team1ID];
-                if (team == null) return data.Team1ID;
-                return team.ToString();
+                return StaticCollections.AiTriggerConditions.ValueEqual((int)data.ConditionType);
             }
-            set { }
+            set
+            {
+                if (value == null) data.ConditionType = AITriggerConditionType.ConditionTrue;
+                else if (value is IIndexableItem item)
+                {
+                    data.ConditionType = (AITriggerConditionType)item.Value.ParseInt();
+                }
+                SetProperty();
+            }
         }
-        public string Team2String
+        public object OperatorItem
         {
             get
             {
-                TeamItem team = MapTeam[data.Team2ID];
-                if (team == null) return data.Team2ID;
-                return team.ToString();
+                return StaticCollections.AiTriggerOperators.ValueEqual((int)data.Operator);
             }
-            set { }
+            set
+            {
+                if (value is IIndexableItem item) data.Operator = (AITriggerConditionOperator)item.Value.ParseInt();
+                else data.Operator = AITriggerConditionOperator.LessThan;
+                SetProperty();
+            }
+        }
+        public object TechTypeItem
+        {
+            get
+            {
+                return StaticCollections.TechTypes.IndexEqual(data.ConditionObjID);
+            }
+            set
+            {
+                if (value is IIndexableItem item) data.ConditionObjID = item.Value;
+                else if (value is string s)
+                {
+                    if (string.IsNullOrEmpty(s)) data.ConditionObjID = ITEM_NONE;
+                    else data.ConditionObjID = s;
+                }
+                else data.ConditionObjID = ITEM_NONE;
+                SetProperty();
+            }
+        }
+        public object SideItem
+        {
+            get { return StaticCollections.AiSideIndexes.ValueEqual(data.SideIndex); }
+            set
+            {
+                if (value is IIndexableItem item) data.SideIndex = item.Value.ParseInt();
+                else data.SideIndex = 0;
+                SetProperty();
+            }
+        }
+        public object OwnerItem
+        {
+            get { return GlobalVar.CurrentMapDocument.Map.Countries[data.OwnerHouse]; }
+            set
+            {
+                if (value is IIndexableItem item) data.OwnerHouse = item.Value;
+                else data.OwnerHouse = ITEM_ALL;
+                SetProperty();
+            }
         }
         public object Team1Item
         {
             get
             {
+                if (data.Team1ID == ITEM_NONE) return ComboItem.NoneItem;
                 TeamItem team = MapTeam[data.Team1ID];
                 if (team == null) return data.Team1ID;
                 return team;
             }
             set
             {
-                if (value == null) data.Team1ID = Constant.ITEM_NONE;
-                else if (value is TeamItem item) data.Team1ID = item.Id;
+                if (value == null) data.Team1ID = ITEM_NONE;
+                else if (value is IIndexableItem item) data.Team1ID = item.Id;
                 else if (value is string s)
                 {
-                    if (string.IsNullOrEmpty(s)) data.Team1ID = Constant.ITEM_NONE;
+                    if (string.IsNullOrEmpty(s)) data.Team1ID = ITEM_NONE;
                     else data.Team1ID = s;
                 }
                 SetProperty();
@@ -227,17 +243,18 @@ namespace RelertSharp.Wpf.ViewModel
         {
             get
             {
+                if (data.Team2ID == ITEM_NONE) return ComboItem.NoneItem;
                 TeamItem team = MapTeam[data.Team2ID];
                 if (team == null) return data.Team2ID;
                 return team;
             }
             set
             {
-                if (value == null) data.Team2ID = Constant.ITEM_NONE;
-                else if (value is TeamItem item) data.Team2ID = item.Id;
+                if (value == null) data.Team2ID = ITEM_NONE;
+                else if (value is IIndexableItem item) data.Team2ID = item.Id;
                 else if (value is string s)
                 {
-                    if (string.IsNullOrEmpty(s)) data.Team2ID = Constant.ITEM_NONE;
+                    if (string.IsNullOrEmpty(s)) data.Team2ID = ITEM_NONE;
                     else data.Team2ID = s;
                 }
                 SetProperty();

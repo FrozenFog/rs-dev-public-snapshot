@@ -204,7 +204,7 @@
     <Compile Include="MapStructure\Logic\AITrigger.cs" />
     <Compile Include="MapStructure\Logic\Country.cs" />
     <Compile Include="MapStructure\Logic\House.cs" />
-    <Compile Include="MapStructure\Logic\IndexableItem.cs" />
+    <Compile Include="Common\IndexableItem.cs" />
     <Compile Include="MapStructure\Logic\TriggerDescription.cs" />
     <Compile Include="MapStructure\MapTheaterTileSet.cs" />
     <Compile Include="MapStructure\Map\BrushAdding.cs" />

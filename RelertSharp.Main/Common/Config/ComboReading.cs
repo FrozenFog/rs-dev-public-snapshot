@@ -72,8 +72,6 @@ namespace RelertSharp.Common
                     return Map.Triggers;
                 case TYPE_TECHTYPE:
                     return Rules.TechnoList;
-                case TYPE_SIDEINDEX:
-                    return Rules.SideIndexes;
                 case TYPE_TAGS:
                     return Map.Tags;
                 case TYPE_HOUSES:
@@ -84,18 +82,5 @@ namespace RelertSharp.Common
                     return ReadCombo(type);
             }
         }
-    }
-
-    public class ComboItem : IndexableItem
-    {
-        public ComboItem(string key, string desc, string value = null)
-        {
-            Id = key;
-            Name = desc;
-            this.value = value;
-        }
-
-        private string value;
-        public override string Value { get { if (value.IsNullOrEmpty()) return Id; return value; } }
     }
 }

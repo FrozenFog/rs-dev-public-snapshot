@@ -10,7 +10,7 @@
         <ViewModel:GlobalScriptVm/>
     </UserControl.DataContext>
     <Grid>
-        <ListBox x:Name="lbxMain" Margin="10,10,10,9.6" Style="{DynamicResource lbxDark}" ItemsSource="{Binding Mode=OneWay}">
+        <ListBox x:Name="lbxMain" Margin="10,10,10,9.6" Style="{DynamicResource lbxDark}" ItemsSource="{Binding Mode=OneWay}" SelectionChanged="SelectedItemChanged">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Show Script Id" IsCheckable="True" Unchecked="IdUnchecked" Checked="IdChecked"/>

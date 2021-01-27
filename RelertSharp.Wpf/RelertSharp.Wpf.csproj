@@ -62,6 +62,9 @@
     <Compile Include="Common\Converter.cs" />
     <Compile Include="Common\Delegates.cs" />
     <Compile Include="Common\GuiExtensions.cs" />
+    <Compile Include="ViewModel\GlobalCountryVm.cs" />
+    <Compile Include="ViewModel\ScriptVm.cs" />
+    <Compile Include="ViewModel\StaticCollectionVm.cs" />
     <Compile Include="ViewModel\TeamVm.cs" />
     <Compile Include="Views\AiTriggerListView.xaml.cs">
       <DependentUpon>AiTriggerListView.xaml</DependentUpon>
@@ -69,6 +72,9 @@
     <Compile Include="Common\Interfaces.cs" />
     <Compile Include="Views\ScriptListView.xaml.cs">
       <DependentUpon>ScriptListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ScriptView.xaml.cs">
+      <DependentUpon>ScriptView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TaskforceListView.xaml.cs">
       <DependentUpon>TaskforceListView.xaml</DependentUpon>
@@ -124,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ScriptListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ScriptView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -29,6 +29,7 @@ namespace RelertSharp.Wpf
         private readonly ScriptListView scriptList = new ScriptListView();
         private readonly TaskforceListView taskforceList = new TaskforceListView();
         private readonly TeamView team = new TeamView();
+        private readonly ScriptView script = new ScriptView();
 
         public MainWindow()
         {
@@ -40,18 +41,19 @@ namespace RelertSharp.Wpf
         private void AddToolPage()
         {
             dockMain.AddToolToRight("Ai Trigger Edit", aiTrigger);
-            dockMain.AddToolToRight("Team List", teamList);
+            //dockMain.AddToolToRight("Team List", teamList);
             dockMain.AddToolToRight("Ai Trigger List", aiTriggerList);
-            //dockMain.AddToolToRight("Script List", scriptList);
+            dockMain.AddToolToRight("Script List", scriptList);
             //dockMain.AddToolToRight("Taskforce List", taskforceList);
-            dockMain.AddToolToRight("Team", team);
+            //dockMain.AddToolToRight("Team", team);
+            dockMain.AddToolToRight("Script", script);
         }
 
         #region Reciver Logics
         private void AddReciveListener()
         {
             BindListener(aiTrigger, aiTriggerList);
-            BindListener(team, teamList);
+            BindListener(script, scriptList);
         }
         private void BindListener(IObjectReciver reciver, IListToolPageContent sender)
         {
