@@ -38,15 +38,5 @@ namespace RelertSharp.Wpf.ViewModel
         //    data.Residue[key].Value = value;
         //    OnDesignatedPropertyChanged(key);
         //}
-
-        public string Name
-        {
-            get { return data.Name; }
-            set
-            {
-                data.Name = value;
-                SetProperty();
-            }
-        }
     }
 }

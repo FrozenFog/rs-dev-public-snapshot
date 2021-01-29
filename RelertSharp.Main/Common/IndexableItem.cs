@@ -91,7 +91,7 @@ namespace RelertSharp.Common
         }
     }
 
-    public class ComboItem : IndexableItem
+    public sealed class ComboItem : IndexableItem
     {
         public ComboItem()
         {

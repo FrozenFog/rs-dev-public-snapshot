@@ -17,6 +17,10 @@ namespace RelertSharp.Wpf.ViewModel
         {
             OnReset();
         }
+        public virtual void UpdateDesignatedName()
+        {
+            OnReset();
+        }
         public virtual void UpdateName(Titem item, Titem old, int visualIndex)
         {
             OnUpdate(item, old, visualIndex);

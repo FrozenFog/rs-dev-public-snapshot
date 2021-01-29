@@ -143,7 +143,7 @@ namespace RelertSharp.Wpf.Views
                 if (key == Constant.KEY_NAME && text != Team[key].Value)
                 {
                     Team[key].Value = text;
-                    GlobalCollectionVm.Teams.UpdateAll();
+                    GlobalCollectionVm.Teams.UpdateDesignatedName();
                 }
                 else
                 {

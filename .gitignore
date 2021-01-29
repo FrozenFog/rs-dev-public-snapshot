@@ -77,5 +77,6 @@ local.rsc
 !Syringe.exe
 !packages.config
 !/RelertSharp.Main/Resources/default.xml
+!/RelertSharp.Main/Resources/defaultIni.xml
 /RelertSharp.Main/bin/OnPublic
 /RelertSharp.GUI/bin/OnPublic

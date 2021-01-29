@@ -28,7 +28,7 @@ namespace RelertSharp.Wpf.ViewModel
             {
                 data.Name = value;
                 SetProperty();
-                GlobalCollectionVm.AiTriggers.UpdateAll();
+                GlobalCollectionVm.AiTriggers.UpdateDesignatedName();
             }
         }
         public string Id

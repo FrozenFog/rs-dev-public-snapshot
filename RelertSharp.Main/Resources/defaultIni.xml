@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RsIniConfig>
+  <ValueTypeList>
+    <!--<cb type="boolNum" default="true"/>
+    <cb type="boolYN" default="true"/>
+    <cb type="boolTF" default="true"/>-->
+    <cb type="bool" default="true"/>
+    <cb type="int" default="true"/>
+    <cb type="uint" default="true"/>
+    <cb type="float" default="true"/>
+    <cb type="percent" default="true"/>
+    <cb type="text" default="true"/>
+    <cb type="csf" default="true"/>
+    <cb type="TechnoType" default="true"/>
+    <cb type="Infantry" default="true"/>
+    <cb type="Unit" default="true"/>
+    <cb type="Aircraft" default="true"/>
+    <cb type="Building" default="true"/>
+    <cb type="Warhead" default="true"/>
+    <cb type="Weapon" default="true"/>
+    <cb type="SuperWeapon" default="true"/>
+    <cb type="Animation" default="true"/>
+    <cb type="Partical" default="true"/>
+    <cb type="ParticalSys" default="true"/>
+    <cb type="VoxelAnims" default="true"/>
+    <cb type="Sound" default="true"/>
+    <cb type="EvaSound" default="true"/>
+    <cb type="OwnerCountry" default="true"/>
+    <cb type="Armor" default="true"/>
+    <cb type="MouseCursor" default="true"/>
+    <cb type="Color" default="true"/>
+    <cb type="Locomotor">
+      <item key="{4A582741-9839-11d1-B709-00A024DDAFD1}" desc=""/>
+      <item key="{4A582742-9839-11d1-B709-00A024DDAFD1}" desc=""/>
+      <item key="{4A582743-9839-11d1-B709-00A024DDAFD1}" desc=""/>
+      <item key="{4A582744-9839-11d1-B709-00A024DDAFD1}" desc=""/>
+      <item key="{4A582746-9839-11d1-B709-00A024DDAFD1}" desc=""/>
+      <item key="{4A582747-9839-11d1-B709-00A024DDAFD1}" desc=""/>
+      <item key="{92612C46-F71F-11d1-AC9F-006008055BB5}" desc=""/>
+      <item key="{2BEA74E1-7CCA-11d3-BE14-00104B62A16C}" desc=""/>
+      <item key="{B7B49766-E576-11d3-9BD9-00104B972FE8}" desc=""/>
+      <item key="{55D141B8-DB94-11d1-AC98-006008055BB5}" desc=""/>
+    </cb>
+    <cb type="Abilities">
+      <item key="SELF_HEAL" desc=""/>
+      <item key="FIREPOWER" desc=""/>
+      <item key="FASTER" desc=""/>
+      <item key="STRONGER" desc=""/>
+      <item key="ROF" desc=""/>
+      <item key="SIGHT" desc=""/>
+    </cb>
+    <cb type="PipScale">
+      <item key="none" desc=""/>
+      <item key="Ammo" desc=""/>
+      <item key="Tiberium" desc=""/>
+      <item key="Passengers" desc=""/>
+      <item key="MindControl" desc=""/>
+    </cb>
+    <cb type="OccupyPip">
+      <item key="PersonBlue"/>
+      <item key="PersonWhite"/>
+      <item key="PersonRed"/>
+      <item key="PersonPurple"/>
+      <item key="PersonGreen"/>
+    </cb>
+    <cb type="MoveZone">
+      <item key="Normal" desc=""/>
+      <item key="Infantry" desc=""/>
+      <item key="Fly" desc=""/>
+      <item key="Destroyer" desc=""/>
+      <item key="AmphibiousDestroyer" desc=""/>
+      <item key="InfantryDestroyer" desc=""/>
+      <item key="Amphibious" desc=""/>
+      <item key="Water" desc=""/>
+      <item key="Crusher" desc=""/>
+      <item key="CrusherAll" desc=""/>
+      <item key="Subterannean" desc=""/>
+      <item key="Railroad" desc=""/>
+    </cb>
+    <cb type="SpeedType">
+      <item key="Amphibious" desc=""/>
+      <item key="Hover" desc=""/>
+      <item key="Float" desc=""/>
+      <item key="FloatBeach" desc=""/>
+      <item key="Track" desc=""/>
+    </cb>
+    <cb type="SwType">
+      <item key="SpyPlane" desc=""/>
+      <item key="MultiMissile" desc=""/>
+      <item key="IronCurtain" desc=""/>
+      <item key="Firestorm" desc=""/>
+      <item key="ForceShield" desc=""/>
+      <item key="LightningStorm" desc=""/>
+      <item key="PsychicDominator" desc=""/>
+      <item key="ChronoSphere" desc=""/>
+      <item key="ChronoWarp" desc=""/>
+      <item key="SonarPulse" desc=""/>
+      <item key="UnitDelivery" desc=""/>
+      <item key="AmerParaDrop" desc=""/>
+      <item key="ParaDrop" desc=""/>
+      <item key="HunterSeeker" desc=""/>
+      <item key="EMPulse" desc=""/>
+      <item key="GenericWarhead" desc=""/>
+      <item key="DropPod" desc=""/>
+      <item key="PsychicReveal" desc=""/>
+    </cb>
+    <cb type="SwAction">
+      <item key="Nuke" desc=""/>
+      <item key="Custom" desc=""/>
+      <item key="IronCurtain" desc=""/>
+      <item key="ForceShield" desc=""/>
+      <item key="LightningStorm" desc=""/>
+      <item key="ChronoSphere" desc=""/>
+      <item key="ChronoWarp" desc=""/>
+      <item key="ParaDrop" desc=""/>
+      <item key="PsychicDominator" desc=""/>
+    </cb>
+    <cb type="SwAiType">
+      <item key="Nuke" desc=""/>
+      <item key="IronCurtain" desc=""/>
+      <item key="None" desc=""/>
+      <item key="Self" desc=""/>
+      <item key="Offensive" desc=""/>
+      <item key="Stealth" desc=""/>
+      <item key="Base" desc=""/>
+      <item key="PsychicDominator" desc=""/>
+      <item key="ParaDrop" desc=""/>
+      <item key="GeneticMutator" desc=""/>
+      <item key="HunterSeeker" desc=""/>
+    </cb>
+    <cb type="SwAffectHouse">
+      <item key="team" desc=""/>
+      <item key="all" desc=""/>
+      <item key="enemies" desc=""/>
+      <item key="owner" desc=""/>
+      <item key="none" desc=""/>
+    </cb>
+    <cb type="SwTargetType">
+      <item key="all" desc=""/>
+      <item key="land" desc=""/>
+      <item key="water" desc=""/>
+      <item key="units" desc=""/>
+      <item key="buildings" desc=""/>
+    </cb>
+    <cb type="InsigniaImg">
+      <item key="dummy" desc=""/>
+      <item key="spyins" desc=""/>
+      <item key="herostcr" desc=""/>
+      <item key="herostbr" desc=""/>
+      <item key="herostar" desc=""/>
+      <item key="arsins" desc=""/>
+      <item key="hikey" desc=""/>
+      <item key="hrkeya" desc=""/>
+      <item key="hrkeyb" desc=""/>
+      <item key="hrkeyc" desc=""/>
+      <item key="pipxnon" desc=""/>
+      <item key="pipxvet" desc=""/>
+      <item key="pipxelt" desc=""/>
+      <item key="fakepip" desc=""/>
+      <item key="defvet" desc=""/>
+    </cb>
+    <cb type="UnitCategory">
+      <item key="Soldier" desc=""/>
+      <item key="Civilian" desc=""/>
+      <item key="AFV" desc=""/>
+      <item key="Transport" desc=""/>
+      <item key="AirPower" desc=""/>
+      <item key="Support" desc=""/>
+      <item key="AirLift" desc=""/>
+    </cb>
+    <cb type="BuildCat">
+      <item key="Combat" desc=""/>
+      <item key="Power" desc=""/>
+      <item key="Tech" desc=""/>
+      <item key="Resource" desc=""/>
+    </cb>
+    <cb type="FactoryType" desc="">
+      <item key="BuildingType" desc=""/>
+      <item key="InfantryType" desc=""/>
+      <item key="UnitType" desc=""/>
+      <item key="AircraftType" desc=""/>
+    </cb>
+    <cb type="ParticalBehavior">
+      <item key="Smoke" desc=""/>
+      <item key="Railgun" desc=""/>
+      <item key="Gas" desc=""/>
+      <item key="Fire" desc=""/>
+      <item key="Spark" desc=""/>
+      <item key="Web" desc=""/>
+    </cb>
+    <cb type="OverlayLandType">
+      <item key="Rock" desc=""/>
+      <item key="Railroad" desc=""/>
+      <item key="Road" desc=""/>
+      <item key="Clear" desc=""/>
+      <item key="Water" desc=""/>
+    </cb>
+    <cb type="OccupyPip">
+      <item key="PersonWhite" desc=""/>
+      <item key="PersonBlue" desc=""/>
+      <item key="PersonRed" desc=""/>
+      <item key="PersonPurple" desc=""/>
+      <item key="PersonGreen" desc=""/>
+    </cb>
+  </ValueTypeList>
+  <AttributeInfo>
+    <Type name="TechnoType" default="true">
+      <attr name="Image" desc="" type="Animation"/>
+      <attr name="UIName" desc="" type="csf"/>
+      <attr name="Name" desc="" type="text"/>
+      <attr name="Primary" desc="" type="Weapon"/>
+      <attr name="Secondary" desc="" type="Weapon"/>
+      <attr name="ElitePrimary" desc="" type="Weapon"/>
+      <attr name="EliteSecondary" desc="" type="Weapon"/>
+      <attr name="Prerequistie" desc="" type="Building" multi="true">
+        <attr name="RequiredTheaters" desc="" type="text"/>
+        <attr name="StolenTechs" desc="" type="uint"/>
+      </attr>
+      <attr name="Strength" desc="" type="uint"/>
+      <attr name="Armor" desc="" type="Armor"/>
+      <attr name="TechLevel" desc="" type="int"/>
+      <attr name="Sight" desc="" type="uint"/>
+      <attr name="Owner" desc="" type="OwnerCountry" multi="true"/>
+      <attr name="Cost" desc="" type="int"/>
+      <attr name="Soylent" desc="" type="int"/>
+      <attr name="Bounty" desc="" type="bool">
+        <attr name="Value" desc="" type="int"/>
+        <attr name="Display" desc="bool"/>
+      </attr>
+      <attr name="Points" desc="" type="int"/>
+      <attr name="VoiceSelect" desc="" type="Sound"/>
+      <attr name="VoiceMove" desc="" type="Sound"/>
+      <attr name="VoiceAttack" desc="" type="Sound"/>
+      <attr name="DieSound" desc="" type="Sound"/>
+      <attr name="ThreatPosed" desc="" type="uint"/>
+      <attr name="VeteranAbilities" desc="" type="Abilities"/>
+      <attr name="EliteAbilities" desc="" type="Abilities"/>
+      <attr name="PixelSelectionBracketDelta" desc="" type="int"/>
+      <attr name="AirRangeBonus" desc="" type="uint"/>
+      <attr name="GuardRange" desc="" type="uint"/>
+      <attr name="Trainable" desc="" type="bool"/>
+      <attr name="BuildTimeMultiplier" desc="" type="float"/>
+      <attr name="SpecialThreatValue" desc="" type="uint"/>
+      <attr name="Insignia" desc="" type="null">
+        <attr name="Veteran" desc="" type="InsigniaImg"/>
+        <attr name="Elite" desc="" type="InsigniaImg"/>
+      </attr>
+      <attr name="CanBeReversed" desc="" type="bool"/>
+      <attr name="MoveSound" desc="" type="Sound"/>
+      <attr name="NavalTargeting" desc="" type="uint"/>
+      <attr name="SelfHealing" desc="" type="bool">
+        <attr name="Step" desc="" type="int"/>
+        <attr name="Rate" desc="" type="float"/>
+      </attr>
+      <attr name="ImmuneToPsionics" desc="" type="bool"/>
+      <attr name="Chronoshift" desc="" type="null">
+        <attr name="Crushable" desc="" type="bool"/>
+        <attr name="Allow" desc="" type="bool"/>
+      </attr>
+      <attr name="Ammo" desc="" type="int"/>
+      <attr name="PipWrap" desc="" type="uint"/>
+      <attr name="PipScale" desc="" type="PipScale"/>
+      <attr name="Explodes" desc="" type="bool"/>
+      <attr name="DeathWeapon" desc="" type="Weapon"/>
+      <attr name="Insignificant" desc="" type="bool"/>
+      <attr name="AttackCursorOnFriendlies" desc="" type="bool"/>
+      <attr name="AttachEffect" desc="" type="null">
+        <attr name="Animation" desc="" type="Animation"/>
+        <attr name="Duration" desc="" type="int"/>
+        <attr name="TemporalHidesAnim" desc="" type="bool"/>
+      </attr>
+      <attr name="CloakingSpeed" desc="" type="uint"/>
+      <attr name="Experience" desc="" type="null">
+        <attr name="MindControlSelfModifier" desc="" type="percent"/>
+        <attr name="FromAirstrike" desc="" type="percent"/>
+        <attr name="ShowEnemy" desc="" type="bool"/>
+      </attr>
+      <attr name="FireAngle" desc="" type="uint"/>
+      <attr name="RadarInvisible" desc="" type="bool"/>
+      <attr name="Cloakable" desc="" type="bool">
+        <attr name="Cloakable.Stages" desc="" type="uint"/>
+      </attr>
+      <attr name="CloakSound" desc="" type="Sound"/>
+      <attr name="DecloakSound" desc="" type="Sound"/>
+      <attr name="AmbientSound" desc="" type="Sound"/>
+      <attr name="DontScore" desc="" type="bool"/>
+      <attr name="ROT" desc="" type="uint"/>
+      <attr name="Crewed" desc="" type="bool"/>
+      <attr name="Buildlimit" desc="" type="int"/>
+    </Type>
+    <Type name="MoveableTechno" base="TechnoType">
+      <attr name="Category" desc="" type="UnitCategory"/>
+      <attr name="Speed" desc="" type="uint"/>
+      <attr name="Locomotor" desc="" type="Locomotor"/>
+      <attr name="MovementZone" desc="" type="MoveZone"/>
+      <attr name="AllowedToStartInMultiplayer" desc="" type="bool"/>
+      <attr name="Size" desc="" type="uint"/>
+      <attr name="LeadershipRating" desc="" type="uint"/>
+      <attr name="SpeedType" desc="" type="SpeedType"/>
+      <attr name="PreventAttackMove" desc="" type="bool"/>
+      <attr name="CrashingSound" desc="" type="Sound"/>
+      <attr name="ImpactLandSound" desc="" type="Sound"/>
+      <attr name="ConsideredAircraft" desc="" type="bool"/>
+      <attr name="JumpjetSpeed" desc="" type="uint"/>
+      <attr name="JumpjetClimb" desc="" type="uint"/>
+      <attr name="JumpjetCrash" desc="" type="uint"/>
+      <attr name="JumpJetAccel" desc="" type="uint"/>
+      <attr name="JumpjetTurnRate" desc="" type="uint"/>
+      <attr name="JumpjetHeight" desc="" type="uint"/>
+      <attr name="JumpjetNoWobbles" desc="" type="bool"/>
+      <attr name="HoverAttack" desc="" type="bool"/>
+      <attr name="Crashable" desc="" type="bool"/>
+      <attr name="BalloonHover" desc="" type="bool"/>
+      <attr name="VoiceSecondaryWeaponAttack" desc="" type="Sound"/>
+      <attr name="CanPassiveAquire" desc="" type="bool"/>
+      <attr name="CanRetaliate" desc="" type="bool"/>
+      <attr name="MoveToShroud" desc="" type="bool"/>
+      <attr name="RequiredHouses" desc="" type="OwnerCountry" multi="true"/>
+      <attr name="PrerequisiteOverride" desc="" type="Building"/>
+      <attr name="NoShadow" desc="" type="bool"/>
+      <attr name="ImmuneToAbduction" desc="" type="bool"/>
+    </Type>
+    <Type name="Infantry" base="MoveableTechno">
+      <attr name="OccupyWeapon" desc="" type="Weapon"/>
+      <attr name="EliteOccupyWeapon" desc="" type="Weapon"/>
+      <attr name="OpenTransportWeapon" desc="" type="Weapon"/>
+      <attr name="Occupier" desc="" type="bool"/>
+      <attr name="Fearless" desc="" type="bool"/>
+      <attr name="Pip" desc="" type="color"/>
+      <attr name="OccupyPip" desc="" type="OccupyPip"/>
+      <attr name="PhysicalSize" desc="" type="uint"/>
+      <attr name="UseOwnName" desc="" type="bool"/>
+      <attr name="DeployedCrushable" desc="" type="bool"/>
+      <attr name="RejoinTeamIfLimboed" desc="" type="bool"/>
+      <attr name="Assaulter" desc="" type="bool"/>
+      <attr name="Natural" desc="" type="bool"/>
+      <attr name="CanDrive" desc="" type="bool"/>
+      <attr name="Engineer" desc="" type="bool"/>
+      <attr name="VoiceCapture" desc="" type="Sound"/>
+      <attr name="VehicleThief" desc="" type="bool">
+        <attr name="EnterSound" desc="" type="Sound"/>
+        <attr name="BreakMindControl" desc="" type="bool"/>
+        <attr name="OneTime" desc="" type="bool"/>
+        <attr name="KillPilots" desc="" type="int"/>
+      </attr>
+      <attr name="AlternateTheaterArt" desc="" type="bool"/>
+      <attr name="TiberiumProof" desc="" type="bool"/>
+      <attr name="Agent" desc="" type="bool"/>
+      <attr name="Infiltrate" desc="" type="bool"/>
+      <attr name="PermaDisguise" desc="" type="bool"/>
+      <attr name="NoSelfGuardArea" desc="" type="bool"/>
+      <attr name="Hero" desc="" type="bool"/>
+      <attr name="Ivan" desc="" type="bool"/>
+      <attr name="ImmuneToRadiation" desc="" type="bool"/>
+      <attr name="IsDesolator" desc="" type="bool"/>
+      <attr name="Thief" desc="" type="bool"/>
+      <attr name="BerzerkAllowed" desc="" type="bool"/>
+      <attr name="TiberiumHeal" desc="" type="bool"/>
+      <attr name="Cyborg" desc="" type="bool"/>
+      <attr name="AirstrikeTeam" desc="" type="uint"/>
+      <attr name="EliteAirstrikeTeam" desc="" type="uint"/>
+      <attr name="AirstrikeTeamType" desc="" type="Aircraft"/>
+      <attr name="EliteAirstrikeTeamType" desc="" type="Aircraft"/>
+      <attr name="AirstrikeRechargeTime" desc="" type="uint"/>
+      <attr name="EliteAirstrikeRechargeTime" desc="" type="uint"/>
+      <attr name="DeathAnims" desc="" type="Animation"/>
+      <attr name="C4" desc="" type="bool"/>
+      <attr name="Slaved" desc="" type="bool"/>
+      <attr name="VoiceSelectEnslaved" desc="" type="Sound"/>
+      <attr name="HarvestRate" desc="" type="uint"/>
+      <attr name="VoicePrimaryWeaponAttack" desc="" type="Sound"/>
+      <attr name="Fraidycat" desc="" type="bool"/>
+      <attr name="Civilian" desc="" type="bool"/>
+      <attr name="IsCow" desc="" type="bool"/>
+    </Type>
+    <Type name="Units" base="MoveableTechno">
+      
+    </Type>
+  </AttributeInfo>
+</RsIniConfig>
