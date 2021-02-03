@@ -49,6 +49,19 @@ namespace RelertSharp.Wpf
             };
             group.Children.Add(anchorable);
         }
+        public static void AddCenterPage(this DockingManager dock, string title, object content)
+        {
+            LayoutDocumentPane pane = dock.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
+            if (pane != null)
+            {
+                LayoutDocument doc = new LayoutDocument
+                {
+                    Title = title,
+                    Content = content
+                };
+                pane.Children.Add(doc);
+            }
+        }
         #endregion
     }
 }

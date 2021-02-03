@@ -13,8 +13,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Wpf.Views;
+using RelertSharp.Wpf.MapEngine;
 
 namespace RelertSharp.Wpf
 {
@@ -23,6 +25,9 @@ namespace RelertSharp.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Timer
+        DispatcherTimer tmrInit;
+        #endregion
         private readonly AiTriggerView aiTrigger = new AiTriggerView();
         private readonly TeamListView teamList = new TeamListView();
         private readonly AiTriggerListView aiTriggerList = new AiTriggerListView();
@@ -30,12 +35,29 @@ namespace RelertSharp.Wpf
         private readonly TaskforceListView taskforceList = new TaskforceListView();
         private readonly TeamView team = new TeamView();
         private readonly ScriptView script = new ScriptView();
+        private readonly MainPanel pnlMain = new MainPanel();
 
         public MainWindow()
         {
             InitializeComponent();
             AddToolPage();
             AddReciveListener();
+            SetTimer();
+        }
+
+        private void SetTimer()
+        {
+            tmrInit = new DispatcherTimer()
+            {
+                Interval = new TimeSpan(0, 0, 5)
+            };
+            tmrInit.Tick += DelayedInitialize;
+            tmrInit.Start();
+        }
+
+        private void DelayedInitialize(object sender, EventArgs e)
+        {
+            pnlMain.Initialize();
         }
 
         private void AddToolPage()
@@ -47,6 +69,8 @@ namespace RelertSharp.Wpf
             //dockMain.AddToolToRight("Taskforce List", taskforceList);
             dockMain.AddToolToRight("Team", team);
             //dockMain.AddToolToRight("Script", script);
+
+            dockMain.AddCenterPage("Map", pnlMain);
         }
 
         #region Reciver Logics
