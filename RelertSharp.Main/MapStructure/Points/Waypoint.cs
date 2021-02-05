@@ -80,8 +80,6 @@ namespace RelertSharp.MapStructure.Points
         }
         public override string Value { get { return Utils.Misc.WaypointString(int.Parse(Num)); } }
         public string Num { get { return Id; } set { Id = value; } }
-        public new PresentMisc SceneObject { get { return (PresentMisc)base.SceneObject; } set { base.SceneObject = value; } }
-        IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
         #endregion
     }
 }

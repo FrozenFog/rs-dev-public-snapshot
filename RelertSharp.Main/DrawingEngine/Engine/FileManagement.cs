@@ -1,404 +1,404 @@
-﻿using RelertSharp.Common;
-using RelertSharp.DrawingEngine.Drawables;
-using RelertSharp.FileSystem;
-using RelertSharp.MapStructure;
-using RelertSharp.MapStructure.Objects;
-using RelertSharp.MapStructure.Points;
-using System.Linq;
-using System;
-using static RelertSharp.Common.GlobalVar;
-using static RelertSharp.Utils.Misc;
+﻿//using RelertSharp.Common;
+//using RelertSharp.DrawingEngine.Drawables;
+//using RelertSharp.FileSystem;
+//using RelertSharp.MapStructure;
+//using RelertSharp.MapStructure.Objects;
+//using RelertSharp.MapStructure.Points;
+//using System.Linq;
+//using System;
+//using static RelertSharp.Common.GlobalVar;
+//using static RelertSharp.Utils.Misc;
 
-namespace RelertSharp.DrawingEngine
-{
-    public partial class Engine
-    {
-        #region Create File
-        private int CreateTileFile(string name)
-        {
-            int id = 0;
-            if (!Buffer.Files.Tmp.Keys.Contains(name))
-            {
-                id = CreateFile(name, DrawableType.Tmp);
-                Buffer.Files.Tmp[name] = id;
-            }
-            else id = Buffer.Files.Tmp[name];
-            return id;
-        }
-        private DrawableTile CreateDrawableTile(string filename, int subindex)
-        {
-            DrawableTile d;
-            if (!Buffer.Buffers.Tiles.Keys.Contains(filename))
-            {
-                d = new DrawableTile();
-                d.pSelf = CreateTileFile(filename);
-                TmpFile tmp = new TmpFile(GlobalDir.GetRawByte(filename), filename);
-                foreach (TmpImage img in tmp.Images)
-                {
-                    DrawableTile.SubTile subtile = new DrawableTile.SubTile();
-                    subtile.RadarColor = new DrawableTile.ColorPair(img.ColorRadarLeft, img.ColorRadarRight);
-                    subtile.WaterPassable = img.TerrainType == Constant.DrawingEngine.Tiles.Water;
-                    subtile.LandPassable = Constant.DrawingEngine.Tiles.Passable.Contains(img.TerrainType);
-                    subtile.Buildable = Constant.DrawingEngine.Tiles.Buildables.Contains(img.TerrainType) && img.RampType == 0;
-                    subtile.TerrainType = img.TerrainType;
-                    d.SubTiles.Add(subtile);
-                }
-                Buffer.Buffers.Tiles[filename] = d;
-            }
-            else d = Buffer.Buffers.Tiles[filename];
-            return d;
-        }
-        private DrawableInfantry CreateDrawableInfantry(ObjectItemBase inf, uint color, int pPal, int idxFrame)
-        {
-            DrawableInfantry d;
-            string lookup = string.Format("{0}{1}.in{2}", inf.RegName, color, idxFrame);
-            if (!Buffer.Buffers.Infantries.Keys.Contains(lookup))
-            {
-                d = new DrawableInfantry();
-                string nameid = GlobalRules.GetObjectImgName(inf, out short frame);
-                string customPalName = GlobalRules.GetCustomPaletteName(inf.RegName);
-                if (!string.IsNullOrEmpty(customPalName))
-                {
-                    pPal = CreatePalette(customPalName);
-                    d.pPalCustom = pPal;
-                }
-                d.NameID = nameid;
-                d.RemapColor = color;
-                d.Framecount = frame;
-                d.pSelf = CreateFile(nameid, DrawableType.Shp, idxFrame);
-                d.pShadow = CreateFile(nameid, DrawableType.Shp, idxFrame + frame / 2);
+//namespace RelertSharp.DrawingEngine
+//{
+//    public partial class Engine
+//    {
+//        #region Create File
+//        private int CreateTileFile(string name)
+//        {
+//            int id = 0;
+//            if (!Buffer.Files.Tmp.Keys.Contains(name))
+//            {
+//                id = CreateFile(name, DrawableType.Tmp);
+//                Buffer.Files.Tmp[name] = id;
+//            }
+//            else id = Buffer.Files.Tmp[name];
+//            return id;
+//        }
+//        private DrawableTile CreateDrawableTile(string filename, int subindex)
+//        {
+//            DrawableTile d;
+//            if (!Buffer.Buffers.Tiles.Keys.Contains(filename))
+//            {
+//                d = new DrawableTile();
+//                d.pSelf = CreateTileFile(filename);
+//                TmpFile tmp = new TmpFile(GlobalDir.GetRawByte(filename), filename);
+//                foreach (TmpImage img in tmp.Images)
+//                {
+//                    DrawableTile.SubTile subtile = new DrawableTile.SubTile();
+//                    subtile.RadarColor = new DrawableTile.ColorPair(img.ColorRadarLeft, img.ColorRadarRight);
+//                    subtile.WaterPassable = img.TerrainType == Constant.DrawingEngine.Tiles.Water;
+//                    subtile.LandPassable = Constant.DrawingEngine.Tiles.Passable.Contains(img.TerrainType);
+//                    subtile.Buildable = Constant.DrawingEngine.Tiles.Buildables.Contains(img.TerrainType) && img.RampType == 0;
+//                    subtile.TerrainType = img.TerrainType;
+//                    d.SubTiles.Add(subtile);
+//                }
+//                Buffer.Buffers.Tiles[filename] = d;
+//            }
+//            else d = Buffer.Buffers.Tiles[filename];
+//            return d;
+//        }
+//        private DrawableInfantry CreateDrawableInfantry(ObjectItemBase inf, uint color, int pPal, int idxFrame)
+//        {
+//            DrawableInfantry d;
+//            string lookup = string.Format("{0}{1}.in{2}", inf.RegName, color, idxFrame);
+//            if (!Buffer.Buffers.Infantries.Keys.Contains(lookup))
+//            {
+//                d = new DrawableInfantry();
+//                string nameid = GlobalRules.GetObjectImgName(inf, out short frame);
+//                string customPalName = GlobalRules.GetCustomPaletteName(inf.RegName);
+//                if (!string.IsNullOrEmpty(customPalName))
+//                {
+//                    pPal = CreatePalette(customPalName);
+//                    d.pPalCustom = pPal;
+//                }
+//                d.NameID = nameid;
+//                d.RemapColor = color;
+//                d.Framecount = frame;
+//                d.pSelf = CreateFile(nameid, DrawableType.Shp, idxFrame);
+//                d.pShadow = CreateFile(nameid, DrawableType.Shp, idxFrame + frame / 2);
 
-                if (d.IsEmpty) d.pSelf = CreateFile("unkInf.shp", DrawableType.Shp);
-                Buffer.Buffers.Infantries[lookup] = d;
-            }
-            else d = Buffer.Buffers.Infantries[lookup];
-            return d;
-        }
-        private DrawableUnit CreateDrawableUnit(string name, uint color, int pPal, int idxFrame)
-        {
-            DrawableUnit d;
-            string lookup = string.Format("{0}{1}.in{2}", name, color, idxFrame);
-            if (!Buffer.Buffers.Units.Keys.Contains(lookup))
-            {
-                d = new DrawableUnit(name);
-                string self = "", turret = "", barl = "";
-                bool vxl = true;
-                self = GlobalRules.GetUnitImgName(name, ref turret, ref barl, ref vxl);
-                if (!vxl) d.Framecount = GlobalDir.GetShpFrameCount(self, out bool b);
-                d.IsVxl = vxl;
-                d.RemapColor = color;
-                string customPalName = GlobalRules.GetCustomPaletteName(name);
-                if (!string.IsNullOrEmpty(customPalName))
-                {
-                    pPal = CreatePalette(customPalName);
-                    d.pPalCustom = pPal;
-                }
-                DrawableType t;
-                if (d.IsVxl) t = DrawableType.Vxl;
-                else t = DrawableType.Shp;
-                if (!string.IsNullOrEmpty(self)) d.pSelf = CreateFile(self, t, idxFrame);
-                if (!string.IsNullOrEmpty(turret)) d.pTurret = CreateFile(turret, DrawableType.Vxl);
-                if (!string.IsNullOrEmpty(barl)) d.pBarrel = CreateFile(barl, DrawableType.Vxl);
+//                if (d.IsEmpty) d.pSelf = CreateFile("unkInf.shp", DrawableType.Shp);
+//                Buffer.Buffers.Infantries[lookup] = d;
+//            }
+//            else d = Buffer.Buffers.Infantries[lookup];
+//            return d;
+//        }
+//        private DrawableUnit CreateDrawableUnit(string name, uint color, int pPal, int idxFrame)
+//        {
+//            DrawableUnit d;
+//            string lookup = string.Format("{0}{1}.in{2}", name, color, idxFrame);
+//            if (!Buffer.Buffers.Units.Keys.Contains(lookup))
+//            {
+//                d = new DrawableUnit(name);
+//                string self = "", turret = "", barl = "";
+//                bool vxl = true;
+//                self = GlobalRules.GetUnitImgName(name, ref turret, ref barl, ref vxl);
+//                if (!vxl) d.Framecount = GlobalDir.GetShpFrameCount(self, out bool b);
+//                d.IsVxl = vxl;
+//                d.RemapColor = color;
+//                string customPalName = GlobalRules.GetCustomPaletteName(name);
+//                if (!string.IsNullOrEmpty(customPalName))
+//                {
+//                    pPal = CreatePalette(customPalName);
+//                    d.pPalCustom = pPal;
+//                }
+//                DrawableType t;
+//                if (d.IsVxl) t = DrawableType.Vxl;
+//                else t = DrawableType.Shp;
+//                if (!string.IsNullOrEmpty(self)) d.pSelf = CreateFile(self, t, idxFrame);
+//                if (!string.IsNullOrEmpty(turret)) d.pTurret = CreateFile(turret, DrawableType.Vxl);
+//                if (!string.IsNullOrEmpty(barl)) d.pBarrel = CreateFile(barl, DrawableType.Vxl);
 
-                if (d.IsEmpty)
-                {
-                    d.pSelf = CreateFile("unkObj.shp", DrawableType.Shp);
-                    d.IsVxl = false;
-                }
-                Buffer.Buffers.Units[lookup] = d;
-            }
-            else d = Buffer.Buffers.Units[lookup];
-            return d;
-        }
-        private DrawableMisc CreateDrawableMisc(TerrainItem terrain)
-        {
-            DrawableMisc d;
-            string name = TileDictionary.NameAsTheater(terrain.RegName);
-            if (!Buffer.Buffers.Miscs.Keys.Contains(name))
-            {
-                d = new DrawableMisc(MapObjectType.Terrain, name);
-                d.Framecount = GlobalDir.GetShpFrameCount(name, out bool b);
-                d.RadarColor = ToColor(GlobalRules[terrain.RegName].ParseStringList("RadarColor"));
-                bool isTibTree = IniParseBool(GlobalRules[terrain.RegName]["SpawnsTiberium"]);
-                d.pPal = pPalIso;
-                d.IsZeroVec = false;
-                if (isTibTree)
-                {
-                    d.pPal = pPalUnit;
-                    d.IsZeroVec = true;
-                }
-                d.pSelf = CreateFile(name, DrawableType.Shp);
-                d.pShadow = CreateFile(name, DrawableType.Shp, d.Framecount / 2);
-                Buffer.Buffers.Miscs[name] = d;
-            }
-            else d = Buffer.Buffers.Miscs[name];
-            return d;
+//                if (d.IsEmpty)
+//                {
+//                    d.pSelf = CreateFile("unkObj.shp", DrawableType.Shp);
+//                    d.IsVxl = false;
+//                }
+//                Buffer.Buffers.Units[lookup] = d;
+//            }
+//            else d = Buffer.Buffers.Units[lookup];
+//            return d;
+//        }
+//        private DrawableMisc CreateDrawableMisc(TerrainItem terrain)
+//        {
+//            DrawableMisc d;
+//            string name = TileDictionary.NameAsTheater(terrain.RegName);
+//            if (!Buffer.Buffers.Miscs.Keys.Contains(name))
+//            {
+//                d = new DrawableMisc(MapObjectType.Terrain, name);
+//                d.Framecount = GlobalDir.GetShpFrameCount(name, out bool b);
+//                d.RadarColor = ToColor(GlobalRules[terrain.RegName].ParseStringList("RadarColor"));
+//                bool isTibTree = IniParseBool(GlobalRules[terrain.RegName]["SpawnsTiberium"]);
+//                d.pPal = pPalIso;
+//                d.IsZeroVec = false;
+//                if (isTibTree)
+//                {
+//                    d.pPal = pPalUnit;
+//                    d.IsZeroVec = true;
+//                }
+//                d.pSelf = CreateFile(name, DrawableType.Shp);
+//                d.pShadow = CreateFile(name, DrawableType.Shp, d.Framecount / 2);
+//                Buffer.Buffers.Miscs[name] = d;
+//            }
+//            else d = Buffer.Buffers.Miscs[name];
+//            return d;
 
-        }
-        private DrawableMisc CreateDrawableMisc(SmudgeItem smudge)
-        {
-            DrawableMisc d;
-            string name = TileDictionary.NameAsTheater(smudge.RegName);
-            if (!Buffer.Buffers.Miscs.Keys.Contains(name))
-            {
-                d = new DrawableMisc(MapObjectType.Smudge, name);
-                d.pSelf = CreateFile(name, DrawableType.Shp);
-                GlobalRules.GetSmudgeSizeData(smudge.RegName, out int w, out int h);
-                d.SmudgeWidth = w;
-                d.SmudgeHeight = h;
-                Buffer.Buffers.Miscs[name] = d;
-            }
-            else d = Buffer.Buffers.Miscs[name];
-            return d;
-        }
-        private DrawableMisc CreateDrawableMisc(OverlayUnit overlay, uint color)
-        {
-            DrawableMisc d;
-            string name = GlobalRules.GetOverlayName(overlay.Index);
-            string lookup = string.Format("{0}{1}.in{2}", name, color, overlay.Frame);
-            if (!Buffer.Buffers.Miscs.Keys.Contains(lookup))
-            {
-                d = new DrawableMisc(MapObjectType.Overlay, name);
-                d.IsZeroVec = true;
-                d.pPal = pPalUnit;
-                string filename = name;
-                bool flat = IniParseBool(GlobalRules[name]["DrawFlat"], true);
-                bool overrides = IniParseBool(GlobalRules[name]["Overrides"]);
-                bool isTiberium = IniParseBool(GlobalRules[name]["Tiberium"]);
-                bool rubble = IniParseBool(GlobalRules[name]["IsRubble"]);
-                bool wall = IniParseBool(GlobalRules[name]["Wall"]);
-                string img = GlobalRules[name]["Image"];
-                string land = GlobalRules[name]["Land"];
-                string[] colors = GlobalRules[name].ParseStringList("RadarColor");
-                if (wall) GlobalRules.FixWallOverlayName(ref filename);
-                d.RadarColor = ToColor(colors);
-                d.IsMoveBlockingOverlay = land == "Rock";
-                d.IsRubble = rubble;
-                d.IsWall = wall;
+//        }
+//        private DrawableMisc CreateDrawableMisc(SmudgeItem smudge)
+//        {
+//            DrawableMisc d;
+//            string name = TileDictionary.NameAsTheater(smudge.RegName);
+//            if (!Buffer.Buffers.Miscs.Keys.Contains(name))
+//            {
+//                d = new DrawableMisc(MapObjectType.Smudge, name);
+//                d.pSelf = CreateFile(name, DrawableType.Shp);
+//                GlobalRules.GetSmudgeSizeData(smudge.RegName, out int w, out int h);
+//                d.SmudgeWidth = w;
+//                d.SmudgeHeight = h;
+//                Buffer.Buffers.Miscs[name] = d;
+//            }
+//            else d = Buffer.Buffers.Miscs[name];
+//            return d;
+//        }
+//        private DrawableMisc CreateDrawableMisc(OverlayUnit overlay, uint color)
+//        {
+//            DrawableMisc d;
+//            string name = GlobalRules.GetOverlayName(overlay.Index);
+//            string lookup = string.Format("{0}{1}.in{2}", name, color, overlay.Frame);
+//            if (!Buffer.Buffers.Miscs.Keys.Contains(lookup))
+//            {
+//                d = new DrawableMisc(MapObjectType.Overlay, name);
+//                d.IsZeroVec = true;
+//                d.pPal = pPalUnit;
+//                string filename = name;
+//                bool flat = IniParseBool(GlobalRules[name]["DrawFlat"], true);
+//                bool overrides = IniParseBool(GlobalRules[name]["Overrides"]);
+//                bool isTiberium = IniParseBool(GlobalRules[name]["Tiberium"]);
+//                bool rubble = IniParseBool(GlobalRules[name]["IsRubble"]);
+//                bool wall = IniParseBool(GlobalRules[name]["Wall"]);
+//                string img = GlobalRules[name]["Image"];
+//                string land = GlobalRules[name]["Land"];
+//                string[] colors = GlobalRules[name].ParseStringList("RadarColor");
+//                if (wall) GlobalRules.FixWallOverlayName(ref filename);
+//                d.RadarColor = ToColor(colors);
+//                d.IsMoveBlockingOverlay = land == "Rock";
+//                d.IsRubble = rubble;
+//                d.IsWall = wall;
 
-                if (!string.IsNullOrEmpty(img) && name != img) filename = img;
-                if (overrides)
-                {
-                    flat = false;
-                    d.IsHiBridge = true;
-                    if (GlobalConfig.BridgeOffsetFrames.Contains(overlay.Frame)) d.IsOffsetBridge = true;
-                }
-                if (!rubble)
-                {
-                    if (!_zeroLandType.Contains(land))
-                    {
-                        if (land == "Railroad") flat = true;
-                        else flat = false;
-                        d.IsZeroVec = false;
-                    }
-                }
-                if (flat) d.FlatType = ShpFlatType.FlatGround;
-                else d.FlatType = ShpFlatType.Vertical;
-                if (wall) d.FlatType = ShpFlatType.Box1;
+//                if (!string.IsNullOrEmpty(img) && name != img) filename = img;
+//                if (overrides)
+//                {
+//                    flat = false;
+//                    d.IsHiBridge = true;
+//                    if (GlobalConfig.BridgeOffsetFrames.Contains(overlay.Frame)) d.IsOffsetBridge = true;
+//                }
+//                if (!rubble)
+//                {
+//                    if (!_zeroLandType.Contains(land))
+//                    {
+//                        if (land == "Railroad") flat = true;
+//                        else flat = false;
+//                        d.IsZeroVec = false;
+//                    }
+//                }
+//                if (flat) d.FlatType = ShpFlatType.FlatGround;
+//                else d.FlatType = ShpFlatType.Vertical;
+//                if (wall) d.FlatType = ShpFlatType.Box1;
 
-                if (GlobalDir.HasFile(filename + ".shp")) filename = filename.ToLower() + ".shp";
-                else if (wall)
-                {
-                    filename = filename.Replace(1, 'G').ToLower() + ".shp";
-                }
-                else
-                {
-                    filename = string.Format("{0}.{1}", filename.ToLower(), TileDictionary.TheaterSub);
-                    if (isTiberium)
-                    {
-                        d.pPal = pPalTheater;
-                        d.IsTiberiumOverlay = true;
-                    }
-                    else d.pPal = pPalIso;
-                }
+//                if (GlobalDir.HasFile(filename + ".shp")) filename = filename.ToLower() + ".shp";
+//                else if (wall)
+//                {
+//                    filename = filename.Replace(1, 'G').ToLower() + ".shp";
+//                }
+//                else
+//                {
+//                    filename = string.Format("{0}.{1}", filename.ToLower(), TileDictionary.TheaterSub);
+//                    if (isTiberium)
+//                    {
+//                        d.pPal = pPalTheater;
+//                        d.IsTiberiumOverlay = true;
+//                    }
+//                    else d.pPal = pPalIso;
+//                }
 
-                if (d.FlatType == ShpFlatType.FlatGround) d.IsFlatOnly = true;
+//                if (d.FlatType == ShpFlatType.FlatGround) d.IsFlatOnly = true;
 
-                d.Framecount = GlobalDir.GetShpFrameCount(filename, out bool b);
-                d.pSelf = CreateFile(filename, DrawableType.Shp, overlay.Frame);
-                if (wall || !rubble || !isTiberium) d.pShadow = CreateFile(filename, DrawableType.Shp, overlay.Frame + d.Framecount / 2);
-                Buffer.Buffers.Miscs[lookup] = d;
-            }
-            else d = Buffer.Buffers.Miscs[lookup];
-            return d;
-        }
-        private DrawableStructure CreateDrawableStructure(string name, uint color, int pPal, int direction, bool isBaseNode = false)
-        {
-            DrawableStructure d;
-            string lookup = string.Format("{0}{1}.in{2}", name, color, direction);
-            if (isBaseNode) lookup += "n";
-            if (!Buffer.Buffers.Structures.Keys.Contains(lookup))
-            {
-                d = new DrawableStructure(name);
-                BuildingData data = GlobalRules.GetBuildingData(name);
-                GlobalRules.GetBuildingShapeData(name, out int height, out int foundx, out int foundy);
+//                d.Framecount = GlobalDir.GetShpFrameCount(filename, out bool b);
+//                d.pSelf = CreateFile(filename, DrawableType.Shp, overlay.Frame);
+//                if (wall || !rubble || !isTiberium) d.pShadow = CreateFile(filename, DrawableType.Shp, overlay.Frame + d.Framecount / 2);
+//                Buffer.Buffers.Miscs[lookup] = d;
+//            }
+//            else d = Buffer.Buffers.Miscs[lookup];
+//            return d;
+//        }
+//        private DrawableStructure CreateDrawableStructure(string name, uint color, int pPal, int direction, bool isBaseNode = false)
+//        {
+//            DrawableStructure d;
+//            string lookup = string.Format("{0}{1}.in{2}", name, color, direction);
+//            if (isBaseNode) lookup += "n";
+//            if (!Buffer.Buffers.Structures.Keys.Contains(lookup))
+//            {
+//                d = new DrawableStructure(name);
+//                BuildingData data = GlobalRules.GetBuildingData(name);
+//                GlobalRules.GetBuildingShapeData(name, out int height, out int foundx, out int foundy);
 
-                #region framecount
-                d.Framecount = data.nSelf;
-                d.ActivateAnimCount = data.nActivateAnim;
-                d.ActivateAnim2Count = data.nActivateAnimTwo;
-                d.ActivateAnim3Count = data.nActivateAnimThree;
-                d.IdleAnimCount = data.nIdleAnim;
-                d.BibCount = data.nBibAnim;
-                d.SuperAnimCount = data.nSuperAnim;
-                d.TurretAnimCount = data.nTurretAnim;
-                #endregion
+//                #region framecount
+//                d.Framecount = data.nSelf;
+//                d.ActivateAnimCount = data.nActivateAnim;
+//                d.ActivateAnim2Count = data.nActivateAnimTwo;
+//                d.ActivateAnim3Count = data.nActivateAnimThree;
+//                d.IdleAnimCount = data.nIdleAnim;
+//                d.BibCount = data.nBibAnim;
+//                d.SuperAnimCount = data.nSuperAnim;
+//                d.TurretAnimCount = data.nTurretAnim;
+//                #endregion
 
-                d.Height = height; d.FoundationX = foundx; d.FoundationY = foundy;
-                d.VoxelTurret = data.TurretAnimIsVoxel;
-                d.RemapColor = color;
-                d.MinimapColor = ToColor(color);
+//                d.Height = height; d.FoundationX = foundx; d.FoundationY = foundy;
+//                d.VoxelTurret = data.TurretAnimIsVoxel;
+//                d.RemapColor = color;
+//                d.MinimapColor = ToColor(color);
 
-                #region ZAdjust
-                d.TurretZAdjust = data.TurretAnimZAdjust;
-                d.ActivateZAdjust = data.ActiveAnimZAdjust;
-                d.Activate2ZAdjust = data.ActiveAnimTwoZAdjust;
-                d.Activate3ZAdjust = data.ActiveAnimThreeZAdjust;
-                d.IdleZAdjust = data.IdleAnimZAdjust;
-                d.SuperZAdjust = data.SuperAnimZAdjust;
-                #endregion
+//                #region ZAdjust
+//                d.TurretZAdjust = data.TurretAnimZAdjust;
+//                d.ActivateZAdjust = data.ActiveAnimZAdjust;
+//                d.Activate2ZAdjust = data.ActiveAnimTwoZAdjust;
+//                d.Activate3ZAdjust = data.ActiveAnimThreeZAdjust;
+//                d.IdleZAdjust = data.IdleAnimZAdjust;
+//                d.SuperZAdjust = data.SuperAnimZAdjust;
+//                #endregion
 
-                string customPalName = GlobalRules.GetCustomPaletteName(name);
-                if (!string.IsNullOrEmpty(customPalName))
-                {
-                    pPal = CreatePalette(customPalName);
-                    d.pPalCustom = pPal;
-                }
-                if (!string.IsNullOrEmpty(data.SelfId))
-                {
-                    d.pSelf = CreateFile(data.SelfId, DrawableType.Shp);
-                    if (!GlobalConfig.DeactiveShadow.Contains(name)) d.pShadow = CreateFile(data.SelfId, DrawableType.Shp, d.Framecount / 2);
-                }
-                if (!string.IsNullOrEmpty(data.ActivateAnim))
-                {
-                    d.pActivateAnim = CreateFile(data.ActivateAnim, DrawableType.Shp);
-                    d.pShadowActivateAnim = CreateFile(data.ActivateAnim, DrawableType.Shp, d.ActivateAnimCount / 2);
-                }
-                if (!string.IsNullOrEmpty(data.ActivateAnimTwo))
-                {
-                    d.pActivateAnim2 = CreateFile(data.ActivateAnimTwo, DrawableType.Shp);
-                    d.pShadowActivateAnim2 = CreateFile(data.ActivateAnimTwo, DrawableType.Shp, d.ActivateAnim2Count / 2);
-                }
-                if (!string.IsNullOrEmpty(data.ActivateAnimThree))
-                {
-                    d.pActivateAnim3 = CreateFile(data.ActivateAnimThree, DrawableType.Shp);
-                    d.pShadowActivateAnim3 = CreateFile(data.ActivateAnimThree, DrawableType.Shp, d.ActivateAnim3Count / 2);
-                }
-                if (!string.IsNullOrEmpty(data.SuperAnim))
-                {
-                    d.pSuperAnim = CreateFile(data.SuperAnim, DrawableType.Shp);
-                    d.pShadowSuperAnim = CreateFile(data.SuperAnim, DrawableType.Shp, d.SuperAnimCount / 2);
-                }
-                if (!string.IsNullOrEmpty(data.IdleAnim))
-                {
-                    d.pIdleAnim = CreateFile(data.IdleAnim, DrawableType.Shp);
-                    d.pShadowIdleAnim = CreateFile(data.IdleAnim, DrawableType.Shp, d.IdleAnimCount / 2);
-                }
-                if (!string.IsNullOrEmpty(data.BibAnim))
-                {
-                    d.pBib = CreateFile(data.BibAnim, DrawableType.Shp);
-                    d.pShadowBib = CreateFile(data.BibAnim, DrawableType.Shp, d.BibCount / 2);
-                }
-                if (!string.IsNullOrEmpty(data.AlphaImage))
-                {
-                    d.pAlphaImg = CreateFile(data.AlphaImage, DrawableType.Shp);
-                }
-                if (!string.IsNullOrEmpty(data.TurretAnim))
-                {
-                    d.offsetTurret = GlobalRules.GetVoxTurOffset(name);
-                    if (d.VoxelTurret)
-                    {
-                        d.pTurretAnim = CreateFile(data.TurretAnim, DrawableType.Vxl);
-                        if (!string.IsNullOrEmpty(data.TurretBarrel)) d.pTurretBarl = CreateFile(data.TurretBarrel, DrawableType.Vxl);
-                    }
-                    else
-                    {
-                        d.pTurretAnim = CreateFile(data.TurretAnim, DrawableType.Shp, direction);
-                        d.pShadowTurretAnim = CreateFile(data.TurretAnim, DrawableType.Shp, direction + d.TurretAnimCount / 2);
-                    }
-                }
+//                string customPalName = GlobalRules.GetCustomPaletteName(name);
+//                if (!string.IsNullOrEmpty(customPalName))
+//                {
+//                    pPal = CreatePalette(customPalName);
+//                    d.pPalCustom = pPal;
+//                }
+//                if (!string.IsNullOrEmpty(data.SelfId))
+//                {
+//                    d.pSelf = CreateFile(data.SelfId, DrawableType.Shp);
+//                    if (!GlobalConfig.DeactiveShadow.Contains(name)) d.pShadow = CreateFile(data.SelfId, DrawableType.Shp, d.Framecount / 2);
+//                }
+//                if (!string.IsNullOrEmpty(data.ActivateAnim))
+//                {
+//                    d.pActivateAnim = CreateFile(data.ActivateAnim, DrawableType.Shp);
+//                    d.pShadowActivateAnim = CreateFile(data.ActivateAnim, DrawableType.Shp, d.ActivateAnimCount / 2);
+//                }
+//                if (!string.IsNullOrEmpty(data.ActivateAnimTwo))
+//                {
+//                    d.pActivateAnim2 = CreateFile(data.ActivateAnimTwo, DrawableType.Shp);
+//                    d.pShadowActivateAnim2 = CreateFile(data.ActivateAnimTwo, DrawableType.Shp, d.ActivateAnim2Count / 2);
+//                }
+//                if (!string.IsNullOrEmpty(data.ActivateAnimThree))
+//                {
+//                    d.pActivateAnim3 = CreateFile(data.ActivateAnimThree, DrawableType.Shp);
+//                    d.pShadowActivateAnim3 = CreateFile(data.ActivateAnimThree, DrawableType.Shp, d.ActivateAnim3Count / 2);
+//                }
+//                if (!string.IsNullOrEmpty(data.SuperAnim))
+//                {
+//                    d.pSuperAnim = CreateFile(data.SuperAnim, DrawableType.Shp);
+//                    d.pShadowSuperAnim = CreateFile(data.SuperAnim, DrawableType.Shp, d.SuperAnimCount / 2);
+//                }
+//                if (!string.IsNullOrEmpty(data.IdleAnim))
+//                {
+//                    d.pIdleAnim = CreateFile(data.IdleAnim, DrawableType.Shp);
+//                    d.pShadowIdleAnim = CreateFile(data.IdleAnim, DrawableType.Shp, d.IdleAnimCount / 2);
+//                }
+//                if (!string.IsNullOrEmpty(data.BibAnim))
+//                {
+//                    d.pBib = CreateFile(data.BibAnim, DrawableType.Shp);
+//                    d.pShadowBib = CreateFile(data.BibAnim, DrawableType.Shp, d.BibCount / 2);
+//                }
+//                if (!string.IsNullOrEmpty(data.AlphaImage))
+//                {
+//                    d.pAlphaImg = CreateFile(data.AlphaImage, DrawableType.Shp);
+//                }
+//                if (!string.IsNullOrEmpty(data.TurretAnim))
+//                {
+//                    d.offsetTurret = GlobalRules.GetVoxTurOffset(name);
+//                    if (d.VoxelTurret)
+//                    {
+//                        d.pTurretAnim = CreateFile(data.TurretAnim, DrawableType.Vxl);
+//                        if (!string.IsNullOrEmpty(data.TurretBarrel)) d.pTurretBarl = CreateFile(data.TurretBarrel, DrawableType.Vxl);
+//                    }
+//                    else
+//                    {
+//                        d.pTurretAnim = CreateFile(data.TurretAnim, DrawableType.Shp, direction);
+//                        d.pShadowTurretAnim = CreateFile(data.TurretAnim, DrawableType.Shp, direction + d.TurretAnimCount / 2);
+//                    }
+//                }
 
-                if (data.IsEmpty) d.pSelf = CreateFile("unkObj.shp", DrawableType.Shp);
-                Buffer.Buffers.Structures[lookup] = d;
-            }
-            else d = Buffer.Buffers.Structures[lookup];
-            return d;
-        }
-        private int CreateFile(string filename, DrawableType type, int shpframe = 0)
-        {
-            switch (type)
-            {
-                case DrawableType.Shp:
-                    return CreateShp(filename, shpframe);
-                case DrawableType.Tmp:
-                    return CreateTmp(filename);
-                case DrawableType.Vxl:
-                    return CreateVxl(filename);
-                default:
-                    return 0;
-            }
-        }
-        private int CreateTmp(string filename)
-        {
-            int id;
-            if (!Buffer.Files.Tmp.Keys.Contains(filename))
-            {
-                if (!GlobalDir.HasFile(filename)) return 0;
-                VFileInfo info = GetPtrFromGlobalDir(filename);
-                id = CppExtern.Files.CreateTmpFileFromFileInMemory(info.ptr, info.size);
-                CppExtern.Files.LoadTmpTextures(id);
-                Buffer.Files.Tmp[filename] = id;
-            }
-            else id = Buffer.Files.Tmp[filename];
-            return id;
-        }
-        private int CreateShp(string filename, int shpframe)
-        {
-            int id;
-            string lookup = string.Format("{0}.in{1}", filename, shpframe);
-            if (!Buffer.Files.Shp.Keys.Contains(lookup))
-            {
-                if (!GlobalDir.HasFile(filename)) return 0;
-                VFileInfo info = GetPtrFromGlobalDir(filename);
-                id = CppExtern.Files.CreateShpFileFromFileInMemory(info.ptr, info.size);
-                CppExtern.Files.LoadShpTextures(id, shpframe);
-                Buffer.Files.Shp[lookup] = id;
-            }
-            else id = Buffer.Files.Shp[lookup];
-            return id;
-        }
-        private int CreateVxl(string filename)
-        {
-            int id;
-            if (!Buffer.Files.Vxl.Keys.Contains(filename))
-            {
-                if (!GlobalDir.HasFile(filename)) return 0;
-                VFileInfo info = GetPtrFromGlobalDir(filename);
-                VFileInfo hva = GetPtrFromGlobalDir(filename.Replace("vxl", "hva"));
-                id = CppExtern.Files.CreateVxlFileFromFileInMemory(info.ptr, info.size, hva.ptr, hva.size);
-                Buffer.Files.Vxl[filename] = id;
-            }
-            else id = Buffer.Files.Vxl[filename];
-            return id;
-        }
-        private int CreatePalette(string filename)
-        {
-            if (!GlobalDir.HasFile(filename)) return 0;
-            int id;
-            if (!Buffer.Files.Pal.Keys.Contains(filename))
-            {
-                VFileInfo info = GetPtrFromGlobalDir(filename);
-                id = CppExtern.Files.CreatePaletteFromFileInBuffer(info.ptr);
-                Buffer.Files.Pal[filename] = id;
-            }
-            else id = Buffer.Files.Pal[filename];
-            return id;
-        }
-        private VFileInfo GetPtrFromGlobalDir(string filename)
-        {
-            VFileInfo info = GlobalDir.GetFilePtr(filename);
-            return info;
-        }
-        #endregion
-    }
-}
+//                if (data.IsEmpty) d.pSelf = CreateFile("unkObj.shp", DrawableType.Shp);
+//                Buffer.Buffers.Structures[lookup] = d;
+//            }
+//            else d = Buffer.Buffers.Structures[lookup];
+//            return d;
+//        }
+//        private int CreateFile(string filename, DrawableType type, int shpframe = 0)
+//        {
+//            switch (type)
+//            {
+//                case DrawableType.Shp:
+//                    return CreateShp(filename, shpframe);
+//                case DrawableType.Tmp:
+//                    return CreateTmp(filename);
+//                case DrawableType.Vxl:
+//                    return CreateVxl(filename);
+//                default:
+//                    return 0;
+//            }
+//        }
+//        private int CreateTmp(string filename)
+//        {
+//            int id;
+//            if (!Buffer.Files.Tmp.Keys.Contains(filename))
+//            {
+//                if (!GlobalDir.HasFile(filename)) return 0;
+//                VFileInfo info = GetPtrFromGlobalDir(filename);
+//                id = CppExtern.Files.CreateTmpFileFromFileInMemory(info.ptr, info.size);
+//                CppExtern.Files.LoadTmpTextures(id);
+//                Buffer.Files.Tmp[filename] = id;
+//            }
+//            else id = Buffer.Files.Tmp[filename];
+//            return id;
+//        }
+//        private int CreateShp(string filename, int shpframe)
+//        {
+//            int id;
+//            string lookup = string.Format("{0}.in{1}", filename, shpframe);
+//            if (!Buffer.Files.Shp.Keys.Contains(lookup))
+//            {
+//                if (!GlobalDir.HasFile(filename)) return 0;
+//                VFileInfo info = GetPtrFromGlobalDir(filename);
+//                id = CppExtern.Files.CreateShpFileFromFileInMemory(info.ptr, info.size);
+//                CppExtern.Files.LoadShpTextures(id, shpframe);
+//                Buffer.Files.Shp[lookup] = id;
+//            }
+//            else id = Buffer.Files.Shp[lookup];
+//            return id;
+//        }
+//        private int CreateVxl(string filename)
+//        {
+//            int id;
+//            if (!Buffer.Files.Vxl.Keys.Contains(filename))
+//            {
+//                if (!GlobalDir.HasFile(filename)) return 0;
+//                VFileInfo info = GetPtrFromGlobalDir(filename);
+//                VFileInfo hva = GetPtrFromGlobalDir(filename.Replace("vxl", "hva"));
+//                id = CppExtern.Files.CreateVxlFileFromFileInMemory(info.ptr, info.size, hva.ptr, hva.size);
+//                Buffer.Files.Vxl[filename] = id;
+//            }
+//            else id = Buffer.Files.Vxl[filename];
+//            return id;
+//        }
+//        private int CreatePalette(string filename)
+//        {
+//            if (!GlobalDir.HasFile(filename)) return 0;
+//            int id;
+//            if (!Buffer.Files.Pal.Keys.Contains(filename))
+//            {
+//                VFileInfo info = GetPtrFromGlobalDir(filename);
+//                id = CppExtern.Files.CreatePaletteFromFileInBuffer(info.ptr);
+//                Buffer.Files.Pal[filename] = id;
+//            }
+//            else id = Buffer.Files.Pal[filename];
+//            return id;
+//        }
+//        private VFileInfo GetPtrFromGlobalDir(string filename)
+//        {
+//            VFileInfo info = GlobalDir.GetFilePtr(filename);
+//            return info;
+//        }
+//        #endregion
+//    }
+//}

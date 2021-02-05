@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Interop;
+using RelertSharp.Engine;
 
 namespace RelertSharp.Wpf.MapEngine
 {
@@ -21,15 +22,18 @@ namespace RelertSharp.Wpf.MapEngine
     /// </summary>
     public partial class MainPanel : UserControl
     {
-        private IntPtr Handle;
         public MainPanel()
         {
             InitializeComponent();
         }
         public void Initialize()
         {
-            HwndSource a = ((HwndSource)PresentationSource.FromVisual(this.cnvMain));
-            Handle = a.Handle;
+            HwndSource hwnd = ((HwndSource)PresentationSource.FromVisual(this.cnvMain));
+            EngineApi.BindMainHwnd(hwnd.Handle);
+        }
+        public void DrawMap()
+        {
+
         }
     }
 }

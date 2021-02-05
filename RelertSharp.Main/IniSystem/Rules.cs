@@ -10,7 +10,8 @@ namespace RelertSharp.IniSystem
 {
     public class Rules : INIFile
     {
-        private char _suff
+        private Dictionary<string, Vec3> bufferedBuildingShape = new Dictionary<string, Vec3>();
+        private static char _suff
         {
             get
             {
@@ -33,14 +34,6 @@ namespace RelertSharp.IniSystem
                 }
             }
         }
-        private Dictionary<string, Vec3> bufferedBuildingShape = new Dictionary<string, Vec3>();
-        private const string EX_SHP = ".shp";
-        private const string EX_VXL = ".vxl";
-        private const string EX_HVA = ".hva";
-        private const string SUFF_BARREL = "barr";
-        private const string SUFF_TURRET = "tur";
-        private const string NULL_ICON = "xxicon.shp";
-
 
         #region Ctor - Rules
         public Rules(string path, INIFileType itype = INIFileType.RulesINI) : base(path, INIFileType.RulesINI) { }
@@ -52,24 +45,6 @@ namespace RelertSharp.IniSystem
 
 
         #region Private Methods - Rules
-        private void InitializePowerupDictionary()
-        {
-            foreach (INIEntity ent in IniData)
-            {
-                if (ent.HasPair("PowersUpBuilding"))
-                {
-                    INIPair p = ent.GetPair("PowersUpBuilding");
-                    string host = p.Value as string;
-                    if (!powerups.Keys.Contains(host))
-                    {
-                        powerups[host] = new List<TechnoPair>();
-                    }
-                    TechnoPair pwups = new TechnoPair(ent.Name, ent["Name"]);
-                    powerups[host].Add(pwups);
-                }
-            }
-            powerupInitialize = true;
-        }
         private List<TechnoPair> GetTechnoPairs(string entName, TechnoPair.AbstractType type, TechnoPair.IndexType indexType = TechnoPair.IndexType.Index)
         {
             INIEntity entLs = this[entName];
@@ -90,97 +65,10 @@ namespace RelertSharp.IniSystem
             }
             return result;
         }
-        private string GuessStructureName(string id)
-        {
-            if (string.IsNullOrEmpty(id)) return "";
-            string name = id + ".shp";
-            if (!GlobalConfig.IgnoreBuildingTheaterArt) name = id.Replace(1, _suff) + ".shp";
-            if (GlobalDir.HasFile(name)) return name;
-            if (GlobalDir.HasFile(name.Replace(1, 'G'))) return name.Replace(1, 'G');
-            if (GlobalDir.HasFile(id + ".shp")) return id + ".shp";
-            return "";
-        }
-        private string GuessStructureName(INIEntity ent)
-        {
-            string img = ent["Image"];
-            if (string.IsNullOrEmpty(img)) return GuessStructureName(ent.Name);
-            else return GuessStructureName(img);
-        }
-        private string GetArtName(string regname)
-        {
-            string img = this[regname]["Image"];
-            if (string.IsNullOrEmpty(img)) return regname;
-            if (Art.HasIniEnt(img)) return img;
-            else return regname;
-        }
-        private void VxlFormating(string id, bool vxl, ref string name, ref string tur, ref string barl)
-        {
-            if (vxl)
-            {
-                tur = id + "tur.vxl";
-                barl = id + "barl.vxl";
-                name = id + ".vxl";
-            }
-            else name = id + ".shp";
-        }
         #endregion
 
 
         #region Public Methods - Rules
-        public void FixWallOverlayName(ref string filename)
-        {
-            if (!GlobalConfig.IgnoreBuildingTheaterArt)
-            {
-                filename = filename.Replace(1, _suff);
-            }
-        }
-        private bool powerupInitialize = false;
-        private Dictionary<string, List<TechnoPair>> powerups = new Dictionary<string, List<TechnoPair>>();
-        public IEnumerable<TechnoPair> GetBuildingUpgradeList(string regid)
-        {
-            if (!powerupInitialize)
-            {
-                InitializePowerupDictionary();
-            }
-            if (powerups.Keys.Contains(regid))
-            {
-                return powerups[regid];
-            }
-            return null;
-        }
-        public string GetCsfUIName(string regid)
-        {
-            if (!HasIniEnt(regid)) return GlobalCsf[regid].ContentString;
-            string uiname = this[regid]["UIName"];
-            return GlobalCsf[uiname].ContentString;
-        }
-        public string GetPcxName(string regid)
-        {
-            string art = GetArtName(regid);
-            string pcx = Art[art]["CameoPCX"];
-            string shp = Art[art]["Cameo"].ToLower();
-            if (string.IsNullOrEmpty(pcx))
-            {
-                if (string.IsNullOrEmpty(shp)) return NULL_ICON;
-                else return shp + EX_SHP;
-            }
-            return pcx;
-        }
-        public string GetCustomPaletteName(string nameid)
-        {
-            string artname = GetArtEntityName(nameid);
-            INIEntity art = Art[artname];
-
-            string pal = art["Palette"];
-            if (string.IsNullOrEmpty(pal)) return pal;
-            else return string.Format("{0}{1}.{2}", pal, TileDictionary.TheaterSub, "pal");
-        }
-        public void GetSmudgeSizeData(string nameid, out int foundx, out int foundy)
-        {
-            INIEntity ent = this[nameid];
-            foundx = ent.ParseInt("Width", 1);
-            foundy = ent.ParseInt("Height", 1);
-        }
         public List<bool> GetBuildingCustomShape(string regname, int sizeX, int sizeY)
         {
             List<bool> shape = InitializeListWithCap<bool>(sizeX * sizeY);
@@ -216,40 +104,6 @@ namespace RelertSharp.IniSystem
             else shape.SetValueAll(true);
             return shape;
         }
-        public Vec4 GetBuildingLampData(string nameid, out float intensity, out int visibility)
-        {
-            if (!HasIniEnt(nameid) || string.IsNullOrEmpty(this[nameid].Name))
-            {
-                intensity = 0;
-                visibility = 0;
-                return Vec4.Unit3(0);
-            }
-            else
-            {
-                INIEntity item = this[nameid];
-                visibility = item.ParseInt("LightVisibility", 5000);
-                intensity = item.ParseFloat("LightIntensity");
-                float r = item.ParseFloat("LightRedTint") + 1;
-                float g = item.ParseFloat("LightGreenTint") + 1;
-                float b = item.ParseFloat("LightBlueTint") + 1;
-                return new Vec4(r, g, b, 1);
-            }
-        }
-        public bool IsVxl(string id)
-        {
-            return IniParseBool(Art[id]["Voxel"]);
-        }
-        public int GetFrameFromDirection(int direction, string nameID)
-        {
-            string art = GetArtEntityName(nameID);
-            INIEntity sequence = Art[Art[art]["Sequence"]];
-            direction >>= 5;
-            if (sequence.Name == "") return direction;
-            int[] ready = sequence.ParseIntList("Ready");
-            //int result = ready[0];
-            int result = 7 - direction;
-            return result < 0 ? 0 : result;
-        }
         public string GetArtEntityName(string nameID, bool isinfantry = false)
         {
             string artname = this[nameID]["Image"];
@@ -260,70 +114,78 @@ namespace RelertSharp.IniSystem
             }
             return artname;
         }
-        public Pnt GetVoxTurOffset(string id)
+        private bool powerupInitialize = false;
+        private Dictionary<string, List<TechnoPair>> powerups = new Dictionary<string, List<TechnoPair>>();
+        public IEnumerable<TechnoPair> GetBuildingUpgradeList(string regid)
         {
-            string x = this[id]["TurretAnimX"];
-            string y = this[id]["TurretAnimY"];
-            return new Pnt()
+            if (!powerupInitialize)
             {
-                X = string.IsNullOrEmpty(x) ? 0 : int.Parse(x),
-                Y = string.IsNullOrEmpty(y) ? 0 : int.Parse(y)
-            };
+                InitializePowerupDictionary();
+            }
+            if (powerups.Keys.Contains(regid))
+            {
+                return powerups[regid];
+            }
+            return null;
         }
-        public string GetUnitImgName(string id, ref string tur, ref string barl, ref bool vxl)
+        private void InitializePowerupDictionary()
         {
-            string artname = GetArtEntityName(id);
-            INIEntity art = Art[artname];
-            vxl = IsVxl(artname);
-            VxlFormating(artname, vxl, ref artname, ref tur, ref barl);
-            return artname;
+            foreach (INIEntity ent in IniData)
+            {
+                if (ent.HasPair("PowersUpBuilding"))
+                {
+                    INIPair p = ent.GetPair("PowersUpBuilding");
+                    string host = p.Value as string;
+                    if (!powerups.Keys.Contains(host))
+                    {
+                        powerups[host] = new List<TechnoPair>();
+                    }
+                    TechnoPair pwups = new TechnoPair(ent.Name, ent["Name"]);
+                    powerups[host].Add(pwups);
+                }
+            }
+            powerupInitialize = true;
         }
-        public INIEntity GetBuildingTurret(string nameid)
+        public void GetBuildingShapeData(string nameid, out int height, out int foundX, out int foundY)
         {
-            string turanim = this[nameid]["TurretAnim"];
-            return Art[turanim];
-        }
-        public string GetObjectImgName(ObjectItemBase inf, out short frame)
-        {
-            frame = 0;
-            string img = GetArtEntityName(inf.RegName) + ".shp";
-            frame = GlobalDir.GetShpFrameCount(img, out bool b);
-            return img;
+            Vec3 sz;
+            if (!bufferedBuildingShape.Keys.Contains(nameid))
+            {
+                sz = new Vec3();
+                string artname = GetArtEntityName(nameid);
+                INIEntity art = Art[artname];
+
+                string foundation = (string)art["Foundation"].ToLower();
+                if (!string.IsNullOrEmpty(foundation))
+                {
+                    if (foundation == "custom")
+                    {
+                        sz.X = art.ParseInt("Foundation.X", 1);
+                        sz.Y = art.ParseInt("Foundation.Y", 1);
+                    }
+                    else
+                    {
+                        string[] tmp = foundation.Split('x');
+                        sz.X = int.Parse(tmp[0]);
+                        sz.Y = int.Parse(tmp[1]);
+                    }
+                }
+                else
+                {
+                    sz.X = 1;
+                    sz.Y = 1;
+                }
+                sz.Z = art.ParseInt("Height", 5) + 5;
+                bufferedBuildingShape[nameid] = sz;
+            }
+            else sz = bufferedBuildingShape[nameid];
+            foundX = (int)sz.X == 0 ? 1 : (int)sz.X;
+            foundY = (int)sz.Y == 0 ? 1 : (int)sz.Y;
+            height = (int)sz.Z;
         }
         public void LoadArt(INIFile f)
         {
             Art = f;
-        }
-        public string GetOverlayPalette(string regName)
-        {
-            INIEntity ov = this[regName];
-            if (ov.ParseBool("Wall")) return string.Format("unit{0}.pal", TileDictionary.TheaterSub);
-            if (ov.ParseBool("Tiberium")) return string.Format("{0}.pal", GlobalConfig.GetTheaterPalName(CurrentMapDocument.Map.Info.TheaterName));
-            return string.Format("iso{0}.pal", TileDictionary.TheaterSub);
-        }
-        public string GetOverlayFileName(string regName)
-        {
-            string filename = regName;
-            INIEntity ov = this[regName];
-            string img = ov["Image"];
-            bool wall = ov.ParseBool("Wall");
-            if (wall) FixWallOverlayName(ref filename);
-            if (!string.IsNullOrEmpty(img) && regName != img) filename = img;
-            if (GlobalDir.HasFile(filename + ".shp")) return filename.ToLower() + ".shp";
-            else if (wall) return filename.Replace(1, 'G').ToLower() + ".shp";
-            else return string.Format("{0}.{1}", filename.ToLower(), TileDictionary.TheaterSub);
-        }
-        public string GetOverlayName(byte overlayid)
-        {
-            INIEntity ov = this["OverlayTypes"];
-            return ov[overlayid.ToString()];
-        }
-        public byte GetOverlayIndex(string regName)
-        {
-            INIEntity lst = this["OverlayTypes"];
-            int index = lst.IndexOfValue(regName);
-            if (index > -1 && index < 256) return (byte)index;
-            else return 0;
         }
         private bool sideInitialized = false;
         private int side = -1;
@@ -442,106 +304,6 @@ namespace RelertSharp.IniSystem
 
 
         #region Internal - Rules
-        internal void GetBuildingShapeData(string nameid, out int height, out int foundX, out int foundY)
-        {
-            Vec3 sz;
-            if (!bufferedBuildingShape.Keys.Contains(nameid))
-            {
-                sz = new Vec3();
-                string artname = GetArtEntityName(nameid);
-                INIEntity art = Art[artname];
-
-                string foundation = (string)art["Foundation"].ToLower();
-                if (!string.IsNullOrEmpty(foundation))
-                {
-                    if (foundation == "custom")
-                    {
-                        sz.X = art.ParseInt("Foundation.X", 1);
-                        sz.Y = art.ParseInt("Foundation.Y", 1);
-                    }
-                    else
-                    {
-                        string[] tmp = foundation.Split('x');
-                        sz.X = int.Parse(tmp[0]);
-                        sz.Y = int.Parse(tmp[1]);
-                    }
-                }
-                else
-                {
-                    sz.X = 1;
-                    sz.Y = 1;
-                }
-                sz.Z = art.ParseInt("Height", 5) + 5;
-                bufferedBuildingShape[nameid] = sz;
-            }
-            else sz = bufferedBuildingShape[nameid];
-            foundX = (int)sz.X == 0 ? 1 : (int)sz.X;
-            foundY = (int)sz.Y == 0 ? 1 : (int)sz.Y;
-            height = (int)sz.Z;
-        }
-        internal BuildingData GetBuildingData(string name)
-        {
-            BuildingData data = new BuildingData();
-            string artname = GetArtEntityName(name);
-            INIEntity art = Art[artname];
-            if (string.IsNullOrEmpty(art.Name)) data.SelfId = name + EX_SHP;
-            else data.SelfId = GuessStructureName(art);
-
-            data.AlphaImage = this[name]["AlphaImage"];
-            if (!string.IsNullOrEmpty(data.AlphaImage)) data.AlphaImage += EX_SHP;
-
-            if (!GlobalConfig.DeactiveAnimList.Contains(artname))
-            {
-                data.ActivateAnim = GuessStructureName(Art[art["ActiveAnim"]]);
-                data.ActivateAnimTwo = GuessStructureName(Art[art["ActiveAnimTwo"]]);
-                data.ActivateAnimThree = GuessStructureName(Art[art["ActiveAnimThree"]]);
-            }
-
-            data.IdleAnim = GuessStructureName(Art[art["IdleAnim"]]);
-            data.SuperAnim = GuessStructureName(Art[art["SuperAnim"]]);
-            if (!GlobalConfig.DeactiveBibList.Contains(artname))
-            {
-                data.BibAnim = GuessStructureName(art["BibShape"]);
-            }
-
-            data.TurretAnimIsVoxel = this[name].ParseBool("TurretAnimIsVoxel");
-            if (data.TurretAnimIsVoxel)
-            {
-                data.TurretAnim = this[name]["TurretAnim"] + EX_VXL;
-                data.TurretBarrel = data.TurretAnim.ToLower().Replace("tur", "barl");
-            }
-            else data.TurretAnim = GuessStructureName(Art[this[name]["TurretAnim"]]);
-
-            data.nSelf = GlobalDir.GetShpFrameCount(data.SelfId, out bool bSelf);
-            bool bTurret = true;
-            if (!data.TurretAnimIsVoxel)
-            {
-                data.nTurretAnim = GlobalDir.GetShpFrameCount(data.TurretAnim, out bool turrEmpty);
-                bTurret = turrEmpty;
-            }
-            else
-            {
-                data.nTurretAnim = 0;
-                bTurret = false;
-            }
-
-            data.TurretAnimZAdjust = this[name].ParseInt("TurretAnimZAdjust");
-            data.ActiveAnimZAdjust = art.ParseInt("ActiveAnimZAdjust");
-            data.ActiveAnimTwoZAdjust = art.ParseInt("ActiveAnimTwoZAdjust");
-            data.ActiveAnimThreeZAdjust = art.ParseInt("ActiveAnimThreeZAdjust");
-            data.ActiveAnimFourZAdjust = art.ParseInt("ActiveAnimZFourAdjust");
-            data.IdleAnimZAdjust = art.ParseInt("IdleAnimZAdjust");
-            data.SuperAnimZAdjust = art.ParseInt("SuperAnimZAdjust");
-
-            data.nActivateAnim = GlobalDir.GetShpFrameCount(data.ActivateAnim, out bool bAnim);
-            data.nActivateAnimTwo = GlobalDir.GetShpFrameCount(data.ActivateAnimTwo, out bool bAnim2);
-            data.nActivateAnimThree = GlobalDir.GetShpFrameCount(data.ActivateAnimThree, out bool bAnim3);
-            data.nIdleAnim = GlobalDir.GetShpFrameCount(data.IdleAnim, out bool bIdle);
-            data.nSuperAnim = GlobalDir.GetShpFrameCount(data.SuperAnim, out bool bSuper);
-            data.nBibAnim = GlobalDir.GetShpFrameCount(data.BibAnim, out bool bBib);
-            data.IsEmpty = bSelf && bAnim && bAnim2 && bAnim3 && bIdle && bSuper && bBib && bTurret;
-            return data;
-        }
         #endregion
 
 

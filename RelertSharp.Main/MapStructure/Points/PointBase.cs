@@ -170,7 +170,7 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Protected
-        protected virtual IPresentBase SceneObject { get; set; }
+        public virtual ISceneObject SceneObject { get; set; }
         #endregion
     }
 }

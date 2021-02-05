@@ -195,8 +195,6 @@ namespace RelertSharp.MapStructure.Points
         public int Range { get { return (Visibility >> 8) + 1; } }
         public bool IsEnable { get; set; } = true;
         public bool IsLocationSetted { get { return X > 0 && Y > 0; } }
-        public new PresentMisc SceneObject { get { return (PresentMisc)base.SceneObject; } set { base.SceneObject = value; } }
-        IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
         public override MapObjectType ObjectType { get { return MapObjectType.LightSource; } }
         #endregion
     }

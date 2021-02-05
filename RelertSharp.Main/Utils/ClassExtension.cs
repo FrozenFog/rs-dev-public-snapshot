@@ -238,3 +238,19 @@ namespace System
         }
     }
 }
+
+
+namespace RelertSharp.Common
+{
+    public static class ExtensionLocateable
+    {
+        public static string FormatXY(this I2dLocateable pos)
+        {
+            return string.Format("X: {0}, Y: {1}", pos.X, pos.Y);
+        }
+        public static string FormatXYZ(this I3dLocateable pos)
+        {
+            return string.Format("X: {0}, Y: {1}, Z: {2}", pos.X, pos.Y, pos.Z);
+        }
+    }
+}

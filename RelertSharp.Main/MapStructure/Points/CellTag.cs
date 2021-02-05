@@ -43,8 +43,6 @@ namespace RelertSharp.MapStructure.Points
 
         #region Public Calls - CellTagItem
         public string TagID { get; set; }
-        public new PresentMisc SceneObject { get { return (PresentMisc)base.SceneObject; } set { base.SceneObject = value; } }
-        IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
         #endregion
     }
 }

@@ -93,9 +93,8 @@ namespace RelertSharp.MapStructure.Points
         public int Y { get; set; }
         public int Coord { get { return Utils.Misc.CoordInt(this); } }
         public bool Selected { get; set; }
-        public PresentStructure SceneObject { get; set; }
-        IPresentBase IMapScenePresentable.SceneObject { get { return SceneObject; } set { SceneObject = (PresentStructure)value; } }
         public MapObjectType ObjectType { get { return MapObjectType.BaseNode; } }
+        public ISceneObject SceneObject { get; set; }
         #endregion
     }
 }

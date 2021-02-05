@@ -95,8 +95,6 @@ namespace RelertSharp.MapStructure.Objects
             }
         }
         public string FollowsIndex { get; set; }
-        public new PresentUnit SceneObject { get { return (PresentUnit)base.SceneObject; } set { base.SceneObject = value; } }
-        IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
         #endregion
     }
 }

@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,8 +42,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\DrawMap.cs" />
+    <Compile Include="Api\ViewPort.cs" />
+    <Compile Include="Common\Buffers\BufferCollection.cs" />
+    <Compile Include="Common\Buffers\Buffers.cs" />
+    <Compile Include="Common\Buffers\Files.cs" />
+    <Compile Include="Common\Buffers\Scene\Scene.cs" />
+    <Compile Include="Common\BuildingData.cs" />
+    <Compile Include="Common\Transform.cs" />
     <Compile Include="CppExtern.cs" />
-    <Compile Include="PipelineEnum.cs" />
+    <Compile Include="Api\EngineApi.cs" />
+    <Compile Include="Common\Delegates.cs" />
+    <Compile Include="DrawableBuffer\DrawableBase.cs" />
+    <Compile Include="DrawableBuffer\DrawableInfantry.cs" />
+    <Compile Include="DrawableBuffer\DrawableMisc.cs" />
+    <Compile Include="DrawableBuffer\DrawableStructure.cs" />
+    <Compile Include="DrawableBuffer\DrawableTile.cs" />
+    <Compile Include="DrawableBuffer\DrawableUnit.cs" />
+    <Compile Include="EngineMain\DrawObjects.cs" />
+    <Compile Include="EngineMain\GdipSurface.cs" />
+    <Compile Include="Api\Minimap.cs" />
+    <Compile Include="EngineMain\EngineInitialize.cs" />
+    <Compile Include="EngineMain\FileManagement.cs" />
+    <Compile Include="EngineMain\Minimap.cs" />
+    <Compile Include="EngineMain\ViewPort.cs" />
+    <Compile Include="ExtensionHelper\RulesExtension.cs" />
+    <Compile Include="MapObjects\MapBuilding.cs" />
+    <Compile Include="MapObjects\MapInfantry.cs" />
+    <Compile Include="MapObjects\MapMisc.cs" />
+    <Compile Include="MapObjects\MapObjectBase.cs" />
+    <Compile Include="Common\PipelineEnum.cs" />
+    <Compile Include="MapObjects\MapTile.cs" />
+    <Compile Include="MapObjects\MapUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

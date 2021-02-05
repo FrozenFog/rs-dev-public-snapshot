@@ -1,5 +1,4 @@
 ﻿using RelertSharp.Common;
-using RelertSharp.DrawingEngine.Presenting;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,8 +91,6 @@ namespace RelertSharp.MapStructure.Objects
             HealthPoint = src.HealthPoint;
             X = src.X;
             Y = src.Y;
-            Selected = src.Selected;
-            SceneObject = src.SceneObject;
         }
         public ObjectItemBase() { }
         #endregion
@@ -104,34 +101,11 @@ namespace RelertSharp.MapStructure.Objects
         {
             X = pos.X;
             Y = pos.Y;
-            SceneObject.MoveTo(pos);
         }
         public void ShiftBy(I3dLocateable delta)
         {
             X += delta.X;
             Y += delta.Y;
-            SceneObject.ShiftBy(delta);
-        }
-        public void Dispose()
-        {
-            Selected = false;
-            SceneObject.Dispose();
-        }
-        public void Select()
-        {
-            if (!Selected)
-            {
-                Selected = true;
-                SceneObject.MarkSelected();
-            }
-        }
-        public void UnSelect()
-        {
-            if (Selected)
-            {
-                Selected = false;
-                SceneObject.Unmark();
-            }
         }
         public virtual void ApplyAttributeFrom(AttributeChanger obj)
         {
@@ -156,27 +130,10 @@ namespace RelertSharp.MapStructure.Objects
         {
             return string.Format("{0} at {1},{2}", RegName, X, Y);
         }
-        public void Hide()
-        {
-            if (!IsHidden)
-            {
-                SceneObject.Hide();
-                IsHidden = true;
-            }
-        }
-        public void Reveal()
-        {
-            if (IsHidden)
-            {
-                SceneObject.Reveal();
-                IsHidden = false;
-            }
-        }
         #endregion
 
 
         #region Public Calls - ObjectItemBase
-        public bool IsHidden { get; protected set; }
         public string ID { get; set; } = "NULL";
         public string RegName { get; set; } = "(NOTHING)";
         public string OwnerHouse { get; set; } = "<none>";
@@ -200,13 +157,13 @@ namespace RelertSharp.MapStructure.Objects
         public bool IsAboveGround { get; set; } = false;
         public bool AutoNORecruitType { get; set; } = false;
         public bool AutoYESRecruitType { get; set; } = true;
-        public bool Selected { get; set; } = false;
         public MapObjectType ObjectType { get; protected set; } = MapObjectType.Undefined;
+        public virtual ISceneObject SceneObject { get; set; }
         #endregion
 
 
         #region Protected
-        protected virtual IPresentBase SceneObject { get; set; }
+
         #endregion
     }
 }

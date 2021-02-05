@@ -196,8 +196,7 @@ namespace RelertSharp.MapStructure
 
 
         #region Drawing
-        public PresentMisc SceneObject { get; set; }
-        IPresentBase IMapScenePresentable.SceneObject { get { return SceneObject; } set { SceneObject = (PresentMisc)value; } }
+        public ISceneObject SceneObject { get; set; }
         #endregion
     }
 }

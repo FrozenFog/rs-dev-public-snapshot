@@ -1,6 +1,6 @@
-﻿using RelertSharp.DrawingEngine.Presenting;
-using RelertSharp.MapStructure.Objects;
+﻿using RelertSharp.MapStructure.Objects;
 using System.Collections.Generic;
+using RelertSharp.MapStructure;
 
 namespace RelertSharp.Common
 {
@@ -32,17 +32,6 @@ namespace RelertSharp.Common
         int Y { get; set; }
         int Coord { get; }
     }
-    public static class ExtensionLocateable
-    {
-        public static string FormatXY(this I2dLocateable pos)
-        {
-            return string.Format("X: {0}, Y: {1}", pos.X, pos.Y);
-        }
-        public static string FormatXYZ(this I3dLocateable pos)
-        {
-            return string.Format("X: {0}, Y: {1}, Z: {2}", pos.X, pos.Y, pos.Z);
-        }
-    }
 
 
     public interface I3dLocateable : I2dLocateable
@@ -52,20 +41,13 @@ namespace RelertSharp.Common
 
     public interface IMapScenePresentable : I2dLocateable
     {
-        bool Selected { get; set; }
-        void MoveTo(I3dLocateable pos);
-        void ShiftBy(I3dLocateable delta);
-        void Select();
-        void UnSelect();
-        void Dispose();
-        IPresentBase SceneObject { get; set; }
+
     }
 
 
-    public interface IMapObject : IMapScenePresentable, IRegistable
+    public interface IMapObject : IRegistable, I2dLocateable
     {
-        void Hide();
-        void Reveal();
+        ISceneObject SceneObject { get; }
         MapObjectType ObjectType { get; }
     }
 

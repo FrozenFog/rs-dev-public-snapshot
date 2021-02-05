@@ -1,5 +1,4 @@
 ﻿using RelertSharp.Common;
-using RelertSharp.DrawingEngine.Presenting;
 using System;
 using System.Collections.Generic;
 using static RelertSharp.Utils.Misc;
@@ -72,18 +71,11 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - InfantryItem
-        public void MoveTo(I3dLocateable pos, int subcell)
+        public virtual void MoveTo(I3dLocateable pos, int subcell)
         {
             if (subcell != -1) this.subcell = subcell;
             X = pos.X;
             Y = pos.Y;
-            SceneObject.MoveTo(pos, subcell);
-        }
-        public override void MoveTo(I3dLocateable pos)
-        {
-            X = pos.X;
-            Y = pos.Y;
-            SceneObject.MoveTo(pos, subcell);
         }
         public override void ApplyAttributeFrom(ICombatObject src)
         {
@@ -125,12 +117,6 @@ namespace RelertSharp.MapStructure.Objects
                 }
             }
         }
-        #endregion
-
-
-        #region Drawing
-        public new PresentInfantry SceneObject { get { return (PresentInfantry)base.SceneObject; } set { base.SceneObject = value; } }
-        IPresentBase IMapScenePresentable.SceneObject { get { return base.SceneObject; } set { base.SceneObject = value; } }
         #endregion
     }
 }

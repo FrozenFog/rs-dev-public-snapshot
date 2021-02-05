@@ -825,7 +825,7 @@ namespace RelertSharp.MapStructure
         public byte IceGrowth { get; set; }
         public int Coord { get { return Misc.CoordInt(X, Y); } }
         public int MinimapRenderableObjectCount { get { return objectsOnTile.Where(x => (x.ObjectType & MapObjectType.MinimapRenderable) != 0).Count(); } }
-        public PresentTile SceneObject { get; set; }
+        public ISceneTile SceneObject { get; set; }
         public bool Selected { get; set; }
         public bool IsHyte { get; set; }
         public int TileTerrainType { get; set; }
