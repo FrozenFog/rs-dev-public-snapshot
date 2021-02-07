@@ -1,6 +1,4 @@
-﻿using static RelertSharp.Common.GlobalVar;
-
-namespace RelertSharp.MapStructure
+﻿namespace RelertSharp.MapStructure
 {
     public partial class Map
     {
@@ -10,7 +8,7 @@ namespace RelertSharp.MapStructure
             {
                 t.SwitchToFramework(enable);
             }
-            Engine.Refresh();
+            //Engine.Refresh();
         }
         public void SwitchFlatGround(bool enable)
         {
@@ -18,7 +16,7 @@ namespace RelertSharp.MapStructure
             {
                 t.FlatToGround(enable);
             }
-            Engine.Refresh();
+            //Engine.Refresh();
         }
         public void FixEmptyTiles()
         {

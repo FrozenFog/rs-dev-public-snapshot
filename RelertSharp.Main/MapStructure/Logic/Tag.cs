@@ -1,6 +1,5 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 

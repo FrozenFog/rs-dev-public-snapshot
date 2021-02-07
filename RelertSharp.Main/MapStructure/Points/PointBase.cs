@@ -1,6 +1,4 @@
 ﻿using RelertSharp.Common;
-using RelertSharp.DrawingEngine.Presenting;
-using RelertSharp.MapStructure.Logic;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;

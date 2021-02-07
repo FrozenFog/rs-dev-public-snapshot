@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RelertSharp.Common;
-using RelertSharp.MapStructure;
 using RelertSharp.MapStructure.Points;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Logic;

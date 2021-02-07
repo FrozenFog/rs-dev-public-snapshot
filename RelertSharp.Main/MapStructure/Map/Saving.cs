@@ -5,7 +5,6 @@ using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
 using System;
 using System.Collections.Generic;
-using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure
 {

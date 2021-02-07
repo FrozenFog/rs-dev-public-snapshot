@@ -17,5 +17,9 @@ namespace RelertSharp.Engine.Api
 
             return true;
         }
+        public static void RefreshFrame()
+        {
+
+        }
     }
 }

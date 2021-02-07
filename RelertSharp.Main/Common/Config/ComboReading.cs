@@ -1,11 +1,7 @@
 ﻿using RelertSharp.IniSystem;
 using RelertSharp.MapStructure;
-using RelertSharp.MapStructure.Logic;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using static RelertSharp.Common.Constant.Config.DefaultComboType;
 

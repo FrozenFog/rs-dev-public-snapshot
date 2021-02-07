@@ -4,7 +4,6 @@ using RelertSharp.IniSystem;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
-using RelertSharp.Utils;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;

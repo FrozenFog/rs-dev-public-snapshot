@@ -1,5 +1,4 @@
 ﻿using RelertSharp.Common;
-using RelertSharp.DrawingEngine.Presenting;
 using RelertSharp.Encoding;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;

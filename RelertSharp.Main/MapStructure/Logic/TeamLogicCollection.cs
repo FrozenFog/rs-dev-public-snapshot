@@ -1,8 +1,5 @@
 ﻿using RelertSharp.IniSystem;
 using RelertSharp.Common;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace RelertSharp.MapStructure.Logic
 {

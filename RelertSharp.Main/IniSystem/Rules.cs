@@ -1,8 +1,6 @@
 ﻿using RelertSharp.Common;
-using RelertSharp.MapStructure.Objects;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 using static RelertSharp.Common.GlobalVar;
 using static RelertSharp.Utils.Misc;
 

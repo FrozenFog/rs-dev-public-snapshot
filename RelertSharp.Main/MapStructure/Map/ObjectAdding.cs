@@ -1,7 +1,6 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
-using System.Drawing;
 
 namespace RelertSharp.MapStructure
 {
