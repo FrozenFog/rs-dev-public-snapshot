@@ -39,12 +39,6 @@ namespace RelertSharp.Common
         int Z { get; set; }
     }
 
-    public interface IMapScenePresentable : I2dLocateable
-    {
-
-    }
-
-
     public interface IMapObject : IRegistable, I2dLocateable
     {
         ISceneObject SceneObject { get; }

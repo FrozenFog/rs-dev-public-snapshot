@@ -196,7 +196,9 @@ namespace RelertSharp.MapStructure
 
 
         #region Drawing
-        public ISceneObject SceneObject { get; set; }
+        public ISceneOverlay SceneObject { get; set; }
+
+        ISceneObject IMapObject.SceneObject { get { return SceneObject; } }
         #endregion
     }
 }

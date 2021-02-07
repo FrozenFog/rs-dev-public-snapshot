@@ -69,6 +69,18 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Methods - Rules
+        public string GetPcxName(string regid)
+        {
+            string art = GetArtEntityName(regid);
+            string pcx = Art[art]["CameoPCX"];
+            string shp = Art[art]["Cameo"].ToLower();
+            if (string.IsNullOrEmpty(pcx))
+            {
+                if (string.IsNullOrEmpty(shp)) return Constant.NULL_ICON;
+                else return shp + Constant.EX_SHP;
+            }
+            return pcx;
+        }
         public List<bool> GetBuildingCustomShape(string regname, int sizeX, int sizeY)
         {
             List<bool> shape = InitializeListWithCap<bool>(sizeX * sizeY);

@@ -62,8 +62,9 @@
     <Compile Include="EngineMain\DrawObjects.cs" />
     <Compile Include="EngineMain\GdipSurface.cs" />
     <Compile Include="Api\Minimap.cs" />
-    <Compile Include="EngineMain\EngineInitialize.cs" />
+    <Compile Include="EngineMain\EngineMain.cs" />
     <Compile Include="EngineMain\FileManagement.cs" />
+    <Compile Include="EngineMain\GlobalLightning.cs" />
     <Compile Include="EngineMain\Minimap.cs" />
     <Compile Include="EngineMain\ViewPort.cs" />
     <Compile Include="ExtensionHelper\RulesExtension.cs" />

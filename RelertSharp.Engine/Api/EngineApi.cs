@@ -10,15 +10,12 @@ namespace RelertSharp.Engine.Api
     public static partial class EngineApi
     {
         private static bool initialized = false;
-        public static bool BindMainHwnd(IntPtr handle)
+        public static bool EngineCtor(IntPtr hwndMain)
         {
-            if (!CppExtern.Scene.SetUpScene(handle)) return false;
-            if (!CppExtern.Scene.ResetSceneView()) return false;
-            return true;
-        }
-        public static bool InitializeMiniMap(Size sz)
-        {
+            EngineMain.EngineCtor(hwndMain);
 
+
+            return true;
         }
     }
 }

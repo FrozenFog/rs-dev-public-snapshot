@@ -32,7 +32,7 @@ namespace RelertSharp.Engine
 
 
         #region Public Methods - GdipSurface
-        public bool Initialize(Size panelsize, Rectangle mapsize)
+        public bool SetupMinimap(Size panelsize, Rectangle mapsize)
         {
             try
             {

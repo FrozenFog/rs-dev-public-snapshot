@@ -9,7 +9,7 @@ namespace RelertSharp.Common
         private Pnt begin, end;
         private int width;
 
-        public SceneSquare2D(Point LT, Point RB, int mapwidth)
+        public SceneSquare2D(Point LT, Point RB, Pnt cellLT, Pnt cellRB, int mapwidth)
         {
             if (LT.X > RB.X && LT.Y > RB.Y)
             {
@@ -27,8 +27,6 @@ namespace RelertSharp.Common
                 RB.Y = LT.Y;
                 LT.Y = up;
             }
-            Pnt cellLT = GlobalVar.Engine.ClientPointToCellPos(LT).To2dLocateable();
-            Pnt cellRB = GlobalVar.Engine.ClientPointToCellPos(RB).To2dLocateable();
             Utils.Misc.TileToFlatCoord(cellLT, mapwidth, out int beginX, out int beginY);
             Utils.Misc.TileToFlatCoord(cellRB, mapwidth, out int endX, out int endY);
             begin = new Pnt(beginX, beginY);

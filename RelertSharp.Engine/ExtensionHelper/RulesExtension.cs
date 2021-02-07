@@ -134,18 +134,6 @@ namespace RelertSharp.Engine
             string uiname = Rules[regid]["UIName"];
             return GlobalCsf[uiname].ContentString;
         }
-        public static string GetPcxName(this Rules r, string regid)
-        {
-            string art = GetArtName(regid);
-            string pcx = Art[art]["CameoPCX"];
-            string shp = Art[art]["Cameo"].ToLower();
-            if (string.IsNullOrEmpty(pcx))
-            {
-                if (string.IsNullOrEmpty(shp)) return NULL_ICON;
-                else return shp + EX_SHP;
-            }
-            return pcx;
-        }
         public static string GetCustomPaletteName(this Rules r, string nameid)
         {
             string artname = Rules.GetArtEntityName(nameid);

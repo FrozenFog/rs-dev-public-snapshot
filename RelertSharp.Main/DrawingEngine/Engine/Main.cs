@@ -65,26 +65,26 @@ namespace RelertSharp.DrawingEngine
 
             return true;
         }
-        public void SetTheater(TheaterType type)
-        {
-            TileDictionary = new MapTheaterTileSet(type);
-            CurrentTheater = type;
-            VFileInfo pal = GetPtrFromGlobalDir(string.Format("iso{0}.pal", TileDictionary.TheaterSub));
-            VFileInfo upal = GetPtrFromGlobalDir(string.Format("unit{0}.pal", TileDictionary.TheaterSub));
-            VFileInfo thpal = GetPtrFromGlobalDir(string.Format("{0}.pal", GlobalConfig.GetTheaterPalName(type)));
-            VFileInfo syspal = GetPtrFromGlobalDir("rs.pal");
-            if (pPalIso != 0) CppExtern.Files.RemovePalette(pPalIso);
-            if (pPalUnit != 0) CppExtern.Files.RemovePalette(pPalUnit);
-            if (pPalTheater != 0) CppExtern.Files.RemovePalette(pPalTheater);
-            pPalIso = CppExtern.Files.CreatePaletteFromFileInBuffer(pal.ptr);
-            pPalUnit = CppExtern.Files.CreatePaletteFromFileInBuffer(upal.ptr);
-            pPalTheater = CppExtern.Files.CreatePaletteFromFileInBuffer(thpal.ptr);
-            pPalSystem = CppExtern.Files.CreatePaletteFromFileInBuffer(syspal.ptr);
+        //public void SetTheater(TheaterType type)
+        //{
+        //    TileDictionary = new MapTheaterTileSet(type);
+        //    CurrentTheater = type;
+        //    VFileInfo pal = GetPtrFromGlobalDir(string.Format("iso{0}.pal", TileDictionary.TheaterSub));
+        //    VFileInfo upal = GetPtrFromGlobalDir(string.Format("unit{0}.pal", TileDictionary.TheaterSub));
+        //    VFileInfo thpal = GetPtrFromGlobalDir(string.Format("{0}.pal", GlobalConfig.GetTheaterPalName(type)));
+        //    VFileInfo syspal = GetPtrFromGlobalDir("rs.pal");
+        //    if (pPalIso != 0) CppExtern.Files.RemovePalette(pPalIso);
+        //    if (pPalUnit != 0) CppExtern.Files.RemovePalette(pPalUnit);
+        //    if (pPalTheater != 0) CppExtern.Files.RemovePalette(pPalTheater);
+        //    pPalIso = CppExtern.Files.CreatePaletteFromFileInBuffer(pal.ptr);
+        //    pPalUnit = CppExtern.Files.CreatePaletteFromFileInBuffer(upal.ptr);
+        //    pPalTheater = CppExtern.Files.CreatePaletteFromFileInBuffer(thpal.ptr);
+        //    pPalSystem = CppExtern.Files.CreatePaletteFromFileInBuffer(syspal.ptr);
 
-            Buffer.Files.CelltagBase = CreateFile("celltag.shp", DrawableType.Shp);
-            Buffer.Files.WaypointBase = CreateFile("waypoint.shp", DrawableType.Shp);
-            Buffer.Files.LightSourceBase = CreateFile("lightsource.shp", DrawableType.Shp);
-        }
+        //    Buffer.Files.CelltagBase = CreateFile("celltag.shp", DrawableType.Shp);
+        //    Buffer.Files.WaypointBase = CreateFile("waypoint.shp", DrawableType.Shp);
+        //    Buffer.Files.LightSourceBase = CreateFile("lightsource.shp", DrawableType.Shp);
+        //}
         public void Refresh()
         {
             CppExtern.Scene.PresentAllObject();

@@ -12,11 +12,17 @@ namespace RelertSharp.MapStructure
         void ShiftBy(I3dLocateable delta);
         void SetColor(Vec4 color);
     }
+    public interface ISceneOverlay : ISceneObject
+    {
+        bool IsWall { get; }
+        bool IsHiBridge { get; }
+    }
     public interface ISceneTile : ISceneObject
     {
         bool WaterPassable { get; }
         bool LandPassable { get; }
         bool Buildable { get; }
+        bool Lamped { get; set; }
         void SwitchToFramework(bool enable);
     }
 }
