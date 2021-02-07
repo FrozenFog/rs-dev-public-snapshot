@@ -1,5 +1,6 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.DrawingEngine.Presenting;
+using RelertSharp.IniSystem;
 using System.Collections.Generic;
 
 namespace RelertSharp.MapStructure.Points

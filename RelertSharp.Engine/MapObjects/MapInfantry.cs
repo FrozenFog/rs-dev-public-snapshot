@@ -87,7 +87,7 @@ namespace RelertSharp.Engine.MapObjects
 
 
         #region Private Methods - MapInfantry
-        private void SetColorStrict(Vec4 color)
+        protected override void SetColorStrict(Vec4 color)
         {
             SetColor(pSelf, color);
         }

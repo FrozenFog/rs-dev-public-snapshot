@@ -11,11 +11,16 @@ namespace RelertSharp.MapStructure
         void Reveal();
         void ShiftBy(I3dLocateable delta);
         void SetColor(Vec4 color);
+        void ApplyTempColor(Vec4 color);
+        void RemoveTempColor();
     }
     public interface ISceneOverlay : ISceneObject
     {
         bool IsWall { get; }
         bool IsHiBridge { get; }
+        bool IsTiberiumOverlay { get; }
+        bool IsRubble { get; }
+        bool IsMoveBlockingOverlay { get; }
     }
     public interface ISceneTile : ISceneObject
     {
@@ -24,5 +29,12 @@ namespace RelertSharp.MapStructure
         bool Buildable { get; }
         bool Lamped { get; set; }
         void SwitchToFramework(bool enable);
+        void MarkSelf(Vec4 color, bool unSelect = false);
+        void MarkExtra(Vec4 color, bool unSelect = false);
+        void HideSelf();
+        void RevealSelf();
+        void HideExtra();
+        void RevealExtra();
+        void RedrawTile(Tile t);
     }
 }

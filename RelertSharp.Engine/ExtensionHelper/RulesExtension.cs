@@ -128,12 +128,6 @@ namespace RelertSharp.Engine
             int result = 7 - direction;
             return result < 0 ? 0 : result;
         }
-        public static string GetCsfUIName(this Rules r, string regid)
-        {
-            if (!r.HasIniEnt(regid)) return GlobalCsf[regid].ContentString;
-            string uiname = Rules[regid]["UIName"];
-            return GlobalCsf[uiname].ContentString;
-        }
         public static string GetCustomPaletteName(this Rules r, string nameid)
         {
             string artname = Rules.GetArtEntityName(nameid);
@@ -142,31 +136,6 @@ namespace RelertSharp.Engine
             string pal = art["Palette"];
             if (string.IsNullOrEmpty(pal)) return pal;
             else return string.Format("{0}{1}.{2}", pal, TileDictionary.TheaterSub, "pal");
-        }
-        public static void GetSmudgeSizeData(this Rules r, string nameid, out int foundx, out int foundy)
-        {
-            INIEntity ent = Rules[nameid];
-            foundx = ent.ParseInt("Width", 1);
-            foundy = ent.ParseInt("Height", 1);
-        }
-        public static Vec4 GetBuildingLampData(this Rules rules, string nameid, out float intensity, out int visibility)
-        {
-            if (!rules.HasIniEnt(nameid) || string.IsNullOrEmpty(Rules[nameid].Name))
-            {
-                intensity = 0;
-                visibility = 0;
-                return Vec4.Unit3(0);
-            }
-            else
-            {
-                INIEntity item = Rules[nameid];
-                visibility = item.ParseInt("LightVisibility", 5000);
-                intensity = item.ParseFloat("LightIntensity");
-                float r = item.ParseFloat("LightRedTint") + 1;
-                float g = item.ParseFloat("LightGreenTint") + 1;
-                float b = item.ParseFloat("LightBlueTint") + 1;
-                return new Vec4(r, g, b, 1);
-            }
         }
         public static Pnt GetVoxTurOffset(this Rules r, string id)
         {
@@ -177,14 +146,6 @@ namespace RelertSharp.Engine
                 X = string.IsNullOrEmpty(x) ? 0 : int.Parse(x),
                 Y = string.IsNullOrEmpty(y) ? 0 : int.Parse(y)
             };
-        }
-        public static string GetUnitImgName(this Rules r, string id, ref string tur, ref string barl, ref bool vxl)
-        {
-            string artname = Rules.GetArtEntityName(id);
-            INIEntity art = Art[artname];
-            vxl = IsVxl(artname);
-            VxlFormating(artname, vxl, ref artname, ref tur, ref barl);
-            return artname;
         }
         public static INIEntity GetBuildingTurret(this Rules r, string nameid)
         {
@@ -197,6 +158,14 @@ namespace RelertSharp.Engine
             string img = Rules.GetArtEntityName(inf.RegName) + ".shp";
             frame = GlobalDir.GetShpFrameCount(img, out bool b);
             return img;
+        }
+        public static string GetUnitImgName(this Rules r, string id, ref string tur, ref string barl, ref bool vxl)
+        {
+            string artname = Rules.GetArtEntityName(id);
+            INIEntity art = Art[artname];
+            vxl = IsVxl(artname);
+            VxlFormating(artname, vxl, ref artname, ref tur, ref barl);
+            return artname;
         }
         #endregion
 

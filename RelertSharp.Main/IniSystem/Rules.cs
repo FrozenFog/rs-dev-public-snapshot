@@ -10,7 +10,6 @@ namespace RelertSharp.IniSystem
 {
     public class Rules : INIFile
     {
-        private Dictionary<string, Vec3> bufferedBuildingShape = new Dictionary<string, Vec3>();
         private static char _suff
         {
             get
@@ -81,41 +80,6 @@ namespace RelertSharp.IniSystem
             }
             return pcx;
         }
-        public List<bool> GetBuildingCustomShape(string regname, int sizeX, int sizeY)
-        {
-            List<bool> shape = InitializeListWithCap<bool>(sizeX * sizeY);
-            string artname = GetArtEntityName(regname);
-            INIEntity art = Art[artname];
-            string foundation = (string)art["Foundation"].ToLower();
-            if (foundation == "custom")
-            {
-                for (int i = 0; i < sizeX * sizeY; i++)
-                {
-                    string found = string.Format("Foundation.{0}", i);
-                    if (art.HasPair(found))
-                    {
-                        int[] tmp = art.ParseIntList(found);
-                        if (tmp.Length != 2)
-                        {
-                            Log.Critical("Building foundation error! Item {0} has unreadable foundation!", regname);
-                            shape.SetValueAll(true);
-                            return shape;
-                        }
-                        try
-                        {
-                            shape[tmp[0] + tmp[1] * sizeX] = true;
-                        }
-                        catch
-                        {
-                            Log.Critical("Building foundation error! Item {0}: size {1},{2} has unreadable foundation!", regname, sizeX, sizeY);
-                            shape.SetValueAll(true);
-                        }
-                    }
-                }
-            }
-            else shape.SetValueAll(true);
-            return shape;
-        }
         public string GetArtEntityName(string nameID, bool isinfantry = false)
         {
             string artname = this[nameID]["Image"];
@@ -157,43 +121,6 @@ namespace RelertSharp.IniSystem
                 }
             }
             powerupInitialize = true;
-        }
-        public void GetBuildingShapeData(string nameid, out int height, out int foundX, out int foundY)
-        {
-            Vec3 sz;
-            if (!bufferedBuildingShape.Keys.Contains(nameid))
-            {
-                sz = new Vec3();
-                string artname = GetArtEntityName(nameid);
-                INIEntity art = Art[artname];
-
-                string foundation = (string)art["Foundation"].ToLower();
-                if (!string.IsNullOrEmpty(foundation))
-                {
-                    if (foundation == "custom")
-                    {
-                        sz.X = art.ParseInt("Foundation.X", 1);
-                        sz.Y = art.ParseInt("Foundation.Y", 1);
-                    }
-                    else
-                    {
-                        string[] tmp = foundation.Split('x');
-                        sz.X = int.Parse(tmp[0]);
-                        sz.Y = int.Parse(tmp[1]);
-                    }
-                }
-                else
-                {
-                    sz.X = 1;
-                    sz.Y = 1;
-                }
-                sz.Z = art.ParseInt("Height", 5) + 5;
-                bufferedBuildingShape[nameid] = sz;
-            }
-            else sz = bufferedBuildingShape[nameid];
-            foundX = (int)sz.X == 0 ? 1 : (int)sz.X;
-            foundY = (int)sz.Y == 0 ? 1 : (int)sz.Y;
-            height = (int)sz.Z;
         }
         public void LoadArt(INIFile f)
         {

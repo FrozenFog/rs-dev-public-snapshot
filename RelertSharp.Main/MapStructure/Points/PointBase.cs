@@ -108,7 +108,7 @@ namespace RelertSharp.MapStructure.Points
             if (!Selected)
             {
                 Selected = true;
-                SceneObject.MarkSelected();
+                SceneObject.ApplyTempColor(Vec4.Selector);
             }
         }
         public void UnSelect()
@@ -116,7 +116,7 @@ namespace RelertSharp.MapStructure.Points
             if (Selected)
             {
                 Selected = false;
-                SceneObject.Unmark();
+                SceneObject.RemoveTempColor();
             }
         }
         public void Dispose()

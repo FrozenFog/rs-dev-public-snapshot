@@ -92,7 +92,6 @@ namespace RelertSharp.MapStructure.Logic
             set { Index = value; }
         }
         public string Index { get; set; }
-        public string Name { get; set; }
         public string Side { get; set; }
         public string ColorName { get; set; }
         public string ParentCountryName { get; set; }

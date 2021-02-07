@@ -141,7 +141,7 @@ namespace RelertSharp.MapStructure
             if (!Selected)
             {
                 Selected = true;
-                SceneObject.MarkSelected();
+                SceneObject.ApplyTempColor(Vec4.Selector);
             }
         }
 
@@ -150,7 +150,7 @@ namespace RelertSharp.MapStructure
             if (Selected)
             {
                 Selected = false;
-                SceneObject.Unmark();
+                SceneObject.RemoveTempColor();
             }
         }
         public void Dispose()

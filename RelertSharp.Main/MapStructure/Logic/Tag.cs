@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class TagCollection : IndexableItemCollection<TagItem>, IEnumerable<TagItem>
+    public class TagCollection : IndexableItemCollection<TagItem>
     {
         private Dictionary<string, List<string>> trigger_tag = new Dictionary<string, List<string>>();
 
@@ -81,18 +81,6 @@ namespace RelertSharp.MapStructure.Logic
             }
             return result;
         }
-
-        #region Enumerator
-        public IEnumerator<TagItem> GetEnumerator()
-        {
-            return data.Values.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return data.Values.GetEnumerator();
-        }
-        #endregion
         #endregion
 
 

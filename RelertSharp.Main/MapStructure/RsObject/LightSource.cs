@@ -186,7 +186,6 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Public Calls
-        public string Name { get; set; }
         public float Red { get; set; } = 0.05f;
         public float Green { get; set; } = 0.05f;
         public float Blue { get; set; } = 0.05f;

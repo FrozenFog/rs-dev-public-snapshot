@@ -447,7 +447,8 @@ namespace RelertSharp.MapStructure
                 if (IsHyte)
                 {
                     SceneObject.Dispose();
-                    Engine.DrawGeneralItem(this);
+                    SceneObject.RedrawTile(this);
+                    //Engine.DrawGeneralItem(this);
                 }
                 if (isFramework) SwitchToFramework(true);
             }
@@ -466,7 +467,8 @@ namespace RelertSharp.MapStructure
             Vec4 color = Vec4.Zero;
             if (SceneObject != null) color = SceneObject.ColorVector;
             SceneObject?.Dispose();
-            Engine.DrawGeneralItem(this);
+            SceneObject?.RedrawTile(this);
+            //Engine.DrawGeneralItem(this);
             if (color != Vec4.Zero) SceneObject.SetColor(color);
             if (isFlat)
             {
@@ -632,13 +634,13 @@ namespace RelertSharp.MapStructure
         public bool MarkForSimulating(bool waterBound = false)
         {
             bool b = waterBound ? WaterBuildable : Buildable;
-            if (b) SceneObject.MarkForBuildable(Vec4.BuildableTile);
-            else SceneObject.MarkForBuildable(Vec4.UnBuildableTile);
+            if (b) SceneObject.ApplyTempColor(Vec4.BuildableTile);
+            else SceneObject.ApplyTempColor(Vec4.UnBuildableTile);
             return b;
         }
         public void UnMarkForSimulating()
         {
-            SceneObject.UnMarkForBuildable();
+            SceneObject.RemoveTempColor();
         }
         public void HideTileImg()
         {
@@ -799,7 +801,7 @@ namespace RelertSharp.MapStructure
                     if (t == typeof(StructureItem)) return false;
                     if (t == typeof(OverlayUnit))
                     {
-                        PresentMisc p = (obj as OverlayUnit).SceneObject;
+                        ISceneOverlay p = (obj as OverlayUnit).SceneObject;
                         result = result && (p.IsTiberiumOverlay || p.IsRubble) && !p.IsMoveBlockingOverlay;
                     }
                 }

@@ -93,7 +93,7 @@ namespace RelertSharp.Engine.MapObjects
 
 
         #region Private Methods - MapMisc
-        private void SetColorStrict(Vec4 color)
+        protected override void SetColorStrict(Vec4 color)
         {
             SetColor(pSelf, color);
         }

@@ -43,6 +43,9 @@ namespace RelertSharp.Common
     {
         ISceneObject SceneObject { get; }
         MapObjectType ObjectType { get; }
+        void Dispose();
+        void MoveTo(I3dLocateable pos);
+        void ShiftBy(I3dLocateable delta);
     }
 
     public interface ICombatObject : IMapObject

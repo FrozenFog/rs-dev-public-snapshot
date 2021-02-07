@@ -37,7 +37,21 @@ namespace RelertSharp.Engine.MapObjects
         #endregion
 
 
+        #region Public
+        public void ApplyTempColor(Vec4 color)
+        {
+            SetColorStrict(color);
+        }
+
+        public void RemoveTempColor()
+        {
+            SetColorStrict(ColorVector);
+        }
+        #endregion
+
+
         #region Protected - MapObjectBase
+        protected abstract void SetColorStrict(Vec4 color);
         protected virtual void RemoveProp(PresentFileTypeFlag flag, int pself, int pextra = 0)
         {
             switch (flag)

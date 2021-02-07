@@ -126,6 +126,10 @@ namespace RelertSharp.MapStructure.Objects
                 ApplyAttributeFrom(c);
             }
         }
+        public virtual void Dispose()
+        {
+            SceneObject?.Dispose();
+        }
         public override string ToString()
         {
             return string.Format("{0} at {1},{2}", RegName, X, Y);

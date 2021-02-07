@@ -177,10 +177,15 @@ namespace RelertSharp.Engine.MapObjects
 
 
         #region Private Methods - MapTile
-        private void SetColorStrict(Vec4 color)
+        protected override void SetColorStrict(Vec4 color)
         {
             SetColor(Body, color);
             SetColor(Extra, color);
+        }
+
+        public void RedrawTile(Tile t)
+        {
+            EngineMain.DrawTile(t);
         }
         #endregion
 

@@ -125,7 +125,7 @@ namespace RelertSharp.Engine.MapObjects
                 CppExtern.ObjectUtils.SetObjectColorCoefficient(pTurretAnim, color);
             }
         }
-        private void SetColorStrict(Vec4 color)
+        protected override void SetColorStrict(Vec4 color)
         {
             SetColor(pSelf, color);
             SetColor(pActivateAnim, color);
