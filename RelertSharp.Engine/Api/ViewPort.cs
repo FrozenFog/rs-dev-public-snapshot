@@ -14,5 +14,13 @@ namespace RelertSharp.Engine.Api
         {
             return EngineMain.ClientPointToCellPos(src);
         }
+        public static void MoveCameraTo(I2dLocateable mapPos, int height)
+        {
+            EngineMain.MoveTo(mapPos, height);
+        }
+        public static void MoveCameraTo(I3dLocateable mapPos)
+        {
+            EngineMain.MoveTo(mapPos);
+        }
     }
 }

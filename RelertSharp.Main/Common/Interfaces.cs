@@ -43,6 +43,7 @@ namespace RelertSharp.Common
     {
         ISceneObject SceneObject { get; }
         MapObjectType ObjectType { get; }
+        int GetHeight();
         void Dispose();
         void MoveTo(I3dLocateable pos);
         void ShiftBy(I3dLocateable delta);

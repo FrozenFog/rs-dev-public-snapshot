@@ -12,7 +12,7 @@ namespace RelertSharp.Engine
 {
     internal static partial class EngineMain
     {
-        private static float _30SQ2, _10SQ3, _15SQ2, _rad45;
+        internal static float _30SQ2, _10SQ3, _15SQ2, _rad45;
         private static string[] _zeroLandType = new string[] { "Water", "Clear", "" };
         private static float _width { get { return _30SQ2; } }
         private static Vec3 _NormTileVec { get { return new Vec3(_15SQ2, _15SQ2, _10SQ3); } }
@@ -20,7 +20,7 @@ namespace RelertSharp.Engine
         private static float _height { get { return _10SQ3; } }
         private const uint _colorIgnore = 0x000000FF;
         private const uint _white = 0xFFFFFFFF;
-        private static Vec3 _generalOffset = new Vec3() { X = 1, Y = 1, Z = (float)Math.Sqrt(2f / 3f) };
+        internal static Vec3 _generalOffset = new Vec3() { X = 1, Y = 1, Z = (float)Math.Sqrt(2f / 3f) };
         private static int pPalIso = 0;
         private static int pPalUnit = 0;
         private static int pPalTheater = 0;

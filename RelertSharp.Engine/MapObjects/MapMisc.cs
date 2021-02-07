@@ -9,7 +9,7 @@ using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.Engine.MapObjects
 {
-    internal sealed class MapMisc : MapObjectBase, ISceneObject
+    internal class MapMisc : MapObjectBase, ISceneObject
     {
         #region Ctor - MapMisc
         public MapMisc(MapObjectType type, I2dLocateable xy, int z) : base(xy, z)

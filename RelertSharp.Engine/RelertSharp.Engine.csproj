@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RelertSharp.Engine</RootNamespace>
-    <AssemblyName>RelertSharp.Engine</AssemblyName>
+    <AssemblyName>rsengine</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -73,6 +73,7 @@
     <Compile Include="MapObjects\MapMisc.cs" />
     <Compile Include="MapObjects\MapObjectBase.cs" />
     <Compile Include="Common\PipelineEnum.cs" />
+    <Compile Include="MapObjects\MapOverlay.cs" />
     <Compile Include="MapObjects\MapTile.cs" />
     <Compile Include="MapObjects\MapUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

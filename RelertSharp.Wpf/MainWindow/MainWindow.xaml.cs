@@ -58,6 +58,7 @@ namespace RelertSharp.Wpf
         private void DelayedInitialize(object sender, EventArgs e)
         {
             pnlMain.Initialize();
+            pnlMain.DrawMap();
         }
 
         private void AddToolPage()

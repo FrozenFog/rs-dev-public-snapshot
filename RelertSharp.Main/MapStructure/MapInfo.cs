@@ -1,4 +1,5 @@
-﻿using RelertSharp.FileSystem;
+﻿using RelertSharp.Common;
+using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
 using System.Collections.Generic;
 using System.Drawing;
@@ -91,6 +92,7 @@ namespace RelertSharp.MapStructure
         }
         public INIEntity BasicResidue { get; private set; }
         public INIEntity SpecialFlagsResidue { get; private set; }
+        public TheaterType TheaterType { get { return GlobalVar.GlobalConfig.GetTheater(TheaterName); } }
         #endregion
     }
 

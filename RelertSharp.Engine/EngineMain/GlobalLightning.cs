@@ -3,6 +3,7 @@ using RelertSharp.MapStructure;
 using RelertSharp.MapStructure.Points;
 using RelertSharp.Engine.MapObjects;
 using static RelertSharp.Common.GlobalVar;
+using RelertSharp.IniSystem;
 
 namespace RelertSharp.Engine
 {

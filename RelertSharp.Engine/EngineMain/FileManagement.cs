@@ -9,6 +9,7 @@ using System;
 using static RelertSharp.Common.GlobalVar;
 using static RelertSharp.Utils.Misc;
 using RelertSharp.Engine.DrawableBuffer;
+using RelertSharp.IniSystem;
 
 namespace RelertSharp.Engine
 {

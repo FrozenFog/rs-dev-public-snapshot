@@ -19,7 +19,7 @@ namespace RelertSharp.Engine.Api
         }
         public static void RefreshFrame()
         {
-
+            CppExtern.Scene.PresentAllObject();
         }
     }
 }

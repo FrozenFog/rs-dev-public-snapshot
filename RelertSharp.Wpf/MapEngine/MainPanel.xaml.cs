@@ -13,7 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Interop;
-using RelertSharp.Engine;
+using RelertSharp.Engine.Api;
+using static RelertSharp.Common.GlobalVar;
 
 namespace RelertSharp.Wpf.MapEngine
 {
@@ -29,11 +30,11 @@ namespace RelertSharp.Wpf.MapEngine
         public void Initialize()
         {
             HwndSource hwnd = ((HwndSource)PresentationSource.FromVisual(this.cnvMain));
-            EngineApi.BindMainHwnd(hwnd.Handle);
+            EngineApi.EngineCtor(hwnd.Handle);
         }
-        public void DrawMap()
+        public async void DrawMap()
         {
-
+            await EngineApi.DrawMap(CurrentMapDocument.Map);
         }
     }
 }

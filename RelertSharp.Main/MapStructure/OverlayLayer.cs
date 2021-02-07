@@ -178,6 +178,11 @@ namespace RelertSharp.MapStructure
                 IsHidden = false;
             }
         }
+
+        public int GetHeight()
+        {
+            return GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(this);
+        }
         #endregion
 
 

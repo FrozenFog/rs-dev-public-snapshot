@@ -126,6 +126,10 @@ namespace RelertSharp.MapStructure.Objects
                 ApplyAttributeFrom(c);
             }
         }
+        public virtual int GetHeight()
+        {
+            return GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(this);
+        }
         public virtual void Dispose()
         {
             SceneObject?.Dispose();

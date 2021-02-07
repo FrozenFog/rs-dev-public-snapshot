@@ -1,10 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RelertSharp.Common
 {
     public static class Constant
     {
-        public const string ReleaseDate = " - ver. 2020.11.21-1907 - UNSTABLE";
+        //public const string ReleaseDate = " - ver. 2020.11.21-1907 - UNSTABLE";
+        public static string VersionInfo
+        {
+            get
+            {
+                string v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+#if DEBUG
+                string type = "DEBUG ver";
+#endif
+#if RELEASE
+                string type = "RELEASE ver";
+#endif
+                string r = string.Format("{0} {1}", type, v);
+                return r;
+            }
+        }
 
         public const int IniMaxLineLength = 512;
         public const string ITEM_NONE = "<none>";

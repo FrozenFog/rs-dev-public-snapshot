@@ -328,7 +328,7 @@ namespace RelertSharp.Engine
         public static bool DrawOverlay(OverlayUnit o, int height)
         {
             DrawableMisc src = CreateDrawableMisc(o, _white);
-            MapMisc dest = new MapMisc(MapObjectType.Overlay, o, height);
+            MapOverlay dest = new MapOverlay(o, height);
             o.SceneObject = dest;
             dest.IsTiberiumOverlay = src.IsTiberiumOverlay;
             dest.IsMoveBlockingOverlay = src.IsMoveBlockingOverlay;

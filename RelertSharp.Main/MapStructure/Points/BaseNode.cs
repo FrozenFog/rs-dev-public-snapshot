@@ -81,6 +81,11 @@ namespace RelertSharp.MapStructure.Points
         {
             return string.Format("{0} at {1}, {2}", RegName, X, Y);
         }
+
+        public int GetHeight()
+        {
+            return GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(this);
+        }
         #endregion
 
 
