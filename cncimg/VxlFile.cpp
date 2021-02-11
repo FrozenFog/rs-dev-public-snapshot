@@ -760,7 +760,7 @@ bool VxlFile::MakeSingleFrameCaches(LPDIRECT3DDEVICE9 pDevice, int idxFrame,
 
 	memset(Cache.get(), 0, 256 * 256);
 
-	for (auto vertex : UsedVertecies)
+	for (const auto& vertex : UsedVertecies)
 	{
 		auto ScreenPos = SceneClass::FructumTransformation(FrameRect, vertex.Vector);
 
@@ -796,7 +796,7 @@ bool VxlFile::MakeSingleFrameCaches(LPDIRECT3DDEVICE9 pDevice, int idxFrame,
 	HighX = HighY = 0;
 	memset(Cache.get(), 0, 256 * 256);
 
-	for (auto vertex : UsedVertecies)
+	for (const auto& vertex : UsedVertecies)
 	{
 		D3DXVECTOR3 ShadowPos = vertex.Vector;
 		ShadowPos.z = 0.0;

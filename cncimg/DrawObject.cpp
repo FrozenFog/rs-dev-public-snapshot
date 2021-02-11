@@ -182,10 +182,12 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	pDevice->SetRenderTarget(0, nullptr);
 	TempVertex->Release();
 
-	auto hResult = pDevice->Present(nullptr, nullptr, NULL, nullptr);
+	auto hResult = pDevice->TestCooperativeLevel();// pDevice->Present(nullptr, nullptr, NULL, nullptr);
 	if (hResult == D3DERR_DEVICELOST) {
 		while (!SceneClass::Instance.HandleDeviceLost());
 	}
+	//else
+	//	pDevice->Present(nullptr, nullptr, NULL, nullptr);
 }
 
 void DrawObject::CommitIsotatedTexture(LPDIRECT3DTEXTURE9 pTexture)

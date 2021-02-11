@@ -324,7 +324,7 @@ void __stdcall SetObjectZAdjust(int nID, float zAdjust)
 	DrawObject::ObjectZAdjust(nID, zAdjust);
 }
 
-bool WINAPI SetUpScene(HWND hWnd)
+LPDIRECT3DSURFACE9 WINAPI SetUpScene(HWND hWnd)
 {
 	return SceneClass::Instance.SetUpScene(hWnd);
 }
