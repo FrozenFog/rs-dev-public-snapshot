@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Wpf.Views;
 using RelertSharp.Wpf.MapEngine;
+using System.Windows.Interop;
 
 namespace RelertSharp.Wpf
 {
@@ -28,6 +29,7 @@ namespace RelertSharp.Wpf
         #region Timer
         DispatcherTimer tmrInit;
         #endregion
+        #region Components
         private readonly AiTriggerView aiTrigger = new AiTriggerView();
         private readonly TeamListView teamList = new TeamListView();
         private readonly AiTriggerListView aiTriggerList = new AiTriggerListView();
@@ -36,6 +38,10 @@ namespace RelertSharp.Wpf
         private readonly TeamView team = new TeamView();
         private readonly ScriptView script = new ScriptView();
         private readonly MainPanel pnlMain = new MainPanel();
+        #endregion
+        #region Dispatcher
+        private DispatcherProcessingDisabled dispatcher;
+        #endregion
 
         public MainWindow()
         {
@@ -58,7 +64,10 @@ namespace RelertSharp.Wpf
         private void DelayedInitialize(object sender, EventArgs e)
         {
             pnlMain.Initialize();
+            PanelListener();
             pnlMain.DrawMap();
+
+            tmrInit.Stop();
         }
 
         private void AddToolPage()
@@ -84,6 +93,24 @@ namespace RelertSharp.Wpf
         private void BindListener(IObjectReciver reciver, IListContainer sender)
         {
             sender.ItemSelected += reciver.ReciveObject;
+        }
+        #endregion
+
+        #region Panel Listener
+        private void PanelListener()
+        {
+            pnlMain.RedrawBegin += PnlMain_RedrawBegin;
+            pnlMain.RedrawEnd += PnlMain_RedrawEnd;
+        }
+
+        private void PnlMain_RedrawEnd(object sender, EventArgs e)
+        {
+            dispatcher.Dispose();
+        }
+
+        private void PnlMain_RedrawBegin(object sender, EventArgs e)
+        {
+            dispatcher = Dispatcher.DisableProcessing();
         }
         #endregion
     }

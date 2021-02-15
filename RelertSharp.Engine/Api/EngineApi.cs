@@ -10,6 +10,7 @@ namespace RelertSharp.Engine.Api
     public static partial class EngineApi
     {
         private static bool initialized = false;
+        private static bool refreshing = false;
         public static bool EngineCtor(IntPtr hwndMain)
         {
             EngineMain.EngineCtor(hwndMain);
@@ -19,7 +20,12 @@ namespace RelertSharp.Engine.Api
         }
         public static void RefreshFrame()
         {
-            CppExtern.Scene.PresentAllObject();
+            if (!refreshing)
+            {
+                refreshing = true;
+                CppExtern.Scene.PresentAllObject();
+                refreshing = false;
+            }
         }
     }
 }
