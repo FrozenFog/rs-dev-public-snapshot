@@ -319,14 +319,20 @@ void WINAPI SetObjectColorCoefficient(int nID, D3DXVECTOR4 Coefficient)
 	DrawObject::SetObjectColorCoefficient(nID, Coefficient);
 }
 
-void __stdcall SetObjectZAdjust(int nID, float zAdjust)
+void WINAPI SetObjectZAdjust(int nID, float zAdjust)
 {
 	DrawObject::ObjectZAdjust(nID, zAdjust);
 }
 
-LPDIRECT3DSURFACE9 WINAPI SetUpScene(HWND hWnd)
+bool WINAPI SetUpScene(int nWidth, int nHeight)
 {
-	return SceneClass::Instance.SetUpScene(hWnd);
+	return SceneClass::Instance.SetUpScene(GetForegroundWindow(), nWidth, nHeight);//this will only return the back buffer
+	// set render target via SetSceneSize method
+}
+
+LPDIRECT3DSURFACE9 WINAPI SetSceneSize(int nWidth, int nHeight)
+{
+	return SceneClass::Instance.SetupNewRenderTarget(nWidth, nHeight);
 }
 
 void WINAPI SetBackgroundColor(BYTE R, BYTE G, BYTE B)

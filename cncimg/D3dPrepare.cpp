@@ -212,7 +212,8 @@ Failed:
 bool Graphic::Direct3DInitialize(HWND hWnd, const char* pShotFileName, bool bUnion, int nDirections, int TurretOff)
 {
 	Graphic::hWnd = hWnd;
-	return SetUpScene(hWnd) && PrepareVertexBuffer(pShotFileName, bUnion, nDirections, TurretOff);
+	return SetUpScene(VIEW_WIDTH, VIEW_HEIGHT) &&
+		PrepareVertexBuffer(pShotFileName, bUnion, nDirections, TurretOff);
 }
 
 void Graphic::Direct3DUninitialize()

@@ -16,16 +16,19 @@ SceneClass::SceneClass() :pResource(nullptr),
 	pBackBuffer(nullptr),
 	pPassSurface(nullptr),
 	pAlphaSurface(nullptr),
+	pRenderTarget(nullptr),
 	VoxelShader(),
-	PlainArtShader()
+	PlainArtShader(),
+	nWidth(0),
+	nHeight(0)
 {
 	ZeroMemory(this, sizeof *this);
 	dwBackgroundColor = D3DCOLOR_XRGB(0, 0, 252);
 }
 
-SceneClass::SceneClass(HWND hWnd) :SceneClass()
+SceneClass::SceneClass(HWND hWnd,int nWidth, int nHeight) :SceneClass()
 {
-	SetUpScene(hWnd);
+	SetUpScene(hWnd, nWidth, nHeight);
 }
 
 SceneClass::~SceneClass()
@@ -50,11 +53,12 @@ void SceneClass::ClearDevice()
 	SAFE_RELEASE(pAlphaSurface);
 	SAFE_RELEASE(pPassSurface);
 	SAFE_RELEASE(pBackBuffer);
+	SAFE_RELEASE(pRenderTarget);
 	SAFE_RELEASE(pDevice);
 	SAFE_RELEASE(pResource);
 }
 
-LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd)
+LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd, int nWidth, int nHeight)
 {
 	auto& Para = this->SceneParas;
 	Para.BackBufferCount = 1;
@@ -74,12 +78,21 @@ LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd)
 	if (FAILED(this->pResource->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
 		D3DCREATE_HARDWARE_VERTEXPROCESSING, &Para, &this->pDevice)))
 	{
+		printf_s("unable to CreateDevice.\n");
 		this->ClearDevice();
 		return nullptr;
 	}
 
+	if (!this->SetupNewRenderTarget(nWidth, nHeight))
+	{
+		printf_s("Unable to create render target.\n");
+		this->ClearDevice();
+		return false;
+	}
+
 	if (FAILED(this->pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &this->pBackBuffer)))
 	{
+		printf_s("unable to GetBackBuffer.\n");
 		this->ClearDevice();
 		return false;
 	}
@@ -88,6 +101,7 @@ LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd)
 	if (FAILED(this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, D3DUSAGE_RENDERTARGET,
 		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pPassSurface, nullptr)))
 	{
+		printf_s("unable to CreatePassTexture.\n");
 		this->ClearDevice();
 		return nullptr;
 	}
@@ -95,13 +109,14 @@ LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd)
 	if (FAILED(this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, NULL,
 		D3DFMT_L8, D3DPOOL_MANAGED, &this->pAlphaSurface, nullptr)))
 	{
+		printf_s("unable to CreateAlphaTexture.\n");
 		this->ClearDevice();
 		return nullptr;
 	}
 
 	if (!this->LoadShaders())
 	{
-		printf_s("failed loading shader.\n");
+		printf_s("Unable to load shader.\n");
 		this->ClearDevice();
 		return nullptr;
 	}
@@ -113,10 +128,30 @@ LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd)
 	DrawObject::hTextureManagementThread =
 		CreateThread(nullptr, 0, DrawObject::TextureManagementThreadProc, nullptr, NULL, &DrawObject::idTextureManagementThread);
 
-	return DrawObject::hTextureManagementThread != INVALID_HANDLE_VALUE ? this->GetBackSurface() : nullptr;
+	return DrawObject::hTextureManagementThread != INVALID_HANDLE_VALUE ? this->pRenderTarget : nullptr;
 #else
 	return this->GetBackSurface();
 #endif
+}
+
+LPDIRECT3DSURFACE9 SceneClass::SetupNewRenderTarget(const size_t nWidth, const size_t nHeight)
+{
+	if (!IsDeviceLoaded())
+		return nullptr;
+
+	SAFE_RELEASE(pRenderTarget);
+	HRESULT hResult = GetDevice()->CreateRenderTarget(nWidth, nHeight, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, 0, TRUE, &pRenderTarget, nullptr);
+
+	if (FAILED(hResult)) {
+		SAFE_RELEASE(pRenderTarget);
+	}
+	else {
+		//GetDevice()->SetRenderTarget(0, pRenderTarget);
+		this->nWidth = nWidth;
+		this->nHeight = nHeight;
+	}
+
+	return pRenderTarget;
 }
 
 bool SceneClass::IsDeviceLoaded()
@@ -213,13 +248,12 @@ RECT SceneClass::GetCurrentViewPort()
 
 RECT SceneClass::GetWindowRect()
 {
-	RECT WndRect;
-
 	if (!this->IsDeviceLoaded())
 		return EmptyRect;
 
-	GetClientRect(this->SceneParas.hDeviceWindow, &WndRect);
-	return WndRect;
+	//GetClientRect(this->SceneParas.hDeviceWindow, &WndRect);
+	
+	return RECT{ 0,0,nWidth,nHeight };
 }
 
 void SceneClass::SetTheater(TheaterType Theater)
@@ -320,6 +354,11 @@ LPDIRECT3DTEXTURE9 SceneClass::GetAlphaSurface()
 	return this->pAlphaSurface;
 }
 
+LPDIRECT3DSURFACE9 SceneClass::GetRenderTarget()
+{
+	return this->pRenderTarget;
+}
+
 ShaderStruct & SceneClass::GetVXLShader()
 {
 	return this->VoxelShader;
@@ -407,6 +446,7 @@ bool SceneClass::ResetDevice()
 	SAFE_RELEASE(this->pBackBuffer);
 	SAFE_RELEASE(this->pPassSurface);
 	SAFE_RELEASE(this->pAlphaSurface);
+	SAFE_RELEASE(this->pRenderTarget);
 
 	this->GetDevice()->SetVertexShader(nullptr);
 	SAFE_RELEASE(this->VertexShader.pVertexShader);
@@ -430,6 +470,7 @@ bool SceneClass::ResetDevice()
 		this->VoxelShader.CreateShader(this->GetDevice());
 		this->PlainArtShader.CreateShader(this->GetDevice());
 		this->GetDevice()->SetVertexShader(this->VertexShader.GetVertexShader());
+		this->SetupNewRenderTarget(this->nWidth, this->nHeight);
 	}
 
 	return SUCCEEDED(hResult);

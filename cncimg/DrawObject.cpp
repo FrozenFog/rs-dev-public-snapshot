@@ -40,6 +40,9 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	
 	auto& Scene = SceneClass::Instance;
 
+	if (!Scene.GetRenderTarget())
+		return;
+
 	auto pPassTexture = Scene.GetPassSurface();
 	auto pAlphaTexture = Scene.GetAlphaSurface();
 	if (FAILED(pPassTexture->GetSurfaceLevel(0, &PassSurface)))
@@ -109,7 +112,7 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 		bShoot = true;
 	}
 
-	pDevice->SetRenderTarget(0, Scene.GetBackSurface());
+	pDevice->SetRenderTarget(0, Scene.GetRenderTarget());
 	pDevice->Clear(0, nullptr, D3DCLEAR_ZBUFFER | D3DCLEAR_TARGET, dwBackground, 1.0f, 0);
 	auto winRect = Scene.GetWindowRect();
 	auto& PassShader = Scene.GetPassShader();
@@ -182,10 +185,14 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	pDevice->SetRenderTarget(0, nullptr);
 	TempVertex->Release();
 
-	auto hResult = pDevice->TestCooperativeLevel();// pDevice->Present(nullptr, nullptr, NULL, nullptr);
-	if (hResult == D3DERR_DEVICELOST) {
-		while (!SceneClass::Instance.HandleDeviceLost());
-	}
+	static bool bStorage = false;
+	if (!bStorage)
+		if (SUCCEEDED(D3DXSaveSurfaceToFileA("rt.png", D3DXIFF_PNG, Scene.GetRenderTarget(), nullptr, nullptr)))
+			bStorage = true;
+	//auto hResult = pDevice->TestCooperativeLevel();// pDevice->Present(nullptr, nullptr, NULL, nullptr);
+	//if (hResult == D3DERR_DEVICELOST) {
+	//	while (!SceneClass::Instance.HandleDeviceLost());
+	//}
 	//else
 	//	pDevice->Present(nullptr, nullptr, NULL, nullptr);
 }
@@ -957,7 +964,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 	{
 		if (!this->String.empty())
 		{
-			if (FAILED(SceneClass::Instance.GetBackSurface()->GetDC(&hBackDC)))
+			if (FAILED(SceneClass::Instance.GetRenderTarget()->GetDC(&hBackDC)))
 				return false;
 
 			auto hFont = FontClass::GlobalFont.GetHFont();
@@ -968,7 +975,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 			SetTextColor(hBackDC, this->dwRemapColor);
 			Result = TextOut(hBackDC, ScreenPos.x, ScreenPos.y, this->String.c_str(), this->String.size());
 			SelectObject(hBackDC, hOld);
-			SceneClass::Instance.GetBackSurface()->ReleaseDC(hBackDC);
+			SceneClass::Instance.GetRenderTarget()->ReleaseDC(hBackDC);
 
 			return Result;
 		}
