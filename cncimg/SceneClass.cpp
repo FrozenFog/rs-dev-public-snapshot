@@ -54,7 +54,7 @@ void SceneClass::ClearDevice()
 	SAFE_RELEASE(pResource);
 }
 
-bool SceneClass::SetUpScene(HWND hWnd)
+LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd)
 {
 	auto& Para = this->SceneParas;
 	Para.BackBufferCount = 1;
@@ -69,13 +69,13 @@ bool SceneClass::SetUpScene(HWND hWnd)
 
 	this->pResource = Direct3DCreate9(D3D_SDK_VERSION);
 	if (!this->pResource)
-		return false;
+		return nullptr;
 
 	if (FAILED(this->pResource->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
 		D3DCREATE_HARDWARE_VERTEXPROCESSING, &Para, &this->pDevice)))
 	{
 		this->ClearDevice();
-		return false;
+		return nullptr;
 	}
 
 	if (FAILED(this->pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &this->pBackBuffer)))
@@ -89,21 +89,21 @@ bool SceneClass::SetUpScene(HWND hWnd)
 		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pPassSurface, nullptr)))
 	{
 		this->ClearDevice();
-		return false;
+		return nullptr;
 	}
 
 	if (FAILED(this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, NULL,
 		D3DFMT_L8, D3DPOOL_MANAGED, &this->pAlphaSurface, nullptr)))
 	{
 		this->ClearDevice();
-		return false;
+		return nullptr;
 	}
 
 	if (!this->LoadShaders())
 	{
 		printf_s("failed loading shader.\n");
 		this->ClearDevice();
-		return false;
+		return nullptr;
 	}
 
 	this->InitializeDeviceState();
@@ -113,9 +113,9 @@ bool SceneClass::SetUpScene(HWND hWnd)
 	DrawObject::hTextureManagementThread =
 		CreateThread(nullptr, 0, DrawObject::TextureManagementThreadProc, nullptr, NULL, &DrawObject::idTextureManagementThread);
 
-	return DrawObject::hTextureManagementThread != INVALID_HANDLE_VALUE;
+	return DrawObject::hTextureManagementThread != INVALID_HANDLE_VALUE ? this->GetBackSurface() : nullptr;
 #else
-	return true;
+	return this->GetBackSurface();
 #endif
 }
 

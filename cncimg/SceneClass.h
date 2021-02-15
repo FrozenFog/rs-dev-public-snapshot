@@ -62,7 +62,7 @@ public:
 
 	void ClearScene();
 	void ClearDevice();
-	bool SetUpScene(HWND hWnd);
+	LPDIRECT3DSURFACE9 SetUpScene(HWND hWnd);
 	bool IsDeviceLoaded();
 	bool LoadShaders();
 

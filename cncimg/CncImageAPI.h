@@ -77,7 +77,7 @@ EXPORT void WINAPI SetObjectColorCoefficient(int nID, D3DXVECTOR4 Coefficient);
 EXPORT void WINAPI SetObjectZAdjust(int nID, float zAdjust);
 
 //scene api
-EXPORT bool WINAPI SetUpScene(HWND hWnd);
+EXPORT LPDIRECT3DSURFACE9 WINAPI SetUpScene(HWND hWnd);
 EXPORT void WINAPI SetBackgroundColor(BYTE R, BYTE G, BYTE B);
 EXPORT bool WINAPI ResetSceneView();
 EXPORT void WINAPI EnableZWrite();

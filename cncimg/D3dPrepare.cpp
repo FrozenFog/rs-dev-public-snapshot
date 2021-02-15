@@ -295,7 +295,7 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion,
 			SetObjectColorCoefficient(vxlid, { 1.0f,0.6f,0.6f,1.0f });
 		}*/
 		int nShadowID;
-		if (CreateVxlObjectCached(VxlFiles[0], { 0.0,0.0,30.3 }, { 0.0,0.0,0.3 }, 
+		if (CreateVxlObjectCached(VxlFiles[0], { 0.0f,0.0f,0.3f }, { 0.0f,0.0f,0.15f }, 
 			D3DX_PI / 2.0, UnitPalette, RGB(252, 0, 252), nCachedObject, nCachedShadow))
 		{
 			printf_s("All Successful!.\n");
@@ -451,7 +451,7 @@ void Graphic::DrawScene()
 
 void Graphic::WorldRotation()
 {
-	static float height = 30.3;
+	static float height = 0.3;
 	static float angle = D3DX_PI / 2.0;
 
 	if (SceneObjects.size() >= 2) {
@@ -464,7 +464,7 @@ void Graphic::WorldRotation()
 		RemoveObjectFromScene(nCachedObject);
 		RemoveObjectFromScene(nCachedShadow);
 		CreateVxlObjectCached(VxlFiles[0], 
-			{ 0.0,0.0,height + 0.3f }, { 0.0,0.0,1.0f }, angle, UnitPalette, RGB(0, 252, 252),
+			{ 0.0,0.0,height + 0.3f }, { 0.0,0.0,0.15f }, angle, UnitPalette, RGB(0, 252, 252),
 			nCachedObject, nCachedShadow);
 
 		if (!nCachedShadow)
