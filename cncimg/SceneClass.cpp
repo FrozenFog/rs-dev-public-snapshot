@@ -58,6 +58,50 @@ void SceneClass::ClearDevice()
 	SAFE_RELEASE(pResource);
 }
 
+bool SceneClass::CreateSurfaces()
+{
+	if (!this->GetDevice())
+		return false;
+
+	if (!this->SetupNewRenderTarget(nWidth, nHeight))
+	{
+		printf_s("Unable to create render target.\n");
+		this->ClearDevice();
+		return nullptr;
+	}
+
+	SAFE_RELEASE(this->pBackBuffer);
+	if (FAILED(this->pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &this->pBackBuffer)))
+	{
+		printf_s("unable to GetBackBuffer.\n");
+		this->ClearDevice();
+		return nullptr;
+	}
+
+	auto winRect = this->GetWindowRect();
+	SAFE_RELEASE(this->pPassSurface);
+	if (FAILED(this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, D3DUSAGE_RENDERTARGET,
+		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pPassSurface, nullptr)))
+	{
+		printf_s("unable to CreatePassTexture.\n");
+		this->ClearDevice();
+		return nullptr;
+	}
+
+	SAFE_RELEASE(this->pAlphaSurface);
+	if (FAILED(this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, NULL,
+		D3DFMT_L8, D3DPOOL_MANAGED, &this->pAlphaSurface, nullptr)))
+	{
+		printf_s("unable to CreateAlphaTexture.\n");
+		this->ClearDevice();
+		return nullptr;
+	}
+
+	//this->InitializeDeviceState();
+	this->GetDevice()->SetVertexShader(this->VertexShader.GetVertexShader());
+	return true;
+}
+
 LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd, int nWidth, int nHeight)
 {
 	auto& Para = this->SceneParas;
@@ -71,45 +115,16 @@ LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd, int nWidth, int nHeight)
 	Para.Windowed = TRUE;
 	Para.hDeviceWindow = hWnd;
 
+	SAFE_RELEASE(this->pResource);
 	this->pResource = Direct3DCreate9(D3D_SDK_VERSION);
 	if (!this->pResource)
 		return nullptr;
 
+	SAFE_RELEASE(this->pDevice);
 	if (FAILED(this->pResource->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
 		D3DCREATE_HARDWARE_VERTEXPROCESSING, &Para, &this->pDevice)))
 	{
 		printf_s("unable to CreateDevice.\n");
-		this->ClearDevice();
-		return nullptr;
-	}
-
-	if (!this->SetupNewRenderTarget(nWidth, nHeight))
-	{
-		printf_s("Unable to create render target.\n");
-		this->ClearDevice();
-		return false;
-	}
-
-	if (FAILED(this->pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &this->pBackBuffer)))
-	{
-		printf_s("unable to GetBackBuffer.\n");
-		this->ClearDevice();
-		return false;
-	}
-
-	auto winRect = this->GetWindowRect();
-	if (FAILED(this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, D3DUSAGE_RENDERTARGET,
-		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pPassSurface, nullptr)))
-	{
-		printf_s("unable to CreatePassTexture.\n");
-		this->ClearDevice();
-		return nullptr;
-	}
-
-	if (FAILED(this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, NULL,
-		D3DFMT_L8, D3DPOOL_MANAGED, &this->pAlphaSurface, nullptr)))
-	{
-		printf_s("unable to CreateAlphaTexture.\n");
 		this->ClearDevice();
 		return nullptr;
 	}
@@ -121,8 +136,13 @@ LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd, int nWidth, int nHeight)
 		return nullptr;
 	}
 
-	this->InitializeDeviceState();
-	this->GetDevice()->SetVertexShader(this->VertexShader.GetVertexShader());
+	this->nWidth = nWidth;
+	this->nHeight = nHeight;
+	if (!this->CreateSurfaces())
+	{
+		this->ClearDevice();
+		return nullptr;
+	}
 
 #ifdef ISOLATED_THREAD
 	DrawObject::hTextureManagementThread =
@@ -134,6 +154,22 @@ LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd, int nWidth, int nHeight)
 #endif
 }
 
+LPDIRECT3DSURFACE9 SceneClass::SetSceneSize(int nWidth, int nHeight)
+{
+	SIZE oldSize = { this->nWidth,this->nHeight };
+	this->nWidth = nWidth;
+	this->nHeight = nHeight;
+
+	if (!this->CreateSurfaces())
+	{
+		printf_s("unable to reset buffers sizes.\n");
+		this->nWidth = oldSize.cx;
+		this->nHeight = oldSize.cy;
+		return nullptr;
+	}
+	return this->pRenderTarget;
+}
+
 LPDIRECT3DSURFACE9 SceneClass::SetupNewRenderTarget(const size_t nWidth, const size_t nHeight)
 {
 	if (!IsDeviceLoaded())
@@ -141,14 +177,31 @@ LPDIRECT3DSURFACE9 SceneClass::SetupNewRenderTarget(const size_t nWidth, const s
 
 	SAFE_RELEASE(pRenderTarget);
 	HRESULT hResult = GetDevice()->CreateRenderTarget(nWidth, nHeight, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, 0, TRUE, &pRenderTarget, nullptr);
-
+	LPDIRECT3DSURFACE9 pDepthStencilSurface = nullptr;
 	if (FAILED(hResult)) {
 		SAFE_RELEASE(pRenderTarget);
+		printf_s("Unable to create new render target, failed with %08x.\n", hResult);
 	}
 	else {
 		//GetDevice()->SetRenderTarget(0, pRenderTarget);
+		hResult = GetDevice()->CreateDepthStencilSurface(nWidth, nHeight, D3DFMT_D24S8, D3DMULTISAMPLE_NONE, 0,
+			TRUE, &pDepthStencilSurface, nullptr);
+		
+		if (FAILED(hResult))
+		{
+			SAFE_RELEASE(pDepthStencilSurface);
+			printf_s("Unable to create new depth stencil surface. Reason = %08x.\n", hResult);
+			return nullptr;
+		}
+
+		printf_s("Setting render target as width = %d, height = %d.\n", nWidth, nHeight);
 		this->nWidth = nWidth;
 		this->nHeight = nHeight;
+		//the old one is released and the new one is set
+		GetDevice()->SetDepthStencilSurface(pDepthStencilSurface);
+		//release the buffer locally 
+		pDepthStencilSurface->Release();
+		this->InitializeDeviceState();
 	}
 
 	return pRenderTarget;
@@ -171,6 +224,13 @@ bool SceneClass::LoadShaders()
 	const char* pMatrixName = "vpmatrix";
 	const char* pShadowMain = "smain";
 	const char* pRemapColorName = "remap_color";
+
+	this->VoxelShader.ReleaseResources();
+	this->PlainArtShader.ReleaseResources();
+	this->VertexShader.ReleaseResources();
+	this->ShadowShader.ReleaseResources();
+	this->AlphaShader.ReleaseResources();
+	this->PassShader.ReleaseResources();
 
 	if (this->VoxelShader.CompileFromFile(".\\shaders\\voxel.hlsl", pVoxelShaderMain) &&
 		this->PlainArtShader.CompileFromFile(".\\shaders\\plain.hlsl", pPlainShaderMain) &&
