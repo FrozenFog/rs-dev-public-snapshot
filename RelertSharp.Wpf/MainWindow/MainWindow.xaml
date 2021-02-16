@@ -14,5 +14,6 @@
                 <Vs2013DarkTheme/>
             </DockingManager.Theme>
         </DockingManager>
+        <Button Content="Button" VerticalAlignment="Top" Click="Button_Click"/>
     </Grid>
 </Window>

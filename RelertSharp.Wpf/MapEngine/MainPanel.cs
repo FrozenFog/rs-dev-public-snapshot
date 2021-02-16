@@ -23,14 +23,14 @@ namespace RelertSharp.Wpf.MapEngine
             InitializeComponent();
         }
 
-        public void Initialize()
+        public void InitializePanel()
         {
-            bool b = EngineApi.EngineCtor(this.Handle);
+            bool b = EngineApi.EngineCtor(Width, Height);
             initialized = true;
         }
         public async void DrawMap()
         {
-            await EngineApi.DrawMap(CurrentMapDocument.Map);
+            EngineApi.DrawMap(CurrentMapDocument.Map);
         }
 
         private void MainPanel_Resize(object sender, EventArgs e)

@@ -26,10 +26,11 @@ namespace RelertSharp.Engine
         private static int pPalTheater = 0;
         private static int pPalSystem = 0;
         private static BufferCollection Buffer = new BufferCollection();
+        internal static IntPtr Handle;
 
 
 
-        internal static void EngineCtor(IntPtr hwndMain)
+        internal static void EngineCtor(int width, int height)
         {
             Log.Write("Engine Begin");
             _30SQ2 = (float)(30F * Math.Sqrt(2));
@@ -41,11 +42,12 @@ namespace RelertSharp.Engine
             Log.Write("Initializing Waypoint");
             InitWaypointNum();
             Log.Write("Setup Scene...");
-            CppExtern.Scene.SetUpScene(hwndMain);
+            CppExtern.Scene.SetUpScene(width, height);
+            //Handle = CppExtern.Scene.SetSceneSize(1, 1);
             Log.Write("Setup complete");
-            Log.Write("Resetting Viewport...");
-            CppExtern.Scene.ResetSceneView();
-            Log.Write("Resetting complete");
+            //Log.Write("Resetting Viewport...");
+            //CppExtern.Scene.ResetSceneView();
+            //Log.Write("Resetting complete");
 
 
             Log.Write("Done.");

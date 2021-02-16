@@ -14,6 +14,16 @@ namespace RelertSharp.Wpf
     internal static class GuiExtensions
     {
         #region Generals
+        public static int ScaledWidth(this FrameworkElement src)
+        {
+            double scale = PresentationSource.FromVisual(src).CompositionTarget.TransformToDevice.M11;
+            return (int)(scale * src.ActualWidth);
+        }
+        public static int ScaledHeight(this FrameworkElement src)
+        {
+            double scale = PresentationSource.FromVisual(src).CompositionTarget.TransformToDevice.M11;
+            return (int)(scale * src.ActualHeight);
+        }
         public static void RefreshContext(this FrameworkElement src, object context)
         {
             src.DataContext = null;

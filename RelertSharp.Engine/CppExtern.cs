@@ -36,7 +36,9 @@ namespace RelertSharp.Engine
             [DllImport(name)]
             public static extern void ClearSceneObjects();
             [DllImport(name)]
-            public static extern bool SetUpScene(IntPtr hwnd);
+            public static extern bool SetUpScene(int width, int height);
+            [DllImport(name)]
+            public static extern IntPtr SetSceneSize(int width, int height);
             [DllImport(name)]
             public static extern void SetBackgroundColor(byte r, byte g, byte b);
         }

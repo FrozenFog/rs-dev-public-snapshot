@@ -63,11 +63,7 @@ namespace RelertSharp.Wpf
 
         private void DelayedInitialize(object sender, EventArgs e)
         {
-            pnlMain.Initialize();
-            PanelListener();
-            pnlMain.DrawMap();
 
-            tmrInit.Stop();
         }
 
         private void AddToolPage()
@@ -96,22 +92,12 @@ namespace RelertSharp.Wpf
         }
         #endregion
 
-        #region Panel Listener
-        private void PanelListener()
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            pnlMain.RedrawBegin += PnlMain_RedrawBegin;
-            pnlMain.RedrawEnd += PnlMain_RedrawEnd;
-        }
+            pnlMain.InitializePanel();
+            pnlMain.DrawMap();
 
-        private void PnlMain_RedrawEnd(object sender, EventArgs e)
-        {
-            dispatcher.Dispose();
+            tmrInit.Stop();
         }
-
-        private void PnlMain_RedrawBegin(object sender, EventArgs e)
-        {
-            dispatcher = Dispatcher.DisableProcessing();
-        }
-        #endregion
     }
 }

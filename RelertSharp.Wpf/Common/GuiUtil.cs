@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AvalonDock;
 using AvalonDock.Layout;
+using RelertSharp.Common;
+using Microsoft.Win32;
 
 namespace RelertSharp.Wpf
 {

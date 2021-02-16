@@ -36,6 +36,8 @@ RelertSharp.Main/bin/Debug/frag
 RelertSharp.Main/bin/Debug/vert
 RelertSharp.Main/bin/Debug/shader
 RelertSharp.Main/_*.*
+RelertSharp.Engine/bin
+RelertSharp.Wpf/bin
 
 #resource and test required
 local.rsc
