@@ -216,6 +216,7 @@ bool Graphic::Direct3DInitialize(HWND hWnd, const char* pShotFileName,
 {
 	Graphic::hWnd = hWnd;
 	return SetUpScene(VIEW_WIDTH, VIEW_HEIGHT) &&
+		SetSceneSize(VIEW_WIDTH + 100, VIEW_HEIGHT + 100) &&
 		PrepareVertexBuffer(pShotFileName, bUnion, nDirections, TurretOff);
 }
 
@@ -248,10 +249,10 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion,
 		return false;
 	}
 
-	if (auto id = CreateStringObjectAtScene({ 0.0,-100.0,0.0 }, RGB(242, 0, 242), "702"))
-	{
-		printf_s("print success.\n");
-	}
+	//if (auto id = CreateStringObjectAtScene({ 0.0,-100.0,0.0 }, RGB(242, 0, 242), "702"))
+	//{
+	//	printf_s("print success.\n");
+	//}
 
 	if (auto id = CreateLineObjectAtScene({ 0.0,0.0,0.1f }, { 0.0,-300.0f,0.1f }, D3DCOLOR_XRGB(242, 0, 0), D3DCOLOR_XRGB(0, 0, 0)))
 	{

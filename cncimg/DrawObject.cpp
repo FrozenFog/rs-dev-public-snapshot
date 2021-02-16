@@ -1019,6 +1019,11 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->SetTexture(1, pFormer2);
 		pDevice->SetPixelShader(pFormerShader);
 		pDevice->SetStreamSource(0, pFormerStream, uOffset, uStride);
+
+		SAFE_RELEASE(pFormerTexture);
+		SAFE_RELEASE(pFormer2);
+		SAFE_RELEASE(pFormerShader);
+		SAFE_RELEASE(pFormerStream);
 		//VxlShader.SetConstantVector(pDevice);
 	}
 	else// Textured vertex.fvf
@@ -1077,6 +1082,9 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->SetTexture(0, pFormerTexture);
 		pDevice->SetTexture(1, pFormer2);
 		pDevice->SetPixelShader(pFormerShader);
+		SAFE_RELEASE(pFormerTexture);
+		SAFE_RELEASE(pFormer2);
+		SAFE_RELEASE(pFormerShader);
 		//pDevice->SetStreamSource(0, pFormerStream, uOffset, uStride);
 
 		if (this->cSpecialDrawType == SPECIAL_NORMAL)

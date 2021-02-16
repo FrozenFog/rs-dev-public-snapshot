@@ -62,7 +62,9 @@ public:
 
 	void ClearScene();
 	void ClearDevice();
+	bool CreateSurfaces();
 	LPDIRECT3DSURFACE9 SetUpScene(HWND hWnd, int nWidth, int nHeight);
+	LPDIRECT3DSURFACE9 SetSceneSize(int nWidth, int nHeight);
 	LPDIRECT3DSURFACE9 SetupNewRenderTarget(const size_t nWidth, const size_t nHeight);
 	bool IsDeviceLoaded();
 	bool LoadShaders();

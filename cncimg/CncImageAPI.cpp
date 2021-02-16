@@ -332,7 +332,7 @@ bool WINAPI SetUpScene(int nWidth, int nHeight)
 
 LPDIRECT3DSURFACE9 WINAPI SetSceneSize(int nWidth, int nHeight)
 {
-	return SceneClass::Instance.SetupNewRenderTarget(nWidth, nHeight);
+	return SceneClass::Instance.SetSceneSize(nWidth, nHeight);
 }
 
 void WINAPI SetBackgroundColor(BYTE R, BYTE G, BYTE B)
