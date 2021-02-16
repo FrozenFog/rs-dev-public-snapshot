@@ -57,12 +57,13 @@ public:
 	static D3DXVECTOR3 FructumTransformation(RECT Screen, D3DXVECTOR3 Coords);
 
 	SceneClass();
-	SceneClass(HWND hWnd);
+	SceneClass(HWND hWnd, int nWidth, int nHeight);
 	~SceneClass();
 
 	void ClearScene();
 	void ClearDevice();
-	LPDIRECT3DSURFACE9 SetUpScene(HWND hWnd);
+	LPDIRECT3DSURFACE9 SetUpScene(HWND hWnd, int nWidth, int nHeight);
+	LPDIRECT3DSURFACE9 SetupNewRenderTarget(const size_t nWidth, const size_t nHeight);
 	bool IsDeviceLoaded();
 	bool LoadShaders();
 
@@ -89,6 +90,7 @@ public:
 	LPDIRECT3DSURFACE9 GetBackSurface();
 	LPDIRECT3DTEXTURE9 GetPassSurface();
 	LPDIRECT3DTEXTURE9 GetAlphaSurface();
+	LPDIRECT3DSURFACE9 GetRenderTarget();
 
 	ShaderStruct& GetVXLShader();
 	ShaderStruct& GetPlainArtShader();
@@ -118,6 +120,8 @@ private:
 	TheaterType Theater;
 	D3DXVECTOR3 CurrentFocusLocation;
 	DWORD dwBackgroundColor;
+	int nWidth;
+	int nHeight;
 	//RECT CurrentViewPort;
 	
 	//for direct3d only
@@ -126,6 +130,7 @@ private:
 	LPDIRECT3DSURFACE9 pBackBuffer;
 	LPDIRECT3DTEXTURE9 pPassSurface;
 	LPDIRECT3DTEXTURE9 pAlphaSurface;
+	LPDIRECT3DSURFACE9 pRenderTarget;
 	D3DPRESENT_PARAMETERS SceneParas;
 
 	ShaderStruct VoxelShader, PlainArtShader;

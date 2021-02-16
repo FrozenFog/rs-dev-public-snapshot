@@ -214,7 +214,9 @@ bool Graphic::Direct3DInitialize(HWND hWnd, const char* pShotFileName,
 	const char* pOutputPath, double dStartDirection,
 	int bSkipAnim)
 {
-	return SetUpScene(hWnd) && PrepareVertexBuffer(pShotFileName, bUnion, nDirections, TurretOff, pOutputPath, dStartDirection, bSkipAnim);
+	Graphic::hWnd = hWnd;
+	return SetUpScene(VIEW_WIDTH, VIEW_HEIGHT) &&
+		PrepareVertexBuffer(pShotFileName, bUnion, nDirections, TurretOff);
 }
 
 void Graphic::Direct3DUninitialize()

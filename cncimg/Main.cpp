@@ -220,7 +220,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_SIZE:
-		Graphic::ResetDevice();
+		//Graphic::ResetDevice();
 		break;
 
 	case WM_KEYDOWN:
