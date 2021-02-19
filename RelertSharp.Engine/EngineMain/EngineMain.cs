@@ -52,15 +52,9 @@ namespace RelertSharp.Engine
 
             Log.Write("Done.");
         }
-        internal static bool Initialize(Size panelsize, Rectangle mapsize, TileLayer tileReferace)
+        internal static bool ResetMiniMap(Rectangle mapsize, Size panelSize, double scaleFactor = 1)
         {
-            _cellFindingReferance = tileReferace;
-
-            Log.Write("Booting Minimap...");
-            if (minimap.SetupMinimap(panelsize, mapsize)) Log.Write("Minimap booted");
-            else return false;
-
-            return true;
+            return minimap.SetupMinimap(panelSize, mapsize, scaleFactor);
         }
         internal static void SetTheater(TheaterType type)
         {

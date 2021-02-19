@@ -9,14 +9,19 @@ namespace RelertSharp.Engine.Api
 {
     public static partial class EngineApi
     {
+        public static event EventHandler RedrawRequest;
+        public static event EventHandler ResizeRequest;
+        public static event EventHandler MouseMoveTileMarkRedrawRequest;
+        private static readonly object lockRenderer = new object();
+
         private static bool initialized = false;
-        private static bool refreshing = false;
         private static bool renderEnable = true;
+
+
         public static bool EngineCtor(int width, int height)
         {
             EngineMain.EngineCtor(width, height);
-
-
+            initialized = true;
             return true;
         }
         public static void SuspendRendering()
@@ -27,25 +32,38 @@ namespace RelertSharp.Engine.Api
         {
             renderEnable = true;
         }
-        public static void RefreshFrame()
+        public static void RenderFrame()
         {
-            if (renderEnable && !refreshing)
+            if (renderEnable)
             {
-                refreshing = true;
-                CppExtern.Scene.PresentAllObject();
-                refreshing = false;
+                lock (lockRenderer)
+                {
+                    CppExtern.Scene.PresentAllObject();
+                }
             }
+        }
+        public static void InvokeRedraw()
+        {
+            RedrawRequest?.Invoke(null, null);
         }
         public static IntPtr ResetHandle(Size sz)
         {
-            EngineMain.Handle = CppExtern.Scene.SetSceneSize(sz.Width, sz.Height);
-            return EngineMain.Handle;
+            return ResetHandle(sz.Width, sz.Height);
         }
         public static IntPtr ResetHandle(int width, int height)
         {
-            EngineMain.Handle = CppExtern.Scene.SetSceneSize(width, height);
-            return EngineMain.Handle;
+            if (initialized)
+            {
+                EngineMain.Handle = CppExtern.Scene.SetSceneSize(width, height);
+                return EngineMain.Handle;
+            }
+            return IntPtr.Zero;
+        }
+        public static void SetBackgroundColor(Color color)
+        {
+            CppExtern.Scene.SetBackgroundColor(color.R, color.G, color.B);
         }
         public static IntPtr EngineHandle { get { return EngineMain.Handle; } }
+        public static double ScaleFactor { get; internal set; } = 1;
     }
 }

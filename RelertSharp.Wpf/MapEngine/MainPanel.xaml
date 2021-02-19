@@ -10,7 +10,7 @@
         <ImageBrush x:Key="SceneResource"/>
     </UserControl.Resources>
     <Grid>
-        <Image x:Name="imgelt" Stretch="Fill">
+        <Image x:Name="imgelt" Stretch="Fill" MouseMove="HandleMouseMove" MouseWheel="HandleMouseWheel">
             <Image.Source>
                 <d3d:D3DImage x:Name="d3dimg"/>
             </Image.Source>

@@ -32,12 +32,12 @@ namespace RelertSharp.Engine
 
 
         #region Public Methods - GdipSurface
-        public bool SetupMinimap(Size panelsize, Rectangle mapsize)
+        public bool SetupMinimap(Size panelsize, Rectangle mapsize, double scaleFactor = 1)
         {
             try
             {
                 this.mapsize = mapsize;
-                sceneSize = new Size(mapsize.Width * 60, mapsize.Height * 30 + 15);
+                sceneSize = new Size((int)(mapsize.Width * 60 * scaleFactor), (int)(mapsize.Height * 30 * scaleFactor));
                 panelSize = panelsize;
                 minimap = new Bitmap(this.mapsize.Width * 2, this.mapsize.Height * 2);
                 ds = Graphics.FromImage(minimap);
@@ -92,6 +92,7 @@ namespace RelertSharp.Engine
         }
         public void DrawColorable(I2dLocateable pos, IMapObject src)
         {
+            if (src.SceneObject == null) return;
             TileToFlatCoord(pos, mapsize.Width, out int x, out int y);
             MapObjectBase p = src.SceneObject as MapObjectBase;
             SetMinimapColorAt(x, y, p.RadarColor.Left);
@@ -166,7 +167,14 @@ namespace RelertSharp.Engine
 
 
         #region Public Calls - GdipSurface
-        public Bitmap MiniMap { get { return ResizeTo(minimap, panelSize); } }
+        public Bitmap MiniMap
+        {
+            get
+            {
+                if (panelSize.Width <= 0 || panelSize.Height <= 0) return null;
+                return ResizeTo(minimap, panelSize);
+            }
+        }
         public Point ClientPos { get; set; }
         #endregion
     }

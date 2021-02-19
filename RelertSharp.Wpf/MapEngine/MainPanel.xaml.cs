@@ -25,15 +25,18 @@ namespace RelertSharp.Wpf.MapEngine
     /// </summary>
     public partial class MainPanel : UserControl
     {
+        public event Dele3dLocateableHandler MousePosChanged;
         private IntPtr _handle;
-        private TimeSpan lastRender = new TimeSpan();
-        private const string D3DSOURCE = "SceneResource";
-        private readonly object _updating = new object();
-        private bool initialized = false;
         private bool drew = false;
-        private readonly object _resizing = new object();
+        private bool rendering = false;
+        private int prevW, prevH;
         private int nWidth { get { return this.ScaledWidth(); } }
         private int nHeight { get { return this.ScaledHeight(); } }
+
+        private static readonly object renderLock = new object();
+        private static readonly object resizeLock = new object();
+
+
         private DispatcherTimer _baseRefreshing;
 
 
@@ -56,6 +59,9 @@ namespace RelertSharp.Wpf.MapEngine
             EngineApi.EngineCtor(nWidth, nHeight);
             _handle = EngineApi.ResetHandle(nWidth, nHeight);
             d3dimg.IsFrontBufferAvailableChanged += FrontBufferChanged;
+            EngineApi.MouseMoveTileMarkRedrawRequest += EngineApi_MouseMoveTileMarkRedrawRequest;
+            EngineApi.RedrawRequest += RedrawInvokeHandler;
+            EngineApi.ResizeRequest += ResizeInvokeHandler;
             //CompositionTarget.Rendering += CompositionTarget_Rendering;
 
             _baseRefreshing = new DispatcherTimer()
@@ -66,64 +72,95 @@ namespace RelertSharp.Wpf.MapEngine
             _baseRefreshing.Start();
         }
 
+        private void ResizeInvokeHandler(object sender, EventArgs e)
+        {
+            Resize();
+        }
+
+        private void RedrawInvokeHandler(object sender, EventArgs e)
+        {
+            RenderFrame();
+        }
+
+        private void EngineApi_MouseMoveTileMarkRedrawRequest(object sender, EventArgs e)
+        {
+            RenderFrame();
+        }
+
         private void FrontBufferChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (drew)
-            {
-                RenderFrame();
-            }
+            RenderFrame();
         }
 
         private void ResizeTick(object sender, EventArgs e)
         {
-            if ((int)imgelt.ActualWidth != d3dimg.Width || (int)imgelt.ActualHeight != d3dimg.Height)
+            if (nWidth != prevW || nHeight != prevH)
             {
-                EngineApi.SuspendRendering();
-                _handle = EngineApi.ResetHandle(nWidth, nHeight);
-                EngineApi.ResumeRendering();
-                RenderFrame();
+                Resize();
+            }
+        }
+        private void Resize()
+        {
+            lock (resizeLock)
+            {
+                int w = (int)(nWidth * EngineApi.ScaleFactor);
+                int h = (int)(nHeight * EngineApi.ScaleFactor);
+                if (d3dimg.PixelWidth != w || d3dimg.PixelHeight != h)
+                {
+                    prevW = w; prevH = h;
+                    EngineApi.SuspendRendering();
+                    _handle = EngineApi.ResetHandle(w, h);
+                    EngineApi.ResizeMinimapClientWindow(w, h);
+                    EngineApi.ResumeRendering();
+                    RenderFrame();
+                }
             }
         }
 
         private void RenderFrame()
         {
-            if (drew)
+            lock (renderLock)
             {
-                //EngineApi.RefreshFrame();
-                if (d3dimg.IsFrontBufferAvailable /*&& arg.RenderingTime != lastRender*/)
+                if (drew && !rendering)
                 {
-                    //_handle = EngineApi.ResetHandle(nWidth, nHeight);
-                    if (_handle != IntPtr.Zero)
+                    //EngineApi.RefreshFrame();
+                    if (d3dimg.IsFrontBufferAvailable /*&& arg.RenderingTime != lastRender*/)
                     {
-                        d3dimg.Lock();
-                        d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
-                        EngineApi.RefreshFrame();
-                        d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
-                        d3dimg.Unlock();
-                        //lastRender = arg.RenderingTime;
+                        //_handle = EngineApi.ResetHandle(nWidth, nHeight);
+                        if (_handle != IntPtr.Zero)
+                        {
+                            rendering = true;
+                            d3dimg.Lock();
+                            d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
+                            EngineApi.RenderFrame();
+                            d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
+                            d3dimg.Unlock();
+                            rendering = false;
+                            //lastRender = arg.RenderingTime;
+                        }
                     }
                 }
             }
         }
 
-        private void CompositionTarget_Rendering(object sender, EventArgs e)
+        private void HandleMouseMove(object sender, MouseEventArgs e)
         {
-            RenderingEventArgs arg = (RenderingEventArgs)e;
             if (drew)
             {
-                if (d3dimg.IsFrontBufferAvailable && arg.RenderingTime != lastRender)
-                {
-                    //_handle = EngineApi.ResetHandle(nWidth, nHeight);
-                    if (_handle != IntPtr.Zero)
-                    {
-                        d3dimg.Lock();
-                        d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
-                        EngineApi.RefreshFrame();
-                        d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
-                        d3dimg.Unlock();
-                        lastRender = arg.RenderingTime;
-                    }
-                }
+                Point p = e.GetPosition(this);
+                p.X *= GuiUtil.MonitorScale * EngineApi.ScaleFactor;
+                p.Y *= GuiUtil.MonitorScale * EngineApi.ScaleFactor;
+                Vec3 pos = EngineApi.ClientPointToCellPos(p.GdiPoint(), out int subcell);
+                if (EngineApi.MouseOnTile(pos)) MousePosChanged?.Invoke(this, pos.To3dLocateable());
+            }
+        }
+
+        private void HandleMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (drew)
+            {
+                if (e.Delta > 0) EngineApi.ChangeScaleFactor(-0.1);
+                else EngineApi.ChangeScaleFactor(0.1);
             }
         }
     }

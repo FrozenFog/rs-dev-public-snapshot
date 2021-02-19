@@ -8,4 +8,6 @@ using RelertSharp.Common;
 namespace RelertSharp.Engine
 {
     public delegate void MapDrawingProgressEventHandler(int max, int progress, MapObjectType type);
+    public delegate void MouseOnTileChangedEventHandler(I3dLocateable posNow, I3dLocateable posPrev);
+    public delegate void MouseOnSubtileChangedEventHandler(int subtileNow, int subtilePrev);
 }

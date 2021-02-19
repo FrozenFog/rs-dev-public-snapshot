@@ -1,0 +1,11 @@
+﻿<UserControl x:Class="RelertSharp.Wpf.MapEngine.MinimapPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RelertSharp.Wpf.MapEngine"
+             mc:Ignorable="d" SizeChanged="PanelSizeChanged">
+    <Grid MouseDown="HandleMouseDown" MouseUp="HandleMouseUp" MouseMove="HandleMouseMove" MouseLeave="HandleMouseLeave">
+        <Image x:Name="img" Stretch="None" />
+    </Grid>
+</UserControl>

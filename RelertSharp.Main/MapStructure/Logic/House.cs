@@ -147,6 +147,7 @@ namespace RelertSharp.MapStructure.Logic
         public System.Drawing.Color DrawingColor { get; set; }
         public HouseUnit GetToUnit { get; set; }
         public override string Value { get { return Id; } }
+        public override string Name { get { return Id; } }
         #endregion
     }
 

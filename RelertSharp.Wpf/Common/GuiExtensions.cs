@@ -6,23 +6,49 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms.Integration;
+using System.Windows.Media;
 using AvalonDock;
 using AvalonDock.Layout;
+
+namespace System.Windows
+{
+    internal static class WpfWindowsExtensions
+    {
+        public static System.Windows.Point WpfPoint(this System.Drawing.Point src)
+        {
+            return new Point(src.X, src.Y);
+        }
+        public static System.Drawing.Point GdiPoint(this System.Windows.Point src)
+        {
+            return new Drawing.Point((int)src.X, (int)src.Y);
+        }
+    }
+}
 
 namespace RelertSharp.Wpf
 {
     internal static class GuiExtensions
     {
         #region Generals
-        public static int ScaledWidth(this FrameworkElement src)
+        public static double GetScale(this FrameworkElement src)
         {
-            double scale = PresentationSource.FromVisual(src).CompositionTarget.TransformToDevice.M11;
-            return (int)(scale * src.ActualWidth);
+            PresentationSource source = PresentationSource.FromVisual(src);
+            if (source == null) return 1;
+            return source.CompositionTarget.TransformToDevice.M11;
         }
-        public static int ScaledHeight(this FrameworkElement src)
+        public static int ScaledWidth(this FrameworkElement src, double additionalFactor = 1.0)
         {
-            double scale = PresentationSource.FromVisual(src).CompositionTarget.TransformToDevice.M11;
-            return (int)(scale * src.ActualHeight);
+            PresentationSource target = PresentationSource.FromVisual(src);
+            if (target == null) return 0;
+            double scale = target.CompositionTarget.TransformToDevice.M11;
+            return (int)(scale * src.ActualWidth * additionalFactor);
+        }
+        public static int ScaledHeight(this FrameworkElement src, double additionalFactor = 1.0)
+        {
+            PresentationSource target = PresentationSource.FromVisual(src);
+            if (target == null) return 0;
+            double scale = target.CompositionTarget.TransformToDevice.M11;
+            return (int)(scale * src.ActualHeight * additionalFactor);
         }
         public static void RefreshContext(this FrameworkElement src, object context)
         {
@@ -45,13 +71,13 @@ namespace RelertSharp.Wpf
 
 
         #region DockingManager
-        public static void AddToolToBottom(this DockingManager dock, string title, object content)
+        private static void AddToolToLayout(Func<LayoutAnchorGroup> selector, Action<LayoutAnchorGroup> creator, string title, object content)
         {
-            LayoutAnchorGroup group = dock.Layout.BottomSide.Children.FirstOrDefault();
+            LayoutAnchorGroup group = selector.Invoke();
             if (group == null)
             {
                 group = new LayoutAnchorGroup();
-                dock.Layout.BottomSide.Children.Add(group);
+                creator?.Invoke(group);
             }
             LayoutAnchorable anchorable = new LayoutAnchorable()
             {
@@ -60,35 +86,39 @@ namespace RelertSharp.Wpf
             };
             group.Children.Add(anchorable);
         }
-        public static void AddToolToLeft(this DockingManager dock, string title, object content)
+        public static void AddToolToTop(this LayoutRoot root, string title, object content)
         {
-            LayoutAnchorGroup group = dock.Layout.LeftSide.Children.FirstOrDefault();
-            if (group == null)
-            {
-                group = new LayoutAnchorGroup();
-                dock.Layout.LeftSide.Children.Add(group);
-            }
-            LayoutAnchorable anchorable = new LayoutAnchorable()
-            {
-                Title = title,
-                Content = content
-            };
-            group.Children.Add(anchorable);
+            AddToolToLayout(() => { return root.TopSide.Children.FirstOrDefault(); }, 
+                            (g) => { root.TopSide.Children.Add(g); },
+                            title, content);
         }
-        public static void AddToolToRight(this DockingManager dock, string title, object content)
+        public static void AddToolToRight(this LayoutRoot root, string title, object content)
         {
-            LayoutAnchorGroup group = dock.Layout.RightSide.Children.FirstOrDefault();
-            if (group == null)
+            AddToolToLayout(() => { return root.RightSide.Children.FirstOrDefault(); },
+                            (g) => { root.RightSide.Children.Add(g); },
+                            title, content);
+        }
+        public static void AddToolToBottom(this LayoutRoot root, string title, object content)
+        {
+            AddToolToLayout(() => { return root.BottomSide.Children.FirstOrDefault(); },
+                            (g) => { root.BottomSide.Children.Add(g); },
+                            title, content);
+        }
+        public static void AddToolToLeft(this LayoutRoot root, string title, object content)
+        {
+            AddToolToLayout(() => { return root.LeftSide.Children.FirstOrDefault(); },
+                            (g) => { root.LeftSide.Children.Add(g); },
+                            title, content);
+        }
+        public static LayoutAnchorGroup SelectRight(this LayoutRoot root, bool createNewIfNotExist = true)
+        {
+            LayoutAnchorGroup group = root.RightSide.Children.FirstOrDefault();
+            if (group == null && createNewIfNotExist)
             {
                 group = new LayoutAnchorGroup();
-                dock.Layout.RightSide.Children.Add(group);
+                root.RightSide.Children.Add(group);
             }
-            LayoutAnchorable anchorable = new LayoutAnchorable()
-            {
-                Title = title,
-                Content = content
-            };
-            group.Children.Add(anchorable);
+            return group;
         }
         public static void AddCenterPage(this DockingManager dock, string title, object content)
         {

@@ -186,6 +186,11 @@ namespace System
             return (decimal)src;
         }
 
+        public static bool InRange(this double src, double floor, double ceil)
+        {
+            return src >= floor && src <= ceil;
+        }
+
 
 
         public static string Replace(this string src, int pos, char c)

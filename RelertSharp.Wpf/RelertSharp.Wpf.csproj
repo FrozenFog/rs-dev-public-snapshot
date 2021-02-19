@@ -67,7 +67,11 @@
     <Compile Include="MapEngine\MainPanel.xaml.cs">
       <DependentUpon>MainPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MapEngine\MinimapPanel.xaml.cs">
+      <DependentUpon>MinimapPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\GlobalCountryVm.cs" />
+    <Compile Include="ViewModel\LightningVm.cs" />
     <Compile Include="ViewModel\ScriptVm.cs" />
     <Compile Include="ViewModel\StaticCollectionVm.cs" />
     <Compile Include="ViewModel\TeamVm.cs" />
@@ -130,6 +134,10 @@
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
+    <Page Include="MapEngine\MinimapPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AiTriggerListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -188,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="LogicEditor\Pages\" />
+    <Folder Include="ToolBoxes\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RelertSharp.Engine\RelertSharp.Engine.csproj">

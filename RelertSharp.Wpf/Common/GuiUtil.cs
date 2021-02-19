@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ namespace RelertSharp.Wpf
 {
     internal static class GuiUtil
     {
+        internal static double MonitorScale = 1;
+        internal static readonly Color defBackColor = Color.FromArgb(30, 30, 30);
         public static bool SafeRun(Action a, string errorMsg, Action failsafe = null)
         {
 #if RELEASE

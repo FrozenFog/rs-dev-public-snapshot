@@ -38,16 +38,18 @@ namespace RelertSharp.Wpf
         private readonly TeamView team = new TeamView();
         private readonly ScriptView script = new ScriptView();
         private readonly MainPanel pnlMain = new MainPanel();
+        private readonly MinimapPanel minimap = new MinimapPanel();
+        //private readonly LightPanel lightPanel = new LightPanel();
+
         #endregion
         #region Dispatcher
-        private DispatcherProcessingDisabled dispatcher;
         #endregion
 
         public MainWindow()
         {
             InitializeComponent();
             AddToolPage();
-            AddReciveListener();
+            //AddReciveListener();
             SetTimer();
         }
 
@@ -63,20 +65,22 @@ namespace RelertSharp.Wpf
 
         private void DelayedInitialize(object sender, EventArgs e)
         {
-
+            DebugInit();
         }
 
         private void AddToolPage()
         {
-            dockMain.AddToolToRight("Ai Trigger Edit", aiTrigger);
-            dockMain.AddToolToRight("Team List", teamList);
-            dockMain.AddToolToRight("Ai Trigger List", aiTriggerList);
+            //dockMain.Layout.AddToolToRight("Ai Trigger Edit", aiTrigger);
+            dockMain.Layout.AddToolToRight("Team List", teamList);
+            //dockMain.Layout.AddToolToRight("Ai Trigger List", aiTriggerList);
             //dockMain.AddToolToRight("Script List", scriptList);
             //dockMain.AddToolToRight("Taskforce List", taskforceList);
-            dockMain.AddToolToRight("Team", team);
+            //dockMain.Layout.AddToolToRight("Team", team);
             //dockMain.AddToolToRight("Script", script);
-
+            //dockMain.Layout.AddToolToRight("Light", lightPanel);
             dockMain.AddCenterPage("Map", pnlMain);
+
+            dockMain.Layout.RightSide.Root.Manager.Layout.AddToolToTop("Minimap", minimap);
         }
 
         #region Reciver Logics
@@ -92,12 +96,28 @@ namespace RelertSharp.Wpf
         }
         #endregion
 
+
+        private void DebugInit()
+        {
+            GuiUtil.MonitorScale = this.GetScale();
+            tmrInit.Stop();
+
+            pnlMain.InitializePanel();
+            minimap.Initialize();
+            Engine.Api.EngineApi.SetBackgroundColor(GuiUtil.defBackColor);
+            pnlMain.DrawMap();
+            minimap.ResumeDrawing();
+            pnlMain.MousePosChanged += PnlMain_MousePosChanged;
+        }
+
+        private void PnlMain_MousePosChanged(object sender, RelertSharp.Common.I3dLocateable pos)
+        {
+            position.Text = string.Format("X: {0}  Y: {1}  Z: {2}", pos.X, pos.Y, pos.Z);
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            pnlMain.InitializePanel();
-            pnlMain.DrawMap();
-
-            tmrInit.Stop();
+            DebugInit();
         }
     }
 }

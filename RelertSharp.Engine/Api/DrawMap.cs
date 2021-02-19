@@ -34,6 +34,7 @@ namespace RelertSharp.Engine.Api
             });
         }
 #endif
+#if DEBUG
         public static void DrawMap(Map map)
         {
             EngineMain.SetTheater(map.Info.TheaterType);
@@ -47,6 +48,8 @@ namespace RelertSharp.Engine.Api
             foreach (WaypointItem wp in map.Waypoints) EngineMain.DrawWaypoint(wp, wp.GetHeight());
             foreach (CellTagItem ct in map.Celltags) EngineMain.DrawCelltag(ct, ct.GetHeight(), true);
             MoveCameraTo(map.CenterPoint, map.GetHeightFromTile(map.CenterPoint));
+            RedrawMinimapAll();
         }
+#endif
     }
 }

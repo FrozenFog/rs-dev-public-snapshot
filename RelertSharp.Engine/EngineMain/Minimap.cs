@@ -19,13 +19,9 @@ namespace RelertSharp.Engine
         {
             minimap.ResetSize(src);
         }
-        public static void ResetMinimapWindow(Size client)
+        public static void ResizeMinimapClientWindow(Size client)
         {
             minimap.SetClientWindowSize(new Rectangle(Point.Empty, client));
-        }
-        public static void RefreshMinimap()
-        {
-            SetMinimapClientPos();
         }
         public static void MinimapMoving(Point panelClicked)
         {

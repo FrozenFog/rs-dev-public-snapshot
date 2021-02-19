@@ -13,7 +13,7 @@ namespace RelertSharp.Engine
 {
     internal static partial class EngineMain
     {
-        private static TileLayer _cellFindingReferance;
+        private static TileLayer _cellFindingReferance { get { return GlobalVar.CurrentMapDocument.Map.TilesData; } }
         private static Tile previousTile;
         private static List<I2dLocateable> buildingShape = new List<I2dLocateable>();
         private static bool markingBuildingShape = false;
@@ -172,35 +172,41 @@ namespace RelertSharp.Engine
         {
             Buffer.Scenes.ResetSelectingRectangle();
         }
+        private static void MoveTo(int x, int y, int z)
+        {
+            Pnt3 pos = new Pnt3(x, y, z);
+            CppExtern.Scene.SetFocusOnScene(ToVec3Iso(pos));
+            SetMinimapClientPos();
+        }
         public static void MoveTo(I3dLocateable pos)
         {
-            CppExtern.Scene.SetFocusOnScene(ToVec3Iso(pos));
+            MoveTo(pos.X, pos.Y, pos.Z);
         }
         public static void MoveTo(I2dLocateable pos)
         {
-            CppExtern.Scene.SetFocusOnScene(ToVec3Iso(pos));
-            SetMinimapClientPos();
+            MoveTo(pos.X, pos.Y, 0);
         }
         public static void MoveTo(I2dLocateable pos, int height)
         {
-            Pnt3 p = new Pnt3(pos, height);
-            CppExtern.Scene.SetFocusOnScene(ToVec3Iso(p));
-            SetMinimapClientPos();
+            MoveTo(pos.X, pos.Y, height);
         }
         public static void ResetView()
         {
             CppExtern.Scene.ResetSceneView();
         }
+        private static void ShiftBy(float dx, float dy)
+        {
+            CppExtern.Scene.MoveFocusOnScreen(dx, dy);
+            SetMinimapClientPos();
+        }
         public static void ViewShift(Point previous, Point now)
         {
             Point delta = now.Delta(previous);
-            CppExtern.Scene.MoveFocusOnScreen(delta.X * 1.2f, delta.Y * 2f);
-            SetMinimapClientPos();
+            ShiftBy(delta.X * 1.2f, delta.Y * 2f);
         }
         public static void ViewShift(Point delta)
         {
-            CppExtern.Scene.MoveFocusOnScreen(delta.X, delta.Y);
-            SetMinimapClientPos();
+            ShiftBy(delta.X, delta.Y);
         }
 
 

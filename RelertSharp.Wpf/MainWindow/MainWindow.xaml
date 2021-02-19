@@ -9,11 +9,18 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <DockingManager x:Name="dockMain">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="23"/>
+        </Grid.RowDefinitions>
+        <DockingManager x:Name="dockMain" Grid.Row="0">
             <DockingManager.Theme>
                 <Vs2013DarkTheme/>
             </DockingManager.Theme>
         </DockingManager>
-        <Button Content="Button" VerticalAlignment="Top" Click="Button_Click"/>
+        <StatusBar Name="bar" Grid.Row="1" Style="{DynamicResource barDark}">
+            <TextBlock x:Name="position">Ready</TextBlock>
+        </StatusBar>
+        <!--<Button Content="Button" VerticalAlignment="Top" Click="Button_Click"/>-->
     </Grid>
 </Window>
