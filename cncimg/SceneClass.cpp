@@ -115,6 +115,8 @@ LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd, int nWidth, int nHeight)
 	Para.Windowed = TRUE;
 	Para.hDeviceWindow = hWnd;
 
+	this->ClearScene();
+
 	SAFE_RELEASE(this->pResource);
 	this->pResource = Direct3DCreate9(D3D_SDK_VERSION);
 	if (!this->pResource)
