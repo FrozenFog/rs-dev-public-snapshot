@@ -122,8 +122,8 @@ private:
 	TheaterType Theater;
 	D3DXVECTOR3 CurrentFocusLocation;
 	DWORD dwBackgroundColor;
-	int nWidth;
-	int nHeight;
+	size_t Width;
+	size_t Height;
 	//RECT CurrentViewPort;
 	
 	//for direct3d only
