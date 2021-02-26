@@ -19,8 +19,8 @@ SceneClass::SceneClass() :pResource(nullptr),
 	pRenderTarget(nullptr),
 	VoxelShader(),
 	PlainArtShader(),
-	nWidth(0),
-	nHeight(0)
+	Width(0),
+	Height(0)
 {
 	ZeroMemory(this, sizeof *this);
 	dwBackgroundColor = D3DCOLOR_XRGB(0, 0, 252);
@@ -63,7 +63,7 @@ bool SceneClass::CreateSurfaces()
 	if (!this->GetDevice())
 		return false;
 
-	if (!this->SetupNewRenderTarget(nWidth, nHeight))
+	if (!this->SetupNewRenderTarget(this->Width, this->Height))
 	{
 		printf_s("Unable to create render target.\n");
 		this->ClearDevice();
@@ -138,8 +138,8 @@ LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd, int nWidth, int nHeight)
 		return nullptr;
 	}
 
-	this->nWidth = nWidth;
-	this->nHeight = nHeight;
+	this->Width = nWidth;
+	this->Height = nHeight;
 	if (!this->CreateSurfaces())
 	{
 		this->ClearDevice();
@@ -158,15 +158,15 @@ LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd, int nWidth, int nHeight)
 
 LPDIRECT3DSURFACE9 SceneClass::SetSceneSize(int nWidth, int nHeight)
 {
-	SIZE oldSize = { this->nWidth,this->nHeight };
-	this->nWidth = nWidth;
-	this->nHeight = nHeight;
+	SIZE oldSize = { this->Width,this->Height };
+	this->Width = nWidth;
+	this->Height = nHeight;
 
 	if (!this->CreateSurfaces())
 	{
 		printf_s("unable to reset buffers sizes.\n");
-		this->nWidth = oldSize.cx;
-		this->nHeight = oldSize.cy;
+		this->Width = oldSize.cx;
+		this->Height = oldSize.cy;
 		return nullptr;
 	}
 	return this->pRenderTarget;
@@ -197,8 +197,8 @@ LPDIRECT3DSURFACE9 SceneClass::SetupNewRenderTarget(const size_t nWidth, const s
 		}
 
 		printf_s("Setting render target as width = %d, height = %d.\n", nWidth, nHeight);
-		this->nWidth = nWidth;
-		this->nHeight = nHeight;
+		this->Width = nWidth;
+		this->Height = nHeight;
 		//the old one is released and the new one is set
 		GetDevice()->SetDepthStencilSurface(pDepthStencilSurface);
 		//release the buffer locally 
@@ -315,7 +315,7 @@ RECT SceneClass::GetWindowRect()
 
 	//GetClientRect(this->SceneParas.hDeviceWindow, &WndRect);
 	
-	return RECT{ 0,0,nWidth,nHeight };
+	return RECT{ 0,0,(long)this->Width,(long)this->Height };
 }
 
 void SceneClass::SetTheater(TheaterType Theater)
@@ -532,7 +532,7 @@ bool SceneClass::ResetDevice()
 		this->VoxelShader.CreateShader(this->GetDevice());
 		this->PlainArtShader.CreateShader(this->GetDevice());
 		this->GetDevice()->SetVertexShader(this->VertexShader.GetVertexShader());
-		this->SetupNewRenderTarget(this->nWidth, this->nHeight);
+		this->SetupNewRenderTarget(this->Width, this->Height);
 	}
 
 	return SUCCEEDED(hResult);
