@@ -174,7 +174,7 @@ LPDIRECT3DSURFACE9 SceneClass::SetSceneSize(int nWidth, int nHeight)
 
 LPDIRECT3DSURFACE9 SceneClass::SetupNewRenderTarget(const size_t nWidth, const size_t nHeight)
 {
-	if (!IsDeviceLoaded())
+	if (!IsDeviceLoaded() || !nWidth || !nHeight)
 		return nullptr;
 
 	SAFE_RELEASE(pRenderTarget);
