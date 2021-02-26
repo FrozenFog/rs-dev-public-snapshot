@@ -947,6 +947,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 	LPDIRECT3DVERTEXBUFFER9 pFormerStream;
 	UINT uStride, uOffset;
 	HDC hBackDC;
+	DWORD dwZEnable;
 
 	auto& VxlShader = SceneClass::Instance.GetVXLShader();
 	auto& PlainShader = SceneClass::Instance.GetPlainArtShader();
@@ -1030,6 +1031,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 	{
 		//requires pTexture, always 2 rectangles
 
+		pDevice->GetRenderState(D3DRS_ZWRITEENABLE, &dwZEnable);
 		pDevice->GetTexture(0, &pFormerTexture);
 		pDevice->GetTexture(1, &pFormer2);
 		pDevice->GetPixelShader(&pFormerShader);
@@ -1045,8 +1047,11 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		if (this->cSpecialDrawType == SPECIAL_NORMAL)
 			pDevice->SetTexture(1, this->pPaletteTexture),
 			pDevice->SetTexture(2, this->pZTexture);
-		else if (this->cSpecialDrawType == SPECIAL_SHADOW)
+		else if (this->cSpecialDrawType == SPECIAL_SHADOW) 
+		{
+			pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 			pDevice->SetTexture(1, nullptr);
+		}
 		else if (this->cSpecialDrawType == SPECIAL_ALPHA)
 			pDevice->SetTexture(SELF_SURFACE_INDEX, Scene.GetAlphaSurface());
 
@@ -1082,6 +1087,7 @@ bool PaintingStruct::Draw(LPDIRECT3DDEVICE9 pDevice)
 		pDevice->SetTexture(0, pFormerTexture);
 		pDevice->SetTexture(1, pFormer2);
 		pDevice->SetPixelShader(pFormerShader);
+		pDevice->SetRenderState(D3DRS_ZWRITEENABLE, dwZEnable);
 		SAFE_RELEASE(pFormerTexture);
 		SAFE_RELEASE(pFormer2);
 		SAFE_RELEASE(pFormerShader);
