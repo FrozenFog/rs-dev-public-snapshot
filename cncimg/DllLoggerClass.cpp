@@ -2,6 +2,19 @@
 
 Logger Logger::Instance;
 
+void _cdecl Logger::WriteLine(const char* pFormat, ...)
+{
+    if (!Instance.IsLogFileOpened())
+        return;
+
+    va_list pStack;
+
+    va_start(pStack, pFormat);
+    vfprintf_s(Instance.pFile, pFormat, pStack);
+    fflush(Instance.pFile);
+    va_end(pStack);
+}
+
 bool Logger::IsLogFileOpened()
 {
     return pFile != nullptr;

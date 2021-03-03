@@ -139,7 +139,7 @@ void Palette::LoadFromFile(const char* pFileName)
 	ULONG nReadBytes;
 	auto pBuffer = malloc(sizeof this->Entries);
 	if (!pBuffer || !ReadFile(hFile, pBuffer, sizeof this->Entries, &nReadBytes, nullptr) || nReadBytes != sizeof this->Entries)
-		printf_s("failed to read palette.\n");
+		Logger::WriteLine(__FUNCTION__" : ""failed to read palette.\n");
 
 	this->LoadFromFileInBuffer(pBuffer);
 	this->ShiftColors();

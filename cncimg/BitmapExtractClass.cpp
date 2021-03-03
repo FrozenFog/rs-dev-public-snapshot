@@ -1,6 +1,7 @@
 #include "BitmapExtractClass.h"
 
 #include <fstream>
+#include "DllLoggerClass.h"
 
 BitmapExtraction::BitmapExtraction() : pData(nullptr)
 {
@@ -30,17 +31,17 @@ void BitmapExtraction::LoadFile(const char * pFileName)
 
 	ULONG nReadSize;
 	if (!ReadFile(hFile, &this->FileHeader, sizeof this->FileHeader, &nReadSize, nullptr) || sizeof this->FileHeader != nReadSize)
-		printf_s("invalid load.\n");
+		Logger::WriteLine(__FUNCTION__" : ""invalid load.\n");
 
 	if (!ReadFile(hFile, &this->BitmapInfo, sizeof this->BitmapInfo, &nReadSize, nullptr) || sizeof this->BitmapInfo != nReadSize)
-		printf_s("invalid load.\n");
+		Logger::WriteLine(__FUNCTION__" : ""invalid load.\n");
 
 	SetFilePointer(hFile, this->FileHeader.bfOffBits, nullptr, FILE_BEGIN);
 	this->pData = new BYTE[this->FileHeader.bfSize - this->FileHeader.bfOffBits];
 
 	if (!ReadFile(hFile, this->pData, this->FileHeader.bfSize - this->FileHeader.bfOffBits, &nReadSize, nullptr) ||
 		this->FileHeader.bfSize - this->FileHeader.bfOffBits != nReadSize)
-		printf_s("invalid pixel loading.\n");
+		Logger::WriteLine(__FUNCTION__" : ""invalid pixel loading.\n");
 
 	CloseHandle(hFile);
 }

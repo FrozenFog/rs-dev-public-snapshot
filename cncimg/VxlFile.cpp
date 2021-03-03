@@ -43,7 +43,7 @@ void SpanData::LoadSpanDataFromBuffer(PBYTE pBuffer, PBYTE pBufferEnd)
 
 		if (nVoxels != nVoxelsEnd)
 		{
-			printf_s("the file format may be wrong.\n");
+			Logger::WriteLine(__FUNCTION__" : ""the file format may be wrong.\n");
 		}
 
 	} while (pBuffer <= pBufferEnd);
@@ -298,25 +298,25 @@ void VxlFile::LoadFromFileInBuffer(LPVOID pFileBuffer, ULONG nSize, LPVOID pHVAB
 
 void VxlFile::PrintInfo()
 {
-	printf_s("contains NumberOfLimbs : %d.\n", this->FileHeader.nNumberOfLimbs);
+	Logger::WriteLine(__FUNCTION__" : ""contains NumberOfLimbs : %d.\n", this->FileHeader.nNumberOfLimbs);
 	for (int i = 0; i < this->FileHeader.nNumberOfLimbs; i++)
 	{
 		auto& Tailer = this->LimbTailers[i];
 		auto& Body = this->BodyData[i];
 
-		printf_s("Span Start off = 0x%X, End off = 0x%X, Data off = 0x%X.\n",
+		Logger::WriteLine(__FUNCTION__" : ""Span Start off = 0x%X, End off = 0x%X, Data off = 0x%X.\n",
 			Tailer.nSpanStartOffset, Tailer.nSpanEndOffset, Tailer.nSpanDataOffset);
 
-		printf_s("Dimension = %d, %d, %d.\n", Tailer.nXSize, Tailer.nYSize, Tailer.nZSize);
+		Logger::WriteLine(__FUNCTION__" : ""Dimension = %d, %d, %d.\n", Tailer.nXSize, Tailer.nYSize, Tailer.nZSize);
 		for (int x = 0; x < Tailer.nXSize; x++)
 		{
 			for (int y = 0; y < Tailer.nYSize; y++)
 			{
 				auto& Span = Body.SpanData[y*Tailer.nXSize + x];
-				printf_s("Span coords x = %d, y = %d, Voxels = %d.\n", x, y, Span.Voxels.size());
+				Logger::WriteLine(__FUNCTION__" : ""Span coords x = %d, y = %d, Voxels = %d.\n", x, y, Span.Voxels.size());
 			}
 		}
-		printf_s("About to print info for next limb:\n Press any key to continue.\n");
+		Logger::WriteLine(__FUNCTION__" : ""About to print info for next limb:\n Press any key to continue.\n");
 		getchar();
 	}
 }

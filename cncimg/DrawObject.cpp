@@ -1125,7 +1125,7 @@ void PaintingStruct::InitializeVisualRect()
 	if (!this->String.empty())
 	{
 		auto Point = Scene.CoordsToScreen(this->Position);
-		printf_s("point = %d, %d.\n", Point.x, Point.y);
+		Logger::WriteLine(__FUNCTION__" : ""point = %d, %d.\n", Point.x, Point.y);
 		//256*256 rect
 		ObjectRect = { Point.x - 128,Point.y - 128,Point.x + 128,Point.y + 128 };
 	}

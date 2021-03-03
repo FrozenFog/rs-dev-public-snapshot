@@ -22,10 +22,7 @@ public:
 		Instance.AddLog(pFormat, std::forward<TArgs>(args)...);
 	}
 
-	static void WriteLine(const char* pString)
-	{
-		Instance << pString;
-	}
+	static void _cdecl WriteLine(const char* pFormat, ...);
 
 	bool IsLogFileOpened();
 	bool OpenLogFile(const char* pFileName);
