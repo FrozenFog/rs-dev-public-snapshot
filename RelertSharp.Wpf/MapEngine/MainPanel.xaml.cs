@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using RelertSharp.Engine.Api;
 using RelertSharp.Common;
 using System.Windows.Threading;
+using System.Threading;
 
 namespace RelertSharp.Wpf.MapEngine
 {
@@ -26,6 +27,7 @@ namespace RelertSharp.Wpf.MapEngine
     public partial class MainPanel : UserControl
     {
         public event Dele3dLocateableHandler MousePosChanged;
+        public event EventHandler ScaleFactorChanged;
         private IntPtr _handle;
         private bool drew = false;
         private bool rendering = false;
@@ -34,10 +36,12 @@ namespace RelertSharp.Wpf.MapEngine
         private int nHeight { get { return this.ScaledHeight(); } }
 
         private static readonly object renderLock = new object();
-        private static readonly object resizeLock = new object();
+        private static readonly object mouseHandleLock = new object();
+        private bool handlingMouse = false;
 
 
         private DispatcherTimer _baseRefreshing;
+        private DispatcherTimer _wheelResize;
 
 
 
@@ -62,14 +66,49 @@ namespace RelertSharp.Wpf.MapEngine
             EngineApi.MouseMoveTileMarkRedrawRequest += EngineApi_MouseMoveTileMarkRedrawRequest;
             EngineApi.RedrawRequest += RedrawInvokeHandler;
             EngineApi.ResizeRequest += ResizeInvokeHandler;
+            _wheelResize = new DispatcherTimer()
+            {
+                Interval = new TimeSpan(0, 0, 0, 0, 700)
+            };
+            _wheelResize.Tick += WheelResizeInvoker;
             //CompositionTarget.Rendering += CompositionTarget_Rendering;
 
-            _baseRefreshing = new DispatcherTimer()
+            //_baseRefreshing = new DispatcherTimer()
+            //{
+            //    Interval = new TimeSpan(0, 0, 0, 0, 400)
+            //};
+            //_baseRefreshing.Tick += ResizeTick;
+            //_baseRefreshing.Start();
+        }
+
+        private void WheelResizeInvoker(object sender, EventArgs e)
+        {
+            if (drew)
             {
-                Interval = new TimeSpan(0, 0, 0, 0, 400)
-            };
-            _baseRefreshing.Tick += ResizeTick;
-            _baseRefreshing.Start();
+                EngineApi.ScaleFactorInvoke();
+                _wheelResize.Stop();
+                Thread.Sleep(300);
+                ResumeMouseHandler();
+            }
+        }
+        private bool mouseSuspended = false;
+        private void SuspendMouseHandler()
+        {
+            if (!mouseSuspended)
+            {
+                mouseSuspended = true;
+                imgelt.MouseMove -= HandleMouseMove;
+                //imgelt.MouseWheel -= HandleMouseWheel;
+            }
+        }
+        private void ResumeMouseHandler()
+        {
+            if (mouseSuspended)
+            {
+                mouseSuspended = false;
+                imgelt.MouseMove += HandleMouseMove;
+                //imgelt.MouseWheel += HandleMouseWheel;
+            }
         }
 
         private void ResizeInvokeHandler(object sender, EventArgs e)
@@ -94,24 +133,23 @@ namespace RelertSharp.Wpf.MapEngine
 
         private void ResizeTick(object sender, EventArgs e)
         {
-            if (nWidth != prevW || nHeight != prevH)
-            {
-                Resize();
-            }
+
         }
         private void Resize()
         {
-            lock (resizeLock)
+            if (!rendering)
             {
                 int w = (int)(nWidth * EngineApi.ScaleFactor);
                 int h = (int)(nHeight * EngineApi.ScaleFactor);
                 if (d3dimg.PixelWidth != w || d3dimg.PixelHeight != h)
                 {
+                    rendering = true;
                     prevW = w; prevH = h;
                     EngineApi.SuspendRendering();
                     _handle = EngineApi.ResetHandle(w, h);
                     EngineApi.ResizeMinimapClientWindow(w, h);
                     EngineApi.ResumeRendering();
+                    rendering = false;
                     RenderFrame();
                 }
             }
@@ -145,13 +183,34 @@ namespace RelertSharp.Wpf.MapEngine
 
         private void HandleMouseMove(object sender, MouseEventArgs e)
         {
+            if (!handlingMouse)
+            {
+                if (drew)
+                {
+                    Point p = e.GetPosition(this);
+                    p.X *= GuiUtil.MonitorScale * EngineApi.ScaleFactor;
+                    p.Y *= GuiUtil.MonitorScale * EngineApi.ScaleFactor;
+                    Vec3 pos = EngineApi.ClientPointToCellPos(p.GdiPoint(), out int subcell);
+                    if (EngineApi.MouseOnTile(pos))
+                    {
+                        handlingMouse = true;
+                        MousePosChanged?.Invoke(this, pos.To3dLocateable());
+                        handlingMouse = false;
+                    }
+                }
+            }
+        }
+
+        private void HandleSizeChanged(object sender, SizeChangedEventArgs e)
+        {
             if (drew)
             {
-                Point p = e.GetPosition(this);
-                p.X *= GuiUtil.MonitorScale * EngineApi.ScaleFactor;
-                p.Y *= GuiUtil.MonitorScale * EngineApi.ScaleFactor;
-                Vec3 pos = EngineApi.ClientPointToCellPos(p.GdiPoint(), out int subcell);
-                if (EngineApi.MouseOnTile(pos)) MousePosChanged?.Invoke(this, pos.To3dLocateable());
+                if (nWidth != prevW || nHeight != prevH)
+                {
+                    SuspendMouseHandler();
+                    Resize();
+                    ResumeMouseHandler();
+                }
             }
         }
 
@@ -159,8 +218,12 @@ namespace RelertSharp.Wpf.MapEngine
         {
             if (drew)
             {
+                _wheelResize.Stop();
+                _wheelResize.Start();
+                SuspendMouseHandler();
                 if (e.Delta > 0) EngineApi.ChangeScaleFactor(-0.1);
                 else EngineApi.ChangeScaleFactor(0.1);
+                ScaleFactorChanged?.Invoke(null, null);
             }
         }
     }

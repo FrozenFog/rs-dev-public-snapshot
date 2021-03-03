@@ -18,6 +18,7 @@ using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Wpf.Views;
 using RelertSharp.Wpf.MapEngine;
 using System.Windows.Interop;
+using RelertSharp.Common;
 
 namespace RelertSharp.Wpf
 {
@@ -108,11 +109,23 @@ namespace RelertSharp.Wpf
             pnlMain.DrawMap();
             minimap.ResumeDrawing();
             pnlMain.MousePosChanged += PnlMain_MousePosChanged;
+            pnlMain.ScaleFactorChanged += PnlMain_ScaleFactorChanged;
         }
 
-        private void PnlMain_MousePosChanged(object sender, RelertSharp.Common.I3dLocateable pos)
+        private void PnlMain_ScaleFactorChanged(object sender, EventArgs e)
         {
-            position.Text = string.Format("X: {0}  Y: {1}  Z: {2}", pos.X, pos.Y, pos.Z);
+            RefreshStatus();
+        }
+
+        private I3dLocateable posMouse;
+        private void PnlMain_MousePosChanged(object sender, I3dLocateable pos)
+        {
+            posMouse = pos;
+            RefreshStatus();
+        }
+        private void RefreshStatus()
+        {
+            position.Text = string.Format("X: {0} Y: {1} Z: {2}, Scale: {3}", posMouse.X, posMouse.Y, posMouse.Z, Engine.Api.EngineApi.ScaleFactor);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -66,7 +66,7 @@ namespace RelertSharp.Engine
         {
             Pnt p = Pnt.FromPoint(src);
             Vec3 pos = new Vec3();
-            CppExtern.Scene.ClientPositionToScenePosition(p, ref pos);
+            CppExtern.Scene.ClientPositionToScenePositionLock(p, ref pos);
             pos.Y += 8;
             pos += _NormTileVec * Constant.DrawingEngine.MapMaxHeightDrawing;
             for (int height = 0; height < Constant.DrawingEngine.MapMaxHeightDrawing * 2; height++)
@@ -87,7 +87,7 @@ namespace RelertSharp.Engine
         {
             Pnt p = Pnt.FromPoint(src);
             Vec3 scenepos = new Vec3();
-            CppExtern.Scene.ClientPositionToScenePosition(p, ref scenepos);
+            CppExtern.Scene.ClientPositionToScenePositionLock(p, ref scenepos);
             scenepos.Y += 8;
             scenepos += _NormTileVec * Constant.DrawingEngine.MapMaxHeightDrawing;
             int height = 0;
@@ -108,7 +108,7 @@ namespace RelertSharp.Engine
         public static Point CellPosToClientPos(I3dLocateable pos)
         {
             Pnt result = new Pnt();
-            CppExtern.Scene.ScenePositionToClientPosition(ToVec3Iso(pos), ref result);
+            CppExtern.Scene.ScenePositionToClientPositionLock(ToVec3Iso(pos), ref result);
             return result.ToPoint();
         }
         public static I3dLocateable GetPreviousLegalTile()
@@ -147,26 +147,26 @@ namespace RelertSharp.Engine
             Vec3 p1 = new Vec3(), p2 = new Vec3(), p3 = new Vec3(), p4 = new Vec3();
             if (isIsometric)
             {
-                CppExtern.Scene.ClientPositionToScenePosition(begin, ref p1);
-                CppExtern.Scene.ClientPositionToScenePosition(end, ref p3);
+                CppExtern.Scene.ClientPositionToScenePositionLock(begin, ref p1);
+                CppExtern.Scene.ClientPositionToScenePositionLock(end, ref p3);
                 p2 = new Vec3(p3.X, p1.Y, 0);
                 p4 = new Vec3(p1.X, p3.Y, 0);
             }
             else
             {
-                CppExtern.Scene.ClientPositionToScenePosition(begin, ref p1);
-                CppExtern.Scene.ClientPositionToScenePosition(end, ref p3);
+                CppExtern.Scene.ClientPositionToScenePositionLock(begin, ref p1);
+                CppExtern.Scene.ClientPositionToScenePositionLock(end, ref p3);
                 Pnt tmp1 = new Pnt(begin.X, end.Y);
                 Pnt tmp2 = new Pnt(end.X, begin.Y);
-                CppExtern.Scene.ClientPositionToScenePosition(tmp1, ref p2);
-                CppExtern.Scene.ClientPositionToScenePosition(tmp2, ref p4);
+                CppExtern.Scene.ClientPositionToScenePositionLock(tmp1, ref p2);
+                CppExtern.Scene.ClientPositionToScenePositionLock(tmp2, ref p4);
             }
             p1 += Constant.DrawingEngine.SelectRectangleMultiplier * _NormTileVec;
             p2 += Constant.DrawingEngine.SelectRectangleMultiplier * _NormTileVec;
             p3 += Constant.DrawingEngine.SelectRectangleMultiplier * _NormTileVec;
             p4 += Constant.DrawingEngine.SelectRectangleMultiplier * _NormTileVec;
             DrawRectangleLine(p1, p2, p3, p4, _white, Buffer.Scenes.RectangleLines);
-            CppExtern.Scene.PresentAllObject();
+            CppExtern.Scene.PresentAllObjectLock();
         }
         public static void ReleaseDrawingRectangle()
         {

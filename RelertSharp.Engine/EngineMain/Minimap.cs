@@ -46,7 +46,7 @@ namespace RelertSharp.Engine
         private static void SetMinimapClientPos()
         {
             Vec3 LT = new Vec3();
-            CppExtern.Scene.ClientPositionToScenePosition(Pnt.Zero, ref LT);
+            CppExtern.Scene.ClientPositionToScenePositionLock(Pnt.Zero, ref LT);
             Vec3 coord = ScenePosToCoord(LT);
             minimap.ClientPos = new Point((int)coord.X, (int)coord.Y);
         }

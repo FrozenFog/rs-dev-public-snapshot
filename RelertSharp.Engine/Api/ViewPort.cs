@@ -46,14 +46,24 @@ namespace RelertSharp.Engine.Api
             }
             return false;
         }
-        private static readonly object scaleFactorLock = new object();
         public static void ChangeScaleFactor(double delta)
         {
-            lock (scaleFactorLock)
+            if (!rendering)
             {
-                if (ScaleFactor >= 4 && delta > 0) return;
-                if (ScaleFactor <= 0.5 && delta < 0) return;
-                ScaleFactor += delta;
+                lock (lockRenderer)
+                {
+                    if (ScaleFactor >= 4 && delta > 0) return;
+                    if (ScaleFactor <= 0.5 && delta < 0) return;
+                    ScaleFactor += delta;
+                    //ResizeRequest?.Invoke(null, null);
+                    //MinimapClientResizeRequest?.Invoke(null, null);
+                }
+            }
+        }
+        public static void ScaleFactorInvoke()
+        {
+            if (!rendering && renderEnable)
+            {
                 ResizeRequest?.Invoke(null, null);
                 MinimapClientResizeRequest?.Invoke(null, null);
             }

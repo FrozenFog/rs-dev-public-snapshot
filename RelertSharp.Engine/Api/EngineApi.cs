@@ -16,6 +16,7 @@ namespace RelertSharp.Engine.Api
 
         private static bool initialized = false;
         private static bool renderEnable = true;
+        private static bool rendering = false;
 
 
         public static bool EngineCtor(int width, int height)
@@ -38,7 +39,9 @@ namespace RelertSharp.Engine.Api
             {
                 lock (lockRenderer)
                 {
-                    CppExtern.Scene.PresentAllObject();
+                    rendering = true;
+                    CppExtern.Scene.PresentAllObjectLock();
+                    rendering = false;
                 }
             }
         }
@@ -54,7 +57,9 @@ namespace RelertSharp.Engine.Api
         {
             if (initialized)
             {
-                EngineMain.Handle = CppExtern.Scene.SetSceneSize(width, height);
+                renderEnable = false;
+                EngineMain.Handle = CppExtern.Scene.SetSceneSizeLock(width, height);
+                renderEnable = true;
                 return EngineMain.Handle;
             }
             return IntPtr.Zero;
