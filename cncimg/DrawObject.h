@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "Palette.h"
+#include "DllLoggerClass.h"
 
 #define SAFE_RELEASE(obj)if(obj)obj->Release(),obj=nullptr;
 

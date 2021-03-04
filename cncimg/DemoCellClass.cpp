@@ -83,7 +83,7 @@ CellClass::~CellClass()
 {
 	RemoveObjectFromScene(nImageId);
 	RemoveObjectFromScene(nExtraId);
-	printf_s("Cell at %f, %f, %f has been erased.\n", Position.x, Position.y, Position.z);
+	Logger::WriteLine(__FUNCTION__" : ""Cell at %f, %f, %f has been erased.\n", Position.x, Position.y, Position.z);
 }
 
 CellClass::CellClass(D3DXVECTOR3 Position, int nPaletteID, int nTileFileID, int nTileIndex) : CellClass()

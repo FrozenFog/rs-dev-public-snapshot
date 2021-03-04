@@ -681,7 +681,7 @@ bool TmpFileClass::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position, 
 	OutTileIndex = OutExtraIndex = 0;
 
 	if (!pDevice || !this->IsLoaded()) {
-		printf_s("not loaded.\n");
+		Logger::WriteLine(__FUNCTION__" : ""not loaded.\n");
 		return false;
 	}
 

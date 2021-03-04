@@ -1,5 +1,5 @@
 #include "VPLFile.h"
-
+#include "DllLoggerClass.h"
 VPLFile VPLFile::GlobalVPL("voxels.vpl");
 
 VPLFile::VPLFile(const char * pFileName)
@@ -26,7 +26,7 @@ void VPLFile::LoadFromFile(const char * pFileName)
 
 	this->Sections.resize(this->Header.nSections);
 	if (!ReadFile(hFile, &this->ContainedPal, sizeof this->ContainedPal, &nReadBytes, nullptr) || nReadBytes != sizeof this->ContainedPal)
-		printf_s("failed to load contained normal pal.\n");
+		Logger::WriteLine(__FUNCTION__" : ""failed to load contained normal pal.\n");
 
 	for (int i = 0; i < 256; i++)
 	{
@@ -37,7 +37,7 @@ void VPLFile::LoadFromFile(const char * pFileName)
 
 	if (!ReadFile(hFile, this->Sections.data(), sizeof VPLSectionTable*this->Sections.size(), &nReadBytes, nullptr) ||
 		nReadBytes != sizeof VPLSectionTable*this->Sections.size())
-		printf_s("failed to load vpl sections.\n");
+		Logger::WriteLine(__FUNCTION__" : ""failed to load vpl sections.\n");
 
 	CloseHandle(hFile);
 }
@@ -55,7 +55,7 @@ void VPLFile::ExtractContainedPal(const char * pOutFileName)
 
 	ULONG nWrittenBytes;
 	if (!WriteFile(hFile, &this->ContainedPal, sizeof this->ContainedPal, &nWrittenBytes, nullptr) || nWrittenBytes != sizeof this->ContainedPal)
-		printf_s("failed to extract the contained normal palette in VPL file.\n");
+		Logger::WriteLine(__FUNCTION__" : ""failed to extract the contained normal palette in VPL file.\n");
 
 	CloseHandle(hFile);
 }

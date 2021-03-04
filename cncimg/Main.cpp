@@ -90,14 +90,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	if (!hWnd)
 	{
-		printf_s("window creation failed.\n");
+		Logger::WriteLine(__FUNCTION__" : ""window creation failed.\n");
 		UnregisterClass("D3DWIN", hInstance);
 		return 0;
 	}
 
 	if (!strlen(lpCmdLine) && !Graphic::Direct3DInitialize(hWnd))
 	{
-		printf_s("d3d creation failed.\n");
+		Logger::WriteLine(__FUNCTION__" : ""d3d creation failed.\n");
 		getchar();
 		DestroyWindow(hWnd);
 		UnregisterClass("D3DWIN", hInstance);
@@ -119,7 +119,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//getchar();
 		if (!Graphic::Direct3DInitialize(hWnd, szFileName, bUnion, nDirections, nTurretOff, szOutPath, dStartDirection, bSkipAnim))
 		{
-			printf_s("d3d creation failed.\n");
+			Logger::WriteLine(__FUNCTION__" : ""d3d creation failed.\n");
 			DestroyWindow(hWnd);
 			UnregisterClass("D3DWIN", hInstance);
 			Sleep(2000);

@@ -4,6 +4,7 @@
 
 #include "CncImageAPI.h"
 #include "DemoCellClass.h"
+#include "DllLoggerClass.h"
 
 #include <math.h>
 #include <Windows.h>
@@ -144,7 +145,7 @@ bool Graphic::TryCreateIndexedTexture()
 		D3DXSHADER_DEBUG, &pCodeBuffer, &pErrorMessage, &pConstantTable)))
 	{
 		if (pErrorMessage)
-			printf_s("%s.\n", pErrorMessage->GetBufferPointer());
+			Logger::WriteLine(__FUNCTION__" : ""%s.\n", pErrorMessage->GetBufferPointer());
 
 		goto Failed;
 	}
@@ -183,10 +184,10 @@ bool Graphic::TryCreateIndexedTexture()
 		pDevice->EndScene();
 		pDevice->Present(nullptr, nullptr, NULL, nullptr);
 
-		printf_s("draw complete.\n");
+		Logger::WriteLine(__FUNCTION__" : ""draw complete.\n");
 	}
 
-	printf_s("pause program.\n");
+	Logger::WriteLine(__FUNCTION__" : ""pause program.\n");
 	getchar();
 
 	SAFE_RELEASE(pIndexed);
@@ -240,28 +241,28 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion,
 /*
 	if (TryCreateIndexedTexture())
 	{
-		printf_s("create indexed texture successfully.\n");
+		Logger::WriteLine(__FUNCTION__" : ""create indexed texture successfully.\n");
 	}*/
 
 	if (!SetSceneFont("RussellSquare", 14))
 	{
-		printf_s("failed to set font.\n");
+		Logger::WriteLine(__FUNCTION__" : ""failed to set font.\n");
 		return false;
 	}
 
 	//if (auto id = CreateStringObjectAtScene({ 0.0,-100.0,0.0 }, RGB(242, 0, 242), "702"))
 	//{
-	//	printf_s("print success.\n");
+	//	Logger::WriteLine(__FUNCTION__" : ""print success.\n");
 	//}
 
 	if (auto id = CreateLineObjectAtScene({ 0.0,0.0,0.1f }, { 0.0,-300.0f,0.1f }, D3DCOLOR_XRGB(242, 0, 0), D3DCOLOR_XRGB(0, 0, 0)))
 	{
-		printf_s("Line success.\n");
+		Logger::WriteLine(__FUNCTION__" : ""Line success.\n");
 	}
 
 	//if (MouseObject = CreateRectangleObjectAtScene({ 0.0,0.0,0.1f },88,88,D3DCOLOR_XRGB(76,76,100)))
 	//{
-	//	printf_s("Rect success.\n");
+	//	Logger::WriteLine(__FUNCTION__" : ""Rect success.\n");
 	//}
 
 	SetBackgroundColor(0, 0, 0);
@@ -301,7 +302,7 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion,
 		if (CreateVxlObjectCached(VxlFiles[0], { 0.0f,0.0f,0.3f }, { 0.0f,0.0f,0.15f }, 
 			D3DX_PI / 2.0, UnitPalette, RGB(252, 0, 252), nCachedObject, nCachedShadow))
 		{
-			printf_s("All Successful!.\n");
+			Logger::WriteLine(__FUNCTION__" : ""All Successful!.\n");
 		}
 
 		//if (auto vxlid = CreateVxlObjectAtScene(VxlFiles[1], { 0.0,0.0,0.0 }, 0.0, 0.0, D3DX_PI / 2.0f, UnitPalette, RGB(0, 0, 252))) {
@@ -353,7 +354,7 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion,
 
 	if (auto vid = CreateShpFile("images\\ygggun.shp")) {
 		if (!LoadShpTextures(vid, 0))
-			printf_s("failed to load as texture.\n");
+			Logger::WriteLine(__FUNCTION__" : ""failed to load as texture.\n");
 		if (auto tid = CreateVxlFile("images\\yaggun.vxl")) {
 
 			float turretY = 15.0f;
@@ -362,7 +363,7 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion,
 			CreateShpObjectAtScene(vid, Position, 0, UnitPalette, INVALID_COLOR_VALUE, 1, 1, 1, 4, false);
 			Position.z -= delta;
 			if (!CreateVxlObjectAtScene(tid, Position, 0, 0, D3DX_PI, UnitPalette, RGB(252, 0, 0)))
-				printf_s("failed to put vxl.\n");
+				Logger::WriteLine(__FUNCTION__" : ""failed to put vxl.\n");
 		}
 	}
 
@@ -404,7 +405,7 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion,
 				if (CellClass::CreateCellAt(Position, TmpPalette, TmpFiles[RamdomIndex], 0)) {
 				}
 				else {
-					printf_s("failed to draw.\n");
+					Logger::WriteLine(__FUNCTION__" : ""failed to draw.\n");
 				}
 			}
 		}
@@ -471,7 +472,7 @@ void Graphic::WorldRotation()
 			nCachedObject, nCachedShadow);
 
 		if (!nCachedShadow)
-			printf_s("No shadow.\n");
+			Logger::WriteLine(__FUNCTION__" : ""No shadow.\n");
 		//height += 0.5;
 		if (height >= 200.0)
 			height -= 200.0;
@@ -508,7 +509,7 @@ void Graphic::InitliazeDeviceState()
 void Graphic::ResetDevice()
 {
 	if (!ResetSceneView())
-		printf_s("failed to handle.\n");
+		Logger::WriteLine(__FUNCTION__" : ""failed to handle.\n");
 }
 
 void Graphic::SetCamera()

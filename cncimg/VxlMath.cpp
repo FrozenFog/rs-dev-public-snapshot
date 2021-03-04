@@ -1,6 +1,7 @@
 #include "VxlMath.h"
 
 #include <ctime>
+#include "DllLoggerClass.h"
 
 D3DXMATRIX TransformationMatrix::Medium =
 {
@@ -90,7 +91,7 @@ void TransformationMatrix::Print()
 {
 	for (int i = 0; i < 3; i++)
 	{
-		printf_s("%.2f\t%.2f\t%.2f\t%.2f\n", Data[i][0], Data[i][1], Data[i][2], Data[i][3]);
+		Logger::WriteLine(__FUNCTION__" : ""%.2f\t%.2f\t%.2f\t%.2f\n", Data[i][0], Data[i][1], Data[i][2], Data[i][3]);
 	}
 }
 
@@ -98,7 +99,7 @@ void TransformationMatrix::PrintMatrix(D3DXMATRIX Matrix)
 {
 	for (int i = 0; i < 4; i++)
 	{
-		printf_s("%.2f\t%.2f\t%.2f\t%.2f\n", Matrix.m[i][0], Matrix.m[i][1], Matrix.m[i][2], Matrix.m[i][3]);
+		Logger::WriteLine(__FUNCTION__" : ""%.2f\t%.2f\t%.2f\t%.2f\n", Matrix.m[i][0], Matrix.m[i][1], Matrix.m[i][2], Matrix.m[i][3]);
 	}
 }
 

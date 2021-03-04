@@ -65,38 +65,42 @@ bool SceneClass::CreateSurfaces()
 
 	if (!this->SetupNewRenderTarget(this->Width, this->Height))
 	{
-		printf_s("Unable to create render target.\n");
+		Logger::WriteLine(__FUNCTION__" : Unable to create render target.\n");
 		this->ClearDevice();
 		return nullptr;
 	}
 
+	Logger::WriteLine(__FUNCTION__" : ""Successfully recreated render target & depth surface.\n");
+	Logger::WriteLine(__FUNCTION__" : ""Dimension = %d, %d.\n", this->Width, this->Height);
 	SAFE_RELEASE(this->pBackBuffer);
 	if (FAILED(this->pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &this->pBackBuffer)))
 	{
-		printf_s("unable to GetBackBuffer.\n");
+		Logger::WriteLine(__FUNCTION__" : unable to GetBackBuffer.\n");
 		this->ClearDevice();
 		return nullptr;
 	}
 
-	auto winRect = this->GetWindowRect();
+	Logger::WriteLine(__FUNCTION__" : ""Successfully retrived back buffer.\n");
 	SAFE_RELEASE(this->pPassSurface);
-	if (FAILED(this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, D3DUSAGE_RENDERTARGET,
+	if (FAILED(this->pDevice->CreateTexture(this->Width, this->Height, 1, D3DUSAGE_RENDERTARGET,
 		D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->pPassSurface, nullptr)))
 	{
-		printf_s("unable to CreatePassTexture.\n");
-		this->ClearDevice();
+		Logger::WriteLine(__FUNCTION__" : ""Unable to CreatePassTexture.\n");
 		return nullptr;
 	}
 
+	Logger::WriteLine(__FUNCTION__" : ""Successfully recreated pass surface.\n");
 	SAFE_RELEASE(this->pAlphaSurface);
-	if (FAILED(this->pDevice->CreateTexture(winRect.right, winRect.bottom, 1, NULL,
+	if (FAILED(this->pDevice->CreateTexture(this->Width, this->Height, 1, NULL,
 		D3DFMT_L8, D3DPOOL_MANAGED, &this->pAlphaSurface, nullptr)))
 	{
-		printf_s("unable to CreateAlphaTexture.\n");
+		this->ClearDevice();
+		Logger::WriteLine(__FUNCTION__" : ""Unable to CreateAlphaTexture.\n");
 		this->ClearDevice();
 		return nullptr;
 	}
 
+	Logger::WriteLine(__FUNCTION__" : ""Successfully recreated alpha surface.\n");
 	//this->InitializeDeviceState();
 	this->GetDevice()->SetVertexShader(this->VertexShader.GetVertexShader());
 	return true;
@@ -126,14 +130,14 @@ LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd, int nWidth, int nHeight)
 	if (FAILED(this->pResource->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
 		D3DCREATE_HARDWARE_VERTEXPROCESSING, &Para, &this->pDevice)))
 	{
-		printf_s("unable to CreateDevice.\n");
+		Logger::WriteLine(__FUNCTION__" : ""Unable to CreateDevice.\n");
 		this->ClearDevice();
 		return nullptr;
 	}
 
 	if (!this->LoadShaders())
 	{
-		printf_s("Unable to load shader.\n");
+		Logger::WriteLine(__FUNCTION__" : ""Unable to load shader.\n");
 		this->ClearDevice();
 		return nullptr;
 	}
@@ -162,13 +166,16 @@ LPDIRECT3DSURFACE9 SceneClass::SetSceneSize(int nWidth, int nHeight)
 	this->Width = nWidth;
 	this->Height = nHeight;
 
+	Logger::WriteLine(__FUNCTION__" : Prepare to reset scene size as %d, %d.\n", nWidth, nHeight);
 	if (!this->CreateSurfaces())
 	{
-		printf_s("unable to reset buffers sizes.\n");
+		Logger::WriteLine(__FUNCTION__"Unable to reset buffers sizes.\n");
 		this->Width = oldSize.cx;
 		this->Height = oldSize.cy;
 		return nullptr;
 	}
+
+	Logger::WriteLine(__FUNCTION__" : ""Scene size reset, returning surface = %p.\n", this->pRenderTarget);
 	return this->pRenderTarget;
 }
 
@@ -177,26 +184,31 @@ LPDIRECT3DSURFACE9 SceneClass::SetupNewRenderTarget(const size_t nWidth, const s
 	if (!IsDeviceLoaded() || !nWidth || !nHeight)
 		return nullptr;
 
+	Logger::WriteLine(__FUNCTION__" : ""Prepare to create new surfaces = %d, %d.\n", nWidth, nHeight);
+	Logger::WriteLine(__FUNCTION__" : ""Original dimension = %d, %d.\n", this->Width, this->Height);
 	SAFE_RELEASE(pRenderTarget);
-	HRESULT hResult = GetDevice()->CreateRenderTarget(nWidth, nHeight, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, 0, TRUE, &pRenderTarget, nullptr);
+	Logger::WriteLine(__FUNCTION__" : ""Original target released, creating a new surface.\n");
+	HRESULT hResult = GetDevice()->CreateRenderTarget(nWidth, nHeight, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, 0, FALSE, &pRenderTarget, nullptr);
 	LPDIRECT3DSURFACE9 pDepthStencilSurface = nullptr;
 	if (FAILED(hResult)) {
 		SAFE_RELEASE(pRenderTarget);
-		printf_s("Unable to create new render target, failed with %08x.\n", hResult);
+		Logger::WriteLine(__FUNCTION__" : Unable to create new render target, failed with %08x.\n", hResult);
 	}
 	else {
 		//GetDevice()->SetRenderTarget(0, pRenderTarget);
+		Logger::WriteLine(__FUNCTION__" : ""Target surface creation complete, recreating depth surface.\n");
 		hResult = GetDevice()->CreateDepthStencilSurface(nWidth, nHeight, D3DFMT_D24S8, D3DMULTISAMPLE_NONE, 0,
 			TRUE, &pDepthStencilSurface, nullptr);
 		
+		Logger::WriteLine(__FUNCTION__" : ""Creating depth stencil surface with %08x.\n", hResult);
 		if (FAILED(hResult))
 		{
 			SAFE_RELEASE(pDepthStencilSurface);
-			printf_s("Unable to create new depth stencil surface. Reason = %08x.\n", hResult);
+			Logger::WriteLine(__FUNCTION__" : Unable to create new depth stencil surface. Reason = %08x.\n", hResult);
 			return nullptr;
 		}
 
-		printf_s("Setting render target as width = %d, height = %d.\n", nWidth, nHeight);
+		Logger::WriteLine(__FUNCTION__" : Setting render target as width = %d, height = %d.\n", nWidth, nHeight);
 		this->Width = nWidth;
 		this->Height = nHeight;
 		//the old one is released and the new one is set
@@ -257,7 +269,7 @@ bool SceneClass::LoadShaders()
 	}
 	else
 	{
-		printf_s("compile error.\n");
+		Logger::WriteLine(__FUNCTION__" : ""compile error.\n");
 		return false;
 	}
 }
@@ -743,7 +755,7 @@ bool ShaderStruct::LinkConstants(const char * pVarName)
 	this->hConstant = this->pConstantTable->GetConstantByName(NULL, pVarName);
 
 	if (!this->hConstant)
-		printf_s("failed to link constant %s.\n", pVarName);
+		Logger::WriteLine(__FUNCTION__" : ""failed to link constant %s.\n", pVarName);
 
 	return this->hConstant != NULL;
 }
@@ -756,7 +768,7 @@ bool ShaderStruct::LinkRemapConstants(const char * pRemapName)
 	this->hRemapConstant = this->pConstantTable->GetConstantByName(NULL, pRemapName);
 
 	if (!this->hRemapConstant)
-		printf_s("failed to link constant %s.\n", hRemapConstant);
+		Logger::WriteLine(__FUNCTION__" : ""failed to link constant %s.\n", hRemapConstant);
 
 	return this->hRemapConstant != NULL;
 }
@@ -818,7 +830,7 @@ bool ShaderStruct::CreateShader(LPDIRECT3DDEVICE9 pDevice)
 
 	if (FAILED(hResult)) {
 		this->ReleaseResources();
-		printf_s("failed to create pixel shader.\n");
+		Logger::WriteLine(__FUNCTION__" : ""failed to create pixel shader.\n");
 		return false;
 	}
 
@@ -834,7 +846,7 @@ bool ShaderStruct::CreateVertexShader(LPDIRECT3DDEVICE9 pDevice)
 
 	if (FAILED(hResult)) {
 		this->ReleaseResources();
-		printf_s("failed to create vertex shader.\n");
+		Logger::WriteLine(__FUNCTION__" : ""failed to create vertex shader.\n");
 		return false;
 	}
 
