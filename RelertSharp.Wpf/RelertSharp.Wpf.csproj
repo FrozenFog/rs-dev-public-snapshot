@@ -79,6 +79,9 @@
       <DependentUpon>AiTriggerListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Interfaces.cs" />
+    <Compile Include="Views\LightningView.xaml.cs">
+      <DependentUpon>LightningView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ScriptListView.xaml.cs">
       <DependentUpon>ScriptListView.xaml</DependentUpon>
     </Compile>
@@ -145,6 +148,10 @@
     <Page Include="Views\AiTriggerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LightningView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ScriptListView.xaml">
       <SubType>Designer</SubType>

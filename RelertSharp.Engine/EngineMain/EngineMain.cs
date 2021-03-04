@@ -39,12 +39,12 @@ namespace RelertSharp.Engine
             _rad45 = (float)Math.PI / 4;
             Log.Write("Minimap Begin");
             minimap = new GdipSurface();
-            Log.Write("Initializing Waypoint");
-            InitWaypointNum();
             Log.Write("Setup Scene...");
             CppExtern.Scene.SetUpScene(width, height);
             //Handle = CppExtern.Scene.SetSceneSize(1, 1);
             Log.Write("Setup complete");
+            Log.Write("Initializing Waypoint");
+            InitWaypointNum();
             //Log.Write("Resetting Viewport...");
             //CppExtern.Scene.ResetSceneView();
             //Log.Write("Resetting complete");
@@ -64,13 +64,13 @@ namespace RelertSharp.Engine
             VFileInfo upal = GetPtrFromGlobalDir(string.Format("unit{0}.pal", TileDictionary.TheaterSub));
             VFileInfo thpal = GetPtrFromGlobalDir(string.Format("{0}.pal", GlobalConfig.GetTheaterPalName(type)));
             VFileInfo syspal = GetPtrFromGlobalDir("rs.pal");
+            pPalSystem = CppExtern.Files.CreatePaletteFromFileInBuffer(syspal.ptr);
             if (pPalIso != 0) CppExtern.Files.RemovePalette(pPalIso);
             if (pPalUnit != 0) CppExtern.Files.RemovePalette(pPalUnit);
             if (pPalTheater != 0) CppExtern.Files.RemovePalette(pPalTheater);
             pPalIso = CppExtern.Files.CreatePaletteFromFileInBuffer(pal.ptr);
             pPalUnit = CppExtern.Files.CreatePaletteFromFileInBuffer(upal.ptr);
             pPalTheater = CppExtern.Files.CreatePaletteFromFileInBuffer(thpal.ptr);
-            pPalSystem = CppExtern.Files.CreatePaletteFromFileInBuffer(syspal.ptr);
 
             Buffer.Files.CelltagBase = CreateFile("celltag.shp", DrawableType.Shp);
             Buffer.Files.WaypointBase = CreateFile("waypoint.shp", DrawableType.Shp);

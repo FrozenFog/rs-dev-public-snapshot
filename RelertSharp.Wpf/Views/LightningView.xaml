@@ -1,0 +1,13 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RelertSharp.Wpf.Views"
+             xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel" x:Class="RelertSharp.Wpf.Views.LightningView"
+             mc:Ignorable="d" Height="496.261" Width="322.663">
+    <UserControl.DataContext>
+        <ViewModel:LightningVm/>
+    </UserControl.DataContext>
+    <Grid/>
+</UserControl>
