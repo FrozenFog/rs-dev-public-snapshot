@@ -47,6 +47,13 @@ namespace RelertSharp.MapStructure
             AddObjectToTile(inf);
             return inf;
         }
+        public StructureItem AddStructure(string id, string[] args)
+        {
+            StructureItem bud = new StructureItem(id, args);
+            Buildings[id] = bud;
+            AddObjectToTile(bud);
+            return bud;
+        }
         public void DumpStructure()
         {
             foreach (StructureItem bud in Buildings)

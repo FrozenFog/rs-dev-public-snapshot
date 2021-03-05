@@ -211,9 +211,24 @@ namespace System
         {
             return src ? 1 : 0;
         }
+        public static string ToString(this double src, int digit = 2)
+        {
+            string format = "{0:N" + digit.ToString() + "}";
+            return string.Format(format, src);
+        }
+        public static double ForcePositive(this double src)
+        {
+            if (src <= 0) return 0;
+            return src;
+        }
         public static bool ParseBool(this string src, bool def = false)
         {
             if (bool.TryParse(src, out bool b)) return b;
+            return def;
+        }
+        public static double ParseDouble(this string src, double def = 0)
+        {
+            if (double.TryParse(src, out double v)) return v;
             return def;
         }
         public static int ParseInt(this string src, int def = 0)

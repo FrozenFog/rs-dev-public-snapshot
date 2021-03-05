@@ -16,7 +16,7 @@
             <ColumnDefinition x:Name="grdColContent" Width="1*"/>
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="1" HorizontalAlignment="Left" Width="3" Style="{DynamicResource gsplitDark}"/>
-        <CheckBox x:Name="ckbEnable" Content="Enabled" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" FlowDirection="RightToLeft" Checked="EnableChecked"/>
+        <CheckBox x:Name="ckbEnable" Content="Enabled" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" Checked="EnableChecked" Height="23" VerticalContentAlignment="Center" Unchecked="EnableChecked"/>
         <Button x:Name="btnRefresh" Content="Refresh" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource btnDark}" Grid.Column="2" IsEnabled="False" Click="RefreshClicked"/>
         <ComboBox x:Name="cbbType" Margin="10,38,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectionChanged="LightningTypeChanged" Grid.Column="2" IsEnabled="False">
             <ComboBox.ItemsSource>
@@ -27,12 +27,12 @@
                 </CompositeCollection>
             </ComboBox.ItemsSource>
         </ComboBox>
-        <TextBox x:Name="txbRed" Height="23" Margin="10,66,10,0" TextWrapping="Wrap" Text="{Binding Red, StringFormat=N6}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2" IsEnabled="False"/>
-        <TextBox x:Name="txbGreen" Height="23" Margin="10,94,10,0" TextWrapping="Wrap" Text="{Binding Green, StringFormat=N6}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2" IsEnabled="False"/>
-        <TextBox x:Name="txbBlue" Height="23" Margin="10,122,10,0" TextWrapping="Wrap" Text="{Binding Blue, StringFormat=N6}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2" IsEnabled="False"/>
-        <TextBox x:Name="txbAmbient" Height="23" Margin="10,150,10,0" TextWrapping="Wrap" Text="{Binding Ambient, StringFormat=N6}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2" IsEnabled="False"/>
-        <TextBox x:Name="txbGround" Height="23" Margin="10,178,10,0" TextWrapping="Wrap" Text="{Binding Ground, StringFormat=N6}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2" IsEnabled="False"/>
-        <TextBox x:Name="txbLevel" Height="23" Margin="10,206,10,0" TextWrapping="Wrap" Text="{Binding Level, StringFormat=N6}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2" IsEnabled="False"/>
+        <TextBox x:Name="txbRed" Height="23" Margin="10,66,10,0" TextWrapping="Wrap" Text="{Binding Red, StringFormat=N6}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2" IsEnabled="False" MouseWheel="WheelValueHandler" KeyDown="ShiftKeyDown" KeyUp="ShiftKeyUp" LostFocus="EditFocusLost"/>
+        <TextBox x:Name="txbGreen" Height="23" Margin="10,94,10,0" TextWrapping="Wrap" Text="{Binding Green, StringFormat=N6}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2" IsEnabled="False" MouseWheel="WheelValueHandler" KeyDown="ShiftKeyDown" KeyUp="ShiftKeyUp" LostFocus="EditFocusLost"/>
+        <TextBox x:Name="txbBlue" Height="23" Margin="10,122,10,0" TextWrapping="Wrap" Text="{Binding Blue, StringFormat=N6}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2" IsEnabled="False" MouseWheel="WheelValueHandler" KeyDown="ShiftKeyDown" KeyUp="ShiftKeyUp" LostFocus="EditFocusLost"/>
+        <TextBox x:Name="txbAmbient" Height="23" Margin="10,150,10,0" TextWrapping="Wrap" Text="{Binding Ambient, StringFormat=N6}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2" IsEnabled="False" MouseWheel="WheelValueHandler" KeyDown="ShiftKeyDown" KeyUp="ShiftKeyUp" LostFocus="EditFocusLost"/>
+        <TextBox x:Name="txbGround" Height="23" Margin="10,178,10,0" TextWrapping="Wrap" Text="{Binding Ground, StringFormat=N6}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2" IsEnabled="False" MouseWheel="WheelValueHandler" KeyDown="ShiftKeyDown" KeyUp="ShiftKeyUp" LostFocus="EditFocusLost"/>
+        <TextBox x:Name="txbLevel" Height="23" Margin="10,206,10,0" TextWrapping="Wrap" Text="{Binding Level, StringFormat=N6}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2" IsEnabled="False" MouseWheel="WheelValueHandler" KeyDown="ShiftKeyDown" KeyUp="ShiftKeyUp" LostFocus="EditFocusLost"/>
         <Label Content="Lightning Type" HorizontalAlignment="Left" Margin="0,38,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
         <Label Content="Red" HorizontalAlignment="Left" Margin="0,66,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
         <Label Content="Green" HorizontalAlignment="Left" Margin="0,94,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>

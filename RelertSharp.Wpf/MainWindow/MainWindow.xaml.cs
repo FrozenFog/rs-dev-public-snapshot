@@ -97,6 +97,10 @@ namespace RelertSharp.Wpf
         {
             sender.ItemSelected += reciver.ReciveObject;
         }
+        private void RedrawListener()
+        {
+            lightning.LightningChangedRequest += RedrawRequestHandler;
+        }
         #endregion
 
 
@@ -112,7 +116,7 @@ namespace RelertSharp.Wpf
             minimap.ResumeDrawing();
             pnlMain.MousePosChanged += PnlMain_MousePosChanged;
             pnlMain.ScaleFactorChanged += PnlMain_ScaleFactorChanged;
-            lightning.LightningChangedRequest += RedrawRequestHandler;
+            RedrawListener();
         }
 
         private void RedrawRequestHandler(object sender, EventArgs e)
