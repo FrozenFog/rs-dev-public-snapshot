@@ -50,6 +50,13 @@ namespace RelertSharp.Wpf.MapEngine
         {
             InitializeComponent();
         }
+        internal void HandleRedrawRequest()
+        {
+            if (drew)
+            {
+                RenderFrame();
+            }
+        }
         public async void DrawMap()
         {
             EngineApi.SuspendRendering();

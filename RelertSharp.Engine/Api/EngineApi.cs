@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using RelertSharp.MapStructure;
+using RelertSharp.Common;
 
 namespace RelertSharp.Engine.Api
 {
@@ -17,6 +19,8 @@ namespace RelertSharp.Engine.Api
         private static bool initialized = false;
         private static bool renderEnable = true;
         private static bool rendering = false;
+
+        private static Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
 
 
         public static bool EngineCtor(int width, int height)

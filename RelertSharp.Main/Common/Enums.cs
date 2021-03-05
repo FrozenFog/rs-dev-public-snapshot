@@ -2,6 +2,12 @@
 
 namespace RelertSharp.Common
 {
+    public enum MapLightningType
+    {
+        Normal = 0,
+        Storm = 1,
+        Dominator = 2
+    }
     public enum IndexableDisplayType
     {
         NameOnly = 0,

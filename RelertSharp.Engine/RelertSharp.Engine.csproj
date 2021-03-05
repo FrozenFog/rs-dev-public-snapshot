@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\DrawMap.cs" />
+    <Compile Include="Api\Lightning.cs" />
     <Compile Include="Api\ViewPort.cs" />
     <Compile Include="Common\Buffers\BufferCollection.cs" />
     <Compile Include="Common\Buffers\Buffers.cs" />

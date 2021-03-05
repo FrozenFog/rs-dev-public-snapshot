@@ -188,12 +188,13 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Calls - LightningItem
-        public float Red { get; set; }
-        public float Green { get; set; }
-        public float Blue { get; set; }
-        public float Level { get; set; }
-        public float Ground { get; set; }
-        public float Ambient { get; set; }
+        public float Red { get; set; } = 1;
+        public float Green { get; set; } = 1;
+        public float Blue { get; set; } = 1;
+        public float Level { get; set; } = 0;
+        public float Ground { get; set; } = 0;
+        public float Ambient { get; set; } = 1;
+        public static LightningItem None { get { return new LightningItem(); } }
         #endregion
     }
 

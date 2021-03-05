@@ -13,6 +13,7 @@ namespace RelertSharp.Wpf.ViewModel
         {
             data = new LightningItem();
         }
+        public LightningVm(object obj) : base(obj) { }
         public float Red
         {
             get { return data.Red; }

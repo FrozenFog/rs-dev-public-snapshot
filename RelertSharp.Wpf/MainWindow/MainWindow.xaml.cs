@@ -40,6 +40,7 @@ namespace RelertSharp.Wpf
         private readonly ScriptView script = new ScriptView();
         private readonly MainPanel pnlMain = new MainPanel();
         private readonly MinimapPanel minimap = new MinimapPanel();
+        private readonly LightningView lightning = new LightningView();
         //private readonly LightPanel lightPanel = new LightPanel();
 
         #endregion
@@ -73,6 +74,7 @@ namespace RelertSharp.Wpf
         {
             //dockMain.Layout.AddToolToRight("Ai Trigger Edit", aiTrigger);
             dockMain.Layout.AddToolToRight("Team List", teamList);
+            dockMain.Layout.AddToolToRight("Lightning", lightning);
             //dockMain.Layout.AddToolToRight("Ai Trigger List", aiTriggerList);
             //dockMain.AddToolToRight("Script List", scriptList);
             //dockMain.AddToolToRight("Taskforce List", taskforceList);
@@ -110,6 +112,12 @@ namespace RelertSharp.Wpf
             minimap.ResumeDrawing();
             pnlMain.MousePosChanged += PnlMain_MousePosChanged;
             pnlMain.ScaleFactorChanged += PnlMain_ScaleFactorChanged;
+            lightning.LightningChangedRequest += RedrawRequestHandler;
+        }
+
+        private void RedrawRequestHandler(object sender, EventArgs e)
+        {
+            pnlMain.HandleRedrawRequest();
         }
 
         private void PnlMain_ScaleFactorChanged(object sender, EventArgs e)
