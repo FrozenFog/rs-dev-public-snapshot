@@ -7,18 +7,43 @@
         xmlns:local="clr-namespace:RelertSharp.Wpf"
         xmlns:Views="clr-namespace:RelertSharp.Wpf.Views" x:Class="RelertSharp.Wpf.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Background="{DynamicResource dimBack}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="23"/>
         </Grid.RowDefinitions>
-        <DockingManager x:Name="dockMain" Grid.Row="0">
+        <Menu Height="23" VerticalAlignment="Top" Style="{DynamicResource menuDark}">
+            <MenuItem Header="123" Height="23">
+                <MenuItem Header="345">
+                    <MenuItem Header="567"/>
+                    <MenuItem Header="555"/>
+                </MenuItem>
+                <Separator Style="{DynamicResource sepDark}"/>
+                <MenuItem Header="5554">
+                    <MenuItem Header="5324"/>
+                    <MenuItem Header="6315"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="64321">
+                <MenuItem Header="63145">
+                    <MenuItem Header="6138905"/>
+                    <MenuItem Header="5678130"/>
+                </MenuItem>
+                <MenuItem Header="63145">
+                    <MenuItem Header="6138905"/>
+                    <MenuItem Header="5678130"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
+                    <MenuItem Header="disable" IsEnabled="False"/>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <DockingManager x:Name="dockMain" Grid.Row="0" Margin="0,23,0,0">
             <DockingManager.Theme>
                 <Vs2013DarkTheme/>
             </DockingManager.Theme>
         </DockingManager>
-        <StatusBar Name="bar" Grid.Row="1" Style="{DynamicResource barDark}">
+        <StatusBar Name="bar" Grid.Row="2" Style="{DynamicResource barDark}">
             <TextBlock x:Name="position">Ready</TextBlock>
         </StatusBar>
         <!--<Button Content="Button" VerticalAlignment="Top" Click="Button_Click"/>-->

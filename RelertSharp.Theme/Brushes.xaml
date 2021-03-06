@@ -9,7 +9,8 @@
     <!--Buttons-->
     <SolidColorBrush x:Key="btnBack" Color="#FF464646"/>
     <SolidColorBrush x:Key="btnBorder" Color="#FF555555"/>
-    
+    <SolidColorBrush x:Key="btnHighLight" Color="#FF565656"/>
+
     <!--Textboxes-->
     <SolidColorBrush x:Key="txbBorder" Color="#FF555555"/>
     <SolidColorBrush x:Key="txbBack" Color="#FF2E2E2E"/>
@@ -19,4 +20,10 @@
     <SolidColorBrush x:Key="scrLight" Color="#686868"/>
     <SolidColorBrush x:Key="scrBack" Color="#3E3E3E"/>
     <SolidColorBrush x:Key="scrMark" Color="#999999"/>
+    
+    <!--Menu-->
+    <SolidColorBrush x:Key="menuDimBack" Color="#1b1b1b"/>
+    <SolidColorBrush x:Key="menuBack" Color="#2d2d2d"/>
+    <SolidColorBrush x:Key="menuSep" Color="#373737"/>
+    <SolidColorBrush x:Key="menuHigh" Color="#404040"/>
 </ResourceDictionary>
