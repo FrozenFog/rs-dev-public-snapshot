@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.ViewModel;
 
 namespace RelertSharp.Wpf.Views
@@ -19,9 +20,12 @@ namespace RelertSharp.Wpf.Views
     /// <summary>
     /// ScriptView.xaml 的交互逻辑
     /// </summary>
-    public partial class ScriptView : UserControl, IObjectReciver
+    public partial class ScriptView : UserControl, IObjectReciver, IRsView
     {
         private ScriptVm context { get { return DataContext as ScriptVm; } }
+
+        public GuiViewType ViewType { get { return GuiViewType.Script; } }
+
         public ScriptView()
         {
             InitializeComponent();

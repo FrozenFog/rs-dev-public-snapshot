@@ -15,15 +15,19 @@ using System.Windows.Shapes;
 using RelertSharp.Common;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.MapStructure.Logic;
+using RelertSharp.Wpf.Common;
 
 namespace RelertSharp.Wpf.Views
 {
     /// <summary>
     /// AiTriggerListView.xaml 的交互逻辑
     /// </summary>
-    public partial class AiTriggerListView : UserControl, IListContainer
+    public partial class AiTriggerListView : UserControl, IListContainer, IRsView
     {
         private GlobalAiTriggerVm context { get { return DataContext as GlobalAiTriggerVm; } }
+
+        public GuiViewType ViewType { get { return GuiViewType.AiTriggerList; } }
+
         public AiTriggerListView()
         {
             InitializeComponent();

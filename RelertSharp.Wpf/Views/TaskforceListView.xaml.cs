@@ -14,14 +14,17 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Common;
+using RelertSharp.Wpf.Common;
 
 namespace RelertSharp.Wpf.Views
 {
     /// <summary>
     /// TaskforceListView.xaml 的交互逻辑
     /// </summary>
-    public partial class TaskforceListView : UserControl, IListContainer
+    public partial class TaskforceListView : UserControl, IListContainer, IRsView
     {
+        public GuiViewType ViewType { get { return GuiViewType.TaskforceList; } }
+
         public TaskforceListView()
         {
             InitializeComponent();

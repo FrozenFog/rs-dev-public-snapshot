@@ -17,17 +17,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using RelertSharp.Wpf.Common;
 
 namespace RelertSharp.Wpf.Views
 {
     /// <summary>
     /// LightningView.xaml 的交互逻辑
     /// </summary>
-    public partial class LightningView : UserControl
+    public partial class LightningView : UserControl, IRsView
     {
         internal event EventHandler LightningChangedRequest;
         public int ContentWidth { get { return (int)grdColContent.ActualWidth; } }
         private Lightning MapLightning { get { return GlobalVar.CurrentMapDocument.Map.LightningCollection; } }
+
+        public GuiViewType ViewType { get { return GuiViewType.LightningPanel; } }
+
         private LightningItem light;
         private DispatcherTimer refreshTimer;
         public LightningView()

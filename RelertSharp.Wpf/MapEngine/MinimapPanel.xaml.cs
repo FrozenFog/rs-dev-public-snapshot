@@ -14,16 +14,21 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RelertSharp.Common;
 using RelertSharp.Engine.Api;
+using RelertSharp.Wpf.Common;
+using RelertSharp.Wpf.Views;
 
 namespace RelertSharp.Wpf.MapEngine
 {
     /// <summary>
     /// MinimapPanel.xaml 的交互逻辑
     /// </summary>
-    public partial class MinimapPanel : UserControl
+    public partial class MinimapPanel : UserControl, IRsView
     {
         private bool drew = false;
         private bool moving = false;
+
+        public GuiViewType ViewType { get { return GuiViewType.Minimap; } }
+
         public MinimapPanel()
         {
             InitializeComponent();

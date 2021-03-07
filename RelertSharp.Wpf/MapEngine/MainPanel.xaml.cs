@@ -18,13 +18,15 @@ using RelertSharp.Engine.Api;
 using RelertSharp.Common;
 using System.Windows.Threading;
 using System.Threading;
+using RelertSharp.Wpf.Views;
+using RelertSharp.Wpf.Common;
 
 namespace RelertSharp.Wpf.MapEngine
 {
     /// <summary>
     /// MainPanel.xaml 的交互逻辑
     /// </summary>
-    public partial class MainPanel : UserControl
+    public partial class MainPanel : UserControl, IRsView
     {
         public event Dele3dLocateableHandler MousePosChanged;
         public event EventHandler ScaleFactorChanged;
@@ -34,6 +36,8 @@ namespace RelertSharp.Wpf.MapEngine
         private int prevW, prevH;
         private int nWidth { get { return this.ScaledWidth(); } }
         private int nHeight { get { return this.ScaledHeight(); } }
+
+        public GuiViewType ViewType { get { return GuiViewType.MainPanel; } }
 
         private static readonly object renderLock = new object();
         private static readonly object mouseHandleLock = new object();

@@ -98,6 +98,28 @@ namespace RelertSharp.Wpf
                             (g) => { root.RightSide.Children.Add(g); },
                             title, content);
         }
+        public static bool AddToolToRight(this LayoutRoot root, string title, object content, int level)
+        {
+            var groups = root.RightSide.Children;
+            LayoutAnchorGroup group;
+            if (groups.Count < level) return false;
+            if (groups.Count == level)
+            {
+                group = new LayoutAnchorGroup();
+                root.RightSide.Children.Add(group);
+            }
+            else
+            {
+                group = groups[level];
+            }
+            LayoutAnchorable anc = new LayoutAnchorable()
+            {
+                Title = title,
+                Content = content
+            };
+            group.Children.Add(anc);
+            return true;
+        }
         public static void AddToolToBottom(this LayoutRoot root, string title, object content)
         {
             AddToolToLayout(() => { return root.BottomSide.Children.FirstOrDefault(); },
