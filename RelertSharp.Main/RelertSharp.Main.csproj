@@ -125,6 +125,7 @@
     <Compile Include="Common\Enumerator\Bfs2DEnumerator.cs" />
     <Compile Include="Common\Enumerator\Circle2DEnumerator.cs" />
     <Compile Include="Common\Constant.cs" />
+    <Compile Include="Common\Enumerator\FisherYatesShuffle.cs" />
     <Compile Include="Common\Enumerator\FoundationEnumerator.cs" />
     <Compile Include="Common\Enumerator\SceneSquare2DEnumerator.cs" />
     <Compile Include="Common\Enumerator\TileSetEnumerator.cs" />
