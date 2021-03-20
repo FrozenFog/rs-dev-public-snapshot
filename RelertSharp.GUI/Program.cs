@@ -8,7 +8,7 @@ using System.Diagnostics;
 using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
 using RelertSharp.Common;
-using RelertSharp.GUI.SubWindows.LogicEditor;
+//using RelertSharp.GUI.SubWindows.LogicEditor;
 using System.Runtime.InteropServices;
 using static RelertSharp.GUI.GuiUtils;
 using System.Threading;
@@ -94,7 +94,7 @@ namespace RelertSharp.GUI
                             Log.Critical("These object will not show in scene(or in logic editor)");
                             Warning(Log.ShowCritical());
                         }
-                        Application.Run(new MainWindowTest());
+                        //Application.Run(new MainWindowTest());
                     },
                     "Unhandled error!",
                     () =>

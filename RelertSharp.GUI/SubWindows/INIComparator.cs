@@ -18,6 +18,12 @@ namespace RelertSharp.SubWindows
 {
     public partial class INIComparator : Form
     {
+        public enum ChangeStatus
+        {
+            New,
+            Removed,
+            Changed
+        }
         public INIComparator()
         {
             InitializeComponent();
