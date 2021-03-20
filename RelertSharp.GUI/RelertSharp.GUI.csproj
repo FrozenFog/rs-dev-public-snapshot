@@ -130,14 +130,394 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\Delegates.cs" />
+    <Compile Include="Controls\Extensions.cs" />
+    <Compile Include="Controls\InputWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\InputWindow.Designer.cs">
+      <DependentUpon>InputWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MinimapPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PickPanel\BasenodeObject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PickPanel\CellTagObject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PickPanel\Exporting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PickPanel\GeneralObjects.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PickPanel\OverlayObject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PickPanel\PickPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PickPanel\PickPanel.Designer.cs">
+      <DependentUpon>PickPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PickPanel\SmudgeObject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PickPanel\TerrainObject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PickPanel\WaypointObject.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RbPanel\RbBrushPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RbPanel\RbBrushPanel.Designer.cs">
+      <DependentUpon>RbBrushPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RbPanel\RbPanelBucket.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RbPanel\RbPanelBucket.Designer.cs">
+      <DependentUpon>RbPanelBucket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RbPanel\RbPanelLightRoom.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RbPanel\RbPanelLightRoom.Designer.cs">
+      <DependentUpon>RbPanelLightRoom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RbPanel\RbPanelWand.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RbPanel\RbPanelWand.Designer.cs">
+      <DependentUpon>RbPanelWand.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\TilePanel\AllTiles.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TilePanel\GeneralTiles.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TilePanel\TilePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TilePanel\TilePanel.Designer.cs">
+      <DependentUpon>TilePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LocalSettingWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LocalSettingWindow.Designer.cs">
+      <DependentUpon>LocalSettingWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\Command.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Drawing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\AttributeBrush.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\KeyHandler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\EventReciver.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\LightRoom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\MenuScript.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\ObjectBrush.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\ObjectInspect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\ObjectMoving.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sidebar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\AircraftAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\AircraftAttributeForm.Designer.cs">
+      <DependentUpon>AircraftAttributeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\Sub\BaseAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\BaseAttributeForm.Designer.cs">
+      <DependentUpon>BaseAttributeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\Sub\BuildingAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\BuildingAttributeForm.Designer.cs">
+      <DependentUpon>BuildingAttributeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\GameRunningSpector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\InfantryAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\InfantryAttributeForm.Designer.cs">
+      <DependentUpon>InfantryAttributeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\Sub\LoadingWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\LoadingWindow.Designer.cs">
+      <DependentUpon>LoadingWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\MouseHandler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Navigating.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\MapVerifyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\MapVerifyForm.Designer.cs">
+      <DependentUpon>MapVerifyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\Sub\RunSettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\RunSettingForm.Designer.cs">
+      <DependentUpon>RunSettingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\Sub\UnitAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Sub\UnitAttributeForm.Designer.cs">
+      <DependentUpon>UnitAttributeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\TileBrush.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\TileUtils.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\ToolBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\ToolsControlPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\Viewport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\RbPanel\RbPanelBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RbPanel\RbPanelBase.Designer.cs">
+      <DependentUpon>RbPanelBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\BrushModel\BrushModel.cs" />
+    <Compile Include="Model\MainWindowDataModel\Selecting.cs" />
+    <Compile Include="Model\MainWindowDataModel\TileUtils.cs" />
+    <Compile Include="Model\TileBrush\TileBrush.cs" />
+    <Compile Include="Model\TileBrush\TileBucket.cs" />
+    <Compile Include="Model\UndoRedo\UndoRedo.cs" />
+    <Compile Include="Model\UndoRedo\UndoRedoCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controls\RbPanel\RbPanelAttribute.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RbPanel\RbPanelAttribute.Designer.cs">
+      <DependentUpon>RbPanelAttribute.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\INIComparator.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SubWindows\INIComparator.Designer.cs">
       <DependentUpon>INIComparator.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\INIEditor\CompletionData.cs" />
+    <Compile Include="SubWindows\INIEditor\FoldingStrategy.cs" />
+    <Compile Include="SubWindows\INIEditor\IntelligenceManager.cs" />
+    <Compile Include="SubWindows\INIEditor\RawEditor.xaml.cs">
+      <DependentUpon>RawEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\INIEditor\dlgEditSection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\INIEditor\dlgEditSection.Designer.cs">
+      <DependentUpon>dlgEditSection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\INIEditor\dlgImportFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\INIEditor\dlgImportFile.Designer.cs">
+      <DependentUpon>dlgImportFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\INIEditor\EventHandler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\INIEditor\INIEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\INIEditor\INIEditor.Designer.cs">
+      <DependentUpon>INIEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\INIEditor\ScrollBarConverter.cs" />
+    <Compile Include="SubWindows\INIEditor\SearchBox.xaml.cs">
+      <DependentUpon>SearchBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\dlgCopy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\dlgCopy.Designer.cs">
+      <DependentUpon>dlgCopy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\dlgNewHouse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\dlgNewHouse.Designer.cs">
+      <DependentUpon>dlgNewHouse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\EventHandler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\LogicEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\LogicEditor.Designer.cs">
+      <DependentUpon>LogicEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelScript.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelScript.Designer.cs">
+      <DependentUpon>PanelScript.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelScriptParam.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelScriptParam.Designer.cs">
+      <DependentUpon>PanelScriptParam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelTaskforce.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelTaskforce.Designer.cs">
+      <DependentUpon>PanelTaskforce.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TaskforcePage\TaskforcePage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelEvent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelEvent.Designer.cs">
+      <DependentUpon>PanelEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\ParameterPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\ParameterPanel.Designer.cs">
+      <DependentUpon>ParameterPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\TriggerPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelTrgTag.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelTrgTag.Designer.cs">
+      <DependentUpon>PanelTrgTag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\PanelGlobalSearch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\Pages\PanelGlobalSearch.Designer.cs">
+      <DependentUpon>PanelGlobalSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\PublicPort.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubWindows\LogicEditor\SearchCollection.cs" />
+    <Compile Include="SubWindows\LogicEditor\StaticHelper.cs" />
+    <Compile Include="Model\MainWindowDataModel\Main.cs" />
+    <Compile Include="MainWindowTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindowTest.Designer.cs">
+      <DependentUpon>MainWindowTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUIUtils.cs" />
+    <Compile Include="WelcomeWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WelcomeWindow.Designer.cs">
+      <DependentUpon>WelcomeWindow.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Controls\InputWindow.resx">
+      <DependentUpon>InputWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PickPanel\PickPanel.resx">
+      <DependentUpon>PickPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RbPanel\RbBrushPanel.resx">
+      <DependentUpon>RbBrushPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RbPanel\RbPanelBucket.resx">
+      <DependentUpon>RbPanelBucket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RbPanel\RbPanelLightRoom.resx">
+      <DependentUpon>RbPanelLightRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RbPanel\RbPanelWand.resx">
+      <DependentUpon>RbPanelWand.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TilePanel\TilePanel.resx">
+      <DependentUpon>TilePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalSettingWindow.resx">
+      <DependentUpon>LocalSettingWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\AircraftAttributeForm.resx">
+      <DependentUpon>AircraftAttributeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\BaseAttributeForm.resx">
+      <DependentUpon>BaseAttributeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\BuildingAttributeForm.resx">
+      <DependentUpon>BuildingAttributeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\InfantryAttributeForm.resx">
+      <DependentUpon>InfantryAttributeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\LoadingWindow.resx">
+      <DependentUpon>LoadingWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\MapVerifyForm.resx">
+      <DependentUpon>MapVerifyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\RunSettingForm.resx">
+      <DependentUpon>RunSettingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\Sub\UnitAttributeForm.resx">
+      <DependentUpon>UnitAttributeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RbPanel\RbPanelBase.resx">
+      <DependentUpon>RbPanelBase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -148,8 +528,56 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Controls\RbPanel\RbPanelAttribute.resx">
+      <DependentUpon>RbPanelAttribute.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SubWindows\INIComparator.resx">
       <DependentUpon>INIComparator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\INIEditor\dlgEditSection.resx">
+      <DependentUpon>dlgEditSection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\INIEditor\dlgImportFile.resx">
+      <DependentUpon>dlgImportFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\INIEditor\INIEditor.resx">
+      <DependentUpon>INIEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\dlgCopy.resx">
+      <DependentUpon>dlgCopy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\dlgNewHouse.resx">
+      <DependentUpon>dlgNewHouse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\LogicEditor.resx">
+      <DependentUpon>LogicEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindowTest.resx">
+      <DependentUpon>MainWindowTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelScript.resx">
+      <DependentUpon>PanelScript.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelScriptParam.resx">
+      <DependentUpon>PanelScriptParam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TaskforcePage\PanelTaskforce.resx">
+      <DependentUpon>PanelTaskforce.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelEvent.resx">
+      <DependentUpon>PanelEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TriggerPage\PanelTrgTag.resx">
+      <DependentUpon>PanelTrgTag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\TriggerPage\ParameterPanel.resx">
+      <DependentUpon>ParameterPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubWindows\LogicEditor\Pages\PanelGlobalSearch.resx">
+      <DependentUpon>PanelGlobalSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WelcomeWindow.resx">
+      <DependentUpon>WelcomeWindow.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="app.manifest" />
@@ -250,7 +678,19 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="SubWindows\INIEditor\RawEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\INIEditor\SearchBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SubWindows\LogicEditor\Pages\TeamPage\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if /I "$(ConfigurationName)" == "Release" Eazfuscator.NET.exe "$(TargetPath)" --msbuild-project-path "$(ProjectPath)" --msbuild-project-configuration "$(ConfigurationName)" --msbuild-project-platform "$(PlatformName)" --msbuild-solution-path "$(SolutionPath)" -n --newline-flush -v 2019.1</PostBuildEvent>
