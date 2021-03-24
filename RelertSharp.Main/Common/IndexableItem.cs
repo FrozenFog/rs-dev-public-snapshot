@@ -33,6 +33,7 @@ namespace RelertSharp.Common
 
         public bool HasId(string id)
         {
+            if (id.IsNullOrEmpty()) return false;
             return data.ContainsKey(id);
         }
 

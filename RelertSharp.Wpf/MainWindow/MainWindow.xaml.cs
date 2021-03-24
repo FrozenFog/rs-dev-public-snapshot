@@ -80,7 +80,7 @@ namespace RelertSharp.Wpf
 
         private void DelayedInitialize(object sender, EventArgs e)
         {
-            //DebugInit();
+            DebugInit();
         }
 
         private void AddToolPage()

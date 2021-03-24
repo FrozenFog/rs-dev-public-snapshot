@@ -33,6 +33,14 @@ namespace RelertSharp.Common
             end = new Pnt(endX, endY);
             width = mapwidth;
         }
+        public SceneSquare2D(I2dLocateable cellLT, I2dLocateable cellRB, int mapWidth)
+        {
+            Utils.Misc.TileToFlatCoord(cellLT, mapWidth, out int beginX, out int beginY);
+            Utils.Misc.TileToFlatCoord(cellRB, mapWidth, out int endX, out int endY);
+            begin = new Pnt(beginX, beginY);
+            end = new Pnt(endX, endY);
+            width = mapWidth;
+        }
 
         public IEnumerator<I2dLocateable> GetEnumerator()
         {

@@ -4,6 +4,7 @@ using RelertSharp.IniSystem;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -27,10 +28,16 @@ namespace RelertSharp.MapStructure
             FixEmptyTiles();
             DumpOverlayToTile();
 
+            void func()
+            {
+                residual = new Dictionary<string, INIEntity>(f.IniDict);
+                GlobalVar.GlobalRules?.SetLocalRules(residual);
+            }
+
             GetPreview(f);
             GetAbstractLogics(f);
             GetTeam(f);
-            GetObjects(f);
+            GetObjects(f, func);
             LoadHouseColor();
 
             globalid.AddRange(Triggers.AllId);
@@ -39,7 +46,7 @@ namespace RelertSharp.MapStructure
             globalid.AddRange(Tags.AllId);
             globalid.AddRange(Scripts.AllId);
 
-            residual = new Dictionary<string, INIEntity>(f.IniDict);
+            
 
             isomappack5String = "";
             overlayString = "";
@@ -78,7 +85,7 @@ namespace RelertSharp.MapStructure
             if (f.IniDict.Keys.Contains("Ranking")) ranks = new RankInfo(f.PopEnt("Ranking"));
             digest = f.PopEnt("Digest").JoinString();
         }
-        private void GetObjects(MapFile f)
+        private void GetObjects(MapFile f, Action dumpFunc = null)
         {
             INIEntity entUnit = f.PopEnt("Units");
             INIEntity entInf = f.PopEnt("Infantry");
@@ -87,6 +94,8 @@ namespace RelertSharp.MapStructure
             INIEntity entTerrain = f.PopEnt("Terrain");
             INIEntity entSmudge = f.PopEnt("Smudge");
             INIEntity entLight = f.PopEnt(Constant.MapStructure.CustomComponents.LightsourceTitle);
+
+            dumpFunc?.Invoke();
 
             foreach (INIPair p in entSmudge.DataList)
             {

@@ -1,4 +1,4 @@
-﻿namespace RelertSharp.Encoding
+﻿namespace RelertSharp.Algorithm
 {
     public static class CRC
     {

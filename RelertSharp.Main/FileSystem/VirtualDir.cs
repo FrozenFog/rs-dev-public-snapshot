@@ -1,4 +1,5 @@
-﻿using RelertSharp.Common;
+﻿using RelertSharp.Algorithm;
+using RelertSharp.Common;
 using RelertSharp.Encoding;
 using RelertSharp.IniSystem;
 using System.Collections.Generic;
@@ -166,6 +167,21 @@ namespace RelertSharp.FileSystem
                 return File.ReadAllBytes(path);
             else
                 return null;
+        }
+        public bool ExtractFile(string _fullName, string savePath, bool fromRoot = false)
+        {
+            byte[] data = GetRawByte(_fullName, fromRoot);
+            if (data != null)
+            {
+                FileStream fs = new FileStream(savePath, FileMode.Create, FileAccess.Write);
+                MemoryStream ms = new MemoryStream(data);
+                ms.WriteTo(fs);
+                fs.Flush();
+                ms.Dispose();
+                fs.Dispose();
+                return true;
+            }
+            return false;
         }
         public byte[] GetRawByte(string _fullName, bool fromRoot = false)
         {

@@ -251,6 +251,10 @@ namespace System
         {
             return src ? "yes" : "no";
         }
+        public static string ZeroOne(this bool src)
+        {
+            return src ? "1" : "0";
+        }
     }
 }
 
