@@ -43,7 +43,6 @@ namespace RelertSharp.Wpf.MapEngine
         private static readonly object lockMouse = new object();
 
 
-        private DispatcherTimer _baseRefreshing;
         private DispatcherTimer _wheelResize;
 
 

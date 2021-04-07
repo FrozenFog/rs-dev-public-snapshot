@@ -123,6 +123,9 @@
     <Compile Include="Common\Comparer\ListViewComparer.cs" />
     <Compile Include="Common\Config\AttributeInfo.cs" />
     <Compile Include="Common\Config\ComboReading.cs" />
+    <Compile Include="Common\Config\Model\ComboGroup.cs" />
+    <Compile Include="Common\Config\Model\LogicAttributes.cs" />
+    <Compile Include="Common\Config\Model\RsModConfig.cs" />
     <Compile Include="Common\Enumerator\Bfs2DEnumerator.cs" />
     <Compile Include="Common\Enumerator\Circle2DEnumerator.cs" />
     <Compile Include="Common\Constant.cs" />

@@ -1,4 +1,5 @@
-﻿using RelertSharp.IniSystem;
+﻿using RelertSharp.Common.Config.Model;
+using RelertSharp.IniSystem;
 using RelertSharp.MapStructure;
 using System;
 using System.Collections.Generic;
@@ -12,35 +13,23 @@ namespace RelertSharp.Common
         private Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
         private Rules Rules { get { return GlobalVar.GlobalRules; } }
 
-        private bool IsDefaultCombo(XmlNode n)
-        {
-            return (n as XmlElement).GetAttribute("default").ParseBool();
-        }
         private IEnumerable<IIndexableItem> ReadCombo(string type)
         {
-            XmlNode comboList = Root.SelectSingleNode("ComboList");
-            foreach (XmlNode n in comboList.ChildNodes)
+            foreach (ComboGroup combo in data.ComboList)
             {
-                string name = n.GetAttribute("type");
-                if (name == type && !IsDefaultCombo(n))
+                if (combo.Type == type)
                 {
-                    string baseOn = n.GetAttribute("base");
                     List<IIndexableItem> items = new List<IIndexableItem>();
-                    if (!baseOn.IsNullOrEmpty())
+                    if (!combo.BasedOn.IsNullOrEmpty())
                     {
-                        IEnumerable<IIndexableItem> based = GetCombo(baseOn);
+                        IEnumerable<IIndexableItem> based = GetCombo(combo.BasedOn);
                         items.AddRange(based);
                     }
                     List<IIndexableItem> front = new List<IIndexableItem>();
-                    foreach (XmlNode nItem in n.ChildNodes)
+                    foreach (var item in combo.Items)
                     {
-                        string key = nItem.GetAttribute("key");
-                        string desc = nItem.GetAttribute("desc");
-                        string value = nItem.GetAttribute("value");
-                        bool isFront = nItem.GetAttribute("front").ParseBool();
-                        ComboItem cb = new ComboItem(key, desc, value);
-                        if (isFront) front.Add(cb);
-                        else items.Add(cb);
+                        if (item.IsFront) front.Add(item.Convert());
+                        else items.Add(item.Convert());
                     }
                     if (front.Count > 0)
                     {
