@@ -92,7 +92,7 @@ namespace RelertSharp.Engine
             scenepos += _NormTileVec * Constant.DrawingEngine.MapMaxHeightDrawing;
             int height = 0;
             Vec3 tileCoord = new Vec3();
-            for (; height < Constant.DrawingEngine.MapMaxHeightDrawing * 2; height++)
+            for (; tileCoord.Z >= 0; )
             {
                 tileCoord = ScenePosToCoord(scenepos);
                 if (_cellFindingReferance.HasTileOn(tileCoord))
