@@ -39,9 +39,8 @@ namespace RelertSharp.Wpf.MapEngine
 
         public GuiViewType ViewType { get { return GuiViewType.MainPanel; } }
 
-        private static readonly object renderLock = new object();
-        private static readonly object mouseHandleLock = new object();
-        private bool handlingMouse = false;
+        private static readonly object lockRender = new object();
+        private static readonly object lockMouse = new object();
 
 
         private DispatcherTimer _baseRefreshing;
@@ -74,7 +73,6 @@ namespace RelertSharp.Wpf.MapEngine
             EngineApi.EngineCtor(nWidth, nHeight);
             _handle = EngineApi.ResetHandle(nWidth, nHeight);
             d3dimg.IsFrontBufferAvailableChanged += FrontBufferChanged;
-            EngineApi.MouseMoveTileMarkRedrawRequest += EngineApi_MouseMoveTileMarkRedrawRequest;
             EngineApi.RedrawRequest += RedrawInvokeHandler;
             EngineApi.ResizeRequest += ResizeInvokeHandler;
             _wheelResize = new DispatcherTimer()
@@ -132,20 +130,11 @@ namespace RelertSharp.Wpf.MapEngine
             RenderFrame();
         }
 
-        private void EngineApi_MouseMoveTileMarkRedrawRequest(object sender, EventArgs e)
-        {
-            RenderFrame();
-        }
-
         private void FrontBufferChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             RenderFrame();
         }
 
-        private void ResizeTick(object sender, EventArgs e)
-        {
-
-        }
         private void Resize()
         {
             if (!rendering)
@@ -168,46 +157,42 @@ namespace RelertSharp.Wpf.MapEngine
 
         private void RenderFrame()
         {
-            lock (renderLock)
+            this.Dispatcher.Invoke(() =>
             {
-                if (drew && !rendering)
+                lock (lockRender)
                 {
-                    //EngineApi.RefreshFrame();
-                    if (d3dimg.IsFrontBufferAvailable /*&& arg.RenderingTime != lastRender*/)
+                    if (drew && !rendering)
                     {
-                        //_handle = EngineApi.ResetHandle(nWidth, nHeight);
-                        if (_handle != IntPtr.Zero)
+                        //EngineApi.RefreshFrame();
+                        if (d3dimg.IsFrontBufferAvailable /*&& arg.RenderingTime != lastRender*/)
                         {
-                            rendering = true;
-                            d3dimg.Lock();
-                            d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
-                            EngineApi.RenderFrame();
-                            d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
-                            d3dimg.Unlock();
-                            rendering = false;
-                            //lastRender = arg.RenderingTime;
+                            //_handle = EngineApi.ResetHandle(nWidth, nHeight);
+                            if (_handle != IntPtr.Zero)
+                            {
+                                rendering = true;
+                                d3dimg.Lock();
+                                d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
+                                EngineApi.RenderFrame();
+                                d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
+                                d3dimg.Unlock();
+                                rendering = false;
+                                //lastRender = arg.RenderingTime;
+                            }
                         }
                     }
                 }
-            }
+            });
         }
 
         private void HandleMouseMove(object sender, MouseEventArgs e)
         {
-            if (!handlingMouse)
+            lock (lockMouse)
             {
                 if (drew)
                 {
                     Point p = e.GetPosition(this);
-                    p.X *= GuiUtil.MonitorScale * EngineApi.ScaleFactor;
-                    p.Y *= GuiUtil.MonitorScale * EngineApi.ScaleFactor;
-                    Vec3 pos = EngineApi.ClientPointToCellPos(p.GdiPoint(), out int subcell);
-                    if (EngineApi.MouseOnTile(pos))
-                    {
-                        handlingMouse = true;
-                        MousePosChanged?.Invoke(this, pos.To3dLocateable());
-                        handlingMouse = false;
-                    }
+                    GuiUtil.ScaleWpfMousePoint(ref p);
+                    MouseMoved(p);
                 }
             }
         }
@@ -222,6 +207,30 @@ namespace RelertSharp.Wpf.MapEngine
                     Resize();
                     ResumeMouseHandler();
                 }
+            }
+        }
+
+        private void HandleMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (drew)
+            {
+                Point p = e.GetPosition(this);
+                GuiUtil.ScaleWpfMousePoint(ref p);
+                if (e.ChangedButton == MouseButton.Left) this.LmbUp(p);
+                else if (e.ChangedButton == MouseButton.Right) this.RmbUp(p);
+                else if (e.ChangedButton == MouseButton.Middle) this.MmbUp(p);
+            }
+        }
+
+        private void HandleMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (drew)
+            {
+                Point p = e.GetPosition(this);
+                GuiUtil.ScaleWpfMousePoint(ref p);
+                if (e.ChangedButton == MouseButton.Left) this.LmbDown(p);
+                else if (e.ChangedButton == MouseButton.Right) this.RmbDown(p);
+                else if (e.ChangedButton == MouseButton.Middle) this.MmbDown(p);
             }
         }
 

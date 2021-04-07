@@ -51,11 +51,14 @@ namespace RelertSharp.Wpf.MapEngine
 
         private void MinimapRedrawed(object sender, EventArgs e)
         {
-            if (drew)
+            this.Dispatcher.Invoke(() =>
             {
-                ImageSource src = EngineApi.MinimapImgSource;
-                this.img.Source = src;
-            }
+                if (drew)
+                {
+                    ImageSource src = EngineApi.MinimapImgSource;
+                    this.img.Source = src;
+                }
+            });
         }
 
         private void PanelSizeChanged(object sender, SizeChangedEventArgs e)
