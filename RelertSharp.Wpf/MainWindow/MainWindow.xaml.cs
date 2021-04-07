@@ -64,7 +64,7 @@ namespace RelertSharp.Wpf
         {
             InitializeComponent();
             AddToolPage();
-            //AddReciveListener();
+            AddReciveListener();
             SetTimer();
         }
 
@@ -91,7 +91,7 @@ namespace RelertSharp.Wpf
             //dockMain.Layout.AddToolToRight("Ai Trigger List", aiTriggerList);
             //dockMain.AddToolToRight("Script List", scriptList);
             //dockMain.AddToolToRight("Taskforce List", taskforceList);
-            //dockMain.Layout.AddToolToRight("Team", team);
+            dockMain.Layout.AddToolToRight("Team", team);
             //dockMain.AddToolToRight("Script", script);
             //dockMain.Layout.AddToolToRight("Light", lightPanel);
             dockMain.AddCenterPage("Map", pnlMain);

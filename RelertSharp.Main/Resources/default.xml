@@ -12,270 +12,322 @@
     <cb type="Tags" default="true"/>
     <cb type="BuildingUpgrade" default="true"/>
     <cb type="SideIndex">
-      <item key="1" desc="Allies"/>
-      <item key="2" desc="Soviets"/>
-      <item key="3" desc="Epsilon"/>
-      <item key="4" desc="Foehn"/>
+      <Items>
+        <item key="1" desc="Allies"/>
+        <item key="2" desc="Soviets"/>
+        <item key="3" desc="Epsilon"/>
+        <item key="4" desc="Foehn"/>
+      </Items>
     </cb>
     <cb type="WaypointWithNone" base="Waypoints">
-      <item key="None" front="true"/>
+      <Items>
+        <item key="None" front="true"/>
+      </Items>
     </cb>
     <cb type="AiSideIndex" base="SideIndex">
-      <item key="0" desc="&lt;all&gt;" front="true"/>
+      <Items>
+        <item key="0" desc="&lt;all&gt;" front="true"/>
+      </Items>
     </cb>
     <cb type="MapObjectTags" base="Tags">
-      <item key="&lt;none&gt;" front="true"/>
+      <Items>
+        <item key="&lt;none&gt;" front="true"/>
+      </Items>
     </cb>
     <cb type="TeamVeteranLevel">
-      <item key="1" desc="Rookie"/>
-      <item key="2" desc="Veteran"/>
-      <item key="3" desc="Elite"/>
+      <Items>
+        <item key="1" desc="Rookie"/>
+        <item key="2" desc="Veteran"/>
+        <item key="3" desc="Elite"/>
+      </Items>
     </cb>
     <cb type="MCDecisions">
-      <item key="0" desc="Nothing"/>
-      <item key="1" desc="Add to team"/>
-      <item key="2" desc="Send to grinder"/>
-      <item key="3" desc="Enter bio reactor"/>
-      <item key="4" desc="Go to hunt"/>
-      <item key="5" desc="Stand still and do nothing"/>
+      <Items>
+        <item key="0" desc="Nothing"/>
+        <item key="1" desc="Add to team"/>
+        <item key="2" desc="Send to grinder"/>
+        <item key="3" desc="Enter bio reactor"/>
+        <item key="4" desc="Go to hunt"/>
+        <item key="5" desc="Stand still and do nothing"/>
+      </Items>
     </cb>
     <cb type="CountryMultiExtend" base="OwnerCountry">
-      <item key="&lt;none&gt;" front="true"/>
-      <item key="&lt;Player @ A&gt;"/>
-      <item key="&lt;Player @ B&gt;"/>
-      <item key="&lt;Player @ C&gt;"/>
-      <item key="&lt;Player @ D&gt;"/>
-      <item key="&lt;Player @ E&gt;"/>
-      <item key="&lt;Player @ F&gt;"/>
-      <item key="&lt;Player @ G&gt;"/>
-      <item key="&lt;Player @ H&gt;"/>
+      <Items>
+        <item key="&lt;none&gt;" front="true"/>
+        <item key="&lt;Player @ A&gt;"/>
+        <item key="&lt;Player @ B&gt;"/>
+        <item key="&lt;Player @ C&gt;"/>
+        <item key="&lt;Player @ D&gt;"/>
+        <item key="&lt;Player @ E&gt;"/>
+        <item key="&lt;Player @ F&gt;"/>
+        <item key="&lt;Player @ G&gt;"/>
+        <item key="&lt;Player @ H&gt;"/>
+      </Items>
     </cb>
     <cb type="HouseMultiExtend" base="Houses">
-      <item key="&lt;none&gt;" front="true"/>
-      <item key="&lt;Player @ A&gt;"/>
-      <item key="&lt;Player @ B&gt;"/>
-      <item key="&lt;Player @ C&gt;"/>
-      <item key="&lt;Player @ D&gt;"/>
-      <item key="&lt;Player @ E&gt;"/>
-      <item key="&lt;Player @ F&gt;"/>
-      <item key="&lt;Player @ G&gt;"/>
-      <item key="&lt;Player @ H&gt;"/>
+      <Items>
+        <item key="&lt;none&gt;" front="true"/>
+        <item key="&lt;Player @ A&gt;"/>
+        <item key="&lt;Player @ B&gt;"/>
+        <item key="&lt;Player @ C&gt;"/>
+        <item key="&lt;Player @ D&gt;"/>
+        <item key="&lt;Player @ E&gt;"/>
+        <item key="&lt;Player @ F&gt;"/>
+        <item key="&lt;Player @ G&gt;"/>
+        <item key="&lt;Player @ H&gt;"/>
+      </Items>
     </cb>
     <cb type="AiHouse" base="OwnerCountry">
-      <item key="&lt;all&gt;" front="true"/>
+      <Items>
+        <item key="&lt;all&gt;" front="true"/>
+      </Items>
     </cb>
     <cb type="AiTriggerType" hideKey="true">
-      <item key="-1" desc="Always build"/>
-      <item key="0" desc="Enemy owns NUMBER of TECHTYPE"/>
-      <item key="1" desc="Ai owns NUMBER of TECHTYPE"/>
-      <item key="2" desc="Enemy power is yellow"/>
-      <item key="3" desc="Enemy power is red"/>
-      <item key="4" desc="Enemy has NUMBER of credit"/>
-      <item key="5" desc="Ai Iron curtain ready"/>
-      <item key="6" desc="Ai Chronosphere ready"/>
-      <item key="7" desc="Neutrul or civilian owns NUMBER of TECHTYPE"/>
+      <Items>
+        <item key="-1" desc="Always build"/>
+        <item key="0" desc="Enemy owns NUMBER of TECHTYPE"/>
+        <item key="1" desc="Ai owns NUMBER of TECHTYPE"/>
+        <item key="2" desc="Enemy power is yellow"/>
+        <item key="3" desc="Enemy power is red"/>
+        <item key="4" desc="Enemy has NUMBER of credit"/>
+        <item key="5" desc="Ai Iron curtain ready"/>
+        <item key="6" desc="Ai Chronosphere ready"/>
+        <item key="7" desc="Neutrul or civilian owns NUMBER of TECHTYPE"/>
+      </Items>
     </cb>
     <cb type="AiTriggerOperator" hideKey="true">
-      <item key="0" desc="less than"/>
-      <item key="1" desc="less than or equal to"/>
-      <item key="2" desc="equal to"/>
-      <item key="3" desc="greater than or equal to"/>
-      <item key="4" desc="greater than"/>
-      <item key="5" desc="not equal to"/>
+      <Items>
+        <item key="0" desc="less than"/>
+        <item key="1" desc="less than or equal to"/>
+        <item key="2" desc="equal to"/>
+        <item key="3" desc="greater than or equal to"/>
+        <item key="4" desc="greater than"/>
+        <item key="5" desc="not equal to"/>
+      </Items>
     </cb>
     <cb type="AiTriggerSide" base="Side">
-      <item key="&lt;all&gt;" front="true"/>
+      <Items>
+        <item key="&lt;all&gt;" front="true"/>
+      </Items>
     </cb>
     <cb type="ScriptUnitMission">
-      <item key="Sleep" desc="" value="0"/>
-      <item key="Attack" desc="" value="1"/>
-      <item key="Move" desc="" value="2"/>
-      <item key="QMove" desc="" value="3"/>
-      <item key="Retreat" desc="" value="4"/>
-      <item key="Guard" desc="" value="5"/>
-      <item key="Sticky" desc="" value="6"/>
-      <item key="Enter" desc="" value="7"/>
-      <item key="Capture" desc="" value="8"/>
-      <item key="Eaten" desc="" value="9"/>
-      <item key="Harvest" desc="" value="10"/>
-      <item key="Area Guard" desc="" value="11"/>
-      <item key="Return" desc="" value="12"/>
-      <item key="Stop" desc="" value="13"/>
-      <item key="Ambush" desc="" value="14"/>
-      <item key="Hunt" desc="" value="15"/>
-      <item key="Unload" desc="" value="16"/>
-      <item key="Sabotage" desc="" value="17"/>
-      <item key="Construction" desc="" value="18"/>
-      <item key="Selling" desc="" value="19"/>
-      <item key="Repair" desc="" value="20"/>
-      <item key="Rescue" desc="" value="21"/>
-      <item key="Missile" desc="" value="22"/>
-      <item key="Harmless" desc="" value="23"/>
-      <item key="Open" desc="" value="24"/>
-      <item key="Patrol" desc="" value="25"/>
-      <item key="Paradrop Approach" desc="" value="26"/>
-      <item key="Paradrop Overfly" desc="" value="27"/>
-      <item key="Wait" desc="" value="28"/>
-      <item key="Move" desc="" value="29"/>
-      <item key="Attack" desc="" value="30"/>
-      <item key="Spyplane Approach" desc="" value="31"/>
-      <item key="Spyplane Overfly" desc="" value="32"/>
+      <Items>
+        <item key="Sleep" desc="" value="0"/>
+        <item key="Attack" desc="" value="1"/>
+        <item key="Move" desc="" value="2"/>
+        <item key="QMove" desc="" value="3"/>
+        <item key="Retreat" desc="" value="4"/>
+        <item key="Guard" desc="" value="5"/>
+        <item key="Sticky" desc="" value="6"/>
+        <item key="Enter" desc="" value="7"/>
+        <item key="Capture" desc="" value="8"/>
+        <item key="Eaten" desc="" value="9"/>
+        <item key="Harvest" desc="" value="10"/>
+        <item key="Area Guard" desc="" value="11"/>
+        <item key="Return" desc="" value="12"/>
+        <item key="Stop" desc="" value="13"/>
+        <item key="Ambush" desc="" value="14"/>
+        <item key="Hunt" desc="" value="15"/>
+        <item key="Unload" desc="" value="16"/>
+        <item key="Sabotage" desc="" value="17"/>
+        <item key="Construction" desc="" value="18"/>
+        <item key="Selling" desc="" value="19"/>
+        <item key="Repair" desc="" value="20"/>
+        <item key="Rescue" desc="" value="21"/>
+        <item key="Missile" desc="" value="22"/>
+        <item key="Harmless" desc="" value="23"/>
+        <item key="Open" desc="" value="24"/>
+        <item key="Patrol" desc="" value="25"/>
+        <item key="Paradrop Approach" desc="" value="26"/>
+        <item key="Paradrop Overfly" desc="" value="27"/>
+        <item key="Wait" desc="" value="28"/>
+        <item key="Move" desc="" value="29"/>
+        <item key="Attack" desc="" value="30"/>
+        <item key="Spyplane Approach" desc="" value="31"/>
+        <item key="Spyplane Overfly" desc="" value="32"/>
+      </Items>
     </cb>
     <cb type="MapUnitState">
-      <item key="Guard" desc=""/>
-      <item key="Area Guard" desc=""/>
-      <item key="Sleep" desc=""/>
-      <item key="Sticky" desc=""/>
-      <item key="Hunt" desc=""/>
-      <item key="Harmless" desc=""/>
-      <item key="Patrol" desc=""/>
-      <item key="Retreat" desc=""/>
-      <item key="Ambush" desc=""/>
-      <item key="Attack" desc=""/>
-      <item key="Capture" desc=""/>
-      <item key="Construction" desc=""/>
-      <item key="Enter" desc=""/>
-      <item key="Harvest" desc=""/>
-      <item key="Missile" desc=""/>
-      <item key="Move" desc=""/>
-      <item key="Open" desc=""/>
-      <item key="QMove" desc=""/>
-      <item key="Repair" desc=""/>
-      <item key="Rescue" desc=""/>
-      <item key="Return" desc=""/>
-      <item key="Sabotage" desc=""/>
-      <item key="Selling" desc=""/>
-      <item key="Stop" desc=""/>
-      <item key="Unload" desc=""/>
+      <Items>
+        <item key="Guard" desc=""/>
+        <item key="Area Guard" desc=""/>
+        <item key="Sleep" desc=""/>
+        <item key="Sticky" desc=""/>
+        <item key="Hunt" desc=""/>
+        <item key="Harmless" desc=""/>
+        <item key="Patrol" desc=""/>
+        <item key="Retreat" desc=""/>
+        <item key="Ambush" desc=""/>
+        <item key="Attack" desc=""/>
+        <item key="Capture" desc=""/>
+        <item key="Construction" desc=""/>
+        <item key="Enter" desc=""/>
+        <item key="Harvest" desc=""/>
+        <item key="Missile" desc=""/>
+        <item key="Move" desc=""/>
+        <item key="Open" desc=""/>
+        <item key="QMove" desc=""/>
+        <item key="Repair" desc=""/>
+        <item key="Rescue" desc=""/>
+        <item key="Return" desc=""/>
+        <item key="Sabotage" desc=""/>
+        <item key="Selling" desc=""/>
+        <item key="Stop" desc=""/>
+        <item key="Unload" desc=""/>
+      </Items>
     </cb>
     <cb type="MapSoptlightType">
-      <item key="0" desc="None"/>
-      <item key="1" desc="Arcing"/>
-      <item key="2" desc="Circular"/>
+      <Items>
+        <item key="0" desc="None"/>
+        <item key="1" desc="Arcing"/>
+        <item key="2" desc="Circular"/>
+      </Items>
     </cb>
   </ComboList>
   <AttributeInfo>
     <Team>
-      <class id="0" name="BasicData" desc=""/>
-      <class id="1" name="Recruiting" desc=""/>
-      <class id="2" name="Attacking" desc=""/>
-      <class id="3" name="SinglePlayer" desc=""/>
-      <class id="4" name="Obsolete" desc=""/>
-      <attr name="Max" label="Max count" desc="" type="int" class="1"/>
-      <attr name="Full" label="Is full pip" desc="" type="bool" class="3"/>
-      <attr name="Name" desc="" type="string" class="0"/>
-      <attr name="Group" desc="" type="int" class="1"/>
-      <attr name="House" desc="" type="CountryMultiExtend" class="0"/>
-      <attr name="Script" desc="" type="Scripts" class="0"/>
-      <attr name="Whiner" label="Is pool team" desc="" type="bool" class="1"/>
-      <attr name="Droppod" label="Paradrop" desc="" type="bool" class="3"/>
-      <attr name="Suicide" label="No retaliate" desc="" type="bool" class="2"/>
-      <attr name="Loadable" desc="" type="bool" class="4"/>
-      <attr name="Prebuild" desc="" type="bool" class="1"/>
-      <attr name="Priority" desc="" type="int" class="1"/>
-      <attr name="Waypoint" desc="" type="Waypoints" class="3"/>
-      <attr name="Annoyance" label="Replenish member" desc="" type="bool" class="1"/>
-      <attr name="IonImmune" desc="" type="bool" class="4"/>
-      <attr name="Recruiter" desc="" type="bool" class="1"/>
-      <attr name="Reinforce" desc="" type="bool" class="3"/>
-      <attr name="TaskForce" desc="" type="Taskforces" class="0"/>
-      <attr name="TechLevel" desc="" type="int" class="3"/>
-      <attr name="Aggressive" desc="" type="bool" class="2"/>
-      <attr name="Autocreate" desc="" type="bool" class="1"/>
-      <attr name="GuardSlower" desc="" type="bool" class="2"/>
-      <attr name="OnTransOnly" label="Must on Trans" desc="" type="bool" class="1"/>
-      <attr name="AvoidThreats" desc="" type="bool" class="2"/>
-      <attr name="LooseRecruit" label="Dismiss on success" desc="" type="bool" class="1"/>
-      <attr name="Tag" desc="" type="Tags" class="0"/>
-      <attr name="VeteranLevel" label="Veteran" desc="" type="TeamVeteranLevel" class="0"/>
-      <attr name="IsBaseDefense" label="Base defense" desc="" type="bool" class="1"/>
-      <attr name="TransportWaypoint" label="Trans-WP" desc="" type="WaypointWithNone" class="3"/>
-      <attr name="UseTransportOrigin" label="Team in Trans" desc="" type="bool" class="3"/>
-      <attr name="MindControlDecision" label="Mind-C decision" desc="" type="MCDecisions" class="2"/>
-      <attr name="OnlyTargetHouseEnemy" label="Attack enemy only" desc="" type="bool" class="2"/>
-      <attr name="TransportsReturnOnUnload" label="Returning Trans" desc="" type="bool" class="3"/>
-      <attr name="AreTeamMembersRecruitable" label="Recruitable member" desc="" type="bool" class="1"/>
+      <Classes>
+        <class id="0" name="BasicData" desc=""/>
+        <class id="1" name="Recruiting" desc=""/>
+        <class id="2" name="Attacking" desc=""/>
+        <class id="3" name="SinglePlayer" desc=""/>
+        <class id="4" name="Obsolete" desc=""/>
+      </Classes>
+      <Items>
+        <attr name="Max" label="Max count" desc="" type="int" class="1"/>
+        <attr name="Full" label="Is full pip" desc="" type="bool" class="3"/>
+        <attr name="Name" desc="" type="string" class="0"/>
+        <attr name="Group" desc="" type="int" class="1"/>
+        <attr name="House" desc="" type="CountryMultiExtend" class="0"/>
+        <attr name="Script" desc="" type="Scripts" class="0"/>
+        <attr name="Whiner" label="Is pool team" desc="" type="bool" class="1"/>
+        <attr name="Droppod" label="Paradrop" desc="" type="bool" class="3"/>
+        <attr name="Suicide" label="No retaliate" desc="" type="bool" class="2"/>
+        <attr name="Loadable" desc="" type="bool" class="4"/>
+        <attr name="Prebuild" desc="" type="bool" class="1"/>
+        <attr name="Priority" desc="" type="int" class="1"/>
+        <attr name="Waypoint" desc="" type="Waypoints" class="3"/>
+        <attr name="Annoyance" label="Replenish member" desc="" type="bool" class="1"/>
+        <attr name="IonImmune" desc="" type="bool" class="4"/>
+        <attr name="Recruiter" desc="" type="bool" class="1"/>
+        <attr name="Reinforce" desc="" type="bool" class="3"/>
+        <attr name="TaskForce" desc="" type="Taskforces" class="0"/>
+        <attr name="TechLevel" desc="" type="int" class="3"/>
+        <attr name="Aggressive" desc="" type="bool" class="2"/>
+        <attr name="Autocreate" desc="" type="bool" class="1"/>
+        <attr name="GuardSlower" desc="" type="bool" class="2"/>
+        <attr name="OnTransOnly" label="Must on Trans" desc="" type="bool" class="1"/>
+        <attr name="AvoidThreats" desc="" type="bool" class="2"/>
+        <attr name="LooseRecruit" label="Dismiss on success" desc="" type="bool" class="1"/>
+        <attr name="Tag" desc="" type="Tags" class="0"/>
+        <attr name="VeteranLevel" label="Veteran" desc="" type="TeamVeteranLevel" class="0"/>
+        <attr name="IsBaseDefense" label="Base defense" desc="" type="bool" class="1"/>
+        <attr name="TransportWaypoint" label="Trans-WP" desc="" type="WaypointWithNone" class="3"/>
+        <attr name="UseTransportOrigin" label="Team in Trans" desc="" type="bool" class="3"/>
+        <attr name="MindControlDecision" label="Mind-C decision" desc="" type="MCDecisions" class="2"/>
+        <attr name="OnlyTargetHouseEnemy" label="Attack enemy only" desc="" type="bool" class="2"/>
+        <attr name="TransportsReturnOnUnload" label="Returning Trans" desc="" type="bool" class="3"/>
+        <attr name="AreTeamMembersRecruitable" label="Recruitable member" desc="" type="bool" class="1"/>
+      </Items>
     </Team>
     <AiTrigger>
-      <attr name="Name" desc="" type="string"/>
-      <attr name="Team" desc="" type="Teams"/>
-      <attr name="SupportTeam" desc="" type="Teams"/>
-      <attr name="Owner" desc="" type="AiHouse"/>
-      <attr name="Side" desc="" type="AiSideIndex"/>
-      <attr name="TechLevel" desc="" type="int"/>
-      <attr name="TrigerType" desc="" type="AiTriggerType"/>
-      <attr name="TechType" desc="" type="TechType"/>
-      <attr name="Operator" desc="" type="AiTriggerOperator"/>
-      <attr name="Amount" desc="" type="int"/>
-      <attr name="InitWeight" desc="" type="int"/>
-      <attr name="MinWeight" desc="" type="int"/>
-      <attr name="MaxWeight" desc="" type="int"/>
-      <attr name="EasyOn" desc="" type="bool"/>
-      <attr name="NormalOn" desc="" type="bool"/>
-      <attr name="HardOn" desc="" type="bool"/>
-      <attr name="SkirmishAvailable" desc="" type="bool"/>
-      <attr name="IsBaseDefense" desc="" type="bool"/>
+      <Items>
+        <attr name="Name" desc="" type="string"/>
+        <attr name="Team" desc="" type="Teams"/>
+        <attr name="SupportTeam" desc="" type="Teams"/>
+        <attr name="Owner" desc="" type="AiHouse"/>
+        <attr name="Side" desc="" type="AiSideIndex"/>
+        <attr name="TechLevel" desc="" type="int"/>
+        <attr name="TrigerType" desc="" type="AiTriggerType"/>
+        <attr name="TechType" desc="" type="TechType"/>
+        <attr name="Operator" desc="" type="AiTriggerOperator"/>
+        <attr name="Amount" desc="" type="int"/>
+        <attr name="InitWeight" desc="" type="int"/>
+        <attr name="MinWeight" desc="" type="int"/>
+        <attr name="MaxWeight" desc="" type="int"/>
+        <attr name="EasyOn" desc="" type="bool"/>
+        <attr name="NormalOn" desc="" type="bool"/>
+        <attr name="HardOn" desc="" type="bool"/>
+        <attr name="SkirmishAvailable" desc="" type="bool"/>
+        <attr name="IsBaseDefense" desc="" type="bool"/>
+      </Items>
     </AiTrigger>
     <Unit>
-      <class id="0" name="BasicData" desc=""/>
-      <class id="1" name="UnitData" desc=""/>
-      <class id="2" name="Recruiting" desc=""/>
-      <attr name="OwnerHouse" desc="" type="Houses" class="0"/>
-      <attr name="HealthPoint" desc="" type="HpBar" class="0"/>
-      <attr name="Rotation" desc="" type="FacingBox" class="0"/>
-      <attr name="TaggedTrigger" desc="" type="MapObjectTags" class="0"/>
-      <attr name="VeterancyPercentage" desc="" type="VeteranBar" class="1"/>
-      <attr name="Status" desc="" type="MapUnitState" class="1"/>
-      <attr name="Group" desc="" type="int" class="1"/>
-      <attr name="IsAboveGround" desc="" type="bool" class="1"/>
-      <attr name="FollowsIndex" desc="" type="string" class="1"/>
-      <attr name="AutoNORecruitType" desc="" type="bool" class="2"/>
-      <attr name="AutoYESRecruitType" desc="" type="bool" class="2"/>
+      <Classes>
+        <class id="0" name="BasicData" desc=""/>
+        <class id="1" name="UnitData" desc=""/>
+        <class id="2" name="Recruiting" desc=""/>
+      </Classes>
+      <Items>
+        <attr name="OwnerHouse" desc="" type="Houses" class="0"/>
+        <attr name="HealthPoint" desc="" type="HpBar" class="0"/>
+        <attr name="Rotation" desc="" type="FacingBox" class="0"/>
+        <attr name="TaggedTrigger" desc="" type="MapObjectTags" class="0"/>
+        <attr name="VeterancyPercentage" desc="" type="VeteranBar" class="1"/>
+        <attr name="Status" desc="" type="MapUnitState" class="1"/>
+        <attr name="Group" desc="" type="int" class="1"/>
+        <attr name="IsAboveGround" desc="" type="bool" class="1"/>
+        <attr name="FollowsIndex" desc="" type="string" class="1"/>
+        <attr name="AutoNORecruitType" desc="" type="bool" class="2"/>
+        <attr name="AutoYESRecruitType" desc="" type="bool" class="2"/>
+      </Items>
     </Unit>
     <Infantry>
-      <class id="0" name="BasicData" desc=""/>
-      <class id="1" name="InfantryData" desc=""/>
-      <class id="2" name="Recruiting" desc=""/>
-      <attr name="OwnerHouse" desc="" type="Houses" class="0"/>
-      <attr name="HealthPoint" desc="" type="HpBar" class="0"/>
-      <attr name="Rotation" desc="" type="FacingBox" class="0"/>
-      <attr name="TaggedTrigger" desc="" type="MapObjectTags" class="0"/>
-      <attr name="VeterancyPercentage" desc="" type="VeteranBar" class="1"/>
-      <attr name="Status" desc="" type="MapUnitState" class="1"/>
-      <attr name="Group" desc="" type="int" class="1"/>
-      <attr name="IsAboveGround" desc="" type="bool" class="1"/>
-      <attr name="AutoNORecruitType" desc="" type="bool" class="2"/>
-      <attr name="AutoYESRecruitType" desc="" type="bool" class="2"/>
+      <Classes>
+        <class id="0" name="BasicData" desc=""/>
+        <class id="1" name="InfantryData" desc=""/>
+        <class id="2" name="Recruiting" desc=""/>
+      </Classes>
+      <Items>
+        <attr name="OwnerHouse" desc="" type="Houses" class="0"/>
+        <attr name="HealthPoint" desc="" type="HpBar" class="0"/>
+        <attr name="Rotation" desc="" type="FacingBox" class="0"/>
+        <attr name="TaggedTrigger" desc="" type="MapObjectTags" class="0"/>
+        <attr name="VeterancyPercentage" desc="" type="VeteranBar" class="1"/>
+        <attr name="Status" desc="" type="MapUnitState" class="1"/>
+        <attr name="Group" desc="" type="int" class="1"/>
+        <attr name="IsAboveGround" desc="" type="bool" class="1"/>
+        <attr name="AutoNORecruitType" desc="" type="bool" class="2"/>
+        <attr name="AutoYESRecruitType" desc="" type="bool" class="2"/>
+      </Items>
     </Infantry>
     <Building>
-      <class id="0" name="BasicData" desc=""/>
-      <class id="1" name="BuildingData" desc=""/>
-      <attr name="OwnerHouse" desc="" type="Houses" class="0"/>
-      <attr name="HealthPoint" desc="" type="HpBar" class="0"/>
-      <attr name="Rotation" desc="" type="FacingBox" class="0"/>
-      <attr name="TaggedTrigger" desc="" type="MapObjectTags" class="0"/>
-      <attr name="AISellablle" desc="" type="bool" class="1"/>
-      <attr name="BuildingOnline" desc="" type="bool" class="1"/>
-      <attr name="UpgradeNum" desc="" type="int" class="1"/>
-      <attr name="SpotlightType" desc="" type="bool" class="1"/>
-      <attr name="Upgrade1" desc="" type="BuildingUpgrade" class="1"/>
-      <attr name="Upgrade2" desc="" type="BuildingUpgrade" class="1"/>
-      <attr name="Upgrade3" desc="" type="BuildingUpgrade" class="1"/>
-      <attr name="AIRepairable" desc="" type="bool" class="1"/>
+      <Classes>
+        <class id="0" name="BasicData" desc=""/>
+        <class id="1" name="BuildingData" desc=""/>
+      </Classes>
+      <Items>
+        <attr name="OwnerHouse" desc="" type="Houses" class="0"/>
+        <attr name="HealthPoint" desc="" type="HpBar" class="0"/>
+        <attr name="Rotation" desc="" type="FacingBox" class="0"/>
+        <attr name="TaggedTrigger" desc="" type="MapObjectTags" class="0"/>
+        <attr name="AISellablle" desc="" type="bool" class="1"/>
+        <attr name="BuildingOnline" desc="" type="bool" class="1"/>
+        <attr name="UpgradeNum" desc="" type="int" class="1"/>
+        <attr name="SpotlightType" desc="" type="bool" class="1"/>
+        <attr name="Upgrade1" desc="" type="BuildingUpgrade" class="1"/>
+        <attr name="Upgrade2" desc="" type="BuildingUpgrade" class="1"/>
+        <attr name="Upgrade3" desc="" type="BuildingUpgrade" class="1"/>
+        <attr name="AIRepairable" desc="" type="bool" class="1"/>
+      </Items>
     </Building>
     <Aircraft>
-      <class id="0" name="BasicData" desc=""/>
-      <class id="1" name="AircraftData" desc=""/>
-      <class id="2" name="Recruiting" desc=""/>
-      <attr name="OwnerHouse" desc="" type="Houses" class="0"/>
-      <attr name="HealthPoint" desc="" type="HpBar" class="0"/>
-      <attr name="Rotation" desc="" type="FacingBox" class="0"/>
-      <attr name="TaggedTrigger" desc="" type="MapObjectTags" class="0"/>
-      <attr name="VeterancyPercentage" desc="" type="VeteranBar" class="1"/>
-      <attr name="Status" desc="" type="MapUnitState" class="1"/>
-      <attr name="Group" desc="" type="int" class="1"/>
-      <attr name="AutoNORecruitType" desc="" type="bool" class="2"/>
-      <attr name="AutoYESRecruitType" desc="" type="bool" class="2"/>
+      <Classes>
+        <class id="0" name="BasicData" desc=""/>
+        <class id="1" name="AircraftData" desc=""/>
+        <class id="2" name="Recruiting" desc=""/>
+      </Classes>
+      <Items>
+        <attr name="OwnerHouse" desc="" type="Houses" class="0"/>
+        <attr name="HealthPoint" desc="" type="HpBar" class="0"/>
+        <attr name="Rotation" desc="" type="FacingBox" class="0"/>
+        <attr name="TaggedTrigger" desc="" type="MapObjectTags" class="0"/>
+        <attr name="VeterancyPercentage" desc="" type="VeteranBar" class="1"/>
+        <attr name="Status" desc="" type="MapUnitState" class="1"/>
+        <attr name="Group" desc="" type="int" class="1"/>
+        <attr name="AutoNORecruitType" desc="" type="bool" class="2"/>
+        <attr name="AutoYESRecruitType" desc="" type="bool" class="2"/>
+      </Items>
     </Aircraft>
   </AttributeInfo>
 </RsModConfig>

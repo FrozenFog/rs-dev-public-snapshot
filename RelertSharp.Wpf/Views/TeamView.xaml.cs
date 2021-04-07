@@ -16,6 +16,7 @@ using RelertSharp.Common;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Wpf.Common;
+using RelertSharp.Common.Config.Model;
 
 namespace RelertSharp.Wpf.Views
 {
@@ -92,7 +93,7 @@ namespace RelertSharp.Wpf.Views
             split.SetColumn(1);
             grd.Children.Add(split);
             double y = 10d;
-            foreach (AttributeItem item in ModConfig.TeamItems.Values.Where(x => x.ClassId == cls.Id))
+            foreach (AttributeItem item in ModConfig.TeamItems.Values.Where(x => x.Parent == cls.Id))
             {
                 Label lbl = new Label()
                 {
