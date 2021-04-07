@@ -182,5 +182,9 @@ namespace RelertSharp.Common
             return new Pnt3((int)X, (int)Y, (int)Z);
         }
         #endregion
+        public override string ToString()
+        {
+            return string.Format("{0},{1},{2}", X, Y, Z);
+        }
     }
 }
