@@ -13,7 +13,6 @@ namespace RelertSharp.Engine.Api
     {
         public static event EventHandler RedrawRequest;
         public static event EventHandler ResizeRequest;
-        public static event EventHandler MouseMoveTileMarkRedrawRequest;
         private static readonly object lockRenderer = new object();
 
         private static bool initialized = false;
@@ -49,9 +48,15 @@ namespace RelertSharp.Engine.Api
                 }
             }
         }
+        private static bool handlingRedrawRequest = false;
         public static void InvokeRedraw()
         {
-            RedrawRequest?.Invoke(null, null);
+            if (!handlingRedrawRequest)
+            {
+                handlingRedrawRequest = true;
+                RedrawRequest?.Invoke(null, null);
+                handlingRedrawRequest = false;
+            }
         }
         public static IntPtr ResetHandle(Size sz)
         {

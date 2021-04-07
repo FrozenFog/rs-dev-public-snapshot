@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace RelertSharp.Wpf.LogicEditor
+namespace RelertSharp.Wpf.TriggerEditor
 {
     /// <summary>
     /// LogicEditor.xaml 的交互逻辑
     /// </summary>
-    public partial class LogicEditor : Window
+    public partial class TriggerEditor : Window
     {
-        public LogicEditor()
+        public TriggerEditor()
         {
             InitializeComponent();
         }

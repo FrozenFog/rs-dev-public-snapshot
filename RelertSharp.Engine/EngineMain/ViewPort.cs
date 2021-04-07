@@ -38,7 +38,7 @@ namespace RelertSharp.Engine
                 if (!markingBuildingShape)
                 {
                     markingBuildingShape = true;
-                    UnmarkAllTile();
+                    UnmarkPreviousTile();
                 }
                 buildingShape.Add(pos);
                 bool b;
@@ -137,9 +137,10 @@ namespace RelertSharp.Engine
             }
             return false;
         }
-        public static void UnmarkAllTile()
+        public static void UnmarkPreviousTile()
         {
             previousTile?.Mark(false);
+            previousTile = null;
         }
         public static void DrawSelectingRectangle(Pnt begin, Pnt end, bool isIsometric)
         {
