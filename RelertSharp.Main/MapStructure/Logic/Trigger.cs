@@ -1,5 +1,6 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -159,7 +160,7 @@ namespace RelertSharp.MapStructure.Logic
             {
                 return new List<object>()
                 {
-                    House, LinkedWith, Name, Disabled, EasyOn, NormalOn, HardOn, (int)Repeating
+                    House, LinkedWith, Name, Disabled.ZeroOne(), EasyOn.ZeroOne(), NormalOn.ZeroOne(), HardOn.ZeroOne(), (int)Repeating
                 };
             }
         }

@@ -15,19 +15,24 @@ using System.Windows.Shapes;
 using RelertSharp.Common;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.MapStructure.Logic;
+using RelertSharp.Wpf.Common;
+using RelertSharp.Common.Config.Model;
 
 namespace RelertSharp.Wpf.Views
 {
     /// <summary>
     /// TeamView.xaml 的交互逻辑
     /// </summary>
-    public partial class TeamView : UserControl, IObjectReciver
+    public partial class TeamView : UserControl, IObjectReciver, IRsView
     {
         private const double ROW_DELTA = 28;
         private const double ROW_HEIGHT = 23;
         private ModConfig ModConfig { get { return GlobalVar.GlobalConfig.ModConfig; } }
         private TeamVm context;
         private TeamItem Team { get { return context.Data; } }
+
+        public GuiViewType ViewType { get { return GuiViewType.Team; } }
+
         private bool isLoading = false;
 
         public event ContentCarrierHandler NameChanged;
@@ -88,7 +93,7 @@ namespace RelertSharp.Wpf.Views
             split.SetColumn(1);
             grd.Children.Add(split);
             double y = 10d;
-            foreach (AttributeItem item in ModConfig.TeamItems.Values.Where(x => x.ClassId == cls.Id))
+            foreach (AttributeItem item in ModConfig.TeamItems.Values.Where(x => x.Parent == cls.Id))
             {
                 Label lbl = new Label()
                 {

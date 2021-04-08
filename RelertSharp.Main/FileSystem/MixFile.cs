@@ -1,4 +1,5 @@
-﻿using RelertSharp.Common;
+﻿using RelertSharp.Algorithm;
+using RelertSharp.Common;
 using RelertSharp.Encoding;
 using RelertSharp.Utils;
 using System;

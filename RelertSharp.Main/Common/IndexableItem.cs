@@ -33,6 +33,7 @@ namespace RelertSharp.Common
 
         public bool HasId(string id)
         {
+            if (id.IsNullOrEmpty()) return false;
             return data.ContainsKey(id);
         }
 
@@ -72,7 +73,7 @@ namespace RelertSharp.Common
 
         public virtual string Name { get; set; }
 
-        public virtual string Value { get { return Id; } }
+        public virtual string Value { get { return Id; } set { } }
 
         public override string ToString()
         {
@@ -116,7 +117,7 @@ namespace RelertSharp.Common
         }
 
         private string value;
-        public override string Value { get { if (value.IsNullOrEmpty()) return Id; return value; } }
+        public override string Value { get { if (value.IsNullOrEmpty()) return Id; return value; } set { this.value = value; } }
         public static ComboItem NoneItem = new ComboItem(Constant.ITEM_NONE);
         public static ComboItem AllItem = new ComboItem(Constant.ITEM_ALL);
     }

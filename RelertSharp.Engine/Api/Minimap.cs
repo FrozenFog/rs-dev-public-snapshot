@@ -11,6 +11,8 @@ namespace RelertSharp.Engine.Api
     {
         public static event EventHandler MinimapRedrawed;
         public static event EventHandler MinimapClientResizeRequest;
+
+
         public static void ResetMinimap(Rectangle mapSize, Size panelSize)
         {
             ResetMinimap(mapSize, panelSize.Width, panelSize.Height);

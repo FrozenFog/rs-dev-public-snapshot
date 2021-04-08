@@ -119,12 +119,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\MapPosition.cs" />
     <Compile Include="Common\Comparer\ListViewComparer.cs" />
     <Compile Include="Common\Config\AttributeInfo.cs" />
     <Compile Include="Common\Config\ComboReading.cs" />
+    <Compile Include="Common\Config\Model\ComboGroup.cs" />
+    <Compile Include="Common\Config\Model\LogicAttributes.cs" />
+    <Compile Include="Common\Config\Model\RsModConfig.cs" />
     <Compile Include="Common\Enumerator\Bfs2DEnumerator.cs" />
     <Compile Include="Common\Enumerator\Circle2DEnumerator.cs" />
     <Compile Include="Common\Constant.cs" />
+    <Compile Include="Algorithm\FisherYatesShuffle.cs" />
     <Compile Include="Common\Enumerator\FoundationEnumerator.cs" />
     <Compile Include="Common\Enumerator\SceneSquare2DEnumerator.cs" />
     <Compile Include="Common\Enumerator\TileSetEnumerator.cs" />
@@ -135,7 +140,6 @@
     <Compile Include="Common\RsLog.cs" />
     <Compile Include="Common\SoundManager.cs" />
     <Compile Include="Common\Enumerator\Square2DEnumerator.cs" />
-    <Compile Include="Common\Structs\BuildingData.cs" />
     <Compile Include="Common\Structs\Pnt.cs" />
     <Compile Include="Common\Structs\Pnt3.cs" />
     <Compile Include="Common\Structs\RadarColor.cs" />
@@ -143,15 +147,15 @@
     <Compile Include="Common\Structs\Vec4.cs" />
     <Compile Include="Common\Structs\VFileInfo.cs" />
     <Compile Include="Encoding\AudEncoding.cs" />
-    <Compile Include="Encoding\Blowfish.cs" />
+    <Compile Include="Algorithm\Blowfish.cs" />
     <Compile Include="Encoding\CsfEncoding.cs" />
     <Compile Include="Encoding\Format80.cs" />
-    <Compile Include="Encoding\CRC.cs" />
+    <Compile Include="Algorithm\CRC.cs" />
     <Compile Include="Encoding\MiniLZO.cs" />
     <Compile Include="Encoding\PackEncoding.cs" />
     <Compile Include="Encoding\PcxDecoder.cs" />
     <Compile Include="Encoding\ShpEncoding.cs" />
-    <Compile Include="Encoding\WSKeyCalc.cs" />
+    <Compile Include="Algorithm\WSKeyCalc.cs" />
     <Compile Include="FileSystem\AudFile.cs" />
     <Compile Include="FileSystem\CsfFile.cs" />
     <Compile Include="FileSystem\HvaFile.cs" />

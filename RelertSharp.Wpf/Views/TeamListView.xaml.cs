@@ -15,14 +15,17 @@ using System.Windows.Shapes;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Common;
+using RelertSharp.Wpf.Common;
 
 namespace RelertSharp.Wpf.Views
 {
     /// <summary>
     /// TeamListView.xaml 的交互逻辑
     /// </summary>
-    public partial class TeamListView : UserControl, IListContainer
+    public partial class TeamListView : UserControl, IListContainer, IRsView
     {
+        public GuiViewType ViewType { get { return GuiViewType.TeamList; } }
+
         public TeamListView()
         {
             InitializeComponent();

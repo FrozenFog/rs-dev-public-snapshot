@@ -14,14 +14,17 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Common;
+using RelertSharp.Wpf.Common;
 
 namespace RelertSharp.Wpf.Views
 {
     /// <summary>
     /// ScriptListView.xaml 的交互逻辑
     /// </summary>
-    public partial class ScriptListView : UserControl, IListContainer
+    public partial class ScriptListView : UserControl, IListContainer, IRsView
     {
+        public GuiViewType ViewType { get { return GuiViewType.ScriptList; } }
+
         public ScriptListView()
         {
             InitializeComponent();

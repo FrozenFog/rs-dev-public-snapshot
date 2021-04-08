@@ -196,7 +196,7 @@ namespace RelertSharp.MapStructure
             result.Z = GetHeightFromTile(newLocation) - GetHeightFromTile(originalLocation);
             return result;
         }
-        public bool IsOutOfSize(I2dLocateable objectLocation, I2dLocateable delta)
+        public bool IsOutOfSize(I2dLocateable objectLocation, I2dLocateable delta = null)
         {
             if (delta == null) return !TilesData.HasTileOn(objectLocation);
             Pnt tmp = new Pnt(objectLocation.X + delta.X, objectLocation.Y + delta.Y);

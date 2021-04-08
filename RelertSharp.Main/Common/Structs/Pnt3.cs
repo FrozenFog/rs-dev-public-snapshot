@@ -33,5 +33,10 @@
         int I2dLocateable.X { get { return X; } set { X = value; } }
 
         int I2dLocateable.Y { get { return Y; } set { Y = value; } }
+
+        public override string ToString()
+        {
+            return string.Format("{0},{1},{2}", X, Y, Z);
+        }
     }
 }

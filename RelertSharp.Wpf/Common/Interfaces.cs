@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RelertSharp.Wpf.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,10 @@ namespace RelertSharp.Wpf.Views
     interface IObjectReciver
     {
         void ReciveObject(object sender, object recived);
+    }
+
+    interface IRsView
+    {
+        GuiViewType ViewType { get; }
     }
 }

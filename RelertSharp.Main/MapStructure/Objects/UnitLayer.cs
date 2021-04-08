@@ -93,7 +93,7 @@ namespace RelertSharp.MapStructure.Objects
                 };
             }
         }
-        public string FollowsIndex { get; set; }
+        public string FollowsIndex { get; set; } = "-1";
         #endregion
     }
 }

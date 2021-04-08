@@ -237,6 +237,14 @@ namespace RelertSharp.IniSystem
         {
             return HasIniEnt(name) || (MapIniData == null ? false : MapIniData.Keys.Contains(name));
         }
+        /// <summary>
+        /// Set local rules that used in map ini section, readonly
+        /// </summary>
+        /// <param name="localRules"></param>
+        public void SetLocalRules(Dictionary<string, INIEntity> localRules)
+        {
+            MapIniData = new Dictionary<string, INIEntity>(localRules);
+        }
         #endregion
 
 
@@ -250,7 +258,7 @@ namespace RelertSharp.IniSystem
         public List<string> UnitRoots { get; private set; }
         public List<string> NavalRoots { get; private set; }
         public List<string> AircraftRoots { get; private set; }
-        public Dictionary<string, INIEntity> MapIniData { get; set; }
+        public Dictionary<string, INIEntity> MapIniData { get; private set; }
         public INIFile Art { get; private set; }
         public List<TechnoPair> VehicleList
         {

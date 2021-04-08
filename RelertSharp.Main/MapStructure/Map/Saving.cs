@@ -114,6 +114,7 @@ namespace RelertSharp.MapStructure
             }
             foreach (TagItem tag in Tags)
             {
+                if (tag.Id == Constant.ITEM_NONE) continue;
                 tags.AddPair(new INIPair(tag.Id, tag.SaveData.JoinBy()));
             }
         }
@@ -130,7 +131,7 @@ namespace RelertSharp.MapStructure
                 aienable.AddPair(new INIPair(key, AiTriggers.GlobalEnables[key] ? "yes" : "no"));
             }
         }
-        private void DumpRegularTocItem<T>(string tocName, IEnumerable<T> srcReferance, Func<T, INIEntity> funcForT, Func<T, string> funcID, out INIEntity toc, out INIEntity[] result)
+        private void DumpRegularTocItem<T>(string tocName, IEnumerable<T> srcReferance, Func<T, INIEntity> funcForT, Func<T, string> funcID, out INIEntity toc, out INIEntity[] result) where T : IIndexableItem
         {
             toc = new INIEntity(tocName);
             List<INIEntity> data = new List<INIEntity>();
@@ -139,6 +140,7 @@ namespace RelertSharp.MapStructure
                 int i = 0;
                 foreach (T item in srcReferance)
                 {
+                    if (item.Id == Constant.ITEM_NONE) continue;
                     toc.AddPair(i++.ToString(), funcID.Invoke(item));
                     data.Add(funcForT(item));
                 }

@@ -38,7 +38,7 @@ namespace RelertSharp.Engine
                 if (!markingBuildingShape)
                 {
                     markingBuildingShape = true;
-                    UnmarkAllTile();
+                    UnmarkPreviousTile();
                 }
                 buildingShape.Add(pos);
                 bool b;
@@ -92,7 +92,7 @@ namespace RelertSharp.Engine
             scenepos += _NormTileVec * Constant.DrawingEngine.MapMaxHeightDrawing;
             int height = 0;
             Vec3 tileCoord = new Vec3();
-            for (; height < Constant.DrawingEngine.MapMaxHeightDrawing * 2; height++)
+            for (; tileCoord.Z >= 0; )
             {
                 tileCoord = ScenePosToCoord(scenepos);
                 if (_cellFindingReferance.HasTileOn(tileCoord))
@@ -137,9 +137,10 @@ namespace RelertSharp.Engine
             }
             return false;
         }
-        public static void UnmarkAllTile()
+        public static void UnmarkPreviousTile()
         {
             previousTile?.Mark(false);
+            previousTile = null;
         }
         public static void DrawSelectingRectangle(Pnt begin, Pnt end, bool isIsometric)
         {

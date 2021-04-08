@@ -1,4 +1,5 @@
 ﻿using RelertSharp.Common;
+using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -20,10 +21,13 @@ namespace RelertSharp.Wpf.Views
     /// <summary>
     /// AiTriggerView.xaml 的交互逻辑
     /// </summary>
-    public partial class AiTriggerView : UserControl, IObjectReciver
+    public partial class AiTriggerView : UserControl, IObjectReciver, IRsView
     {
         private AiTriggerVm context { get { return DataContext as AiTriggerVm; } }
         private ModConfig config { get { return GlobalVar.GlobalConfig.ModConfig; } }
+
+        public GuiViewType ViewType { get { return GuiViewType.AiTrigger; } }
+
         public AiTriggerView()
         {
             InitializeComponent();

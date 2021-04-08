@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using RelertSharp.MapStructure;
+using RelertSharp.Common;
 
 namespace RelertSharp.Engine.Api
 {
@@ -11,12 +13,13 @@ namespace RelertSharp.Engine.Api
     {
         public static event EventHandler RedrawRequest;
         public static event EventHandler ResizeRequest;
-        public static event EventHandler MouseMoveTileMarkRedrawRequest;
         private static readonly object lockRenderer = new object();
 
         private static bool initialized = false;
         private static bool renderEnable = true;
         private static bool rendering = false;
+
+        private static Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
 
 
         public static bool EngineCtor(int width, int height)
@@ -45,9 +48,15 @@ namespace RelertSharp.Engine.Api
                 }
             }
         }
+        private static bool handlingRedrawRequest = false;
         public static void InvokeRedraw()
         {
-            RedrawRequest?.Invoke(null, null);
+            if (!handlingRedrawRequest)
+            {
+                handlingRedrawRequest = true;
+                RedrawRequest?.Invoke(null, null);
+                handlingRedrawRequest = false;
+            }
         }
         public static IntPtr ResetHandle(Size sz)
         {

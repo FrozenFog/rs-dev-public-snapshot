@@ -13,12 +13,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
+using System.IO;
 using System.Windows.Threading;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Wpf.Views;
+using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.MapEngine;
 using System.Windows.Interop;
 using RelertSharp.Common;
+using RelertSharp.Wpf.LayoutManaging;
+using System.Reflection;
 
 namespace RelertSharp.Wpf
 {
@@ -31,17 +36,26 @@ namespace RelertSharp.Wpf
         DispatcherTimer tmrInit;
         #endregion
         #region Components
+        [RsViewComponent(GuiViewType.AiTrigger, nameof(aiTrigger))]
         private readonly AiTriggerView aiTrigger = new AiTriggerView();
+        [RsViewComponent(GuiViewType.TeamList, nameof(teamList))]
         private readonly TeamListView teamList = new TeamListView();
+        [RsViewComponent(GuiViewType.AiTriggerList, nameof(aiTriggerList))]
         private readonly AiTriggerListView aiTriggerList = new AiTriggerListView();
+        [RsViewComponent(GuiViewType.ScriptList, nameof(scriptList))]
         private readonly ScriptListView scriptList = new ScriptListView();
+        [RsViewComponent(GuiViewType.TaskforceList, nameof(taskforceList))]
         private readonly TaskforceListView taskforceList = new TaskforceListView();
+        [RsViewComponent(GuiViewType.Team, nameof(team))]
         private readonly TeamView team = new TeamView();
+        [RsViewComponent(GuiViewType.Script, nameof(script))]
         private readonly ScriptView script = new ScriptView();
+        [RsViewComponent(GuiViewType.MainPanel, nameof(pnlMain))]
         private readonly MainPanel pnlMain = new MainPanel();
+        [RsViewComponent(GuiViewType.Minimap, nameof(minimap))]
         private readonly MinimapPanel minimap = new MinimapPanel();
-        //private readonly LightPanel lightPanel = new LightPanel();
-
+        [RsViewComponent(GuiViewType.LightningPanel, nameof(lightning))]
+        private readonly LightningView lightning = new LightningView();
         #endregion
         #region Dispatcher
         #endregion
@@ -50,7 +64,7 @@ namespace RelertSharp.Wpf
         {
             InitializeComponent();
             AddToolPage();
-            //AddReciveListener();
+            AddReciveListener();
             SetTimer();
         }
 
@@ -73,15 +87,15 @@ namespace RelertSharp.Wpf
         {
             //dockMain.Layout.AddToolToRight("Ai Trigger Edit", aiTrigger);
             dockMain.Layout.AddToolToRight("Team List", teamList);
+            dockMain.Layout.AddToolToRight("Lightning", lightning);
             //dockMain.Layout.AddToolToRight("Ai Trigger List", aiTriggerList);
             //dockMain.AddToolToRight("Script List", scriptList);
             //dockMain.AddToolToRight("Taskforce List", taskforceList);
-            //dockMain.Layout.AddToolToRight("Team", team);
+            dockMain.Layout.AddToolToRight("Team", team);
             //dockMain.AddToolToRight("Script", script);
             //dockMain.Layout.AddToolToRight("Light", lightPanel);
             dockMain.AddCenterPage("Map", pnlMain);
-
-            dockMain.Layout.RightSide.Root.Manager.Layout.AddToolToTop("Minimap", minimap);
+            dockMain.Layout.AddToolToRight("Minimap", minimap, 1);
         }
 
         #region Reciver Logics
@@ -94,6 +108,10 @@ namespace RelertSharp.Wpf
         private void BindListener(IObjectReciver reciver, IListContainer sender)
         {
             sender.ItemSelected += reciver.ReciveObject;
+        }
+        private void RedrawListener()
+        {
+            lightning.LightningChangedRequest += RedrawRequestHandler;
         }
         #endregion
 
@@ -110,6 +128,16 @@ namespace RelertSharp.Wpf
             minimap.ResumeDrawing();
             pnlMain.MousePosChanged += PnlMain_MousePosChanged;
             pnlMain.ScaleFactorChanged += PnlMain_ScaleFactorChanged;
+            RedrawListener();
+        }
+        private void DebugClick()
+        {
+            dockMain.LoadLayoutFromXml("layout.xml", this);
+        }
+
+        private void RedrawRequestHandler(object sender, EventArgs e)
+        {
+            pnlMain.HandleRedrawRequest();
         }
 
         private void PnlMain_ScaleFactorChanged(object sender, EventArgs e)
@@ -131,6 +159,11 @@ namespace RelertSharp.Wpf
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DebugInit();
+        }
+
+        private void DebugClick(object sender, RoutedEventArgs e)
+        {
+            DebugClick();
         }
     }
 }

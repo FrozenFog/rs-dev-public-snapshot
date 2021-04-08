@@ -56,7 +56,7 @@ namespace RelertSharp.MapStructure.Logic
         public TaskforceItem(INIEntity ent) : base(ent)
         {
             Name = ent.PopPair("Name").Value;
-            Group = int.Parse(ent.PopPair("Group").Value);
+            Group = ent.PopPair("Group").ParseInt(-1);
             foreach (INIPair p in ent.DataList)
             {
                 string[] tmp = p.ParseStringList();

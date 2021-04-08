@@ -16,6 +16,8 @@
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/RadioButton.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/CheckBox.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/StatusBar.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/Menu.xaml"/>
+                <!--<ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/MenuItem.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

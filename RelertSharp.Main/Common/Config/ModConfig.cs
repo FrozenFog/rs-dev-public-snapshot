@@ -1,23 +1,21 @@
 ﻿using System.Xml;
 using System.IO;
+using RelertSharp.Common.Config.Model;
+using System.Xml.Serialization;
 
 namespace RelertSharp.Common
 {
     public partial class ModConfig
     {
-        private XmlDocument doc = new XmlDocument();
         private string path;
-        private XmlNode Root { get { return doc.SelectSingleNode("RsModConfig"); } }
+        private RsModConfig data;
 
         public ModConfig(string path)
         {
             if (File.Exists(path))
             {
                 this.path = path;
-                XmlReaderSettings setting = new XmlReaderSettings();
-                setting.IgnoreComments = true;
-                XmlReader r = XmlReader.Create(path, setting);
-                doc.Load(r);
+                ReadConfig(path);
             }
             else CreateDefaultConfig();
 
@@ -25,10 +23,18 @@ namespace RelertSharp.Common
         }
 
         #region Private Methods
+        private void ReadConfig(string path)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(RsModConfig));
+            TextReader reader = new StreamReader(path);
+            data = serializer.Deserialize(reader) as RsModConfig;
+        }
         private void CreateDefaultConfig()
         {
             this.path = Constant.Config.Path;
-            doc.LoadXml(Properties.Resources._default);
+            XmlSerializer serializer = new XmlSerializer(typeof(RsModConfig));
+            TextReader reader = new StringReader(Properties.Resources._default);
+            data = serializer.Deserialize(reader) as RsModConfig;
             SaveConfig();
         }
         #endregion
@@ -38,25 +44,14 @@ namespace RelertSharp.Common
         #region Public Methods
         public void SaveConfig()
         {
-#if RELEASE
-            doc.Save(this.path);
-#endif
+            XmlSerializer serializer = new XmlSerializer(typeof(RsModConfig));
+            TextWriter writer = new StreamWriter(path);
+            serializer.Serialize(writer, data);
+            writer.Close();
         }
-        #endregion
-        #region Public Calls
+#endregion
+#region Public Calls
 
-        #endregion
-    }
-}
-
-
-namespace RelertSharp.Common
-{
-    internal static class XmlNodeExtension
-    {
-        public static string GetAttribute(this XmlNode src, string key)
-        {
-            return (src as XmlElement).GetAttribute(key);
-        }
+#endregion
     }
 }

@@ -14,7 +14,7 @@
 using System;
 using System.Linq;
 
-namespace RelertSharp.Encoding
+namespace RelertSharp.Algorithm
 {
     public class WSKeyCalc
     {

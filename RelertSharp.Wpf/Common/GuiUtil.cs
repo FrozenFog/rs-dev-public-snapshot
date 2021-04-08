@@ -9,6 +9,7 @@ using AvalonDock;
 using AvalonDock.Layout;
 using RelertSharp.Common;
 using Microsoft.Win32;
+using RelertSharp.Engine.Api;
 
 namespace RelertSharp.Wpf
 {
@@ -66,6 +67,12 @@ namespace RelertSharp.Wpf
         public static void Warning(string format, params object[] obj)
         {
             Warning(string.Format(format, obj));
+        }
+
+        public static void ScaleWpfMousePoint(ref System.Windows.Point p)
+        {
+            p.X *= MonitorScale * EngineApi.ScaleFactor;
+            p.Y *= MonitorScale * EngineApi.ScaleFactor;
         }
     }
 }

@@ -28,20 +28,31 @@ namespace RelertSharp.Engine.Api
         {
             EngineMain.MoveTo(mapPos);
         }
+        public static void ShiftViewBy(System.Drawing.Point delta)
+        {
+            EngineMain.ViewShift(delta);
+        }
         /// <summary>
         /// Return true if pos is changed
         /// </summary>
         /// <param name="pos"></param>
         /// <param name="subcell"></param>
         /// <returns></returns>
-        public static bool MouseOnTile(Vec3 pos)
+        public static bool MouseOnTile(Vec3 pos, bool needIndicate = true)
         {
             if (pos != Vec3.Zero)
             {
-                if (EngineMain.SelectTile(pos))
+                if (needIndicate)
                 {
-                    MouseMoveTileMarkRedrawRequest?.Invoke(null, null);
-                    return true;
+                    if (EngineMain.SelectTile(pos))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    EngineMain.UnmarkPreviousTile();
+                    return false;
                 }
             }
             return false;

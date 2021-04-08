@@ -402,6 +402,7 @@ namespace RelertSharp.Engine
                 if (!src.IsTiberiumOverlay &&
                     src.MiscType != MapObjectType.Smudge &&
                     src.MiscType != MapObjectType.Celltag &&
+                    src.MiscType != MapObjectType.Waypoint &&
                     !src.IsFlatOnly) dest.pSelfShadow = RenderAndPresent(src.pShadow, pos + OffsetTo(Offset.ShadowSelf), frame + shadow / 2, color, pPal, ShpFlatType.FlatGround, box, ShaderType.Shadow);
                 //if (src.MiscType == MapObjectType.Waypoint) dest.pWpNum = CppExtern.ObjectUtils.CreateStringObjectAtScene(pos.MoveX(_15SQ2 * -1), 0x0000FFFF, src.NameID);
             }

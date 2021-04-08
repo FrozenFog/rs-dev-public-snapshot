@@ -7,18 +7,65 @@
         xmlns:local="clr-namespace:RelertSharp.Wpf"
         xmlns:Views="clr-namespace:RelertSharp.Wpf.Views" x:Class="RelertSharp.Wpf.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Background="{DynamicResource dimBack}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="23"/>
         </Grid.RowDefinitions>
-        <DockingManager x:Name="dockMain" Grid.Row="0">
+        <Menu Height="23" VerticalAlignment="Top" Style="{DynamicResource menuDark}" IsMainMenu="True">
+            <MenuItem Header="Files" Height="23">
+                <MenuItem Header="New Map">
+                    <MenuItem Header="Standard Map"/>
+                    <MenuItem Header="Mega Map"/>
+                </MenuItem>
+                <MenuItem Header="Open Map"/>
+                <MenuItem Header="Save Map"/>
+                <MenuItem Header="Save As..."/>
+                <Separator Style="{DynamicResource sepDark}"/>
+                <MenuItem Header="Check Map"/>
+                <MenuItem Header="Exit"/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Clear Map"/>
+            </MenuItem>
+            <MenuItem Header="Views">
+                <MenuItem Header="Logics">
+                    <MenuItem Header="Trigger View"/>
+                    <MenuItem Header="Trigger List"/>
+                    <MenuItem Header="Team View"/>
+                    <MenuItem Header="Team List"/>
+                    <MenuItem Header="Taskforce View"/>
+                    <MenuItem Header="Taskforce List"/>
+                    <MenuItem Header="Script View"/>
+                    <MenuItem Header="Script List"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
+                    <MenuItem Header="Ai-Trigger View"/>
+                    <MenuItem Header="Ai-Trigger List"/>
+                    <MenuItem Header="Local Variables"/>
+                </MenuItem>
+                <MenuItem Header="Map Components">
+                    <MenuItem Header="Houses"/>
+                    <MenuItem Header="Countries"/>
+                </MenuItem>
+                <MenuItem Header="Lightning">
+                    <MenuItem Header="Global Lightning"/>
+                    <MenuItem Header="Light Sources"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Map Tools">
+                <MenuItem Header="Ini Editor"/>
+            </MenuItem>
+            <MenuItem Header="Debug">
+                <MenuItem Header="Debug Button" Click="DebugClick"/>
+            </MenuItem>
+        </Menu>
+        <DockingManager x:Name="dockMain" Grid.Row="0" Margin="0,23,0,0">
             <DockingManager.Theme>
                 <Vs2013DarkTheme/>
             </DockingManager.Theme>
         </DockingManager>
-        <StatusBar Name="bar" Grid.Row="1" Style="{DynamicResource barDark}">
+        <StatusBar Name="bar" Grid.Row="2" Style="{DynamicResource barDark}">
             <TextBlock x:Name="position">Ready</TextBlock>
         </StatusBar>
         <!--<Button Content="Button" VerticalAlignment="Top" Click="Button_Click"/>-->
