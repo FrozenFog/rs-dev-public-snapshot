@@ -50,13 +50,17 @@ namespace RelertSharp.Engine.Api
             }
         }
         private static bool handlingRedrawRequest = false;
+        private static MiniTimer timer = new MiniTimer();
         public static void InvokeRedraw()
         {
             if (!handlingRedrawRequest)
             {
+                timer.Start();
                 handlingRedrawRequest = true;
                 RedrawRequest?.Invoke(null, null);
                 handlingRedrawRequest = false;
+                timer.Stop();
+                long avg = timer.Average;
             }
         }
         public static IntPtr ResetHandle(Size sz)

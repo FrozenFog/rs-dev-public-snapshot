@@ -42,6 +42,10 @@ namespace RelertSharp.Engine.Api
             EngineMain.RedrawMinimapAll();
             MinimapRedrawed?.Invoke(null, null);
         }
+        public static void UpdateMinimap()
+        {
+            MinimapRedrawed?.Invoke(null, null);
+        }
 
         public static Bitmap MiniMapImg { get { return EngineMain.MiniMap; } }
         public static ImageSource MinimapImgSource

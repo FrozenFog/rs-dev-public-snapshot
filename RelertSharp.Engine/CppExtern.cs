@@ -1,6 +1,7 @@
 ﻿using RelertSharp.Common;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -13,6 +14,7 @@ namespace RelertSharp.Engine
     {
         private const string name = "CncVxlRenderText.dll";
         private static readonly object cppLock = new object();
+        private static MiniTimer timer = new MiniTimer();
 
         public static class Scene
         {
@@ -52,7 +54,13 @@ namespace RelertSharp.Engine
             private static extern void PresentAllObject();
             public static void PresentAllObjectLock()
             {
-                lock (cppLock) PresentAllObject();
+                lock (cppLock)
+                {
+                    timer.Start();
+                    PresentAllObject();
+                    timer.Stop();
+                    long avg = timer.Average;
+                }
             }
             [DllImport(name)]
             public static extern void ClearSceneObjects();

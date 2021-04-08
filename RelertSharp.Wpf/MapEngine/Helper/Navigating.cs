@@ -1,4 +1,5 @@
-﻿using RelertSharp.Engine.Api;
+﻿using RelertSharp.Common;
+using RelertSharp.Engine.Api;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -56,8 +57,10 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         }
         private static void HaltMoving()
         {
+            worker.DoWork -= DoWork;
             worker.CancelAsync();
             worker.Dispose();
+            EngineApi.RedrawMinimapAll();
         }
 
         private static void DoWork(object sender, DoWorkEventArgs e)
@@ -71,10 +74,11 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                     t.Restart();
                     EngineApi.ShiftViewBy(delta.GdiPoint());
                     EngineApi.InvokeRedraw();
-                    EngineApi.RedrawMinimapAll();
+                    EngineApi.UpdateMinimap();
                     t.Stop();
-                    long elapsed = t.ElapsedMilliseconds;
-                    if (elapsed < restMilSec) Thread.Sleep((int)(restMilSec - elapsed));
+                    Thread.Sleep((int)restMilSec);
+                    //long elapsed = t.ElapsedMilliseconds;
+                    //if (elapsed < restMilSec) Thread.Sleep((int)(restMilSec - elapsed));
                 }
                 else break;
             }

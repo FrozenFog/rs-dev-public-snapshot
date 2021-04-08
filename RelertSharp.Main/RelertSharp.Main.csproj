@@ -137,6 +137,7 @@
     <Compile Include="Common\GlobalVar.cs" />
     <Compile Include="Common\Interfaces.cs" />
     <Compile Include="Common\Config\ModConfig.cs" />
+    <Compile Include="Common\MiniTimer.cs" />
     <Compile Include="Common\RsLog.cs" />
     <Compile Include="Common\SoundManager.cs" />
     <Compile Include="Common\Enumerator\Square2DEnumerator.cs" />
