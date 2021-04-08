@@ -9,8 +9,9 @@
     <UserControl.Resources>
         <ImageBrush x:Key="SceneResource"/>
     </UserControl.Resources>
-    <Grid>
-        <Image x:Name="imgelt" Stretch="Fill" MouseMove="HandleMouseMove" MouseWheel="HandleMouseWheel" SizeChanged="HandleSizeChanged" MouseDown="HandleMouseDown" MouseUp="HandleMouseUp">
+    <Grid MouseMove="HandleMouseMove" MouseWheel="HandleMouseWheel" SizeChanged="HandleSizeChanged" MouseDown="HandleMouseDown" MouseUp="HandleMouseUp">
+        <Canvas x:Name="graphicTop" Panel.ZIndex="2"/>
+        <Image x:Name="imgelt" Stretch="Fill" Panel.ZIndex="1">
             <Image.Source>
                 <d3d:D3DImage x:Name="d3dimg"/>
             </Image.Source>

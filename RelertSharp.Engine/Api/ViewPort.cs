@@ -28,9 +28,17 @@ namespace RelertSharp.Engine.Api
         {
             EngineMain.MoveTo(mapPos);
         }
-        public static void ShiftViewBy(System.Drawing.Point delta)
+        public static void ShiftViewBy(Point delta)
         {
             EngineMain.ViewShift(delta);
+        }
+        public static void DrawSelectingRectangle(Point begin, Point end, bool isIsometric)
+        {
+            EngineMain.DrawSelectingRectangle(Pnt.FromPoint(begin), Pnt.FromPoint(end), isIsometric);
+        }
+        public static void ReleaseSelectingRectangle()
+        {
+            EngineMain.ReleaseDrawingRectangle();
         }
         /// <summary>
         /// Return true if pos is changed

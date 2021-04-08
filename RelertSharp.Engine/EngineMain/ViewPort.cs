@@ -167,7 +167,7 @@ namespace RelertSharp.Engine
             p3 += Constant.DrawingEngine.SelectRectangleMultiplier * _NormTileVec;
             p4 += Constant.DrawingEngine.SelectRectangleMultiplier * _NormTileVec;
             DrawRectangleLine(p1, p2, p3, p4, _white, Buffer.Scenes.RectangleLines);
-            CppExtern.Scene.PresentAllObjectLock();
+            //CppExtern.Scene.PresentAllObjectLock();
         }
         public static void ReleaseDrawingRectangle()
         {

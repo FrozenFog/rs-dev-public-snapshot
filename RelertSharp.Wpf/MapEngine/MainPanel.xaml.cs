@@ -36,14 +36,20 @@ namespace RelertSharp.Wpf.MapEngine
         private int prevW, prevH;
         private int nWidth { get { return this.ScaledWidth(); } }
         private int nHeight { get { return this.ScaledHeight(); } }
+        private double dpi;
 
         public GuiViewType ViewType { get { return GuiViewType.MainPanel; } }
 
         private static readonly object lockRender = new object();
         private static readonly object lockMouse = new object();
 
+        private const int susMsResize = 600;
 
-        private DispatcherTimer _wheelResize;
+
+        private DispatcherTimer _wheelResizeDelay;
+        private DispatcherTimer _suspendMouseDelay;
+
+        private RenderTargetBitmap img;
 
 
 
@@ -69,16 +75,18 @@ namespace RelertSharp.Wpf.MapEngine
         }
         public void InitializePanel()
         {
+            dpi = this.GetScale();
             EngineApi.EngineCtor(nWidth, nHeight);
             _handle = EngineApi.ResetHandle(nWidth, nHeight);
             d3dimg.IsFrontBufferAvailableChanged += FrontBufferChanged;
             EngineApi.RedrawRequest += RedrawInvokeHandler;
             EngineApi.ResizeRequest += ResizeInvokeHandler;
-            _wheelResize = new DispatcherTimer()
-            {
-                Interval = new TimeSpan(0, 0, 0, 0, 700)
-            };
-            _wheelResize.Tick += WheelResizeInvoker;
+            _wheelResizeDelay = new DispatcherTimer();
+            _wheelResizeDelay.Tick += WheelResizeInvoker;
+            _wheelResizeDelay.Interval = new TimeSpan(0, 0, 0, 0, susMsResize);
+            _suspendMouseDelay = new DispatcherTimer();
+            _suspendMouseDelay.Tick += SuspendMouseTick;
+
             //CompositionTarget.Rendering += CompositionTarget_Rendering;
 
             //_baseRefreshing = new DispatcherTimer()
@@ -89,12 +97,24 @@ namespace RelertSharp.Wpf.MapEngine
             //_baseRefreshing.Start();
         }
 
+        private void SuspendMouseTick(object sender, EventArgs e)
+        {
+            if (drew && mouseSuspendedMs)
+            {
+                _suspendMouseDelay.Stop();
+                Thread.Sleep(100);
+                imgelt.MouseMove += HandleMouseMove;
+                imgelt.MouseDown += HandleMouseDown;
+                imgelt.MouseUp += HandleMouseUp;
+            }
+        }
+
         private void WheelResizeInvoker(object sender, EventArgs e)
         {
             if (drew)
             {
                 EngineApi.ScaleFactorInvoke();
-                _wheelResize.Stop();
+                _wheelResizeDelay.Stop();
                 Thread.Sleep(300);
                 ResumeMouseHandler();
             }
@@ -107,6 +127,20 @@ namespace RelertSharp.Wpf.MapEngine
                 mouseSuspended = true;
                 imgelt.MouseMove -= HandleMouseMove;
                 //imgelt.MouseWheel -= HandleMouseWheel;
+            }
+        }
+        private bool mouseSuspendedMs = false;
+        private void SuspendMouseHandlerFor(int milSec)
+        {
+            if (!mouseSuspendedMs)
+            {
+                mouseSuspended = true;
+                imgelt.MouseMove -= HandleMouseMove;
+                imgelt.MouseDown -= HandleMouseDown;
+                imgelt.MouseUp -= HandleMouseUp;
+                _suspendMouseDelay.Stop();
+                _suspendMouseDelay.Interval = new TimeSpan(0, 0, 0, 0, milSec);
+                _suspendMouseDelay.Start();
             }
         }
         private void ResumeMouseHandler()
@@ -190,8 +224,11 @@ namespace RelertSharp.Wpf.MapEngine
                 if (drew)
                 {
                     Point p = e.GetPosition(this);
+                    Point pOrg = e.GetPosition(this);
                     GuiUtil.ScaleWpfMousePoint(ref p);
-                    MouseMoved(p);
+                    bool redraw = MouseMoved(p, pOrg);
+
+                    if (redraw) EngineApi.InvokeRedraw();
                 }
             }
         }
@@ -214,10 +251,11 @@ namespace RelertSharp.Wpf.MapEngine
             if (drew)
             {
                 Point p = e.GetPosition(this);
+                Point pOrg = e.GetPosition(this);
                 GuiUtil.ScaleWpfMousePoint(ref p);
-                if (e.ChangedButton == MouseButton.Left) this.LmbUp(p);
-                else if (e.ChangedButton == MouseButton.Right) this.RmbUp(p);
-                else if (e.ChangedButton == MouseButton.Middle) this.MmbUp(p);
+                if (e.ChangedButton == MouseButton.Left) this.LmbUp(p, pOrg);
+                else if (e.ChangedButton == MouseButton.Right) this.RmbUp(p, pOrg);
+                else if (e.ChangedButton == MouseButton.Middle) this.MmbUp(p, pOrg);
             }
         }
 
@@ -226,10 +264,11 @@ namespace RelertSharp.Wpf.MapEngine
             if (drew)
             {
                 Point p = e.GetPosition(this);
+                Point pOrg = e.GetPosition(this);
                 GuiUtil.ScaleWpfMousePoint(ref p);
-                if (e.ChangedButton == MouseButton.Left) this.LmbDown(p);
-                else if (e.ChangedButton == MouseButton.Right) this.RmbDown(p);
-                else if (e.ChangedButton == MouseButton.Middle) this.MmbDown(p);
+                if (e.ChangedButton == MouseButton.Left) this.LmbDown(p, pOrg);
+                else if (e.ChangedButton == MouseButton.Right) this.RmbDown(p, pOrg);
+                else if (e.ChangedButton == MouseButton.Middle) this.MmbDown(p, pOrg);
             }
         }
 
@@ -237,8 +276,8 @@ namespace RelertSharp.Wpf.MapEngine
         {
             if (drew)
             {
-                _wheelResize.Stop();
-                _wheelResize.Start();
+                _wheelResizeDelay.Stop();
+                _wheelResizeDelay.Start();
                 SuspendMouseHandler();
                 if (e.Delta > 0) EngineApi.ChangeScaleFactor(-0.1);
                 else EngineApi.ChangeScaleFactor(0.1);
