@@ -25,6 +25,11 @@ CommonTextureFileClass::CommonTextureFileClass(LPDIRECT3DDEVICE9 pDevice, float 
 	CreateCircle(pDevice, Radius, Thickness, dwColor);
 }
 
+CommonTextureFileClass::CommonTextureFileClass(LPDIRECT3DDEVICE9 pDevice, const void* pColorBuffer, ULONG ulWidth, ULONG ulHeight)
+{
+	LoadARGB32TextureFromBuffer(pDevice, pColorBuffer, ulWidth, ulHeight);
+}
+
 CommonTextureFileClass::~CommonTextureFileClass()
 {
 	RemoveTexture();
@@ -36,6 +41,30 @@ bool CommonTextureFileClass::LoadFromFile(LPDIRECT3DDEVICE9 pDevice, const char 
 		return false;
 
 	return SUCCEEDED(D3DXCreateTextureFromFile(pDevice, pFileName, &pTexture));
+}
+
+bool CommonTextureFileClass::LoadARGB32TextureFromBuffer(LPDIRECT3DDEVICE9 pDevice, const void* pColorBuffer, ULONG ulWidth, ULONG ulHeight)
+{
+	if (this->IsLoaded() || !pColorBuffer)
+		return false;
+
+	D3DLOCKED_RECT LockedRect;
+	HRESULT hResult = pDevice ? pDevice->CreateTexture(ulWidth, ulHeight, 1, NULL, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &this->pTexture, nullptr) : E_POINTER;
+	if (FAILED(hResult)) {
+		SAFE_RELEASE(this->pTexture);
+		return false;
+	}
+
+	hResult = this->pTexture->LockRect(0, &LockedRect, nullptr, NULL);
+	if (FAILED(hResult)) {
+		this->pTexture->UnlockRect(0);
+		SAFE_RELEASE(this->pTexture);
+		return false;
+	}
+
+	ULONG ulDataSize = ulWidth * ulHeight * sizeof D3DCOLOR;
+	memcpy_s(LockedRect.pBits, ulDataSize, pColorBuffer, ulDataSize);
+	return SUCCEEDED(this->pTexture->UnlockRect(0));
 }
 
 bool CommonTextureFileClass::CreateCircle(LPDIRECT3DDEVICE9 pDevice, float Radius, float Thickness, DWORD dwColor)
