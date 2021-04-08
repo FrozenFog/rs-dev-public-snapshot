@@ -16,33 +16,35 @@ namespace RelertSharp.Wpf.MapEngine
         #region Head
         private enum MouseAction
         {
-            None = 0
+            None = 0,
+            DEBUG = 65535
         }
-        private MouseAction mouseState = MouseAction.None;
+        private MouseAction mouseState = MouseAction.DEBUG;
         private bool rmbMoving = false;
+        private bool selecting = false;
         private bool NeedIndicating
         {
-            get { return !rmbMoving; }
+            get { return !rmbMoving && !selecting; }
         }
         #endregion
 
 
         #region Rmb
-        private void RmbDown(Point point)
+        private void RmbDown(Point point, Point unscaled)
         {
             switch (mouseState)
             {
-                case MouseAction.None:
+                case MouseAction.DEBUG:
                     rmbMoving = true;
                     Navigating.BeginRightClickMove(point);
                     break;
             }
         }
-        private void RmbUp(Point point)
+        private void RmbUp(Point point, Point unscaled)
         {
             switch (mouseState)
             {
-                case MouseAction.None:
+                case MouseAction.DEBUG:
                     rmbMoving = false;
                     Navigating.EndRightClickMove();
                     break;
@@ -51,24 +53,37 @@ namespace RelertSharp.Wpf.MapEngine
         #endregion
 
         #region Lmb
-        private void LmbUp(Point point)
+        private void LmbUp(Point point, Point unscaled)
         {
-
+            switch (mouseState)
+            {
+                case MouseAction.DEBUG:
+                    selecting = false;
+                    Selector.EndSelecting();
+                    //SuspendMouseHandlerFor(susMsSelect);
+                    break;
+            }
         }
 
-        private void LmbDown(Point point)
+        private void LmbDown(Point point, Point unscaled)
         {
-
+            switch (mouseState)
+            {
+                case MouseAction.DEBUG:
+                    selecting = true;
+                    Selector.BeginSelecting(unscaled, false, graphicTop);
+                    break;
+            }
         }
         #endregion
 
         #region Mmb
-        private void MmbUp(Point point)
+        private void MmbUp(Point point, Point unscaled)
         {
 
         }
 
-        private void MmbDown(Point point)
+        private void MmbDown(Point point, Point unscaled)
         {
 
         }
@@ -77,9 +92,11 @@ namespace RelertSharp.Wpf.MapEngine
         #region Move
         /// <summary>
         /// Handle all mouse move event in main panel
+        /// return true if needs redraw, prevent lag from redrawing
         /// </summary>
         /// <param name="point"></param>
-        private void MouseMoved(Point point)
+        /// <returns></returns>
+        private bool MouseMoved(Point point, Point unscaled)
         {
             bool redraw = false;
             Vec3 pos = EngineApi.ClientPointToCellPos(point.GdiPoint(), out int subcell);
@@ -88,16 +105,18 @@ namespace RelertSharp.Wpf.MapEngine
                 Navigating.UpdateDelta(point);
                 redraw = false;
             }
+            if (selecting)
+            {
+                Selector.UpdateSelectingRectangle(unscaled);
+                redraw = false;
+            }
             if (EngineApi.MouseOnTile(pos, NeedIndicating))
             {
                 MousePosChanged?.Invoke(this, pos.To3dLocateable());
                 redraw = true;
             }
 
-            if (redraw)
-            {
-                EngineApi.InvokeRedraw();
-            }
+            return redraw;
         }
         #endregion
     }

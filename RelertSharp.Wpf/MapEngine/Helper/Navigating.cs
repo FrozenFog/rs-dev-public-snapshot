@@ -13,7 +13,6 @@ namespace RelertSharp.Wpf.MapEngine.Helper
 {
     internal static class Navigating
     {
-        private const int rate = 60;
         private static Point delta;
         private static Point downPos;
         private static bool moving = false;
@@ -64,7 +63,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         private static void DoWork(object sender, DoWorkEventArgs e)
         {
             Stopwatch t = new Stopwatch();
-            long restMilSec = 1000 / rate;
+            long restMilSec = 1000 / EngineApi.MaxRate;
             while (true)
             {
                 if (moving)

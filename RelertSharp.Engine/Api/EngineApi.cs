@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using RelertSharp.MapStructure;
 using RelertSharp.Common;
+using System.Threading;
 
 namespace RelertSharp.Engine.Api
 {
@@ -79,5 +80,6 @@ namespace RelertSharp.Engine.Api
         }
         public static IntPtr EngineHandle { get { return EngineMain.Handle; } }
         public static double ScaleFactor { get; internal set; } = 1;
+        public const int MaxRate = 60;
     }
 }

@@ -125,6 +125,11 @@ namespace RelertSharp.Engine
             public static extern bool RemoveTmpFile(int id);
             [DllImport(name)]
             public static extern bool LoadTmpTextures(int tmpId);
+
+
+            // common
+            [DllImport(name)]
+            public static extern int CreateCommonARGB32TextureFromColorBuffer(IntPtr pFile, uint width, uint height);
         }
 
 
