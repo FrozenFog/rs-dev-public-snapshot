@@ -41,6 +41,7 @@ EXPORT bool WINAPI LoadShpTextures(int nFileId, int idxFrame);
 EXPORT bool WINAPI IsShpFrameLoadedAsTexture(int nFileID, int idxFrame);
 
 EXPORT int WINAPI CreateCommonTextureFile(const char* pFileName);
+EXPORT int WINAPI CreateCommonARGB32TextureFromColorBuffer(const void* lpFileBuffer, ULONG ulWidth, ULONG ulHeight);
 EXPORT int WINAPI CreateCircularCommonTextureFile(float Radius, float Thickness, DWORD dwD3DColor);
 
 EXPORT bool WINAPI RemoveCommonTextureFile(int nFileId);

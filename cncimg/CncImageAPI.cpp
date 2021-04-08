@@ -189,6 +189,22 @@ int WINAPI CreateCommonTextureFile(const char * pFileName)
 	return 0;
 }
 
+int WINAPI CreateCommonARGB32TextureFromColorBuffer(const void* lpFileBuffer, ULONG ulWidth, ULONG ulHeight)
+{
+	if (!SceneClass::Instance.IsDeviceLoaded())
+		return 0;
+
+	auto pFile = std::make_unique<CommonTextureFileClass>(SceneClass::Instance.GetDevice(), lpFileBuffer, ulWidth, ulHeight);
+	if (pFile && pFile->IsLoaded())
+	{
+		auto id = GlobalID::AllocatedGlobalId++;
+
+		CommonTextureFileClass::FileObjectTable[id] = std::move(pFile);
+		return id;
+	}
+	return 0;
+}
+
 int WINAPI CreateCircularCommonTextureFile(float Radius, float Thickness, DWORD dwD3DColor)
 {
 	if (!SceneClass::Instance.IsDeviceLoaded())
