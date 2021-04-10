@@ -13,6 +13,11 @@ namespace RelertSharp.IniSystem
         public static List<bool> GetBuildingCustomShape(this Rules r, string regname, int sizeX, int sizeY)
         {
             List<bool> shape = InitializeListWithCap<bool>(sizeX * sizeY);
+            if (r == null)
+            {
+                shape.SetValueAll(true);
+                return shape;
+            }
             string artname = r.GetArtEntityName(regname);
             INIEntity art = r.Art[artname];
             string foundation = (string)art["Foundation"].ToLower();
@@ -47,6 +52,13 @@ namespace RelertSharp.IniSystem
         }
         public static void GetBuildingShapeData(this Rules r, string nameid, out int height, out int foundX, out int foundY)
         {
+            if (r == null)
+            {
+                foundX = 1;
+                foundY = 1;
+                height = 1;
+                return;
+            }
             Vec3 sz;
             if (!bufferedBuildingShape.Keys.Contains(nameid))
             {
@@ -84,6 +96,12 @@ namespace RelertSharp.IniSystem
         }
         public static void GetSmudgeSizeData(this Rules r, string nameid, out int foundx, out int foundy)
         {
+            if (r == null)
+            {
+                foundx = 1;
+                foundy = 1;
+                return;
+            }
             INIEntity ent = r[nameid];
             foundx = ent.ParseInt("Width", 1);
             foundy = ent.ParseInt("Height", 1);

@@ -11,10 +11,11 @@ namespace RelertSharp.Algorithm
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> src, Func<T, T, bool> swapCondition = null, int seed = 0)
         {
             Random rnd;
+            int count = src.Count();
             if (seed == 0) rnd = new Random();
             else rnd = new Random(seed);
-            List<T> r = new List<T>(src);
-            for (int i = r.Count - 1; i >= 1; i--)
+            T[] r = src.ToArray();
+            for (int i = count - 1; i >= 1; i--)
             {
                 int maxTry = 100;
                 if (swapCondition != null)
