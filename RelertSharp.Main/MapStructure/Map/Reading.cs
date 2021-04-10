@@ -38,7 +38,7 @@ namespace RelertSharp.MapStructure
             GetAbstractLogics(f);
             GetTeam(f);
             GetObjects(f, func);
-            LoadHouseColor();
+            if (GlobalVar.GlobalRules != null) LoadHouseColor();
 
             globalid.AddRange(Triggers.AllId);
             globalid.AddRange(Teams.AllId);
