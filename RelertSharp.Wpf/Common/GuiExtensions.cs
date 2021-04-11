@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms.Integration;
+using System.IO;
 using System.Windows.Media;
 using AvalonDock;
 using AvalonDock.Layout;
+using System.Windows.Media.Imaging;
+using System.Drawing.Imaging;
 
 namespace System.Windows
 {
@@ -21,6 +24,21 @@ namespace System.Windows
         public static System.Drawing.Point GdiPoint(this System.Windows.Point src)
         {
             return new Drawing.Point((int)src.X, (int)src.Y);
+        }
+        public static BitmapImage ToWpfImage(this System.Drawing.Image src)
+        {
+            MemoryStream ms = new MemoryStream();
+            BitmapImage img = new BitmapImage();
+            src.Save(ms, ImageFormat.Bmp);
+            img.BeginInit();
+            img.CacheOption = BitmapCacheOption.OnLoad;
+            img.StreamSource = ms;
+            img.EndInit();
+            return img;
+        }
+        public static Drawing.Color ToGdiColor(this System.Windows.Media.Color src)
+        {
+            return Drawing.Color.FromArgb(src.A, src.R, src.G, src.B);
         }
     }
 }

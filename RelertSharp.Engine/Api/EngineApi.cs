@@ -12,8 +12,9 @@ namespace RelertSharp.Engine.Api
 {
     public static partial class EngineApi
     {
-        public static event EventHandler RedrawRequest;
-        public static event EventHandler ResizeRequest;
+        public static event EventHandler RedrawRequested;
+        public static event EventHandler ResizeRequested;
+        public static event EventHandler TheaterReloaded;
         private static readonly object lockRenderer = new object();
 
         private static bool initialized = false;
@@ -57,7 +58,7 @@ namespace RelertSharp.Engine.Api
             {
                 timer.Start();
                 handlingRedrawRequest = true;
-                RedrawRequest?.Invoke(null, null);
+                RedrawRequested?.Invoke(null, null);
                 handlingRedrawRequest = false;
                 timer.Stop();
                 long avg = timer.Average;

@@ -83,7 +83,7 @@ namespace RelertSharp.Engine.Api
         {
             if (!rendering && renderEnable)
             {
-                ResizeRequest?.Invoke(null, null);
+                ResizeRequested?.Invoke(null, null);
                 MinimapClientResizeRequest?.Invoke(null, null);
             }
         }

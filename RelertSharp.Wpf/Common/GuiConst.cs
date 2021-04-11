@@ -20,7 +20,8 @@ namespace RelertSharp.Wpf.Common
         Taskforce,
         TaskforceList,
         Team,
-        TeamList
+        TeamList,
+        AnimationPreview
     }
     public class RsViewComponentAttribute : Attribute
     {

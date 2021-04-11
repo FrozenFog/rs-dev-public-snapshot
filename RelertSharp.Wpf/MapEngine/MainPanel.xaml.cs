@@ -68,7 +68,11 @@ namespace RelertSharp.Wpf.MapEngine
         public async void DrawMap()
         {
             EngineApi.SuspendRendering();
+#if DEBUG
             EngineApi.DrawMap(GlobalVar.CurrentMapDocument.Map);
+#else
+            await EngineApi.DrawMap(GlobalVar.CurrentMapDocument.Map);
+#endif
             drew = true;
             EngineApi.ResumeRendering();
             RenderFrame();
@@ -79,8 +83,8 @@ namespace RelertSharp.Wpf.MapEngine
             EngineApi.EngineCtor(nWidth, nHeight);
             _handle = EngineApi.ResetHandle(nWidth, nHeight);
             d3dimg.IsFrontBufferAvailableChanged += FrontBufferChanged;
-            EngineApi.RedrawRequest += RedrawInvokeHandler;
-            EngineApi.ResizeRequest += ResizeInvokeHandler;
+            EngineApi.RedrawRequested += RedrawInvokeHandler;
+            EngineApi.ResizeRequested += ResizeInvokeHandler;
             _wheelResizeDelay = new DispatcherTimer();
             _wheelResizeDelay.Tick += WheelResizeInvoker;
             _wheelResizeDelay.Interval = new TimeSpan(0, 0, 0, 0, susMsResize);

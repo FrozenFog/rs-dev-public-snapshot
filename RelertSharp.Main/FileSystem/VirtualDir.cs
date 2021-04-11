@@ -183,6 +183,22 @@ namespace RelertSharp.FileSystem
             }
             return false;
         }
+        public bool TryGetRawByte(string _fullName, out byte[] bytes, bool fromRoot = false)
+        {
+            if (fromRoot || GlobalConfig.Local.DevMode)
+            {
+                bytes = GetFromRoot(_fullName);
+                if (bytes != null) return true;
+            }
+            uint fileid = CRC.GetCRC(_fullName);
+            if (!fileOrigin.Keys.Contains(fileid))
+            {
+                bytes = null;
+                return false;
+            }
+            bytes = GetRawByte(_fullName, fromRoot);
+            return true;
+        }
         public byte[] GetRawByte(string _fullName, bool fromRoot = false)
         {
             Log.Write("Finding " + _fullName);

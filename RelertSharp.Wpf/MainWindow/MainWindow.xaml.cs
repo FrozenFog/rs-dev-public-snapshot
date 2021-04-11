@@ -24,6 +24,7 @@ using System.Windows.Interop;
 using RelertSharp.Common;
 using RelertSharp.Wpf.LayoutManaging;
 using System.Reflection;
+using RelertSharp.Wpf.ToolBoxes;
 
 namespace RelertSharp.Wpf
 {
@@ -56,6 +57,8 @@ namespace RelertSharp.Wpf
         private readonly MinimapPanel minimap = new MinimapPanel();
         [RsViewComponent(GuiViewType.LightningPanel, nameof(lightning))]
         private readonly LightningView lightning = new LightningView();
+        [RsViewComponent(GuiViewType.AnimationPreview, nameof(animationPreview))]
+        private readonly AnimationPreview animationPreview = new AnimationPreview();
         #endregion
         #region Dispatcher
         #endregion
@@ -92,6 +95,7 @@ namespace RelertSharp.Wpf
             //dockMain.AddToolToRight("Script List", scriptList);
             //dockMain.AddToolToRight("Taskforce List", taskforceList);
             dockMain.Layout.AddToolToRight("Team", team);
+            dockMain.Layout.AddToolToRight("Animation", animationPreview);
             //dockMain.AddToolToRight("Script", script);
             //dockMain.Layout.AddToolToRight("Light", lightPanel);
             dockMain.AddCenterPage("Map", pnlMain);
@@ -113,6 +117,11 @@ namespace RelertSharp.Wpf
         {
             lightning.LightningChangedRequest += RedrawRequestHandler;
         }
+        private void OtherListener()
+        {
+            pnlMain.MousePosChanged += PnlMain_MousePosChanged;
+            pnlMain.ScaleFactorChanged += PnlMain_ScaleFactorChanged;
+        }
         #endregion
 
 
@@ -126,13 +135,12 @@ namespace RelertSharp.Wpf
             Engine.Api.EngineApi.SetBackgroundColor(GuiUtil.defBackColor);
             pnlMain.DrawMap();
             minimap.ResumeDrawing();
-            pnlMain.MousePosChanged += PnlMain_MousePosChanged;
-            pnlMain.ScaleFactorChanged += PnlMain_ScaleFactorChanged;
             RedrawListener();
+            OtherListener();
         }
         private void DebugClick()
         {
-            dockMain.LoadLayoutFromXml("layout.xml", this);
+            animationPreview.LoadAnimation("CHRONOWAVE");
         }
 
         private void RedrawRequestHandler(object sender, EventArgs e)
