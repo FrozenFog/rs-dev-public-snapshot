@@ -177,6 +177,30 @@ namespace RelertSharp.FileSystem
                     for (int i = 0; i < Width; i++)
                     {
                         if (Data[count] != 0) shpImage.SetPixel(i, j, _pal[Data[count]]);
+                        else shpImage.SetPixel(i, j, Color.Transparent);
+                        count++;
+                    }
+                }
+            }
+            Image = bmp;
+        }
+        public unsafe void SetBitmap(PalFile _pal, Color transparentColor)
+        {
+            if (IsNullFrame)
+            {
+                Image = new Bitmap(1, 1);
+                return;
+            }
+            Bitmap bmp = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
+            using (FastBitmap shpImage = new FastBitmap(bmp))
+            {
+                int count = 0;
+                for (int j = 0; j < Height; j++)
+                {
+                    for (int i = 0; i < Width; i++)
+                    {
+                        if (Data[count] != 0) shpImage.SetPixel(i, j, _pal[Data[count]]);
+                        else shpImage.SetPixel(i, j, transparentColor);
                         count++;
                     }
                 }

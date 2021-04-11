@@ -9,16 +9,22 @@ using RelertSharp.MapStructure.Points;
 using RelertSharp.IniSystem;
 using static RelertSharp.Common.GlobalVar;
 using RelertSharp.MapStructure.Logic;
+using RelertSharp.Common;
 
 namespace RelertSharp.Engine.Api
 {
     public static partial class EngineApi
     {
         public static event MapDrawingProgressEventHandler DrawingProgressTick;
+        public static void SetTheater(TheaterType type)
+        {
+            EngineMain.SetTheater(type);
+            TheaterReloaded?.Invoke(null, null);
+        }
 #if DEBUG
         public static void DrawMap(Map map)
         {
-            EngineMain.SetTheater(map.Info.TheaterType);
+            SetTheater(map.Info.TheaterType);
             foreach (Tile t in map.TilesData) EngineMain.DrawTile(t);
             foreach (InfantryItem inf in map.Infantries) EngineMain.DrawInfantry(inf, inf.GetHeight(), map.GetHouseColor(inf));
             foreach (UnitItem u in map.Units) EngineMain.DrawUnit(u, u.GetHeight(), map.GetHouseColor(u));
@@ -41,7 +47,7 @@ namespace RelertSharp.Engine.Api
         {
             await Task.Run(() =>
             {
-                EngineMain.SetTheater(map.Info.TheaterType);
+                SetTheater(map.Info.TheaterType);
                 foreach (Tile t in map.TilesData) EngineMain.DrawTile(t);
                 foreach (InfantryItem inf in map.Infantries) EngineMain.DrawInfantry(inf, inf.GetHeight(), map.GetHouseColor(inf));
                 foreach (UnitItem u in map.Units) EngineMain.DrawUnit(u, u.GetHeight(), map.GetHouseColor(u));

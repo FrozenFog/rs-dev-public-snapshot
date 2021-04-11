@@ -74,6 +74,9 @@
     </Compile>
     <Compile Include="MapEngine\MouseHandler.cs" />
     <Compile Include="MapEngine\Helper\Navigating.cs" />
+    <Compile Include="ToolBoxes\AnimationPreview.xaml.cs">
+      <DependentUpon>AnimationPreview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\GlobalCountryVm.cs" />
     <Compile Include="ViewModel\LightningVm.cs" />
     <Compile Include="ViewModel\ScriptVm.cs" />
@@ -118,6 +121,10 @@
     <Compile Include="Views\AiTriggerView.xaml.cs">
       <DependentUpon>AiTriggerView.xaml</DependentUpon>
     </Compile>
+    <Page Include="ToolBoxes\AnimationPreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TriggerEditor\TriggerEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -207,7 +214,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dialogs\" />
-    <Folder Include="ToolBoxes\" />
     <Folder Include="TriggerEditor\Pages\" />
   </ItemGroup>
   <ItemGroup>
