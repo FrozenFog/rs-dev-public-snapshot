@@ -140,7 +140,7 @@ namespace RelertSharp.Wpf
         }
         private void DebugClick()
         {
-            animationPreview.LoadAnimation("CHRONOWAVE");
+            animationPreview.LoadAnimation("IRONEXP");
         }
 
         private void RedrawRequestHandler(object sender, EventArgs e)

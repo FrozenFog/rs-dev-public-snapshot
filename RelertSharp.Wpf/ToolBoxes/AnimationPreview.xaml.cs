@@ -31,7 +31,6 @@ namespace RelertSharp.Wpf.ToolBoxes
         private bool init = false;
         private string animRegName;
         private int currentFrame = 0, maxFrame = 0;
-        private double shpMaxHeight, shpMaxWidth;
         private Color bgc;
         private ShpFile shp;
         private PalFile pal;
@@ -63,6 +62,10 @@ namespace RelertSharp.Wpf.ToolBoxes
         }
         public void LoadAnimation(string regName)
         {
+            if (isPlaying)
+            {
+                StopAnimation();
+            }
             if (!init)
             {
                 LoadDefaultPalette();
@@ -73,9 +76,7 @@ namespace RelertSharp.Wpf.ToolBoxes
             if (GlobalVar.GlobalDir.TryGetRawByte(animRegName, out byte[] data))
             {
                 shp = new ShpFile(data, animRegName);
-                shpMaxWidth = shp.Frames.Max(a => a.Width);
-                shpMaxHeight = shp.Frames.Max(a => a.Height);
-                sldProgress.Maximum = shp.Count;
+                sldProgress.Maximum = shp.Count - 1;
                 maxFrame = shp.Count;
                 sldProgress.Value = 0;
             }
@@ -142,7 +143,7 @@ namespace RelertSharp.Wpf.ToolBoxes
                 this.Dispatcher.Invoke(() =>
                 {
                     int frame = currentFrame + 1;
-                    if (frame >= (int)sldProgress.Maximum) frame = 0;
+                    if (frame > (int)sldProgress.Maximum) frame = 0;
                     sldProgress.Value = frame;
                     currentFrame = frame;
                     SetInfoLabel();
@@ -205,20 +206,13 @@ namespace RelertSharp.Wpf.ToolBoxes
         }
         private void ShowFrame()
         {
-            // frameHeight + dy = CONSTANT
-            // CONSTANT = canvasHeight/2 + shpMaxHeight/2
-            // dy = (canvasHeight + shpMaxHeight) / 2 - frameHeight
-            //
-            // dx always center
-            // dx = (canvasWidth - frameWidth) / 2
-            //canvas.Children.Remove(currentImg);
             BitmapImage source = shp.Frames[currentFrame].Image.ToWpfImage();
             currentImg.Source = source;
-            double dx = (canvas.ScaledWidth() - source.PixelWidth) / 2;
-            double dy = (canvas.ScaledHeight() + shp.Height) / 2 - source.Height;
-            Canvas.SetLeft(currentImg, dx);
-            Canvas.SetTop(currentImg, dy);
-            //canvas.Children.Add(currentImg);
+            double scale = this.GetScale();
+            double dx = (canvas.ScaledWidth() - shp.Width) / 2 + shp.Frames[currentFrame].X;
+            double dy = (canvas.ScaledHeight() - shp.Height) / 2 + shp.Frames[currentFrame].Y;
+            Canvas.SetLeft(currentImg, dx / scale);
+            Canvas.SetTop(currentImg, dy / scale);
         }
         private void SetInfoLabel()
         {
