@@ -8,6 +8,7 @@ using System.Linq;
 using System;
 using static RelertSharp.Common.GlobalVar;
 using static RelertSharp.Utils.Misc;
+using static RelertSharp.Common.Constant;
 using RelertSharp.Engine.DrawableBuffer;
 using RelertSharp.IniSystem;
 
@@ -169,7 +170,7 @@ namespace RelertSharp.Engine
                 bool isTiberium = IniParseBool(GlobalRules[name]["Tiberium"]);
                 bool rubble = IniParseBool(GlobalRules[name]["IsRubble"]);
                 bool wall = IniParseBool(GlobalRules[name]["Wall"]);
-                string img = GlobalRules[name]["Image"];
+                string img = GlobalRules[name][KEY_IMAGE];
                 string land = GlobalRules[name]["Land"];
                 string[] colors = GlobalRules[name].ParseStringList("RadarColor");
                 if (wall) GlobalRules.FixWallOverlayName(ref filename);

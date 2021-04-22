@@ -177,6 +177,7 @@
     <Compile Include="FileSystem\VxlFile.cs" />
     <Compile Include="FileSystem\WavFile.cs" />
     <Compile Include="IniSystem\Rules.cs" />
+    <Compile Include="IniSystem\RulesExtension\AnimationUtil.cs" />
     <Compile Include="IniSystem\RulesExtension\FindObjectAttribute.cs" />
     <Compile Include="IniSystem\RulesExtension\GlobalFinding.cs" />
     <Compile Include="IniSystem\SoundRules.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="MapStructure\Map\MapVerification\Verification.cs" />
     <Compile Include="MapStructure\Map\MapVerification\VerifyModels.cs" />
     <Compile Include="Utils\Misc.cs" />
+    <Compile Include="Utils\RsMath.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

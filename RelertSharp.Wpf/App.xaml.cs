@@ -23,7 +23,7 @@ namespace RelertSharp.Wpf
     {
         private static string _guid = "c0a76b5a-12ab-45c5-b9d9-d693faa6e7b9";
         private static RsLog Log { get { return GlobalVar.Log; } }
-        private static string name = "arele.map";
+        private static string name = "areddawn.map";
         private static string StartupPath { get { return AppDomain.CurrentDomain.BaseDirectory; } }
         [DllImport("kernel32.dll")]
         static extern bool SetDllDirectory(string pathname);

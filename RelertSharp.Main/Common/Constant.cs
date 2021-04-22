@@ -22,16 +22,23 @@ namespace RelertSharp.Common
             }
         }
 
+        public const string KEY_IMAGE = "Image";
+        public const string KEY_ALPHA = "AlphaImage";
+        public const string KEY_NAME = "Name";
+        public const string KEY_CUSPAL = "CustomPalette";
+        public const string KEY_NEXTANIM = "Next";
+        public const string KEY_TRAILER = "TrailerAnim";
+
         public const int IniMaxLineLength = 512;
         public const string ITEM_NONE = "<none>";
         public const string ITEM_ALL = "<all>";
-        public const string KEY_NAME = "Name";
         public const string EX_SHP = ".shp";
         public const string EX_VXL = ".vxl";
         public const string EX_HVA = ".hva";
         public const string SUFF_BARREL = "barr";
         public const string SUFF_TURRET = "tur";
         public const string NULL_ICON = "xxicon.shp";
+
         public static class TileSetClass
         {
             public const string Clear = "TscClear";
