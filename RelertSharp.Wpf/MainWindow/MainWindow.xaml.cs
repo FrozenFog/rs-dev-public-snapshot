@@ -140,7 +140,7 @@ namespace RelertSharp.Wpf
         }
         private void DebugClick()
         {
-            animationPreview.LoadAnimation("IRONEXP");
+            animationPreview.LoadAnimation("FVORTEX");
         }
 
         private void RedrawRequestHandler(object sender, EventArgs e)

@@ -26,7 +26,7 @@
         <Button x:Name="btnHouseColor" Content="" Grid.Column="1" Margin="9.6,89,11,0" VerticalAlignment="Top" Height="23" Style="{DynamicResource btnDark}" Background="Red" Click="btnBgc_Click"/>
         <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" MinHeight="120">
             <Grid>
-                <Label x:Name="lblFrameInfo" Content="info" Style="{DynamicResource lblDark}" VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="5"/>
+                <Label x:Name="lblFrameInfo" Content="info" Style="{DynamicResource lblDark}" VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="5" Margin="10,0,0,0"/>
                 <Canvas x:Name="canvas" Panel.ZIndex="2"/>
             </Grid>
         </ScrollViewer>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static RelertSharp.Common.GlobalVar;
 using static RelertSharp.Utils.Misc;
+using static RelertSharp.Common.Constant;
 
 namespace RelertSharp.IniSystem
 {
@@ -80,7 +81,7 @@ namespace RelertSharp.IniSystem
         }
         public string GetArtEntityName(string nameID, bool isinfantry = false)
         {
-            string artname = this[nameID]["Image"];
+            string artname = this[nameID][KEY_IMAGE];
             if (string.IsNullOrEmpty(artname)) artname = nameID;
             if (isinfantry && IniParseBool(this[nameID]["AlternateTheaterArt"]))
             {

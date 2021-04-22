@@ -1,6 +1,7 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.Encoding;
 using RelertSharp.Utils;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -31,11 +32,33 @@ namespace RelertSharp.FileSystem
 
 
         #region Public Methods - ShpFile
+        public void ApplyAlphaShp(ShpFile alpha, Color transparent)
+        {
+            int left = (this.Width - alpha.Width) / 2;
+            int top = (this.Height - alpha.Height) / 2;
+            foreach (ShpFrame img in data)
+            {
+                img.ApplyAlpha(alpha, left, top, transparent);
+            }
+        }
+        public void ApplyAlphaShp(ShpFile alpha, int frame, Color transparentColor)
+        {
+            int left = (this.Width - alpha.Width) / 2;
+            int top = (this.Height - alpha.Height) / 2;
+            data[frame].ApplyAlpha(alpha, left, top, transparentColor);
+        }
         public void LoadColor(PalFile _pal)
         {
             foreach (ShpFrame img in data)
             {
                 img.SetBitmap(_pal);
+            }
+        }
+        public void ResetPal()
+        {
+            foreach (ShpFrame img in data)
+            {
+                img.DeleteBitmap();
             }
         }
         public Size GetMaxSize()
@@ -147,6 +170,7 @@ namespace RelertSharp.FileSystem
 
     public class ShpFrame
     {
+        private bool alphaApplied = false;
         #region Ctor - ShpFrame
         public ShpFrame(ushort _x, ushort _y, ushort _width, ushort _height, byte _flag, int _offset)
         {
@@ -161,51 +185,109 @@ namespace RelertSharp.FileSystem
 
 
         #region Public Methods - ShpFrame
-        public unsafe void SetBitmap(PalFile _pal)
+        public void ApplyAlpha(ShpFile alpha, int alphaLeft, int alphaTop, Color transparentColor)
         {
-            if (IsNullFrame)
+            if (!alphaApplied)
             {
-                Image = new Bitmap(1, 1);
-                return;
-            }
-            Bitmap bmp = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
-            using (FastBitmap shpImage = new FastBitmap(bmp))
-            {
-                int count = 0;
-                for (int j = 0; j < Height; j++)
+                ShpFrame alphaImg = alpha.Frames[0];
+                using (FastBitmap fast = new FastBitmap(Image))
                 {
-                    for (int i = 0; i < Width; i++)
+                    int yAlpha = this.Y - alphaTop;
+                    for (int j = 0; j < Height; j++)
                     {
-                        if (Data[count] != 0) shpImage.SetPixel(i, j, _pal[Data[count]]);
-                        else shpImage.SetPixel(i, j, Color.Transparent);
-                        count++;
+                        if (yAlpha >= alphaImg.Height) break;
+                        if (yAlpha < 0)
+                        {
+                            yAlpha++;
+                            continue;
+                        }
+                        int xAlpha = this.X - alphaLeft;
+                        for (int i = 0; i < Width; i++)
+                        {
+                            if (xAlpha >= alphaImg.Width) break;
+                            if (xAlpha < 0)
+                            {
+                                xAlpha++;
+                                continue;
+                            }
+                            int iAlpha = xAlpha + yAlpha * alphaImg.Width;
+                            if (alphaImg.Data[iAlpha] != 0)
+                            {
+                                double scale = alphaImg.Data[iAlpha] / 127d;
+                                int c = fast.GetPixel(i, j);
+                                if (c != transparentColor.ToArgb()) fast.SetPixel(i, j, ScalePixelByAlpha(c, scale));
+                            }
+                            xAlpha++;
+                        }
+                        yAlpha++;
                     }
                 }
+                alphaApplied = true;
             }
-            Image = bmp;
+        }
+        public void DeleteBitmap()
+        {
+            Image?.Dispose();
+            alphaApplied = false;
+            Image = null;
+        }
+        public unsafe void SetBitmap(PalFile _pal)
+        {
+            if (Image == null)
+            {
+                if (IsNullFrame)
+                {
+                    Image = new Bitmap(1, 1);
+                    return;
+                }
+                Bitmap bmp = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
+                using (FastBitmap shpImage = new FastBitmap(bmp))
+                {
+                    int count = 0;
+                    for (int j = 0; j < Height; j++)
+                    {
+                        for (int i = 0; i < Width; i++)
+                        {
+                            if (Data[count] != 0) shpImage.SetPixel(i, j, _pal[Data[count]]);
+                            else shpImage.SetPixel(i, j, Color.Transparent);
+                            count++;
+                        }
+                    }
+                }
+                Image = bmp;
+            }
+        }
+        public void ResetBitmap(PalFile pal, Color transparentColor)
+        {
+            Image.Dispose();
+            Image = null;
+            SetBitmap(pal, transparentColor);
         }
         public unsafe void SetBitmap(PalFile _pal, Color transparentColor)
         {
-            if (IsNullFrame)
+            if (Image == null)
             {
-                Image = new Bitmap(1, 1);
-                return;
-            }
-            Bitmap bmp = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
-            using (FastBitmap shpImage = new FastBitmap(bmp))
-            {
-                int count = 0;
-                for (int j = 0; j < Height; j++)
+                if (IsNullFrame)
                 {
-                    for (int i = 0; i < Width; i++)
+                    Image = new Bitmap(1, 1);
+                    return;
+                }
+                Bitmap bmp = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
+                using (FastBitmap shpImage = new FastBitmap(bmp))
+                {
+                    int count = 0;
+                    for (int j = 0; j < Height; j++)
                     {
-                        if (Data[count] != 0) shpImage.SetPixel(i, j, _pal[Data[count]]);
-                        else shpImage.SetPixel(i, j, transparentColor);
-                        count++;
+                        for (int i = 0; i < Width; i++)
+                        {
+                            if (Data[count] != 0) shpImage.SetPixel(i, j, _pal[Data[count]]);
+                            else shpImage.SetPixel(i, j, transparentColor);
+                            count++;
+                        }
                     }
                 }
+                Image = bmp;
             }
-            Image = bmp;
         }
         public void SetRawData(byte[] _data)
         {
@@ -215,6 +297,18 @@ namespace RelertSharp.FileSystem
 
 
         #region Private Methods - ShpFrame
+        private int ScalePixelByAlpha(int src, double alpha)
+        {
+            int func(int color)
+            {
+                int result = (int)(color * alpha);
+                return Math.Min(result, 0xFF);
+            }
+            int r = func((src & 0x00ff0000) >> 16);
+            int g = func((src & 0x0000ff00) >> 8);
+            int b = func(src & 0x000000ff);
+            return (0xff << 24) | (r << 16) | (g << 8) | b;
+        }
         #endregion
 
 

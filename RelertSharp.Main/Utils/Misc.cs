@@ -64,6 +64,11 @@ namespace RelertSharp.Utils
             }
             return def;
         }
+        public static T GetNonNull<T>(T obj1, T obj2) where T : class
+        {
+            if (obj1 == null) return obj2;
+            return obj1;
+        }
         public static dynamic GetNonNull(object obj1, object obj2)
         {
             if (obj1.GetType() == typeof(INIKeyType))

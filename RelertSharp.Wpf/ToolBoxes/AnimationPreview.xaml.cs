@@ -1,5 +1,6 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.FileSystem;
+using RelertSharp.IniSystem;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,6 +26,7 @@ namespace RelertSharp.Wpf.ToolBoxes
     /// </summary>
     public partial class AnimationPreview : UserControl
     {
+        private const uint COLOR_DEFAULT = 0xFF252525;
         private const string GLYPH_PLAY = "▶";
         private const string GLYPH_STOP = "■";
         private bool isPlaying = false;
@@ -32,7 +34,7 @@ namespace RelertSharp.Wpf.ToolBoxes
         private string animRegName;
         private int currentFrame = 0, maxFrame = 0;
         private Color bgc;
-        private ShpFile shp;
+        private AnimationComponent anim;
         private PalFile pal;
         private Image currentImg = new Image();
 
@@ -49,6 +51,7 @@ namespace RelertSharp.Wpf.ToolBoxes
             canvas.Children.Add(currentImg);
             worker.DoWork += Worker_DoWork;
             Engine.Api.EngineApi.TheaterReloaded += ReloadPalettes;
+            bgc = WpfWindowsExtensions.FromArgb(COLOR_DEFAULT);
         }
         #endregion
 
@@ -71,15 +74,11 @@ namespace RelertSharp.Wpf.ToolBoxes
                 LoadDefaultPalette();
                 init = true;
             }
-            shp?.Dispose();
-            animRegName = regName + Constant.EX_SHP;
-            if (GlobalVar.GlobalDir.TryGetRawByte(animRegName, out byte[] data))
-            {
-                shp = new ShpFile(data, animRegName);
-                sldProgress.Maximum = shp.Count - 1;
-                maxFrame = shp.Count;
-                sldProgress.Value = 0;
-            }
+            anim = GlobalVar.GlobalRules.GetAnimByRegName(regName);
+            sldProgress.Maximum = anim.FrameCount - 1;
+            maxFrame = anim.FrameCount;
+            sldProgress.Value = 0;
+            animRegName = regName;
         }
         #endregion
 
@@ -129,7 +128,11 @@ namespace RelertSharp.Wpf.ToolBoxes
             if (GlobalVar.GlobalDir.TryGetRawByte(palName, out byte[] data))
             {
                 pal = new PalFile(data, palName);
-                if (shp != null) SetAnimationByFrame();
+                if (anim != null)
+                {
+                    anim.ResetBitmap();
+                    SetAnimationByFrame();
+                }
             }
         }
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
@@ -147,7 +150,7 @@ namespace RelertSharp.Wpf.ToolBoxes
                     sldProgress.Value = frame;
                     currentFrame = frame;
                     SetInfoLabel();
-                    shp.Frames[currentFrame].SetBitmap(pal, bgc.ToGdiColor());
+                    anim.SetFrame(currentFrame, bgc.ToGdiColor(), pal);
                     ShowFrame();
                 });
                 watch.Stop();
@@ -189,7 +192,7 @@ namespace RelertSharp.Wpf.ToolBoxes
         }
         private void SetAnimationByFrame()
         {
-            shp.Frames[currentFrame].SetBitmap(pal, bgc.ToGdiColor());
+            anim.SetFrame(currentFrame, bgc.ToGdiColor(), pal);
             ShowFrame();
         }
         private void StopAnimation()
@@ -202,21 +205,27 @@ namespace RelertSharp.Wpf.ToolBoxes
         private void ResetBgc()
         {
             canvas.Background = new SolidColorBrush(bgc);
-            if (shp != null) SetAnimationByFrame();
+            if (anim != null)
+            {
+                anim.ResetBitmap();
+                SetAnimationByFrame();
+            }
         }
         private void ShowFrame()
         {
-            BitmapImage source = shp.Frames[currentFrame].Image.ToWpfImage();
+            BitmapImage source = anim.GetImageByFrame(currentFrame).First().ToWpfImage();
             currentImg.Source = source;
             double scale = this.GetScale();
-            double dx = (canvas.ScaledWidth() - shp.Width) / 2 + shp.Frames[currentFrame].X;
-            double dy = (canvas.ScaledHeight() - shp.Height) / 2 + shp.Frames[currentFrame].Y;
+            anim.FrameXY(currentFrame, out int x, out int y);
+            anim.FrameWH(currentFrame, out int w, out int h);
+            double dx = (canvas.ScaledWidth() - w) / 2 + x;
+            double dy = (canvas.ScaledHeight() - h) / 2 + y;
             Canvas.SetLeft(currentImg, dx / scale);
             Canvas.SetTop(currentImg, dy / scale);
         }
         private void SetInfoLabel()
         {
-            lblFrameInfo.Content = string.Format("{0}/{1}", currentFrame, maxFrame);
+            lblFrameInfo.Content = string.Format("{2} - {0}/{1}", currentFrame, maxFrame, animRegName);
         }
         #endregion
     }

@@ -40,6 +40,14 @@ namespace System.Windows
         {
             return Drawing.Color.FromArgb(src.A, src.R, src.G, src.B);
         }
+        public static Color FromArgb(uint argb)
+        {
+            byte a = (byte)((argb & 0xff000000) >> 24);
+            byte r = (byte)((argb & 0x00ff0000) >> 16);
+            byte g = (byte)((argb & 0x0000ff00) >> 8);
+            byte b = (byte)(argb & 0xff);
+            return Color.FromArgb(a, r, g, b);
+        }
     }
 }
 

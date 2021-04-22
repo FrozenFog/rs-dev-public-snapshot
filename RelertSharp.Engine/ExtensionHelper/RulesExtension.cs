@@ -90,7 +90,7 @@ namespace RelertSharp.Engine
         {
             string filename = regName;
             INIEntity ov = Rules[regName];
-            string img = ov["Image"];
+            string img = ov[KEY_IMAGE];
             bool wall = ov.ParseBool("Wall");
             if (wall) r.FixWallOverlayName(ref filename);
             if (!string.IsNullOrEmpty(img) && regName != img) filename = img;
@@ -210,13 +210,13 @@ namespace RelertSharp.Engine
         }
         private static string GuessStructureName(INIEntity ent)
         {
-            string img = ent["Image"];
+            string img = ent[KEY_IMAGE];
             if (string.IsNullOrEmpty(img)) return GuessStructureName(ent.Name);
             else return GuessStructureName(img);
         }
         private static string GetArtName(string regname)
         {
-            string img = Rules[regname]["Image"];
+            string img = Rules[regname][KEY_IMAGE];
             if (string.IsNullOrEmpty(img)) return regname;
             if (Art.HasIniEnt(img)) return img;
             else return regname;
