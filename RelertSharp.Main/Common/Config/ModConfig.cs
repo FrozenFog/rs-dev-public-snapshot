@@ -45,6 +45,7 @@ namespace RelertSharp.Common
         public void SaveConfig()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(RsModConfig));
+            if (!File.Exists(path)) File.Create(path);
             TextWriter writer = new StreamWriter(path);
             serializer.Serialize(writer, data);
             writer.Close();
