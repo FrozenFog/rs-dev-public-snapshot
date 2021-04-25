@@ -44,11 +44,13 @@ namespace RelertSharp.Common
         #region Public Methods
         public void SaveConfig()
         {
+#if RELEASE
             XmlSerializer serializer = new XmlSerializer(typeof(RsModConfig));
             if (!File.Exists(path)) File.Create(path);
             TextWriter writer = new StreamWriter(path);
             serializer.Serialize(writer, data);
             writer.Close();
+#endif
         }
 #endregion
 #region Public Calls
