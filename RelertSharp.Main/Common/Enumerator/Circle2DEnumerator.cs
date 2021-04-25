@@ -14,11 +14,15 @@ namespace RelertSharp.Common
 
     internal class Circle2DEnumerator : IEnumerator<I2dLocateable>
     {
+        private const int MAX_DEG = 360 / 8;
+        private double deltaDeg;
         private I2dLocateable last;
         private Pnt data;
         private int range;
-        private int thetadeg;
+        private double thetadeg;
         private int ox, oy;
+        private int halfQuad = 0;
+        private int dx, dy;
 
 
         public Circle2DEnumerator(I2dLocateable src, int r)
@@ -30,40 +34,91 @@ namespace RelertSharp.Common
             data.X += r;
             last = new Pnt(-1, -1);
             thetadeg = 0;
+            CalcDelta(r);
         }
 
         public I2dLocateable Current { get { return data; } }
 
         private void Refresh()
         {
-            int dx = (int)Math.Round((float)range * Math.Cos(ToRad(thetadeg)));
-            int dy = (int)Math.Round((float)range * Math.Sin(ToRad(thetadeg)));
-            data.X = dx + ox;
-            data.Y = dy + oy;
+            switch (halfQuad)
+            {
+                case 0:
+                    dx = (int)Math.Round((float)range * Math.Cos(ToRad(thetadeg)));
+                    dy = (int)Math.Round((float)range * Math.Sin(ToRad(thetadeg)));
+                    data.X = ox + dx;
+                    data.Y = oy + dy;
+                    break;
+                case 1:
+                    data.X = ox + dy;
+                    data.Y = oy + dx;
+                    break;
+                case 2:
+                    data.X = ox - dy;
+                    data.Y = oy + dx;
+                    break;
+                case 3:
+                    data.X = ox - dx;
+                    data.Y = oy + dy;
+                    break;
+                case 4:
+                    data.X = ox - dx;
+                    data.Y = oy - dy;
+                    break;
+                case 5:
+                    data.X = ox - dy;
+                    data.Y = oy - dx;
+                    break;
+                case 6:
+                    data.X = ox + dy;
+                    data.Y = oy - dx;
+                    break;
+                case 7:
+                    data.X = ox + dx;
+                    data.Y = oy - dy;
+                    break;
+                case 8:
+                    halfQuad = -1;
+                    thetadeg += deltaDeg;
+                    break;
+            }
+            halfQuad++;
         }
-        private double ToRad(int deg)
+        private double ToRad(double deg)
         {
             return Math.PI * (deg / 180f);
+        }
+        private const double a = 44.95389;
+        private const double b = -0.99734;
+        private void CalcDelta(int radius)
+        {
+            /// formula : deg = a * radius ^ b
+            /// where a = 44.95389, std-err 0.00974
+            ///       b = -0.99734, std-err 1.9899e-4
+            /// reduced chi-sqr = 1.13662e-4
+            /// adj. r-sqr = 0.99996
+
+            deltaDeg = a * Math.Pow(radius, b);
+            //deltaDeg = 360d / 7000;
         }
 
         object IEnumerator.Current { get { return Current; } }
 
         public void Dispose()
         {
-            thetadeg = 360;
+            thetadeg = MAX_DEG;
             range = -1;
         }
 
         public bool MoveNext()
         {
-            while (thetadeg < 360)
+            while (thetadeg < MAX_DEG + deltaDeg)
             {
-                thetadeg++;
                 Refresh();
                 if (data.X != last.X || data.Y != last.Y) break;
             }
             last = data;
-            return thetadeg < 360;
+            return thetadeg < MAX_DEG + deltaDeg;
         }
 
         public void Reset()
