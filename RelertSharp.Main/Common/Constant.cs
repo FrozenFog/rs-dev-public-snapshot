@@ -28,6 +28,7 @@ namespace RelertSharp.Common
         public const string KEY_CUSPAL = "CustomPalette";
         public const string KEY_NEXTANIM = "Next";
         public const string KEY_TRAILER = "TrailerAnim";
+        public const string KEY_TRALSEP = "TrailerSeperation";
 
         public const int IniMaxLineLength = 512;
         public const string ITEM_NONE = "<none>";
