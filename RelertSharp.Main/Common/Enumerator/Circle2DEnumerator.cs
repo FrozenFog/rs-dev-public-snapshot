@@ -14,12 +14,12 @@ namespace RelertSharp.Common
 
     internal class Circle2DEnumerator : IEnumerator<I2dLocateable>
     {
-        private const int MAX_DEG = 360 / 8;
-        private double deltaDeg;
+        private const double MAX_RAD = Math.PI / 4;
+        private double deltaRad;
         private I2dLocateable last;
         private Pnt data;
         private int range;
-        private double thetadeg;
+        private double thetaRad;
         private int ox, oy;
         private int halfQuad = 0;
         private int dx, dy;
@@ -33,7 +33,7 @@ namespace RelertSharp.Common
             data = new Pnt(src);
             data.X += r;
             last = new Pnt(-1, -1);
-            thetadeg = 0;
+            thetaRad = 0;
             CalcDelta(r);
         }
 
@@ -44,8 +44,8 @@ namespace RelertSharp.Common
             switch (halfQuad)
             {
                 case 0:
-                    dx = (int)Math.Round((float)range * Math.Cos(ToRad(thetadeg)));
-                    dy = (int)Math.Round((float)range * Math.Sin(ToRad(thetadeg)));
+                    dx = (int)Math.Round((float)range * Math.Cos(thetaRad));
+                    dy = (int)Math.Round((float)range * Math.Sin(thetaRad));
                     data.X = ox + dx;
                     data.Y = oy + dy;
                     break;
@@ -79,16 +79,12 @@ namespace RelertSharp.Common
                     break;
                 case 8:
                     halfQuad = -1;
-                    thetadeg += deltaDeg;
+                    thetaRad += deltaRad;
                     break;
             }
             halfQuad++;
         }
-        private double ToRad(double deg)
-        {
-            return Math.PI * (deg / 180f);
-        }
-        private const double a = 44.95389;
+        private const double a = 44.95389 * Math.PI / 180f;
         private const double b = -0.99734;
         private void CalcDelta(int radius)
         {
@@ -98,7 +94,7 @@ namespace RelertSharp.Common
             /// reduced chi-sqr = 1.13662e-4
             /// adj. r-sqr = 0.99996
 
-            deltaDeg = a * Math.Pow(radius, b);
+            deltaRad = a * Math.Pow(radius, b);
             //deltaDeg = 360d / 7000;
         }
 
@@ -106,24 +102,24 @@ namespace RelertSharp.Common
 
         public void Dispose()
         {
-            thetadeg = MAX_DEG;
+            thetaRad = MAX_RAD;
             range = -1;
         }
 
         public bool MoveNext()
         {
-            while (thetadeg < MAX_DEG + deltaDeg)
+            while (thetaRad < MAX_RAD + deltaRad)
             {
                 Refresh();
                 if (data.X != last.X || data.Y != last.Y) break;
             }
             last = data;
-            return thetadeg < MAX_DEG + deltaDeg;
+            return thetaRad < MAX_RAD + deltaRad;
         }
 
         public void Reset()
         {
-            thetadeg = 0;
+            thetaRad = 0;
         }
     }
 }
