@@ -65,6 +65,7 @@ namespace RelertSharp.Wpf.ToolBoxes
         }
         public void LoadAnimation(string regName)
         {
+            anim?.Dispose();
             if (isPlaying)
             {
                 StopAnimation();
@@ -213,7 +214,7 @@ namespace RelertSharp.Wpf.ToolBoxes
         }
         private void ShowFrame()
         {
-            BitmapImage source = anim.GetImageByFrame(currentFrame).First().ToWpfImage();
+            BitmapImage source = anim.GetResultImage(currentFrame, bgc.ToGdiColor()).ToWpfImage();
             currentImg.Source = source;
             double scale = this.GetScale();
             anim.FrameXY(currentFrame, out int x, out int y);

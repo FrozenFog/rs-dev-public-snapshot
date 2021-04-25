@@ -33,7 +33,11 @@ namespace RelertSharp.IniSystem
             component.Pal = GetPalFile(customPal);
             component.Alpha = GetShpFile(alphaName);
 
-            if (ent.HasPair(KEY_TRAILER)) component.TrailerAnim = GetComponent(r, ent[KEY_TRAILER]);
+            if (ent.HasPair(KEY_TRAILER))
+            {
+                component.TrailerAnim = GetComponent(r, ent[KEY_TRAILER]);
+                component.TrailerSeperation = ent.ParseInt(KEY_TRALSEP);
+            }
             if (ent.HasPair(KEY_NEXTANIM)) component.NextAnim = GetComponent(r, ent[KEY_NEXTANIM]);
 
             return component;
@@ -113,19 +117,19 @@ namespace RelertSharp.IniSystem
             }
             TrailerAnim?.SetFrame(GetTrailerFrame(frame), transparentColor, pal);
         }
-        public List<Bitmap> GetImageByFrame(int frame)
+        public Bitmap GetResultImage(int frame, Color transparent)
         {
-            List<Bitmap> bmps = new List<Bitmap>();
-            if (frame >= Shp.Count)
-            {
-                return NextAnim.GetImageByFrame(frame - Shp.Count);
-            }
-            else
-            {
-                bmps.Add(Shp.Frames[frame].Image);
-                if (TrailerAnim != null) bmps.AddRange(TrailerAnim.GetImageByFrame(GetTrailerFrame(frame)));
-            }
-            return bmps;
+            /// fuck trailer fuck off
+            //Bitmap img = new Bitmap(GetImage(frame));
+            //img.MakeTransparent(transparent);
+            //Graphics g = Graphics.FromImage(img);
+            //if (TrailerAnim != null && frame % TrailerSeperation == 0)
+            //{
+            //    Bitmap trailer = TrailerAnim.GetImage(frame % TrailerAnim.FrameCount);
+            //    g.DrawImage(trailer);
+            //}
+            //return img;
+            return GetImage(frame);
         }
         public void FrameXY(int frame, out int x, out int y)
         {
@@ -159,6 +163,14 @@ namespace RelertSharp.IniSystem
 
 
         #region Private
+        private Bitmap GetImage(int frame)
+        {
+            if (frame >= Shp.Count)
+            {
+                return NextAnim.GetImage(frame - Shp.Count);
+            }
+            return Shp.Frames[frame].Image;
+        }
         private int GetTrailerFrame(int frame)
         {
             if (TrailerAnim == null) return 0;
@@ -182,6 +194,7 @@ namespace RelertSharp.IniSystem
                 return frameCount;
             }
         }
+        public int TrailerSeperation { get; set; }
         public AnimationComponent NextAnim { get; set; }
         public AnimationComponent TrailerAnim { get; set; }
         #endregion
