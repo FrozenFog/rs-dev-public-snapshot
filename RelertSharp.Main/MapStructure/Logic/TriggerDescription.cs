@@ -40,8 +40,8 @@ namespace RelertSharp.MapStructure.Logic
                 int paramNum = int.Parse(param[i++]);
                 string[] initParams = param.Skip(1).Take(paramNum).ToArray();
                 i += paramNum;
-                string abst = DICT[param[i++]];
-                string desc = DICT[param[i++]];
+                string abst = param[i++];
+                string desc = param[i++];
                 int settingNum = int.Parse(param[i++]);
                 TriggerDescription description = new TriggerDescription(id, abst, desc, initParams);
                 while (settingNum-- > 0)

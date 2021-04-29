@@ -14,6 +14,8 @@ namespace RelertSharp.Common.Config.Model
         public string Type { get; set; } = string.Empty;
         [XmlAttribute("default")]
         public bool IsDefault { get; set; } = false;
+        [XmlAttribute("zeroIdx")]
+        public bool IsZeroIndex { get; set; } = false;
         [XmlAttribute("base")]
         public string BasedOn { get; set; } = string.Empty;
         [XmlArrayItem("item")]

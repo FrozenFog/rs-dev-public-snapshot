@@ -25,6 +25,8 @@ using RelertSharp.Common;
 using RelertSharp.Wpf.LayoutManaging;
 using System.Reflection;
 using RelertSharp.Wpf.ToolBoxes;
+using RelertSharp.MapStructure.Logic;
+using RelertSharp.Common.Config.Model;
 
 namespace RelertSharp.Wpf
 {
@@ -140,7 +142,87 @@ namespace RelertSharp.Wpf
         }
         private void DebugClick()
         {
-            animationPreview.LoadAnimation("FVORTEX");
+            DescriptCollection desc = new DescriptCollection();
+            ModConfig cfg = GlobalVar.GlobalConfig.ModConfig;
+            cfg.TriggerInfo.TriggerEvents.Clear();
+            cfg.TriggerInfo.TriggerActions.Clear();
+            cfg.TriggerInfo.ScriptActions.Clear();
+            foreach(TriggerDescription d in desc.Events)
+            {
+                LogicInfo info = new LogicInfo()
+                {
+                    Id = d.ID,
+                    Abstract = d.Abstract,
+                    Description = d.Description,
+                    FormatString = "",
+                    DefaultParameters = d.InitParams.JoinBy(),
+                    ParamLength = d.InitParams.Length
+                };
+                info.Parameters = new List<LogicInfoParameter>();
+                foreach (TriggerParam para in d.Parameters)
+                {
+                    LogicInfoParameter lip = new LogicInfoParameter()
+                    {
+                        Label = para.Name,
+                        ParamPos = para.ParamPos,
+                        TraceTarget = para.Type.ToString(),
+                        ValueType = para.ComboType.ToString()
+                    };
+                    info.Parameters.Add(lip);
+                }
+                cfg.TriggerInfo.TriggerEvents.Add(info);
+            }
+            foreach(TriggerDescription d in desc.Actions)
+            {
+                LogicInfo info = new LogicInfo()
+                {
+                    Id = d.ID,
+                    Abstract = d.Abstract,
+                    Description = d.Description,
+                    FormatString = "",
+                    DefaultParameters = d.InitParams.JoinBy(),
+                    ParamLength = d.InitParams.Length
+                };
+                info.Parameters = new List<LogicInfoParameter>();
+                foreach (TriggerParam para in d.Parameters)
+                {
+                    LogicInfoParameter lip = new LogicInfoParameter()
+                    {
+                        Label = para.Name,
+                        ParamPos = para.ParamPos,
+                        TraceTarget = para.Type.ToString(),
+                        ValueType = para.ComboType.ToString()
+                    };
+                    info.Parameters.Add(lip);
+                }
+                cfg.TriggerInfo.TriggerActions.Add(info);
+            }
+            foreach(TriggerDescription d in desc.Scripts)
+            {
+                LogicInfo info = new LogicInfo()
+                {
+                    Id = d.ID,
+                    Abstract = d.Abstract,
+                    Description = d.Description,
+                    FormatString = "",
+                    DefaultParameters = d.InitParams.JoinBy(),
+                    ParamLength = d.InitParams.Length
+                };
+                info.Parameters = new List<LogicInfoParameter>();
+                foreach (TriggerParam para in d.Parameters)
+                {
+                    LogicInfoParameter lip = new LogicInfoParameter()
+                    {
+                        Label = para.Name,
+                        ParamPos = para.ParamPos,
+                        TraceTarget = para.Type.ToString(),
+                        ValueType = para.ComboType.ToString()
+                    };
+                    info.Parameters.Add(lip);
+                }
+                cfg.TriggerInfo.ScriptActions.Add(info);
+            }
+            cfg.SaveConfig();
         }
 
         private void RedrawRequestHandler(object sender, EventArgs e)

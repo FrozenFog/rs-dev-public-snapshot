@@ -14,5 +14,7 @@ namespace RelertSharp.Common.Config.Model
         public List<ComboGroup> ComboList { get; set; } 
         [XmlElement(ElementName = "AttributeInfo")]
         public LogicAttributes LogicAttributes { get; set; }
+        [XmlElement(ElementName = "TriggerInfo")]
+        public TriggerInfo TriggerInfo { get; set; }
     }
 }

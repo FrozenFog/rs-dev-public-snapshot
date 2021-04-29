@@ -127,6 +127,8 @@
     <Compile Include="Common\Config\Model\ComboGroup.cs" />
     <Compile Include="Common\Config\Model\LogicAttributes.cs" />
     <Compile Include="Common\Config\Model\RsModConfig.cs" />
+    <Compile Include="Common\Config\Model\TriggerInfo.cs" />
+    <Compile Include="Common\Config\TriggerScriptInfo.cs" />
     <Compile Include="Common\Enumerator\Bfs2DEnumerator.cs" />
     <Compile Include="Common\Enumerator\Circle2DEnumerator.cs" />
     <Compile Include="Common\Constant.cs" />
@@ -260,6 +262,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\enUs.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -283,4 +286,9 @@
     <Content Include="Resources\defaultIni.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties resources_4enus_1json__JsonSchema="https://beaujs.com/schema.json" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

@@ -65,20 +65,30 @@ namespace RelertSharp.Properties {
         ///&lt;RsModConfig&gt;
         ///  &lt;ComboList&gt;
         ///    &lt;cb type=&quot;Waypoints&quot; default=&quot;true&quot;/&gt;
+        ///    &lt;cb type=&quot;OwnerCountry&quot; default=&quot;true&quot;/&gt;
         ///    &lt;cb type=&quot;Houses&quot; default=&quot;true&quot;/&gt;
+        ///    &lt;cb type=&quot;HouseIndex&quot; default=&quot;true&quot;/&gt;
         ///    &lt;cb type=&quot;Scripts&quot; default=&quot;true&quot;/&gt;
         ///    &lt;cb type=&quot;Teams&quot; default=&quot;true&quot;/&gt;
         ///    &lt;cb type=&quot;Taskforces&quot; default=&quot;true&quot;/&gt;
         ///    &lt;cb type=&quot;Triggers&quot; default=&quot;true&quot;/&gt;
-        ///    &lt;cb type=&quot;TechType&quot; default=&quot;true&quot;/&gt;
-        ///    &lt;cb type=&quot;Side&quot; default=&quot;true&quot;/&gt;
-        ///    &lt;cb type=&quot;Tags&quot; default=&quot;true&quot;/&gt;
-        ///    &lt;cb type=&quot;BuildingUpgrade&quot; default=&quot;true&quot;/&gt;
-        ///    &lt;cb type=&quot;MapObjectTag [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///    &lt;cb type=&quot;GlobalVar&quot; default=&quot;true&quot;/&gt;
+        ///    &lt;cb type=&quot;LocalVar&quot; default=&quot;true&quot;/&gt;
+        ///    &lt;cb type=&quot;Tech [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string _default {
             get {
                 return ResourceManager.GetString("_default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] enUs {
+            get {
+                object obj = ResourceManager.GetObject("enUs", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }
