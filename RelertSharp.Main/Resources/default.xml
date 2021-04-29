@@ -4,13 +4,39 @@
     <cb type="Waypoints" default="true"/>
     <cb type="OwnerCountry" default="true"/>
     <cb type="Houses" default="true"/>
+    <cb type="HouseIndex" default="true"/>
     <cb type="Scripts" default="true"/>
     <cb type="Teams" default="true"/>
     <cb type="Taskforces" default="true"/>
     <cb type="Triggers" default="true"/>
+    <cb type="GlobalVar" default="true"/>
+    <cb type="LocalVar" default="true"/>
     <cb type="TechType" default="true"/>
     <cb type="Tags" default="true"/>
     <cb type="BuildingUpgrade" default="true"/>
+    <cb type="BuildingReg" default="true"/>
+    <cb type="UnitIndex" default="true"/>
+    <cb type="InfantryIndex" default="true"/>
+    <cb type="AircraftIndex" default="true"/>
+    <cb type="AnimationIndex" default="true"/>
+    <cb type="ParticalAnimIndex" default="true"/>
+    <cb type="WeaponIndex" default="true"/>
+    <cb type="VoxelAnimIndex" default="true"/>
+    <cb type="SuperWeaponReg" default="true"/>
+    <cb type="SuperWeaponIndex" default="true"/>
+    <cb type="Movies" default="true"/>
+    <cb type="SoundReg" default="true"/>
+    <cb type="ThemeReg" default="true"/>
+    <cb type="EvaReg" default="true"/>
+    <cb type="CsfLabel" default="true"/>
+    <cb type="SoundIndex" base="SoundReg" zeroIdx="true"/>
+    <cb type="ThemeIndex" base="ThemeReg" zeroIdx="true"/>
+    <cb type="EvaIndex" base="EvaReg" zeroIdx="true"/>
+    <cb type="TeamIndex" base="Teams" zeroIdx="true"/>
+    <cb type="BuildingIndex" base="BuildingReg" zeroIdx="true"/>
+    <cb type="MovieIndex" base="Movies" zeroIdx="true"/>
+    <cb type="TagIndex" base="Tags" zeroIdx="true"/>
+    <cb type="ScriptIndex" base="Scripts" zeroIdx="true"/>
     <cb type="SideIndex">
       <Items>
         <item key="1" desc="Allies"/>
@@ -51,6 +77,48 @@
         <item key="5" desc="Stand still and do nothing"/>
       </Items>
     </cb>
+    <cb type="RadarEvent">
+      <Items>
+        <item key="0" desc="Red warning"/>
+        <item key="1" desc="Yellow tips"/>
+        <item key="2" desc="Yellow tips"/>
+        <item key="3" desc="Red warning"/>
+        <item key="4" desc="Red warning"/>
+        <item key="5" desc="Blue hint"/>
+      </Items>
+    </cb>
+    <cb type="MeteorType">
+      <Items>
+        <item key="0" desc="0 to 2 meteors"/>
+        <item key="0" desc="4 to 6 meteors"/>
+        <item key="0" desc="8 to 10 meteors"/>
+        <item key="0" desc="14 to 16 meteors"/>
+        <item key="0" desc="0 or 1 meteor"/>
+      </Items>
+    </cb>
+    <cb type="CrateType">
+      <Items>
+        <item key="0" desc="Credits"/>
+        <item key="1" desc="Unit"/>
+        <item key="2" desc="Heal house"/>
+        <item key="3" desc="Cloak"/>
+        <item key="4" desc="Explosion"/>
+        <item key="5" desc="Napalm"/>
+        <item key="6" desc="Squad (obsolete)"/>
+        <item key="7" desc="Shroud map"/>
+        <item key="8" desc="Reveal map"/>
+        <item key="9" desc="Armor up"/>
+        <item key="10" desc="Speed up"/>
+        <item key="11" desc="DMG up"/>
+        <item key="12" desc="Nuke payload"/>
+        <item key="13" desc="Invulnerability (obsolete)"/>
+        <item key="14" desc="Veteran up"/>
+        <item key="15" desc="Ion storm (obsolete)"/>
+        <item key="16" desc="Bad gas"/>
+        <item key="17" desc="Tiberium"/>
+        <item key="18" desc="Drop pod (obsolete"/>
+      </Items>
+    </cb>
     <cb type="CountryMultiExtend" base="OwnerCountry">
       <Items>
         <item key="&lt;none&gt;" front="true"/>
@@ -75,6 +143,18 @@
         <item key="&lt;Player @ F&gt;"/>
         <item key="&lt;Player @ G&gt;"/>
         <item key="&lt;Player @ H&gt;"/>
+      </Items>
+    </cb>
+    <cb type="HouseMultiIndex" base="HouseIndex">
+      <Items>
+        <item key="4475" desc="&lt;Player @ A&gt;"/>
+        <item key="4476" desc="&lt;Player @ B&gt;"/>
+        <item key="4477" desc="&lt;Player @ C&gt;"/>
+        <item key="4478" desc="&lt;Player @ D&gt;"/>
+        <item key="4479" desc="&lt;Player @ E&gt;"/>
+        <item key="4480" desc="&lt;Player @ F&gt;"/>
+        <item key="4481" desc="&lt;Player @ G&gt;"/>
+        <item key="4482" desc="&lt;Player @ H&gt;"/>
       </Items>
     </cb>
     <cb type="AiHouse" base="OwnerCountry">
@@ -176,11 +256,62 @@
         <item key="Unload" desc=""/>
       </Items>
     </cb>
-    <cb type="MapSoptlightType">
+    <cb type="SpotlightType">
       <Items>
         <item key="0" desc="None"/>
         <item key="1" desc="Arcing"/>
         <item key="2" desc="Circular"/>
+      </Items>
+    </cb>
+    <cb type="AttackTargetType" hideKey="true">
+      <Items>
+        <item key="0" desc="Cancel attack"/>
+        <item key="1" desc="Anything"/>
+        <item key="2" desc="Structures"/>
+        <item key="3" desc="Harvesters"/>
+        <item key="4" desc="Infantries"/>
+        <item key="5" desc="Vehicles"/>
+        <item key="6" desc="Factories"/>
+        <item key="7" desc="Base Defenses"/>
+        <item key="8" desc="Base Threats"/>
+        <item key="9" desc="Power Plants"/>
+        <item key="10" desc="Occupiable"/>
+        <item key="11" desc="Tech Buildings"/>
+      </Items>
+    </cb>
+    <cb type="UnloadType" hideKey="true">
+      <Items>
+        <item key="0" desc="Keep transports and passengers"/>
+        <item key="1" desc="Keep transports, dismiss passengers"/>
+        <item key="2" desc="Keep passengers, dismiss transports"/>
+        <item key="3" desc="Dismiss all"/>
+      </Items>
+    </cb>
+    <cb type="ScriptFacing" hideKey="true">
+      <Items>
+        <item key="0" desc="↗ North-East"/>
+        <item key="1" desc="→ East"/>
+        <item key="2" desc="↘ South-East"/>
+        <item key="3" desc="↓ South"/>
+        <item key="4" desc="↙ South-West"/>
+        <item key="5" desc="← West"/>
+        <item key="6" desc="↖ North-West"/>
+        <item key="7" desc="↑ North"/>
+      </Items>
+    </cb>
+    <cb type="TalkBubble" hideKey="true">
+      <Items>
+        <item key="1" desc="(*) Speech"/>
+        <item key="2" desc="(?) Question"/>
+        <item key="3" desc="(!) Alert"/>
+      </Items>
+    </cb>
+    <cb type="TargetingPriority" hideKey="true">
+      <Items>
+        <item key="0" desc="Least Threat"/>
+        <item key="1" desc="Most Threat"/>
+        <item key="2" desc="Closest"/>
+        <item key="3" desc="Farthest"/>
       </Items>
     </cb>
   </ComboList>
@@ -304,7 +435,7 @@
         <attr name="AISellablle" desc="" type="bool" class="1"/>
         <attr name="BuildingOnline" desc="" type="bool" class="1"/>
         <attr name="UpgradeNum" desc="" type="int" class="1"/>
-        <attr name="SpotlightType" desc="" type="bool" class="1"/>
+        <attr name="SpotlightType" desc="" type="SpotlightType" class="1"/>
         <attr name="Upgrade1" desc="" type="BuildingUpgrade" class="1"/>
         <attr name="Upgrade2" desc="" type="BuildingUpgrade" class="1"/>
         <attr name="Upgrade3" desc="" type="BuildingUpgrade" class="1"/>
@@ -330,4 +461,1193 @@
       </Items>
     </Aircraft>
   </AttributeInfo>
+  <TriggerInfo>
+    <TriggerEvents>
+      <info id="0" abstract="TEA000" desc="TED000" defaultArr="0,0" format="Will not activate" length="2"/>
+      <info id="1" abstract="TEA001" desc="TED001" defaultArr="0,0" format="Target entered by {0}" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="2" abstract="TEA002" desc="TED002" defaultArr="0,0" format="Building being spied" length="2"/>
+      <info id="3" abstract="TEA003" desc="TED003" defaultArr="0,0" format="Thief steals from {0}" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="4" abstract="TEA004" desc="TED004" defaultArr="0,0" format="Object discovered by player" length="2"/>
+      <info id="5" abstract="TEA005" desc="TED005" defaultArr="0,0" format="{0}'s object discovered by player" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="6" abstract="TEA006" desc="TED006" defaultArr="0,0" format="Object attacked by anyone" length="2"/>
+      <info id="7" abstract="TEA007" desc="TED007" defaultArr="0,0" format="Object destroyed by anyone" length="2"/>
+      <info id="8" abstract="TEA008" desc="TED008" defaultArr="0,0" format="Activate now" length="2"/>
+      <info id="9" abstract="TEA009" desc="TED009" defaultArr="0,0" format="All units of {0} have been destroyed" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="10" abstract="TEA010" desc="TED010" defaultArr="0,0" format="All buildings of {0} have been destroyed" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="11" abstract="TEA011" desc="TED011" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="12" abstract="TEA012" desc="TED012" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="string" label="Credits(money)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="13" abstract="TEA013" desc="TED013" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="string" label="Time(seconds)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="14" abstract="TEA014" desc="TED014" defaultArr="0,0" format="" length="2"/>
+      <info id="15" abstract="TEA015" desc="TED015" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="string" label="Target Number" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="16" abstract="TEA016" desc="TED016" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="string" label="Target Number" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="17" abstract="TEA017" desc="TED017" defaultArr="0,0" format="" length="2"/>
+      <info id="18" abstract="TEA018" desc="TED018" defaultArr="0,0" format="" length="2"/>
+      <info id="19" abstract="TEA019" desc="TED019" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="BuildingIndex" label="Building Type(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="20" abstract="TEA020" desc="TED020" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="UnitIndex" label="Unit Type(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="21" abstract="TEA021" desc="TED021" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="InfantryIndex" label="Infantry Type(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="22" abstract="TEA022" desc="TED022" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="AircraftIndex" label="Aircraft Type(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="23" abstract="TEA023" desc="TED023" defaultArr="1,0" format="" length="2">
+        <Parameters>
+          <param type="Teams" trace="TeamRegTrace" label="Teamtype ID" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="24" abstract="TEA024" desc="TED024" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="25" abstract="TEA025" desc="TED025" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="26" abstract="TEA026" desc="TED026" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="27" abstract="TEA027" desc="TED027" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="GlobalVar" label="Global Variable" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="28" abstract="TEA028" desc="TED028" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="GlobalVar" label="Global Variable" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="29" abstract="TEA029" desc="TED029" defaultArr="0,0" format="" length="2"/>
+      <info id="30" abstract="TEA030" desc="TED030" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="31" abstract="TEA031" desc="TED031" defaultArr="0,0" format="" length="2"/>
+      <info id="32" abstract="TEA032" desc="TED032" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="BuildingIndex" label="Building Type(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="33" abstract="TEA033" desc="TED033" defaultArr="0,0" format="" length="2"/>
+      <info id="34" abstract="TEA034" desc="TED034" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="35" abstract="TEA035" desc="TED035" defaultArr="0,0" format="" length="2"/>
+      <info id="36" abstract="TEA036" desc="TED036" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="LocalVar" label="Local Variable" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="37" abstract="TEA037" desc="TED037" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="LocalVar" label="Local Variable" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="38" abstract="TEA038" desc="TED038" defaultArr="0,0" format="" length="2"/>
+      <info id="39" abstract="TEA039" desc="TED039" defaultArr="0,0" format="" length="2"/>
+      <info id="40" abstract="TEA040" desc="TED040" defaultArr="0,0" format="" length="2"/>
+      <info id="41" abstract="TEA041" desc="TED041" defaultArr="0,0" format="" length="2"/>
+      <info id="42" abstract="TEA042" desc="TED042" defaultArr="0,0" format="" length="2"/>
+      <info id="43" abstract="TEA043" desc="TED043" defaultArr="0,0" format="" length="2"/>
+      <info id="44" abstract="TEA044" desc="TED044" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="45" abstract="TEA045" desc="TED045" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="string" label="Percent(0-100)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="46" abstract="TEA046" desc="TED046" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="string" label="Percent(0-100)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="47" abstract="TEA047" desc="TED047" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="string" label="Time(seconds)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="48" abstract="TEA048" desc="TED048" defaultArr="0,0" format="" length="2"/>
+      <info id="49" abstract="TEA049" desc="TED049" defaultArr="0,0" format="" length="2"/>
+      <info id="50" abstract="TEA050" desc="TED050" defaultArr="0,0" format="" length="2"/>
+      <info id="51" abstract="TEA051" desc="TED051" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="string" label="Time(seconds)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="52" abstract="TEA052" desc="TED052" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="string" label="Target Number" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="53" abstract="TEA053" desc="TED053" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="54" abstract="TEA054" desc="TED054" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="InfantryIndex" label="Infantry Type(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="55" abstract="TEA055" desc="TED055" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="56" abstract="TEA056" desc="TED056" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="57" abstract="TEA057" desc="TED057" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="BuildingIndex" label="Building Type(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="58" abstract="TEA058" desc="TED058" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="59" abstract="TEA059" desc="TED059" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="60" abstract="TEA060" desc="TED060" defaultArr="2,0,0" format="" length="3">
+        <Parameters>
+          <param type="TechType" label="Tech Type(ID)" arrPos="2" />
+          <param type="string" label="Number" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="61" abstract="TEA061" desc="TED061" defaultArr="2,0,0" format="" length="3">
+        <Parameters>
+          <param type="TechType" label="Tech Type(ID)" arrPos="2" />
+        </Parameters>
+      </info>
+      <info id="62" abstract="TEA062" desc="TED062" defaultArr="0,0" format="" length="2"/>
+      <info id="63" abstract="TEA063" desc="TED063" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="64" abstract="TEA064" desc="TED064" defaultArr="0,0" format="" length="2"/>
+      <info id="65" abstract="TEA065" desc="TED065" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="66" abstract="TEA066" desc="TED066" defaultArr="0,0" format="" length="2"/>
+      <info id="67" abstract="TEA067" desc="TED067" defaultArr="0,0" format="" length="2"/>
+      <info id="68" abstract="TEA068" desc="TED068" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="69" abstract="TEA069" desc="TED069" defaultArr="0,0" format="" length="2"/>
+      <info id="70" abstract="TEA070" desc="TED070" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="71" abstract="TEA071" desc="TED071" defaultArr="0,0" format="" length="2"/>
+      <info id="72" abstract="TEA072" desc="TED072" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="73" abstract="TEA073" desc="TED073" defaultArr="0,0" format="" length="2"/>
+      <info id="74" abstract="TEA074" desc="TED074" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="75" abstract="TEA075" desc="TED075" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="SuperWeaponIndex" label="SuperWeapon(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="76" abstract="TEA076" desc="TED076" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="SuperWeaponIndex" label="SuperWeapon(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="77" abstract="TEA077" desc="TED077" defaultArr="2,0,0" format="" length="3">
+        <Parameters>
+          <param type="SuperWeaponReg" label="SuperWeapon" arrPos="2" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="78" abstract="TEA078" desc="TED078" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="TechType" label="Tech Type" arrPos="2" />
+        </Parameters>
+      </info>
+      <info id="79" abstract="TEA079" desc="TED079" defaultArr="0,0" format="" length="2"/>
+      <info id="80" abstract="TEA080" desc="TED080" defaultArr="2,0,0" format="" length="3">
+        <Parameters>
+          <param type="TechType" label="Tech Type" arrPos="2" />
+        </Parameters>
+      </info>
+      <info id="81" abstract="TEA081" desc="TED081" defaultArr="2,0,0" format="" length="3">
+        <Parameters>
+          <param type="TechType" label="Tech Type" arrPos="2" />
+          <param type="string" label="Number" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="82" abstract="TEA082" desc="TED082" defaultArr="2,0,0" format="" length="3">
+        <Parameters>
+          <param type="TechType" label="Tech Type" arrPos="2" />
+          <param type="string" label="Number" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="83" abstract="TEA083" desc="TED083" defaultArr="0,0" format="" length="2"/>
+      <info id="84" abstract="TEA084" desc="TED084" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="85" abstract="TEA085" desc="TED085" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="86" abstract="TEA086" desc="TED086" defaultArr="2,0,0" format="" length="3">
+        <Parameters>
+          <param type="TechType" label="Tech Type" arrPos="2" />
+          <param type="string" label="Number" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="87" abstract="TEA087" desc="TED087" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="88" abstract="TEA088" desc="TED088" defaultArr="0,0" format="" length="2">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+    </TriggerEvents>
+    <TriggerActions>
+      <info id="0" abstract="TAA000" desc="TAD000" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="1" abstract="TAA001" desc="TAD001" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="2" abstract="TAA002" desc="TAD002" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="3" abstract="TAA003" desc="TAD003" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="4" abstract="TAA004" desc="TAD004" defaultArr="1,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="Teams" trace="TeamRegTrace" label="Teamtype ID" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="5" abstract="TAA005" desc="TAD005" defaultArr="1,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="Teams" trace="TeamRegTrace" label="Teamtype ID" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="6" abstract="TAA006" desc="TAD006" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="7" abstract="TAA007" desc="TAD007" defaultArr="1,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="Teams" trace="TeamRegTrace" label="Teamtype ID" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="8" abstract="TAA008" desc="TAD008" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="9" abstract="TAA009" desc="TAD009" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="10" abstract="TAA010" desc="TAD010" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="Movies" label="Movie(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="11" abstract="TAA011" desc="TAD011" defaultArr="4,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="CsfLabel" trace="CsfTrace" label="Csf Label" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="12" abstract="TAA012" desc="TAD012" defaultArr="2,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="Triggers" trace="TriggerRegTrace" label="Trigger ID" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="13" abstract="TAA013" desc="TAD013" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="14" abstract="TAA014" desc="TAD014" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="15" abstract="TAA015" desc="TAD015" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="16" abstract="TAA016" desc="TAD016" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="17" abstract="TAA017" desc="TAD017" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="18" abstract="TAA018" desc="TAD018" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1"/>
+        </Parameters>
+      </info>
+      <info id="19" abstract="TAA019" desc="TAD019" defaultArr="7,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="SoundReg" trace="SoundRegTrace" label="Sound Name" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="20" abstract="TAA020" desc="TAD020" defaultArr="8,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="ThemeReg" trace="SoundRegTrace" label="Music Name" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="21" abstract="TAA021" desc="TAD021" defaultArr="6,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="EvaReg" trace="SoundRegTrace" label="Speech Name" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="22" abstract="TAA022" desc="TAD022" defaultArr="2,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="Triggers" trace="TriggerRegTrace" label="Trigger ID" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="23" abstract="TAA023" desc="TAD023" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="24" abstract="TAA024" desc="TAD024" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="25" abstract="TAA025" desc="TAD025" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Time(seconds)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="26" abstract="TAA026" desc="TAD026" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Time(seconds)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="27" abstract="TAA027" desc="TAD027" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Time(seconds)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="28" abstract="TAA028" desc="TAD028" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="GlobalVar" label="Global Variable" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="29" abstract="TAA029" desc="TAD029" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="GlobalVar" label="Global Variable" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="30" abstract="TAA030" desc="TAD030" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="bool" label="Is Activated" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="31" abstract="TAA031" desc="TAD031" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="32" abstract="TAA032" desc="TAD032" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="33" abstract="TAA033" desc="TAD033" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="SuperWeaponIndex" label="SuperWeapon(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="34" abstract="TAA034" desc="TAD034" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="SuperWeaponIndex" label="SuperWeapon(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="35" abstract="TAA035" desc="TAD035" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Unknown Parameter" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="36" abstract="TAA036" desc="TAD036" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="37" abstract="TAA037" desc="TAD037" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="38" abstract="TAA038" desc="TAD038" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="39" abstract="TAA039" desc="TAD039" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Zoom Type(1 or 2)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="40" abstract="TAA040" desc="TAD040" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Rectangle X(Left)" arrPos="2" />
+          <param type="string" label="Rectangle Y(Top)" arrPos="3" />
+          <param type="string" label="Rectangle Width" arrPos="4" />
+          <param type="string" label="Rectangle Height" arrPos="5" />
+        </Parameters>
+      </info>
+      <info id="41" abstract="TAA041" desc="TAD041" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="AnimationIndex" trace="AnimIdxTrace" label="Animation(index)" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="42" abstract="TAA042" desc="TAD042" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="WeaponIndex" label="Weapon(index)" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="43" abstract="TAA043" desc="TAD043" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="VoxelAnim" label="Voxel Anim(index)" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="44" abstract="TAA044" desc="TAD044" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Time(frame)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="45" abstract="TAA045" desc="TAD045" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="46" abstract="TAA046" desc="TAD046" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="47" abstract="TAA047" desc="TAD047" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="48" abstract="TAA048" desc="TAD048" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Speed" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="49" abstract="TAA049" desc="TAD049" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="50" abstract="TAA050" desc="TAD050" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="51" abstract="TAA051" desc="TAD051" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="52" abstract="TAA052" desc="TAD052" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="SpotlightType" label="Light Behavior" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="53" abstract="TAA053" desc="TAD053" defaultArr="2,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="Triggers" trace="TriggerRegTrace" label="Trigger ID" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="54" abstract="TAA054" desc="TAD054" defaultArr="2,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="Triggers" trace="TriggerRegTrace" label="Trigger ID" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="55" abstract="TAA055" desc="TAD055" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="RadarEvent" label="Radar Event(index)" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="56" abstract="TAA056" desc="TAD056" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="LocalVar" label="Local Variable" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="57" abstract="TAA057" desc="TAD057" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="LocalVar" label="Local Variable" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="58" abstract="TAA058" desc="TAD058" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="MeteorType" label="Meteor Size(0-4)" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="59" abstract="TAA059" desc="TAD059" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="60" abstract="TAA060" desc="TAD060" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="61" abstract="TAA061" desc="TAD061" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="62" abstract="TAA062" desc="TAD062" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="63" abstract="TAA063" desc="TAD063" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="64" abstract="TAA064" desc="TAD064" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="65" abstract="TAA065" desc="TAD065" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="66" abstract="TAA066" desc="TAD066" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="67" abstract="TAA067" desc="TAD067" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="68" abstract="TAA068" desc="TAD068" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="69" abstract="TAA069" desc="TAD069" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="70" abstract="TAA070" desc="TAD070" defaultArr="3,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="TagIndex" trace="TagIdxTrace" label="Tag ID" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="71" abstract="TAA071" desc="TAD071" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Number" arrPos="1" parseType="NestedFloat"/>
+        </Parameters>
+      </info>
+      <info id="72" abstract="TAA072" desc="TAD072" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Number" arrPos="1" parseType="NestedFloat"/>
+        </Parameters>
+      </info>
+      <info id="73" abstract="TAA073" desc="TAD073" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Number" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="74" abstract="TAA074" desc="TAD074" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="75" abstract="TAA075" desc="TAD075" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="76" abstract="TAA076" desc="TAD076" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Percent(0-100)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="77" abstract="TAA077" desc="TAD077" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Percent(0-100)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="78" abstract="TAA078" desc="TAD078" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Percent(0-100)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="79" abstract="TAA079" desc="TAD079" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Percent(0-100)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="80" abstract="TAA080" desc="TAD080" defaultArr="1,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="Teams" trace="TeamRegTrace" label="Teamtype ID" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="81" abstract="TAA081" desc="TAD081" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="82" abstract="TAA082" desc="TAD082" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="83" abstract="TAA083" desc="TAD083" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="84" abstract="TAA084" desc="TAD084" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Group Number" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="85" abstract="TAA085" desc="TAD085" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="bool" label="Is Activated" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="86" abstract="TAA086" desc="TAD086" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="bool" label="Is Activated" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="87" abstract="TAA087" desc="TAD087" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="bool" label="Is Activated" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="88" abstract="TAA088" desc="TAD088" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="ParticalAnimIndex" label="Partical Anim(index)" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="89" abstract="TAA089" desc="TAD089" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="90" abstract="TAA090" desc="TAD090" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="91" abstract="TAA091" desc="TAD091" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="92" abstract="TAA092" desc="TAD092" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="93" abstract="TAA093" desc="TAD093" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="94" abstract="TAA094" desc="TAD094" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="95" abstract="TAA095" desc="TAD095" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="96" abstract="TAA096" desc="TAD096" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="97" abstract="TAA097" desc="TAD097" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="98" abstract="TAA098" desc="TAD098" defaultArr="7,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="SoundReg" trace="SoundRegTrace" label="Sound Name" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="99" abstract="TAA099" desc="TAD099" defaultArr="7,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="SoundReg" trace="SoundRegTrace" label="Sound Name" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="100" abstract="TAA100" desc="TAD100" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="Movies" label="Movie(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="101" abstract="TAA101" desc="TAD101" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Waypoint" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="102" abstract="TAA102" desc="TAD102" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="103" abstract="TAA103" desc="TAD103" defaultArr="4,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="CsfLabel" trace="CsfTrace" label="Csf Label" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="104" abstract="TAA104" desc="TAD104" defaultArr="5,0,0,0,0,0,0" format="" length="7">
+        <Parameters>
+          <param type="Teams" trace="TeamRegTrace" label="Teamtype ID" arrPos="1" />
+          <param type="string" label="Time(frame)" arrPos="6" />
+        </Parameters>
+      </info>
+      <info id="105" abstract="TAA105" desc="TAD105" defaultArr="5,0,0,0,0,0,0" format="" length="7">
+        <Parameters>
+          <param type="Teams" trace="TeamRegTrace" label="Teamtype ID" arrPos="1" />
+          <param type="string" label="Time(frame)" arrPos="6" />
+        </Parameters>
+      </info>
+      <info id="106" abstract="TAA106" desc="TAD106" defaultArr="9,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="TechType" label="Tech Type(ID)" arrPos="1" />
+          <param type="string" label="Tech level" arrPos="6" />
+        </Parameters>
+      </info>
+      <info id="107" abstract="TAA107" desc="TAD107" defaultArr="1,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="Teams" trace="TeamRegTrace" label="Teamtype ID" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="108" abstract="TAA108" desc="TAD108" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="CrateType" label="Crate type" arrPos="1" />
+          <param type="NonCombo" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="109" abstract="TAA109" desc="TAD109" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="110" abstract="TAA110" desc="TAD110" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Time(seconds)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="111" abstract="TAA111" desc="TAD111" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="112" abstract="TAA112" desc="TAD112" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="113" abstract="TAA113" desc="TAD113" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="114" abstract="TAA114" desc="TAD114" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Tab index(0-3)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="115" abstract="TAA115" desc="TAD115" defaultArr="9,0,0,0,0,0,0" format="" length="7">
+        <Parameters>
+          <param type="TechType" label="Tech Type(ID)" arrPos="1" />
+          <param type="string" label="Time(frame, 0-700)" arrPos="6" />
+        </Parameters>
+      </info>
+      <info id="116" abstract="TAA116" desc="TAD116" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="117" abstract="TAA117" desc="TAD117" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="Movies" label="Movie(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="118" abstract="TAA118" desc="TAD118" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="119" abstract="TAA119" desc="TAD119" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="120" abstract="TAA120" desc="TAD120" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="121" abstract="TAA121" desc="TAD121" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="122" abstract="TAA122" desc="TAD122" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="123" abstract="TAA123" desc="TAD123" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="124" abstract="TAA124" desc="TAD124" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="125" abstract="TAA125" desc="TAD125" defaultArr="10,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="BuildingReg" label="Building Type" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" parseType="Waypoint" arrPos="6" />
+        </Parameters>
+      </info>
+      <info id="126" abstract="TAA126" desc="TAD126" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="127" abstract="TAA127" desc="TAD127" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Time(frame)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="128" abstract="TAA128" desc="TAD128" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="129" abstract="TAA129" desc="TAD129" defaultArr="11,0,0,0,0,0,0" format="" length="7">
+        <Parameters>
+          <param type="SuperWeaponIndex" label="SuperWeapon(index)" arrPos="1" />
+          <param type="string" label="Percent(0-100)" arrPos="6" />
+        </Parameters>
+      </info>
+      <info id="130" abstract="TAA130" desc="TAD130" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="131" abstract="TAA131" desc="TAD131" defaultArr="9,0,0,0,0,0,0" format="" length="7">
+        <Parameters>
+          <param type="BuildingReg" label="Building Type" arrPos="1" />
+          <param type="string" label="Time(frame)" arrPos="6" />
+        </Parameters>
+      </info>
+      <info id="132" abstract="TAA132" desc="TAD132" defaultArr="11,0,0,0,0,0,0" format="" length="7">
+        <Parameters>
+          <param type="SuperWeaponIndex" label="SuperWeapon(index)" arrPos="1" />
+          <param type="string" label="Time(frame)" arrPos="6" />
+        </Parameters>
+      </info>
+      <info id="133" abstract="TAA133" desc="TAD133" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="SuperWeaponIndex" label="SuperWeapon(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="134" abstract="TAA134" desc="TAD134" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="SuperWeaponIndex" label="SuperWeapon(index)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="135" abstract="TAA135" desc="TAD135" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="136" abstract="TAA136" desc="TAD136" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="137" abstract="TAA137" desc="TAD137" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="138" abstract="TAA138" desc="TAD138" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="139" abstract="TAA139" desc="TAD139" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Time(frame)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="140" abstract="TAA140" desc="TAD140" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+        </Parameters>
+      </info>
+      <info id="141" abstract="TAA141" desc="TAD141" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="142" abstract="TAA142" desc="TAD142" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Percent(0-100)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="143" abstract="TAA143" desc="TAD143" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Percent(0-100)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="144" abstract="TAA144" desc="TAD144" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Percent(0-100)" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="145" abstract="TAA145" desc="TAD145" defaultArr="0,0,0,0,0,0,A" format="" length="7"/>
+      <info id="146" abstract="TAA146" desc="TAD146" defaultArr="11,11,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
+          <param type="string" label="Power" arrPos="6" />
+        </Parameters>
+      </info>
+      <info id="147" abstract="TAA147" desc="TAD147" defaultArr="0,-1,0,0,0,0,A" format="" length="7"/>
+      <info id="148" abstract="TAA148" desc="TAD148" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Eva Type" arrPos="1" />
+        </Parameters>
+      </info>
+      <info id="149" abstract="TAA149" desc="TAD149" defaultArr="0,0,0,0,0,0,A" format="" length="7">
+        <Parameters>
+          <param type="string" label="Group Num" arrPos="1" />
+        </Parameters>
+      </info>
+    </TriggerActions>
+    <ScriptActions>
+      <info id="0" abstract="SAA00" desc="SAD00" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="AttackTargetType" label="Target Type" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="1" abstract="SAA01" desc="SAD01" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="2" abstract="SAA02" desc="SAD02" defaultArr="0" format="" length="1"/>
+      <info id="3" abstract="SAA03" desc="SAD03" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="4" abstract="SAA04" desc="SAD04" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Coordinate(x, y)" arrPos="0" parseType="Base128"/>
+        </Parameters>
+      </info>
+      <info id="5" abstract="SAA05" desc="SAD05" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="string" label="Time(seconds)" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="6" abstract="SAA06" desc="SAD06" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="string" label="Line(&gt;0)" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="7" abstract="SAA07" desc="SAD07" defaultArr="0" format="" length="1"/>
+      <info id="8" abstract="SAA08" desc="SAD08" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="UnloadBehavior" label="Unload Behavior" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="9" abstract="SAA09" desc="SAD09" defaultArr="0" format="" length="1"/>
+      <info id="10" abstract="SAA10" desc="SAD10" defaultArr="0" format="" length="1"/>
+      <info id="11" abstract="SAA11" desc="SAD11" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="ScriptUnitMission" label="Mission Type" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="12" abstract="SAA12" desc="SAD12" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="GlobalVar" label="Global Variable" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="13" abstract="SAA13" desc="SAD13" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="string" label="Sequence Num" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="14" abstract="SAA14" desc="SAD14" defaultArr="0" format="" length="1"/>
+      <info id="15" abstract="SAA15" desc="SAD15" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="16" abstract="SAA16" desc="SAD16" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="17" abstract="SAA17" desc="SAD17" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="ScriptIndex" trace="ScriptIdxTrace" label="Script" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="18" abstract="SAA18" desc="SAD18" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="TeamIndex" trace="TeamIdxTrace" label="Team Type" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="19" abstract="SAA19" desc="SAD19" defaultArr="0" format="" length="1"/>
+      <info id="20" abstract="SAA20" desc="SAD20" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="21" abstract="SAA21" desc="SAD21" defaultArr="0" format="" length="1"/>
+      <info id="22" abstract="SAA22" desc="SAD22" defaultArr="0" format="" length="1"/>
+      <info id="23" abstract="SAA23" desc="SAD23" defaultArr="0" format="" length="1"/>
+      <info id="24" abstract="SAA24" desc="SAD24" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="EvaIndex" trace="EvaIdxTrace" label="Speech Name" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="25" abstract="SAA25" desc="SAD25" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="SoundIndex" trace="SoundIdxTrace" label="Sound Name" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="26" abstract="SAA26" desc="SAD26" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="MovieIndex" label="Movie(index)" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="27" abstract="SAA27" desc="SAD27" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="ThemeIndex" trace="ThemeIdxTrace" label="Music Name" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="28" abstract="SAA28" desc="SAD28" defaultArr="0" format="" length="1"/>
+      <info id="29" abstract="SAA29" desc="SAD29" defaultArr="0" format="" length="1"/>
+      <info id="30" abstract="SAA30" desc="SAD30" defaultArr="0" format="" length="1"/>
+      <info id="31" abstract="SAA31" desc="SAD31" defaultArr="0" format="" length="1"/>
+      <info id="32" abstract="SAA32" desc="SAD32" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="string" label="Time(seconds)" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="33" abstract="SAA33" desc="SAD33" defaultArr="0" format="" length="1"/>
+      <info id="34" abstract="SAA34" desc="SAD34" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="string" label="Speed" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="35" abstract="SAA35" desc="SAD35" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="string" label="Time(frame)" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="36" abstract="SAA36" desc="SAD36" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="string" label="Time(frame)" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="37" abstract="SAA37" desc="SAD37" defaultArr="0" format="" length="1"/>
+      <info id="38" abstract="SAA38" desc="SAD38" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="GlobalVar" label="Global Variable" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="39" abstract="SAA39" desc="SAD39" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="LocalVar" label="Local Variable" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="40" abstract="SAA40" desc="SAD40" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="LocalVar" label="Local Variable" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="41" abstract="SAA41" desc="SAD41" defaultArr="0" format="" length="1"/>
+      <info id="42" abstract="SAA42" desc="SAD42" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="Facing" label="Facing Direction" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="43" abstract="SAA43" desc="SAD43" defaultArr="0" format="" length="1"/>
+      <info id="44" abstract="SAA44" desc="SAD44" defaultArr="0" format="" length="1"/>
+      <info id="45" abstract="SAA45" desc="SAD45" defaultArr="0" format="" length="1"/>
+      <info id="46" abstract="SAA46" desc="SAD46" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="BuildingIndex" label="Building Type" arrPos="0" parseType="LowMask16" />
+          <param type="TargetingPriority" label="Priority" arrPos="0" parseType="HighMask16" />
+        </Parameters>
+      </info>
+      <info id="47" abstract="SAA47" desc="SAD47" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="BuildingIndex" label="Building Type" arrPos="0" parseType="LowMask16"/>
+          <param type="TargetingPriority" label="Priority" arrPos="0" parseType="HighMask16"/>
+        </Parameters>
+      </info>
+      <info id="48" abstract="SAA48" desc="SAD48" defaultArr="0" format="" length="1"/>
+      <info id="49" abstract="SAA49" desc="SAD49" defaultArr="0" format="" length="1"/>
+      <info id="50" abstract="SAA50" desc="SAD50" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="string" label="Time(frame)" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="51" abstract="SAA51" desc="SAD51" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="AnimationIndex" trace="AnimIdxTrace" label="Animation(index)" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="52" abstract="SAA52" desc="SAD52" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="TalkBubble" label="Bubble Type" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="53" abstract="SAA53" desc="SAD53" defaultArr="0" format="" length="1"/>
+      <info id="54" abstract="SAA54" desc="SAD54" defaultArr="0" format="" length="1"/>
+      <info id="55" abstract="SAA55" desc="SAD55" defaultArr="0" format="" length="1"/>
+      <info id="56" abstract="SAA56" desc="SAD56" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="BuildingIndex" label="Building Type" arrPos="0" parseType="LowMask16" />
+          <param type="TargetingPriority" label="Priority" arrPos="0" parseType="HighMask16" />
+        </Parameters>
+      </info>
+      <info id="57" abstract="SAA57" desc="SAD57" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="BuildingIndex" label="Building Type" arrPos="0" parseType="LowMask16" />
+          <param type="TargetingPriority" label="Priority" arrPos="0" parseType="HighMask16" />
+        </Parameters>
+      </info>
+      <info id="58" abstract="SAA58" desc="SAD58" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="BuildingIndex" label="Building Type" arrPos="0" parseType="LowMask16" />
+          <param type="TargetingPriority" label="Priority" arrPos="0" parseType="HighMask16" />
+        </Parameters>
+      </info>
+      <info id="59" abstract="SAA59" desc="SAD59" defaultArr="0" format="" length="1">
+        <Parameters>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="0" />
+        </Parameters>
+      </info>
+      <info id="60" abstract="SAA60" desc="SAD60" defaultArr="0" format="" length="1"/>
+      <info id="61" abstract="SAA61" desc="SAD61" defaultArr="0" format="" length="1"/>
+      <info id="62" abstract="SAA62" desc="SAD62" defaultArr="0" format="" length="1"/>
+      <info id="63" abstract="SAA63" desc="SAD63" defaultArr="0" format="" length="1"/>
+      <info id="64" abstract="SAA64" desc="SAD64" defaultArr="0" format="" length="1"/>
+    </ScriptActions>
+  </TriggerInfo>
 </RsModConfig>
