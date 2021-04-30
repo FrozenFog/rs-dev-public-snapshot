@@ -15,6 +15,7 @@ namespace RelertSharp.Common
         public static string PlayerSide { get; set; }
         public static MapStructure.MapTheaterTileSet TileDictionary { get; set; }
         public static TheaterType CurrentTheater { get; set; }
+        public static Language Language { get; set; }
         public static string RunPath { get { return System.Windows.Forms.Application.StartupPath + "\\"; } }
         private static RsLog log;
         public static RsLog Log

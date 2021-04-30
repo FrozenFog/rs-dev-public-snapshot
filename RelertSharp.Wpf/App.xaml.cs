@@ -156,6 +156,7 @@ namespace RelertSharp.Wpf
             {
                 Local = local
             };
+            GlobalVar.Language = new RelertSharp.Common.Language();
             Log.Write("Primary config loaded");
             if (!SafeRun(() => { GlobalVar.GlobalDir = new VirtualDir(); },
                 "Virtual mix directiory initialization failed!")) return false;

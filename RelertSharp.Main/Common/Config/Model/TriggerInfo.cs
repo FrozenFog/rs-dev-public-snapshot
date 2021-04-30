@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace RelertSharp.Common.Config.Model
 {
@@ -43,13 +45,13 @@ namespace RelertSharp.Common.Config.Model
     {
         [XmlAttribute("id")]
         public int Id { get; set; }
-        [XmlAttribute("abstract")]
+        [XmlIgnore]
         public string Abstract { get; set; }
-        [XmlAttribute("desc")]
+        [XmlIgnore]
         public string Description { get; set; }
         [XmlAttribute("defaultArr")]
         public string DefaultParameters { get; set; }
-        [XmlAttribute("format")]
+        [XmlIgnore]
         public string FormatString { get; set; }
         [XmlAttribute("length")]
         public int ParamLength { get; set; }
