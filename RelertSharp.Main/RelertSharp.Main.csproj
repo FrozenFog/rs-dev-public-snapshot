@@ -98,6 +98,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\assembly\GAC\Microsoft.DirectX.DirectSound\1.0.2902.0__31bf3856ad364e35\Microsoft.DirectX.DirectSound.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="ObjectListView">
       <HintPath>..\Reference\ObjectListView.dll</HintPath>
     </Reference>
@@ -124,7 +127,9 @@
     <Compile Include="Common\Comparer\ListViewComparer.cs" />
     <Compile Include="Common\Config\AttributeInfo.cs" />
     <Compile Include="Common\Config\ComboReading.cs" />
+    <Compile Include="Common\Config\Language.cs" />
     <Compile Include="Common\Config\Model\ComboGroup.cs" />
+    <Compile Include="Common\Config\Model\LanguageControl.cs" />
     <Compile Include="Common\Config\Model\LogicAttributes.cs" />
     <Compile Include="Common\Config\Model\RsModConfig.cs" />
     <Compile Include="Common\Config\Model\TriggerInfo.cs" />
@@ -253,6 +258,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -286,9 +292,5 @@
     <Content Include="Resources\defaultIni.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties resources_4enus_1json__JsonSchema="https://beaujs.com/schema.json" />
-    </VisualStudio>
-  </ProjectExtensions>
+  <ProjectExtensions />
 </Project>

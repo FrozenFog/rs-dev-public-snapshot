@@ -20,6 +20,8 @@ namespace RelertSharp.Common
             else CreateDefaultConfig();
 
             ReadAttributeInfo();
+
+            LoadTriggerLanguage();
         }
 
         #region Private Methods
