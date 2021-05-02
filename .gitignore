@@ -69,6 +69,7 @@ local.rsc
 *.ini
 *.vpl
 *.xml
+*.json
 !RelertSharp.GUI/Resources/*.png
 !relert-sharp.sln
 !rslib.dll
@@ -80,5 +81,6 @@ local.rsc
 !packages.config
 !/RelertSharp.Main/Resources/default.xml
 !/RelertSharp.Main/Resources/defaultIni.xml
+!/RelertSharp.Main/Resources/enUs.json
 /RelertSharp.Main/bin/OnPublic
 /RelertSharp.GUI/bin/OnPublic

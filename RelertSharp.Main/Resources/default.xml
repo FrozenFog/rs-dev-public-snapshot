@@ -501,23 +501,23 @@
       </info>
       <info id="12" defaultArr="0,0" length="2">
         <Parameters>
-          <param type="string" label="Credits(money)" arrPos="1" />
+          <param type="string" label="Credits(money)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="13" defaultArr="0,0" length="2">
         <Parameters>
-          <param type="string" label="Time(seconds)" arrPos="1" />
+          <param type="string" label="Time(seconds)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="14" defaultArr="0,0" length="2"/>
       <info id="15" defaultArr="0,0" length="2">
         <Parameters>
-          <param type="string" label="Target Number" arrPos="1" />
+          <param type="string" label="Target Number" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="16" defaultArr="0,0" length="2">
         <Parameters>
-          <param type="string" label="Target Number" arrPos="1" />
+          <param type="string" label="Target Number" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="17" defaultArr="0,0" length="2"/>
@@ -587,7 +587,7 @@
       <info id="33" defaultArr="0,0" length="2"/>
       <info id="34" defaultArr="0,0" length="2">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="35" defaultArr="0,0" length="2"/>
@@ -614,17 +614,17 @@
       </info>
       <info id="45" defaultArr="0,0" length="2">
         <Parameters>
-          <param type="string" label="Percent(0-100)" arrPos="1" />
+          <param type="string" label="Percent(0-100)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="46" defaultArr="0,0" length="2">
         <Parameters>
-          <param type="string" label="Percent(0-100)" arrPos="1" />
+          <param type="string" label="Percent(0-100)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="47" defaultArr="0,0" length="2">
         <Parameters>
-          <param type="string" label="Time(seconds)" arrPos="1" />
+          <param type="string" label="Time(seconds)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="48" defaultArr="0,0" length="2"/>
@@ -632,12 +632,12 @@
       <info id="50" defaultArr="0,0" length="2"/>
       <info id="51" defaultArr="0,0" length="2">
         <Parameters>
-          <param type="string" label="Time(seconds)" arrPos="1" />
+          <param type="string" label="Time(seconds)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="52" defaultArr="0,0" length="2">
         <Parameters>
-          <param type="string" label="Target Number" arrPos="1" />
+          <param type="string" label="Target Number" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="53" defaultArr="0,0" length="2">
@@ -677,13 +677,13 @@
       </info>
       <info id="60" defaultArr="2,0,0" length="3">
         <Parameters>
-          <param type="TechType" label="Tech Type(ID)" arrPos="2" />
-          <param type="string" label="Number" arrPos="1" />
+          <param type="TechType" label="Tech Type(ID)" arrPos="2" fmtType="KvKey" />
+          <param type="string" label="Number" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="61" defaultArr="2,0,0" length="3">
         <Parameters>
-          <param type="TechType" label="Tech Type(ID)" arrPos="2" />
+          <param type="TechType" label="Tech Type(ID)" arrPos="2" fmtType="KvKey" />
         </Parameters>
       </info>
       <info id="62" defaultArr="0,0" length="2"/>
@@ -735,31 +735,31 @@
       </info>
       <info id="77" defaultArr="2,0,0" length="3">
         <Parameters>
-          <param type="SuperWeaponReg" label="SuperWeapon" arrPos="2" />
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+          <param type="SuperWeaponReg" label="SuperWeapon" arrPos="2" fmtType="KvKey" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="78" defaultArr="0,0" length="2">
         <Parameters>
-          <param type="TechType" label="Tech Type" arrPos="2" />
+          <param type="TechType" label="Tech Type" arrPos="2" fmtType="KvKey" />
         </Parameters>
       </info>
       <info id="79" defaultArr="0,0" length="2"/>
       <info id="80" defaultArr="2,0,0" length="3">
         <Parameters>
-          <param type="TechType" label="Tech Type" arrPos="2" />
+          <param type="TechType" label="Tech Type" arrPos="2" fmtType="KvKey" />
         </Parameters>
       </info>
       <info id="81" defaultArr="2,0,0" length="3">
         <Parameters>
-          <param type="TechType" label="Tech Type" arrPos="2" />
-          <param type="string" label="Number" arrPos="1" />
+          <param type="TechType" label="Tech Type" arrPos="2" fmtType="KvKey" />
+          <param type="string" label="Number" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="82" defaultArr="2,0,0" length="3">
         <Parameters>
-          <param type="TechType" label="Tech Type" arrPos="2" />
-          <param type="string" label="Number" arrPos="1" />
+          <param type="TechType" label="Tech Type" arrPos="2" fmtType="KvKey" />
+          <param type="string" label="Number" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="83" defaultArr="0,0" length="2"/>
@@ -775,8 +775,8 @@
       </info>
       <info id="86" defaultArr="2,0,0" length="3">
         <Parameters>
-          <param type="TechType" label="Tech Type" arrPos="2" />
-          <param type="string" label="Number" arrPos="1" />
+          <param type="TechType" label="Tech Type" arrPos="2" fmtType="KvKey" />
+          <param type="string" label="Number" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="87" defaultArr="0,0" length="2">
@@ -829,7 +829,7 @@
       </info>
       <info id="8" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="9" defaultArr="0,0,0,0,0,0,A" length="7">
@@ -866,27 +866,27 @@
       <info id="16" defaultArr="0,0,0,0,0,0,A" length="7"/>
       <info id="17" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="18" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="19" defaultArr="7,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="SoundReg" trace="SoundRegTrace" label="Sound Name" arrPos="1" />
+          <param type="SoundReg" trace="SoundRegTrace" label="Sound Name" arrPos="1" fmtType="KvKey" />
         </Parameters>
       </info>
       <info id="20" defaultArr="8,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="ThemeReg" trace="SoundRegTrace" label="Music Name" arrPos="1" />
+          <param type="ThemeReg" trace="SoundRegTrace" label="Music Name" arrPos="1" fmtType="KvKey" />
         </Parameters>
       </info>
       <info id="21" defaultArr="6,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="EvaReg" trace="SoundRegTrace" label="Speech Name" arrPos="1" />
+          <param type="EvaReg" trace="SoundRegTrace" label="Speech Name" arrPos="1" fmtType="KvKey" />
         </Parameters>
       </info>
       <info id="22" defaultArr="2,0,0,0,0,0,A" length="7">
@@ -923,7 +923,7 @@
       </info>
       <info id="30" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="bool" label="Is Activated" arrPos="1" />
+          <param type="bool" label="Is Activated" arrPos="1" fmtType="Bool" />
         </Parameters>
       </info>
       <info id="31" defaultArr="0,0,0,0,0,0,A" length="7"/>
@@ -940,7 +940,7 @@
       </info>
       <info id="35" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Unknown Parameter" arrPos="1" />
+          <param type="AttackTargetType" label="Prefer Target" arrPos="1" />
         </Parameters>
       </info>
       <info id="36" defaultArr="0,0,0,0,0,0,A" length="7">
@@ -960,38 +960,38 @@
       </info>
       <info id="39" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Zoom Type(1 or 2)" arrPos="1" />
+          <param type="string" label="Zoom Type(1 or 2)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="40" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Rectangle X(Left)" arrPos="2" />
-          <param type="string" label="Rectangle Y(Top)" arrPos="3" />
-          <param type="string" label="Rectangle Width" arrPos="4" />
-          <param type="string" label="Rectangle Height" arrPos="5" />
+          <param type="string" label="Rectangle X(Left)" arrPos="2" fmtType="Plain" />
+          <param type="string" label="Rectangle Y(Top)" arrPos="3" fmtType="Plain" />
+          <param type="string" label="Rectangle Width" arrPos="4" fmtType="Plain" />
+          <param type="string" label="Rectangle Height" arrPos="5" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="41" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
           <param type="AnimationIndex" trace="AnimIdxTrace" label="Animation(index)" arrPos="1" />
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="42" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
           <param type="WeaponIndex" label="Weapon(index)" arrPos="1" />
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="43" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
           <param type="VoxelAnim" label="Voxel Anim(index)" arrPos="1" />
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="44" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Time(frame)" arrPos="1" />
+          <param type="string" label="Time(frame)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="45" defaultArr="0,0,0,0,0,0,A" length="7"/>
@@ -999,8 +999,8 @@
       <info id="47" defaultArr="0,0,0,0,0,0,A" length="7"/>
       <info id="48" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Speed" arrPos="1" />
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" label="Speed" arrPos="1" fmtType="Plain" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="49" defaultArr="0,0,0,0,0,0,A" length="7"/>
@@ -1024,7 +1024,7 @@
       <info id="55" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
           <param type="RadarEvent" label="Radar Event(index)" arrPos="1" />
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="56" defaultArr="0,0,0,0,0,0,A" length="7">
@@ -1040,12 +1040,12 @@
       <info id="58" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
           <param type="MeteorType" label="Meteor Size(0-4)" arrPos="1" />
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="59" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="60" defaultArr="0,0,0,0,0,0,A" length="7"/>
@@ -1053,22 +1053,22 @@
       <info id="62" defaultArr="0,0,0,0,0,0,A" length="7"/>
       <info id="63" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="64" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="65" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="66" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="67" defaultArr="0,0,0,0,0,0,A" length="7"/>
@@ -1081,17 +1081,17 @@
       </info>
       <info id="71" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Number" arrPos="1" parseType="NestedFloat"/>
+          <param type="string" label="Number" arrPos="1" parseType="NestedFloat"  fmtType="Plain" />
         </Parameters>
       </info>
       <info id="72" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Number" arrPos="1" parseType="NestedFloat"/>
+          <param type="string" label="Number" arrPos="1" parseType="NestedFloat"  fmtType="Plain" />
         </Parameters>
       </info>
       <info id="73" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Number" arrPos="1" />
+          <param type="string" label="Number" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="74" defaultArr="0,0,0,0,0,0,A" length="7">
@@ -1106,28 +1106,28 @@
       </info>
       <info id="76" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Percent(0-100)" arrPos="1" />
+          <param type="string" label="Percent(0-100)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="77" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Percent(0-100)" arrPos="1" />
+          <param type="string" label="Percent(0-100)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="78" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Percent(0-100)" arrPos="1" />
+          <param type="string" label="Percent(0-100)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="79" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Percent(0-100)" arrPos="1" />
+          <param type="string" label="Percent(0-100)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="80" defaultArr="1,0,0,0,0,0,A" length="7">
         <Parameters>
           <param type="Teams" trace="TeamRegTrace" label="Teamtype ID" arrPos="1" />
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="81" defaultArr="0,0,0,0,0,0,A" length="7"/>
@@ -1135,38 +1135,38 @@
       <info id="83" defaultArr="0,0,0,0,0,0,A" length="7"/>
       <info id="84" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Group Number" arrPos="1" />
+          <param type="string" label="Group Number" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="85" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="bool" label="Is Activated" arrPos="1" />
+          <param type="bool" label="Is Activated" arrPos="1" fmtType="Bool" />
         </Parameters>
       </info>
       <info id="86" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="bool" label="Is Activated" arrPos="1" />
+          <param type="bool" label="Is Activated" arrPos="1" fmtType="Bool" />
         </Parameters>
       </info>
       <info id="87" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="bool" label="Is Activated" arrPos="1" />
+          <param type="bool" label="Is Activated" arrPos="1" fmtType="Bool" />
         </Parameters>
       </info>
       <info id="88" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
           <param type="ParticalAnimIndex" label="Partical Anim(index)" arrPos="1" />
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="89" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="1" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="90" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="91" defaultArr="0,0,0,0,0,0,A" length="7"/>
@@ -1174,29 +1174,29 @@
       <info id="93" defaultArr="0,0,0,0,0,0,A" length="7"/>
       <info id="94" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="95" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="96" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="97" defaultArr="0,0,0,0,0,0,A" length="7"/>
       <info id="98" defaultArr="7,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="SoundReg" trace="SoundRegTrace" label="Sound Name" arrPos="1" />
+          <param type="SoundReg" trace="SoundRegTrace" label="Sound Name" arrPos="1" fmtType="KvKey" />
         </Parameters>
       </info>
       <info id="99" defaultArr="7,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="SoundReg" trace="SoundRegTrace" label="Sound Name" arrPos="1" />
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="SoundReg" trace="SoundRegTrace" label="Sound Name" arrPos="1" fmtType="KvKey" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="100" defaultArr="0,0,0,0,0,0,A" length="7">
@@ -1206,12 +1206,12 @@
       </info>
       <info id="101" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Waypoint" arrPos="1" />
+          <param type="string" label="Waypoint" arrPos="1" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="102" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="103" defaultArr="4,0,0,0,0,0,A" length="7">
@@ -1222,47 +1222,47 @@
       <info id="104" defaultArr="5,0,0,0,0,0,0" length="7">
         <Parameters>
           <param type="Teams" trace="TeamRegTrace" label="Teamtype ID" arrPos="1" />
-          <param type="string" label="Time(frame)" arrPos="6" />
+          <param type="string" label="Time(frame)" arrPos="6" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="105" defaultArr="5,0,0,0,0,0,0" length="7">
         <Parameters>
           <param type="Teams" trace="TeamRegTrace" label="Teamtype ID" arrPos="1" />
-          <param type="string" label="Time(frame)" arrPos="6" />
+          <param type="string" label="Time(frame)" arrPos="6" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="106" defaultArr="9,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="TechType" label="Tech Type(ID)" arrPos="1" />
-          <param type="string" label="Tech level" arrPos="6" />
+          <param type="TechType" label="Tech Type(ID)" arrPos="1" fmtType="KvKey" />
+          <param type="string" label="Tech level" arrPos="6" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="107" defaultArr="1,0,0,0,0,0,A" length="7">
         <Parameters>
           <param type="Teams" trace="TeamRegTrace" label="Teamtype ID" arrPos="1" />
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="108" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
           <param type="CrateType" label="Crate type" arrPos="1" />
-          <param type="NonCombo" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="109" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="110" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Time(seconds)" arrPos="1" />
+          <param type="string" label="Time(seconds)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="111" defaultArr="0,0,0,0,0,0,A" length="7"/>
       <info id="112" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="113" defaultArr="0,0,0,0,0,0,A" length="7">
@@ -1272,18 +1272,18 @@
       </info>
       <info id="114" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Tab index(0-3)" arrPos="1" />
+          <param type="string" label="Tab index(0-3)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="115" defaultArr="9,0,0,0,0,0,0" length="7">
         <Parameters>
-          <param type="TechType" label="Tech Type(ID)" arrPos="1" />
-          <param type="string" label="Time(frame, 0-700)" arrPos="6" />
+          <param type="TechType" label="Tech Type(ID)" arrPos="1" fmtType="KvKey" />
+          <param type="string" label="Time(frame)" arrPos="6" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="116" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="117" defaultArr="0,0,0,0,0,0,A" length="7">
@@ -1324,8 +1324,8 @@
       </info>
       <info id="125" defaultArr="10,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="BuildingReg" label="Building Type" arrPos="1" />
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" parseType="Waypoint" arrPos="6" />
+          <param type="BuildingReg" label="Building Type" arrPos="1" fmtType="KvKey" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" parseType="Waypoint" arrPos="6" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="126" defaultArr="0,0,0,0,0,0,A" length="7">
@@ -1335,18 +1335,18 @@
       </info>
       <info id="127" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Time(frame)" arrPos="1" />
+          <param type="string" label="Time(frame)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="128" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="129" defaultArr="11,0,0,0,0,0,0" length="7">
         <Parameters>
           <param type="SuperWeaponIndex" label="SuperWeapon(index)" arrPos="1" />
-          <param type="string" label="Percent(0-100)" arrPos="6" />
+          <param type="string" label="Percent(0-100)" arrPos="6" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="130" defaultArr="0,0,0,0,0,0,A" length="7">
@@ -1356,14 +1356,14 @@
       </info>
       <info id="131" defaultArr="9,0,0,0,0,0,0" length="7">
         <Parameters>
-          <param type="BuildingReg" label="Building Type" arrPos="1" />
-          <param type="string" label="Time(frame)" arrPos="6" />
+          <param type="BuildingReg" label="Building Type" arrPos="1" fmtType="KvKey" />
+          <param type="string" label="Time(frame)" arrPos="6" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="132" defaultArr="11,0,0,0,0,0,0" length="7">
         <Parameters>
           <param type="SuperWeaponIndex" label="SuperWeapon(index)" arrPos="1" />
-          <param type="string" label="Time(frame)" arrPos="6" />
+          <param type="string" label="Time(frame)" arrPos="6" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="133" defaultArr="0,0,0,0,0,0,A" length="7">
@@ -1378,58 +1378,62 @@
       </info>
       <info id="135" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="136" defaultArr="0,0,0,0,0,0,A" length="7"/>
       <info id="137" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="138" defaultArr="0,0,0,0,0,0,A" length="7"/>
       <info id="139" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Time(frame)" arrPos="1" />
+          <param type="string" label="Time(frame)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="140" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint"/>
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="6" parseType="Waypoint" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="141" defaultArr="0,0,0,0,0,0,A" length="7"/>
       <info id="142" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Percent(0-100)" arrPos="1" />
+          <param type="string" label="Percent(0-100)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="143" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Percent(0-100)" arrPos="1" />
+          <param type="string" label="Percent(0-100)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="144" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Percent(0-100)" arrPos="1" />
+          <param type="string" label="Percent(0-100)" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="145" defaultArr="0,0,0,0,0,0,A" length="7"/>
-      <info id="146" defaultArr="11,11,0,0,0,0,A" length="7">
+      <info id="146" defaultArr="11,0,0,0,0,0,0" length="7">
         <Parameters>
           <param type="HouseMultiIndex" label="House(index)" arrPos="1" />
-          <param type="string" label="Power" arrPos="6" />
+          <param type="string" label="Power" arrPos="6" fmtType="Plain" />
         </Parameters>
       </info>
-      <info id="147" defaultArr="0,-1,0,0,0,0,A" length="7"/>
+      <info id="147" defaultArr="0,0,0,0,0,0,A" length="7">
+        <Parameters>
+          <param type="HouseMultiIndex" label="House(index)" arrPos="1"/>
+        </Parameters>
+      </info>
       <info id="148" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Eva Type" arrPos="1" />
+          <param type="string" label="Eva Type" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="149" defaultArr="0,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="string" label="Group Num" arrPos="1" />
+          <param type="string" label="Group Num" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
     </TriggerActions>
@@ -1441,28 +1445,28 @@
       </info>
       <info id="1" defaultArr="0" length="1">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="0" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="0" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="2" defaultArr="0" length="1"/>
       <info id="3" defaultArr="0" length="1">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="0" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="0" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="4" defaultArr="0" length="1">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Coordinate(x, y)" arrPos="0" parseType="Base128"/>
+          <param type="string" trace="I2dWaypointTrace" label="Coordinate(x, y)" arrPos="0" parseType="Base128" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="5" defaultArr="0" length="1">
         <Parameters>
-          <param type="string" label="Time(seconds)" arrPos="0" />
+          <param type="string" label="Time(seconds)" arrPos="0" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="6" defaultArr="0" length="1">
         <Parameters>
-          <param type="string" label="Line(&gt;0)" arrPos="0" />
+          <param type="string" label="Line(&gt;0)" arrPos="0" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="7" defaultArr="0" length="1"/>
@@ -1485,18 +1489,18 @@
       </info>
       <info id="13" defaultArr="0" length="1">
         <Parameters>
-          <param type="string" label="Sequence Num" arrPos="0" />
+          <param type="string" label="Sequence Num" arrPos="0" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="14" defaultArr="0" length="1"/>
       <info id="15" defaultArr="0" length="1">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="0" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="0" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="16" defaultArr="0" length="1">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="0" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="0" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="17" defaultArr="0" length="1">
@@ -1544,23 +1548,23 @@
       <info id="31" defaultArr="0" length="1"/>
       <info id="32" defaultArr="0" length="1">
         <Parameters>
-          <param type="string" label="Time(seconds)" arrPos="0" />
+          <param type="string" label="Time(seconds)" arrPos="0" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="33" defaultArr="0" length="1"/>
       <info id="34" defaultArr="0" length="1">
         <Parameters>
-          <param type="string" label="Speed" arrPos="0" />
+          <param type="string" label="Speed" arrPos="0" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="35" defaultArr="0" length="1">
         <Parameters>
-          <param type="string" label="Time(frame)" arrPos="0" />
+          <param type="string" label="Time(frame)" arrPos="0" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="36" defaultArr="0" length="1">
         <Parameters>
-          <param type="string" label="Time(frame)" arrPos="0" />
+          <param type="string" label="Time(frame)" arrPos="0" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="37" defaultArr="0" length="1"/>
@@ -1604,7 +1608,7 @@
       <info id="49" defaultArr="0" length="1"/>
       <info id="50" defaultArr="0" length="1">
         <Parameters>
-          <param type="string" label="Time(frame)" arrPos="0" />
+          <param type="string" label="Time(frame)" arrPos="0" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="51" defaultArr="0" length="1">
@@ -1640,7 +1644,7 @@
       </info>
       <info id="59" defaultArr="0" length="1">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="0" />
+          <param type="string" trace="I2dWaypointTrace" label="Waypoint" arrPos="0" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="60" defaultArr="0" length="1"/>

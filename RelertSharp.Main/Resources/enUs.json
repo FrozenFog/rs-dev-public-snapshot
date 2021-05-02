@@ -450,752 +450,752 @@
     "Action": {
       "0": {
         "abs": "No Action",
-        "fmt": "",
+        "fmt": "Do nothing",
         "des": "Null action, will do nothing."
       },
       "1": {
         "abs": "Winner Is...",
-        "fmt": "",
+        "fmt": "Announce {0} wins",
         "des": "Cause the game end immediately with declearing #HOUSE#'s victory.\nAny other house will be defeated and no matter allied or not.\nIrrelevant to trigger house."
       },
       "2": {
         "abs": "Loser Is...",
-        "fmt": "",
+        "fmt": "Announce {0} lose",
         "des": "Cause the game end immediately with declearing #HOUSE#'s defeat.\nAny other house will announce victory and no matter allied or not.\nIrrelevant to trigger house."
       },
       "3": {
         "abs": "Production Begins",
-        "fmt": "",
+        "fmt": "{0} begin production",
         "des": "Cause the #HOUSE#(controlled by computer) will begin production of units and structures.\nIf #HOUSE# is human player, this action will do nothing.\nIrrelevant to trigger house."
       },
       "4": {
         "abs": "Create Team",
-        "fmt": "",
+        "fmt": "Create team {0} belongs to #OWNER#",
         "des": "Cause the #TRIGGER HOUSE# to create a #TEAMTYPE#.\nThe team will created by regrouping or constructing, not by reinforcement."
       },
       "5": {
         "abs": "Destroy Team",
-        "fmt": "",
+        "fmt": "Dismiss team {0}",
         "des": "Cause the #TEAMTYPE# dismissed. If the team still have members, all members will be available for recruiting into other teams and will NOT be killed instantly.\nIrrelevant to ANY house."
       },
       "6": {
         "abs": "All To Hunt",
-        "fmt": "",
+        "fmt": "All units of {0} go hunt",
         "des": "Cause all units belong to #HOUSE# start \"hunting mode\", they will search and destroy any enemy on the current battlefield by distance.\nIrrelevant to trigger house."
       },
       "7": {
         "abs": "Reinforcement (team)",
-        "fmt": "",
+        "fmt": "Create {0} reinforcement belongs to team house",
         "des": "Create a #TEAMTYPE# belongs to #TEAM HOUSE# using the settings specified in team logic.\nThis action WILL create a bunch of units at #TEAM WAYPOINT# from nothing.\nIrrelevant to trigger house."
       },
       "8": {
         "abs": "Drop Zone Flare At ...",
-        "fmt": "",
+        "fmt": "Drop zone flare at {0}",
         "des": "Create a drop zone flare at #WAYPOINT#"
       },
       "9": {
         "abs": "Fire Sale",
-        "fmt": "",
+        "fmt": "{0} begins fire sale",
         "des": "Cause all buildings of the specified #HOUSE# to be sold.\nTypically used in final assault by computer on single player.\nIrrelevant to trigger house."
       },
       "10": {
         "abs": "Play Movie",
-        "fmt": "",
+        "fmt": "Play movie: {0}",
         "des": "Play specified #MOVIE# on full screen. The game will pause while the movie is playing, and will resume after the movie finished."
       },
       "11": {
         "abs": "Text Trigger",
-        "fmt": "",
+        "fmt": "Show text {0}",
         "des": "Display specified #CSFLABEL# on upper left of the screen, all player will see this message.\nIrrelevant to ANY house."
       },
       "12": {
         "abs": "Destroy Trigger",
-        "fmt": "",
+        "fmt": "Destroy trigger {0}",
         "des": "Destroy the specified #TRIGGER# and prevent it from operating, but the destroyed trigger can be re-created."
       },
       "13": {
         "abs": "Autocreate Begins",
-        "fmt": "",
+        "fmt": "{0} begins autocreate",
         "des": "Initiate autocrate procedure for specified #HOUSE#, typically used by computer creating teams in single player.\nIrrelevant to trigger house."
       },
       "14": {
         "abs": "Change House",
-        "fmt": "",
+        "fmt": "Change object beloning to {0}",
         "des": "Change the beloning of attatched object to specified #HOUSE#.\nIrrelevant to trigger house."
       },
       "15": {
         "abs": "Allow Win",
-        "fmt": "",
+        "fmt": "Turn a virtual winning condition to TRUE",
         "des": "!UNSTABLE!\nTurns a virtual winning condition to TRUE.\nWhen all trigger contains this action in current map is triggered, the player wins.\nIrrelevant to ANY house.\n\n!WARNING!\nThis action will sometimes crash the game."
       },
       "16": {
         "abs": "Reveal All Map",
-        "fmt": "",
+        "fmt": "Reveal all map",
         "des": "Reveals the entire map to the player.\n\n!WARNING!\nUsing this action in multiplayer map will sometimes crash the game with reconnection error!"
       },
       "17": {
         "abs": "Reveal Around Waypoint...",
-        "fmt": "",
+        "fmt": "Reveal around {0}",
         "des": "Reveals a specified region around #WAYPOINT# for player.\nThe region size can be changed by [General]-RevealTriggerRadius."
       },
       "18": {
         "abs": "Reveal Waypoint Zone",
-        "fmt": "",
+        "fmt": "Reveal zone at {0}",
         "des": "!ADVANCE!\nReveals all cells beloning to the ZONE specified by #WAYPOINT# for player.\nYou may read the description of Event.24 for a brief defination of a ZONE."
       },
       "19": {
         "abs": "Play Sound Effect",
-        "fmt": "",
+        "fmt": "Play sound {0} centered",
         "des": "Play a specified #SOUND#.\nIrrelevant to location, always center played."
       },
       "20": {
         "abs": "Play Music Theme",
-        "fmt": "",
+        "fmt": "Play music: {0}",
         "des": "Play a specified #THEME#.\nWill override the music played by jukebox in Menu->Control, and will resume playing if the specified #TMEME# is end."
       },
       "21": {
         "abs": "Play Speech",
-        "fmt": "",
+        "fmt": "Play eva speech: {0}",
         "des": "Play a specified #EVASPEECH#.\nWill override the eva sound that currently playing, and it will be override by the default priority."
       },
       "22": {
         "abs": "Force Trigger",
-        "fmt": "",
+        "fmt": "Force trigger {0} to fire",
         "des": "Force the specified #TRIGGER# to fire without meet the Evnet condition of that trigger.\nIf the trigger runs only 1 time and have not meet the Event condition yet, the designated trigger can be force triggered repeatedly, but will not be force triggered once the Event condition has been made."
       },
       "23": {
         "abs": "Timer Start",
-        "fmt": "",
+        "fmt": "Timer Start",
         "des": "Start the global timer."
       },
       "24": {
         "abs": "Timer Stop",
-        "fmt": "",
+        "fmt": "Timer Stop",
         "des": "Stop the global timer."
       },
       "25": {
         "abs": "Timer Extend",
-        "fmt": "",
-        "des": "Extemd the global timer for #TIME# seconds."
+        "fmt": "Extend timer {0} seconds",
+        "des": "Extend the global timer for #TIME# seconds."
       },
       "26": {
         "abs": "Timer Shorten",
-        "fmt": "",
+        "fmt": "Shorten timer {0} seconds",
         "des": "Short the global timer for #TIME# seconds.\nThe timer can be negative, but wills show as 00:00."
       },
       "27": {
         "abs": "Timer Set",
-        "fmt": "",
+        "fmt": "Set timer to {0} seconds",
         "des": "Set the global timer to #TIME# seconds.\nThere are only one global timer in the map."
       },
       "28": {
         "abs": "Global Set",
-        "fmt": "",
+        "fmt": "Set global var {0} to TRUE",
         "des": "Set the #GLOBAL VARIABLE#(defined in Ini) to TRUE/On/Set"
       },
       "29": {
         "abs": "Global Clear",
-        "fmt": "",
+        "fmt": "set global var {0} to FALSE",
         "des": "Set the #GLOBAL VARIABLE#(defined in Ini) to FALSE/Off/Clear"
       },
       "30": {
         "abs": "Auto Base Building",
-        "fmt": "",
+        "fmt": "Start ai auto base building",
         "des": "Set the computer skirmish mode to ON or OFF.\nWhen set to ON, the computer house will set their building as in skirmish mode, the existing base nodes still in effect.\nIrrelevant to ANY house"
       },
       "31": {
         "abs": "Grow Shroud",
-        "fmt": "",
+        "fmt": "Grow shroud one step",
         "des": "Incress unrevealed area for one step unit. This can be modified by [AudioVisual]-ShroudGrow/ShroudRate.\nShroud regrow queue is affected by the time of which area has been revealed."
       },
       "32": {
         "abs": "Destroy Attached Object",
-        "fmt": "",
+        "fmt": "Destroy this",
         "des": "Destroy the object that attatched to this trigger."
       },
       "33": {
         "abs": "Add One-Time Superweapon",
-        "fmt": "",
+        "fmt": "Add one time superweapon {0} to #OWNER#",
         "des": "Add a specified #SUPERWEAPON# to #TRIGGER HOUSE#.\nThis superweapon may use only once, then it will disappear."
       },
       "34": {
         "abs": "Add Repeating Superweapon",
-        "fmt": "",
+        "fmt": "Add repeating superweapon {0} to #OWNER#",
         "des": "Add a specified #SUPERWEAPON# to #TRIGGER HOUSE#.\nThis effect is permanent."
       },
       "35": {
         "abs": "Preferred Target",
-        "fmt": "",
+        "fmt": "Set offensive superweapon of #OWNER# to target {0}",
         "des": "Set the #TRIGGER HOUSE#'s offensive superweapon target to specified type object.\n0:Nothing.\n1:Anything\n2:Buildings\n3:Harvesters\n4:Infantries\n5:Vehicles\n6:Factories\n7:Base Defenses\n8:Base Threats(Enemy in their base)\n9:Power Plants\n10:Occupiable Buildings\n11:Neutral Tech Buildings."
       },
       "36": {
         "abs": "All Change House",
-        "fmt": "",
+        "fmt": "All of #OWNER# change to {0}",
         "des": "Change all objects of #TRIGGER HOUSE# to specified #HOUSE#."
       },
       "37": {
         "abs": "Make Ally",
-        "fmt": "",
+        "fmt": "#OWNER# allies with {0}",
         "des": "Make the #TRIGGER HOUSE# ally with specified #HOUSE#."
       },
       "38": {
         "abs": "Make Enemy",
-        "fmt": "",
+        "fmt": "#OWNER# enemy with {0}",
         "des": "Make the #TRIGGER HOUSE# enemy with specified #HOUSE#."
       },
       "39": {
         "abs": "Change Zoom Level",
-        "fmt": "",
+        "fmt": "Change zoom level to {0}",
         "des": "Change the zoom out level of the player's minimap.\n1:Normal view\n2:Zoomed Out.\nIrrelevant to ANY house."
       },
       "40": {
         "abs": "Resize Player View",
-        "fmt": "",
+        "fmt": "Resize view to {0},{1}, width {2}, height {3}",
         "des": "Change the player's battlefield view rectangle into specified size and location.\nIrrelevant to ANY house."
       },
       "41": {
         "abs": "Play Anim At...",
-        "fmt": "",
+        "fmt": "Play anim {0} at {1}",
         "des": "Play a specified #ANIMATION# at #WAYPOINT#."
       },
       "42": {
         "abs": "Do Explosion At...",
-        "fmt": "",
+        "fmt": "Use {0} make explode at {1}",
         "des": "Crate an explosion at #WAYPOINT# using specified #WARHEAD#."
       },
       "43": {
         "abs": "Create Voxel Animation At...",
-        "fmt": "",
+        "fmt": "Create voxel anim {0} at {1}",
         "des": "Create a #VOXEL ANIMATION# at #WAYPOINT#"
       },
       "44": {
         "abs": "Ion Storm At...",
-        "fmt": "",
+        "fmt": "Start ion storm for {0} frames",
         "des": "!ONLY IN TS!\nStart an ion storm for the specified number of game #FRAMES#."
       },
       "45": {
         "abs": "Ion Storm Stop",
-        "fmt": "",
+        "fmt": "Stop ion storm",
         "des": "!ONLY IN TS!\nEnd the ion storm in progress."
       },
       "46": {
         "abs": "Lock Input",
-        "fmt": "",
+        "fmt": "Lock input",
         "des": "Disable player's input. Mostly used in the beginning of single player game.\nIrrelevant to ANY house."
       },
       "47": {
         "abs": "Unlock Input",
-        "fmt": "",
+        "fmt": "Unlock input",
         "des": "Enable player's input.\nIrrelevant to ANY house."
       },
       "48": {
         "abs": "Center Camera At Waypoint",
-        "fmt": "",
+        "fmt": "Center camera at {0} instantly",
         "des": "Set player's view camera to #WAYPOINT# instantly.\nIrrelevant to ANY house."
       },
       "49": {
         "abs": "Zoom In",
-        "fmt": "",
+        "fmt": "Zoom in map and lock input",
         "des": "!UNSTABLE!\nZooms the tactical map in, will downscale current resolution and lock player's input.\nIrrelevant to ANY house."
       },
       "50": {
         "abs": "Zoom Out",
-        "fmt": "",
+        "fmt": "Zoom out map and unlock input",
         "des": "!UNSTABLE!\nZooms the tactical map out, will upscale current resolution and unlock player's input.\nIrrelevant to ANY house."
       },
       "51": {
         "abs": "Reshroud Map",
-        "fmt": "",
+        "fmt": "Reshroud #OWNER#'s map",
         "des": "Reshrouds the entire map for #TRIGGER HOUSE#"
       },
       "52": {
         "abs": "Change Light Behavior",
-        "fmt": "",
+        "fmt": "Change object spotlight to {0}",
         "des": "!ARES ONLY!\nChange the spotlight type of the attatched building.\n0:No Spotlight\n1:Circular\n2:Arcing."
       },
       "53": {
         "abs": "Enable Trigger",
-        "fmt": "",
+        "fmt": "Enable trigger {0}",
         "des": "Enable the specified #TRIGGER#"
       },
       "54": {
         "abs": "Disable Trigger",
-        "fmt": "",
+        "fmt": "Disable trigger {0}",
         "des": "Disable the specified #TRIGGER#"
       },
       "55": {
         "abs": "Create Radar Evnet",
-        "fmt": "",
+        "fmt": "Create radar event {0} at {1}",
         "des": "Crate a radar event at #WAYPOINT#\n0,3,4:Red\n1,2:Yellow\n5:Blue."
       },
       "56": {
         "abs": "Local Set",
-        "fmt": "",
+        "fmt": "Set local var {0} to TRUE",
         "des": "Set the #LOCAL VARIABLE# to TRUE/On/Set"
       },
       "57": {
         "abs": "Local Clear",
-        "fmt": "",
+        "fmt": "Set local var {0} to FALSE",
         "des": "Set the #LOCAL VARIABLE# to FALSE/Off/Clear"
       },
       "58": {
         "abs": "Meteor Shower At...",
-        "fmt": "",
+        "fmt": "Create meteor({0}) at {1}",
         "des": "!ONLY IN TS!\nCrates a meteor shower around #WAYPOINT#.\nUse in RA2 may crash the game!\nSize scales from 0-3."
       },
       "59": {
         "abs": "Reduce Tiberium At...",
-        "fmt": "",
+        "fmt": "Reduce tiberium at {0}",
         "des": "Reduces Tiberium around #WAYPOINT#"
       },
       "60": {
         "abs": "Sell Attached Building",
-        "fmt": "",
+        "fmt": "Sell this",
         "des": "Sells the attatched building.\nIrrelevant to ANY house."
       },
       "61": {
         "abs": "Turn Off Attached Building",
-        "fmt": "",
+        "fmt": "Turn off this",
         "des": "Turn off the attatched building.\nIrrelevant to ANY house."
       },
       "62": {
         "abs": "Turn On Attached Building",
-        "fmt": "",
+        "fmt": "Turn on this",
         "des": "Turn on the attatched building.\nIrrelevant to ANY house."
       },
       "63": {
         "abs": "Apply 100 Damage At...",
-        "fmt": "",
+        "fmt": "Apply 100 HE damage at {0}",
         "des": "Applies 100 points of HE damage at #WAYPOINT#, can be permanently repeated. May use this to destroy a bridge immediately."
       },
       "64": {
         "abs": "Light Flash(small) At...",
-        "fmt": "",
+        "fmt": "Create small flash at {0}",
         "des": "!NO EFFECT, NEEDS REPAIR!\nShows a small light flash at #WAYPOINT#."
       },
       "65": {
         "abs": "Light Flash(medium) At...",
-        "fmt": "",
+        "fmt": "Create medium flash at {0}",
         "des": "!NO EFFECT, NEEDS REPAIR!\nShows a medium light flash at #WAYPOINT#."
       },
       "66": {
         "abs": "Light Flash(large) At...",
-        "fmt": "",
+        "fmt": "Create large flash at {0}",
         "des": "!NO EFFECT, NEEDS REPAIR!\nShows a large light flash at #WAYPOINT#."
       },
       "67": {
         "abs": "Announce Win",
-        "fmt": "",
+        "fmt": "Announce win",
         "des": ""
       },
       "68": {
-        "abs": "Allounce Lose",
-        "fmt": "",
+        "abs": "Announce Lose",
+        "fmt": "Announce lose",
         "des": ""
       },
       "69": {
         "abs": "Force End",
-        "fmt": "",
+        "fmt": "Force scenario end",
         "des": ""
       },
       "70": {
         "abs": "Destroy Tag",
-        "fmt": "",
+        "fmt": "Destroy tag {0}",
         "des": ""
       },
       "71": {
         "abs": "Set Ambient Step",
-        "fmt": "",
+        "fmt": "Set ambient step to {0}",
         "des": ""
       },
       "72": {
         "abs": "Set Ambient Rate",
-        "fmt": "",
+        "fmt": "Set ambient rate to {0}",
         "des": ""
       },
       "73": {
         "abs": "Set Ambient Light",
-        "fmt": "",
+        "fmt": "Set ambient light to {0}",
         "des": ""
       },
       "74": {
         "abs": "AI Triggers Begin",
-        "fmt": "",
+        "fmt": "Start {0}'s ai trigger",
         "des": ""
       },
       "75": {
         "abs": "AI Triggers Stop",
-        "fmt": "",
+        "fmt": "Stop {0}'s ai trigger",
         "des": ""
       },
       "76": {
         "abs": "Set AI Team Ratio",
-        "fmt": "",
+        "fmt": "Set ai trigger team ratio to {0}%",
         "des": ""
       },
       "77": {
         "abs": "Set AI Aircraft Team Ratio",
-        "fmt": "",
+        "fmt": "Set ai aircraft team ratio to {0}%",
         "des": ""
       },
       "78": {
         "abs": "Set AI Infantry Team Ratio",
-        "fmt": "",
+        "fmt": "Set ai infantry team ratio to {0}%",
         "des": ""
       },
       "79": {
         "abs": "Set AI Unit Team Ratio",
-        "fmt": "",
+        "fmt": "Set ai unit team ratio to {0}%",
         "des": ""
       },
       "80": {
         "abs": "Reinforcement At...",
-        "fmt": "",
+        "fmt": "Create reinforcement {0} at {1}",
         "des": ""
       },
       "81": {
         "abs": "Wakeup Attached Object",
-        "fmt": "",
+        "fmt": "Wakeup this",
         "des": ""
       },
       "82": {
         "abs": "Wakeup All Sleepers",
-        "fmt": "",
+        "fmt": "Wakeup all sleeping object",
         "des": ""
       },
       "83": {
         "abs": "Wakeup All Harmless",
-        "fmt": "",
+        "fmt": "Wakeup all harmless object",
         "des": ""
       },
       "84": {
         "abs": "Wakeup Group...",
-        "fmt": "",
+        "fmt": "Wakeup all object in group {0}",
         "des": ""
       },
       "85": {
         "abs": "Vein Growth",
-        "fmt": "",
+        "fmt": "Set vein growth to {0}",
         "des": ""
       },
       "86": {
         "abs": "Tiberium Growth",
-        "fmt": "",
+        "fmt": "Set tiberium growth to {0}",
         "des": ""
       },
       "87": {
         "abs": "Ice Growth",
-        "fmt": "",
+        "fmt": "Set ice growth to {0}",
         "des": ""
       },
       "88": {
         "abs": "Partical Anim At...",
-        "fmt": "",
+        "fmt": "Play partical anim {0} at {1}",
         "des": ""
       },
       "89": {
         "abs": "Remove Partical Anim At...",
-        "fmt": "",
+        "fmt": "Remove partical anim at {0}",
         "des": ""
       },
       "90": {
         "abs": "Lightning Strike At...",
-        "fmt": "",
+        "fmt": "Land down lightning at {0}",
         "des": ""
       },
       "91": {
         "abs": "Go Berzerk(attached)",
-        "fmt": "",
+        "fmt": "Bezerk this",
         "des": ""
       },
       "92": {
         "abs": "Activate Firestorm",
-        "fmt": "",
+        "fmt": "Turns on firestorm of #OWNER#",
         "des": ""
       },
       "93": {
         "abs": "Deactivate Firestorm",
-        "fmt": "",
+        "fmt": "Turns off firestorm of #OWNER#",
         "des": ""
       },
       "94": {
         "abs": "Ion-Cannon Strike At...",
-        "fmt": "",
+        "fmt": "Land down ion cannon at {0}",
         "des": ""
       },
       "95": {
         "abs": "Nuke Strike At...",
-        "fmt": "",
+        "fmt": "Land nuke strike at {0}",
         "des": ""
       },
       "96": {
         "abs": "Chem-Missile Strike At...",
-        "fmt": "",
+        "fmt": "Land down chemical missile at {0}",
         "des": ""
       },
       "97": {
         "abs": "Toggle Train Cargo",
-        "fmt": "",
+        "fmt": "Toggle train drops cargo or not",
         "des": ""
       },
       "98": {
         "abs": "Play Sound Effect",
-        "fmt": "",
+        "fmt": "Play sound {0} at random waypoint",
         "des": ""
       },
       "99": {
         "abs": "Play Sound Effect At...",
-        "fmt": "",
+        "fmt": "Play sound {0} at {1}",
         "des": ""
       },
       "100": {
         "abs": "Play Movie",
-        "fmt": "",
+        "fmt": "Play movie: {0}",
         "des": ""
       },
       "101": {
         "abs": "Reshroud Map At...",
-        "fmt": "",
+        "fmt": "Reshroud map at {0}",
         "des": ""
       },
       "102": {
         "abs": "Lightning Storm Strike At...",
-        "fmt": "",
+        "fmt": "Launch #OWNER#'s lightning storm at {0}",
         "des": ""
       },
       "103": {
         "abs": "Timer Text",
-        "fmt": "",
+        "fmt": "Set time text as {0}",
         "des": ""
       },
       "104": {
         "abs": "Flash Team",
-        "fmt": "",
+        "fmt": "Flash team {0} for {1} frames",
         "des": ""
       },
       "105": {
         "abs": "Talk Bubble",
-        "fmt": "",
+        "fmt": "Display talk bubble {1} frames at team {0}",
         "des": ""
       },
       "106": {
         "abs": "Set Object Tech-Level",
-        "fmt": "",
+        "fmt": "Set {0}'s tech level to {1}",
         "des": ""
       },
       "107": {
         "abs": "Reinforcement by Chrono At...",
-        "fmt": "",
+        "fmt": "Warp in reinforcement {0} at {1}",
         "des": ""
       },
       "108": {
         "abs": "Create Crate At...",
-        "fmt": "",
+        "fmt": "Spawn crate {0} at {1}",
         "des": ""
       },
       "109": {
         "abs": "Iron Curtain At...",
-        "fmt": "",
+        "fmt": "Iron curtain at {0}",
         "des": ""
       },
       "110": {
         "abs": "Pause Game for...",
-        "fmt": "",
+        "fmt": "Pause game for {0} seconds",
         "des": ""
       },
       "111": {
         "abs": "Evict Occupiers(attached)",
-        "fmt": "",
+        "fmt": "Evict this",
         "des": ""
       },
       "112": {
         "abs": "Center(jump) Camera At...",
-        "fmt": "",
+        "fmt": "Jump camera to {0}",
         "des": ""
       },
       "113": {
         "abs": "Make House Cheer",
-        "fmt": "",
+        "fmt": "{0} cheer",
         "des": ""
       },
       "114": {
         "abs": "Set Tab to (0-3)",
-        "fmt": "",
+        "fmt": "Set tab to {0}",
         "des": ""
       },
       "115": {
         "abs": "Flash Cameo",
-        "fmt": "",
+        "fmt": "Flash {0}'s cameo for {1} frames",
         "des": ""
       },
       "116": {
         "abs": "Stop Sounds At...",
-        "fmt": "",
+        "fmt": "Stop all sound at {0}",
         "des": ""
       },
       "117": {
         "abs": "Play Ingame Movie(pause game)",
-        "fmt": "",
+        "fmt": "Play ingame movie {0} and pasue game",
         "des": ""
       },
       "118": {
         "abs": "Clear All Smudges",
-        "fmt": "",
+        "fmt": "Clear all smudges",
         "des": ""
       },
       "119": {
         "abs": "Destroy All of...",
-        "fmt": "",
+        "fmt": "Eliminate all of {0}",
         "des": ""
       },
       "120": {
         "abs": "Destroy All Buildings of...",
-        "fmt": "",
+        "fmt": "Destroy all buildings of {0}",
         "des": ""
       },
       "121": {
         "abs": "Destroy All Land Units of...",
-        "fmt": "",
+        "fmt": "Destroy all land units of {0}",
         "des": ""
       },
       "122": {
         "abs": "Destroy All Naval Units of...",
-        "fmt": "",
+        "fmt": "Destroy all naval units of {0}",
         "des": ""
       },
       "123": {
         "abs": "Mindcontrol Base of...",
-        "fmt": "",
+        "fmt": "Mind control all of {0}'s object to #OWNER#",
         "des": ""
       },
       "124": {
         "abs": "Restore Mindcontrol Base of...",
-        "fmt": "",
+        "fmt": "#OWNER# give all mind control objects back to {0}",
         "des": ""
       },
       "125": {
         "abs": "Create Building At...",
-        "fmt": "",
+        "fmt": "Create building {0} at {1}",
         "des": ""
       },
       "126": {
         "abs": "Restore Starting Units of...",
-        "fmt": "",
+        "fmt": "Restore Starting Units of {0}",
         "des": ""
       },
       "127": {
         "abs": "Chrono Screen Effect for(frames)",
-        "fmt": "",
+        "fmt": "Chrono screen effect for {0} frames",
         "des": ""
       },
       "128": {
         "abs": "Teleport All to...",
-        "fmt": "",
+        "fmt": "All units of #OWNER# teleport to {0}",
         "des": ""
       },
       "129": {
         "abs": "Set Superweapon Charge(percent)",
-        "fmt": "",
+        "fmt": "Set superweapon {0} charge at {1}%",
         "des": ""
       },
       "130": {
         "abs": "Restore Starting Buildings of...",
-        "fmt": "",
+        "fmt": "Restore Starting Buildings of {0}",
         "des": ""
       },
       "131": {
         "abs": "Flash Buildings of(type)...",
-        "fmt": "",
+        "fmt": "Flash all {0} building for {1} frames",
         "des": ""
       },
       "132": {
         "abs": "Superweapon Set Recharge Time(frames)",
-        "fmt": "",
+        "fmt": "Set superweapon {0}'s recharge time to {1} frames",
         "des": ""
       },
       "133": {
         "abs": "Superweapon Reset Recharge Time",
-        "fmt": "",
+        "fmt": "Reset superweapon {0}'s recharge time to default",
         "des": ""
       },
       "134": {
         "abs": "Superweapon Reset",
-        "fmt": "",
+        "fmt": "Reset superweapon {0}'s charge",
         "des": ""
       },
       "135": {
         "abs": "Set Preferred Target Cell At...",
-        "fmt": "",
+        "fmt": "Set all #OWNER#'s superweapon target cell at {0}",
         "des": ""
       },
       "136": {
         "abs": "Clear Prefereed Target Cell",
-        "fmt": "",
+        "fmt": "Clear #OWNER#'s superweapon target cell",
         "des": ""
       },
       "137": {
         "abs": "Center Base Cell Set At...",
-        "fmt": "",
+        "fmt": "Set #OWNER#'s center base cell at {0}",
         "des": ""
       },
       "138": {
         "abs": "Center Base Cell Clear",
-        "fmt": "",
+        "fmt": "Clear #OWNER#'s center base cell",
         "des": ""
       },
       "139": {
         "abs": "Blackout Radar",
-        "fmt": "",
+        "fmt": "Blackout #OWNER#'s radar for {0} frames",
         "des": ""
       },
       "140": {
         "abs": "Set Defensive Target Cell At...",
-        "fmt": "",
+        "fmt": "Set all #OWNER#'s defensive superweapon target cell at {0}",
         "des": ""
       },
       "141": {
         "abs": "Clear Defensive Target Cell",
-        "fmt": "",
+        "fmt": "Clear #OWNER#'s defensive superweapon target cell",
         "des": ""
       },
       "142": {
         "abs": "Retint Red",
-        "fmt": "",
+        "fmt": "Redraw red to {0}%",
         "des": ""
       },
       "143": {
         "abs": "Retint Green",
-        "fmt": "",
+        "fmt": "Redraw green to {0}%",
         "des": ""
       },
       "144": {
         "abs": "Retint Blue",
-        "fmt": "",
+        "fmt": "Redraw blue to {0}%",
         "des": ""
       },
       "145": {
         "abs": "Jump Camera Home",
-        "fmt": "",
+        "fmt": "Center camera to home",
         "des": ""
       },
       "146": {
         "abs": "Add Additional Power to House...(Ares 3.0)",
-        "fmt": "",
+        "fmt": "Add additional {1} power to {0}",
         "des": ""
       },
       "147": {
         "abs": "Kill Driver Attatched(Ares 3.0)",
-        "fmt": "",
+        "fmt": "Kill this driver and change vehicle beloning to {0}",
         "des": ""
       },
       "148": {
         "abs": "Set Eva Side...(Ares 3.0)",
-        "fmt": "",
+        "fmt": "Set eva side index to {0}",
         "des": ""
       },
       "149": {
         "abs": "Set Team Group...(Ares 3.0)",
-        "fmt": "",
+        "fmt": "Set team group to {0}",
         "des": ""
       }
     },

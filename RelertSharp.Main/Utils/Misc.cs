@@ -403,6 +403,13 @@ namespace RelertSharp.Utils
             }
             return avg / i;
         }
+
+        public static T ParseEnum<T>(string src, T defaultValue) where T : struct
+        {
+            if (string.IsNullOrEmpty(src)) return defaultValue;
+            if (Enum.TryParse(src, out T t)) return t;
+            return defaultValue;
+        }
     }
 
 }

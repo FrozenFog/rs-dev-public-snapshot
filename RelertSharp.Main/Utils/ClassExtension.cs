@@ -113,6 +113,10 @@ namespace System.Collections.Generic
         {
             return src.Where(x => x.Value == target.ToString()).FirstOrDefault();
         }
+        public static void Foreach<T>(this IEnumerable<T> src, Action<T> func)
+        {
+            foreach (T item in src) func(item);
+        }
     }
 
 
@@ -214,6 +218,10 @@ namespace System
                 else if (int.Parse(s) == 0) return false;
             }
             return def;
+        }
+        public static string Peel(this string s, int level = 1)
+        {
+            return s.Substring(level, s.Length - 2 * level);
         }
         public static string YesNo(this bool src)
         {
