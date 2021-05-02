@@ -50,6 +50,8 @@ namespace RelertSharp.Wpf
         private readonly LightningView lightning = new LightningView();
         [RsViewComponent(GuiViewType.AnimationPreview, nameof(animationPreview))]
         private readonly AnimationPreview animationPreview = new AnimationPreview();
+        [RsViewComponent(GuiViewType.TriggerList, nameof(triggerList))]
+        private readonly TriggerListView triggerList = new TriggerListView();
         #endregion
         #region Dispatcher
         #endregion
@@ -80,13 +82,14 @@ namespace RelertSharp.Wpf
         private void AddToolPage()
         {
             //dockMain.Layout.AddToolToRight("Ai Trigger Edit", aiTrigger);
-            dockMain.Layout.AddToolToRight("Team List", teamList);
+            //dockMain.Layout.AddToolToRight("Team List", teamList);
             dockMain.Layout.AddToolToRight("Lightning", lightning);
             //dockMain.Layout.AddToolToRight("Ai Trigger List", aiTriggerList);
             //dockMain.AddToolToRight("Script List", scriptList);
             //dockMain.AddToolToRight("Taskforce List", taskforceList);
-            dockMain.Layout.AddToolToRight("Team", team);
+            //dockMain.Layout.AddToolToRight("Team", team);
             dockMain.Layout.AddToolToRight("Animation", animationPreview);
+            dockMain.Layout.AddToolToRight("Trigger List", triggerList);
             //dockMain.AddToolToRight("Script", script);
             //dockMain.Layout.AddToolToRight("Light", lightPanel);
             dockMain.AddCenterPage("Map", pnlMain);
@@ -131,7 +134,7 @@ namespace RelertSharp.Wpf
         }
         private void DebugClick()
         {
-
+            triggerList.ReloadMapTrigger();
         }
 
         private void RedrawRequestHandler(object sender, EventArgs e)

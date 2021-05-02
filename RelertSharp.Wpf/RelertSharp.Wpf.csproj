@@ -78,6 +78,7 @@
       <DependentUpon>AnimationPreview.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\GlobalCountryVm.cs" />
+    <Compile Include="ViewModel\GlobalTriggerVm.cs" />
     <Compile Include="ViewModel\LightningVm.cs" />
     <Compile Include="ViewModel\ScriptVm.cs" />
     <Compile Include="ViewModel\StaticCollectionVm.cs" />
@@ -103,6 +104,9 @@
     </Compile>
     <Compile Include="Views\TeamView.xaml.cs">
       <DependentUpon>TeamView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TriggerListView.xaml.cs">
+      <DependentUpon>TriggerListView.xaml</DependentUpon>
     </Compile>
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -181,6 +185,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TeamView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TriggerListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

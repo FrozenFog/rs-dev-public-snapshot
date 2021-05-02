@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/Button.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/TextBox.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/Label.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/TextBlock.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/ComboBox.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/ListBox.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/GridSplitter.xaml"/>
@@ -17,6 +18,7 @@
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/CheckBox.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/StatusBar.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/Menu.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/TreeView.xaml"/>
                 <!--<ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/MenuItem.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

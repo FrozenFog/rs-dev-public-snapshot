@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -30,6 +31,14 @@ namespace RelertSharp.Common.Config.Model
         Base128,
         LowMask16,
         HighMask16
+    }
+    public enum ParamFormatType
+    {
+        KvValue = -1,
+        Plain,
+        KvKey,
+        WpPos,
+        Bool
     }
     public class TriggerInfo
     {
@@ -64,12 +73,52 @@ namespace RelertSharp.Common.Config.Model
         [XmlAttribute("type")]
         public string ValueType { get; set; }
         [XmlAttribute("trace")]
-        public string TraceTarget { get; set; }
+        public string _TraceType
+        {
+            get
+            {
+                if (TraceTarget == TriggerInfoTraceType.None) return null;
+                return TraceTarget.ToString();
+            }
+            set
+            {
+                TraceTarget = Utils.Misc.ParseEnum(value, TriggerInfoTraceType.None);
+            }
+        }
+        [XmlIgnore]
+        public TriggerInfoTraceType TraceTarget { get; set; }
+        [XmlAttribute("parseType")]
+        public string _ParseMethodType
+        {
+            get
+            {
+                if (ParseMethod == ParamParseMethod.Plain) return null;
+                return ParseMethod.ToString();
+            }
+            set
+            {
+                ParseMethod = Utils.Misc.ParseEnum(value, ParamParseMethod.Plain);
+            }
+        }
+        [XmlIgnore]
+        public ParamParseMethod ParseMethod { get; set; }
+        [XmlAttribute("fmtType")]
+        public string _FormatType
+        {
+            get
+            {
+                if (ParamFormat == ParamFormatType.KvValue) return null;
+                return ParamFormat.ToString();
+            }
+            set
+            {
+                ParamFormat = Utils.Misc.ParseEnum(value, ParamFormatType.KvValue);
+            }
+        }
+        public ParamFormatType ParamFormat { get; set; }
         [XmlAttribute("label")]
         public string Label { get; set; }
         [XmlAttribute("arrPos")]
         public int ParamPos { get; set; }
-        [XmlAttribute("parseType")]
-        public string ParseMethodType { get; set; }
     }
 }
