@@ -47,5 +47,10 @@ namespace RelertSharp
             if (src <= 0) return 0;
             return src;
         }
+
+        public static int ChebyshevDistance(System.Windows.Point p1, System.Windows.Point p2)
+        {
+            return (int)Math.Max(Math.Abs(p1.X - p2.X), Math.Abs(p1.Y - p2.Y));
+        }
     }
 }

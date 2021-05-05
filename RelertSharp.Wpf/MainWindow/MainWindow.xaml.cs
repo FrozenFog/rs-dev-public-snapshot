@@ -134,6 +134,7 @@ namespace RelertSharp.Wpf
         }
         private void DebugClick()
         {
+            tmrInit.Stop();
             triggerList.ReloadMapTrigger();
         }
 

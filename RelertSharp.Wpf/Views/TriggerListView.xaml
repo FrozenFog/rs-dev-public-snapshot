@@ -10,12 +10,25 @@
         <ViewModel:GlobalTriggerVm/>
     </UserControl.DataContext>
     <Grid>
-        <TreeView x:Name="trvMain" Margin="10,10,10,10" Style="{DynamicResource trvDark}">
+        <TreeView x:Name="trvMain" Margin="10,10,10,10" AllowDrop="True" Style="{DynamicResource trvDark}" DragOver="TrgDragOver" Drop="TrgDragDrop" MouseMove="DragMouseMove" MouseDown="DragMouseDown">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:TriggerTreeItemVm}" ItemsSource="{Binding Items}">
                     <TextBlock Text="{Binding Title}" Style="{DynamicResource txblkDark}"/>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
+            <TreeView.ContextMenu>
+                <ContextMenu Style="{DynamicResource cmenuDark}">
+                    <MenuItem Header="Add trigger group" Click="Menu_AddGroup"/>
+                    <MenuItem Header="Delete trigger group" Click="Menu_DeleteGroup"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
+                    <MenuItem Header="Add trigger" Click="Menu_AddTrigger"/>
+                    <MenuItem Header="Copy trigger" Click="Menu_CopyTrigger"/>
+                    <MenuItem Header="Delete trigger" Click="Menu_DeleteTrigger"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
+                    <MenuItem Header="Ascending sort" Click="Menu_Ascending"/>
+                    <MenuItem Header="Descending sort" Click="Menu_Descending"/>
+                </ContextMenu>
+            </TreeView.ContextMenu>
         </TreeView>
     </Grid>
 </UserControl>
