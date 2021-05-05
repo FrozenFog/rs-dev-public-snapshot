@@ -161,15 +161,21 @@ namespace System
 {
     public static class SystemExtensions
     {
-
+        #region Number
         public static decimal AsDecimal(this float src)
         {
             return (decimal)src;
         }
+        public static string ToString(this double src, int digit = 2)
+        {
+            string format = "{0:N" + digit.ToString() + "}";
+            return string.Format(format, src);
+        }
+        #endregion
 
 
 
-
+        #region String
         public static string Replace(this string src, int pos, char c)
         {
             return src.Remove(pos, 1).Insert(pos, c.ToString());
@@ -182,16 +188,6 @@ namespace System
         public static bool IsNullOrEmpty(this string src)
         {
             return string.IsNullOrEmpty(src);
-        }
-
-        public static int ToInt(this bool src)
-        {
-            return src ? 1 : 0;
-        }
-        public static string ToString(this double src, int digit = 2)
-        {
-            string format = "{0:N" + digit.ToString() + "}";
-            return string.Format(format, src);
         }
         public static bool ParseBool(this string src, bool def = false)
         {
@@ -223,6 +219,23 @@ namespace System
         {
             return s.Substring(level, s.Length - 2 * level);
         }
+        public static bool ContainChars(this string s, params char[] chars)
+        {
+            foreach (char c in chars)
+            {
+                if (s.Contains(c)) return true;
+            }
+            return false;
+        }
+        #endregion
+
+
+
+        #region Bool
+        public static int ToInt(this bool src)
+        {
+            return src ? 1 : 0;
+        }
         public static string YesNo(this bool src)
         {
             return src ? "yes" : "no";
@@ -231,6 +244,7 @@ namespace System
         {
             return src ? "1" : "0";
         }
+        #endregion
     }
 }
 

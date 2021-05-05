@@ -10,7 +10,6 @@
         <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}"/>
         <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}"/>
         <Setter Property="Foreground" Value="{StaticResource textFront}"/>
-        <Setter Property="Height" Value="23"/>
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{StaticResource textDisable}"/>

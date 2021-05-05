@@ -23,7 +23,7 @@
     
     <!--Menu-->
     <SolidColorBrush x:Key="menuDimBack" Color="#1b1b1b"/>
-    <SolidColorBrush x:Key="menuBack" Color="#2d2d2d"/>
+    <SolidColorBrush x:Key="menuBack" Color="#202020"/>
     <SolidColorBrush x:Key="menuSep" Color="#373737"/>
     <SolidColorBrush x:Key="menuHigh" Color="#404040"/>
 </ResourceDictionary>

@@ -18,6 +18,7 @@
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/CheckBox.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/StatusBar.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/Menu.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/ContextMenu.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/TreeView.xaml"/>
                 <!--<ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/MenuItem.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
