@@ -19,6 +19,7 @@ using RelertSharp.Wpf.Dialogs;
 using RelertSharp.Common;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.MapStructure;
+using System.Windows.Threading;
 
 namespace RelertSharp.Wpf.Views
 {
@@ -35,6 +36,11 @@ namespace RelertSharp.Wpf.Views
         {
             InitializeComponent();
             DataContext = GlobalCollectionVm.Triggers;
+            _dragTimer = new DispatcherTimer()
+            {
+                Interval = new TimeSpan(0, 0, 0, 0, DRAG_INTERVAL)
+            };
+            _dragTimer.Tick += DragTimerTick;
         }
 
         public void ReloadMapTrigger()
@@ -108,6 +114,8 @@ namespace RelertSharp.Wpf.Views
             TextBlock b = e.OriginalSource as TextBlock;
             if (b != null)
             {
+                TreeViewItem org = trvMain.CastSelectedItem();
+                if (org != null) org.IsSelected = false;
                 bool a = b.Focus();
             }
         }
@@ -115,6 +123,7 @@ namespace RelertSharp.Wpf.Views
 
 
         #region DragDrop
+        private bool isDraging = false;
         private Point prevMouseDown;
         private TriggerTreeItemVm dragItem;
         private void TrgDragOver(object sender, DragEventArgs e)
@@ -153,20 +162,6 @@ namespace RelertSharp.Wpf.Views
                     if (removeFromRoot) trvMain.Items.Remove(dragItem);
                     if (addToTarget) target.AddItem(dragItem);
                     if (addToAncestor) target.Ancestor.AddItem(dragItem);
-                    ////e.Effects = DragDropEffects.Move;
-                    //
-                    //if (dragItem.IsRoot)
-                    //{
-                    //    // if target item is root too, do nothing
-                    //    if (!target.IsRoot) trvMain.Items.Remove(dragItem);
-                    //}
-                    //// drag a non-root item, remove from ancestor
-                    //else dragItem.RemoveFromAncestor();
-
-                    //// target is tree, add to target child
-                    //if (target.IsTree) target.AddItem(dragItem);
-                    //// target is not tree nor root, add to target's ancestor
-                    //else target.Ancestor.AddItem(dragItem);
                 }
                 else if (target == null && !dragItem.IsRoot)
                 {
@@ -174,11 +169,12 @@ namespace RelertSharp.Wpf.Views
                     trvMain.Items.Add(dragItem);
                 }
             }
+            isDraging = false;
         }
 
         private void DragMouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (isDraging && e.LeftButton == MouseButtonState.Pressed)
             {
                 Point current = e.GetPosition(trvMain);
                 if (RsMath.ChebyshevDistance(current, prevMouseDown) > 10)
@@ -192,9 +188,25 @@ namespace RelertSharp.Wpf.Views
             }
         }
 
+        private DispatcherTimer _dragTimer;
+        private const int DRAG_INTERVAL = 200;
         private void DragMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left) prevMouseDown = e.GetPosition(trvMain);
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                _dragTimer.Stop();
+                _dragTimer.Start();
+                prevMouseDown = e.GetPosition(trvMain);
+            }
+        }
+        private void DragMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            _dragTimer.Stop();
+        }
+        private void DragTimerTick(object sender, EventArgs e)
+        {
+            _dragTimer.Stop();
+            isDraging = true;
         }
 
         private TriggerTreeItemVm GetItemOnDrag(DragEventArgs e)

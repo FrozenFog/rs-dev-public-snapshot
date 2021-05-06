@@ -199,5 +199,13 @@ namespace RelertSharp.Wpf
             }
         }
         #endregion
+
+
+        #region TreeView
+        public static TreeViewItem CastSelectedItem(this TreeView src)
+        {
+            return src.ItemContainerGenerator.ContainerFromItem(src.SelectedItem) as TreeViewItem;
+        }
+        #endregion
     }
 }
