@@ -5,11 +5,8 @@ using System.Linq;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class TagCollection : IndexableItemCollection<TagItem>
+    public class TagCollection : IndexableItemCollection<TagItem>, ICurdContainer<TagItem>
     {
-        private Dictionary<string, List<string>> trigger_tag = new Dictionary<string, List<string>>();
-
-
         #region Ctor - TagCollection
         public TagCollection(INIEntity entTag)
         {
@@ -29,48 +26,23 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - TagCollection
-        public TagItem NewTag(TriggerItem trg, string id)
-        {
-            TagItem t = new TagItem(trg, id);
-            this[id] = t;
-            return t;
-        }
-        public TagItem NewTag(TagItem src, string id)
-        {
-            TagItem t = new TagItem(src, id);
-            this[id] = t;
-            return t;
-        }
-        public void Remove(TagItem t, string triggerid)
-        {
-            if (data.Keys.Contains(t.Id)) data.Remove(t.Id);
-            if (trigger_tag.Keys.Contains(triggerid)) trigger_tag.Remove(triggerid);
-        }
-        public void RemoveRelation(string triggerid)
-        {
-            if (trigger_tag.ContainsKey(triggerid))
-            {
-                if (trigger_tag[triggerid].Count == 1) data.Remove(trigger_tag[triggerid].First());
-                trigger_tag.Remove(triggerid);
-            }
-        }
-        /// <summary>
-        /// return a tag with certain trigger id, return null tag if not found
-        /// </summary>
-        /// <param name="triggerID"></param>
-        /// <returns></returns>
-        public List<TagItem> GetTagFromTrigger(string triggerID, TriggerItem item = null)
-        {
-            if (triggerID == "TEMPLATE") return new List<TagItem>(new TagItem[] { new TagItem(item, "TGMPLATE") });
-            List<TagItem> ret = new List<TagItem>();
-            if (trigger_tag.ContainsKey(triggerID))
-                foreach (var i in trigger_tag[triggerID])
-                    ret.Add(data[i]);
-            return
-                ret.Count > 0
-                ? ret
-                : new List<TagItem>(new TagItem[] { new TagItem("xxxxxxxx", new string[3] { "0", "!NO AVAIABLE TAG!", "<none>" }) });
-        }
+        ///// <summary>
+        ///// return a tag with certain trigger id, return null tag if not found
+        ///// </summary>
+        ///// <param name="triggerID"></param>
+        ///// <returns></returns>
+        //public List<TagItem> GetTagFromTrigger(string triggerID, TriggerItem item = null)
+        //{
+        //    if (triggerID == "TEMPLATE") return new List<TagItem>(new TagItem[] { new TagItem(item, "TGMPLATE") });
+        //    List<TagItem> ret = new List<TagItem>();
+        //    if (trigger_tag.ContainsKey(triggerID))
+        //        foreach (var i in trigger_tag[triggerID])
+        //            ret.Add(data[i]);
+        //    return
+        //        ret.Count > 0
+        //        ? ret
+        //        : new List<TagItem>(new TagItem[] { new TagItem("xxxxxxxx", new string[3] { "0", "!NO AVAIABLE TAG!", "<none>" }) });
+        //}
         public IEnumerable<TechnoPair> ToTechno()
         {
             List<TechnoPair> result = new List<TechnoPair>();
@@ -80,25 +52,85 @@ namespace RelertSharp.MapStructure.Logic
             }
             return result;
         }
+
+        #region Curd
+        //public void Remove(TagItem t, string triggerid)
+        //{
+        //    if (data.Keys.Contains(t.Id)) data.Remove(t.Id);
+        //    if (trigger_tag.Keys.Contains(triggerid)) trigger_tag.Remove(triggerid);
+        //}
+        public TagItem AddItem(string id, string name)
+        {
+            TagItem t = new TagItem(id, name);
+            this[id] = t;
+            return t;
+        }
+
+        public TagItem AddItem(string id, TriggerItem src)
+        {
+            TagItem t = new TagItem(src, id);
+            this[id] = t;
+            return t;
+        }
+
+        public TagItem CopyItem(TagItem src, string id)
+        {
+            TagItem t = new TagItem(src, id);
+            this[id] = t;
+            return t;
+        }
+
+        public bool ContainsItem(TagItem target)
+        {
+            return data.ContainsKey(target.Id);
+        }
+
+        public bool ContainsItem(string id, string obsolete = "")
+        {
+            return data.ContainsKey(id);
+        }
+
+        public bool RemoveItem(TagItem target)
+        {
+            if (data.ContainsKey(target.Id))
+            {
+                return data.Remove(target.Id);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Returns all tag id that removed by trigger
+        /// </summary>
+        /// <param name="trg"></param>
+        /// <returns></returns>
+        public IEnumerable<string> RemoveItem(TriggerItem trg)
+        {
+            HashSet<TagItem> target = new HashSet<TagItem>();
+            foreach (TagItem tag in this)
+            {
+                if (tag.AssoTrigger == trg.Id) target.Add(tag);
+            }
+            target.Foreach(x => RemoveItem(x));
+            return target.Select((x) => { return x.Id; });
+        }
+        #endregion
         #endregion
 
 
         #region Public Calls - TagCollection
-        public TagItem this[string _id]
+        public new TagItem this[string _id]
         {
             get
             {
                 if (data.Keys.Contains(_id)) return data[_id];
                 return null;
             }
-            set
+            private set
             {
                 data[_id] = value;
-                if (!trigger_tag.ContainsKey(value.AssoTrigger)) trigger_tag[value.AssoTrigger] = new List<string>();
-                trigger_tag[value.AssoTrigger].Add(value.Id);
             }
         }
-        public TagItem TemplateTag { get; set; }
         #endregion
     }
 

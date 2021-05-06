@@ -297,6 +297,13 @@ namespace RelertSharp.Wpf.Views
 
         private void Menu_DeleteTrigger(object sender, RoutedEventArgs e)
         {
+            TriggerTreeItemVm item = SelectedItem;
+            TriggerItem trigger = item.Data;
+            if (map.RemoveTrigger(trigger))
+            {
+                if (item.IsRoot) trvMain.Items.Remove(item);
+                else item.RemoveFromAncestor();
+            }
 
         }
 

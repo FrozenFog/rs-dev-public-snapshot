@@ -199,6 +199,7 @@
     <Compile Include="MapStructure\Logic\TriggerDescription.cs" />
     <Compile Include="MapStructure\MapTheaterTileSet.cs" />
     <Compile Include="MapStructure\Map\BrushAdding.cs" />
+    <Compile Include="MapStructure\Map\MapObjectFactory.cs" />
     <Compile Include="MapStructure\Map\ObjectAdding.cs" />
     <Compile Include="MapStructure\Map\ObjectDeleting.cs" />
     <Compile Include="MapStructure\Map\ObjectMoving.cs" />
