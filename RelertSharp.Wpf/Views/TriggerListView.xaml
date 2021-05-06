@@ -4,13 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RelertSharp.Wpf.Views"
-             xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel" xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="RelertSharp.Wpf.Views.TriggerListView"
+             xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel" xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="userControl" x:Class="RelertSharp.Wpf.Views.TriggerListView"
              mc:Ignorable="d">
     <UserControl.DataContext>
         <ViewModel:GlobalTriggerVm/>
     </UserControl.DataContext>
     <Grid>
         <TreeView x:Name="trvMain" Margin="10,10,10,10" AllowDrop="True" Style="{DynamicResource trvDark}" DragOver="TrgDragOver" Drop="TrgDragDrop" MouseMove="DragMouseMove" PreviewMouseRightButtonDown="PreviewRightDown">
+            <TreeView.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#0078D7" />
+            </TreeView.Resources>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:TriggerTreeItemVm}" ItemsSource="{Binding Items}">
                     <TextBlock Text="{Binding Title}" Style="{DynamicResource txblkDark}" MouseDown="DragMouseDown" MouseUp="DragMouseUp"/>
@@ -19,11 +22,11 @@
             <TreeView.ContextMenu>
                 <ContextMenu Style="{DynamicResource cmenuDark}">
                     <MenuItem Header="Add trigger group" Click="Menu_AddGroup"/>
-                    <MenuItem Header="Delete trigger group" Click="Menu_DeleteGroup"/>
+                    <MenuItem Name="menuDelGrp" Header="Delete trigger group" Click="Menu_DeleteGroup"/>
                     <Separator Style="{DynamicResource sepDark}"/>
                     <MenuItem Header="Add trigger" Click="Menu_AddTrigger"/>
-                    <MenuItem Header="Copy trigger" Click="Menu_CopyTrigger"/>
-                    <MenuItem Header="Delete trigger" Click="Menu_DeleteTrigger"/>
+                    <MenuItem Name="menuCopyTrg" Header="Copy trigger" Click="Menu_CopyTrigger"/>
+                    <MenuItem Name="menuDelTrg" Header="Delete trigger" Click="Menu_DeleteTrigger"/>
                     <Separator Style="{DynamicResource sepDark}"/>
                     <MenuItem Header="Ascending sort" Click="Menu_Ascending"/>
                     <MenuItem Header="Descending sort" Click="Menu_Descending"/>

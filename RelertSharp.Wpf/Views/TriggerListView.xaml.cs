@@ -109,16 +109,70 @@ namespace RelertSharp.Wpf.Views
         }
 
         #region Misc
+        #region Selecting & Right click
         private void PreviewRightDown(object sender, MouseButtonEventArgs e)
         {
-            TextBlock b = e.OriginalSource as TextBlock;
-            if (b != null)
+            DeselectAll(trvMain);
+            TreeViewItem item = GetSelectedItem(trvMain);
+            PreviewMenuShowing();
+        }
+        private void DeselectAll(ItemsControl src)
+        {
+            foreach (object o in src.Items)
             {
-                TreeViewItem org = trvMain.CastSelectedItem();
-                if (org != null) org.IsSelected = false;
-                bool a = b.Focus();
+                TreeViewItem item = src.ItemContainerGenerator.ContainerFromItem(o) as TreeViewItem;
+                if (item == null) continue;
+                if (item.Items.Count > 0) DeselectAll(item);
+                item.IsSelected = false;
             }
         }
+        private TreeViewItem GetSelectedItem(ItemsControl src)
+        {
+            foreach (object o in src.Items)
+            {
+                TreeViewItem item = src.ItemContainerGenerator.ContainerFromItem(o) as TreeViewItem;
+                if (item.IsSelected)
+                {
+                    int j = 0;
+                }
+                Point p = Mouse.GetPosition(item);
+                Rect itemRect = VisualTreeHelper.GetDescendantBounds(item);
+                if (itemRect.Contains(p))
+                {
+                    if (item.IsExpanded)
+                    {
+                        TreeViewItem selected = GetSelectedItem(item);
+                        if (selected != null)
+                        {
+                            selected.IsSelected = true;
+                            return selected;
+                        }
+                    }
+                    item.IsSelected = true;
+                    return item;
+                }
+            }
+            return null;
+        }
+        #endregion
+        #region Menu Enabler & Disabler
+        private void PreviewMenuShowing()
+        {
+            if (SelectedItem != null)
+            {
+                bool b = SelectedItem.IsTree;
+                menuCopyTrg.IsEnabled = !b;
+                menuDelTrg.IsEnabled = !b;
+                menuDelGrp.IsEnabled = b;
+            }
+            else
+            {
+                menuCopyTrg.IsEnabled = false;
+                menuDelTrg.IsEnabled = false;
+                menuDelGrp.IsEnabled = false;
+            }
+        }
+        #endregion
         #endregion
 
 
@@ -269,24 +323,6 @@ namespace RelertSharp.Wpf.Views
         private void Menu_Descending(object sender, RoutedEventArgs e)
         {
             SortBy(false);
-        }
-        #endregion
-
-
-
-
-        #region Binder
-        public bool IsTrigger
-        {
-            get
-            {
-                if (SelectedItem != null) return !SelectedItem.IsTree;
-                return false;
-            }
-        }
-        public bool IsTree
-        {
-            get { return !IsTrigger; }
         }
         #endregion
     }
