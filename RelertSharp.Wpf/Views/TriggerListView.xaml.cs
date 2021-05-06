@@ -49,6 +49,7 @@ namespace RelertSharp.Wpf.Views
                 {
                     string groupName = m.Value.Peel();
                     string trgName = trg.Name.Substring(m.Index + m.Length).Trim();
+                    trg.Name = trgName;
                     TriggerTreeItemVm item = new TriggerTreeItemVm();
                     item.Title = groupName;
                     if (groups.ContainsKey(groupName))
@@ -100,6 +101,17 @@ namespace RelertSharp.Wpf.Views
         {
             /// not available
         }
+
+        #region Misc
+        private void PreviewRightDown(object sender, MouseButtonEventArgs e)
+        {
+            TextBlock b = e.OriginalSource as TextBlock;
+            if (b != null)
+            {
+                bool a = b.Focus();
+            }
+        }
+        #endregion
 
 
         #region DragDrop

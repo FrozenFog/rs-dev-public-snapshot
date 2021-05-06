@@ -43,11 +43,13 @@ namespace RelertSharp.Wpf.MapEngine
         private static readonly object lockRender = new object();
         private static readonly object lockMouse = new object();
 
-        private const int susMsResize = 600;
+        private const int susMsWheel = 600;
+        private const int susMsResize = 200;
 
 
         private DispatcherTimer _wheelResizeDelay;
         private DispatcherTimer _suspendMouseDelay;
+        private DispatcherTimer _panelResizeDelay;
 
         private RenderTargetBitmap img;
 
@@ -87,7 +89,10 @@ namespace RelertSharp.Wpf.MapEngine
             EngineApi.ResizeRequested += ResizeInvokeHandler;
             _wheelResizeDelay = new DispatcherTimer();
             _wheelResizeDelay.Tick += WheelResizeInvoker;
-            _wheelResizeDelay.Interval = new TimeSpan(0, 0, 0, 0, susMsResize);
+            _wheelResizeDelay.Interval = new TimeSpan(0, 0, 0, 0, susMsWheel);
+            _panelResizeDelay = new DispatcherTimer();
+            _panelResizeDelay.Tick += PanelResizeInvoker;
+            _panelResizeDelay.Interval = new TimeSpan(0, 0, 0, 0, susMsResize);
             _suspendMouseDelay = new DispatcherTimer();
             _suspendMouseDelay.Tick += SuspendMouseTick;
 
@@ -120,6 +125,18 @@ namespace RelertSharp.Wpf.MapEngine
                 EngineApi.ScaleFactorInvoke();
                 _wheelResizeDelay.Stop();
                 Thread.Sleep(300);
+                ResumeMouseHandler();
+            }
+        }
+        private void PanelResizeInvoker(object sender, EventArgs e)
+        {
+            if (drew)
+            {
+                this.SizeChanged -= HandleSizeChanged;
+                EngineApi.ScaleFactorInvoke();
+                _panelResizeDelay.Stop();
+                Thread.Sleep(300);
+                this.SizeChanged += HandleSizeChanged;
                 ResumeMouseHandler();
             }
         }
@@ -243,9 +260,9 @@ namespace RelertSharp.Wpf.MapEngine
             {
                 if (nWidth != prevW || nHeight != prevH)
                 {
+                    _wheelResizeDelay.Stop();
+                    _wheelResizeDelay.Start();
                     SuspendMouseHandler();
-                    Resize();
-                    ResumeMouseHandler();
                 }
             }
         }
