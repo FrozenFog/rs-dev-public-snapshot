@@ -180,11 +180,10 @@ namespace RelertSharp.MapStructure
             INIEntity entWaypoints = f.PopEnt("Waypoints");
 
             Tags = new TagCollection(entTag);
-            Tags.TemplateTag = new TagItem(Triggers.TemplateTrigger, "TGMPLATE");
 
             foreach (INIPair p in entTrigger.DataList)
             {
-                Triggers.LoadTriggerCommand(p);
+                Triggers.ReadTriggerFromIni(p);
                 if (entEvent.DictData.Keys.Contains(p.Name))
                 {
                     Triggers[p.Name].Events = new LogicGroup(entEvent.GetPair(p.Name), TriggerSubType.EventLogic);

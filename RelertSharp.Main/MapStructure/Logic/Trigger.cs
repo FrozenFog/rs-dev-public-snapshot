@@ -9,14 +9,12 @@ using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class TriggerCollection : IndexableItemCollection<TriggerItem>, IListSource
+    public class TriggerCollection : IndexableItemCollection<TriggerItem>, IListSource, ICurdContainer<TriggerItem>
     {
         #region Ctor - TriggerCollection
         public TriggerCollection()
         {
-            TemplateTrigger = new TriggerItem("TEMPLATE", "<none>", "<none>", "DefaultTrigger", false, true, true, true, 0);
-            TemplateTrigger.Events = new LogicGroup();
-            TemplateTrigger.Actions = new LogicGroup();
+
         }
         #endregion
 
@@ -27,30 +25,13 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - TriggerCollection
-        public void LoadTriggerCommand(INIPair p)
+        public void ReadTriggerFromIni(INIPair p)
         {
             if (!data.Keys.Contains(p.Name))
             {
                 string[] l = p.ParseStringList();
                 data[p.Name] = new TriggerItem(p.Name, l[0], l[1], l[2], IniParseBool(l[3]), IniParseBool(l[4]), IniParseBool(l[5]), IniParseBool(l[6]), int.Parse(l[7]));
             }
-        }
-        public void RemoveTrigger(TriggerItem trigger)
-        {
-            if (data.Keys.Contains(trigger.Id)) data.Remove(trigger.Id);
-        }
-        public TriggerItem NewTrigger(string id)
-        {
-            TriggerItem t = new TriggerItem(TemplateTrigger, id);
-            t.Name = TemplateTrigger.Name;
-            this[id] = t;
-            return t;
-        }
-        public TriggerItem NewTrigger(string id, TriggerItem src)
-        {
-            TriggerItem t = new TriggerItem(src, id);
-            this[id] = t;
-            return t;
         }
         public IEnumerable<TechnoPair> ToTechno()
         {
@@ -66,7 +47,6 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TriggerCollection
-        public TriggerItem TemplateTrigger { get; set; }
         //public TriggerItem this[string _id]
         //{
         //    get
@@ -90,6 +70,46 @@ namespace RelertSharp.MapStructure.Logic
         public IList GetList()
         {
             return data.Values.ToList();
+        }
+        #endregion
+
+
+        #region Curd
+        public TriggerItem AddItem(string id, string name)
+        {
+            TriggerItem t = new TriggerItem()
+            {
+                Id = id,
+                Name = name
+            };
+            this[id] = t;
+            return t;
+        }
+
+        public TriggerItem CopyItem(TriggerItem src, string id)
+        {
+            TriggerItem t = new TriggerItem(src, id);
+            this[id] = t;
+            return t;
+        }
+
+        public bool RemoveItem(TriggerItem target)
+        {
+            if (data.ContainsKey(target.Id))
+            {
+                return data.Remove(target.Id);
+            }
+            return false;
+        }
+
+        public bool ContainsItem(TriggerItem item)
+        {
+            return data.ContainsKey(item.Id);
+        }
+
+        public bool ContainsItem(string id, string obsolete = "")
+        {
+            return data.ContainsKey(id);
         }
         #endregion
     }

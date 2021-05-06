@@ -13,6 +13,14 @@ namespace RelertSharp.Common
         void DescendingSort();
         void ChangeDisplay(IndexableDisplayType type);
     }
+    public interface ICurdContainer<TItem>
+    {
+        TItem AddItem(string param1, string param2);
+        TItem CopyItem(TItem src, string param);
+        bool ContainsItem(TItem look);
+        bool ContainsItem(string param1, string param2);
+        bool RemoveItem(TItem target);
+    }
     public interface IIndexableItem
     {
         string Id { get; }
