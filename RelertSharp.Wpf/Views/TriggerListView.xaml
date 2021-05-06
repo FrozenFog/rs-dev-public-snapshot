@@ -10,10 +10,10 @@
         <ViewModel:GlobalTriggerVm/>
     </UserControl.DataContext>
     <Grid>
-        <TreeView x:Name="trvMain" Margin="10,10,10,10" AllowDrop="True" Style="{DynamicResource trvDark}" DragOver="TrgDragOver" Drop="TrgDragDrop" MouseMove="DragMouseMove" MouseDown="DragMouseDown" PreviewMouseRightButtonDown="PreviewRightDown">
+        <TreeView x:Name="trvMain" Margin="10,10,10,10" AllowDrop="True" Style="{DynamicResource trvDark}" DragOver="TrgDragOver" Drop="TrgDragDrop" MouseMove="DragMouseMove" PreviewMouseRightButtonDown="PreviewRightDown">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:TriggerTreeItemVm}" ItemsSource="{Binding Items}">
-                    <TextBlock Text="{Binding Title}" Style="{DynamicResource txblkDark}"/>
+                    <TextBlock Text="{Binding Title}" Style="{DynamicResource txblkDark}" MouseDown="DragMouseDown" MouseUp="DragMouseUp"/>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
             <TreeView.ContextMenu>
