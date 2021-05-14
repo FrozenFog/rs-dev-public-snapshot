@@ -132,7 +132,7 @@ namespace RelertSharp.IniSystem
             }
         }
         public string Value { get { return Id; } }
-        public string Id { get { return Index; } }
+        public string Id { get { return Index; } set { } }
         public string RegName { get; set; } = "";
         public string UIName { get; set; } = "";
         public static TechnoPair NonePair

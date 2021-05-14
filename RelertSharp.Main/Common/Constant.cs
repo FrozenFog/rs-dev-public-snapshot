@@ -33,6 +33,7 @@ namespace RelertSharp.Common
         public const int IniMaxLineLength = 512;
         public const string ITEM_NONE = "<none>";
         public const string ITEM_ALL = "<all>";
+        public const string FMT_OWNER = "#OWNER#";
         public const string EX_SHP = ".shp";
         public const string EX_VXL = ".vxl";
         public const string EX_HVA = ".hva";
@@ -307,6 +308,7 @@ namespace RelertSharp.Common
             {
                 public const string TYPE_WAYPOINT = "Waypoints";
                 public const string TYPE_HOUSES = "Houses";
+                public const string TYPE_IDX_HOUSE = "HouseIndex";
                 public const string TYPE_OWNERCOUNTRY = "OwnerCountry";
                 public const string TYPE_SCRIPTS = "Scripts";
                 public const string TYPE_TEAMS = "Teams";
@@ -316,6 +318,23 @@ namespace RelertSharp.Common
                 public const string TYPE_TAGS = "Tags";
                 public const string TYPE_SIDEINDEX = "SideIndex";
                 public const string TYPE_BUDUPG = "BuildingUpgrade";
+                public const string TYPE_GLOBAL = "GlobalVar";
+                public const string TYPE_LOCAL = "LocalVar";
+                public const string TYPE_BUDREG = "BuildingReg";
+                public const string TYPE_IDX_UNT = "UnitIndex";
+                public const string TYPE_IDX_INF = "InfantryIndex";
+                public const string TYPE_IDX_AIR = "AircraftIndex";
+                public const string TYPE_IDX_ANIM = "AnimationIndex";
+                public const string TYPE_IDX_PRTC = "ParticalAnimIndex";
+                public const string TYPE_IDX_WEP = "WeaponIndex";
+                public const string TYPE_IDX_VOX = "VoxelAnimIndex";
+                public const string TYPE_REG_SUP = "SuperWeaponReg";
+                public const string TYPE_IDX_SUP = "SuperWeaponIndex";
+                public const string TYPE_MOVIE = "Movies";
+                public const string TYPE_REG_SND = "SoundReg";
+                public const string TYPE_REG_THM = "ThemeReg";
+                public const string TYPE_REG_EVA = "EvaReg";
+                public const string TYPE_CSF = "CsfLabel";
             }
         }
     }

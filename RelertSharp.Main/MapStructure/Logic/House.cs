@@ -15,12 +15,22 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - HouseCollection
-        public IEnumerable<TechnoPair> ToTechno()
+        //public IEnumerable<TechnoPair> ToTechno()
+        //{
+        //    List<TechnoPair> result = new List<TechnoPair>();
+        //    foreach (string id in AllId)
+        //    {
+        //        result.Add(new TechnoPair(id, this[id].Id));
+        //    }
+        //    return result;
+        //}
+        public IEnumerable<IIndexableItem> ToZeroIndex()
         {
-            List<TechnoPair> result = new List<TechnoPair>();
-            foreach (string id in AllId)
+            List<ComboItem> result = new List<ComboItem>();
+            int i = 0;
+            foreach (HouseItem house in this)
             {
-                result.Add(new TechnoPair(id, this[id].Id));
+                result.Add(new ComboItem(i++.ToString(), house.Id));
             }
             return result;
         }

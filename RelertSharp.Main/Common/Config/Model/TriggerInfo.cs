@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -8,7 +10,7 @@ namespace RelertSharp.Common.Config.Model
 {
     public enum TriggerInfoTraceType
     {
-        None = -1,
+        None = 0,
         TeamRegTrace,
         TeamIdxTrace,
         TriggerRegTrace,
@@ -25,7 +27,7 @@ namespace RelertSharp.Common.Config.Model
     }
     public enum ParamParseMethod
     {
-        Plain = -1,
+        Plain = 0,
         Waypoint,
         NestedFloat,
         Base128,
@@ -34,7 +36,7 @@ namespace RelertSharp.Common.Config.Model
     }
     public enum ParamFormatType
     {
-        KvValue = -1,
+        KvValue = 0,
         Plain,
         KvKey,
         WpPos,
@@ -70,8 +72,10 @@ namespace RelertSharp.Common.Config.Model
 
     public class LogicInfoParameter
     {
+        #region Model
         [XmlAttribute("type")]
         public string ValueType { get; set; }
+        private string _traceType;
         [XmlAttribute("trace")]
         public string _TraceType
         {
@@ -82,11 +86,18 @@ namespace RelertSharp.Common.Config.Model
             }
             set
             {
+                _traceType = value;
                 TraceTarget = Utils.Misc.ParseEnum(value, TriggerInfoTraceType.None);
             }
         }
+        private TriggerInfoTraceType _TraceTarget;
         [XmlIgnore]
-        public TriggerInfoTraceType TraceTarget { get; set; }
+        public TriggerInfoTraceType TraceTarget
+        {
+            get { if (_traceType.IsNullOrEmpty()) return TriggerInfoTraceType.None; return _TraceTarget; }
+            set { _TraceTarget = value; }
+        }
+        private string _parsetype;
         [XmlAttribute("parseType")]
         public string _ParseMethodType
         {
@@ -97,11 +108,18 @@ namespace RelertSharp.Common.Config.Model
             }
             set
             {
+                _parsetype = value;
                 ParseMethod = Utils.Misc.ParseEnum(value, ParamParseMethod.Plain);
             }
         }
+        private ParamParseMethod _ParseMethod;
         [XmlIgnore]
-        public ParamParseMethod ParseMethod { get; set; }
+        public ParamParseMethod ParseMethod
+        {
+            get { if (_parsetype.IsNullOrEmpty()) return ParamParseMethod.Plain; return _ParseMethod; }
+            set { _ParseMethod = value; }
+        }
+        private string _fmtType;
         [XmlAttribute("fmtType")]
         public string _FormatType
         {
@@ -112,20 +130,32 @@ namespace RelertSharp.Common.Config.Model
             }
             set
             {
+                _fmtType = value;
                 ParamFormat = Utils.Misc.ParseEnum(value, ParamFormatType.KvValue);
             }
         }
-        public ParamFormatType ParamFormat { get; set; }
+        private ParamFormatType _fmt;
+        [XmlIgnore]
+        public ParamFormatType ParamFormat
+        {
+            get { if (_fmtType.IsNullOrEmpty()) return ParamFormatType.KvValue; return _fmt; }
+            set { _fmt = value; }
+        }
         [XmlAttribute("label")]
         public string Label { get; set; }
         [XmlAttribute("arrPos")]
         public int ParamPos { get; set; }
+        #endregion
 
 
         #region Trigger Parameter Parsing
         private delegate string ParameterParseHandler(string input);
+        private delegate string ParameterFormatHandler(string input, IEnumerable<IIndexableItem> lookup);
         private const string PARAM_DEF = "0";
         private const string PARAM_LAST = "A";
+        private const string FMT_TRUE = "True";
+        private const string FMT_FALSE = "False";
+        #region Parse & Write
         private static readonly Dictionary<ParamParseMethod, ParameterParseHandler> Parse = new Dictionary<ParamParseMethod, ParameterParseHandler>()
         {
             {ParamParseMethod.Plain, PlainParse },
@@ -252,9 +282,50 @@ namespace RelertSharp.Common.Config.Model
             }
             return PARAM_DEF;
         }
-        public static string GetParameter(string input, LogicInfoParameter parameter)
+        #endregion
+        #region Formating
+        private static readonly Dictionary<ParamFormatType, ParameterFormatHandler> Format = new Dictionary<ParamFormatType, ParameterFormatHandler>()
         {
-            string result = Parse[parameter.ParseMethod](input);
+            {ParamFormatType.Plain, PlainFormat },
+            {ParamFormatType.KvKey, PlainFormat },
+            {ParamFormatType.KvValue, KvValueFormat },
+            {ParamFormatType.Bool, BoolFormat },
+            {ParamFormatType.WpPos, WpPosFormat }
+        };
+        private static string PlainFormat(string @in, IEnumerable<IIndexableItem> lookup)
+        {
+            return @in;
+        }
+        private static string KvValueFormat(string @in, IEnumerable<IIndexableItem> lookup)
+        {
+            IIndexableItem item = lookup.FirstOrDefault(x => x.Id == @in);
+            if (item != null) return item.Name;
+            return @in;
+        }
+        private static string WpPosFormat(string @in, IEnumerable<IIndexableItem> lookup)
+        {
+            IIndexableItem item = lookup.FirstOrDefault(x => x.Id == @in);
+            if (item != null && item is I2dLocateable pos)
+            {
+                return string.Format("{2}({0}, {1})", pos.X, pos.Y, item.Id);
+            }
+            return @in;
+        }
+        private static string BoolFormat(string @in, IEnumerable<IIndexableItem> lookup)
+        {
+            if (@in.ParseBool()) return FMT_TRUE;
+            return FMT_FALSE;
+        }
+        #endregion
+        public static string GetParameter(string input, LogicInfoParameter info)
+        {
+            string result = Parse[info.ParseMethod](input);
+            return result;
+        }
+        public static string GetFormatParam(string parameter, LogicInfoParameter info)
+        {
+            IEnumerable<IIndexableItem> combo = GlobalVar.GlobalConfig.ModConfig.GetCombo(info.ValueType);
+            string result = Format[info.ParamFormat](parameter, combo);
             return result;
         }
         public static string WriteParameter(string input, LogicInfoParameter parameter)

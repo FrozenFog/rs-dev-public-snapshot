@@ -186,6 +186,7 @@
     <Compile Include="FileSystem\WavFile.cs" />
     <Compile Include="IniSystem\Rules.cs" />
     <Compile Include="IniSystem\RulesExtension\AnimationUtil.cs" />
+    <Compile Include="IniSystem\RulesExtension\ComboReading.cs" />
     <Compile Include="IniSystem\RulesExtension\FindObjectAttribute.cs" />
     <Compile Include="IniSystem\RulesExtension\GlobalFinding.cs" />
     <Compile Include="IniSystem\SoundRules.cs" />
