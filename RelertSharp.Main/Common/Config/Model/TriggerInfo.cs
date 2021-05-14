@@ -120,5 +120,148 @@ namespace RelertSharp.Common.Config.Model
         public string Label { get; set; }
         [XmlAttribute("arrPos")]
         public int ParamPos { get; set; }
+
+
+        #region Trigger Parameter Parsing
+        private delegate string ParameterParseHandler(string input);
+        private const string PARAM_DEF = "0";
+        private const string PARAM_LAST = "A";
+        private static readonly Dictionary<ParamParseMethod, ParameterParseHandler> Parse = new Dictionary<ParamParseMethod, ParameterParseHandler>()
+        {
+            {ParamParseMethod.Plain, PlainParse },
+            {ParamParseMethod.Waypoint, WaypointParse },
+            {ParamParseMethod.Base128, Base128Parse },
+            {ParamParseMethod.HighMask16, HiMask16Parse },
+            {ParamParseMethod.LowMask16, LowMask16Parse },
+            {ParamParseMethod.NestedFloat, NestedFloatParse }
+        };
+        private static Dictionary<ParamParseMethod, ParameterParseHandler> Write = new Dictionary<ParamParseMethod, ParameterParseHandler>()
+        {
+            {ParamParseMethod.Plain, PlainWrite },
+            {ParamParseMethod.Waypoint, WaypointWrite },
+            {ParamParseMethod.Base128, Base128Write },
+            {ParamParseMethod.HighMask16, HiMask16Write },
+            {ParamParseMethod.LowMask16, LowMask16Write },
+            {ParamParseMethod.NestedFloat, NestedFloatWrite }
+        };
+        private static string PlainParse(string @in)
+        {
+            return @in;
+        }
+        private static string PlainWrite(string @in)
+        {
+            return @in;
+        }
+        private static string WaypointParse(string @in)
+        {
+            return Utils.Misc.WaypointInt(@in).ToString();
+        }
+        private static string WaypointWrite(string @in)
+        {
+            if (int.TryParse(@in, out int i))
+            {
+                return Utils.Misc.WaypointString(i);
+            }
+            return PARAM_LAST;
+        }
+        private static string NestedFloatParse(string @in)
+        {
+            return Utils.Misc.FromNestedFloat(@in).ToString();
+        }
+        private static string NestedFloatWrite(string @in)
+        {
+            if (float.TryParse(@in, out float f))
+            {
+                return Utils.Misc.ToNestedFloat(f);
+            }
+            return PARAM_DEF;
+        }
+        private static string Base128Parse(string @in)
+        {
+            if (int.TryParse(@in, out int i))
+            {
+                int y = i >> 7;
+                int x = i & 0x7f;
+                return string.Format("{0},{1}", x, y);
+            }
+            return PARAM_DEF;
+        }
+        private static string Base128Write(string @in)
+        {
+            string[] s = @in.Split(',');
+            if (s.Length == 2)
+            {
+                string sX = s[0].Trim();
+                string sY = s[1].Trim();
+                int.TryParse(sX, out int x);
+                int.TryParse(sY, out int y);
+                int result = (y << 7) | x;
+                return result.ToString();
+            }
+            return PARAM_DEF;
+        }
+        private static string LowMask16Parse(string @in)
+        {
+            if (int.TryParse(@in, out int i))
+            {
+                int result = i & 0xffff;
+                return result.ToString();
+            }
+            return PARAM_DEF;
+        }
+        private static string LowMask16Write(string @in)
+        {
+            string[] buffer = @in.Split(',');
+            if (buffer.Length == 2)
+            {
+                string dest = buffer[0];
+                string src = buffer[1];
+                if (int.TryParse(src, out int i))
+                {
+                    int.TryParse(dest, out int write);
+                    var result = (int)(write & 0xFFFF0000) | i;
+                    return write.ToString();
+                }
+                return dest;
+            }
+            return PARAM_DEF;
+        }
+        private static string HiMask16Parse(string @in)
+        {
+            if (int.TryParse(@in, out int i))
+            {
+                int result = i >> 16;
+                return result.ToString();
+            }
+            return PARAM_DEF;
+        }
+        private static string HiMask16Write(string @in)
+        {
+            string[] buffer = @in.Split(',');
+            if (buffer.Length == 2)
+            {
+                string dest = buffer[0];
+                string src = buffer[1];
+                if (int.TryParse(src, out int i))
+                {
+                    int.TryParse(dest, out int write);
+                    write = (write & 0xFFFF) | (i << 16);
+                    return write.ToString();
+                }
+                return dest;
+            }
+            return PARAM_DEF;
+        }
+        public static string GetParameter(string input, LogicInfoParameter parameter)
+        {
+            string result = Parse[parameter.ParseMethod](input);
+            return result;
+        }
+        public static string WriteParameter(string input, LogicInfoParameter parameter)
+        {
+            string result = Write[parameter.ParseMethod](input);
+            return result;
+        }
+        #endregion
     }
 }

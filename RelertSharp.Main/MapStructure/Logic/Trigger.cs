@@ -121,7 +121,7 @@ namespace RelertSharp.MapStructure.Logic
         public TriggerItem(string id, string house, string linkedTriggerID, string name, bool disabled, bool e, bool n, bool h, int repeating)
         {
             Id = id;
-            House = house;
+            OwnerCountry = house;
             LinkedWith = linkedTriggerID;
             Name = name;
             Disabled = disabled;
@@ -133,7 +133,7 @@ namespace RelertSharp.MapStructure.Logic
         public TriggerItem(TriggerItem src, string id)
         {
             Id = id;
-            House = src.House;
+            OwnerCountry = src.OwnerCountry;
             LinkedWith = src.LinkedWith;
             Name = src.Name + " - Clone";
             Disabled = src.Disabled;
@@ -165,7 +165,7 @@ namespace RelertSharp.MapStructure.Logic
                 return item;
             }
         }
-        public string House { get; set; }
+        public string OwnerCountry { get; set; }
         public string LinkedWith { get; set; }
         public bool Disabled { get; set; }
         public bool EasyOn { get; set; }
@@ -180,7 +180,7 @@ namespace RelertSharp.MapStructure.Logic
             {
                 return new List<object>()
                 {
-                    House, LinkedWith, Name, Disabled.ZeroOne(), EasyOn.ZeroOne(), NormalOn.ZeroOne(), HardOn.ZeroOne(), (int)Repeating
+                    OwnerCountry, LinkedWith, Name, Disabled.ZeroOne(), EasyOn.ZeroOne(), NormalOn.ZeroOne(), HardOn.ZeroOne(), (int)Repeating
                 };
             }
         }
