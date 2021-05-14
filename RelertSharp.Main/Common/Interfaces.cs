@@ -23,7 +23,7 @@ namespace RelertSharp.Common
     }
     public interface IIndexableItem
     {
-        string Id { get; }
+        string Id { get; set; }
         string Name { get; }
         void ChangeDisplay(IndexableDisplayType type);
         string Value { get; }

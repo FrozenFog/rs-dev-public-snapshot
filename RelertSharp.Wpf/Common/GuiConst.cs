@@ -23,7 +23,8 @@ namespace RelertSharp.Wpf.Common
         TeamList,
         AnimationPreview,
         TriggerList,
-        Trigger
+        Trigger,
+        Event, Action,
     }
     public class RsViewComponentAttribute : Attribute
     {

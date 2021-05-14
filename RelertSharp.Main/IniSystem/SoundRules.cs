@@ -29,8 +29,8 @@ namespace RelertSharp.IniSystem
             foreach (INIPair p in ent)
             {
                 //SoundList.Add(sound[p.Value as string].ToTechno(p.Value));
-                SoundList.Add(new TechnoPair(p.Value, ""));
-                SoundList0.Add(new TechnoPair(i.ToString(), p.Value));
+                SoundList.Add(new ComboItem(p.Value, ""));
+                SoundList0.Add(new ComboItem(i.ToString(), p.Value));
                 i++;
             }
             i = 0;
@@ -38,8 +38,8 @@ namespace RelertSharp.IniSystem
             foreach (INIPair p in ent)
             {
                 //EvaList.Add(eva[p.Value as string].ToTechno(p.Value));
-                EvaList.Add(new TechnoPair(p.Value, ""));
-                EvaList0.Add(new TechnoPair(i.ToString(), p.Value));
+                EvaList.Add(new ComboItem(p.Value, ""));
+                EvaList0.Add(new ComboItem(i.ToString(), p.Value));
                 i++;
             }
             i = 0;
@@ -47,8 +47,8 @@ namespace RelertSharp.IniSystem
             foreach (INIPair p in ent)
             {
                 //ThemeList.Add(theme[p.Value as string].ToTechno(p.Value));
-                ThemeList.Add(new TechnoPair(p.Value, ""));
-                ThemeList0.Add(new TechnoPair(i.ToString(), p.Value));
+                ThemeList.Add(new ComboItem(p.Value, ""));
+                ThemeList0.Add(new ComboItem(i.ToString(), p.Value));
                 i++;
             }
         }
@@ -90,12 +90,12 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Calls - SoundRules
-        public List<TechnoPair> SoundList { get; private set; } = new List<TechnoPair>();
-        public List<TechnoPair> ThemeList { get; private set; } = new List<TechnoPair>();
-        public List<TechnoPair> EvaList { get; private set; } = new List<TechnoPair>();
-        public List<TechnoPair> EvaList0 { get; private set; } = new List<TechnoPair>();
-        public List<TechnoPair> SoundList0 { get; private set; } = new List<TechnoPair>();
-        public List<TechnoPair> ThemeList0 { get; private set; } = new List<TechnoPair>();
+        public List<ComboItem> SoundList { get; private set; } = new List<ComboItem>();
+        public List<ComboItem> ThemeList { get; private set; } = new List<ComboItem>();
+        public List<ComboItem> EvaList { get; private set; } = new List<ComboItem>();
+        public List<ComboItem> EvaList0 { get; private set; } = new List<ComboItem>();
+        public List<ComboItem> SoundList0 { get; private set; } = new List<ComboItem>();
+        public List<ComboItem> ThemeList0 { get; private set; } = new List<ComboItem>();
         #endregion
     }
 }

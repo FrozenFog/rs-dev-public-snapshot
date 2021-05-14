@@ -261,104 +261,104 @@ namespace RelertSharp.IniSystem
         public List<string> AircraftRoots { get; private set; }
         public Dictionary<string, INIEntity> MapIniData { get; private set; }
         public INIFile Art { get; private set; }
-        public List<TechnoPair> VehicleList
-        {
-            get
-            {
-                return GetTechnoPairs("VehicleTypes", TechnoPair.AbstractType.Name);
-            }
-        }
-        public List<TechnoPair> InfantryList
-        {
-            get
-            {
-                return GetTechnoPairs("InfantryTypes", TechnoPair.AbstractType.Name);
-            }
-        }
-        public List<TechnoPair> AircraftList
-        {
-            get
-            {
-                return GetTechnoPairs("AircraftTypes", TechnoPair.AbstractType.Name);
-            }
-        }
-        public List<TechnoPair> BuildingList
-        {
-            get
-            {
-                return GetTechnoPairs("BuildingTypes", TechnoPair.AbstractType.Name);
-            }
-        }
-        public List<TechnoPair> BuildingList0
-        {
-            get
-            {
-                return GetTechnoPairs(this["BuildingTypes"].ReorganizeTo());
-            }
-        }
-        public List<TechnoPair> BuildingIDList
-        {
-            get
-            {
-                return GetTechnoPairs("BuildingTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName);
-            }
-        }
-        public List<TechnoPair> SuperWeaponList
-        {
-            get
-            {
-                return GetTechnoPairs("SuperWeaponTypes", TechnoPair.AbstractType.RegName);
-            }
-        }
-        public List<TechnoPair> WarheadList
-        {
-            get
-            {
-                return GetTechnoPairs("Warheads", TechnoPair.AbstractType.RegName);
-            }
-        }
-        public List<TechnoPair> AnimationList
-        {
-            get
-            {
-                return GetTechnoPairs(this["Animations"]);
-            }
-        }
-        public List<TechnoPair> AnimationList0
-        {
-            get
-            {
-                return GetTechnoPairs(this["Animations"].ReorganizeTo());
-            }
-        }
-        public List<TechnoPair> ParticalList
-        {
-            get
-            {
-                return GetTechnoPairs(this["Particles"]);
-            }
-        }
-        public List<TechnoPair> VoxAnimList
-        {
-            get
-            {
-                return GetTechnoPairs(this["VoxelAnims"]);
-            }
-        }
-        public List<TechnoPair> MovieList
-        {
-            get
-            {
-                return GetTechnoPairs(Art["Movies"]);
-            }
-        }
-        public List<TechnoPair> MovieList0
-        {
-            get
-            {
-                return GetTechnoPairs(Art["Movies"].ReorganizeTo());
-            }
-        }
+        //public List<TechnoPair> VehicleList
+        //{
+        //    get
+        //    {
+        //        return GetTechnoPairs("VehicleTypes", TechnoPair.AbstractType.Name);
+        //    }
+        //}
+        //public List<TechnoPair> InfantryList
+        //{
+        //    get
+        //    {
+        //        return GetTechnoPairs("InfantryTypes", TechnoPair.AbstractType.Name);
+        //    }
+        //}
+        //public List<TechnoPair> AircraftList
+        //{
+        //    get
+        //    {
+        //        return GetTechnoPairs("AircraftTypes", TechnoPair.AbstractType.Name);
+        //    }
+        //}
+        //public List<TechnoPair> BuildingList
+        //{
+        //    get
+        //    {
+        //        return GetTechnoPairs("BuildingTypes", TechnoPair.AbstractType.Name);
+        //    }
+        //}
+        //public List<TechnoPair> BuildingList0
+        //{
+        //    get
+        //    {
+        //        return GetTechnoPairs(this["BuildingTypes"].ReorganizeTo());
+        //    }
+        //}
+        //public List<TechnoPair> BuildingIDList
+        //{
+        //    get
+        //    {
+        //        return GetTechnoPairs("BuildingTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName);
+        //    }
+        //}
+        //public List<TechnoPair> SuperWeaponList
+        //{
+        //    get
+        //    {
+        //        return GetTechnoPairs("SuperWeaponTypes", TechnoPair.AbstractType.RegName);
+        //    }
+        //}
+        //public List<TechnoPair> WarheadList
+        //{
+        //    get
+        //    {
+        //        return GetTechnoPairs("Warheads", TechnoPair.AbstractType.RegName);
+        //    }
+        //}
+        //public List<TechnoPair> AnimationList
+        //{
+        //    get
+        //    {
+        //        return GetTechnoPairs(this["Animations"]);
+        //    }
+        //}
+        //public List<TechnoPair> AnimationList0
+        //{
+        //    get
+        //    {
+        //        return GetTechnoPairs(this["Animations"].ReorganizeTo());
+        //    }
+        //}
+        //public List<TechnoPair> ParticalList
+        //{
+        //    get
+        //    {
+        //        return GetTechnoPairs(this["Particles"]);
+        //    }
+        //}
+        //public List<TechnoPair> VoxAnimList
+        //{
+        //    get
+        //    {
+        //        return GetTechnoPairs(this["VoxelAnims"]);
+        //    }
+        //}
+        //public List<TechnoPair> MovieList
+        //{
+        //    get
+        //    {
+        //        return GetTechnoPairs(Art["Movies"]);
+        //    }
+        //}
+        //public List<TechnoPair> MovieList0
+        //{
+        //    get
+        //    {
+        //        return GetTechnoPairs(Art["Movies"].ReorganizeTo());
+        //    }
+        //}
         public List<TechnoPair> TechnoList
         {
             get

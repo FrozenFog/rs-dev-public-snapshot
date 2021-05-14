@@ -6,6 +6,7 @@ using RelertSharp.MapStructure.Points;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.IniSystem;
+using RelertSharp.Common.Config.Model;
 
 namespace RelertSharp.MapStructure
 {
@@ -204,13 +205,11 @@ namespace RelertSharp.MapStructure
         }
         private static void VerifyTriggerLogic()
         {
-            DescriptCollection descs = new DescriptCollection();
-
             foreach (TriggerItem trg in Map.Triggers)
             {
                 OrphanTrigger(trg);
                 EmptyLogic(trg);
-                InvalidParam(trg, descs);
+                InvalidParam(trg);
                 TriggerTooLong(trg);
             }
         }
@@ -345,57 +344,62 @@ namespace RelertSharp.MapStructure
                 });
             }
         }
-        private static void InvalidParam(TriggerItem trg, DescriptCollection descs)
+        private static void InvalidParam(TriggerItem trg)
         {
             foreach (LogicItem lg in trg.Actions)
             {
-                if (descs.Action(lg.ID) is TriggerDescription desc)
-                {
-                    foreach (TriggerParam param in desc.Parameters)
-                    {
-                        if (param.Type == TriggerParam.ParamType.SelectableString)
-                        {
-                            IEnumerable<TechnoPair> data = Map.GetComboCollections(param);
-                            if (!data.Any(x => x.Index.ToLower() == param.GetParameter(lg.Parameters).ToString().ToLower()))
-                            {
-                                result.Add(new VerifyResultItem
-                                {
-                                    Level = VerifyAlertLevel.Warning,
-                                    VerifyType = VerifyType.TriggerParameterInvalid,
-                                    IdNavigator = trg.Id,
-                                    LogicType = LogicType.Trigger,
-                                    Message = string.Format("Trigger {0}({1}) action{2}(Action-{3}) has unrecognizeable parameter value, it may cause severe crash to the game. It's adviced to double-check your parameter.",
-                                        trg.Id, trg.Name, lg.idx, lg.ID)
-                                });
-                            }
-                        }
-                    }
-                }
+                LogicInfo info = GlobalVar.GlobalConfig.ModConfig.TriggerInfo.TriggerActions[lg.ID];
+                //foreach (LogicInfoParameter param in info.Parameters)
+                //{
+                //    if (param.ValueType)
+                //}
+                //if (descs.Action(lg.ID) is TriggerDescription desc)
+                //{
+                //    foreach (TriggerParam param in desc.Parameters)
+                //    {
+                //        if (param.Type == TriggerParam.ParamType.SelectableString)
+                //        {
+                //            IEnumerable<IIndexableItem> data = GlobalVar.GlobalConfig.ModConfig.GetCombo(param);
+                //            if (!data.Any(x => x.Id.ToLower() == param.GetParameter(lg.Parameters).ToString().ToLower()))
+                //            {
+                //                result.Add(new VerifyResultItem
+                //                {
+                //                    Level = VerifyAlertLevel.Warning,
+                //                    VerifyType = VerifyType.TriggerParameterInvalid,
+                //                    IdNavigator = trg.Id,
+                //                    LogicType = LogicType.Trigger,
+                //                    Message = string.Format("Trigger {0}({1}) action{2}(Action-{3}) has unrecognizeable parameter value, it may cause severe crash to the game. It's adviced to double-check your parameter.",
+                //                        trg.Id, trg.Name, lg.idx, lg.ID)
+                //                });
+                //            }
+                //        }
+                //    }
+                //}
             }
             foreach (LogicItem lg in trg.Events)
             {
-                if (descs.Event(lg.ID) is TriggerDescription desc)
-                {
-                    foreach (TriggerParam param in desc.Parameters)
-                    {
-                        if (param.Type == TriggerParam.ParamType.SelectableString)
-                        {
-                            IEnumerable<TechnoPair> data = Map.GetComboCollections(param);
-                            if (!data.Any(x => x.Index == param.GetParameter(lg.Parameters).ToString()))
-                            {
-                                result.Add(new VerifyResultItem
-                                {
-                                    Level = VerifyAlertLevel.Warning,
-                                    VerifyType = VerifyType.TriggerParameterInvalid,
-                                    IdNavigator = trg.Id,
-                                    LogicType = LogicType.Trigger,
-                                    Message = string.Format("Trigger {0}({1}) event{2}(Event-{3}) has unrecognizeable parameter value, it may cause severe crash to the game. It's adviced to double-check your parameter.",
-                                        trg.Id, trg.Name, lg.idx, lg.ID)
-                                });
-                            }
-                        }
-                    }
-                }
+                //if (descs.Event(lg.ID) is TriggerDescription desc)
+                //{
+                //    foreach (TriggerParam param in desc.Parameters)
+                //    {
+                //        if (param.Type == TriggerParam.ParamType.SelectableString)
+                //        {
+                //            IEnumerable<TechnoPair> data = Map.GetComboCollections(param);
+                //            if (!data.Any(x => x.Index == param.GetParameter(lg.Parameters).ToString()))
+                //            {
+                //                result.Add(new VerifyResultItem
+                //                {
+                //                    Level = VerifyAlertLevel.Warning,
+                //                    VerifyType = VerifyType.TriggerParameterInvalid,
+                //                    IdNavigator = trg.Id,
+                //                    LogicType = LogicType.Trigger,
+                //                    Message = string.Format("Trigger {0}({1}) event{2}(Event-{3}) has unrecognizeable parameter value, it may cause severe crash to the game. It's adviced to double-check your parameter.",
+                //                        trg.Id, trg.Name, lg.idx, lg.ID)
+                //                });
+                //            }
+                //        }
+                //    }
+                //}
             }
         }
         #endregion

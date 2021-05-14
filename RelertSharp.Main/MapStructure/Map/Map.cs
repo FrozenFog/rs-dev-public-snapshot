@@ -42,87 +42,87 @@ namespace RelertSharp.MapStructure
 
 
         #region Collection Utils
-        public IEnumerable<TechnoPair> GetComboCollections(TriggerParam param)
-        {
-            switch (param.ComboType)
-            {
-                case TriggerParam.ComboContent.Aircrafts:
-                    return GlobalRules.AircraftList;
-                case TriggerParam.ComboContent.Buildings:
-                    return GlobalRules.BuildingList;
-                case TriggerParam.ComboContent.Infantries:
-                    return GlobalRules.InfantryList;
-                case TriggerParam.ComboContent.Units:
-                    return GlobalRules.VehicleList;
-                case TriggerParam.ComboContent.SoundNames:
-                    return GlobalSound.SoundList;
-                case TriggerParam.ComboContent.EvaNames:
-                    return GlobalSound.EvaList;
-                case TriggerParam.ComboContent.ThemeNames:
-                    return GlobalSound.ThemeList;
-                case TriggerParam.ComboContent.LocalVar:
-                    return LocalVariables.ToTechno();
-                case TriggerParam.ComboContent.SuperWeapons:
-                    return GlobalRules.SuperWeaponList;
-                case TriggerParam.ComboContent.CsfLabel:
-                    return GlobalCsf.TechnoPairs;
-                case TriggerParam.ComboContent.Triggers:
-                    return Triggers.ToTechno();
-                case TriggerParam.ComboContent.Tags:
-                    return Tags.ToTechno();
-                case TriggerParam.ComboContent.TechnoType:
-                    return GlobalRules.TechnoList;
-                case TriggerParam.ComboContent.GlobalVar:
-                    return GlobalRules.GlobalVar;
-                case TriggerParam.ComboContent.Teams:
-                    return Teams.ToTechno();
-                case TriggerParam.ComboContent.Houses:
-                    List<TechnoPair> countries = new List<TechnoPair>
-                    {
-                        new TechnoPair("-1", "ANY HOUSE")
-                    };
-                    countries.AddRange(Countries.ToTechno());
-                    return countries;
-                case TriggerParam.ComboContent.Animations:
-                    return GlobalRules.AnimationList;
-                case TriggerParam.ComboContent.ParticalAnim:
-                    return GlobalRules.ParticalList;
-                case TriggerParam.ComboContent.VoxelAnim:
-                    return GlobalRules.VoxAnimList;
-                case TriggerParam.ComboContent.BuildingID:
-                    return GlobalRules.BuildingIDList;
-                case TriggerParam.ComboContent.Movies:
-                    return GlobalRules.MovieList;
-                case TriggerParam.ComboContent.Movies0:
-                    return GlobalRules.MovieList0;
-                case TriggerParam.ComboContent.Warhead:
-                    return GlobalRules.WarheadList;
-                case TriggerParam.ComboContent.Animations0:
-                    return GlobalRules.AnimationList0;
-                case TriggerParam.ComboContent.Buildings0:
-                    return GlobalRules.BuildingList0;
-                case TriggerParam.ComboContent.AttackTargetType:
-                    return GlobalVar.Scripts.AttackTargetType;
-                case TriggerParam.ComboContent.UnloadBehavior:
-                    return GlobalVar.Scripts.UnloadBehavior;
-                case TriggerParam.ComboContent.ScriptMission:
-                    return GlobalVar.Scripts.Missions;
-                case TriggerParam.ComboContent.ScriptFrom0:
-                    return Scripts.ToTechnoFrom0();
-                case TriggerParam.ComboContent.EvaNames0:
-                    return GlobalSound.EvaList0;
-                case TriggerParam.ComboContent.SoundNames0:
-                    return GlobalSound.SoundList0;
-                case TriggerParam.ComboContent.ThemeNames0:
-                    return GlobalSound.ThemeList0;
-                case TriggerParam.ComboContent.Facing:
-                    return GlobalVar.Scripts.FacingDirections;
-                case TriggerParam.ComboContent.TalkBubble:
-                    return GlobalVar.Scripts.TalkBubbles;
-                default:
-                    return null;
-            }
-        }
+        //public IEnumerable<TechnoPair> GetComboCollections(TriggerParam param)
+        //{
+        //    switch (param.ComboType)
+        //    {
+        //        case TriggerParam.ComboContent.Aircrafts:
+        //            return GlobalRules.AircraftList;
+        //        case TriggerParam.ComboContent.Buildings:
+        //            return GlobalRules.BuildingList;
+        //        case TriggerParam.ComboContent.Infantries:
+        //            return GlobalRules.InfantryList;
+        //        case TriggerParam.ComboContent.Units:
+        //            return GlobalRules.VehicleList;
+        //        //case TriggerParam.ComboContent.SoundNames:
+        //        //    return GlobalSound.SoundList;
+        //        //case TriggerParam.ComboContent.EvaNames:
+        //        //    return GlobalSound.EvaList;
+        //        //case TriggerParam.ComboContent.ThemeNames:
+        //        //    return GlobalSound.ThemeList;
+        //        case TriggerParam.ComboContent.LocalVar:
+        //            return LocalVariables.ToTechno();
+        //        case TriggerParam.ComboContent.SuperWeapons:
+        //            return GlobalRules.SuperWeaponList;
+        //        case TriggerParam.ComboContent.CsfLabel:
+        //            return GlobalCsf.TechnoPairs;
+        //        case TriggerParam.ComboContent.Triggers:
+        //            return Triggers.ToTechno();
+        //        case TriggerParam.ComboContent.Tags:
+        //            return Tags.ToTechno();
+        //        case TriggerParam.ComboContent.TechnoType:
+        //            return GlobalRules.TechnoList;
+        //        case TriggerParam.ComboContent.GlobalVar:
+        //            return GlobalRules.GlobalVar;
+        //        case TriggerParam.ComboContent.Teams:
+        //            return Teams.ToTechno();
+        //        case TriggerParam.ComboContent.Houses:
+        //            List<TechnoPair> countries = new List<TechnoPair>
+        //            {
+        //                new TechnoPair("-1", "ANY HOUSE")
+        //            };
+        //            countries.AddRange(Countries.ToTechno());
+        //            return countries;
+        //        case TriggerParam.ComboContent.Animations:
+        //            return GlobalRules.AnimationList;
+        //        case TriggerParam.ComboContent.ParticalAnim:
+        //            return GlobalRules.ParticalList;
+        //        case TriggerParam.ComboContent.VoxelAnim:
+        //            return GlobalRules.VoxAnimList;
+        //        case TriggerParam.ComboContent.BuildingID:
+        //            return GlobalRules.BuildingIDList;
+        //        case TriggerParam.ComboContent.Movies:
+        //            return GlobalRules.MovieList;
+        //        case TriggerParam.ComboContent.Movies0:
+        //            return GlobalRules.MovieList0;
+        //        case TriggerParam.ComboContent.Warhead:
+        //            return GlobalRules.WarheadList;
+        //        case TriggerParam.ComboContent.Animations0:
+        //            return GlobalRules.AnimationList0;
+        //        case TriggerParam.ComboContent.Buildings0:
+        //            return GlobalRules.BuildingList0;
+        //        case TriggerParam.ComboContent.AttackTargetType:
+        //            return GlobalVar.Scripts.AttackTargetType;
+        //        case TriggerParam.ComboContent.UnloadBehavior:
+        //            return GlobalVar.Scripts.UnloadBehavior;
+        //        case TriggerParam.ComboContent.ScriptMission:
+        //            return GlobalVar.Scripts.Missions;
+        //        case TriggerParam.ComboContent.ScriptFrom0:
+        //            return Scripts.ToTechnoFrom0();
+        //        //case TriggerParam.ComboContent.EvaNames0:
+        //        //    return GlobalSound.EvaList0;
+        //        //case TriggerParam.ComboContent.SoundNames0:
+        //        //    return GlobalSound.SoundList0;
+        //        //case TriggerParam.ComboContent.ThemeNames0:
+        //        //    return GlobalSound.ThemeList0;
+        //        case TriggerParam.ComboContent.Facing:
+        //            return GlobalVar.Scripts.FacingDirections;
+        //        case TriggerParam.ComboContent.TalkBubble:
+        //            return GlobalVar.Scripts.TalkBubbles;
+        //        default:
+        //            return null;
+        //    }
+        //}
         #endregion
 
 

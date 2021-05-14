@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 using static RelertSharp.Common.Constant.Config.DefaultComboType;
+using static RelertSharp.IniSystem.RulesComboExtension;
 
 namespace RelertSharp.Common
 {
@@ -34,9 +35,28 @@ namespace RelertSharp.Common
                     if (front.Count > 0)
                     {
                         front.AddRange(items);
+                        if (combo.IsZeroIndex)
+                        {
+                            int i = 0;
+                            foreach (IIndexableItem item in front)
+                            {
+                                item.Id = i++.ToString();
+                            }
+                        }
                         return front;
                     }
-                    else return items;
+                    else
+                    {
+                        if (combo.IsZeroIndex)
+                        {
+                            int i = 0;
+                            foreach (IIndexableItem item in items)
+                            {
+                                item.Id = i++.ToString();
+                            }
+                        }
+                        return items;
+                    }
                 }
             }
             return new List<IIndexableItem>();
@@ -61,8 +81,44 @@ namespace RelertSharp.Common
                     return Map.Tags;
                 case TYPE_HOUSES:
                     return Map.Houses;
+                case TYPE_IDX_HOUSE:
+                    return Map.Houses.ToZeroIndex();
                 case TYPE_OWNERCOUNTRY:
                     return Map.Countries;
+                case TYPE_GLOBAL:
+                    return Rules.GlobalVar;
+                case TYPE_LOCAL:
+                    return Map.LocalVariables;
+                case TYPE_BUDREG:
+                    return Rules.BuildingList(false, true);
+                case TYPE_IDX_UNT:
+                    return Rules.VehicleList(true);
+                case TYPE_IDX_INF:
+                    return Rules.InfantryList(true);
+                case TYPE_IDX_AIR:
+                    return Rules.AircraftList(true);
+                case TYPE_IDX_ANIM:
+                    return Rules.AnimationList(true);
+                case TYPE_IDX_PRTC:
+                    return Rules.ParticalList(true);
+                case TYPE_IDX_WEP:
+                    return Rules.WeaponList(true);
+                case TYPE_IDX_VOX:
+                    return Rules.VoxAnimList(true);
+                case TYPE_IDX_SUP:
+                    return Rules.SuperWeaponList(true);
+                case TYPE_REG_SUP:
+                    return Rules.SuperWeaponList(false, true);
+                case TYPE_MOVIE:
+                    return Rules.MovieList();
+                case TYPE_REG_SND:
+                    return GlobalVar.GlobalSound.SoundList;
+                case TYPE_REG_THM:
+                    return GlobalVar.GlobalSound.ThemeList;
+                case TYPE_REG_EVA:
+                    return GlobalVar.GlobalSound.EvaList;
+                case TYPE_CSF:
+                    return GlobalVar.GlobalCsf;
                 default:
                     return ReadCombo(type);
             }

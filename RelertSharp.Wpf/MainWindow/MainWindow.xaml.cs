@@ -54,6 +54,10 @@ namespace RelertSharp.Wpf
         private readonly TriggerListView triggerList = new TriggerListView();
         [RsViewComponent(GuiViewType.Trigger, nameof(trigger))]
         private readonly TriggerView trigger = new TriggerView();
+        [RsViewComponent(GuiViewType.Event, nameof(events))]
+        private readonly EventView events = new EventView();
+        [RsViewComponent(GuiViewType.Action, nameof(actions))]
+        private readonly ActionView actions = new ActionView();
         #endregion
         #region Dispatcher
         #endregion
@@ -97,6 +101,8 @@ namespace RelertSharp.Wpf
             dockMain.AddCenterPage("Map", pnlMain);
             dockMain.Layout.AddToolToRight("Minimap", minimap, 1);
             dockMain.Layout.AddToolToRight("Trigger", trigger);
+            dockMain.Layout.AddToolToRight("Events", events);
+            dockMain.Layout.AddToolToRight("Actions", actions);
         }
 
         #region Reciver Logics
@@ -106,6 +112,8 @@ namespace RelertSharp.Wpf
             //BindListener(script, scriptList);
             //BindListener(team, teamList);
             BindListener(trigger, triggerList);
+            BindListener(events, triggerList);
+            BindListener(actions, triggerList);
         }
         private void BindListener(IObjectReciver reciver, IListContainer sender)
         {
