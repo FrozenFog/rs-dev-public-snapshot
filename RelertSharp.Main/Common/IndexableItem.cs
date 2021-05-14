@@ -75,6 +75,8 @@ namespace RelertSharp.Common
 
         public virtual string Value { get { return Id; } set { } }
 
+        public event EventHandler NameUpdated;
+
         public override string ToString()
         {
             if (displayType == IndexableDisplayType.IdAndName)
@@ -83,6 +85,10 @@ namespace RelertSharp.Common
                 return string.Format(format, Id, Name);
             }
             else return Name;
+        }
+        public virtual void OnNameUpdated()
+        {
+            NameUpdated?.Invoke(null, null);
         }
         public void ChangeDisplay(IndexableDisplayType type)
         {

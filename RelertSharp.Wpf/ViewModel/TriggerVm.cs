@@ -27,6 +27,7 @@ namespace RelertSharp.Wpf.ViewModel
             set
             {
                 data.Name = value;
+                data.OnNameUpdated();
                 SetProperty();
             }
         }
@@ -105,6 +106,42 @@ namespace RelertSharp.Wpf.ViewModel
             {
                 data.HardOn = value;
                 SetProperty();
+            }
+        }
+        public bool Rep0Checked
+        {
+            get { return data.Repeating == TriggerRepeatingType.NoRepeating; }
+            set
+            {
+                if (value)
+                {
+                    data.Repeating = TriggerRepeatingType.NoRepeating;
+                    SetProperty();
+                }
+            }
+        }
+        public bool Rep1Checked
+        {
+            get { return data.Repeating == TriggerRepeatingType.OneTimeLogicAND; }
+            set
+            {
+                if (value)
+                {
+                    data.Repeating = TriggerRepeatingType.OneTimeLogicAND;
+                    SetProperty();
+                }
+            }
+        }
+        public bool Rep2Checked
+        {
+            get { return data.Repeating == TriggerRepeatingType.RepeatLogicOR; }
+            set
+            {
+                if (value)
+                {
+                    data.Repeating = TriggerRepeatingType.RepeatLogicOR;
+                    SetProperty();
+                }
             }
         }
     }

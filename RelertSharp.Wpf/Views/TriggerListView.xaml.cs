@@ -89,7 +89,10 @@ namespace RelertSharp.Wpf.Views
 
         private void SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (SelectedItem != null) ItemSelected?.Invoke(this, SelectedItem.Data);
+            if (SelectedItem != null)
+            {
+                ItemSelected?.Invoke(this, SelectedItem.Data);
+            }
             else ItemSelected?.Invoke(this, null);
         }
 
@@ -103,10 +106,13 @@ namespace RelertSharp.Wpf.Views
             tree.Foreach(x => { if (x.IsTree) trvMain.Items.Add(x); });
             tree.Foreach(x => { if (!x.IsTree) trvMain.Items.Add(x); });
         }
-
+        /// <summary>
+        /// not available
+        /// </summary>
+        /// <param name="enable"></param>
         public void ShowingId(bool enable)
         {
-            /// not available
+            throw new NotSupportedException();
         }
 
         #region Misc

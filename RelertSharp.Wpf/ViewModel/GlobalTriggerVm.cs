@@ -19,7 +19,7 @@ namespace RelertSharp.Wpf.ViewModel
         }
     }
 
-    internal class TriggerTreeItemVm
+    internal class TriggerTreeItemVm : BaseVm<TriggerItem>
     {
         public TriggerTreeItemVm()
         {
@@ -28,8 +28,13 @@ namespace RelertSharp.Wpf.ViewModel
         public TriggerTreeItemVm(TriggerItem trg)
         {
             Data = trg;
+            Data.NameUpdated += SetName;
         }
 
+        private void SetName(object sender, EventArgs e)
+        {
+            SetProperty("Title");
+        }
 
         public void AddItem(TriggerTreeItemVm item)
         {
@@ -82,8 +87,21 @@ namespace RelertSharp.Wpf.ViewModel
 
 
         public TriggerTreeItemVm Ancestor { get; private set; }
-        public TriggerItem Data { get; set; }
-        public string Title { get; set; }
+        public TriggerItem Data
+        {
+            get { return data; }
+            set { data = value; }
+        }
+        private string title;
+        public string Title
+        {
+            get { if (Data != null) return Data.Name; return title; }
+            set
+            {
+                title = value;
+                SetProperty();
+            }
+        }
         public bool IsTree { get { return Data == null; } }
         public bool IsRoot { get { return Ancestor == null; } }
 
