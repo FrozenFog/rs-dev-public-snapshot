@@ -154,6 +154,19 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
 
 
+        #region Private Methods
+        /// <summary>
+        /// modify all tag repeating type that related to this trigger
+        /// </summary>
+        private void ModifyRepeating()
+        {
+            GlobalVar.CurrentMapDocument?.Map?.Tags?.Foreach(x =>
+            {
+                if (x.AssoTrigger == this.Id) x.Repeating = repeating;
+            });
+        }
+        #endregion
+
         #region Public Calls - TriggerItem
         public LogicGroup Events { get; set; }
         public LogicGroup Actions { get; set; }
@@ -171,7 +184,16 @@ namespace RelertSharp.MapStructure.Logic
         public bool EasyOn { get; set; }
         public bool NormalOn { get; set; }
         public bool HardOn { get; set; }
-        public TriggerRepeatingType Repeating { get; set; }
+        private TriggerRepeatingType repeating = TriggerRepeatingType.NoRepeating;
+        public TriggerRepeatingType Repeating
+        {
+            get { return repeating; }
+            set
+            {
+                repeating = value;
+                ModifyRepeating();
+            }
+        }
         public string IDName { get { return Id + ":" + Name; } }
 
         public IEnumerable<object> SaveData
