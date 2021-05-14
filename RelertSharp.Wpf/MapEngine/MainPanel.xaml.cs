@@ -112,9 +112,9 @@ namespace RelertSharp.Wpf.MapEngine
             {
                 _suspendMouseDelay.Stop();
                 Thread.Sleep(100);
-                imgelt.MouseMove += HandleMouseMove;
-                imgelt.MouseDown += HandleMouseDown;
-                imgelt.MouseUp += HandleMouseUp;
+                gridMain.MouseMove += HandleMouseMove;
+                gridMain.MouseDown += HandleMouseDown;
+                gridMain.MouseUp += HandleMouseUp;
             }
         }
 
@@ -146,7 +146,9 @@ namespace RelertSharp.Wpf.MapEngine
             if (!mouseSuspended)
             {
                 mouseSuspended = true;
-                imgelt.MouseMove -= HandleMouseMove;
+                gridMain.MouseMove -= HandleMouseMove;
+                gridMain.MouseDown -= HandleMouseDown;
+                gridMain.MouseUp -= HandleMouseUp;
                 //imgelt.MouseWheel -= HandleMouseWheel;
             }
         }
@@ -169,7 +171,9 @@ namespace RelertSharp.Wpf.MapEngine
             if (mouseSuspended)
             {
                 mouseSuspended = false;
-                imgelt.MouseMove += HandleMouseMove;
+                gridMain.MouseMove += HandleMouseMove;
+                gridMain.MouseDown += HandleMouseDown;
+                gridMain.MouseUp += HandleMouseUp;
                 //imgelt.MouseWheel += HandleMouseWheel;
             }
         }

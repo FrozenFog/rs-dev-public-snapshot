@@ -87,9 +87,10 @@ namespace RelertSharp.Wpf.Views
 
         public event ContentCarrierHandler ItemSelected;
 
-        private void SelectedItemChanged(object sender, SelectionChangedEventArgs e)
+        private void SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            ItemSelected?.Invoke(this, trvMain.SelectedItem);
+            if (SelectedItem != null) ItemSelected?.Invoke(this, SelectedItem.Data);
+            else ItemSelected?.Invoke(this, null);
         }
 
         public void SortBy(bool ascending)

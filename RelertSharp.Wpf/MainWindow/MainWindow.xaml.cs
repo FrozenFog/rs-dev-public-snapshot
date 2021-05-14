@@ -52,6 +52,8 @@ namespace RelertSharp.Wpf
         private readonly AnimationPreview animationPreview = new AnimationPreview();
         [RsViewComponent(GuiViewType.TriggerList, nameof(triggerList))]
         private readonly TriggerListView triggerList = new TriggerListView();
+        [RsViewComponent(GuiViewType.Trigger, nameof(trigger))]
+        private readonly TriggerView trigger = new TriggerView();
         #endregion
         #region Dispatcher
         #endregion
@@ -83,25 +85,27 @@ namespace RelertSharp.Wpf
         {
             //dockMain.Layout.AddToolToRight("Ai Trigger Edit", aiTrigger);
             //dockMain.Layout.AddToolToRight("Team List", teamList);
-            dockMain.Layout.AddToolToRight("Lightning", lightning);
+            //dockMain.Layout.AddToolToRight("Lightning", lightning);
             //dockMain.Layout.AddToolToRight("Ai Trigger List", aiTriggerList);
             //dockMain.AddToolToRight("Script List", scriptList);
             //dockMain.AddToolToRight("Taskforce List", taskforceList);
             //dockMain.Layout.AddToolToRight("Team", team);
-            dockMain.Layout.AddToolToRight("Animation", animationPreview);
+            //dockMain.Layout.AddToolToRight("Animation", animationPreview);
             dockMain.Layout.AddToolToRight("Trigger List", triggerList);
             //dockMain.AddToolToRight("Script", script);
             //dockMain.Layout.AddToolToRight("Light", lightPanel);
             dockMain.AddCenterPage("Map", pnlMain);
             dockMain.Layout.AddToolToRight("Minimap", minimap, 1);
+            dockMain.Layout.AddToolToRight("Trigger", trigger);
         }
 
         #region Reciver Logics
         private void AddReciveListener()
         {
-            BindListener(aiTrigger, aiTriggerList);
-            BindListener(script, scriptList);
-            BindListener(team, teamList);
+            //BindListener(aiTrigger, aiTriggerList);
+            //BindListener(script, scriptList);
+            //BindListener(team, teamList);
+            BindListener(trigger, triggerList);
         }
         private void BindListener(IObjectReciver reciver, IListContainer sender)
         {

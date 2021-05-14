@@ -10,7 +10,7 @@
         <ViewModel:GlobalTriggerVm/>
     </UserControl.DataContext>
     <Grid>
-        <TreeView x:Name="trvMain" Margin="10,10,10,10" AllowDrop="True" Style="{DynamicResource trvDark}" DragOver="TrgDragOver" Drop="TrgDragDrop" MouseMove="DragMouseMove" PreviewMouseRightButtonDown="PreviewRightDown">
+        <TreeView x:Name="trvMain" Margin="10,10,10,10" AllowDrop="True" Style="{DynamicResource trvDark}" DragOver="TrgDragOver" Drop="TrgDragDrop" MouseMove="DragMouseMove" PreviewMouseRightButtonDown="PreviewRightDown" SelectedItemChanged="SelectedItemChanged">
             <TreeView.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#0078D7" />
             </TreeView.Resources>

@@ -1,0 +1,111 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using RelertSharp.MapStructure.Logic;
+using RelertSharp.MapStructure;
+using RelertSharp.Common;
+using static RelertSharp.Common.Constant;
+
+namespace RelertSharp.Wpf.ViewModel
+{
+    internal class TriggerVm : BaseVm<TriggerItem>
+    {
+        public GlobalTriggerVm Triggers { get { return GlobalCollectionVm.Triggers; } }
+        public GlobalCountryVm Owners { get { return GlobalCollectionVm.Countries; } }
+        private Map map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        public TriggerVm()
+        {
+            data = new TriggerItem();
+        }
+        public TriggerVm(object obj) : base(obj) { }
+
+        public string Name
+        {
+            get { return data.Name; }
+            set
+            {
+                data.Name = value;
+                SetProperty();
+            }
+        }
+        public string Id
+        {
+            get { return data.Id; }
+            set
+            {
+                data.Id = value;
+                SetProperty();
+            }
+        }
+
+        public object AssoTriggerItem
+        {
+            get
+            {
+                if (data.LinkedWith == ITEM_NONE) return ComboItem.NoneItem;
+                TriggerItem trigger = map.Triggers[data.LinkedWith];
+                if (trigger == null) return data.LinkedWith;
+                return trigger;
+            }
+            set
+            {
+                if (value == null) data.LinkedWith = ITEM_NONE;
+                else if (value is IIndexableItem item) data.LinkedWith = item.Id;
+                SetProperty();
+            }
+        }
+        public object TriggerOwner
+        {
+            get
+            {
+                CountryItem c = map.Countries[data.OwnerCountry];
+                return c;
+            }
+            set
+            {
+                if (value is CountryItem c)
+                {
+                    data.OwnerCountry = c.Name;
+                }
+            }
+        }
+        public bool IsDisabled
+        {
+            get { return data.Disabled; }
+            set
+            {
+                data.Disabled = value;
+                SetProperty();
+            }
+        }
+        public bool Easy
+        {
+            get { return data.EasyOn; }
+            set
+            {
+                data.EasyOn = value;
+                SetProperty();
+            }
+        }
+        public bool Normal
+        {
+            get { return data.NormalOn; }
+            set
+            {
+                data.NormalOn = value;
+                SetProperty();
+            }
+        }
+        public bool Hard
+        {
+            get { return data.HardOn; }
+            set
+            {
+                data.HardOn = value;
+                SetProperty();
+            }
+        }
+    }
+}
