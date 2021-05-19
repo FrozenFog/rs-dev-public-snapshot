@@ -44,9 +44,6 @@ namespace RelertSharp.Common.Config.Model
 
     public class AttributeItem
     {
-        public const string TYPE_BOOL = "bool";
-        public const string TYPE_INT = "int";
-        public const string TYPE_STRING = "string";
         public const string PARSE_WP = "WPIndex";
 
         /// <summary>

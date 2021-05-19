@@ -87,7 +87,14 @@ namespace RelertSharp.Wpf
         }
         public static void AddControls(this Panel src, params FrameworkElement[] elements)
         {
-            foreach (FrameworkElement c in elements) src.Children.Add(c);
+            foreach (FrameworkElement c in elements)
+            {
+                if (c.Parent != null)
+                {
+                    (c.Parent as Panel).Children.Remove(c);
+                }
+                src.Children.Add(c);
+            }
         }
         public static void SetStyle(this FrameworkElement src, FrameworkElement provider, string key)
         {

@@ -677,13 +677,13 @@
       </info>
       <info id="60" defaultArr="2,0,0" length="3">
         <Parameters>
-          <param type="TechType" label="Tech Type(ID)" arrPos="2" fmtType="KvKey" />
+          <param type="TechType" label="Tech Type(ID)" arrPos="2" fmtType="KvAll" />
           <param type="string" label="Number" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="61" defaultArr="2,0,0" length="3">
         <Parameters>
-          <param type="TechType" label="Tech Type(ID)" arrPos="2" fmtType="KvKey" />
+          <param type="TechType" label="Tech Type(ID)" arrPos="2" fmtType="KvAll" />
         </Parameters>
       </info>
       <info id="62" defaultArr="0,0" length="2"/>
@@ -741,24 +741,24 @@
       </info>
       <info id="78" defaultArr="0,0" length="2">
         <Parameters>
-          <param type="TechType" label="Tech Type" arrPos="2" fmtType="KvKey" />
+          <param type="TechType" label="Tech Type" arrPos="2" fmtType="KvAll" />
         </Parameters>
       </info>
       <info id="79" defaultArr="0,0" length="2"/>
       <info id="80" defaultArr="2,0,0" length="3">
         <Parameters>
-          <param type="TechType" label="Tech Type" arrPos="2" fmtType="KvKey" />
+          <param type="TechType" label="Tech Type" arrPos="2" fmtType="KvAll" />
         </Parameters>
       </info>
       <info id="81" defaultArr="2,0,0" length="3">
         <Parameters>
-          <param type="TechType" label="Tech Type" arrPos="2" fmtType="KvKey" />
+          <param type="TechType" label="Tech Type" arrPos="2" fmtType="KvAll" />
           <param type="string" label="Number" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
       <info id="82" defaultArr="2,0,0" length="3">
         <Parameters>
-          <param type="TechType" label="Tech Type" arrPos="2" fmtType="KvKey" />
+          <param type="TechType" label="Tech Type" arrPos="2" fmtType="KvAll" />
           <param type="string" label="Number" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
@@ -775,7 +775,7 @@
       </info>
       <info id="86" defaultArr="2,0,0" length="3">
         <Parameters>
-          <param type="TechType" label="Tech Type" arrPos="2" fmtType="KvKey" />
+          <param type="TechType" label="Tech Type" arrPos="2" fmtType="KvAll" />
           <param type="string" label="Number" arrPos="1" fmtType="Plain" />
         </Parameters>
       </info>
@@ -1233,7 +1233,7 @@
       </info>
       <info id="106" defaultArr="9,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="TechType" label="Tech Type(ID)" arrPos="1" fmtType="KvKey" />
+          <param type="TechType" label="Tech Type(ID)" arrPos="1" fmtType="KvAll" />
           <param type="string" label="Tech level" arrPos="6" fmtType="Plain" />
         </Parameters>
       </info>
@@ -1277,7 +1277,7 @@
       </info>
       <info id="115" defaultArr="9,0,0,0,0,0,0" length="7">
         <Parameters>
-          <param type="TechType" label="Tech Type(ID)" arrPos="1" fmtType="KvKey" />
+          <param type="TechType" label="Tech Type(ID)" arrPos="1" fmtType="KvAll" />
           <param type="string" label="Time(frame)" arrPos="6" fmtType="Plain" />
         </Parameters>
       </info>

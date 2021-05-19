@@ -126,6 +126,9 @@ namespace RelertSharp.Wpf
 
         static bool Initialization()
         {
+#if DEBUG
+            File.Delete(Constant.Config.Path);
+#endif
             if (!SafeRun(() => { Utils.Misc.Init_Language(); }, "Failed to read language file!")) return false;
             return SetGlobalVar();
         }

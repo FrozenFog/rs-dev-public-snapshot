@@ -19,6 +19,11 @@ namespace RelertSharp.MapStructure.Points
             }
             return null;
         }
+        public WaypointItem FindByAlphabet(string alphabetId)
+        {
+            string id = Utils.Misc.WaypointInt(alphabetId).ToString();
+            return FindByID(id);
+        }
         public WaypointItem FindByPos(I2dLocateable pos)
         {
             foreach (WaypointItem item in this)

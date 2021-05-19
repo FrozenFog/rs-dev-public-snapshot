@@ -162,7 +162,7 @@ namespace RelertSharp.Wpf.Views
             yOffset = 1;
             switch (src.ValueType)
             {
-                case AttributeItem.TYPE_BOOL:
+                case Constant.Config.TYPE_BOOL:
                     CheckBox ckb = new CheckBox()
                     {
                         VerticalAlignment = VerticalAlignment.Top,
@@ -173,8 +173,8 @@ namespace RelertSharp.Wpf.Views
                     ckb.Click += CkbUpdate;
                     r = ckb;
                     break;
-                case AttributeItem.TYPE_INT:
-                case AttributeItem.TYPE_STRING:
+                case Constant.Config.TYPE_INT:
+                case Constant.Config.TYPE_STRING:
                     TextBox txb = new TextBox()
                     {
                         VerticalAlignment = VerticalAlignment.Top,

@@ -87,17 +87,12 @@
     <Compile Include="ViewModel\StaticCollectionVm.cs" />
     <Compile Include="ViewModel\TeamVm.cs" />
     <Compile Include="ViewModel\TriggerLogicVm.cs" />
+    <Compile Include="ViewModel\TriggerTreeItemVm.cs" />
     <Compile Include="ViewModel\TriggerVm.cs" />
-    <Compile Include="Views\ActionView.xaml.cs">
-      <DependentUpon>ActionView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\AiTriggerListView.xaml.cs">
       <DependentUpon>AiTriggerListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Interfaces.cs" />
-    <Compile Include="Views\EventView.xaml.cs">
-      <DependentUpon>EventView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\LightningView.xaml.cs">
       <DependentUpon>LightningView.xaml</DependentUpon>
     </Compile>
@@ -118,6 +113,9 @@
     </Compile>
     <Compile Include="Views\TriggerListView.xaml.cs">
       <DependentUpon>TriggerListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TriggerLogicView.xaml.cs">
+      <DependentUpon>TriggerLogicView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TriggerView.xaml.cs">
       <DependentUpon>TriggerView.xaml</DependentUpon>
@@ -174,19 +172,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ActionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\AiTriggerListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AiTriggerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\EventView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -215,6 +205,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TriggerListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TriggerLogicView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -304,6 +304,11 @@ namespace RelertSharp.Common
         public static class Config
         {
             public const string Path = "./configs/default.xml";
+            public const string TYPE_BOOL = "bool";
+            public const string TYPE_INT = "int";
+            public const string TYPE_STRING = "string";
+            public const string PARAM_DEF = "0";
+            public const string PARAM_LAST = "A";
             public static class DefaultComboType
             {
                 public const string TYPE_WAYPOINT = "Waypoints";

@@ -54,12 +54,14 @@ namespace RelertSharp.IniSystem
             }
             return result;
         }
-        private List<TechnoPair> GetTechnoPairs(INIEntity entlist)
+        private IEnumerable<IIndexableItem> GetIdxItem_Reg_Name(string entName)
         {
-            List<TechnoPair> result = new List<TechnoPair>();
-            foreach (INIPair p in entlist)
+            INIEntity entList = this[entName];
+            List<ComboItem> result = new List<ComboItem>();
+            foreach (INIPair p in entList)
             {
-                result.Add(new TechnoPair(p.Name, p.Value));
+                INIEntity ent = this[p.Value.ToString()];
+                result.Add(new ComboItem(p.Value, ent[KEY_NAME]));
             }
             return result;
         }
@@ -359,38 +361,38 @@ namespace RelertSharp.IniSystem
         //        return GetTechnoPairs(Art["Movies"].ReorganizeTo());
         //    }
         //}
-        public List<TechnoPair> TechnoList
+        public IEnumerable<IIndexableItem> TechnoList
         {
             get
             {
-                List<TechnoPair> result = new List<TechnoPair>();
-                result.AddRange(GetTechnoPairs("InfantryTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
-                result.AddRange(GetTechnoPairs("VehicleTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
-                result.AddRange(GetTechnoPairs("AircraftTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
-                result.AddRange(GetTechnoPairs("BuildingTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
+                List<IIndexableItem> result = new List<IIndexableItem>();
+                result.AddRange(GetIdxItem_Reg_Name("InfantryTypes"));
+                result.AddRange(GetIdxItem_Reg_Name("VehicleTypes"));
+                result.AddRange(GetIdxItem_Reg_Name("AircraftTypes"));
+                result.AddRange(GetIdxItem_Reg_Name("BuildingTypes"));
                 return result;
             }
         }
-        public List<TechnoPair> TaskforceUnitAvailableList
+        public IEnumerable<IIndexableItem> TaskforceUnitAvailableList
         {
             get
             {
-                List<TechnoPair> result = new List<TechnoPair>();
-                result.AddRange(GetTechnoPairs("InfantryTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
-                result.AddRange(GetTechnoPairs("VehicleTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
-                result.AddRange(GetTechnoPairs("AircraftTypes", TechnoPair.AbstractType.Name, TechnoPair.IndexType.RegName));
+                List<IIndexableItem> result = new List<IIndexableItem>();
+                result.AddRange(GetIdxItem_Reg_Name("InfantryTypes"));
+                result.AddRange(GetIdxItem_Reg_Name("VehicleTypes"));
+                result.AddRange(GetIdxItem_Reg_Name("AircraftTypes")); 
                 return result;
             }
         }
-        public List<TechnoPair> GlobalVar
+        public IEnumerable<IIndexableItem> GlobalVar
         {
             get
             {
-                List<TechnoPair> result = new List<TechnoPair>();
+                List<ComboItem> result = new List<ComboItem>();
                 INIEntity ent = this["VariableNames"];
                 foreach (INIPair p in ent)
                 {
-                    result.Add(new TechnoPair(p.Name, p.Value));
+                    result.Add(new ComboItem(p.Name, p.Value));
                 }
                 return result;
             }

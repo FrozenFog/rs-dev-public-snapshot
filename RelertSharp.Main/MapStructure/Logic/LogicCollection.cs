@@ -197,11 +197,11 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Internal - LogicGroup
-        internal TriggerSubType LogicType { get; set; }
         #endregion
 
 
         #region Public Calls - LogicGroup
+        public TriggerSubType LogicType { get; internal set; }
         public string ID { get; set; }
         public LogicItem this[int index] { get { return data[index]; } set { data[index] = value; } }
         public string ParentID { get; set; }
@@ -211,43 +211,52 @@ namespace RelertSharp.MapStructure.Logic
 
     public class LogicItem
     {
+        private bool initialized = false;
+        public event EventHandler InfoUpdated;
         private TriggerInfo cfg { get { return GlobalVar.GlobalConfig.ModConfig.TriggerInfo; } }
-        private List<LogicInfo> group { get { if (type == TriggerSubType.ActionLogic) return cfg.TriggerActions; return cfg.TriggerEvents; } }
+        private List<LogicInfo> group { get { if (Type == TriggerSubType.ActionLogic) return cfg.TriggerActions; return cfg.TriggerEvents; } }
         private LogicInfo info;
-        private TriggerSubType type;
-        public int idx;
+        //public int idx;
 
 
         #region Ctor - LogicItem
         public LogicItem(int _typeID, string[] _param, TriggerSubType _type, string _comment = "")
         {
-            type = _type;
+            Type = _type;
             Parameters = _param;
             Comment = _comment;
             ID = _typeID;
+            initialized = true;
         }
-        public LogicItem(TriggerSubType _type, int num)
+        public LogicItem(TriggerSubType _type)
         {
-            type = _type;
-            idx = num;
-            if (_type == TriggerSubType.EventLogic) Parameters = new string[] { "0", "0", "0" };
-            else Parameters = new string[] { "0", "0", "0", "0", "0", "0", "A" };
+            Type = _type;
+            //idx = num;
+            //if (_type == TriggerSubType.EventLogic) Parameters = new string[] { "0", "0", "0" };
+            //else Parameters = new string[] { "0", "0", "0", "0", "0", "0", "A" };
             ID = 0;
+            initialized = true;
         }
         public LogicItem(LogicItem src, int num)
         {
             Comment = src.Comment;
-            type = src.type;
-            idx = num;
-            if (src.type == TriggerSubType.EventLogic) Parameters = new string[] { "0", "0", "0" };
+            Type = src.Type;
+            //idx = num;
+            if (src.Type == TriggerSubType.EventLogic) Parameters = new string[] { "0", "0", "0" };
             else Parameters = new string[] { "0", "0", "0", "0", "0", "0", "A" };
             Array.Copy(src.Parameters, Parameters, Parameters.Length);
             ID = src.ID;
+            initialized = true;
         }
         #endregion
 
 
         #region Public Methods - LogicItem
+        public void SetIdTo(int id)
+        {
+            ID = id;
+            OnInfoRefreshInvoked();
+        }
         public override string ToString()
         {
             List<string> param = new List<string>();
@@ -267,27 +276,61 @@ namespace RelertSharp.MapStructure.Logic
             if (result.Contains(Constant.FMT_OWNER))
             {
                 string owner = GlobalVar.CurrentMapDocument.Map.Triggers[Parent.ParentID].OwnerCountry;
-                result = result.Replace(Constant.FMT_OWNER, owner);
+                result = result.Replace(Constant.FMT_OWNER, owner.CoverWith("[", "]"));
             }
             return string.Format("{0:D3}: {1}", ID, result);
+        }
+        public virtual void OnInfoRefreshInvoked()
+        {
+            InfoUpdated?.Invoke(null, null);
+        }
+        #region Parameter IO
+        public string GetParameter(LogicInfoParameter param)
+        {
+            string raw = Parameters[param.ParamPos];
+            return LogicInfoParameter.GetParameter(raw, param);
+        }
+        public void SetParameter(LogicInfoParameter paramInfo, string value)
+        {
+            string write = LogicInfoParameter.WriteParameter(value, paramInfo);
+            Parameters[paramInfo.ParamPos] = write;
+            OnInfoRefreshInvoked();
+        }
+        public void SetParameter(LogicInfoParameter paramInfo, bool value)
+        {
+            string write = value.ZeroOne();
+            Parameters[paramInfo.ParamPos] = write;
+            OnInfoRefreshInvoked();
+        }
+        #endregion
+        #endregion
+
+
+        #region Private
+        private void InitializeParameter()
+        {
+            Parameters = info.DefaultParameters.Split(',');
         }
         #endregion
 
 
         #region Public Calls - LogicItem
+        public TriggerSubType Type { get; internal set; }
+        public LogicInfo Info { get { return info; } }
         public LogicGroup Parent { get; internal set; }
         private int id;
         public int ID
         {
             get { return id; }
-            set
+            private set
             {
                 id = value;
                 info = group[id];
+                if (initialized) InitializeParameter();
             }
         }
         public string Comment { get; set; }
-        public string[] Parameters { get; set; }
+        public string[] Parameters { get; private set; }
         #endregion
     }
 }

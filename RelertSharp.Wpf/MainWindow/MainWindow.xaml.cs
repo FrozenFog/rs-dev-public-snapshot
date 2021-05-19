@@ -55,9 +55,9 @@ namespace RelertSharp.Wpf
         [RsViewComponent(GuiViewType.Trigger, nameof(trigger))]
         private readonly TriggerView trigger = new TriggerView();
         [RsViewComponent(GuiViewType.Event, nameof(events))]
-        private readonly EventView events = new EventView();
+        private readonly TriggerLogicView events = new TriggerLogicView(true);
         [RsViewComponent(GuiViewType.Action, nameof(actions))]
-        private readonly ActionView actions = new ActionView();
+        private readonly TriggerLogicView actions = new TriggerLogicView(false);
         #endregion
         #region Dispatcher
         #endregion
