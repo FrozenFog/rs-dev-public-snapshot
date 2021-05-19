@@ -113,6 +113,15 @@ namespace System.Collections.Generic
         {
             return src.Where(x => x.Value == target.ToString()).FirstOrDefault();
         }
+        public static IEnumerable<IIndexableItem> ToZeroIdx(this IEnumerable<IIndexableItem> src, int i = 0)
+        {
+            List<IIndexableItem> dest = new List<IIndexableItem>();
+            foreach (IIndexableItem item in src)
+            {
+                dest.Add(new ComboItem(i++.ToString(), item.Value));
+            }
+            return dest;
+        }
         public static void Foreach<T>(this IEnumerable<T> src, Action<T> func)
         {
             foreach (T item in src) func(item);
@@ -218,6 +227,10 @@ namespace System
         public static string Peel(this string s, int level = 1)
         {
             return s.Substring(level, s.Length - 2 * level);
+        }
+        public static string CoverWith(this string s, string left, string right)
+        {
+            return left + s + right;
         }
         public static bool ContainChars(this string s, params char[] chars)
         {

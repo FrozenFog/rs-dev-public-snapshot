@@ -24,16 +24,6 @@ namespace RelertSharp.MapStructure.Logic
         //    }
         //    return result;
         //}
-        public IEnumerable<IIndexableItem> ToZeroIndex()
-        {
-            List<ComboItem> result = new List<ComboItem>();
-            int i = 0;
-            foreach (HouseItem house in this)
-            {
-                result.Add(new ComboItem(i++.ToString(), house.Id));
-            }
-            return result;
-        }
         public HouseItem GetHouse(string name)
         {
             foreach (HouseItem h in this)

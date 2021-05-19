@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using static RelertSharp.Common.Constant.Config;
 
 namespace RelertSharp.Common.Config.Model
 {
@@ -39,6 +38,7 @@ namespace RelertSharp.Common.Config.Model
         KvValue = 0,
         Plain,
         KvKey,
+        KvAll,
         WpPos,
         Bool
     }
@@ -68,11 +68,19 @@ namespace RelertSharp.Common.Config.Model
         public int ParamLength { get; set; }
         [XmlArrayItem("param")]
         public List<LogicInfoParameter> Parameters { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0:D3} {1}", Id, Abstract);
+        }
     }
 
     public class LogicInfoParameter
     {
         #region Model
+        /// <summary>
+        /// Combo list type.
+        /// </summary>
         [XmlAttribute("type")]
         public string ValueType { get; set; }
         private string _traceType;
@@ -151,8 +159,6 @@ namespace RelertSharp.Common.Config.Model
         #region Trigger Parameter Parsing
         private delegate string ParameterParseHandler(string input);
         private delegate string ParameterFormatHandler(string input, IEnumerable<IIndexableItem> lookup);
-        private const string PARAM_DEF = "0";
-        private const string PARAM_LAST = "A";
         private const string FMT_TRUE = "True";
         private const string FMT_FALSE = "False";
         #region Parse & Write
@@ -289,6 +295,7 @@ namespace RelertSharp.Common.Config.Model
             {ParamFormatType.Plain, PlainFormat },
             {ParamFormatType.KvKey, PlainFormat },
             {ParamFormatType.KvValue, KvValueFormat },
+            {ParamFormatType.KvAll, KvAllFormat },
             {ParamFormatType.Bool, BoolFormat },
             {ParamFormatType.WpPos, WpPosFormat }
         };
@@ -302,9 +309,18 @@ namespace RelertSharp.Common.Config.Model
             if (item != null) return item.Name;
             return @in;
         }
-        private static string WpPosFormat(string @in, IEnumerable<IIndexableItem> lookup)
+        private static string KvAllFormat(string @in, IEnumerable<IIndexableItem> lookup)
         {
             IIndexableItem item = lookup.FirstOrDefault(x => x.Id == @in);
+            if (item != null)
+            {
+                return string.Format("{0}({1})", item.Id, item.Name);
+            }
+            return @in;
+        }
+        private static string WpPosFormat(string @in, IEnumerable<IIndexableItem> lookup)
+        {
+            IIndexableItem item = GlobalVar.CurrentMapDocument.Map.Waypoints.FindByAlphabet(@in);
             if (item != null && item is I2dLocateable pos)
             {
                 return string.Format("{2}({0}, {1})", pos.X, pos.Y, item.Id);
@@ -326,7 +342,7 @@ namespace RelertSharp.Common.Config.Model
         {
             IEnumerable<IIndexableItem> combo = GlobalVar.GlobalConfig.ModConfig.GetCombo(info.ValueType);
             string result = Format[info.ParamFormat](parameter, combo);
-            return result;
+            return result.CoverWith("[", "]");
         }
         public static string WriteParameter(string input, LogicInfoParameter parameter)
         {

@@ -170,14 +170,6 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Calls - TriggerItem
         public LogicGroup Events { get; set; }
         public LogicGroup Actions { get; set; }
-        public static TriggerItem NullTrigger
-        {
-            get
-            {
-                TriggerItem item = new TriggerItem("<none>", "", "", "<none>", true, false, false, false, 0);
-                return item;
-            }
-        }
         public string OwnerCountry { get; set; }
         public string LinkedWith { get; set; }
         public bool Disabled { get; set; }

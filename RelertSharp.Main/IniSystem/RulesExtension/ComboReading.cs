@@ -9,6 +9,19 @@ namespace RelertSharp.IniSystem
 {
     public static class RulesComboExtension
     {
+        private static IEnumerable<ComboItem> GetComboItems_Index_Name(INIFile r, string listName)
+        {
+            INIEntity list = r[listName];
+            List<ComboItem> result = new List<ComboItem>();
+            int i = 0;
+            foreach (INIPair p in list)
+            {
+                INIEntity ent = r[p.Value];
+                string value = string.Format("{0}({1})", ent[Constant.KEY_NAME], p.Value);
+                result.Add(new ComboItem(i++.ToString(), value));
+            }
+            return result;
+        }
         private static IEnumerable<ComboItem> GetComboFromRules(INIFile r, string listName, bool zeroIdx = false, bool regOnly = false)
         {
             INIEntity entList = r[listName];
@@ -47,19 +60,19 @@ namespace RelertSharp.IniSystem
 
         public static IEnumerable<ComboItem> VehicleList(this Rules r, bool zeroIdx = false)
         {
-            return Wrapper(r, "VehicleTypes", zeroIdx);
+            return GetComboItems_Index_Name(r, "VehicleTypes");
         }
         public static IEnumerable<ComboItem> InfantryList(this Rules r, bool zeroIdx = false)
         {
-            return Wrapper(r, "InfantryTypes", zeroIdx);
+            return GetComboItems_Index_Name(r, "InfantryTypes");
         }
         public static IEnumerable<ComboItem> AircraftList(this Rules r, bool zeroIdx = false)
         {
-            return Wrapper(r, "AircraftTypes", zeroIdx);
+            return GetComboItems_Index_Name(r, "AircraftTypes");
         }
         public static IEnumerable<ComboItem> BuildingList(this Rules r, bool zeroIdx = false, bool regOnly = false)
         {
-            return Wrapper(r, "BuildingTypes", zeroIdx);
+            return GetComboItems_Index_Name(r, "BuildingTypes");
         }
         public static IEnumerable<ComboItem> SuperWeaponList(this Rules r, bool zeroIdx = false, bool regOnly = false)
         {

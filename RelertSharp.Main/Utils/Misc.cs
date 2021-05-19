@@ -211,7 +211,8 @@ namespace RelertSharp.Utils
                 }
                 catch
                 {
-                    throw new RSException.InvalidWaypointException(result);
+                    return 0;
+                    //throw new RSException.InvalidWaypointException(result);
                 }
             }
             return result - 1;

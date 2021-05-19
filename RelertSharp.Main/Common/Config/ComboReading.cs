@@ -82,7 +82,7 @@ namespace RelertSharp.Common
                 case TYPE_HOUSES:
                     return Map.Houses;
                 case TYPE_IDX_HOUSE:
-                    return Map.Houses.ToZeroIndex();
+                    return Map.Houses.ToZeroIdx();
                 case TYPE_OWNERCOUNTRY:
                     return Map.Countries;
                 case TYPE_GLOBAL:
