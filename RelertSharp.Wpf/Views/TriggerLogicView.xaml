@@ -40,8 +40,9 @@
         <ComboBox x:Name="cbbCurrent" Margin="10,9.8,10,0" Grid.Row="1" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" DataContext="{Binding SelectedItem}" SelectedIndex="{Binding CurrentItemTypeIndex}" SelectionChanged="CurrentTypeChanged"/>
         <TextBox x:Name="txbDetail" Height="Auto" Margin="10,37.8,10,10.4" Grid.Row="1" TextWrapping="Wrap" Style="{DynamicResource txbDark}" DataContext="{Binding SelectedItem}" Text="{Binding DetailInformation, Mode=OneWay}" VerticalContentAlignment="Top" IsEnabled="False"/>
         <ScrollViewer Grid.Column="1" Margin="10.2,33,10.2,9.6" Grid.RowSpan="2">
-            <StackPanel x:Name="stkMain"/>
+            <StackPanel x:Name="stkMain" Drop="DraggedItemDropped" DragOver="DragOverStk" AllowDrop="True"/>
         </ScrollViewer>
+        <Label Content="Parameters" HorizontalAlignment="Left" Margin="10.6,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="1"/>
 
     </Grid>
 </UserControl>

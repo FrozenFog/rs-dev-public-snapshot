@@ -69,6 +69,7 @@ namespace RelertSharp.Wpf.ViewModel
                 if (value is CountryItem c)
                 {
                     data.OwnerCountry = c.Name;
+                    data.InvokeChildInfoRefreshAll();
                 }
             }
         }

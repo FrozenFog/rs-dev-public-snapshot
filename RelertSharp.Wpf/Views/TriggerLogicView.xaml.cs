@@ -294,7 +294,64 @@ namespace RelertSharp.Wpf.Views
             }
         }
         #endregion
+
         #endregion
+
+        #region Drag Drop
+        private void DraggedItemDropped(object sender, DragEventArgs e)
+        {
+            object o = e.OriginalSource;
+            IDataObject data = new DataObject();
+            data = e.Data;
+            string value = TryGetDroppedValue(data, out Type valueType);
+            if (!value.IsNullOrEmpty()) TryWriteDroppedValue(value, valueType);
+        }
+
+        private void DragOverStk(object sender, DragEventArgs e)
+        {
+            object o = e.OriginalSource;
+        }
+
+        private void TryWriteDroppedValue(string value, Type refType)
+        {
+            foreach (FrameworkElement elem in stkMain.Children)
+            {
+                if (elem is Grid grid)
+                {
+                    foreach (FrameworkElement c in grid.Children)
+                    {
+                        if (c is ComboBox cbb && cbb.Items.Count > 0)
+                        {
+                            object first = cbb.Items[0];
+                            if (first.GetType() == refType)
+                            {
+                                IIndexableItem item = cbb.ItemsSource.OfType<IIndexableItem>().Where(x => x.Id == value).FirstOrDefault();
+                                if (item != null)
+                                {
+                                    cbb.SelectedItem = item;
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        private string TryGetDroppedValue(IDataObject src, out Type type)
+        {
+            type = null;
+            if (src.GetData(typeof(TriggerTreeItemVm)) is TriggerTreeItemVm trigger)
+            {
+                if (trigger.Data != null)
+                {
+                    type = typeof(TriggerItem);
+                    return trigger.Data.Id;
+                }
+            }
+            return string.Empty;
+        }
+        #endregion
+
         #endregion
     }
 }

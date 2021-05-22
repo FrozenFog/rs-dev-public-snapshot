@@ -117,10 +117,37 @@ namespace RelertSharp.Wpf.Views
 
         #region Misc
         #region Selecting & Right click
+        private TriggerTreeItemVm GetItemAtMouse(ItemsControl src, MouseButtonEventArgs e)
+        {
+            Point p = e.GetPosition(src);
+            TextBlock treeitem = null;
+            UIElement elem = src.InputHitTest(p) as UIElement;
+            while (elem != null)
+            {
+                if (elem == src) treeitem = null;
+                object item = src.ItemContainerGenerator.ItemFromContainer(elem);
+                if (!item.Equals(DependencyProperty.UnsetValue))
+                {
+                    treeitem = item as TextBlock;
+                    break;
+                }
+                if (elem is TextBlock target)
+                {
+                    treeitem = target;
+                    break;
+                }
+                elem = (UIElement)VisualTreeHelper.GetParent(elem);
+            }
+            if (treeitem != null) return treeitem.DataContext as TriggerTreeItemVm;
+            return null;
+        }
         private void PreviewRightDown(object sender, MouseButtonEventArgs e)
         {
-            DeselectAll(trvMain);
-            TreeViewItem item = GetSelectedItem(trvMain);
+            if (SelectedItem != null) SelectedItem.IsSelected = false;
+            TriggerTreeItemVm item = GetItemAtMouse(trvMain, e);
+            if (item != null) item.IsSelected = true;
+            //DeselectAll(trvMain);
+            //TreeViewItem item = GetSelectedItem(trvMain);
             PreviewMenuShowing();
         }
         private void DeselectAll(ItemsControl src)
@@ -138,10 +165,6 @@ namespace RelertSharp.Wpf.Views
             foreach (object o in src.Items)
             {
                 TreeViewItem item = src.ItemContainerGenerator.ContainerFromItem(o) as TreeViewItem;
-                if (item.IsSelected)
-                {
-                    int j = 0;
-                }
                 Point p = Mouse.GetPosition(item);
                 Rect itemRect = VisualTreeHelper.GetDescendantBounds(item);
                 if (itemRect.Contains(p))
@@ -207,7 +230,7 @@ namespace RelertSharp.Wpf.Views
             TriggerTreeItemVm target = GetItemOnDrag(e);
             if (dragItem != null)
             {
-                if (target != null && target.Title != dragItem.Title)
+                if (target != null && target.Title != dragItem.Title && !target.IsDescendantOf(dragItem))
                 {
                     bool sameAncestor = !target.IsTree && (dragItem.Ancestor == target.Ancestor);
                     // remove from ancestor: anything other than a root, and they share same ancestor
@@ -240,12 +263,21 @@ namespace RelertSharp.Wpf.Views
                 Point current = e.GetPosition(trvMain);
                 if (RsMath.ChebyshevDistance(current, prevMouseDown) > 10)
                 {
-                    dragItem = trvMain.SelectedItem as TriggerTreeItemVm;
+                    //dragItem = trvMain.SelectedItem as TriggerTreeItemVm;
                     if (dragItem != null)
                     {
-                        DragDropEffects effect = DragDrop.DoDragDrop(trvMain, trvMain.SelectedItem, DragDropEffects.Move);
+                        DataObject obj = new DataObject(dragItem);
+                        DragDropEffects effect = DragDrop.DoDragDrop(trvMain, obj, DragDropEffects.Move);
                     }
                 }
+            }
+        }
+
+        private void DragMouseLeave(object sender, MouseEventArgs e)
+        {
+            if (isDraging)
+            {
+                isDraging = false;
             }
         }
 
@@ -258,11 +290,18 @@ namespace RelertSharp.Wpf.Views
                 _dragTimer.Stop();
                 _dragTimer.Start();
                 prevMouseDown = e.GetPosition(trvMain);
+                dragItem = GetItemAtMouse(trvMain, e);
+                e.Handled = true;
             }
         }
         private void DragMouseUp(object sender, MouseButtonEventArgs e)
         {
-            _dragTimer.Stop();
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                _dragTimer.Stop();
+                if (!isDraging) dragItem.IsSelected = true;
+                else isDraging = false;
+            }
         }
         private void DragTimerTick(object sender, EventArgs e)
         {

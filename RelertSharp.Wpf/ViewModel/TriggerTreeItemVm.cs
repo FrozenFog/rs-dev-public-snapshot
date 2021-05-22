@@ -73,6 +73,25 @@ namespace RelertSharp.Wpf.ViewModel
             trees.ForEach(x => Items.Add(x));
             items.ForEach(x => Items.Add(x));
         }
+        public bool IsDescendantOf(TriggerTreeItemVm ancestor)
+        {
+            TriggerTreeItemVm back = this;
+            while (back != null)
+            {
+                if (back.Ancestor == null) return false;
+                if (back.Ancestor == ancestor) return true;
+                back = this.Ancestor;
+            }
+            return false;
+        }
+        public void UnselectAllDescendant()
+        {
+            foreach (TriggerTreeItemVm item in Items)
+            {
+                item.UnselectAllDescendant();
+            }
+            IsSelected = false;
+        }
 
 
         public TriggerTreeItemVm Ancestor { get; private set; }
@@ -88,6 +107,26 @@ namespace RelertSharp.Wpf.ViewModel
             set
             {
                 title = value;
+                SetProperty();
+            }
+        }
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                SetProperty();
+            }
+        }
+        private bool _isExpanded;
+        public bool IsExpanded
+        {
+            get { return _isExpanded; }
+            set
+            {
+                _isExpanded = value;
                 SetProperty();
             }
         }
