@@ -150,7 +150,11 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - TriggerItem
-
+        public void InvokeChildInfoRefreshAll()
+        {
+            foreach (LogicItem lg in Events) lg.OnInfoRefreshInvoked();
+            foreach (LogicItem lg in Actions) lg.OnInfoRefreshInvoked();
+        }
         #endregion
 
 

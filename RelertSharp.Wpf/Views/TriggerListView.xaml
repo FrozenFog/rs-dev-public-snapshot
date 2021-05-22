@@ -10,13 +10,18 @@
         <ViewModel:GlobalTriggerVm/>
     </UserControl.DataContext>
     <Grid>
-        <TreeView x:Name="trvMain" Margin="10,10,10,10" AllowDrop="True" Style="{DynamicResource trvDark}" DragOver="TrgDragOver" Drop="TrgDragDrop" MouseMove="DragMouseMove" PreviewMouseRightButtonDown="PreviewRightDown" SelectedItemChanged="SelectedItemChanged">
+        <TreeView x:Name="trvMain" Margin="10,10,10,10" AllowDrop="True" Style="{DynamicResource trvDark}" DragOver="TrgDragOver" Drop="TrgDragDrop" MouseMove="DragMouseMove" PreviewMouseRightButtonDown="PreviewRightDown" SelectedItemChanged="SelectedItemChanged" MouseLeave="DragMouseLeave">
             <TreeView.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#0078D7" />
             </TreeView.Resources>
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="TreeViewItem">
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:TriggerTreeItemVm}" ItemsSource="{Binding Items}">
-                    <TextBlock Text="{Binding Title}" Style="{DynamicResource txblkDark}" MouseDown="DragMouseDown" MouseUp="DragMouseUp"/>
+                    <TextBlock Text="{Binding Title}" Style="{DynamicResource txblkDark}" PreviewMouseDown="DragMouseDown" MouseUp="DragMouseUp"/>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
             <TreeView.ContextMenu>
