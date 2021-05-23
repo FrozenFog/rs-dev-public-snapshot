@@ -83,6 +83,8 @@ namespace RelertSharp.Wpf.Views
         }
 
         #region ParameterIO
+
+        #region Common
         internal void RefreshControl()
         {
             LoadControl();
@@ -236,6 +238,8 @@ namespace RelertSharp.Wpf.Views
         {
             return src.Tag as LogicInfoParameter;
         }
+        #endregion
+
 
 
         #region Listener
@@ -303,7 +307,7 @@ namespace RelertSharp.Wpf.Views
             object o = e.OriginalSource;
             IDataObject data = new DataObject();
             data = e.Data;
-            string value = TryGetDroppedValue(data, out Type valueType);
+            string value = data.TryGetDroppedDataObjectId(out Type valueType);
             if (!value.IsNullOrEmpty()) TryWriteDroppedValue(value, valueType);
         }
 
@@ -336,19 +340,6 @@ namespace RelertSharp.Wpf.Views
                     }
                 }
             }
-        }
-        private string TryGetDroppedValue(IDataObject src, out Type type)
-        {
-            type = null;
-            if (src.GetData(typeof(TriggerTreeItemVm)) is TriggerTreeItemVm trigger)
-            {
-                if (trigger.Data != null)
-                {
-                    type = typeof(TriggerItem);
-                    return trigger.Data.Id;
-                }
-            }
-            return string.Empty;
         }
         #endregion
 

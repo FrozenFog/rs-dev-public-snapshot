@@ -12,6 +12,9 @@ using AvalonDock;
 using AvalonDock.Layout;
 using System.Windows.Media.Imaging;
 using System.Drawing.Imaging;
+using System.Windows.Input;
+using RelertSharp.Wpf.ViewModel;
+using RelertSharp.MapStructure.Logic;
 
 namespace System.Windows
 {
@@ -212,6 +215,65 @@ namespace RelertSharp.Wpf
         public static TreeViewItem CastSelectedItem(this TreeView src)
         {
             return src.ItemContainerGenerator.ContainerFromItem(src.SelectedItem) as TreeViewItem;
+        }
+        #endregion
+
+
+        #region Items container
+        public static TCast GetItemAtMouse<TCast>(this ItemsControl src, MouseButtonEventArgs e) where TCast : class
+        {
+            Point p = e.GetPosition(src);
+            TCast dest = null;
+            UIElement elem = src.InputHitTest(p) as UIElement;
+            while (elem != null)
+            {
+                if (elem == src) dest = null;
+                object item = src.ItemContainerGenerator.ItemFromContainer(elem);
+                if (!item.Equals(DependencyProperty.UnsetValue))
+                {
+                    dest = item as TCast;
+                    break;
+                }
+                if (elem is TCast target)
+                {
+                    dest = target;
+                    break;
+                }
+                elem = (UIElement)VisualTreeHelper.GetParent(elem);
+            }
+            return dest;
+        }
+        #endregion
+
+
+        #region Drag Drop - DataObject
+        public static string TryGetDroppedDataObjectId(this IDataObject src, out Type dataType)
+        {
+            dataType = null;
+            if (src.GetData(typeof(TriggerTreeItemVm)) is TriggerTreeItemVm trigger)
+            {
+                if (trigger.Data != null)
+                {
+                    dataType = typeof(TriggerItem);
+                    return trigger.Data.Id;
+                }
+            }
+            else if (src.GetData(typeof(TeamItem)) is TeamItem team)
+            {
+                dataType = typeof(TeamItem);
+                return team.Id;
+            }
+            else if (src.GetData(typeof(TeamScriptGroup)) is TeamScriptGroup script)
+            {
+                dataType = typeof(TeamScriptGroup);
+                return script.Id;
+            }
+            else if (src.GetData(typeof(TaskforceItem)) is TaskforceItem taskforce)
+            {
+                dataType = typeof(TaskforceItem);
+                return taskforce.Id;
+            }
+            return string.Empty;
         }
         #endregion
     }
