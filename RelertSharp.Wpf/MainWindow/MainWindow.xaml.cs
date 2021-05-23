@@ -99,7 +99,7 @@ namespace RelertSharp.Wpf
             //dockMain.AddToolToRight("Script", script);
             //dockMain.Layout.AddToolToRight("Light", lightPanel);
             dockMain.AddCenterPage("Map", pnlMain);
-            dockMain.Layout.AddToolToRight("Minimap", minimap, 1);
+            dockMain.Layout.AddToolToLeft("Teams", teamList);
             dockMain.Layout.AddToolToRight("Trigger", trigger);
             dockMain.Layout.AddToolToRight("Events", events);
             dockMain.Layout.AddToolToRight("Actions", actions);

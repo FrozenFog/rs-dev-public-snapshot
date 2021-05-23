@@ -119,25 +119,7 @@ namespace RelertSharp.Wpf.Views
         #region Selecting & Right click
         private TriggerTreeItemVm GetItemAtMouse(ItemsControl src, MouseButtonEventArgs e)
         {
-            Point p = e.GetPosition(src);
-            TextBlock treeitem = null;
-            UIElement elem = src.InputHitTest(p) as UIElement;
-            while (elem != null)
-            {
-                if (elem == src) treeitem = null;
-                object item = src.ItemContainerGenerator.ItemFromContainer(elem);
-                if (!item.Equals(DependencyProperty.UnsetValue))
-                {
-                    treeitem = item as TextBlock;
-                    break;
-                }
-                if (elem is TextBlock target)
-                {
-                    treeitem = target;
-                    break;
-                }
-                elem = (UIElement)VisualTreeHelper.GetParent(elem);
-            }
+            TextBlock treeitem = src.GetItemAtMouse<TextBlock>(e);
             if (treeitem != null) return treeitem.DataContext as TriggerTreeItemVm;
             return null;
         }
@@ -149,40 +131,6 @@ namespace RelertSharp.Wpf.Views
             //DeselectAll(trvMain);
             //TreeViewItem item = GetSelectedItem(trvMain);
             PreviewMenuShowing();
-        }
-        private void DeselectAll(ItemsControl src)
-        {
-            foreach (object o in src.Items)
-            {
-                TreeViewItem item = src.ItemContainerGenerator.ContainerFromItem(o) as TreeViewItem;
-                if (item == null) continue;
-                if (item.Items.Count > 0) DeselectAll(item);
-                item.IsSelected = false;
-            }
-        }
-        private TreeViewItem GetSelectedItem(ItemsControl src)
-        {
-            foreach (object o in src.Items)
-            {
-                TreeViewItem item = src.ItemContainerGenerator.ContainerFromItem(o) as TreeViewItem;
-                Point p = Mouse.GetPosition(item);
-                Rect itemRect = VisualTreeHelper.GetDescendantBounds(item);
-                if (itemRect.Contains(p))
-                {
-                    if (item.IsExpanded)
-                    {
-                        TreeViewItem selected = GetSelectedItem(item);
-                        if (selected != null)
-                        {
-                            selected.IsSelected = true;
-                            return selected;
-                        }
-                    }
-                    item.IsSelected = true;
-                    return item;
-                }
-            }
-            return null;
         }
         #endregion
         #region Menu Enabler & Disabler
@@ -311,8 +259,7 @@ namespace RelertSharp.Wpf.Views
 
         private TriggerTreeItemVm GetItemOnDrag(DragEventArgs e)
         {
-            TextBlock b = e.OriginalSource as TextBlock;
-            if (b == null) return null;
+            if (!(e.OriginalSource is TextBlock b)) return null;
             return b.DataContext as TriggerTreeItemVm;
         }
         #endregion

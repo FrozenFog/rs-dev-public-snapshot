@@ -16,6 +16,7 @@ using RelertSharp.MapStructure.Logic;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Common;
 using RelertSharp.Wpf.Common;
+using System.Windows.Threading;
 
 namespace RelertSharp.Wpf.Views
 {
@@ -30,6 +31,11 @@ namespace RelertSharp.Wpf.Views
         {
             InitializeComponent();
             DataContext = GlobalCollectionVm.Teams;
+            _dragTimer = new DispatcherTimer()
+            {
+                Interval = new TimeSpan(0, 0, 0, 0, DRAG_INTERVAL)
+            };
+            _dragTimer.Tick += DragTick;
         }
 
         public event ContentCarrierHandler ItemSelected;
@@ -86,5 +92,61 @@ namespace RelertSharp.Wpf.Views
         {
             ItemSelected?.Invoke(this, lbxMain.SelectedItem);
         }
+
+
+
+        #region Drag Drop
+        private DispatcherTimer _dragTimer;
+        private const int DRAG_INTERVAL = 200;
+        private Point prevMouseDown;
+        private TeamItem dragItem;
+        private bool isDraging = false;
+
+        private void DragMouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDraging && e.LeftButton == MouseButtonState.Pressed)
+            {
+                Point current = e.GetPosition(lbxMain);
+                if (RsMath.ChebyshevDistance(current, prevMouseDown) > 10 && dragItem != null)
+                {
+                    DataObject obj = new DataObject(dragItem);
+                    DragDropEffects effect = DragDrop.DoDragDrop(lbxMain, obj, DragDropEffects.Move);
+                }
+            }
+        }
+        private void TeamDragOver(object sender, DragEventArgs e)
+        {
+            Point current = e.GetPosition(lbxMain);
+            if (RsMath.ChebyshevDistance(current, prevMouseDown) > 10)
+            {
+                e.Effects = DragDropEffects.Scroll;
+            }
+            e.Handled = true;
+        }
+
+        private void DragMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                _dragTimer.Stop();
+                _dragTimer.Start();
+                prevMouseDown = e.GetPosition(lbxMain);
+                TextBlock blk = lbxMain.GetItemAtMouse<TextBlock>(e);
+                if (blk != null)
+                {
+                    dragItem = blk.DataContext as TeamItem;
+                }
+            }
+        }
+        private void DragTick(object sender, EventArgs e)
+        {
+            _dragTimer.Stop();
+            isDraging = true;
+        }
+        private void DragMouseLeave(object sender, MouseEventArgs e)
+        {
+            if (isDraging) isDraging = false;
+        }
+        #endregion
     }
 }
