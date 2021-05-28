@@ -63,7 +63,13 @@ namespace RelertSharp.Common
 
 
 
+    public sealed class SimpleIndexableItem : IndexableItem
+    {
+        public SimpleIndexableItem()
+        {
 
+        }
+    }
     public abstract class IndexableItem : IIndexableItem
     {
         private IndexableDisplayType displayType = IndexableDisplayType.IdAndName;

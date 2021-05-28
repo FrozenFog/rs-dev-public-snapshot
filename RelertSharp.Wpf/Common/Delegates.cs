@@ -8,5 +8,5 @@ using RelertSharp.Common;
 namespace RelertSharp.Wpf
 {
     public delegate void ContentCarrierHandler(object sender, object item);
-    public delegate void Dele3dLocateableHandler(object sender, I3dLocateable pos);
+    public delegate void IndexableHandler(IIndexableItem item);
 }

@@ -10,6 +10,7 @@ namespace RelertSharp.Engine.Api
 {
     public static partial class EngineApi
     {
+        public static event I3dLocateableHandler MoveCameraRequested;
         public static Vec3 ClientPointToCellPos(Point src)
         {
             return EngineMain.ClientPointToCellPos(src);
@@ -19,6 +20,10 @@ namespace RelertSharp.Engine.Api
             Vec3 pos = EngineMain.ClientPointToCellPos(src, out int sub);
             subcell = sub;
             return pos;
+        }
+        public static void CallMoveCameraTo(I3dLocateable pos)
+        {
+            MoveCameraRequested?.Invoke(pos);
         }
         public static void MoveCameraTo(I2dLocateable mapPos, int height)
         {

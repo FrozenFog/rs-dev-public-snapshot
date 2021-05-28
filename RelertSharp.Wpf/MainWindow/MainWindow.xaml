@@ -58,6 +58,7 @@
             </MenuItem>
             <MenuItem Header="Debug">
                 <MenuItem Header="Debug Button" Click="DebugClick"/>
+                <MenuItem Header="Go Back" Click="DebugClick2"/>
             </MenuItem>
         </Menu>
         <DockingManager x:Name="dockMain" Grid.Row="0" Margin="0,23,0,0">
