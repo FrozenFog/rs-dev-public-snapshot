@@ -1,4 +1,5 @@
-﻿using RelertSharp.MapStructure.Logic;
+﻿using RelertSharp.Common;
+using RelertSharp.MapStructure.Logic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -91,6 +92,22 @@ namespace RelertSharp.Wpf.ViewModel
                 item.UnselectAllDescendant();
             }
             IsSelected = false;
+        }
+        public TriggerTreeItemVm Find(IIndexableItem target)
+        {
+            if (IsTree)
+            {
+                foreach (TriggerTreeItemVm sub in Items)
+                {
+                    TriggerTreeItemVm result = sub.Find(target);
+                    if (result != null) return result;
+                }
+            }
+            else
+            {
+                if (data.Id == target.Id) return this;
+            }
+            return null;
         }
 
 

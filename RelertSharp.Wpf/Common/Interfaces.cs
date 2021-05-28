@@ -1,4 +1,5 @@
-﻿using RelertSharp.Wpf.Common;
+﻿using RelertSharp.Common;
+using RelertSharp.Wpf.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace RelertSharp.Wpf.Views
     {
         void SortBy(bool ascending);
         void ShowingId(bool enable);
+        void SelectItem(IIndexableItem item);
+        IIndexableItem GetSelectedItem();
         event ContentCarrierHandler ItemSelected;
     }
 

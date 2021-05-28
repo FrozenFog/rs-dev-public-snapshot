@@ -68,6 +68,7 @@
     <Compile Include="Dialogs\DlgTriggerListAddGroup.xaml.cs">
       <DependentUpon>DlgTriggerListAddGroup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindow\NavigationHub.cs" />
     <Compile Include="MapEngine\Helper\Selector.cs" />
     <Compile Include="MapEngine\MainPanel.xaml.cs">
       <DependentUpon>MainPanel.xaml</DependentUpon>
@@ -145,10 +146,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TriggerEditor\TriggerEditor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -156,9 +153,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TriggerEditor\TriggerEditor.xaml.cs">
-      <DependentUpon>TriggerEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -244,9 +238,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TriggerEditor\Pages\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\RelertSharp.Engine\RelertSharp.Engine.csproj">
       <Project>{13b39736-333f-48d2-bb64-f70b94c765b7}</Project>

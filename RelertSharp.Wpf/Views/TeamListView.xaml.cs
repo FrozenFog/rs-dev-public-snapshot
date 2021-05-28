@@ -36,6 +36,8 @@ namespace RelertSharp.Wpf.Views
                 Interval = new TimeSpan(0, 0, 0, 0, DRAG_INTERVAL)
             };
             _dragTimer.Tick += DragTick;
+            NavigationHub.GoToTeamRequest += SelectItem;
+            NavigationHub.BindTeamList(this);
         }
 
         public event ContentCarrierHandler ItemSelected;
@@ -93,6 +95,18 @@ namespace RelertSharp.Wpf.Views
             ItemSelected?.Invoke(this, lbxMain.SelectedItem);
         }
 
+        public void SelectItem(IIndexableItem item)
+        {
+            lbxMain.SelectItem(item, (a, b) =>
+            {
+                return a.Id == b.Id;
+            });
+        }
+
+        public IIndexableItem GetSelectedItem()
+        {
+            return lbxMain.SelectedItem as IIndexableItem;
+        }
 
 
         #region Drag Drop

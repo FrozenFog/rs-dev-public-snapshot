@@ -20,6 +20,7 @@ using System.Windows.Threading;
 using System.Threading;
 using RelertSharp.Wpf.Views;
 using RelertSharp.Wpf.Common;
+using RelertSharp.Engine;
 
 namespace RelertSharp.Wpf.MapEngine
 {
@@ -28,7 +29,7 @@ namespace RelertSharp.Wpf.MapEngine
     /// </summary>
     public partial class MainPanel : UserControl, IRsView
     {
-        public event Dele3dLocateableHandler MousePosChanged;
+        public event I3dLocateableHandler MousePosChanged;
         public event EventHandler ScaleFactorChanged;
         private IntPtr _handle;
         private bool drew = false;
@@ -87,6 +88,7 @@ namespace RelertSharp.Wpf.MapEngine
             d3dimg.IsFrontBufferAvailableChanged += FrontBufferChanged;
             EngineApi.RedrawRequested += RedrawInvokeHandler;
             EngineApi.ResizeRequested += ResizeInvokeHandler;
+            NavigationHub.GoToPositionRequest += MoveCameraInvokeHandler;
             _wheelResizeDelay = new DispatcherTimer();
             _wheelResizeDelay.Tick += WheelResizeInvoker;
             _wheelResizeDelay.Interval = new TimeSpan(0, 0, 0, 0, susMsWheel);
@@ -186,6 +188,14 @@ namespace RelertSharp.Wpf.MapEngine
         private void RedrawInvokeHandler(object sender, EventArgs e)
         {
             RenderFrame();
+        }
+
+        private void MoveCameraInvokeHandler(I3dLocateable pos)
+        {
+            if (drew)
+            {
+                EngineApi.MoveCameraTo(pos, pos.Z);
+            }
         }
 
         private void FrontBufferChanged(object sender, DependencyPropertyChangedEventArgs e)

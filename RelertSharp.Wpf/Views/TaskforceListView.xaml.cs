@@ -29,6 +29,8 @@ namespace RelertSharp.Wpf.Views
         {
             InitializeComponent();
             DataContext = GlobalCollectionVm.Taskforces;
+            NavigationHub.GoToTaskforceRequest += SelectItem;
+            NavigationHub.BindTaskforceList(this);
         }
 
         public event ContentCarrierHandler ItemSelected;
@@ -80,6 +82,19 @@ namespace RelertSharp.Wpf.Views
             {
                 IdUnchecked(null, null);
             }
+        }
+
+        public void SelectItem(IIndexableItem item)
+        {
+            lbxMain.SelectItem(item, (a, b) =>
+            {
+                return a.Id == b.Id;
+            });
+        }
+
+        public IIndexableItem GetSelectedItem()
+        {
+            return lbxMain.SelectedItem as IIndexableItem;
         }
     }
 }

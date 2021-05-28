@@ -93,7 +93,7 @@ namespace RelertSharp.Wpf
             //dockMain.Layout.AddToolToRight("Ai Trigger List", aiTriggerList);
             //dockMain.AddToolToRight("Script List", scriptList);
             //dockMain.AddToolToRight("Taskforce List", taskforceList);
-            //dockMain.Layout.AddToolToRight("Team", team);
+            dockMain.Layout.AddToolToLeft("Team", team);
             //dockMain.Layout.AddToolToRight("Animation", animationPreview);
             dockMain.Layout.AddToolToRight("Trigger List", triggerList);
             //dockMain.AddToolToRight("Script", script);
@@ -110,7 +110,7 @@ namespace RelertSharp.Wpf
         {
             //BindListener(aiTrigger, aiTriggerList);
             //BindListener(script, scriptList);
-            //BindListener(team, teamList);
+            BindListener(team, teamList);
             BindListener(trigger, triggerList);
             BindListener(events, triggerList);
             BindListener(actions, triggerList);
@@ -161,7 +161,7 @@ namespace RelertSharp.Wpf
         }
 
         private I3dLocateable posMouse;
-        private void PnlMain_MousePosChanged(object sender, I3dLocateable pos)
+        private void PnlMain_MousePosChanged(I3dLocateable pos)
         {
             posMouse = pos;
             RefreshStatus();
@@ -179,6 +179,11 @@ namespace RelertSharp.Wpf
         private void DebugClick(object sender, RoutedEventArgs e)
         {
             DebugClick();
+        }
+
+        private void DebugClick2(object sender, RoutedEventArgs e)
+        {
+            NavigationHub.BackTrace();
         }
     }
 }

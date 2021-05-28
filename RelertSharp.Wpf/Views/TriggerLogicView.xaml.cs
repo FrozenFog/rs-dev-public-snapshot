@@ -167,7 +167,14 @@ namespace RelertSharp.Wpf.Views
                 lbl.SetStyle(this, "lblDark");
                 lbl.Margin = new Thickness(10, y, 0, 0);
                 lbl.SetColumn(0);
+                lbl.MouseDoubleClick += ClickLabelTrace;
                 FrameworkElement control = GenerateControl(param, out double yOffset);
+                TraceHelper binder = new TraceHelper()
+                {
+                    SourceControl = control,
+                    Param = param
+                };
+                lbl.Tag = binder;
                 control.Height = PARAM_ROW_HEIGHT;
                 control.Margin = new Thickness(10, y + yOffset, 10, 0);
                 control.SetColumn(2);
@@ -182,6 +189,7 @@ namespace RelertSharp.Wpf.Views
             };
             stkMain.AddControls(grd, blank);
         }
+
         private FrameworkElement GenerateControl(LogicInfoParameter src, out double yOffset)
         {
             FrameworkElement elem;
@@ -290,11 +298,38 @@ namespace RelertSharp.Wpf.Views
                 }
             }
         }
-        private void ClickOnTrace(object sender, RoutedEventArgs e)
+        private void ClickLabelTrace(object sender, MouseButtonEventArgs e)
         {
             if (!isLoadingParameter)
             {
-
+                Label lbl = sender as Label;
+                TraceHelper binder = lbl.Tag as TraceHelper;
+                string value = string.Empty;
+                IIndexableItem target = new SimpleIndexableItem();
+                if (binder.SourceControl is ComboBox cbb)
+                {
+                    target = cbb.SelectedItem as IIndexableItem;
+                }
+                else if (binder.SourceControl is TextBox txb)
+                {
+                    value = txb.Text;
+                }
+                switch (binder.Param.TraceTarget)
+                {
+                    case TriggerInfoTraceType.TriggerRegTrace:
+                        NavigationHub.GoToTrigger(target);
+                        break;
+                    case TriggerInfoTraceType.TeamRegTrace:
+                        NavigationHub.GoToTeam(target);
+                        break;
+                    case TriggerInfoTraceType.I2dWaypointTrace:
+                        I2dLocateable wp = GlobalVar.CurrentMapDocument.Map.Waypoints.FindByID(value);
+                        if (wp != null)
+                        {
+                            NavigationHub.GoToPosition(wp, GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(wp));
+                        }
+                        break;
+                }
             }
         }
         #endregion
@@ -344,5 +379,18 @@ namespace RelertSharp.Wpf.Views
         #endregion
 
         #endregion
+
+
+
+        private class TraceHelper
+        {
+            public TraceHelper()
+            {
+
+            }
+
+            public FrameworkElement SourceControl { get; set; }
+            public LogicInfoParameter Param { get; set; }
+        }
     }
 }

@@ -41,6 +41,21 @@ namespace RelertSharp.Wpf.Views
                 Interval = new TimeSpan(0, 0, 0, 0, DRAG_INTERVAL)
             };
             _dragTimer.Tick += DragTimerTick;
+            NavigationHub.GoToTriggerRequest += SelectItem;
+            NavigationHub.BindTriggerList(this);
+        }
+
+        public void SelectItem(IIndexableItem item)
+        {
+            foreach (object o in trvMain.Items)
+            {
+                TriggerTreeItemVm vm = (o as TriggerTreeItemVm).Find(item);
+                if (vm != null)
+                {
+                    vm.IsSelected = true;
+                    return;
+                }
+            }
         }
 
         public void ReloadMapTrigger()
@@ -113,6 +128,15 @@ namespace RelertSharp.Wpf.Views
         public void ShowingId(bool enable)
         {
             throw new NotSupportedException();
+        }
+
+        public IIndexableItem GetSelectedItem()
+        {
+            if (trvMain.SelectedItem is TriggerTreeItemVm vm)
+            {
+                return vm.Data;
+            }
+            return null;
         }
 
         #region Misc

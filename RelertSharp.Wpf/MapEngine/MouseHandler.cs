@@ -112,7 +112,7 @@ namespace RelertSharp.Wpf.MapEngine
             }
             if (EngineApi.MouseOnTile(pos, NeedIndicating))
             {
-                MousePosChanged?.Invoke(this, pos.To3dLocateable());
+                MousePosChanged?.Invoke(pos.To3dLocateable());
                 redraw = true;
             }
 

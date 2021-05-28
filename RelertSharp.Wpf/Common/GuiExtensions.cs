@@ -15,6 +15,7 @@ using System.Drawing.Imaging;
 using System.Windows.Input;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.MapStructure.Logic;
+using RelertSharp.Common;
 
 namespace System.Windows
 {
@@ -242,6 +243,20 @@ namespace RelertSharp.Wpf
                 elem = (UIElement)VisualTreeHelper.GetParent(elem);
             }
             return dest;
+        }
+        public static void SelectItem<TItem>(this ListBox src, TItem target, Func<TItem, TItem, bool> selector) where TItem : class
+        {
+            foreach (object o in src.Items)
+            {
+                if (o is TItem item)
+                {
+                    if (selector(item, target))
+                    {
+                        src.SelectedItem = o;
+                        return;
+                    }
+                }
+            }
         }
         #endregion
 

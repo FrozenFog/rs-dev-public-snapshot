@@ -29,6 +29,8 @@ namespace RelertSharp.Wpf.Views
         {
             InitializeComponent();
             DataContext = GlobalCollectionVm.Scripts;
+            NavigationHub.GoToScriptRequest += SelectItem;
+            NavigationHub.BindScriptList(this);
         }
 
         public event ContentCarrierHandler ItemSelected;
@@ -86,6 +88,19 @@ namespace RelertSharp.Wpf.Views
         {
             ItemSelected?.Invoke(this, lbxMain.SelectedItem);
             
+        }
+
+        public void SelectItem(IIndexableItem item)
+        {
+            lbxMain.SelectItem(item, (a, b) =>
+            {
+                return a.Id == b.Id;
+            });
+        }
+
+        public IIndexableItem GetSelectedItem()
+        {
+            return lbxMain.SelectedItem as IIndexableItem;
         }
     }
 }
