@@ -20,12 +20,12 @@ namespace RelertSharp.IniSystem
         private static AnimationComponent GetComponent(Rules r, string regName)
         {
             INIFile art = r.Art;
-            if (!art.HasIniEnt(regName)) return null;
-            INIEntity ent = art[regName];
             AnimationComponent component = new AnimationComponent()
             {
                 RegName = regName
             };
+            if (!art.HasIniEnt(regName)) return component;
+            INIEntity ent = art[regName];
             string shpName = GetShpName(art, ent, regName) + EX_SHP;
             string alphaName = ent[KEY_ALPHA] + EX_SHP;
             string customPal = ent[KEY_CUSPAL];
@@ -48,6 +48,7 @@ namespace RelertSharp.IniSystem
             if (ent.HasPair(KEY_IMAGE))
             {
                 string img = ent[KEY_IMAGE];
+                if (img == regname) return regname;
                 INIEntity imgEnt = art.GetEnt(img);
                 if (imgEnt == null) return img;
                 else return GetShpName(art, imgEnt, img);
@@ -105,6 +106,7 @@ namespace RelertSharp.IniSystem
         }
         public void SetFrame(int frame, Color transparentColor, PalFile pal = null)
         {
+            if (!IsValid) return;
             if (frame >= Shp.Count)
             {
                 NextAnim?.SetFrame(frame - Shp.Count, transparentColor, pal);
@@ -173,7 +175,7 @@ namespace RelertSharp.IniSystem
         }
         private int GetTrailerFrame(int frame)
         {
-            if (TrailerAnim == null) return 0;
+            if (TrailerAnim == null || TrailerAnim.FrameCount <= 0) return 0;
             return frame % TrailerAnim.FrameCount;
         }
         #endregion
@@ -197,6 +199,7 @@ namespace RelertSharp.IniSystem
         public int TrailerSeperation { get; set; }
         public AnimationComponent NextAnim { get; set; }
         public AnimationComponent TrailerAnim { get; set; }
+        public bool IsValid { get { return Shp != null; } }
         #endregion
     }
 }

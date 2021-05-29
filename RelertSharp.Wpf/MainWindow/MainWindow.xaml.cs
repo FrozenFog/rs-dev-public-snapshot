@@ -94,7 +94,7 @@ namespace RelertSharp.Wpf
             //dockMain.AddToolToRight("Script List", scriptList);
             //dockMain.AddToolToRight("Taskforce List", taskforceList);
             dockMain.Layout.AddToolToLeft("Team", team);
-            //dockMain.Layout.AddToolToRight("Animation", animationPreview);
+            dockMain.Layout.AddToolToLeft("Animation", animationPreview);
             dockMain.Layout.AddToolToRight("Trigger List", triggerList);
             //dockMain.AddToolToRight("Script", script);
             //dockMain.Layout.AddToolToRight("Light", lightPanel);

@@ -329,6 +329,9 @@ namespace RelertSharp.Wpf.Views
                             NavigationHub.GoToPosition(wp, GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(wp));
                         }
                         break;
+                    case TriggerInfoTraceType.AnimIdxTrace:
+                        NavigationHub.PlayAnimation(target.Name);
+                        break;
                 }
             }
         }
