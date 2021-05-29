@@ -12,6 +12,7 @@ namespace RelertSharp.Wpf
 {
     internal static class NavigationHub
     {
+        #region Logic navigation
         public static event IndexableHandler GoToTriggerRequest;
         private static IListContainer trgList;
         public static void GoToTrigger(IIndexableItem trigger)
@@ -70,6 +71,17 @@ namespace RelertSharp.Wpf
             I3dLocateable dest = new Pnt3(pos, height);
             GoToPositionRequest?.Invoke(dest);
         }
+        #endregion
+
+
+        #region External function
+        public static event RegnameHandler PlayAnimationRequest;
+        public static void PlayAnimation(string regname)
+        {
+            PlayAnimationRequest?.Invoke(regname);
+        }
+        #endregion
+
 
         #region BackTrace
         private static readonly LinkedList<NavigateNode> navigateHistory = new LinkedList<NavigateNode>();

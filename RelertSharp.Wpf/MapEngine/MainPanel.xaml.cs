@@ -195,6 +195,7 @@ namespace RelertSharp.Wpf.MapEngine
             if (drew)
             {
                 EngineApi.MoveCameraTo(pos, pos.Z);
+                RenderFrame();
             }
         }
 

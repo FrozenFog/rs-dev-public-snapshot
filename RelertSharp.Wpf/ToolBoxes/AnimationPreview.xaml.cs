@@ -52,6 +52,7 @@ namespace RelertSharp.Wpf.ToolBoxes
             worker.DoWork += Worker_DoWork;
             Engine.Api.EngineApi.TheaterReloaded += ReloadPalettes;
             bgc = WpfWindowsExtensions.FromArgb(COLOR_DEFAULT);
+            NavigationHub.PlayAnimationRequest += LoadAnimation;
         }
         #endregion
 
@@ -76,7 +77,7 @@ namespace RelertSharp.Wpf.ToolBoxes
                 init = true;
             }
             anim = GlobalVar.GlobalRules.GetAnimByRegName(regName);
-            sldProgress.Maximum = anim.FrameCount - 1;
+            sldProgress.Maximum = anim.FrameCount > 0 ? anim.FrameCount - 1 : 0;
             maxFrame = anim.FrameCount;
             sldProgress.Value = 0;
             animRegName = regName;
@@ -146,6 +147,7 @@ namespace RelertSharp.Wpf.ToolBoxes
                 watch.Restart();
                 this.Dispatcher.Invoke(() =>
                 {
+                    if (!anim.IsValid) return;
                     int frame = currentFrame + 1;
                     if (frame > (int)sldProgress.Maximum) frame = 0;
                     sldProgress.Value = frame;
@@ -193,6 +195,7 @@ namespace RelertSharp.Wpf.ToolBoxes
         }
         private void SetAnimationByFrame()
         {
+            if (!anim.IsValid) return;
             anim.SetFrame(currentFrame, bgc.ToGdiColor(), pal);
             ShowFrame();
         }
@@ -214,6 +217,7 @@ namespace RelertSharp.Wpf.ToolBoxes
         }
         private void ShowFrame()
         {
+            if (!anim.IsValid) return;
             BitmapImage source = anim.GetResultImage(currentFrame, bgc.ToGdiColor()).ToWpfImage();
             currentImg.Source = source;
             double scale = this.GetScale();
