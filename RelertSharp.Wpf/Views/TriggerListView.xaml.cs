@@ -53,6 +53,7 @@ namespace RelertSharp.Wpf.Views
                 if (vm != null)
                 {
                     vm.IsSelected = true;
+                    vm.ExpandAllAncestor();
                     return;
                 }
             }

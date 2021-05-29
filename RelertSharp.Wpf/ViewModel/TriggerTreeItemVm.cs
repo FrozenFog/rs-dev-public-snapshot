@@ -109,6 +109,15 @@ namespace RelertSharp.Wpf.ViewModel
             }
             return null;
         }
+        public void ExpandAllAncestor()
+        {
+            TriggerTreeItemVm ancestor = this.Ancestor;
+            while (ancestor != null)
+            {
+                ancestor.IsExpanded = true;
+                ancestor = ancestor.Ancestor;
+            }
+        }
 
 
         public TriggerTreeItemVm Ancestor { get; private set; }
@@ -143,7 +152,8 @@ namespace RelertSharp.Wpf.ViewModel
             get { return _isExpanded; }
             set
             {
-                _isExpanded = value;
+                if (IsTree) _isExpanded = value;
+                else _isExpanded = false;
                 SetProperty();
             }
         }
