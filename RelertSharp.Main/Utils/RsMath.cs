@@ -1,8 +1,10 @@
-﻿using System;
+﻿using RelertSharp.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace RelertSharp
 {
@@ -47,10 +49,73 @@ namespace RelertSharp
             if (src <= 0) return 0;
             return src;
         }
+        public static int Floor(double src)
+        {
+            return src >= 0 ? (int)src : (int)src - 1;
+        }
 
         public static int ChebyshevDistance(System.Windows.Point p1, System.Windows.Point p2)
         {
             return (int)Math.Max(Math.Abs(p1.X - p2.X), Math.Abs(p1.Y - p2.Y));
+        }
+        public static float ScalarProduct(I2dLocateable a, I2dLocateable b)
+        {
+            return a.X * b.X + a.Y * b.Y;
+        }
+        public static float ScalarProduct(I3dLocateable a, I3dLocateable b)
+        {
+            return a.X * b.X + a.Y * b.Y + a.Z * b.Z;
+        }
+        public static float ScalarProduct(Vec3 a, Vec3 b)
+        {
+            return a.X * b.X + a.Y * b.Y + a.Z * b.Z;
+        }
+        public static double ScalarProduct(Vector a, Vector b)
+        {
+            return a.X * b.X + a.Y * b.Y;
+        }
+
+
+        public static T[] Mirror2dArray<T>(this T[] arr, int width, int height, bool isXArray = true)
+        {
+            T[] result = new T[arr.Length];
+            if (isXArray)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
+                    {
+                        result[width - x - 1 + y * width] = arr[x + y * width];
+                    }
+                }
+            }
+            else
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
+                    {
+                        result[x + (height - y - 1) * width] = arr[x + y * width];
+                    }
+                }
+            }
+            return result;
+        }
+        /// <summary>
+        /// scale between -1.0 and 1.0
+        /// </summary>
+        /// <param name="arr"></param>
+        public static void NormalizeArray(ref double[] arr)
+        {
+            double max = arr.Max();
+            double min = arr.Min();
+            double mid = (max + min) / 2;
+            double scaled = (max - min) / 2;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                double normalize = (arr[i] - mid) / scaled;
+                arr[i] = normalize;
+            }
         }
     }
 }

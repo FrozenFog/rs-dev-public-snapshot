@@ -225,7 +225,8 @@ namespace RelertSharp.Wpf.Views
                         ComboBox cbb = new ComboBox()
                         {
                             VerticalAlignment = VerticalAlignment.Top,
-                            HorizontalAlignment = HorizontalAlignment.Stretch
+                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                            IsEditable = true
                         };
                         cbb.ItemsPanel = FindResource("VirtualPanel") as ItemsPanelTemplate;
                         cbb.SetStyle(this, "cbbDark");
