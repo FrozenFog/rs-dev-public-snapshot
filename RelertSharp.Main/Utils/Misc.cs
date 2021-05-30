@@ -358,6 +358,15 @@ namespace RelertSharp.Utils
             fs.Flush();
             fs.Dispose();
         }
+        public static void DebugSave(string data, string filename)
+        {
+            System.IO.FileStream fs = new System.IO.FileStream(filename, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+            System.IO.StreamWriter writer = new System.IO.StreamWriter(fs);
+            writer.Write(data);
+            writer.Flush();
+            writer.Dispose();
+            fs.Dispose();
+        }
         public static void TileToFlatCoord(I2dLocateable pos, int mapWidth, out int x, out int y)
         {
             x = pos.X - pos.Y + mapWidth - 1;

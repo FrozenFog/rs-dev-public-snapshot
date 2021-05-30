@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm\MapPosition.cs" />
+    <Compile Include="Algorithm\PerlinNoiseGenerator.cs" />
     <Compile Include="CliFunction\MapLocker.cs" />
     <Compile Include="Common\Comparer\ListViewComparer.cs" />
     <Compile Include="Common\Config\AttributeInfo.cs" />
