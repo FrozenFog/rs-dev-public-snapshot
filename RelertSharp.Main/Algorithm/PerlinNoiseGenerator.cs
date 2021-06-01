@@ -151,7 +151,7 @@ namespace RelertSharp.Algorithm
         {
             for (int i = 0; i< dest.Length; i++)
             {
-                dest[i] += srcArr[i] + scale;
+                dest[i] += srcArr[i] * scale;
             }
         }
         private static void Smooth(ref double[] arr, int width, int height)

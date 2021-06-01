@@ -230,6 +230,14 @@ namespace RelertSharp.IniSystem
         {
             return data[data.Keys.ElementAt(index)];
         }
+        public INIPair Find(Predicate<INIPair> predicate)
+        {
+            foreach (INIPair p in this)
+            {
+                if (predicate(p)) return p;
+            }
+            return INIPair.NullPair;
+        }
         /// <summary>
         /// Find and return specified IniPair, return NullPair(not null) if not found.
         /// </summary>

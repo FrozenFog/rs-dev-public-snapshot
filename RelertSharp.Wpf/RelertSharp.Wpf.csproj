@@ -68,6 +68,7 @@
     <Compile Include="Dialogs\DlgTriggerListAddGroup.xaml.cs">
       <DependentUpon>DlgTriggerListAddGroup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindow\Menu.cs" />
     <Compile Include="MainWindow\NavigationHub.cs" />
     <Compile Include="MapEngine\Helper\Selector.cs" />
     <Compile Include="MapEngine\MainPanel.xaml.cs">

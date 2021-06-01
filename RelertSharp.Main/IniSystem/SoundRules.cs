@@ -56,35 +56,20 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Methods - SoundRules
-        public INIEntity GetEva(string index)
+        public INIEntity GetEva(string regName)
         {
-            string evaname = eva["DialogList"][index];
+            string evaname = eva["DialogList"].Find(x => x.Value == regName).Value;
             return eva[evaname];
         }
-        public INIEntity GetEva(int index)
+        public INIEntity GetSound(string regName)
         {
-            string name = eva["DialogList"].GetPair(index).Value;
-            return eva[name];
-        }
-        public INIEntity GetSound(string index)
-        {
-            string soundname = sound["SoundList"][index];
+            string soundname = sound["SoundList"].Find(x => x.Value == regName).Value;
             return sound[soundname];
         }
-        public INIEntity GetSound(int index)
+        public INIEntity GetTheme(string regName)
         {
-            string name = sound["SoundList"].GetPair(index).Value;
-            return sound[name];
-        }
-        public INIEntity GetTheme(string index)
-        {
-            string themename = theme["Themes"][index];
+            string themename = theme["Themes"].Find(x => x.Value == regName).Value;
             return theme[themename];
-        }
-        public INIEntity GetTheme(int index)
-        {
-            string name = theme["Themes"].GetPair(index).Value;
-            return theme[name];
         }
         #endregion
 

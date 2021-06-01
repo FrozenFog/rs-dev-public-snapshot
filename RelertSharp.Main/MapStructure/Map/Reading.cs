@@ -151,13 +151,6 @@ namespace RelertSharp.MapStructure
             INIEntity _houseList = f.PopEnt("Houses");
             INIEntity _countryList = f.PopEnt("Countries");
 
-            foreach (INIPair p in _houseList)
-            {
-                HouseItem item = new HouseItem(f.PopEnt(p.Value));
-                foreach (BaseNode node in item.BaseNodes) AddObjectToTile(node);
-                item.Index = p.Name;
-                Houses[p.Name] = item;
-            }
             Countries = new CountryCollection();
             foreach (INIPair p in _countryList)
             {
@@ -165,6 +158,22 @@ namespace RelertSharp.MapStructure
                 if (string.IsNullOrEmpty(item.Name)) item.Name = p.Value;
                 item.Index = p.Name;
                 Countries[item.Name] = item;
+            }
+            foreach (INIPair p in _houseList)
+            {
+                HouseItem item = new HouseItem(f.PopEnt(p.Value));
+                foreach (BaseNode node in item.BaseNodes) AddObjectToTile(node);
+                item.Index = p.Name;
+                Houses[p.Name] = item;
+
+                if (item.PlayerControl)
+                {
+                    CountryItem c = Countries.GetCountry(item.Country);
+                    if (c != null)
+                    {
+                        GlobalVar.PlayerSide = c.Side;
+                    }
+                }
             }
         }
         private void GetAbstractLogics(MapFile f)

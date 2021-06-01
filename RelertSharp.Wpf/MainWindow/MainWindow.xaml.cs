@@ -59,6 +59,9 @@ namespace RelertSharp.Wpf
         [RsViewComponent(GuiViewType.Action, nameof(actions))]
         private readonly TriggerLogicView actions = new TriggerLogicView(false);
         #endregion
+        #region Else
+        private SoundManager soundManager = new SoundManager();
+        #endregion
         #region Dispatcher
         #endregion
 
@@ -68,8 +71,10 @@ namespace RelertSharp.Wpf
             AddToolPage();
             AddReciveListener();
             SetTimer();
+            BindNavigation();
         }
 
+        #region Initialization
         private void SetTimer()
         {
             tmrInit = new DispatcherTimer()
@@ -79,12 +84,6 @@ namespace RelertSharp.Wpf
             tmrInit.Tick += DelayedInitialize;
             tmrInit.Start();
         }
-
-        private void DelayedInitialize(object sender, EventArgs e)
-        {
-            DebugInit();
-        }
-
         private void AddToolPage()
         {
             //dockMain.Layout.AddToolToRight("Ai Trigger Edit", aiTrigger);
@@ -104,12 +103,41 @@ namespace RelertSharp.Wpf
             dockMain.Layout.AddToolToRight("Events", events);
             dockMain.Layout.AddToolToRight("Actions", actions);
         }
+        #endregion
+
+
+        private void DelayedInitialize(object sender, EventArgs e)
+        {
+            DebugInit();
+        }
 
         #region Reciver Logics
+        private void BindNavigation()
+        {
+            NavigationHub.PlaySoundRequest += NavigateSound;
+        }
+
+        private async void NavigateSound(string regname, SoundType type)
+        {
+            if (soundManager.IsPlaying)
+            {
+                soundManager.Stop();
+            }
+            else
+            {
+                string name = soundManager.GetSoundName(regname, type);
+                await Task.Run(() =>
+                {
+                    soundManager.LoadWav(GlobalVar.GlobalSoundBank.GetSound(name));
+                });
+                soundManager.Play();
+            }
+        }
+
         private void AddReciveListener()
         {
-            //BindListener(aiTrigger, aiTriggerList);
-            //BindListener(script, scriptList);
+            BindListener(aiTrigger, aiTriggerList);
+            BindListener(script, scriptList);
             BindListener(team, teamList);
             BindListener(trigger, triggerList);
             BindListener(events, triggerList);
@@ -144,11 +172,6 @@ namespace RelertSharp.Wpf
             RedrawListener();
             OtherListener();
         }
-        private void DebugClick()
-        {
-            tmrInit.Stop();
-            triggerList.ReloadMapTrigger();
-        }
 
         private void RedrawRequestHandler(object sender, EventArgs e)
         {
@@ -169,42 +192,6 @@ namespace RelertSharp.Wpf
         private void RefreshStatus()
         {
             position.Text = string.Format("X: {0} Y: {1} Z: {2}, Scale: {3}", posMouse.X, posMouse.Y, posMouse.Z, Engine.Api.EngineApi.ScaleFactor);
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            DebugInit();
-        }
-
-        private void DebugClick(object sender, RoutedEventArgs e)
-        {
-            DebugClick();
-        }
-
-        private void DebugClick2(object sender, RoutedEventArgs e)
-        {
-            //NavigationHub.BackTrace();
-            Algorithm.PerlinNoiseGeneratorConfig cfg = new Algorithm.PerlinNoiseGeneratorConfig()
-            {
-                Amplify = false,
-                Width = 50,
-                Height = 50,
-                Iteration = 10,
-                Scale = 5f,
-                SmoothIteration = 15
-            };
-            double[] r = RelertSharp.Algorithm.PerlinNoiseGenerator.Generate2DNoise(cfg);
-            
-            StringBuilder sb = new StringBuilder();
-            for (int y = 0; y < 50; y++)
-            {
-                for (int x = 0; x < 50; x++)
-                {
-                    double v = r[x + y * 50];
-                    sb.Append(string.Format("{0}\t{1}\t{2}\n", x, y, v));
-                }
-            }
-            Utils.Misc.DebugSave(sb.ToString(), "123.txt");
         }
     }
 }
