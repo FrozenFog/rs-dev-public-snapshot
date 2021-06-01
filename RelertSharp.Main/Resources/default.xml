@@ -881,12 +881,12 @@
       </info>
       <info id="20" defaultArr="8,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="ThemeReg" trace="SoundRegTrace" label="Music Name" arrPos="1" fmtType="KvKey" />
+          <param type="ThemeReg" trace="ThemeRegTrace" label="Music Name" arrPos="1" fmtType="KvKey" />
         </Parameters>
       </info>
       <info id="21" defaultArr="6,0,0,0,0,0,A" length="7">
         <Parameters>
-          <param type="EvaReg" trace="SoundRegTrace" label="Speech Name" arrPos="1" fmtType="KvKey" />
+          <param type="EvaReg" trace="EvaRegTrace" label="Speech Name" arrPos="1" fmtType="KvKey" />
         </Parameters>
       </info>
       <info id="22" defaultArr="2,0,0,0,0,0,A" length="7">

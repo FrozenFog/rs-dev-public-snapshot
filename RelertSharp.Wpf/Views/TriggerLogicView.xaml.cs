@@ -315,25 +315,7 @@ namespace RelertSharp.Wpf.Views
                 {
                     value = txb.Text;
                 }
-                switch (binder.Param.TraceTarget)
-                {
-                    case TriggerInfoTraceType.TriggerRegTrace:
-                        NavigationHub.GoToTrigger(target);
-                        break;
-                    case TriggerInfoTraceType.TeamRegTrace:
-                        NavigationHub.GoToTeam(target);
-                        break;
-                    case TriggerInfoTraceType.I2dWaypointTrace:
-                        I2dLocateable wp = GlobalVar.CurrentMapDocument.Map.Waypoints.FindByID(value);
-                        if (wp != null)
-                        {
-                            NavigationHub.GoToPosition(wp, GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(wp));
-                        }
-                        break;
-                    case TriggerInfoTraceType.AnimIdxTrace:
-                        NavigationHub.PlayAnimation(target.Name);
-                        break;
-                }
+                NavigationHub.HandleTrace(binder.Param.TraceTarget, value, target);
             }
         }
         #endregion

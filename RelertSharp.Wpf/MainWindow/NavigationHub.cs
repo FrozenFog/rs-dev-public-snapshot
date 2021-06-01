@@ -7,11 +7,67 @@ using RelertSharp.Wpf.Common;
 using RelertSharp.Common;
 using RelertSharp.Engine;
 using RelertSharp.Wpf.Views;
+using RelertSharp.Common.Config.Model;
 
 namespace RelertSharp.Wpf
 {
     internal static class NavigationHub
     {
+        #region Main Distribution
+        public static void HandleTrace(TriggerInfoTraceType type, string value, IIndexableItem target)
+        {
+            switch (type)
+            {
+                case TriggerInfoTraceType.TriggerRegTrace:
+                    GoToTrigger(target);
+                    break;
+                case TriggerInfoTraceType.TeamRegTrace:
+                    GoToTeam(target);
+                    break;
+                case TriggerInfoTraceType.I2dWaypointTrace:
+                    I2dLocateable wp = GlobalVar.CurrentMapDocument.Map.Waypoints.FindByID(value);
+                    if (wp != null)
+                    {
+                        GoToPosition(wp, GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(wp));
+                    }
+                    break;
+                case TriggerInfoTraceType.AnimIdxTrace:
+                    PlayAnimation(target.Name);
+                    break;
+                case TriggerInfoTraceType.EvaIdxTrace:
+                    PlaySound(target.Name, SoundType.Eva);
+                    break;
+                case TriggerInfoTraceType.EvaRegTrace:
+                    PlaySound(target.Id, SoundType.Eva);
+                    break;
+                case TriggerInfoTraceType.ThemeIdxTrace:
+                    PlaySound(target.Name, SoundType.Theme);
+                    break;
+                case TriggerInfoTraceType.ThemeRegTrace:
+                    PlaySound(target.Id, SoundType.Theme);
+                    break;
+                case TriggerInfoTraceType.SoundIdxTrace:
+                    PlaySound(target.Name, SoundType.SoundBankRnd);
+                    break;
+                case TriggerInfoTraceType.SoundRegTrace:
+                    PlaySound(target.Id, SoundType.SoundBankRnd);
+                    break;
+                case TriggerInfoTraceType.I2dBase128Trace:
+                    string[] tmp = value.Split(',');
+                    if (tmp.Length == 2)
+                    {
+                        int.TryParse(tmp[0], out int x);
+                        int.TryParse(tmp[1], out int y);
+                        I2dLocateable pos = new Pnt(x, y);
+                        if (pos.X != 0 && pos.Y != 0)
+                        {
+                            GoToPosition(pos, GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(pos));
+                        }
+                    }
+                    break;
+            }
+        }
+        #endregion
         #region Logic navigation
         public static event IndexableHandler GoToTriggerRequest;
         private static IListContainer trgList;
@@ -79,6 +135,11 @@ namespace RelertSharp.Wpf
         public static void PlayAnimation(string regname)
         {
             PlayAnimationRequest?.Invoke(regname);
+        }
+        public static event SoundPlayingHandler PlaySoundRequest;
+        public static void PlaySound(string soundReg, SoundType type)
+        {
+            PlaySoundRequest?.Invoke(soundReg, type);
         }
         #endregion
 
