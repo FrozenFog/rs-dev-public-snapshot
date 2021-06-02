@@ -204,6 +204,10 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Calls - OverlayUnit
+        /// <summary>
+        /// Overlay won't have id, returns null
+        /// </summary>
+        public string Id { get { return null; } }
         public bool IsHidden { get; private set; }
         public byte Index { get; set; }
         public byte Frame { get; set; }

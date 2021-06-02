@@ -26,8 +26,8 @@ namespace RelertSharp.MapStructure.Objects
             {
                 if (!data.Keys.Contains(i.ToString()))
                 {
-                    item.ID = i.ToString();
-                    data[item.ID] = item;
+                    item.Id = i.ToString();
+                    data[item.Id] = item;
                     return;
                 }
             }
@@ -42,7 +42,7 @@ namespace RelertSharp.MapStructure.Objects
         }
         protected void RemoveItem(T item)
         {
-            data.Remove(item.ID);
+            data.Remove(item.Id);
         }
         #endregion
 
@@ -80,7 +80,7 @@ namespace RelertSharp.MapStructure.Objects
         #region Ctor
         public ObjectItemBase(string _id, string[] _args)
         {
-            ID = _id;
+            Id = _id;
             OwnerHouse = _args[0];
             RegName = _args[1];
             HealthPoint = int.Parse(_args[2]);
@@ -89,7 +89,7 @@ namespace RelertSharp.MapStructure.Objects
         }
         public ObjectItemBase(ObjectItemBase src)
         {
-            ID = src.ID;
+            Id = src.Id;
             OwnerHouse = src.OwnerHouse;
             RegName = src.RegName;
             HealthPoint = src.HealthPoint;
@@ -162,7 +162,7 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Calls - ObjectItemBase
-        public string ID { get; internal set; } = "NULL";
+        public string Id { get; internal set; } = "NULL";
         public string RegName { get; set; } = "(NOTHING)";
         public string OwnerHouse { get; set; } = "<none>";
         public int HealthPoint { get; set; } = 256;

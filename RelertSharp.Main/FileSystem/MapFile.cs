@@ -131,7 +131,7 @@ namespace RelertSharp.FileSystem
                                 Misc.ParseObjectsToString
                                 (
                                     building.OwnerHouse,
-                                    building.ID,
+                                    building.Id,
                                     building.HealthPoint,
                                     building.X,
                                     building.Y,

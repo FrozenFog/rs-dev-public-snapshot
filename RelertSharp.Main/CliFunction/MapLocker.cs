@@ -51,7 +51,7 @@ namespace RelertSharp.CliFunction
             Swap(map.TilesData, shuffleVector, (pos, v) => { Swap(pos, v[pos.AsPnt()]); });
             foreach (OverlayUnit o in map.Overlays.ToArray())
             {
-                map.RemoveOverlay(o);
+                MapApi.RemoveObject(o);
                 Swap(o, shuffleVector[o.AsPnt()]);
                 map.Overlays[o.X, o.Y] = o;
             }

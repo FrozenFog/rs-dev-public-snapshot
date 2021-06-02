@@ -56,12 +56,11 @@ namespace RelertSharp.Common
         void MoveTo(I3dLocateable pos, int subcell = -1);
         void ShiftBy(I3dLocateable delta);
         void ApplyConfig(IMapObjectBrushConfig config);
-        string ID { get; }
+        string Id { get; }
     }
 
     public interface ICombatObject : IMapObject
     {
-        string ID { get; }
         string OwnerHouse { get; set; }
         int HealthPoint { get; set; }
         string Status { get; set; }

@@ -630,7 +630,7 @@ namespace RelertSharp.MapStructure
             {
                 if (objectsOnTile[i] is ICombatObject target)
                 {
-                    if (target.RegName == src.RegName && target.ID == src.ID)
+                    if (target.RegName == src.RegName && target.Id == src.Id)
                     {
                         objectsOnTile.RemoveAt(i);
                         break;
