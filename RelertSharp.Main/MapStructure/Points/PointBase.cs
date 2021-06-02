@@ -89,7 +89,7 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Public Methods - PointItemBase
-        public void MoveTo(I3dLocateable pos)
+        public void MoveTo(I3dLocateable pos, int subcell = -1)
         {
             X = pos.X;
             Y = pos.Y;
@@ -142,6 +142,11 @@ namespace RelertSharp.MapStructure.Points
         {
             return GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(this);
         }
+        public virtual void ApplyConfig(IMapObjectBrushConfig config)
+        {
+            X = config.Pos.X;
+            Y = config.Pos.Y;
+        }
         #endregion
 
 
@@ -166,12 +171,8 @@ namespace RelertSharp.MapStructure.Points
             }
         }
         public bool Selected { get; set; }
-        public string RegName { get { return string.Empty; } }
+        public virtual string RegName { get { return string.Empty; } set { } }
         public virtual MapObjectType ObjectType { get; protected set; } = MapObjectType.Undefined;
-        #endregion
-
-
-        #region Protected
         public virtual ISceneObject SceneObject { get; set; }
         #endregion
     }

@@ -87,6 +87,11 @@ namespace RelertSharp.MapStructure
                 data[(y << 9) + x] = value;
             }
         }
+        public OverlayUnit this[I2dLocateable pos]
+        {
+            get { return this[pos.X, pos.Y]; }
+            set { this[pos.X, pos.Y] = value; }
+        }
         #endregion
     }
 
@@ -118,11 +123,15 @@ namespace RelertSharp.MapStructure
             Index = src.Index;
             Frame = src.Frame;
         }
+        internal OverlayUnit()
+        {
+
+        }
         #endregion
 
 
         #region Public Methods - OverlayUnit
-        public void MoveTo(I3dLocateable pos)
+        public void MoveTo(I3dLocateable pos, int subcell = -1)
         {
             X = pos.X;
             Y = pos.Y;
@@ -183,6 +192,14 @@ namespace RelertSharp.MapStructure
         {
             return GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(this);
         }
+
+        public void ApplyConfig(IMapObjectBrushConfig config)
+        {
+            X = config.Pos.X;
+            Y = config.Pos.Y;
+            Index = config.OverlayIndex;
+            Frame = config.OverlayFrame;
+        }
         #endregion
 
 
@@ -194,7 +211,7 @@ namespace RelertSharp.MapStructure
         public int Y { get; set; }
         public int Coord { get { return Misc.CoordInt(X, Y); } }
         public bool Selected { get; set; }
-        public string RegName { get; set; }
+        public string RegName { get; private set; }
         public MapObjectType ObjectType { get { return MapObjectType.Overlay; } }
         #endregion
 

@@ -25,19 +25,23 @@ namespace RelertSharp.MapStructure.Points
             RegName = src.RegName;
             ObjectType = MapObjectType.Terrain;
         }
+        internal TerrainItem()
+        {
+            ObjectType = MapObjectType.Terrain;
+        }
 
 
         #region Public Methods - TerrainItem
-        public IMapObject CopyNew()
+        public override void ApplyConfig(IMapObjectBrushConfig config)
         {
-            TerrainItem terr = new TerrainItem(this);
-            return terr;
+            base.ApplyConfig(config);
+            RegName = config.RegName;
         }
         #endregion
 
 
         #region Public Calls - TerrainItem
-        public new string RegName { get; set; }
+        public override string RegName { get; set; }
         #endregion
     }
 }

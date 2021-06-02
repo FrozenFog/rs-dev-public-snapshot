@@ -5,21 +5,21 @@ namespace RelertSharp.MapStructure
 {
     public partial class Map
     {
-        public void MoveObjectTo(IMapObject target, I3dLocateable pos, int subcell = -1)
-        {
-            EraseObjectTileData(target);
-            if (target.GetType() == typeof(InfantryItem))
-            {
-                (target as InfantryItem).MoveTo(pos, subcell);
-            }
-            else target.MoveTo(pos);
-            AddObjectInfoInTile(target);
-        }
-        public void ShiftObjectBy(IMapObject target, I3dLocateable delta)
-        {
-            EraseObjectTileData(target);
-            target.ShiftBy(delta);
-            AddObjectInfoInTile(target);
-        }
+        //public void MoveObjectTo(IMapObject target, I3dLocateable pos, int subcell = -1)
+        //{
+        //    EraseObjectTileData(target);
+        //    if (target.GetType() == typeof(InfantryItem))
+        //    {
+        //        (target as InfantryItem).MoveTo(pos, subcell);
+        //    }
+        //    else target.MoveTo(pos);
+        //    AddObjectInfoInTile(target);
+        //}
+        //public void ShiftObjectBy(IMapObject target, I3dLocateable delta)
+        //{
+        //    EraseObjectTileData(target);
+        //    target.ShiftBy(delta);
+        //    AddObjectInfoInTile(target);
+        //}
     }
 }

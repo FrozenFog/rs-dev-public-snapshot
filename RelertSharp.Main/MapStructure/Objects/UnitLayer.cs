@@ -29,7 +29,7 @@ namespace RelertSharp.MapStructure.Objects
                 Status = _args[6];
                 TaggedTrigger = _args[7];
                 VeterancyPercentage = int.Parse(_args[8]);
-                Group = int.Parse(_args[9]);
+                Group = _args[9];
                 IsAboveGround = IniParseBool(_args[10]);
                 FollowsIndex = _args[11];
                 AutoNORecruitType = IniParseBool(_args[12]);
@@ -60,7 +60,7 @@ namespace RelertSharp.MapStructure.Objects
             RegName = regname;
             ObjectType = MapObjectType.Unit;
         }
-        public UnitItem()
+        internal UnitItem()
         {
             ObjectType = MapObjectType.Unit;
         }

@@ -25,7 +25,7 @@ namespace RelertSharp.MapStructure.Objects
                 Status = _args[6];
                 TaggedTrigger = _args[7];
                 VeterancyPercentage = int.Parse(_args[8]);
-                Group = int.Parse(_args[9]);
+                Group = _args[9];
                 AutoNORecruitType = IniParseBool(_args[10]);
                 AutoYESRecruitType = IniParseBool(_args[11]);
                 ObjectType = MapObjectType.Aircraft;
@@ -50,6 +50,10 @@ namespace RelertSharp.MapStructure.Objects
         public AircraftItem(string regname)
         {
             RegName = regname;
+            ObjectType = MapObjectType.Aircraft;
+        }
+        internal AircraftItem()
+        {
             ObjectType = MapObjectType.Aircraft;
         }
 

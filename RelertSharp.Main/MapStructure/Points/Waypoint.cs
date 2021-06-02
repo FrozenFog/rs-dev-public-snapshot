@@ -75,13 +75,25 @@ namespace RelertSharp.MapStructure.Points
             Num = index.ToString();
             ObjectType = MapObjectType.Waypoint;
         }
+        internal WaypointItem()
+        {
+            ObjectType = MapObjectType.Waypoint;
+        }
 
-
-        #region Public Calls - WaypointItem
+        #region Public Methods
         public override string ToString()
         {
             return string.Format("{0} - ({1}, {2})", Num, X, Y);
         }
+        public override void ApplyConfig(IMapObjectBrushConfig config)
+        {
+            base.ApplyConfig(config);
+            Num = config.WaypointNum;
+        }
+        #endregion
+
+
+        #region Public Calls - WaypointItem
         public override string Value { get { return Utils.Misc.WaypointString(int.Parse(Num)); } }
         public string Num { get { return Id; } set { Id = value; } }
         #endregion
