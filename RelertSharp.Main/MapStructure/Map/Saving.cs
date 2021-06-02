@@ -15,7 +15,7 @@ namespace RelertSharp.MapStructure
             INIEntity ent = new INIEntity("Structures");
             foreach (StructureItem bud in Buildings)
             {
-                ent.AddPair(new INIPair(bud.ID, bud.SaveData.JoinBy()));
+                ent.AddPair(new INIPair(bud.Id, bud.SaveData.JoinBy()));
             }
             return ent;
         }
@@ -24,7 +24,7 @@ namespace RelertSharp.MapStructure
             INIEntity ent = new INIEntity("Infantry");
             foreach (InfantryItem inf in Infantries)
             {
-                ent.AddPair(new INIPair(inf.ID, inf.SaveData.JoinBy()));
+                ent.AddPair(new INIPair(inf.Id, inf.SaveData.JoinBy()));
             }
             return ent;
         }
@@ -33,7 +33,7 @@ namespace RelertSharp.MapStructure
             INIEntity ent = new INIEntity("Units");
             foreach (UnitItem u in Units)
             {
-                ent.AddPair(new INIPair(u.ID, u.SaveData.JoinBy()));
+                ent.AddPair(new INIPair(u.Id, u.SaveData.JoinBy()));
             }
             return ent;
         }
@@ -42,7 +42,7 @@ namespace RelertSharp.MapStructure
             INIEntity ent = new INIEntity("Aircraft");
             foreach (AircraftItem a in Aircrafts)
             {
-                ent.AddPair(new INIPair(a.ID, a.SaveData.JoinBy()));
+                ent.AddPair(new INIPair(a.Id, a.SaveData.JoinBy()));
             }
             return ent;
         }

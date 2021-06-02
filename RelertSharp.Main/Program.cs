@@ -53,7 +53,7 @@ namespace RelertSharp
                             if (o.Index >= maxNum) toRemove.Add(o);
                             if (m.Map.IsOutOfSize(o, null)) toRemove.Add(o);
                         }
-                        foreach (OverlayUnit o in toRemove) m.Map.RemoveOverlay(o);
+                        foreach (OverlayUnit o in toRemove) MapApi.RemoveObject(o);
                         m.SaveMapAs(StartupPath, filename);
                     }
                     else if (a == "/locker")

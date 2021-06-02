@@ -101,7 +101,7 @@ namespace RelertSharp.MapStructure.Points
         /// <summary>
         /// Basenode won't have id, return null anyway
         /// </summary>
-        public string ID { get { return null; } }
+        public string Id { get { return null; } }
         public HouseItem Parent { get; private set; }
         public string SaveData { get { return string.Format("{0},{1},{2}", RegName, X, Y); } }
         public bool IsHidden { get; private set; }

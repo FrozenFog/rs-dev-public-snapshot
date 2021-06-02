@@ -196,20 +196,20 @@ namespace RelertSharp.MapStructure
             switch (obj.ObjectType)
             {
                 case MapObjectType.Aircraft:
-                    Map.Aircrafts.RemoveByID(obj.ID);
+                    Map.Aircrafts.RemoveByID(obj.Id);
                     break;
                 case MapObjectType.BaseNode:
                     BaseNode node = obj as BaseNode;
                     node.Parent.RemoveNode(node);
                     break;
                 case MapObjectType.Building:
-                    Map.Buildings.RemoveByID(obj.ID);
+                    Map.Buildings.RemoveByID(obj.Id);
                     break;
                 case MapObjectType.Celltag:
                     Map.Celltags.RemoveObjectByID(obj as CellTagItem);
                     break;
                 case MapObjectType.Infantry:
-                    Map.Infantries.RemoveByID(obj.ID);
+                    Map.Infantries.RemoveByID(obj.Id);
                     break;
                 case MapObjectType.LightSource:
                     Map.LightSources.RemoveObjectByID(obj as LightSource);
@@ -224,7 +224,7 @@ namespace RelertSharp.MapStructure
                     Map.Terrains.RemoveObjectByID(obj as TerrainItem);
                     break;
                 case MapObjectType.Vehicle:
-                    Map.Units.RemoveByID(obj.ID);
+                    Map.Units.RemoveByID(obj.Id);
                     break;
                 case MapObjectType.Waypoint:
                     Map.Waypoints.RemoveWaypoint(obj as WaypointItem);
