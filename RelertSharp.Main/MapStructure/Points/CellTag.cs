@@ -30,9 +30,18 @@ namespace RelertSharp.MapStructure.Points
             TagID = TagID;
             ObjectType = MapObjectType.Celltag;
         }
+        internal CellTagItem()
+        {
+            ObjectType = MapObjectType.Celltag;
+        }
 
 
         #region Public Methods
+        public override void ApplyConfig(IMapObjectBrushConfig config)
+        {
+            base.ApplyConfig(config);
+            TagID = config.AttatchedTag;
+        }
         public override string ToString()
         {
             return string.Format("{0}, {1} - {2}", X, Y, TagID);

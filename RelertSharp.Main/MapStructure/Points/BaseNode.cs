@@ -1,32 +1,33 @@
 ﻿using RelertSharp.Common;
+using RelertSharp.MapStructure.Logic;
 using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.MapStructure.Points
 {
     public class BaseNode : IMapObject
     {
-        public BaseNode(string _name, int _x, int _y)
+        public BaseNode(string _name, int _x, int _y, HouseItem parent)
         {
             RegName = _name;
             X = _x;
             Y = _y;
+            Parent = parent;
         }
         public BaseNode(BaseNode src)
         {
             RegName = src.RegName;
             X = src.X;
             Y = src.Y;
+            Parent = src.Parent;
         }
-        public BaseNode(StructureItem src)
+        internal BaseNode(HouseItem parent)
         {
-            RegName = src.RegName;
-            X = src.X;
-            Y = src.Y;
+            Parent = parent;
         }
 
 
         #region Public Methods - BaseNode
-        public void MoveTo(I3dLocateable pos)
+        public void MoveTo(I3dLocateable pos, int subcell = -1)
         {
             X = pos.X;
             Y = pos.Y;
@@ -86,10 +87,22 @@ namespace RelertSharp.MapStructure.Points
         {
             return GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(this);
         }
+
+        public void ApplyConfig(IMapObjectBrushConfig config)
+        {
+            RegName = config.RegName;
+            X = config.Pos.X;
+            Y = config.Pos.Y;
+        }
         #endregion
 
 
         #region Public Calls - BaseNode
+        /// <summary>
+        /// Basenode won't have id, return null anyway
+        /// </summary>
+        public string ID { get { return null; } }
+        public HouseItem Parent { get; private set; }
         public string SaveData { get { return string.Format("{0},{1},{2}", RegName, X, Y); } }
         public bool IsHidden { get; private set; }
         public string RegName { get; set; }

@@ -33,7 +33,7 @@ namespace RelertSharp.MapStructure.Objects
                 Rotation = int.Parse(_args[7]);
                 TaggedTrigger = _args[8];
                 VeterancyPercentage = int.Parse(_args[9]);
-                Group = int.Parse(_args[10]);
+                Group = _args[10];
                 IsAboveGround = IniParseBool(_args[11]);
                 AutoNORecruitType = IniParseBool(_args[12]);
                 AutoYESRecruitType = IniParseBool(_args[13]);
@@ -63,7 +63,7 @@ namespace RelertSharp.MapStructure.Objects
             RegName = regname;
             ObjectType = MapObjectType.Infantry;
         }
-        public InfantryItem()
+        internal InfantryItem()
         {
             ObjectType = MapObjectType.Infantry;
         }
@@ -71,7 +71,7 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - InfantryItem
-        public virtual void MoveTo(I3dLocateable pos, int subcell)
+        public override void MoveTo(I3dLocateable pos, int subcell)
         {
             if (subcell != -1) this.subcell = subcell;
             X = pos.X;
@@ -86,6 +86,11 @@ namespace RelertSharp.MapStructure.Objects
                 AutoNORecruitType = inf.AutoNORecruitType;
                 base.ApplyAttributeFrom(src);
             }
+        }
+        public override void ApplyConfig(IMapObjectBrushConfig config)
+        {
+            base.ApplyConfig(config);
+            SubCells = config.SubCell;
         }
         #endregion
 

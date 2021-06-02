@@ -16,7 +16,11 @@ namespace RelertSharp.MapStructure.Objects
         {
             if (data.Keys.Contains(id)) data.Remove(id);
         }
-        public virtual void AddFromBrush(T item)
+        /// <summary>
+        /// Only use this to generate id
+        /// </summary>
+        /// <param name="item"></param>
+        public virtual void AddItem(T item)
         {
             for (int i = 0; i < 10000; i++)
             {
@@ -97,7 +101,7 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - ObjectItemBase
-        public virtual void MoveTo(I3dLocateable pos)
+        public virtual void MoveTo(I3dLocateable pos, int subcell = -1)
         {
             X = pos.X;
             Y = pos.Y;
@@ -126,6 +130,22 @@ namespace RelertSharp.MapStructure.Objects
                 ApplyAttributeFrom(c);
             }
         }
+        public virtual void ApplyConfig(IMapObjectBrushConfig config)
+        {
+            RegName = config.RegName;
+            X = config.Pos.X;
+            Y = config.Pos.Y;
+            OwnerHouse = config.OwnerHouse;
+            HealthPoint = config.HealthPoint;
+            Group = config.Group;
+            Status = config.MissionStatus;
+            TaggedTrigger = config.AttatchedTag;
+            VeterancyPercentage = config.VeterancyPercentage;
+            Rotation = config.FacingRotation;
+            AutoYESRecruitType = config.AutoRecruitYes;
+            AutoNORecruitType = config.AutoRecruitNo;
+            IsAboveGround = config.AboveGround;
+        }
         public virtual int GetHeight()
         {
             return GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(this);
@@ -142,7 +162,7 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Calls - ObjectItemBase
-        public string ID { get; set; } = "NULL";
+        public string ID { get; internal set; } = "NULL";
         public string RegName { get; set; } = "(NOTHING)";
         public string OwnerHouse { get; set; } = "<none>";
         public int HealthPoint { get; set; } = 256;
@@ -161,7 +181,7 @@ namespace RelertSharp.MapStructure.Objects
         }
         public int Rotation { get; set; } = 0;
         public int VeterancyPercentage { get; set; } = 100;
-        public int Group { get; set; } = -1;
+        public string Group { get; set; } = "-1";
         public bool IsAboveGround { get; set; } = false;
         public bool AutoNORecruitType { get; set; } = false;
         public bool AutoYESRecruitType { get; set; } = true;

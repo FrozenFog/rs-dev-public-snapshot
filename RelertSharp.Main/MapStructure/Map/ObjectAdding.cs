@@ -26,56 +26,56 @@ namespace RelertSharp.MapStructure
             }
             else Tiles.AddObjectOnTile(obj);
         }
-        public SmudgeItem AddSmudge(string regname, int x, int y, bool ignore)
+        internal SmudgeItem AddSmudge(string regname, int x, int y, bool ignore)
         {
             SmudgeItem smg = new SmudgeItem(regname, x, y, ignore);
             Smudges.AddObject(smg);
             AddObjectToTile(smg);
             return smg;
         }
-        public UnitItem AddUnit(string id, string[] args)
+        internal UnitItem AddUnit(string id, string[] args)
         {
             UnitItem unit = new UnitItem(id, args);
             Units[id] = unit;
             AddObjectToTile(unit);
             return unit;
         }
-        public InfantryItem AddInfantry(string id, string[] args)
+        internal InfantryItem AddInfantry(string id, string[] args)
         {
             InfantryItem inf = new InfantryItem(id, args);
             Infantries[id] = inf;
             AddObjectToTile(inf);
             return inf;
         }
-        public StructureItem AddStructure(string id, string[] args)
+        internal StructureItem AddStructure(string id, string[] args)
         {
             StructureItem bud = new StructureItem(id, args);
             Buildings[id] = bud;
             AddObjectToTile(bud);
             return bud;
         }
-        public void DumpStructure()
+        internal void DumpStructure()
         {
             foreach (StructureItem bud in Buildings)
             {
                 AddObjectToTile(bud);
             }
         }
-        public AircraftItem AddAircraft(string id, string[] args)
+        internal AircraftItem AddAircraft(string id, string[] args)
         {
             AircraftItem air = new AircraftItem(id, args);
             Aircrafts[id] = air;
             AddObjectToTile(air);
             return air;
         }
-        public TerrainItem AddTerrain(string coord, string regname)
+        internal TerrainItem AddTerrain(string coord, string regname)
         {
             TerrainItem ter = new TerrainItem(coord, regname);
             Terrains.AddObject(ter);
             AddObjectToTile(ter);
             return ter;
         }
-        public CellTagItem AddCellTag(I2dLocateable pos, string tagID)
+        internal CellTagItem AddCellTag(I2dLocateable pos, string tagID)
         {
             CellTagItem cell = new CellTagItem(pos, tagID);
             Celltags.AddObject(cell);

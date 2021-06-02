@@ -29,19 +29,23 @@ namespace RelertSharp.MapStructure.Points
             RegName = src.RegName;
             ObjectType = MapObjectType.Smudge;
         }
+        internal SmudgeItem()
+        {
+            ObjectType = MapObjectType.Smudge;
+        }
 
 
         #region Public Methods - SmudgeItem
-        public IMapObject CopyNew()
+        public override void ApplyConfig(IMapObjectBrushConfig config)
         {
-            SmudgeItem smg = new SmudgeItem(this);
-            return smg;
+            base.ApplyConfig(config);
+            RegName = config.RegName;
         }
         #endregion
 
 
         #region Public Calls - SmudgeItem
-        public new string RegName { get; set; }
+        public override string RegName { get; set; }
         public bool IgnoreSmudge { get; set; }
         public int SizeX
         {

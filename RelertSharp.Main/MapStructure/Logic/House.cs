@@ -72,7 +72,7 @@ namespace RelertSharp.MapStructure.Logic
             {
                 string num = string.Format("{0:D3}", i);
                 string[] tmp = ent.PopPair(num).ParseStringList();
-                BaseNode node = new BaseNode(tmp[0], int.Parse(tmp[1]), int.Parse(tmp[2]));
+                BaseNode node = new BaseNode(tmp[0], int.Parse(tmp[1]), int.Parse(tmp[2]), this);
                 BaseNodes.Add(node);
             }
             residual = ent.DictData;
@@ -123,6 +123,16 @@ namespace RelertSharp.MapStructure.Logic
             PlayerControl = (bool)unit.Data["PlayerControl"].Value;
             NodeCounts = (int)unit.Data["NodeCounts"].Value;
             GetToUnit = new HouseUnit(this);
+        }
+        public BaseNode AddNewNode()
+        {
+            BaseNode node = new BaseNode(this);
+            BaseNodes.Add(node);
+            return node;
+        }
+        public void RemoveNode(BaseNode node)
+        {
+            BaseNodes.Remove(node);
         }
         #endregion
 

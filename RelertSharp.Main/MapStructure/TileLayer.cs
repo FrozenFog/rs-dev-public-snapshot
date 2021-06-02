@@ -218,6 +218,14 @@ namespace RelertSharp.MapStructure
         {
             this[pos]?.AddObject(src);
         }
+        public void RemoveObjectOnTile(IMapObject obj, I2dLocateable pos)
+        {
+            this[pos]?.RemoveObject(obj);
+        }
+        public void RemoveObjectOnTile(IMapObject obj)
+        {
+            this[obj]?.RemoveObject(obj);
+        }
         public void FixEmptyTiles(int width, int height)
         {
             LayTileWeb(1, width, width, height);

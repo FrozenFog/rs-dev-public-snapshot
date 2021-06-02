@@ -199,6 +199,8 @@
     <Compile Include="MapStructure\Logic\House.cs" />
     <Compile Include="Common\IndexableItem.cs" />
     <Compile Include="MapStructure\Logic\TriggerDescription.cs" />
+    <Compile Include="MapStructure\MapApi\Api.cs" />
+    <Compile Include="MapStructure\MapApi\MapObjects.cs" />
     <Compile Include="MapStructure\MapTheaterTileSet.cs" />
     <Compile Include="MapStructure\Map\BrushAdding.cs" />
     <Compile Include="MapStructure\Map\MapObjectFactory.cs" />
@@ -294,6 +296,7 @@
   <ItemGroup>
     <Content Include="Resources\defaultIni.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
 </Project>

@@ -53,21 +53,53 @@ namespace RelertSharp.Common
         MapObjectType ObjectType { get; }
         int GetHeight();
         void Dispose();
-        void MoveTo(I3dLocateable pos);
+        void MoveTo(I3dLocateable pos, int subcell = -1);
         void ShiftBy(I3dLocateable delta);
+        void ApplyConfig(IMapObjectBrushConfig config);
+        string ID { get; }
     }
 
     public interface ICombatObject : IMapObject
     {
-        string ID { get; set; }
+        string ID { get; }
         string OwnerHouse { get; set; }
         int HealthPoint { get; set; }
         string Status { get; set; }
         string TaggedTrigger { get; set; }
         int Rotation { get; set; }
         int VeterancyPercentage { get; set; }
-        int Group { get; set; }
+        string Group { get; set; }
         void ApplyAttributeFrom(AttributeChanger ckb);
         void ApplyAttributeFrom(ICombatObject src);
+    }
+
+    public interface IMapObjectBrushConfig
+    {
+        string OwnerHouse { get; }
+        string RegName { get; }
+        I2dLocateable Pos { get; }
+        int Height { get; }
+        int SubCell { get; }
+        int FacingRotation { get; }
+        string AttatchedTag { get; }
+        /// <summary>
+        /// Area guard, Sleep, etc
+        /// </summary>
+        string MissionStatus { get; }
+        string Group { get; }
+        int HealthPoint { get; }
+        int VeterancyPercentage { get; }
+        bool AboveGround { get; }
+        /// <summary>
+        /// Default false
+        /// </summary>
+        bool AutoRecruitYes { get; }
+        /// <summary>
+        /// Default true
+        /// </summary>
+        bool AutoRecruitNo { get; }
+        string WaypointNum { get; }
+        byte OverlayIndex { get; }
+        byte OverlayFrame { get; }
     }
 }
