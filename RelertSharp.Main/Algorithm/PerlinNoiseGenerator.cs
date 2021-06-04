@@ -44,13 +44,9 @@ namespace RelertSharp.Algorithm
         }
 
         /// <summary>
-        /// return 2d perlin noise graph widh designated size
+        /// Use config, just new one
         /// </summary>
-        /// <param name="width">desighated width(x scale)</param>
-        /// <param name="height">desighated height(y scale)</param>
-        /// <param name="scaleFactor">frequency, to be percise</param>
-        /// <param name="amplitude"></param>
-        /// <param name="seed">leave it empty will use time-based random generator</param>
+        /// <param name="config"></param>
         /// <returns></returns>
         public static double[] Generate2DNoise(PerlinNoiseGeneratorConfig config)
         {
@@ -183,15 +179,41 @@ namespace RelertSharp.Algorithm
         {
 
         }
-
+        /// <summary>
+        /// Graph width
+        /// </summary>
         public int Width { get; set; }
+        /// <summary>
+        /// Graph height
+        /// </summary>
         public int Height { get; set; }
+        /// <summary>
+        /// Larger scale means larger cluster, default 5f
+        /// </summary>
         public float Scale { get; set; } = 5f;
+        /// <summary>
+        /// Reserved, currently useless
+        /// </summary>
         public bool Amplify { get; set; }
+        /// <summary>
+        /// Leave for 0 will use time-based random seed
+        /// </summary>
         public int Seed { get; set; }
+        /// <summary>
+        /// Iteration times, more iteration means more smooth graph, default 4 times
+        /// </summary>
         public int Iteration { get; set; } = 4;
+        /// <summary>
+        /// Smooth iteration times, use simple 3x3 box filter, default 1 time
+        /// </summary>
         public int SmoothIteration { get; set; } = 1;
+        /// <summary>
+        /// Scale the result array between -1 and 1, include border
+        /// </summary>
         public bool Normalize { get; set; } = true;
+        /// <summary>
+        /// Interpolate function, leave it null will use fifth degree polynomial as default
+        /// </summary>
         public Func<float, double> CurveFunction { get; set; }
     }
 }

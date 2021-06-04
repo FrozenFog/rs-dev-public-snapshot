@@ -72,6 +72,19 @@ namespace RelertSharp.Common
         void ApplyAttributeFrom(ICombatObject src);
     }
 
+    public interface IMapTileBrushConfig
+    {
+        I3dLocateable Pos { get; }
+        int TileIndex { get; }
+        byte TileSubIndex { get; }
+        byte IceGrowth { get; }
+        /// <summary>
+        /// Return a virtual tile, no scene object
+        /// </summary>
+        /// <returns></returns>
+        Tile ComposeTile();
+
+    }
     public interface IMapObjectBrushConfig
     {
         string OwnerHouse { get; }
