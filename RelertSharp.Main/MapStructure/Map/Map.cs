@@ -34,6 +34,7 @@ namespace RelertSharp.MapStructure
         public Map(MapFile f)
         {
             ReadFromMapFile(f);
+            TileDictionary = new MapTheaterTileSet(this.info.TheaterType);
         }
         #endregion
 

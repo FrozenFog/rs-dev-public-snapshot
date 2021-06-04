@@ -62,23 +62,6 @@ namespace RelertSharp.MapStructure
                 ymax++;
             }
         }
-        private void SetLatBase(Tile center, TileSet setCenter, int direction)
-        {
-            if (direction == 0 && TileDictionary.IsConnLat(setCenter.SetIndex))
-            {
-                setCenter = TileDictionary.SwapSet(setCenter);
-            }
-            else if (direction != 0 && !TileDictionary.IsConnLat(setCenter.SetIndex) && setCenter.SetIndex != Constant.LATSystem.idxClear)
-            {
-                setCenter = TileDictionary.SwapSet(setCenter);
-            }
-            else if (direction != 0 && setCenter.SetIndex == Constant.LATSystem.idxClear)
-            {
-                direction = 0;
-            }
-            center.TileIndex = setCenter.Offset + direction;
-            center.Redraw();
-        }
         //private void SetTilePixelInPreview(Bitmap dest, Tile t, int bmpx, int bmpy)
         //{
         //    TileAbstract abs = GlobalVar.TileDictionary.GetTileAbstract(t.TileIndex);
@@ -159,56 +142,6 @@ namespace RelertSharp.MapStructure
                 directions.Add(WallDirection.SW);
             }
             return result;
-        }
-        public bool NeedLat(Tile obj)
-        {
-            if (obj == null) return false;
-            return Constant.LATSystem.LatSet.Contains(TileDictionary.GetTileSetIndexFromTile(obj));
-        }
-        public void SwitchLat(Tile center)
-        {
-            if (center != null && TileDictionary.IsLat(center))
-            {
-                TileSet setCenter = TileDictionary.GetTileSetFromTile(center);
-                int result = 0;
-                Pnt pos = new Pnt(center);
-                if (this[pos + Pnt.OneX] is Tile dr && TileDictionary.IsClearLat(dr, center)) result += (int)WallDirection.SE;
-                if (this[pos - Pnt.OneX] is Tile ul && TileDictionary.IsClearLat(ul, center)) result += (int)WallDirection.NW;
-                if (this[pos + Pnt.OneY] is Tile dl && TileDictionary.IsClearLat(dl, center)) result += (int)WallDirection.SW;
-                if (this[pos - Pnt.OneY] is Tile ur && TileDictionary.IsClearLat(ur, center)) result += (int)WallDirection.NE;
-
-                SetLatBase(center, setCenter, result);
-                //else
-                //{
-                //    if (!TileDictionary.IsConnLat(setCenter.SetIndex)) setCenter = TileDictionary.SwapSet(setCenter);
-                //    if (Constant.LATSystem.idxClear == setCenter.SetIndex) result = 0;
-                //}
-            }
-        }
-        public void SwitchLat(Tile center, Tile referanceTile, WallDirection referanceDirection)
-        {
-            if (center != null && TileDictionary.IsLat(center))
-            {
-                TileSet setCenter = TileDictionary.GetTileSetFromTile(center);
-                TileSet referance = TileDictionary.GetTileSetFromTile(referanceTile);
-                int result = 0;
-                if (!TileDictionary.LatEqual(setCenter.SetIndex, referance.SetIndex))
-                {
-                    result = (int)referanceDirection;
-                    //referanceDirection = WallDirection.All;
-                }
-                Pnt pos = new Pnt(center);
-                if (referanceDirection != WallDirection.SE && this[pos + Pnt.OneX] is Tile dr && TileDictionary.IsClearLat(dr, center)) result += (int)WallDirection.SE;
-                if (referanceDirection != WallDirection.NW && this[pos - Pnt.OneX] is Tile ul && TileDictionary.IsClearLat(ul, center)) result += (int)WallDirection.NW;
-                if (referanceDirection != WallDirection.SW && this[pos + Pnt.OneY] is Tile dl && TileDictionary.IsClearLat(dl, center)) result += (int)WallDirection.SW;
-                if (referanceDirection != WallDirection.NE && this[pos - Pnt.OneY] is Tile ur && TileDictionary.IsClearLat(ur, center)) result += (int)WallDirection.NE;
-
-                SetLatBase(center, setCenter, result < 0 ? 0 : result);
-                //if (!TileDictionary.IsConnLat(setCenter.SetIndex)) setCenter = TileDictionary.GetTileSetFromIndex(TileDictionary.SwitchLatIndex(setCenter.SetIndex));
-                //if (Constant.LATSystem.idxClear == setCenter.SetIndex) result = 0;
-                //center.TileIndex = setCenter.Offset + result;
-                //center.Redraw();
-            }
         }
         public void AddObjectOnTile(IMapObject src)
         {
@@ -561,7 +494,7 @@ namespace RelertSharp.MapStructure
                 isFlat = false;
             }
         }
-        public void ReplaceWith(Tile newtile)
+        public void MoveObjectsToNewTile(Tile newtile)
         {
             foreach (IMapObject obj in objectsOnTile)
             {
@@ -579,7 +512,7 @@ namespace RelertSharp.MapStructure
         }
         public void Dispose()
         {
-            SceneObject.Dispose();
+            SceneObject?.Dispose();
             Disposed = true;
         }
         public byte[] GetBytes()
@@ -699,18 +632,18 @@ namespace RelertSharp.MapStructure
                 isExtraHidden = false;
             }
         }
-        public void MoveTo(Tile dest, int height, int alig)
-        {
-            if (SceneObject != null)
-            {
-                if (isFlat)
-                {
-                    originalHeight = alig + height;
-                    height = 0;
-                }
-                MoveTileTo(dest, height);
-            }
-        }
+        //public void MoveTo(Tile dest, int height, int alig)
+        //{
+        //    if (SceneObject != null)
+        //    {
+        //        if (isFlat)
+        //        {
+        //            originalHeight = alig + height;
+        //            height = 0;
+        //        }
+        //        MoveTileTo(dest, height);
+        //    }
+        //}
         public void Select()
         {
             if (Disposed) return;
@@ -730,6 +663,19 @@ namespace RelertSharp.MapStructure
                 if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Zero, true);
                 Selected = false;
             }
+        }
+        #endregion
+
+
+        #region Internal
+        internal void ReplaceWithNewTileConfig(IMapTileBrushConfig config)
+        {
+            X = config.Pos.X;
+            Y = config.Pos.Y;
+            Z = config.Pos.Z;
+            TileIndex = config.TileIndex;
+            SubIndex = config.TileSubIndex;
+            IceGrowth = config.IceGrowth;
         }
         #endregion
 
@@ -815,7 +761,7 @@ namespace RelertSharp.MapStructure
                 return result;
             }
         }
-        public byte Height { get; set; }
+        public byte Height { get; internal set; }
         public int RealHeight { get { return originalHeight == 0 ? Height : originalHeight; } }
         public int TileIndex
         {

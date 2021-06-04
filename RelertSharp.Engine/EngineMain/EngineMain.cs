@@ -58,7 +58,7 @@ namespace RelertSharp.Engine
         }
         internal static void SetTheater(TheaterType type)
         {
-            TileDictionary = new MapTheaterTileSet(type);
+            //TileDictionary = new MapTheaterTileSet(type);
             CurrentTheater = type;
             VFileInfo pal = GetPtrFromGlobalDir(string.Format("iso{0}.pal", TileDictionary.TheaterSub));
             VFileInfo upal = GetPtrFromGlobalDir(string.Format("unit{0}.pal", TileDictionary.TheaterSub));
