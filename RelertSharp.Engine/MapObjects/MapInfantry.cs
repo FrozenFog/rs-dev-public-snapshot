@@ -28,13 +28,14 @@ namespace RelertSharp.Engine.MapObjects
                 Disposed = true;
             }
         }
-        public void MoveTo(I3dLocateable cell, int subcell)
+        public override void MoveTo(I3dLocateable cell, int subcell)
         {
             if (subcell > 0 && subcell < 4 && !(subcell == SubCell && CoordEquals(cell)))
             {
                 Vec3 delta = GetDeltaDistant(cell, subcell, SubCell);
                 ShiftBy(delta, pSelf, pSelfShadow);
                 SubCell = subcell;
+                base.MoveTo(cell);
             }
         }
         public override void ShiftBy(I3dLocateable delta)

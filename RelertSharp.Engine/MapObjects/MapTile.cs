@@ -66,7 +66,7 @@ namespace RelertSharp.Engine.MapObjects
                 Disposed = true;
             }
         }
-        public override void MoveTo(I3dLocateable cell)
+        public override void MoveTo(I3dLocateable cell, int subcell = -1)
         {
             Vec3 pos = Vec3.ToVec3Iso(cell);
             SetLocation(pos, pSelf, pExtra);

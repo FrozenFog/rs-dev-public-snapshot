@@ -17,6 +17,7 @@ namespace RelertSharp.Wpf.MapEngine
         private enum MouseAction
         {
             None = 0,
+            ObjectBrush = 1,
             DEBUG = 65535
         }
         private MouseAction mouseState = MouseAction.DEBUG;
@@ -57,7 +58,7 @@ namespace RelertSharp.Wpf.MapEngine
         {
             switch (mouseState)
             {
-                case MouseAction.DEBUG:
+                case MouseAction.None:
                     selecting = false;
                     Selector.EndSelecting();
                     //SuspendMouseHandlerFor(susMsSelect);
@@ -69,9 +70,12 @@ namespace RelertSharp.Wpf.MapEngine
         {
             switch (mouseState)
             {
-                case MouseAction.DEBUG:
+                case MouseAction.None:
                     selecting = true;
                     Selector.BeginSelecting(unscaled, false, graphicTop);
+                    break;
+                case MouseAction.DEBUG:
+                    PaintBrush.AddBrushObjectToMap();
                     break;
             }
         }
@@ -100,6 +104,7 @@ namespace RelertSharp.Wpf.MapEngine
         {
             bool redraw = false;
             Vec3 pos = EngineApi.ClientPointToCellPos(point.GdiPoint(), out int subcell);
+            I3dLocateable i3dpos = pos.To3dLocateable();
             if (rmbMoving)
             {
                 Navigating.UpdateDelta(point);
@@ -110,12 +115,20 @@ namespace RelertSharp.Wpf.MapEngine
                 Selector.UpdateSelectingRectangle(unscaled);
                 redraw = false;
             }
+            if (!rmbMoving && !selecting)
+            {
+                switch (mouseState)
+                {
+                    case MouseAction.DEBUG:
+                        redraw = PaintBrush.MoveBrushObjectTo(i3dpos, subcell);
+                        break;
+                }
+            }
             if (EngineApi.MouseOnTile(pos, NeedIndicating))
             {
                 MousePosChanged?.Invoke(pos.To3dLocateable());
                 redraw = true;
             }
-
             return redraw;
         }
         #endregion

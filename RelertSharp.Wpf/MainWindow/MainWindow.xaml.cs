@@ -58,6 +58,8 @@ namespace RelertSharp.Wpf
         private readonly TriggerLogicView events = new TriggerLogicView(true);
         [RsViewComponent(GuiViewType.Action, nameof(actions))]
         private readonly TriggerLogicView actions = new TriggerLogicView(false);
+        [RsViewComponent(GuiViewType.ObjctPanel, nameof(objectPanel))]
+        private readonly MapObjectBrushView objectPanel = new MapObjectBrushView();
         #endregion
         #region Else
         private SoundManager soundManager = new SoundManager();
@@ -94,6 +96,7 @@ namespace RelertSharp.Wpf
             //dockMain.AddToolToRight("Taskforce List", taskforceList);
             dockMain.Layout.AddToolToLeft("Team", team);
             dockMain.Layout.AddToolToLeft("Animation", animationPreview);
+            dockMain.Layout.AddToolToLeft("Map Objects", objectPanel);
             dockMain.Layout.AddToolToRight("Trigger List", triggerList);
             //dockMain.AddToolToRight("Script", script);
             //dockMain.Layout.AddToolToRight("Light", lightPanel);

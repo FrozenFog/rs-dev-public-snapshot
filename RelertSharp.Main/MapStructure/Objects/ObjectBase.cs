@@ -105,11 +105,13 @@ namespace RelertSharp.MapStructure.Objects
         {
             X = pos.X;
             Y = pos.Y;
+            SceneObject?.MoveTo(pos, subcell);
         }
         public void ShiftBy(I3dLocateable delta)
         {
             X += delta.X;
             Y += delta.Y;
+            SceneObject?.ShiftBy(delta);
         }
         public virtual void ApplyAttributeFrom(AttributeChanger obj)
         {

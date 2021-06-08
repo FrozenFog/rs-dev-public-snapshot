@@ -21,6 +21,13 @@ namespace RelertSharp.Common
                 return r;
             }
         }
+        public static class RulesHead
+        {
+            public const string HEAD_BUILDING = "BuildingTypes";
+            public const string HEAD_INFANTRY = "InfantryTypes";
+            public const string HEAD_VEHICLE = "VehicleTypes";
+            public const string HEAD_AIRCRAFT = "AircraftTypes";
+        }
 
         public const string KEY_IMAGE = "Image";
         public const string KEY_ALPHA = "AlphaImage";

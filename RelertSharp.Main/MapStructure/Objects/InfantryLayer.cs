@@ -71,12 +71,6 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - InfantryItem
-        public override void MoveTo(I3dLocateable pos, int subcell)
-        {
-            if (subcell != -1) this.subcell = subcell;
-            X = pos.X;
-            Y = pos.Y;
-        }
         public override void ApplyAttributeFrom(ICombatObject src)
         {
             if (src is InfantryItem inf)

@@ -92,7 +92,7 @@ namespace RelertSharp.Engine.MapObjects
             if (ptr != 0) CppExtern.ObjectUtils.SetObjectLocation(ptr, pos);
             if (pshadow != 0) CppExtern.ObjectUtils.SetObjectLocation(pshadow, pos);
         }
-        public virtual void MoveTo(I3dLocateable pos)
+        public virtual void MoveTo(I3dLocateable pos, int subcell = -1)
         {
             X = pos.X;
             Y = pos.Y;
