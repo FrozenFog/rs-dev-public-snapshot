@@ -44,15 +44,7 @@ namespace RelertSharp.Wpf.MapEngine
         private static readonly object lockRender = new object();
         private static readonly object lockMouse = new object();
 
-        private const int susMsWheel = 600;
-        private const int susMsResize = 200;
-
-
-        private DispatcherTimer _wheelResizeDelay;
-        private DispatcherTimer _suspendMouseDelay;
-        private DispatcherTimer _panelResizeDelay;
-
-        private RenderTargetBitmap img;
+        //private RenderTargetBitmap img;
 
 
 
@@ -88,101 +80,36 @@ namespace RelertSharp.Wpf.MapEngine
             d3dimg.IsFrontBufferAvailableChanged += FrontBufferChanged;
             EngineApi.RedrawRequested += RedrawInvokeHandler;
             EngineApi.ResizeRequested += ResizeInvokeHandler;
+            EngineApi.LockRequested += LockInvokeHandler;
+            EngineApi.UnlockRequested += UnlockInvokeHandler;
             NavigationHub.GoToPositionRequest += MoveCameraInvokeHandler;
-            _wheelResizeDelay = new DispatcherTimer();
-            _wheelResizeDelay.Tick += WheelResizeInvoker;
-            _wheelResizeDelay.Interval = new TimeSpan(0, 0, 0, 0, susMsWheel);
-            _panelResizeDelay = new DispatcherTimer();
-            _panelResizeDelay.Tick += PanelResizeInvoker;
-            _panelResizeDelay.Interval = new TimeSpan(0, 0, 0, 0, susMsResize);
-            _suspendMouseDelay = new DispatcherTimer();
-            _suspendMouseDelay.Tick += SuspendMouseTick;
-
-            //CompositionTarget.Rendering += CompositionTarget_Rendering;
-
-            //_baseRefreshing = new DispatcherTimer()
-            //{
-            //    Interval = new TimeSpan(0, 0, 0, 0, 400)
-            //};
-            //_baseRefreshing.Tick += ResizeTick;
-            //_baseRefreshing.Start();
         }
 
-        private void SuspendMouseTick(object sender, EventArgs e)
+        #region PERMANENTLY SOLVED ENGINE DEAD
+        private bool locked = false;
+        private void UnlockInvokeHandler(object sender, EventArgs e)
         {
-            if (drew && mouseSuspendedMs)
+            if (locked)
             {
-                _suspendMouseDelay.Stop();
-                Thread.Sleep(100);
-                gridMain.MouseMove += HandleMouseMove;
-                gridMain.MouseDown += HandleMouseDown;
-                gridMain.MouseUp += HandleMouseUp;
+                d3dimg.Unlock();
+                locked = false;
             }
         }
 
-        private void WheelResizeInvoker(object sender, EventArgs e)
+        private void LockInvokeHandler(object sender, EventArgs e)
         {
-            if (drew)
+            if (!locked)
             {
-                EngineApi.ScaleFactorInvoke();
-                _wheelResizeDelay.Stop();
-                Thread.Sleep(300);
-                ResumeMouseHandler();
+                d3dimg.Lock();
+                locked = true;
             }
         }
-        private void PanelResizeInvoker(object sender, EventArgs e)
-        {
-            if (drew)
-            {
-                this.SizeChanged -= HandleSizeChanged;
-                EngineApi.ScaleFactorInvoke();
-                _panelResizeDelay.Stop();
-                Thread.Sleep(300);
-                this.SizeChanged += HandleSizeChanged;
-                ResumeMouseHandler();
-            }
-        }
-        private bool mouseSuspended = false;
-        private void SuspendMouseHandler()
-        {
-            if (!mouseSuspended)
-            {
-                mouseSuspended = true;
-                gridMain.MouseMove -= HandleMouseMove;
-                gridMain.MouseDown -= HandleMouseDown;
-                gridMain.MouseUp -= HandleMouseUp;
-                //imgelt.MouseWheel -= HandleMouseWheel;
-            }
-        }
-        private bool mouseSuspendedMs = false;
-        private void SuspendMouseHandlerFor(int milSec)
-        {
-            if (!mouseSuspendedMs)
-            {
-                mouseSuspended = true;
-                imgelt.MouseMove -= HandleMouseMove;
-                imgelt.MouseDown -= HandleMouseDown;
-                imgelt.MouseUp -= HandleMouseUp;
-                _suspendMouseDelay.Stop();
-                _suspendMouseDelay.Interval = new TimeSpan(0, 0, 0, 0, milSec);
-                _suspendMouseDelay.Start();
-            }
-        }
-        private void ResumeMouseHandler()
-        {
-            if (mouseSuspended)
-            {
-                mouseSuspended = false;
-                gridMain.MouseMove += HandleMouseMove;
-                gridMain.MouseDown += HandleMouseDown;
-                gridMain.MouseUp += HandleMouseUp;
-                //imgelt.MouseWheel += HandleMouseWheel;
-            }
-        }
+        #endregion
 
         private void ResizeInvokeHandler(object sender, EventArgs e)
         {
             Resize();
+            RenderFrame();
         }
 
         private void RedrawInvokeHandler(object sender, EventArgs e)
@@ -219,12 +146,11 @@ namespace RelertSharp.Wpf.MapEngine
                     EngineApi.ResizeMinimapClientWindow(w, h);
                     EngineApi.ResumeRendering();
                     rendering = false;
-                    RenderFrame();
                 }
             }
         }
 
-        private void RenderFrame()
+        private void RenderFrame(bool manualLock = false)
         {
             this.Dispatcher.Invoke(() =>
             {
@@ -239,11 +165,11 @@ namespace RelertSharp.Wpf.MapEngine
                             if (_handle != IntPtr.Zero)
                             {
                                 rendering = true;
-                                d3dimg.Lock();
+                                if (!manualLock) EngineApi.InvokeLock();
                                 d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
                                 EngineApi.RenderFrame();
                                 d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
-                                d3dimg.Unlock();
+                                if (!manualLock) EngineApi.InvokeUnlock();
                                 rendering = false;
                                 //lastRender = arg.RenderingTime;
                             }
@@ -275,9 +201,11 @@ namespace RelertSharp.Wpf.MapEngine
             {
                 if (nWidth != prevW || nHeight != prevH)
                 {
-                    _wheelResizeDelay.Stop();
-                    _wheelResizeDelay.Start();
-                    SuspendMouseHandler();
+
+                    EngineApi.ScaleFactorInvoke();
+                    //_wheelResizeDelay.Stop();
+                    //_wheelResizeDelay.Start();
+                    //SuspendMouseHandler();
                 }
             }
         }
@@ -300,33 +228,29 @@ namespace RelertSharp.Wpf.MapEngine
 
         private void HandleMouseDown(object sender, MouseButtonEventArgs e)
         {
-            lock (lockMouse)
+            if (drew)
             {
-                if (drew)
-                {
-                    Point p = e.GetPosition(this);
-                    Point pOrg = e.GetPosition(this);
-                    GuiUtil.ScaleWpfMousePoint(ref p);
-                    if (e.ChangedButton == MouseButton.Left) this.LmbDown(p, pOrg);
-                    else if (e.ChangedButton == MouseButton.Right) this.RmbDown(p, pOrg);
-                    else if (e.ChangedButton == MouseButton.Middle) this.MmbDown(p, pOrg);
-                }
+                EngineApi.InvokeLock();
+                Point p = e.GetPosition(this);
+                Point pOrg = e.GetPosition(this);
+                GuiUtil.ScaleWpfMousePoint(ref p);
+                if (e.ChangedButton == MouseButton.Left) this.LmbDown(p, pOrg);
+                else if (e.ChangedButton == MouseButton.Right) this.RmbDown(p, pOrg);
+                else if (e.ChangedButton == MouseButton.Middle) this.MmbDown(p, pOrg);
+                EngineApi.InvokeUnlock();
             }
         }
 
         private void HandleMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            lock (lockMouse)
+            if (drew)
             {
-                if (drew)
-                {
-                    _wheelResizeDelay.Stop();
-                    _wheelResizeDelay.Start();
-                    SuspendMouseHandler();
-                    if (e.Delta > 0) EngineApi.ChangeScaleFactor(-0.1);
-                    else EngineApi.ChangeScaleFactor(0.1);
-                    ScaleFactorChanged?.Invoke(null, null);
-                }
+                EngineApi.InvokeLock();
+                if (e.Delta > 0) EngineApi.ChangeScaleFactor(-0.1);
+                else EngineApi.ChangeScaleFactor(0.1);
+                ScaleFactorChanged?.Invoke(null, null);
+                EngineApi.ScaleFactorInvoke();
+                EngineApi.InvokeUnlock();
             }
         }
     }
