@@ -29,7 +29,7 @@ namespace RelertSharp.Engine.MapObjects
 
 
         #region Public Methods - PresentStructure
-        public override void MoveTo(I3dLocateable cell)
+        public override void MoveTo(I3dLocateable cell, int subcell = -1)
         {
             Vec3 delta = GetDeltaDistant(cell);
             foreach (int p in Pointers) ShiftBy(delta, p);

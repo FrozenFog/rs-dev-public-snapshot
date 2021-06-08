@@ -6,7 +6,7 @@ namespace RelertSharp.MapStructure
     {
         Vec4 ColorVector { get; }
         void Dispose();
-        void MoveTo(I3dLocateable pos);
+        void MoveTo(I3dLocateable pos, int subcell = -1);
         void Hide();
         void Reveal();
         void ShiftBy(I3dLocateable delta);

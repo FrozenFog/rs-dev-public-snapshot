@@ -70,6 +70,7 @@
     </Compile>
     <Compile Include="MainWindow\Menu.cs" />
     <Compile Include="MainWindow\NavigationHub.cs" />
+    <Compile Include="MapEngine\Helper\PaintBrush.cs" />
     <Compile Include="MapEngine\Helper\Selector.cs" />
     <Compile Include="MapEngine\MainPanel.xaml.cs">
       <DependentUpon>MainPanel.xaml</DependentUpon>
@@ -82,9 +83,11 @@
     <Compile Include="ToolBoxes\AnimationPreview.xaml.cs">
       <DependentUpon>AnimationPreview.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\BaseTreeVm.cs" />
     <Compile Include="ViewModel\GlobalCountryVm.cs" />
     <Compile Include="ViewModel\GlobalTriggerVm.cs" />
     <Compile Include="ViewModel\LightningVm.cs" />
+    <Compile Include="ViewModel\ObjectPickVm.cs" />
     <Compile Include="ViewModel\ScriptVm.cs" />
     <Compile Include="ViewModel\StaticCollectionVm.cs" />
     <Compile Include="ViewModel\TeamVm.cs" />
@@ -97,6 +100,9 @@
     <Compile Include="Common\Interfaces.cs" />
     <Compile Include="Views\LightningView.xaml.cs">
       <DependentUpon>LightningView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MapObjectBrushView.xaml.cs">
+      <DependentUpon>MapObjectBrushView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ScriptListView.xaml.cs">
       <DependentUpon>ScriptListView.xaml</DependentUpon>
@@ -179,6 +185,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\MapObjectBrushView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ScriptListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -239,7 +249,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\headAir.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RelertSharp.Engine\RelertSharp.Engine.csproj">
       <Project>{13b39736-333f-48d2-bb64-f70b94c765b7}</Project>
@@ -253,6 +265,18 @@
       <Project>{b99fdcb6-735a-45b2-a55c-745325ae54ea}</Project>
       <Name>RelertSharp.Theme</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\headBuilding.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\headInfantry.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\headUnit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\headNaval.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

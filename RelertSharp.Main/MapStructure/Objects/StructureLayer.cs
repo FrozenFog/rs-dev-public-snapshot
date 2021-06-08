@@ -62,7 +62,7 @@ namespace RelertSharp.MapStructure.Objects
             AIRepairable = src.AIRepairable;
             ObjectType = MapObjectType.Building;
         }
-        internal StructureItem(string regname)
+        public StructureItem(string regname)
         {
             RegName = regname;
             ObjectType = MapObjectType.Building;

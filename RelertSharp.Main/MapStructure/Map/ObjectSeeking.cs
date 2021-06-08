@@ -8,23 +8,23 @@ namespace RelertSharp.MapStructure
     public partial class Map
     {
         #region Private Generic Seeking
-        private T GetMapObject<T>(I2dLocateable pos) where T : ObjectItemBase, IMapObject
-        {
-            Tile t = Tiles[pos];
-            if (t != null)
-            {
-                foreach (IMapObject obj in t.GetObjects())
-                {
-                    if (obj.GetType() == typeof(T)) return obj as T;
-                }
-            }
-            return null;
-        }
-        private void UpdateObject<T>(T src) where T : ObjectItemBase, ICombatObject
-        {
-            Tiles[src].RemoveObject(src);
-            Tiles[src].AddObject(src);
-        }
+        //private T GetMapObject<T>(I2dLocateable pos) where T : ObjectItemBase, IMapObject
+        //{
+        //    Tile t = Tiles[pos];
+        //    if (t != null)
+        //    {
+        //        foreach (IMapObject obj in t.GetObjects())
+        //        {
+        //            if (obj.GetType() == typeof(T)) return obj as T;
+        //        }
+        //    }
+        //    return null;
+        //}
+        //private void UpdateObject<T>(T src) where T : ObjectItemBase, ICombatObject
+        //{
+        //    Tiles[src].RemoveObject(src);
+        //    Tiles[src].AddObject(src);
+        //}
         private void EraseObjectTileData(IMapObject obj)
         {
             Type t = obj.GetType();

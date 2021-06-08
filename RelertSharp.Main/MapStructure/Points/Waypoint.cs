@@ -75,6 +75,11 @@ namespace RelertSharp.MapStructure.Points
             Num = index.ToString();
             ObjectType = MapObjectType.Waypoint;
         }
+        public WaypointItem(I2dLocateable pos, string index) : base(pos)
+        {
+            Num = index;
+            ObjectType = MapObjectType.Waypoint;
+        }
         internal WaypointItem()
         {
             ObjectType = MapObjectType.Waypoint;

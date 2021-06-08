@@ -21,6 +21,53 @@ namespace RelertSharp.Engine.Api
             EngineMain.SetTheater(type);
             TheaterReloaded?.Invoke(null, null);
         }
+        public static void DrawObject(IMapObject obj)
+        {
+            int height = obj.GetHeight();
+            switch (obj.ObjectType)
+            {
+                case MapObjectType.Infantry:
+                    InfantryItem inf = obj as InfantryItem;
+                    EngineMain.DrawInfantry(inf, height, Map.GetHouseColor(inf));
+                    break;
+                case MapObjectType.Aircraft:
+                    AircraftItem air = obj as AircraftItem;
+                    EngineMain.DrawAircraft(air, height, Map.GetHouseColor(air));
+                    break;
+                case MapObjectType.Unit:
+                    UnitItem unit = obj as UnitItem;
+                    EngineMain.DrawUnit(unit, height, Map.GetHouseColor(unit));
+                    break;
+                case MapObjectType.Building:
+                    StructureItem bud = obj as StructureItem;
+                    EngineMain.DrawBuilding(bud, height, Map.GetHouseColor(bud));
+                    break;
+                case MapObjectType.Overlay:
+                    OverlayUnit o = obj as OverlayUnit;
+                    EngineMain.DrawOverlay(o, height);
+                    break;
+                case MapObjectType.Waypoint:
+                    WaypointItem wp = obj as WaypointItem;
+                    EngineMain.DrawWaypoint(wp, height);
+                    break;
+                case MapObjectType.BaseNode:
+                    BaseNode node = obj as BaseNode;
+                    EngineMain.DrawBaseNode(node, height, Map.GetHouseColor(node.Parent.Name));
+                    break;
+                case MapObjectType.Terrain:
+                    TerrainItem ter = obj as TerrainItem;
+                    EngineMain.DrawTerrain(ter, height);
+                    break;
+                case MapObjectType.Smudge:
+                    SmudgeItem smg = obj as SmudgeItem;
+                    EngineMain.DrawSmudge(smg, height);
+                    break;
+                case MapObjectType.Celltag:
+                    CellTagItem cell = obj as CellTagItem;
+                    EngineMain.DrawCelltag(cell, height, true);
+                    break;
+            }
+        }
 #if DEBUG
         public static void DrawMap(Map map)
         {

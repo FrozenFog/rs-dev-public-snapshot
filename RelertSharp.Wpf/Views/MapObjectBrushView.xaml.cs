@@ -1,0 +1,136 @@
+﻿using RelertSharp.Common;
+using RelertSharp.IniSystem;
+using RelertSharp.Wpf.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace RelertSharp.Wpf.Views
+{
+    /// <summary>
+    /// MapObjectBrushView.xaml 的交互逻辑
+    /// </summary>
+    public partial class MapObjectBrushView : UserControl
+    {
+        private Rules Rules { get { return GlobalVar.GlobalRules; } }
+        public MapObjectBrushView()
+        {
+            InitializeComponent();
+        }
+
+
+        #region Public
+        public void ReloadAllObjects()
+        {
+            trvMain.Items.Clear();
+            void add_to_node(ObjectPickVm dest, string regname, MapObjectType type = MapObjectType.Undefined)
+            {
+                dest.AddItem(new ObjectPickVm(regname, Rules.FormatTreeNodeName(regname), type));
+            }
+            List<ObjectPickVm> init_side()
+            {
+                int num = Rules.GetSideCount();
+                List<ObjectPickVm> result = new List<ObjectPickVm>();
+                for (int i = 0; i< num; i++)
+                {
+                    result.Add(new ObjectPickVm(Rules.GetSideName(i).ToLang()));
+                }
+                result.Add(new ObjectPickVm("Others"));
+                return result;
+            }
+            void building()
+            {
+                ObjectPickVm root = new ObjectPickVm("Buildings");
+                root.SetIcon(Properties.Resources.iconObjBud.ToWpfImage(true));
+                List<ObjectPickVm> sides = init_side();
+                ObjectPickVm tech = new ObjectPickVm("Tech Buildings");
+                foreach (INIPair p in Rules[Constant.RulesHead.HEAD_BUILDING])
+                {
+                    if (Rules.IsTechBuilding(p.Value))
+                    {
+                        add_to_node(tech, p.Value, MapObjectType.Building);
+                    }
+                    else
+                    {
+                        int side = Rules.GuessSide(p.Value, CombatObjectType.Building, true);
+                        if (side >= 0) add_to_node(sides[side], p.Value, MapObjectType.Building);
+                        else add_to_node(sides.Last(), p.Value, MapObjectType.Building);
+                    }
+                }
+                sides.Insert(sides.Count - 1, tech);
+                sides.ForEach(x => root.AddItem(x));
+                trvMain.Items.Add(root);
+            }
+            void generic(string title, string rulesHead, ImageSource icon, CombatObjectType combatType, MapObjectType objType)
+            {
+                ObjectPickVm root = new ObjectPickVm(title);
+                root.SetIcon(icon);
+                List<ObjectPickVm> sides = init_side();
+                foreach (INIPair p in Rules[rulesHead])
+                {
+                    int side = Rules.GuessSide(p.Value, combatType);
+                    if (side >= 0) add_to_node(sides[side], p.Value, objType);
+                    else add_to_node(sides.Last(), p.Value, objType);
+                }
+                sides.ForEach(x => root.AddItem(x));
+                trvMain.Items.Add(root);
+            }
+            void unit()
+            {
+                ObjectPickVm uRoot = new ObjectPickVm("Units");
+                uRoot.SetIcon(Properties.Resources.iconObjUnit.ToWpfImage(true));
+                ObjectPickVm nRoot = new ObjectPickVm("Navals");
+                nRoot.SetIcon(Properties.Resources.iconObjNaval.ToWpfImage(true));
+                List<ObjectPickVm> uSides = init_side();
+                List<ObjectPickVm> nSides = init_side();
+                foreach (INIPair p in Rules[Constant.RulesHead.HEAD_VEHICLE])
+                {
+                    if (Rules[p.Value]["MovementZone"] == "Water")
+                    {
+                        int side = Rules.GuessSide(p.Value, CombatObjectType.Naval);
+                        if (side >= 0) add_to_node(nSides[side], p.Value, MapObjectType.Vehicle);
+                        else add_to_node(nSides.Last(), p.Value, MapObjectType.Vehicle);
+                    }
+                    else
+                    {
+                        int side = Rules.GuessSide(p.Value, CombatObjectType.Vehicle);
+                        if (side >= 0) add_to_node(uSides[side], p.Value, MapObjectType.Vehicle);
+                        else add_to_node(uSides.Last(), p.Value, MapObjectType.Vehicle);
+                    }
+                }
+                uSides.ForEach(x => uRoot.AddItem(x));
+                nSides.ForEach(x => nRoot.AddItem(x));
+                trvMain.Items.Add(uRoot);
+                trvMain.Items.Add(nRoot);
+            }
+            building();
+            generic("Infantries", Constant.RulesHead.HEAD_INFANTRY, Properties.Resources.iconObjInf.ToWpfImage(true), CombatObjectType.Infantry, MapObjectType.Infantry);
+            unit();
+            generic("Aircrafts", Constant.RulesHead.HEAD_AIRCRAFT, Properties.Resources.iconObjAir.ToWpfImage(true), CombatObjectType.Aircraft, MapObjectType.Aircraft);
+        }
+        #endregion
+
+        #region Handler
+        private void BrushItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            ObjectPickVm selected = trvMain.SelectedItem as ObjectPickVm;
+            if (selected.Type != MapObjectType.Undefined)
+            {
+                PaintBrush.LoadBrushObject(selected.RegName, selected.Type);
+            }
+        }
+        #endregion
+    }
+}

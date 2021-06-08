@@ -25,6 +25,7 @@ namespace RelertSharp.Wpf.Common
         TriggerList,
         Trigger,
         Event, Action,
+        ObjctPanel,
     }
     public class RsViewComponentAttribute : Attribute
     {

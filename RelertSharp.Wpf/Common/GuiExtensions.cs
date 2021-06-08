@@ -29,11 +29,14 @@ namespace System.Windows
         {
             return new Drawing.Point((int)src.X, (int)src.Y);
         }
-        public static BitmapImage ToWpfImage(this System.Drawing.Image src)
+        public static BitmapImage ToWpfImage(this System.Drawing.Image src, bool isPng = false)
         {
             MemoryStream ms = new MemoryStream();
             BitmapImage img = new BitmapImage();
-            src.Save(ms, ImageFormat.Bmp);
+            ImageFormat fmt;
+            if (isPng) fmt = ImageFormat.Png;
+            else fmt = ImageFormat.Bmp;
+            src.Save(ms, fmt);
             img.BeginInit();
             img.CacheOption = BitmapCacheOption.OnLoad;
             img.StreamSource = ms;

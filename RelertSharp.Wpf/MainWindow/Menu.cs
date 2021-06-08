@@ -14,6 +14,12 @@ namespace RelertSharp.Wpf
         {
             tmrInit.Stop();
             triggerList.ReloadMapTrigger();
+            objectPanel.ReloadAllObjects();
+            ObjectBrushConfig cfg = new ObjectBrushConfig()
+            {
+                OwnerHouse = RelertSharp.Common.GlobalVar.CurrentMapDocument.Map.Houses.First().Name
+            };
+            PaintBrush.SetConfig(cfg);
         }
 
         private void DebugClick(object sender, RoutedEventArgs e)

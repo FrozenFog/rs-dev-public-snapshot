@@ -217,8 +217,8 @@ namespace RelertSharp.Wpf.Views
 
                     if (removeFromAncestor) dragItem.RemoveFromAncestor();
                     if (removeFromRoot) trvMain.Items.Remove(dragItem);
-                    if (addToTarget) target.AddItem(dragItem);
-                    if (addToAncestor) target.Ancestor.AddItem(dragItem);
+                    if (addToTarget) target.InsertItem(dragItem);
+                    if (addToAncestor) target.Ancestor.InsertItem(dragItem);
                 }
                 else if (target == null && !dragItem.IsRoot)
                 {
