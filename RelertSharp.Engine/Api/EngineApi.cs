@@ -15,6 +15,8 @@ namespace RelertSharp.Engine.Api
         public static event EventHandler RedrawRequested;
         public static event EventHandler ResizeRequested;
         public static event EventHandler TheaterReloaded;
+        public static event EventHandler LockRequested;
+        public static event EventHandler UnlockRequested;
         private static readonly object lockRenderer = new object();
 
         private static bool initialized = false;
@@ -63,6 +65,14 @@ namespace RelertSharp.Engine.Api
                 timer.Stop();
                 long avg = timer.Average;
             }
+        }
+        public static void InvokeLock()
+        {
+            LockRequested?.Invoke(null, null);
+        }
+        public static void InvokeUnlock()
+        {
+            UnlockRequested?.Invoke(null, null);
         }
         public static IntPtr ResetHandle(Size sz)
         {

@@ -71,6 +71,7 @@ namespace RelertSharp.Engine.Api
 #if DEBUG
         public static void DrawMap(Map map)
         {
+            EngineApi.InvokeLock();
             SetTheater(map.Info.TheaterType);
             foreach (Tile t in map.TilesData) EngineMain.DrawTile(t);
             foreach (InfantryItem inf in map.Infantries) EngineMain.DrawInfantry(inf, inf.GetHeight(), map.GetHouseColor(inf));
@@ -88,6 +89,7 @@ namespace RelertSharp.Engine.Api
             }
             MoveCameraTo(map.CenterPoint, map.GetHeightFromTile(map.CenterPoint));
             RedrawMinimapAll();
+            EngineApi.InvokeUnlock();
         }
 #else
         public static async Task DrawMap(Map map)

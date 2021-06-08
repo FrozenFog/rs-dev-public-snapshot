@@ -135,7 +135,10 @@ namespace RelertSharp.Wpf
                         drawedObject = MapApi.AddWaypoint(Config);
                         break;
                 }
-                if (drawedObject != null) EngineApi.DrawObject(drawedObject);
+                if (drawedObject != null)
+                {
+                    EngineApi.DrawObject(drawedObject);
+                }
             }
         }
         public static void RefreshObjectAttribute()
