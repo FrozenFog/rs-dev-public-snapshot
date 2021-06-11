@@ -33,7 +33,7 @@ namespace RelertSharp.MapStructure.Objects
                 Rotation = int.Parse(_args[5]);
                 TaggedTrigger = _args[6];
                 AISellable = IniParseBool(_args[7]);
-                BuildingOnline = IniParseBool(_args[9]);
+                IsPowered = IniParseBool(_args[9]);
                 UpgradeNum = int.Parse(_args[10]);
                 SpotlightType = (BuildingSpotlightType)(int.Parse(_args[11]));
                 Upgrade1 = _args[12];
@@ -53,7 +53,7 @@ namespace RelertSharp.MapStructure.Objects
             Rotation = src.Rotation;
             TaggedTrigger = src.TaggedTrigger;
             AISellable = src.AISellable;
-            BuildingOnline = src.BuildingOnline;
+            IsPowered = src.IsPowered;
             UpgradeNum = src.UpgradeNum;
             SpotlightType = src.SpotlightType;
             Upgrade1 = src.Upgrade1;
@@ -71,20 +71,18 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - StructureItem
-        public override void ApplyAttributeFrom(ICombatObject src)
+        public override void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
         {
-            if (src is StructureItem bud)
-            {
-                AIRepairable = bud.AIRepairable;
-                AISellable = bud.AISellable;
-                BuildingOnline = bud.BuildingOnline;
-                SpotlightType = bud.SpotlightType;
-                Upgrade1 = bud.Upgrade1;
-                Upgrade2 = bud.Upgrade2;
-                Upgrade3 = bud.Upgrade3;
-                UpgradeNum = bud.UpgradeNum;
-                base.ApplyAttributeFrom(src);
-            }
+            base.ApplyConfig(config, filter, applyPosAndName);
+            if (filter.Sellable) AISellable = config.IsSellable;
+            if (filter.Rebuild) AIRebuildable = config.AiRebuildable;
+            if (filter.Powered) IsPowered = config.Powered;
+            if (filter.UpgradeNum) UpgradeNum = config.UpgradeNum;
+            if (filter.Upg1) Upgrade1 = config.Upg1;
+            if (filter.Upg2) Upgrade2 = config.Upg2;
+            if (filter.Upg3) Upgrade3 = config.Upg3;
+            if (filter.AiRepairable) AIRepairable = config.AiRepairable;
+            if (filter.Spotlight) SpotlightType = config.SpotlightType;
         }
         #endregion
 
@@ -96,14 +94,14 @@ namespace RelertSharp.MapStructure.Objects
             {
                 return new List<object>()
                 {
-                    OwnerHouse, RegName, HealthPoint, X, Y, Rotation, TaggedTrigger, AISellable.ToInt(), AIRebuildable.ToInt(), BuildingOnline.ToInt(), 
+                    OwnerHouse, RegName, HealthPoint, X, Y, Rotation, TaggedTrigger, AISellable.ToInt(), AIRebuildable.ToInt(), IsPowered.ToInt(), 
                     UpgradeNum, (int)SpotlightType, Upgrade1,Upgrade2,Upgrade3,AIRepairable.ToInt(), Nominal.ToInt() 
                 };
             }
         }
         public bool AISellable { get; set; } = true;
         public bool AIRebuildable { get; private set; } = false;
-        public bool BuildingOnline { get; set; } = true;
+        public bool IsPowered { get; set; } = true;
         public int UpgradeNum { get; set; }
         public BuildingSpotlightType SpotlightType { get; set; }
         public string Upgrade1 { get; set; } = "None";

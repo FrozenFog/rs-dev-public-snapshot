@@ -61,6 +61,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\BrushConfig.cs" />
     <Compile Include="Common\Delegates.cs" />
     <Compile Include="Common\GuiConst.cs" />
     <Compile Include="Common\GuiExtensions.cs" />
@@ -85,12 +86,16 @@
     </Compile>
     <Compile Include="ViewModel\BaseTreeVm.cs" />
     <Compile Include="ViewModel\GlobalCountryVm.cs" />
+    <Compile Include="ViewModel\GlobalHouseVm.cs" />
+    <Compile Include="ViewModel\GlobalTagVm.cs" />
     <Compile Include="ViewModel\GlobalTriggerVm.cs" />
     <Compile Include="ViewModel\LightningVm.cs" />
+    <Compile Include="ViewModel\ObjectAttributeApplierVm.cs" />
     <Compile Include="ViewModel\ObjectPickVm.cs" />
     <Compile Include="ViewModel\ScriptVm.cs" />
     <Compile Include="ViewModel\StaticCollectionVm.cs" />
     <Compile Include="ViewModel\TeamVm.cs" />
+    <Compile Include="ViewModel\TileSetVm.cs" />
     <Compile Include="ViewModel\TriggerLogicVm.cs" />
     <Compile Include="ViewModel\TriggerTreeItemVm.cs" />
     <Compile Include="ViewModel\TriggerVm.cs" />

@@ -142,10 +142,13 @@ namespace RelertSharp.MapStructure.Points
         {
             return GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(this);
         }
-        public virtual void ApplyConfig(IMapObjectBrushConfig config)
+        public virtual void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
         {
-            X = config.Pos.X;
-            Y = config.Pos.Y;
+            if (applyPosAndName)
+            {
+                X = config.Pos.X;
+                Y = config.Pos.Y;
+            }
         }
         #endregion
 

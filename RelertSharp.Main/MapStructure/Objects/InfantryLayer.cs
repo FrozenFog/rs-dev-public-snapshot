@@ -71,20 +71,10 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - InfantryItem
-        public override void ApplyAttributeFrom(ICombatObject src)
+        public override void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
         {
-            if (src is InfantryItem inf)
-            {
-                IsAboveGround = inf.IsAboveGround;
-                AutoYESRecruitType = inf.AutoYESRecruitType;
-                AutoNORecruitType = inf.AutoNORecruitType;
-                base.ApplyAttributeFrom(src);
-            }
-        }
-        public override void ApplyConfig(IMapObjectBrushConfig config)
-        {
-            base.ApplyConfig(config);
-            SubCells = config.SubCell;
+            base.ApplyConfig(config, filter, applyPosAndName);
+            if (applyPosAndName) SubCells = config.SubCell;
         }
         #endregion
 

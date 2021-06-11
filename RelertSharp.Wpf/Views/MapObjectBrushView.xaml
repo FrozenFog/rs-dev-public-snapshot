@@ -5,9 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RelertSharp.Wpf.Views"
              xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel"
+             xmlns:common="clr-namespace:RelertSharp.Common;assembly=rsdata"
              mc:Ignorable="d">
-    <Grid>
-        <TreeView x:Name="trvMain" Style="{DynamicResource trvDark}" Margin="10" SelectedItemChanged="BrushItemChanged">
+    <UserControl.DataContext>
+        <ViewModel:ObjectAttributeApplierVm/>
+    </UserControl.DataContext>
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="3"/>
+            <RowDefinition Height="*" MinHeight="150"/>
+        </Grid.RowDefinitions>
+        <GridSplitter Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{DynamicResource gsplitDark}" Height="3"/>
+        <TreeView x:Name="trvMain" Style="{DynamicResource trvDark}" Margin="10" SelectedItemChanged="BrushItemChanged" Grid.Row="0">
             <TreeView.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#0078D7" />
             </TreeView.Resources>
@@ -26,6 +36,63 @@
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
+        <ScrollViewer x:Name="scrvMain" Grid.Row="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="3"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel x:Name="stkLbl" Grid.Column="0">
+                    <Label Content="Owner House" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsOwnerHouseEnable}"/>
+                    <Label Content="Status" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsMissionEnable}"/>
+                    <Label Content="Health Point" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsHpEnable}"/>
+                    <Label Content="Facing" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsFacingEnable}"/>
+                    <Label Content="Tag" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsTagEnable}"/>
+                    <Label Content="Veterancy" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsVeterancyEnable}"/>
+                    <Label Content="Powered" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsPoweredEnable}"/>
+                    <Label Content="Upgrade Num" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsUpgNumEnable}"/>
+                    <Label Content="Upgrade 1" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsUpg1Enable}"/>
+                    <Label Content="Upgrade 2" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsUpg2Enable}"/>
+                    <Label Content="Upgrade 3" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsUpg3Enable}"/>
+                    <Label Content="Group" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsGroupEnable}"/>
+                    <Label Content="Is Above Ground" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsAboveGroundEnable}"/>
+                    <Label Content="Follows Index" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsFollowsEnable}"/>
+                    <Label Content="Recruitable" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsRecruitNEnable}"/>
+                    <Label Content="Ai Recruitable" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsRecruitYEnable}"/>
+                    <Label Content="Sellable" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsSellableEnable}"/>
+                    <Label Content="Ai Rebuild" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsRebuildEnable}"/>
+                    <Label Content="Ai Repair" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsRepairEnable}"/>
+                    <Label Content="Spotlight Type" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Visibility="{Binding IsSpotlightEnable}"/>
+
+                </StackPanel>
+                <StackPanel x:Name="stkControl" Grid.Column="3">
+                    <ComboBox Name="cbbOwner" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectedItem="{Binding OwnerHouseItem}" Visibility="{Binding IsOwnerHouseEnable}"/>
+                    <ComboBox Name="cbbStatus" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectedItem="{Binding MissionStatusItem}" Visibility="{Binding IsMissionEnable}"/>
+                    <Slider Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Maximum="256" Minimum="0" Value="{Binding HealthPoint}" Visibility="{Binding IsHpEnable}" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="16"/>
+                    <TextBox Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Visibility="{Binding IsFacingEnable}" Text="{Binding Facing}"/>
+                    <ComboBox Name="cbbTag" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectedItem="{Binding TagItem}" Visibility="{Binding IsTagEnable}"/>
+                    <Slider Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Maximum="200" Minimum="0" Value="{Binding Veterancy}" Visibility="{Binding IsVeterancyEnable}" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="20"/>
+                    <CheckBox Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding Powered}" Visibility="{Binding IsPoweredEnable}"/>
+                    <TextBox Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Visibility="{Binding IsUpgNumEnable}" Text="{Binding UpgradeNum}"/>
+                    <ComboBox Name="cbbUpg1" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectedItem="{Binding Upg1Item}" Visibility="{Binding IsUpg1Enable}"/>
+                    <ComboBox Name="cbbUpg2" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectedItem="{Binding Upg2Item}" Visibility="{Binding IsUpg2Enable}"/>
+                    <ComboBox Name="cbbUpg3" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectedItem="{Binding Upg3Item}" Visibility="{Binding IsUpg3Enable}"/>
+                    <TextBox Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Visibility="{Binding IsGroupEnable}" Text="{Binding Group}"/>
+                    <CheckBox Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding AboveGround}" Visibility="{Binding IsAboveGroundEnable}"/>
+                    <TextBox Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Visibility="{Binding IsFollowsEnable}" Text="{Binding FollowsIndex}"/>
+                    <CheckBox Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding RecruitNo}" Visibility="{Binding IsRecruitNEnable}"/>
+                    <CheckBox Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding RecruitYes}" Visibility="{Binding IsRecruitYEnable}"/>
+                    <CheckBox Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding Sellable}" Visibility="{Binding IsSellableEnable}"/>
+                    <CheckBox Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding AiRebuild}" Visibility="{Binding IsRebuildEnable}"/>
+                    <CheckBox Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding AiRepair}" Visibility="{Binding IsRepairEnable}"/>
+                    <ComboBox Name="cbbSpotlight" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectedItem="{Binding SpotlightItem}" Visibility="{Binding IsSpotlightEnable}"/>
+
+                </StackPanel>
+                <GridSplitter Grid.Column="2" Style="{DynamicResource gsplitDark}" Width="3" HorizontalAlignment="Left" VerticalAlignment="Stretch"/>
+
+            </Grid>
+        </ScrollViewer>
 
     </Grid>
 </UserControl>

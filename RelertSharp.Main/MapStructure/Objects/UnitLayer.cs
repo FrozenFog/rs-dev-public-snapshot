@@ -67,16 +67,10 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods
-        public override void ApplyAttributeFrom(ICombatObject src)
+        public override void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
         {
-            if (src is UnitItem u)
-            {
-                FollowsIndex = u.FollowsIndex;
-                IsAboveGround = u.IsAboveGround;
-                AutoYESRecruitType = u.AutoYESRecruitType;
-                AutoNORecruitType = u.AutoNORecruitType;
-                base.ApplyAttributeFrom(src);
-            }
+            base.ApplyConfig(config, filter, applyPosAndName);
+            if (filter.Follows) FollowsIndex = config.FollowsIndex;
         }
         #endregion
 

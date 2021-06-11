@@ -10,6 +10,13 @@ namespace RelertSharp
 {
     public static class RsMath
     {
+        /// <summary>
+        /// include both
+        /// </summary>
+        /// <param name="src"></param>
+        /// <param name="floor"></param>
+        /// <param name="ceil"></param>
+        /// <returns></returns>
         public static int TrimTo(this int src, int floor, int ceil)
         {
             if (floor > ceil) throw new ArgumentException("Floor is grater than Ceil");

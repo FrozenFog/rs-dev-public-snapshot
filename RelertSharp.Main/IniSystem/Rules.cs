@@ -92,18 +92,23 @@ namespace RelertSharp.IniSystem
             return artname;
         }
         private bool powerupInitialize = false;
-        private Dictionary<string, List<TechnoPair>> powerups = new Dictionary<string, List<TechnoPair>>();
-        public IEnumerable<TechnoPair> GetBuildingUpgradeList(string regid)
+        private Dictionary<string, List<IIndexableItem>> powerups = new Dictionary<string, List<IIndexableItem>>();
+        public IEnumerable<IIndexableItem> GetBuildingUpgradeList(string regid)
         {
+            List<IIndexableItem> result = new List<IIndexableItem>
+            {
+                new ComboItem(VALUE_NONE)
+            };
+            if (string.IsNullOrEmpty(regid)) return result;
             if (!powerupInitialize)
             {
                 InitializePowerupDictionary();
             }
             if (powerups.Keys.Contains(regid))
             {
-                return powerups[regid];
+                result.AddRange(powerups[regid]);
             }
-            return null;
+            return result;
         }
         private void InitializePowerupDictionary()
         {
@@ -115,9 +120,9 @@ namespace RelertSharp.IniSystem
                     string host = p.Value as string;
                     if (!powerups.Keys.Contains(host))
                     {
-                        powerups[host] = new List<TechnoPair>();
+                        powerups[host] = new List<IIndexableItem>();
                     }
-                    TechnoPair pwups = new TechnoPair(ent.Name, ent["Name"]);
+                    IIndexableItem pwups = new ComboItem(ent.Name, ent["Name"]);
                     powerups[host].Add(pwups);
                 }
             }

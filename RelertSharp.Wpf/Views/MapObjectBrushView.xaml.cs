@@ -1,5 +1,6 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
+using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,9 @@ namespace RelertSharp.Wpf.Views
     public partial class MapObjectBrushView : UserControl
     {
         private Rules Rules { get { return GlobalVar.GlobalRules; } }
+        private ObjectBrushConfig cfg;
+        private ObjectBrushFilter filter;
+        private ObjectAttributeApplierVm context;
         public MapObjectBrushView()
         {
             InitializeComponent();
@@ -119,6 +123,15 @@ namespace RelertSharp.Wpf.Views
             generic("Infantries", Constant.RulesHead.HEAD_INFANTRY, Properties.Resources.iconObjInf.ToWpfImage(true), CombatObjectType.Infantry, MapObjectType.Infantry);
             unit();
             generic("Aircrafts", Constant.RulesHead.HEAD_AIRCRAFT, Properties.Resources.iconObjAir.ToWpfImage(true), CombatObjectType.Aircraft, MapObjectType.Aircraft);
+            ReloadAttributeCombo();
+        }
+        internal void BindBrushConfig(ObjectBrushConfig config, ObjectBrushFilter filter)
+        {
+            cfg = config; this.filter = filter;
+            context = new ObjectAttributeApplierVm(config, filter);
+            context.AttributeRefreshRequest += HandleAttrubuteRefresh;
+            context.ObjectRefreshRequest += ObjectRefreshHandler;
+            DataContext = context;
         }
         #endregion
 
@@ -126,10 +139,51 @@ namespace RelertSharp.Wpf.Views
         private void BrushItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             ObjectPickVm selected = trvMain.SelectedItem as ObjectPickVm;
+            IEnumerable<IIndexableItem> upgradeType = GlobalVar.GlobalRules.GetBuildingUpgradeList(selected.RegName);
+            cbbUpg1.ItemsSource = upgradeType;
+            cbbUpg2.ItemsSource = upgradeType;
+            cbbUpg3.ItemsSource = upgradeType;
+            context.SetObjectType(selected.Type);
+            RefreshContext();
             if (selected.Type != MapObjectType.Undefined)
             {
                 PaintBrush.LoadBrushObject(selected.RegName, selected.Type);
             }
+        }
+        private void HandleAttrubuteRefresh(object sender, EventArgs e)
+        {
+            ObjectPickVm selected = trvMain.SelectedItem as ObjectPickVm;
+            IEnumerable<IIndexableItem> upgradeType = GlobalVar.GlobalRules.GetBuildingUpgradeList(selected.RegName);
+            cbbUpg1.ItemsSource = upgradeType;
+            cbbUpg2.ItemsSource = upgradeType;
+            cbbUpg3.ItemsSource = upgradeType;
+            context.SetObjectType(selected.Type);
+            RefreshContext();
+        }
+        private void ObjectRefreshHandler(object sender, EventArgs e)
+        {
+            ObjectPickVm selected = trvMain.SelectedItem as ObjectPickVm;
+            if (selected.Type != MapObjectType.Undefined)
+            {
+                PaintBrush.LoadBrushObject(selected.RegName, selected.Type);
+            }
+        }
+        #endregion
+
+
+
+        #region Private
+        private void ReloadAttributeCombo()
+        {
+            cbbOwner.ItemsSource = GlobalCollectionVm.Houses;
+            cbbTag.ItemsSource = GlobalCollectionVm.Tags;
+            cbbStatus.ItemsSource = GlobalVar.GlobalConfig.ModConfig.GetCombo(Constant.Config.DefaultComboType.TYPE_MAP_OBJSTATE).CastToCombo();
+            cbbSpotlight.ItemsSource = GlobalVar.GlobalConfig.ModConfig.GetCombo(Constant.Config.DefaultComboType.TYPE_MAP_SPOTLIGHT).CastToCombo();
+        }
+        private void RefreshContext()
+        {
+            DataContext = null;
+            DataContext = context;
         }
         #endregion
     }

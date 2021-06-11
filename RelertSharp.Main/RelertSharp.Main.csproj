@@ -214,7 +214,6 @@
     <Compile Include="MapStructure\Map\TileAdd.cs" />
     <Compile Include="MapStructure\Map\TileUtils.cs" />
     <Compile Include="MapStructure\Objects\AircraftLayer.cs" />
-    <Compile Include="MapStructure\Objects\AttributeChanger.cs" />
     <Compile Include="MapStructure\Objects\InfantryLayer.cs" />
     <Compile Include="MapStructure\Logic\LocalVar.cs" />
     <Compile Include="MapStructure\Logic\LogicCollection.cs" />

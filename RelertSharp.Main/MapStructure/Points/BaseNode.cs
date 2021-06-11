@@ -88,11 +88,14 @@ namespace RelertSharp.MapStructure.Points
             return GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(this);
         }
 
-        public void ApplyConfig(IMapObjectBrushConfig config)
+        public void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
         {
-            RegName = config.RegName;
-            X = config.Pos.X;
-            Y = config.Pos.Y;
+            if (applyPosAndName)
+            {
+                X = config.Pos.X;
+                Y = config.Pos.Y;
+                RegName = config.RegName;
+            }
         }
         #endregion
 
