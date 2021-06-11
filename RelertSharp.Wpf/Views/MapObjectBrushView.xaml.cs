@@ -168,6 +168,15 @@ namespace RelertSharp.Wpf.Views
                 PaintBrush.LoadBrushObject(selected.RegName, selected.Type);
             }
         }
+        private void FacingWheel(object sender, MouseWheelEventArgs e)
+        {
+            bool inc = e.Delta > 0;
+            int delta = 32 * (inc ? 1 : -1);
+            int result = context.Facing + delta;
+            if (result <= 0) result += 256;
+            if (result >= 256) result -= 256;
+            context.Facing = result;
+        }
         #endregion
 
 
