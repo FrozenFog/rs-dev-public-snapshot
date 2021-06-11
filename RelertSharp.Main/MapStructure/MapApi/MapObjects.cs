@@ -29,81 +29,81 @@ namespace RelertSharp.MapStructure
                     break;
             }
         }
-        public static StructureItem AddBuilding(IMapObjectBrushConfig config)
+        public static StructureItem AddBuilding(IMapObjectBrushConfig config, IObjectBrushFilter filter)
         {
             StructureItem bud = new StructureItem(config.RegName);
-            bud.ApplyConfig(config);
+            bud.ApplyConfig(config, filter, true);
             Map.Buildings.AddItem(bud);
             AddToTile(bud);
             return bud;
         }
-        public static InfantryItem AddInfantry(IMapObjectBrushConfig config)
+        public static InfantryItem AddInfantry(IMapObjectBrushConfig config, IObjectBrushFilter filter)
         {
             InfantryItem inf = new InfantryItem();
-            inf.ApplyConfig(config);
+            inf.ApplyConfig(config, filter, true);
             Map.Infantries.AddItem(inf);
             AddToTile(inf);
             return inf;
         }
-        public static UnitItem AddUnit(IMapObjectBrushConfig config)
+        public static UnitItem AddUnit(IMapObjectBrushConfig config, IObjectBrushFilter filter)
         {
             UnitItem unit = new UnitItem();
-            unit.ApplyConfig(config);
+            unit.ApplyConfig(config, filter, true);
             Map.Units.AddItem(unit);
             AddToTile(unit);
             return unit;
         }
-        public static AircraftItem AddAircraft(IMapObjectBrushConfig config)
+        public static AircraftItem AddAircraft(IMapObjectBrushConfig config, IObjectBrushFilter filter)
         {
             AircraftItem air = new AircraftItem();
-            air.ApplyConfig(config);
+            air.ApplyConfig(config, filter, true);
             Map.Aircrafts.AddItem(air);
             AddToTile(air);
             return air;
         }
-        public static SmudgeItem AddSmudge(IMapObjectBrushConfig config)
+        public static SmudgeItem AddSmudge(IMapObjectBrushConfig config, IObjectBrushFilter filter)
         {
             SmudgeItem smg = new SmudgeItem();
-            smg.ApplyConfig(config);
+            smg.ApplyConfig(config, filter, true);
             Map.Smudges.AddObject(smg);
             AddToTile(smg);
             return smg;
         }
-        public static TerrainItem AddTerrain(IMapObjectBrushConfig config)
+        public static TerrainItem AddTerrain(IMapObjectBrushConfig config, IObjectBrushFilter filter)
         {
             TerrainItem terr = new TerrainItem();
-            terr.ApplyConfig(config);
+            terr.ApplyConfig(config, filter, true);
             Map.Terrains.AddObject(terr);
             AddToTile(terr);
             return terr;
         }
-        public static CellTagItem AddCellTag(IMapObjectBrushConfig config)
+        public static CellTagItem AddCellTag(IMapObjectBrushConfig config, IObjectBrushFilter filter)
         {
             CellTagItem cell = new CellTagItem();
-            cell.ApplyConfig(config);
+            cell.ApplyConfig(config, filter, true);
             Map.Celltags.AddObject(cell);
             AddToTile(cell);
             return cell;
         }
-        public static BaseNode AddBaseNode(IMapObjectBrushConfig config)
+        public static BaseNode AddBaseNode(IMapObjectBrushConfig config, IObjectBrushFilter filter)
         {
             BaseNode node = Map.Houses[config.OwnerHouse].AddNewNode();
-            node.ApplyConfig(config);
+            node.ApplyConfig(config, filter, true);
             AddToTile(node);
             return node;
         }
-        public static WaypointItem AddWaypoint(IMapObjectBrushConfig config)
+        public static WaypointItem AddWaypoint(IMapObjectBrushConfig config, IObjectBrushFilter filter)
         {
             WaypointItem wp = new WaypointItem();
-            wp.ApplyConfig(config);
+            wp.ApplyConfig(config, filter, true);
             Map.Waypoints.AddObject(wp);
             AddToTile(wp);
             return wp;
         }
-        public static OverlayUnit AddOverlay(IMapObjectBrushConfig config)
+        public static OverlayUnit AddOverlay(IMapObjectBrushConfig config, IObjectBrushFilter filter)
         {
             OverlayUnit o = new OverlayUnit();
-            o.ApplyConfig(config);
+            o.ApplyConfig(config, filter, true);
             Map.Overlays[o] = o;
             AddToTile(o);
             return o;

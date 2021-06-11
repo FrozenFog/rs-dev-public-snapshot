@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RelertSharp.Wpf.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,12 +15,11 @@ namespace RelertSharp.Wpf
         {
             tmrInit.Stop();
             triggerList.ReloadMapTrigger();
+            ObjectBrushConfig cfg = new ObjectBrushConfig();
+            ObjectBrushFilter filter = new ObjectBrushFilter();
+            PaintBrush.SetConfig(cfg, filter);
             objectPanel.ReloadAllObjects();
-            ObjectBrushConfig cfg = new ObjectBrushConfig()
-            {
-                OwnerHouse = RelertSharp.Common.GlobalVar.CurrentMapDocument.Map.Houses.First().Name
-            };
-            PaintBrush.SetConfig(cfg);
+            objectPanel.BindBrushConfig(cfg, filter);
         }
 
         private void DebugClick(object sender, RoutedEventArgs e)

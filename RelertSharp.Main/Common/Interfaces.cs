@@ -55,7 +55,7 @@ namespace RelertSharp.Common
         void Dispose();
         void MoveTo(I3dLocateable pos, int subcell = -1);
         void ShiftBy(I3dLocateable delta);
-        void ApplyConfig(IMapObjectBrushConfig config);
+        void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndNameAndName = true);
         string Id { get; }
     }
 
@@ -68,8 +68,6 @@ namespace RelertSharp.Common
         int Rotation { get; set; }
         int VeterancyPercentage { get; set; }
         string Group { get; set; }
-        void ApplyAttributeFrom(AttributeChanger ckb);
-        void ApplyAttributeFrom(ICombatObject src);
     }
 
     public interface IMapTileBrushConfig
@@ -110,8 +108,49 @@ namespace RelertSharp.Common
         /// Default true
         /// </summary>
         bool AutoRecruitNo { get; }
+        string FollowsIndex { get; }
+        /// <summary>
+        /// Default true
+        /// </summary>
+        bool IsSellable { get; }
+        bool AiRebuildable { get; }
+        /// <summary>
+        /// Default true
+        /// </summary>
+        bool Powered { get; }
+        int UpgradeNum { get; }
+        string Upg1 { get; }
+        string Upg2 { get; }
+        string Upg3 { get; }
+        bool AiRepairable { get; }
+        BuildingSpotlightType SpotlightType { get; }
+
         string WaypointNum { get; }
         byte OverlayIndex { get; }
         byte OverlayFrame { get; }
+    }
+
+    public interface IObjectBrushFilter
+    {
+        bool AboveGround { get; }
+        bool AiRepairable { get; }
+        bool Facing { get; }
+        bool Follows { get; }
+        bool Group { get; }
+        bool HealthPoint { get; }
+        bool MissionStatus { get; }
+        bool OwnerHouse { get; }
+        bool Powered { get; }
+        bool Rebuild { get; }
+        bool RecruitNo { get; }
+        bool RecruitYes { get; }
+        bool Sellable { get; }
+        bool Spotlight { get; }
+        bool Tag { get; }
+        bool Upg1 { get; }
+        bool Upg2 { get; }
+        bool Upg3 { get; }
+        bool UpgradeNum { get; }
+        bool Veteran { get; }
     }
 }

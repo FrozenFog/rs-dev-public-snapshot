@@ -18,6 +18,8 @@ namespace RelertSharp.Wpf.ViewModel
         public static GlobalAiTriggerVm AiTriggers { get; set; } = new GlobalAiTriggerVm();
         public static StaticCollectionVm StaticCollections { get; set; } = new StaticCollectionVm();
         public static GlobalCountryVm Countries { get; set; } = new GlobalCountryVm();
+        public static GlobalHouseVm Houses { get; set; } = new GlobalHouseVm();
         public static GlobalTriggerVm Triggers { get; set; } = new GlobalTriggerVm();
+        public static GlobalTagVm Tags { get; set; } = new GlobalTagVm();
     }
 }

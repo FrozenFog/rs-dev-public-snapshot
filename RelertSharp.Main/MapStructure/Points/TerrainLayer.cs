@@ -32,10 +32,10 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Public Methods - TerrainItem
-        public override void ApplyConfig(IMapObjectBrushConfig config)
+        public override void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
         {
-            base.ApplyConfig(config);
-            RegName = config.RegName;
+            base.ApplyConfig(config, filter, applyPosAndName);
+            if (applyPosAndName) RegName = config.RegName;
         }
         #endregion
 

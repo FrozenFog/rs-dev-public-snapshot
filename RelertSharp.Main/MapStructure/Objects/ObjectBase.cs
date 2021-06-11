@@ -113,40 +113,24 @@ namespace RelertSharp.MapStructure.Objects
             Y += delta.Y;
             SceneObject?.ShiftBy(delta);
         }
-        public virtual void ApplyAttributeFrom(AttributeChanger obj)
+        public virtual void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
         {
-            ICombatObject host = obj.Host;
-            if (obj.bOwnerHouse) OwnerHouse = host.OwnerHouse;
-            if (obj.bHealthPoint) HealthPoint = host.HealthPoint;
-            if (obj.bGroup) Group = host.Group;
-            if (obj.bStatus) Status = host.Status;
-            if (obj.bTaggedTrigger) TaggedTrigger = host.TaggedTrigger;
-            if (obj.bVeteran) VeterancyPercentage = host.VeterancyPercentage;
-            if (obj.bRotation) Rotation = host.Rotation;
-        }
-        public virtual void ApplyAttributeFrom(ICombatObject src)
-        {
-            if (src != null)
+            if (applyPosAndName)
             {
-                AttributeChanger c = new AttributeChanger(true, src);
-                ApplyAttributeFrom(c);
+                RegName = config.RegName;
+                X = config.Pos.X;
+                Y = config.Pos.Y;
             }
-        }
-        public virtual void ApplyConfig(IMapObjectBrushConfig config)
-        {
-            RegName = config.RegName;
-            X = config.Pos.X;
-            Y = config.Pos.Y;
-            OwnerHouse = config.OwnerHouse;
-            HealthPoint = config.HealthPoint;
-            Group = config.Group;
-            Status = config.MissionStatus;
-            TaggedTrigger = config.AttatchedTag;
-            VeterancyPercentage = config.VeterancyPercentage;
-            Rotation = config.FacingRotation;
-            AutoYESRecruitType = config.AutoRecruitYes;
-            AutoNORecruitType = config.AutoRecruitNo;
-            IsAboveGround = config.AboveGround;
+            if (filter.OwnerHouse) OwnerHouse = config.OwnerHouse;
+            if (filter.HealthPoint) HealthPoint = config.HealthPoint;
+            if (filter.Group) Group = config.Group;
+            if (filter.MissionStatus) Status = config.MissionStatus;
+            if (filter.Tag) TaggedTrigger = config.AttatchedTag;
+            if (filter.Veteran) VeterancyPercentage = config.VeterancyPercentage;
+            if (filter.Facing) Rotation = config.FacingRotation;
+            if (filter.RecruitYes) AutoYESRecruitType = config.AutoRecruitYes;
+            if (filter.RecruitNo) AutoNORecruitType = config.AutoRecruitNo;
+            if (filter.AboveGround) IsAboveGround = config.AboveGround;
         }
         public virtual int GetHeight()
         {

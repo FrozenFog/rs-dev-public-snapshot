@@ -122,6 +122,12 @@ namespace System.Collections.Generic
             }
             return dest;
         }
+        public static IEnumerable<IIndexableItem> CastToCombo(this IEnumerable<IIndexableItem> src)
+        {
+            List<IIndexableItem> dest = new List<IIndexableItem>();
+            src.Foreach(x => dest.Add(new ComboItem(x.Id, x.Name)));
+            return dest;
+        }
         public static void Foreach<T>(this IEnumerable<T> src, Action<T> func)
         {
             foreach (T item in src) func(item);

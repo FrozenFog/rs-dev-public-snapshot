@@ -9,6 +9,7 @@ using RelertSharp.Common;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
 using RelertSharp.MapStructure;
+using RelertSharp.Wpf.Common;
 
 namespace RelertSharp.Wpf
 {
@@ -16,13 +17,15 @@ namespace RelertSharp.Wpf
     {
         #region Components
         public static ObjectBrushConfig Config { get; private set; }
+        public static ObjectBrushFilter Filter { get; private set; }
         private static Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
         private static IMapObject currentObject;
         #endregion
         #region Api
-        public static void SetConfig(IMapObjectBrushConfig config)
+        public static void SetConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter)
         {
             Config = config as ObjectBrushConfig;
+            Filter = filter as ObjectBrushFilter;
         }
         #region Objects
         public static void LoadBrushObject(string regname, MapObjectType type, bool dispose = true)
@@ -65,7 +68,7 @@ namespace RelertSharp.Wpf
             }
             if (isValid)
             {
-                currentObject.ApplyConfig(Config);
+                currentObject.ApplyConfig(Config, Filter);
                 EngineApi.DrawObject(currentObject);
             }
         }
@@ -105,34 +108,35 @@ namespace RelertSharp.Wpf
             if (currentObject != null)
             {
                 IMapObject drawedObject = null;
+                IObjectBrushFilter dummyFilter = new ObjectBrushFilter();
                 switch (currentObject.ObjectType)
                 {
                     case MapObjectType.Infantry:
-                        drawedObject = MapApi.AddInfantry(Config);
+                        drawedObject = MapApi.AddInfantry(Config, dummyFilter);
                         break;
                     case MapObjectType.Unit:
-                        drawedObject = MapApi.AddUnit(Config);
+                        drawedObject = MapApi.AddUnit(Config, dummyFilter);
                         break;
                     case MapObjectType.Building:
-                        drawedObject = MapApi.AddBuilding(Config);
+                        drawedObject = MapApi.AddBuilding(Config, dummyFilter);
                         break;
                     case MapObjectType.Aircraft:
-                        drawedObject = MapApi.AddAircraft(Config);
+                        drawedObject = MapApi.AddAircraft(Config, dummyFilter);
                         break;
                     case MapObjectType.Terrain:
-                        drawedObject = MapApi.AddTerrain(Config);
+                        drawedObject = MapApi.AddTerrain(Config, dummyFilter);
                         break;
                     case MapObjectType.Smudge:
-                        drawedObject = MapApi.AddSmudge(Config);
+                        drawedObject = MapApi.AddSmudge(Config, dummyFilter);
                         break;
                     case MapObjectType.Overlay:
-                        drawedObject = MapApi.AddOverlay(Config);
+                        drawedObject = MapApi.AddOverlay(Config, dummyFilter);
                         break;
                     case MapObjectType.Celltag:
-                        drawedObject = MapApi.AddCellTag(Config);
+                        drawedObject = MapApi.AddCellTag(Config, dummyFilter);
                         break;
                     case MapObjectType.Waypoint:
-                        drawedObject = MapApi.AddWaypoint(Config);
+                        drawedObject = MapApi.AddWaypoint(Config, dummyFilter);
                         break;
                 }
                 if (drawedObject != null)
@@ -143,7 +147,7 @@ namespace RelertSharp.Wpf
         }
         public static void RefreshObjectAttribute()
         {
-            currentObject.ApplyConfig(Config);
+            currentObject.ApplyConfig(Config, Filter);
             currentObject?.Dispose();
             EngineApi.DrawObject(currentObject);
         }
@@ -153,70 +157,5 @@ namespace RelertSharp.Wpf
         #endregion
 
         #endregion
-    }
-
-
-    internal class ObjectBrushConfig : IMapObjectBrushConfig
-    {
-        #region Interface
-        public string OwnerHouse { get; set; }
-
-        public string RegName { get; set; }
-
-        public I2dLocateable Pos { get; set; } = new Pnt();
-
-        public int Height { get; set; }
-
-        public int SubCell { get; set; } = -1;
-
-        public int FacingRotation {
-            get; set;
-        }
-
-        public string AttatchedTag {
-            get; set;
-        }
-
-        public string MissionStatus {
-            get; set;
-        }
-
-        public string Group {
-            get; set;
-        }
-
-        public int HealthPoint {
-            get; set;
-        }
-
-        public int VeterancyPercentage {
-            get; set;
-        }
-
-        public bool AboveGround {
-            get; set;
-        }
-
-        public bool AutoRecruitYes {
-            get; set;
-        }
-
-        public bool AutoRecruitNo {
-            get; set;
-        }
-
-        public string WaypointNum {
-            get; set;
-        }
-
-        public byte OverlayIndex {
-            get; set;
-        }
-
-        public byte OverlayFrame {
-            get; set;
-        }
-        #endregion
-
     }
 }

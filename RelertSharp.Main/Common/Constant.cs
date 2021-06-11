@@ -39,6 +39,7 @@ namespace RelertSharp.Common
 
         public const int IniMaxLineLength = 512;
         public const string ITEM_NONE = "<none>";
+        public const string VALUE_NONE = "None";
         public const string ITEM_ALL = "<all>";
         public const string FMT_OWNER = "#OWNER#";
         public const string EX_SHP = ".shp";
@@ -318,6 +319,8 @@ namespace RelertSharp.Common
             public const string PARAM_LAST = "A";
             public static class DefaultComboType
             {
+                public const string TYPE_MAP_OBJSTATE = "MapUnitState";
+                public const string TYPE_MAP_SPOTLIGHT = "SpotlightType";
                 public const string TYPE_WAYPOINT = "Waypoints";
                 public const string TYPE_HOUSES = "Houses";
                 public const string TYPE_IDX_HOUSE = "HouseIndex";

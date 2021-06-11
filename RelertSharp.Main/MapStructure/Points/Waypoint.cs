@@ -90,10 +90,10 @@ namespace RelertSharp.MapStructure.Points
         {
             return string.Format("{0} - ({1}, {2})", Num, X, Y);
         }
-        public override void ApplyConfig(IMapObjectBrushConfig config)
+        public override void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = true)
         {
-            base.ApplyConfig(config);
-            Num = config.WaypointNum;
+            base.ApplyConfig(config, filter, applyPosAndName);
+            if (applyPosAndName) Num = config.WaypointNum;
         }
         #endregion
 

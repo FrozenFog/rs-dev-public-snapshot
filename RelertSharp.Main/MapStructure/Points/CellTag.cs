@@ -37,10 +37,10 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Public Methods
-        public override void ApplyConfig(IMapObjectBrushConfig config)
+        public override void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
         {
-            base.ApplyConfig(config);
-            TagID = config.AttatchedTag;
+            base.ApplyConfig(config, filter, applyPosAndName);
+            if (filter.Tag) TagID = config.AttatchedTag;
         }
         public override string ToString()
         {
