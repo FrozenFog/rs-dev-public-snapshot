@@ -69,23 +69,23 @@
                 <StackPanel x:Name="stkControl" Grid.Column="3">
                     <ComboBox Name="cbbOwner" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectedItem="{Binding OwnerHouseItem}" Visibility="{Binding IsOwnerHouseEnable}"/>
                     <ComboBox Name="cbbStatus" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectedItem="{Binding MissionStatusItem}" Visibility="{Binding IsMissionEnable}"/>
-                    <Slider Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Maximum="256" Minimum="0" Value="{Binding HealthPoint}" Visibility="{Binding IsHpEnable}" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="16"/>
-                    <TextBox Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Visibility="{Binding IsFacingEnable}" Text="{Binding Facing}"/>
+                    <Slider x:Name="sldHp" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Maximum="256" Minimum="0" Value="{Binding HealthPoint}" Visibility="{Binding IsHpEnable}" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="16"/>
+                    <TextBox x:Name="txbFacing" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Visibility="{Binding IsFacingEnable}" Text="{Binding Facing}" MouseWheel="FacingWheel"/>
                     <ComboBox Name="cbbTag" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectedItem="{Binding TagItem}" Visibility="{Binding IsTagEnable}"/>
-                    <Slider Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Maximum="200" Minimum="0" Value="{Binding Veterancy}" Visibility="{Binding IsVeterancyEnable}" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="20"/>
-                    <CheckBox Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding Powered}" Visibility="{Binding IsPoweredEnable}"/>
-                    <TextBox Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Visibility="{Binding IsUpgNumEnable}" Text="{Binding UpgradeNum}"/>
+                    <Slider x:Name="sldVeterancy" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Maximum="200" Minimum="0" Value="{Binding Veterancy}" Visibility="{Binding IsVeterancyEnable}" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="20"/>
+                    <CheckBox x:Name="ckbPowered" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding Powered}" Visibility="{Binding IsPoweredEnable}"/>
+                    <TextBox x:Name="txbUpgNum" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Visibility="{Binding IsUpgNumEnable}" Text="{Binding UpgradeNum}"/>
                     <ComboBox Name="cbbUpg1" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectedItem="{Binding Upg1Item}" Visibility="{Binding IsUpg1Enable}"/>
                     <ComboBox Name="cbbUpg2" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectedItem="{Binding Upg2Item}" Visibility="{Binding IsUpg2Enable}"/>
                     <ComboBox Name="cbbUpg3" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectedItem="{Binding Upg3Item}" Visibility="{Binding IsUpg3Enable}"/>
-                    <TextBox Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Visibility="{Binding IsGroupEnable}" Text="{Binding Group}"/>
-                    <CheckBox Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding AboveGround}" Visibility="{Binding IsAboveGroundEnable}"/>
-                    <TextBox Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Visibility="{Binding IsFollowsEnable}" Text="{Binding FollowsIndex}"/>
-                    <CheckBox Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding RecruitNo}" Visibility="{Binding IsRecruitNEnable}"/>
-                    <CheckBox Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding RecruitYes}" Visibility="{Binding IsRecruitYEnable}"/>
-                    <CheckBox Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding Sellable}" Visibility="{Binding IsSellableEnable}"/>
-                    <CheckBox Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding AiRebuild}" Visibility="{Binding IsRebuildEnable}"/>
-                    <CheckBox Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding AiRepair}" Visibility="{Binding IsRepairEnable}"/>
+                    <TextBox x:Name="txbGroup" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Visibility="{Binding IsGroupEnable}" Text="{Binding Group}"/>
+                    <CheckBox x:Name="ckbAboveGround" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding AboveGround}" Visibility="{Binding IsAboveGroundEnable}"/>
+                    <TextBox x:Name="txbFollows" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Visibility="{Binding IsFollowsEnable}" Text="{Binding FollowsIndex}"/>
+                    <CheckBox x:Name="ckbRecN" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding RecruitNo}" Visibility="{Binding IsRecruitNEnable}"/>
+                    <CheckBox x:Name="ckbRecY" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding RecruitYes}" Visibility="{Binding IsRecruitYEnable}"/>
+                    <CheckBox x:Name="ckbSell" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding Sellable}" Visibility="{Binding IsSellableEnable}"/>
+                    <CheckBox x:Name="ckbRebuild" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding AiRebuild}" Visibility="{Binding IsRebuildEnable}"/>
+                    <CheckBox x:Name="ckbRepair" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding AiRepair}" Visibility="{Binding IsRepairEnable}"/>
                     <ComboBox Name="cbbSpotlight" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectedItem="{Binding SpotlightItem}" Visibility="{Binding IsSpotlightEnable}"/>
 
                 </StackPanel>
