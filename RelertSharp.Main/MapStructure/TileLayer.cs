@@ -106,7 +106,7 @@ namespace RelertSharp.MapStructure
         //    }
         //    return bmp;
         //}
-        public IEnumerable<Tile> GetNeighbor(Tile src)
+        public IEnumerable<Tile> GetNeighbor(I2dLocateable src)
         {
             List<Tile> result = new List<Tile>();
             Pnt pos = new Pnt(src);
@@ -116,7 +116,13 @@ namespace RelertSharp.MapStructure
             if (this[pos - Pnt.OneY] is Tile ur) result.Add(ur);
             return result;
         }
-        public List<Tile> GetNeighbor(Tile src, out List<WallDirection> directions)
+        /// <summary>
+        /// The direction returned is from result to referance center tile
+        /// </summary>
+        /// <param name="src"></param>
+        /// <param name="directions"></param>
+        /// <returns></returns>
+        public List<Tile> GetNeighbor(I2dLocateable src, out List<WallDirection> directions)
         {
             List<Tile> result = new List<Tile>();
             directions = new List<WallDirection>();
@@ -140,6 +146,33 @@ namespace RelertSharp.MapStructure
             {
                 result.Add(ur);
                 directions.Add(WallDirection.SW);
+            }
+            return result;
+        }
+        public List<Tile> GetDiagonalTile(I2dLocateable src, out List<WallDirection> directions)
+        {
+            List<Tile> result = new List<Tile>();
+            directions = new List<WallDirection>();
+            Pnt pos = new Pnt(src);
+            if (this[pos + Pnt.One] is Tile down)
+            {
+                result.Add(down);
+                directions.Add(WallDirection.CornerOfSouth);
+            }
+            if (this[pos - Pnt.One]is Tile up)
+            {
+                result.Add(up);
+                directions.Add(WallDirection.CornerOfNorth);
+            }
+            if (this[pos + Pnt.Diag] is Tile right)
+            {
+                result.Add(right);
+                directions.Add(WallDirection.CornerOfEast);
+            }
+            if (this[pos - Pnt.Diag] is Tile left)
+            {
+                result.Add(left);
+                directions.Add(WallDirection.CornerOfWest);
             }
             return result;
         }
@@ -426,6 +459,14 @@ namespace RelertSharp.MapStructure
                 if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
             }
         }
+        public void SetHeightTo(int height)
+        {
+            if (height >= 0 && height < Constant.DrawingEngine.MapMaxHeight)
+            {
+                MoveTileTo(this, height);
+                MoveTileObjectsTo(this, height);
+            }
+        }
         public void Rise()
         {
             if (Height < Constant.DrawingEngine.MapMaxHeight)
@@ -676,6 +717,11 @@ namespace RelertSharp.MapStructure
             TileIndex = config.TileIndex;
             SubIndex = config.TileSubIndex;
             IceGrowth = config.IceGrowth;
+        }
+        internal void SetTileTo(int tileIndex, byte subindex)
+        {
+            TileIndex = tileIndex;
+            SubIndex = subindex;
         }
         #endregion
 

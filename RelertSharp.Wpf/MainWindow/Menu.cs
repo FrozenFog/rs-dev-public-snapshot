@@ -1,4 +1,5 @@
 ﻿using RelertSharp.Wpf.Common;
+using RelertSharp.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace RelertSharp.Wpf
             PaintBrush.SetConfig(cfg, filter);
             objectPanel.ReloadAllObjects();
             objectPanel.BindBrushConfig(cfg, filter);
+            MapEngine.Helper.RampUtil.RunTest();
         }
 
         private void DebugClick(object sender, RoutedEventArgs e)

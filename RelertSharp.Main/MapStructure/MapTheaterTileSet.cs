@@ -322,6 +322,14 @@ namespace RelertSharp.MapStructure
                 return src;
             }
         }
+        /// <summary>
+        /// Return theater default ramp tileset
+        /// </summary>
+        /// <returns></returns>
+        public TileSet GetRampSet()
+        {
+            return tileSets[general["RampBase"]];
+        }
         #endregion
 
 

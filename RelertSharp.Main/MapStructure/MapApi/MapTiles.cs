@@ -11,11 +11,35 @@ namespace RelertSharp.MapStructure
     {
         private static MapTheaterTileSet TileDictionary { get { return GlobalVar.TileDictionary; } }
         #region Set Tile & LAT
+        /// <summary>
+        /// The direction returned is from result to referance center tile
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="adjacent"></param>
+        /// <param name="directions"></param>
+        public static void GetAdjacentTileAround(I2dLocateable pos, out Tile[] adjacent, out WallDirection[] directions)
+        {
+            adjacent = Map.TilesData.GetNeighbor(pos, out List<WallDirection> dir).ToArray();
+            directions = dir.ToArray();
+        }
+        public static void GetDiagonalTileAround(I2dLocateable pos, out Tile[] diagonal, out WallDirection[] directions)
+        {
+            diagonal = Map.TilesData.GetDiagonalTile(pos, out List<WallDirection> dir).ToArray();
+            directions = dir.ToArray();
+        }
         public static void SetTile(IMapTileBrushConfig config)
         {
             if (Map.TilesData[config.Pos] is Tile org)
             {
                 org.ReplaceWithNewTileConfig(config);
+                org.Redraw();
+            }
+        }
+        public static void SetTile(int tileIndex, byte subindex, I2dLocateable pos)
+        {
+            if (Map.TilesData[pos] is Tile org)
+            {
+                org.SetTileTo(tileIndex, subindex);
                 org.Redraw();
             }
         }
