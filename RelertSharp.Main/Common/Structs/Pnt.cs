@@ -27,6 +27,11 @@ namespace RelertSharp.Common
         public static Pnt Zero { get { return new Pnt(0, 0); } }
         public static Pnt OneX { get { return new Pnt(1, 0); } }
         public static Pnt OneY { get { return new Pnt(0, 1); } }
+        public static Pnt One { get { return new Pnt(1, 1); } }
+        /// <summary>
+        /// (1, -1)
+        /// </summary>
+        public static Pnt Diag { get { return new Pnt(1, -1); } }
 
         public int Coord { get { return Utils.Misc.CoordInt(X, Y); } }
 

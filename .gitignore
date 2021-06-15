@@ -70,7 +70,7 @@ local.rsc
 *.vpl
 *.xml
 *.json
-!RelertSharp.GUI/Resources/*.png
+!RelertSharp.Wpf/Resources/*.png
 !relert-sharp.sln
 !rslib.dll
 !voxel.vpl

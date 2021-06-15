@@ -41,6 +41,14 @@ namespace RelertSharp
             return src;
         }
 
+        public static float TrimTo(this float src, float floor, float ceil)
+        {
+            if (floor > ceil) throw new ArgumentException("Floor is grater than Ceil");
+            if (src >= ceil) return ceil;
+            if (src <= floor) return floor;
+            return src;
+        }
+
         public static bool InRange(this double src, double floor, double ceil)
         {
             return src >= floor && src <= ceil;
@@ -60,7 +68,10 @@ namespace RelertSharp
         {
             return src >= 0 ? (int)src : (int)src - 1;
         }
-
+        public static int Round(double src)
+        {
+            return (int)Math.Round(src);
+        }
         public static int ChebyshevDistance(System.Windows.Point p1, System.Windows.Point p2)
         {
             return (int)Math.Max(Math.Abs(p1.X - p2.X), Math.Abs(p1.Y - p2.Y));
