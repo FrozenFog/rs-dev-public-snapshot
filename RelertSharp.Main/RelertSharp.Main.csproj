@@ -241,6 +241,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\RSConfig.cs" />
+    <Compile Include="Terraformer\HillGenerator.cs" />
+    <Compile Include="Terraformer\RampBase.cs" />
     <Compile Include="Utils\ClassExtension.cs" />
     <Compile Include="Utils\CMemory.cs" />
     <Compile Include="Utils\Colors.cs" />

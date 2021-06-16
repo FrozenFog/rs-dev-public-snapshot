@@ -21,7 +21,7 @@ namespace RelertSharp.Wpf
             PaintBrush.SetConfig(cfg, filter);
             objectPanel.ReloadAllObjects();
             objectPanel.BindBrushConfig(cfg, filter);
-            MapEngine.Helper.RampUtil.RunTest();
+            Terraformer.HillGenerator.RunTest();
         }
 
         private void DebugClick(object sender, RoutedEventArgs e)
