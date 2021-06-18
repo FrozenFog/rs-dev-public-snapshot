@@ -211,7 +211,7 @@ namespace RelertSharp.Wpf.ViewModel
         }
         public object OwnerItem
         {
-            get { return GlobalVar.CurrentMapDocument.Map.Countries[data.OwnerHouse]; }
+            get { return GlobalVar.CurrentMapDocument?.Map.Countries[data.OwnerHouse]; }
             set
             {
                 if (value is IIndexableItem item) data.OwnerHouse = item.Value;

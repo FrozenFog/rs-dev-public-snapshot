@@ -36,6 +36,11 @@ namespace RelertSharp.Wpf.Common
     {
         public ObjectBrushConfig()
         {
+            GlobalVar.MapDocumentLoaded += MapLoadedHandler;
+        }
+
+        private void MapLoadedHandler(object sender, EventArgs e)
+        {
             OwnerHouse = GlobalVar.CurrentMapDocument.Map.Houses.First().Name;
         }
 

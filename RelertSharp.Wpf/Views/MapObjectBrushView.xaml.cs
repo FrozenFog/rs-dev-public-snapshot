@@ -32,6 +32,12 @@ namespace RelertSharp.Wpf.Views
         public MapObjectBrushView()
         {
             InitializeComponent();
+            GlobalVar.MapDocumentLoaded += MapReloadedHandler;
+        }
+
+        private void MapReloadedHandler(object sender, EventArgs e)
+        {
+            ReloadAllObjects();
         }
 
 

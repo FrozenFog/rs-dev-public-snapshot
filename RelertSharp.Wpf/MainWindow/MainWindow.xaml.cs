@@ -25,7 +25,6 @@ namespace RelertSharp.Wpf
     public partial class MainWindow : Window
     {
         #region Timer
-        DispatcherTimer tmrInit;
         #endregion
         #region Components
         [RsViewComponent(GuiViewType.AiTrigger, nameof(aiTrigger))]
@@ -72,20 +71,10 @@ namespace RelertSharp.Wpf
             InitializeComponent();
             AddToolPage();
             AddReciveListener();
-            SetTimer();
             BindNavigation();
         }
 
         #region Initialization
-        private void SetTimer()
-        {
-            tmrInit = new DispatcherTimer()
-            {
-                Interval = new TimeSpan(0, 0, 5)
-            };
-            tmrInit.Tick += DelayedInitialize;
-            tmrInit.Start();
-        }
         private void AddToolPage()
         {
             //dockMain.Layout.AddToolToRight("Ai Trigger Edit", aiTrigger);
@@ -94,17 +83,18 @@ namespace RelertSharp.Wpf
             //dockMain.Layout.AddToolToRight("Ai Trigger List", aiTriggerList);
             //dockMain.AddToolToRight("Script List", scriptList);
             //dockMain.AddToolToRight("Taskforce List", taskforceList);
-            dockMain.Layout.AddToolToLeft("Team", team);
-            dockMain.Layout.AddToolToLeft("Animation", animationPreview);
-            dockMain.Layout.AddToolToLeft("Map Objects", objectPanel);
+            //dockMain.Layout.AddToolToLeft("Team", team);
+            //dockMain.Layout.AddToolToLeft("Animation", animationPreview);
+            //dockMain.Layout.AddToolToLeft("Map Objects", objectPanel);
             dockMain.Layout.AddToolToRight("Trigger List", triggerList);
             //dockMain.AddToolToRight("Script", script);
             //dockMain.Layout.AddToolToRight("Light", lightPanel);
             dockMain.AddCenterPage("Map", pnlMain);
-            dockMain.Layout.AddToolToLeft("Teams", teamList);
-            dockMain.Layout.AddToolToRight("Trigger", trigger);
-            dockMain.Layout.AddToolToRight("Events", events);
-            dockMain.Layout.AddToolToRight("Actions", actions);
+            dockMain.Layout.AddToolToLeft("Minimap", minimap);
+            //dockMain.Layout.AddToolToLeft("Teams", teamList);
+            //dockMain.Layout.AddToolToRight("Trigger", trigger);
+            //dockMain.Layout.AddToolToRight("Events", events);
+            //dockMain.Layout.AddToolToRight("Actions", actions);
         }
         #endregion
 
@@ -164,16 +154,7 @@ namespace RelertSharp.Wpf
 
         private void DebugInit()
         {
-            GuiUtil.MonitorScale = this.GetScale();
-            tmrInit.Stop();
 
-            pnlMain.InitializePanel();
-            minimap.Initialize();
-            Engine.Api.EngineApi.SetBackgroundColor(GuiUtil.defBackColor);
-            pnlMain.DrawMap();
-            minimap.ResumeDrawing();
-            RedrawListener();
-            OtherListener();
         }
 
         private void RedrawRequestHandler(object sender, EventArgs e)
@@ -196,5 +177,24 @@ namespace RelertSharp.Wpf
         {
             position.Text = string.Format("X: {0} Y: {1} Z: {2}, Scale: {3}", posMouse.X, posMouse.Y, posMouse.Z, Engine.Api.EngineApi.ScaleFactor);
         }
+
+
+        #region Handler
+        private void WindowLoadedInitializer(object sender, RoutedEventArgs e)
+        {
+            GuiUtil.MonitorScale = this.GetScale();
+
+            Engine.Api.EngineApi.SetBackgroundColor(GuiUtil.defBackColor);
+            //pnlMain.DrawMap();
+            //minimap.ResumeDrawing();
+            RedrawListener();
+            OtherListener();
+
+            ObjectBrushConfig cfg = new ObjectBrushConfig();
+            ObjectBrushFilter filter = new ObjectBrushFilter();
+            PaintBrush.SetConfig(cfg, filter);
+            objectPanel.BindBrushConfig(cfg, filter);
+        }
+        #endregion
     }
 }

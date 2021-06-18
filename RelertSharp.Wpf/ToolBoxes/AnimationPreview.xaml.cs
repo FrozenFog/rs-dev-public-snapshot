@@ -126,7 +126,9 @@ namespace RelertSharp.Wpf.ToolBoxes
 
         private void cbbPalType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string palName = cbbPalType.SelectedItem.ToString();
+            object item = cbbPalType.SelectedItem;
+            if (item == null) return;
+            string palName = item.ToString();
             if (GlobalVar.GlobalDir.TryGetRawByte(palName, out byte[] data))
             {
                 pal = new PalFile(data, palName);

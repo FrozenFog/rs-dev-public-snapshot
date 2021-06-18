@@ -45,9 +45,11 @@ namespace RelertSharp.Wpf.ViewModel
         {
             get
             {
+                string linked = data.LinkedWith;
+                if (string.IsNullOrEmpty(linked)) return null;
                 if (data.LinkedWith == ITEM_NONE) return ComboItem.NoneItem;
-                TriggerItem trigger = map.Triggers[data.LinkedWith];
-                if (trigger == null) return data.LinkedWith;
+                TriggerItem trigger = map.Triggers[linked];
+                if (trigger == null) return linked;
                 return trigger;
             }
             set
@@ -61,7 +63,9 @@ namespace RelertSharp.Wpf.ViewModel
         {
             get
             {
-                CountryItem c = map.Countries[data.OwnerCountry];
+                string owner = data.OwnerCountry;
+                if (owner.IsNullOrEmpty()) return null;
+                CountryItem c = map.Countries[owner];
                 return c;
             }
             set

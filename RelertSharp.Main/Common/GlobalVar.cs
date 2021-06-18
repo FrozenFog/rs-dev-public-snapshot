@@ -1,9 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 namespace RelertSharp.Common
 {
     public static class GlobalVar
     {
-        public static FileSystem.MapFile CurrentMapDocument { get; set; }
+        public static event EventHandler MapDocumentLoaded;
+        public static event EventHandler MapDocumentRedrawRequested;
+        public static FileSystem.MapFile CurrentMapDocument { get; private set; }
+        public static void LoadMapDocument(string path)
+        {
+            CurrentMapDocument = new FileSystem.MapFile(path);
+            MapDocumentLoaded?.Invoke(null, null);
+            MapDocumentRedrawRequested?.Invoke(null, null);
+        }
         public static ELanguage CurrentLanguage { get; set; } = ELanguage.EnglishUS;
         public static RSConfig GlobalConfig { get; set; }
         public static FileSystem.VirtualDir GlobalDir { get; set; }
@@ -22,14 +31,6 @@ namespace RelertSharp.Common
         {
             get { if (log == null) log = new RsLog(); return log; }
             set { log = value; }
-        }
-        public static class Scripts
-        {
-            public static List<IniSystem.TechnoPair> AttackTargetType { get; set; }
-            public static List<IniSystem.TechnoPair> UnloadBehavior { get; set; }
-            public static List<IniSystem.TechnoPair> Missions { get; set; }
-            public static List<IniSystem.TechnoPair> FacingDirections { get; set; }
-            public static List<IniSystem.TechnoPair> TalkBubbles { get; set; }
         }
     }
 }

@@ -37,14 +37,14 @@ namespace RelertSharp.Engine.Api
         {
             EngineMain.ViewShift(delta);
         }
-        public static void DrawSelectingRectangle(Point begin, Point end, bool isIsometric)
-        {
-            EngineMain.DrawSelectingRectangle(Pnt.FromPoint(begin), Pnt.FromPoint(end), isIsometric);
-        }
-        public static void ReleaseSelectingRectangle()
-        {
-            EngineMain.ReleaseDrawingRectangle();
-        }
+        //public static void DrawSelectingRectangle(Point begin, Point end, bool isIsometric)
+        //{
+        //    EngineMain.DrawSelectingRectangle(Pnt.FromPoint(begin), Pnt.FromPoint(end), isIsometric);
+        //}
+        //public static void ReleaseSelectingRectangle()
+        //{
+        //    EngineMain.ReleaseDrawingRectangle();
+        //}
         /// <summary>
         /// Return true if pos is changed
         /// </summary>

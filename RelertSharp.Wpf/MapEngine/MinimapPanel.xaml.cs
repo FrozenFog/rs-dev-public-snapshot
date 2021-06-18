@@ -32,11 +32,19 @@ namespace RelertSharp.Wpf.MapEngine
         public MinimapPanel()
         {
             InitializeComponent();
+            GlobalVar.MapDocumentLoaded += MapReloadedHandler;
+            EngineApi.MapDrawingComplete += MapDrawingCompleteHandler;
+            EngineApi.MinimapRedrawed += MinimapRedrawed;
         }
 
-        public void Initialize()
+        private void MapDrawingCompleteHandler(object sender, EventArgs e)
         {
-            EngineApi.MinimapRedrawed += MinimapRedrawed;
+            drew = true;
+            PanelSizeChanged(null, null);
+        }
+
+        private void MapReloadedHandler(object sender, EventArgs e)
+        {
             EngineApi.ResetMinimap(GlobalVar.CurrentMapDocument.Map.Info.Size, (int)ActualWidth, (int)ActualHeight, GuiUtil.MonitorScale);
         }
 

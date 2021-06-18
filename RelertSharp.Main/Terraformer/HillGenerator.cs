@@ -67,13 +67,13 @@ namespace RelertSharp.Terraformer
                 Amplify = false,
                 Width = 300,
                 Height = 300,
-                Iteration = 10,
-                Scale = 7f,
+                Iteration = 5,
+                Scale = 50f,
                 SmoothIteration = 4,
                 Seed = 1234
             };
             double[] noise = Algorithm.PerlinNoiseGenerator.Generate2DNoise(cfg);
-            GenerateRandomHill(Map.TilesData, 300, 300, noise, 13, 0);
+            GenerateRandomHill(Map.TilesData, 300, 300, noise, 10, 0);
             GlobalVar.CurrentMapDocument.SaveMapAs("D:\\", "111.map");
         }
         /// <summary>
