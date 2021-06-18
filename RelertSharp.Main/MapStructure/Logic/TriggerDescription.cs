@@ -2,7 +2,6 @@
 using RelertSharp.IniSystem;
 using System.Collections.Generic;
 using System.Linq;
-using static RelertSharp.Common.GlobalVar.Scripts;
 using static RelertSharp.Language;
 
 namespace RelertSharp.MapStructure.Logic
@@ -24,7 +23,6 @@ namespace RelertSharp.MapStructure.Logic
             Load(ev, events);
             Load(ac, actions);
             Load(sc, scripts);
-            LoadScriptSubCombo(f);
         }
         #endregion
 
@@ -51,25 +49,6 @@ namespace RelertSharp.MapStructure.Logic
                 }
                 _data[id] = description;
             }
-        }
-        private void LoadScriptSubCombo(INIFile f)
-        {
-            INIEntity target = f["AttackTargetType"];
-            INIEntity unload = f["UnloadBehavior"];
-            INIEntity mission = f["DoMission"];
-            INIEntity facing = f["ChangeFacing"];
-            INIEntity bubble = f["TalkBubble"];
-
-            AttackTargetType = new List<TechnoPair>();
-            UnloadBehavior = new List<TechnoPair>();
-            Missions = new List<TechnoPair>();
-            FacingDirections = new List<TechnoPair>();
-            TalkBubbles = new List<TechnoPair>();
-            ReadScriptSubCombo(AttackTargetType, target);
-            ReadScriptSubCombo(UnloadBehavior, unload);
-            ReadScriptSubCombo(Missions, mission);
-            ReadScriptSubCombo(FacingDirections, facing);
-            ReadScriptSubCombo(TalkBubbles, bubble);
         }
         private void ReadScriptSubCombo(List<TechnoPair> dest, INIEntity src)
         {

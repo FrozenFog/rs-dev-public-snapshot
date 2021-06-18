@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:RelertSharp.Wpf"
         xmlns:Views="clr-namespace:RelertSharp.Wpf.Views" x:Class="RelertSharp.Wpf.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="{DynamicResource dimBack}">
+        Title="MainWindow" Height="450" Width="800" Background="{DynamicResource dimBack}" Loaded="WindowLoadedInitializer">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -19,7 +19,7 @@
                     <MenuItem Header="Standard Map"/>
                     <MenuItem Header="Mega Map"/>
                 </MenuItem>
-                <MenuItem Header="Open Map"/>
+                <MenuItem Header="Open Map" Click="MenuOpenMap"/>
                 <MenuItem Header="Save Map"/>
                 <MenuItem Header="Save As..."/>
                 <Separator Style="{DynamicResource sepDark}"/>

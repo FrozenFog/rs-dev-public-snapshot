@@ -43,6 +43,12 @@ namespace RelertSharp.Wpf.Views
             _dragTimer.Tick += DragTimerTick;
             NavigationHub.GoToTriggerRequest += SelectItem;
             NavigationHub.BindTriggerList(this);
+            GlobalVar.MapDocumentLoaded += MapReloadedHandler;
+        }
+
+        private void MapReloadedHandler(object sender, EventArgs e)
+        {
+            ReloadMapTrigger();
         }
 
         public void SelectItem(IIndexableItem item)

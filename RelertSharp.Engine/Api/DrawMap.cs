@@ -16,6 +16,8 @@ namespace RelertSharp.Engine.Api
     public static partial class EngineApi
     {
         public static event MapDrawingProgressEventHandler DrawingProgressTick;
+        public static event EventHandler MapDrawingBegin;
+        public static event EventHandler MapDrawingComplete;
         public static void SetTheater(TheaterType type)
         {
             EngineMain.SetTheater(type);
@@ -68,9 +70,14 @@ namespace RelertSharp.Engine.Api
                     break;
             }
         }
+        public static void DisposeMap()
+        {
+            CppExtern.Scene.ClearSceneObjects();
+        }
 #if DEBUG
         public static void DrawMap(Map map)
         {
+            MapDrawingBegin?.Invoke(null, null);
             EngineApi.InvokeLock();
             SetTheater(map.Info.TheaterType);
             foreach (Tile t in map.TilesData) EngineMain.DrawTile(t);
@@ -90,6 +97,7 @@ namespace RelertSharp.Engine.Api
             MoveCameraTo(map.CenterPoint, map.GetHeightFromTile(map.CenterPoint));
             RedrawMinimapAll();
             EngineApi.InvokeUnlock();
+            MapDrawingComplete?.Invoke(null, null);
         }
 #else
         public static async Task DrawMap(Map map)

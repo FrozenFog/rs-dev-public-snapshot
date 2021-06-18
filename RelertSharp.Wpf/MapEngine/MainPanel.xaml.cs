@@ -52,7 +52,28 @@ namespace RelertSharp.Wpf.MapEngine
         public MainPanel()
         {
             InitializeComponent();
+            GlobalVar.MapDocumentRedrawRequested += MapRedrawHandler;
+            GlobalVar.MapDocumentLoaded += MapReloadedHandler;
+            EngineApi.RedrawRequested += RedrawInvokeHandler;
+            EngineApi.ResizeRequested += ResizeInvokeHandler;
+            EngineApi.LockRequested += LockInvokeHandler;
+            EngineApi.UnlockRequested += UnlockInvokeHandler;
+            NavigationHub.GoToPositionRequest += MoveCameraInvokeHandler;
         }
+
+        private void MapReloadedHandler(object sender, EventArgs e)
+        {
+            InitializePanel();
+        }
+
+        private void MapRedrawHandler(object sender, EventArgs e)
+        {
+            drew = false;
+            SuspendEvent();
+            DrawMap();
+            ResumeEvent();
+        }
+
         internal void HandleRedrawRequest()
         {
             if (drew)
@@ -72,17 +93,17 @@ namespace RelertSharp.Wpf.MapEngine
             EngineApi.ResumeRendering();
             RenderFrame();
         }
+        private bool initialized = false;
         public void InitializePanel()
         {
-            dpi = this.GetScale();
-            EngineApi.EngineCtor(nWidth, nHeight);
-            _handle = EngineApi.ResetHandle(nWidth, nHeight);
-            d3dimg.IsFrontBufferAvailableChanged += FrontBufferChanged;
-            EngineApi.RedrawRequested += RedrawInvokeHandler;
-            EngineApi.ResizeRequested += ResizeInvokeHandler;
-            EngineApi.LockRequested += LockInvokeHandler;
-            EngineApi.UnlockRequested += UnlockInvokeHandler;
-            NavigationHub.GoToPositionRequest += MoveCameraInvokeHandler;
+            if (!initialized)
+            {
+                dpi = this.GetScale();
+                EngineApi.EngineCtor(nWidth, nHeight);
+                _handle = EngineApi.ResetHandle(nWidth, nHeight);
+                d3dimg.IsFrontBufferAvailableChanged += FrontBufferChanged;
+                initialized = true;
+            }
         }
 
         #region PERMANENTLY SOLVED ENGINE DEAD
@@ -106,6 +127,31 @@ namespace RelertSharp.Wpf.MapEngine
         }
         #endregion
 
+        private bool mouseSuspended = false;
+        private void SuspendEvent()
+        {
+            if (!mouseSuspended)
+            {
+                gridMain.MouseMove -= HandleMouseMove;
+                gridMain.MouseWheel -= HandleMouseWheel;
+                gridMain.MouseDown -= HandleMouseDown;
+                gridMain.MouseUp -= HandleMouseUp;
+                gridMain.SizeChanged -= HandleSizeChanged;
+                mouseSuspended = true;
+            }
+        }
+        private void ResumeEvent()
+        {
+            if (mouseSuspended)
+            {
+                gridMain.MouseMove += HandleMouseMove;
+                gridMain.MouseWheel += HandleMouseWheel;
+                gridMain.MouseDown += HandleMouseDown;
+                gridMain.MouseUp += HandleMouseUp;
+                gridMain.SizeChanged += HandleSizeChanged;
+                mouseSuspended = false;
+            }
+        }
         private void ResizeInvokeHandler(object sender, EventArgs e)
         {
             Resize();

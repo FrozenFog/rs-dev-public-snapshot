@@ -41,7 +41,17 @@ namespace RelertSharp.Wpf.Views
         {
             InitializeComponent();
             context = new TeamVm();
-            InitializeTeamClasses();
+            GlobalVar.MapDocumentLoaded += MapLoadedHandler;
+        }
+
+        private bool initialized = false;
+        private void MapLoadedHandler(object sender, EventArgs e)
+        {
+            if (!initialized)
+            {
+                InitializeTeamClasses();
+                initialized = true;
+            }
             RefreshControl();
         }
 

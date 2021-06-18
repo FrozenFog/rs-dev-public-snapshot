@@ -116,7 +116,6 @@ namespace RelertSharp.Wpf
             #endregion
             GlobalVar.Log = new RsLog();
             Initialization();
-            GlobalVar.CurrentMapDocument = new MapFile(name);
             App application = new App();
             application.InitializeComponent();
             application.Run();
