@@ -156,24 +156,24 @@ namespace RelertSharp.Engine
             {
                 if (upg1.pSelf != 0)
                 {
-                    dest.pPlug1 = RenderAndPresent(src, upg1.pSelf, pos + OffsetTo(Offset.Plug1), pPal, flat);
-                    dest.pPlug1Shadow = RenderAndPresent(src, upg1.pShadow, pos + OffsetTo(Offset.ShadowPlug1), pPal, ShpFlatType.FlatGround, upg1.Framecount, ShaderType.Shadow);
+                    dest.pPlug1 = RenderAndPresent(src, upg1.pSelf, pos + src.offsetPlug1 + OffsetTo(Offset.Plug1), pPal, flat);
+                    dest.pPlug1Shadow = RenderAndPresent(src, upg1.pShadow, pos + src.offsetPlug1 + OffsetTo(Offset.ShadowPlug1), pPal, ShpFlatType.FlatGround, upg1.Framecount, ShaderType.Shadow);
                 }
             }
             if (upg2 != null)
             {
                 if (upg2.pSelf != 0)
                 {
-                    dest.pPlug2 = RenderAndPresent(src, upg2.pSelf, pos + OffsetTo(Offset.Plug2), pPal, flat);
-                    dest.pPlug2Shadow = RenderAndPresent(src, upg2.pShadow, pos + OffsetTo(Offset.ShadowPlug2), pPal, ShpFlatType.FlatGround, upg2.Framecount, ShaderType.Shadow);
+                    dest.pPlug2 = RenderAndPresent(src, upg2.pSelf, pos + src.offsetPlug2 + OffsetTo(Offset.Plug2), pPal, flat);
+                    dest.pPlug2Shadow = RenderAndPresent(src, upg2.pShadow, pos + src.offsetPlug2 + OffsetTo(Offset.ShadowPlug2), pPal, ShpFlatType.FlatGround, upg2.Framecount, ShaderType.Shadow);
                 }
             }
             if (upg3 != null)
             {
                 if (upg3.pSelf != 0)
                 {
-                    dest.pPlug3 = RenderAndPresent(src, upg3.pSelf, pos + OffsetTo(Offset.Plug3), pPal, flat);
-                    dest.pPlug3Shadow = RenderAndPresent(src, upg3.pShadow, pos + OffsetTo(Offset.ShadowPlug3), pPal, ShpFlatType.FlatGround, upg3.Framecount, ShaderType.Shadow);
+                    dest.pPlug3 = RenderAndPresent(src, upg3.pSelf, pos + src.offsetPlug3 + OffsetTo(Offset.Plug3), pPal, flat);
+                    dest.pPlug3Shadow = RenderAndPresent(src, upg3.pShadow, pos + src.offsetPlug3 + OffsetTo(Offset.ShadowPlug3), pPal, ShpFlatType.FlatGround, upg3.Framecount, ShaderType.Shadow);
                 }
             }
             if (dest.IsValid)
@@ -436,21 +436,45 @@ namespace RelertSharp.Engine
         #region Helper
         private static Vec3 BuildingRotation(string nameid, int facing, bool isVxl)
         {
-            facing >>= 5;
+            //facing >>= 5;
             if (isVxl)
             {
-                return new Vec3() { X = 0, Y = 0, Z = (facing - 2) * _rad45 };
+                return new Vec3() { X = 0, Y = 0, Z = (facing / 32f - 2) * _rad45 };
             }
             else
             {
-                if (facing == 7) facing = 0;
-                else facing = 7 - facing;
                 INIEntity turret = GlobalRules.GetBuildingTurret(nameid);
                 int maxnum = turret.ParseInt("LoopEnd") - turret.ParseInt("LoopStart") + 1;
                 if (maxnum < 8) return Vec3.Zero;
-                int increse = maxnum >> 3;
-                return new Vec3() { X = facing * increse, Y = 0, Z = 0 };
+
+                int incBy = 256 / maxnum;
+                int frmInit = maxnum * 7 / 8;
+                int frame = frmInit - facing / incBy;
+                if (frame < 0) frame += maxnum;
+                //facing /= incBy;
+                //if (facing == maxnum - 1) facing = 0;
+                //else facing = maxnum - 1 - facing;
+
+                //int increse = maxnum >> 3;
+                return new Vec3() { X = frame, Y = 0, Z = 0 };
             }
+
+
+            //facing >>= 5;
+            //if (isVxl)
+            //{
+            //    return new Vec3() { X = 0, Y = 0, Z = (facing - 2) * _rad45 };
+            //}
+            //else
+            //{
+            //    if (facing == 7) facing = 0;
+            //    else facing = 7 - facing;
+            //    INIEntity turret = GlobalRules.GetBuildingTurret(nameid);
+            //    int maxnum = turret.ParseInt("LoopEnd") - turret.ParseInt("LoopStart") + 1;
+            //    if (maxnum < 8) return Vec3.Zero;
+            //    int increse = maxnum >> 3;
+            //    return new Vec3() { X = facing * increse, Y = 0, Z = 0 };
+            //}
         }
         private static void SetVxlZAdjust(int self, int selfShadow, int turret = 0, int turrShadow = 0, int barl = 0, int barlShadow = 0)
         {
@@ -476,22 +500,25 @@ namespace RelertSharp.Engine
             if (dest.pActivateAnim3 != 0) CppExtern.ObjectUtils.SetObjectZAdjust(dest.pActivateAnim3, src.Activate3ZAdjust);
             if (dest.pSuperAnim != 0) CppExtern.ObjectUtils.SetObjectZAdjust(dest.pSuperAnim, src.SuperZAdjust);
             if (dest.pIdleAnim != 0) CppExtern.ObjectUtils.SetObjectZAdjust(dest.pIdleAnim, src.IdleZAdjust);
+            if (dest.pPlug1 != 0) CppExtern.ObjectUtils.SetObjectZAdjust(dest.pPlug1, src.Plug1ZAdjust);
+            if (dest.pPlug2 != 0) CppExtern.ObjectUtils.SetObjectZAdjust(dest.pPlug2, src.Plug2ZAdjust);
+            if (dest.pPlug3 != 0) CppExtern.ObjectUtils.SetObjectZAdjust(dest.pPlug3, src.Plug3ZAdjust);
         }
         private static Vec3 VxlRotation(string nameID, int facing, bool isVxl)
         {
             if (isVxl)
             {
-                facing >>= 5;
-                return new Vec3() { X = 0, Y = 0, Z = (facing - 2) * _rad45 };
+                float rotating = facing / 32f;
+                return new Vec3() { X = 0, Y = 0, Z = (rotating - 2) * _rad45 };
             }
             else
             {
-                int facingBase = 256 / GlobalRules[nameID].ParseInt("Facings", 8);
+                int facingBase = 256 / GlobalRules.Art[nameID].ParseInt("Facings", 8);
                 int direction = facing / facingBase;
                 if (direction == 7) direction = 0;
                 else direction++;
-                int startFrame = GlobalRules[nameID].ParseInt("StartWalkFrame", -1);
-                int walkFrame = GlobalRules[nameID].ParseInt("WalkFrames", 12);
+                int startFrame = GlobalRules.Art[nameID].ParseInt("StartWalkFrame", -1);
+                int walkFrame = GlobalRules.Art[nameID].ParseInt("WalkFrames", 12);
                 int offset = walkFrame - 1;
                 return new Vec3() { X = startFrame + direction * walkFrame + offset, Y = 0, Z = 0 };
             }

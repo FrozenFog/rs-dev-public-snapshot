@@ -154,6 +154,7 @@ namespace RelertSharp.Wpf.Views
             if (selected.Type != MapObjectType.Undefined)
             {
                 PaintBrush.LoadBrushObject(selected.RegName, selected.Type);
+                MapEngine.Helper.MouseState.SetState(MapEngine.Helper.PanelMouseState.ObjectBrush);
             }
         }
         private void HandleAttrubuteRefresh(object sender, EventArgs e)

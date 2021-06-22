@@ -259,6 +259,12 @@ namespace RelertSharp.Engine
                 d.Activate3ZAdjust = data.ActiveAnimThreeZAdjust;
                 d.IdleZAdjust = data.IdleAnimZAdjust;
                 d.SuperZAdjust = data.SuperAnimZAdjust;
+                d.Plug1ZAdjust = data.Plug1ZAdjust;
+                d.offsetPlug1 = GlobalRules.GetPlugOffset(name, 1);
+                d.Plug2ZAdjust = data.Plug2ZAdjust;
+                d.offsetPlug2 = GlobalRules.GetPlugOffset(name, 2);
+                d.Plug3ZAdjust = data.Plug3ZAdjust;
+                d.offsetPlug3 = GlobalRules.GetPlugOffset(name, 3);
                 #endregion
 
                 string customPalName = GlobalRules.GetCustomPaletteName(name);

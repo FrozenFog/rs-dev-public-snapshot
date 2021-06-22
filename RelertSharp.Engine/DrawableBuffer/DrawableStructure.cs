@@ -48,6 +48,12 @@ namespace RelertSharp.Engine.DrawableBuffer
         public int Activate3ZAdjust { get; set; }
         public int SuperZAdjust { get; set; }
         public int IdleZAdjust { get; set; }
+        public int Plug1ZAdjust { get; set; }
+        public Pnt offsetPlug1 { get; set; }
+        public int Plug2ZAdjust { get; set; }
+        public Pnt offsetPlug2 { get; set; }
+        public int Plug3ZAdjust { get; set; }
+        public Pnt offsetPlug3 { get; set; }
         #endregion
     }
 }

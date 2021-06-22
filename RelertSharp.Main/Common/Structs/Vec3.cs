@@ -10,6 +10,7 @@ namespace RelertSharp.Common
         private const float _15SQ2 = 21.213203f;
         private const float _30SQ2 = 42.426406f;
         private const float _10SQ3 = 17.320508f;
+        private const float _sq2 = 1.41421356f;
 
 
         public Vec3(int x, int y, int z)
@@ -142,11 +143,11 @@ namespace RelertSharp.Common
         }
         public static Vec3 operator +(Vec3 a, Pnt b)
         {
-            float sq3 = (float)Math.Sqrt(3);
-            float sq2 = (float)Math.Sqrt(2);
+            //float sq3 = (float)Math.Sqrt(3);
+            //float sq2 = (float)Math.Sqrt(2);
             //float dz = b.Y * 2 / sq3;
-            float dx = sq2 * b.Y + b.X / sq2;
-            float dy = sq2 * b.Y - b.X / sq2;
+            float dx = _sq2 * b.Y + b.X / _sq2;
+            float dy = _sq2 * b.Y - b.X / _sq2;
             return new Vec3() { X = a.X + dx, Y = a.Y + dy, Z = a.Z /*- dz*/ };
         }
         public static Vec3 operator +(Pnt b, Vec3 a)
