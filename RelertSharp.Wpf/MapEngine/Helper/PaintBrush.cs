@@ -27,6 +27,10 @@ namespace RelertSharp.Wpf
             Config = config as ObjectBrushConfig;
             Filter = filter as ObjectBrushFilter;
         }
+        public static void DisposeBrushObject()
+        {
+            currentObject?.Dispose();
+        }
         #region Objects
         public static void LoadBrushObject(string regname, MapObjectType type, bool dispose = true)
         {

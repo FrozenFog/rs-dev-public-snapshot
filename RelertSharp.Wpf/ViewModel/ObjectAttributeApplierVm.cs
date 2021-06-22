@@ -380,6 +380,13 @@ namespace RelertSharp.Wpf.ViewModel
                 data.UpgradeNum = r;
                 SetProperty();
                 AttributeRefreshRequest?.Invoke(null, null);
+                if (r == 0)
+                {
+                    data.Upg1 = Constant.VALUE_NONE;
+                    data.Upg2 = Constant.VALUE_NONE;
+                    data.Upg3 = Constant.VALUE_NONE;
+                    ObjectRefreshRequest?.Invoke(null, null);
+                }
             }
         }
         public Visibility IsUpg1Enable
@@ -403,6 +410,7 @@ namespace RelertSharp.Wpf.ViewModel
                 if (value == null) data.Upg1 = Constant.VALUE_NONE;
                 else data.Upg1 = value.Id;
                 SetProperty();
+                ObjectRefreshRequest?.Invoke(null, null);
             }
         }
         public Visibility IsUpg2Enable
@@ -426,6 +434,7 @@ namespace RelertSharp.Wpf.ViewModel
                 if (value == null) data.Upg2 = Constant.VALUE_NONE;
                 else data.Upg2 = value.Id;
                 SetProperty();
+                ObjectRefreshRequest?.Invoke(null, null);
             }
         }
         public Visibility IsUpg3Enable
@@ -449,6 +458,7 @@ namespace RelertSharp.Wpf.ViewModel
                 if (value == null) data.Upg3 = Constant.VALUE_NONE;
                 else data.Upg3 = value.Id;
                 SetProperty();
+                ObjectRefreshRequest?.Invoke(null, null);
             }
         }
         public Visibility IsRepairEnable

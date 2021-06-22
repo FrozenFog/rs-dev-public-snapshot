@@ -70,6 +70,10 @@ namespace RelertSharp.Engine
             data.IdleAnimZAdjust = art.ParseInt("IdleAnimZAdjust");
             data.SuperAnimZAdjust = art.ParseInt("SuperAnimZAdjust");
 
+            data.Plug1ZAdjust = art.ParseInt("PowerUp1LocZZ");
+            data.Plug2ZAdjust = art.ParseInt("PowerUp2LocZZ");
+            data.Plug3ZAdjust = art.ParseInt("PowerUp3LocZZ");
+
             data.nActivateAnim = GlobalDir.GetShpFrameCount(data.ActivateAnim, out bool bAnim);
             data.nActivateAnimTwo = GlobalDir.GetShpFrameCount(data.ActivateAnimTwo, out bool bAnim2);
             data.nActivateAnimThree = GlobalDir.GetShpFrameCount(data.ActivateAnimThree, out bool bAnim3);
@@ -146,6 +150,15 @@ namespace RelertSharp.Engine
                 X = string.IsNullOrEmpty(x) ? 0 : int.Parse(x),
                 Y = string.IsNullOrEmpty(y) ? 0 : int.Parse(y)
             };
+        }
+        public static Pnt GetPlugOffset(this Rules r, string parent, int plugNum)
+        {
+            string xKey = string.Format("PowerUp{0}LocXX", plugNum);
+            string yKey = string.Format("PowerUp{0}LocYY", plugNum);
+            INIEntity art = Art[parent];
+            int x = art.ParseInt(xKey);
+            int y = art.ParseInt(yKey);
+            return new Pnt(x, y);
         }
         public static INIEntity GetBuildingTurret(this Rules r, string nameid)
         {

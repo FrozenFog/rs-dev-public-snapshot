@@ -80,7 +80,7 @@ namespace RelertSharp.Wpf.Common
 
         public byte OverlayFrame { get; set; }
 
-        public string FollowsIndex { get; set; }
+        public string FollowsIndex { get; set; } = "-1";
 
         public bool IsSellable { get; set; } = true;
 

@@ -53,5 +53,9 @@
         public string AlphaImage { get; set; }
 
         public bool IsEmpty { get; set; }
+
+        public int Plug1ZAdjust { get; set; }
+        public int Plug2ZAdjust { get; set; }
+        public int Plug3ZAdjust { get; set; }
     }
 }

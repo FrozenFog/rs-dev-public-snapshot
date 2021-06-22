@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using RelertSharp.Common;
 using RelertSharp.Engine.Api;
 using RelertSharp.Wpf.MapEngine.Helper;
@@ -14,18 +16,103 @@ namespace RelertSharp.Wpf.MapEngine
     public partial class MainPanel
     {
         #region Head
-        private enum MouseAction
-        {
-            None = 0,
-            ObjectBrush = 1,
-            DEBUG = 65535
-        }
-        private MouseAction mouseState = MouseAction.DEBUG;
+        private const int CLICK_INTERVAL = 50;
         private bool rmbMoving = false;
         private bool selecting = false;
         private bool NeedIndicating
         {
             get { return !rmbMoving && !selecting; }
+        }
+        private bool isHold = false;
+        private DispatcherTimer tmrClick = new DispatcherTimer();
+        private Point downPos, downPosOrg;
+        private MouseButton downBtn;
+        #endregion
+
+
+        #region Firstpass
+
+        private void HandleMouseMove(object sender, MouseEventArgs e)
+        {
+            lock (lockMouse)
+            {
+                if (drew)
+                {
+                    Point p = e.GetPosition(this);
+                    Point pOrg = e.GetPosition(this);
+                    GuiUtil.ScaleWpfMousePoint(ref p);
+                    bool redraw = MouseMoved(p, pOrg);
+
+                    if (redraw) EngineApi.InvokeRedraw();
+                }
+            }
+        }
+
+        private void HandleMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            lock (lockMouse)
+            {
+                if (drew)
+                {
+                    EngineApi.InvokeLock();
+                    if (isHold)
+                    {
+                        Point p = e.GetPosition(this);
+                        Point pOrg = e.GetPosition(this);
+                        GuiUtil.ScaleWpfMousePoint(ref p);
+                        if (e.ChangedButton == MouseButton.Left) this.LmbUp(p, pOrg);
+                        else if (e.ChangedButton == MouseButton.Right) this.RmbUp(p, pOrg);
+                        else if (e.ChangedButton == MouseButton.Middle) this.MmbUp(p, pOrg);
+                        isHold = false;
+                    }
+                    else
+                    {
+                        tmrClick.Stop();
+                        if (downBtn == MouseButton.Left) this.LmbClick(downPos, downPosOrg);
+                        else if (downBtn == MouseButton.Right) this.RmbClick(downPos, downPosOrg);
+                        else if (downBtn == MouseButton.Middle) this.MmbClick(downPos, downPosOrg);
+                    }
+                    EngineApi.InvokeUnlock();
+                }
+            }
+        }
+
+        private void HandleMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (drew)
+            {
+                Point p = e.GetPosition(this);
+                Point pOrg = e.GetPosition(this);
+                GuiUtil.ScaleWpfMousePoint(ref p);
+                downPos = p;
+                downPosOrg = pOrg;
+                downBtn = e.ChangedButton;
+                tmrClick.Start();
+            }
+        }
+
+        private void HandleMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (drew)
+            {
+                EngineApi.InvokeLock();
+                if (e.Delta > 0) EngineApi.ChangeScaleFactor(-0.1);
+                else EngineApi.ChangeScaleFactor(0.1);
+                ScaleFactorChanged?.Invoke(null, null);
+                EngineApi.ScaleFactorInvoke();
+                EngineApi.InvokeUnlock();
+            }
+        }
+
+        private void HoldTickHandler(object sender, EventArgs e)
+        {
+            tmrClick.Stop();
+            isHold = true;
+            EngineApi.InvokeLock();
+            if (downBtn == MouseButton.Left) this.LmbDown(downPos, downPosOrg);
+            else if (downBtn == MouseButton.Right) this.RmbDown(downPos, downPosOrg);
+            else if (downBtn == MouseButton.Middle) this.MmbDown(downPos, downPosOrg);
+            EngineApi.InvokeUnlock();
         }
         #endregion
 
@@ -33,32 +120,49 @@ namespace RelertSharp.Wpf.MapEngine
         #region Rmb
         private void RmbDown(Point point, Point unscaled)
         {
-            switch (mouseState)
-            {
-                case MouseAction.DEBUG:
-                    rmbMoving = true;
-                    Navigating.BeginRightClickMove(point);
-                    break;
-            }
+            rmbMoving = true;
+            Navigating.BeginRightClickMove(point);
+            //switch (mouseState)
+            //{
+            //    case MouseAction.DEBUG:
+            //        rmbMoving = true;
+            //        Navigating.BeginRightClickMove(point);
+            //        break;
+            //}
         }
         private void RmbUp(Point point, Point unscaled)
         {
-            switch (mouseState)
+            if (rmbMoving)
             {
-                case MouseAction.DEBUG:
-                    rmbMoving = false;
-                    Navigating.EndRightClickMove();
+                rmbMoving = false;
+                Navigating.EndRightClickMove();
+            }
+            //switch (mouseState)
+            //{
+            //    case MouseAction.DEBUG:
+
+            //        break;
+            //}
+        }
+        private void RmbClick(Point point, Point unscaled)
+        {
+            switch (MouseState.State)
+            {
+                case PanelMouseState.ObjectBrush:
+                    PaintBrush.DisposeBrushObject();
                     break;
             }
+            MouseState.SetState(PanelMouseState.None);
+            EngineApi.InvokeRedraw();
         }
         #endregion
 
         #region Lmb
         private void LmbUp(Point point, Point unscaled)
         {
-            switch (mouseState)
+            switch (MouseState.State)
             {
-                case MouseAction.None:
+                case PanelMouseState.None:
                     selecting = false;
                     Selector.EndSelecting();
                     //SuspendMouseHandlerFor(susMsSelect);
@@ -68,13 +172,20 @@ namespace RelertSharp.Wpf.MapEngine
 
         private void LmbDown(Point point, Point unscaled)
         {
-            switch (mouseState)
+            switch (MouseState.State)
             {
-                case MouseAction.None:
+                case PanelMouseState.None:
                     selecting = true;
                     Selector.BeginSelecting(unscaled, false, graphicTop);
                     break;
-                case MouseAction.DEBUG:
+            }
+        }
+
+        private void LmbClick(Point point, Point unscaled)
+        {
+            switch (MouseState.State)
+            {
+                case PanelMouseState.ObjectBrush:
                     PaintBrush.AddBrushObjectToMap();
                     break;
             }
@@ -88,6 +199,10 @@ namespace RelertSharp.Wpf.MapEngine
         }
 
         private void MmbDown(Point point, Point unscaled)
+        {
+
+        }
+        private void MmbClick(Point point, Point unscaled)
         {
 
         }
@@ -117,9 +232,9 @@ namespace RelertSharp.Wpf.MapEngine
             }
             if (!rmbMoving && !selecting)
             {
-                switch (mouseState)
+                switch (MouseState.State)
                 {
-                    case MouseAction.DEBUG:
+                    case PanelMouseState.ObjectBrush:
                         redraw = PaintBrush.MoveBrushObjectTo(i3dpos, subcell);
                         break;
                 }

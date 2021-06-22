@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="MainWindow\Menu.cs" />
     <Compile Include="MainWindow\NavigationHub.cs" />
+    <Compile Include="MapEngine\Helper\MouseState.cs" />
     <Compile Include="MapEngine\Helper\PaintBrush.cs" />
     <Compile Include="MapEngine\Helper\Selector.cs" />
     <Compile Include="MapEngine\MainPanel.xaml.cs">

@@ -52,6 +52,8 @@ namespace RelertSharp.Wpf.MapEngine
         public MainPanel()
         {
             InitializeComponent();
+            tmrClick.Tick += HoldTickHandler;
+            tmrClick.Interval = new TimeSpan(0, 0, 0, 0, CLICK_INTERVAL);
             GlobalVar.MapDocumentRedrawRequested += MapRedrawHandler;
             GlobalVar.MapDocumentLoaded += MapReloadedHandler;
             EngineApi.RedrawRequested += RedrawInvokeHandler;
@@ -225,22 +227,6 @@ namespace RelertSharp.Wpf.MapEngine
             });
         }
 
-        private void HandleMouseMove(object sender, MouseEventArgs e)
-        {
-            lock (lockMouse)
-            {
-                if (drew)
-                {
-                    Point p = e.GetPosition(this);
-                    Point pOrg = e.GetPosition(this);
-                    GuiUtil.ScaleWpfMousePoint(ref p);
-                    bool redraw = MouseMoved(p, pOrg);
-
-                    if (redraw) EngineApi.InvokeRedraw();
-                }
-            }
-        }
-
         private void HandleSizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (drew)
@@ -253,50 +239,6 @@ namespace RelertSharp.Wpf.MapEngine
                     //_wheelResizeDelay.Start();
                     //SuspendMouseHandler();
                 }
-            }
-        }
-
-        private void HandleMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            lock (lockMouse)
-            {
-                if (drew)
-                {
-                    Point p = e.GetPosition(this);
-                    Point pOrg = e.GetPosition(this);
-                    GuiUtil.ScaleWpfMousePoint(ref p);
-                    if (e.ChangedButton == MouseButton.Left) this.LmbUp(p, pOrg);
-                    else if (e.ChangedButton == MouseButton.Right) this.RmbUp(p, pOrg);
-                    else if (e.ChangedButton == MouseButton.Middle) this.MmbUp(p, pOrg);
-                }
-            }
-        }
-
-        private void HandleMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (drew)
-            {
-                EngineApi.InvokeLock();
-                Point p = e.GetPosition(this);
-                Point pOrg = e.GetPosition(this);
-                GuiUtil.ScaleWpfMousePoint(ref p);
-                if (e.ChangedButton == MouseButton.Left) this.LmbDown(p, pOrg);
-                else if (e.ChangedButton == MouseButton.Right) this.RmbDown(p, pOrg);
-                else if (e.ChangedButton == MouseButton.Middle) this.MmbDown(p, pOrg);
-                EngineApi.InvokeUnlock();
-            }
-        }
-
-        private void HandleMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            if (drew)
-            {
-                EngineApi.InvokeLock();
-                if (e.Delta > 0) EngineApi.ChangeScaleFactor(-0.1);
-                else EngineApi.ChangeScaleFactor(0.1);
-                ScaleFactorChanged?.Invoke(null, null);
-                EngineApi.ScaleFactorInvoke();
-                EngineApi.InvokeUnlock();
             }
         }
     }

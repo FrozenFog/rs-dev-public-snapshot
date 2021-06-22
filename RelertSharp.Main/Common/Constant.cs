@@ -283,7 +283,7 @@ namespace RelertSharp.Common
                 public static float ShadowIdle = -0.6f;
                 public static float ShadowSuper = -0.55f;
                 public static float ShadowBarrel = -0.5f;
-                public static float ShadowTurret = -0.45f;
+                public static float ShadowTurret = -1.45f;
                 public static float ShadowBib = -0.4f;
                 public static float ShadowPlug3 = -0.35f;
                 public static float ShadowPlug2 = -0.3f;
