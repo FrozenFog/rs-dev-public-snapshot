@@ -55,7 +55,6 @@ namespace RelertSharp.MapStructure.Logic
             ColorName = ent.PopPair("Color").Value;
             Prefix = ent.PopPair("Prefix").Value;
             Suffix = ent.PopPair("Suffix").Value;
-            SmartAI = ent.PopPair("SmartAI").ParseBool();
             ParentCountryName = ent.PopPair("ParentCountry").Value;
             residual = ent.DictData;
         }
@@ -70,7 +69,6 @@ namespace RelertSharp.MapStructure.Logic
             data.AddPair("Name", Name);
             data.AddPair("Color", ColorName);
             data.AddPair("ParentCountry", ParentCountryName);
-            data.AddPair("SmartAI", SmartAI.YesNo());
             data.AddPair("Suffix", Suffix);
             data.AddPair("Prefix", Prefix);
             data.AddPair("Side", Side);
@@ -97,7 +95,16 @@ namespace RelertSharp.MapStructure.Logic
         public string ParentCountryName { get; set; }
         public string Suffix { get; set; }
         public string Prefix { get; set; }
-        public bool SmartAI { get; set; }
+        public IEnumerable<INIPair> Residual
+        {
+            get { return residual.Values; }
+            set
+            {
+                Dictionary<string, INIPair> r = new Dictionary<string, INIPair>();
+                foreach (INIPair p in value) r[p.Name] = p;
+                residual = r;
+            }
+        }
         #endregion
     }
 }

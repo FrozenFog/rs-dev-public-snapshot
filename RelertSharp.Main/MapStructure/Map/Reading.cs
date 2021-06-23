@@ -67,7 +67,7 @@ namespace RelertSharp.MapStructure
                 if (string.IsNullOrEmpty(house.ColorName)) house.DrawingColor = Color.Red;
                 else
                 {
-                    INIPair p = GlobalVar.GlobalRules["Colors"].GetPair(house.ColorName);
+                    INIPair p = GlobalVar.GlobalRules.GetColorInfo(house.ColorName);
                     if (p.Name == "") house.DrawingColor = Color.Red;
                     else
                     {

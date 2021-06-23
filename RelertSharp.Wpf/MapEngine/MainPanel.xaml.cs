@@ -110,10 +110,12 @@ namespace RelertSharp.Wpf.MapEngine
 
         #region PERMANENTLY SOLVED ENGINE DEAD
         private bool locked = false;
+        private bool manualLockOverride = false;
         private void UnlockInvokeHandler(object sender, EventArgs e)
         {
             if (locked)
             {
+                manualLockOverride = false;
                 d3dimg.Unlock();
                 locked = false;
             }
@@ -123,6 +125,7 @@ namespace RelertSharp.Wpf.MapEngine
         {
             if (!locked)
             {
+                manualLockOverride = true;
                 d3dimg.Lock();
                 locked = true;
             }
@@ -198,7 +201,7 @@ namespace RelertSharp.Wpf.MapEngine
             }
         }
 
-        private void RenderFrame(bool manualLock = false)
+        private void RenderFrame()
         {
             this.Dispatcher.Invoke(() =>
             {
@@ -213,11 +216,19 @@ namespace RelertSharp.Wpf.MapEngine
                             if (_handle != IntPtr.Zero)
                             {
                                 rendering = true;
-                                if (!manualLock) EngineApi.InvokeLock();
+                                if (!manualLockOverride)
+                                {
+                                    d3dimg.Lock();
+                                    locked = true;
+                                }
                                 d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
                                 EngineApi.RenderFrame();
                                 d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
-                                if (!manualLock) EngineApi.InvokeUnlock();
+                                if (!manualLockOverride)
+                                {
+                                    d3dimg.Unlock();
+                                    locked = false;
+                                }
                                 rendering = false;
                                 //lastRender = arg.RenderingTime;
                             }

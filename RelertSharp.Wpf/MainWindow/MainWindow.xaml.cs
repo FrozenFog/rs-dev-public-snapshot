@@ -59,6 +59,8 @@ namespace RelertSharp.Wpf
         private readonly TriggerLogicView actions = new TriggerLogicView(false);
         [RsViewComponent(GuiViewType.ObjctPanel, nameof(objectPanel))]
         private readonly MapObjectBrushView objectPanel = new MapObjectBrushView();
+        [RsViewComponent(GuiViewType.HousePanel, nameof(housePanel))]
+        private readonly CountryHouseView housePanel = new CountryHouseView();
         #endregion
         #region Else
         private SoundManager soundManager = new SoundManager();
@@ -91,6 +93,7 @@ namespace RelertSharp.Wpf
             //dockMain.Layout.AddToolToRight("Light", lightPanel);
             dockMain.AddCenterPage("Map", pnlMain);
             dockMain.Layout.AddToolToLeft("Minimap", minimap);
+            dockMain.Layout.AddToolToBottom("House", housePanel);
             //dockMain.Layout.AddToolToLeft("Teams", teamList);
             //dockMain.Layout.AddToolToRight("Trigger", trigger);
             //dockMain.Layout.AddToolToRight("Events", events);
