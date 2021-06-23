@@ -47,6 +47,10 @@ namespace System.Windows
         {
             return Drawing.Color.FromArgb(src.A, src.R, src.G, src.B);
         }
+        public static Color ToWpfColor(this System.Drawing.Color src)
+        {
+            return Color.FromArgb(src.A, src.R, src.G, src.B);
+        }
         public static Color FromArgb(uint argb)
         {
             byte a = (byte)((argb & 0xff000000) >> 24);

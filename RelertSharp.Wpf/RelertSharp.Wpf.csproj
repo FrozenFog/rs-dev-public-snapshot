@@ -90,6 +90,8 @@
     <Compile Include="ViewModel\GlobalHouseVm.cs" />
     <Compile Include="ViewModel\GlobalTagVm.cs" />
     <Compile Include="ViewModel\GlobalTriggerVm.cs" />
+    <Compile Include="ViewModel\HouseListVm.cs" />
+    <Compile Include="ViewModel\HouseVm.cs" />
     <Compile Include="ViewModel\LightningVm.cs" />
     <Compile Include="ViewModel\ObjectAttributeApplierVm.cs" />
     <Compile Include="ViewModel\ObjectPickVm.cs" />
@@ -104,6 +106,9 @@
       <DependentUpon>AiTriggerListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Interfaces.cs" />
+    <Compile Include="Views\HouseView.xaml.cs">
+      <DependentUpon>HouseView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LightningView.xaml.cs">
       <DependentUpon>LightningView.xaml</DependentUpon>
     </Compile>
@@ -184,6 +189,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AiTriggerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HouseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

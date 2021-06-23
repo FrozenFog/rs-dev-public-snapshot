@@ -3,6 +3,7 @@ using RelertSharp.IniSystem;
 using RelertSharp.MapStructure.Points;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace RelertSharp.MapStructure.Logic
@@ -46,6 +47,7 @@ namespace RelertSharp.MapStructure.Logic
     {
         private List<string> alliesWith;
         private Dictionary<string, INIPair> residual;
+        public event EventHandler ColorUpdated;
 
 
         #region Ctor - HouseItem
@@ -142,7 +144,26 @@ namespace RelertSharp.MapStructure.Logic
         public string Index { get; set; }
         public int IQ { get; set; }
         public HouseEdges Edge { get; set; }
-        public string ColorName { get; set; }
+        private string _colorname;
+        public string ColorName
+        {
+            get { return _colorname; }
+            set
+            {
+                _colorname = value;
+                if (GlobalVar.GlobalRules != null)
+                {
+                    INIPair p = GlobalVar.GlobalRules.GetColorInfo(_colorname);
+                    if (p.Name == "") DrawingColor = Color.Red;
+                    else
+                    {
+                        string[] hsb = p.ParseStringList();
+                        DrawingColor = Utils.HSBColor.FromHSB(hsb);
+                    }
+                }
+                ColorUpdated?.Invoke(null, null);
+            }
+        }
         public List<string> AlliesWith
         {
             get { return alliesWith; }
@@ -154,10 +175,10 @@ namespace RelertSharp.MapStructure.Logic
         public bool PlayerControl { get; set; }
         public int NodeCounts { get; set; }
         public double PercentBuilt { get; set; }
-        public System.Drawing.Color DrawingColor { get; set; }
+        public System.Drawing.Color DrawingColor { get; internal set; }
         public HouseUnit GetToUnit { get; set; }
         public override string Value { get { return Id; } }
-        public override string Name { get { return Id; } }
+        public override string Name { get { return Id; } set { Id = value; } }
         #endregion
     }
 

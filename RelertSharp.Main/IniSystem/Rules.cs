@@ -162,6 +162,11 @@ namespace RelertSharp.IniSystem
         {
             return this["AI"].ParseStringList("NeutralTechBuildings").Contains(regname);
         }
+        public INIPair GetColorInfo(string colorName)
+        {
+            INIEntity entColor = this["Colors"];
+            return entColor.GetPair(colorName);
+        }
         public int GuessSide(string regname, CombatObjectType type, bool isBuilding = false)
         {
             //has planning side
