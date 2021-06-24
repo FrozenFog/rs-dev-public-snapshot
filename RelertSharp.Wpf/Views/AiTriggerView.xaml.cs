@@ -1,4 +1,5 @@
-﻿using RelertSharp.Common;
+﻿using AvalonDock.Layout;
+using RelertSharp.Common;
 using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.ViewModel;
 using System;
@@ -27,6 +28,8 @@ namespace RelertSharp.Wpf.Views
         private ModConfig config { get { return GlobalVar.GlobalConfig.ModConfig; } }
 
         public GuiViewType ViewType { get { return GuiViewType.AiTrigger; } }
+        public LayoutAnchorable ParentAncorable { get; set; }
+        public LayoutDocument ParentDocument { get; set; }
 
         public AiTriggerView()
         {

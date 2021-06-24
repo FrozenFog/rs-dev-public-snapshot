@@ -16,6 +16,8 @@ using RelertSharp.Common;
 using RelertSharp.Wpf.ToolBoxes;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Common.Config.Model;
+using System.Reflection;
+using System.ComponentModel;
 
 namespace RelertSharp.Wpf
 {
@@ -27,39 +29,39 @@ namespace RelertSharp.Wpf
         #region Timer
         #endregion
         #region Components
-        [RsViewComponent(GuiViewType.AiTrigger, nameof(aiTrigger))]
+        [RsViewComponent(GuiViewType.AiTrigger, GuiViewSide.Right, "Ai Trigger Info")]
         private readonly AiTriggerView aiTrigger = new AiTriggerView();
-        [RsViewComponent(GuiViewType.TeamList, nameof(teamList))]
+        [RsViewComponent(GuiViewType.TeamList, GuiViewSide.Left, "Team List")]
         private readonly TeamListView teamList = new TeamListView();
-        [RsViewComponent(GuiViewType.AiTriggerList, nameof(aiTriggerList))]
+        [RsViewComponent(GuiViewType.AiTriggerList, GuiViewSide.Left, "Ai Trigger List")]
         private readonly AiTriggerListView aiTriggerList = new AiTriggerListView();
-        [RsViewComponent(GuiViewType.ScriptList, nameof(scriptList))]
+        [RsViewComponent(GuiViewType.ScriptList, GuiViewSide.Left, "Script List")]
         private readonly ScriptListView scriptList = new ScriptListView();
-        [RsViewComponent(GuiViewType.TaskforceList, nameof(taskforceList))]
+        [RsViewComponent(GuiViewType.TaskforceList, GuiViewSide.Left, "Taskforce List")]
         private readonly TaskforceListView taskforceList = new TaskforceListView();
-        [RsViewComponent(GuiViewType.Team, nameof(team))]
+        [RsViewComponent(GuiViewType.Team, GuiViewSide.Right, "Team Info")]
         private readonly TeamView team = new TeamView();
-        [RsViewComponent(GuiViewType.Script, nameof(script))]
+        [RsViewComponent(GuiViewType.Script, GuiViewSide.Right, "Script Info")]
         private readonly ScriptView script = new ScriptView();
-        [RsViewComponent(GuiViewType.MainPanel, nameof(pnlMain))]
+        [RsViewComponent(GuiViewType.MainPanel, GuiViewSide.Center, "Map")]
         private readonly MainPanel pnlMain = new MainPanel();
-        [RsViewComponent(GuiViewType.Minimap, nameof(minimap))]
+        [RsViewComponent(GuiViewType.Minimap, GuiViewSide.Top, "Minimap")]
         private readonly MinimapPanel minimap = new MinimapPanel();
-        [RsViewComponent(GuiViewType.LightningPanel, nameof(lightning))]
+        [RsViewComponent(GuiViewType.LightningPanel, GuiViewSide.Right, "Lightning")]
         private readonly LightningView lightning = new LightningView();
-        [RsViewComponent(GuiViewType.AnimationPreview, nameof(animationPreview))]
+        [RsViewComponent(GuiViewType.AnimationPreview, GuiViewSide.Right, "Animation Preview")]
         private readonly AnimationPreview animationPreview = new AnimationPreview();
-        [RsViewComponent(GuiViewType.TriggerList, nameof(triggerList))]
+        [RsViewComponent(GuiViewType.TriggerList, GuiViewSide.Left, "Trigger List")]
         private readonly TriggerListView triggerList = new TriggerListView();
-        [RsViewComponent(GuiViewType.Trigger, nameof(trigger))]
+        [RsViewComponent(GuiViewType.Trigger, GuiViewSide.Top, "Trigger Info")]
         private readonly TriggerView trigger = new TriggerView();
-        [RsViewComponent(GuiViewType.Event, nameof(events))]
+        [RsViewComponent(GuiViewType.Event, GuiViewSide.Bottom, "Events")]
         private readonly TriggerLogicView events = new TriggerLogicView(true);
-        [RsViewComponent(GuiViewType.Action, nameof(actions))]
+        [RsViewComponent(GuiViewType.Action, GuiViewSide.Bottom, "Actions")]
         private readonly TriggerLogicView actions = new TriggerLogicView(false);
-        [RsViewComponent(GuiViewType.ObjctPanel, nameof(objectPanel))]
-        private readonly MapObjectBrushView objectPanel = new MapObjectBrushView();
-        [RsViewComponent(GuiViewType.HousePanel, nameof(housePanel))]
+        [RsViewComponent(GuiViewType.ObjctPanel, GuiViewSide.Left, "Object Brush")]
+        private readonly MapObjectBrushView objectBrush = new MapObjectBrushView();
+        [RsViewComponent(GuiViewType.HousePanel, GuiViewSide.Bottom, "House Info")]
         private readonly CountryHouseView housePanel = new CountryHouseView();
         #endregion
         #region Else
@@ -71,33 +73,71 @@ namespace RelertSharp.Wpf
         public MainWindow()
         {
             InitializeComponent();
-            AddToolPage();
+            LoadAllTools();
             AddReciveListener();
             BindNavigation();
         }
 
         #region Initialization
-        private void AddToolPage()
+        private void LoadAllTools()
         {
-            //dockMain.Layout.AddToolToRight("Ai Trigger Edit", aiTrigger);
-            //dockMain.Layout.AddToolToRight("Team List", teamList);
-            //dockMain.Layout.AddToolToRight("Lightning", lightning);
-            //dockMain.Layout.AddToolToRight("Ai Trigger List", aiTriggerList);
-            //dockMain.AddToolToRight("Script List", scriptList);
-            //dockMain.AddToolToRight("Taskforce List", taskforceList);
-            //dockMain.Layout.AddToolToLeft("Team", team);
-            //dockMain.Layout.AddToolToLeft("Animation", animationPreview);
-            dockMain.Layout.AddToolToLeft("Map Objects", objectPanel);
-            dockMain.Layout.AddToolToRight("Trigger List", triggerList);
-            //dockMain.AddToolToRight("Script", script);
-            //dockMain.Layout.AddToolToRight("Light", lightPanel);
-            dockMain.AddCenterPage("Map", pnlMain);
-            dockMain.Layout.AddToolToLeft("Minimap", minimap);
-            dockMain.Layout.AddToolToBottom("House", housePanel);
-            //dockMain.Layout.AddToolToLeft("Teams", teamList);
-            //dockMain.Layout.AddToolToRight("Trigger", trigger);
-            //dockMain.Layout.AddToolToRight("Events", events);
-            //dockMain.Layout.AddToolToRight("Actions", actions);
+            FieldInfo[] fields = typeof(MainWindow).GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+            foreach (FieldInfo info in fields)
+            {
+                RsViewComponentAttribute attr = info.GetCustomAttribute<RsViewComponentAttribute>();
+                if (attr != null)
+                {
+                    IRsView control = info.GetValue(this) as IRsView;
+                    switch (attr.Side)
+                    {
+                        case GuiViewSide.Top:
+                            dockMain.Layout.AddToolToTop(attr.Title, control);
+                            break;
+                        case GuiViewSide.Bottom:
+                            dockMain.Layout.AddToolToBottom(attr.Title, control);
+                            break;
+                        case GuiViewSide.Left:
+                            dockMain.Layout.AddToolToLeft(attr.Title, control);
+                            break;
+                        case GuiViewSide.Right:
+                            dockMain.Layout.AddToolToRight(attr.Title, control);
+                            break;
+                        case GuiViewSide.Center:
+                            dockMain.AddCenterPage(attr.Title, control);
+                            break;
+                    }
+                }
+            }
+        }
+        private void LoadTargetTool(GuiViewType type)
+        {
+            FieldInfo[] fields = typeof(MainWindow).GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+            foreach (FieldInfo info in fields)
+            {
+                RsViewComponentAttribute attr = info.GetCustomAttribute<RsViewComponentAttribute>();
+                if (attr != null && attr.ViewType == type)
+                {
+                    IRsView control = info.GetValue(this) as IRsView;
+                    switch (attr.Side)
+                    {
+                        case GuiViewSide.Top:
+                            dockMain.Layout.AddToolToTop(attr.Title, control);
+                            break;
+                        case GuiViewSide.Bottom:
+                            dockMain.Layout.AddToolToBottom(attr.Title, control);
+                            break;
+                        case GuiViewSide.Left:
+                            dockMain.Layout.AddToolToLeft(attr.Title, control);
+                            break;
+                        case GuiViewSide.Right:
+                            dockMain.Layout.AddToolToRight(attr.Title, control);
+                            break;
+                        case GuiViewSide.Center:
+                            dockMain.AddCenterPage(attr.Title, control);
+                            break;
+                    }
+                }
+            }
         }
         #endregion
 
@@ -196,7 +236,7 @@ namespace RelertSharp.Wpf
             ObjectBrushConfig cfg = new ObjectBrushConfig();
             ObjectBrushFilter filter = new ObjectBrushFilter();
             PaintBrush.SetConfig(cfg, filter);
-            objectPanel.BindBrushConfig(cfg, filter);
+            objectBrush.BindBrushConfig(cfg, filter);
         }
         #endregion
     }

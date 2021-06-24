@@ -40,6 +40,8 @@ namespace RelertSharp.Wpf.MapEngine
         private double dpi;
 
         public GuiViewType ViewType { get { return GuiViewType.MainPanel; } }
+        public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
+        public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
 
         private static readonly object lockRender = new object();
         private static readonly object lockMouse = new object();

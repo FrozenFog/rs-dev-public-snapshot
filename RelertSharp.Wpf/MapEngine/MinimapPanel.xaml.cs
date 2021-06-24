@@ -28,6 +28,8 @@ namespace RelertSharp.Wpf.MapEngine
         private bool moving = false;
 
         public GuiViewType ViewType { get { return GuiViewType.Minimap; } }
+        public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
+        public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
 
         public MinimapPanel()
         {

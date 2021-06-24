@@ -54,6 +54,8 @@ namespace RelertSharp.Wpf.Views
         }
 
         public GuiViewType ViewType { get; } = GuiViewType.Event;
+        public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
+        public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
 
         public void ReciveObject(object sender, object recived)
         {

@@ -16,6 +16,7 @@ using RelertSharp.Common;
 using RelertSharp.IniSystem;
 using RelertSharp.MapStructure;
 using RelertSharp.MapStructure.Logic;
+using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.ViewModel;
 
 namespace RelertSharp.Wpf.Views
@@ -23,9 +24,14 @@ namespace RelertSharp.Wpf.Views
     /// <summary>
     /// CountryHouseView.xaml 的交互逻辑
     /// </summary>
-    public partial class CountryHouseView : UserControl
+    public partial class CountryHouseView : UserControl, IRsView
     {
         private Map Map { get { return GlobalVar.CurrentMapDocument?.Map; } }
+
+        public GuiViewType ViewType => GuiViewType.HousePanel;
+        public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
+        public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
+
         public CountryHouseView()
         {
             InitializeComponent();

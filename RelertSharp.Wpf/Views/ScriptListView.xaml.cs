@@ -24,6 +24,8 @@ namespace RelertSharp.Wpf.Views
     public partial class ScriptListView : UserControl, IListContainer, IRsView
     {
         public GuiViewType ViewType { get { return GuiViewType.ScriptList; } }
+        public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
+        public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
 
         public ScriptListView()
         {

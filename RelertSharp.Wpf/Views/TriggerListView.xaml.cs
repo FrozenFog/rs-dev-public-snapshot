@@ -31,6 +31,8 @@ namespace RelertSharp.Wpf.Views
         private Map map { get { return GlobalVar.CurrentMapDocument.Map; } }
         private TriggerTreeItemVm SelectedItem { get { return trvMain.SelectedItem as TriggerTreeItemVm; } }
         public GuiViewType ViewType { get { return GuiViewType.TriggerList; } }
+        public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
+        public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
 
         public TriggerListView()
         {
