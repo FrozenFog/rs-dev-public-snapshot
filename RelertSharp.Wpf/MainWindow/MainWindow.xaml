@@ -31,30 +31,45 @@
             </MenuItem>
             <MenuItem Header="Views">
                 <MenuItem Header="Logics">
-                    <MenuItem Header="Trigger View"/>
-                    <MenuItem Header="Trigger List"/>
-                    <MenuItem Header="Team View"/>
-                    <MenuItem Header="Team List"/>
-                    <MenuItem Header="Taskforce View"/>
-                    <MenuItem Header="Taskforce List"/>
-                    <MenuItem Header="Script View"/>
-                    <MenuItem Header="Script List"/>
+                    <MenuItem Header="Trigger View" Click="MenuShowTrigger"/>
+                    <MenuItem Header="Trigger Event" Click="MenuShowEvent"/>
+                    <MenuItem Header="Trigger Action" Click="MenuShowAction"/>
+                    <MenuItem Header="Trigger List" Click="MenupenTriggerList"/>
+                    <MenuItem Header="Team View" Click="MenuShowTeam"/>
+                    <MenuItem Header="Team List" Click="MenuShowTeamList"/>
+                    <MenuItem Header="Taskforce View" Click="MenuShowTaskforce"/>
+                    <MenuItem Header="Taskforce List" Click="MenuShowTaskforceList"/>
+                    <MenuItem Header="Script View" Click="MenuShowScript"/>
+                    <MenuItem Header="Script List" Click="MenuShowScriptList"/>
+                    <MenuItem Header="Houses" Click="MenuShowHouses"/>
                     <Separator Style="{DynamicResource sepDark}"/>
-                    <MenuItem Header="Ai-Trigger View"/>
-                    <MenuItem Header="Ai-Trigger List"/>
-                    <MenuItem Header="Local Variables"/>
+                    <MenuItem Header="Ai-Trigger View" Click="MenuShowAiTrigger"/>
+                    <MenuItem Header="Ai-Trigger List" Click="MenuShowAiTriggerList"/>
+                    <MenuItem Header="Local Variables" Click="MenuShowLocalVar"/>
                 </MenuItem>
-                <MenuItem Header="Map Components">
-                    <MenuItem Header="Houses"/>
-                    <MenuItem Header="Countries"/>
+                <MenuItem Header="Map and Objects">
+                    <MenuItem Header="Map" Click="MenuShowMapPanel"/>
+                    <MenuItem Header="Minimap" Click="MenuShowMinimap"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
+                    <MenuItem Header="Object Brush" Click="MenuShowObjectBrush"/>
+                    <MenuItem Header="Tile Brush" Click="MenuShowTileBrush"/>
+                    <MenuItem Header="Format Painter" Click="MenuShowFmtBrush"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
+                    <MenuItem Header="Layer Control" Click="MenuShowLayerControl"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
+                    <MenuItem Header="Global Lightning" Click="MenuShowLightning"/>
+                    <MenuItem Header="Light Sources" Click="MenuShowLightSource"/>
                 </MenuItem>
-                <MenuItem Header="Lightning">
-                    <MenuItem Header="Global Lightning"/>
-                    <MenuItem Header="Light Sources"/>
+                <MenuItem Header="Tools">
+                    <MenuItem Header="Animation Preview" Click="MenuShowAnimPreview"/>
+                    <MenuItem Header="Statistics" Click="MenuShowStatistics"/>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Map Tools">
-                <MenuItem Header="Ini Editor"/>
+            <MenuItem Header="Layout">
+                <MenuItem Header="Load Layout" Click="MenuLoadLayout"/>
+                <MenuItem Header="Save Layout" Click="MenuSaveLayout"/>
+                <Separator Style="{DynamicResource sepDark}"/>
+                <MenuItem Header="Default Layout" Click="MenuDefaultLayout"/>
             </MenuItem>
             <MenuItem Header="Debug">
                 <MenuItem Header="Debug Button" Click="DebugClick"/>

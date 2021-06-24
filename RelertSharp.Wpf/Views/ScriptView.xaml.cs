@@ -25,6 +25,8 @@ namespace RelertSharp.Wpf.Views
         private ScriptVm context { get { return DataContext as ScriptVm; } }
 
         public GuiViewType ViewType { get { return GuiViewType.Script; } }
+        public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
+        public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
 
         public ScriptView()
         {

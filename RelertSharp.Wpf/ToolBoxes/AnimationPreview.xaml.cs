@@ -1,6 +1,8 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
+using RelertSharp.Wpf.Common;
+using RelertSharp.Wpf.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,7 +26,7 @@ namespace RelertSharp.Wpf.ToolBoxes
     /// <summary>
     /// AnimationPreview.xaml 的交互逻辑
     /// </summary>
-    public partial class AnimationPreview : UserControl
+    public partial class AnimationPreview : UserControl, IRsView
     {
         private const uint COLOR_DEFAULT = 0xFF252525;
         private const string GLYPH_PLAY = "▶";
@@ -39,6 +41,10 @@ namespace RelertSharp.Wpf.ToolBoxes
         private Image currentImg = new Image();
 
         private BackgroundWorker worker;
+
+        public GuiViewType ViewType => GuiViewType.AnimationPreview;
+        public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
+        public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
 
         #region ctor
         public AnimationPreview()

@@ -24,6 +24,8 @@ namespace RelertSharp.Wpf.Views
     public partial class TaskforceListView : UserControl, IListContainer, IRsView
     {
         public GuiViewType ViewType { get { return GuiViewType.TaskforceList; } }
+        public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
+        public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
 
         public TaskforceListView()
         {

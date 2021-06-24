@@ -1,4 +1,5 @@
-﻿using RelertSharp.Common;
+﻿using AvalonDock.Layout;
+using RelertSharp.Common;
 using RelertSharp.Wpf.Common;
 using System;
 using System.Collections.Generic;
@@ -26,5 +27,7 @@ namespace RelertSharp.Wpf.Views
     interface IRsView
     {
         GuiViewType ViewType { get; }
+        LayoutAnchorable ParentAncorable { get; set; }
+        LayoutDocument ParentDocument { get; set; }
     }
 }

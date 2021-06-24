@@ -31,6 +31,8 @@ namespace RelertSharp.Wpf.Views
         private Lightning MapLightning { get { return GlobalVar.CurrentMapDocument.Map.LightningCollection; } }
 
         public GuiViewType ViewType { get { return GuiViewType.LightningPanel; } }
+        public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
+        public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
 
         private LightningItem light;
         private DispatcherTimer refreshTimer;
@@ -106,6 +108,7 @@ namespace RelertSharp.Wpf.Views
 
         private void EnableChecked(object sender, RoutedEventArgs e)
         {
+            if (GlobalVar.CurrentMapDocument == null) return;
             if (cbbType.SelectedIndex < 0) cbbType.SelectedIndex = 0;
             IsControlEnable(ckbEnable.IsChecked.Value);
             LightningTypeChanged(null, null);

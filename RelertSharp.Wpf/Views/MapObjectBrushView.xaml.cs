@@ -23,9 +23,14 @@ namespace RelertSharp.Wpf.Views
     /// <summary>
     /// MapObjectBrushView.xaml 的交互逻辑
     /// </summary>
-    public partial class MapObjectBrushView : UserControl
+    public partial class MapObjectBrushView : UserControl, IRsView
     {
         private Rules Rules { get { return GlobalVar.GlobalRules; } }
+
+        public GuiViewType ViewType => GuiViewType.ObjctPanel;
+        public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
+        public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
+
         private ObjectBrushConfig cfg;
         private ObjectBrushFilter filter;
         private ObjectAttributeApplierVm context;

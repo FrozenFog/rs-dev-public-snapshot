@@ -32,6 +32,8 @@ namespace RelertSharp.Wpf.Views
         private TeamItem Team { get { return context.Data; } }
 
         public GuiViewType ViewType { get { return GuiViewType.Team; } }
+        public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
+        public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
 
         private bool isLoading = false;
 

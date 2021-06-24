@@ -16,6 +16,7 @@ using RelertSharp.Common;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Wpf.Common;
+using AvalonDock.Layout;
 
 namespace RelertSharp.Wpf.Views
 {
@@ -27,6 +28,9 @@ namespace RelertSharp.Wpf.Views
         private GlobalAiTriggerVm context { get { return DataContext as GlobalAiTriggerVm; } }
 
         public GuiViewType ViewType { get { return GuiViewType.AiTriggerList; } }
+
+        public LayoutAnchorable ParentAncorable { get; set; }
+        public LayoutDocument ParentDocument { get; set; }
 
         public AiTriggerListView()
         {

@@ -13,9 +13,11 @@ using AvalonDock.Layout;
 using System.Windows.Media.Imaging;
 using System.Drawing.Imaging;
 using System.Windows.Input;
+using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Common;
+using RelertSharp.Wpf.Views;
 
 namespace System.Windows
 {
@@ -126,8 +128,11 @@ namespace RelertSharp.Wpf
             LayoutAnchorable anchorable = new LayoutAnchorable()
             {
                 Title = title,
-                Content = content
+                Content = content,
+                ContentId = RsViewComponentAttribute.GetViewName(content)
             };
+            IRsView con = content as IRsView;
+            con.ParentAncorable = anchorable;
             group.Children.Add(anchorable);
         }
         public static void AddToolToTop(this LayoutRoot root, string title, object content)
@@ -142,28 +147,6 @@ namespace RelertSharp.Wpf
                             (g) => { root.RightSide.Children.Add(g); },
                             title, content);
         }
-        public static bool AddToolToRight(this LayoutRoot root, string title, object content, int level)
-        {
-            var groups = root.RightSide.Children;
-            LayoutAnchorGroup group;
-            if (groups.Count < level) return false;
-            if (groups.Count == level)
-            {
-                group = new LayoutAnchorGroup();
-                root.RightSide.Children.Add(group);
-            }
-            else
-            {
-                group = groups[level];
-            }
-            LayoutAnchorable anc = new LayoutAnchorable()
-            {
-                Title = title,
-                Content = content
-            };
-            group.Children.Add(anc);
-            return true;
-        }
         public static void AddToolToBottom(this LayoutRoot root, string title, object content)
         {
             AddToolToLayout(() => { return root.BottomSide.Children.FirstOrDefault(); },
@@ -176,16 +159,6 @@ namespace RelertSharp.Wpf
                             (g) => { root.LeftSide.Children.Add(g); },
                             title, content);
         }
-        public static LayoutAnchorGroup SelectRight(this LayoutRoot root, bool createNewIfNotExist = true)
-        {
-            LayoutAnchorGroup group = root.RightSide.Children.FirstOrDefault();
-            if (group == null && createNewIfNotExist)
-            {
-                group = new LayoutAnchorGroup();
-                root.RightSide.Children.Add(group);
-            }
-            return group;
-        }
         public static void AddCenterPage(this DockingManager dock, string title, object content)
         {
             LayoutDocumentPane pane = dock.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
@@ -194,11 +167,15 @@ namespace RelertSharp.Wpf
                 LayoutDocument doc = new LayoutDocument
                 {
                     Title = title,
-                    Content = content
+                    Content = content,
+                    ContentId = RsViewComponentAttribute.GetViewName(content)
                 };
+                IRsView con = content as IRsView;
+                con.ParentDocument = doc;
                 pane.Children.Add(doc);
             }
         }
+
         public static void AddCenterPage(this DockingManager dock, string title, System.Windows.Forms.Control winformControl)
         {
             LayoutDocumentPane pane = dock.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
@@ -215,6 +192,35 @@ namespace RelertSharp.Wpf
                 };
                 pane.Children.Add(doc);
             }
+        }
+        public static bool HasDocumentWithContentId(this DockingManager dock, string id)
+        {
+            bool find(ILayoutElement ob)
+            {
+                if (ob is LayoutPanel pnl)
+                {
+                    foreach (var sub in pnl.Children) if (find(sub)) return true;
+                }
+                else if (ob is LayoutDocumentPaneGroup group)
+                {
+                    foreach (var sub in group.Children) if (find(sub)) return true;
+                }
+                else if (ob is LayoutDocumentPane docPane)
+                {
+                    foreach (var sub in docPane.Children) if (find(sub)) return true;
+                }
+                else if (ob is LayoutDocument doc)
+                {
+                    if (doc.ContentId == id) return true;
+                    return false;
+                }
+                return false;
+            }
+            foreach (ILayoutPanelElement elem in dock.Layout.RootPanel.Children)
+            {
+                if (find(elem)) return true;
+            }
+            return false;
         }
         #endregion
 

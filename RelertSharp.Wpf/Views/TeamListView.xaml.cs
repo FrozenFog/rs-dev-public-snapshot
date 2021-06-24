@@ -26,6 +26,8 @@ namespace RelertSharp.Wpf.Views
     public partial class TeamListView : UserControl, IListContainer, IRsView
     {
         public GuiViewType ViewType { get { return GuiViewType.TeamList; } }
+        public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
+        public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
 
         public TeamListView()
         {
@@ -36,8 +38,15 @@ namespace RelertSharp.Wpf.Views
                 Interval = new TimeSpan(0, 0, 0, 0, DRAG_INTERVAL)
             };
             _dragTimer.Tick += DragTick;
+            GlobalVar.MapDocumentLoaded += MapReloadedHandler;
             NavigationHub.GoToTeamRequest += SelectItem;
             NavigationHub.BindTeamList(this);
+        }
+
+        private void MapReloadedHandler(object sender, EventArgs e)
+        {
+            lbxMain.ItemsSource = null;
+            lbxMain.ItemsSource = GlobalCollectionVm.Teams;
         }
 
         public event ContentCarrierHandler ItemSelected;
