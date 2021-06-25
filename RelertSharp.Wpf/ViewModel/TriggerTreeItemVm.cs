@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace RelertSharp.Wpf.ViewModel
 {
@@ -90,6 +91,27 @@ namespace RelertSharp.Wpf.ViewModel
             {
                 title = value;
                 SetProperty();
+            }
+        }
+        public override bool IsExpanded
+        {
+            get { return base.IsExpanded; }
+            set
+            {
+                base.IsExpanded = value;
+                SetProperty(nameof(HeadImg));
+            }
+        }
+        public ImageSource HeadImg
+        {
+            get
+            {
+                if (IsTree)
+                {
+                    if (IsExpanded) return Properties.Resources.iconTrgExpand.ToWpfImage(true);
+                    else return Properties.Resources.iconTrgFold.ToWpfImage(true);
+                }
+                else return null;
             }
         }
     }
