@@ -22,7 +22,10 @@
             </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:TriggerTreeItemVm}" ItemsSource="{Binding Items}">
-                    <TextBlock Text="{Binding Title}" Style="{DynamicResource txblkDark}" PreviewMouseDown="DragMouseDown" MouseUp="DragMouseUp"/>
+                    <StackPanel Orientation="Horizontal" PreviewMouseDown="DragMouseDown" MouseUp="DragMouseUp">
+                        <Image Source="{Binding HeadImg}" Margin="3" Width="10" Height="10" Stretch="Fill"/>
+                        <TextBlock Text="{Binding Title}" Style="{DynamicResource txblkDark}"/>
+                    </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
             <TreeView.ContextMenu>

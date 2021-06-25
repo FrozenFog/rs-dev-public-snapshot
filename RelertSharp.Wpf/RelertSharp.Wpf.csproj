@@ -293,5 +293,11 @@
   <ItemGroup>
     <None Include="Resources\headNaval.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\headTrgFolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\headTrgFolderOpen.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

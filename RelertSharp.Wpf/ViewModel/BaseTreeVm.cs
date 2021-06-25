@@ -81,7 +81,7 @@ namespace RelertSharp.Wpf.ViewModel
         #region Calls
         public IBaseTreeVm<TData> Ancestor { get; private set; }
         private bool _isSelected;
-        public bool IsSelected
+        public virtual bool IsSelected
         {
             get { return _isSelected; }
             set
@@ -91,7 +91,7 @@ namespace RelertSharp.Wpf.ViewModel
             }
         }
         private bool _isExpanded;
-        public bool IsExpanded
+        public virtual bool IsExpanded
         {
             get { return _isExpanded; }
             set

@@ -19,18 +19,10 @@ using RelertSharp.MapStructure.Logic;
 using RelertSharp.Common;
 using RelertSharp.Wpf.Views;
 
-namespace System.Windows
+namespace System.Windows.Media
 {
-    internal static class WpfWindowsExtensions
+    internal static class WpfMediaExtensions
     {
-        public static System.Windows.Point WpfPoint(this System.Drawing.Point src)
-        {
-            return new Point(src.X, src.Y);
-        }
-        public static System.Drawing.Point GdiPoint(this System.Windows.Point src)
-        {
-            return new Drawing.Point((int)src.X, (int)src.Y);
-        }
         public static BitmapImage ToWpfImage(this System.Drawing.Image src, bool isPng = false)
         {
             MemoryStream ms = new MemoryStream();
@@ -44,6 +36,21 @@ namespace System.Windows
             img.StreamSource = ms;
             img.EndInit();
             return img;
+        }
+    }
+}
+
+namespace System.Windows
+{
+    internal static class WpfWindowsExtensions
+    {
+        public static System.Windows.Point WpfPoint(this System.Drawing.Point src)
+        {
+            return new Point(src.X, src.Y);
+        }
+        public static System.Drawing.Point GdiPoint(this System.Windows.Point src)
+        {
+            return new Drawing.Point((int)src.X, (int)src.Y);
         }
         public static Drawing.Color ToGdiColor(this System.Windows.Media.Color src)
         {

@@ -280,7 +280,7 @@ namespace RelertSharp.Wpf.Views
             if (e.ChangedButton == MouseButton.Left)
             {
                 _dragTimer.Stop();
-                if (!isDraging) dragItem.IsSelected = true;
+                if (!isDraging && dragItem != null) dragItem.IsSelected = true;
                 else isDraging = false;
             }
         }
