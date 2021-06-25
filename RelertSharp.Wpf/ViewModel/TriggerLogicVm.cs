@@ -52,6 +52,7 @@ namespace RelertSharp.Wpf.ViewModel
         private void UpdateTitle(object sender, EventArgs e)
         {
             SetProperty(nameof(Title));
+            SetProperty(nameof(DetailInformation));
         }
 
         public TriggerLogicItemVm(LogicItem src) : base(src)
