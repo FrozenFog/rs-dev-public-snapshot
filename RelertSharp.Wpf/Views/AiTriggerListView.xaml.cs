@@ -36,6 +36,13 @@ namespace RelertSharp.Wpf.Views
         {
             InitializeComponent();
             DataContext = GlobalCollectionVm.AiTriggers;
+            GlobalVar.MapDocumentLoaded += MapReloadedHandler;
+        }
+
+        private void MapReloadedHandler(object sender, EventArgs e)
+        {
+            lbxMain.ItemsSource = null;
+            lbxMain.ItemsSource = GlobalCollectionVm.AiTriggers;
         }
 
         public event ContentCarrierHandler ItemSelected;

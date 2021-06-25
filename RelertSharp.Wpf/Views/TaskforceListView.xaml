@@ -10,7 +10,7 @@
         <ViewModel:GlobalTaskforceVm/>
     </UserControl.DataContext>
     <Grid>
-        <ListBox x:Name="lbxMain" Margin="10,10,9.6,9.8" Style="{DynamicResource lbxDark}" ItemsSource="{Binding Mode=OneWay}">
+        <ListBox x:Name="lbxMain" Margin="10,10,9.6,9.8" Style="{DynamicResource lbxDark}">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Show Taskforce Id" IsCheckable="True" Unchecked="IdUnchecked" Checked="IdChecked"/>

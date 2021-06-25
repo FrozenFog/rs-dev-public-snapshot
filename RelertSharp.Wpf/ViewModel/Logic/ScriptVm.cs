@@ -7,6 +7,7 @@ using RelertSharp.IniSystem;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Common;
 using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace RelertSharp.Wpf.ViewModel
 {
@@ -27,20 +28,20 @@ namespace RelertSharp.Wpf.ViewModel
                 SetProperty();
             }
         }
-        public ScriptItemsVm Items
+        public ObservableCollection<ScriptItemVm> Items
         {
-            get { return new ScriptItemsVm(data.Data); }
+            get { return new ObservableCollection<ScriptItemVm>(data.Data.Cast<ScriptItemVm>()); }
         }
     }
 
-    internal class ScriptItemsVm : BaseNotifyCollectionVm<TeamScriptItem>, IEnumerable
+    internal class ScriptItemVm : BaseNotifyCollectionVm<TeamScriptItem>, IEnumerable
     {
         private List<TeamScriptItem> data;
-        public ScriptItemsVm()
+        public ScriptItemVm()
         {
             data = new List<TeamScriptItem>();
         }
-        public ScriptItemsVm(List<TeamScriptItem> items)
+        public ScriptItemVm(List<TeamScriptItem> items)
         {
             data = items;
         }

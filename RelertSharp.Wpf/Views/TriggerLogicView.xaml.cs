@@ -84,6 +84,80 @@ namespace RelertSharp.Wpf.Views
             initialized = true;
         }
 
+        /// <summary>
+        /// menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PreviewRightDown(object sender, MouseButtonEventArgs e)
+        {
+            bool hasItem = lbxMain.SelectedItem != null;
+            menuDelete.IsEnabled = hasItem;
+            menuCopy.IsEnabled = hasItem;
+            menuUp.IsEnabled = hasItem;
+            menuDown.IsEnabled = hasItem;
+        }
+        #region curd
+        private void Menu_Add(object sender, RoutedEventArgs e)
+        {
+            int idx = lbxMain.SelectedIndex;
+            if (idx < 0) idx = Context.Count;
+            else idx++;
+            Context.AddItemAt(idx);
+        }
+
+        private void Menu_Delete(object sender, RoutedEventArgs e)
+        {
+            int idx = lbxMain.SelectedIndex;
+            if (idx < 0) return;
+            Context.RemoveItemAt(idx);
+        }
+
+        private void Menu_Copy(object sender, RoutedEventArgs e)
+        {
+            int idx = lbxMain.SelectedIndex;
+            if (idx < 0) return;
+            Context.CopyItem(idx);
+        }
+
+        private void Menu_MoveUp(object sender, RoutedEventArgs e)
+        {
+            int idx = lbxMain.SelectedIndex;
+            if (idx <= 0) return;
+            Context.MoveItemTo(idx, idx - 1);
+            lbxMain.SelectedIndex = idx - 1;
+        }
+
+        private void Menu_MoveDown(object sender, RoutedEventArgs e)
+        {
+            int idx = lbxMain.SelectedIndex;
+            if (idx >= Context.Count - 1) return;
+            Context.MoveItemTo(idx, idx + 1);
+            lbxMain.SelectedIndex = idx + 1;
+        }
+        private void Menu_Top(object sender, RoutedEventArgs e)
+        {
+            int idx = lbxMain.SelectedIndex;
+            if (idx <= 0) return;
+            Context.MoveItemTo(idx, 0);
+            lbxMain.SelectedIndex = 0;
+        }
+
+        private void Menu_Bottom(object sender, RoutedEventArgs e)
+        {
+            int last = Context.Count - 1;
+            int idx = lbxMain.SelectedIndex;
+            if (idx >= last) return;
+            Context.MoveItemTo(idx, last);
+            lbxMain.SelectedIndex = last;
+        }
+
+        private void Menu_RemoveAll(object sender, RoutedEventArgs e)
+        {
+            if (Context.Count > 0) Context.RemoveAllItem();
+        }
+        #endregion
+
         #region ParameterIO
 
         #region Common
@@ -217,7 +291,7 @@ namespace RelertSharp.Wpf.Views
                         HorizontalAlignment = HorizontalAlignment.Stretch
                     };
                     txb.SetStyle(this, "txbDark");
-                    txb.MouseLeave += TxbUpdate;
+                    txb.TextChanged += TxbUpdate;
                     elem = txb;
                     break;
                 default:

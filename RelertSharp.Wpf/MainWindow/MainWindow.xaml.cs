@@ -136,16 +136,11 @@ namespace RelertSharp.Wpf
                             dockMain.AddCenterPage(attr.Title, control);
                             break;
                     }
+                    return;
                 }
             }
         }
         #endregion
-
-
-        private void DelayedInitialize(object sender, EventArgs e)
-        {
-            DebugInit();
-        }
 
         #region Reciver Logics
         private void BindNavigation()
@@ -193,12 +188,6 @@ namespace RelertSharp.Wpf
             pnlMain.ScaleFactorChanged += PnlMain_ScaleFactorChanged;
         }
         #endregion
-
-
-        private void DebugInit()
-        {
-
-        }
 
         private void RedrawRequestHandler(object sender, EventArgs e)
         {
