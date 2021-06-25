@@ -55,7 +55,7 @@
         <item key="0" desc="&lt;all&gt;" front="true"/>
       </Items>
     </cb>
-    <cb type="MapObjectTags" base="Tags">
+    <cb type="TagWithNone" base="Tags">
       <Items>
         <item key="&lt;none&gt;" front="true"/>
       </Items>
@@ -326,39 +326,39 @@
       </Classes>
       <Items>
         <attr name="Max" label="Max count" desc="" type="int" class="1"/>
-        <attr name="Full" label="Is full pip" desc="" type="bool" class="3"/>
+        <attr name="Full" label="Is full pip" desc="" type="bool" class="3" default="no"/>
         <attr name="Name" desc="" type="string" class="0"/>
-        <attr name="Group" desc="" type="int" class="1"/>
+        <attr name="Group" desc="" type="int" class="1" default="-1"/>
         <attr name="House" desc="" type="CountryMultiExtend" class="0"/>
         <attr name="Script" desc="" type="Scripts" class="0"/>
-        <attr name="Whiner" label="Is pool team" desc="" type="bool" class="1"/>
-        <attr name="Droppod" label="Paradrop" desc="" type="bool" class="3"/>
-        <attr name="Suicide" label="No retaliate" desc="" type="bool" class="2"/>
-        <attr name="Loadable" desc="" type="bool" class="4"/>
-        <attr name="Prebuild" desc="" type="bool" class="1"/>
-        <attr name="Priority" desc="" type="int" class="1"/>
+        <attr name="Whiner" label="Is pool team" desc="" type="bool" class="1" default="no"/>
+        <attr name="Droppod" label="Paradrop" desc="" type="bool" class="3" default="no"/>
+        <attr name="Suicide" label="No retaliate" desc="" type="bool" class="2" default="no"/>
+        <attr name="Loadable" desc="" type="bool" class="4" default="no"/>
+        <attr name="Prebuild" desc="" type="bool" class="1" default="no"/>
+        <attr name="Priority" desc="" type="int" class="1" default="7"/>
         <attr name="Waypoint" desc="" type="Waypoints" class="3"/>
-        <attr name="Annoyance" label="Replenish member" desc="" type="bool" class="1"/>
-        <attr name="IonImmune" desc="" type="bool" class="4"/>
-        <attr name="Recruiter" desc="" type="bool" class="1"/>
-        <attr name="Reinforce" desc="" type="bool" class="3"/>
+        <attr name="Annoyance" label="Replenish member" desc="" type="bool" class="1" default="no"/>
+        <attr name="IonImmune" desc="" type="bool" class="4" default="no"/>
+        <attr name="Recruiter" desc="" type="bool" class="1" default="no"/>
+        <attr name="Reinforce" desc="" type="bool" class="3" default="no"/>
         <attr name="TaskForce" desc="" type="Taskforces" class="0"/>
-        <attr name="TechLevel" desc="" type="int" class="3"/>
-        <attr name="Aggressive" desc="" type="bool" class="2"/>
-        <attr name="Autocreate" desc="" type="bool" class="1"/>
-        <attr name="GuardSlower" desc="" type="bool" class="2"/>
-        <attr name="OnTransOnly" label="Must on Trans" desc="" type="bool" class="1"/>
-        <attr name="AvoidThreats" desc="" type="bool" class="2"/>
-        <attr name="LooseRecruit" label="Dismiss on success" desc="" type="bool" class="1"/>
-        <attr name="Tag" desc="" type="Tags" class="0"/>
-        <attr name="VeteranLevel" label="Veteran" desc="" type="TeamVeteranLevel" class="0"/>
-        <attr name="IsBaseDefense" label="Base defense" desc="" type="bool" class="1"/>
+        <attr name="TechLevel" desc="" type="int" class="3" default="0"/>
+        <attr name="Aggressive" desc="" type="bool" class="2" default="no"/>
+        <attr name="Autocreate" desc="" type="bool" class="1" default="no"/>
+        <attr name="GuardSlower" desc="" type="bool" class="2" default="no"/>
+        <attr name="OnTransOnly" label="Must on Trans" desc="" type="bool" class="1" default="no"/>
+        <attr name="AvoidThreats" desc="" type="bool" class="2" default="false"/>
+        <attr name="LooseRecruit" label="Dismiss on success" desc="" type="bool" class="1" default="no"/>
+        <attr name="Tag" desc="" type="TagWithNone" class="0"/>
+        <attr name="VeteranLevel" label="Veteran" desc="" type="TeamVeteranLevel" class="0" default="1"/>
+        <attr name="IsBaseDefense" label="Base defense" desc="" type="bool" class="1" default="no"/>
         <attr name="TransportWaypoint" label="Trans-WP" desc="" type="WaypointWithNone" class="3"/>
-        <attr name="UseTransportOrigin" label="Team in Trans" desc="" type="bool" class="3"/>
-        <attr name="MindControlDecision" label="Mind-C decision" desc="" type="MCDecisions" class="2"/>
-        <attr name="OnlyTargetHouseEnemy" label="Attack enemy only" desc="" type="bool" class="2"/>
-        <attr name="TransportsReturnOnUnload" label="Returning Trans" desc="" type="bool" class="3"/>
-        <attr name="AreTeamMembersRecruitable" label="Recruitable member" desc="" type="bool" class="1"/>
+        <attr name="UseTransportOrigin" label="Team in Trans" desc="" type="bool" class="3" default="no"/>
+        <attr name="MindControlDecision" label="Mind-C decision" desc="" type="MCDecisions" class="2" default="0"/>
+        <attr name="OnlyTargetHouseEnemy" label="Attack enemy only" desc="" type="bool" class="2" default="no"/>
+        <attr name="TransportsReturnOnUnload" label="Returning Trans" desc="" type="bool" class="3" default="no"/>
+        <attr name="AreTeamMembersRecruitable" label="Recruitable member" desc="" type="bool" class="1" default="yes"/>
       </Items>
     </Team>
     <AiTrigger>
@@ -393,7 +393,7 @@
         <attr name="OwnerHouse" desc="" type="Houses" class="0"/>
         <attr name="HealthPoint" desc="" type="HpBar" class="0"/>
         <attr name="Rotation" desc="" type="FacingBox" class="0"/>
-        <attr name="TaggedTrigger" desc="" type="MapObjectTags" class="0"/>
+        <attr name="TaggedTrigger" desc="" type="TagWithNone" class="0"/>
         <attr name="VeterancyPercentage" desc="" type="VeteranBar" class="1"/>
         <attr name="Status" desc="" type="MapUnitState" class="1"/>
         <attr name="Group" desc="" type="int" class="1"/>
@@ -413,7 +413,7 @@
         <attr name="OwnerHouse" desc="" type="Houses" class="0"/>
         <attr name="HealthPoint" desc="" type="HpBar" class="0"/>
         <attr name="Rotation" desc="" type="FacingBox" class="0"/>
-        <attr name="TaggedTrigger" desc="" type="MapObjectTags" class="0"/>
+        <attr name="TaggedTrigger" desc="" type="TagWithNone" class="0"/>
         <attr name="VeterancyPercentage" desc="" type="VeteranBar" class="1"/>
         <attr name="Status" desc="" type="MapUnitState" class="1"/>
         <attr name="Group" desc="" type="int" class="1"/>
@@ -431,7 +431,7 @@
         <attr name="OwnerHouse" desc="" type="Houses" class="0"/>
         <attr name="HealthPoint" desc="" type="HpBar" class="0"/>
         <attr name="Rotation" desc="" type="FacingBox" class="0"/>
-        <attr name="TaggedTrigger" desc="" type="MapObjectTags" class="0"/>
+        <attr name="TaggedTrigger" desc="" type="TagWithNone" class="0"/>
         <attr name="AISellablle" desc="" type="bool" class="1"/>
         <attr name="BuildingOnline" desc="" type="bool" class="1"/>
         <attr name="UpgradeNum" desc="" type="int" class="1"/>
@@ -452,7 +452,7 @@
         <attr name="OwnerHouse" desc="" type="Houses" class="0"/>
         <attr name="HealthPoint" desc="" type="HpBar" class="0"/>
         <attr name="Rotation" desc="" type="FacingBox" class="0"/>
-        <attr name="TaggedTrigger" desc="" type="MapObjectTags" class="0"/>
+        <attr name="TaggedTrigger" desc="" type="TagWithNone" class="0"/>
         <attr name="VeterancyPercentage" desc="" type="VeteranBar" class="1"/>
         <attr name="Status" desc="" type="MapUnitState" class="1"/>
         <attr name="Group" desc="" type="int" class="1"/>

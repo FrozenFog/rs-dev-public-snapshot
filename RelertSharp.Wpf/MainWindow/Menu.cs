@@ -40,7 +40,7 @@ namespace RelertSharp.Wpf
 
         private void DebugClick2(object sender, RoutedEventArgs e)
         {
-            dockMain.SaveLayoutToXml("layout.xml");
+            GlobalVar.CurrentMapDocument.SaveMapAs("D://", "testarele.map");
         }
         #endregion
 

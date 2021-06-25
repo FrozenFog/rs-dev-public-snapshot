@@ -690,8 +690,8 @@
       },
       "48": {
         "abs": "Center Camera At Waypoint",
-        "fmt": "Center camera at {0} instantly",
-        "des": "Set player's view camera to #WAYPOINT# instantly.\nIrrelevant to ANY house."
+        "fmt": "Center camera at {1} with speed {0}",
+        "des": "Set player's view camera to #WAYPOINT# at #SPEED#.\nIrrelevant to ANY house."
       },
       "49": {
         "abs": "Zoom In",

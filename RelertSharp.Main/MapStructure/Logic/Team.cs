@@ -115,22 +115,16 @@ namespace RelertSharp.MapStructure.Logic
         public INIEntity GetSaveData()
         {
             INIEntity result = new INIEntity(Id);
-            //result.AddPair("Name", Name);
-            //result.AddPair("House", House);
-            //result.AddPair("Script", ScriptID);
-            //result.AddPair("TaskForce", TaskforceID);
-            //result.AddPair("Max", TeamCapacity);
-            //result.AddPair("Waypoint", WaypointString(Waypoint));
-            //result.AddPair("VeteranLevel", (int)VeteranLevel);
-            //result.AddPair("MindControlDecision", (int)MCDecision);
-            //result.AddPair("Priority", Priority);
-            //result.AddPair("TechLevel", TechLevel);
-            //result.AddPair("Group", Group);
-            //for (int i = 0; i < Constant.TeamBoolIndex.Count; i++)
-            //{
-            //    result.AddPair(Constant.TeamBoolIndex[i], YesNo(Attributes.Get(i)));
-            //}
-            result.AddPair(Residue.Values);
+            if (GlobalVar.GlobalConfig?.ModConfig != null)
+            {
+                ModConfig cfg = GlobalVar.GlobalConfig.ModConfig;
+                foreach (INIPair p in Residue.Values)
+                {
+                    var attr = cfg.TeamItems[p.Name];
+                    if (attr.DefaultValue == null || attr.DefaultValue != p.Value) result.AddPair(p);
+                }
+            }
+            else result.AddPair(Residue.Values);
             return result;
         }
         //public void SetAttribute(string index, bool value)
