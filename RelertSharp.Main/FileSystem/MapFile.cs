@@ -5,6 +5,7 @@ using RelertSharp.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
+using System.IO;
 
 namespace RelertSharp.FileSystem
 {
@@ -47,7 +48,7 @@ namespace RelertSharp.FileSystem
             DumpMapObjects(f.IniDict);
             DumpLogics(f.IniDict);
             DumpCustomComponents(f.IniDict);
-            f.SaveIni(savePath + filename, true);
+            f.SaveIni(Path.Combine(savePath, filename), true);
             if (GlobalVar.Log.HasCritical) GlobalVar.Log.ShowCritical();
         }
         #endregion

@@ -85,5 +85,12 @@ namespace RelertSharp.Common.Config.Model
         /// </summary>
         [XmlAttribute("parsing")]
         public string ParseMethod { get; set; }
+
+        /// <summary>
+        /// Default value when initialized (in game)
+        /// If target is default value when saving, will be discard
+        /// </summary>
+        [XmlAttribute("default")]
+        public string DefaultValue { get; set; }
     }
 }
