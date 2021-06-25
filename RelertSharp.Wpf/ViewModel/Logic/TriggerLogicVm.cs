@@ -24,7 +24,33 @@ namespace RelertSharp.Wpf.ViewModel
 
         }
 
-
+        #region Curd
+        public void AddItemAt(int pos)
+        {
+            data.AddItemAt(pos);
+            SetProperty(nameof(Items));
+        }
+        public void RemoveItemAt(int pos)
+        {
+            data.RemoveItemAt(pos);
+            SetProperty(nameof(Items));
+        }
+        public void MoveItemTo(int from, int to)
+        {
+            data.MoveItemTo(from, to);
+            SetProperty(nameof(Items));
+        }
+        public void CopyItem(int sourceIndex)
+        {
+            data.CopyItemAt(sourceIndex);
+            SetProperty(nameof(Items));
+        }
+        public void RemoveAllItem()
+        {
+            data.RemoveAll();
+            SetProperty(nameof(Items));
+        }
+        #endregion
         public TriggerLogicCollectionVm Items
         {
             get { return new TriggerLogicCollectionVm(data); }
@@ -39,13 +65,37 @@ namespace RelertSharp.Wpf.ViewModel
                 SetProperty();
             }
         }
+        public int Count { get { return data.Count(); } }
     }
+
+    internal class TriggerLogicCollectionVm : BaseNotifyCollectionVm<TriggerLogicItemVm>, IEnumerable
+    {
+        private List<TriggerLogicItemVm> data;
+        public TriggerLogicCollectionVm()
+        {
+            data = new List<TriggerLogicItemVm>();
+        }
+        public TriggerLogicCollectionVm(IEnumerable<LogicItem> items)
+        {
+            data = new List<TriggerLogicItemVm>();
+            items.Foreach(x =>
+            {
+                data.Add(new TriggerLogicItemVm(x));
+            });
+        }
+        public IEnumerator GetEnumerator()
+        {
+            return data.GetEnumerator();
+        }
+        public List<TriggerLogicItemVm> Items { get { return data; } }
+    }
+
 
     internal class TriggerLogicItemVm : BaseVm<LogicItem>
     {
         public TriggerLogicItemVm()
         {
-            data = new LogicItem(TriggerSubType.EventLogic);
+            data = new LogicItem(TriggerSubType.EventLogic, null);
             data.InfoUpdated += UpdateTitle;
         }
 
@@ -106,28 +156,5 @@ namespace RelertSharp.Wpf.ViewModel
         {
             get { return data.Info; }
         }
-    }
-
-
-    internal class TriggerLogicCollectionVm : BaseNotifyCollectionVm<TriggerLogicItemVm>, IEnumerable
-    {
-        private List<TriggerLogicItemVm> data;
-        public TriggerLogicCollectionVm()
-        {
-            data = new List<TriggerLogicItemVm>();
-        }
-        public TriggerLogicCollectionVm(IEnumerable<LogicItem> items)
-        {
-            data = new List<TriggerLogicItemVm>();
-            items.Foreach(x =>
-            {
-                data.Add(new TriggerLogicItemVm(x));
-            });
-        }
-        public IEnumerator GetEnumerator()
-        {
-            return data.GetEnumerator();
-        }
-        public List<TriggerLogicItemVm> Items { get { return data; } }
     }
 }

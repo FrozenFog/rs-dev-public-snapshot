@@ -85,23 +85,23 @@
     <Compile Include="ToolBoxes\AnimationPreview.xaml.cs">
       <DependentUpon>AnimationPreview.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\BaseTreeVm.cs" />
-    <Compile Include="ViewModel\GlobalCountryVm.cs" />
-    <Compile Include="ViewModel\GlobalHouseVm.cs" />
-    <Compile Include="ViewModel\GlobalTagVm.cs" />
-    <Compile Include="ViewModel\GlobalTriggerVm.cs" />
-    <Compile Include="ViewModel\HouseListVm.cs" />
-    <Compile Include="ViewModel\HouseVm.cs" />
-    <Compile Include="ViewModel\LightningVm.cs" />
-    <Compile Include="ViewModel\ObjectAttributeApplierVm.cs" />
-    <Compile Include="ViewModel\ObjectPickVm.cs" />
-    <Compile Include="ViewModel\ScriptVm.cs" />
-    <Compile Include="ViewModel\StaticCollectionVm.cs" />
-    <Compile Include="ViewModel\TeamVm.cs" />
-    <Compile Include="ViewModel\TileSetVm.cs" />
-    <Compile Include="ViewModel\TriggerLogicVm.cs" />
-    <Compile Include="ViewModel\TriggerTreeItemVm.cs" />
-    <Compile Include="ViewModel\TriggerVm.cs" />
+    <Compile Include="ViewModel\Base\BaseTreeVm.cs" />
+    <Compile Include="ViewModel\Global\GlobalCountryVm.cs" />
+    <Compile Include="ViewModel\Global\GlobalHouseVm.cs" />
+    <Compile Include="ViewModel\Global\GlobalTagVm.cs" />
+    <Compile Include="ViewModel\Global\GlobalTriggerVm.cs" />
+    <Compile Include="ViewModel\Logic\HouseListVm.cs" />
+    <Compile Include="ViewModel\Logic\HouseVm.cs" />
+    <Compile Include="ViewModel\Etc\LightningVm.cs" />
+    <Compile Include="ViewModel\Object\ObjectAttributeApplierVm.cs" />
+    <Compile Include="ViewModel\Object\ObjectPickVm.cs" />
+    <Compile Include="ViewModel\Logic\ScriptVm.cs" />
+    <Compile Include="ViewModel\Global\StaticCollectionVm.cs" />
+    <Compile Include="ViewModel\Logic\TeamVm.cs" />
+    <Compile Include="ViewModel\Tile\TileSetVm.cs" />
+    <Compile Include="ViewModel\Logic\TriggerLogicVm.cs" />
+    <Compile Include="ViewModel\Logic\TriggerTreeItemVm.cs" />
+    <Compile Include="ViewModel\Logic\TriggerVm.cs" />
     <Compile Include="Views\AiTriggerListView.xaml.cs">
       <DependentUpon>AiTriggerListView.xaml</DependentUpon>
     </Compile>
@@ -145,14 +145,14 @@
     </Page>
     <Compile Include="Common\GuiUtil.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="ViewModel\AiTriggerVm.cs" />
-    <Compile Include="ViewModel\BaseNotifyCollectionVm.cs" />
-    <Compile Include="ViewModel\BaseVm.cs" />
-    <Compile Include="ViewModel\GlobalAiTriggerVm.cs" />
-    <Compile Include="ViewModel\GlobalCollectionVm.cs" />
-    <Compile Include="ViewModel\GlobalTaskforceVm.cs" />
-    <Compile Include="ViewModel\GlobalTeamVm.cs" />
-    <Compile Include="ViewModel\GlobalScriptVm.cs" />
+    <Compile Include="ViewModel\Logic\AiTriggerVm.cs" />
+    <Compile Include="ViewModel\Base\BaseNotifyCollectionVm.cs" />
+    <Compile Include="ViewModel\Base\BaseVm.cs" />
+    <Compile Include="ViewModel\Global\GlobalAiTriggerVm.cs" />
+    <Compile Include="ViewModel\Global\GlobalCollectionVm.cs" />
+    <Compile Include="ViewModel\Global\GlobalTaskforceVm.cs" />
+    <Compile Include="ViewModel\Global\GlobalTeamVm.cs" />
+    <Compile Include="ViewModel\Global\GlobalScriptVm.cs" />
     <Compile Include="Views\AiTriggerView.xaml.cs">
       <DependentUpon>AiTriggerView.xaml</DependentUpon>
     </Compile>

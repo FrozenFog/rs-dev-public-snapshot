@@ -31,8 +31,15 @@ namespace RelertSharp.Wpf.Views
         {
             InitializeComponent();
             DataContext = GlobalCollectionVm.Scripts;
+            GlobalVar.MapDocumentLoaded += MapReloadedHandler;
             NavigationHub.GoToScriptRequest += SelectItem;
             NavigationHub.BindScriptList(this);
+        }
+
+        private void MapReloadedHandler(object sender, EventArgs e)
+        {
+            lbxMain.ItemsSource = null;
+            lbxMain.ItemsSource = GlobalCollectionVm.Scripts;
         }
 
         public event ContentCarrierHandler ItemSelected;

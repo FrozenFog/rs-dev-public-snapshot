@@ -30,17 +30,17 @@ namespace RelertSharp.Wpf
         }
         #endregion
         #region Debug
-        private const string mapname = "areddawn.map";
+        private const string mapname = "arele.map";
 
         private void DebugClick(object sender, RoutedEventArgs e)
         {
-            //GlobalVar.LoadMapDocument(mapname);
-            dockMain.SaveLayoutToXml("layout.xml");
+            GlobalVar.LoadMapDocument(mapname);
+            dockMain.LoadLayoutFromXml("layout.xml", this);
         }
 
         private void DebugClick2(object sender, RoutedEventArgs e)
         {
-            dockMain.LoadLayoutFromXml("layout.xml", this);
+            dockMain.SaveLayoutToXml("layout.xml");
         }
         #endregion
 

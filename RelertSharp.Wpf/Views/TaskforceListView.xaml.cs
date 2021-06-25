@@ -31,8 +31,15 @@ namespace RelertSharp.Wpf.Views
         {
             InitializeComponent();
             DataContext = GlobalCollectionVm.Taskforces;
+            GlobalVar.MapDocumentLoaded += MapReloadedHandler;
             NavigationHub.GoToTaskforceRequest += SelectItem;
             NavigationHub.BindTaskforceList(this);
+        }
+
+        private void MapReloadedHandler(object sender, EventArgs e)
+        {
+            lbxMain.ItemsSource = null;
+            lbxMain.ItemsSource = GlobalCollectionVm.Taskforces;
         }
 
         public event ContentCarrierHandler ItemSelected;
