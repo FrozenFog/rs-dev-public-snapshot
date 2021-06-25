@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel"
              xmlns:local="clr-namespace:RelertSharp.Wpf.Views"
-             mc:Ignorable="d" >
+             mc:Ignorable="d">
     <UserControl.DataContext>
         <ViewModel:TriggerLogicVm/>
     </UserControl.DataContext>
@@ -38,7 +38,11 @@
             </ListBox.ItemsSource>
         </ListBox>
         <ComboBox x:Name="cbbCurrent" Margin="10,9.8,10,0" Grid.Row="1" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" DataContext="{Binding SelectedItem}" SelectedIndex="{Binding CurrentItemTypeIndex}" SelectionChanged="CurrentTypeChanged"/>
-        <TextBox x:Name="txbDetail" Height="Auto" Margin="10,37.8,10,10.4" Grid.Row="1" TextWrapping="Wrap" Style="{DynamicResource txbDark}" DataContext="{Binding SelectedItem}" Text="{Binding DetailInformation, Mode=OneWay}" VerticalContentAlignment="Top" IsEnabled="False" IsUndoEnabled="False" IsReadOnly="True"/>
+        <ScrollViewer Margin="10,37.8,10,10.4" Grid.Row="1" VerticalContentAlignment="Top">
+            <Grid>
+                <TextBox x:Name="txbDetail" TextWrapping="Wrap" Style="{DynamicResource txbDark}" DataContext="{Binding SelectedItem}" Text="{Binding DetailInformation, Mode=OneWay}" IsEnabled="False" IsUndoEnabled="False" IsReadOnly="True" Height="Auto"/>
+            </Grid>
+        </ScrollViewer>
         <ScrollViewer Grid.Column="1" Margin="10.2,33,10.2,9.6" Grid.RowSpan="2">
             <StackPanel x:Name="stkMain" Drop="DraggedItemDropped" DragOver="DragOverStk" AllowDrop="True"/>
         </ScrollViewer>
