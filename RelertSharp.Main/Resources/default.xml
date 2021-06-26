@@ -60,6 +60,11 @@
         <item key="&lt;none&gt;" front="true"/>
       </Items>
     </cb>
+    <cb type="ScriptWithNone" base="Scripts">
+      <Items>
+        <item key="&lt;none&gt;" front="true"/>
+      </Items>
+    </cb>
     <cb type="TeamVeteranLevel">
       <Items>
         <item key="1" desc="Rookie"/>
@@ -330,7 +335,7 @@
         <attr name="Name" desc="" type="string" class="0"/>
         <attr name="Group" desc="" type="int" class="1" default="-1"/>
         <attr name="House" desc="" type="CountryMultiExtend" class="0"/>
-        <attr name="Script" desc="" type="Scripts" class="0"/>
+        <attr name="Script" desc="" type="ScriptWithNone" class="0"/>
         <attr name="Whiner" label="Is pool team" desc="" type="bool" class="1" default="no"/>
         <attr name="Droppod" label="Paradrop" desc="" type="bool" class="3" default="no"/>
         <attr name="Suicide" label="No retaliate" desc="" type="bool" class="2" default="no"/>
@@ -1456,7 +1461,7 @@
       </info>
       <info id="4" defaultArr="0" length="1">
         <Parameters>
-          <param type="string" trace="I2dWaypointTrace" label="Coordinate(x, y)" arrPos="0" parseType="Base128" fmtType="WpPos" />
+          <param type="string" trace="I2dBase128Trace" label="Coordinate(x, y)" arrPos="0" parseType="Base128" fmtType="WpPos" />
         </Parameters>
       </info>
       <info id="5" defaultArr="0" length="1">
@@ -1472,14 +1477,14 @@
       <info id="7" defaultArr="0" length="1"/>
       <info id="8" defaultArr="0" length="1">
         <Parameters>
-          <param type="UnloadBehavior" label="Unload Behavior" arrPos="0" />
+          <param type="UnloadType" label="Unload Behavior" arrPos="0" />
         </Parameters>
       </info>
       <info id="9" defaultArr="0" length="1"/>
       <info id="10" defaultArr="0" length="1"/>
       <info id="11" defaultArr="0" length="1">
         <Parameters>
-          <param type="ScriptUnitMission" label="Mission Type" arrPos="0" />
+          <param type="ScriptUnitMission" label="Mission Type" arrPos="0" fmtType="KvKey"/>
         </Parameters>
       </info>
       <info id="12" defaultArr="0" length="1">
@@ -1594,14 +1599,14 @@
       <info id="45" defaultArr="0" length="1"/>
       <info id="46" defaultArr="0" length="1">
         <Parameters>
-          <param type="BuildingIndex" label="Building Type" arrPos="0" parseType="LowMask16" />
-          <param type="TargetingPriority" label="Priority" arrPos="0" parseType="HighMask16" />
+          <param type="BuildingIndex" label="Building Type" arrPos="0" parseType="LowMask16" fmtType="LowMask16" />
+          <param type="TargetingPriority" label="Priority" arrPos="0" parseType="HighMask16" fmtType="HighMask16" />
         </Parameters>
       </info>
       <info id="47" defaultArr="0" length="1">
         <Parameters>
-          <param type="BuildingIndex" label="Building Type" arrPos="0" parseType="LowMask16"/>
-          <param type="TargetingPriority" label="Priority" arrPos="0" parseType="HighMask16"/>
+          <param type="BuildingIndex" label="Building Type" arrPos="0" parseType="LowMask16" fmtType="LowMask16" />
+          <param type="TargetingPriority" label="Priority" arrPos="0" parseType="HighMask16" fmtType="HighMask16" />
         </Parameters>
       </info>
       <info id="48" defaultArr="0" length="1"/>
@@ -1626,20 +1631,20 @@
       <info id="55" defaultArr="0" length="1"/>
       <info id="56" defaultArr="0" length="1">
         <Parameters>
-          <param type="BuildingIndex" label="Building Type" arrPos="0" parseType="LowMask16" />
-          <param type="TargetingPriority" label="Priority" arrPos="0" parseType="HighMask16" />
+          <param type="BuildingIndex" label="Building Type" arrPos="0" parseType="LowMask16" fmtType="LowMask16" />
+          <param type="TargetingPriority" label="Priority" arrPos="0" parseType="HighMask16" fmtType="HighMask16" />
         </Parameters>
       </info>
       <info id="57" defaultArr="0" length="1">
         <Parameters>
-          <param type="BuildingIndex" label="Building Type" arrPos="0" parseType="LowMask16" />
-          <param type="TargetingPriority" label="Priority" arrPos="0" parseType="HighMask16" />
+          <param type="BuildingIndex" label="Building Type" arrPos="0" parseType="LowMask16" fmtType="LowMask16" />
+          <param type="TargetingPriority" label="Priority" arrPos="0" parseType="HighMask16" fmtType="HighMask16" />
         </Parameters>
       </info>
       <info id="58" defaultArr="0" length="1">
         <Parameters>
-          <param type="BuildingIndex" label="Building Type" arrPos="0" parseType="LowMask16" />
-          <param type="TargetingPriority" label="Priority" arrPos="0" parseType="HighMask16" />
+          <param type="BuildingIndex" label="Building Type" arrPos="0" parseType="LowMask16" fmtType="LowMask16" />
+          <param type="TargetingPriority" label="Priority" arrPos="0" parseType="HighMask16" fmtType="HighMask16" />
         </Parameters>
       </info>
       <info id="59" defaultArr="0" length="1">

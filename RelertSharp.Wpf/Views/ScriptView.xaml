@@ -5,18 +5,60 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RelertSharp.Wpf.Views"
              xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel" x:Class="RelertSharp.Wpf.Views.ScriptView"
-             mc:Ignorable="d" Height="194.4" Width="349.867">
+             mc:Ignorable="d" Height="347.2" Width="496.8">
     <UserControl.DataContext>
         <ViewModel:ScriptVm/>
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="Items" Source="{Binding Items}"/>
+        <ItemsPanelTemplate x:Key="VirtualPanel">
+            <VirtualizingStackPanel/>
+        </ItemsPanelTemplate>
+    </UserControl.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" MinWidth="46"/>
             <ColumnDefinition Width="*" MinWidth="46"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Name" HorizontalAlignment="Right" Margin="10,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
-        <TextBox Height="23" Margin="10,10,9.6,0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.ColumnSpan="2" Grid.Column="1"/>
-        <ListBox Grid.ColumnSpan="3" Margin="10,38,9.6,10.2" Style="{DynamicResource lbxDark}" ItemsSource="{Binding Items}"/>
+        <Label Content="Name" HorizontalAlignment="Right" Margin="10,10,0.6,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Width="34"/>
+        <TextBox Height="23" Margin="9.4,10,10.4,0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <ListBox x:Name="lbxMain" Grid.ColumnSpan="3" Margin="10,38,10.4,11.4" Style="{DynamicResource lbxDark}" SelectedValue="{Binding SelectedItem}" SelectionChanged="CurrentSelectionChanged" PreviewMouseRightButtonDown="PreviewRightDown">
+            <ListBox.ContextMenu>
+                <ContextMenu Style="{DynamicResource cmenuDark}">
+                    <MenuItem Header="Add new item" Click="Menu_Add"/>
+                    <MenuItem Name="menuDelete" Header="Delete item" Click="Menu_Delete"/>
+                    <MenuItem Name="menuCopy" Header="Copy item" Click="Menu_Copy"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
+                    <MenuItem Name="menuUp" Header="Move up" Click="Menu_MoveUp"/>
+                    <MenuItem Name="menuDown" Header="Move down" Click="Menu_MoveDown"/>
+                    <MenuItem Name="menuTop" Header="Move to top" Click="Menu_Top"/>
+                    <MenuItem Name="menuBottom" Header="Move to bottom" Click="Menu_Bottom"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
+                    <MenuItem Header="Remove all items" Click="Menu_RemoveAll"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type ViewModel:ScriptItemVm}">
+                    <TextBlock Text="{Binding Title}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsSource>
+                <CompositeCollection>
+                    <CollectionContainer Collection="{Binding Source={StaticResource Items}}"/>
+                </CompositeCollection>
+            </ListBox.ItemsSource>
+        </ListBox>
+        <ComboBox Name="cbbType" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" DataContext="{Binding SelectedItem}" Style="{DynamicResource cbbDark}" Margin="10,10,10,0" VerticalAlignment="Top" SelectedIndex="{Binding ScriptIndex}" SelectionChanged="ScriptTypeChanged"/>
+        <ScrollViewer Grid.Column="2" Grid.Row="1" Margin="9.6,37.6,10.4,9.8">
+            <StackPanel x:Name="stkMain" Drop="DraggedItemDropped" DragOver="DragOverStk" AllowDrop="True"/>
+        </ScrollViewer>
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,37.6,10.4,9.8">
+            <TextBox Style="{DynamicResource txbDark}" TextWrapping="Wrap" IsUndoEnabled="False" IsReadOnly="True" Height="Auto" VerticalContentAlignment="Top" DataContext="{Binding SelectedItem}" Text="{Binding DetailInformation, Mode=OneWay}" IsEnabled="False"/>
+        </ScrollViewer>
     </Grid>
 </UserControl>

@@ -93,6 +93,7 @@
     <Compile Include="ViewModel\Logic\HouseListVm.cs" />
     <Compile Include="ViewModel\Logic\HouseVm.cs" />
     <Compile Include="ViewModel\Etc\LightningVm.cs" />
+    <Compile Include="ViewModel\Logic\ScriptListVm.cs" />
     <Compile Include="ViewModel\Object\ObjectAttributeApplierVm.cs" />
     <Compile Include="ViewModel\Object\ObjectPickVm.cs" />
     <Compile Include="ViewModel\Logic\ScriptVm.cs" />

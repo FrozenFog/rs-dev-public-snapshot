@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Common;
 using RelertSharp.Wpf.Common;
+using System.Collections.ObjectModel;
 
 namespace RelertSharp.Wpf.Views
 {
@@ -38,34 +39,53 @@ namespace RelertSharp.Wpf.Views
 
         private void MapReloadedHandler(object sender, EventArgs e)
         {
-            lbxMain.ItemsSource = null;
-            lbxMain.ItemsSource = GlobalCollectionVm.Scripts;
+            lbxMain.Items.Clear();
+            foreach (var script in GlobalVar.CurrentMapDocument.Map.Scripts)
+            {
+                lbxMain.Items.Add(new ScriptListVm(script));
+            }
         }
+
+
+        #region Private
+        #endregion
 
         public event ContentCarrierHandler ItemSelected;
 
         private void IdUnchecked(object sender, RoutedEventArgs e)
         {
+            foreach (ScriptListVm script in lbxMain.Items)
+            {
+                script.ChangeDisplay(IndexableDisplayType.NameOnly);
+            }
             GlobalVar.CurrentMapDocument?.Map.Scripts.ChangeDisplay(IndexableDisplayType.NameOnly);
-            GlobalCollectionVm.Scripts.UpdateAll();
+            lbxMain.Items.Refresh();
         }
 
         private void IdChecked(object sender, RoutedEventArgs e)
         {
+            foreach (ScriptListVm script in lbxMain.Items)
+            {
+                script.ChangeDisplay(IndexableDisplayType.IdAndName);
+            }
             GlobalVar.CurrentMapDocument?.Map.Scripts.ChangeDisplay(IndexableDisplayType.IdAndName);
-            GlobalCollectionVm.Scripts.UpdateAll();
+            lbxMain.Items.Refresh();
         }
 
         private void AscendingSort(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Scripts.AscendingSort();
-            GlobalCollectionVm.Scripts.UpdateAll();
+            List<ScriptListVm> src = lbxMain.Items.Cast<ScriptListVm>().ToList();
+            src = src.OrderBy(x => x.Title).ToList();
+            lbxMain.Items.Clear();
+            src.ForEach(x => lbxMain.Items.Add(x));
         }
 
         private void DescendingSort(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Scripts.DescendingSort();
-            GlobalCollectionVm.Scripts.UpdateAll();
+            List<ScriptListVm> src = lbxMain.Items.Cast<ScriptListVm>().ToList();
+            src = src.OrderByDescending(x => x.Title).ToList();
+            lbxMain.Items.Clear();
+            src.ForEach(x => lbxMain.Items.Add(x));
         }
 
 
@@ -95,8 +115,10 @@ namespace RelertSharp.Wpf.Views
 
         private void SelectedItemChanged(object sender, SelectionChangedEventArgs e)
         {
-            ItemSelected?.Invoke(this, lbxMain.SelectedItem);
-            
+            if (lbxMain.SelectedItem is ScriptListVm script)
+            {
+                ItemSelected?.Invoke(this, script.Data);
+            }
         }
 
         public void SelectItem(IIndexableItem item)
@@ -109,7 +131,7 @@ namespace RelertSharp.Wpf.Views
 
         public IIndexableItem GetSelectedItem()
         {
-            return lbxMain.SelectedItem as IIndexableItem;
+            return (lbxMain.SelectedItem as ScriptListVm).Data;
         }
     }
 }

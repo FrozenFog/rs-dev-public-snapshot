@@ -164,7 +164,7 @@ namespace RelertSharp.FileSystem
 
         #region Public Calls - CSFString
         public string Id { get { return UIName; } set { } }
-        public string Name { get { return ContentString; } }
+        public string Name { get { return ContentString; } set { } }
         public string Value { get { return ContentString; } }
         public string UIName { get; set; } = "";
         public string ContentString { get; set; } = "";

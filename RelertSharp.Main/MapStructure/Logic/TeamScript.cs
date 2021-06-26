@@ -1,5 +1,7 @@
 ﻿using RelertSharp.Common;
+using RelertSharp.Common.Config.Model;
 using RelertSharp.IniSystem;
+using System;
 using System.Collections.Generic;
 
 namespace RelertSharp.MapStructure.Logic
@@ -8,11 +10,7 @@ namespace RelertSharp.MapStructure.Logic
     {
         public TeamScriptCollection() : base()
         {
-            this[Constant.ITEM_NONE] = new TeamScriptGroup()
-            {
-                Id = Constant.ITEM_NONE,
-                Name = Constant.ITEM_NONE
-            };
+
         }
 
 
@@ -48,7 +46,7 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
     }
 
-    public class TeamScriptGroup : TeamLogicItem, IIndexableItem
+    public class TeamScriptGroup : TeamLogicItem, IIndexableItem, ISubCurdContainer<TeamScriptItem>
     {
         private List<TeamScriptItem> data = new List<TeamScriptItem>();
 
@@ -87,24 +85,51 @@ namespace RelertSharp.MapStructure.Logic
             }
             return result;
         }
-        public TeamScriptItem NewScript(int insertIndex)
+        public TeamScriptItem AddItemAt(int pos)
         {
-            TeamScriptItem item = new TeamScriptItem(0, "0");
-            if (insertIndex == -1) data.Add(item);
-            else data.Insert(insertIndex + 1, item);
+            TeamScriptItem item = new TeamScriptItem();
+            data.Insert(pos, item);
             return item;
         }
-        public TeamScriptItem NewScript(int insertIndex, TeamScriptItem src)
+        public void RemoveItemAt(int pos)
         {
-            TeamScriptItem item = new TeamScriptItem(src);
-            if (insertIndex == -1) data.Add(item);
-            else data.Insert(insertIndex + 1, item);
-            return item;
+            data.RemoveAt(pos);
         }
-        public void RemoveScript(int index)
+        public void RemoveAll()
         {
-            data.RemoveAt(index);
+            data.Clear();
         }
+        public void MoveItemTo(int from, int to)
+        {
+            TeamScriptItem item = data[from];
+            data.RemoveAt(from);
+            data.Insert(to, item);
+        }
+        public TeamScriptItem CopyItemAt(int pos)
+        {
+            TeamScriptItem src = data[pos];
+            TeamScriptItem copy = new TeamScriptItem(src);
+            data.Insert(pos, copy);
+            return copy;
+        }
+        //public TeamScriptItem NewScript(int insertIndex)
+        //{
+        //    TeamScriptItem item = new TeamScriptItem(0, "0");
+        //    if (insertIndex == -1) data.Add(item);
+        //    else data.Insert(insertIndex + 1, item);
+        //    return item;
+        //}
+        //public TeamScriptItem NewScript(int insertIndex, TeamScriptItem src)
+        //{
+        //    TeamScriptItem item = new TeamScriptItem(src);
+        //    if (insertIndex == -1) data.Add(item);
+        //    else data.Insert(insertIndex + 1, item);
+        //    return item;
+        //}
+        //public void RemoveScript(int index)
+        //{
+        //    data.RemoveAt(index);
+        //}
         #endregion
 
 
@@ -116,24 +141,99 @@ namespace RelertSharp.MapStructure.Logic
 
     public class TeamScriptItem
     {
+        private bool _initialized = false;
+        private List<LogicInfo> cfg { get { return GlobalVar.GlobalConfig.ModConfig.TriggerInfo.ScriptActions; } }
+        private LogicInfo info;
+        public event EventHandler InfoUpdated;
         #region Ctor
         public TeamScriptItem(int _actionType, string _value)
         {
             ScriptActionIndex = _actionType;
             ActionValue = _value;
+            _initialized = true;
         }
         public TeamScriptItem(TeamScriptItem src)
         {
             ScriptActionIndex = src.ScriptActionIndex;
             ActionValue = src.ActionValue;
+            _initialized = true;
+        }
+        public TeamScriptItem()
+        {
+            ScriptActionIndex = 0;
+            ActionValue = "0";
+            _initialized = true;
         }
         #endregion
 
+
+        #region Public
+        public override string ToString()
+        {
+            List<string> param = new List<string>();
+            foreach (LogicInfoParameter parameter in info.Parameters)
+            {
+                string raw = ActionValue;
+                string parsed = LogicInfoParameter.GetFormatParam(raw, parameter);
+                param.Add(parsed);
+            }
+            string result = string.Format(info.FormatString, param.ToArray());
+            return string.Format("{0:D2}: {1}", ScriptActionIndex, result);
+        }
+        public void SetScriptTypeTo(int id)
+        {
+            ScriptActionIndex = id;
+            OnInfoUpdated();
+        }
+        public void OnInfoUpdated()
+        {
+            InfoUpdated?.Invoke(null, null);
+        }
+        #region Parameter IO
+        public string GetParameter(LogicInfoParameter param)
+        {
+            string raw = ActionValue;
+            return LogicInfoParameter.GetParameter(raw, param);
+        }
+        public void SetParameter(LogicInfoParameter param, string value)
+        {
+            string write = LogicInfoParameter.WriteParameter(value, param, ActionValue);
+            ActionValue = write;
+            OnInfoUpdated();
+        }
+        public void SetParameter(LogicInfoParameter param, bool value)
+        {
+            string write = LogicInfoParameter.WriteParameter(value.ZeroOne(), param, ActionValue); 
+            ActionValue = write;
+            OnInfoUpdated();
+        }
+        #endregion
+        #endregion
+
+
+        #region Private
+        private void InitializeParameter()
+        {
+            ActionValue = info.DefaultParameters;
+        }
+        #endregion
+
+
         #region Public Calls - TeamScriptItem
         public string SaveData { get { return string.Format("{0},{1}", ScriptActionIndex, ActionValue); } }
-        public override string ToString() { return string.Format("ScriptType-{0:D2}", ScriptActionIndex); }
-        public int ScriptActionIndex { get; set; }
-        public string ActionValue { get; set; }
+        private int _index;
+        public int ScriptActionIndex
+        {
+            get { return _index; }
+            private set
+            {
+                _index = value;
+                info = cfg[_index];
+                if (_initialized) InitializeParameter();
+            }
+        }
+        public string ActionValue { get; private set; }
+        public LogicInfo Info { get { return info; } }
         #endregion
     }
 }
