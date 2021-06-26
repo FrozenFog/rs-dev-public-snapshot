@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,26 +15,35 @@ using System.Windows.Shapes;
 namespace RelertSharp.Wpf.Dialogs
 {
     /// <summary>
-    /// DlgTriggerListAddGroup.xaml 的交互逻辑
+    /// DlgNampInput.xaml 的交互逻辑
     /// </summary>
-    public partial class DlgTriggerListAddGroup : Window
+    public partial class DlgNampInput : Window
     {
-        public DlgTriggerListAddGroup()
+        public DlgNampInput()
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="label">Default label: Name</param>
+        /// <param name="title">Default title: Relert Sharp</param>
+        public DlgNampInput(string label = null, string title = null)
+        {
+            InitializeComponent();
+            if (!title.IsNullOrEmpty()) Title = title;
+            if (!label.IsNullOrEmpty()) lblName.Content = label;
+        }
 
+
+        #region Private
         private bool IsValidName()
         {
             if (ResultName.IsNullOrEmpty()) return false;
             if (ResultName.ContainChars('=', ',', '.')) return false;
             return true;
         }
-
-
-
-        public string ResultName { get { return txbName.Text; } }
-        public bool IsRoot { get { return ckbRoot.IsChecked.Value; } }
+        #endregion
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
@@ -45,7 +53,7 @@ namespace RelertSharp.Wpf.Dialogs
             }
             if (!IsValidName())
             {
-                GuiUtil.Warning("Invalid group name, must not contain \"=\", \",\", or \".\"");
+                GuiUtil.Warning("Invalid name, must not contain \"=\", \",\"");
                 return;
             }
             DialogResult = true;
@@ -55,5 +63,8 @@ namespace RelertSharp.Wpf.Dialogs
         {
             DialogResult = false;
         }
+
+
+        public string ResultName { get { return txbName.Text; } }
     }
 }
