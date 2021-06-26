@@ -134,10 +134,6 @@ namespace RelertSharp.Wpf.ViewModel
         public string Title
         {
             get { return data.ToString(); }
-            set
-            {
-                SetProperty();
-            }
         }
         public int CurrentItemTypeIndex
         {

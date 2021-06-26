@@ -1202,327 +1202,327 @@
     "Script": {
       "0": {
         "abs": "Attack Target Type...",
-        "fmt": "",
+        "fmt": "Instruct team member attack target {0}",
         "des": ""
       },
       "1": {
         "abs": "Attack Waypoint...",
-        "fmt": "",
+        "fmt": "Force team member attack waypoint at {0}",
         "des": ""
       },
       "2": {
         "abs": "Go Berzerk",
-        "fmt": "",
+        "fmt": "Team go berzerk",
         "des": ""
       },
       "3": {
         "abs": "Move To Waypoint...",
-        "fmt": "",
+        "fmt": "Instruct team move to waypoint at {0}",
         "des": ""
       },
       "4": {
         "abs": "Move To Cell(base 128)...",
-        "fmt": "",
+        "fmt": "Instruct team move to {0}",
         "des": ""
       },
       "5": {
         "abs": "Guard Area... Time",
-        "fmt": "",
+        "fmt": "Guard area {0} seconds",
         "des": ""
       },
       "6": {
         "abs": "Jump To Line...",
-        "fmt": "",
+        "fmt": "Repeat script from line {0}",
         "des": ""
       },
       "7": {
         "abs": "Force Team Owner Win",
-        "fmt": "",
+        "fmt": "Force team owner win",
         "des": ""
       },
       "8": {
         "abs": "Unload Passenger",
-        "fmt": "",
+        "fmt": "Unload all passenger, and {0}",
         "des": ""
       },
       "9": {
         "abs": "Deploy",
-        "fmt": "",
+        "fmt": "Deploy now",
         "des": ""
       },
       "10": {
         "abs": "Follow Friendlies",
-        "fmt": "",
+        "fmt": "Follow friendly team",
         "des": ""
       },
       "11": {
         "abs": "Change Member Status(mission) To...",
-        "fmt": "",
+        "fmt": "Change team status to {0}",
         "des": ""
       },
       "12": {
         "abs": "Set Global Variable...",
-        "fmt": "",
+        "fmt": "Set global var {0} to TRUE",
         "des": ""
       },
       "13": {
         "abs": "Play Idle Anim Sequence...",
-        "fmt": "",
+        "fmt": "Play idle sequence id {0}",
         "des": ""
       },
       "14": {
         "abs": "Load Onto Transport",
-        "fmt": "",
+        "fmt": "All member load to transport",
         "des": ""
       },
       "15": {
         "abs": "Spy On Structure At Waypoint...",
-        "fmt": "",
+        "fmt": "Spy structure at {0}",
         "des": ""
       },
       "16": {
         "abs": "Patrol To Waypoint...",
-        "fmt": "",
+        "fmt": "Move and partol towards {0}",
         "des": ""
       },
       "17": {
         "abs": "Change Team Script To...",
-        "fmt": "",
+        "fmt": "Change script to {0}",
         "des": ""
       },
       "18": {
         "abs": "Change To Team...",
-        "fmt": "",
+        "fmt": "All member change to team {0}",
         "des": ""
       },
       "19": {
         "abs": "Go Panic",
-        "fmt": "",
+        "fmt": "All member start panic sequence",
         "des": ""
       },
       "20": {
         "abs": "Change House...",
-        "fmt": "",
+        "fmt": "Change all member beloning to {0}",
         "des": ""
       },
       "21": {
         "abs": "Scatter",
-        "fmt": "",
+        "fmt": "All member scatter now",
         "des": ""
       },
       "22": {
         "abs": "Afraid and Move To Nearest Shroud",
-        "fmt": "",
+        "fmt": "Instruct team member move to nearest shroud",
         "des": ""
       },
       "23": {
         "abs": "Force Team Owner Lose",
-        "fmt": "",
+        "fmt": "Force team owner lose",
         "des": ""
       },
       "24": {
         "abs": "Play Eva Speech...",
-        "fmt": "",
+        "fmt": "Play eva {0}",
         "des": ""
       },
       "25": {
         "abs": "Play Sound...",
-        "fmt": "",
+        "fmt": "Play sound {0}",
         "des": ""
       },
       "26": {
         "abs": "Play Movie...",
-        "fmt": "",
+        "fmt": "Play movie {0} fullscreen",
         "des": ""
       },
       "27": {
         "abs": "Play Theme...",
-        "fmt": "",
+        "fmt": "Play music {0}",
         "des": ""
       },
       "28": {
         "abs": "Reduce Ore On This Cell",
-        "fmt": "",
+        "fmt": "Reduce tiberium/ore at team member's position",
         "des": ""
       },
       "29": {
         "abs": "Team Begin Production",
-        "fmt": "",
+        "fmt": "Force team owner begin ai auto production",
         "des": ""
       },
       "30": {
         "abs": "Force Owner Begin Fire Sale",
-        "fmt": "",
+        "fmt": "Force team owner launch fire sale",
         "des": ""
       },
       "31": {
         "abs": "Suicide Now",
-        "fmt": "",
+        "fmt": "Destroy this",
         "des": ""
       },
       "32": {
         "abs": "Start Storm In... Seconds",
-        "fmt": "",
+        "fmt": "Start storm after {0} seconds",
         "des": ""
       },
       "33": {
         "abs": "End Storm",
-        "fmt": "",
+        "fmt": "End storm",
         "des": ""
       },
       "34": {
         "abs": "Center Map On This Team At Speed...",
-        "fmt": "",
+        "fmt": "Move camera on this team at speed {0}",
         "des": ""
       },
       "35": {
         "abs": "Shroud Map For...Frame",
-        "fmt": "",
+        "fmt": "Shroud map for {0} frame",
         "des": ""
       },
       "36": {
         "abs": "Reveal Map For...Frame",
-        "fmt": "",
+        "fmt": "Reveal all map for {0} frame",
         "des": ""
       },
       "37": {
         "abs": "Dismiss Team",
-        "fmt": "",
+        "fmt": "Dismiss this team",
         "des": ""
       },
       "38": {
         "abs": "Clear Global Variable...",
-        "fmt": "",
+        "fmt": "Set global var {0} to FALSE",
         "des": ""
       },
       "39": {
         "abs": "Set Local Variable...",
-        "fmt": "",
+        "fmt": "Set local var {0} to TRUE",
         "des": ""
       },
       "40": {
         "abs": "Clear Local Variable...",
-        "fmt": "",
+        "fmt": "Set local var {0} to FALSE",
         "des": ""
       },
       "41": {
         "abs": "Unpanic Team",
-        "fmt": "",
+        "fmt": "Stop team panic sequence",
         "des": ""
       },
       "42": {
         "abs": "Change Facing To...",
-        "fmt": "",
+        "fmt": "Change member facing to {0}",
         "des": ""
       },
       "43": {
         "abs": "Wait Until Fully Loaded",
-        "fmt": "",
+        "fmt": "Wait team fully loaded",
         "des": ""
       },
       "44": {
         "abs": "Unload Truck",
-        "fmt": "",
+        "fmt": "Change unit image to Unloaded Truck",
         "des": ""
       },
       "45": {
         "abs": "Load Truck",
-        "fmt": "",
+        "fmt": "Change unit image to Loaded Truck",
         "des": ""
       },
       "46": {
         "abs": "Attack Enemy Structure...",
-        "fmt": "",
+        "fmt": "Attack enemy structure {0} with priority {1}",
         "des": ""
       },
       "47": {
         "abs": "Move To Enemy Structure...",
-        "fmt": "",
+        "fmt": "Move to enemy structure {0} with priority {1}",
         "des": ""
       },
       "48": {
         "abs": "Go Scouting",
-        "fmt": "",
+        "fmt": "Team go scout",
         "des": ""
       },
       "49": {
-        "abs": "Register Success(for AITrigger)",
-        "fmt": "",
+        "abs": "Register Success(for AiTrigger)",
+        "fmt": "Report success for AiTrigger",
         "des": ""
       },
       "50": {
         "abs": "Flash... Times",
-        "fmt": "",
+        "fmt": "Flash team for {0} frame",
         "des": ""
       },
       "51": {
         "abs": "Play Animation...",
-        "fmt": "",
+        "fmt": "Play animation {0}",
         "des": ""
       },
       "52": {
         "abs": "Talk Bubble...",
-        "fmt": "",
+        "fmt": "Show takl bubble {0} on team member",
         "des": ""
       },
       "53": {
         "abs": "Gather(at enemy base)",
-        "fmt": "",
+        "fmt": "Team gather near enemy base",
         "des": ""
       },
       "54": {
-        "abs": "Regroup(at enemy base)",
-        "fmt": "",
+        "abs": "Regroup(at friendly base)",
+        "fmt": "Team gather near friendly base",
         "des": ""
       },
       "55": {
         "abs": "Activate Iron Curtain On Team",
-        "fmt": "",
+        "fmt": "Request iron curtain on team now",
         "des": ""
       },
       "56": {
         "abs": "ChronoSphere Team To Building...",
-        "fmt": "",
+        "fmt": "Chronosphere team to building {0} with priority {1}",
         "des": ""
       },
       "57": {
-        "abs": "ChronoWrap Team To Building...",
-        "fmt": "",
+        "abs": "ChronoWarp Team To Building...",
+        "fmt": "Chronowarp team to building {0} with priority {1}",
         "des": ""
       },
       "58": {
         "abs": "Move To Allied Structure...",
-        "fmt": "",
+        "fmt": "Move to friendly structure {0} with priority {1}",
         "des": ""
       },
       "59": {
         "abs": "Attack Structure At Waypoint...",
-        "fmt": "",
+        "fmt": "attack structure at {0}",
         "des": ""
       },
       "60": {
         "abs": "Team Enter Grinder",
-        "fmt": "",
+        "fmt": "All member enter grinder",
         "des": ""
       },
       "61": {
         "abs": "Team Occupy Tank Bunker",
-        "fmt": "",
+        "fmt": "All member find tank bunker to garrison",
         "des": ""
       },
       "62": {
         "abs": "Team Enter Bio Reactor",
-        "fmt": "",
+        "fmt": "All member find and enter bio reactor",
         "des": ""
       },
       "63": {
         "abs": "Team Occupy Battle Bunker",
-        "fmt": "",
+        "fmt": "All member find and enter battle bunker",
         "des": ""
       },
       "64": {
         "abs": "Team Garrison Structure",
-        "fmt": "",
+        "fmt": "All member find and enter civilian structure",
         "des": ""
       }
     }

@@ -50,9 +50,14 @@ namespace RelertSharp.Common
                         if (combo.IsZeroIndex)
                         {
                             int i = 0;
-                            foreach (IIndexableItem item in items)
+                            IEnumerable<IIndexableItem> tmp = new List<IIndexableItem>(items);
+                            items.Clear();
+                            foreach (IIndexableItem item in tmp)
                             {
-                                item.Id = i++.ToString();
+                                ComboItem cb = new ComboItem(item.Id, item.Name);
+                                if (cb.Name.IsNullOrEmpty()) cb.Name = cb.Id;
+                                cb.Id = i++.ToString();
+                                items.Add(cb);
                             }
                         }
                         return items;

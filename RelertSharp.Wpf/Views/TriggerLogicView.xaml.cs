@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static RelertSharp.Wpf.Common.GuiConst;
 
 namespace RelertSharp.Wpf.Views
 {
@@ -26,8 +27,6 @@ namespace RelertSharp.Wpf.Views
     /// </summary>
     public partial class TriggerLogicView : UserControl, IRsView, IObjectReciver
     {
-        private const double PARAM_ROW_HEIGHT = 23d;
-        private const double PARAM_ROW_DELTA = 28d;
         private bool initialized = false;
         private bool isLoadingParameter = false;
         private Dictionary<string, ComboBox> cbbBuffer = new Dictionary<string, ComboBox>();
@@ -401,7 +400,6 @@ namespace RelertSharp.Wpf.Views
         #region Drag Drop
         private void DraggedItemDropped(object sender, DragEventArgs e)
         {
-            object o = e.OriginalSource;
             IDataObject data = new DataObject();
             data = e.Data;
             string value = data.TryGetDroppedDataObjectId(out Type valueType);
@@ -410,7 +408,7 @@ namespace RelertSharp.Wpf.Views
 
         private void DragOverStk(object sender, DragEventArgs e)
         {
-            object o = e.OriginalSource;
+
         }
 
         private void TryWriteDroppedValue(string value, Type refType)
@@ -441,18 +439,5 @@ namespace RelertSharp.Wpf.Views
         #endregion
 
         #endregion
-
-
-
-        private class TraceHelper
-        {
-            public TraceHelper()
-            {
-
-            }
-
-            public FrameworkElement SourceControl { get; set; }
-            public LogicInfoParameter Param { get; set; }
-        }
     }
 }

@@ -8,6 +8,7 @@ using RelertSharp.Common;
 using RelertSharp.Engine;
 using RelertSharp.Wpf.Views;
 using RelertSharp.Common.Config.Model;
+using System.Windows;
 
 namespace RelertSharp.Wpf
 {
@@ -192,5 +193,17 @@ namespace RelertSharp.Wpf
             public IListContainer Invoker { get; set; }
         }
         #endregion
+    }
+
+
+    internal class TraceHelper
+    {
+        public TraceHelper()
+        {
+
+        }
+
+        public FrameworkElement SourceControl { get; set; }
+        public LogicInfoParameter Param { get; set; }
     }
 }

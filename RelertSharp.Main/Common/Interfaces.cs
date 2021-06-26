@@ -21,10 +21,18 @@ namespace RelertSharp.Common
         bool ContainsItem(string param1, string param2);
         bool RemoveItem(TItem target);
     }
+    public interface ISubCurdContainer<TItem>
+    {
+        TItem AddItemAt(int pos);
+        void RemoveItemAt(int pos);
+        void RemoveAll();
+        void MoveItemTo(int from, int to);
+        TItem CopyItemAt(int pos);
+    }
     public interface IIndexableItem
     {
         string Id { get; set; }
-        string Name { get; }
+        string Name { get; set; }
         void ChangeDisplay(IndexableDisplayType type);
         string Value { get; }
     }

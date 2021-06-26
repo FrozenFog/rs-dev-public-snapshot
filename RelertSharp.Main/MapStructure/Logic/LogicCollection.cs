@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class LogicGroup : IEnumerable<LogicItem>
+    public class LogicGroup : IEnumerable<LogicItem>, ISubCurdContainer<LogicItem>
     {
         private List<LogicItem> data = new List<LogicItem>();
         private TriggerInfo cfg { get { return GlobalVar.GlobalConfig.ModConfig.TriggerInfo; } }

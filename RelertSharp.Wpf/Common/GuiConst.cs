@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.Wpf.Common
 {
+    internal static class GuiConst
+    {
+        public const double PARAM_ROW_HEIGHT = 23d;
+        public const double PARAM_ROW_DELTA = 28d;
+    }
     public enum GuiViewSide
     {
         Top,

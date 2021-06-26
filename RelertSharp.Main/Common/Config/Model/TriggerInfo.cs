@@ -42,7 +42,9 @@ namespace RelertSharp.Common.Config.Model
         KvKey,
         KvAll,
         WpPos,
-        Bool
+        Bool,
+        LowMask16,
+        HighMask16
     }
     public class TriggerInfo
     {
@@ -159,7 +161,7 @@ namespace RelertSharp.Common.Config.Model
 
 
         #region Trigger Parameter Parsing
-        private delegate string ParameterParseHandler(string input);
+        private delegate string ParameterParseHandler(string input, string referance = null);
         private delegate string ParameterFormatHandler(string input, IEnumerable<IIndexableItem> lookup);
         private const string FMT_TRUE = "True";
         private const string FMT_FALSE = "False";
@@ -182,19 +184,19 @@ namespace RelertSharp.Common.Config.Model
             {ParamParseMethod.LowMask16, LowMask16Write },
             {ParamParseMethod.NestedFloat, NestedFloatWrite }
         };
-        private static string PlainParse(string @in)
+        private static string PlainParse(string @in, string referance = null)
         {
             return @in;
         }
-        private static string PlainWrite(string @in)
+        private static string PlainWrite(string @in, string referance = null)
         {
             return @in;
         }
-        private static string WaypointParse(string @in)
+        private static string WaypointParse(string @in, string referance = null)
         {
             return Utils.Misc.WaypointInt(@in).ToString();
         }
-        private static string WaypointWrite(string @in)
+        private static string WaypointWrite(string @in, string referance = null)
         {
             if (int.TryParse(@in, out int i))
             {
@@ -202,11 +204,11 @@ namespace RelertSharp.Common.Config.Model
             }
             return PARAM_LAST;
         }
-        private static string NestedFloatParse(string @in)
+        private static string NestedFloatParse(string @in, string referance = null)
         {
             return Utils.Misc.FromNestedFloat(@in).ToString();
         }
-        private static string NestedFloatWrite(string @in)
+        private static string NestedFloatWrite(string @in, string referance = null)
         {
             if (float.TryParse(@in, out float f))
             {
@@ -214,7 +216,7 @@ namespace RelertSharp.Common.Config.Model
             }
             return PARAM_DEF;
         }
-        private static string Base128Parse(string @in)
+        private static string Base128Parse(string @in, string referance = null)
         {
             if (int.TryParse(@in, out int i))
             {
@@ -224,7 +226,7 @@ namespace RelertSharp.Common.Config.Model
             }
             return PARAM_DEF;
         }
-        private static string Base128Write(string @in)
+        private static string Base128Write(string @in, string referance = null)
         {
             string[] s = @in.Split(',');
             if (s.Length == 2)
@@ -238,7 +240,7 @@ namespace RelertSharp.Common.Config.Model
             }
             return PARAM_DEF;
         }
-        private static string LowMask16Parse(string @in)
+        private static string LowMask16Parse(string @in, string referance = null)
         {
             if (int.TryParse(@in, out int i))
             {
@@ -247,24 +249,18 @@ namespace RelertSharp.Common.Config.Model
             }
             return PARAM_DEF;
         }
-        private static string LowMask16Write(string @in)
+        private static string LowMask16Write(string @in, string referance)
         {
-            string[] buffer = @in.Split(',');
-            if (buffer.Length == 2)
+            if (int.TryParse(referance, out int iref))
             {
-                string dest = buffer[0];
-                string src = buffer[1];
-                if (int.TryParse(src, out int i))
-                {
-                    int.TryParse(dest, out int write);
-                    var result = (int)(write & 0xFFFF0000) | i;
-                    return write.ToString();
-                }
-                return dest;
+                iref = (int)(iref & 0xffff0000);
+                int.TryParse(@in, out int iIn);
+                iref += iIn;
+                return iref.ToString();
             }
-            return PARAM_DEF;
+            return referance;
         }
-        private static string HiMask16Parse(string @in)
+        private static string HiMask16Parse(string @in, string referance = null)
         {
             if (int.TryParse(@in, out int i))
             {
@@ -273,22 +269,17 @@ namespace RelertSharp.Common.Config.Model
             }
             return PARAM_DEF;
         }
-        private static string HiMask16Write(string @in)
+        private static string HiMask16Write(string @in, string referance)
         {
-            string[] buffer = @in.Split(',');
-            if (buffer.Length == 2)
+            if (int.TryParse(referance, out int iref))
             {
-                string dest = buffer[0];
-                string src = buffer[1];
-                if (int.TryParse(src, out int i))
-                {
-                    int.TryParse(dest, out int write);
-                    write = (write & 0xFFFF) | (i << 16);
-                    return write.ToString();
-                }
-                return dest;
+                iref &= 0xffff;
+                int.TryParse(@in, out int iIn);
+                iIn <<= 16;
+                iref += iIn;
+                return iref.ToString();
             }
-            return PARAM_DEF;
+            return referance;
         }
         #endregion
         #region Formating
@@ -299,8 +290,28 @@ namespace RelertSharp.Common.Config.Model
             {ParamFormatType.KvValue, KvValueFormat },
             {ParamFormatType.KvAll, KvAllFormat },
             {ParamFormatType.Bool, BoolFormat },
-            {ParamFormatType.WpPos, WpPosFormat }
+            {ParamFormatType.WpPos, WpPosFormat },
+            {ParamFormatType.HighMask16, HiFormat16 },
+            {ParamFormatType.LowMask16,  LoFormat16 }
         };
+        private static string HiFormat16(string @in, IEnumerable<IIndexableItem> lookup)
+        {
+            int.TryParse(@in, out int idx);
+            idx >>= 16;
+            string sIdx = idx.ToString();
+            IIndexableItem item = lookup.FirstOrDefault(x => x.Id == sIdx);
+            if (item != null) return item.Name;
+            return @in;
+        }
+        private static string LoFormat16(string @in, IEnumerable<IIndexableItem> lookup)
+        {
+            int.TryParse(@in, out int idx);
+            idx &= 0xffff;
+            string sIdx = idx.ToString();
+            IIndexableItem item = lookup.FirstOrDefault(x => x.Id == sIdx);
+            if (item != null) return item.Name;
+            return @in;
+        }
         private static string PlainFormat(string @in, IEnumerable<IIndexableItem> lookup)
         {
             return @in;
@@ -346,9 +357,9 @@ namespace RelertSharp.Common.Config.Model
             string result = Format[info.ParamFormat](parameter, combo);
             return result.CoverWith("[", "]");
         }
-        public static string WriteParameter(string input, LogicInfoParameter parameter)
+        public static string WriteParameter(string input, LogicInfoParameter parameter, string referanceOriginal = null)
         {
-            string result = Write[parameter.ParseMethod](input);
+            string result = Write[parameter.ParseMethod](input, referanceOriginal);
             return result;
         }
         #endregion

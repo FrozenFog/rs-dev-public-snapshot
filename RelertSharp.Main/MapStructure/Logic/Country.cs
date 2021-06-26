@@ -56,6 +56,7 @@ namespace RelertSharp.MapStructure.Logic
             Prefix = ent.PopPair("Prefix").Value;
             Suffix = ent.PopPair("Suffix").Value;
             ParentCountryName = ent.PopPair("ParentCountry").Value;
+            SmartAi = ent.PopPair("SmartAI").ParseBool(true);
             residual = ent.DictData;
         }
         public CountryItem() { }
@@ -72,6 +73,7 @@ namespace RelertSharp.MapStructure.Logic
             data.AddPair("Suffix", Suffix);
             data.AddPair("Prefix", Prefix);
             data.AddPair("Side", Side);
+            data.AddPair("SmartAI", SmartAi.YesNo());
             data.AddPair(residual.Values);
             return data;
         }
@@ -95,6 +97,7 @@ namespace RelertSharp.MapStructure.Logic
         public string ParentCountryName { get; set; }
         public string Suffix { get; set; }
         public string Prefix { get; set; }
+        public bool SmartAi { get; set; }
         public IEnumerable<INIPair> Residual
         {
             get { return residual.Values; }
