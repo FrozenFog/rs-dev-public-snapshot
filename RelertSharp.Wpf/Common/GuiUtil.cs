@@ -68,6 +68,14 @@ namespace RelertSharp.Wpf
         {
             Warning(string.Format(format, obj));
         }
+        public static bool YesNoWarning(string content)
+        {
+            return MessageBox.Show(content, "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes;
+        }
+        public static MessageBoxResult YesNoCancel(string content)
+        {
+            return MessageBox.Show(content, "Relert Sharp", MessageBoxButton.YesNoCancel, MessageBoxImage.Information);
+        }
 
         public static void ScaleWpfMousePoint(ref System.Windows.Point p)
         {

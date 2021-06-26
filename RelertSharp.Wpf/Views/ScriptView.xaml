@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RelertSharp.Wpf.Views"
              xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel" x:Class="RelertSharp.Wpf.Views.ScriptView"
-             mc:Ignorable="d" Height="347.2" Width="496.8">
+             mc:Ignorable="d">
     <UserControl.DataContext>
         <ViewModel:ScriptVm/>
     </UserControl.DataContext>

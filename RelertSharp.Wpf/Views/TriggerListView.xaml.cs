@@ -34,6 +34,8 @@ namespace RelertSharp.Wpf.Views
         public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
         public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
 
+
+        #region Ctor
         public TriggerListView()
         {
             InitializeComponent();
@@ -52,7 +54,10 @@ namespace RelertSharp.Wpf.Views
         {
             ReloadMapTrigger();
         }
+        #endregion
 
+
+        #region Public
         public void SelectItem(IIndexableItem item)
         {
             foreach (object o in trvMain.Items)
@@ -110,16 +115,10 @@ namespace RelertSharp.Wpf.Views
         }
 
         public event ContentCarrierHandler ItemSelected;
+        #endregion
 
-        private void SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            if (SelectedItem != null)
-            {
-                ItemSelected?.Invoke(this, SelectedItem.Data);
-            }
-            else ItemSelected?.Invoke(this, null);
-        }
 
+        #region IContainer
         public void SortBy(bool ascending)
         {
             List<TriggerTreeItemVm> tree = trvMain.Items.Cast<TriggerTreeItemVm>().ToList();
@@ -147,9 +146,19 @@ namespace RelertSharp.Wpf.Views
             }
             return null;
         }
+        #endregion
 
-        #region Misc
+
         #region Selecting & Right click
+        private void SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (SelectedItem != null)
+            {
+                ItemSelected?.Invoke(this, SelectedItem.Data);
+            }
+            else ItemSelected?.Invoke(this, null);
+        }
+
         private TriggerTreeItemVm GetItemAtMouse(ItemsControl src, MouseButtonEventArgs e)
         {
             TextBlock treeitem = src.GetItemAtMouse<TextBlock>(e);
@@ -165,8 +174,6 @@ namespace RelertSharp.Wpf.Views
             //TreeViewItem item = GetSelectedItem(trvMain);
             PreviewMenuShowing();
         }
-        #endregion
-        #region Menu Enabler & Disabler
         private void PreviewMenuShowing()
         {
             if (SelectedItem != null)
@@ -183,7 +190,6 @@ namespace RelertSharp.Wpf.Views
                 menuDelGrp.IsEnabled = false;
             }
         }
-        #endregion
         #endregion
 
 
@@ -301,7 +307,7 @@ namespace RelertSharp.Wpf.Views
         private void Menu_AddGroup(object sender, RoutedEventArgs e)
         {
             DlgTriggerListAddGroup addGroup = new DlgTriggerListAddGroup();
-            if (addGroup.ShowDialog().Value == true)
+            if (addGroup.ShowDialog().Value)
             {
                 TriggerTreeItemVm group = new TriggerTreeItemVm()
                 {
@@ -318,6 +324,8 @@ namespace RelertSharp.Wpf.Views
                     }
                 }
                 else trvMain.Items.Add(group);
+                group.IsSelected = true;
+                group.ExpandAllAncestor();
             }
         }
 
@@ -335,17 +343,56 @@ namespace RelertSharp.Wpf.Views
 
         private void Menu_DeleteGroup(object sender, RoutedEventArgs e)
         {
-
+            void remove(TriggerTreeItemVm tree)
+            {
+                if (tree.IsTree)
+                {
+                    foreach (TriggerTreeItemVm sub in tree.Items) remove(sub);
+                }
+                else
+                {
+                    map.RemoveTrigger(tree.Data);
+                }
+            }
+            if (GuiUtil.YesNoWarning("All child trigger and associated tag will be deleted.\nAre you sure?"))
+            {
+                TriggerTreeItemVm item = SelectedItem;
+                remove(item);
+                if (item.IsRoot) trvMain.Items.Remove(item);
+                else item.RemoveFromAncestor();
+            }
         }
 
         private void Menu_AddTrigger(object sender, RoutedEventArgs e)
         {
+            DlgNampInput dlg = new DlgNampInput("Trigger name");
+            if (dlg.ShowDialog().Value)
+            {
+                TriggerItem trigger = map.AddTrigger(dlg.ResultName);
+                trigger.OwnerCountry = map.Countries.First().Name;
+                TriggerTreeItemVm vm = new TriggerTreeItemVm(trigger);
 
+                if (SelectedItem == null || (!SelectedItem.IsTree && SelectedItem.IsRoot)) trvMain.Items.Add(vm);
+                else if (SelectedItem.IsTree) SelectedItem.AddItem(vm);
+                else if (!SelectedItem.IsTree && !SelectedItem.IsRoot) SelectedItem.Ancestor.AddItem(vm);
+                vm.IsSelected = true;
+                vm.ExpandAllAncestor();
+            }
         }
 
         private void Menu_CopyTrigger(object sender, RoutedEventArgs e)
         {
+            if (SelectedItem != null && !SelectedItem.IsTree)
+            {
+                TriggerItem copy = map.AddTrigger(SelectedItem.Data);
+                TriggerTreeItemVm vm = new TriggerTreeItemVm(copy);
 
+                if (SelectedItem.IsRoot) trvMain.Items.Add(vm);
+                else SelectedItem.Ancestor.AddItem(vm);
+
+                vm.IsSelected = true;
+                vm.ExpandAllAncestor();
+            }
         }
 
         private void Menu_Ascending(object sender, RoutedEventArgs e)

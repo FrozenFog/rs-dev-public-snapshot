@@ -17,8 +17,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Ctor - LogicGroup
         public LogicGroup(LogicGroup src)
         {
-            ID = src.ID;
-            data = new List<LogicItem>(src.data);
+            src.data.ForEach(x => data.Add(new LogicItem(x)));
             ParentID = src.ParentID;
             LogicType = src.LogicType;
         }
@@ -61,7 +60,10 @@ namespace RelertSharp.MapStructure.Logic
                 }
             }
         }
-        public LogicGroup() { }
+        public LogicGroup()
+        {
+            data = new List<LogicItem>();
+        }
         #endregion
 
 
@@ -165,7 +167,6 @@ namespace RelertSharp.MapStructure.Logic
 
         #region Public Calls - LogicGroup
         public TriggerSubType LogicType { get; internal set; }
-        public string ID { get; set; }
         public LogicItem this[int index] { get { return data[index]; } set { data[index] = value; } }
         public string ParentID { get; set; }
         #endregion
@@ -237,7 +238,7 @@ namespace RelertSharp.MapStructure.Logic
             //    else return string.Format("Event{0:D2}-ID:{1:D2}", idx, ID);
             //}
             string result = string.Format(info.FormatString, param.ToArray());
-            if (result.Contains(Constant.FMT_OWNER))
+            if (result.Contains(Constant.FMT_OWNER) && !Parent.ParentID.IsNullOrEmpty())
             {
                 string owner = GlobalVar.CurrentMapDocument.Map.Triggers[Parent.ParentID].OwnerCountry;
                 result = result.Replace(Constant.FMT_OWNER, owner.CoverWith("[", "]"));

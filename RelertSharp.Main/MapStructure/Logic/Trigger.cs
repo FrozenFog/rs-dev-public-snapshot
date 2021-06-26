@@ -82,6 +82,16 @@ namespace RelertSharp.MapStructure.Logic
                 Id = id,
                 Name = name
             };
+            t.Events = new LogicGroup()
+            {
+                ParentID = t.Id,
+                LogicType = TriggerSubType.EventLogic
+            };
+            t.Actions = new LogicGroup()
+            {
+                ParentID = t.Id,
+                LogicType = TriggerSubType.ActionLogic
+            };
             this[id] = t;
             return t;
         }
@@ -175,11 +185,11 @@ namespace RelertSharp.MapStructure.Logic
         public LogicGroup Events { get; set; }
         public LogicGroup Actions { get; set; }
         public string OwnerCountry { get; set; }
-        public string LinkedWith { get; set; }
+        public string LinkedWith { get; set; } = Constant.ITEM_NONE;
         public bool Disabled { get; set; }
-        public bool EasyOn { get; set; }
-        public bool NormalOn { get; set; }
-        public bool HardOn { get; set; }
+        public bool EasyOn { get; set; } = true;
+        public bool NormalOn { get; set; } = true;
+        public bool HardOn { get; set; } = true;
         private TriggerRepeatingType repeating = TriggerRepeatingType.NoRepeating;
         public TriggerRepeatingType Repeating
         {

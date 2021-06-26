@@ -76,6 +76,11 @@ namespace RelertSharp.Wpf.ViewModel
             }
             return null;
         }
+        public override void RemoveItem(IBaseTreeVm<TriggerItem> item)
+        {
+            base.RemoveItem(item);
+            SetProperty(nameof(HeadImg));
+        }
 
 
         public TriggerItem Data
@@ -108,7 +113,11 @@ namespace RelertSharp.Wpf.ViewModel
             {
                 if (IsTree)
                 {
-                    if (IsExpanded) return Properties.Resources.iconTrgExpand.ToWpfImage(true);
+                    if (IsExpanded)
+                    {
+                        if (Items.Count == 0) return Properties.Resources.iconTrgFold.ToWpfImage(true);
+                        return Properties.Resources.iconTrgExpand.ToWpfImage(true);
+                    }
                     else return Properties.Resources.iconTrgFold.ToWpfImage(true);
                 }
                 else return null;
