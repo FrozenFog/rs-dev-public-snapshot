@@ -30,12 +30,12 @@
             </TreeView.ItemTemplate>
             <TreeView.ContextMenu>
                 <ContextMenu Style="{DynamicResource cmenuDark}">
-                    <MenuItem Header="Add trigger group" Click="Menu_AddGroup"/>
-                    <MenuItem Name="menuDelGrp" Header="Delete trigger group" Click="Menu_DeleteGroup"/>
-                    <Separator Style="{DynamicResource sepDark}"/>
                     <MenuItem Header="Add trigger" Click="Menu_AddTrigger"/>
                     <MenuItem Name="menuCopyTrg" Header="Copy trigger" Click="Menu_CopyTrigger"/>
                     <MenuItem Name="menuDelTrg" Header="Delete trigger" Click="Menu_DeleteTrigger"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
+                    <MenuItem Header="Add trigger group" Click="Menu_AddGroup"/>
+                    <MenuItem Name="menuDelGrp" Header="Delete trigger group" Click="Menu_DeleteGroup"/>
                     <Separator Style="{DynamicResource sepDark}"/>
                     <MenuItem Header="Ascending sort" Click="Menu_Ascending"/>
                     <MenuItem Header="Descending sort" Click="Menu_Descending"/>

@@ -39,6 +39,8 @@ namespace RelertSharp.Wpf
         private readonly ScriptListView scriptList = new ScriptListView();
         [RsViewComponent(GuiViewType.TaskforceList, GuiViewSide.Left, "Taskforce List")]
         private readonly TaskforceListView taskforceList = new TaskforceListView();
+        [RsViewComponent(GuiViewType.Taskforce, GuiViewSide.Right, "Taskforce Info")]
+        private readonly TaskforceView taskforce = new TaskforceView();
         [RsViewComponent(GuiViewType.Team, GuiViewSide.Right, "Team Info")]
         private readonly TeamView team = new TeamView();
         [RsViewComponent(GuiViewType.Script, GuiViewSide.Right, "Script Info")]
@@ -173,6 +175,7 @@ namespace RelertSharp.Wpf
             BindListener(trigger, triggerList);
             BindListener(events, triggerList);
             BindListener(actions, triggerList);
+            BindListener(taskforce, taskforceList);
         }
         private void BindListener(IObjectReciver reciver, IListContainer sender)
         {

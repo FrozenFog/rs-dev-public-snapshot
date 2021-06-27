@@ -365,7 +365,7 @@ namespace RelertSharp.Wpf.Views
 
         private void Menu_AddTrigger(object sender, RoutedEventArgs e)
         {
-            DlgNampInput dlg = new DlgNampInput("Trigger name");
+            DlgNameInput dlg = new DlgNameInput("Trigger name");
             if (dlg.ShowDialog().Value)
             {
                 TriggerItem trigger = map.AddTrigger(dlg.ResultName);

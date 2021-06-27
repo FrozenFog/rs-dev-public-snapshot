@@ -60,6 +60,11 @@
         <item key="&lt;none&gt;" front="true"/>
       </Items>
     </cb>
+    <cb type="TaskforceWithNone" base="Taskforces">
+      <Items>
+        <item key="&lt;none&gt;" front="true"/>
+      </Items>
+    </cb>
     <cb type="ScriptWithNone" base="Scripts">
       <Items>
         <item key="&lt;none&gt;" front="true"/>
@@ -347,7 +352,7 @@
         <attr name="IonImmune" desc="" type="bool" class="4" default="no"/>
         <attr name="Recruiter" desc="" type="bool" class="1" default="no"/>
         <attr name="Reinforce" desc="" type="bool" class="3" default="no"/>
-        <attr name="TaskForce" desc="" type="Taskforces" class="0"/>
+        <attr name="TaskForce" desc="" type="TaskforceWithNone" class="0"/>
         <attr name="TechLevel" desc="" type="int" class="3" default="0"/>
         <attr name="Aggressive" desc="" type="bool" class="2" default="no"/>
         <attr name="Autocreate" desc="" type="bool" class="1" default="no"/>
