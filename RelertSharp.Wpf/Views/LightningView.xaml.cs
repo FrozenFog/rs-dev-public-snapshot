@@ -27,6 +27,7 @@ namespace RelertSharp.Wpf.Views
     public partial class LightningView : UserControl, IRsView
     {
         internal event EventHandler LightningChangedRequest;
+        private readonly DelayedAction delayedRefresh;
         public int ContentWidth { get { return (int)grdColContent.ActualWidth; } }
         private Lightning MapLightning { get { return GlobalVar.CurrentMapDocument.Map.LightningCollection; } }
 
@@ -35,35 +36,24 @@ namespace RelertSharp.Wpf.Views
         public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
 
         private LightningItem light;
-        private DispatcherTimer refreshTimer;
         public LightningView()
         {
             InitializeComponent();
             DataContext = new LightningVm();
-            refreshTimer = new DispatcherTimer()
-            {
-                Interval = new TimeSpan(0, 0, 0, 0, 200)
-            };
-            refreshTimer.Tick += RefreshTimerTicked;
-        }
-
-        private void RefreshTimerTicked(object sender, EventArgs e)
-        {
-            refreshTimer.Stop();
-            SetLight(light);
+            delayedRefresh = new DelayedAction(null, SetLight, 200);
         }
 
         private void LoadLight(LightningItem item)
         {
             DataContext = new LightningVm(item);
             light = item;
-            SetLight(item);
+            SetLight();
         }
-        private void SetLight(LightningItem item)
+        private void SetLight()
         {
-            if (item != null)
+            if (light != null)
             {
-                EngineApi.ApplyLightning(item, ckbEnable.IsChecked.Value);
+                EngineApi.ApplyLightning(light, ckbEnable.IsChecked.Value);
                 LightningChangedRequest?.Invoke(null, null);
             }
         }
@@ -79,11 +69,10 @@ namespace RelertSharp.Wpf.Views
             txbLevel.IsEnabled = enabled;
         }
 
-
+        #region Handler
         private void LightningTypeChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboItem item = cbbType.SelectedItem as ComboItem;
-            if (item != null)
+            if (cbbType.SelectedItem is ComboItem item)
             {
                 MapLightningType lightningType = (MapLightningType)item.Value.ParseInt();
                 switch (lightningType)
@@ -103,7 +92,7 @@ namespace RelertSharp.Wpf.Views
 
         private void RefreshClicked(object sender, RoutedEventArgs e)
         {
-            SetLight(light);
+            SetLight();
         }
 
         private void EnableChecked(object sender, RoutedEventArgs e)
@@ -114,39 +103,24 @@ namespace RelertSharp.Wpf.Views
             LightningTypeChanged(null, null);
         }
 
-        private bool increWheelAdjust = false;
         private void WheelValueHandler(object sender, MouseWheelEventArgs e)
         {
             TextBox txb = sender as TextBox;
             double delta = 0;
             if (e.Delta > 0) delta = 0.01;
-            else delta = -0.01;
-            if (increWheelAdjust) delta *= 10;
+            else if (e.Delta < 0) delta = -0.01;
+            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)) delta *= 10;
             double value = txb.Text.ParseDouble();
             value += delta;
             txb.Text = value.ForcePositive().ToString(6);
-            QueueRefresh();
-        }
-
-        private void ShiftKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.LeftShift || e.Key == Key.RightShift) increWheelAdjust = true;
-        }
-
-        private void ShiftKeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.LeftShift || e.Key == Key.RightShift) increWheelAdjust = false;
-        }
-
-        private void QueueRefresh()
-        {
-            refreshTimer.Stop();
-            refreshTimer.Start();
+            delayedRefresh.Restart();
         }
 
         private void EditFocusLost(object sender, RoutedEventArgs e)
         {
-            QueueRefresh();
+            delayedRefresh.Restart();
         }
+        #endregion
+
     }
 }

@@ -26,7 +26,7 @@
             <ColumnDefinition Width="*" MinWidth="46"/>
         </Grid.ColumnDefinitions>
         <Label Content="Name" HorizontalAlignment="Right" Margin="10,10,0.6,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Width="34"/>
-        <TextBox Height="23" Margin="9.4,10,10.4,0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <TextBox Height="23" Margin="9.4,10,10.4,0" TextWrapping="Wrap" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.ColumnSpan="2" Grid.Column="1"/>
         <ListBox x:Name="lbxMain" Grid.ColumnSpan="3" Margin="10,38,10.4,11.4" Style="{DynamicResource lbxDark}" SelectedValue="{Binding SelectedItem}" SelectionChanged="CurrentSelectionChanged" PreviewMouseRightButtonDown="PreviewRightDown">
             <ListBox.ContextMenu>
                 <ContextMenu Style="{DynamicResource cmenuDark}">

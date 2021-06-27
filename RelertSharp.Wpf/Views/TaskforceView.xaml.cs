@@ -94,8 +94,10 @@ namespace RelertSharp.Wpf.Views
         {
             if (Context.SelectedItem != null && int.TryParse(txbAmount.Text, out int num))
             {
-                num += e.Delta / Math.Abs(e.Delta);
-                num = RsMath.ForcePositive(num);
+                int delta = 0;
+                if (e.Delta > 0) delta = 1;
+                else if (e.Delta < 0) delta = -1;
+                num = RsMath.ForcePositive(num + delta);
                 Context.SelectedItem.UnitNum = num;
             }
         }

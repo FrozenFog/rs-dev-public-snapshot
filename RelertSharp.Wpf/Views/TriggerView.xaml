@@ -28,7 +28,7 @@
         <Label Content="Trigger Id" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
         <TextBox x:Name="txbId" Height="23" Margin="10,38,10,0" TextWrapping="Wrap" Text="{Binding Id}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" IsEnabled="False"/>
         <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="1"/>
-        <TextBox x:Name="txbName" Height="23" Margin="10,38,10,0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="txbName" Height="23" Margin="10,38,10,0" TextWrapping="Wrap" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="1" Grid.ColumnSpan="2"/>
         <Label Content="Asso. Trigger" HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
         <ComboBox x:Name="cbbAsso" Margin="10,89,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" Grid.ColumnSpan="3" IsEditable="True" SelectedValue="{Binding AssoTriggerItem}">
             <ComboBox.ItemsSource>

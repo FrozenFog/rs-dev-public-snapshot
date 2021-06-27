@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
         <GridSplitter Width="3" VerticalAlignment="Stretch" HorizontalAlignment="Left" Style="{DynamicResource gsplitDark}" Grid.Column="1"/>
         <Label Content="House Name" HorizontalAlignment="Left" Margin="14.4,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="2"/>
-        <TextBox Height="23" Margin="14.4,33,10,0" TextWrapping="Wrap" Text="{Binding HouseName}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2"/>
+        <TextBox Height="23" Margin="14.4,33,10,0" TextWrapping="Wrap" Text="{Binding HouseName, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2"/>
         <ListBox x:Name="lbxHouse" Margin="10,10,10.2,11.2" Style="{DynamicResource lbxDark}" SelectionChanged="HouseSelectionChanged">
             <ListBox.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:HouseListVm}">
@@ -48,20 +48,20 @@
                     </ComboBox.ItemsSource>
                 </ComboBox>
                 <Label Content="Build Activity(%)" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="3"/>
-                <TextBox Height="23" Margin="10,125,10.4,0" TextWrapping="Wrap" Text="{Binding BuildActivity}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="3"/>
+                <TextBox Height="23" Margin="10,125,10.4,0" TextWrapping="Wrap" Text="{Binding BuildActivity, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="3"/>
                 <Label Content="Tech Level" HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="3"/>
-                <TextBox Height="23" Margin="10,171,10.4,0" TextWrapping="Wrap" Text="{Binding TechLevel}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="3"/>
+                <TextBox Height="23" Margin="10,171,10.4,0" TextWrapping="Wrap" Text="{Binding TechLevel, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="3"/>
                 <Label Content="IQ" HorizontalAlignment="Left" Margin="10,194,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="3"/>
-                <TextBox Height="23" Margin="10,217,10.4,0" TextWrapping="Wrap" Text="{Binding IQ}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="3"/>
+                <TextBox Height="23" Margin="10,217,10.4,0" TextWrapping="Wrap" Text="{Binding IQ, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="3"/>
                 <Label Content="Extra Information" HorizontalAlignment="Left" Margin="10,240,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
-                <TextBox Height="Auto" Margin="10,263,10.4,10.4" TextWrapping="Wrap" Text="{Binding ExtraInfo}" Style="{DynamicResource txbDark}" VerticalContentAlignment="Top" AcceptsReturn="True"/>
+                <TextBox Height="Auto" Margin="10,263,10.4,10.4" TextWrapping="Wrap" Text="{Binding ExtraInfo, UpdateSourceTrigger=LostFocus}" Style="{DynamicResource txbDark}" VerticalContentAlignment="Top" AcceptsReturn="True"/>
                 <Rectangle Fill="{Binding ColorIndicator, Mode=OneWay}" HorizontalAlignment="Right" Height="18" Margin="0,10,10.6,0" Stroke="{StaticResource btnBorder}" VerticalAlignment="Top" Width="48"/>
             </Grid>
         </ScrollViewer>
         <Label Content="Inherit From" HorizontalAlignment="Left" Margin="14.6,56,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="2"/>
         <ComboBox x:Name="cbbInherit" Margin="14.6,79,10.6,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" Grid.Column="2" SelectedItem="{Binding InheritFromRulesHouseItem}"/>
         <Label Content="Credits (x100)" HorizontalAlignment="Left" Margin="14.6,102,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="2"/>
-        <TextBox Height="23" Margin="13.6,125,10.6,0" TextWrapping="Wrap" Text="{Binding Credit}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2"/>
+        <TextBox Height="23" Margin="13.6,125,10.6,0" TextWrapping="Wrap" Text="{Binding Credit, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2"/>
         <CheckBox Content="Player Control" Grid.Column="2" HorizontalAlignment="Left" Margin="14.6,153,0,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding PlayerControl}"/>
     </Grid>
 </UserControl>

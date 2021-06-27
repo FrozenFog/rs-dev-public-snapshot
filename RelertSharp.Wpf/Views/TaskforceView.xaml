@@ -19,8 +19,8 @@
         <ListBox x:Name="lbxUnits" Grid.Column="2" Style="{DynamicResource lbxDark}" Margin="10,61,9.6,10.4" DataContext="{Binding SelectedItem}" SelectedValue="{Binding CurrentUnit}" SelectionChanged="ScrollSelection" Grid.ColumnSpan="2"/>
         <Label Content="Name" Style="{DynamicResource lblDark}" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23"/>
         <Label Content="Group" Style="{DynamicResource lblDark}" Margin="9.4,10,0,0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23"/>
-        <TextBox Height="23" Grid.Column="0" Style="{DynamicResource txbDark}" Text="{Binding Name}" Margin="10,33,9.6,0" VerticalAlignment="Top"/>
-        <TextBox Height="23" Style="{DynamicResource txbDark}" Text="{Binding Group}" Margin="9.4,32,9,0" Grid.Column="1" VerticalAlignment="Top"/>
+        <TextBox Height="23" Grid.Column="0" Style="{DynamicResource txbDark}" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="10,33,9.6,0" VerticalAlignment="Top"/>
+        <TextBox Height="23" Style="{DynamicResource txbDark}" Text="{Binding Group, UpdateSourceTrigger=LostFocus}" Margin="9.4,32,9,0" Grid.Column="1" VerticalAlignment="Top"/>
         <ListView x:Name="lvMain" Grid.ColumnSpan="2" Margin="10,61,10,10.4" Style="{DynamicResource lbxDark}" SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding Items}">
             <ListView.ContextMenu>
                 <ContextMenu Style="{DynamicResource cmenuDark}">
@@ -47,7 +47,7 @@
         </ListView>
         <TextBox x:Name="txbSearch" Style="{DynamicResource txbDark}" Grid.Column="2" Height="23" Margin="10.2,32,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="TextChangeSearch"/>
         <Label Content="Search Name" Style="{DynamicResource lblDark}" Margin="9.8,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Grid.Column="2"/>
-        <TextBox x:Name="txbAmount" Height="23" Style="{DynamicResource txbDark}" DataContext="{Binding SelectedItem}" Text="{Binding UnitNum}" Margin="9.6,32,9.6,0" Grid.Column="3" VerticalAlignment="Top" MouseWheel="AmountWheel"/>
+        <TextBox x:Name="txbAmount" Height="23" Style="{DynamicResource txbDark}" DataContext="{Binding SelectedItem}" Text="{Binding UnitNum, UpdateSourceTrigger=PropertyChanged}" Margin="9.6,32,9.6,0" Grid.Column="3" VerticalAlignment="Top" MouseWheel="AmountWheel"/>
         <Label Content="Amount" Style="{DynamicResource lblDark}" Margin="9.6,10,0,0" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23"/>
     </Grid>
 </UserControl>
