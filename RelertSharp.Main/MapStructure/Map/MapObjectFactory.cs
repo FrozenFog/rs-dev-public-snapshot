@@ -42,6 +42,25 @@ namespace RelertSharp.MapStructure
         }
         #endregion
 
+
+        #region Taskforces
+        public TaskforceItem AddTaskforce(string name)
+        {
+            TaskforceItem tf = Taskforces.AddItem(NewID, name);
+            return tf;
+        }
+        public TaskforceItem AddTaskforce(TaskforceItem src)
+        {
+            TaskforceItem tf = Taskforces.CopyItem(src, NewID);
+            return tf;
+        }
+        public bool RemoveTaskforce(TaskforceItem item)
+        {
+            DelID(item.Id);
+            return Taskforces.RemoveItem(item);
+        }
+        #endregion
+
         #endregion
         //public TeamScriptGroup NewScript()
         //{

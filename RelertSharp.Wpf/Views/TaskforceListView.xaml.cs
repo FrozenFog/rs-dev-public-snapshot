@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Common;
 using RelertSharp.Wpf.Common;
+using RelertSharp.Wpf.Dialogs;
 
 namespace RelertSharp.Wpf.Views
 {
@@ -26,6 +27,9 @@ namespace RelertSharp.Wpf.Views
         public GuiViewType ViewType { get { return GuiViewType.TaskforceList; } }
         public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
         public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
+        private MapStructure.Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private TaskforceListVm SelectedItem { get { return lbxMain.SelectedItem as TaskforceListVm; } }
+        private IndexableDisplayType displayTypeNow = IndexableDisplayType.IdAndName;
 
         public TaskforceListView()
         {
@@ -38,34 +42,51 @@ namespace RelertSharp.Wpf.Views
 
         private void MapReloadedHandler(object sender, EventArgs e)
         {
-            lbxMain.ItemsSource = null;
-            lbxMain.ItemsSource = GlobalCollectionVm.Taskforces;
+            lbxMain.Items.Clear();
+            foreach (var tf in GlobalVar.CurrentMapDocument.Map.Taskforces)
+            {
+                lbxMain.Items.Add(new TaskforceListVm(tf));
+            }
         }
 
         public event ContentCarrierHandler ItemSelected;
 
         private void IdUnchecked(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Taskforces.ChangeDisplay(IndexableDisplayType.NameOnly);
-            GlobalCollectionVm.Taskforces.UpdateAll();
+            displayTypeNow = IndexableDisplayType.NameOnly;
+            foreach (TaskforceListVm vm in lbxMain.Items)
+            {
+                vm.ChangeDisplay(IndexableDisplayType.NameOnly);
+            }
+            GlobalVar.CurrentMapDocument?.Map.Taskforces.ChangeDisplay(displayTypeNow);
+            lbxMain.Items.Refresh();
         }
 
         private void IdChecked(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Taskforces.ChangeDisplay(IndexableDisplayType.IdAndName);
-            GlobalCollectionVm.Taskforces.UpdateAll();
+            displayTypeNow = IndexableDisplayType.IdAndName;
+            foreach (TaskforceListVm vm in lbxMain.Items)
+            {
+                vm.ChangeDisplay(IndexableDisplayType.IdAndName);
+            }
+            GlobalVar.CurrentMapDocument?.Map.Taskforces.ChangeDisplay(displayTypeNow);
+            lbxMain.Items.Refresh();
         }
 
         private void AscendingSort(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Taskforces.AscendingSort();
-            GlobalCollectionVm.Taskforces.UpdateAll();
+            List<TaskforceListVm> src = lbxMain.Items.Cast<TaskforceListVm>().ToList();
+            src = src.OrderBy(x => x.Title).ToList();
+            lbxMain.Items.Clear();
+            src.ForEach(x => lbxMain.Items.Add(x));
         }
 
         private void DescendingSort(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Taskforces.DescendingSort();
-            GlobalCollectionVm.Scripts.UpdateAll();
+            List<TaskforceListVm> src = lbxMain.Items.Cast<TaskforceListVm>().ToList();
+            src = src.OrderByDescending(x => x.Title).ToList();
+            lbxMain.Items.Clear();
+            src.ForEach(x => lbxMain.Items.Add(x));
         }
 
 
@@ -105,5 +126,61 @@ namespace RelertSharp.Wpf.Views
         {
             return lbxMain.SelectedItem as IIndexableItem;
         }
+
+        private void SelectedItemChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lbxMain.SelectedItem is TaskforceListVm vm)
+            {
+                ItemSelected?.Invoke(this, vm.Data);
+            }
+        }
+
+        #region Mouse
+        private void PreviewRightDown(object sender, MouseButtonEventArgs e)
+        {
+            bool hasItem = lbxMain.SelectedItem != null;
+            menuCopy.IsEnabled = hasItem;
+            menuDelete.IsEnabled = hasItem;
+        }
+        #endregion
+
+
+        #region Menu
+        private void Menu_Add(object sender, RoutedEventArgs e)
+        {
+            DlgNameInput dlg = new DlgNameInput("Taskforce name");
+            if (dlg.ShowDialog().Value)
+            {
+                var tf = Map.AddTaskforce(dlg.ResultName);
+                tf.ChangeDisplay(displayTypeNow);
+                TaskforceListVm vm = new TaskforceListVm(tf);
+                if (lbxMain.SelectedIndex == -1) lbxMain.Items.Add(vm);
+                else lbxMain.Items.Insert(lbxMain.SelectedIndex + 1, vm);
+                lbxMain.SelectedItem = vm;
+            }
+        }
+
+        private void Menu_Copy(object sender, RoutedEventArgs e)
+        {
+            if (SelectedItem != null)
+            {
+                var copy = Map.AddTaskforce(SelectedItem.Data);
+                copy.ChangeDisplay(displayTypeNow);
+                TaskforceListVm vm = new TaskforceListVm(copy);
+                lbxMain.Items.Insert(lbxMain.SelectedIndex, vm);
+                lbxMain.SelectedItem = vm;
+            }
+        }
+
+        private void Menu_Delete(object sender, RoutedEventArgs e)
+        {
+            TaskforceListVm vm = SelectedItem;
+            var tf = vm.Data;
+            if (Map.RemoveTaskforce(tf))
+            {
+                lbxMain.Items.Remove(vm);
+            }
+        }
+        #endregion
     }
 }

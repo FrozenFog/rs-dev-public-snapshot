@@ -98,7 +98,7 @@ namespace RelertSharp.Wpf
 
         private void MenuShowTaskforce(object sender, RoutedEventArgs e)
         {
-            //ShowView(taskforce);
+            ShowView(taskforce);
         }
 
         private void MenuShowTaskforceList(object sender, RoutedEventArgs e)

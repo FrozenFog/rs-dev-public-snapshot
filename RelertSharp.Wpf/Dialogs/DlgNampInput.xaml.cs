@@ -17,9 +17,9 @@ namespace RelertSharp.Wpf.Dialogs
     /// <summary>
     /// DlgNampInput.xaml 的交互逻辑
     /// </summary>
-    public partial class DlgNampInput : Window
+    public partial class DlgNameInput : Window
     {
-        public DlgNampInput()
+        public DlgNameInput()
         {
             InitializeComponent();
         }
@@ -28,7 +28,7 @@ namespace RelertSharp.Wpf.Dialogs
         /// </summary>
         /// <param name="label">Default label: Name</param>
         /// <param name="title">Default title: Relert Sharp</param>
-        public DlgNampInput(string label = null, string title = null)
+        public DlgNameInput(string label = null, string title = null)
         {
             InitializeComponent();
             if (!title.IsNullOrEmpty()) Title = title;

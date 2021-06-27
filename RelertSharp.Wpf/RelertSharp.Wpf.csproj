@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\BrushConfig.cs" />
+    <Compile Include="Common\DelayedAction.cs" />
     <Compile Include="Common\Delegates.cs" />
     <Compile Include="Common\GuiConst.cs" />
     <Compile Include="Common\GuiExtensions.cs" />
@@ -97,6 +98,8 @@
     <Compile Include="ViewModel\Logic\HouseVm.cs" />
     <Compile Include="ViewModel\Etc\LightningVm.cs" />
     <Compile Include="ViewModel\Logic\ScriptListVm.cs" />
+    <Compile Include="ViewModel\Logic\TaskforceListVm.cs" />
+    <Compile Include="ViewModel\Logic\TaskforceVm.cs" />
     <Compile Include="ViewModel\Object\ObjectAttributeApplierVm.cs" />
     <Compile Include="ViewModel\Object\ObjectPickVm.cs" />
     <Compile Include="ViewModel\Logic\ScriptVm.cs" />
@@ -127,6 +130,9 @@
     </Compile>
     <Compile Include="Views\TaskforceListView.xaml.cs">
       <DependentUpon>TaskforceListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TaskforceView.xaml.cs">
+      <DependentUpon>TaskforceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TeamListView.xaml.cs">
       <DependentUpon>TeamListView.xaml</DependentUpon>
@@ -221,6 +227,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TaskforceListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TaskforceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -7,68 +7,80 @@ using System.Windows.Forms;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    //public class TaskforceShowItem
-    //{
-    //    public override string ToString() { return Number + " " + Name; }
-    //    public TaskforceShowItem(Tuple<string, int> pair)
-    //    {
-    //        Number = pair.Item2;
-    //        RegName = pair.Item1;
-    //        Name = GlobalVar.GlobalRules.GetCsfUIName(RegName);
-    //    }
-    //    public int Number { get; set; }
-    //    public string RegName { get; set; }
-    //    public string Name { get; set; }
-    //}
-
-    public class TaskforceCollection : TeamLogicCollection<TaskforceItem>
+    public class TaskforceCollection : TeamLogicCollection<TaskforceItem>, ICurdContainer<TaskforceItem>
     {
         public TaskforceCollection() : base()
         {
-            this[Constant.ITEM_NONE] = new TaskforceItem()
-            {
-                Id = Constant.ITEM_NONE,
-                Name = Constant.ITEM_NONE
-            };
+
         }
 
 
         #region Public Methods - TaskforceCollection
-        public void RemoveTaskforce(string id)
+
+        #endregion
+
+
+        #region Curd
+        public TaskforceItem AddItem(string id, string name)
         {
-            if (AllId.Contains(id)) Remove(id);
-        }
-        public TaskforceItem NewTaskforce(string id, string name = "New Taskforce")
-        {
-            TaskforceItem t = new TaskforceItem(id, name, -1);
+            TaskforceItem t = new TaskforceItem(id, name);
             this[id] = t;
             return t;
+        }
+
+        public bool ContainsItem(TaskforceItem look)
+        {
+            return data.ContainsKey(look.Id);
+        }
+
+        public bool ContainsItem(string id, string obsolete = null)
+        {
+            return data.ContainsKey(id);
+        }
+
+        public TaskforceItem CopyItem(TaskforceItem src, string id)
+        {
+            TaskforceItem t = new TaskforceItem(src, id);
+            this[id] = t;
+            return t;
+        }
+
+        public bool RemoveItem(TaskforceItem target)
+        {
+            if (data.ContainsKey(target.Id))
+            {
+                return data.Remove(target.Id);
+            }
+            return false;
         }
         #endregion
     }
 
-    public class TaskforceItem : TeamLogicItem, IIndexableItem
+    public class TaskforceItem : TeamLogicItem, IIndexableItem, ISubCurdContainer<TaskforceUnit>
     {
-        private int memberid = 0;
-
-
         #region Ctor - TaskforceItem
         public TaskforceItem(INIEntity ent) : base(ent)
         {
             Name = ent.PopPair("Name").Value;
-            Group = ent.PopPair("Group").ParseInt(-1);
+            Group = ent.PopPair("Group").Value;
             foreach (INIPair p in ent.DataList)
             {
-                string[] tmp = p.ParseStringList();
                 Members.Add(new TaskforceUnit(p));
             }
-            memberid = Members.Count;
         }
-        public TaskforceItem(string id, string name, int group)
+        public TaskforceItem(string id, string name)
         {
-            Name = name;
-            Group = group;
             Id = id;
+            Name = name;
+        }
+        public TaskforceItem(TaskforceItem src, string id)
+        {
+            Name = src.Name + " - Clone";
+            Id = id;
+            foreach (TaskforceUnit u in src.Members)
+            {
+                Members.Add(new TaskforceUnit(u));
+            }
         }
         public TaskforceItem() : base() { }
         #endregion
@@ -79,67 +91,73 @@ namespace RelertSharp.MapStructure.Logic
         {
             INIEntity result = new INIEntity(Id);
             result.AddPair(new INIPair("Name", Name));
-            result.AddPair(new INIPair("Group", Group.ToString()));
+            result.AddPair(new INIPair("Group", Group));
             for (int i = 0; i < Members.Count; i++)
             {
                 result.AddPair(new INIPair(i.ToString(), Members[i].SaveData));
             }
             return result;
         }
-        public TaskforceItem Copy(string newid)
+        #region Curd
+        public TaskforceUnit AddItemAt(int pos)
         {
-            TaskforceItem cp = new TaskforceItem();
-            cp.Id = newid;
-            cp.Name = Name + " Copy";
-            cp.Members = Members;
-            cp.Group = Group;
-            return cp;
+            TaskforceUnit u = new TaskforceUnit(Constant.ITEM_NONE, 1);
+            Members.Insert(pos, u);
+            return u;
         }
-        public static IEnumerable<ListViewItem> ToListViewItems(IEnumerable<TaskforceUnit> src)
+        public void RemoveItemAt(int pos)
         {
-            List<ListViewItem> dest = new List<ListViewItem>();
-            foreach (TaskforceUnit unit in src)
-            {
-                dest.Add(unit.ToListviewItem());
-            }
-            return dest;
+            Members.RemoveAt(pos);
         }
-        public TaskforceUnit NewUnitItem(string regname, int num)
+        public void RemoveAll()
         {
-            TaskforceUnit unit = new TaskforceUnit(memberid++.ToString(), regname, num);
-            Members.Add(unit);
-            return unit;
+            Members.Clear();
         }
+        public void MoveItemTo(int from, int to)
+        {
+            TaskforceUnit unit = Members[from];
+            Members.RemoveAt(from);
+            Members.Insert(to, unit);
+        }
+        public TaskforceUnit CopyItemAt(int pos)
+        {
+            TaskforceUnit src = Members[pos];
+            TaskforceUnit copy = new TaskforceUnit(src);
+            Members.Insert(pos, copy);
+            return copy;
+        }
+        #endregion
         #endregion
 
 
         #region Public Calls - TaskforceItem
         public bool IsEmpty { get { return Members.Count == 0; } }
         public List<TaskforceUnit> Members { get; private set; } = new List<TaskforceUnit>();
-        public IEnumerable<string> MemberPcxNames
-        {
-            get
-            {
-                List<string> s = new List<string>();
-                foreach (TaskforceUnit u in Members)
-                {
-                    s.Add(GlobalVar.GlobalRules.GetPcxName(u.RegName));
-                }
-                return s;
-            }
-        }
+        //public IEnumerable<string> MemberPcxNames
+        //{
+        //    get
+        //    {
+        //        List<string> s = new List<string>();
+        //        foreach (TaskforceUnit u in Members)
+        //        {
+        //            s.Add(GlobalVar.GlobalRules.GetPcxName(u.RegName));
+        //        }
+        //        return s;
+        //    }
+        //}
         //public Dictionary<string, int> MemberData { get { return memberData; } set { memberData = value; } }
-        public int Group { get; set; }
+        public string Group { get; set; } = "-1";
         #endregion
     }
 
 
-    public class TaskforceUnit : IEquatable<TaskforceUnit>
+    public class TaskforceUnit
     {
+        public event EventHandler InfoUpdated;
+        private bool initialized;
         #region Ctor - TaskforceUnit
         public TaskforceUnit(INIPair p)
         {
-            ID = p.Name;
             string[] tmp = p.ParseStringList();
             if (tmp.Length != 2)
             {
@@ -147,69 +165,81 @@ namespace RelertSharp.MapStructure.Logic
                 return;
             }
             RegName = tmp[1];
-            UnitNum = int.Parse(tmp[0]);
+            int.TryParse(tmp[0], out int num);
+            UnitNum = num;
+            initialized = true;
         }
-        public TaskforceUnit(string id, string regname, int num)
+        public TaskforceUnit(string regname, int num)
         {
-            ID = id;
             RegName = regname;
             UnitNum = num;
+            initialized = true;
         }
         public TaskforceUnit(string regname)
         {
             RegName = regname;
             UnitNum = 1;
+            initialized = true;
+        }
+        public TaskforceUnit(TaskforceUnit src)
+        {
+            RegName = src.RegName;
+            UnitNum = src.UnitNum;
+            initialized = true;
         }
         #endregion
 
 
         #region Public Methods - TaskforceUnit
-        public ListViewItem ToListviewItem()
-        {
-            ListViewItem item = new ListViewItem(string.Format("{0}\n({1}):\n{2}", UiName, RegName, UnitNum), PcxName.ToLower());
-            item.Name = RegName;
-            return item;
-        }
-        public static TaskforceUnit FromListviewItem(ListViewItem src)
-        {
-            TaskforceUnit dest = new TaskforceUnit(src.Name);
-            string count = src.Text.Split(':').Last();
-            try
-            {
-                dest.UnitNum = int.Parse(count);
-            }
-            catch
-            {
-                dest.UnitNum = 1;
-            }
-            return dest;
-        }
+        //public ListViewItem ToListviewItem()
+        //{
+        //    ListViewItem item = new ListViewItem(string.Format("{0}\n({1}):\n{2}", UiName, RegName, UnitNum), PcxName.ToLower());
+        //    item.Name = RegName;
+        //    return item;
+        //}
+        //public static TaskforceUnit FromListviewItem(ListViewItem src)
+        //{
+        //    TaskforceUnit dest = new TaskforceUnit(src.Name);
+        //    string count = src.Text.Split(':').Last();
+        //    try
+        //    {
+        //        dest.UnitNum = int.Parse(count);
+        //    }
+        //    catch
+        //    {
+        //        dest.UnitNum = 1;
+        //    }
+        //    return dest;
+        //}
         public override string ToString()
         {
             return string.Format("{0}({1}):{2}", UiName, RegName, UnitNum);
-        }
-
-        public bool Equals(TaskforceUnit other)
-        {
-            if (other is null) return false;
-            if (ReferenceEquals(other, this)) return true;
-            return RegName == other.RegName;
-        }
-        public override int GetHashCode()
-        {
-            return RegName == null ? 0 : RegName.GetHashCode();
         }
         #endregion
 
 
         #region Public Calls - TaskforceUnit
         public string SaveData { get { return string.Format("{0},{1}", UnitNum, RegName); } }
-        /// <summary>
-        /// 0, 1, 2... etc
-        /// </summary>
-        public string ID { get; set; }
-        public string RegName { get; set; }
-        public int UnitNum { get; set; }
+        private string name = Constant.ITEM_NONE;
+        public string RegName
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                if (initialized) InfoUpdated?.Invoke(null, null);
+            }
+        }
+        private int num;
+        public int UnitNum
+        {
+            get { return num; }
+            set
+            {
+                num = value;
+                if (initialized) InfoUpdated?.Invoke(null, null);
+            }
+        }
         public string UiName { get { return GlobalVar.GlobalRules.GetCsfUIName(RegName); } }
         public string PcxName { get { return GlobalVar.GlobalRules.GetPcxName(RegName); } }
         #endregion

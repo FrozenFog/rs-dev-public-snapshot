@@ -40,6 +40,17 @@ namespace System.Windows.Media
     }
 }
 
+namespace System.Windows.Controls
+{
+    internal static class WpfControlExtension
+    {
+        public static void AddRange(this ItemCollection target, IEnumerable<object> src)
+        {
+            foreach (object o in src) target.Add(o);
+        }
+    }
+}
+
 namespace System.Windows
 {
     internal static class WpfWindowsExtensions

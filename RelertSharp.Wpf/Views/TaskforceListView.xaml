@@ -10,11 +10,20 @@
         <ViewModel:GlobalTaskforceVm/>
     </UserControl.DataContext>
     <Grid>
-        <ListBox x:Name="lbxMain" Margin="10,10,9.6,9.8" Style="{DynamicResource lbxDark}">
+        <ListBox x:Name="lbxMain" Margin="10,10,9.6,9.8" Style="{DynamicResource lbxDark}" SelectionChanged="SelectedItemChanged" PreviewMouseRightButtonDown="PreviewRightDown">
+            <ListBox.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type ViewModel:TaskforceListVm}">
+                    <TextBlock Text="{Binding Title}" Style="{DynamicResource txblkDark}"/>
+                </HierarchicalDataTemplate>
+            </ListBox.ItemTemplate>
             <ListBox.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Show Taskforce Id" IsCheckable="True" Unchecked="IdUnchecked" Checked="IdChecked"/>
-                    <Separator/>
+                <ContextMenu Style="{DynamicResource cmenuDark}">
+                    <MenuItem Header="Add Taskforce" Click="Menu_Add"/>
+                    <MenuItem Name="menuCopy" Header="Copy Taskforce" Click="Menu_Copy"/>
+                    <MenuItem Name="menuDelete" Header="Delete Taskforce" Click="Menu_Delete"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
+                    <MenuItem Header="Show Taskforce Id" IsChecked="True" IsCheckable="True" Unchecked="IdUnchecked" Checked="IdChecked"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
                     <MenuItem Header="Ascending Sort" Click="AscendingSort"/>
                     <MenuItem Header="Descending Sort" Click="DescendingSort"/>
                 </ContextMenu>
