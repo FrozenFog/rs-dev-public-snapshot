@@ -35,6 +35,10 @@ namespace RelertSharp.Wpf.Common
             BeforeInvoke?.Invoke();
             tmr.Start();
         }
+        public void Stop()
+        {
+            tmr.Stop();
+        }
         #endregion
 
 

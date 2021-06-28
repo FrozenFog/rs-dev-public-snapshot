@@ -36,6 +36,7 @@ namespace RelertSharp.Wpf.Views
         {
             InitializeComponent();
             GlobalVar.MapDocumentLoaded += MapReloadedHandler;
+            dragAllies = new DragDropHelper<HouseListVm>(lbxHouse);
         }
 
         private void MapReloadedHandler(object sender, EventArgs e)
@@ -76,6 +77,61 @@ namespace RelertSharp.Wpf.Views
                 }
             }
         }
+        #endregion
+
+
+        #region Dragdrop
+        private DragDropHelper<HouseListVm> dragAllies;
+        #region Begin Drag from lbxHouse
+        private void PreviewLeftDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                dragAllies.BeginDrag(e.GetPosition(lbxAllies));
+                dragAllies.SetDragItem(GetItemAtMouse(lbxHouse, e));
+                e.Handled = true;
+            }
+        }
+        private void DragMouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragAllies.IsDraging && e.LeftButton == MouseButtonState.Pressed)
+            {
+                Point current = e.GetPosition(lbxAllies);
+                dragAllies.MouseMoveDrag(current);
+            }
+        }
+        private void DragMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                dragAllies.EndDrag();
+                if (dragAllies.DragItem != null) dragAllies.DragItem.IsSelected = true;
+            }
+        }
+        private void DragMouseLeave(object sender, MouseEventArgs e)
+        {
+            dragAllies.EndDrag();
+        }
+
+        private HouseListVm GetItemAtMouse(ItemsControl src, MouseButtonEventArgs e)
+        {
+            TextBlock item = src.GetItemAtMouse<TextBlock>(e);
+            if (item != null) return item.DataContext as HouseListVm;
+            return null;
+        }
+        #endregion
+
+        #region Drop on allies
+        private void AcceptDroppedAllies(object sender, DragEventArgs e)
+        {
+            if (dragAllies.GetDragObject(e, out HouseListVm vm) && DataContext is HouseVm target)
+            {
+                target.AddAlly(vm.Data.Name);
+                lbxAllies.Items.Refresh();
+            }
+        }
+        #endregion
+
         #endregion
     }
 }

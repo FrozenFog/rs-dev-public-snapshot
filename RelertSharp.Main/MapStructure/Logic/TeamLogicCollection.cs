@@ -3,7 +3,7 @@ using RelertSharp.Common;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class TeamLogicCollection<T> : IndexableItemCollection<T> where T : IndexableItem
+    public class TeamLogicCollection<TItem> : IndexableItemCollection<TItem> where TItem : IndexableItem
     {
         #region Ctor - TeamLogicCollection
         public TeamLogicCollection() { }
@@ -20,7 +20,7 @@ namespace RelertSharp.MapStructure.Logic
         {
             return data.ContainsKey(ID);
         }
-        public bool ValueExists(T Value)
+        public bool ValueExists(TItem Value)
         {
             return data.ContainsValue(Value);
         }
@@ -28,6 +28,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TeamLogicCollection
+
         #endregion
     }
     public class TeamLogicItem : IndexableItem

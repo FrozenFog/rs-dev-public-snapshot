@@ -20,7 +20,7 @@
         }
         public void FixEmptyTiles()
         {
-            Tiles.FixEmptyTiles(Info.Size.Width, info.Size.Height);
+            Tiles.FixEmptyTiles(Info.Size.Width, Info.Size.Height);
         }
     }
 }

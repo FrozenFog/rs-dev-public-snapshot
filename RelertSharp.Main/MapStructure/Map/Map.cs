@@ -21,7 +21,6 @@ namespace RelertSharp.MapStructure
         private HashSet<string> globalid = new HashSet<string>();
         private int genID = 1000000;
 
-        private MapInfo info;
         private RankInfo ranks;
         private HeaderInfo headers;
         private Rectangle previewSize;
@@ -34,7 +33,7 @@ namespace RelertSharp.MapStructure
         public Map(MapFile f)
         {
             ReadFromMapFile(f);
-            TileDictionary = new MapTheaterTileSet(this.info.TheaterType);
+            TileDictionary = new MapTheaterTileSet(this.Info.TheaterType);
         }
         #endregion
 
@@ -204,6 +203,7 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Calls - Map
+        public IEnumerable<ICombatObject> AllCombatObjects { get { return Infantries.Union<ICombatObject>(Aircrafts).Union(Buildings).Union(Units); } }
         public WaypointCollection Waypoints { get; private set; } = new WaypointCollection();
         public CellTagCollection Celltags { get; private set; } = new CellTagCollection();
         public Lightning LightningCollection { get; private set; }
@@ -226,13 +226,10 @@ namespace RelertSharp.MapStructure
         public OverlayLayer Overlays { get; private set; }
         //public ActionCollection Actions { get; private set; }
         //public EventCollection Events { get; private set; }
-        public MapInfo Info
-        {
-            get { return info; }
-        }
+        public MapInfo Info { get; private set; } 
         public INIEntity[] InfoEntity
         {
-            get { return new INIEntity[3] { info.Basic, info.Map, info.SpecialFlags }; }
+            get { return new INIEntity[3] { Info.Basic, Info.Map, Info.SpecialFlags }; }
         }
         public Dictionary<string, INIEntity> IniResidue
         {
@@ -289,7 +286,7 @@ namespace RelertSharp.MapStructure
         {
             get
             {
-                return new Pnt(info.Size.Width, info.Size.Height);
+                return new Pnt(Info.Size.Width, Info.Size.Height);
             }
         }
         #endregion

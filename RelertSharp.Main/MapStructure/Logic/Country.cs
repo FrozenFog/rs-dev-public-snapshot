@@ -14,16 +14,6 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - CountryCollection
-
-        public IEnumerable<TechnoPair> ToTechno()
-        {
-            List<TechnoPair> result = new List<TechnoPair>();
-            foreach (CountryItem item in this)
-            {
-                result.Add(new TechnoPair(item.Index, item.Name));
-            }
-            return result.OrderBy(x => int.Parse(x.Index));
-        }
         public CountryItem GetCountry(string name)
         {
             foreach (CountryItem c in this)
@@ -32,12 +22,6 @@ namespace RelertSharp.MapStructure.Logic
             }
             return null;
         }
-        public int NewIndex()
-        {
-            for (int i = 0; i < int.MaxValue; ++i)
-                if (!Exists(i.ToString())) return i;
-            return -1;
-        }
         #endregion
     }
 
@@ -45,6 +29,9 @@ namespace RelertSharp.MapStructure.Logic
     public class CountryItem : TeamLogicItem, IIndexableItem
     {
         private Dictionary<string, INIPair> residual = new Dictionary<string, INIPair>();
+        public NameChangedHandler CountryNameChanged;
+        public EventHandler AllInfoUpdated;
+        private bool initialized = false;
 
 
         #region Ctor - CountryItem
@@ -58,8 +45,9 @@ namespace RelertSharp.MapStructure.Logic
             ParentCountryName = ent.PopPair("ParentCountry").Value;
             SmartAi = ent.PopPair("SmartAI").ParseBool(true);
             residual = ent.DictData;
+            initialized = true;
         }
-        public CountryItem() { }
+        public CountryItem() { initialized = true; }
         #endregion
 
 
@@ -82,16 +70,19 @@ namespace RelertSharp.MapStructure.Logic
         {
             return Name;
         }
+        internal void OnAllInfoUpdated()
+        {
+            AllInfoUpdated?.Invoke(null, null);
+        }
         #endregion
 
 
         #region Public Calls - CountryItem
         public override string Id
         {
-            get { return Index; }
-            set { Index = value; }
+            get { return Name; }
+            set { Name = value; }
         }
-        public string Index { get; set; }
         public string Side { get; set; }
         public string ColorName { get; set; }
         public string ParentCountryName { get; set; }
@@ -106,6 +97,16 @@ namespace RelertSharp.MapStructure.Logic
                 Dictionary<string, INIPair> r = new Dictionary<string, INIPair>();
                 foreach (INIPair p in value) r[p.Name] = p;
                 residual = r;
+            }
+        }
+        public override string Name
+        {
+            get { return base.Name; }
+            set
+            {
+                string prev = base.Name;
+                base.Name = value;
+                if (initialized) CountryNameChanged?.Invoke(this, prev, value);
             }
         }
         #endregion
