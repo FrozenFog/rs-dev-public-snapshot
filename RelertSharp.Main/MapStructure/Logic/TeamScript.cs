@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class TeamScriptCollection : TeamLogicCollection<TeamScriptGroup>
+    public class TeamScriptCollection : TeamLogicCollection<TeamScriptGroup>, ICurdContainer<TeamScriptGroup>
     {
         public TeamScriptCollection() : base()
         {
@@ -15,33 +15,42 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - TeamScriptCollection
-        public List<TechnoPair> ToTechnoFrom0()
+
+
+        #endregion
+
+        #region Curd
+        public TeamScriptGroup AddItem(string id, string name)
         {
-            List<TechnoPair> result = new List<TechnoPair>();
-            int i = 0;
-            foreach (TeamScriptGroup g in this)
+            TeamScriptGroup s = new TeamScriptGroup(id, name);
+            this[id] = s;
+            return s;
+        }
+
+        public TeamScriptGroup CopyItem(TeamScriptGroup src, string id)
+        {
+            TeamScriptGroup s = new TeamScriptGroup(src, id);
+            this[id] = s;
+            return s;
+        }
+
+        public bool ContainsItem(TeamScriptGroup look)
+        {
+            return data.ContainsKey(look.Id);
+        }
+
+        public bool ContainsItem(string id, string obsolete = null)
+        {
+            return data.ContainsKey(id);
+        }
+
+        public bool RemoveItem(TeamScriptGroup target)
+        {
+            if (ContainsItem(target))
             {
-                TechnoPair p = new TechnoPair(i.ToString(), string.Format("{0} - {1}", g.Id, g.Name));
-                result.Add(p);
-                i++;
+                return data.Remove(target.Id);
             }
-            return result;
-        }
-        public TeamScriptGroup NewScript(string id, string name = "New Script")
-        {
-            TeamScriptGroup g = new TeamScriptGroup()
-            {
-                Id = id,
-                Name = name
-            };
-            this[id] = g;
-            return g;
-        }
-        public TeamScriptGroup NewScript(TeamScriptGroup src, string id)
-        {
-            TeamScriptGroup g = new TeamScriptGroup(src, id);
-            this[id] = g;
-            return g;
+            return false;
         }
         #endregion
     }
@@ -69,6 +78,11 @@ namespace RelertSharp.MapStructure.Logic
             Name = src.Name + " - Clone";
             Id = id;
             data = new List<TeamScriptItem>(src.data);
+        }
+        public TeamScriptGroup(string id, string name)
+        {
+            Id = id;
+            Name = name;
         }
         public TeamScriptGroup() : base() { }
         #endregion

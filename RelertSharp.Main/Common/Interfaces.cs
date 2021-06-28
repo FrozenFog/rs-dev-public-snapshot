@@ -15,10 +15,10 @@ namespace RelertSharp.Common
     }
     public interface ICurdContainer<TItem>
     {
-        TItem AddItem(string param1, string param2);
-        TItem CopyItem(TItem src, string param);
+        TItem AddItem(string id, string name);
+        TItem CopyItem(TItem src, string id);
         bool ContainsItem(TItem look);
-        bool ContainsItem(string param1, string param2);
+        bool ContainsItem(string id, string param2);
         bool RemoveItem(TItem target);
     }
     public interface ISubCurdContainer<TItem>

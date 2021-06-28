@@ -16,6 +16,7 @@ using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Common;
 using RelertSharp.Wpf.Common;
 using System.Collections.ObjectModel;
+using RelertSharp.Wpf.Dialogs;
 
 namespace RelertSharp.Wpf.Views
 {
@@ -27,6 +28,9 @@ namespace RelertSharp.Wpf.Views
         public GuiViewType ViewType { get { return GuiViewType.ScriptList; } }
         public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
         public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
+        private MapStructure.Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private ScriptListVm SelectedItem { get { return lbxMain.SelectedItem as ScriptListVm; } }
+        private IndexableDisplayType displayType = IndexableDisplayType.IdAndName;
 
         public ScriptListView()
         {
@@ -54,21 +58,23 @@ namespace RelertSharp.Wpf.Views
 
         private void IdUnchecked(object sender, RoutedEventArgs e)
         {
+            displayType = IndexableDisplayType.NameOnly;
             foreach (ScriptListVm script in lbxMain.Items)
             {
-                script.ChangeDisplay(IndexableDisplayType.NameOnly);
+                script.ChangeDisplay(displayType);
             }
-            GlobalVar.CurrentMapDocument?.Map.Scripts.ChangeDisplay(IndexableDisplayType.NameOnly);
+            GlobalVar.CurrentMapDocument?.Map.Scripts.ChangeDisplay(displayType);
             lbxMain.Items.Refresh();
         }
 
         private void IdChecked(object sender, RoutedEventArgs e)
         {
+            displayType = IndexableDisplayType.IdAndName;
             foreach (ScriptListVm script in lbxMain.Items)
             {
-                script.ChangeDisplay(IndexableDisplayType.IdAndName);
+                script.ChangeDisplay(displayType);
             }
-            GlobalVar.CurrentMapDocument?.Map.Scripts.ChangeDisplay(IndexableDisplayType.IdAndName);
+            GlobalVar.CurrentMapDocument?.Map.Scripts.ChangeDisplay(displayType);
             lbxMain.Items.Refresh();
         }
 
@@ -133,5 +139,53 @@ namespace RelertSharp.Wpf.Views
         {
             return (lbxMain.SelectedItem as ScriptListVm).Data;
         }
+
+
+        #region Mouse
+        private void PreviewRightDown(object sender, MouseButtonEventArgs e)
+        {
+            bool hasItem = SelectedItem != null;
+            menuCopy.IsEnabled = hasItem;
+            menuDelete.IsEnabled = hasItem;
+        }
+        #endregion
+
+
+        #region Menu
+        private void Menu_Add(object sender, RoutedEventArgs e)
+        {
+            DlgNameInput dlg = new DlgNameInput("Script name");
+            if (dlg.ShowDialog().Value)
+            {
+                var sc = Map.AddScript(dlg.ResultName);
+                sc.ChangeDisplay(displayType);
+                ScriptListVm vm = new ScriptListVm(sc);
+                if (lbxMain.SelectedIndex == -1) lbxMain.Items.Add(vm);
+                else lbxMain.Items.Insert(lbxMain.SelectedIndex + 1, vm);
+                lbxMain.SelectedItem = vm;
+            }
+        }
+
+        private void Menu_Copy(object sender, RoutedEventArgs e)
+        {
+            if (SelectedItem != null)
+            {
+                var copy = Map.AddScript(SelectedItem.Data);
+                copy.ChangeDisplay(displayType);
+                ScriptListVm vm = new ScriptListVm(copy);
+                lbxMain.Items.Insert(lbxMain.SelectedIndex, vm);
+                lbxMain.SelectedItem = vm;
+            }
+        }
+
+        private void Menu_Delete(object sender, RoutedEventArgs e)
+        {
+            var sc = SelectedItem.Data;
+            if (Map.RemoveScript(sc))
+            {
+                lbxMain.Items.Remove(SelectedItem);
+            }
+        }
+        #endregion
     }
 }
