@@ -80,6 +80,65 @@ namespace RelertSharp.MapStructure
         }
         #endregion
 
+
+        #region House & Country
+        /// <summary>
+        /// Only used by listener
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="prev"></param>
+        /// <param name="now"></param>
+        private void HouseNameChanged(object sender, string prev, string now)
+        {
+            // player house
+            if (Info.PlayerHouseName == prev) Info.PlayerHouseName = now;
+
+            // all map objects
+            foreach (ICombatObject obj in AllCombatObjects)
+            {
+                if (obj.OwnerHouse == prev) obj.OwnerHouse = now;
+            }
+
+            // all allies
+            foreach (HouseItem house in Houses)
+            {
+                for (int i = 0; i< house.AlliesWith.Count; i++)
+                {
+                    if (house.AlliesWith[i] == prev)
+                    {
+                        house.AlliesWith[i] = now;
+                        house.OnAllInfoUpdate();
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// Only used by listener
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="prev"></param>
+        /// <param name="now"></param>
+        private void CountryNameChanged(object sender, string prev, string now)
+        {
+            // all triggers
+            foreach (TriggerItem trg in Triggers)
+            {
+                if (trg.OwnerCountry == prev) trg.OwnerCountry = now;
+            }
+
+            // all teams
+            foreach (TeamItem team in Teams)
+            {
+                if (team.House == prev) team.House = now;
+            }
+
+            // all houses
+            foreach (HouseItem house in Houses)
+            {
+                if (house.Country == prev) house.Country = now;
+            }
+        }
+        #endregion
         #endregion
         //public TeamScriptGroup NewScript()
         //{

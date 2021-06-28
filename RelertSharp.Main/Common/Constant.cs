@@ -116,6 +116,11 @@ namespace RelertSharp.Common
             public const int ArgLenLightSource = 7;
             public const string CivilianCountrySide = "Civilian";
             public const string DefaultCivilianHouse = "Neutral";
+
+            public const string KEY_HOUSE = "House";
+            public const string KEY_SCRIPT = "Script";
+            public const string KEY_TASKFORCE = "TaskForce";
+
             public static readonly string[] ObjectStatus =
             {
                 "Area Guard", "Attack", "Capture", "Construction", "Enter", "Guard", "Harmless", "Harvest", "Hunt", "Missile", "Move", "Open", "Patrol", "QMove", "Repair", "Rescue",

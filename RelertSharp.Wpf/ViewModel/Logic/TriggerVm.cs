@@ -65,7 +65,7 @@ namespace RelertSharp.Wpf.ViewModel
             {
                 string owner = data.OwnerCountry;
                 if (owner.IsNullOrEmpty()) return null;
-                CountryItem c = map.Countries[owner];
+                CountryItem c = map.Countries.GetCountry(owner);
                 return c;
             }
             set

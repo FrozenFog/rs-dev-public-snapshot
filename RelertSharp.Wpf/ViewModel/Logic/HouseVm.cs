@@ -25,23 +25,52 @@ namespace RelertSharp.Wpf.ViewModel
             data = new ComboItem();
             house = new HouseItem();
             country = new CountryItem();
+            house.AllInfoUpdate += UpdateAllHouseInfo;
+            country.AllInfoUpdated += UpdateAllCountryInfo;
         }
+
         public HouseVm(HouseItem house, CountryItem country)
         {
             this.house = house;
             this.country = country;
+            house.AllInfoUpdate += UpdateAllHouseInfo;
+            country.AllInfoUpdated += UpdateAllCountryInfo;
         }
         public HouseVm(object obj) : base(obj) { }
         #endregion
 
 
         #region Private
+        private void UpdateAllCountryInfo(object sender, EventArgs e)
+        {
+            SetProperty(nameof(HouseName));
+            SetProperty(nameof(InheritFromRulesHouseItem));
+            SetProperty(nameof(ExtraInfo));
+        }
+        private void UpdateAllHouseInfo(object sender, EventArgs e)
+        {
+            SetProperty(nameof(AlliesWith));
+            SetProperty(nameof(HouseName));
+            SetProperty(nameof(Credit));
+        }
         private void FindAncestorCountryProps(string inheritFrom, out string prefix, out string suffix, out string side)
         {
             INIEntity ancestor = GlobalVar.GlobalRules[inheritFrom];
             suffix = ancestor["Suffix"];
             prefix = ancestor["Prefix"];
             side = ancestor["Side"];
+        }
+        #endregion
+
+
+        #region Public
+        public void AddAlly(string allyName)
+        {
+            if (!house.AlliesWith.Contains(allyName))
+            {
+                house.AlliesWith.Add(allyName);
+                SetProperty(nameof(AlliesWith));
+            }
         }
         #endregion
 

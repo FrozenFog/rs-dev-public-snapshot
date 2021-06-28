@@ -55,6 +55,16 @@ namespace RelertSharp.Wpf.ViewModel
                 return b;
             }
         }
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                SetProperty();
+            }
+        }
         #endregion
         public HouseItem Data
         {

@@ -47,7 +47,7 @@ namespace RelertSharp.Common
             return data.Values.GetEnumerator();
         }
 
-        public TItem this[string _id]
+        public virtual TItem this[string _id]
         {
             get
             {

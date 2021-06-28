@@ -23,7 +23,7 @@ namespace RelertSharp.MapStructure
             overlaydataString = f.PopEnt("OverlayDataPack").JoinString();
 
             GetGeneralInfo(f);
-            Tiles = new TileLayer(isomappack5String, info.Size);
+            Tiles = new TileLayer(isomappack5String, Info.Size);
             Overlays = new OverlayLayer(overlayString, overlaydataString);
             FixEmptyTiles();
             DumpOverlayToTile();
@@ -79,7 +79,7 @@ namespace RelertSharp.MapStructure
         }
         private void GetGeneralInfo(MapFile f)
         {
-            info = new MapInfo(f.PopEnt("Basic"), f.PopEnt("Map"), f.PopEnt("SpecialFlags"));
+            Info = new MapInfo(f.PopEnt("Basic"), f.PopEnt("Map"), f.PopEnt("SpecialFlags"));
             LightningCollection = new Lightning(f.PopEnt("Lighting"));
             if (f.IniDict.Keys.Contains("Header")) headers = new HeaderInfo(f.PopEnt("Header"));
             if (f.IniDict.Keys.Contains("Ranking")) ranks = new RankInfo(f.PopEnt("Ranking"));
@@ -155,15 +155,15 @@ namespace RelertSharp.MapStructure
             foreach (INIPair p in _countryList)
             {
                 CountryItem item = new CountryItem(f.PopEnt(p.Value));
-                if (string.IsNullOrEmpty(item.Name)) item.Name = p.Value;
-                item.Index = p.Name;
-                Countries[item.Name] = item;
+                item.CountryNameChanged += CountryNameChanged;
+                //if (string.IsNullOrEmpty(item.Name)) item.Name = p.Value;
+                Countries[p.Name] = item;
             }
             foreach (INIPair p in _houseList)
             {
                 HouseItem item = new HouseItem(f.PopEnt(p.Value));
+                item.HouseNameChanged += HouseNameChanged;
                 foreach (BaseNode node in item.BaseNodes) AddObjectToTile(node);
-                item.Index = p.Name;
                 Houses[p.Name] = item;
 
                 if (item.PlayerControl)

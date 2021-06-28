@@ -33,10 +33,17 @@ namespace RelertSharp.MapStructure.Logic
             }
             return null;
         }
-        public int NewIndex()
+        /// <summary>
+        /// Return -1 if not found
+        /// </summary>
+        /// <param name="houseName"></param>
+        /// <returns></returns>
+        public int IndexOf(string houseName)
         {
-            for (int i = 0; i < int.MaxValue; ++i)
-                if (!Exists(i.ToString())) return i;
+            for (int i = 0; i < data.Count; i++)
+            {
+                if (this[i.ToString()].Name == houseName) return i;
+            }
             return -1;
         }
         #endregion
@@ -48,6 +55,9 @@ namespace RelertSharp.MapStructure.Logic
         private List<string> alliesWith;
         private Dictionary<string, INIPair> residual;
         public event EventHandler ColorUpdated;
+        public event EventHandler AllInfoUpdate;
+        public event NameChangedHandler HouseNameChanged;
+        private bool initialized = false;
 
 
         #region Ctor - HouseItem
@@ -78,9 +88,10 @@ namespace RelertSharp.MapStructure.Logic
                 BaseNodes.Add(node);
             }
             residual = ent.DictData;
+            initialized = true;
             //GetToUnit = new HouseUnit(this);
         }
-        public HouseItem() { }
+        public HouseItem() { initialized = true; }
         #endregion
 
 
@@ -113,19 +124,6 @@ namespace RelertSharp.MapStructure.Logic
         {
             return Name;
         }
-        public void SetFromUnit(HouseUnit unit)
-        {
-            IQ = (int)unit.Data["IQ"].Value;
-            Edge = (HouseEdges)unit.Data["Edge"].Value;
-            PercentBuilt = (double)unit.Data["PercentBuilt"].Value;
-            ColorName = (string)unit.Data["ColorName"].Value;
-            Country = (string)unit.Data["Country"].Value;
-            Credits = (int)unit.Data["Credits"].Value;
-            TechLevel = (int)unit.Data["TechLevel"].Value;
-            PlayerControl = (bool)unit.Data["PlayerControl"].Value;
-            NodeCounts = (int)unit.Data["NodeCounts"].Value;
-            GetToUnit = new HouseUnit(this);
-        }
         public BaseNode AddNewNode()
         {
             BaseNode node = new BaseNode(this);
@@ -136,12 +134,15 @@ namespace RelertSharp.MapStructure.Logic
         {
             BaseNodes.Remove(node);
         }
+        internal void OnAllInfoUpdate()
+        {
+            AllInfoUpdate?.Invoke(null, null);
+        }
         #endregion
 
 
         #region Public Calls - HouseItem
         public List<BaseNode> BaseNodes { get; private set; } = new List<BaseNode>();
-        public string Index { get; set; }
         public int IQ { get; set; }
         public HouseEdges Edge { get; set; }
         private string _colorname;
@@ -176,39 +177,18 @@ namespace RelertSharp.MapStructure.Logic
         public int NodeCounts { get; set; }
         public double PercentBuilt { get; set; }
         public System.Drawing.Color DrawingColor { get; internal set; }
-        public HouseUnit GetToUnit { get; set; }
         public override string Value { get { return Id; } }
         public override string Name { get { return Id; } set { Id = value; } }
-        #endregion
-    }
-
-
-    public class HouseUnit
-    {
-        public struct HouseShowUnit
+        public override string Id
         {
-            public object Value;
-            public string ShowName;
-            public HouseShowUnit(string displayName, object value) { Value = value; ShowName = displayName; }
+            get { return base.Id; }
+            set
+            {
+                string prev = base.Id;
+                base.Id = value;
+                if (initialized) HouseNameChanged?.Invoke(this, prev, value);
+            }
         }
-
-        #region Ctor - HouseUnit
-        public HouseUnit(HouseItem item)
-        {
-            Data.Add("IQ", new HouseShowUnit(Language.DICT["LGColvRowHouseIQ"], item.IQ));
-            Data.Add("Edge", new HouseShowUnit(Language.DICT["LGColvRowHouseEdge"], item.Edge));
-            Data.Add("PercentBuilt", new HouseShowUnit(Language.DICT["LGColvRowHousePercentBuilt"], item.PercentBuilt));
-            Data.Add("ColorName", new HouseShowUnit(Language.DICT["LGColvRowHouseColorName"], item.ColorName));
-            Data.Add("Country", new HouseShowUnit(Language.DICT["LGColvRowHouseCountry"], item.Country));
-            Data.Add("Credits", new HouseShowUnit(Language.DICT["LGColvRowHouseCredits"], item.Credits));
-            Data.Add("TechLevel", new HouseShowUnit(Language.DICT["LGColvRowHouseTechLevel"], item.TechLevel));
-            Data.Add("PlayerControl", new HouseShowUnit(Language.DICT["LGColvRowHousePlayerControl"], item.PlayerControl));
-            Data.Add("NodeCounts", new HouseShowUnit(Language.DICT["LGColvRowHouseNodeCounts"], item.NodeCounts));
-        }
-        #endregion
-
-        #region Public Calls - HouseUnit
-        public Dictionary<string, HouseShowUnit> Data { get; set; } = new Dictionary<string, HouseShowUnit>();
         #endregion
     }
 }

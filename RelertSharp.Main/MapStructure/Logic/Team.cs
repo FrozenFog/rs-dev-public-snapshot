@@ -109,7 +109,7 @@ namespace RelertSharp.MapStructure.Logic
             get { return this[Constant.KEY_NAME].Value; }
             set
             {
-                this[Constant.KEY_NAME] = new INIPair(Constant.KEY_NAME, Value);
+                this[Constant.KEY_NAME] = new INIPair(Constant.KEY_NAME, value);
             }
         }
         public INIEntity GetSaveData()
@@ -127,71 +127,25 @@ namespace RelertSharp.MapStructure.Logic
             else result.AddPair(Residue.Values);
             return result;
         }
-        //public void SetAttribute(string index, bool value)
-        //{
-        //    Attributes.Set(Constant.TeamBoolIndex.IndexOf(index), value);
-        //}
-        //public bool GetAttribute(string index)
-        //{
-        //    return Attributes.Get(Constant.TeamBoolIndex.IndexOf(index));
-        //}
-        //public void SetFromUnit(TeamUnit teamUnit)
-        //{
-        //    Name = (string)teamUnit.Data["TeamName"].Value;
-        //    TaskforceID = (string)teamUnit.Data["TaskforceID"].Value;
-        //    ScriptID = (string)teamUnit.Data["ScriptID"].Value;
-        //    TagID = (string)teamUnit.Data["TagID"].Value;
-        //    Waypoint = (int)teamUnit.Data["Waypoint"].Value;
-        //    House = (string)teamUnit.Data["House"].Value;
-        //    VeteranLevel = (TeamVeteranLevel)teamUnit.Data["VeteranLevel"].Value;
-        //    MCDecision = (TeamMCDecision)teamUnit.Data["VeteranLevel"].Value;
-        //    TeamCapacity = (int)teamUnit.Data["TeamCapacity"].Value;
-        //    Priority = (int)teamUnit.Data["Priority"].Value;
-        //    TechLevel = (int)teamUnit.Data["TechLevel"].Value;
-        //    Group = (int)teamUnit.Data["Group"].Value;
-        //    foreach (string idx in Constant.TeamBoolIndex) SetAttribute(idx, (bool)teamUnit.Data[idx].Value);
-        //}
-        //public TeamItem Copy(string newid)
-        //{
-        //    TeamItem item = new TeamItem();
-        //    item.Id = newid;
-        //    item.Name = Name += " Clone";
-        //    item.TaskforceID = TaskforceID;
-        //    item.ScriptID = ScriptID;
-        //    item.TagID = TagID;
-        //    item.Waypoint = Waypoint;
-        //    item.House = House;
-        //    item.VeteranLevel = VeteranLevel;
-        //    item.MCDecision = MCDecision;
-        //    item.TeamCapacity = TeamCapacity;
-        //    item.Priority = Priority;
-        //    item.TechLevel = TechLevel;
-        //    item.Group = Group;
-        //    item.Attributes = Attributes;
-        //    item.GetToUnit = new TeamUnit(item);
-        //    return item;
-        //}
         #endregion
 
 
         #region Public Calls - TeamItem
-        public int Group { get; set; }
-        public int TechLevel { get; set; }
-        /// <summary>
-        /// Recruitable rank of this team, aka priority
-        /// </summary>
-        public int Priority { get; set; }
-        /// <summary>
-        /// Capacity of this team (in this map)
-        /// </summary>
-        public int TeamCapacity { get; set; }
-        public TeamMCDecision MCDecision { get; set; }
-        public TeamVeteranLevel VeteranLevel { get; set; }
-        public string TaskforceID { get; set; }
-        public string ScriptID { get; set; }
-        public string TagID { get; set; }
-        public string House { get; set; }
-        public int Waypoint { get; set; }
+        public string TaskforceID
+        {
+            get { return this[Constant.MapStructure.KEY_TASKFORCE].Value; }
+            set { this[Constant.MapStructure.KEY_TASKFORCE] = new INIPair(Constant.MapStructure.KEY_TASKFORCE, value); }
+        }
+        public string ScriptID
+        {
+            get { return this[Constant.MapStructure.KEY_SCRIPT].Value; }
+            set { this[Constant.MapStructure.KEY_SCRIPT] = new INIPair(Constant.MapStructure.KEY_SCRIPT, value); }
+        }
+        public string House
+        {
+            get { return this[Constant.MapStructure.KEY_HOUSE].Value; }
+            set { this[Constant.MapStructure.KEY_HOUSE] = new INIPair(Constant.MapStructure.KEY_HOUSE, value); }
+        }
         //public BitArray Attributes { get; set; } = new BitArray(21);
         public Dictionary<string, INIPair> Residue { get; set; }
         public INIPair this[string key]

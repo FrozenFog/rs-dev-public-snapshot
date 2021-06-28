@@ -20,10 +20,15 @@
         <GridSplitter Width="3" VerticalAlignment="Stretch" HorizontalAlignment="Left" Style="{DynamicResource gsplitDark}" Grid.Column="1"/>
         <Label Content="House Name" HorizontalAlignment="Left" Margin="14.4,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="2"/>
         <TextBox Height="23" Margin="14.4,33,10,0" TextWrapping="Wrap" Text="{Binding HouseName, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="2"/>
-        <ListBox x:Name="lbxHouse" Margin="10,10,10.2,11.2" Style="{DynamicResource lbxDark}" SelectionChanged="HouseSelectionChanged">
+        <ListBox x:Name="lbxHouse" Margin="10,10,10.2,11.2" Style="{DynamicResource lbxDark}" SelectionChanged="HouseSelectionChanged" MouseMove="DragMouseMove" MouseLeave="DragMouseLeave">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:HouseListVm}">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" PreviewMouseLeftButtonDown="PreviewLeftDown" MouseUp="DragMouseUp">
                         <Rectangle Fill="{Binding HouseColor}" Stroke="{StaticResource btnBorder}" Width="10" Height="10" Margin="3"/>
                         <TextBlock Text="{Binding Title}" Style="{DynamicResource txblkDark}"/>
                     </StackPanel>
@@ -31,7 +36,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Label Content="Allies With" HorizontalAlignment="Left" Margin="14.6,172,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="2"/>
-        <ListBox x:Name="lbxAllies" Grid.Column="2" Margin="14.6,195,10.6,11.4" Style="{DynamicResource lbxDark}" ItemsSource="{Binding AlliesWith}"/>
+        <ListBox x:Name="lbxAllies" Grid.Column="2" Margin="14.6,195,10.6,11.4" Style="{DynamicResource lbxDark}" ItemsSource="{Binding AlliesWith}" AllowDrop="True" Drop="AcceptDroppedAllies"/>
         <ScrollViewer Grid.Column="3">
             <Grid>
                 <Label Content="Color" HorizontalAlignment="Left" Margin="10.4,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="3"/>

@@ -135,6 +135,7 @@
     <Compile Include="Common\Config\Model\RsModConfig.cs" />
     <Compile Include="Common\Config\Model\TriggerInfo.cs" />
     <Compile Include="Common\Config\TriggerScriptInfo.cs" />
+    <Compile Include="Common\Delegates.cs" />
     <Compile Include="Common\Enumerator\Bfs2DEnumerator.cs" />
     <Compile Include="Common\Enumerator\Circle2DEnumerator.cs" />
     <Compile Include="Common\Constant.cs" />
