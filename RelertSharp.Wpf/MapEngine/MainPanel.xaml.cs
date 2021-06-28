@@ -246,8 +246,9 @@ namespace RelertSharp.Wpf.MapEngine
             {
                 if (nWidth != prevW || nHeight != prevH)
                 {
-
+                    EngineApi.InvokeLock();
                     EngineApi.ScaleFactorInvoke();
+                    EngineApi.InvokeUnlock();
                     //_wheelResizeDelay.Stop();
                     //_wheelResizeDelay.Start();
                     //SuspendMouseHandler();
