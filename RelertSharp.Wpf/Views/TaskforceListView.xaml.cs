@@ -56,7 +56,7 @@ namespace RelertSharp.Wpf.Views
             displayTypeNow = IndexableDisplayType.NameOnly;
             foreach (TaskforceListVm vm in lbxMain.Items)
             {
-                vm.ChangeDisplay(IndexableDisplayType.NameOnly);
+                vm.ChangeDisplay(displayTypeNow);
             }
             GlobalVar.CurrentMapDocument?.Map.Taskforces.ChangeDisplay(displayTypeNow);
             lbxMain.Items.Refresh();
@@ -67,7 +67,7 @@ namespace RelertSharp.Wpf.Views
             displayTypeNow = IndexableDisplayType.IdAndName;
             foreach (TaskforceListVm vm in lbxMain.Items)
             {
-                vm.ChangeDisplay(IndexableDisplayType.IdAndName);
+                vm.ChangeDisplay(displayTypeNow);
             }
             GlobalVar.CurrentMapDocument?.Map.Taskforces.ChangeDisplay(displayTypeNow);
             lbxMain.Items.Refresh();

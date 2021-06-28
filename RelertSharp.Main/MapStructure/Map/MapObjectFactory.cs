@@ -61,6 +61,25 @@ namespace RelertSharp.MapStructure
         }
         #endregion
 
+
+        #region Scripts
+        public TeamScriptGroup AddScript(string name)
+        {
+            TeamScriptGroup script = Scripts.AddItem(NewID, name);
+            return script;
+        }
+        public TeamScriptGroup AddScript(TeamScriptGroup src)
+        {
+            TeamScriptGroup copy = Scripts.CopyItem(src, NewID);
+            return copy;
+        }
+        public bool RemoveScript(TeamScriptGroup item)
+        {
+            DelID(item.Id);
+            return Scripts.RemoveItem(item);
+        }
+        #endregion
+
         #endregion
         //public TeamScriptGroup NewScript()
         //{

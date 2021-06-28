@@ -10,7 +10,7 @@
         <ViewModel:GlobalScriptVm/>
     </UserControl.DataContext>
     <Grid>
-        <ListBox x:Name="lbxMain" Margin="10,10,10,9.6" Style="{DynamicResource lbxDark}" SelectionChanged="SelectedItemChanged">
+        <ListBox x:Name="lbxMain" Margin="10,10,10,9.6" Style="{DynamicResource lbxDark}" SelectionChanged="SelectedItemChanged" PreviewMouseRightButtonDown="PreviewRightDown">
             <ListBox.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:ScriptListVm}">
                     <TextBlock Text="{Binding Title}" Style="{DynamicResource txblkDark}"/>
@@ -18,7 +18,11 @@
             </ListBox.ItemTemplate>
             <ListBox.ContextMenu>
                 <ContextMenu Style="{DynamicResource cmenuDark}">
-                    <MenuItem Header="Show Script Id" IsCheckable="True" Unchecked="IdUnchecked" Checked="IdChecked"/>
+                    <MenuItem Header="Add Script" Click="Menu_Add"/>
+                    <MenuItem Name="menuCopy" Header="Copy Script" Click="Menu_Copy"/>
+                    <MenuItem Name="menuDelete" Header="Delete Script" Click="Menu_Delete"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
+                    <MenuItem Header="Show Script Id" IsChecked="True" IsCheckable="True" Unchecked="IdUnchecked" Checked="IdChecked"/>
                     <Separator Style="{DynamicResource sepDark}"/>
                     <MenuItem Header="Ascending Sort" Click="AscendingSort"/>
                     <MenuItem Header="Descending Sort" Click="DescendingSort"/>
