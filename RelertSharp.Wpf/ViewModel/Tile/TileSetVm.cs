@@ -20,7 +20,7 @@ namespace RelertSharp.Wpf.ViewModel
 
 
         #region Calls
-        public string Title { get; private set; }
+        public override string Title { get; }
         #endregion
     }
 }

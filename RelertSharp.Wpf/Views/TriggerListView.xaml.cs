@@ -86,7 +86,7 @@ namespace RelertSharp.Wpf.Views
                     string trgName = trg.Name.Substring(m.Index + m.Length).Trim();
                     trg.Name = trgName;
                     TriggerTreeItemVm item = new TriggerTreeItemVm();
-                    item.Title = groupName;
+                    item.SetTitle(groupName);
                     if (groups.ContainsKey(groupName))
                     {
                         groups[groupName].AddItem(trg, trgName);
@@ -100,7 +100,7 @@ namespace RelertSharp.Wpf.Views
                 else
                 {
                     TriggerTreeItemVm item = new TriggerTreeItemVm(trg);
-                    item.Title = trg.ToString();
+                    item.SetTitle(trg.ToString());
                     groups[trg.Name] = item;
                 }
             }
@@ -309,10 +309,8 @@ namespace RelertSharp.Wpf.Views
             DlgTriggerListAddGroup addGroup = new DlgTriggerListAddGroup();
             if (addGroup.ShowDialog().Value)
             {
-                TriggerTreeItemVm group = new TriggerTreeItemVm()
-                {
-                    Title = addGroup.ResultName
-                };
+                TriggerTreeItemVm group = new TriggerTreeItemVm();
+                group.SetTitle(addGroup.ResultName);
                 if (trvMain.SelectedItem is TriggerTreeItemVm ancestor)
                 {
                     if (addGroup.IsRoot) trvMain.Items.Add(group);

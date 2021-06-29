@@ -36,7 +36,7 @@ namespace RelertSharp.Wpf.Views
         {
             InitializeComponent();
             GlobalVar.MapDocumentLoaded += MapReloadedHandler;
-            dragAllies = new DragDropHelper<HouseListVm>(lbxHouse);
+            dragAllies = new DragDropHelper<HouseItem, HouseListVm>(lbxHouse);
         }
 
         private void MapReloadedHandler(object sender, EventArgs e)
@@ -81,14 +81,15 @@ namespace RelertSharp.Wpf.Views
 
 
         #region Dragdrop
-        private DragDropHelper<HouseListVm> dragAllies;
+        private DragDropHelper<HouseItem, HouseListVm> dragAllies;
         #region Begin Drag from lbxHouse
         private void PreviewLeftDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
                 dragAllies.BeginDrag(e.GetPosition(lbxAllies));
-                dragAllies.SetDragItem(GetItemAtMouse(lbxHouse, e));
+                dragAllies.SetReferanceVm(GetItemAtMouse(lbxHouse, e));
+                dragAllies.SetDragItem(dragAllies.ReferanceVm.Data);
                 e.Handled = true;
             }
         }
@@ -105,7 +106,7 @@ namespace RelertSharp.Wpf.Views
             if (e.ChangedButton == MouseButton.Left)
             {
                 dragAllies.EndDrag();
-                if (dragAllies.DragItem != null) dragAllies.DragItem.IsSelected = true;
+                if (dragAllies.DragItem != null) dragAllies.ReferanceVm.IsSelected = true;
             }
         }
         private void DragMouseLeave(object sender, MouseEventArgs e)
@@ -124,9 +125,9 @@ namespace RelertSharp.Wpf.Views
         #region Drop on allies
         private void AcceptDroppedAllies(object sender, DragEventArgs e)
         {
-            if (dragAllies.GetDragObject(e, out HouseListVm vm) && DataContext is HouseVm target)
+            if (dragAllies.GetDragObject(e, out HouseItem house) && DataContext is HouseVm target)
             {
-                target.AddAlly(vm.Data.Name);
+                target.AddAlly(house.Name);
                 lbxAllies.Items.Refresh();
             }
         }
