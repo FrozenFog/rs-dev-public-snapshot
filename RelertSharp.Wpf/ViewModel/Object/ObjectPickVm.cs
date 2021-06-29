@@ -39,7 +39,7 @@ namespace RelertSharp.Wpf.ViewModel
 
 
         #region Calls
-        public string Title { get; private set; }
+        public override string Title { get; }
         public string RegName { get; private set; }
         public ImageSource Icon { get; private set; }
         public MapObjectType Type { get; private set; } = MapObjectType.Undefined;

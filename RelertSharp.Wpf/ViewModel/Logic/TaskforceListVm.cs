@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.Wpf.ViewModel
 {
-    internal class TaskforceListVm : BaseVm<TaskforceItem>, IIndexableItem
+    internal class TaskforceListVm : BaseListVm<TaskforceItem>, IIndexableItem
     {
         #region Ctor
         public TaskforceListVm()
@@ -19,25 +19,20 @@ namespace RelertSharp.Wpf.ViewModel
         {
             src.NameUpdated += SetName;
         }
-
-        private void SetName(object sender, EventArgs e)
-        {
-            SetProperty(nameof(Title));
-        }
         #endregion
 
 
         #region Public
-        public void ChangeDisplay(IndexableDisplayType type)
+        public override void ChangeDisplay(IndexableDisplayType type)
         {
             data.ChangeDisplay(type);
-            SetProperty(nameof(Title));
+            base.ChangeDisplay(type);
         }
         #endregion
 
 
         #region Bind Call
-        public string Title
+        public override string Title
         {
             get { return data.ToString(); }
         }

@@ -16,8 +16,11 @@ namespace RelertSharp.Wpf.ViewModel
         }
 
 
-        #region Private
-
+        #region Protected
+        protected virtual void SetName(object sender, EventArgs e)
+        {
+            SetProperty(nameof(Title));
+        }
         #endregion
 
 
@@ -75,6 +78,10 @@ namespace RelertSharp.Wpf.ViewModel
                 ancestor = ancestor.Ancestor;
             }
         }
+        public virtual void SetTitle(string title)
+        {
+            _title = title;
+        }
         #endregion
 
 
@@ -103,6 +110,8 @@ namespace RelertSharp.Wpf.ViewModel
         public bool IsTree { get { return data == null; } }
         public bool IsRoot { get { return Ancestor == null; } }
         public ObservableCollection<IBaseTreeVm<TData>> Items { get; set; } = new ObservableCollection<IBaseTreeVm<TData>>();
+        protected string _title;
+        public virtual string Title { get; }
         #endregion
     }
 
@@ -123,5 +132,6 @@ namespace RelertSharp.Wpf.ViewModel
         void RemoveFromAncestor();
         void RemoveItem(IBaseTreeVm<TData> item);
         void UnselectAllDescendant();
+        void SetTitle(string name);
     }
 }

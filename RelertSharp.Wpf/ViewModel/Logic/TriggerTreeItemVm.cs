@@ -22,15 +22,10 @@ namespace RelertSharp.Wpf.ViewModel
             Data.NameUpdated += SetName;
         }
 
-        private void SetName(object sender, EventArgs e)
-        {
-            SetProperty(nameof(Title));
-        }
-
         public void AddItem(TriggerItem trg, string title)
         {
             TriggerTreeItemVm vm = new TriggerTreeItemVm(trg);
-            vm.Title = title;
+            vm.SetTitle(title);
             base.AddItem(vm);
         }
         public void Sort(bool ascending)
@@ -88,15 +83,9 @@ namespace RelertSharp.Wpf.ViewModel
             get { return data; }
             set { data = value; }
         }
-        private string title;
-        public string Title
+        public override string Title
         {
-            get { if (Data != null) return Data.Name; return title; }
-            set
-            {
-                title = value;
-                SetProperty();
-            }
+            get { if (Data != null) return Data.Name; return _title; }
         }
         public override bool IsExpanded
         {

@@ -105,6 +105,7 @@
     <Compile Include="ToolBoxes\AnimationPreview.xaml.cs">
       <DependentUpon>AnimationPreview.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Base\BaseListVm.cs" />
     <Compile Include="ViewModel\Base\BaseTreeVm.cs" />
     <Compile Include="ViewModel\Global\GlobalCountryVm.cs" />
     <Compile Include="ViewModel\Global\GlobalHouseVm.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="ViewModel\Logic\ScriptListVm.cs" />
     <Compile Include="ViewModel\Logic\TaskforceListVm.cs" />
     <Compile Include="ViewModel\Logic\TaskforceVm.cs" />
+    <Compile Include="ViewModel\Logic\TeamListVm.cs" />
     <Compile Include="ViewModel\Object\ObjectAttributeApplierVm.cs" />
     <Compile Include="ViewModel\Object\ObjectPickVm.cs" />
     <Compile Include="ViewModel\Logic\ScriptVm.cs" />

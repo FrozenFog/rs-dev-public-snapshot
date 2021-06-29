@@ -28,16 +28,14 @@ namespace RelertSharp.Wpf.Views
         public GuiViewType ViewType { get { return GuiViewType.TeamList; } }
         public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
         public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
+        private MapStructure.Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private IndexableDisplayType displayType = IndexableDisplayType.IdAndName;
 
         public TeamListView()
         {
             InitializeComponent();
             DataContext = GlobalCollectionVm.Teams;
-            _dragTimer = new DispatcherTimer()
-            {
-                Interval = new TimeSpan(0, 0, 0, 0, DRAG_INTERVAL)
-            };
-            _dragTimer.Tick += DragTick;
+            dragTeam = new DragDropHelper<TeamItem, TeamListVm>(lbxMain);
             GlobalVar.MapDocumentLoaded += MapReloadedHandler;
             NavigationHub.GoToTeamRequest += SelectItem;
             NavigationHub.BindTeamList(this);
@@ -45,34 +43,47 @@ namespace RelertSharp.Wpf.Views
 
         private void MapReloadedHandler(object sender, EventArgs e)
         {
-            lbxMain.ItemsSource = null;
-            lbxMain.ItemsSource = GlobalCollectionVm.Teams;
+            //lbxMain.ItemsSource = null;
+            //lbxMain.ItemsSource = GlobalCollectionVm.Teams;
+            lbxMain.Items.Clear();
+            foreach (TeamItem t in Map.Teams)
+            {
+                lbxMain.Items.Add(new TeamListVm(t));
+            }
         }
 
         public event ContentCarrierHandler ItemSelected;
 
         private void IdUnchecked(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Teams.ChangeDisplay(IndexableDisplayType.NameOnly);
-            GlobalCollectionVm.Teams.UpdateAll();
+            displayType = IndexableDisplayType.NameOnly;
+            foreach (TeamListVm vm in lbxMain.Items) vm.ChangeDisplay(displayType);
+            GlobalVar.CurrentMapDocument?.Map.Teams.ChangeDisplay(displayType);
+            lbxMain.Items.Refresh();
         }
 
         private void IdChecked(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Teams.ChangeDisplay(IndexableDisplayType.IdAndName);
-            GlobalCollectionVm.Teams.UpdateAll();
+            displayType = IndexableDisplayType.IdAndName;
+            foreach (TeamListVm vm in lbxMain.Items) vm.ChangeDisplay(displayType);
+            GlobalVar.CurrentMapDocument?.Map.Teams.ChangeDisplay(displayType);
+            lbxMain.Items.Refresh();
         }
 
         private void AscendingSort(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Teams.AscendingSort();
-            GlobalCollectionVm.Teams.UpdateAll();
+            List<TeamListVm> src = lbxMain.Items.Cast<TeamListVm>().ToList();
+            src = src.OrderBy(x => x.Title).ToList();
+            lbxMain.Items.Clear();
+            src.ForEach(x => lbxMain.Items.Add(x));
         }
 
         private void DescendingSort(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.Teams.DescendingSort();
-            GlobalCollectionVm.Teams.UpdateAll();
+            List<TeamListVm> src = lbxMain.Items.Cast<TeamListVm>().ToList();
+            src = src.OrderByDescending(x => x.Title).ToList();
+            lbxMain.Items.Clear();
+            src.ForEach(x => lbxMain.Items.Add(x));
         }
 
         public void SortBy(bool ascending)
@@ -101,7 +112,10 @@ namespace RelertSharp.Wpf.Views
 
         private void SelectedItemChanged(object sender, SelectionChangedEventArgs e)
         {
-            ItemSelected?.Invoke(this, lbxMain.SelectedItem);
+            if (lbxMain.SelectedItem is TeamListVm vm)
+            {
+                ItemSelected?.Invoke(this, vm.Data);
+            }
         }
 
         public void SelectItem(IIndexableItem item)
@@ -114,61 +128,49 @@ namespace RelertSharp.Wpf.Views
 
         public IIndexableItem GetSelectedItem()
         {
-            return lbxMain.SelectedItem as IIndexableItem;
+            return (lbxMain.SelectedItem as TeamListVm).Data;
         }
 
 
         #region Drag Drop
-        private DispatcherTimer _dragTimer;
-        private const int DRAG_INTERVAL = 200;
-        private Point prevMouseDown;
-        private TeamItem dragItem;
-        private bool isDraging = false;
+        private DragDropHelper<TeamItem, TeamListVm> dragTeam;
 
         private void DragMouseMove(object sender, MouseEventArgs e)
         {
-            if (isDraging && e.LeftButton == MouseButtonState.Pressed)
+            if (dragTeam.IsDraging && e.LeftButton == MouseButtonState.Pressed)
             {
                 Point current = e.GetPosition(lbxMain);
-                if (RsMath.ChebyshevDistance(current, prevMouseDown) > 10 && dragItem != null)
-                {
-                    DataObject obj = new DataObject(dragItem);
-                    DragDropEffects effect = DragDrop.DoDragDrop(lbxMain, obj, DragDropEffects.Move);
-                }
+                dragTeam.MouseMoveDrag(current);
             }
-        }
-        private void TeamDragOver(object sender, DragEventArgs e)
-        {
-            Point current = e.GetPosition(lbxMain);
-            if (RsMath.ChebyshevDistance(current, prevMouseDown) > 10)
-            {
-                e.Effects = DragDropEffects.Scroll;
-            }
-            e.Handled = true;
         }
 
         private void DragMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                _dragTimer.Stop();
-                _dragTimer.Start();
-                prevMouseDown = e.GetPosition(lbxMain);
-                TextBlock blk = lbxMain.GetItemAtMouse<TextBlock>(e);
-                if (blk != null)
-                {
-                    dragItem = blk.DataContext as TeamItem;
-                }
+                dragTeam.BeginDrag(e.GetPosition(lbxMain));
+                dragTeam.SetReferanceVm(GetItemAtMouse(lbxMain, e));
+                dragTeam.SetDragItem(dragTeam.ReferanceVm.Data);
+                e.Handled = true;
             }
         }
-        private void DragTick(object sender, EventArgs e)
+        private void DragMouseUp(object sender, MouseButtonEventArgs e)
         {
-            _dragTimer.Stop();
-            isDraging = true;
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                dragTeam.EndDrag();
+                if (dragTeam.DragItem != null) dragTeam.ReferanceVm.IsSelected = true;
+            }
         }
         private void DragMouseLeave(object sender, MouseEventArgs e)
         {
-            if (isDraging) isDraging = false;
+            dragTeam.EndDrag();
+        }
+        private TeamListVm GetItemAtMouse(ItemsControl src, MouseButtonEventArgs e)
+        {
+            TextBlock item = src.GetItemAtMouse<TextBlock>(e);
+            if (item != null) return item.DataContext as TeamListVm;
+            return null;
         }
         #endregion
     }

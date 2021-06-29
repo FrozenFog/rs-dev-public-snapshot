@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace RelertSharp.Wpf.Common
 {
-    internal class DragDropHelper<TObject> where TObject : class
+    internal class DragDropHelper<TObject, TVm> where TObject : class
     {
         private Point prevMouseDown;
         private bool isDraging = false;
@@ -33,6 +33,10 @@ namespace RelertSharp.Wpf.Common
         public void SetDragItem(TObject obj)
         {
             dragItem = obj;
+        }
+        public void SetReferanceVm(TVm vm)
+        {
+            ReferanceVm = vm;
         }
         public void EndDrag()
         {
@@ -74,6 +78,7 @@ namespace RelertSharp.Wpf.Common
         public int MouseMoveThreshold { get; set; } = 10;
         public bool IsDraging { get { return isDraging; } }
         public TObject DragItem { get { return dragItem; } }
+        public TVm ReferanceVm { get; private set; }
         #endregion
     }
 }

@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace RelertSharp.Wpf.ViewModel
 {
-    internal class HouseListVm : BaseVm<HouseItem>
+    internal class HouseListVm : BaseListVm<HouseItem>
     {
         #region Ctor
         public HouseListVm()
@@ -28,16 +28,11 @@ namespace RelertSharp.Wpf.ViewModel
         {
             SetProperty(nameof(HouseColor));
         }
-
-        private void SetName(object sender, EventArgs e)
-        {
-            SetProperty(nameof(Title));
-        }
         #endregion
 
 
         #region Bind Call
-        public string Title
+        public override string Title
         {
             get { return data.Name; }
         }
@@ -53,16 +48,6 @@ namespace RelertSharp.Wpf.ViewModel
                     b.Color = rgb;
                 }
                 return b;
-            }
-        }
-        private bool _isSelected;
-        public bool IsSelected
-        {
-            get { return _isSelected; }
-            set
-            {
-                _isSelected = value;
-                SetProperty();
             }
         }
         #endregion

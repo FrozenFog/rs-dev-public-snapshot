@@ -37,8 +37,6 @@ namespace RelertSharp.Wpf.Views
 
         private bool isLoading = false;
 
-        public event ContentCarrierHandler NameChanged;
-
         public TeamView()
         {
             InitializeComponent();
@@ -160,6 +158,7 @@ namespace RelertSharp.Wpf.Views
                 if (key == Constant.KEY_NAME && text != Team[key].Value)
                 {
                     Team[key].Value = text;
+                    Team.OnNameUpdated();
                     GlobalCollectionVm.Teams.UpdateDesignatedName();
                 }
                 else
@@ -193,7 +192,7 @@ namespace RelertSharp.Wpf.Views
                         HorizontalAlignment = HorizontalAlignment.Stretch
                     };
                     txb.SetStyle(this, "txbDark");
-                    txb.MouseLeave += TxbUpdate;
+                    txb.TextChanged += TxbUpdate;
                     r = txb;
                     break;
                 default:
