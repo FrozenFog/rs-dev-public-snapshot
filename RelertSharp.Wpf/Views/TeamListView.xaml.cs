@@ -128,7 +128,11 @@ namespace RelertSharp.Wpf.Views
 
         public IIndexableItem GetSelectedItem()
         {
-            return (lbxMain.SelectedItem as TeamListVm).Data;
+            if (lbxMain.SelectedItem is TeamListVm vm)
+            {
+                return vm.Data;
+            }
+            return null;
         }
 
 
@@ -149,7 +153,7 @@ namespace RelertSharp.Wpf.Views
             if (e.ChangedButton == MouseButton.Left)
             {
                 dragTeam.BeginDrag(e.GetPosition(lbxMain));
-                dragTeam.SetReferanceVm(GetItemAtMouse(lbxMain, e));
+                dragTeam.SetReferanceVm(lbxMain.GetItemAtMouse<TeamListVm, TextBlock>(e));
                 dragTeam.SetDragItem(dragTeam.ReferanceVm.Data);
                 e.Handled = true;
             }
@@ -165,12 +169,6 @@ namespace RelertSharp.Wpf.Views
         private void DragMouseLeave(object sender, MouseEventArgs e)
         {
             dragTeam.EndDrag();
-        }
-        private TeamListVm GetItemAtMouse(ItemsControl src, MouseButtonEventArgs e)
-        {
-            TextBlock item = src.GetItemAtMouse<TextBlock>(e);
-            if (item != null) return item.DataContext as TeamListVm;
-            return null;
         }
         #endregion
     }

@@ -406,11 +406,6 @@ namespace RelertSharp.Wpf.Views
             if (!value.IsNullOrEmpty()) TryWriteDroppedValue(value, valueType);
         }
 
-        private void DragOverStk(object sender, DragEventArgs e)
-        {
-
-        }
-
         private void TryWriteDroppedValue(string value, Type refType)
         {
             foreach (FrameworkElement elem in stkMain.Children)
