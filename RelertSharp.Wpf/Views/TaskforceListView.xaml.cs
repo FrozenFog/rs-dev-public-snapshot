@@ -16,6 +16,7 @@ using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Common;
 using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.Dialogs;
+using RelertSharp.MapStructure.Logic;
 
 namespace RelertSharp.Wpf.Views
 {
@@ -38,6 +39,7 @@ namespace RelertSharp.Wpf.Views
             GlobalVar.MapDocumentLoaded += MapReloadedHandler;
             NavigationHub.GoToTaskforceRequest += SelectItem;
             NavigationHub.BindTaskforceList(this);
+            dragTaskforce = new DragDropHelper<TaskforceItem, TaskforceListVm>(lbxMain);
         }
 
         private void MapReloadedHandler(object sender, EventArgs e)
@@ -124,7 +126,11 @@ namespace RelertSharp.Wpf.Views
 
         public IIndexableItem GetSelectedItem()
         {
-            return lbxMain.SelectedItem as IIndexableItem;
+            if (lbxMain.SelectedItem is TaskforceListVm vm)
+            {
+                return vm.Data;
+            }
+            return null;
         }
 
         private void SelectedItemChanged(object sender, SelectionChangedEventArgs e)
@@ -180,6 +186,43 @@ namespace RelertSharp.Wpf.Views
             {
                 lbxMain.Items.Remove(vm);
             }
+        }
+        #endregion
+
+
+        #region Drag Drop
+        private DragDropHelper<TaskforceItem, TaskforceListVm> dragTaskforce;
+
+        private void DragMouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragTaskforce.IsDraging && e.LeftButton == MouseButtonState.Pressed)
+            {
+                Point current = e.GetPosition(lbxMain);
+                dragTaskforce.MouseMoveDrag(current);
+            }
+        }
+
+        private void DragMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                dragTaskforce.BeginDrag(e.GetPosition(lbxMain));
+                dragTaskforce.SetReferanceVm(lbxMain.GetItemAtMouse<TaskforceListVm, TextBlock>(e));
+                dragTaskforce.SetDragItem(dragTaskforce.ReferanceVm.Data);
+                e.Handled = true;
+            }
+        }
+        private void DragMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                dragTaskforce.EndDrag();
+                if (dragTaskforce.DragItem != null) dragTaskforce.ReferanceVm.IsSelected = true;
+            }
+        }
+        private void DragMouseLeave(object sender, MouseEventArgs e)
+        {
+            dragTaskforce.EndDrag();
         }
         #endregion
     }

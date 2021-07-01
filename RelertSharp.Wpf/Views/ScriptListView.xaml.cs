@@ -17,6 +17,7 @@ using RelertSharp.Common;
 using RelertSharp.Wpf.Common;
 using System.Collections.ObjectModel;
 using RelertSharp.Wpf.Dialogs;
+using RelertSharp.MapStructure.Logic;
 
 namespace RelertSharp.Wpf.Views
 {
@@ -39,6 +40,7 @@ namespace RelertSharp.Wpf.Views
             GlobalVar.MapDocumentLoaded += MapReloadedHandler;
             NavigationHub.GoToScriptRequest += SelectItem;
             NavigationHub.BindScriptList(this);
+            dragScript = new DragDropHelper<TeamScriptGroup, ScriptListVm>(lbxMain);
         }
 
         private void MapReloadedHandler(object sender, EventArgs e)
@@ -137,7 +139,8 @@ namespace RelertSharp.Wpf.Views
 
         public IIndexableItem GetSelectedItem()
         {
-            return (lbxMain.SelectedItem as ScriptListVm).Data;
+            if (lbxMain.SelectedItem is ScriptListVm vm) return vm.Data;
+            return null;
         }
 
 
@@ -184,6 +187,42 @@ namespace RelertSharp.Wpf.Views
             if (Map.RemoveScript(sc))
             {
                 lbxMain.Items.Remove(SelectedItem);
+            }
+        }
+        #endregion
+
+        #region DragDrop
+        private DragDropHelper<TeamScriptGroup, ScriptListVm> dragScript;
+        private void DragMouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragScript.IsDraging && e.LeftButton == MouseButtonState.Pressed)
+            {
+                Point current = e.GetPosition(lbxMain);
+                dragScript.MouseMoveDrag(current);
+            }
+        }
+
+        private void DragMouseLeave(object sender, MouseEventArgs e)
+        {
+            dragScript.EndDrag();
+        }
+        private void DragMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                dragScript.BeginDrag(e.GetPosition(lbxMain));
+                dragScript.SetReferanceVm(lbxMain.GetItemAtMouse<ScriptListVm, TextBlock>(e));
+                dragScript.SetDragItem(dragScript.ReferanceVm.Data);
+                e.Handled = true;
+            }
+        }
+
+        private void DragMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                dragScript.EndDrag();
+                if (dragScript.DragItem != null) dragScript.ReferanceVm.IsSelected = true;
             }
         }
         #endregion

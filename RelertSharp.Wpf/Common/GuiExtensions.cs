@@ -18,6 +18,7 @@ using RelertSharp.Wpf.ViewModel;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Common;
 using RelertSharp.Wpf.Views;
+using RelertSharp.Wpf;
 
 namespace System.Windows.Media
 {
@@ -47,6 +48,12 @@ namespace System.Windows.Controls
         public static void AddRange(this ItemCollection target, IEnumerable<object> src)
         {
             foreach (object o in src) target.Add(o);
+        }
+        public static TItem GetItemAtMouse<TItem, TTemplateControl>(this ItemsControl src, MouseButtonEventArgs e) where TTemplateControl : FrameworkElement where TItem : class
+        {
+            TTemplateControl item = src.GetItemAtMouse<TTemplateControl>(e);
+            if (item != null) return item.DataContext as TItem;
+            return null;
         }
     }
 }
@@ -318,6 +325,11 @@ namespace RelertSharp.Wpf
             {
                 dataType = typeof(TaskforceItem);
                 return taskforce.Id;
+            }
+            else if (src.GetData(typeof(HouseItem)) is HouseItem house)
+            {
+                dataType = typeof(ComboItem);
+                return GlobalVar.CurrentMapDocument.Map.Houses.IndexOf(house.Name).ToString();
             }
             return string.Empty;
         }
