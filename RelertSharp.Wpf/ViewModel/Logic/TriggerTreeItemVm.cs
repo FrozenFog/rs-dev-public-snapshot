@@ -87,30 +87,5 @@ namespace RelertSharp.Wpf.ViewModel
         {
             get { if (Data != null) return Data.Name; return _title; }
         }
-        public override bool IsExpanded
-        {
-            get { return base.IsExpanded; }
-            set
-            {
-                base.IsExpanded = value;
-                SetProperty(nameof(HeadImg));
-            }
-        }
-        public ImageSource HeadImg
-        {
-            get
-            {
-                if (IsTree)
-                {
-                    if (IsExpanded)
-                    {
-                        if (Items.Count == 0) return Properties.Resources.iconTrgFold.ToWpfImage(true);
-                        return Properties.Resources.iconTrgExpand.ToWpfImage(true);
-                    }
-                    else return Properties.Resources.iconTrgFold.ToWpfImage(true);
-                }
-                else return null;
-            }
-        }
     }
 }

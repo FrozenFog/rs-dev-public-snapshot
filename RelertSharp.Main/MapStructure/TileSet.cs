@@ -53,7 +53,7 @@ namespace RelertSharp.MapStructure
             };
             data.Add(varies);
         }
-        public IEnumerable<string> GetNames()
+        public List<string> GetNames()
         {
             List<string> result = new List<string>();
             for (int i = 0; i < data.Count; i++)

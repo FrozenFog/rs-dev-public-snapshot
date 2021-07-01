@@ -65,6 +65,8 @@ namespace RelertSharp.Wpf
         private readonly MapObjectBrushView objectBrush = new MapObjectBrushView();
         [RsViewComponent(GuiViewType.HousePanel, GuiViewSide.Bottom, "House Info")]
         private readonly CountryHouseView housePanel = new CountryHouseView();
+        [RsViewComponent(GuiViewType.TilePanel, GuiViewSide.Bottom, "Tiles")]
+        private readonly TilePanelView tiles = new TilePanelView();
         #endregion
         #region Else
         private SoundManager soundManager = new SoundManager();
