@@ -51,9 +51,5 @@ namespace RelertSharp.Wpf.ViewModel
             }
         }
         #endregion
-        public HouseItem Data
-        {
-            get { return data; }
-        }
     }
 }

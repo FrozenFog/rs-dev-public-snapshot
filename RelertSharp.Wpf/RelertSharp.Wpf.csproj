@@ -123,7 +123,8 @@
     <Compile Include="ViewModel\Logic\ScriptVm.cs" />
     <Compile Include="ViewModel\Global\StaticCollectionVm.cs" />
     <Compile Include="ViewModel\Logic\TeamVm.cs" />
-    <Compile Include="ViewModel\Tile\TileSetVm.cs" />
+    <Compile Include="ViewModel\Tile\TileSetItemVm.cs" />
+    <Compile Include="ViewModel\Tile\TileSetTreeVm.cs" />
     <Compile Include="ViewModel\Logic\TriggerLogicVm.cs" />
     <Compile Include="ViewModel\Logic\TriggerTreeItemVm.cs" />
     <Compile Include="ViewModel\Logic\TriggerVm.cs" />
@@ -157,6 +158,9 @@
     </Compile>
     <Compile Include="Views\TeamView.xaml.cs">
       <DependentUpon>TeamView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TilePanelView.xaml.cs">
+      <DependentUpon>TilePanelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TriggerListView.xaml.cs">
       <DependentUpon>TriggerListView.xaml</DependentUpon>
@@ -257,6 +261,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TeamView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TilePanelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -36,7 +36,6 @@ namespace RelertSharp.Wpf.ViewModel
         {
             get { return data.ToString(); }
         }
-        public TaskforceItem Data { get { return data; } }
 
         public string Id { get => ((IIndexableItem)Data).Id; set => ((IIndexableItem)Data).Id = value; }
         public string Name { get => ((IIndexableItem)Data).Name; set => ((IIndexableItem)Data).Name = value; }

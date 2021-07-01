@@ -35,7 +35,7 @@ namespace RelertSharp.Wpf
         private void DebugClick(object sender, RoutedEventArgs e)
         {
             GlobalVar.LoadMapDocument(mapname);
-            dockMain.LoadLayoutFromXml("layout.xml", this);
+            //dockMain.LoadLayoutFromXml("layout.xml", this);
         }
 
         private void DebugClick2(object sender, RoutedEventArgs e)
