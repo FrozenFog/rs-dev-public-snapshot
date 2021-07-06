@@ -1,0 +1,52 @@
+﻿using RelertSharp.Common.Config.Model;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+namespace RelertSharp.Common
+{
+    public class UserConfig
+    {
+        private const string path = Constant.Config.UserConfig;
+        private RsUserConfig data;
+        public UserConfig()
+        {
+            if (File.Exists(path))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(RsUserConfig));
+                TextReader reader = new StreamReader(path);
+                data = serializer.Deserialize(reader) as RsUserConfig;
+            }
+            else
+            {
+                data = RsUserConfig.EmptyConfig();
+            }
+        }
+
+
+        #region Public 
+        public void Save()
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(RsUserConfig));
+            if (!File.Exists(path))
+            {
+                File.Create(path).Close();
+            }
+            TextWriter writer = new StreamWriter(path);
+            serializer.Serialize(writer, data);
+            writer.Close();
+        }
+        #endregion
+
+
+        #region Calls
+        public GuiStatus GuiStatus { get { return data.GuiStatus; } }
+        public FavouriteItemTree FavouriteTileSet { get { return data.FavouriteItems.TileSets; } }
+        public FavouriteItemTree FavouriteObjects { get { return data.FavouriteItems.Objects; } }
+        #endregion
+    }
+}

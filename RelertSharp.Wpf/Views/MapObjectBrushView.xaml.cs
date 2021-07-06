@@ -102,6 +102,19 @@ namespace RelertSharp.Wpf.Views
                 sides.ForEach(x => root.AddItem(x));
                 trvMain.Items.Add(root);
             }
+            void favourites()
+            {
+                ObjectPickVm root = new ObjectPickVm("Favourites");
+                root.SetIcon(Properties.Resources.iconObjFav.ToWpfImage(true));
+                void readInto(RelertSharp.Common.Config.Model.FavouriteItemTree src, ObjectPickVm parent)
+                {
+                    ObjectPickVm dest = new ObjectPickVm(src.Title, src.Value, src.Type);
+                    if (src.Items != null) foreach (var sub in src.Items) readInto(sub, dest);
+                    parent.AddItem(dest);
+                }
+                readInto(GlobalVar.GlobalConfig.UserConfig.FavouriteObjects, root);
+                trvMain.Items.Add(root);
+            }
             void unit()
             {
                 ObjectPickVm uRoot = new ObjectPickVm("Units");
@@ -134,6 +147,7 @@ namespace RelertSharp.Wpf.Views
             generic("Infantries", Constant.RulesHead.HEAD_INFANTRY, Properties.Resources.iconObjInf.ToWpfImage(true), CombatObjectType.Infantry, MapObjectType.Infantry);
             unit();
             generic("Aircrafts", Constant.RulesHead.HEAD_AIRCRAFT, Properties.Resources.iconObjAir.ToWpfImage(true), CombatObjectType.Aircraft, MapObjectType.Aircraft);
+            favourites();
             ReloadAttributeCombo();
         }
         internal void BindBrushConfig(ObjectBrushConfig config, ObjectBrushFilter filter)

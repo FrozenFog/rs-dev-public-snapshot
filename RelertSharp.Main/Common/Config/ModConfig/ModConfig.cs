@@ -60,7 +60,7 @@ namespace RelertSharp.Common
         }
 #endregion
 #region Public Calls
-
+        public TileSetInfo TileSetInfo { get { return data.TileSetInfo; } }
 #endregion
     }
 }

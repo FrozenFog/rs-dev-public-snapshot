@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,11 +39,50 @@ namespace RelertSharp.Wpf.Views
         private void MapReloadedHandler(object sender, EventArgs e)
         {
             trvMain.Items.Clear();
-            foreach (var tileset in GlobalVar.TileDictionary.TileSets)
+            void add_to(MapStructure.TileSet set, TileSetTreeVm dest)
             {
-                TileSetTreeVm vm = new TileSetTreeVm(tileset);
-                trvMain.Items.Add(vm);
+                if (set.AllowPlace && !set.IsFramework)
+                {
+                    TileSetTreeVm src = new TileSetTreeVm(set);
+                    dest.AddItem(src);
+                }
             }
+            void loadGeneral()
+            {
+                TileSetTreeVm general = new TileSetTreeVm("General Tile Sets");
+                foreach (var p in GlobalVar.TileDictionary.GeneralTilesets)
+                {
+                    var tileset = GlobalVar.TileDictionary.GetTileSetFromIndex(p.Value);
+                    add_to(tileset, general);
+                }
+                trvMain.Items.Add(general);
+            }
+            void loadCustom()
+            {
+                foreach (var classInfo in GlobalVar.GlobalConfig.ModConfig.TileSetInfo.Classes)
+                {
+                    TileSetTreeVm root = new TileSetTreeVm(classInfo.Title);
+                    Regex re = new Regex(classInfo.RegexFormat);
+                    foreach (var tileset in GlobalVar.TileDictionary.TileSets)
+                    {
+                        if (re.Match(tileset.SetName).Success) add_to(tileset, root);
+                    }
+                    trvMain.Items.Add(root);
+                }
+                TileSetTreeVm all = new TileSetTreeVm("All tile sets");
+                foreach (var tileset in GlobalVar.TileDictionary.TileSets)
+                {
+                    add_to(tileset, all);
+                }
+                trvMain.Items.Add(all);
+            }
+            void loadFav()
+            {
+
+            }
+            loadGeneral();
+            loadCustom();
+            loadFav();
         }
 
         private void SelectedSetChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

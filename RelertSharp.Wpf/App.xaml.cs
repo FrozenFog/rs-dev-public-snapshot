@@ -119,10 +119,15 @@ namespace RelertSharp.Wpf
             App application = new App();
             application.InitializeComponent();
             application.Run();
+            Finalization();
         }
 
 
 
+        static void Finalization()
+        {
+            GlobalVar.GlobalConfig.UserConfig.Save();
+        }
         static bool Initialization()
         {
 #if DEBUG

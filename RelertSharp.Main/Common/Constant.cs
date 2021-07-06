@@ -317,6 +317,7 @@ namespace RelertSharp.Common
         public static class Config
         {
             public const string Path = "./configs/default.xml";
+            public const string UserConfig = "user.xml";
             public const string TYPE_BOOL = "bool";
             public const string TYPE_INT = "int";
             public const string TYPE_STRING = "string";

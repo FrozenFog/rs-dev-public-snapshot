@@ -62,9 +62,13 @@ namespace RelertSharp.MapStructure
             }
             return result;
         }
-        public bool ClassifyAs(string guessType)
+        public bool ClassifyAs(params string[] guessTypes)
         {
-            return SetName.Contains(guessType) || SetName.Contains(guessType.ToLower());
+            foreach (string guessType in guessTypes)
+            {
+                if (SetName.Contains(guessType) || SetName.Contains(guessType.ToLower())) return true;
+            }
+            return false;
         }
         public override string ToString()
         {

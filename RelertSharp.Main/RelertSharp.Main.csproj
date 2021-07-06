@@ -126,15 +126,20 @@
     <Compile Include="Algorithm\PerlinNoiseGenerator.cs" />
     <Compile Include="CliFunction\MapLocker.cs" />
     <Compile Include="Common\Comparer\ListViewComparer.cs" />
-    <Compile Include="Common\Config\AttributeInfo.cs" />
-    <Compile Include="Common\Config\ComboReading.cs" />
-    <Compile Include="Common\Config\Language.cs" />
-    <Compile Include="Common\Config\Model\ComboGroup.cs" />
-    <Compile Include="Common\Config\Model\LanguageControl.cs" />
-    <Compile Include="Common\Config\Model\LogicAttributes.cs" />
-    <Compile Include="Common\Config\Model\RsModConfig.cs" />
-    <Compile Include="Common\Config\Model\TriggerInfo.cs" />
-    <Compile Include="Common\Config\TriggerScriptInfo.cs" />
+    <Compile Include="Common\Config\ModConfig\AttributeInfo.cs" />
+    <Compile Include="Common\Config\ModConfig\ComboReading.cs" />
+    <Compile Include="Common\Config\ModConfig\Language.cs" />
+    <Compile Include="Common\Config\Model\ModConfig\ComboGroup.cs" />
+    <Compile Include="Common\Config\Model\ModConfig\LanguageControl.cs" />
+    <Compile Include="Common\Config\Model\ModConfig\LogicAttributes.cs" />
+    <Compile Include="Common\Config\Model\ModConfig\RsModConfig.cs" />
+    <Compile Include="Common\Config\Model\ModConfig\TileSetInfo.cs" />
+    <Compile Include="Common\Config\Model\ModConfig\TriggerInfo.cs" />
+    <Compile Include="Common\Config\ModConfig\TriggerScriptInfo.cs" />
+    <Compile Include="Common\Config\Model\UserConfig\FavouriteItems.cs" />
+    <Compile Include="Common\Config\Model\UserConfig\GuiStatus.cs" />
+    <Compile Include="Common\Config\Model\UserConfig\RsUserConfig.cs" />
+    <Compile Include="Common\Config\UserConfig\UserConfig.cs" />
     <Compile Include="Common\Delegates.cs" />
     <Compile Include="Common\Enumerator\Bfs2DEnumerator.cs" />
     <Compile Include="Common\Enumerator\Circle2DEnumerator.cs" />
@@ -147,7 +152,7 @@
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\GlobalVar.cs" />
     <Compile Include="Common\Interfaces.cs" />
-    <Compile Include="Common\Config\ModConfig.cs" />
+    <Compile Include="Common\Config\ModConfig\ModConfig.cs" />
     <Compile Include="Common\MiniTimer.cs" />
     <Compile Include="Common\RsLog.cs" />
     <Compile Include="Common\SoundManager.cs" />
@@ -298,6 +303,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\defaultIni.xml" />
+    <Content Include="Resources\user.xml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

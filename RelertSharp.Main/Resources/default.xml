@@ -1664,4 +1664,20 @@
       <info id="64" defaultArr="0" length="1"/>
     </ScriptActions>
   </TriggerInfo>
+  <TileSetInfo>
+    <Classes>
+      <info title="LAT" re="LAT" />
+      <info title="Cliff" re="[cC]liff" />
+      <info title="Water bounds" re="[wW]ater" />
+      <info title="Ramps" re="[rR]amps?|[sS]lope" />
+      <info title="Bridges" re="[bB]ridge" />
+      <info title="Roads" re="[rR]oad|[hH]ighway" />
+      <info title="Theater features" re="[fF]eature|[fF]arm" />
+      <info title="Railroads" re="[rR]ail|[tT]rack|[tT]rain" />
+      <info title="Tunnels" re="[tT]unnel" />
+      <info title="Shores" re="[sS]hore" />
+      <info title="Paves" re="[pP]ave" />
+      <info title="Fixes" re="[fF]ix" />
+    </Classes>
+  </TileSetInfo>
 </RsModConfig>

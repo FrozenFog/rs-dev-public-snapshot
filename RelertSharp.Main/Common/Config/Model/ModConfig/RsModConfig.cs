@@ -16,5 +16,7 @@ namespace RelertSharp.Common.Config.Model
         public LogicAttributes LogicAttributes { get; set; }
         [XmlElement(ElementName = "TriggerInfo")]
         public TriggerInfo TriggerInfo { get; set; }
+        [XmlElement(ElementName = "TileSetInfo")]
+        public TileSetInfo TileSetInfo { get; set; }
     }
 }
