@@ -209,7 +209,6 @@
     <Compile Include="MapStructure\MapApi\MapObjects.cs" />
     <Compile Include="MapStructure\MapApi\MapTiles.cs" />
     <Compile Include="MapStructure\MapTheaterTileSet.cs" />
-    <Compile Include="MapStructure\Map\BrushAdding.cs" />
     <Compile Include="MapStructure\Map\MapObjectFactory.cs" />
     <Compile Include="MapStructure\Map\ObjectAdding.cs" />
     <Compile Include="MapStructure\Map\ObjectDeleting.cs" />

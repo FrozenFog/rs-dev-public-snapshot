@@ -435,6 +435,10 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - Tile
+        public static Tile CopyAsReferance(Tile src)
+        {
+            return new Tile(src.TileIndex, src.SubIndex, src.X, src.Y, src.Z);
+        }
         public void Redraw()
         {
             Vec4 color = Vec4.Zero;
@@ -551,6 +555,13 @@ namespace RelertSharp.MapStructure
                 newtile.AddObject(obj);
             }
         }
+        public void MoveTo(I3dLocateable pos)
+        {
+            X = pos.X;
+            Y = pos.Y;
+            Z = pos.Z;
+            SceneObject?.MoveTo(pos);
+        }
         public void Dispose()
         {
             SceneObject?.Dispose();
@@ -622,6 +633,11 @@ namespace RelertSharp.MapStructure
         public void UnMarkForSimulating()
         {
             SceneObject.RemoveTempColor();
+        }
+        public void Hide()
+        {
+            HideTileImg();
+            HideExtraImg();
         }
         public void HideTileImg()
         {

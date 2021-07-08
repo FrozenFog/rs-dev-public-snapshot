@@ -172,6 +172,7 @@ namespace RelertSharp.Wpf.Views
             RefreshContext();
             if (selected.Type != MapObjectType.Undefined)
             {
+                PaintBrush.ResumeBrush();
                 PaintBrush.LoadBrushObject(selected.RegName, selected.Type);
                 MapEngine.Helper.MouseState.SetState(MapEngine.Helper.PanelMouseState.ObjectBrush);
             }
@@ -191,6 +192,7 @@ namespace RelertSharp.Wpf.Views
             ObjectPickVm selected = trvMain.SelectedItem as ObjectPickVm;
             if (selected.Type != MapObjectType.Undefined)
             {
+                PaintBrush.ResumeBrush();
                 PaintBrush.LoadBrushObject(selected.RegName, selected.Type);
             }
         }

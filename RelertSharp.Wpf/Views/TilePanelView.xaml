@@ -30,7 +30,7 @@
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-        <ListView x:Name="lvMain" Grid.Column="1" Margin="10" Style="{DynamicResource lbxDark}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" DataContext="{x:Type ViewModel:TileSetItemVm}">
+        <ListView x:Name="lvMain" Grid.Column="1" Margin="10" Style="{DynamicResource lbxDark}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" DataContext="{x:Type ViewModel:TileSetItemVm}" SelectionChanged="SelectTileChanged">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel/>

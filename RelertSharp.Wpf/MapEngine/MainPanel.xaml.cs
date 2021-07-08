@@ -54,8 +54,8 @@ namespace RelertSharp.Wpf.MapEngine
         public MainPanel()
         {
             InitializeComponent();
-            tmrClick.Tick += HoldTickHandler;
-            tmrClick.Interval = new TimeSpan(0, 0, 0, 0, CLICK_INTERVAL);
+            holdClickAction = new DelayedAction(null, MouseHoldToClick, 100);
+            keyClickAction = new DelayedAction(null, KeyHoldToClick, 80);
             GlobalVar.MapDocumentRedrawRequested += MapRedrawHandler;
             GlobalVar.MapDocumentLoaded += MapReloadedHandler;
             EngineApi.RedrawRequested += RedrawInvokeHandler;
@@ -113,13 +113,18 @@ namespace RelertSharp.Wpf.MapEngine
         #region PERMANENTLY SOLVED ENGINE DEAD
         private bool locked = false;
         private bool manualLockOverride = false;
+        private int lockLevel = 0;
         private void UnlockInvokeHandler(object sender, EventArgs e)
         {
             if (locked)
             {
                 manualLockOverride = false;
-                d3dimg.Unlock();
-                locked = false;
+                lockLevel--;
+                if (lockLevel == 0)
+                {
+                    d3dimg.Unlock();
+                    locked = false;
+                }
             }
         }
 
@@ -128,8 +133,12 @@ namespace RelertSharp.Wpf.MapEngine
             if (!locked)
             {
                 manualLockOverride = true;
-                d3dimg.Lock();
-                locked = true;
+                if (lockLevel == 0)
+                {
+                    d3dimg.Lock();
+                    locked = true;
+                }
+                lockLevel++;
             }
         }
         #endregion

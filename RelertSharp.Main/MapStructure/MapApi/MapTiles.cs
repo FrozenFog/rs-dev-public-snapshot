@@ -43,6 +43,15 @@ namespace RelertSharp.MapStructure
                 org.Redraw();
             }
         }
+        public static void SetTile(Tile src)
+        {
+            if (Map.TilesData[src] is Tile org)
+            {
+                org.SetTileTo(src.TileIndex, src.SubIndex);
+                org.SetHeightTo(src.Height);
+                org.Redraw();
+            }
+        }
         /// <summary>
         /// Will use map data for adjacent 4 referance tile
         /// </summary>

@@ -20,6 +20,7 @@ namespace RelertSharp.Wpf
         public static ObjectBrushFilter Filter { get; private set; }
         private static Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
         private static IMapObject currentObject;
+        private static bool isSuspended;
         #endregion
         #region Api
         public static void SetConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter)
@@ -30,6 +31,22 @@ namespace RelertSharp.Wpf
         public static void DisposeBrushObject()
         {
             currentObject?.Dispose();
+        }
+        public static void SuspendBrush()
+        {
+            if (!isSuspended)
+            {
+                currentObject?.Dispose();
+                isSuspended = true;
+            }
+        }
+        public static void ResumeBrush()
+        {
+            if (isSuspended)
+            {
+                if (currentObject != null) EngineApi.DrawObject(currentObject);
+                isSuspended = false;
+            }
         }
         #region Objects
         public static void LoadBrushObject(string regname, MapObjectType type, bool dispose = true)
@@ -155,9 +172,6 @@ namespace RelertSharp.Wpf
             currentObject?.Dispose();
             EngineApi.DrawObject(currentObject);
         }
-        #endregion
-        #region Tiles
-
         #endregion
 
         #endregion

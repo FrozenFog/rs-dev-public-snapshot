@@ -1,4 +1,5 @@
-﻿using RelertSharp.MapStructure;
+﻿using RelertSharp.FileSystem;
+using RelertSharp.MapStructure;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,13 +17,34 @@ namespace RelertSharp.Wpf.ViewModel
         {
             data = new TileSet(false, false, -1);
         }
-        public TileSetItemVm(Image assembleImage)
+        public TileSetItemVm(TmpFile file, int tileIndex)
         {
-            image = assembleImage.ToWpfImage();
+            SubTiles = new List<SubTileInfo>();
+            image = file.AssembleImage.ToWpfImage();
+            TileIndex = tileIndex;
+            byte idx = 0;
+            foreach (var img in file.Images)
+            {
+                if (!img.IsNullTile)
+                {
+                    img.GetDeltaPosition(out int dx, out int dy, out int dz);
+                    SubTileInfo info = new SubTileInfo()
+                    {
+                        Dx = dx,
+                        Dy = dy,
+                        Dz = dz,
+                        SubIndex = idx
+                    };
+                    SubTiles.Add(info);
+                }
+                idx++;
+            }
+            IsLat = RelertSharp.Common.GlobalVar.TileDictionary.IsLat(TileIndex);
         }
 
 
 
+        #region Call
         #region Binding
         public ImageSource TileSetImage
         {
@@ -34,5 +56,19 @@ namespace RelertSharp.Wpf.ViewModel
             }
         }
         #endregion
+
+        public int TileIndex { get; private set; }
+        public List<SubTileInfo> SubTiles { get; private set; }
+        public bool IsLat { get; private set; }
+        #endregion
+
+
+        internal class SubTileInfo
+        {
+            public int Dx { get; internal set; }
+            public int Dy { get; internal set; }
+            public int Dz { get; internal set; }
+            public byte SubIndex { get; internal set; }
+        }
     }
 }

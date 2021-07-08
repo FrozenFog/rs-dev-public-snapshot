@@ -1,6 +1,8 @@
 ﻿using AvalonDock.Layout;
 using RelertSharp.Common;
+using RelertSharp.Wpf;
 using RelertSharp.Wpf.Common;
+using RelertSharp.Wpf.MapEngine.Helper;
 using RelertSharp.Wpf.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -29,12 +31,43 @@ namespace RelertSharp.Wpf.Views
         {
             InitializeComponent();
             GlobalVar.MapDocumentLoaded += MapReloadedHandler;
+            TilePaintBrush.SelectTileForwardRequest += ForwardSelection;
+            TilePaintBrush.SelectTileBackwardRequest += BackwardSelection;
+        }
+
+        private void BackwardSelection(object sender, EventArgs e)
+        {
+            if (lvMain.Items.Count > 0)
+            {
+                if (lvMain.SelectedIndex == 0)
+                {
+                    lvMain.SelectedIndex = lvMain.Items.Count - 1;
+                }
+                else lvMain.SelectedIndex--;
+            }
+        }
+
+        private void ForwardSelection(object sender, EventArgs e)
+        {
+            if (lvMain.Items.Count > 0)
+            {
+                if (lvMain.SelectedIndex == lvMain.Items.Count - 1)
+                {
+                    lvMain.SelectedIndex = 0;
+                }
+                else lvMain.SelectedIndex++;
+            }
         }
 
         public GuiViewType ViewType => GuiViewType.TilePanel;
 
         public LayoutAnchorable ParentAncorable { get; set; }
         public LayoutDocument ParentDocument { get; set; }
+
+
+        #region Public
+
+        #endregion
 
         private void MapReloadedHandler(object sender, EventArgs e)
         {
@@ -78,7 +111,9 @@ namespace RelertSharp.Wpf.Views
             }
             void loadFav()
             {
+                TileSetTreeVm root = new TileSetTreeVm("Favourite");
 
+                trvMain.Items.Add(root);
             }
             loadGeneral();
             loadCustom();
@@ -90,6 +125,25 @@ namespace RelertSharp.Wpf.Views
             if (trvMain.SelectedItem is TileSetTreeVm vm)
             {
                 lvMain.ItemsSource = vm.SubTileCollection;
+                if (lvMain.Items.Count > 0)
+                {
+                    lvMain.SelectedIndex = 0;
+                }
+            }
+        }
+
+        private bool _isTileSelectingLocked = false;
+        private void SelectTileChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!_isTileSelectingLocked)
+            {
+                MouseState.SetState(PanelMouseState.TileBrush);
+                if (lvMain.SelectedItem is TileSetItemVm vm)
+                {
+                    TilePaintBrush.ResumeBrush();
+                    TilePaintBrush.LoadTileBrush(vm);
+                    Engine.Api.EngineApi.InvokeRedraw();
+                }
             }
         }
     }

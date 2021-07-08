@@ -140,50 +140,5 @@ namespace RelertSharp.MapStructure
         }
         #endregion
         #endregion
-        //public TeamScriptGroup NewScript()
-        //{
-        //    TeamScriptGroup group = Scripts.NewScript(NewID);
-        //    return group;
-        //}
-        //public TeamScriptGroup NewScript(TeamScriptGroup src)
-        //{
-        //    TeamScriptGroup g = Scripts.NewScript(src, NewID);
-        //    return g;
-        //}
-        //public void RemoveScript(TeamScriptGroup group)
-        //{
-        //    Scripts.Remove(group.Id);
-        //    DelID(group.Id);
-        //}
-        //public TaskforceItem NewTaskforce()
-        //{
-        //    TaskforceItem t = Taskforces.NewTaskforce(NewID);
-        //    return t;
-        //}
-        //public void RemoveTaskforce(TaskforceItem item)
-        //{
-        //    Taskforces.Remove(item.Id);
-        //    DelID(item.Id);
-        //}
-        //public TeamItem NewTeam()
-        //{
-        //    TeamItem t = Teams.NewTeam(NewID);
-        //    return t;
-        //}
-        //public void RemoveTeam(TeamItem item)
-        //{
-        //    Teams.Remove(item.Id);
-        //    DelID(item.Id);
-        //}
-        //public AITriggerItem NewAITrigger()
-        //{
-        //    AITriggerItem t = AiTriggers.NewAITrigger(NewID);
-        //    return t;
-        //}
-        //public void RemoveAITrigger(AITriggerItem item)
-        //{
-        //    AiTriggers.Remove(item.Id);
-        //    DelID(item.Id);
-        //}
     }
 }

@@ -268,6 +268,14 @@ namespace RelertSharp.FileSystem
         {
             return ExtraZData[_index];
         }
+        public void GetDeltaPosition(out int dx, out int dy, out int dz)
+        {
+            int nx = X / 30;
+            int ny = Y / 15;
+            dx = (nx + ny) / 2;
+            dy = (ny - nx) / 2;
+            dz = Height;
+        }
         #endregion
 
 

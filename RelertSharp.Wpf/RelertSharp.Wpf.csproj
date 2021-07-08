@@ -94,6 +94,8 @@
     <Compile Include="MapEngine\Helper\MouseState.cs" />
     <Compile Include="MapEngine\Helper\PaintBrush.cs" />
     <Compile Include="MapEngine\Helper\Selector.cs" />
+    <Compile Include="MapEngine\Helper\TilePaintBrush.cs" />
+    <Compile Include="MapEngine\KeyHandler.cs" />
     <Compile Include="MapEngine\MainPanel.xaml.cs">
       <DependentUpon>MainPanel.xaml</DependentUpon>
     </Compile>

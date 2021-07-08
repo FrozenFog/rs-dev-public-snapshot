@@ -21,13 +21,14 @@ namespace RelertSharp.Wpf.ViewModel
         {
             data = set;
             Title = set.SetName;
+            int idx = 0;
             foreach (string name in set.GetNames())
             {
                 string filename = TileDictionary.GetFrameworkNameSafe(name);
                 if (filename.IsNullOrEmpty()) continue;
                 TmpFile file = new TmpFile(GlobalVar.GlobalDir.GetRawByte(filename), filename);
                 file.LoadColor(GlobalVar.TilePalette);
-                subtiles.Add(new TileSetItemVm(file.AssembleImage));
+                subtiles.Add(new TileSetItemVm(file, set.Offset + idx++));
             }
         }
 

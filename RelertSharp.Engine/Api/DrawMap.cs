@@ -70,6 +70,10 @@ namespace RelertSharp.Engine.Api
                     break;
             }
         }
+        public static void DrawTile(Tile t)
+        {
+            EngineMain.DrawTile(t);
+        }
         public static void DisposeMap()
         {
             CppExtern.Scene.ClearSceneObjects();
