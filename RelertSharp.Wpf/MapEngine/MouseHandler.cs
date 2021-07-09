@@ -24,7 +24,6 @@ namespace RelertSharp.Wpf.MapEngine
         {
             get { return !rmbMoving && !selecting; }
         }
-        private bool isHold = false;
         private Point downPos, downPosOrg;
         private MouseButton downBtn;
         private Stopwatch watchClick = new Stopwatch();

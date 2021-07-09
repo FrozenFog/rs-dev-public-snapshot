@@ -107,7 +107,11 @@ namespace RelertSharp.Common.Config.Model
         public TriggerInfoTraceType TraceTarget
         {
             get { if (_traceType.IsNullOrEmpty()) return TriggerInfoTraceType.None; return _TraceTarget; }
-            set { _TraceTarget = value; }
+            set
+            {
+                _TraceTarget = value;
+                if (value != TriggerInfoTraceType.None) _traceType = value.ToString();
+            }
         }
         private string _parsetype;
         [XmlAttribute("parseType")]
@@ -129,7 +133,11 @@ namespace RelertSharp.Common.Config.Model
         public ParamParseMethod ParseMethod
         {
             get { if (_parsetype.IsNullOrEmpty()) return ParamParseMethod.Plain; return _ParseMethod; }
-            set { _ParseMethod = value; }
+            set
+            {
+                _ParseMethod = value;
+                if (value != ParamParseMethod.Plain) _parsetype = value.ToString();
+            }
         }
         private string _fmtType;
         [XmlAttribute("fmtType")]
@@ -151,7 +159,11 @@ namespace RelertSharp.Common.Config.Model
         public ParamFormatType ParamFormat
         {
             get { if (_fmtType.IsNullOrEmpty()) return ParamFormatType.KvValue; return _fmt; }
-            set { _fmt = value; }
+            set
+            {
+                _fmt = value;
+                if (value != ParamFormatType.KvValue) _fmtType = value.ToString();
+            }
         }
         [XmlAttribute("label")]
         public string Label { get; set; }

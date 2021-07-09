@@ -39,6 +39,20 @@ namespace RelertSharp.Wpf.ViewModel
         {
             get { return subtiles; }
         }
+        public int SetIndex { get { return data.SetIndex; } }
+        public bool IsCustomRoot { get; set; }
+        public bool IsCustom
+        {
+            get
+            {
+                IBaseTreeVm<TileSet> ancestor = this;
+                while (ancestor.Ancestor != null)
+                {
+                    ancestor = ancestor.Ancestor;
+                }
+                return (ancestor as TileSetTreeVm).IsCustomRoot;
+            }
+        }
         #endregion
     }
 }

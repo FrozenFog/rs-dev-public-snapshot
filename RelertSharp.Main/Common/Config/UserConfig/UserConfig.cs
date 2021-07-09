@@ -40,6 +40,18 @@ namespace RelertSharp.Common
             serializer.Serialize(writer, data);
             writer.Close();
         }
+        public void SetGuiStatus(double x, double y, double w, double h, bool maximized)
+        {
+            GuiStatus.PosX = x;
+            GuiStatus.PosY = y;
+            GuiStatus.Width = w;
+            GuiStatus.Height = h;
+            GuiStatus.IsMaximized = maximized;
+        }
+        public bool IsGuiValid()
+        {
+            return GuiStatus.Width > 5 && GuiStatus.Height > 5;
+        }
         #endregion
 
 

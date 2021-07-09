@@ -4,6 +4,7 @@ using RelertSharp.Wpf;
 using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.MapEngine.Helper;
 using RelertSharp.Wpf.ViewModel;
+using RelertSharp.Common.Config.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +26,9 @@ namespace RelertSharp.Wpf.Views
     /// <summary>
     /// TileOverlayView.xaml 的交互逻辑
     /// </summary>
-    public partial class TilePanelView : UserControl, IRsView
+    public partial class TilePanelView : UserControl, IFinalizeableView
     {
+        private bool _isLoaded = false;
         public TilePanelView()
         {
             InitializeComponent();
@@ -64,11 +66,52 @@ namespace RelertSharp.Wpf.Views
         public LayoutAnchorable ParentAncorable { get; set; }
         public LayoutDocument ParentDocument { get; set; }
 
+        public void DoFinalization()
+        {
+            if (_isLoaded)
+            {
+                FavouriteItemTree packAsFavItem(TileSetTreeVm tree)
+                {
+                    var dest = new FavouriteItemTree()
+                    {
+                        Title = tree.Title,
+                    };
+                    if (!tree.IsTree)
+                    {
+                        dest.Value = tree.SetIndex.ToString();
+                        dest.Type = MapObjectType.Tile;
+                    }
+                    foreach (TileSetTreeVm vm in tree.Items)
+                    {
+                        var item = packAsFavItem(vm);
+                        dest.Items.Add(item);
+                    }
+                    return dest;
+                }
+                GlobalVar.GlobalConfig.UserConfig.FavouriteTileSet.Items.Clear();
+                foreach (TileSetTreeVm vm in trvMain.Items)
+                {
+                    if (vm.IsCustomRoot)
+                    {
+                        foreach (TileSetTreeVm tree in vm.Items)
+                        {
+                            var favItem = packAsFavItem(tree);
+                            GlobalVar.GlobalConfig.UserConfig.FavouriteTileSet.Items.Add(favItem);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
 
         #region Public
 
         #endregion
 
+
+        #region Handler
+        #region Load & selection
         private void MapReloadedHandler(object sender, EventArgs e)
         {
             trvMain.Items.Clear();
@@ -111,13 +154,38 @@ namespace RelertSharp.Wpf.Views
             }
             void loadFav()
             {
-                TileSetTreeVm root = new TileSetTreeVm("Favourite");
-
+                TileSetTreeVm extractAsVm(FavouriteItemTree src)
+                {
+                    TileSetTreeVm vm;
+                    if (src.Type == MapObjectType.Tile)
+                    {
+                        int.TryParse(src.Value, out int idxSet);
+                        MapStructure.TileSet set = GlobalVar.TileDictionary.GetTileSetFromIndex(idxSet);
+                        vm = new TileSetTreeVm(set);
+                    }
+                    else vm = new TileSetTreeVm(src.Title);
+                    foreach (var fav in src.Items)
+                    {
+                        TileSetTreeVm subVm = extractAsVm(fav);
+                        vm.AddItem(subVm);
+                    }
+                    return vm;
+                }
+                TileSetTreeVm root = new TileSetTreeVm("Favourite")
+                {
+                    IsCustomRoot = true
+                };
+                foreach (var favTree in GlobalVar.GlobalConfig.UserConfig.FavouriteTileSet.Items)
+                {
+                    var vm = extractAsVm(favTree);
+                    root.AddItem(vm);
+                }
                 trvMain.Items.Add(root);
             }
             loadGeneral();
             loadCustom();
             loadFav();
+            _isLoaded = true;
         }
 
         private void SelectedSetChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -146,5 +214,12 @@ namespace RelertSharp.Wpf.Views
                 }
             }
         }
+        #endregion
+
+
+        #region Menu
+
+        #endregion
+        #endregion
     }
 }

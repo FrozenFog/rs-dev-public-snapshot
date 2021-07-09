@@ -30,4 +30,9 @@ namespace RelertSharp.Wpf.Views
         LayoutAnchorable ParentAncorable { get; set; }
         LayoutDocument ParentDocument { get; set; }
     }
+
+    interface IFinalizeableView : IRsView
+    {
+        void DoFinalization();
+    }
 }

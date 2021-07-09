@@ -11,9 +11,9 @@ namespace RelertSharp.Common.Config.Model
     public class GuiStatus
     {
         [XmlElement]
-        public int PosX { get; set; }
+        public double PosX { get; set; }
         [XmlElement]
-        public int PosY { get; set; }
+        public double PosY { get; set; }
         [XmlElement]
         public bool IsMaximized { get; set; }
         [XmlElement]

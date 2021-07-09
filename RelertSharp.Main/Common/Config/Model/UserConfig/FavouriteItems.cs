@@ -44,9 +44,13 @@ namespace RelertSharp.Common.Config.Model
         public MapObjectType Type
         {
             get { if (_type.IsNullOrEmpty()) return MapObjectType.Undefined; return _Type; }
-            set { _Type = value; }
+            set
+            {
+                _Type = value;
+                if (value != MapObjectType.Undefined) _type = value.ToString();
+            }
         }
         [XmlArrayItem("item")]
-        public List<FavouriteItemTree> Items { get; set; }
+        public List<FavouriteItemTree> Items { get; set; } = new List<FavouriteItemTree>();
     }
 }

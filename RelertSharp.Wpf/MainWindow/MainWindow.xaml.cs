@@ -80,9 +80,22 @@ namespace RelertSharp.Wpf
             LoadAllTools();
             AddReciveListener();
             BindNavigation();
+            InitializeGuiStatus();
         }
 
         #region Initialization
+        private void InitializeGuiStatus()
+        {
+            if (GlobalVar.GlobalConfig.UserConfig.IsGuiValid())
+            {
+                var gui = GlobalVar.GlobalConfig.UserConfig.GuiStatus;
+                Left = gui.PosX;
+                Top = gui.PosY;
+                Width = gui.Width;
+                Height = gui.Height;
+                if (gui.IsMaximized) WindowState = WindowState.Maximized;
+            }
+        }
         private void LoadAllTools()
         {
             FieldInfo[] fields = typeof(MainWindow).GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
@@ -217,6 +230,7 @@ namespace RelertSharp.Wpf
 
 
         #region Handler
+        #region Loaded & Closed
         private void WindowLoadedInitializer(object sender, RoutedEventArgs e)
         {
             GuiUtil.MonitorScale = this.GetScale();
@@ -232,6 +246,23 @@ namespace RelertSharp.Wpf
             PaintBrush.SetConfig(cfg, filter);
             objectBrush.BindBrushConfig(cfg, filter);
         }
+        private void MainWindowClosed(object sender, EventArgs e)
+        {
+            /// finalize view
+            FieldInfo[] fields = typeof(MainWindow).GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+            foreach (FieldInfo info in fields)
+            {
+                RsViewComponentAttribute attr = info.GetCustomAttribute<RsViewComponentAttribute>();
+                if (attr != null && info.GetValue(this) is IFinalizeableView view)
+                {
+                    view.DoFinalization();
+                }
+            }
+
+            /// save Gui
+            GlobalVar.GlobalConfig.UserConfig.SetGuiStatus(Left, Top, Width, Height, WindowState == WindowState.Maximized);
+        }
+        #endregion
         #endregion
     }
 }
