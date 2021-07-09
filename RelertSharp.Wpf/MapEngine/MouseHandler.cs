@@ -17,7 +17,7 @@ namespace RelertSharp.Wpf.MapEngine
     public partial class MainPanel
     {
         #region Head
-        private const int CLICK_INTERVAL = 50;
+        private const int CLICK_INTERVAL = 300;
         private bool rmbMoving = false;
         private bool selecting = false;
         private bool NeedIndicating
@@ -25,9 +25,9 @@ namespace RelertSharp.Wpf.MapEngine
             get { return !rmbMoving && !selecting; }
         }
         private bool isHold = false;
-        private DelayedAction holdClickAction;
         private Point downPos, downPosOrg;
         private MouseButton downBtn;
+        private Stopwatch watchClick = new Stopwatch();
         #endregion
 
 
@@ -53,24 +53,22 @@ namespace RelertSharp.Wpf.MapEngine
         {
             if (drew)
             {
-                holdClickAction.Stop();
+                watchClick.Stop();
                 EngineApi.InvokeLock();
-                if (isHold)
-                {
-                    Point p = e.GetPosition(this);
-                    Point pOrg = e.GetPosition(this);
-                    GuiUtil.ScaleWpfMousePoint(ref p);
-                    if (e.ChangedButton == MouseButton.Left) this.LmbUp(p, pOrg);
-                    else if (e.ChangedButton == MouseButton.Right) this.RmbUp(p, pOrg);
-                    else if (e.ChangedButton == MouseButton.Middle) this.MmbUp(p, pOrg);
-                    isHold = false;
-                }
-                else
+
+                if (watchClick.ElapsedMilliseconds < CLICK_INTERVAL)
                 {
                     if (downBtn == MouseButton.Left) this.LmbClick(downPos, downPosOrg);
                     else if (downBtn == MouseButton.Right) this.RmbClick(downPos, downPosOrg);
                     else if (downBtn == MouseButton.Middle) this.MmbClick(downPos, downPosOrg);
                 }
+                Point p = e.GetPosition(this);
+                Point pOrg = e.GetPosition(this);
+                GuiUtil.ScaleWpfMousePoint(ref p);
+                if (e.ChangedButton == MouseButton.Left) this.LmbUp(p, pOrg);
+                else if (e.ChangedButton == MouseButton.Right) this.RmbUp(p, pOrg);
+                else if (e.ChangedButton == MouseButton.Middle) this.MmbUp(p, pOrg);
+
                 EngineApi.InvokeUnlock();
             }
         }
@@ -79,13 +77,18 @@ namespace RelertSharp.Wpf.MapEngine
         {
             if (drew)
             {
+                watchClick.Restart();
                 Point p = e.GetPosition(this);
                 Point pOrg = e.GetPosition(this);
                 GuiUtil.ScaleWpfMousePoint(ref p);
                 downPos = p;
                 downPosOrg = pOrg;
                 downBtn = e.ChangedButton;
-                holdClickAction.Restart();
+                EngineApi.InvokeLock();
+                if (downBtn == MouseButton.Left) this.LmbDown(downPos, downPosOrg);
+                else if (downBtn == MouseButton.Right) this.RmbDown(downPos, downPosOrg);
+                else if (downBtn == MouseButton.Middle) this.MmbDown(downPos, downPosOrg);
+                EngineApi.InvokeUnlock();
             }
         }
 
@@ -110,16 +113,6 @@ namespace RelertSharp.Wpf.MapEngine
                 }
                 EngineApi.InvokeUnlock();
             }
-        }
-
-        private void MouseHoldToClick()
-        {
-            isHold = true;
-            EngineApi.InvokeLock();
-            if (downBtn == MouseButton.Left) this.LmbDown(downPos, downPosOrg);
-            else if (downBtn == MouseButton.Right) this.RmbDown(downPos, downPosOrg);
-            else if (downBtn == MouseButton.Middle) this.MmbDown(downPos, downPosOrg);
-            EngineApi.InvokeUnlock();
         }
         #endregion
 

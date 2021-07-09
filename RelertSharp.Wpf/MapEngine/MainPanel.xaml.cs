@@ -54,8 +54,7 @@ namespace RelertSharp.Wpf.MapEngine
         public MainPanel()
         {
             InitializeComponent();
-            holdClickAction = new DelayedAction(null, MouseHoldToClick, 100);
-            keyClickAction = new DelayedAction(null, KeyHoldToClick, 80);
+            keyClickAction = new DelayedAction(null, KeyHoldToClick, CLICK_INTERVAL);
             GlobalVar.MapDocumentRedrawRequested += MapRedrawHandler;
             GlobalVar.MapDocumentLoaded += MapReloadedHandler;
             EngineApi.RedrawRequested += RedrawInvokeHandler;
