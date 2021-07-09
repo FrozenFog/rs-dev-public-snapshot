@@ -161,7 +161,7 @@ namespace RelertSharp.Wpf.Views
 
         private TriggerTreeItemVm GetItemAtMouse(ItemsControl src, MouseButtonEventArgs e)
         {
-            TextBlock treeitem = src.GetItemAtMouse<TextBlock>(e);
+            TextBlock treeitem = src.GetItemControlAtMouse<TextBlock>(e);
             if (treeitem != null) return treeitem.DataContext as TriggerTreeItemVm;
             return null;
         }

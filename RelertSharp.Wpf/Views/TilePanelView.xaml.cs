@@ -20,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RelertSharp.Wpf.Dialogs;
 
 namespace RelertSharp.Wpf.Views
 {
@@ -29,6 +30,7 @@ namespace RelertSharp.Wpf.Views
     public partial class TilePanelView : UserControl, IFinalizeableView
     {
         private bool _isLoaded = false;
+        private TileSetTreeVm vmFav;
         public TilePanelView()
         {
             InitializeComponent();
@@ -181,6 +183,7 @@ namespace RelertSharp.Wpf.Views
                     root.AddItem(vm);
                 }
                 trvMain.Items.Add(root);
+                vmFav = root;
             }
             loadGeneral();
             loadCustom();
@@ -217,9 +220,83 @@ namespace RelertSharp.Wpf.Views
         #endregion
 
 
-        #region Menu
-
+        #region Mouse
+        private bool isAddInvoked = false;
+        private void Menu_AddToDesignated(object sender, RoutedEventArgs e)
+        {
+            if (isAddInvoked && sender is MenuItem src && src.DataContext is TileSetTreeVm vm && trvMain.SelectedItem is TileSetTreeVm target)
+            {
+                vm.AddItem(new TileSetTreeVm(target));
+                isAddInvoked = false;
+            }
+        }
+        private void PreviewRight(object sender, MouseButtonEventArgs e)
+        {
+            bool canDel = false, canFav = false, canAdd = false;
+            menuAddTo.Items.Clear();
+            if (trvMain.GetItemAtMouse<TileSetTreeVm, TextBlock>(e) is TileSetTreeVm vm)
+            {
+                MenuItem castAsMenu(TileSetTreeVm src)
+                {
+                    MenuItem item = new MenuItem();
+                    item.Header = src.Title;
+                    item.DataContext = src;
+                    if (src.IsTree)
+                    {
+                        item.Click += Menu_AddToDesignated;
+                    }
+                    foreach (TileSetTreeVm sub in src.Items)
+                    {
+                        if (sub.IsTree)
+                        {
+                            item.Items.Add(castAsMenu(sub));
+                        }
+                    }
+                    return item;
+                }
+                vm.IsSelected = true;
+                canDel = vm.IsCustom && !vm.IsCustomRoot;
+                canFav = !canDel && !vm.IsTree;
+                canAdd = vm.IsCustom;
+                menuAddTo.Items.Add(castAsMenu(vmFav));
+                isAddInvoked = true;
+            }
+            menuDelFav.IsEnabled = canDel;
+            menuAddTo.IsEnabled = canFav;
+            menuAddGroup.IsEnabled = canAdd;
+        }
         #endregion
+
+
+        #region Menu
+        private void Menu_AddFavGroup(object sender, RoutedEventArgs e)
+        {
+            DlgNameInput dlg = new DlgNameInput();
+            if (dlg.ShowDialog().Value && trvMain.SelectedItem is TileSetTreeVm dest)
+            {
+                string name = dlg.ResultName;
+                TileSetTreeVm vm = new TileSetTreeVm(name);
+                if (dest.IsCustomRoot) vmFav.AddItem(vm);
+                else if (dest.IsCustom)
+                {
+                    if (dest.IsTree) dest.AddItem(vm);
+                    else dest.Ancestor.AddItem(vm);
+                }
+            }
+        }
+
+        private void Menu_DelFav(object sender, RoutedEventArgs e)
+        {
+            if (GuiUtil.YesNoWarning("All item inside will be removed.\nAre you sure?"))
+            {
+                if (trvMain.SelectedItem is TileSetTreeVm vm)
+                {
+                    vm.RemoveFromAncestor();
+                }
+            }
+        }
+        #endregion
+
         #endregion
     }
 }

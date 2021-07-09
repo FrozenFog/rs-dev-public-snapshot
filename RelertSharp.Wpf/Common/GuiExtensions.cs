@@ -51,7 +51,7 @@ namespace System.Windows.Controls
         }
         public static TItem GetItemAtMouse<TItem, TTemplateControl>(this ItemsControl src, MouseButtonEventArgs e) where TTemplateControl : FrameworkElement where TItem : class
         {
-            TTemplateControl item = src.GetItemAtMouse<TTemplateControl>(e);
+            TTemplateControl item = src.GetItemControlAtMouse<TTemplateControl>(e);
             if (item != null) return item.DataContext as TItem;
             return null;
         }
@@ -259,7 +259,7 @@ namespace RelertSharp.Wpf
 
 
         #region Items container
-        public static TCast GetItemAtMouse<TCast>(this ItemsControl src, MouseButtonEventArgs e) where TCast : class
+        public static TCast GetItemControlAtMouse<TCast>(this ItemsControl src, MouseButtonEventArgs e) where TCast : class
         {
             Point p = e.GetPosition(src);
             TCast dest = null;

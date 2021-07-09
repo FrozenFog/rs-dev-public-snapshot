@@ -116,7 +116,7 @@ namespace RelertSharp.Wpf.Views
 
         private HouseListVm GetItemAtMouse(ItemsControl src, MouseButtonEventArgs e)
         {
-            TextBlock item = src.GetItemAtMouse<TextBlock>(e);
+            TextBlock item = src.GetItemControlAtMouse<TextBlock>(e);
             if (item != null) return item.DataContext as HouseListVm;
             return null;
         }

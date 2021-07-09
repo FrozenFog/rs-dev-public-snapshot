@@ -11,7 +11,7 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <TreeView x:Name="trvMain" Margin="10" Style="{DynamicResource trvDark}" SelectedItemChanged="SelectedSetChanged">
+        <TreeView x:Name="trvMain" Margin="10" Style="{DynamicResource trvDark}" SelectedItemChanged="SelectedSetChanged" PreviewMouseRightButtonDown="PreviewRight">
             <TreeView.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#0078D7" />
             </TreeView.Resources>
@@ -29,6 +29,14 @@
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
+            <TreeView.ContextMenu>
+                <ContextMenu Style="{DynamicResource cmenuDark}">
+                    <MenuItem Name="menuAddGroup" Header="Add favourite group" Click="Menu_AddFavGroup"/>
+                    <MenuItem Name="menuDelFav" Header="Delete favourite group" Click="Menu_DelFav"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
+                    <MenuItem Name="menuAddTo" Header="Add to favourite"/>
+                </ContextMenu>
+            </TreeView.ContextMenu>
         </TreeView>
         <ListView x:Name="lvMain" Grid.Column="1" Margin="10" Style="{DynamicResource lbxDark}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" DataContext="{x:Type ViewModel:TileSetItemVm}" SelectionChanged="SelectTileChanged">
             <ItemsControl.ItemsPanel>

@@ -31,6 +31,20 @@ namespace RelertSharp.Wpf.ViewModel
                 subtiles.Add(new TileSetItemVm(file, set.Offset + idx++));
             }
         }
+        public TileSetTreeVm(TileSetTreeVm src)
+        {
+            data = src.data;
+            Title = src.Title;
+            int idx = 0;
+            foreach (string name in data.GetNames())
+            {
+                string filename = TileDictionary.GetFrameworkNameSafe(name);
+                if (filename.IsNullOrEmpty()) continue;
+                TmpFile file = new TmpFile(GlobalVar.GlobalDir.GetRawByte(filename), filename);
+                file.LoadColor(GlobalVar.TilePalette);
+                subtiles.Add(new TileSetItemVm(file, data.Offset + idx++));
+            }
+        }
 
 
         #region Calls
