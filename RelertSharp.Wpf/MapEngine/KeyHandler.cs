@@ -1,10 +1,12 @@
 ﻿using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.MapEngine.Helper;
+using RelertSharp.Engine.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace RelertSharp.Wpf.MapEngine
@@ -13,14 +15,26 @@ namespace RelertSharp.Wpf.MapEngine
     {
         private DelayedAction keyClickAction;
         #region Handler Firstpass
+        private bool isLoaded = false;
+        private void PanelLoaded(object sender, RoutedEventArgs e)
+        {
+            if (!isLoaded)
+            {
+                var parent = Window.GetWindow(this);
+                parent.PreviewKeyDown += HandleKeyDown;
+                parent.PreviewKeyUp += HandleKeyUp;
+                isLoaded = true;
+            }
+        }
         private void HandleKeyDown(object sender, KeyEventArgs e)
         {
-            if (drew)
+            if (drew && ParentDocument.IsActive)
             {
                 switch (MouseState.State)
                 {
                     case PanelMouseState.TileBrush:
                         TileBrushKeyHandler(e);
+                        EngineApi.InvokeRedraw();
                         e.Handled = true;
                         break;
                 }
@@ -29,7 +43,7 @@ namespace RelertSharp.Wpf.MapEngine
 
         private void HandleKeyUp(object sender, KeyEventArgs e)
         {
-            if (drew)
+            if (drew && ParentDocument.IsActive)
             {
 
             }
