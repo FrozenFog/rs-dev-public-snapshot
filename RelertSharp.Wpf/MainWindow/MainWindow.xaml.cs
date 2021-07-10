@@ -263,6 +263,7 @@ namespace RelertSharp.Wpf
             GlobalVar.GlobalConfig.UserConfig.SetGuiStatus(Left, Top, Width, Height, WindowState == WindowState.Maximized);
         }
         #endregion
+
         #endregion
     }
 }

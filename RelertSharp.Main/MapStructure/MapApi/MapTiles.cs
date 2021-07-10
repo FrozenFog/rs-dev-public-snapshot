@@ -48,7 +48,7 @@ namespace RelertSharp.MapStructure
             if (Map.TilesData[src] is Tile org)
             {
                 org.SetTileTo(src.TileIndex, src.SubIndex);
-                org.SetHeightTo(src.Height);
+                org.SetHeightTo(src.RealHeight);
                 org.Redraw();
             }
         }
@@ -167,6 +167,18 @@ namespace RelertSharp.MapStructure
                 }
             }
             hiddenTiles.Clear();
+        }
+        #endregion
+
+
+        #region Framework & Flat Ground
+        public static void SetFramework(bool enable)
+        {
+            if (IsValid) Map.TilesData.SwitchFramework(enable);
+        }
+        public static void SetFlatGround(bool enable)
+        {
+            if (IsValid) Map.TilesData.SwitchFlatGround(enable);
         }
         #endregion
     }

@@ -20,7 +20,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         private static List<I3dLocateable> tileSetOffset = new List<I3dLocateable>();
         private static I3dLocateable prevPos;
         private static Pnt3 offset;
-        private static bool isLat, isSuspended;
+        private static bool isLat, isSuspended, isFlat;
 
         private static TileLayer Tiles { get { return GlobalVar.CurrentMapDocument.Map.TilesData; } }
 
@@ -69,6 +69,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             {
                 Tile t = new Tile(src.TileIndex, subtile.SubIndex, INIT_X + subtile.Dx, INIT_Y + subtile.Dy, subtile.Dz);
                 EngineApi.DrawTile(t);
+                t.FlatToGround(isFlat);
                 tileSetOffset.Add(new Pnt3(subtile.Dx, subtile.Dy, subtile.Dz));
                 body.Add(t);
             }
@@ -78,6 +79,10 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         }
         public static bool MoveTileBrushTo(I3dLocateable pos)
         {
+            /// pre-process height(flat ground or not)
+            if (Tiles[pos] is Tile mapPosition) pos.Z = mapPosition.RealHeight;
+
+            /// do job
             EngineApi.InvokeLock();
             foreach (Tile t in under) t.RevealAllTileImg();
             foreach (Tile t in surroundLat) t.Dispose();
@@ -93,8 +98,9 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 /// otherwise reveal and move
                 if (Tiles[tileDest] is Tile)
                 {
-                    body[i].MoveTo(tileDest);
+                    body[i].MoveTo(tileDest, isFlat);
                     body[i].RevealAllTileImg();
+                    body[i].FlatToGround(isFlat);
                 }
                 else
                 {
@@ -152,6 +158,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             offset = new Pnt3();
         }
         #endregion
+        #region Brush suspending
         public static void SuspendBrush()
         {
             if (!isSuspended)
@@ -174,6 +181,20 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 isSuspended = false;
             }
         }
+        #endregion
+        #region Framework & Flat
+        public static void SwitchToFramework(bool enable)
+        {
+            foreach (Tile t in body) t.SwitchToFramework(enable);
+            foreach (Tile t in surroundLat) t.SwitchToFramework(enable);
+        }
+        public static void SwitchToFlatGround(bool enable)
+        {
+            foreach (Tile t in body) t.FlatToGround(enable);
+            foreach (Tile t in surroundLat) t.FlatToGround(enable);
+            isFlat = enable;
+        }
+        #endregion
         #endregion
 
         public static bool LatEnable { get; set; } = true;

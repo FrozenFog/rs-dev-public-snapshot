@@ -27,6 +27,9 @@
                 <MenuItem Header="Exit"/>
             </MenuItem>
             <MenuItem Header="Edit">
+                <MenuItem Header="Switch To Framework" Click="MenuSwitchFramework" IsCheckable="True"/>
+                <MenuItem Header="Switch To Flat" Click="MenuSwitchFlat" IsCheckable="True"/>
+                <Separator Style="{DynamicResource sepDark}"/>
                 <MenuItem Header="Clear Map"/>
             </MenuItem>
             <MenuItem Header="Views">

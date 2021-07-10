@@ -1,17 +1,22 @@
 ﻿using RelertSharp.Wpf.Common;
 using RelertSharp.Common;
+using RelertSharp.MapStructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
 using AvalonDock.Layout;
 using AvalonDock.Layout.Serialization;
 using System.Xml;
 using System.IO;
 using RelertSharp.Wpf.Views;
+using RelertSharp.Wpf.MapEngine.Helper;
+using RelertSharp.Engine.Api;
+using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
+using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
+using System.Windows.Controls;
 
 namespace RelertSharp.Wpf
 {
@@ -41,6 +46,29 @@ namespace RelertSharp.Wpf
         private void DebugClick2(object sender, RoutedEventArgs e)
         {
             GlobalVar.CurrentMapDocument.SaveMapAs("D://", "testarele.map");
+        }
+        #endregion
+
+
+        #region Edits
+        private void MenuSwitchFramework(object sender, RoutedEventArgs e)
+        {
+            EngineApi.InvokeLock();
+            bool enable = (sender as MenuItem).IsChecked;
+            MapApi.SetFramework(enable);
+            TilePaintBrush.SwitchToFramework(enable);
+            EngineApi.InvokeUnlock();
+            EngineApi.InvokeRedraw();
+        }
+
+        private void MenuSwitchFlat(object sender, RoutedEventArgs e)
+        {
+            EngineApi.InvokeLock();
+            bool enable = (sender as MenuItem).IsChecked;
+            MapApi.SetFlatGround(enable);
+            TilePaintBrush.SwitchToFlatGround(enable);
+            EngineApi.InvokeUnlock();
+            EngineApi.InvokeRedraw();
         }
         #endregion
 

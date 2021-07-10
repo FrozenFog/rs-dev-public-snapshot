@@ -18,6 +18,7 @@ namespace RelertSharp.MapStructure
         private Dictionary<int, Tile> data = new Dictionary<int, Tile>();
         private List<int> indexs = new List<int>();
         private byte bottomLevel = 255;
+        private bool isFramework, isFlat;
 
 
         #region Ctor - TileLayer
@@ -73,39 +74,7 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - TileLayer
-        //public Bitmap GenerateShot(Rectangle rect)
-        //{
-        //    int width = rect.Width;
-        //    int height = rect.Height;
-        //    Bitmap bmp = new Bitmap(width * 2, height * 2);
-        //    int xmin = 1;
-        //    int ymax = width;
-        //    for (int j = 0; j < height; j++)
-        //    {
-        //        int x = xmin;
-        //        int y = ymax;
-        //        for (int i = 0; i<width; i++)
-        //        {
-        //            SetTilePixelInPreview(bmp, this[x, y], 2 * i, 2 * j);
-        //            x++; y--;
-        //        }
-        //        xmin++; ymax++;
-        //    }
-        //    xmin = 2;
-        //    ymax = width;
-        //    for (int j = 0; j < height; j++)
-        //    {
-        //        int x = xmin;
-        //        int y = ymax;
-        //        for (int i = 0; i < width - 1; i++)
-        //        {
-        //            SetTilePixelInPreview(bmp, this[x, y], 2 * i + 1, 2 * j + 1);
-        //            x++;y--;
-        //        }
-        //        xmin++; ymax++;
-        //    }
-        //    return bmp;
-        //}
+        #region Tile finding
         public IEnumerable<Tile> GetNeighbor(I2dLocateable src)
         {
             List<Tile> result = new List<Tile>();
@@ -159,7 +128,7 @@ namespace RelertSharp.MapStructure
                 result.Add(down);
                 directions.Add(WallDirection.CornerOfSouth);
             }
-            if (this[pos - Pnt.One]is Tile up)
+            if (this[pos - Pnt.One] is Tile up)
             {
                 result.Add(up);
                 directions.Add(WallDirection.CornerOfNorth);
@@ -176,6 +145,24 @@ namespace RelertSharp.MapStructure
             }
             return result;
         }
+        public bool HasTileOn(I3dLocateable pos)
+        {
+            Tile t = this[pos.X, pos.Y];
+            if (t != null) return t.Z == pos.Z;
+            return false;
+        }
+        public bool HasTileOn(I2dLocateable tile)
+        {
+            return this[tile] != null;
+        }
+        public bool HasTileOn(Vec3 pos)
+        {
+            Tile t = this[pos.ToCoord()];
+            if (t != null) return t.Z == pos.Z;
+            return false;
+        }
+        #endregion
+        #region Add / remove objects
         public void AddObjectOnTile(IMapObject src)
         {
             this[src]?.AddObject(src);
@@ -192,26 +179,12 @@ namespace RelertSharp.MapStructure
         {
             this[obj]?.RemoveObject(obj);
         }
+        #endregion
+        #region Saving io
         public void FixEmptyTiles(int width, int height)
         {
             LayTileWeb(1, width, width, height);
             LayTileWeb(2, width, width - 1, height);
-        }
-        public bool HasTileOn(I3dLocateable pos)
-        {
-            Tile t = this[pos.X, pos.Y];
-            if (t != null) return t.Z == pos.Z;
-            return false;
-        }
-        public bool HasTileOn(I2dLocateable tile)
-        {
-            return this[tile] != null;
-        }
-        public bool HasTileOn(Vec3 pos)
-        {
-            Tile t = this[pos.ToCoord()];
-            if (t != null) return t.Z == pos.Z;
-            return false;
         }
         public void Sort()
         {
@@ -288,6 +261,22 @@ namespace RelertSharp.MapStructure
             byte[] lzoPack = PackEncoding.EncodeToPack(preCompress, PackType.IsoMapPack);
             return Convert.ToBase64String(lzoPack);
         }
+        #endregion
+        #region Framework & Flat Ground
+        internal void SwitchFramework(bool enable)
+        {
+            isFramework = enable;
+            foreach (Tile t in this)
+            {
+                t.SwitchToFramework(enable);
+            }
+        }
+        internal void SwitchFlatGround(bool enable)
+        {
+            isFlat = enable;
+            foreach (Tile t in this) t.FlatToGround(enable);
+        }
+        #endregion
         #region Enumerator
         public IEnumerator<Tile> GetEnumerator()
         {
@@ -349,6 +338,8 @@ namespace RelertSharp.MapStructure
         {
             get { return bottomLevel; }
         }
+        public bool IsFrameworkOn { get { return isFramework; } }
+        public bool IsFlatGroundOn { get { return isFlat; } }
         #endregion
     }
 
@@ -555,12 +546,20 @@ namespace RelertSharp.MapStructure
                 newtile.AddObject(obj);
             }
         }
-        public void MoveTo(I3dLocateable pos)
+        public void MoveTo(I3dLocateable pos, bool flatEnable)
         {
             X = pos.X;
             Y = pos.Y;
-            Z = pos.Z;
-            SceneObject?.MoveTo(pos);
+            originalHeight = pos.Z;
+            if (flatEnable)
+            {
+                MoveTileTo(pos, 0, true);
+                MoveTileObjectsTo(pos, 0);
+            }
+            else
+            {
+                SetHeightTo(pos.Z);
+            }
         }
         public void Dispose()
         {
