@@ -24,14 +24,17 @@ namespace RelertSharp.Engine.Api
         public static void CallMoveCameraTo(I3dLocateable pos)
         {
             MoveCameraRequested?.Invoke(pos);
+            CameraPosition = pos;
         }
         public static void MoveCameraTo(I2dLocateable mapPos, int height)
         {
             EngineMain.MoveTo(mapPos, height);
+            CameraPosition = new Pnt3(mapPos, height);
         }
         public static void MoveCameraTo(I3dLocateable mapPos)
         {
             EngineMain.MoveTo(mapPos);
+            CameraPosition = mapPos;
         }
         public static void ShiftViewBy(Point delta)
         {
@@ -84,6 +87,19 @@ namespace RelertSharp.Engine.Api
                 }
             }
         }
+        public static void SetScaleFactor(double value)
+        {
+            if (!rendering)
+            {
+                lock (lockRenderer)
+                {
+                    if (value > 5 || value < 0.5) return;
+                    ScaleFactor = value;
+                    //ResizeRequest?.Invoke(null, null);
+                    //MinimapClientResizeRequest?.Invoke(null, null);
+                }
+            }
+        }
         public static void ScaleFactorInvoke()
         {
             if (!rendering && renderEnable)
@@ -92,5 +108,8 @@ namespace RelertSharp.Engine.Api
                 MinimapClientResizeRequest?.Invoke(null, null);
             }
         }
+
+
+        public static I3dLocateable CameraPosition { get; private set; } = new Pnt3();
     }
 }

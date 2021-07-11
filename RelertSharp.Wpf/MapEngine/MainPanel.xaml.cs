@@ -38,6 +38,7 @@ namespace RelertSharp.Wpf.MapEngine
         private int nWidth { get { return this.ScaledWidth(); } }
         private int nHeight { get { return this.ScaledHeight(); } }
         private double dpi;
+        private D3dImg d3dimg = new D3dImg();
 
         public GuiViewType ViewType { get { return GuiViewType.MainPanel; } }
         public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
@@ -54,6 +55,7 @@ namespace RelertSharp.Wpf.MapEngine
         public MainPanel()
         {
             InitializeComponent();
+            imgelt.Source = d3dimg;
             keyClickAction = new DelayedAction(null, KeyHoldToClick, CLICK_INTERVAL);
             GlobalVar.MapDocumentRedrawRequested += MapRedrawHandler;
             GlobalVar.MapDocumentLoaded += MapReloadedHandler;
@@ -84,6 +86,53 @@ namespace RelertSharp.Wpf.MapEngine
                 RenderFrame();
             }
         }
+        public void SaveMapScreenshotAs(string path)
+        {
+            if (drew)
+            {
+                lock (lockRender)
+                {
+                    SuspendEvent();
+                    EngineApi.SuspendRendering();
+                    var map = GlobalVar.CurrentMapDocument.Map;
+                    var destMapSize = map.Info.Size;
+                    int width = (int)((destMapSize.Width + destMapSize.X + 6) * 60);
+                    int height = (int)((destMapSize.Height + destMapSize.Y) * 30);
+                    double prevScale = EngineApi.ScaleFactor;
+                    I3dLocateable prevPos = new Pnt3(EngineApi.CameraPosition);
+                    I2dLocateable destCenter = map.CenterPoint;
+                    int delta = (int)(map.Info.Size.Width * 0.04);
+                    destCenter.X += delta;
+                    destCenter.Y -= delta;
+
+
+                    EngineApi.InvokeLock();
+                    EngineApi.ChangeScaleFactor(1);
+                    EngineApi.MoveCameraTo(destCenter, 0);
+                    IntPtr drawHandle = EngineApi.ResetHandle(width, height);
+                    d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, drawHandle);
+                    EngineApi.RenderFrame();
+                    BitmapSource bmp = d3dimg.DrawBackBuffer();
+                    using (var fs = new System.IO.FileStream(path, System.IO.FileMode.Create, System.IO.FileAccess.Write))
+                    {
+                        BitmapEncoder encoder = new PngBitmapEncoder();
+                        encoder.Frames.Add(BitmapFrame.Create(bmp));
+                        encoder.Save(fs);
+                    }
+
+                    // revert original status
+                    _handle = EngineApi.ResetHandle(nWidth, nHeight);
+                    EngineApi.SetScaleFactor(prevScale);
+                    EngineApi.MoveCameraTo(prevPos);
+                    EngineApi.ResumeRendering();
+                    d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
+                    EngineApi.RenderFrame();
+                    d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
+                    EngineApi.InvokeUnlock();
+                    ResumeEvent();
+                }
+            }
+        }
         public async void DrawMap()
         {
             EngineApi.SuspendRendering();
@@ -110,35 +159,26 @@ namespace RelertSharp.Wpf.MapEngine
         }
 
         #region PERMANENTLY SOLVED ENGINE DEAD
-        private bool locked = false;
         private bool manualLockOverride = false;
         private int lockLevel = 0;
         private void UnlockInvokeHandler(object sender, EventArgs e)
         {
-            if (locked)
+            lockLevel--;
+            if (lockLevel == 0)
             {
                 manualLockOverride = false;
-                lockLevel--;
-                if (lockLevel == 0)
-                {
-                    d3dimg.Unlock();
-                    locked = false;
-                }
+                d3dimg.Unlock();
             }
         }
 
         private void LockInvokeHandler(object sender, EventArgs e)
         {
-            if (!locked)
+            if (lockLevel == 0)
             {
                 manualLockOverride = true;
-                if (lockLevel == 0)
-                {
-                    d3dimg.Lock();
-                    locked = true;
-                }
-                lockLevel++;
+                d3dimg.Lock();
             }
+            lockLevel++;
         }
         #endregion
 
@@ -229,7 +269,6 @@ namespace RelertSharp.Wpf.MapEngine
                                 if (!manualLockOverride)
                                 {
                                     d3dimg.Lock();
-                                    locked = true;
                                 }
                                 d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
                                 EngineApi.RenderFrame();
@@ -237,7 +276,6 @@ namespace RelertSharp.Wpf.MapEngine
                                 if (!manualLockOverride)
                                 {
                                     d3dimg.Unlock();
-                                    locked = false;
                                 }
                                 rendering = false;
                                 //lastRender = arg.RenderingTime;
@@ -262,6 +300,23 @@ namespace RelertSharp.Wpf.MapEngine
                     //SuspendMouseHandler();
                 }
             }
+        }
+    }
+
+
+
+
+}
+
+namespace System.Windows.Interop
+{
+    public class D3dImg : D3DImage
+    {
+        public D3dImg() : base() { }
+
+        public BitmapSource DrawBackBuffer()
+        {
+            return base.CopyBackBuffer();
         }
     }
 }

@@ -70,6 +70,20 @@ namespace RelertSharp.Wpf
             EngineApi.InvokeUnlock();
             EngineApi.InvokeRedraw();
         }
+
+        private void MenuSaveShot(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog()
+            {
+                Filter = "Png File | *.png",
+                FileName = GlobalVar.CurrentMapDocument.Map.Info.MapName,
+                AddExtension = true
+            };
+            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                pnlMain.SaveMapScreenshotAs(dlg.FileName);
+            }
+        }
         #endregion
 
 
