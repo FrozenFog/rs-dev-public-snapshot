@@ -45,7 +45,7 @@ namespace RelertSharp.Wpf
 
         private void DebugClick2(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument.SaveMapAs("D://", "testarele.map");
+            Selector.RemoveSelectionFlag(MapObjectType.Building);
         }
         #endregion
 
@@ -81,7 +81,13 @@ namespace RelertSharp.Wpf
             };
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                TilePaintBrush.SuspendBrush();
+                PaintBrush.SuspendBrush();
+                EngineApi.SuspendTileIndicator();
                 pnlMain.SaveMapScreenshotAs(dlg.FileName);
+                TilePaintBrush.ResumeBrush();
+                PaintBrush.ResumeBrush();
+                EngineApi.ResumeTileIndicator();
             }
         }
         #endregion

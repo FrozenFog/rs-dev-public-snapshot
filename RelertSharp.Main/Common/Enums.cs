@@ -67,7 +67,10 @@ namespace RelertSharp.Common
         LogicObject = Celltag | Waypoint,
         LightSource = 2048,
 
-        MinimapRenderable = Building | Unit | Overlay | Terrain | Smudge
+        MinimapRenderable = Building | Unit | Overlay | Terrain | Smudge,
+
+        RsObjects = LightSource,
+        AllSelectableObjects = CombatObject | MiscObject | LogicObject | BaseNode | RsObjects
     }
     public enum LogicType
     {

@@ -43,8 +43,8 @@ namespace RelertSharp.Engine.MapObjects
         }
         public void SetTransparency(bool isTransparency)
         {
-            if (isTransparency) SetTransparency(Vec4.Transparency);
-            else SetTransparency(Vec4.DeTransparency);
+            if (isTransparency) SetTransparency(Vec4.BaseNodeColor);
+            else SetTransparency(Vec4.One);
         }
         public void Dispose()
         {

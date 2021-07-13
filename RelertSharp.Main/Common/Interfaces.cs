@@ -64,6 +64,8 @@ namespace RelertSharp.Common
         void MoveTo(I3dLocateable pos, int subcell = -1);
         void ShiftBy(I3dLocateable delta);
         void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndNameAndName = true);
+        void Select();
+        void CancelSelection();
         string Id { get; }
     }
 

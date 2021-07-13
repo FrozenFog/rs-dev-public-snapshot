@@ -205,7 +205,7 @@ namespace RelertSharp.FileSystem
                                         infantry.HealthPoint,
                                         infantry.X,
                                         infantry.Y,
-                                        infantry.SubCells,
+                                        infantry.SubCell,
                                         infantry.Status,
                                         infantry.Rotation,
                                         infantry.TaggedTrigger,

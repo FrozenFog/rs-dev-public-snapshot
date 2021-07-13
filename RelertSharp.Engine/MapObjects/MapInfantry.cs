@@ -14,7 +14,7 @@ namespace RelertSharp.Engine.MapObjects
         #region Ctor - MapInfantry
         public MapInfantry(InfantryItem inf, int height) : base(inf, height)
         {
-            SubCell = inf.SubCells;
+            SubCell = inf.SubCell;
         }
         #endregion
 

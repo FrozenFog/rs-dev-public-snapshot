@@ -114,17 +114,17 @@ namespace RelertSharp.MapStructure
         #region Move
         private static bool isMoving = false;
         private static Dictionary<IMapObject, I2dLocateable> orgPos;
-        public static void BeginMove(IEnumerable<IMapObject> targets, bool isShade = false)
+        public static void BeginMove(IEnumerable<IMapObject> targets)
         {
             isMoving = true;
             orgPos = new Dictionary<IMapObject, I2dLocateable>();
             foreach (IMapObject obj in targets)
             {
                 orgPos[obj] = new Pnt(obj);
-                if (!isShade) EraseObjectRefInTile(obj);
+                EraseObjectRefInTile(obj);
             }
         }
-        public static void ShiftObjectsBy(I2dLocateable delta, bool isShade = false)
+        public static void ShiftObjectsBy(I2dLocateable delta)
         {
             if (isMoving)
             {
@@ -146,32 +146,22 @@ namespace RelertSharp.MapStructure
         /// <param name="pos"></param>
         /// <param name="subcell"></param>
         /// <param name="isShade"></param>
-        public static void MoveObjectTo(IMapObject obj, I2dLocateable pos, int subcell, bool isShade = false)
+        public static void MoveObjectTo(IMapObject obj, I2dLocateable pos, int subcell = -1)
         {
             if (Map.TilesData.HasTileOn(pos))
             {
-                if (!isShade) EraseObjectRefInTile(obj);
+                EraseObjectRefInTile(obj);
                 I3dLocateable dest = new Pnt3(pos, Map.GetHeightFromTile(pos));
                 obj.MoveTo(dest, subcell);
-                if (!isShade) AddToTile(obj);
+                AddToTile(obj);
             }
         }
-        public static void EndMove(bool isShade = false)
+        public static void EndMove()
         {
             isMoving = false;
-            if (!isShade)
+            foreach (IMapObject obj in orgPos.Keys)
             {
-                foreach (IMapObject obj in orgPos.Keys)
-                {
-                    AddToTile(obj);
-                }
-            }
-            else
-            {
-                foreach (IMapObject obj in orgPos.Keys)
-                {
-                    obj.Dispose();
-                }
+                AddToTile(obj);
             }
             orgPos.Clear();
         }

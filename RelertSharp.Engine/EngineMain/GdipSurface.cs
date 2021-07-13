@@ -1,4 +1,5 @@
-﻿using RelertSharp.Common;
+﻿using RelertSharp.Algorithm;
+using RelertSharp.Common;
 using RelertSharp.Engine.DrawableBuffer;
 using RelertSharp.Engine.MapObjects;
 using RelertSharp.MapStructure;
@@ -124,19 +125,10 @@ namespace RelertSharp.Engine
             if (color == nullcolor) return;
             minimap.SetPixel(x, y, color);
         }
-        private void To2dCoord(I2dLocateable pos, out int x, out int y)
-        {
-            x = pos.X - pos.Y + mapsize.Width - 1;
-            y = pos.X + pos.Y - mapsize.Width - 1;
-        }
-        private void To2dCoord(Point pos, out int x, out int y)
-        {
-            x = pos.X - pos.Y + mapsize.Width - 1;
-            y = pos.X + pos.Y - mapsize.Width - 1;
-        }
         private Pnt ToTilePos(int x, int y)
         {
-            return new Pnt((x + y + 2) / 2, mapsize.Width + (y - x) / 2);
+            MapPosition.MinimapPxPosToCell(x, y, mapsize.Width, out I2dLocateable cell);
+            return new Pnt(cell);
         }
         private Bitmap ResizeTo(Bitmap src, Size destSize)
         {

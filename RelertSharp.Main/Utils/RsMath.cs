@@ -92,6 +92,14 @@ namespace RelertSharp
         {
             return a.X * b.X + a.Y * b.Y;
         }
+        public static I2dLocateable I2dSubi(I2dLocateable value, I2dLocateable minusBy)
+        {
+            return new Pnt(value.X - minusBy.X, value.Y - minusBy.Y);
+        }
+        public static I2dLocateable I2dAddi(I2dLocateable a, I2dLocateable b)
+        {
+            return new Pnt(a.X + b.X, a.Y + b.Y);
+        }
 
 
         public static T[] Mirror2dArray<T>(this T[] arr, int width, int height, bool isXArray = true)

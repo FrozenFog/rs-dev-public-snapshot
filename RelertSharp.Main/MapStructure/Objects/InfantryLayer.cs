@@ -28,7 +28,7 @@ namespace RelertSharp.MapStructure.Objects
                 {
                     throw new Exception();
                 }
-                SubCells = int.Parse(_args[5]);
+                SubCell = int.Parse(_args[5]);
                 Status = _args[6];
                 Rotation = int.Parse(_args[7]);
                 TaggedTrigger = _args[8];
@@ -47,7 +47,7 @@ namespace RelertSharp.MapStructure.Objects
         }
         public InfantryItem(InfantryItem src) : base(src)
         {
-            SubCells = src.SubCells;
+            SubCell = src.SubCell;
             Status = src.Status;
             Rotation = src.Rotation;
             TaggedTrigger = src.TaggedTrigger;
@@ -74,7 +74,7 @@ namespace RelertSharp.MapStructure.Objects
         public override void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
         {
             base.ApplyConfig(config, filter, applyPosAndName);
-            if (applyPosAndName) SubCells = config.SubCell;
+            if (applyPosAndName) SubCell = config.SubCell;
         }
         #endregion
 
@@ -91,7 +91,7 @@ namespace RelertSharp.MapStructure.Objects
                 };
             }
         }
-        public int SubCells
+        public int SubCell
         {
             get { return subcell; }
             set

@@ -48,6 +48,10 @@ namespace RelertSharp.Common
         {
             get { return new Vec4(0.5f, 0.5f, 1, 1); }
         }
+        public static Vec4 BaseNodeSelector
+        {
+            get { return new Vec4(0.5f, 0.5f, 1, 0.6f); }
+        }
         public static Vec4 TileIndicator
         {
             get { return new Vec4(1, 0, 0, 1); }
@@ -56,13 +60,9 @@ namespace RelertSharp.Common
         {
             get { return new Vec4(0, 1, 0, 1); }
         }
-        public static Vec4 Transparency
+        public static Vec4 BaseNodeColor
         {
             get { return new Vec4(0.5f, 1, 0.5f, 0.6f); }
-        }
-        public static Vec4 DeTransparency
-        {
-            get { return new Vec4(1, 1, 1, 1); }
         }
         public static Vec4 HideCompletely
         {

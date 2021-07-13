@@ -153,7 +153,7 @@ namespace RelertSharp.MapStructure
             }
         }
 
-        public void UnSelect()
+        public void CancelSelection()
         {
             if (Selected)
             {

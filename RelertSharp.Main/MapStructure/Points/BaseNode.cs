@@ -45,11 +45,11 @@ namespace RelertSharp.MapStructure.Points
             if (!Selected)
             {
                 Selected = true;
-                SceneObject.ApplyTempColor(Vec4.Selector);
+                SceneObject.ApplyTempColor(Vec4.BaseNodeSelector);
             }
         }
 
-        public void UnSelect()
+        public void CancelSelection()
         {
             if (Selected)
             {

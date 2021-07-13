@@ -101,7 +101,7 @@ namespace RelertSharp.MapStructure.Points
             Y += delta.Y;
             SceneObject.ShiftBy(delta);
         }
-        public void Select()
+        public virtual void Select()
         {
             if (!Selected)
             {
@@ -109,7 +109,7 @@ namespace RelertSharp.MapStructure.Points
                 SceneObject.ApplyTempColor(Vec4.Selector);
             }
         }
-        public void UnSelect()
+        public virtual void CancelSelection()
         {
             if (Selected)
             {

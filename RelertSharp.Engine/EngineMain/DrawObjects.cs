@@ -27,8 +27,8 @@ namespace RelertSharp.Engine
             DrawableInfantry src = CreateDrawableInfantry(inf, color, pPalUnit, frame);
             MapInfantry dest = new MapInfantry(inf, height);
             inf.SceneObject = dest;
-            Vec3 pos = ToVec3Iso(dest, inf.SubCells);
-            return DrawInfantry(src, pos, dest, frame, pPalUnit, inf.SubCells);
+            Vec3 pos = ToVec3Iso(dest, inf.SubCell);
+            return DrawInfantry(src, pos, dest, frame, pPalUnit, inf.SubCell);
         }
         private static bool DrawInfantry(DrawableInfantry src, Vec3 pos, MapInfantry dest, int frame, int pPal, int subcell)
         {

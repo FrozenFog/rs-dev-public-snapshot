@@ -19,10 +19,9 @@ namespace RelertSharp.Wpf.MapEngine
         #region Head
         private const int CLICK_INTERVAL = 300;
         private bool rmbMoving = false;
-        private bool selecting = false;
         private bool NeedIndicating
         {
-            get { return !rmbMoving && !selecting; }
+            get { return !rmbMoving && !Selector.IsSelecting; }
         }
         private Point downPos, downPosOrg;
         private MouseButton downBtn;
@@ -54,20 +53,18 @@ namespace RelertSharp.Wpf.MapEngine
             {
                 watchClick.Stop();
                 EngineApi.InvokeLock();
-
-                if (watchClick.ElapsedMilliseconds < CLICK_INTERVAL)
-                {
-                    if (downBtn == MouseButton.Left) this.LmbClick(downPos, downPosOrg);
-                    else if (downBtn == MouseButton.Right) this.RmbClick(downPos, downPosOrg);
-                    else if (downBtn == MouseButton.Middle) this.MmbClick(downPos, downPosOrg);
-                }
                 Point p = e.GetPosition(this);
                 Point pOrg = e.GetPosition(this);
                 GuiUtil.ScaleWpfMousePoint(ref p);
                 if (e.ChangedButton == MouseButton.Left) this.LmbUp(p, pOrg);
                 else if (e.ChangedButton == MouseButton.Right) this.RmbUp(p, pOrg);
                 else if (e.ChangedButton == MouseButton.Middle) this.MmbUp(p, pOrg);
-
+                if (watchClick.ElapsedMilliseconds < CLICK_INTERVAL && RsMath.ChebyshevDistance(downPos, p) < 10)
+                {
+                    if (downBtn == MouseButton.Left) this.LmbClick(downPos, downPosOrg);
+                    else if (downBtn == MouseButton.Right) this.RmbClick(downPos, downPosOrg);
+                    else if (downBtn == MouseButton.Middle) this.MmbClick(downPos, downPosOrg);
+                }
                 EngineApi.InvokeUnlock();
             }
         }
@@ -162,36 +159,68 @@ namespace RelertSharp.Wpf.MapEngine
         #region Lmb
         private void LmbUp(Point point, Point unscaled)
         {
+            Vec3 pos = EngineApi.ClientPointToCellPos(point.GdiPoint(), out int subcell);
+            I3dLocateable cell = pos.To3dLocateable();
+
             switch (MouseState.State)
             {
                 case PanelMouseState.None:
-                    selecting = false;
-                    Selector.EndSelecting();
-                    //SuspendMouseHandlerFor(susMsSelect);
+                    if (Selector.IsSelecting)
+                    {
+                        Selector.EndSelecting(GuiUtil.IsKeyDown(Key.LeftAlt, Key.RightAlt));
+                    }
+                    else if (Selector.IsMoving) Selector.EndSelectedObjectsMoving();
+                    EngineApi.InvokeRedraw();
                     break;
             }
         }
 
         private void LmbDown(Point point, Point unscaled)
         {
+            Vec3 pos = EngineApi.ClientPointToCellPos(point.GdiPoint(), out int subcell);
+            I3dLocateable cell = pos.To3dLocateable();
+
             switch (MouseState.State)
             {
                 case PanelMouseState.None:
-                    selecting = true;
-                    Selector.BeginSelecting(unscaled, false, graphicTop);
+                    if (Selector.IsPositionHasSelectedItem(cell, subcell))
+                    {
+                        Selector.BeginSelectedObjectsMoving(cell);
+                    }
+                    else
+                    {
+                        if (GuiUtil.IsKeyUp(Key.LeftShift, Key.RightShift) && GuiUtil.IsKeyUp(Key.LeftAlt, Key.RightAlt))
+                        {
+                            Selector.UnselectAll();
+                            EngineApi.InvokeRedraw();
+                        }
+                        Selector.BeginSelecting(unscaled, false, graphicTop, cell);
+                    }
                     break;
             }
         }
 
         private void LmbClick(Point point, Point unscaled)
         {
+            Vec3 pos = EngineApi.ClientPointToCellPos(point.GdiPoint(), out int subcell);
+            I3dLocateable cell = pos.To3dLocateable();
+
             switch (MouseState.State)
             {
+                case PanelMouseState.None:
+                    bool addSelect = GuiUtil.IsKeyDown(Key.LeftShift, Key.RightShift);
+                    bool reverseSelect = GuiUtil.IsKeyDown(Key.LeftAlt, Key.RightAlt);
+                    if (!addSelect && !reverseSelect) Selector.UnselectAll();
+                    Selector.SelectAt(cell, subcell, reverseSelect);
+                    EngineApi.InvokeRedraw();
+                    break;
                 case PanelMouseState.ObjectBrush:
                     PaintBrush.AddBrushObjectToMap();
+                    EngineApi.InvokeRedraw();
                     break;
                 case PanelMouseState.TileBrush:
                     TilePaintBrush.AddTileToMap();
+                    EngineApi.InvokeRedraw();
                     break;
             }
         }
@@ -222,40 +251,48 @@ namespace RelertSharp.Wpf.MapEngine
         /// <returns></returns>
         private bool MouseMoved(Point point, Point unscaled)
         {
-            bool redraw = false;
+            bool redraw = false, noIndicate = false;
             Vec3 pos = EngineApi.ClientPointToCellPos(point.GdiPoint(), out int subcell);
-            I3dLocateable i3dpos = pos.To3dLocateable();
-            bool notFound = i3dpos.X == 0 && i3dpos.Y == 0 && i3dpos.Z == 0;
+            I3dLocateable cell = pos.To3dLocateable();
+            bool notFound = cell.X == 0 && cell.Y == 0 && cell.Z == 0;
             if (rmbMoving)
             {
                 Navigating.UpdateDelta(point);
                 redraw = false;
+                goto nop;
             }
-            if (selecting)
+            if (Selector.IsSelecting)
             {
-                Selector.UpdateSelectingRectangle(unscaled);
+                Selector.UpdateSelectingRectangle(unscaled, cell);
                 redraw = false;
+                goto nop;
             }
-            if (!rmbMoving && !selecting)
+            if (Selector.IsMoving)
             {
-                switch (MouseState.State)
-                {
-                    case PanelMouseState.ObjectBrush:
-                        redraw = PaintBrush.MoveBrushObjectTo(i3dpos, subcell);
-                        break;
-                    case PanelMouseState.TileBrush:
-                        if (!notFound)
-                        {
-                            redraw = TilePaintBrush.MoveTileBrushTo(i3dpos);
-                        }
-                        break;
-                }
-            }
-            if (EngineApi.MouseOnTile(pos, NeedIndicating))
-            {
-                MousePosChanged?.Invoke(pos.To3dLocateable());
+                Selector.MoveSelectedObjectsTo(cell, subcell);
                 redraw = true;
             }
+            switch (MouseState.State)
+            {
+                case PanelMouseState.ObjectBrush:
+                    redraw = PaintBrush.MoveBrushObjectTo(cell, subcell);
+                    break;
+                case PanelMouseState.TileBrush:
+                    if (!notFound)
+                    {
+                        redraw = TilePaintBrush.MoveTileBrushTo(cell);
+                    }
+                    break;
+            }
+            if (!noIndicate)
+            {
+                if (EngineApi.MouseOnTile(pos, NeedIndicating))
+                {
+                    MousePosChanged?.Invoke(pos.To3dLocateable());
+                    redraw = true;
+                }
+            }
+            nop:
             return redraw;
         }
         #endregion

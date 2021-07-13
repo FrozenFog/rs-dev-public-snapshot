@@ -77,6 +77,9 @@ namespace RelertSharp.MapStructure.Objects
 
     public class ObjectItemBase : I2dLocateable, IRegistable
     {
+        private bool isSelected = false;
+
+
         #region Ctor
         public ObjectItemBase(string _id, string[] _args)
         {
@@ -101,6 +104,22 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - ObjectItemBase
+        public virtual void Select()
+        {
+            if (!isSelected)
+            {
+                SceneObject.ApplyTempColor(Vec4.Selector);
+                isSelected = true;
+            }
+        }
+        public virtual void CancelSelection()
+        {
+            if (isSelected)
+            {
+                SceneObject.RemoveTempColor();
+                isSelected = false;
+            }
+        }
         public virtual void MoveTo(I3dLocateable pos, int subcell = -1)
         {
             X = pos.X;

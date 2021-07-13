@@ -37,6 +37,11 @@ namespace RelertSharp.Wpf.MapEngine
                         EngineApi.InvokeRedraw();
                         e.Handled = true;
                         break;
+                    case PanelMouseState.None:
+                        SelectorKeyHandler(e);
+                        EngineApi.InvokeRedraw();
+                        e.Handled = true;
+                        break;
                 }
             }
         }
@@ -81,6 +86,15 @@ namespace RelertSharp.Wpf.MapEngine
                     break;
                 case Key.Home:
                     TilePaintBrush.ResetOffset();
+                    break;
+            }
+        }
+        private void SelectorKeyHandler(KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Delete:
+                    Selector.DeleteSelectedObjects();
                     break;
             }
         }

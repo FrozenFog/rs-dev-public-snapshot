@@ -10,6 +10,7 @@ using AvalonDock.Layout;
 using RelertSharp.Common;
 using Microsoft.Win32;
 using RelertSharp.Engine.Api;
+using System.Windows.Input;
 
 namespace RelertSharp.Wpf
 {
@@ -81,6 +82,23 @@ namespace RelertSharp.Wpf
         {
             p.X *= MonitorScale * EngineApi.ScaleFactor;
             p.Y *= MonitorScale * EngineApi.ScaleFactor;
+        }
+
+        public static bool IsKeyDown(params Key[] keys)
+        {
+            foreach (var k in keys)
+            {
+                if (Keyboard.IsKeyDown(k)) return true;
+            }
+            return false;
+        }
+        public static bool IsKeyUp(params Key[] keys)
+        {
+            foreach (var k in keys)
+            {
+                if (Keyboard.IsKeyDown(k)) return false;
+            }
+            return true;
         }
     }
 }

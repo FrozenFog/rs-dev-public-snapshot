@@ -58,6 +58,7 @@ namespace RelertSharp.Engine.Api
         {
             if (pos != Vec3.Zero)
             {
+                if (isTileIndicateSuspended) return true;
                 if (needIndicate)
                 {
                     if (EngineMain.SelectTile(pos))
@@ -72,6 +73,16 @@ namespace RelertSharp.Engine.Api
                 }
             }
             return false;
+        }
+        private static bool isTileIndicateSuspended = false;
+        public static void SuspendTileIndicator()
+        {
+            EngineMain.UnmarkPreviousTile();
+            isTileIndicateSuspended = true;
+        }
+        public static void ResumeTileIndicator()
+        {
+            isTileIndicateSuspended = false;
         }
         public static void ChangeScaleFactor(double delta)
         {
