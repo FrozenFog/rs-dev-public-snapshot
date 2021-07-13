@@ -171,15 +171,12 @@ namespace RelertSharp.Wpf
             {
                 soundManager.Stop();
             }
-            else
+            string name = soundManager.GetSoundName(regname, type);
+            await Task.Run(() =>
             {
-                string name = soundManager.GetSoundName(regname, type);
-                await Task.Run(() =>
-                {
-                    soundManager.LoadWav(GlobalVar.GlobalSoundBank.GetSound(name));
-                });
-                soundManager.Play();
-            }
+                soundManager.LoadWav(GlobalVar.GlobalSoundBank.GetSound(name));
+            });
+            soundManager.Play();
         }
 
         private void AddReciveListener()

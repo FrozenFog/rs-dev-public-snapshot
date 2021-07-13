@@ -95,6 +95,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                         }
                     }
                 }
+                PlaySelectedSound();
                 rect = null;
             }
         }
@@ -206,6 +207,27 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             selectedObjects.Clear();
         }
         #endregion
+        #endregion
+
+
+
+        #region Fun: play selected sound
+        private static void PlaySelectedSound()
+        {
+            var rules = GlobalVar.GlobalRules;
+            IEnumerable<IMapObject> playable = selectedObjects.Where(x => (x.ObjectType & (MapObjectType.CombatObject | MapObjectType.BaseNode)) != 0);
+            HashSet<string> names = playable.Select(x => x.RegName).Distinct().ToHashSet();
+            List<IniSystem.INIEntity> playableEnts = new List<IniSystem.INIEntity>();
+            foreach (var ent in rules)
+            {
+                if (names.Contains(ent.Name)) playableEnts.Add(ent);
+            }
+            if (playableEnts.Count <= 0) return;
+            int maxTech = playableEnts.Max(x => x.ParseInt("TechLevel", -1));
+            IniSystem.INIEntity entMax = playableEnts.First(x => x.ParseInt("TechLevel", -1) == maxTech);
+            string soundName = entMax["VoiceSelect"].ToString();
+            NavigationHub.PlaySound(soundName, SoundType.SoundBankRnd);
+        }
         #endregion
 
 
