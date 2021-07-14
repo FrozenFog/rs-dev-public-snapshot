@@ -29,6 +29,7 @@
             <MenuItem Header="Edit">
                 <MenuItem Header="Switch To Framework" Click="MenuSwitchFramework" IsCheckable="True"/>
                 <MenuItem Header="Switch To Flat" Click="MenuSwitchFlat" IsCheckable="True"/>
+                <MenuItem Header="Switch To Isometric Selecting" Click="MenuIsoSelect" IsCheckable="True"/>
                 <Separator Style="{DynamicResource sepDark}"/>
                 <MenuItem Header="Save Map Render Picture" Click="MenuSaveShot"/>
                 <Separator Style="{DynamicResource sepDark}"/>

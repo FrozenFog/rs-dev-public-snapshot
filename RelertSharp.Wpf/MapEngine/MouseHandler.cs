@@ -194,7 +194,7 @@ namespace RelertSharp.Wpf.MapEngine
                             Selector.UnselectAll();
                             EngineApi.InvokeRedraw();
                         }
-                        Selector.BeginSelecting(unscaled, false, graphicTop, cell);
+                        Selector.BeginSelecting(unscaled, graphicTop, cell);
                     }
                     break;
             }

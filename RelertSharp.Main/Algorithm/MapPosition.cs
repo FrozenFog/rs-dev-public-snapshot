@@ -11,6 +11,19 @@ namespace RelertSharp.Algorithm
     public static class MapPosition
     {
         /// <summary>
+        /// Use to regular square 2d enumerator's (isometric) Up & Down
+        /// field selecting, as click position may not always up & down
+        /// </summary>
+        /// <param name="p1">first point, order is irrelevant</param>
+        /// <param name="p2">second point, order is irrelevant</param>
+        /// <param name="up">out Top cell position</param>
+        /// <param name="down">out Down cell position</param>
+        public static void RegularCellToIsometricSquare(I2dLocateable p1, I2dLocateable p2, out I2dLocateable up, out I2dLocateable down)
+        {
+            up = new Pnt(Math.Min(p1.X, p2.X), Math.Min(p1.Y, p2.Y));
+            down = new Pnt(Math.Max(p1.X, p2.X), Math.Max(p1.Y, p2.Y));
+        }
+        /// <summary>
         /// Use to regular scene square 2d enumerator's Left-Top & Right-Bottom
         /// field selecting, as click position may not always LT & RB
         /// </summary>

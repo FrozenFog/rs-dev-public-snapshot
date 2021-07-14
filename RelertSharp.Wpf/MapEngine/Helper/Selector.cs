@@ -33,6 +33,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         private static Canvas src;
         private static SolidColorBrush b = new SolidColorBrush(Colors.White);
         private static Rectangle rect;
+        private static List<Line> isoLines = new List<Line>();
 
         // selecting
         private static List<IMapObject> selectedObjects = new List<IMapObject>();
@@ -46,24 +47,49 @@ namespace RelertSharp.Wpf.MapEngine.Helper
 
         #region Api
         #region Box Object Selecting
-        public static void BeginSelecting(Point downPos, bool isometric, Canvas graphic, I3dLocateable begin)
+        public static void SetIsometricSelecting(bool enable)
+        {
+            isIsometric = enable;
+        }
+        public static void BeginSelecting(Point downPos, Canvas graphic, I3dLocateable begin)
         {
             if (!dragingSelectBox)
             {
                 selectDown = downPos;
                 dragingSelectBox = true;
-                isIsometric = isometric;
                 src = graphic;
                 beginCell = begin;
                 endCell = begin;
-                rect = new Rectangle()
+                if (isIsometric)
                 {
-                    Stroke = b,
-                    StrokeThickness = 1
-                };
-                src.Children.Add(rect);
-                Canvas.SetTop(rect, downPos.Y);
-                Canvas.SetLeft(rect, downPos.X);
+                    for (int i = 0; i< 4; i++)
+                    {
+                        Line l = new Line()
+                        {
+                            Stroke = b,
+                            StrokeThickness = 1,
+                            X1 = downPos.X,
+                            X2 = downPos.X,
+                            Y1 = downPos.Y,
+                            Y2 = downPos.Y
+                        };
+                        isoLines.Add(l);
+                        src.Children.Add(l);
+                        Canvas.SetTop(l, 0);
+                        Canvas.SetLeft(l, 0);
+                    }
+                }
+                else
+                {
+                    rect = new Rectangle()
+                    {
+                        Stroke = b,
+                        StrokeThickness = 1
+                    };
+                    src.Children.Add(rect);
+                    Canvas.SetTop(rect, downPos.Y);
+                    Canvas.SetLeft(rect, downPos.X);
+                }
             }
         }
         public static void EndSelecting(bool reverseSelect)
@@ -72,8 +98,21 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             {
                 dragingSelectBox = false;
                 src.Children.Clear();
-                MapPosition.RegularCellToSceneSquare(beginCell, endCell, MapWidth, out I2dLocateable lt, out I2dLocateable rb);
-                foreach (I2dLocateable pos in new SceneSquare2D(lt, rb, MapWidth))
+                IEnumerable<I2dLocateable> enumerator;
+                if (isIsometric)
+                {
+                    MapPosition.RegularCellToIsometricSquare(beginCell, endCell, out I2dLocateable up, out I2dLocateable down);
+                    enumerator = new Square2D(up, down);
+                    isoLines.Clear();
+                }
+                else
+                {
+                    MapPosition.RegularCellToSceneSquare(beginCell, endCell, MapWidth, out I2dLocateable lt, out I2dLocateable rb);
+                    enumerator = new SceneSquare2D(lt, rb, MapWidth);
+                    rect = null;
+                }
+
+                foreach (I2dLocateable pos in enumerator)
                 {
                     if (Map.TilesData[pos] is Tile t)
                     {
@@ -95,8 +134,8 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                         }
                     }
                 }
+
                 PlaySelectedSound();
-                rect = null;
             }
         }
         public static void SelectAt(I2dLocateable cell, int subcell, bool reverseSelect)
@@ -128,10 +167,44 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             {
                 selectNew = newPos;
                 endCell = end;
-                Canvas.SetTop(rect, Math.Min(selectNew.Y, selectDown.Y));
-                Canvas.SetLeft(rect, Math.Min(selectNew.X, selectDown.X));
-                rect.Width = Math.Abs(selectNew.X - selectDown.X);
-                rect.Height = Math.Abs(selectNew.Y - selectDown.Y);
+                if (isIsometric)
+                {
+                    double xRight, yRight, xLeft, yLeft;
+                    double x1 = selectDown.X, x2 = selectNew.X, y1 = selectDown.Y, y2 = selectNew.Y;
+                    double sq3 = Math.Sqrt(3);
+                    xRight = (sq3 * (y1 - y2) + x1 + x2) / 2;
+                    yRight = (sq3 * (y1 + y2) + x1 - x2) / 2 / sq3;
+                    xLeft = (x1 + x2 - sq3 * (y1 - y2)) / 2;
+                    yLeft = (x2 - x1 + sq3 * (y2 + y1)) / 2 / sq3;
+                    // up right line(persume)
+                    isoLines[0].X2 = xRight;
+                    isoLines[0].Y2 = yRight;
+
+                    // down right line
+                    isoLines[1].X1 = xRight;
+                    isoLines[1].Y1 = yRight;
+                    isoLines[1].X2 = x2;
+                    isoLines[1].Y2 = y2;
+
+                    // down left line
+                    isoLines[2].X1 = x2;
+                    isoLines[2].Y1 = y2;
+                    isoLines[2].X2 = xLeft;
+                    isoLines[2].Y2 = yLeft;
+
+                    // up left line
+                    isoLines[3].X2 = xLeft;
+                    isoLines[3].Y2 = yLeft;
+
+                    // canvas
+                }
+                else
+                {
+                    Canvas.SetTop(rect, Math.Min(selectNew.Y, selectDown.Y));
+                    Canvas.SetLeft(rect, Math.Min(selectNew.X, selectDown.X));
+                    rect.Width = Math.Abs(selectNew.X - selectDown.X);
+                    rect.Height = Math.Abs(selectNew.Y - selectDown.Y);
+                }
             }
         }
         public static void UnselectAll()
@@ -218,10 +291,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             IEnumerable<IMapObject> playable = selectedObjects.Where(x => (x.ObjectType & (MapObjectType.CombatObject | MapObjectType.BaseNode)) != 0);
             HashSet<string> names = playable.Select(x => x.RegName).Distinct().ToHashSet();
             List<IniSystem.INIEntity> playableEnts = new List<IniSystem.INIEntity>();
-            foreach (var ent in rules)
-            {
-                if (names.Contains(ent.Name)) playableEnts.Add(ent);
-            }
+            foreach (string name in names) playableEnts.Add(rules[name]);
             if (playableEnts.Count <= 0) return;
             int maxTech = playableEnts.Max(x => x.ParseInt("TechLevel", -1));
             IniSystem.INIEntity entMax = playableEnts.First(x => x.ParseInt("TechLevel", -1) == maxTech);
