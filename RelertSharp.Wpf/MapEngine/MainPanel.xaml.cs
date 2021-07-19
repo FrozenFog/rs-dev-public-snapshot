@@ -21,6 +21,7 @@ using System.Threading;
 using RelertSharp.Wpf.Views;
 using RelertSharp.Wpf.Common;
 using RelertSharp.Engine;
+using RelertSharp.Algorithm;
 
 namespace RelertSharp.Wpf.MapEngine
 {
@@ -92,27 +93,80 @@ namespace RelertSharp.Wpf.MapEngine
             {
                 lock (lockRender)
                 {
+                    const double wWindow = 1600;
+                    const double hWindow = 900;
+                    // suspend responding
                     SuspendEvent();
                     EngineApi.SuspendRendering();
                     var map = GlobalVar.CurrentMapDocument.Map;
-                    var destMapSize = map.Info.Size;
-                    int width = (int)((destMapSize.Width + destMapSize.X + 6) * 60);
-                    int height = (int)((destMapSize.Height + destMapSize.Y) * 30);
+
+                    // save previous status
                     double prevScale = EngineApi.ScaleFactor;
                     I3dLocateable prevPos = new Pnt3(EngineApi.CameraPosition);
-                    I2dLocateable destCenter = map.CenterPoint;
-                    int delta = (int)(map.Info.Size.Width * 0.04);
-                    destCenter.X += delta;
-                    destCenter.Y -= delta;
+
+                    // total size
+                    var destMapSize = map.Info.Size;
+                    int totalPicWidth = (int)((destMapSize.Width + destMapSize.X) * 60);
+                    int totalPicHeight = (int)((destMapSize.Height + destMapSize.Y) * 30);
+
+                    // split into several section
+                    List<I3dLocateable> cameraPositions = new List<I3dLocateable>();
+                    List<BitmapSource> sections = new List<BitmapSource>();
+                    int countWidth = (int)Math.Ceiling(totalPicWidth / wWindow);
+                    int countHeight = (int)Math.Ceiling(totalPicHeight / hWindow);
+                    int wCell = destMapSize.Width / countWidth;
+                    int hCell = destMapSize.Height / countHeight;
+                    int pxOffsetY = 0;
+                    for (int y = 0; y < countHeight + 1; y++)
+                    {
+                        int pxOffsetX = 0;
+                        for (int x = 0; x < countWidth + 1; x++)
+                        {
+                            MapPosition.MinimapPxPosToCell(pxOffsetX * 2, pxOffsetY * 2, destMapSize.Width, out I2dLocateable cell);
+                            cameraPositions.Add(new Pnt3(cell, 0));
+                            pxOffsetX += wCell;
+                        }
+                        pxOffsetY += hCell;
+                    }
 
 
+                    // begin
+                    // set size and scale
                     EngineApi.InvokeLock();
                     EngineApi.ChangeScaleFactor(1);
-                    EngineApi.MoveCameraTo(destCenter, 0);
-                    IntPtr drawHandle = EngineApi.ResetHandle(width, height);
-                    d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, drawHandle);
-                    EngineApi.RenderFrame();
-                    BitmapSource bmp = d3dimg.DrawBackBuffer();
+                    IntPtr drawHandle = EngineApi.ResetHandle((int)wWindow, (int)hWindow);
+
+                    // draw sections
+                    foreach (I3dLocateable cell in cameraPositions)
+                    {
+                        EngineApi.MoveCameraTo(cell);
+                        d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, drawHandle);
+                        EngineApi.RenderFrame();
+                        BitmapSource src = d3dimg.DrawBackBuffer().Clone();
+                        CroppedBitmap crp = new CroppedBitmap(src, new Int32Rect(1, 1, src.PixelWidth - 2, src.PixelHeight - 2));
+                        sections.Add(crp);
+                    }
+
+                    // combine sections
+                    DrawingGroup scene = new DrawingGroup();
+                    double yOffset = 0;
+                    for (int y = 0; y < countHeight + 1; y++)
+                    {
+                        double xOffset = 0;
+                        for (int x = 0; x < countWidth + 1; x++)
+                        {
+                            ImageDrawing section = new ImageDrawing();
+                            section.ImageSource = sections[y * (countHeight + 1) + x];
+                            section.Rect = new Rect(xOffset - 1, yOffset - 1, wWindow, hWindow);
+                            scene.Children.Add(section);
+                            xOffset += wCell * 60;
+                        }
+                        yOffset += hCell * 30;
+                    }
+                    var drawingImage = new Image { Source = new DrawingImage(scene) };
+                    drawingImage.Arrange(new Rect(0, 0, totalPicWidth, totalPicHeight));
+                    RenderTargetBitmap bmp = new RenderTargetBitmap(totalPicWidth, totalPicHeight, 96, 96, PixelFormats.Pbgra32);
+                    bmp.Render(drawingImage);
                     using (var fs = new System.IO.FileStream(path, System.IO.FileMode.Create, System.IO.FileAccess.Write))
                     {
                         JpegBitmapEncoder encoder = new JpegBitmapEncoder() { QualityLevel = 90 };
@@ -120,16 +174,44 @@ namespace RelertSharp.Wpf.MapEngine
                         encoder.Save(fs);
                     }
 
-                    // revert original status
+                    // revert
                     _handle = EngineApi.ResetHandle(nWidth, nHeight);
                     EngineApi.SetScaleFactor(prevScale);
                     EngineApi.MoveCameraTo(prevPos);
+                    // resume
                     EngineApi.ResumeRendering();
                     d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
                     EngineApi.RenderFrame();
                     d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
                     EngineApi.InvokeUnlock();
                     ResumeEvent();
+                    
+
+
+                    //EngineApi.InvokeLock();
+                    //EngineApi.ChangeScaleFactor(1);
+                    //EngineApi.MoveCameraTo(destCenter, 0);
+                    //IntPtr drawHandle = EngineApi.ResetHandle(width, height);
+                    //d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, drawHandle);
+                    //EngineApi.RenderFrame();
+                    //BitmapSource bmp = d3dimg.DrawBackBuffer();
+                    //using (var fs = new System.IO.FileStream(path, System.IO.FileMode.Create, System.IO.FileAccess.Write))
+                    //{
+                    //    JpegBitmapEncoder encoder = new JpegBitmapEncoder() { QualityLevel = 90 };
+                    //    encoder.Frames.Add(BitmapFrame.Create(bmp));
+                    //    encoder.Save(fs);
+                    //}
+
+                    //// revert original status
+                    //_handle = EngineApi.ResetHandle(nWidth, nHeight);
+                    //EngineApi.SetScaleFactor(prevScale);
+                    //EngineApi.MoveCameraTo(prevPos);
+                    //EngineApi.ResumeRendering();
+                    //d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
+                    //EngineApi.RenderFrame();
+                    //d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
+                    //EngineApi.InvokeUnlock();
+                    //ResumeEvent();
                 }
             }
         }
