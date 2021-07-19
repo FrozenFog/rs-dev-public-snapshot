@@ -115,7 +115,7 @@ namespace RelertSharp.Wpf.MapEngine
                     BitmapSource bmp = d3dimg.DrawBackBuffer();
                     using (var fs = new System.IO.FileStream(path, System.IO.FileMode.Create, System.IO.FileAccess.Write))
                     {
-                        BitmapEncoder encoder = new PngBitmapEncoder();
+                        JpegBitmapEncoder encoder = new JpegBitmapEncoder() { QualityLevel = 90 };
                         encoder.Frames.Add(BitmapFrame.Create(bmp));
                         encoder.Save(fs);
                     }

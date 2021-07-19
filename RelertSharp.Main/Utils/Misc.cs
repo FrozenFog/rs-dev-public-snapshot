@@ -184,38 +184,27 @@ namespace RelertSharp.Utils
             }
         }
         /// <summary>
-        /// Return waypoint in int, must between A - ZZ
+        /// Return waypoint in int, must between A - FXSHRXX
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
         public static int WaypointInt(string s)
         {
+            if (s == "FXSHRXX")
+                return int.MaxValue;
+
             s = s.ToUpper();
-            if (s == "") return 0;
-            char c1 = (char)64, c2 = (char)64;
-            if (s.Length == 1)
+            int n = 0;
+            int len = s.Length;
+            for (int i = len - 1, j = 1; i >= 0; i--, j *= 26)
             {
-                c2 = s[0];
+                int c = s[i];
+                if (c < 'A' || c > 'Z') return 0;
+                n += ((int)c - 64) * j;
             }
-            else
-            {
-                c1 = s[0];
-                c2 = s[1];
-            }
-            int result = (c1 - 64) * 26 + (c2 - 64);
-            if (result < 1 || result > 702)
-            {
-                try
-                {
-                    return int.Parse(s);
-                }
-                catch
-                {
-                    return 0;
-                    //throw new RSException.InvalidWaypointException(result);
-                }
-            }
-            return result - 1;
+            if (n <= 0)
+                return -1;
+            return n - 1;
         }
         public static unsafe float FromNestedFloat(string hexData)
         {
@@ -230,29 +219,28 @@ namespace RelertSharp.Utils
             return (*(uint*)&src).ToString();
         }
         /// <summary>
-        /// Return waypoint in alphabet format, [0, 701]
+        /// Return waypoint in alphabet format, [0, INT_MAX]
         /// </summary>
         /// <param name="waypoint"></param>
         /// <returns></returns>
         public static string WaypointString(int waypoint)
         {
-            if (waypoint < 0 || waypoint > 701)
-            {
-                return waypoint.ToString();
-                //throw new RSException.InvalidWaypointException(waypoint);
-            }
-            int c1, c2;
-            if (waypoint < 26)
-            {
-                c1 = waypoint % 26 + 65;
-                return ((char)c1).ToString();
-            }
+            if (waypoint < 0)
+                return "0";
+            if (waypoint == int.MaxValue) 
+                return "FXSHRXX";
             else
             {
-                c1 = waypoint / 26 + 64;
-                c2 = waypoint % 26 + 65;
-                string result = ((char)c1).ToString() + ((char)c2).ToString();
-                return result;
+                string buffer = "";
+                ++waypoint;
+                while (waypoint > 0) 
+                {
+                    int m = waypoint % 26;
+                    if (m == 0) m = 26;
+                    buffer = (char)(m + 64) + buffer;
+                    waypoint = (waypoint - m) / 26;
+                }
+                return buffer;
             }
         }
         /// <summary>

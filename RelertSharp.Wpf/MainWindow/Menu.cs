@@ -81,7 +81,7 @@ namespace RelertSharp.Wpf
         {
             SaveFileDialog dlg = new SaveFileDialog()
             {
-                Filter = "Png File | *.png",
+                Filter = "Jpeg File | *.jpg",
                 FileName = GlobalVar.CurrentMapDocument.Map.Info.MapName,
                 AddExtension = true
             };
