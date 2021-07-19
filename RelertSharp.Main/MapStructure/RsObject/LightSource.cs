@@ -112,6 +112,10 @@ namespace RelertSharp.MapStructure.Points
             Green = src.Green;
             Blue = src.Blue;
         }
+        private LightSource()
+        {
+
+        }
         #endregion
 
 
@@ -169,6 +173,36 @@ namespace RelertSharp.MapStructure.Points
         public static float IntensityShift(float intensity)
         {
             return intensity >= 0 ? 1 + intensity * 1.5f : 0.9384f + 0.44f * intensity;
+        }
+        public string[] ExtractParameter()
+        {
+            return new string[]
+            {
+                Red.ToString(),
+                Green.ToString(),
+                Blue.ToString(),
+                Intensity.ToString(),
+                Visibility.ToString(),
+                IsEnable.ZeroOne(),
+                X.ToString(),
+                Y.ToString()
+            };
+        }
+        public IMapObject ConstructFromParameter(string[] command)
+        {
+            ParameterReader reader = new ParameterReader(command);
+            LightSource source = new LightSource()
+            {
+                Red = reader.ReadFloat(0.05f),
+                Green = reader.ReadFloat(0.05f),
+                Blue = reader.ReadFloat(0.05f),
+                Intensity = reader.ReadFloat(0.02f),
+                Visibility = reader.ReadInt(5000),
+                IsEnable = reader.ReadBool(true),
+                X = reader.ReadInt(),
+                Y = reader.ReadInt()
+            };
+            return source;
         }
         #endregion
 

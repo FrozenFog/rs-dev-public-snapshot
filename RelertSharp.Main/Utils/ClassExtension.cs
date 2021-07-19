@@ -214,6 +214,11 @@ namespace System
             if (double.TryParse(src, out double v)) return v;
             return def;
         }
+        public static float ParseFloat(this string src, float def = 0)
+        {
+            if (float.TryParse(src, out float v)) return v;
+            return def;
+        }
         public static int ParseInt(this string src, int def = 0)
         {
             if (int.TryParse(src, out int i)) return i;

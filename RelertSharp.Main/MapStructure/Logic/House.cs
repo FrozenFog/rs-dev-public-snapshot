@@ -130,6 +130,10 @@ namespace RelertSharp.MapStructure.Logic
             BaseNodes.Add(node);
             return node;
         }
+        public void AddNode(BaseNode node)
+        {
+            BaseNodes.Add(node);
+        }
         public void RemoveNode(BaseNode node)
         {
             BaseNodes.Remove(node);

@@ -170,6 +170,9 @@ namespace RelertSharp.MapStructure.Objects
         public string Id { get; internal set; } = "NULL";
         public string RegName { get; set; } = "(NOTHING)";
         public string OwnerHouse { get; set; } = "<none>";
+        /// <summary>
+        /// Default: 256
+        /// </summary>
         public int HealthPoint { get; set; } = 256;
         public string Status { get; set; } = "<none>";
         public string TaggedTrigger { get; set; } = "None";
@@ -185,10 +188,19 @@ namespace RelertSharp.MapStructure.Objects
             }
         }
         public int Rotation { get; set; } = 0;
+        /// <summary>
+        /// Default: 100
+        /// </summary>
         public int VeterancyPercentage { get; set; } = 100;
+        /// <summary>
+        /// Default: -1
+        /// </summary>
         public string Group { get; set; } = "-1";
         public bool IsAboveGround { get; set; } = false;
         public bool AutoNORecruitType { get; set; } = false;
+        /// <summary>
+        /// Default: true
+        /// </summary>
         public bool AutoYESRecruitType { get; set; } = true;
         public MapObjectType ObjectType { get; protected set; } = MapObjectType.Undefined;
         public virtual ISceneObject SceneObject { get; set; }

@@ -30,18 +30,29 @@ namespace RelertSharp.Wpf.MapEngine
         {
             if (drew && ParentDocument.IsActive)
             {
-                switch (MouseState.State)
+                if (e.Key == Key.Z && GuiUtil.IsKeyDown(Key.LeftCtrl))
                 {
-                    case PanelMouseState.TileBrush:
-                        TileBrushKeyHandler(e);
-                        EngineApi.InvokeRedraw();
-                        e.Handled = true;
-                        break;
-                    case PanelMouseState.None:
-                        SelectorKeyHandler(e);
-                        EngineApi.InvokeRedraw();
-                        e.Handled = true;
-                        break;
+                    if (UndoRedoHub.Undo()) EngineApi.InvokeRedraw();
+                }
+                else if (e.Key == Key.Y && GuiUtil.IsKeyDown(Key.LeftCtrl))
+                {
+                    if (UndoRedoHub.Redo()) EngineApi.InvokeRedraw();
+                }
+                else
+                {
+                    switch (MouseState.State)
+                    {
+                        case PanelMouseState.TileBrush:
+                            TileBrushKeyHandler(e);
+                            EngineApi.InvokeRedraw();
+                            e.Handled = true;
+                            break;
+                        case PanelMouseState.None:
+                            SelectorKeyHandler(e);
+                            EngineApi.InvokeRedraw();
+                            e.Handled = true;
+                            break;
+                    }
                 }
             }
         }

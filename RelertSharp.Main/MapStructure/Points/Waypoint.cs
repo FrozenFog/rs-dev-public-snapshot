@@ -95,6 +95,26 @@ namespace RelertSharp.MapStructure.Points
             base.ApplyConfig(config, filter, applyPosAndName);
             if (applyPosAndName) Num = config.WaypointNum;
         }
+        public string[] ExtractParameter()
+        {
+            return new string[]
+            {
+                Num,
+                X.ToString(),
+                Y.ToString()
+            };
+        }
+        public IMapObject ConstructFromParameter(string[] command)
+        {
+            ParameterReader reader = new ParameterReader(command);
+            WaypointItem wp = new WaypointItem()
+            {
+                Num = reader.ReadString(),
+                X = reader.ReadInt(),
+                Y = reader.ReadInt()
+            };
+            return wp;
+        }
         #endregion
 
 

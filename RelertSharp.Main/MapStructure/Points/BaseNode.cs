@@ -97,6 +97,29 @@ namespace RelertSharp.MapStructure.Points
                 RegName = config.RegName;
             }
         }
+        public string[] ExtractParameter()
+        {
+            return new string[]
+            {
+                Parent.Name,
+                RegName,
+                X.ToString(),
+                Y.ToString()
+            };
+        }
+        public IMapObject ConstructFromParameter(string [] commands)
+        {
+            ParameterReader reader = new ParameterReader(commands);
+            string parentName = reader.ReadString();
+            HouseItem parent = GlobalVar.CurrentMapDocument.Map.Houses.GetHouse(parentName);
+            BaseNode node = new BaseNode(parent)
+            {
+                RegName = reader.ReadString(),
+                X = reader.ReadInt(),
+                Y = reader.ReadInt()
+            };
+            return node;
+        }
         #endregion
 
 

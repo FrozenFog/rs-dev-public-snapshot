@@ -36,7 +36,7 @@ namespace RelertSharp.Engine.Api
                     AircraftItem air = obj as AircraftItem;
                     EngineMain.DrawAircraft(air, height, Map.GetHouseColor(air));
                     break;
-                case MapObjectType.Unit:
+                case MapObjectType.Vehicle:
                     UnitItem unit = obj as UnitItem;
                     EngineMain.DrawUnit(unit, height, Map.GetHouseColor(unit));
                     break;

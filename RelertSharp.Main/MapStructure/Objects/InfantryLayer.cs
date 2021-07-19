@@ -76,6 +76,48 @@ namespace RelertSharp.MapStructure.Objects
             base.ApplyConfig(config, filter, applyPosAndName);
             if (applyPosAndName) SubCell = config.SubCell;
         }
+        public string[] ExtractParameter()
+        {
+            return new string[]
+            {
+                OwnerHouse,
+                RegName,
+                HealthPoint.ToString(),
+                X.ToString(),
+                Y.ToString(),
+                subcell.ToString(),
+                Status,
+                Rotation.ToString(),
+                TaggedTrigger,
+                VeterancyPercentage.ToString(),
+                Group,
+                IsAboveGround.ZeroOne(),
+                AutoNORecruitType.ZeroOne(),
+                AutoYESRecruitType.ZeroOne()
+            };
+        }
+        public IMapObject ConstructFromParameter(string[] command)
+        {
+            ParameterReader reader = new ParameterReader(command);
+            InfantryItem inf = new InfantryItem()
+            {
+                OwnerHouse = reader.ReadString(),
+                RegName = reader.ReadString(),
+                HealthPoint = reader.ReadInt(256),
+                X = reader.ReadInt(),
+                Y = reader.ReadInt(),
+                subcell = reader.ReadInt(),
+                Status = reader.ReadString(),
+                Rotation = reader.ReadInt(),
+                TaggedTrigger = reader.ReadString(),
+                VeterancyPercentage = reader.ReadInt(100),
+                Group = reader.ReadString(),
+                IsAboveGround = reader.ReadBool(),
+                AutoNORecruitType = reader.ReadBool(),
+                AutoYESRecruitType = reader.ReadBool(true)
+            };
+            return inf;
+        }
         #endregion
 
 

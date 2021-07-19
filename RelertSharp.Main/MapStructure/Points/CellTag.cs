@@ -46,6 +46,26 @@ namespace RelertSharp.MapStructure.Points
         {
             return string.Format("{0}, {1} - {2}", X, Y, TagID);
         }
+        public string[] ExtractParameter()
+        {
+            return new string[]
+            {
+                X.ToString(),
+                Y.ToString(),
+                TagID
+            };
+        }
+        public IMapObject ConstructFromParameter(string[] command)
+        {
+            ParameterReader reader = new ParameterReader(command);
+            CellTagItem cell = new CellTagItem()
+            {
+                X = reader.ReadInt(),
+                Y = reader.ReadInt(),
+                TagID = reader.ReadString()
+            };
+            return cell;
+        }
         #endregion
 
 

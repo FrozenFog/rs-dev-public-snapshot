@@ -22,6 +22,10 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Ctor
+        private StructureItem()
+        {
+            ObjectType = MapObjectType.Building;
+        }
         public StructureItem(string _id, string[] _args) : base(_id, _args)
         {
             try
@@ -84,6 +88,52 @@ namespace RelertSharp.MapStructure.Objects
             if (filter.AiRepairable) AIRepairable = config.AiRepairable;
             if (filter.Spotlight) SpotlightType = config.SpotlightType;
         }
+        public string[] ExtractParameter()
+        {
+            return new string[]
+            {
+                OwnerHouse,
+                RegName,
+                HealthPoint.ToString(),
+                X.ToString(),
+                Y.ToString(),
+                Rotation.ToString(),
+                TaggedTrigger,
+                AISellable.ZeroOne(),
+                AIRebuildable.ZeroOne(),
+                IsPowered.ZeroOne(),
+                UpgradeNum.ToString(),
+                ((int)SpotlightType).ToString(),
+                Upgrade1,
+                Upgrade2,
+                Upgrade3,
+                AIRepairable.ZeroOne(),
+            };
+        }
+        public IMapObject ConstructFromParameter(string[] command)
+        {
+            ParameterReader reader = new ParameterReader(command);
+            StructureItem bud = new StructureItem()
+            {
+                OwnerHouse = reader.ReadString(),
+                RegName = reader.ReadString(),
+                HealthPoint = reader.ReadInt(256),
+                X = reader.ReadInt(),
+                Y = reader.ReadInt(),
+                Rotation = reader.ReadInt(),
+                TaggedTrigger = reader.ReadString(),
+                AISellable = reader.ReadBool(true),
+                AIRebuildable = reader.ReadBool(true),
+                IsPowered = reader.ReadBool(true),
+                UpgradeNum = reader.ReadInt(),
+                SpotlightType = (BuildingSpotlightType)reader.ReadInt(),
+                Upgrade1 = reader.ReadString(),
+                Upgrade2 = reader.ReadString(),
+                Upgrade3 = reader.ReadString(),
+                AIRepairable = reader.ReadBool(true),
+            };
+            return bud;
+        }
         #endregion
 
 
@@ -99,14 +149,26 @@ namespace RelertSharp.MapStructure.Objects
                 };
             }
         }
+        /// <summary>
+        /// Default: true
+        /// </summary>
         public bool AISellable { get; set; } = true;
+        /// <summary>
+        /// Default: true
+        /// </summary>
         public bool AIRebuildable { get; private set; } = false;
+        /// <summary>
+        /// Default: true
+        /// </summary>
         public bool IsPowered { get; set; } = true;
         public int UpgradeNum { get; set; }
         public BuildingSpotlightType SpotlightType { get; set; }
         public string Upgrade1 { get; set; } = "None";
         public string Upgrade2 { get; set; } = "None";
         public string Upgrade3 { get; set; } = "None";
+        /// <summary>
+        /// Default: true
+        /// </summary>
         public bool AIRepairable { get; set; } = true;
         public bool Nominal { get; private set; } = false;
         public int SizeX

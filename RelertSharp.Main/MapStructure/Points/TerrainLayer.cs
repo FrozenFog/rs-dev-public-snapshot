@@ -37,6 +37,26 @@ namespace RelertSharp.MapStructure.Points
             base.ApplyConfig(config, filter, applyPosAndName);
             if (applyPosAndName) RegName = config.RegName;
         }
+        public string[] ExtractParameter()
+        {
+            return new string[]
+            {
+                X.ToString(),
+                Y.ToString(),
+                RegName
+            };
+        }
+        public IMapObject ConstructFromParameter(string[] command)
+        {
+            ParameterReader reader = new ParameterReader(command);
+            TerrainItem terr = new TerrainItem()
+            {
+                X = reader.ReadInt(),
+                Y = reader.ReadInt(),
+                RegName = reader.ReadString()
+            };
+            return terr;
+        }
         #endregion
 
 

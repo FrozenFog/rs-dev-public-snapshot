@@ -108,6 +108,47 @@ namespace RelertSharp.MapStructure
             AddToTile(o);
             return o;
         }
+        public static void AddObject(IMapObject obj)
+        {
+            switch (obj.ObjectType)
+            {
+                case MapObjectType.Aircraft:
+                    Map.Aircrafts.AddItem(obj as AircraftItem);
+                    break;
+                case MapObjectType.Building:
+                    Map.Buildings.AddItem(obj as StructureItem);
+                    break;
+                case MapObjectType.Vehicle:
+                    Map.Units.AddItem(obj as UnitItem);
+                    break;
+                case MapObjectType.Infantry:
+                    Map.Infantries.AddItem(obj as InfantryItem);
+                    break;
+                case MapObjectType.Smudge:
+                    Map.Smudges.AddObject(obj as SmudgeItem);
+                    break;
+                case MapObjectType.Terrain:
+                    Map.Terrains.AddObject(obj as TerrainItem);
+                    break;
+                case MapObjectType.Celltag:
+                    Map.Celltags.AddObject(obj as CellTagItem);
+                    break;
+                case MapObjectType.Waypoint:
+                    Map.Waypoints.AddObject(obj as WaypointItem);
+                    break;
+                case MapObjectType.Overlay:
+                    Map.Overlays[obj] = obj as OverlayUnit;
+                    break;
+                case MapObjectType.LightSource:
+                    Map.LightSources.AddObject(obj as LightSource);
+                    break;
+                case MapObjectType.BaseNode:
+                    BaseNode node = obj as BaseNode;
+                    node.Parent.AddNode(node);
+                    break;
+            }
+            AddToTile(obj);
+        }
         #endregion
 
 

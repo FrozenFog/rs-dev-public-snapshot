@@ -59,7 +59,44 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods
-
+        public string[] ExtractParameter()
+        {
+            return new string[]
+            {
+                OwnerHouse,
+                RegName,
+                HealthPoint.ToString(),
+                X.ToString(),
+                Y.ToString(),
+                Rotation.ToString(),
+                Status,
+                TaggedTrigger,
+                VeterancyPercentage.ToString(),
+                Group,
+                AutoNORecruitType.ZeroOne(),
+                AutoYESRecruitType.ZeroOne()
+            };
+        }
+        public IMapObject ConstructFromParameter(string[] parameter)
+        {
+            ParameterReader reader = new ParameterReader(parameter);
+            AircraftItem air = new AircraftItem()
+            {
+                OwnerHouse = reader.ReadString(),
+                RegName = reader.ReadString(),
+                HealthPoint = reader.ReadInt(256),
+                X = reader.ReadInt(),
+                Y = reader.ReadInt(),
+                Rotation = reader.ReadInt(),
+                Status = reader.ReadString(),
+                TaggedTrigger = reader.ReadString(),
+                VeterancyPercentage = reader.ReadInt(100),
+                Group = reader.ReadString(),
+                AutoNORecruitType = reader.ReadBool(),
+                AutoYESRecruitType = reader.ReadBool(true)
+            };
+            return air;
+        }
         #endregion
 
 

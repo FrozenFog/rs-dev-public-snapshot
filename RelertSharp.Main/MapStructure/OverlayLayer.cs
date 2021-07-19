@@ -203,6 +203,28 @@ namespace RelertSharp.MapStructure
                 Frame = config.OverlayFrame;
             }
         }
+        public string[] ExtractParameter()
+        {
+            return new string[]
+            {
+                X.ToString(),
+                Y.ToString(),
+                Index.ToString(),
+                Frame.ToString()
+            };
+        }
+        public IMapObject ConstructFromParameter(string[] command)
+        {
+            ParameterReader reader = new ParameterReader(command);
+            OverlayUnit o = new OverlayUnit()
+            {
+                X = reader.ReadInt(),
+                Y = reader.ReadInt(),
+                Index = reader.ReadByte(),
+                Frame = reader.ReadByte()
+            };
+            return o;
+        }
         #endregion
 
 

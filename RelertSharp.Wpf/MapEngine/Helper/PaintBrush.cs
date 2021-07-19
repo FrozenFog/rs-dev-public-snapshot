@@ -135,7 +135,7 @@ namespace RelertSharp.Wpf
                     case MapObjectType.Infantry:
                         drawedObject = MapApi.AddInfantry(Config, dummyFilter);
                         break;
-                    case MapObjectType.Unit:
+                    case MapObjectType.Vehicle:
                         drawedObject = MapApi.AddUnit(Config, dummyFilter);
                         break;
                     case MapObjectType.Building:
@@ -163,6 +163,7 @@ namespace RelertSharp.Wpf
                 if (drawedObject != null)
                 {
                     EngineApi.DrawObject(drawedObject);
+                    UndoRedoHub.PushCommand(drawedObject);
                 }
             }
         }
