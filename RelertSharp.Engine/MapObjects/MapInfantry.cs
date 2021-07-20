@@ -30,7 +30,7 @@ namespace RelertSharp.Engine.MapObjects
         }
         public override void MoveTo(I3dLocateable cell, int subcell)
         {
-            if (subcell > 0 && subcell < 4 && !(subcell == SubCell && CoordEquals(cell)))
+            if (subcell >= 2 && subcell <= 4 && !(subcell == SubCell && CoordEquals(cell)))
             {
                 Vec3 delta = GetDeltaDistant(cell, subcell, SubCell);
                 ShiftBy(delta, pSelf, pSelfShadow);

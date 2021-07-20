@@ -98,6 +98,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             {
                 dragingSelectBox = false;
                 src.Children.Clear();
+                if (beginCell.Coord == endCell.Coord) return;
                 IEnumerable<I2dLocateable> enumerator;
                 if (isIsometric)
                 {
@@ -125,7 +126,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                                     obj.CancelSelection();
                                     selectedObjects.Remove(obj);
                                 }
-                                else
+                                else if (!reverseSelect && !selectedObjects.Contains(obj))
                                 {
                                     obj.Select();
                                     selectedObjects.Add(obj);
@@ -146,19 +147,26 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 {
                     if ((obj.ObjectType & selectFlag) != 0)
                     {
-                        if (obj is InfantryItem inf && inf.SubCell != subcell) continue;
-                        if (reverseSelect && selectedObjects.Contains(obj))
+                        bool reverse = reverseSelect && selectedObjects.Contains(obj);
+                        bool select = !(reverseSelect || selectedObjects.Contains(obj));
+                        if (obj is InfantryItem inf)
+                        {
+                            if (inf.SubCell != subcell) continue;
+                        }
+                        if (reverse)
                         {
                             obj.CancelSelection();
                             selectedObjects.Remove(obj);
                         }
-                        else
+                        if (select)
                         {
                             obj.Select();
                             selectedObjects.Add(obj);
                         }
+                        if (reverse || select) break;
                     }
                 }
+                PlaySelectedSound();
             }
         }
         public static void UpdateSelectingRectangle(Point newPos, I3dLocateable end)
@@ -232,6 +240,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             isMoving = true;
             orgPos.Clear();
             foreach (var obj in selectedObjects) orgPos.Add(new Pnt(obj));
+            MapApi.BeginMove(selectedObjects);
             posBeginMove = beginCell;
         }
         public static void MoveSelectedObjectsTo(I2dLocateable destCell, int subcell = -1)
@@ -245,8 +254,12 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                     I2dLocateable objDest = RsMath.I2dAddi(orgPos[i], delta);
                     if (Map.TilesData[objDest] is Tile)
                     {
-                        if (obj is InfantryItem inf) MapApi.MoveObjectTo(obj, objDest, inf.SubCell);
-                        else MapApi.MoveObjectTo(obj, objDest, subcell);
+                        if (obj is InfantryItem inf)
+                        {
+                            int destSubcell = selectedObjects.Count == 1 ? subcell : inf.SubCell;
+                            MapApi.MoveObjectTo(obj, objDest, destSubcell, false);
+                        }
+                        else MapApi.MoveObjectTo(obj, objDest, subcell, false);
                     }
                 }
             }
@@ -254,6 +267,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         public static void EndSelectedObjectsMoving()
         {
             isMoving = false;
+            MapApi.EndMove(selectedObjects);
         }
         public static bool IsPositionHasSelectedItem(I2dLocateable pos, int subcell = -1)
         {
@@ -261,10 +275,10 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             {
                 if (obj.Coord == pos.Coord)
                 {
-                    if (subcell != -1)
+                    if (obj is InfantryItem inf)
                     {
-                        if (obj is InfantryItem inf) return inf.SubCell == subcell;
-                        else return true;
+                        if (inf.SubCell == subcell) return true;
+                        else continue;
                     }
                     else return true;
                 }

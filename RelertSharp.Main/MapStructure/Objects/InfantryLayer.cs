@@ -16,7 +16,7 @@ namespace RelertSharp.MapStructure.Objects
 
     public class InfantryItem : ObjectItemBase, ICombatObject
     {
-        private int subcell = 1;
+        private int subcell = 4;
 
 
         #region Ctor - InfantryItem
@@ -71,6 +71,11 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - InfantryItem
+        public override void MoveTo(I3dLocateable pos, int subcell = -1)
+        {
+            SubCell = subcell;
+            base.MoveTo(pos, subcell);
+        }
         public override void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
         {
             base.ApplyConfig(config, filter, applyPosAndName);
@@ -106,7 +111,7 @@ namespace RelertSharp.MapStructure.Objects
                 HealthPoint = reader.ReadInt(256),
                 X = reader.ReadInt(),
                 Y = reader.ReadInt(),
-                subcell = reader.ReadInt(),
+                subcell = reader.ReadInt(4),
                 Status = reader.ReadString(),
                 Rotation = reader.ReadInt(),
                 TaggedTrigger = reader.ReadString(),
@@ -138,13 +143,13 @@ namespace RelertSharp.MapStructure.Objects
             get { return subcell; }
             set
             {
-                if (value >= 1 && value <= 3)
+                if (value >= 2 && value <= 4)
                 {
                     subcell = value;
                 }
                 else
                 {
-                    subcell = 1;
+                    subcell = 4;
                 }
             }
         }

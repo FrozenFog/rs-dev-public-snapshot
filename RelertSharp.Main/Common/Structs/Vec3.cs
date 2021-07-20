@@ -80,8 +80,8 @@ namespace RelertSharp.Common
         public static Vec3 ToVec3Iso(I3dLocateable src, int subcell)
         {
             float x = src.X + 0.25f, y = src.Y + 0.25f, z = src.Z;
-            if (subcell == 2) x -= 0.5f;
-            else if (subcell == 3) y -= 0.5f;
+            if (subcell == 3) x -= 0.5f;
+            else if (subcell == 2) y -= 0.5f;
             return ToVec3Iso(x, y, z);
         }
         public static Vec3 ToVec3Iso(float x, float y, float z)

@@ -90,7 +90,6 @@ namespace RelertSharp.Engine
             CppExtern.Scene.ClientPositionToScenePositionLock(p, ref scenepos);
             scenepos.Y += 8;
             scenepos += _NormTileVec * Constant.DrawingEngine.MapMaxHeightDrawing;
-            int height = 0;
             Vec3 tileCoord = new Vec3();
             for (; tileCoord.Z >= 0; )
             {
@@ -233,9 +232,9 @@ namespace RelertSharp.Engine
             float y = scenePos.Y / _width;
             float dx = x - tilepos.X;
             float dy = y - tilepos.Y;
-            int subcell = 1;
-            if (dy - dx > 0.25f && dx < 0.5f) subcell = 2;
-            else if (dy - dx < -0.25f && dy < 0.5f) subcell = 3;
+            int subcell = 4;
+            if (dy - dx > 0.25f && dx < 0.5f) subcell = 3;
+            else if (dy - dx < -0.25f && dy < 0.5f) subcell = 2;
             return subcell;
         }
     }

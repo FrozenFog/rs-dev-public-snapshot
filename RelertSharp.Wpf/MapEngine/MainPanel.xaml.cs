@@ -30,7 +30,7 @@ namespace RelertSharp.Wpf.MapEngine
     /// </summary>
     public partial class MainPanel : UserControl, IRsView
     {
-        public event I3dLocateableHandler MousePosChanged;
+        public event ScenePositionHandler MousePosChanged;
         public event EventHandler ScaleFactorChanged;
         private IntPtr _handle;
         private bool drew = false;

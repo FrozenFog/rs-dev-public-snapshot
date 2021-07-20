@@ -215,14 +215,16 @@ namespace RelertSharp.Wpf
         }
 
         private I3dLocateable posMouse;
-        private void PnlMain_MousePosChanged(I3dLocateable pos)
+        private int subcell;
+        private void PnlMain_MousePosChanged(I3dLocateable pos, int subcell)
         {
             posMouse = pos;
+            this.subcell = subcell;
             RefreshStatus();
         }
         private void RefreshStatus()
         {
-            position.Text = string.Format("X: {0} Y: {1} Z: {2}, Scale: {3}", posMouse.X, posMouse.Y, posMouse.Z, Engine.Api.EngineApi.ScaleFactor);
+            position.Text = string.Format("X: {0} Y: {1} Z: {2} Subcell: {4}, Scale: {3}", posMouse.X, posMouse.Y, posMouse.Z, Engine.Api.EngineApi.ScaleFactor, subcell);
         }
 
 

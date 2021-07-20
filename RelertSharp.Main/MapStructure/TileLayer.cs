@@ -597,6 +597,11 @@ namespace RelertSharp.MapStructure
         /// <param name="src"></param>
         public void RemoveObject(IMapObject src)
         {
+            if (src is ICombatObject com)
+            {
+                RemoveObject(com);
+                return;
+            }
             int i = 0;
             for (; i < objectsOnTile.Count; i++)
             {

@@ -23,8 +23,8 @@ namespace RelertSharp.Engine
         internal static Vec3 ToVec3Iso(MapInfantry inf, int subcell)
         {
             float x = inf.X + 0.25f, y = inf.Y + 0.25f, z = inf.Z;
-            if (subcell == 2) x -= 0.5f;
-            if (subcell == 3) y -= 0.5f;
+            if (subcell == 3) x -= 0.5f;
+            if (subcell == 2) y -= 0.5f;
             return ToVec3Iso(x, y, z);
         }
         internal static Vec3 ToVec3Iso(I3dLocateable d3)

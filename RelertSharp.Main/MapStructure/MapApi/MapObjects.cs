@@ -155,14 +155,36 @@ namespace RelertSharp.MapStructure
         #region Move
         private static bool isMoving = false;
         private static Dictionary<IMapObject, I2dLocateable> orgPos;
+        //public static void BeginMove(IEnumerable<IMapObject> targets)
+        //{
+        //    isMoving = true;
+        //    orgPos = new Dictionary<IMapObject, I2dLocateable>();
+        //    foreach (IMapObject obj in targets)
+        //    {
+        //        orgPos[obj] = new Pnt(obj);
+        //        EraseObjectRefInTile(obj);
+        //    }
+        //}
+        /// <summary>
+        /// Erase all object information on original tile
+        /// </summary>
+        /// <param name="targets"></param>
         public static void BeginMove(IEnumerable<IMapObject> targets)
         {
-            isMoving = true;
-            orgPos = new Dictionary<IMapObject, I2dLocateable>();
             foreach (IMapObject obj in targets)
             {
-                orgPos[obj] = new Pnt(obj);
                 EraseObjectRefInTile(obj);
+            }
+        }
+        /// <summary>
+        /// Write all object information to current tile they're on
+        /// </summary>
+        /// <param name="targets"></param>
+        public static void EndMove(IEnumerable<IMapObject> targets)
+        {
+            foreach (IMapObject obj in targets)
+            {
+                AddToTile(obj);
             }
         }
         public static void ShiftObjectsBy(I2dLocateable delta)
@@ -183,29 +205,29 @@ namespace RelertSharp.MapStructure
         /// <summary>
         /// Only use for single object moving, such as ONE infantry, or Object brush
         /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="pos"></param>
-        /// <param name="subcell"></param>
-        /// <param name="isShade"></param>
-        public static void MoveObjectTo(IMapObject obj, I2dLocateable pos, int subcell = -1)
+        /// <param name="obj">Object that needs to move</param>
+        /// <param name="pos">Target position</param>
+        /// <param name="subcell">Target subcell</param>
+        /// <param name="eraseMove">Will erase original object info on tile and write to destination tile</param>
+        public static void MoveObjectTo(IMapObject obj, I2dLocateable pos, int subcell = -1, bool eraseMove = true)
         {
             if (Map.TilesData.HasTileOn(pos))
             {
-                EraseObjectRefInTile(obj);
+                if (eraseMove) EraseObjectRefInTile(obj);
                 I3dLocateable dest = new Pnt3(pos, Map.GetHeightFromTile(pos));
                 obj.MoveTo(dest, subcell);
-                AddToTile(obj);
+                if (eraseMove) AddToTile(obj);
             }
         }
-        public static void EndMove()
-        {
-            isMoving = false;
-            foreach (IMapObject obj in orgPos.Keys)
-            {
-                AddToTile(obj);
-            }
-            orgPos.Clear();
-        }
+        //public static void EndMove()
+        //{
+        //    isMoving = false;
+        //    foreach (IMapObject obj in orgPos.Keys)
+        //    {
+        //        AddToTile(obj);
+        //    }
+        //    orgPos.Clear();
+        //}
         #endregion
 
 

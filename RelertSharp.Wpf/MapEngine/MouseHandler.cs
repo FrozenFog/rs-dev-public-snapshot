@@ -26,6 +26,7 @@ namespace RelertSharp.Wpf.MapEngine
         private Point downPos, downPosOrg;
         private MouseButton downBtn;
         private Stopwatch watchClick = new Stopwatch();
+        private int prevSubcell = -1;
         #endregion
 
 
@@ -286,9 +287,10 @@ namespace RelertSharp.Wpf.MapEngine
             }
             if (!noIndicate)
             {
-                if (EngineApi.MouseOnTile(pos, NeedIndicating))
+                if (EngineApi.MouseOnTile(pos, NeedIndicating) || prevSubcell != subcell)
                 {
-                    MousePosChanged?.Invoke(pos.To3dLocateable());
+                    MousePosChanged?.Invoke(pos.To3dLocateable(), subcell);
+                    prevSubcell = subcell;
                     redraw = true;
                 }
             }

@@ -12,4 +12,5 @@ namespace RelertSharp.Engine
     public delegate void MouseOnSubtileChangedEventHandler(int subtileNow, int subtilePrev);
     public delegate void I3dLocateableHandler(I3dLocateable pos);
     public delegate void I2dLocateableHandler(I2dLocateable pos);
+    public delegate void ScenePositionHandler(I3dLocateable cell, int subcell);
 }
