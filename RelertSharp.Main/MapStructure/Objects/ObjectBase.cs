@@ -22,13 +22,17 @@ namespace RelertSharp.MapStructure.Objects
         /// <param name="item"></param>
         public virtual void AddItem(T item)
         {
-            for (int i = 0; i < 10000; i++)
+            if (item.Id != Constant.ITEM_NONE) data[item.Id] = item;
+            else
             {
-                if (!data.Keys.Contains(i.ToString()))
+                for (int i = 0; i < 10000; i++)
                 {
-                    item.Id = i.ToString();
-                    data[item.Id] = item;
-                    return;
+                    if (!data.Keys.Contains(i.ToString()))
+                    {
+                        item.Id = i.ToString();
+                        data[item.Id] = item;
+                        return;
+                    }
                 }
             }
         }
@@ -157,6 +161,7 @@ namespace RelertSharp.MapStructure.Objects
         }
         public virtual void Dispose()
         {
+            isSelected = false;
             SceneObject?.Dispose();
         }
         public override string ToString()
@@ -167,15 +172,15 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Calls - ObjectItemBase
-        public string Id { get; internal set; } = "NULL";
+        public string Id { get; internal set; } = Constant.ITEM_NONE;
         public string RegName { get; set; } = "(NOTHING)";
-        public string OwnerHouse { get; set; } = "<none>";
+        public string OwnerHouse { get; set; } = Constant.ITEM_NONE;
         /// <summary>
         /// Default: 256
         /// </summary>
         public int HealthPoint { get; set; } = 256;
-        public string Status { get; set; } = "<none>";
-        public string TaggedTrigger { get; set; } = "None";
+        public string Status { get; set; } = Constant.ITEM_NONE;
+        public string TaggedTrigger { get; set; } = Constant.VALUE_NONE;
         public int X { get; set; } = 0;
         public int Y { get; set; } = 0;
         public int Coord

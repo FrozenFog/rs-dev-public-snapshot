@@ -164,6 +164,7 @@ namespace RelertSharp.MapStructure
         public void Dispose()
         {
             Selected = false;
+            SceneObject.RemoveTempColor();
             SceneObject?.Dispose();
         }
         public IMapObject CopyNew()

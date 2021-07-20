@@ -61,6 +61,13 @@ namespace RelertSharp.Common
             Incre();
             return result;
         }
+        public string[] Take(int count)
+        {
+            if (count == 0) return new string[] { };
+            string[] result = parameters.Skip(i).Take(count).ToArray();
+            Skip(count);
+            return result;
+        }
         public void Skip(int count = 1)
         {
             while (count-- > 0) Incre();

@@ -14,7 +14,7 @@ namespace RelertSharp.MapStructure.Objects
         #endregion
     }
 
-    public class InfantryItem : ObjectItemBase, ICombatObject
+    public class InfantryItem : ObjectItemBase, ICombatObject, IPosition
     {
         private int subcell = 4;
 
@@ -85,6 +85,7 @@ namespace RelertSharp.MapStructure.Objects
         {
             return new string[]
             {
+                Id,
                 OwnerHouse,
                 RegName,
                 HealthPoint.ToString(),
@@ -106,6 +107,7 @@ namespace RelertSharp.MapStructure.Objects
             ParameterReader reader = new ParameterReader(command);
             InfantryItem inf = new InfantryItem()
             {
+                Id = reader.ReadString(),
                 OwnerHouse = reader.ReadString(),
                 RegName = reader.ReadString(),
                 HealthPoint = reader.ReadInt(256),

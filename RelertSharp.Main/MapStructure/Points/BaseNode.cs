@@ -60,6 +60,8 @@ namespace RelertSharp.MapStructure.Points
         public void Dispose()
         {
             Selected = false;
+            IsHidden = false;
+            SceneObject.RemoveTempColor();
             SceneObject?.Dispose();
         }
         public void Hide()

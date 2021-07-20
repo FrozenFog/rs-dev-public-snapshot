@@ -239,7 +239,11 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         {
             isMoving = true;
             orgPos.Clear();
-            foreach (var obj in selectedObjects) orgPos.Add(new Pnt(obj));
+            foreach (var obj in selectedObjects)
+            {
+                if (obj is IPosition inf) orgPos.Add(new PntPos(inf));
+                else orgPos.Add(new PntPos(obj));
+            }
             MapApi.BeginMove(selectedObjects);
             posBeginMove = beginCell;
         }
@@ -268,6 +272,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         {
             isMoving = false;
             MapApi.EndMove(selectedObjects);
+            UndoRedoHub.PushCommand(selectedObjects, new List<I2dLocateable>(orgPos), new List<I2dLocateable>(selectedObjects));
         }
         public static bool IsPositionHasSelectedItem(I2dLocateable pos, int subcell = -1)
         {
@@ -291,6 +296,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             {
                 MapApi.RemoveObject(obj);
             }
+            if (selectedObjects.Count > 0) UndoRedoHub.PushCommand(selectedObjects);
             selectedObjects.Clear();
         }
         #endregion

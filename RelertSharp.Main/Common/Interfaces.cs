@@ -48,6 +48,11 @@ namespace RelertSharp.Common
         int Y { get; set; }
         int Coord { get; }
     }
+    
+    public interface IPosition : I2dLocateable
+    {
+        int SubCell { get; }
+    }
 
 
     public interface I3dLocateable : I2dLocateable

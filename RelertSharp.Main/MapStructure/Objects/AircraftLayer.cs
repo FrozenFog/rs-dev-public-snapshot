@@ -63,6 +63,7 @@ namespace RelertSharp.MapStructure.Objects
         {
             return new string[]
             {
+                Id,
                 OwnerHouse,
                 RegName,
                 HealthPoint.ToString(),
@@ -82,6 +83,7 @@ namespace RelertSharp.MapStructure.Objects
             ParameterReader reader = new ParameterReader(parameter);
             AircraftItem air = new AircraftItem()
             {
+                Id = reader.ReadString(),
                 OwnerHouse = reader.ReadString(),
                 RegName = reader.ReadString(),
                 HealthPoint = reader.ReadInt(256),
