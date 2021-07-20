@@ -15,46 +15,38 @@ using System.Windows.Shapes;
 namespace RelertSharp.Wpf.Dialogs
 {
     /// <summary>
-    /// DlgNampInput.xaml 的交互逻辑
+    /// DlgCmdInput.xaml 的交互逻辑
     /// </summary>
-    public partial class DlgNameInput : Window
+    public partial class DlgCmdInput : Window
     {
-        public DlgNameInput()
+        public DlgCmdInput()
         {
             InitializeComponent();
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="label">Default label: Name</param>
-        /// <param name="title">Default title: Relert Sharp</param>
-        public DlgNameInput(string label = null, string title = null)
+        public DlgCmdInput(string label = null, string title = null)
         {
             InitializeComponent();
             if (!title.IsNullOrEmpty()) Title = title;
             if (!label.IsNullOrEmpty()) lblName.Content = label;
         }
 
-
         #region Private
-        private bool IsValidName()
+        private bool IsValidCommand()
         {
-            if (ResultName.IsNullOrEmpty()) return false;
-            if (ResultName.ContainChars('=', ',', '.')) return false;
             return true;
         }
         #endregion
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
-            if (ResultName.IsNullOrEmpty())
+            if (ResultCommand.IsNullOrEmpty())
             {
-                GuiUtil.Warning("Name is empty.");
+                GuiUtil.Warning("Empty command!");
                 return;
             }
-            if (!IsValidName())
+            if (!IsValidCommand())
             {
-                GuiUtil.Warning("Invalid name, must not contain \"=\", \",\"");
+                GuiUtil.Warning("Invalid command!");
                 return;
             }
             DialogResult = true;
@@ -66,6 +58,6 @@ namespace RelertSharp.Wpf.Dialogs
         }
 
 
-        public string ResultName { get { return txbName.Text; } }
+        public string ResultCommand { get { return txbMain.Text; } }
     }
 }

@@ -3,6 +3,7 @@ using RelertSharp.Common.Config.Model;
 using RelertSharp.FileSystem;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Wpf.Common;
+using RelertSharp.Wpf.Dialogs;
 using RelertSharp.Wpf.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -154,6 +155,16 @@ namespace RelertSharp.Wpf.Views
         private void Menu_RemoveAll(object sender, RoutedEventArgs e)
         {
             if (Context.Count > 0) Context.RemoveAllItem();
+        }
+
+        private void Menu_Cmd(object sender, RoutedEventArgs e)
+        {
+            DlgCmdInput dlg = new DlgCmdInput();
+            if (dlg.ShowDialog().Value)
+            {
+                string command = dlg.ResultCommand;
+                Context.ApplyCommand(command);
+            }
         }
         #endregion
 

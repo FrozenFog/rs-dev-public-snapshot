@@ -50,6 +50,13 @@ namespace RelertSharp.Wpf.ViewModel
             data.RemoveAll();
             SetProperty(nameof(Items));
         }
+        #region Command
+        public void ApplyCommand(string commandLine)
+        {
+            data.ApplyCommandLine(commandLine);
+            SetProperty(nameof(Items));
+        }
+        #endregion
         #endregion
         public TriggerLogicCollectionVm Items
         {

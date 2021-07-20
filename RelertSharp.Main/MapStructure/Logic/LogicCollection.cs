@@ -99,42 +99,37 @@ namespace RelertSharp.MapStructure.Logic
             data.Insert(pos, copy);
             return copy;
         }
-        //public LogicItem NewEvent()
-        //{
-        //    LogicItem item = new LogicItem(TriggerSubType.EventLogic, GetCount());
-        //    Add(item);
-        //    return item;
-        //}
-        //public LogicItem NewAction()
-        //{
-        //    LogicItem item = new LogicItem(TriggerSubType.ActionLogic, GetCount());
-        //    Add(item);
-        //    return item;
-        //}
-        //public void Multiply(string[] command, LogicItem template, List<TriggerParam> lookups)
-        //{
-        //    foreach (string s in command)
-        //    {
-        //        if (string.IsNullOrEmpty(s)) continue;
-        //        string[] sl = s.Split(new char[] { ',' });
-        //        if (sl.Length != lookups.Count) return;
-        //        LogicItem item = new LogicItem(template, GetCount());
-        //        for (int i = 0; i < sl.Length; i++)
-        //        {
-        //            item.Parameters[lookups[i].ParamPos] = sl[i];
-        //        }
-        //        Add(item);
-        //    }
-        //}
-        //public void Add(LogicItem item)
-        //{
-        //    data[item.idx] = item;
-        //}
-        //public void Remove(LogicItem item)
-        //{
-        //    if (item == null) return;
-        //    data.Remove(item.idx);
-        //}
+        /// <summary>
+        /// count \t id1 \t param1 \t param2 \t id2...
+        /// </summary>
+        /// <param name="cmd"></param>
+        public void ApplyCommandLine(string cmd)
+        {
+            List<LogicItem> results = new List<LogicItem>();
+            List<LogicInfo> group = LogicType == TriggerSubType.ActionLogic ? cfg.TriggerActions : cfg.TriggerEvents;
+            try
+            {
+                ParameterReader reader = new ParameterReader(cmd, '\t');
+                int count = reader.ReadInt();
+                for (;count > 0; count--)
+                {
+                    int id = reader.ReadInt();
+                    LogicInfo info = group[id];
+                    LogicItem item = new LogicItem(LogicType, this);
+                    item.SetIdTo(id);
+                    foreach (var param in info.Parameters)
+                    {
+                        item.SetParameter(param, reader.ReadString());
+                    }
+                    results.Add(item);
+                }
+            }
+            catch
+            {
+                results.Clear();
+            }
+            data.AddRange(results);
+        }
         public string GetSaveData()
         {
             List<object> obj = new List<object>();

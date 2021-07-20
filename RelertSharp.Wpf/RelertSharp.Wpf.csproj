@@ -83,6 +83,9 @@
     <Compile Include="Common\GuiConst.cs" />
     <Compile Include="Common\GuiExtensions.cs" />
     <Compile Include="Common\LayoutManagerExtension.cs" />
+    <Compile Include="Dialogs\DlgCmdInput.xaml.cs">
+      <DependentUpon>DlgCmdInput.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\DlgNampInput.xaml.cs">
       <DependentUpon>DlgNampInput.xaml</DependentUpon>
     </Compile>
@@ -191,6 +194,10 @@
     <Compile Include="Views\AiTriggerView.xaml.cs">
       <DependentUpon>AiTriggerView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Dialogs\DlgCmdInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\DlgNampInput.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

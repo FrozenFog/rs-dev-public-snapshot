@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.Common
 {
-    internal class ParameterReader
+    public class ParameterReader
     {
         private string[] parameters;
         private int i = 0;
@@ -24,35 +24,40 @@ namespace RelertSharp.Common
         public byte ReadByte(byte def = 0)
         {
             if (IsEmpty) return def;
-            def = (byte)parameters[i].ParseInt(def);
+            string value = parameters[i].Trim();
+            def = (byte)value.ParseInt(def);
             Incre();
             return def;
         }
         public float ReadFloat(float def = 0f)
         {
             if (IsEmpty) return def;
-            def = parameters[i].ParseFloat(def);
+            string value = parameters[i].Trim();
+            def = value.ParseFloat(def);
             Incre();
             return def;
         }
         public int ReadInt(int def = 0)
         {
             if (IsEmpty) return def;
-            def = parameters[i].ParseInt(def);
+            string value = parameters[i].Trim();
+            def = value.ParseInt(def);
             Incre();
             return def;
         }
         public bool ReadBool(bool def = false)
         {
             if (IsEmpty) return def;
-            def = parameters[i].ParseBool(def);
+            string value = parameters[i].Trim();
+            def = value.ParseBool(def);
             Incre();
             return def;
         }
-        public string ReadString()
+        public string ReadString(bool trim = true)
         {
             if (IsEmpty) return string.Empty;
             string result = parameters[i];
+            if (trim) result = result.Trim();
             Incre();
             return result;
         }

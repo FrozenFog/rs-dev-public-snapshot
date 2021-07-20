@@ -38,6 +38,8 @@
                     <MenuItem Name="menuBottom" Header="Move to bottom" Click="Menu_Bottom"/>
                     <Separator Style="{DynamicResource sepDark}"/>
                     <MenuItem Header="Remove all items" Click="Menu_RemoveAll"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
+                    <MenuItem Header="Input command line" Click="Menu_Cmd"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
             <ListBox.ItemTemplate>

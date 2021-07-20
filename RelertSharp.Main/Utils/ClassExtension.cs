@@ -206,6 +206,8 @@ namespace System
         }
         public static bool ParseBool(this string src, bool def = false)
         {
+            if (src == "0") return false;
+            if (src == "1") return true;
             if (bool.TryParse(src, out bool b)) return b;
             return def;
         }
