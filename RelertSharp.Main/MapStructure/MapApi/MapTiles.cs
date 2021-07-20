@@ -35,11 +35,12 @@ namespace RelertSharp.MapStructure
                 org.Redraw();
             }
         }
-        public static void SetTile(int tileIndex, byte subindex, I2dLocateable pos)
+        public static void SetTile(int tileIndex, byte subindex, I2dLocateable pos, int height = -1)
         {
             if (Map.TilesData[pos] is Tile org)
             {
                 org.SetTileTo(tileIndex, subindex);
+                if (height != -1) org.SetHeightTo(height);
                 org.Redraw();
             }
         }

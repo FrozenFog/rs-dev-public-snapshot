@@ -47,6 +47,11 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         #region Move, Add, Load
         public static void AddTileToMap()
         {
+            List<Tile> org = new List<Tile>(under);
+            org.AddRange(surroundUnder);
+            List<Tile> dest = new List<Tile>(body);
+            dest.AddRange(surroundLat);
+            UndoRedoHub.PushCommand(dest, org);
             foreach (Tile t in body) MapApi.SetTile(t);
             foreach (Tile t in under) t.RevealAllTileImg();
 

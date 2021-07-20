@@ -32,11 +32,15 @@ namespace RelertSharp.Wpf.MapEngine
             {
                 if (e.Key == Key.Z && GuiUtil.IsKeyDown(Key.LeftCtrl))
                 {
+                    EngineApi.InvokeLock();
                     if (UndoRedoHub.Undo()) EngineApi.InvokeRedraw();
+                    EngineApi.InvokeUnlock();
                 }
                 else if (e.Key == Key.Y && GuiUtil.IsKeyDown(Key.LeftCtrl))
                 {
+                    EngineApi.InvokeLock();
                     if (UndoRedoHub.Redo()) EngineApi.InvokeRedraw();
+                    EngineApi.InvokeUnlock();
                 }
                 else
                 {

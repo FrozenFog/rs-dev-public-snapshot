@@ -12,8 +12,8 @@ namespace RelertSharp.Wpf
 {
     internal static class UndoRedoHub
     {
-        private static Stack<UndoRedoCommand> undoCommands = new Stack<UndoRedoCommand>();
-        private static Stack<UndoRedoCommand> redoCommands = new Stack<UndoRedoCommand>();
+        private static Stack<IUndoRedoCommand> undoCommands = new Stack<IUndoRedoCommand>();
+        private static Stack<IUndoRedoCommand> redoCommands = new Stack<IUndoRedoCommand>();
         private enum CommandType
         {
             AddObject,
@@ -57,8 +57,12 @@ namespace RelertSharp.Wpf
             string[] arrs = obj.ExtractParameter();
             cmds.Add(arrs.Length.ToString());
             cmds.AddRange(arrs);
-            UndoRedoCommand command = new UndoRedoCommand(CommandType.AddObject, cmds.JoinBy(), obj);
-            PushCommand(command);
+            AddObjectCommand cmd = new AddObjectCommand()
+            {
+                CommandLine = cmds.JoinBy()
+            };
+            cmd.SetReferance(obj);
+            PushCommand(cmd);
         }
         /// <summary>
         /// Remove object from map
@@ -74,7 +78,12 @@ namespace RelertSharp.Wpf
                 cmds.Add(arr.Length.ToString());
                 cmds.AddRange(arr);
             }
-            UndoRedoCommand cmd = new UndoRedoCommand(CommandType.RemoveObject, cmds.JoinBy(), new List<IMapObject>(src));
+            AddObjectCommand cmd = new AddObjectCommand()
+            {
+                CommandLine = cmds.JoinBy(),
+                IsMultipleObject = true
+            };
+            cmd.SetReferance(new List<IMapObject>(src));
             PushCommand(cmd);
         }
         /// <summary>
@@ -121,12 +130,42 @@ namespace RelertSharp.Wpf
                 }
                 cmds.AddRange(line);
             }
-            UndoRedoCommand cmd = new UndoRedoCommand(CommandType.MoveObject, cmds.JoinBy(), referance);
+            MoveObjectCommand cmd = new MoveObjectCommand()
+            {
+                CommandLine = cmds.JoinBy()
+            };
+            cmd.SetReferance(referance);
+            PushCommand(cmd);
+        }
+        public static void PushCommand(List<Tile> target, List<Tile> before)
+        {
+            List<string> cmds = new List<string>();
+            cmds.Add(target.Count.ToString());
+            for (int i = 0; i< target.Count; i++)
+            {
+                Tile org = before[i];
+                Tile dest = target[i];
+                string[] line = new string[]
+                {
+                    org.TileIndex.ToString(),
+                    org.SubIndex.ToString(),
+                    org.RealHeight.ToString(),
+                    dest.TileIndex.ToString(),
+                    dest.SubIndex.ToString(),
+                    dest.RealHeight.ToString()
+                };
+                cmds.AddRange(line);
+            }
+            TileModifyCommand cmd = new TileModifyCommand()
+            {
+                CommandLine = cmds.JoinBy()
+            };
+            cmd.SetReferance(new List<Tile>(before));
             PushCommand(cmd);
         }
         #endregion
 
-        private static void PushCommand(UndoRedoCommand cmd)
+        private static void PushCommand(IUndoRedoCommand cmd)
         {
             redoCommands.Clear();
             undoCommands.Push(cmd);
@@ -134,162 +173,172 @@ namespace RelertSharp.Wpf
 
 
 
-        private class UndoRedoCommand
+        #region Commands
+        private class TileModifyCommand : BaseCommand
         {
-            private object refer;
-            public UndoRedoCommand(CommandType type, string parameter, IMapObject referance = null)
+            public override void Execute()
             {
-                Type = type;
-                Command = parameter;
-                refer = referance;
-            }
-            public UndoRedoCommand(CommandType type, string parameter, IEnumerable<IMapObject> referances)
-            {
-                Type = type;
-                Command = parameter;
-                refer = referances;
-            }
-
-
-            public void Execute()
-            {
-                switch (Type)
-                {
-                    case CommandType.AddObject:
-                        ExecCommand.AddObject(Command, refer as IMapObject);
-                        break;
-                    case CommandType.AddTile:
-                        ExecCommand.AddTile(Command);
-                        break;
-                    case CommandType.RemoveObject:
-                        foreach (IMapObject obj in refer as IEnumerable<IMapObject>) ExecCommand.RemoveObject(obj);
-                        break;
-                    case CommandType.MoveObject:
-                        ExecCommand.MoveObject(Command, refer as IEnumerable<IMapObject>);
-                        break;
-                }
-            }
-            public void ReverseExecute()
-            {
-                switch (Type)
-                {
-                    case CommandType.AddObject:
-                        ExecCommand.RemoveObject(refer as IMapObject);
-                        break;
-                    case CommandType.AddTile:
-                        ExecCommand.RedoTile(Command);
-                        break;
-                    case CommandType.RemoveObject:
-                        ExecCommand.AddObject(Command, refer as IEnumerable<IMapObject>);
-                        break;
-                    case CommandType.MoveObject:
-                        ExecCommand.MoveObjectBack(Command, refer as IEnumerable<IMapObject>);
-                        break;
-                }
-            }
-
-
-
-            #region Call
-            public CommandType Type { get; set; }
-            public string Command { get; set; }
-            #endregion
-        }
-
-
-        private static class ExecCommand
-        {
-            public static IMapObject AddObject(string parameter, IMapObject referance)
-            {
-                ParameterReader reader = new ParameterReader(parameter);
-                int len = reader.ReadInt();
-                string[] arr = reader.Take(len);
-                //IMapObject add = referance.ConstructFromParameter(arr);
-                MapApi.AddObject(referance);
-                EngineApi.DrawObject(referance);
-                return referance;
-            }
-            public static IEnumerable<IMapObject> AddObject(string parameter, IEnumerable<IMapObject> referances)
-            {
-                List<IMapObject> result = new List<IMapObject>();
-                ParameterReader reader = new ParameterReader(parameter);
+                ParameterReader reader = new ParameterReader(CommandLine);
                 int count = reader.ReadInt();
-                IMapObject[] refers = referances.ToArray();
+                Tile[] targets = (referance as IEnumerable<Tile>).ToArray();
                 for (int i = 0; i < count; i++)
                 {
+                    reader.Skip(3);
+                    int index = reader.ReadInt();
+                    byte subindex = reader.ReadByte();
+                    int height = reader.ReadInt();
+                    MapApi.SetTile(index, subindex, targets[i], height);
+                }
+            }
+
+            public override void ReverseExecute()
+            {
+                ParameterReader reader = new ParameterReader(CommandLine);
+                int count = reader.ReadInt();
+                Tile[] targets = (referance as IEnumerable<Tile>).ToArray();
+                for (int i = 0; i < count; i++)
+                {
+                    int index = reader.ReadInt();
+                    byte subindex = reader.ReadByte();
+                    int height = reader.ReadInt();
+                    reader.Skip(3);
+                    MapApi.SetTile(index, subindex, targets[i], height);
+                }
+            }
+        }
+        private class MoveObjectCommand : BaseCommand
+        {
+            public override void Execute()
+            {
+                IEnumerable<IMapObject> targets = referance as IEnumerable<IMapObject>;
+                ParameterReader reader = new ParameterReader(CommandLine);
+                int count = reader.ReadInt();
+                IMapObject[] objs = targets.ToArray();
+                MapApi.BeginMove(targets);
+                for (int i = 0; i < count; i++)
+                {
+                    MapObjectType type = (MapObjectType)reader.ReadInt();
+                    IMapObject obj = objs[i];
+                    if (type == MapObjectType.Infantry)
+                    {
+                        reader.Skip(3);
+                        int subcell = reader.ReadInt();
+                        int x = reader.ReadInt(); int y = reader.ReadInt();
+                        MapApi.MoveObjectTo(obj, new Pnt(x, y), subcell, false);
+                    }
+                    else
+                    {
+                        reader.Skip(2);
+                        int x = reader.ReadInt(); int y = reader.ReadInt();
+                        MapApi.MoveObjectTo(obj, new Pnt(x, y), -1, false);
+                    }
+                }
+                MapApi.EndMove(targets);
+            }
+
+            public override void ReverseExecute()
+            {
+                IEnumerable<IMapObject> targets = referance as IEnumerable<IMapObject>;
+                ParameterReader reader = new ParameterReader(CommandLine);
+                int count = reader.ReadInt();
+                IMapObject[] objs = targets.ToArray();
+                MapApi.BeginMove(targets);
+                for (int i = 0; i < count; i++)
+                {
+                    MapObjectType type = (MapObjectType)reader.ReadInt();
+                    IMapObject obj = objs[i];
+                    if (type == MapObjectType.Infantry)
+                    {
+                        int subcell = reader.ReadInt();
+                        int x = reader.ReadInt(); int y = reader.ReadInt();
+                        reader.Skip(3);
+                        MapApi.MoveObjectTo(obj, new Pnt(x, y), subcell, false);
+                    }
+                    else
+                    {
+                        int x = reader.ReadInt(); int y = reader.ReadInt();
+                        reader.Skip(2);
+                        MapApi.MoveObjectTo(obj, new Pnt(x, y), -1, false);
+                    }
+                }
+                MapApi.EndMove(targets);
+            }
+        }
+        private class AddObjectCommand : BaseCommand
+        {
+            public bool IsMultipleObject { get; set; }
+            public override void Execute()
+            {
+                if (IsMultipleObject)
+                {
+                    IEnumerable<IMapObject> objs = referance as IEnumerable<IMapObject>;
+                    ParameterReader reader = new ParameterReader(CommandLine);
+                    int count = reader.ReadInt();
+                    IMapObject[] refers = objs.ToArray();
+                    for (int i = 0; i < count; i++)
+                    {
+                        int len = reader.ReadInt();
+                        string[] arr = reader.Take(len);
+                        IMapObject add = refers[i]/*.ConstructFromParameter(arr)*/;
+                        MapApi.AddObject(add);
+                        EngineApi.DrawObject(add);
+                    }
+                }
+                else
+                {
+                    IMapObject obj = referance as IMapObject;
+                    ParameterReader reader = new ParameterReader(CommandLine);
                     int len = reader.ReadInt();
                     string[] arr = reader.Take(len);
-                    IMapObject add = refers[i]/*.ConstructFromParameter(arr)*/;
-                    MapApi.AddObject(add);
-                    EngineApi.DrawObject(add);
-                    result.Add(add);
+                    //IMapObject add = referance.ConstructFromParameter(arr);
+                    MapApi.AddObject(obj);
+                    EngineApi.DrawObject(obj);
                 }
-                return result;
             }
-            public static void RemoveObject(IMapObject referance)
-            {
-                MapApi.RemoveObject(referance);
-            }
-            public static void AddTile(string parameter)
-            {
 
-            }
-            public static void RedoTile(string parameter)
+            public override void ReverseExecute()
             {
-
-            }
-            public static void MoveObject(string command, IEnumerable<IMapObject> targets)
-            {
-                ParameterReader reader = new ParameterReader(command);
-                int count = reader.ReadInt();
-                IMapObject[] objs = targets.ToArray();
-                MapApi.BeginMove(targets);
-                for (int i = 0; i< count; i++)
+                if (IsMultipleObject)
                 {
-                    MapObjectType type = (MapObjectType)reader.ReadInt();
-                    IMapObject obj = objs[i];
-                    if (type == MapObjectType.Infantry)
-                    {
-                        reader.Skip(3);
-                        int subcell = reader.ReadInt();
-                        int x = reader.ReadInt(); int y = reader.ReadInt();
-                        MapApi.MoveObjectTo(obj, new Pnt(x, y), subcell, false);
-                    }
-                    else
-                    {
-                        reader.Skip(2);
-                        int x = reader.ReadInt(); int y = reader.ReadInt();
-                        MapApi.MoveObjectTo(obj, new Pnt(x, y), -1, false);
-                    }
+                    foreach (IMapObject obj in referance as IEnumerable<IMapObject>) MapApi.RemoveObject(obj);
                 }
-                MapApi.EndMove(targets);
-            }
-            public static void MoveObjectBack(string command, IEnumerable<IMapObject> targets)
-            {
-                ParameterReader reader = new ParameterReader(command);
-                int count = reader.ReadInt();
-                IMapObject[] objs = targets.ToArray();
-                MapApi.BeginMove(targets);
-                for (int i = 0; i < count; i++)
-                {
-                    MapObjectType type = (MapObjectType)reader.ReadInt();
-                    IMapObject obj = objs[i];
-                    if (type == MapObjectType.Infantry)
-                    {
-                        int subcell = reader.ReadInt();
-                        int x = reader.ReadInt(); int y = reader.ReadInt();
-                        reader.Skip(3);
-                        MapApi.MoveObjectTo(obj, new Pnt(x, y), subcell, false);
-                    }
-                    else
-                    {
-                        int x = reader.ReadInt(); int y = reader.ReadInt();
-                        reader.Skip(2);
-                        MapApi.MoveObjectTo(obj, new Pnt(x, y), -1, false);
-                    }
-                }
-                MapApi.EndMove(targets);
+                else MapApi.RemoveObject(referance as IMapObject);
             }
         }
+        #endregion
+
+
+
+        #region Interface
+        private interface IUndoRedoCommand
+        {
+            void Execute();
+            void ReverseExecute();
+            string CommandLine { get; }
+        }
+        private abstract class BaseCommand : IUndoRedoCommand
+        {
+            protected object referance;
+            public string CommandLine { get; set; }
+            public abstract void Execute();
+            public abstract void ReverseExecute();
+            public void SetReferance(IMapObject src)
+            {
+                referance = src;
+            }
+            public void SetReferance(IEnumerable<IMapObject> src)
+            {
+                referance = src;
+            }
+            public void SetReferance(Tile src)
+            {
+                referance = src;
+            }
+            public void SetReferance(IEnumerable<Tile> src)
+            {
+                referance = src;
+            }
+        }
+        #endregion
     }
 }
