@@ -62,7 +62,7 @@ namespace RelertSharp.Wpf.Common
 
         public string MissionStatus { get; set; } = "Area Guard";
 
-        public string Group { get; set; } = "-1";
+        public string Group { get; set; } = Constant.ID_INVALID;
 
         public int HealthPoint { get; set; } = 256;
 
@@ -80,7 +80,7 @@ namespace RelertSharp.Wpf.Common
 
         public byte OverlayFrame { get; set; }
 
-        public string FollowsIndex { get; set; } = "-1";
+        public string FollowsIndex { get; set; } = Constant.ID_INVALID;
 
         public bool IsSellable { get; set; } = true;
 

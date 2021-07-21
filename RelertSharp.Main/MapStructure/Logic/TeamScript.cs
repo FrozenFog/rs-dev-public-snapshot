@@ -75,7 +75,7 @@ namespace RelertSharp.MapStructure.Logic
         }
         public TeamScriptGroup(TeamScriptGroup src, string id)
         {
-            Name = src.Name + " - Clone";
+            Name = src.Name + Constant.CLONE_SUFFIX;
             Id = id;
             data = new List<TeamScriptItem>(src.data);
         }

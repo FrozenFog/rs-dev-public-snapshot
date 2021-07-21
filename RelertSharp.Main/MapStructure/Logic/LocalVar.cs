@@ -1,14 +1,25 @@
 ﻿using RelertSharp.Common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class LocalVarCollection : IEnumerable<LocalVarItem>
+    public class LocalVarCollection : IEnumerable<LocalVarItem>, ICurdContainer<LocalVarItem>
     {
         private Dictionary<string, LocalVarItem> data = new Dictionary<string, LocalVarItem>();
-
+        private string NewId
+        {
+            get
+            {
+                for (int i = 0; i < 512; i++)
+                {
+                    if (!data.ContainsKey(i.ToString())) return i.ToString();
+                }
+                return string.Empty;
+            }
+        }
 
         #region Ctor - LocalVarCollection
         public LocalVarCollection() { }
@@ -16,23 +27,47 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - LocalVarCollection
-        public bool UpdateData(List<LocalVarItem> localVars)
+        /// <summary>
+        /// id is obsoleted
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public LocalVarItem AddItem(string id, string name)
         {
-            if (localVars == null) return false;
-            data.Clear();
-            foreach (LocalVarItem localVar in localVars)
-                data.Add(localVar.Id, localVar);
-            return true;
+            id = NewId;
+            if (id.IsNullOrEmpty()) return null;
+            LocalVarItem local = new LocalVarItem(name, false, id);
+            this[id] = local;
+            return local;
         }
-        public List<IniSystem.TechnoPair> ToTechno()
+
+        public LocalVarItem CopyItem(LocalVarItem src, string id)
         {
-            List<IniSystem.TechnoPair> result = new List<IniSystem.TechnoPair>();
-            foreach (LocalVarItem var in this)
+            id = NewId;
+            if (id.IsNullOrEmpty()) return null;
+            LocalVarItem local = new LocalVarItem(src, id);
+            this[id] = local;
+            return local;
+        }
+
+        public bool ContainsItem(LocalVarItem look)
+        {
+            return data.ContainsKey(look.Id);
+        }
+
+        public bool ContainsItem(string id, string param2)
+        {
+            return data.ContainsKey(id);
+        }
+
+        public bool RemoveItem(LocalVarItem target)
+        {
+            if (ContainsItem(target))
             {
-                IniSystem.TechnoPair p = new IniSystem.TechnoPair(var.Id, var.Name);
-                result.Add(p);
+                return data.Remove(target.Id);
             }
-            return result;
+            return false;
         }
         #region Enumerator
         public IEnumerator<LocalVarItem> GetEnumerator()
@@ -52,12 +87,12 @@ namespace RelertSharp.MapStructure.Logic
         /// <summary>
         /// index,name
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public LocalVarItem this[string name]
+        public LocalVarItem this[string id]
         {
-            get { return data.Keys.Contains(name) ? data[name] : null; }
-            set { data[name] = value; }
+            get { return data.Keys.Contains(id) ? data[id] : null; }
+            set { data[id] = value; }
         }
 
         #endregion
@@ -74,11 +109,21 @@ namespace RelertSharp.MapStructure.Logic
             InitState = init;
             Id = index.ToString();
         }
+        public LocalVarItem()
+        {
+            Name = Constant.VALUE_NONE;
+            Id = Constant.ID_INVALID;
+        }
+        public LocalVarItem(LocalVarItem src, string id)
+        {
+            Name = src.Name + Constant.CLONE_SUFFIX;
+            Id = id;
+        }
         #endregion
 
 
         #region Public Calls - LocalVarItem
-        public override string ToString() { return Id + ' ' + Name; }
+        public override string ToString() { return string.Format("{0}: {1} ({2})", Id, Name, InitState); }
         public bool InitState { get; set; }
         #endregion
     }

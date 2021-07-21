@@ -41,6 +41,7 @@ namespace RelertSharp.Common
         public const string ITEM_NONE = "<none>";
         public const string VALUE_NONE = "None";
         public const string ITEM_ALL = "<all>";
+        public const string ID_INVALID = "-1";
         public const string FMT_OWNER = "#OWNER#";
         public const string EX_SHP = ".shp";
         public const string EX_VXL = ".vxl";
@@ -48,6 +49,8 @@ namespace RelertSharp.Common
         public const string SUFF_BARREL = "barr";
         public const string SUFF_TURRET = "tur";
         public const string NULL_ICON = "xxicon.shp";
+        public const string CLONE_SUFFIX = " - Clone";
+        public const string TAG_SUFFIX = " - Tag";
 
         public static class TileSetClass
         {

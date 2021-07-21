@@ -331,6 +331,11 @@ namespace RelertSharp.Wpf
                 dataType = typeof(ComboItem);
                 return GlobalVar.CurrentMapDocument.Map.Houses.IndexOf(house.Name).ToString();
             }
+            else if (src.GetData(typeof(LocalVarItem)) is LocalVarItem local)
+            {
+                dataType = typeof(LocalVarItem);
+                return local.Id;
+            }
             return string.Empty;
         }
         #endregion

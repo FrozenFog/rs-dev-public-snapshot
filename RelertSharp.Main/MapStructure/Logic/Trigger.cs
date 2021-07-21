@@ -145,7 +145,7 @@ namespace RelertSharp.MapStructure.Logic
             Id = id;
             OwnerCountry = src.OwnerCountry;
             LinkedWith = src.LinkedWith;
-            Name = src.Name + " - Clone";
+            Name = src.Name + Constant.CLONE_SUFFIX;
             Disabled = src.Disabled;
             EasyOn = src.EasyOn;
             NormalOn = src.NormalOn;

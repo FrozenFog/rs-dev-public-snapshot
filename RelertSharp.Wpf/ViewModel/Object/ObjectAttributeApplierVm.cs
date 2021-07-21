@@ -199,7 +199,7 @@ namespace RelertSharp.Wpf.ViewModel
             get { return data.Group; }
             set
             {
-                if (string.IsNullOrEmpty(value)) data.Group = "-1";
+                if (string.IsNullOrEmpty(value)) data.Group = Constant.ID_INVALID;
                 else data.Group = value;
                 SetProperty();
             }

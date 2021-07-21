@@ -75,7 +75,7 @@ namespace RelertSharp.MapStructure.Logic
         }
         public TaskforceItem(TaskforceItem src, string id)
         {
-            Name = src.Name + " - Clone";
+            Name = src.Name + Constant.CLONE_SUFFIX;
             Id = id;
             foreach (TaskforceUnit u in src.Members)
             {
@@ -146,7 +146,7 @@ namespace RelertSharp.MapStructure.Logic
         //    }
         //}
         //public Dictionary<string, int> MemberData { get { return memberData; } set { memberData = value; } }
-        public string Group { get; set; } = "-1";
+        public string Group { get; set; } = Constant.ID_INVALID;
         #endregion
     }
 

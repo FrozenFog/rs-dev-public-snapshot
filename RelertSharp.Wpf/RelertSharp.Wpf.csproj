@@ -120,6 +120,7 @@
     <Compile Include="ViewModel\Logic\HouseListVm.cs" />
     <Compile Include="ViewModel\Logic\HouseVm.cs" />
     <Compile Include="ViewModel\Etc\LightningVm.cs" />
+    <Compile Include="ViewModel\Logic\LocalVarVm.cs" />
     <Compile Include="ViewModel\Logic\ScriptListVm.cs" />
     <Compile Include="ViewModel\Logic\TaskforceListVm.cs" />
     <Compile Include="ViewModel\Logic\TaskforceVm.cs" />
@@ -143,6 +144,9 @@
     </Compile>
     <Compile Include="Views\LightningView.xaml.cs">
       <DependentUpon>LightningView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LocalVarView.xaml.cs">
+      <DependentUpon>LocalVarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MapObjectBrushView.xaml.cs">
       <DependentUpon>MapObjectBrushView.xaml</DependentUpon>
@@ -245,6 +249,10 @@
     <Page Include="Views\LightningView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LocalVarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MapObjectBrushView.xaml">
       <SubType>Designer</SubType>

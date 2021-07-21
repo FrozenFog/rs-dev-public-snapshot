@@ -131,7 +131,7 @@ namespace RelertSharp.MapStructure.Objects
                 };
             }
         }
-        public string FollowsIndex { get; set; } = "-1";
+        public string FollowsIndex { get; set; } = Constant.ID_INVALID;
         #endregion
     }
 }

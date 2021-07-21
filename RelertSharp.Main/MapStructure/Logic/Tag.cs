@@ -150,14 +150,14 @@ namespace RelertSharp.MapStructure.Logic
         {
             Id = id;
             Repeating = src.Repeating;
-            Name = src.Name + " - Clone";
+            Name = src.Name + Constant.CLONE_SUFFIX;
             AssoTrigger = src.AssoTrigger;
         }
         public TagItem(TriggerItem trg, string _id)
         {
             Id = _id;
             Repeating = trg.Repeating;
-            Name = trg.Name + " - Tag";
+            Name = trg.Name + Constant.TAG_SUFFIX;
             AssoTrigger = trg.Id;
         }
         public TagItem(string id, string name)

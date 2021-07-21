@@ -200,7 +200,7 @@ namespace RelertSharp.MapStructure.Objects
         /// <summary>
         /// Default: -1
         /// </summary>
-        public string Group { get; set; } = "-1";
+        public string Group { get; set; } = Constant.ID_INVALID;
         public bool IsAboveGround { get; set; } = false;
         public bool AutoNORecruitType { get; set; } = false;
         /// <summary>

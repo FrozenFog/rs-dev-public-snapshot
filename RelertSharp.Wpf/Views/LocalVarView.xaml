@@ -1,0 +1,35 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RelertSharp.Wpf.Views"
+             xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel" x:Class="RelertSharp.Wpf.Views.LocalVarView"
+             mc:Ignorable="d">
+    <UserControl.DataContext>
+        <ViewModel:LocalVarVm/>
+    </UserControl.DataContext>
+    <Grid>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
+        <TextBox Style="{DynamicResource txbDark}" Margin="10,33,92,0" VerticalAlignment="Top" Text="{Binding Name}"/>
+        <CheckBox Content="Is Enabled" HorizontalAlignment="Right" Margin="0,36,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding IsEnabled}"/>
+        <ListBox x:Name="lbxMain" Margin="10,61,10,10" Style="{DynamicResource lbxDark}" SelectionChanged="SelectedItemChanged" PreviewMouseRightButtonDown="PreviewRightDown" MouseMove="DragMouseMove" MouseLeave="DragMouseLeave">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type ViewModel:LocalVarVm}">
+                    <TextBlock Text="{Binding Header}" Style="{DynamicResource txblkDark}" PreviewMouseLeftButtonDown="DragMouseDown" MouseUp="DragMouseUp"/>
+                </HierarchicalDataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu Style="{DynamicResource cmenuDark}">
+                    <MenuItem Header="Add Variable" Click="Menu_Add"/>
+                    <MenuItem Header="Remove Variable" Name="menuRemove" Click="Menu_Remove"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+    </Grid>
+</UserControl>

@@ -67,6 +67,8 @@ namespace RelertSharp.Wpf
         private readonly CountryHouseView housePanel = new CountryHouseView();
         [RsViewComponent(GuiViewType.TilePanel, GuiViewSide.Bottom, "Tiles")]
         private readonly TilePanelView tiles = new TilePanelView();
+        [RsViewComponent(GuiViewType.LocalVarPanel, GuiViewSide.Right, "Local Var")]
+        private readonly LocalVarView localVar = new LocalVarView();
         #endregion
         #region Else
         private SoundManager soundManager = new SoundManager();

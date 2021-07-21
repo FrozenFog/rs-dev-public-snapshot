@@ -47,6 +47,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         #region Move, Add, Load
         public static void AddTileToMap()
         {
+            EngineApi.InvokeLock();
             List<Tile> org = new List<Tile>(under);
             org.AddRange(surroundUnder);
             List<Tile> dest = new List<Tile>(body);
@@ -57,6 +58,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
 
             foreach (Tile t in surroundLat) MapApi.SetTile(t);
             foreach (Tile t in surroundUnder) t.RevealAllTileImg();
+            EngineApi.InvokeUnlock();
         }
         public static void LoadTileBrush(TileSetItemVm src)
         {
@@ -79,8 +81,8 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 body.Add(t);
             }
             isLat = src.IsLat;
-            EngineApi.InvokeUnlock();
             MoveTileBrushTo(prevPos);
+            EngineApi.InvokeUnlock();
         }
         public static bool MoveTileBrushTo(I3dLocateable pos)
         {

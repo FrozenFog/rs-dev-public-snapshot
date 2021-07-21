@@ -139,6 +139,19 @@ namespace RelertSharp.MapStructure
             }
         }
         #endregion
+
+
+        #region Misc
+        public LocalVarItem AddLocalVar(string name)
+        {
+            LocalVarItem local = LocalVariables.AddItem(null, name);
+            return local;
+        }
+        public bool RemoveVariable(LocalVarItem local)
+        {
+            return LocalVariables.RemoveItem(local);
+        }
+        #endregion
         #endregion
     }
 }
