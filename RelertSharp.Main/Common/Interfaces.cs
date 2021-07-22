@@ -42,6 +42,16 @@ namespace RelertSharp.Common
         string RegName { get; }
     }
 
+    public interface IGroupable
+    {
+        string Group { get; }
+    }
+
+    public interface ITaggableObject
+    {
+        string TagId { get; }
+    }
+
     public interface I2dLocateable
     {
         int X { get; set; }
@@ -76,15 +86,14 @@ namespace RelertSharp.Common
         string Id { get; }
     }
 
-    public interface ICombatObject : IMapObject
+    public interface ICombatObject : IMapObject, IGroupable
     {
         string OwnerHouse { get; set; }
         int HealthPoint { get; set; }
         string Status { get; set; }
-        string TaggedTrigger { get; set; }
+        string TagId { get; set; }
         int Rotation { get; set; }
         int VeterancyPercentage { get; set; }
-        string Group { get; set; }
     }
 
     public interface IMapTileBrushConfig

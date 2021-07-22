@@ -117,12 +117,14 @@ namespace RelertSharp.Common
             public const int ArgLenAircraft = 12;
             public const int ArgLenAiTrigger = 18;
             public const int ArgLenLightSource = 7;
+            public const int CAPACITY_LOCALVAR = 100;
             public const string CivilianCountrySide = "Civilian";
             public const string DefaultCivilianHouse = "Neutral";
 
             public const string KEY_HOUSE = "House";
             public const string KEY_SCRIPT = "Script";
             public const string KEY_TASKFORCE = "TaskForce";
+            public const string KEY_GROUP = "Group";
 
             public static readonly string[] ObjectStatus =
             {

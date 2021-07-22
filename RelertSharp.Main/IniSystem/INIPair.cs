@@ -166,6 +166,12 @@ namespace RelertSharp.IniSystem
             }
             catch { return def; }
         }
+        public string GetString(string def = null)
+        {
+            string value = Value.ToString();
+            if (string.IsNullOrEmpty(value)) return def;
+            return value;
+        }
         /// <summary>
         /// Try parse the value as float
         /// </summary>

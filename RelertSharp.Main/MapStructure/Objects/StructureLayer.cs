@@ -35,7 +35,7 @@ namespace RelertSharp.MapStructure.Objects
                     throw new Exception();
                 }
                 Rotation = int.Parse(_args[5]);
-                TaggedTrigger = _args[6];
+                TagId = _args[6];
                 AISellable = IniParseBool(_args[7]);
                 IsPowered = IniParseBool(_args[9]);
                 UpgradeNum = int.Parse(_args[10]);
@@ -55,7 +55,7 @@ namespace RelertSharp.MapStructure.Objects
         public StructureItem(StructureItem src) : base(src)
         {
             Rotation = src.Rotation;
-            TaggedTrigger = src.TaggedTrigger;
+            TagId = src.TagId;
             AISellable = src.AISellable;
             IsPowered = src.IsPowered;
             UpgradeNum = src.UpgradeNum;
@@ -99,7 +99,7 @@ namespace RelertSharp.MapStructure.Objects
                 X.ToString(),
                 Y.ToString(),
                 Rotation.ToString(),
-                TaggedTrigger,
+                TagId,
                 AISellable.ZeroOne(),
                 AIRebuildable.ZeroOne(),
                 IsPowered.ZeroOne(),
@@ -123,7 +123,7 @@ namespace RelertSharp.MapStructure.Objects
                 X = reader.ReadInt(),
                 Y = reader.ReadInt(),
                 Rotation = reader.ReadInt(),
-                TaggedTrigger = reader.ReadString(),
+                TagId = reader.ReadString(),
                 AISellable = reader.ReadBool(true),
                 AIRebuildable = reader.ReadBool(true),
                 IsPowered = reader.ReadBool(true),
@@ -146,7 +146,7 @@ namespace RelertSharp.MapStructure.Objects
             {
                 return new List<object>()
                 {
-                    OwnerHouse, RegName, HealthPoint, X, Y, Rotation, TaggedTrigger, AISellable.ToInt(), AIRebuildable.ToInt(), IsPowered.ToInt(), 
+                    OwnerHouse, RegName, HealthPoint, X, Y, Rotation, TagId, AISellable.ToInt(), AIRebuildable.ToInt(), IsPowered.ToInt(), 
                     UpgradeNum, (int)SpotlightType, Upgrade1,Upgrade2,Upgrade3,AIRepairable.ToInt(), Nominal.ToInt() 
                 };
             }

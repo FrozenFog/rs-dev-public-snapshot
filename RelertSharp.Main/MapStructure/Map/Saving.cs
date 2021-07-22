@@ -69,7 +69,7 @@ namespace RelertSharp.MapStructure
             INIEntity ent = new INIEntity("CellTags");
             foreach (CellTagItem cell in Celltags)
             {
-                ent.AddPair(new INIPair(cell.CoordString, cell.TagID));
+                ent.AddPair(new INIPair(cell.CoordString, cell.TagId));
             }
             return ent;
         }

@@ -26,6 +26,10 @@ namespace RelertSharp.Wpf.ViewModel
 
 
         #region Public Methods
+        public virtual int IndexOf(IBaseTreeVm<TData> iitem)
+        {
+            return Items.IndexOf(iitem);
+        }
         public virtual void AddItem(IBaseTreeVm<TData> iitem)
         {
             if (iitem is BaseTreeVm<TData> item)
@@ -53,12 +57,13 @@ namespace RelertSharp.Wpf.ViewModel
         }
         public virtual bool IsDescendantOf(IBaseTreeVm<TData> ancestor)
         {
-            IBaseTreeVm<TData> back = this;
-            while (back != null)
+            if (!ancestor.IsTree) return false;
+            IBaseTreeVm<TData> descendant = this;
+            while (descendant != null)
             {
-                if (back.Ancestor == null) return false;
-                if (back.Ancestor == ancestor) return true;
-                back = this.Ancestor;
+                if (descendant.Ancestor == null) return false;
+                if (descendant.Ancestor.Equals(ancestor)) return true;
+                descendant = descendant.Ancestor;
             }
             return false;
         }
@@ -125,7 +130,7 @@ namespace RelertSharp.Wpf.ViewModel
                 else return null;
             }
         }
-        public bool IsTree { get { return data == null; } }
+        public virtual bool IsTree { get { return data == null; } }
         public bool IsRoot { get { return Ancestor == null; } }
         public ObservableCollection<IBaseTreeVm<TData>> Items { get; set; } = new ObservableCollection<IBaseTreeVm<TData>>();
         protected string _title;
@@ -145,6 +150,7 @@ namespace RelertSharp.Wpf.ViewModel
 
         void AddItem(IBaseTreeVm<TData> item);
         void InsertItem(IBaseTreeVm<TData> item, int index = 0);
+        int IndexOf(IBaseTreeVm<TData> item);
         void ExpandAllAncestor();
         bool IsDescendantOf(IBaseTreeVm<TData> ancestor);
         void RemoveFromAncestor();

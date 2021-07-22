@@ -49,10 +49,16 @@ namespace System.Windows.Controls
         {
             foreach (object o in src) target.Add(o);
         }
-        public static TItem GetItemAtMouse<TItem, TTemplateControl>(this ItemsControl src, MouseButtonEventArgs e) where TTemplateControl : FrameworkElement where TItem : class
+        public static TItemVm GetItemAtMouse<TItemVm, TTemplateControl>(this ItemsControl src, MouseButtonEventArgs e) where TTemplateControl : FrameworkElement where TItemVm : class
         {
             TTemplateControl item = src.GetItemControlAtMouse<TTemplateControl>(e);
-            if (item != null) return item.DataContext as TItem;
+            if (item != null) return item.DataContext as TItemVm;
+            return null;
+        }
+        public static TItemVm GetItemAtMouse<TItemVm, TTemplateControl>(this ItemsControl src, Point mousePosition) where TTemplateControl : FrameworkElement where TItemVm : class
+        {
+            TTemplateControl item = src.GetItemControlAtMouse<TTemplateControl>(mousePosition);
+            if (item != null) return item.DataContext as TItemVm;
             return null;
         }
     }
@@ -262,8 +268,12 @@ namespace RelertSharp.Wpf
         public static TCast GetItemControlAtMouse<TCast>(this ItemsControl src, MouseButtonEventArgs e) where TCast : class
         {
             Point p = e.GetPosition(src);
+            return src.GetItemControlAtMouse<TCast>(p);
+        }
+        public static TCast GetItemControlAtMouse<TCast>(this ItemsControl src, Point mousePosition) where TCast : class
+        {
             TCast dest = null;
-            UIElement elem = src.InputHitTest(p) as UIElement;
+            UIElement elem = src.InputHitTest(mousePosition) as UIElement;
             while (elem != null)
             {
                 if (elem == src) dest = null;
@@ -300,6 +310,11 @@ namespace RelertSharp.Wpf
 
 
         #region Drag Drop - DataObject
+        public static TDataContext GetContext<TDataContext, TFramework>(this DragEventArgs e) where TFramework : FrameworkElement where TDataContext : class
+        {
+            if (!(e.OriginalSource is TFramework frm)) return null;
+            return frm.DataContext as TDataContext;
+        }
         public static string TryGetDroppedDataObjectId(this IDataObject src, out Type dataType)
         {
             dataType = null;

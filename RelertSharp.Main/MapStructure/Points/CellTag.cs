@@ -8,26 +8,26 @@ namespace RelertSharp.MapStructure.Points
     }
 
 
-    public class CellTagItem : PointItemBase, IMapObject
+    public class CellTagItem : PointItemBase, IMapObject, ITaggableObject
     {
         public CellTagItem(string _coord, string _tagID) : base(_coord)
         {
-            TagID = _tagID;
+            TagId = _tagID;
             ObjectType = MapObjectType.Celltag;
         }
         public CellTagItem(CellTagItem src) : base(src)
         {
-            TagID = src.TagID;
+            TagId = src.TagId;
             ObjectType = MapObjectType.Celltag;
         }
         public CellTagItem(string tagid)
         {
-            TagID = tagid;
+            TagId = tagid;
             ObjectType = MapObjectType.Celltag;
         }
         public CellTagItem(I2dLocateable pos, string tagID) : base(pos)
         {
-            TagID = TagID;
+            TagId = TagId;
             ObjectType = MapObjectType.Celltag;
         }
         internal CellTagItem()
@@ -40,11 +40,11 @@ namespace RelertSharp.MapStructure.Points
         public override void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
         {
             base.ApplyConfig(config, filter, applyPosAndName);
-            if (filter.Tag) TagID = config.AttatchedTag;
+            if (filter.Tag) TagId = config.AttatchedTag;
         }
         public override string ToString()
         {
-            return string.Format("{0}, {1} - {2}", X, Y, TagID);
+            return string.Format("{0}, {1} - {2}", X, Y, TagId);
         }
         public string[] ExtractParameter()
         {
@@ -52,7 +52,7 @@ namespace RelertSharp.MapStructure.Points
             {
                 X.ToString(),
                 Y.ToString(),
-                TagID
+                TagId
             };
         }
         public IMapObject ConstructFromParameter(string[] command)
@@ -62,7 +62,7 @@ namespace RelertSharp.MapStructure.Points
             {
                 X = reader.ReadInt(),
                 Y = reader.ReadInt(),
-                TagID = reader.ReadString()
+                TagId = reader.ReadString()
             };
             return cell;
         }
@@ -70,7 +70,7 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Public Calls - CellTagItem
-        public string TagID { get; set; }
+        public string TagId { get; set; }
         #endregion
     }
 }

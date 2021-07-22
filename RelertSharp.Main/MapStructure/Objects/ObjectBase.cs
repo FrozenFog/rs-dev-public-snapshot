@@ -79,7 +79,7 @@ namespace RelertSharp.MapStructure.Objects
     }
 
 
-    public class ObjectItemBase : I2dLocateable, IRegistable
+    public class ObjectItemBase : I2dLocateable, IRegistable, ITaggableObject
     {
         private bool isSelected = false;
 
@@ -148,7 +148,7 @@ namespace RelertSharp.MapStructure.Objects
             if (filter.HealthPoint) HealthPoint = config.HealthPoint;
             if (filter.Group) Group = config.Group;
             if (filter.MissionStatus) Status = config.MissionStatus;
-            if (filter.Tag) TaggedTrigger = config.AttatchedTag;
+            if (filter.Tag) TagId = config.AttatchedTag;
             if (filter.Veteran) VeterancyPercentage = config.VeterancyPercentage;
             if (filter.Facing) Rotation = config.FacingRotation;
             if (filter.RecruitYes) AutoYESRecruitType = config.AutoRecruitYes;
@@ -180,7 +180,7 @@ namespace RelertSharp.MapStructure.Objects
         /// </summary>
         public int HealthPoint { get; set; } = 256;
         public string Status { get; set; } = Constant.ITEM_NONE;
-        public string TaggedTrigger { get; set; } = Constant.VALUE_NONE;
+        public string TagId { get; set; } = Constant.VALUE_NONE;
         public int X { get; set; } = 0;
         public int Y { get; set; } = 0;
         public int Coord

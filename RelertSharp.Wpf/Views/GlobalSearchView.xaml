@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="RelertSharp.Wpf.Views.GlobalSearchView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RelertSharp.Wpf.Views"
+             xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <DataTemplate x:Key="TempHeader">
+            <TextBlock HorizontalAlignment="Left" Text="{Binding}"/>
+        </DataTemplate>
+        <Style x:Key="StyleHeader" TargetType="GridViewColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid Height="467" Width="719">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="195*"/>
+            <RowDefinition Height="334*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="482*"/>
+            <ColumnDefinition Width="381*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Search Target" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
+        <WrapPanel Name="wrapTargets" Margin="10,33,9.6,10.2"/>
+        <Label Content="Conditions" HorizontalAlignment="Left" Margin="10,9.8,0,0" Grid.Row="1" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
+        <Label Content="Search Result" HorizontalAlignment="Left" Margin="10.4,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="1"/>
+        <ListView x:Name="lvResult" Grid.Column="1" Margin="10.4,33,10.4,9.6" Grid.RowSpan="2" Style="{DynamicResource lvDark}">
+            <ListView.View>
+                <GridView/>
+            </ListView.View>
+        </ListView>
+        <TreeView x:Name="trvConditions" Style="{DynamicResource trvDark}" Grid.Row="1" Margin="10,37.8,9.6,9.6" AllowDrop="True" PreviewMouseRightButtonDown="PreviewRightDown" Drop="CondDragDrop" MouseMove="CondDragMove" MouseLeave="CondDragLeave" DragOver="CondDragOver">
+            <TreeView.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#0078D7" />
+            </TreeView.Resources>
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="TreeViewItem">
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type ViewModel:SearchConditionVm}" ItemsSource="{Binding Items}">
+                    <StackPanel Orientation="Horizontal" Height="43" HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Vertical" Margin="1">
+                            <TextBlock Style="{DynamicResource txblkDark}" Text="Logic Operator" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>
+                            <ComboBox Style="{DynamicResource cbbDark}" Width="120" ItemsSource="{Binding LogicOperators}" SelectedValue="{Binding LogicOper}" IsEnabled="{Binding IsLogicOperEnable}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="1" Visibility="{Binding VisIsTree}">
+                            <TextBlock Style="{DynamicResource txblkDark}" Text="Condition Type" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>
+                            <ComboBox Style="{DynamicResource cbbDark}" Width="200" ItemsSource="{Binding Conditions}" SelectedValue="{Binding Type}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="1" Visibility="{Binding VisIsTree}">
+                            <TextBlock Style="{DynamicResource txblkDark}" Text="Operator" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>
+                            <ComboBox Style="{DynamicResource cbbDark}" Width="80" ItemsSource="{Binding ValueOperators}" SelectedValue="{Binding ValueOper}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="1" Visibility="{Binding VisIsTree}">
+                            <TextBlock Style="{DynamicResource txblkDark}" Text="Value" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>
+                            <TextBox Style="{DynamicResource txbDark}" Width="100" Text="{Binding StringValue}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+            <TreeView.ContextMenu>
+                <ContextMenu Style="{DynamicResource cmenuDark}">
+                    <MenuItem Header="Add condition" Click="Menu_AddCond"/>
+                    <MenuItem Header="Add condition group" Click="Menu_AddGroup"/>
+                    <MenuItem Name="menuDel" Header="Remove condition" Click="Menu_RemoveCond"/>
+                </ContextMenu>
+            </TreeView.ContextMenu>
+        </TreeView>
+        <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Right" Height="23" Margin="0,10,9.6,0" Grid.Row="1" VerticalAlignment="Top" Width="95" Style="{DynamicResource btnDark}" Click="btnSearch_Click"/>
+        <Button x:Name="btnSearchInResult" Content="Search in result" HorizontalAlignment="Right" Height="23" Margin="0,10,109.6,0" Grid.Row="1" VerticalAlignment="Top" Width="95" Style="{DynamicResource btnDark}" Click="btnSearchIn_Click"/>
+
+    </Grid>
+</UserControl>

@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="ViewModel\Base\BaseListVm.cs" />
     <Compile Include="ViewModel\Base\BaseTreeVm.cs" />
+    <Compile Include="ViewModel\Etc\SearchConditionVm.cs" />
     <Compile Include="ViewModel\Global\GlobalCountryVm.cs" />
     <Compile Include="ViewModel\Global\GlobalHouseVm.cs" />
     <Compile Include="ViewModel\Global\GlobalTagVm.cs" />
@@ -139,6 +140,9 @@
       <DependentUpon>AiTriggerListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Interfaces.cs" />
+    <Compile Include="Views\GlobalSearchView.xaml.cs">
+      <DependentUpon>GlobalSearchView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HouseView.xaml.cs">
       <DependentUpon>HouseView.xaml</DependentUpon>
     </Compile>
@@ -239,6 +243,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AiTriggerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GlobalSearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

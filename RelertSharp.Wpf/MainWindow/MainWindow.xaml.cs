@@ -69,6 +69,8 @@ namespace RelertSharp.Wpf
         private readonly TilePanelView tiles = new TilePanelView();
         [RsViewComponent(GuiViewType.LocalVarPanel, GuiViewSide.Right, "Local Var")]
         private readonly LocalVarView localVar = new LocalVarView();
+        [RsViewComponent(GuiViewType.GlobalSearch, GuiViewSide.Center, "Global Search")]
+        private readonly GlobalSearchView globalSearch = new GlobalSearchView();
         #endregion
         #region Else
         private SoundManager soundManager = new SoundManager();

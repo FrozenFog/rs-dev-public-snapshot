@@ -31,7 +31,7 @@ namespace RelertSharp.MapStructure.Objects
                 SubCell = int.Parse(_args[5]);
                 Status = _args[6];
                 Rotation = int.Parse(_args[7]);
-                TaggedTrigger = _args[8];
+                TagId = _args[8];
                 VeterancyPercentage = int.Parse(_args[9]);
                 Group = _args[10];
                 IsAboveGround = IniParseBool(_args[11]);
@@ -50,7 +50,7 @@ namespace RelertSharp.MapStructure.Objects
             SubCell = src.SubCell;
             Status = src.Status;
             Rotation = src.Rotation;
-            TaggedTrigger = src.TaggedTrigger;
+            TagId = src.TagId;
             VeterancyPercentage = src.VeterancyPercentage;
             Group = src.Group;
             IsAboveGround = src.IsAboveGround;
@@ -94,7 +94,7 @@ namespace RelertSharp.MapStructure.Objects
                 subcell.ToString(),
                 Status,
                 Rotation.ToString(),
-                TaggedTrigger,
+                TagId,
                 VeterancyPercentage.ToString(),
                 Group,
                 IsAboveGround.ZeroOne(),
@@ -116,7 +116,7 @@ namespace RelertSharp.MapStructure.Objects
                 subcell = reader.ReadInt(4),
                 Status = reader.ReadString(),
                 Rotation = reader.ReadInt(),
-                TaggedTrigger = reader.ReadString(),
+                TagId = reader.ReadString(),
                 VeterancyPercentage = reader.ReadInt(100),
                 Group = reader.ReadString(),
                 IsAboveGround = reader.ReadBool(),
@@ -135,7 +135,7 @@ namespace RelertSharp.MapStructure.Objects
             {
                 return new List<object>()
                 {
-                    OwnerHouse, RegName, HealthPoint, X,Y,subcell,Status, Rotation,TaggedTrigger,VeterancyPercentage,Group,
+                    OwnerHouse, RegName, HealthPoint, X,Y,subcell,Status, Rotation,TagId,VeterancyPercentage,Group,
                     IsAboveGround.ToInt(), AutoNORecruitType.ToInt(), AutoYESRecruitType.ToInt()
                 };
             }

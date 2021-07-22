@@ -58,7 +58,7 @@ namespace RelertSharp.MapStructure.Logic
     /// <summary>
     /// use yes/no for bool
     /// </summary>
-    public class TeamItem : TeamLogicItem
+    public class TeamItem : TeamLogicItem, IGroupable
     {
         #region Ctor - TeamItem
         public TeamItem(INIEntity ent) : base(ent)
@@ -145,6 +145,10 @@ namespace RelertSharp.MapStructure.Logic
         {
             get { return this[Constant.MapStructure.KEY_HOUSE].Value; }
             set { this[Constant.MapStructure.KEY_HOUSE] = new INIPair(Constant.MapStructure.KEY_HOUSE, value); }
+        }
+        public string Group
+        {
+            get { return this[Constant.MapStructure.KEY_GROUP].GetString(Constant.ID_INVALID); }
         }
         //public BitArray Attributes { get; set; } = new BitArray(21);
         public Dictionary<string, INIPair> Residue { get; set; }

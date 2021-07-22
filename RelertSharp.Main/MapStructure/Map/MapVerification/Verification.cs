@@ -48,13 +48,13 @@ namespace RelertSharp.MapStructure
         {
             foreach (CellTagItem cell in Map.Celltags)
             {
-                if (!Map.Tags.HasId(cell.TagID))
+                if (!Map.Tags.HasId(cell.TagId))
                 {
                     result.Add(new VerifyResultItem
                     {
                         Level = VerifyAlertLevel.Suggest,
                         VerifyType = VerifyType.CelltagIdNotFound,
-                        Message = string.Format("Celltag at {0},{1} has ivalid tag id {2}", cell.X, cell.Y, cell.TagID),
+                        Message = string.Format("Celltag at {0},{1} has ivalid tag id {2}", cell.X, cell.Y, cell.TagId),
                         Pos = cell
                     });
                 }

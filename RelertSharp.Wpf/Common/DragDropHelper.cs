@@ -10,6 +10,7 @@ namespace RelertSharp.Wpf.Common
     internal class DragDropHelper<TObject, TVm> where TObject : class
     {
         private Point prevMouseDown;
+        private Point prevMouseMove;
         private bool isDraging = false;
         private bool triggeredDrag = false;
         private TObject dragItem;
@@ -48,6 +49,7 @@ namespace RelertSharp.Wpf.Common
         {
             if (isDraging && !triggeredDrag)
             {
+                prevMouseMove = moving;
                 if (RsMath.ChebyshevDistance(moving, prevMouseDown) > MouseMoveThreshold)
                 {
                     if (dragItem != null)
@@ -79,6 +81,8 @@ namespace RelertSharp.Wpf.Common
         public bool IsDraging { get { return isDraging; } }
         public TObject DragItem { get { return dragItem; } }
         public TVm ReferanceVm { get; private set; }
+        public Point MousePosition { get { return prevMouseMove; } }
+        public Point MouseDownPos { get { return prevMouseDown; } }
         #endregion
     }
 }

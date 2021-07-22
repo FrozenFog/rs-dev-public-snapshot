@@ -56,7 +56,7 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
     }
 
-    public class TaskforceItem : TeamLogicItem, IIndexableItem, ISubCurdContainer<TaskforceUnit>
+    public class TaskforceItem : TeamLogicItem, IIndexableItem, ISubCurdContainer<TaskforceUnit>, IGroupable
     {
         #region Ctor - TaskforceItem
         public TaskforceItem(INIEntity ent) : base(ent)

@@ -23,7 +23,7 @@ namespace RelertSharp.MapStructure.Objects
                 }
                 Rotation = int.Parse(_args[5]);
                 Status = _args[6];
-                TaggedTrigger = _args[7];
+                TagId = _args[7];
                 VeterancyPercentage = int.Parse(_args[8]);
                 Group = _args[9];
                 AutoNORecruitType = IniParseBool(_args[10]);
@@ -40,7 +40,7 @@ namespace RelertSharp.MapStructure.Objects
         {
             Rotation = src.Rotation;
             Status = src.Status;
-            TaggedTrigger = src.TaggedTrigger;
+            TagId = src.TagId;
             VeterancyPercentage = src.VeterancyPercentage;
             Group = src.Group;
             AutoNORecruitType = src.AutoNORecruitType;
@@ -71,7 +71,7 @@ namespace RelertSharp.MapStructure.Objects
                 Y.ToString(),
                 Rotation.ToString(),
                 Status,
-                TaggedTrigger,
+                TagId,
                 VeterancyPercentage.ToString(),
                 Group,
                 AutoNORecruitType.ZeroOne(),
@@ -91,7 +91,7 @@ namespace RelertSharp.MapStructure.Objects
                 Y = reader.ReadInt(),
                 Rotation = reader.ReadInt(),
                 Status = reader.ReadString(),
-                TaggedTrigger = reader.ReadString(),
+                TagId = reader.ReadString(),
                 VeterancyPercentage = reader.ReadInt(100),
                 Group = reader.ReadString(),
                 AutoNORecruitType = reader.ReadBool(),
@@ -109,7 +109,7 @@ namespace RelertSharp.MapStructure.Objects
             {
                 return new List<object>()
                 {
-                    OwnerHouse, RegName, HealthPoint, X, Y, Rotation, Status, TaggedTrigger, VeterancyPercentage, Group, 
+                    OwnerHouse, RegName, HealthPoint, X, Y, Rotation, Status, TagId, VeterancyPercentage, Group, 
                     AutoNORecruitType.ToInt(), AutoYESRecruitType.ToInt()
                 };
             }

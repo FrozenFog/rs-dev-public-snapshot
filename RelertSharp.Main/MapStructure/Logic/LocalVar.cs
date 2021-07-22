@@ -13,7 +13,7 @@ namespace RelertSharp.MapStructure.Logic
         {
             get
             {
-                for (int i = 0; i < 512; i++)
+                for (int i = 0; i < Constant.MapStructure.CAPACITY_LOCALVAR; i++)
                 {
                     if (!data.ContainsKey(i.ToString())) return i.ToString();
                 }
