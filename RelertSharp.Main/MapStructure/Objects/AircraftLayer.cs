@@ -64,7 +64,7 @@ namespace RelertSharp.MapStructure.Objects
             return new string[]
             {
                 Id,
-                OwnerHouse,
+                Owner,
                 RegName,
                 HealthPoint.ToString(),
                 X.ToString(),
@@ -84,7 +84,7 @@ namespace RelertSharp.MapStructure.Objects
             AircraftItem air = new AircraftItem()
             {
                 Id = reader.ReadString(),
-                OwnerHouse = reader.ReadString(),
+                Owner = reader.ReadString(),
                 RegName = reader.ReadString(),
                 HealthPoint = reader.ReadInt(256),
                 X = reader.ReadInt(),
@@ -109,7 +109,7 @@ namespace RelertSharp.MapStructure.Objects
             {
                 return new List<object>()
                 {
-                    OwnerHouse, RegName, HealthPoint, X, Y, Rotation, Status, TagId, VeterancyPercentage, Group, 
+                    Owner, RegName, HealthPoint, X, Y, Rotation, Status, TagId, VeterancyPercentage, Group, 
                     AutoNORecruitType.ToInt(), AutoYESRecruitType.ToInt()
                 };
             }

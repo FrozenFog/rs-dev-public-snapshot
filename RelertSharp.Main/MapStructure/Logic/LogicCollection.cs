@@ -235,7 +235,7 @@ namespace RelertSharp.MapStructure.Logic
             string result = string.Format(info.FormatString, param.ToArray());
             if (result.Contains(Constant.FMT_OWNER) && !Parent.ParentID.IsNullOrEmpty())
             {
-                string owner = GlobalVar.CurrentMapDocument.Map.Triggers[Parent.ParentID].OwnerCountry;
+                string owner = GlobalVar.CurrentMapDocument.Map.Triggers[Parent.ParentID].Owner;
                 result = result.Replace(Constant.FMT_OWNER, owner.CoverWith("[", "]"));
             }
             return string.Format("{0:D3}: {1}", ID, result);

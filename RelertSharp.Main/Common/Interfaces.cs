@@ -42,6 +42,11 @@ namespace RelertSharp.Common
         string RegName { get; }
     }
 
+    public interface IOwnableObject
+    {
+        string Owner { get; }
+    }
+
     public interface IGroupable
     {
         string Group { get; }
@@ -58,6 +63,11 @@ namespace RelertSharp.Common
         int Y { get; set; }
         int Coord { get; }
     }
+
+    public interface IBaseObject
+    {
+        MapObjectType ObjectType { get; }
+    }
     
     public interface IPosition : I2dLocateable
     {
@@ -70,10 +80,9 @@ namespace RelertSharp.Common
         int Z { get; set; }
     }
 
-    public interface IMapObject : IRegistable, I2dLocateable
+    public interface IMapObject : IRegistable, I2dLocateable, IBaseObject
     {
         ISceneObject SceneObject { get; }
-        MapObjectType ObjectType { get; }
         int GetHeight();
         void Dispose();
         void MoveTo(I3dLocateable pos, int subcell = -1);
@@ -86,9 +95,9 @@ namespace RelertSharp.Common
         string Id { get; }
     }
 
-    public interface ICombatObject : IMapObject, IGroupable
+    public interface ICombatObject : IMapObject, IGroupable, IOwnableObject
     {
-        string OwnerHouse { get; set; }
+        new string Owner { get; set; }
         int HealthPoint { get; set; }
         string Status { get; set; }
         string TagId { get; set; }
@@ -111,7 +120,7 @@ namespace RelertSharp.Common
     }
     public interface IMapObjectBrushConfig
     {
-        string OwnerHouse { get; }
+        string Owner { get; }
         string RegName { get; }
         I2dLocateable Pos { get; }
         int Height { get; }
@@ -165,7 +174,7 @@ namespace RelertSharp.Common
         bool Group { get; }
         bool HealthPoint { get; }
         bool MissionStatus { get; }
-        bool OwnerHouse { get; }
+        bool Owner { get; }
         bool Powered { get; }
         bool Rebuild { get; }
         bool RecruitNo { get; }

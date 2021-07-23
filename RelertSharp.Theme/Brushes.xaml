@@ -26,4 +26,7 @@
     <SolidColorBrush x:Key="menuBack" Color="#202020"/>
     <SolidColorBrush x:Key="menuSep" Color="#373737"/>
     <SolidColorBrush x:Key="menuHigh" Color="#404040"/>
+    
+    <!--Selected-->
+    <SolidColorBrush x:Key="selectedBlue" Color="#0078D7"/>
 </ResourceDictionary>

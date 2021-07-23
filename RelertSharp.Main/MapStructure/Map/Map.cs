@@ -62,7 +62,7 @@ namespace RelertSharp.MapStructure
         }
         public uint GetHouseColor(ICombatObject obj)
         {
-            HouseItem house = Houses.GetHouse(obj.OwnerHouse);
+            HouseItem house = Houses.GetHouse(obj.Owner);
             if (house == null) return 0;
             return 0xFF000000 | (uint)(house.DrawingColor.B << 16 | house.DrawingColor.G << 8 | house.DrawingColor.R);
         }

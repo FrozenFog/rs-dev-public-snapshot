@@ -131,7 +131,7 @@ namespace RelertSharp.FileSystem
                                 idx++.ToString(),
                                 Misc.ParseObjectsToString
                                 (
-                                    building.OwnerHouse,
+                                    building.Owner,
                                     building.Id,
                                     building.HealthPoint,
                                     building.X,
@@ -166,7 +166,7 @@ namespace RelertSharp.FileSystem
                                     idx++.ToString(),
                                     Misc.ParseObjectsToString
                                     (
-                                        unit.OwnerHouse,
+                                        unit.Owner,
                                         unit.RegName,
                                         unit.HealthPoint,
                                         unit.X,
@@ -200,7 +200,7 @@ namespace RelertSharp.FileSystem
                                     idx.ToString(),
                                     Misc.ParseObjectsToString
                                     (
-                                        infantry.OwnerHouse,
+                                        infantry.Owner,
                                         infantry.RegName,
                                         infantry.HealthPoint,
                                         infantry.X,
@@ -235,7 +235,7 @@ namespace RelertSharp.FileSystem
                                     idx.ToString(),
                                     Misc.ParseObjectsToString
                                     (
-                                        aircraft.OwnerHouse,
+                                        aircraft.Owner,
                                         aircraft.RegName,
                                         aircraft.HealthPoint,
                                         aircraft.X,

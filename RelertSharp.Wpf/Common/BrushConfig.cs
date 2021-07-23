@@ -10,7 +10,7 @@ namespace RelertSharp.Wpf.Common
     internal class ObjectBrushFilter : IObjectBrushFilter
     {
         #region Calls
-        public bool OwnerHouse { get; set; } = true;
+        public bool Owner { get; set; } = true;
         public bool Facing { get; set; } = true;
         public bool Tag { get; set; } = true;
         public bool MissionStatus { get; set; } = true;
@@ -41,12 +41,12 @@ namespace RelertSharp.Wpf.Common
 
         private void MapLoadedHandler(object sender, EventArgs e)
         {
-            OwnerHouse = GlobalVar.CurrentMapDocument.Map.Houses.First().Name;
+            Owner = GlobalVar.CurrentMapDocument.Map.Houses.First().Name;
         }
 
 
         #region Interface
-        public string OwnerHouse { get; set; }
+        public string Owner { get; set; }
 
         public string RegName { get; set; }
 

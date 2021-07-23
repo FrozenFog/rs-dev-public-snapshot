@@ -44,19 +44,19 @@ namespace RelertSharp.Wpf.ViewModel
         }
         public bool ApplyOwnerHouse
         {
-            get { return filter.OwnerHouse; }
+            get { return filter.Owner; }
             set
             {
-                filter.OwnerHouse = value;
+                filter.Owner = value;
                 SetProperty();
             }
         }
         public HouseItem OwnerHouseItem
         {
-            get { return GlobalVar.CurrentMapDocument?.Map.Houses.GetHouse(data.OwnerHouse); }
+            get { return GlobalVar.CurrentMapDocument?.Map.Houses.GetHouse(data.Owner); }
             set
             {
-                data.OwnerHouse = value.Name;
+                data.Owner = value.Name;
                 SetProperty();
                 ObjectRefreshRequest?.Invoke(null, null);
             }

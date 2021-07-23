@@ -79,7 +79,7 @@ namespace RelertSharp.MapStructure.Objects
     }
 
 
-    public class ObjectItemBase : I2dLocateable, IRegistable, ITaggableObject
+    public class ObjectItemBase : I2dLocateable, IRegistable, ITaggableObject, IIndexableItem
     {
         private bool isSelected = false;
 
@@ -88,7 +88,7 @@ namespace RelertSharp.MapStructure.Objects
         public ObjectItemBase(string _id, string[] _args)
         {
             Id = _id;
-            OwnerHouse = _args[0];
+            Owner = _args[0];
             RegName = _args[1];
             HealthPoint = int.Parse(_args[2]);
             X = int.Parse(_args[3]);
@@ -97,7 +97,7 @@ namespace RelertSharp.MapStructure.Objects
         public ObjectItemBase(ObjectItemBase src)
         {
             Id = src.Id;
-            OwnerHouse = src.OwnerHouse;
+            Owner = src.Owner;
             RegName = src.RegName;
             HealthPoint = src.HealthPoint;
             X = src.X;
@@ -144,7 +144,7 @@ namespace RelertSharp.MapStructure.Objects
                 X = config.Pos.X;
                 Y = config.Pos.Y;
             }
-            if (filter.OwnerHouse) OwnerHouse = config.OwnerHouse;
+            if (filter.Owner) Owner = config.Owner;
             if (filter.HealthPoint) HealthPoint = config.HealthPoint;
             if (filter.Group) Group = config.Group;
             if (filter.MissionStatus) Status = config.MissionStatus;
@@ -168,13 +168,18 @@ namespace RelertSharp.MapStructure.Objects
         {
             return string.Format("{0} at {1},{2}", RegName, X, Y);
         }
+
+        public void ChangeDisplay(IndexableDisplayType type)
+        {
+            // do nothing
+        }
         #endregion
 
 
         #region Public Calls - ObjectItemBase
         public string Id { get; internal set; } = Constant.ITEM_NONE;
         public string RegName { get; set; } = "(NOTHING)";
-        public string OwnerHouse { get; set; } = Constant.ITEM_NONE;
+        public string Owner { get; set; } = Constant.ITEM_NONE;
         /// <summary>
         /// Default: 256
         /// </summary>
@@ -209,6 +214,10 @@ namespace RelertSharp.MapStructure.Objects
         public bool AutoYESRecruitType { get; set; } = true;
         public MapObjectType ObjectType { get; protected set; } = MapObjectType.Undefined;
         public virtual ISceneObject SceneObject { get; set; }
+        string IIndexableItem.Id { get { return Id; } set { } }
+        public string Name { get { return RegName; } set { RegName = value; } }
+
+        public string Value { get { return RegName; } }
         #endregion
 
 

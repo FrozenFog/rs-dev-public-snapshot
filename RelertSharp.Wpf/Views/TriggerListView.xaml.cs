@@ -367,7 +367,7 @@ namespace RelertSharp.Wpf.Views
             if (dlg.ShowDialog().Value)
             {
                 TriggerItem trigger = map.AddTrigger(dlg.ResultName);
-                trigger.OwnerCountry = map.Countries.First().Name;
+                trigger.Owner = map.Countries.First().Name;
                 TriggerTreeItemVm vm = new TriggerTreeItemVm(trigger);
 
                 if (SelectedItem == null || (!SelectedItem.IsTree && SelectedItem.IsRoot)) trvMain.Items.Add(vm);

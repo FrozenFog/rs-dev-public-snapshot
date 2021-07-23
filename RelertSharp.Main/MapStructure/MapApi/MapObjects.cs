@@ -87,7 +87,7 @@ namespace RelertSharp.MapStructure
         }
         public static BaseNode AddBaseNode(IMapObjectBrushConfig config, IObjectBrushFilter filter)
         {
-            BaseNode node = Map.Houses.GetHouse(config.OwnerHouse).AddNewNode();
+            BaseNode node = Map.Houses.GetHouse(config.Owner).AddNewNode();
             node.ApplyConfig(config, filter, true);
             AddToTile(node);
             return node;

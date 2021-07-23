@@ -125,13 +125,13 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class TriggerItem : IndexableItem
+    public class TriggerItem : IndexableItem, IOwnableObject
     {
         #region Ctor - TriggerItem
         public TriggerItem(string id, string house, string linkedTriggerID, string name, bool disabled, bool e, bool n, bool h, int repeating)
         {
             Id = id;
-            OwnerCountry = house;
+            Owner = house;
             LinkedWith = linkedTriggerID;
             Name = name;
             Disabled = disabled;
@@ -143,7 +143,7 @@ namespace RelertSharp.MapStructure.Logic
         public TriggerItem(TriggerItem src, string id)
         {
             Id = id;
-            OwnerCountry = src.OwnerCountry;
+            Owner = src.Owner;
             LinkedWith = src.LinkedWith;
             Name = src.Name + Constant.CLONE_SUFFIX;
             Disabled = src.Disabled;
@@ -184,7 +184,10 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Calls - TriggerItem
         public LogicGroup Events { get; set; }
         public LogicGroup Actions { get; set; }
-        public string OwnerCountry { get; set; }
+        /// <summary>
+        /// Country
+        /// </summary>
+        public string Owner { get; set; }
         public string LinkedWith { get; set; } = Constant.ITEM_NONE;
         public bool Disabled { get; set; }
         public bool EasyOn { get; set; } = true;
@@ -208,7 +211,7 @@ namespace RelertSharp.MapStructure.Logic
             {
                 return new List<object>()
                 {
-                    OwnerCountry, LinkedWith, Name, Disabled.ZeroOne(), EasyOn.ZeroOne(), NormalOn.ZeroOne(), HardOn.ZeroOne(), (int)Repeating
+                    Owner, LinkedWith, Name, Disabled.ZeroOne(), EasyOn.ZeroOne(), NormalOn.ZeroOne(), HardOn.ZeroOne(), (int)Repeating
                 };
             }
         }

@@ -96,7 +96,7 @@ namespace RelertSharp.MapStructure
             // all map objects
             foreach (ICombatObject obj in AllCombatObjects)
             {
-                if (obj.OwnerHouse == prev) obj.OwnerHouse = now;
+                if (obj.Owner == prev) obj.Owner = now;
             }
 
             // all allies
@@ -123,13 +123,13 @@ namespace RelertSharp.MapStructure
             // all triggers
             foreach (TriggerItem trg in Triggers)
             {
-                if (trg.OwnerCountry == prev) trg.OwnerCountry = now;
+                if (trg.Owner == prev) trg.Owner = now;
             }
 
             // all teams
             foreach (TeamItem team in Teams)
             {
-                if (team.House == prev) team.House = now;
+                if (team.Owner == prev) team.Owner = now;
             }
 
             // all houses

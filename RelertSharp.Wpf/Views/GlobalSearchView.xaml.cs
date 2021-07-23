@@ -5,6 +5,7 @@ using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,10 +33,12 @@ namespace RelertSharp.Wpf.Views
         private SearchConditionVm Root = new SearchConditionVm(true);
         private SearchConditionVm SelectedCondition { get { return trvConditions.SelectedItem as SearchConditionVm; } }
         private List<object> SearchResult = new List<object>();
+        private ObservableCollection<SearchResultVm> ResultVm = new ObservableCollection<SearchResultVm>();
         public GlobalSearchView()
         {
             InitializeComponent();
             dragCond = new DragDropHelper<SearchConditionVm.SearchConditionModel, SearchConditionVm>(trvConditions);
+            lvResult.ItemsSource = ResultVm;
             trvConditions.Items.Add(Root);
         }
 
@@ -59,15 +62,26 @@ namespace RelertSharp.Wpf.Views
                 .Concat(SearchIn(map.Tags))
                 .Concat(SearchIn(map.Waypoints)).ToList();
             SearchResult = results;
+            SetResult();
         }
         private void btnSearchIn_Click(object sender, RoutedEventArgs e)
         {
             List<object> results = SearchIn(SearchResult);
             SearchResult = results;
+            SetResult();
         }
 
 
         #region Search
+        private void SetResult()
+        {
+            ResultVm.Clear();
+            foreach (object obj in SearchResult)
+            {
+                SearchResultVm vm = new SearchResultVm(obj);
+                ResultVm.Add(vm);
+            }
+        }
         private List<object> SearchIn(IEnumerable<object> src)
         {
             List<object> results = new List<object>();
@@ -160,7 +174,78 @@ namespace RelertSharp.Wpf.Views
             }
         }
         #endregion
+        #region Results
+        private void Menu_ResSelectAll(object sender, RoutedEventArgs e)
+        {
+            foreach (SearchResultVm vm in ResultVm)
+            {
+                vm.IsSelected = true;
+            }
+        }
 
+        private void Menu_ResUnselectAll(object sender, RoutedEventArgs e)
+        {
+            foreach (SearchResultVm vm in ResultVm)
+            {
+                vm.IsSelected = false;
+            }
+        }
+
+        private void Menu_ResGenReport(object sender, RoutedEventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (SearchResultVm vm in ResultVm)
+            {
+                if (vm.IsSelected) sb.Append(vm.GenerateReport());
+            }
+            Clipboard.SetText(sb.ToString());
+        }
+
+        private void Menu_ResDiscard(object sender, RoutedEventArgs e)
+        {
+            SearchResult.Remove(resultMouseAt);
+        }
+        private SearchResultVm resultMouseAt;
+        private void ResPrevRightDown(object sender, MouseButtonEventArgs e)
+        {
+            resultMouseAt = lvResult.GetItemAtMouse<SearchResultVm, TextBlock>(e);
+            bool canDiscard = resultMouseAt != null;
+            menuDiscardRes.IsEnabled = canDiscard;
+            e.Handled = true;
+        }
+        private SearchResultVm prevItemShiftBegin;
+        private void ResPrevLeftDown(object sender, MouseButtonEventArgs e)
+        {
+            if (GuiUtil.IsKeyDown(Key.LeftShift, Key.RightShift) && prevItemShiftBegin != null)
+            {
+                SearchResultVm vmShift = lvResult.GetItemAtMouse<SearchResultVm, TextBlock>(e);
+                if (vmShift == null)
+                {
+                    prevItemShiftBegin = lvResult.GetItemAtMouse<SearchResultVm, TextBlock>(e);
+                    return;
+                }
+                int begin = ResultVm.IndexOf(prevItemShiftBegin);
+                int end = ResultVm.IndexOf(vmShift);
+                for (int i = Math.Min(begin, end); i < Math.Max(begin, end); i++)
+                {
+                    ResultVm[i].IsSelected = true;
+                }
+            }
+            else
+            {
+                prevItemShiftBegin = lvResult.GetItemAtMouse<SearchResultVm, TextBlock>(e);
+            }
+        }
+        private void Menu_ResDiscardSel(object sender, RoutedEventArgs e)
+        {
+            List<SearchResultVm> remove = new List<SearchResultVm>();
+            foreach (SearchResultVm vm in ResultVm)
+            {
+                if (vm.IsSelected) remove.Add(vm);
+            }
+            remove.ForEach(x => ResultVm.Remove(x));
+        }
+        #endregion
         #endregion
 
         #region DragDrop

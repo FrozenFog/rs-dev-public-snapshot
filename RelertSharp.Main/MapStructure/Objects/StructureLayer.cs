@@ -93,7 +93,7 @@ namespace RelertSharp.MapStructure.Objects
             return new string[]
             {
                 Id,
-                OwnerHouse,
+                Owner,
                 RegName,
                 HealthPoint.ToString(),
                 X.ToString(),
@@ -117,7 +117,7 @@ namespace RelertSharp.MapStructure.Objects
             StructureItem bud = new StructureItem()
             {
                 Id = reader.ReadString(),
-                OwnerHouse = reader.ReadString(),
+                Owner = reader.ReadString(),
                 RegName = reader.ReadString(),
                 HealthPoint = reader.ReadInt(256),
                 X = reader.ReadInt(),
@@ -146,7 +146,7 @@ namespace RelertSharp.MapStructure.Objects
             {
                 return new List<object>()
                 {
-                    OwnerHouse, RegName, HealthPoint, X, Y, Rotation, TagId, AISellable.ToInt(), AIRebuildable.ToInt(), IsPowered.ToInt(), 
+                    Owner, RegName, HealthPoint, X, Y, Rotation, TagId, AISellable.ToInt(), AIRebuildable.ToInt(), IsPowered.ToInt(), 
                     UpgradeNum, (int)SpotlightType, Upgrade1,Upgrade2,Upgrade3,AIRepairable.ToInt(), Nominal.ToInt() 
                 };
             }

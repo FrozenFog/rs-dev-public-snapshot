@@ -63,7 +63,7 @@ namespace RelertSharp.Wpf.ViewModel
         {
             get
             {
-                string owner = data.OwnerCountry;
+                string owner = data.Owner;
                 if (owner.IsNullOrEmpty()) return null;
                 CountryItem c = map.Countries.GetCountry(owner);
                 return c;
@@ -72,7 +72,7 @@ namespace RelertSharp.Wpf.ViewModel
             {
                 if (value is CountryItem c)
                 {
-                    data.OwnerCountry = c.Name;
+                    data.Owner = c.Name;
                     data.InvokeChildInfoRefreshAll();
                 }
             }

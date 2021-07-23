@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RelertSharp.Wpf.Views"
              xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel"
+             xmlns:cmds="clr-namespace:RelertSharp.Wpf.Common.Commands"
              mc:Ignorable="d">
     <UserControl.Resources>
         <DataTemplate x:Key="TempHeader">
@@ -14,22 +15,46 @@
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
         </Style>
     </UserControl.Resources>
-    <Grid Height="467" Width="719">
+    <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="195*"/>
-            <RowDefinition Height="334*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="482*"/>
-            <ColumnDefinition Width="381*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Label Content="Search Target" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
         <WrapPanel Name="wrapTargets" Margin="10,33,9.6,10.2"/>
         <Label Content="Conditions" HorizontalAlignment="Left" Margin="10,9.8,0,0" Grid.Row="1" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
         <Label Content="Search Result" HorizontalAlignment="Left" Margin="10.4,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="1"/>
-        <ListView x:Name="lvResult" Grid.Column="1" Margin="10.4,33,10.4,9.6" Grid.RowSpan="2" Style="{DynamicResource lvDark}">
+        <ListView x:Name="lvResult" Grid.Column="1" Margin="10.4,33,10.4,9.6" Grid.RowSpan="2" Style="{DynamicResource lbxDark}" SelectionMode="Multiple" 
+                  PreviewMouseRightButtonDown="ResPrevRightDown" PreviewMouseLeftButtonDown="ResPrevLeftDown"
+                  cmds:ListViewColumnSortCommand.AutoSort="True">
+            <ListView.ContextMenu>
+                <ContextMenu Style="{DynamicResource cmenuDark}">
+                    <MenuItem Header="Select all" Click="Menu_ResSelectAll"/>
+                    <MenuItem Header="Unselect all" Click="Menu_ResUnselectAll"/>
+                    <MenuItem Name="menuDiscardRes" Header="Discard item" Click="Menu_ResDiscard"/>
+                    <MenuItem Header="Discard selected item" Click="Menu_ResDiscardSel"/>
+                    <Separator Style="{DynamicResource sepDark}"/>
+                    <MenuItem Header="Generate report" Click="Menu_ResGenReport"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.View>
-                <GridView/>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}" cmds:ListViewColumnSortCommand.PropertyName="Type"/>
+                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" cmds:ListViewColumnSortCommand.PropertyName="Id"/>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" cmds:ListViewColumnSortCommand.PropertyName="Name"/>
+                        <GridViewColumn Header="Owner" DisplayMemberBinding="{Binding Owner}" cmds:ListViewColumnSortCommand.PropertyName="Owner"/>
+                        <GridViewColumn Header="Position.X" DisplayMemberBinding="{Binding PosX}" cmds:ListViewColumnSortCommand.PropertyName="PosX"/>
+                        <GridViewColumn Header="Position.Y" DisplayMemberBinding="{Binding PosY}" cmds:ListViewColumnSortCommand.PropertyName="PosY"/>
+                        <GridViewColumn Header="Position.Z" DisplayMemberBinding="{Binding PosZ}" cmds:ListViewColumnSortCommand.PropertyName="PosZ"/>
+                        <GridViewColumn Header="TagId" DisplayMemberBinding="{Binding TagId}" cmds:ListViewColumnSortCommand.PropertyName="TagId"/>
+                        <GridViewColumn Header="Health point" DisplayMemberBinding="{Binding Health}" cmds:ListViewColumnSortCommand.PropertyName="Health"/>
+                    </GridView.Columns>
+                </GridView>
             </ListView.View>
         </ListView>
         <TreeView x:Name="trvConditions" Style="{DynamicResource trvDark}" Grid.Row="1" Margin="10,37.8,9.6,9.6" AllowDrop="True" PreviewMouseRightButtonDown="PreviewRightDown" Drop="CondDragDrop" MouseMove="CondDragMove" MouseLeave="CondDragLeave" DragOver="CondDragOver">
