@@ -7,6 +7,15 @@ namespace RelertSharp.Common
         public static event EventHandler MapDocumentLoaded;
         public static event EventHandler MapDocumentRedrawRequested;
         public static FileSystem.MapFile CurrentMapDocument { get; private set; }
+        public static MapStructure.Map GlobalMap
+        {
+            get
+            {
+                if (CurrentMapDocument != null) return CurrentMapDocument.Map;
+                return null;
+            }
+        }
+        public static bool HasMap { get { return GlobalMap != null; } }
         public static void LoadMapDocument(string path)
         {
             CurrentMapDocument = new FileSystem.MapFile(path);

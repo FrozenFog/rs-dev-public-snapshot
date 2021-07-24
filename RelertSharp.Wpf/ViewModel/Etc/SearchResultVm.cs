@@ -10,7 +10,7 @@ namespace RelertSharp.Wpf.ViewModel
     internal class SearchResultVm : BaseListVm<object>
     {
         private const string NAN_ITEM = "N/A";
-        private static MapStructure.Map map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private static MapStructure.Map map { get { return GlobalVar.GlobalMap; } }
         public SearchResultVm(object result)
         {
             data = result;

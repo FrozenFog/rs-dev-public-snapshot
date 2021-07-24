@@ -9,11 +9,7 @@ namespace RelertSharp.MapStructure
 {
     public static partial class MapApi
     {
-        private static Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
-        private static bool IsValid
-        {
-            get { return GlobalVar.CurrentMapDocument != null; }
-        }
+        private static Map Map { get { return GlobalVar.GlobalMap; } }
         static MapApi()
         {
 

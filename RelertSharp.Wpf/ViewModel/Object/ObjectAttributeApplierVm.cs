@@ -14,7 +14,6 @@ namespace RelertSharp.Wpf.ViewModel
     {
         private ObjectBrushFilter filter;
         private MapObjectType Type { get; set; }
-        private RelertSharp.MapStructure.Map Map { get { return GlobalVar.CurrentMapDocument?.Map; } }
         internal event EventHandler ObjectRefreshRequest;
         internal event EventHandler AttributeRefreshRequest;
 
@@ -53,7 +52,7 @@ namespace RelertSharp.Wpf.ViewModel
         }
         public HouseItem OwnerHouseItem
         {
-            get { return GlobalVar.CurrentMapDocument?.Map.Houses.GetHouse(data.Owner); }
+            get { return GlobalVar.GlobalMap?.Houses.GetHouse(data.Owner); }
             set
             {
                 data.Owner = value.Name;
@@ -121,7 +120,7 @@ namespace RelertSharp.Wpf.ViewModel
         }
         public TagItem TagItem
         {
-            get { return Map?.Tags[data.AttatchedTag]; }
+            get { return GlobalVar.GlobalMap?.Tags[data.AttatchedTag]; }
             set
             {
                 data.AttatchedTag = value.Id;

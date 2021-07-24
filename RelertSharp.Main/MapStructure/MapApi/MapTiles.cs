@@ -175,11 +175,11 @@ namespace RelertSharp.MapStructure
         #region Framework & Flat Ground
         public static void SetFramework(bool enable)
         {
-            if (IsValid) Map.TilesData.SwitchFramework(enable);
+            if (GlobalVar.HasMap) Map.TilesData.SwitchFramework(enable);
         }
         public static void SetFlatGround(bool enable)
         {
-            if (IsValid) Map.TilesData.SwitchFlatGround(enable);
+            if (GlobalVar.HasMap) Map.TilesData.SwitchFlatGround(enable);
         }
         #endregion
     }

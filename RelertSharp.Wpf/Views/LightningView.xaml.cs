@@ -29,7 +29,7 @@ namespace RelertSharp.Wpf.Views
         internal event EventHandler LightningChangedRequest;
         private readonly DelayedAction delayedRefresh;
         public int ContentWidth { get { return (int)grdColContent.ActualWidth; } }
-        private Lightning MapLightning { get { return GlobalVar.CurrentMapDocument.Map.LightningCollection; } }
+        private Lightning MapLightning { get { return GlobalVar.GlobalMap.LightningCollection; } }
 
         public GuiViewType ViewType { get { return GuiViewType.LightningPanel; } }
         public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }

@@ -13,7 +13,7 @@ namespace RelertSharp.Engine
 {
     internal static partial class EngineMain
     {
-        private static TileLayer _cellFindingReferance { get { return GlobalVar.CurrentMapDocument.Map.TilesData; } }
+        private static TileLayer _cellFindingReferance { get { return GlobalVar.GlobalMap.TilesData; } }
         private static Tile previousTile;
         private static List<I2dLocateable> buildingShape = new List<I2dLocateable>();
         private static bool markingBuildingShape = false;

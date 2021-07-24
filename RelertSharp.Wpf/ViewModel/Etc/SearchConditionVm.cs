@@ -110,7 +110,7 @@ namespace RelertSharp.Wpf.ViewModel
         }
         private string GetStringValue(object validate, out bool isEnumerable, out List<string> extraInfo)
         {
-            var map = GlobalVar.CurrentMapDocument.Map;
+            var map = GlobalVar.GlobalMap;
             isEnumerable = false;
             List<string> extra = new List<string>();
             extraInfo = extra;

@@ -32,7 +32,7 @@ namespace RelertSharp.Wpf.Views
         public LayoutAnchorable ParentAncorable { get; set; }
         public LayoutDocument ParentDocument { get; set; }
         private LocalVarVm SelectedItem { get { return lbxMain.SelectedItem as LocalVarVm; } }
-        private Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private Map Map { get { return GlobalVar.GlobalMap; } }
         public LocalVarView()
         {
             InitializeComponent();
@@ -43,7 +43,7 @@ namespace RelertSharp.Wpf.Views
 
         private void MapReloadedHandler(object sender, EventArgs e)
         {
-            foreach (LocalVarItem local in GlobalVar.CurrentMapDocument.Map.LocalVariables)
+            foreach (LocalVarItem local in GlobalVar.GlobalMap.LocalVariables)
             {
                 lbxMain.Items.Add(new LocalVarVm(local));
             }

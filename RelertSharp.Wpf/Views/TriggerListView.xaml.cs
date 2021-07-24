@@ -28,7 +28,7 @@ namespace RelertSharp.Wpf.Views
     /// </summary>
     public partial class TriggerListView : UserControl, IListContainer, IRsView
     {
-        private Map map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private Map map { get { return GlobalVar.GlobalMap; } }
         private TriggerTreeItemVm SelectedItem { get { return trvMain.SelectedItem as TriggerTreeItemVm; } }
         public GuiViewType ViewType { get { return GuiViewType.TriggerList; } }
         public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }

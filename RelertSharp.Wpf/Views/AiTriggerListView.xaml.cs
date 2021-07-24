@@ -49,25 +49,25 @@ namespace RelertSharp.Wpf.Views
 
         private void IdUnchecked(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.AiTriggers.ChangeDisplay(IndexableDisplayType.NameOnly);
+            GlobalVar.GlobalMap?.AiTriggers.ChangeDisplay(IndexableDisplayType.NameOnly);
             GlobalCollectionVm.AiTriggers.UpdateAll();
         }
 
         private void IdChecked(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.AiTriggers.ChangeDisplay(IndexableDisplayType.IdAndName);
+            GlobalVar.GlobalMap?.AiTriggers.ChangeDisplay(IndexableDisplayType.IdAndName);
             GlobalCollectionVm.AiTriggers.UpdateAll();
         }
 
         private void AscendingSort(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.AiTriggers.AscendingSort();
+            GlobalVar.GlobalMap?.AiTriggers.AscendingSort();
             GlobalCollectionVm.AiTriggers.UpdateAll();
         }
 
         private void DescendingSort(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument?.Map.AiTriggers.DescendingSort();
+            GlobalVar.GlobalMap?.AiTriggers.DescendingSort();
             GlobalCollectionVm.AiTriggers.UpdateAll();
         }
 

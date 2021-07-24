@@ -175,7 +175,7 @@ namespace RelertSharp.MapStructure.Logic
         /// </summary>
         private void ModifyRepeating()
         {
-            GlobalVar.CurrentMapDocument?.Map?.Tags?.Foreach(x =>
+            GlobalVar.GlobalMap?.Tags?.Foreach(x =>
             {
                 if (x.AssoTrigger == this.Id) x.Repeating = repeating;
             });

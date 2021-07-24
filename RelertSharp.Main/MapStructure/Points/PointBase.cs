@@ -138,9 +138,11 @@ namespace RelertSharp.MapStructure.Points
                 IsHidden = false;
             }
         }
-        public virtual int GetHeight()
+        public virtual int GetHeight(Map source = null)
         {
-            return GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(this);
+            if (source != null) return source.GetHeightFromTile(this);
+            else if (GlobalVar.HasMap) return GlobalVar.GlobalMap.GetHeightFromTile(this);
+            return Constant.MapStructure.INVALID_HEIGHT;
         }
         public virtual void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
         {

@@ -29,7 +29,7 @@ namespace RelertSharp.Wpf.Views
         public GuiViewType ViewType { get { return GuiViewType.ScriptList; } }
         public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
         public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
-        private MapStructure.Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private MapStructure.Map Map { get { return GlobalVar.GlobalMap; } }
         private ScriptListVm SelectedItem { get { return lbxMain.SelectedItem as ScriptListVm; } }
         private IndexableDisplayType displayType = IndexableDisplayType.IdAndName;
 
@@ -46,7 +46,7 @@ namespace RelertSharp.Wpf.Views
         private void MapReloadedHandler(object sender, EventArgs e)
         {
             lbxMain.Items.Clear();
-            foreach (var script in GlobalVar.CurrentMapDocument.Map.Scripts)
+            foreach (var script in GlobalVar.GlobalMap.Scripts)
             {
                 lbxMain.Items.Add(new ScriptListVm(script));
             }
@@ -65,7 +65,7 @@ namespace RelertSharp.Wpf.Views
             {
                 script.ChangeDisplay(displayType);
             }
-            GlobalVar.CurrentMapDocument?.Map.Scripts.ChangeDisplay(displayType);
+            GlobalVar.GlobalMap?.Scripts.ChangeDisplay(displayType);
             lbxMain.Items.Refresh();
         }
 
@@ -76,7 +76,7 @@ namespace RelertSharp.Wpf.Views
             {
                 script.ChangeDisplay(displayType);
             }
-            GlobalVar.CurrentMapDocument?.Map.Scripts.ChangeDisplay(displayType);
+            GlobalVar.GlobalMap?.Scripts.ChangeDisplay(displayType);
             lbxMain.Items.Refresh();
         }
 

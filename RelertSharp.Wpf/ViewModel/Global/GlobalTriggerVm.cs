@@ -14,7 +14,7 @@ namespace RelertSharp.Wpf.ViewModel
     {
         public IEnumerator GetEnumerator()
         {
-            if (GlobalVar.CurrentMapDocument != null) return GlobalVar.CurrentMapDocument.Map.Triggers.GetEnumerator();
+            if (GlobalVar.HasMap) return GlobalVar.GlobalMap.Triggers.GetEnumerator();
             return EmptyEnumerator;
         }
     }

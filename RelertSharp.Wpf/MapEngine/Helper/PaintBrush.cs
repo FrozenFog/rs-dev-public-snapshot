@@ -18,7 +18,7 @@ namespace RelertSharp.Wpf
         #region Components
         public static ObjectBrushConfig Config { get; private set; }
         public static ObjectBrushFilter Filter { get; private set; }
-        private static Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private static Map Map { get { return GlobalVar.GlobalMap; } }
         private static IMapObject currentObject;
         private static bool isSuspended;
         #endregion

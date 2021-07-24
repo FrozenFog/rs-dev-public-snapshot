@@ -88,7 +88,7 @@ namespace RelertSharp.Common
     public interface IMapObject : IRegistable, I2dLocateable, IBaseObject
     {
         ISceneObject SceneObject { get; }
-        int GetHeight();
+        int GetHeight(Map source = null);
         void Dispose();
         void MoveTo(I3dLocateable pos, int subcell = -1);
         void ShiftBy(I3dLocateable delta);

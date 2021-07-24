@@ -26,8 +26,6 @@ namespace RelertSharp.Wpf.Views
     /// </summary>
     public partial class CountryHouseView : UserControl, IRsView
     {
-        private Map Map { get { return GlobalVar.CurrentMapDocument?.Map; } }
-
         public GuiViewType ViewType => GuiViewType.HousePanel;
         public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
         public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
@@ -44,7 +42,7 @@ namespace RelertSharp.Wpf.Views
             //lbxHouse.ItemsSource = null;
             //lbxHouse.ItemsSource = GlobalCollectionVm.Houses;
             lbxHouse.Items.Clear();
-            foreach (HouseItem house in Map.Houses)
+            foreach (HouseItem house in GlobalVar.GlobalMap.Houses)
             {
                 lbxHouse.Items.Add(new HouseListVm(house));
             }
@@ -71,7 +69,7 @@ namespace RelertSharp.Wpf.Views
         {
             if (lbxHouse.SelectedItem is HouseListVm lsHouse)
             {
-                if (Map?.Countries.GetCountry(lsHouse.Data.Country) is CountryItem country)
+                if (GlobalVar.GlobalMap?.Countries.GetCountry(lsHouse.Data.Country) is CountryItem country)
                 {
                     DataContext = new HouseVm(lsHouse.Data, country);
                 }

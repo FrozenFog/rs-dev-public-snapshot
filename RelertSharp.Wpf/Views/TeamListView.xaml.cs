@@ -28,7 +28,7 @@ namespace RelertSharp.Wpf.Views
         public GuiViewType ViewType { get { return GuiViewType.TeamList; } }
         public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
         public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
-        private MapStructure.Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private MapStructure.Map Map { get { return GlobalVar.GlobalMap; } }
         private IndexableDisplayType displayType = IndexableDisplayType.IdAndName;
 
         public TeamListView()
@@ -58,7 +58,7 @@ namespace RelertSharp.Wpf.Views
         {
             displayType = IndexableDisplayType.NameOnly;
             foreach (TeamListVm vm in lbxMain.Items) vm.ChangeDisplay(displayType);
-            GlobalVar.CurrentMapDocument?.Map.Teams.ChangeDisplay(displayType);
+            GlobalVar.GlobalMap?.Teams.ChangeDisplay(displayType);
             lbxMain.Items.Refresh();
         }
 
@@ -66,7 +66,7 @@ namespace RelertSharp.Wpf.Views
         {
             displayType = IndexableDisplayType.IdAndName;
             foreach (TeamListVm vm in lbxMain.Items) vm.ChangeDisplay(displayType);
-            GlobalVar.CurrentMapDocument?.Map.Teams.ChangeDisplay(displayType);
+            GlobalVar.GlobalMap?.Teams.ChangeDisplay(displayType);
             lbxMain.Items.Refresh();
         }
 

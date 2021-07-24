@@ -14,7 +14,7 @@ namespace RelertSharp.Wpf.ViewModel
     {
         public GlobalTriggerVm Triggers { get { return GlobalCollectionVm.Triggers; } }
         public GlobalCountryVm Owners { get { return GlobalCollectionVm.Countries; } }
-        private Map map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private Map map { get { return GlobalVar.GlobalMap; } }
         public TriggerVm()
         {
             data = new TriggerItem();

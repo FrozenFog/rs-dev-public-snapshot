@@ -87,7 +87,7 @@ namespace RelertSharp.Engine
         {
             INIEntity ov = Rules[regName];
             if (ov.ParseBool("Wall")) return string.Format("unit{0}.pal", TileDictionary.TheaterSub);
-            if (ov.ParseBool("Tiberium")) return string.Format("{0}.pal", GlobalConfig.GetTheaterPalName(CurrentMapDocument.Map.Info.TheaterName));
+            if (ov.ParseBool("Tiberium")) return string.Format("{0}.pal", GlobalConfig.GetTheaterPalName(GlobalMap.Info.TheaterName));
             return string.Format("iso{0}.pal", TileDictionary.TheaterSub);
         }
         public static string GetOverlayFileName(this Rules r, string regName)

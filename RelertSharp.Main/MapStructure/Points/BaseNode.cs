@@ -85,9 +85,11 @@ namespace RelertSharp.MapStructure.Points
             return string.Format("{0} at {1}, {2}", RegName, X, Y);
         }
 
-        public int GetHeight()
+        public int GetHeight(Map source = null)
         {
-            return GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(this);
+            if (source != null) return source.GetHeightFromTile(this);
+            else if (GlobalVar.HasMap) return GlobalVar.GlobalMap.GetHeightFromTile(this);
+            else return Constant.MapStructure.INVALID_HEIGHT;
         }
 
         public void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
@@ -113,7 +115,7 @@ namespace RelertSharp.MapStructure.Points
         {
             ParameterReader reader = new ParameterReader(commands);
             string parentName = reader.ReadString();
-            HouseItem parent = GlobalVar.CurrentMapDocument.Map.Houses.GetHouse(parentName);
+            HouseItem parent = GlobalVar.GlobalMap.Houses.GetHouse(parentName);
             BaseNode node = new BaseNode(parent)
             {
                 RegName = reader.ReadString(),

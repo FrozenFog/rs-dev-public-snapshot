@@ -16,7 +16,6 @@ namespace RelertSharp.Engine
         private static string[] _zeroLandType = new string[] { "Water", "Clear", "" };
         private static float _width { get { return _30SQ2; } }
         private static Vec3 _NormTileVec { get { return new Vec3(_15SQ2, _15SQ2, _10SQ3); } }
-        private static Map Map { get { return CurrentMapDocument.Map; } }
         private static float _height { get { return _10SQ3; } }
         private const uint _colorIgnore = 0x000000FF;
         private const uint _white = 0xFFFFFFFF;

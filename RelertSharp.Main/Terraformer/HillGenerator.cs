@@ -40,7 +40,7 @@ namespace RelertSharp.Terraformer
         };
         private static int rampBaseIndex;
         private static Random r;
-        private static Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private static Map Map { get { return GlobalVar.GlobalMap; } }
         private static int RandomRampOffset
         {
             get

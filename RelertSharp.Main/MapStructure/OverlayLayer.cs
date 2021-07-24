@@ -189,9 +189,11 @@ namespace RelertSharp.MapStructure
             }
         }
 
-        public int GetHeight()
+        public int GetHeight(Map source = null)
         {
-            return GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(this);
+            if (source != null) return source.GetHeightFromTile(this);
+            else if (GlobalVar.HasMap) return GlobalVar.GlobalMap.GetHeightFromTile(this);
+            else return Constant.MapStructure.INVALID_HEIGHT;
         }
 
         public void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)

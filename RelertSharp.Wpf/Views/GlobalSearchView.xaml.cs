@@ -56,7 +56,7 @@ namespace RelertSharp.Wpf.Views
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            var map = GlobalVar.CurrentMapDocument.Map;
+            var map = GlobalVar.GlobalMap;
             List<object> results = new List<object>();
             results = results
                 .Concat(SearchIn(map.Buildings))
@@ -96,7 +96,7 @@ namespace RelertSharp.Wpf.Views
         private List<object> SearchIn(IEnumerable<object> src)
         {
             List<object> results = new List<object>();
-            var map = GlobalVar.CurrentMapDocument.Map;
+            var map = GlobalVar.GlobalMap;
             foreach (object obj in src)
             {
                 if (obj is TriggerItem trg)

@@ -13,7 +13,7 @@ namespace RelertSharp.Wpf.ViewModel
     {
         public IEnumerator GetEnumerator()
         {
-            if (GlobalVar.CurrentMapDocument != null) return GlobalVar.CurrentMapDocument.Map.Taskforces.GetEnumerator();
+            if (GlobalVar.HasMap) return GlobalVar.GlobalMap.Taskforces.GetEnumerator();
             return EmptyEnumerator;
         }
     }

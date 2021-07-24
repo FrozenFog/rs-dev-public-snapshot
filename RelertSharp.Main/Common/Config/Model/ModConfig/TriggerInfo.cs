@@ -345,7 +345,7 @@ namespace RelertSharp.Common.Config.Model
         }
         private static string WpPosFormat(string @in, IEnumerable<IIndexableItem> lookup)
         {
-            IIndexableItem item = GlobalVar.CurrentMapDocument.Map.Waypoints.FindByAlphabet(@in);
+            IIndexableItem item = GlobalVar.GlobalMap.Waypoints.FindByAlphabet(@in);
             if (item != null && item is I2dLocateable pos)
             {
                 return string.Format("{2}({0}, {1})", pos.X, pos.Y, item.Id);

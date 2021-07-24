@@ -15,7 +15,7 @@ namespace RelertSharp.Wpf.ViewModel
         public GlobalTeamVm TeamCollections { get { return GlobalCollectionVm.Teams; } }
         public StaticCollectionVm StaticCollections { get { return GlobalCollectionVm.StaticCollections; } }
         public GlobalCountryVm OwnerCountries { get { return GlobalCollectionVm.Countries; } }
-        private TeamCollection MapTeam { get { return GlobalVar.CurrentMapDocument.Map.Teams; } }
+        private TeamCollection MapTeam { get { return GlobalVar.GlobalMap.Teams; } }
         public AiTriggerVm()
         {
             data = new AITriggerItem();
@@ -211,7 +211,7 @@ namespace RelertSharp.Wpf.ViewModel
         }
         public object OwnerItem
         {
-            get { return GlobalVar.CurrentMapDocument?.Map.Countries.GetCountry(data.OwnerHouse); }
+            get { return GlobalVar.GlobalMap?.Countries.GetCountry(data.OwnerHouse); }
             set
             {
                 if (value is IIndexableItem item) data.OwnerHouse = item.Value;

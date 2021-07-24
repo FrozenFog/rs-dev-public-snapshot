@@ -22,7 +22,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         private static Pnt3 offset;
         private static bool isLat, isSuspended, isFlat;
 
-        private static TileLayer Tiles { get { return GlobalVar.CurrentMapDocument.Map.TilesData; } }
+        private static TileLayer Tiles { get { return GlobalVar.GlobalMap.TilesData; } }
 
         static TilePaintBrush()
         {

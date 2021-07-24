@@ -98,7 +98,7 @@ namespace RelertSharp.Wpf.MapEngine
                     // suspend responding
                     SuspendEvent();
                     EngineApi.SuspendRendering();
-                    var map = GlobalVar.CurrentMapDocument.Map;
+                    var map = GlobalVar.GlobalMap;
 
                     // save previous status
                     double prevScale = EngineApi.ScaleFactor;
@@ -219,9 +219,9 @@ namespace RelertSharp.Wpf.MapEngine
         {
             EngineApi.SuspendRendering();
 #if DEBUG
-            EngineApi.DrawMap(GlobalVar.CurrentMapDocument.Map);
+            EngineApi.DrawMap(GlobalVar.GlobalMap);
 #else
-            await EngineApi.DrawMap(GlobalVar.CurrentMapDocument.Map);
+            await EngineApi.DrawMap(GlobalVar.GlobalMap);
 #endif
             drew = true;
             EngineApi.ResumeRendering();

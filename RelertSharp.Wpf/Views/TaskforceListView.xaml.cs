@@ -28,7 +28,7 @@ namespace RelertSharp.Wpf.Views
         public GuiViewType ViewType { get { return GuiViewType.TaskforceList; } }
         public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
         public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
-        private MapStructure.Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private MapStructure.Map Map { get { return GlobalVar.GlobalMap; } }
         private TaskforceListVm SelectedItem { get { return lbxMain.SelectedItem as TaskforceListVm; } }
         private IndexableDisplayType displayTypeNow = IndexableDisplayType.IdAndName;
 
@@ -45,7 +45,7 @@ namespace RelertSharp.Wpf.Views
         private void MapReloadedHandler(object sender, EventArgs e)
         {
             lbxMain.Items.Clear();
-            foreach (var tf in GlobalVar.CurrentMapDocument.Map.Taskforces)
+            foreach (var tf in GlobalVar.GlobalMap.Taskforces)
             {
                 lbxMain.Items.Add(new TaskforceListVm(tf));
             }
@@ -60,7 +60,7 @@ namespace RelertSharp.Wpf.Views
             {
                 vm.ChangeDisplay(displayTypeNow);
             }
-            GlobalVar.CurrentMapDocument?.Map.Taskforces.ChangeDisplay(displayTypeNow);
+            GlobalVar.GlobalMap?.Taskforces.ChangeDisplay(displayTypeNow);
             lbxMain.Items.Refresh();
         }
 
@@ -71,7 +71,7 @@ namespace RelertSharp.Wpf.Views
             {
                 vm.ChangeDisplay(displayTypeNow);
             }
-            GlobalVar.CurrentMapDocument?.Map.Taskforces.ChangeDisplay(displayTypeNow);
+            GlobalVar.GlobalMap?.Taskforces.ChangeDisplay(displayTypeNow);
             lbxMain.Items.Refresh();
         }
 

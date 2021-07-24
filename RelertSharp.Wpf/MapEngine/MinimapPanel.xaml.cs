@@ -47,7 +47,7 @@ namespace RelertSharp.Wpf.MapEngine
 
         private void MapReloadedHandler(object sender, EventArgs e)
         {
-            EngineApi.ResetMinimap(GlobalVar.CurrentMapDocument.Map.Info.Size, (int)ActualWidth, (int)ActualHeight, GuiUtil.MonitorScale);
+            EngineApi.ResetMinimap(GlobalVar.GlobalMap.Info.Size, (int)ActualWidth, (int)ActualHeight, GuiUtil.MonitorScale);
         }
 
         public void ResumeDrawing()

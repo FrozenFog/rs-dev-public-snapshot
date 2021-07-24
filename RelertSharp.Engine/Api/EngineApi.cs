@@ -23,7 +23,7 @@ namespace RelertSharp.Engine.Api
         private static bool renderEnable = true;
         private static bool rendering = false;
 
-        private static Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private static Map Map { get { return GlobalVar.GlobalMap; } }
 
 
         public static bool EngineCtor(int width, int height)

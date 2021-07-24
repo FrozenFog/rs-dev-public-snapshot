@@ -49,7 +49,7 @@ namespace RelertSharp.MapStructure.Points
                         X = light.X,
                         Y = light.Y
                     };
-                    bud.Owner = GlobalVar.CurrentMapDocument.Map.GetCivilianHouse() ?? Constant.MapStructure.DefaultCivilianHouse;
+                    bud.Owner = GlobalVar.GlobalMap.GetCivilianHouse() ?? Constant.MapStructure.DefaultCivilianHouse;
                     entities.Add(bud);
                     i++;
                 }

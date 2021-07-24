@@ -18,18 +18,18 @@ namespace RelertSharp.MapStructure.Logic
             item.Id = id;
             item.Name = "New Team";
             //item.TaskforceID =
-            //    GlobalVar.CurrentMapDocument.Map.Taskforces.Count() > 0 ?
-            //    GlobalVar.CurrentMapDocument.Map.Taskforces.ElementAt(0).Id :
+            //    GlobalVar.GlobalMap.Taskforces.Count() > 0 ?
+            //    GlobalVar.GlobalMap.Taskforces.ElementAt(0).Id :
             //    string.Empty;
             //item.ScriptID =
-            //    GlobalVar.CurrentMapDocument.Map.Scripts.Count() > 0 ?
-            //    GlobalVar.CurrentMapDocument.Map.Scripts.ElementAt(0).Id :
+            //    GlobalVar.GlobalMap.Scripts.Count() > 0 ?
+            //    GlobalVar.GlobalMap.Scripts.ElementAt(0).Id :
             //    string.Empty;
             //item.TagID = string.Empty;
             //item.Waypoint = 0;
             //item.House =
-            //    GlobalVar.CurrentMapDocument.Map.Countries.Count() > 0 ?
-            //    GlobalVar.CurrentMapDocument.Map.Countries.ElementAt(0).Name :
+            //    GlobalVar.GlobalMap.Countries.Count() > 0 ?
+            //    GlobalVar.GlobalMap.Countries.ElementAt(0).Name :
             //    string.Empty;
             //item.VeteranLevel = TeamVeteranLevel.Rookie;
             //item.MCDecision = TeamMCDecision.Default;

@@ -22,8 +22,8 @@ namespace RelertSharp.Wpf.MapEngine.Helper
     internal static class Selector
     {
         #region Private call
-        private static int MapWidth { get { return GlobalVar.CurrentMapDocument.Map.Info.Size.Width; } }
-        private static Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private static int MapWidth { get { return GlobalVar.GlobalMap.Info.Size.Width; } }
+        private static Map Map { get { return GlobalVar.GlobalMap; } }
         #endregion
         private static Point selectDown, selectNew;
         private static int subCell;

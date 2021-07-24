@@ -155,9 +155,11 @@ namespace RelertSharp.MapStructure.Objects
             if (filter.RecruitNo) AutoNORecruitType = config.AutoRecruitNo;
             if (filter.AboveGround) IsAboveGround = config.AboveGround;
         }
-        public virtual int GetHeight()
+        public virtual int GetHeight(Map source = null)
         {
-            return GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(this);
+            if (source != null) return source.GetHeightFromTile(this);
+            else if (GlobalVar.HasMap) return GlobalVar.GlobalMap.GetHeightFromTile(this);
+            else return Constant.MapStructure.INVALID_HEIGHT;
         }
         public virtual void Dispose()
         {

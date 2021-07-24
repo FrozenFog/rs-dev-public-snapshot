@@ -19,7 +19,7 @@ namespace RelertSharp.Engine
             Vec4 unable = new Vec4(1, 0.6f, 0.6f, 1);
             if (enable)
             {
-                foreach (Tile t in Map.TilesData)
+                foreach (Tile t in GlobalMap.TilesData)
                 {
                     if (t.Buildable) t.SceneObject.SetColor(buildable);
                     else t.SceneObject.SetColor(unable);
@@ -27,7 +27,7 @@ namespace RelertSharp.Engine
             }
             else
             {
-                foreach (Tile t in Map.TilesData)
+                foreach (Tile t in GlobalMap.TilesData)
                 {
                     t.SceneObject.SetColor(Vec4.One);
                 }
@@ -39,7 +39,7 @@ namespace RelertSharp.Engine
             Vec4 unable = new Vec4(1, 0.6f, 0.6f, 1);
             if (enable)
             {
-                foreach (Tile t in Map.TilesData)
+                foreach (Tile t in GlobalMap.TilesData)
                 {
                     if (t.Passable) t.SceneObject.SetColor(passable);
                     else t.SceneObject.SetColor(unable);
@@ -47,7 +47,7 @@ namespace RelertSharp.Engine
             }
             else
             {
-                foreach (Tile t in Map.TilesData)
+                foreach (Tile t in GlobalMap.TilesData)
                 {
                     t.SceneObject.SetColor(Vec4.One);
                 }
@@ -55,14 +55,14 @@ namespace RelertSharp.Engine
         }
         private static void ApplyLampAt(I2dLocateable pos, Vec4 color, int range)
         {
-            foreach (Tile t in Map.TilesData) t.SceneObject.Lamped = false;
+            foreach (Tile t in GlobalMap.TilesData) t.SceneObject.Lamped = false;
             Vec4 grade = (color - Vec4.One) / range;
             for (int r = 0; r <= range; r++)
             {
                 Circle2D c = new Circle2D(pos, r);
                 foreach (I2dLocateable target in c)
                 {
-                    if (Map.TilesData[target] is Tile t && !t.SceneObject.Lamped)
+                    if (GlobalMap.TilesData[target] is Tile t && !t.SceneObject.Lamped)
                     {
                         (t.SceneObject as MapTile).MultiplyColor(color);
                         t.SceneObject.Lamped = true;
@@ -95,7 +95,7 @@ namespace RelertSharp.Engine
             sceneColor = color;
             ambientLight = amb;
             lightningLevel = light.Level;
-            foreach (Tile t in Map.TilesData)
+            foreach (Tile t in GlobalMap.TilesData)
             {
                 Vec4 tilecolor = sceneColor;
                 tilecolor += Vec4.Unit3(light.Level * t.Height);

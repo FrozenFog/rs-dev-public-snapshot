@@ -94,7 +94,7 @@ namespace RelertSharp.Wpf
             //                        MapFile map = new MapFile(name);
             //                        GlobalVar.GlobalRules.MapIniData = map.Map.IniResidue;
             //                        GlobalVar.CurrentMapDocument = map;
-            //                        GlobalVar.CurrentMapDocument.Map.DumpStructure();
+            //                        GlobalVar.GlobalMap.DumpStructure();
             //                        if (Log.HasCritical)
             //                        {
             //                            Log.Critical("These object will not show in scene(or in logic editor)");

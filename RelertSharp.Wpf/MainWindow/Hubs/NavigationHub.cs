@@ -26,10 +26,10 @@ namespace RelertSharp.Wpf
                     GoToTeam(target);
                     break;
                 case TriggerInfoTraceType.I2dWaypointTrace:
-                    I2dLocateable wp = GlobalVar.CurrentMapDocument.Map.Waypoints.FindByID(value);
+                    IMapObject wp = GlobalVar.GlobalMap.Waypoints.FindByID(value);
                     if (wp != null)
                     {
-                        GoToPosition(wp, GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(wp));
+                        GoToPosition(wp, wp.GetHeight());
                     }
                     break;
                 case TriggerInfoTraceType.AnimIdxTrace:
@@ -62,7 +62,7 @@ namespace RelertSharp.Wpf
                         I2dLocateable pos = new Pnt(x, y);
                         if (pos.X != 0 && pos.Y != 0)
                         {
-                            GoToPosition(pos, GlobalVar.CurrentMapDocument.Map.GetHeightFromTile(pos));
+                            GoToPosition(pos, GlobalVar.GlobalMap.GetHeightFromTile(pos));
                         }
                     }
                     break;

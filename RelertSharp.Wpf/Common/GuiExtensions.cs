@@ -344,7 +344,7 @@ namespace RelertSharp.Wpf
             else if (src.GetData(typeof(HouseItem)) is HouseItem house)
             {
                 dataType = typeof(ComboItem);
-                return GlobalVar.CurrentMapDocument.Map.Houses.IndexOf(house.Name).ToString();
+                return GlobalVar.GlobalMap.Houses.IndexOf(house.Name).ToString();
             }
             else if (src.GetData(typeof(LocalVarItem)) is LocalVarItem local)
             {

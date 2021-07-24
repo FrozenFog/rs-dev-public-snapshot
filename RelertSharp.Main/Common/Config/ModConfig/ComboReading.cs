@@ -11,7 +11,7 @@ namespace RelertSharp.Common
 {
     public partial class ModConfig
     {
-        private Map Map { get { return GlobalVar.CurrentMapDocument.Map; } }
+        private Map Map { get { return GlobalVar.GlobalMap; } }
         private Rules Rules { get { return GlobalVar.GlobalRules; } }
 
         private IEnumerable<IIndexableItem> ReadCombo(string type)

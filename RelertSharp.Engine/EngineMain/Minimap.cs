@@ -30,7 +30,7 @@ namespace RelertSharp.Engine
         }
         public static void RedrawMinimapAll()
         {
-            TileLayer tiles = GlobalVar.CurrentMapDocument.Map.TilesData;
+            TileLayer tiles = GlobalVar.GlobalMap.TilesData;
             foreach (Tile t in tiles)
             {
                 if (t.MinimapRenderableObjectCount == 0) minimap.DrawTile(t.SceneObject as MapTile);
