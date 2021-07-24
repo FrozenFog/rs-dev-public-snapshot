@@ -131,7 +131,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class TagItem : IndexableItem
+    public class TagItem : IndexableItem, ILogicItem
     {
         #region Ctor - TagItem
         public TagItem(string _id, string[] dataList)
@@ -184,6 +184,7 @@ namespace RelertSharp.MapStructure.Logic
         public string AssoTrigger { get; set; }
         public static TagItem NullTag { get { return new TagItem("None", ""); } }
         public bool Binded { get; set; } = true;
+        public LogicType ItemType { get { return LogicType.Tag; } }
         #endregion
     }
 }

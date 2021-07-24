@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -127,6 +128,9 @@ namespace RelertSharp.Wpf.ViewModel
                 case ConditionType.HealthPoint:
                     if (validate is ICombatObject com) return com.HealthPoint.ToString();
                     break;
+                case ConditionType.FacingDirection:
+                    if (validate is ICombatObject combat) return combat.Rotation.ToString();
+                    break;
                 case ConditionType.Height:
                     if (validate is I2dLocateable p3) return map.GetHeightFromTile(p3).ToString();
                     break;
@@ -221,6 +225,10 @@ namespace RelertSharp.Wpf.ViewModel
                     if (b) r = d1 != d2;
                     else r = objValue != StringValue;
                     break;
+                case Operator.RegExMatch:
+                    Regex regex = new Regex(StringValue);
+                    r = regex.IsMatch(objValue);
+                    break;
             }
             return r;
         }
@@ -308,7 +316,8 @@ namespace RelertSharp.Wpf.ViewModel
             LessOrEqualThan,
             EqualThan,
             NotEqualThan,
-            Contains
+            Contains,
+            RegExMatch
         }
         public enum ConditionType
         {
@@ -330,7 +339,8 @@ namespace RelertSharp.Wpf.ViewModel
             ScriptParameter,
             ScriptType,
             TaskforceMemberRegistName,
-            GroupId
+            GroupId,
+            FacingDirection
         }
         public class SearchConditionModel
         {

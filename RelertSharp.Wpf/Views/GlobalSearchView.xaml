@@ -72,7 +72,7 @@
                     <StackPanel Orientation="Horizontal" Height="43" HorizontalAlignment="Stretch">
                         <StackPanel Orientation="Vertical" Margin="1">
                             <TextBlock Style="{DynamicResource txblkDark}" Text="Logic Operator" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>
-                            <ComboBox Style="{DynamicResource cbbDark}" Width="120" ItemsSource="{Binding LogicOperators}" SelectedValue="{Binding LogicOper}" IsEnabled="{Binding IsLogicOperEnable}"/>
+                            <ComboBox Style="{DynamicResource cbbDark}" Width="150" ItemsSource="{Binding LogicOperators}" SelectedValue="{Binding LogicOper}" IsEnabled="{Binding IsLogicOperEnable}"/>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Margin="1" Visibility="{Binding VisIsTree}">
                             <TextBlock Style="{DynamicResource txblkDark}" Text="Condition Type" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>
@@ -80,7 +80,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Margin="1" Visibility="{Binding VisIsTree}">
                             <TextBlock Style="{DynamicResource txblkDark}" Text="Operator" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>
-                            <ComboBox Style="{DynamicResource cbbDark}" Width="80" ItemsSource="{Binding ValueOperators}" SelectedValue="{Binding ValueOper}"/>
+                            <ComboBox Style="{DynamicResource cbbDark}" Width="120" ItemsSource="{Binding ValueOperators}" SelectedValue="{Binding ValueOper}"/>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Margin="1" Visibility="{Binding VisIsTree}">
                             <TextBlock Style="{DynamicResource txblkDark}" Text="Value" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>

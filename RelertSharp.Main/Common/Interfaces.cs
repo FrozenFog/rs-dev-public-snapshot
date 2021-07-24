@@ -68,6 +68,11 @@ namespace RelertSharp.Common
     {
         MapObjectType ObjectType { get; }
     }
+
+    public interface ILogicItem
+    {
+        LogicType ItemType { get; }
+    }
     
     public interface IPosition : I2dLocateable
     {

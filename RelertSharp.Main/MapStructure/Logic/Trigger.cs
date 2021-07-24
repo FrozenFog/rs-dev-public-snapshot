@@ -125,8 +125,9 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class TriggerItem : IndexableItem, IOwnableObject
+    public class TriggerItem : IndexableItem, IOwnableObject, ILogicItem
     {
+        public LogicType ItemType { get { return LogicType.Trigger; } }
         #region Ctor - TriggerItem
         public TriggerItem(string id, string house, string linkedTriggerID, string name, bool disabled, bool e, bool n, bool h, int repeating)
         {

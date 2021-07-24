@@ -58,7 +58,7 @@ namespace RelertSharp.MapStructure.Logic
     /// <summary>
     /// use yes/no for bool
     /// </summary>
-    public class TeamItem : TeamLogicItem, IGroupable, IOwnableObject
+    public class TeamItem : TeamLogicItem, IGroupable, IOwnableObject, ILogicItem
     {
         #region Ctor - TeamItem
         public TeamItem(INIEntity ent) : base(ent)
@@ -167,6 +167,7 @@ namespace RelertSharp.MapStructure.Logic
                 Residue[key] = value;
             }
         }
+        public LogicType ItemType { get { return LogicType.Team; } }
         //public TeamUnit GetToUnit { get; set; }
         #endregion
     }

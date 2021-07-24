@@ -50,7 +50,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class AITriggerItem : IndexableItem
+    public class AITriggerItem : IndexableItem, ILogicItem
     {
         #region Ctor - AITriggerItem
         public AITriggerItem()
@@ -112,6 +112,7 @@ namespace RelertSharp.MapStructure.Logic
         public string Team1ID { get; set; } = Constant.ITEM_NONE;
         public string OwnerHouse { get; set; }
         public int TechLevel { get; set; }
+        public LogicType ItemType { get { return LogicType.AiTrigger; } }
         public AITriggerConditionType ConditionType { get; set; } = AITriggerConditionType.ConditionTrue;
         public string ConditionObjID { get; set; }
         public AITriggerConditionOperator Operator { get { return Comparator.Operator; } set { Comparator.Operator = value; } }

@@ -55,7 +55,7 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
     }
 
-    public class TeamScriptGroup : TeamLogicItem, IIndexableItem, ISubCurdContainer<TeamScriptItem>
+    public class TeamScriptGroup : TeamLogicItem, IIndexableItem, ISubCurdContainer<TeamScriptItem>, ILogicItem
     {
         private List<TeamScriptItem> data = new List<TeamScriptItem>();
 
@@ -150,6 +150,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Calls - TeamScriptGroup
         public bool IsEmpty { get { return data.Count == 0; } }
         public List<TeamScriptItem> Data { get { return data; } set { data = value; } }
+        public LogicType ItemType { get { return LogicType.Script; } }
         #endregion
     }
 

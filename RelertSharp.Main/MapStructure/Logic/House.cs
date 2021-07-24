@@ -50,7 +50,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class HouseItem : TeamLogicItem, IIndexableItem
+    public class HouseItem : TeamLogicItem, IIndexableItem, ILogicItem
     {
         private List<string> alliesWith;
         private Dictionary<string, INIPair> residual;
@@ -193,6 +193,7 @@ namespace RelertSharp.MapStructure.Logic
                 if (initialized) HouseNameChanged?.Invoke(this, prev, value);
             }
         }
+        public LogicType ItemType { get { return LogicType.House; } }
         #endregion
     }
 }

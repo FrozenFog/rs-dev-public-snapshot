@@ -26,7 +26,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class CountryItem : TeamLogicItem, IIndexableItem
+    public class CountryItem : TeamLogicItem, IIndexableItem, ILogicItem
     {
         private Dictionary<string, INIPair> residual = new Dictionary<string, INIPair>();
         public NameChangedHandler CountryNameChanged;
@@ -109,6 +109,7 @@ namespace RelertSharp.MapStructure.Logic
                 if (initialized) CountryNameChanged?.Invoke(this, prev, value);
             }
         }
+        public LogicType ItemType { get { return LogicType.Country; } }
         #endregion
     }
 }

@@ -99,7 +99,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class LocalVarItem : IndexableItem
+    public class LocalVarItem : IndexableItem, ILogicItem
     {
         #region Ctor - LocalVarItem
         public LocalVarItem(string name, bool init, string index) : this(name, init, int.Parse(index)) { }
@@ -125,6 +125,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Calls - LocalVarItem
         public override string ToString() { return string.Format("{0}: {1} ({2})", Id, Name, InitState); }
         public bool InitState { get; set; }
+        public LogicType ItemType { get { return LogicType.LocalVariable; } }
         #endregion
     }
 }

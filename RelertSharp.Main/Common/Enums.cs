@@ -48,24 +48,24 @@ namespace RelertSharp.Common
         Undefined = 0,
 
         Building = 1,
-        Vehicle = 2,
-        Infantry = 4,
-        Aircraft = 8,
+        Vehicle = 1 << 1,
+        Infantry = 1 << 2,
+        Aircraft = 1 << 3,
         Unit = Vehicle | Aircraft,
-        Tile = 16,
-        Overlay = 32,
-        Terrain = 64,
-        Smudge = 128,
-        BaseNode = 256,
+        Tile = 1 << 4,
+        Overlay = 1 << 5,
+        Terrain = 1 << 6,
+        Smudge = 1 << 7,
+        BaseNode = 1 << 8,
         MiscObject = Overlay | Terrain | Smudge,
         AllBuilding = Building | BaseNode,
         MovableCombanant = Vehicle | Infantry | Aircraft,
         GroundMovable = Vehicle | Infantry,
         CombatObject = Building | Vehicle | Infantry | Aircraft,
-        Celltag = 512,
-        Waypoint = 1024,
+        Celltag = 1 << 9,
+        Waypoint = 1 << 10,
         LogicObject = Celltag | Waypoint,
-        LightSource = 2048,
+        LightSource = 1 << 11,
 
         MinimapRenderable = Building | Unit | Infantry | Overlay | Terrain,
 
@@ -80,8 +80,9 @@ namespace RelertSharp.Common
         Trigger = 3,
         Tag = 4,
         AiTrigger = 5,
-        LocalVar = 6,
-        House = 7
+        LocalVariable = 6,
+        House = 7,
+        Country = 8
     }
     [Flags]
     public enum AudType

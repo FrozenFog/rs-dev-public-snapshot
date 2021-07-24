@@ -56,7 +56,7 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
     }
 
-    public class TaskforceItem : TeamLogicItem, IIndexableItem, ISubCurdContainer<TaskforceUnit>, IGroupable
+    public class TaskforceItem : TeamLogicItem, IIndexableItem, ISubCurdContainer<TaskforceUnit>, IGroupable, ILogicItem
     {
         #region Ctor - TaskforceItem
         public TaskforceItem(INIEntity ent) : base(ent)
@@ -147,6 +147,7 @@ namespace RelertSharp.MapStructure.Logic
         //}
         //public Dictionary<string, int> MemberData { get { return memberData; } set { memberData = value; } }
         public string Group { get; set; } = Constant.ID_INVALID;
+        public LogicType ItemType { get { return LogicType.Taskforce; } }
         #endregion
     }
 

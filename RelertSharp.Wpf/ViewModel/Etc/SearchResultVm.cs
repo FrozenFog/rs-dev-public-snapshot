@@ -40,6 +40,7 @@ namespace RelertSharp.Wpf.ViewModel
             get
             {
                 if (data is IBaseObject obj) return obj.ObjectType.ToString();
+                if (data is ILogicItem item) return item.ItemType.ToString();
                 return NAN_ITEM;
             }
         }
