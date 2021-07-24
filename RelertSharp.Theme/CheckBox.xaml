@@ -3,7 +3,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/Brushes.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-    <Style x:Key="ckbDark" TargetType="{x:Type CheckBox}">
+    <Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
         <Setter Property="Foreground" Value="{StaticResource textFront}"/>
     </Style>
 </ResourceDictionary>

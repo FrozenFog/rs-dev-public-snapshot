@@ -7,14 +7,14 @@
         mc:Ignorable="d"
         Title="Relert Sharp" Background="{DynamicResource dimBack}" Height="215.2" Width="344" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterOwner">
     <Grid>
-        <Label Name="lblName" Content="Input Command" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
+        <Label Name="lblName" Content="Input Command" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <ScrollViewer Margin="10,38,9.6,46.6">
             <Grid>
-                <TextBox x:Name="txbMain" TextWrapping="Wrap" Style="{DynamicResource txbDark}" Height="Auto" Margin="0,0,-0.4,0" VerticalContentAlignment="Top" AcceptsReturn="True" AcceptsTab="True"/>
+                <TextBox x:Name="txbMain" TextWrapping="Wrap" Height="Auto" Margin="0,0,-0.4,0" VerticalContentAlignment="Top" AcceptsReturn="True" AcceptsTab="True"/>
             </Grid>
         </ScrollViewer>
-        <Button x:Name="btnOk" Content="Accept" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{DynamicResource btnDark}" Click="btnOk_Click" Margin="10,153,0,0" Width="94"/>
-        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{DynamicResource btnDark}" Click="btnCancel_Click" Margin="234,153,0,0" Width="94"/>
+        <Button x:Name="btnOk" Content="Accept" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnOk_Click" Margin="10,153,0,0" Width="94"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnCancel_Click" Margin="234,153,0,0" Width="94"/>
 
     </Grid>
 </Window>

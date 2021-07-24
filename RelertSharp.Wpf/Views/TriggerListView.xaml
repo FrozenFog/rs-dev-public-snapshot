@@ -24,19 +24,19 @@
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:TriggerTreeItemVm}" ItemsSource="{Binding Items}">
                     <StackPanel Orientation="Horizontal" PreviewMouseDown="DragMouseDown" MouseUp="DragMouseUp">
                         <Image Source="{Binding HeadImg}" Margin="3" Width="10" Height="10" Stretch="Fill"/>
-                        <TextBlock Text="{Binding Title}" Style="{DynamicResource txblkDark}"/>
+                        <TextBlock Text="{Binding Title}"/>
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
             <TreeView.ContextMenu>
-                <ContextMenu Style="{DynamicResource cmenuDark}">
+                <ContextMenu>
                     <MenuItem Header="Add trigger" Click="Menu_AddTrigger"/>
                     <MenuItem Name="menuCopyTrg" Header="Copy trigger" Click="Menu_CopyTrigger"/>
                     <MenuItem Name="menuDelTrg" Header="Delete trigger" Click="Menu_DeleteTrigger"/>
-                    <Separator Style="{DynamicResource sepDark}"/>
+                    <Separator/>
                     <MenuItem Header="Add trigger group" Click="Menu_AddGroup"/>
                     <MenuItem Name="menuDelGrp" Header="Delete trigger group" Click="Menu_DeleteGroup"/>
-                    <Separator Style="{DynamicResource sepDark}"/>
+                    <Separator/>
                     <MenuItem Header="Ascending sort" Click="Menu_Ascending"/>
                     <MenuItem Header="Descending sort" Click="Menu_Descending"/>
                 </ContextMenu>

@@ -24,21 +24,21 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Label Name="lblType" Content="Events" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Width="37"/>
+        <Label Name="lblType" Content="Events" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="37"/>
         <ListBox x:Name="lbxMain" Margin="10,33,9.8,9.8" Style="{DynamicResource lbxDark}" SelectedValue="{Binding SelectedItem}" SelectionChanged="CurrentSelectionChanged" PreviewMouseRightButtonDown="PreviewRightDown">
             <ListBox.ContextMenu>
-                <ContextMenu Style="{DynamicResource cmenuDark}">
+                <ContextMenu>
                     <MenuItem Header="Add new item" Click="Menu_Add"/>
                     <MenuItem Name="menuDelete" Header="Delete item" Click="Menu_Delete"/>
                     <MenuItem Name="menuCopy" Header="Copy item" Click="Menu_Copy"/>
-                    <Separator Style="{DynamicResource sepDark}"/>
+                    <Separator/>
                     <MenuItem Name="menuUp" Header="Move up" Click="Menu_MoveUp"/>
                     <MenuItem Name="menuDown" Header="Move down" Click="Menu_MoveDown"/>
                     <MenuItem Name="menuTop" Header="Move to top" Click="Menu_Top"/>
                     <MenuItem Name="menuBottom" Header="Move to bottom" Click="Menu_Bottom"/>
-                    <Separator Style="{DynamicResource sepDark}"/>
+                    <Separator/>
                     <MenuItem Header="Remove all items" Click="Menu_RemoveAll"/>
-                    <Separator Style="{DynamicResource sepDark}"/>
+                    <Separator/>
                     <MenuItem Header="Input command line" Click="Menu_Cmd"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
@@ -53,15 +53,15 @@
                 </CompositeCollection>
             </ListBox.ItemsSource>
         </ListBox>
-        <ComboBox x:Name="cbbCurrent" Margin="10,9.8,10,0" Grid.Row="1" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" DataContext="{Binding SelectedItem}" SelectedIndex="{Binding CurrentItemTypeIndex}" SelectionChanged="CurrentTypeChanged"/>
+        <ComboBox x:Name="cbbCurrent" Margin="10,9.8,10,0" Grid.Row="1" VerticalAlignment="Top" DataContext="{Binding SelectedItem}" SelectedIndex="{Binding CurrentItemTypeIndex}" SelectionChanged="CurrentTypeChanged"/>
         <ScrollViewer Margin="10,37.8,10,10.4" Grid.Row="1" VerticalContentAlignment="Top">
             <Grid>
-                <TextBox x:Name="txbDetail" TextWrapping="Wrap" Style="{DynamicResource txbDark}" DataContext="{Binding SelectedItem}" Text="{Binding DetailInformation, Mode=OneWay}" IsEnabled="False" IsUndoEnabled="False" IsReadOnly="True" Height="Auto" VerticalContentAlignment="Top"/>
+                <TextBox x:Name="txbDetail" TextWrapping="Wrap" DataContext="{Binding SelectedItem}" Text="{Binding DetailInformation, Mode=OneWay}" IsEnabled="False" IsUndoEnabled="False" IsReadOnly="True" Height="Auto" VerticalContentAlignment="Top"/>
             </Grid>
         </ScrollViewer>
         <ScrollViewer Grid.Column="1" Margin="10.2,33,10.2,9.6" Grid.RowSpan="2">
             <StackPanel x:Name="stkMain" Drop="DraggedItemDropped" AllowDrop="True"/>
         </ScrollViewer>
-        <Label Content="Parameters" HorizontalAlignment="Left" Margin="10.6,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="1"/>
+        <Label Content="Parameters" HorizontalAlignment="Left" Margin="10.6,10,0,0" VerticalAlignment="Top" Grid.Column="1"/>
     </Grid>
 </UserControl>

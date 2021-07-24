@@ -154,7 +154,7 @@ namespace RelertSharp.Wpf.Views
             {
                 dragTeam.BeginDrag(e.GetPosition(lbxMain));
                 dragTeam.SetReferanceVm(lbxMain.GetItemAtMouse<TeamListVm, TextBlock>(e));
-                dragTeam.SetDragItem(dragTeam.ReferanceVm.Data);
+                dragTeam.SetDragItem(dragTeam.ReferanceVm?.Data);
                 e.Handled = true;
             }
         }

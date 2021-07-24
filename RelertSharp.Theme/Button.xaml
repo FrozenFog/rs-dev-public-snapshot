@@ -3,7 +3,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/Brushes.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-    <Style x:Key="btnDark" TargetType="{x:Type Button}">
+    <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}">
         <Setter Property="Foreground" Value="{StaticResource textFront}"/>
         <Setter Property="BorderBrush" Value="{StaticResource btnBorder}"/>
         <Setter Property="Background" Value="{StaticResource btnBack}"/>

@@ -25,15 +25,15 @@
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:TileSetTreeVm}" ItemsSource="{Binding Items}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{Binding HeadImg}" Margin="3" Width="10" Height="10" Stretch="Fill"/>
-                        <TextBlock Text="{Binding Title}" Style="{DynamicResource txblkDark}"/>
+                        <TextBlock Text="{Binding Title}"/>
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
             <TreeView.ContextMenu>
-                <ContextMenu Style="{DynamicResource cmenuDark}">
+                <ContextMenu>
                     <MenuItem Name="menuAddGroup" Header="Add favourite group" Click="Menu_AddFavGroup"/>
                     <MenuItem Name="menuDelFav" Header="Delete favourite group" Click="Menu_DelFav"/>
-                    <Separator Style="{DynamicResource sepDark}"/>
+                    <Separator/>
                     <MenuItem Name="menuAddTo" Header="Add to favourite"/>
                 </ContextMenu>
             </TreeView.ContextMenu>

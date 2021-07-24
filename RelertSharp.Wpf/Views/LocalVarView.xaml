@@ -10,9 +10,9 @@
         <ViewModel:LocalVarVm/>
     </UserControl.DataContext>
     <Grid>
-        <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
-        <TextBox Style="{DynamicResource txbDark}" Margin="10,33,92,0" VerticalAlignment="Top" Text="{Binding Name}"/>
-        <CheckBox Content="Is Enabled" HorizontalAlignment="Right" Margin="0,36,10,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" IsChecked="{Binding IsEnabled}"/>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox Margin="10,33,92,0" VerticalAlignment="Top" Text="{Binding Name}"/>
+        <CheckBox Content="Is Enabled" HorizontalAlignment="Right" Margin="0,36,10,0" VerticalAlignment="Top" IsChecked="{Binding IsEnabled}"/>
         <ListBox x:Name="lbxMain" Margin="10,61,10,10" Style="{DynamicResource lbxDark}" SelectionChanged="SelectedItemChanged" PreviewMouseRightButtonDown="PreviewRightDown" MouseMove="DragMouseMove" MouseLeave="DragMouseLeave">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
@@ -21,11 +21,11 @@
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:LocalVarVm}">
-                    <TextBlock Text="{Binding Header}" Style="{DynamicResource txblkDark}" PreviewMouseLeftButtonDown="DragMouseDown" MouseUp="DragMouseUp"/>
+                    <TextBlock Text="{Binding Header}" PreviewMouseLeftButtonDown="DragMouseDown" MouseUp="DragMouseUp"/>
                 </HierarchicalDataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.ContextMenu>
-                <ContextMenu Style="{DynamicResource cmenuDark}">
+                <ContextMenu>
                     <MenuItem Header="Add Variable" Click="Menu_Add"/>
                     <MenuItem Header="Remove Variable" Name="menuRemove" Click="Menu_Remove"/>
                 </ContextMenu>

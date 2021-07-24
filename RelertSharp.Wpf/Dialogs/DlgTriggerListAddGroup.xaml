@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="Relert Sharp" Background="{DynamicResource dimBack}" Height="123.2" Width="241.6" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterOwner">
     <Grid>
-        <CheckBox x:Name="ckbRoot" Content="Add to root" HorizontalAlignment="Left" Height="18" Margin="129,15,0,0" VerticalAlignment="Top" Width="92" Style="{DynamicResource ckbDark}"/>
-        <Label Content="Group Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
-        <TextBox x:Name="txbName" HorizontalAlignment="Left" Height="23" Margin="10,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" Style="{DynamicResource txbDark}"/>
-        <Button x:Name="btnOk" Content="Accept" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource btnDark}" Click="btnOk_Click"/>
-        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="146,61,0,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource btnDark}" Click="btnCancel_Click"/>
+        <CheckBox x:Name="ckbRoot" Content="Add to root" HorizontalAlignment="Left" Height="18" Margin="129,15,0,0" VerticalAlignment="Top" Width="92"/>
+        <Label Content="Group Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txbName" HorizontalAlignment="Left" Height="23" Margin="10,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="211"/>
+        <Button x:Name="btnOk" Content="Accept" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top" Width="75" Click="btnOk_Click"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="146,61,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
 
     </Grid>
 </Window>

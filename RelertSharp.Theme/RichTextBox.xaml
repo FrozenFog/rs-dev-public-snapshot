@@ -62,7 +62,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    <Style x:Key="rtxbDark" TargetType="{x:Type RichTextBox}">
+    <Style x:Key="{x:Type RichTextBox}" TargetType="{x:Type RichTextBox}">
         <Style.Resources>
             <Style x:Key="{x:Type FlowDocument}" TargetType="{x:Type FlowDocument}">
                 <Setter Property="OverridesDefaultStyle" Value="true"/>

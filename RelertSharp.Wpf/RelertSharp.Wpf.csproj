@@ -93,9 +93,11 @@
     <Compile Include="Dialogs\DlgTriggerListAddGroup.xaml.cs">
       <DependentUpon>DlgTriggerListAddGroup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindow\Components.cs" />
     <Compile Include="MainWindow\Menu.cs" />
-    <Compile Include="MainWindow\NavigationHub.cs" />
-    <Compile Include="MainWindow\UndoRedoHub.cs" />
+    <Compile Include="MainWindow\Hubs\NavigationHub.cs" />
+    <Compile Include="MainWindow\Hubs\SearchHub.cs" />
+    <Compile Include="MainWindow\Hubs\UndoRedoHub.cs" />
     <Compile Include="MapEngine\Helper\MouseState.cs" />
     <Compile Include="MapEngine\Helper\PaintBrush.cs" />
     <Compile Include="MapEngine\Helper\Selector.cs" />
@@ -116,6 +118,7 @@
     <Compile Include="ViewModel\Base\BaseTreeVm.cs" />
     <Compile Include="ViewModel\Etc\SearchConditionVm.cs" />
     <Compile Include="ViewModel\Etc\SearchResultVm.cs" />
+    <Compile Include="ViewModel\Etc\SelectedInspectorVm.cs" />
     <Compile Include="ViewModel\Global\GlobalCountryVm.cs" />
     <Compile Include="ViewModel\Global\GlobalHouseVm.cs" />
     <Compile Include="ViewModel\Global\GlobalTagVm.cs" />
@@ -162,6 +165,9 @@
     </Compile>
     <Compile Include="Views\ScriptView.xaml.cs">
       <DependentUpon>ScriptView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SelectedItemView.xaml.cs">
+      <DependentUpon>SelectedItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TaskforceListView.xaml.cs">
       <DependentUpon>TaskforceListView.xaml</DependentUpon>
@@ -273,6 +279,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ScriptView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SelectedItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

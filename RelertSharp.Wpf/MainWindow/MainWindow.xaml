@@ -22,7 +22,7 @@
                 <MenuItem Header="Open Map" Click="MenuOpenMap"/>
                 <MenuItem Header="Save Map"/>
                 <MenuItem Header="Save As..."/>
-                <Separator Style="{DynamicResource sepDark}"/>
+                <Separator/>
                 <MenuItem Header="Check Map"/>
                 <MenuItem Header="Exit"/>
             </MenuItem>
@@ -30,9 +30,9 @@
                 <MenuItem Header="Switch To Framework" Click="MenuSwitchFramework" IsCheckable="True"/>
                 <MenuItem Header="Switch To Flat" Click="MenuSwitchFlat" IsCheckable="True"/>
                 <MenuItem Header="Switch To Isometric Selecting" Click="MenuIsoSelect" IsCheckable="True"/>
-                <Separator Style="{DynamicResource sepDark}"/>
+                <Separator/>
                 <MenuItem Header="Save Map Render Picture" Click="MenuSaveShot"/>
-                <Separator Style="{DynamicResource sepDark}"/>
+                <Separator/>
                 <MenuItem Header="Clear Map"/>
             </MenuItem>
             <MenuItem Header="Views">
@@ -48,7 +48,7 @@
                     <MenuItem Header="Script View" Click="MenuShowScript"/>
                     <MenuItem Header="Script List" Click="MenuShowScriptList"/>
                     <MenuItem Header="Houses" Click="MenuShowHouses"/>
-                    <Separator Style="{DynamicResource sepDark}"/>
+                    <Separator/>
                     <MenuItem Header="Ai-Trigger View" Click="MenuShowAiTrigger"/>
                     <MenuItem Header="Ai-Trigger List" Click="MenuShowAiTriggerList"/>
                     <MenuItem Header="Local Variables" Click="MenuShowLocalVar"/>
@@ -56,13 +56,13 @@
                 <MenuItem Header="Map and Objects">
                     <MenuItem Header="Map" Click="MenuShowMapPanel"/>
                     <MenuItem Header="Minimap" Click="MenuShowMinimap"/>
-                    <Separator Style="{DynamicResource sepDark}"/>
+                    <Separator/>
                     <MenuItem Header="Object Brush" Click="MenuShowObjectBrush"/>
                     <MenuItem Header="Tile Brush" Click="MenuShowTileBrush"/>
                     <MenuItem Header="Format Painter" Click="MenuShowFmtBrush"/>
-                    <Separator Style="{DynamicResource sepDark}"/>
+                    <Separator/>
                     <MenuItem Header="Layer Control" Click="MenuShowLayerControl"/>
-                    <Separator Style="{DynamicResource sepDark}"/>
+                    <Separator/>
                     <MenuItem Header="Global Lightning" Click="MenuShowLightning"/>
                     <MenuItem Header="Light Sources" Click="MenuShowLightSource"/>
                 </MenuItem>
@@ -74,7 +74,7 @@
             <MenuItem Header="Layout">
                 <MenuItem Header="Load Layout" Click="MenuLoadLayout"/>
                 <MenuItem Header="Save Layout" Click="MenuSaveLayout"/>
-                <Separator Style="{DynamicResource sepDark}"/>
+                <Separator/>
                 <MenuItem Header="Default Layout" Click="MenuDefaultLayout"/>
             </MenuItem>
             <MenuItem Header="Debug">

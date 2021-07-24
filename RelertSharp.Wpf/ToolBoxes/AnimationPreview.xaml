@@ -14,19 +14,19 @@
             <RowDefinition Height="150"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button x:Name="btnPlay" Content="▶" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Width="23" Height="23" Style="{DynamicResource btnDark}" Click="btnPlay_Click"/>
+        <Button x:Name="btnPlay" Content="▶" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Width="23" Height="23" Click="btnPlay_Click"/>
         <Slider x:Name="sldProgress" Margin="38,117,10.6,0" VerticalAlignment="Top" Height="23" Grid.ColumnSpan="2" ValueChanged="PlayerProgressChanged" SmallChange="1"/>
-        <Label Content="Frame Rate" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Width="65"/>
-        <Label Content="Background" HorizontalAlignment="Left" Margin="9.8,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="1" Width="69"/>
-        <TextBox x:Name="txbFrameRate" Height="23" Margin="10,33,10.2,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top" Style="{DynamicResource txbDark}"/>
-        <Button x:Name="btnBgc" Content="" Grid.Column="1" Margin="9.8,33,10.6,0" VerticalAlignment="Top" Height="23" Style="{DynamicResource btnDark}" Background="{DynamicResource dimBack}" Click="btnBgc_Click"/>
-        <Label Content="Palette Type" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Width="71"/>
-        <ComboBox x:Name="cbbPalType" Margin="10,89,10.4,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" SelectionChanged="cbbPalType_SelectionChanged"/>
-        <Label Content="House Color" HorizontalAlignment="Left" Margin="9.6,61,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="1"/>
-        <Button x:Name="btnHouseColor" Content="" Grid.Column="1" Margin="9.6,89,11,0" VerticalAlignment="Top" Height="23" Style="{DynamicResource btnDark}" Background="Red" Click="btnBgc_Click"/>
+        <Label Content="Frame Rate" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="65"/>
+        <Label Content="Background" HorizontalAlignment="Left" Margin="9.8,10,0,0" VerticalAlignment="Top" Grid.Column="1" Width="69"/>
+        <TextBox x:Name="txbFrameRate" Height="23" Margin="10,33,10.2,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top"/>
+        <Button x:Name="btnBgc" Content="" Grid.Column="1" Margin="9.8,33,10.6,0" VerticalAlignment="Top" Height="23" Background="{DynamicResource dimBack}" Click="btnBgc_Click"/>
+        <Label Content="Palette Type" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top" Width="71"/>
+        <ComboBox x:Name="cbbPalType" Margin="10,89,10.4,0" VerticalAlignment="Top" SelectionChanged="cbbPalType_SelectionChanged"/>
+        <Label Content="House Color" HorizontalAlignment="Left" Margin="9.6,61,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Button x:Name="btnHouseColor" Content="" Grid.Column="1" Margin="9.6,89,11,0" VerticalAlignment="Top" Height="23" Background="Red" Click="btnBgc_Click"/>
         <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" MinHeight="120">
             <Grid>
-                <Label x:Name="lblFrameInfo" Content="info" Style="{DynamicResource lblDark}" VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="5" Margin="10,0,0,0"/>
+                <Label x:Name="lblFrameInfo" Content="info" VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="5" Margin="10,0,0,0"/>
                 <Canvas x:Name="canvas" Panel.ZIndex="2"/>
             </Grid>
         </ScrollViewer>

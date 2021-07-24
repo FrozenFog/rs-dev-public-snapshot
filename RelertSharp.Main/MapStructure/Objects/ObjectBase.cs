@@ -225,4 +225,17 @@ namespace RelertSharp.MapStructure.Objects
 
         #endregion
     }
+
+    public sealed class VirtualMapObject : ObjectItemBase, IMapObject
+    {
+        public IMapObject ConstructFromParameter(string[] commands)
+        {
+            return new VirtualMapObject();
+        }
+
+        public string[] ExtractParameter()
+        {
+            return new string[0];
+        }
+    }
 }

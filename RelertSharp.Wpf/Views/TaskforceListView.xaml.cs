@@ -208,7 +208,7 @@ namespace RelertSharp.Wpf.Views
             {
                 dragTaskforce.BeginDrag(e.GetPosition(lbxMain));
                 dragTaskforce.SetReferanceVm(lbxMain.GetItemAtMouse<TaskforceListVm, TextBlock>(e));
-                dragTaskforce.SetDragItem(dragTaskforce.ReferanceVm.Data);
+                dragTaskforce.SetDragItem(dragTaskforce.ReferanceVm?.Data);
                 e.Handled = true;
             }
         }

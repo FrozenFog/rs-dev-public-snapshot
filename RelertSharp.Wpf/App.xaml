@@ -17,8 +17,10 @@
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/GridSplitter.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/ListView.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/RadioButton.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/TabControl.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/CheckBox.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/StatusBar.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/ScrollBar.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/Menu.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/ContextMenu.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/TreeView.xaml"/>

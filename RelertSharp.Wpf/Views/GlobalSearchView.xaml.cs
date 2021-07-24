@@ -40,8 +40,19 @@ namespace RelertSharp.Wpf.Views
             dragCond = new DragDropHelper<SearchConditionVm.SearchConditionModel, SearchConditionVm>(trvConditions);
             lvResult.ItemsSource = ResultVm;
             trvConditions.Items.Add(Root);
+            SearchHub.SearchResultPushed += AddRequestedResult;
+            SearchHub.SearchClearRequested += RemoveResultHandler;
         }
 
+        private void RemoveResultHandler(object sender, EventArgs e)
+        {
+            ResultVm.Clear();
+        }
+
+        private void AddRequestedResult(IEnumerable<object> objects)
+        {
+            objects.Foreach(x => ResultVm.Add(new SearchResultVm(x)));
+        }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
@@ -256,7 +267,7 @@ namespace RelertSharp.Wpf.Views
             {
                 dragCond.BeginDrag(e.GetPosition(trvConditions));
                 dragCond.SetReferanceVm(trvConditions.GetItemAtMouse<SearchConditionVm, StackPanel>(e));
-                dragCond.SetDragItem(dragCond.ReferanceVm.Data);
+                dragCond.SetDragItem(dragCond.ReferanceVm?.Data);
                 e.Handled = true;
             }
         }
@@ -280,10 +291,11 @@ namespace RelertSharp.Wpf.Views
             {
                 if (target == null || target.Equals(Root))
                 {
+                    if (target.Equals(vm)) return;
                     vm.RemoveFromAncestor();
                     Root.AddItem(vm);
                 }
-                else if (target.IsDescendantOf(vm)) return;
+                else if (target.IsDescendantOf(vm) || target.Equals(vm)) return;
                 else if (target.IsTree)
                 {
                     vm.RemoveFromAncestor();

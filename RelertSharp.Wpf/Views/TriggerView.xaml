@@ -25,12 +25,12 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="1.5*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Trigger Id" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
-        <TextBox x:Name="txbId" Height="23" Margin="10,38,10,0" TextWrapping="Wrap" Text="{Binding Id}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" IsEnabled="False"/>
-        <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="1"/>
-        <TextBox x:Name="txbName" Height="23" Margin="10,38,10,0" TextWrapping="Wrap" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Style="{DynamicResource txbDark}" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <Label Content="Asso. Trigger" HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
-        <ComboBox x:Name="cbbAsso" Margin="10,89,10,0" VerticalAlignment="Top" Style="{DynamicResource cbbDark}" Grid.ColumnSpan="3" IsEditable="True" SelectedValue="{Binding AssoTriggerItem}">
+        <Label Content="Trigger Id" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txbId" Height="23" Margin="10,38,10,0" TextWrapping="Wrap" Text="{Binding Id}" VerticalAlignment="Top" IsEnabled="False"/>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <TextBox x:Name="txbName" Height="23" Margin="10,38,10,0" TextWrapping="Wrap" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Label Content="Asso. Trigger" HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbbAsso" Margin="10,89,10,0" VerticalAlignment="Top" Grid.ColumnSpan="3" IsEditable="True" SelectedValue="{Binding AssoTriggerItem}">
             <ComboBox.ItemsSource>
                 <CompositeCollection>
                     <common:ComboItem Id="&lt;none&gt;"/>
@@ -45,13 +45,13 @@
                 </CompositeCollection>
             </ListBox.ItemsSource>
         </ListBox>
-        <Label Content="Owner house" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="3"/>
-        <CheckBox x:Name="ckbDisable" Content="Disabled" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" Height="14" IsChecked="{Binding IsDisabled}"/>
-        <CheckBox x:Name="ckbEasy" Content="Easy" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" Height="14" IsChecked="{Binding Easy}"/>
-        <CheckBox x:Name="ckbNormal" Content="Normal" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" Grid.Column="1" Height="14" IsChecked="{Binding Normal}"/>
-        <CheckBox x:Name="ckbHard" Content="Hard" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Style="{DynamicResource ckbDark}" Grid.Column="2" Height="14" IsChecked="{Binding Hard}"/>
-        <RadioButton x:Name="rdbRep0" Content="One time OR" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Style="{DynamicResource rdbDark}" Height="14" IsChecked="{Binding Rep0Checked}"/>
-        <RadioButton x:Name="rdbRep1" Content="One time AND" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Style="{DynamicResource rdbDark}" Grid.Column="1" Height="14" IsChecked="{Binding Rep1Checked}"/>
-        <RadioButton x:Name="rdbRep2" Content="Repeating OR" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Style="{DynamicResource rdbDark}" Grid.Column="2" Height="14" IsChecked="{Binding Rep2Checked}"/>
+        <Label Content="Owner house" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="3"/>
+        <CheckBox x:Name="ckbDisable" Content="Disabled" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Height="14" IsChecked="{Binding IsDisabled}"/>
+        <CheckBox x:Name="ckbEasy" Content="Easy" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Height="14" IsChecked="{Binding Easy}"/>
+        <CheckBox x:Name="ckbNormal" Content="Normal" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Grid.Column="1" Height="14" IsChecked="{Binding Normal}"/>
+        <CheckBox x:Name="ckbHard" Content="Hard" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Grid.Column="2" Height="14" IsChecked="{Binding Hard}"/>
+        <RadioButton x:Name="rdbRep0" Content="One time OR" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Height="14" IsChecked="{Binding Rep0Checked}"/>
+        <RadioButton x:Name="rdbRep1" Content="One time AND" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Grid.Column="1" Height="14" IsChecked="{Binding Rep1Checked}"/>
+        <RadioButton x:Name="rdbRep2" Content="Repeating OR" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Grid.Column="2" Height="14" IsChecked="{Binding Rep2Checked}"/>
     </Grid>
 </UserControl>

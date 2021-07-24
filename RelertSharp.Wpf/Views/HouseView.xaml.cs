@@ -89,7 +89,7 @@ namespace RelertSharp.Wpf.Views
             {
                 dragAllies.BeginDrag(e.GetPosition(lbxAllies));
                 dragAllies.SetReferanceVm(GetItemAtMouse(lbxHouse, e));
-                dragAllies.SetDragItem(dragAllies.ReferanceVm.Data);
+                dragAllies.SetDragItem(dragAllies.ReferanceVm?.Data);
                 e.Handled = true;
             }
         }

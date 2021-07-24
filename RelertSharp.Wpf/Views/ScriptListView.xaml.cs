@@ -212,7 +212,7 @@ namespace RelertSharp.Wpf.Views
             {
                 dragScript.BeginDrag(e.GetPosition(lbxMain));
                 dragScript.SetReferanceVm(lbxMain.GetItemAtMouse<ScriptListVm, TextBlock>(e));
-                dragScript.SetDragItem(dragScript.ReferanceVm.Data);
+                dragScript.SetDragItem(dragScript.ReferanceVm?.Data);
                 e.Handled = true;
             }
         }

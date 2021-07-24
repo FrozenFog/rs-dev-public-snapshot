@@ -45,6 +45,26 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         private static List<I2dLocateable> orgPos = new List<I2dLocateable>();
         private static I2dLocateable posBeginMove;
 
+        static Selector()
+        {
+            SearchHub.SelectionPushed += PushSelectionHandler;
+            SearchHub.SelectionClearRequested += ClearSelectionHandler;
+        }
+
+        private static void ClearSelectionHandler(object sender, EventArgs e)
+        {
+            UnselectAll();
+        }
+
+        private static void PushSelectionHandler(IEnumerable<object> objects)
+        {
+            foreach (IMapObject obj in objects)
+            {
+                obj.Select();
+                selectedObjects.Add(obj);
+            }
+        }
+
         #region Api
         #region Box Object Selecting
         public static void SetIsometricSelecting(bool enable)

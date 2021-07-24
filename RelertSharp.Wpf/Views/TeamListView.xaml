@@ -19,7 +19,7 @@
             <ListBox.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:TeamListVm}">
                     <StackPanel Orientation="Horizontal" PreviewMouseLeftButtonDown="DragMouseDown" MouseUp="DragMouseUp">
-                        <TextBlock Text="{Binding Title}" Style="{DynamicResource txblkDark}"/>
+                        <TextBlock Text="{Binding Title}"/>
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </ListBox.ItemTemplate>

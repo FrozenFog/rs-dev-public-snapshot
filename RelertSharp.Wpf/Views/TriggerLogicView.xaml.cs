@@ -288,7 +288,6 @@ namespace RelertSharp.Wpf.Views
                         VerticalAlignment = VerticalAlignment.Top,
                         HorizontalAlignment = HorizontalAlignment.Left
                     };
-                    ckb.SetStyle(this, "ckbDark");
                     yOffset = 6;
                     ckb.Click += CkbUpdate;
                     elem = ckb;
@@ -300,7 +299,6 @@ namespace RelertSharp.Wpf.Views
                         VerticalAlignment = VerticalAlignment.Top,
                         HorizontalAlignment = HorizontalAlignment.Stretch
                     };
-                    txb.SetStyle(this, "txbDark");
                     txb.TextChanged += TxbUpdate;
                     elem = txb;
                     break;
@@ -315,7 +313,6 @@ namespace RelertSharp.Wpf.Views
                             IsEditable = true
                         };
                         cbb.ItemsPanel = FindResource("VirtualPanel") as ItemsPanelTemplate;
-                        cbb.SetStyle(this, "cbbDark");
                         IEnumerable<IIndexableItem> sources = Config.GetCombo(src.ValueType);
                         cbb.ItemsSource = sources;
                         cbb.SelectionChanged += CbbUpdate;

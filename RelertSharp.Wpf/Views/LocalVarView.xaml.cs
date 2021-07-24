@@ -111,7 +111,7 @@ namespace RelertSharp.Wpf.Views
             {
                 dragDrop.BeginDrag(e.GetPosition(lbxMain));
                 dragDrop.SetReferanceVm(lbxMain.GetItemAtMouse<LocalVarVm, TextBlock>(e));
-                dragDrop.SetDragItem(dragDrop.ReferanceVm.Data);
+                dragDrop.SetDragItem(dragDrop.ReferanceVm?.Data);
                 e.Handled = true;
             }
         }

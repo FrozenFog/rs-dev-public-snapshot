@@ -18,17 +18,17 @@
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:TaskforceListVm}">
-                    <TextBlock Text="{Binding Title}" Style="{DynamicResource txblkDark}" PreviewMouseLeftButtonDown="DragMouseDown" MouseUp="DragMouseUp"/>
+                    <TextBlock Text="{Binding Title}" PreviewMouseLeftButtonDown="DragMouseDown" MouseUp="DragMouseUp"/>
                 </HierarchicalDataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.ContextMenu>
-                <ContextMenu Style="{DynamicResource cmenuDark}">
+                <ContextMenu>
                     <MenuItem Header="Add Taskforce" Click="Menu_Add"/>
                     <MenuItem Name="menuCopy" Header="Copy Taskforce" Click="Menu_Copy"/>
                     <MenuItem Name="menuDelete" Header="Delete Taskforce" Click="Menu_Delete"/>
-                    <Separator Style="{DynamicResource sepDark}"/>
+                    <Separator/>
                     <MenuItem Header="Show Taskforce Id" IsChecked="True" IsCheckable="True" Unchecked="IdUnchecked" Checked="IdChecked"/>
-                    <Separator Style="{DynamicResource sepDark}"/>
+                    <Separator/>
                     <MenuItem Header="Ascending Sort" Click="AscendingSort"/>
                     <MenuItem Header="Descending Sort" Click="DescendingSort"/>
                 </ContextMenu>

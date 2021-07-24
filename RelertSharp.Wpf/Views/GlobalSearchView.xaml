@@ -7,14 +7,6 @@
              xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel"
              xmlns:cmds="clr-namespace:RelertSharp.Wpf.Common.Commands"
              mc:Ignorable="d">
-    <UserControl.Resources>
-        <DataTemplate x:Key="TempHeader">
-            <TextBlock HorizontalAlignment="Left" Text="{Binding}"/>
-        </DataTemplate>
-        <Style x:Key="StyleHeader" TargetType="GridViewColumnHeader">
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-        </Style>
-    </UserControl.Resources>
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
@@ -24,20 +16,20 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Search Target" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
+        <Label Content="Search Target" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <WrapPanel Name="wrapTargets" Margin="10,33,9.6,10.2"/>
-        <Label Content="Conditions" HorizontalAlignment="Left" Margin="10,9.8,0,0" Grid.Row="1" VerticalAlignment="Top" Style="{DynamicResource lblDark}"/>
-        <Label Content="Search Result" HorizontalAlignment="Left" Margin="10.4,10,0,0" VerticalAlignment="Top" Style="{DynamicResource lblDark}" Grid.Column="1"/>
+        <Label Content="Conditions" HorizontalAlignment="Left" Margin="10,9.8,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <Label Content="Search Result" HorizontalAlignment="Left" Margin="10.4,10,0,0" VerticalAlignment="Top" Grid.Column="1"/>
         <ListView x:Name="lvResult" Grid.Column="1" Margin="10.4,33,10.4,9.6" Grid.RowSpan="2" Style="{DynamicResource lbxDark}" SelectionMode="Multiple" 
                   PreviewMouseRightButtonDown="ResPrevRightDown" PreviewMouseLeftButtonDown="ResPrevLeftDown"
                   cmds:ListViewColumnSortCommand.AutoSort="True">
             <ListView.ContextMenu>
-                <ContextMenu Style="{DynamicResource cmenuDark}">
+                <ContextMenu>
                     <MenuItem Header="Select all" Click="Menu_ResSelectAll"/>
                     <MenuItem Header="Unselect all" Click="Menu_ResUnselectAll"/>
                     <MenuItem Name="menuDiscardRes" Header="Discard item" Click="Menu_ResDiscard"/>
                     <MenuItem Header="Discard selected item" Click="Menu_ResDiscardSel"/>
-                    <Separator Style="{DynamicResource sepDark}"/>
+                    <Separator/>
                     <MenuItem Header="Generate report" Click="Menu_ResGenReport"/>
                 </ContextMenu>
             </ListView.ContextMenu>
@@ -53,6 +45,7 @@
                         <GridViewColumn Header="Position.Z" DisplayMemberBinding="{Binding PosZ}" cmds:ListViewColumnSortCommand.PropertyName="PosZ"/>
                         <GridViewColumn Header="TagId" DisplayMemberBinding="{Binding TagId}" cmds:ListViewColumnSortCommand.PropertyName="TagId"/>
                         <GridViewColumn Header="Health point" DisplayMemberBinding="{Binding Health}" cmds:ListViewColumnSortCommand.PropertyName="Health"/>
+                        <GridViewColumn Header="Facing" DisplayMemberBinding="{Binding Facing}" cmds:ListViewColumnSortCommand.PropertyName="Facing"/>
                     </GridView.Columns>
                 </GridView>
             </ListView.View>
@@ -71,34 +64,34 @@
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:SearchConditionVm}" ItemsSource="{Binding Items}">
                     <StackPanel Orientation="Horizontal" Height="43" HorizontalAlignment="Stretch">
                         <StackPanel Orientation="Vertical" Margin="1">
-                            <TextBlock Style="{DynamicResource txblkDark}" Text="Logic Operator" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>
-                            <ComboBox Style="{DynamicResource cbbDark}" Width="150" ItemsSource="{Binding LogicOperators}" SelectedValue="{Binding LogicOper}" IsEnabled="{Binding IsLogicOperEnable}"/>
+                            <TextBlock Text="Logic Operator" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>
+                            <ComboBox Width="150" ItemsSource="{Binding LogicOperators}" SelectedValue="{Binding LogicOper}" IsEnabled="{Binding IsLogicOperEnable}"/>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Margin="1" Visibility="{Binding VisIsTree}">
-                            <TextBlock Style="{DynamicResource txblkDark}" Text="Condition Type" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>
-                            <ComboBox Style="{DynamicResource cbbDark}" Width="200" ItemsSource="{Binding Conditions}" SelectedValue="{Binding Type}"/>
+                            <TextBlock Text="Condition Type" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>
+                            <ComboBox Width="200" ItemsSource="{Binding Conditions}" SelectedValue="{Binding Type}"/>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Margin="1" Visibility="{Binding VisIsTree}">
-                            <TextBlock Style="{DynamicResource txblkDark}" Text="Operator" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>
-                            <ComboBox Style="{DynamicResource cbbDark}" Width="120" ItemsSource="{Binding ValueOperators}" SelectedValue="{Binding ValueOper}"/>
+                            <TextBlock Text="Operator" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>
+                            <ComboBox Width="120" ItemsSource="{Binding ValueOperators}" SelectedValue="{Binding ValueOper}"/>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Margin="1" Visibility="{Binding VisIsTree}">
-                            <TextBlock Style="{DynamicResource txblkDark}" Text="Value" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>
-                            <TextBox Style="{DynamicResource txbDark}" Width="100" Text="{Binding StringValue}"/>
+                            <TextBlock Text="Value" PreviewMouseDown="CondDragMouseDown" MouseUp="CondDragMouseUp"/>
+                            <TextBox Width="100" Text="{Binding StringValue}"/>
                         </StackPanel>
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
             <TreeView.ContextMenu>
-                <ContextMenu Style="{DynamicResource cmenuDark}">
+                <ContextMenu>
                     <MenuItem Header="Add condition" Click="Menu_AddCond"/>
                     <MenuItem Header="Add condition group" Click="Menu_AddGroup"/>
                     <MenuItem Name="menuDel" Header="Remove condition" Click="Menu_RemoveCond"/>
                 </ContextMenu>
             </TreeView.ContextMenu>
         </TreeView>
-        <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Right" Height="23" Margin="0,10,9.6,0" Grid.Row="1" VerticalAlignment="Top" Width="95" Style="{DynamicResource btnDark}" Click="btnSearch_Click"/>
-        <Button x:Name="btnSearchInResult" Content="Search in result" HorizontalAlignment="Right" Height="23" Margin="0,10,109.6,0" Grid.Row="1" VerticalAlignment="Top" Width="95" Style="{DynamicResource btnDark}" Click="btnSearchIn_Click"/>
+        <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Right" Height="23" Margin="0,10,9.6,0" Grid.Row="1" VerticalAlignment="Top" Width="95" Click="btnSearch_Click"/>
+        <Button x:Name="btnSearchInResult" Content="Search in result" HorizontalAlignment="Right" Height="23" Margin="0,10,109.6,0" Grid.Row="1" VerticalAlignment="Top" Width="95" Click="btnSearchIn_Click"/>
 
     </Grid>
 </UserControl>

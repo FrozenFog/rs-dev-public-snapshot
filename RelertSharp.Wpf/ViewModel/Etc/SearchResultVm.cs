@@ -103,6 +103,14 @@ namespace RelertSharp.Wpf.ViewModel
                 return NAN_ITEM;
             }
         }
+        public string Facing
+        {
+            get
+            {
+                if (data is ICombatObject com) return com.Rotation.ToString();
+                return NAN_ITEM;
+            }
+        }
         #endregion
         #endregion
     }

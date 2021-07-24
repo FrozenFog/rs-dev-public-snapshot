@@ -75,7 +75,6 @@ namespace RelertSharp.Wpf.Views
             {
                 Content = cls.Name
             };
-            head.SetStyle(this, "btnDark");
             head.HorizontalContentAlignment = HorizontalAlignment.Left;
             Grid grd = new Grid();
             ColumnDefinition colLabel = new ColumnDefinition()
@@ -99,7 +98,6 @@ namespace RelertSharp.Wpf.Views
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Stretch
             };
-            split.SetStyle(this, "gsplitDark");
             split.SetColumn(1);
             grd.Children.Add(split);
             double y = 10d;
@@ -111,7 +109,6 @@ namespace RelertSharp.Wpf.Views
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Top
                 };
-                lbl.SetStyle(this, "lblDark");
                 lbl.Margin = new Thickness(0, y, 10, 0);
                 lbl.SetColumn(0);
                 FrameworkElement control = AcquireControlFromAttribute(item, out double yOffset);
@@ -179,7 +176,6 @@ namespace RelertSharp.Wpf.Views
                         VerticalAlignment = VerticalAlignment.Top,
                         HorizontalAlignment = HorizontalAlignment.Left
                     };
-                    ckb.SetStyle(this, "ckbDark");
                     yOffset = 6;
                     ckb.Click += CkbUpdate;
                     r = ckb;
@@ -191,7 +187,6 @@ namespace RelertSharp.Wpf.Views
                         VerticalAlignment = VerticalAlignment.Top,
                         HorizontalAlignment = HorizontalAlignment.Stretch
                     };
-                    txb.SetStyle(this, "txbDark");
                     txb.TextChanged += TxbUpdate;
                     r = txb;
                     break;
@@ -201,7 +196,6 @@ namespace RelertSharp.Wpf.Views
                         VerticalAlignment = VerticalAlignment.Top,
                         HorizontalAlignment = HorizontalAlignment.Stretch
                     };
-                    cbb.SetStyle(this, "cbbDark");
                     IEnumerable<IIndexableItem> items = ModConfig.GetCombo(src.ValueType);
                     cbb.ItemsSource = items;
                     cbb.SelectionChanged += CbbUpdate;
