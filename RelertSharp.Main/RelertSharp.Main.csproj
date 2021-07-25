@@ -201,6 +201,7 @@
     <Compile Include="IniSystem\SoundRules.cs" />
     <Compile Include="IniSystem\TechnoPair.cs" />
     <Compile Include="Common\LocalConfig.cs" />
+    <Compile Include="MapStructure\BaseVisibleObject.cs" />
     <Compile Include="MapStructure\ISceneObject.cs" />
     <Compile Include="MapStructure\Logic\AITrigger.cs" />
     <Compile Include="MapStructure\Logic\Country.cs" />

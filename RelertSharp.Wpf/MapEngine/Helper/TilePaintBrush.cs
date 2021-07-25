@@ -54,10 +54,10 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             dest.AddRange(surroundLat);
             UndoRedoHub.PushCommand(dest, org);
             foreach (Tile t in body) MapApi.SetTile(t);
-            foreach (Tile t in under) t.RevealAllTileImg();
+            foreach (Tile t in under) t.Reveal();
 
             foreach (Tile t in surroundLat) MapApi.SetTile(t);
-            foreach (Tile t in surroundUnder) t.RevealAllTileImg();
+            foreach (Tile t in surroundUnder) t.Reveal();
             EngineApi.InvokeUnlock();
         }
         public static void LoadTileBrush(TileSetItemVm src)
@@ -65,9 +65,9 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             EngineApi.InvokeLock();
             tileSetOffset.Clear();
             foreach (Tile t in body) t.Dispose();
-            foreach (Tile t in under) t.RevealAllTileImg();
+            foreach (Tile t in under) t.Reveal();
             foreach (Tile t in surroundLat) t.Dispose();
-            foreach (Tile t in surroundUnder) t.RevealAllTileImg();
+            foreach (Tile t in surroundUnder) t.Reveal();
             body.Clear();
             under.Clear();
             surroundLat.Clear();
@@ -91,9 +91,9 @@ namespace RelertSharp.Wpf.MapEngine.Helper
 
             /// do job
             EngineApi.InvokeLock();
-            foreach (Tile t in under) t.RevealAllTileImg();
+            foreach (Tile t in under) t.Reveal();
             foreach (Tile t in surroundLat) t.Dispose();
-            foreach (Tile t in surroundUnder) t.RevealAllTileImg();
+            foreach (Tile t in surroundUnder) t.Reveal();
             under.Clear();
             surroundLat.Clear();
             surroundUnder.Clear();
@@ -106,7 +106,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 if (Tiles[tileDest] is Tile)
                 {
                     body[i].MoveTo(tileDest, isFlat);
-                    body[i].RevealAllTileImg();
+                    body[i].Reveal();
                     body[i].FlatToGround(isFlat);
                 }
                 else
@@ -171,9 +171,9 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             if (!isSuspended)
             {
                 foreach (Tile t in body) t.Hide();
-                foreach (Tile t in surroundUnder) t.RevealAllTileImg();
+                foreach (Tile t in surroundUnder) t.Reveal();
                 foreach (Tile t in surroundLat) t.Hide();
-                foreach (Tile t in under) t.RevealAllTileImg();
+                foreach (Tile t in under) t.Reveal();
                 isSuspended = true;
             }
         }
@@ -181,9 +181,9 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         {
             if (isSuspended)
             {
-                foreach (Tile t in body) t.RevealAllTileImg();
+                foreach (Tile t in body) t.Reveal();
                 foreach (Tile t in surroundUnder) t.Hide();
-                foreach (Tile t in surroundLat) t.RevealAllTileImg();
+                foreach (Tile t in surroundLat) t.Reveal();
                 foreach (Tile t in under) t.Hide();
                 isSuspended = false;
             }

@@ -157,7 +157,7 @@ namespace RelertSharp.Engine.MapObjects
         {
             SetColor(Extra, ColorVector);
         }
-        public void Hide()
+        public void PhaseOut()
         {
             if (!IsHidden)
             {
@@ -165,13 +165,23 @@ namespace RelertSharp.Engine.MapObjects
                 IsHidden = true;
             }
         }
-        public void Reveal()
+        public void UnPhase()
         {
             if (IsHidden)
             {
                 SetColorStrict(ColorVector);
                 IsHidden = false;
             }
+        }
+        public void Hide()
+        {
+            HideSelf();
+            HideExtra();
+        }
+        public void Reveal()
+        {
+            RevealSelf();
+            RevealExtra();
         }
         #endregion
 

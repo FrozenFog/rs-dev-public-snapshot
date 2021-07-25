@@ -4,7 +4,7 @@ using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.MapStructure.Points
 {
-    public class BaseNode : IndexableItem, IMapObject, IOwnableObject
+    public class BaseNode : BaseVisibleObject, IMapObject, IOwnableObject
     {
         public BaseNode(string _name, int _x, int _y, HouseItem parent)
         {
@@ -27,69 +27,9 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Public Methods - BaseNode
-        public void MoveTo(I3dLocateable pos, int subcell = -1)
-        {
-            X = pos.X;
-            Y = pos.Y;
-            SceneObject.MoveTo(pos);
-        }
-        public void ShiftBy(I3dLocateable delta)
-        {
-            X += delta.X;
-            Y += delta.Y;
-            SceneObject.ShiftBy(delta);
-        }
-
-        public void Select(bool force = false)
-        {
-            if (force || !IsSelected)
-            {
-                IsSelected = true;
-                SceneObject.ApplyTempColor(Vec4.BaseNodeSelector);
-            }
-        }
-
-        public void CancelSelection()
-        {
-            if (IsSelected)
-            {
-                IsSelected = false;
-                SceneObject.RemoveTempColor();
-            }
-        }
-        public void Dispose()
-        {
-            IsSelected = false;
-            IsHidden = false;
-            SceneObject.RemoveTempColor();
-            SceneObject?.Dispose();
-        }
-        public void Hide()
-        {
-            if (!IsHidden)
-            {
-                SceneObject.Hide();
-                IsHidden = true;
-            }
-        }
-        public void Reveal()
-        {
-            if (IsHidden)
-            {
-                SceneObject.Reveal();
-                IsHidden = false;
-            }
-        }
         public override string ToString()
         {
             return string.Format("{0} at {1}, {2}", RegName, X, Y);
-        }
-
-        public int GetHeight(Map source = null)
-        {
-            if (source != null) return source.GetHeightFromTile(this);
-            else if (GlobalVar.HasMap) return GlobalVar.GlobalMap.GetHeightFromTile(this);
-            else return Constant.MapStructure.INVALID_HEIGHT;
         }
 
         public void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
@@ -142,19 +82,16 @@ namespace RelertSharp.MapStructure.Points
         }
         public HouseItem Parent { get; private set; }
         public string SaveData { get { return string.Format("{0},{1},{2}", RegName, X, Y); } }
-        public bool IsHidden { get; private set; }
         public string RegName { get; set; }
         public string Owner
         {
             get { if (Parent != null) return Parent.Name; return string.Empty; }
             set { }
         }
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Coord { get { return Utils.Misc.CoordInt(this); } }
-        public bool IsSelected { get; private set; }
-        public MapObjectType ObjectType { get { return MapObjectType.BaseNode; } }
-        public ISceneObject SceneObject { get; set; }
+        public override int X { get; set; }
+        public override int Y { get; set; }
+        public override int Coord { get { return Utils.Misc.CoordInt(this); } }
+        public override MapObjectType ObjectType { get { return MapObjectType.BaseNode; } }
         #endregion
     }
 }

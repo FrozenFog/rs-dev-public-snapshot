@@ -142,8 +142,7 @@ namespace RelertSharp.MapStructure
             if (Map.TilesData[pos] is Tile t && !hiddenTiles.Contains(t))
             {
                 hiddenTiles.Add(t);
-                t.HideTileImg();
-                t.HideExtraImg();
+                t.Hide();
             }
         }
         public static void RevealTileAt(IEnumerable<I2dLocateable> poses)
@@ -154,7 +153,7 @@ namespace RelertSharp.MapStructure
         {
             if (hiddenTiles.Contains(pos))
             {
-                Map.TilesData[pos].RevealAllTileImg();
+                Map.TilesData[pos].Reveal();
                 hiddenTiles.Remove(pos);
             }
         }
@@ -164,7 +163,7 @@ namespace RelertSharp.MapStructure
             {
                 if (hiddenTiles.Contains(pos))
                 {
-                    Map.TilesData[pos].RevealAllTileImg();
+                    Map.TilesData[pos].Reveal();
                 }
             }
             hiddenTiles.Clear();

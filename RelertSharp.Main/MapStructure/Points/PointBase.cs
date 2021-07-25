@@ -60,7 +60,7 @@ namespace RelertSharp.MapStructure.Points
 
 
 
-    public class PointItemBase : IndexableItem, I2dLocateable
+    public class PointItemBase : BaseVisibleObject, I2dLocateable
     {
         public PointItemBase()
         {
@@ -80,70 +80,9 @@ namespace RelertSharp.MapStructure.Points
             X = pos.X;
             Y = pos.Y;
         }
-        public PointItemBase(PointItemBase src)
-        {
-            X = src.X;
-            Y = src.Y;
-            SceneObject = src.SceneObject;
-        }
 
 
         #region Public Methods - PointItemBase
-        public void MoveTo(I3dLocateable pos, int subcell = -1)
-        {
-            X = pos.X;
-            Y = pos.Y;
-            SceneObject.MoveTo(pos);
-        }
-        public void ShiftBy(I3dLocateable delta)
-        {
-            X += delta.X;
-            Y += delta.Y;
-            SceneObject.ShiftBy(delta);
-        }
-        public virtual void Select(bool force = false)
-        {
-            if (force || !IsSelected)
-            {
-                IsSelected = true;
-                SceneObject.ApplyTempColor(Vec4.Selector);
-            }
-        }
-        public virtual void CancelSelection()
-        {
-            if (IsSelected)
-            {
-                IsSelected = false;
-                SceneObject.RemoveTempColor();
-            }
-        }
-        public void Dispose()
-        {
-            IsSelected = false;
-            SceneObject.Dispose();
-        }
-        public void Hide()
-        {
-            if (!IsHidden)
-            {
-                SceneObject.Hide();
-                IsHidden = true;
-            }
-        }
-        public void Reveal()
-        {
-            if (IsHidden)
-            {
-                SceneObject.Reveal();
-                IsHidden = false;
-            }
-        }
-        public virtual int GetHeight(Map source = null)
-        {
-            if (source != null) return source.GetHeightFromTile(this);
-            else if (GlobalVar.HasMap) return GlobalVar.GlobalMap.GetHeightFromTile(this);
-            return Constant.MapStructure.INVALID_HEIGHT;
-        }
         public virtual void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
         {
             if (applyPosAndName)
@@ -156,7 +95,6 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Public Calls - PointItemBase
-        public bool IsHidden { get; protected set; }
         public string CoordString
         {
             get
@@ -164,9 +102,9 @@ namespace RelertSharp.MapStructure.Points
                 return Utils.Misc.CoordString(Y, X);
             }
         }
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Coord
+        public override int X { get; set; }
+        public override int Y { get; set; }
+        public override int Coord
         {
             get { return CoordInt(X, Y); }
             set
@@ -175,10 +113,7 @@ namespace RelertSharp.MapStructure.Points
                 Y = CoordIntY(value);
             }
         }
-        public bool IsSelected { get; private set; }
         public virtual string RegName { get { return string.Empty; } set { } }
-        public virtual MapObjectType ObjectType { get; protected set; } = MapObjectType.Undefined;
-        public virtual ISceneObject SceneObject { get; set; }
         #endregion
     }
 }

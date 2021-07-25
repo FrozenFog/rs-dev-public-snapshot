@@ -344,7 +344,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class Tile : I3dLocateable
+    public class Tile : BaseVisibleObject, I3dLocateable
     {
         private int tileIndex;
         private List<IMapObject> objectsOnTile = new List<IMapObject>();
@@ -382,7 +382,7 @@ namespace RelertSharp.MapStructure
             originalHeight = src.originalHeight;
             isFlat = src.isFlat;
             isFramework = src.isFramework;
-            Selected = src.Selected;
+            isSelected = src.isSelected;
             marked = src.marked;
             isSelfHidden = src.isSelfHidden;
             isExtraHidden = src.isExtraHidden;
@@ -416,10 +416,27 @@ namespace RelertSharp.MapStructure
                 }
                 if (isFramework) SwitchToFramework(true);
             }
-            if (Selected)
+            if (isSelected)
             {
                 if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
                 if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
+            }
+        }
+        private void HideExtraImg()
+        {
+            if (!isExtraHidden)
+            {
+                SceneObject.HideExtra();
+                isExtraHidden = true;
+            }
+        }
+        private void RevealExtraImg()
+        {
+            if (Disposed) return;
+            if (isExtraHidden)
+            {
+                SceneObject.RevealExtra();
+                isExtraHidden = false;
             }
         }
         #endregion
@@ -448,7 +465,7 @@ namespace RelertSharp.MapStructure
                 isFramework = false;
                 SwitchToFramework(true);
             }
-            if (Selected)
+            if (isSelected)
             {
                 if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
                 if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
@@ -482,7 +499,7 @@ namespace RelertSharp.MapStructure
         {
             if (Disposed) return;
             this.marked = marked;
-            if (!Selected)
+            if (!isSelected)
             {
                 if (marked)
                 {
@@ -502,7 +519,7 @@ namespace RelertSharp.MapStructure
             SceneObject.SwitchToFramework(enable);
             if (isSelfHidden) SceneObject.HideSelf();
             if (isExtraHidden) SceneObject.HideExtra();
-            if (Selected)
+            if (isSelected)
             {
                 if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
                 if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
@@ -561,10 +578,22 @@ namespace RelertSharp.MapStructure
                 SetHeightTo(pos.Z);
             }
         }
-        public void Dispose()
+        /// <summary>
+        /// do nothing for tile
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="subcell"></param>
+        public override void MoveTo(I3dLocateable pos, int subcell = -1)
         {
-            SceneObject?.Dispose();
-            Disposed = true;
+            
+        }
+        /// <summary>
+        /// do nothing for tile
+        /// </summary>
+        /// <param name="delta"></param>
+        public override void ShiftBy(I3dLocateable delta)
+        {
+            
         }
         public byte[] GetBytes()
         {
@@ -638,92 +667,9 @@ namespace RelertSharp.MapStructure
         {
             SceneObject.RemoveTempColor();
         }
-        public void Hide()
+        public override int GetHeight(Map source = null)
         {
-            HideTileImg();
-            HideExtraImg();
-        }
-        public void HideTileImg()
-        {
-            if (!isSelfHidden)
-            {
-                SceneObject.HideSelf();
-                isSelfHidden = true;
-            }
-        }
-        public void HideExtraImg()
-        {
-            if (!isExtraHidden)
-            {
-                SceneObject.HideExtra();
-                isExtraHidden = true;
-            }
-        }
-        public void RevealAllTileImg()
-        {
-            if (Disposed) return;
-            if (isSelfHidden)
-            {
-                SceneObject.RevealSelf();
-                isSelfHidden = false;
-            }
-            RevealExtraImg();
-        }
-        public void RevealAsStd(bool flat = false)
-        {
-            if (Disposed) return;
-            SceneObject.RevealSelf();
-            isSelfHidden = false;
-            if (!flat)
-            {
-                RevealExtraImg();
-            }
-            if (Selected)
-            {
-                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
-                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
-            }
-        }
-        public void RevealExtraImg()
-        {
-            if (Disposed) return;
-            if (isExtraHidden)
-            {
-                SceneObject.RevealExtra();
-                isExtraHidden = false;
-            }
-        }
-        //public void MoveTo(Tile dest, int height, int alig)
-        //{
-        //    if (SceneObject != null)
-        //    {
-        //        if (isFlat)
-        //        {
-        //            originalHeight = alig + height;
-        //            height = 0;
-        //        }
-        //        MoveTileTo(dest, height);
-        //    }
-        //}
-        public void Select()
-        {
-            if (Disposed) return;
-            if (!Selected && SceneObject != null)
-            {
-                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
-                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
-                Selected = true;
-            }
-        }
-        public void DeSelect()
-        {
-            if (Disposed) return;
-            if (Selected && SceneObject != null)
-            {
-                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Zero, true);
-                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Zero, true);
-                Selected = false;
-            }
+            return Z;
         }
         #endregion
 
@@ -759,18 +705,14 @@ namespace RelertSharp.MapStructure
         {
             get { return IsDefault && IceGrowth == 0; }
         }
-        public static Tile EmptyTile
-        {
-            get { return new Tile(0, 0, 65535, 0, 0, 0); }
-        }
         public static Tile EmptyTileAt(int x, int y)
         {
             return new Tile((short)x, (short)y, 0, 0, 0, 0);
         }
         public short X16 { get; set; }
         public short Y16 { get; set; }
-        public int X { get { return X16; } set { X16 = (short)value; } }
-        public int Y { get { return Y16; } set { Y16 = (short)value; } }
+        public override int X { get { return X16; } set { X16 = (short)value; } }
+        public override int Y { get { return Y16; } set { Y16 = (short)value; } }
         public int Z { get { return Height; } set { Height = (byte)value; } }
         public bool Buildable
         {
@@ -844,10 +786,9 @@ namespace RelertSharp.MapStructure
         }
         public byte SubIndex { get; set; }
         public byte IceGrowth { get; set; }
-        public int Coord { get { return Misc.CoordInt(X, Y); } }
+        public override int Coord { get { return Misc.CoordInt(X, Y); } }
         public int MinimapRenderableObjectCount { get { return objectsOnTile.Where(x => (x.ObjectType & MapObjectType.MinimapRenderable) != 0).Count(); } }
-        public ISceneTile SceneObject { get; set; }
-        public bool Selected { get; set; }
+        public new ISceneTile SceneObject { get; set; }
         public bool IsHyte { get; set; }
         public int TileTerrainType { get; set; }
         public bool Disposed { get; private set; }

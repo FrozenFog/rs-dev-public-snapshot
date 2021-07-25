@@ -96,7 +96,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class OverlayUnit : IMapObject, IRegistable
+    public class OverlayUnit : BaseVisibleObject, IMapObject, IRegistable
     {
 
 
@@ -131,70 +131,6 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - OverlayUnit
-        public void MoveTo(I3dLocateable pos, int subcell = -1)
-        {
-            X = pos.X;
-            Y = pos.Y;
-            SceneObject.MoveTo(pos);
-        }
-        public void ShiftBy(I3dLocateable delta)
-        {
-            X += delta.X;
-            Y += delta.Y;
-            SceneObject.ShiftBy(delta);
-        }
-
-        public void Select(bool force = false)
-        {
-            if (force || !IsSelected)
-            {
-                IsSelected = true;
-                SceneObject.ApplyTempColor(Vec4.Selector);
-            }
-        }
-
-        public void CancelSelection()
-        {
-            if (IsSelected)
-            {
-                IsSelected = false;
-                SceneObject.RemoveTempColor();
-            }
-        }
-        public void Dispose()
-        {
-            IsSelected = false;
-            SceneObject.RemoveTempColor();
-            SceneObject?.Dispose();
-        }
-        public IMapObject CopyNew()
-        {
-            OverlayUnit o = new OverlayUnit(this);
-            return o;
-        }
-        public void Hide()
-        {
-            if (!IsHidden)
-            {
-                SceneObject.Hide();
-                IsHidden = true;
-            }
-        }
-        public void Reveal()
-        {
-            if (IsHidden)
-            {
-                SceneObject.Reveal();
-                IsHidden = false;
-            }
-        }
-
-        public int GetHeight(Map source = null)
-        {
-            if (source != null) return source.GetHeightFromTile(this);
-            else if (GlobalVar.HasMap) return GlobalVar.GlobalMap.GetHeightFromTile(this);
-            else return Constant.MapStructure.INVALID_HEIGHT;
-        }
 
         public void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
         {
@@ -235,16 +171,14 @@ namespace RelertSharp.MapStructure
         /// <summary>
         /// Overlay won't have id, returns null
         /// </summary>
-        public string Id { get { return null; } }
-        public bool IsHidden { get; private set; }
+        public override string Id { get { return null; } }
         public byte Index { get; set; }
         public byte Frame { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Coord { get { return Misc.CoordInt(X, Y); } }
-        public bool IsSelected { get; private set; }
+        public override int X { get; set; }
+        public override int Y { get; set; }
+        public override int Coord { get { return Misc.CoordInt(X, Y); } }
         public string RegName { get; private set; }
-        public MapObjectType ObjectType { get { return MapObjectType.Overlay; } }
+        public override MapObjectType ObjectType { get { return MapObjectType.Overlay; } }
         #endregion
 
 

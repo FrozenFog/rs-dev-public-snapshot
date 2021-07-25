@@ -96,7 +96,7 @@ namespace RelertSharp.Common
         {
             NameUpdated?.Invoke(null, null);
         }
-        public void ChangeDisplay(IndexableDisplayType type)
+        public virtual void ChangeDisplay(IndexableDisplayType type)
         {
             displayType = type;
         }

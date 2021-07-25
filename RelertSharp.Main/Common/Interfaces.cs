@@ -95,6 +95,8 @@ namespace RelertSharp.Common
         void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndNameAndName = true);
         void Select(bool force = false);
         void CancelSelection();
+        void Hide(bool force = false);
+        void Reveal();
         string[] ExtractParameter();
         IMapObject ConstructFromParameter(string[] commands);
         string Id { get; }

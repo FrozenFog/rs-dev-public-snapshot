@@ -35,6 +35,8 @@ namespace RelertSharp.MapStructure
         void RevealSelf();
         void HideExtra();
         void RevealExtra();
+        void PhaseOut();
+        void UnPhase();
         void RedrawTile(Tile t);
     }
 }

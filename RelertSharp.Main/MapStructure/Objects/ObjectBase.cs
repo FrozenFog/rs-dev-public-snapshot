@@ -79,9 +79,8 @@ namespace RelertSharp.MapStructure.Objects
     }
 
 
-    public class ObjectItemBase : I2dLocateable, IRegistable, ITaggableObject, IIndexableItem
+    public class ObjectItemBase : BaseVisibleObject, IRegistable, ITaggableObject
     {
-        private bool isSelected = false;
 
 
         #region Ctor
@@ -108,34 +107,6 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - ObjectItemBase
-        public virtual void Select(bool force = false)
-        {
-            if (force || !isSelected)
-            {
-                SceneObject.ApplyTempColor(Vec4.Selector);
-                isSelected = true;
-            }
-        }
-        public virtual void CancelSelection()
-        {
-            if (isSelected)
-            {
-                SceneObject.RemoveTempColor();
-                isSelected = false;
-            }
-        }
-        public virtual void MoveTo(I3dLocateable pos, int subcell = -1)
-        {
-            X = pos.X;
-            Y = pos.Y;
-            SceneObject?.MoveTo(pos, subcell);
-        }
-        public void ShiftBy(I3dLocateable delta)
-        {
-            X += delta.X;
-            Y += delta.Y;
-            SceneObject?.ShiftBy(delta);
-        }
         public virtual void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndName = false)
         {
             if (applyPosAndName)
@@ -155,23 +126,12 @@ namespace RelertSharp.MapStructure.Objects
             if (filter.RecruitNo) AutoNORecruitType = config.AutoRecruitNo;
             if (filter.AboveGround) IsAboveGround = config.AboveGround;
         }
-        public virtual int GetHeight(Map source = null)
-        {
-            if (source != null) return source.GetHeightFromTile(this);
-            else if (GlobalVar.HasMap) return GlobalVar.GlobalMap.GetHeightFromTile(this);
-            else return Constant.MapStructure.INVALID_HEIGHT;
-        }
-        public virtual void Dispose()
-        {
-            isSelected = false;
-            SceneObject?.Dispose();
-        }
         public override string ToString()
         {
             return string.Format("{0} at {1},{2}", RegName, X, Y);
         }
 
-        public void ChangeDisplay(IndexableDisplayType type)
+        public override void ChangeDisplay(IndexableDisplayType type)
         {
             // do nothing
         }
@@ -179,7 +139,7 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Calls - ObjectItemBase
-        public string Id { get; internal set; } = Constant.ITEM_NONE;
+        public override string Id { get; set; } = Constant.ITEM_NONE;
         public string RegName { get; set; } = "(NOTHING)";
         public string Owner { get; set; } = Constant.ITEM_NONE;
         /// <summary>
@@ -188,17 +148,8 @@ namespace RelertSharp.MapStructure.Objects
         public int HealthPoint { get; set; } = 256;
         public string Status { get; set; } = Constant.ITEM_NONE;
         public string TagId { get; set; } = Constant.VALUE_NONE;
-        public int X { get; set; } = 0;
-        public int Y { get; set; } = 0;
-        public int Coord
-        {
-            get { return Utils.Misc.CoordInt(X, Y); }
-            set
-            {
-                X = Utils.Misc.CoordIntX(value);
-                Y = Utils.Misc.CoordIntY(value);
-            }
-        }
+        public override int X { get; set; } = 0;
+        public override int Y { get; set; } = 0;
         public int Rotation { get; set; } = 0;
         /// <summary>
         /// Default: 100
@@ -214,10 +165,7 @@ namespace RelertSharp.MapStructure.Objects
         /// Default: true
         /// </summary>
         public bool AutoYESRecruitType { get; set; } = true;
-        public MapObjectType ObjectType { get; protected set; } = MapObjectType.Undefined;
-        public virtual ISceneObject SceneObject { get; set; }
-        string IIndexableItem.Id { get { return Id; } set { } }
-        public virtual string Name
+        public override string Name
         {
             get
             {
@@ -227,8 +175,7 @@ namespace RelertSharp.MapStructure.Objects
             set { }
         }
 
-        public string Value { get { return RegName; } }
-        public bool IsSelected { get { return isSelected; } }
+        public override string Value { get { return RegName; } }
         #endregion
 
 
