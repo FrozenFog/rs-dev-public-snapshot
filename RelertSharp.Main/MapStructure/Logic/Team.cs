@@ -152,6 +152,7 @@ namespace RelertSharp.MapStructure.Logic
         public string Group
         {
             get { return this[Constant.MapStructure.KEY_GROUP].GetString(Constant.ID_INVALID); }
+            set { this[Constant.MapStructure.KEY_GROUP] = new INIPair(Constant.MapStructure.KEY_GROUP, value); }
         }
         //public BitArray Attributes { get; set; } = new BitArray(21);
         public Dictionary<string, INIPair> Residue { get; set; }

@@ -101,25 +101,25 @@ namespace RelertSharp.MapStructure.Points
             Y += delta.Y;
             SceneObject.ShiftBy(delta);
         }
-        public virtual void Select()
+        public virtual void Select(bool force = false)
         {
-            if (!Selected)
+            if (force || !IsSelected)
             {
-                Selected = true;
+                IsSelected = true;
                 SceneObject.ApplyTempColor(Vec4.Selector);
             }
         }
         public virtual void CancelSelection()
         {
-            if (Selected)
+            if (IsSelected)
             {
-                Selected = false;
+                IsSelected = false;
                 SceneObject.RemoveTempColor();
             }
         }
         public void Dispose()
         {
-            Selected = false;
+            IsSelected = false;
             SceneObject.Dispose();
         }
         public void Hide()
@@ -175,7 +175,7 @@ namespace RelertSharp.MapStructure.Points
                 Y = CoordIntY(value);
             }
         }
-        public bool Selected { get; set; }
+        public bool IsSelected { get; private set; }
         public virtual string RegName { get { return string.Empty; } set { } }
         public virtual MapObjectType ObjectType { get; protected set; } = MapObjectType.Undefined;
         public virtual ISceneObject SceneObject { get; set; }

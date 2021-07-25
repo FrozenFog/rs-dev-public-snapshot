@@ -44,17 +44,17 @@ namespace RelertSharp.Common
 
     public interface IOwnableObject
     {
-        string Owner { get; }
+        string Owner { get; set; }
     }
 
     public interface IGroupable
     {
-        string Group { get; }
+        string Group { get; set; }
     }
 
     public interface ITaggableObject
     {
-        string TagId { get; }
+        string TagId { get; set; }
     }
 
     public interface I2dLocateable
@@ -93,11 +93,12 @@ namespace RelertSharp.Common
         void MoveTo(I3dLocateable pos, int subcell = -1);
         void ShiftBy(I3dLocateable delta);
         void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndNameAndName = true);
-        void Select();
+        void Select(bool force = false);
         void CancelSelection();
         string[] ExtractParameter();
         IMapObject ConstructFromParameter(string[] commands);
         string Id { get; }
+        bool IsSelected { get; }
     }
 
     public interface ICombatObject : IMapObject, IGroupable, IOwnableObject

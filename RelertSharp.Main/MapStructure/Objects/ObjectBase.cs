@@ -108,9 +108,9 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Methods - ObjectItemBase
-        public virtual void Select()
+        public virtual void Select(bool force = false)
         {
-            if (!isSelected)
+            if (force || !isSelected)
             {
                 SceneObject.ApplyTempColor(Vec4.Selector);
                 isSelected = true;
@@ -217,9 +217,18 @@ namespace RelertSharp.MapStructure.Objects
         public MapObjectType ObjectType { get; protected set; } = MapObjectType.Undefined;
         public virtual ISceneObject SceneObject { get; set; }
         string IIndexableItem.Id { get { return Id; } set { } }
-        public string Name { get { return RegName; } set { RegName = value; } }
+        public virtual string Name
+        {
+            get
+            {
+                if (GlobalVar.GlobalRules != null) return GlobalVar.GlobalRules[RegName].GetString(Constant.KEY_NAME);
+                else return string.Empty;
+            }
+            set { }
+        }
 
         public string Value { get { return RegName; } }
+        public bool IsSelected { get { return isSelected; } }
         #endregion
 
 

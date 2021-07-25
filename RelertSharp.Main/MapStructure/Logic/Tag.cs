@@ -39,15 +39,6 @@ namespace RelertSharp.MapStructure.Logic
         //        ? ret
         //        : new List<TagItem>(new TagItem[] { new TagItem("xxxxxxxx", new string[3] { "0", "!NO AVAIABLE TAG!", "<none>" }) });
         //}
-        public IEnumerable<TechnoPair> ToTechno()
-        {
-            List<TechnoPair> result = new List<TechnoPair>();
-            foreach (TagItem tag in this)
-            {
-                result.Add(new TechnoPair(tag.Id, tag.Name));
-            }
-            return result;
-        }
 
         #region Curd
         //public void Remove(TagItem t, string triggerid)

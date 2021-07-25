@@ -29,6 +29,10 @@ namespace RelertSharp.Wpf.ViewModel
         {
             NameChanged?.Invoke(this, data);
         }
+        protected virtual void OnAllPropertyChanged()
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));
+        }
         public virtual void LoadData(Tdata data)
         {
             this.data = data;

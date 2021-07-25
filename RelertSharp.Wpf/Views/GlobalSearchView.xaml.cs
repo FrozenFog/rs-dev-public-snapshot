@@ -224,29 +224,6 @@ namespace RelertSharp.Wpf.Views
             menuDiscardRes.IsEnabled = canDiscard;
             e.Handled = true;
         }
-        private SearchResultVm prevItemShiftBegin;
-        private void ResPrevLeftDown(object sender, MouseButtonEventArgs e)
-        {
-            if (GuiUtil.IsKeyDown(Key.LeftShift, Key.RightShift) && prevItemShiftBegin != null)
-            {
-                SearchResultVm vmShift = lvResult.GetItemAtMouse<SearchResultVm, TextBlock>(e);
-                if (vmShift == null)
-                {
-                    prevItemShiftBegin = lvResult.GetItemAtMouse<SearchResultVm, TextBlock>(e);
-                    return;
-                }
-                int begin = ResultVm.IndexOf(prevItemShiftBegin);
-                int end = ResultVm.IndexOf(vmShift);
-                for (int i = Math.Min(begin, end); i < Math.Max(begin, end); i++)
-                {
-                    ResultVm[i].IsSelected = true;
-                }
-            }
-            else
-            {
-                prevItemShiftBegin = lvResult.GetItemAtMouse<SearchResultVm, TextBlock>(e);
-            }
-        }
         private void Menu_ResDiscardSel(object sender, RoutedEventArgs e)
         {
             List<SearchResultVm> remove = new List<SearchResultVm>();

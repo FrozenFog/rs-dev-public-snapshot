@@ -58,7 +58,7 @@ namespace RelertSharp.Wpf.Common
 
         public int FacingRotation { get; set; }
 
-        public string AttatchedTag { get; set; } = Constant.ITEM_NONE;
+        public string AttatchedTag { get; set; } = Constant.VALUE_NONE;
 
         public string MissionStatus { get; set; } = "Area Guard";
 

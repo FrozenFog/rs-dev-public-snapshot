@@ -213,7 +213,6 @@ namespace RelertSharp.Wpf.Views
         private void ReloadAttributeCombo()
         {
             cbbOwner.ItemsSource = GlobalCollectionVm.Houses;
-            cbbTag.ItemsSource = GlobalCollectionVm.Tags;
             cbbStatus.ItemsSource = GlobalVar.GlobalConfig.ModConfig.GetCombo(Constant.Config.DefaultComboType.TYPE_MAP_OBJSTATE).CastToCombo();
             cbbSpotlight.ItemsSource = GlobalVar.GlobalConfig.ModConfig.GetCombo(Constant.Config.DefaultComboType.TYPE_MAP_SPOTLIGHT).CastToCombo();
         }

@@ -70,6 +70,15 @@ namespace RelertSharp.Engine.Api
                     break;
             }
         }
+        public static void RedrawObject(IMapObject src)
+        {
+            Vec4 color = Vec4.Zero;
+            if (src.SceneObject != null) color = src.SceneObject.ColorVector;
+            src.SceneObject?.Dispose();
+            DrawObject(src);
+            if (color != Vec4.Zero) src.SceneObject.SetColor(color);
+            if (src.IsSelected) src.Select(true);
+        }
         public static void DrawTile(Tile t)
         {
             EngineMain.DrawTile(t);

@@ -21,6 +21,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
 {
     internal static class Selector
     {
+        public static event Action SelectionChanged;
         #region Private call
         private static int MapWidth { get { return GlobalVar.GlobalMap.Info.Size.Width; } }
         private static Map Map { get { return GlobalVar.GlobalMap; } }
@@ -29,6 +30,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         private static int subCell;
         private static bool dragingSelectBox;
         private static bool isIsometric;
+        private static int prevCount = -1;
 
         private static Canvas src;
         private static SolidColorBrush b = new SolidColorBrush(Colors.White);
@@ -62,6 +64,16 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             {
                 obj.Select();
                 selectedObjects.Add(obj);
+            }
+            OnSelectionChanged();
+        }
+
+        private static void OnSelectionChanged()
+        {
+            if (prevCount != selectedObjects.Count)
+            {
+                SelectionChanged?.Invoke();
+                prevCount = selectedObjects.Count;
             }
         }
 
@@ -155,7 +167,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                         }
                     }
                 }
-
+                OnSelectionChanged();
                 PlaySelectedSound();
             }
         }
@@ -186,6 +198,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                         if (reverse || select) break;
                     }
                 }
+                OnSelectionChanged();
                 PlaySelectedSound();
             }
         }
@@ -239,6 +252,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         {
             foreach (IMapObject obj in selectedObjects) obj.CancelSelection();
             selectedObjects.Clear();
+            OnSelectionChanged();
         }
         public static void AddSelectionFlag(MapObjectType typeAdd)
         {
@@ -318,6 +332,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             }
             if (selectedObjects.Count > 0) UndoRedoHub.PushCommand(selectedObjects);
             selectedObjects.Clear();
+            OnSelectionChanged();
         }
         #endregion
         #endregion

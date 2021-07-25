@@ -206,6 +206,7 @@ namespace RelertSharp.IniSystem
         {
             if (!data.Keys.Contains(p.Name)) data[p.Name] = p;
         }
+
         public void AddPair(string key, object value)
         {
             if (!data.Keys.Contains(key)) data[key] = new INIPair(key, value.ToString());
@@ -229,6 +230,11 @@ namespace RelertSharp.IniSystem
         public INIPair GetPair(int index)
         {
             return data[data.Keys.ElementAt(index)];
+        }
+        public string GetString(string key, string def = "")
+        {
+            if (data.ContainsKey(key)) return data[key].Value.ToString();
+            else return def;
         }
         public INIPair Find(Predicate<INIPair> predicate)
         {

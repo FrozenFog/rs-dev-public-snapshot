@@ -4,7 +4,7 @@ using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.MapStructure.Points
 {
-    public class BaseNode : IMapObject
+    public class BaseNode : IndexableItem, IMapObject, IOwnableObject
     {
         public BaseNode(string _name, int _x, int _y, HouseItem parent)
         {
@@ -40,26 +40,26 @@ namespace RelertSharp.MapStructure.Points
             SceneObject.ShiftBy(delta);
         }
 
-        public void Select()
+        public void Select(bool force = false)
         {
-            if (!Selected)
+            if (force || !IsSelected)
             {
-                Selected = true;
+                IsSelected = true;
                 SceneObject.ApplyTempColor(Vec4.BaseNodeSelector);
             }
         }
 
         public void CancelSelection()
         {
-            if (Selected)
+            if (IsSelected)
             {
-                Selected = false;
+                IsSelected = false;
                 SceneObject.RemoveTempColor();
             }
         }
         public void Dispose()
         {
-            Selected = false;
+            IsSelected = false;
             IsHidden = false;
             SceneObject.RemoveTempColor();
             SceneObject?.Dispose();
@@ -131,15 +131,28 @@ namespace RelertSharp.MapStructure.Points
         /// <summary>
         /// Basenode won't have id, return null anyway
         /// </summary>
-        public string Id { get { return null; } }
+        public override string Id { get { return null; } }
+        public override string Name
+        {
+            get
+            {
+                if (GlobalVar.GlobalRules != null) return GlobalVar.GlobalRules[RegName].GetString(Constant.KEY_NAME);
+                return string.Empty;
+            }
+        }
         public HouseItem Parent { get; private set; }
         public string SaveData { get { return string.Format("{0},{1},{2}", RegName, X, Y); } }
         public bool IsHidden { get; private set; }
         public string RegName { get; set; }
+        public string Owner
+        {
+            get { if (Parent != null) return Parent.Name; return string.Empty; }
+            set { }
+        }
         public int X { get; set; }
         public int Y { get; set; }
         public int Coord { get { return Utils.Misc.CoordInt(this); } }
-        public bool Selected { get; set; }
+        public bool IsSelected { get; private set; }
         public MapObjectType ObjectType { get { return MapObjectType.BaseNode; } }
         public ISceneObject SceneObject { get; set; }
         #endregion

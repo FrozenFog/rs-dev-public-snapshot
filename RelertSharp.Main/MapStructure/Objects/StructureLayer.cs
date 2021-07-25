@@ -158,7 +158,7 @@ namespace RelertSharp.MapStructure.Objects
         /// <summary>
         /// Default: true
         /// </summary>
-        public bool AIRebuildable { get; private set; } = false;
+        public bool AIRebuildable { get; set; } = false;
         /// <summary>
         /// Default: true
         /// </summary>

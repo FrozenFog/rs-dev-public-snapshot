@@ -144,26 +144,26 @@ namespace RelertSharp.MapStructure
             SceneObject.ShiftBy(delta);
         }
 
-        public void Select()
+        public void Select(bool force = false)
         {
-            if (!Selected)
+            if (force || !IsSelected)
             {
-                Selected = true;
+                IsSelected = true;
                 SceneObject.ApplyTempColor(Vec4.Selector);
             }
         }
 
         public void CancelSelection()
         {
-            if (Selected)
+            if (IsSelected)
             {
-                Selected = false;
+                IsSelected = false;
                 SceneObject.RemoveTempColor();
             }
         }
         public void Dispose()
         {
-            Selected = false;
+            IsSelected = false;
             SceneObject.RemoveTempColor();
             SceneObject?.Dispose();
         }
@@ -242,7 +242,7 @@ namespace RelertSharp.MapStructure
         public int X { get; set; }
         public int Y { get; set; }
         public int Coord { get { return Misc.CoordInt(X, Y); } }
-        public bool Selected { get; set; }
+        public bool IsSelected { get; private set; }
         public string RegName { get; private set; }
         public MapObjectType ObjectType { get { return MapObjectType.Overlay; } }
         #endregion

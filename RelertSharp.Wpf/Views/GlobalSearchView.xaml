@@ -20,9 +20,8 @@
         <WrapPanel Name="wrapTargets" Margin="10,33,9.6,10.2"/>
         <Label Content="Conditions" HorizontalAlignment="Left" Margin="10,9.8,0,0" Grid.Row="1" VerticalAlignment="Top"/>
         <Label Content="Search Result" HorizontalAlignment="Left" Margin="10.4,10,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <ListView x:Name="lvResult" Grid.Column="1" Margin="10.4,33,10.4,9.6" Grid.RowSpan="2" Style="{DynamicResource lbxDark}" SelectionMode="Multiple" 
-                  PreviewMouseRightButtonDown="ResPrevRightDown" PreviewMouseLeftButtonDown="ResPrevLeftDown"
-                  cmds:ListViewColumnSortCommand.AutoSort="True">
+        <ListView x:Name="lvResult" Grid.Column="1" Margin="10.4,33,10.4,9.6" Grid.RowSpan="2" Style="{DynamicResource lbxDark}" 
+                  PreviewMouseRightButtonDown="ResPrevRightDown" cmds:ListViewColumnSortCommand.AutoSort="True">
             <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Select all" Click="Menu_ResSelectAll"/>
@@ -39,6 +38,7 @@
                         <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}" cmds:ListViewColumnSortCommand.PropertyName="Type"/>
                         <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" cmds:ListViewColumnSortCommand.PropertyName="Id"/>
                         <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" cmds:ListViewColumnSortCommand.PropertyName="Name"/>
+                        <GridViewColumn Header="Regist name" DisplayMemberBinding="{Binding RegName}" cmds:ListViewColumnSortCommand.PropertyName="RegName"/>
                         <GridViewColumn Header="Owner" DisplayMemberBinding="{Binding Owner}" cmds:ListViewColumnSortCommand.PropertyName="Owner"/>
                         <GridViewColumn Header="Position.X" DisplayMemberBinding="{Binding PosX}" cmds:ListViewColumnSortCommand.PropertyName="PosX"/>
                         <GridViewColumn Header="Position.Y" DisplayMemberBinding="{Binding PosY}" cmds:ListViewColumnSortCommand.PropertyName="PosY"/>
@@ -50,7 +50,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TreeView x:Name="trvConditions" Style="{DynamicResource trvDark}" Grid.Row="1" Margin="10,37.8,9.6,9.6" AllowDrop="True" PreviewMouseRightButtonDown="PreviewRightDown" Drop="CondDragDrop" MouseMove="CondDragMove" MouseLeave="CondDragLeave" DragOver="CondDragOver">
+        <TreeView x:Name="trvConditions" Style="{DynamicResource trvDark}" Grid.Row="1" Margin="10,37.8,9.6,9.6" AllowDrop="True" 
+                  PreviewMouseRightButtonDown="PreviewRightDown" Drop="CondDragDrop" MouseMove="CondDragMove" MouseLeave="CondDragLeave" DragOver="CondDragOver">
             <TreeView.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#0078D7" />
             </TreeView.Resources>

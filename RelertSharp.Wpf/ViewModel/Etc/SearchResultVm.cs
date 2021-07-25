@@ -52,6 +52,14 @@ namespace RelertSharp.Wpf.ViewModel
                 return NAN_ITEM;
             }
         }
+        public string RegName
+        {
+            get
+            {
+                if (data is IRegistable reg) return reg.RegName;
+                return NAN_ITEM;
+            }
+        }
         public string Owner
         {
             get

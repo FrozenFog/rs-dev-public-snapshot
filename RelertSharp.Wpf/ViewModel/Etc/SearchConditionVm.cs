@@ -206,7 +206,7 @@ namespace RelertSharp.Wpf.ViewModel
                 case Operator.Contains:
                     r = objValue.Contains(StringValue);
                     break;
-                case Operator.EqualThan:
+                case Operator.Equal:
                     r = objValue == StringValue;
                     break;
                 case Operator.GreaterOrEqualThan:
@@ -314,7 +314,7 @@ namespace RelertSharp.Wpf.ViewModel
             LessThan,
             GreaterOrEqualThan,
             LessOrEqualThan,
-            EqualThan,
+            Equal,
             NotEqualThan,
             Contains,
             RegExMatch

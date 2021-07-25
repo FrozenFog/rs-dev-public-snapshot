@@ -12,6 +12,7 @@ namespace RelertSharp.Wpf.ViewModel
 {
     internal class ObjectAttributeApplierVm : BaseVm<ObjectBrushConfig>
     {
+        public GlobalTagVm GlobalTags { get { return GlobalCollectionVm.Tags; } }
         private ObjectBrushFilter filter;
         private MapObjectType Type { get; set; }
         internal event EventHandler ObjectRefreshRequest;
