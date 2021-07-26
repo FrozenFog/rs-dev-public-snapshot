@@ -61,11 +61,11 @@ namespace RelertSharp.Wpf.ViewModel
         }
         public int GetFacing()
         {
-            return 0;
+            return Facing;
         }
         public void SetFacing(int facing)
         {
-
+            Facing = facing;
         }
         #endregion
 

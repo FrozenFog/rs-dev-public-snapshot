@@ -65,6 +65,19 @@ namespace RelertSharp.MapStructure.Logic
             data.AddPair(residual.Values);
             return data;
         }
+        public string[] ExtractParameter()
+        {
+            return new string[]
+            {
+                Name,
+                ColorName,
+                ParentCountryName,
+                Suffix,
+                Prefix,
+                Side,
+                SmartAi.ZeroOne()
+            };
+        }
         public override string Value { get { return Name; } }
         public override string ToString()
         {

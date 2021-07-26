@@ -100,106 +100,87 @@ namespace RelertSharp.Wpf
 
 
         #region Views
-        private void ShowView(IRsView src)
-        {
-            if (src.ParentAncorable != null)
-            {
-                foreach (LayoutAnchorable anc in dockMain.Layout.Hidden)
-                {
-                    if (anc.ContentId == src.ViewType.ToString())
-                    {
-                        dockMain.Layout.Hidden.Remove(anc);
-                        LoadTargetTool(src.ViewType);
-                        break;
-                    }
-                }
-            }
-            if (src.ParentDocument != null && !dockMain.HasDocumentWithContentId(src.ViewType.ToString()))
-            {
-                dockMain.AddCenterPage(RsViewComponentAttribute.GetViewTitle(src), src);
-            }
-        }
         #region Logics
         private void MenuShowEvent(object sender, RoutedEventArgs e)
         {
-            ShowView(events);
+            LayoutManagerHub.ShowView(events);
         }
 
         private void MenuShowAction(object sender, RoutedEventArgs e)
         {
-            ShowView(actions);
+            LayoutManagerHub.ShowView(actions);
         }
 
         private void MenuShowTrigger(object sender, RoutedEventArgs e)
         {
-            ShowView(trigger);
+            LayoutManagerHub.ShowView(trigger);
         }
 
         private void MenupenTriggerList(object sender, RoutedEventArgs e)
         {
-            ShowView(triggerList);
+            LayoutManagerHub.ShowView(triggerList);
         }
 
         private void MenuShowTeam(object sender, RoutedEventArgs e)
         {
-            ShowView(team);
+            LayoutManagerHub.ShowView(team);
         }
 
         private void MenuShowTeamList(object sender, RoutedEventArgs e)
         {
-            ShowView(teamList);
+            LayoutManagerHub.ShowView(teamList);
         }
 
         private void MenuShowTaskforce(object sender, RoutedEventArgs e)
         {
-            ShowView(taskforce);
+            LayoutManagerHub.ShowView(taskforce);
         }
 
         private void MenuShowTaskforceList(object sender, RoutedEventArgs e)
         {
-            ShowView(taskforceList);
+            LayoutManagerHub.ShowView(taskforceList);
         }
 
         private void MenuShowScript(object sender, RoutedEventArgs e)
         {
-            ShowView(script);
+            LayoutManagerHub.ShowView(script);
         }
 
         private void MenuShowScriptList(object sender, RoutedEventArgs e)
         {
-            ShowView(scriptList);
+            LayoutManagerHub.ShowView(scriptList);
         }
 
         private void MenuShowHouses(object sender, RoutedEventArgs e)
         {
-            ShowView(housePanel);
+            LayoutManagerHub.ShowView(housePanel);
         }
 
         private void MenuShowAiTrigger(object sender, RoutedEventArgs e)
         {
-            ShowView(aiTrigger);
+            LayoutManagerHub.ShowView(aiTrigger);
         }
 
         private void MenuShowAiTriggerList(object sender, RoutedEventArgs e)
         {
-            ShowView(aiTriggerList);
+            LayoutManagerHub.ShowView(aiTriggerList);
         }
 
         private void MenuShowLocalVar(object sender, RoutedEventArgs e)
         {
-
+            LayoutManagerHub.ShowView(localVar);
         }
         #endregion
 
         #region Map and Objects
         private void MenuShowMapPanel(object sender, RoutedEventArgs e)
         {
-            ShowView(pnlMain);
+            LayoutManagerHub.ShowView(pnlMain);
         }
 
         private void MenuShowLightning(object sender, RoutedEventArgs e)
         {
-            ShowView(lightning);
+            LayoutManagerHub.ShowView(lightning);
         }
 
         private void MenuShowLightSource(object sender, RoutedEventArgs e)
@@ -208,7 +189,7 @@ namespace RelertSharp.Wpf
         }
         private void MenuShowObjectBrush(object sender, RoutedEventArgs e)
         {
-            ShowView(objectBrush);
+            LayoutManagerHub.ShowView(objectBrush);
         }
 
         private void MenuShowTileBrush(object sender, RoutedEventArgs e)
@@ -218,7 +199,7 @@ namespace RelertSharp.Wpf
 
         private void MenuShowMinimap(object sender, RoutedEventArgs e)
         {
-            ShowView(minimap);
+            LayoutManagerHub.ShowView(minimap);
         }
 
         private void MenuShowFmtBrush(object sender, RoutedEventArgs e)
@@ -235,7 +216,7 @@ namespace RelertSharp.Wpf
         #region Tools
         private void MenuShowAnimPreview(object sender, RoutedEventArgs e)
         {
-            ShowView(animationPreview);
+            LayoutManagerHub.ShowView(animationPreview);
         }
 
         private void MenuShowStatistics(object sender, RoutedEventArgs e)

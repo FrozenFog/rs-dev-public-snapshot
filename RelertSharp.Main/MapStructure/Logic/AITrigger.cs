@@ -103,6 +103,30 @@ namespace RelertSharp.MapStructure.Logic
             objs.AddRange(new object[] { oper, (double)StartingWeight, (double)MinimumWeight, (double)MaximumWeight, IsForSkirmish, 0, SideIndex, IsBaseDefense, Team2ID, EasyOn, NormalOn, HardOn });
             return objs.JoinBy();
         }
+        public string[] ExtractParameter()
+        {
+            return new string[]
+            {
+                Name,
+                Team1ID,
+                OwnerHouse,
+                TechLevel.ToString(),
+                ((int)ConditionType).ToString(),
+                ConditionObjID,
+                Comparator.ToCmpString,
+                StartingWeight.ToString(),
+                MinimumWeight.ToString(),
+                IsForSkirmish.ZeroOne(),
+                "0",
+                SideIndex.ToString(),
+                IsBaseDefense.ZeroOne(),
+                Team2ID,
+                EasyOn.ZeroOne(),
+                NormalOn.ZeroOne(),
+                HardOn.ZeroOne()
+            };
+
+        }
         #endregion
 
 

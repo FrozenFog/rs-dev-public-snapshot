@@ -98,6 +98,26 @@ namespace RelertSharp.MapStructure.Logic
             }
             return result;
         }
+        public string[] ExtractParameter()
+        {
+            List<string> r = new List<string>()
+            {
+                Id,
+                Name,
+                Group,
+                Members.Count.ToString()
+            };
+            foreach (TaskforceUnit unit in Members)
+            {
+                string[] sub = new string[]
+                {
+                    unit.RegName,
+                    unit.Count.ToString()
+                };
+                r.AddRange(sub);
+            }
+            return r.ToArray();
+        }
         #region Curd
         public TaskforceUnit AddItemAt(int pos)
         {
@@ -167,25 +187,25 @@ namespace RelertSharp.MapStructure.Logic
             }
             RegName = tmp[1];
             int.TryParse(tmp[0], out int num);
-            UnitNum = num;
+            Count = num;
             initialized = true;
         }
         public TaskforceUnit(string regname, int num)
         {
             RegName = regname;
-            UnitNum = num;
+            Count = num;
             initialized = true;
         }
         public TaskforceUnit(string regname)
         {
             RegName = regname;
-            UnitNum = 1;
+            Count = 1;
             initialized = true;
         }
         public TaskforceUnit(TaskforceUnit src)
         {
             RegName = src.RegName;
-            UnitNum = src.UnitNum;
+            Count = src.Count;
             initialized = true;
         }
         #endregion
@@ -214,13 +234,13 @@ namespace RelertSharp.MapStructure.Logic
         //}
         public override string ToString()
         {
-            return string.Format("{0}({1}):{2}", UiName, RegName, UnitNum);
+            return string.Format("{0}({1}):{2}", UiName, RegName, Count);
         }
         #endregion
 
 
         #region Public Calls - TaskforceUnit
-        public string SaveData { get { return string.Format("{0},{1}", UnitNum, RegName); } }
+        public string SaveData { get { return string.Format("{0},{1}", Count, RegName); } }
         private string name = Constant.ITEM_NONE;
         public string RegName
         {
@@ -232,7 +252,7 @@ namespace RelertSharp.MapStructure.Logic
             }
         }
         private int num;
-        public int UnitNum
+        public int Count
         {
             get { return num; }
             set

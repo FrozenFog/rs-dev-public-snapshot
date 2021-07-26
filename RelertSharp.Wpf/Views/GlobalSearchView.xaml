@@ -8,6 +8,11 @@
              xmlns:cmds="clr-namespace:RelertSharp.Wpf.Common.Commands"
              mc:Ignorable="d">
     <Grid >
+        <Grid.Resources>
+            <Style x:Key="item" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                <EventSetter Event="MouseDoubleClick" Handler="ResTraceDoubleClick"/>
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="3*"/>
@@ -21,15 +26,15 @@
         <Label Content="Conditions" HorizontalAlignment="Left" Margin="10,9.8,0,0" Grid.Row="1" VerticalAlignment="Top"/>
         <Label Content="Search Result" HorizontalAlignment="Left" Margin="10.4,10,0,0" VerticalAlignment="Top" Grid.Column="1"/>
         <ListView x:Name="lvResult" Grid.Column="1" Margin="10.4,33,10.4,9.6" Grid.RowSpan="2" Style="{DynamicResource lbxDark}" 
-                  PreviewMouseRightButtonDown="ResPrevRightDown" cmds:ListViewColumnSortCommand.AutoSort="True">
+                  MouseRightButtonDown="ResMenuRightDown" cmds:ListViewColumnSortCommand.AutoSort="True"
+                  ItemContainerStyle="{StaticResource item}">
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Select all" Click="Menu_ResSelectAll"/>
-                    <MenuItem Header="Unselect all" Click="Menu_ResUnselectAll"/>
-                    <MenuItem Name="menuDiscardRes" Header="Discard item" Click="Menu_ResDiscard"/>
-                    <MenuItem Header="Discard selected item" Click="Menu_ResDiscardSel"/>
+                    <MenuItem Name="menuSelectScene" Header="Select item in scene" Click="Menu_AddSelection"/>
                     <Separator/>
-                    <MenuItem Header="Generate report" Click="Menu_ResGenReport"/>
+                    <MenuItem Name="menuDiscardRes" Header="Discard selected item" Click="Menu_ResDiscardSel"/>
+                    <Separator/>
+                    <MenuItem Name="menuReport" Header="Generate report" Click="Menu_ResGenReport"/>
                 </ContextMenu>
             </ListView.ContextMenu>
             <ListView.View>
@@ -88,6 +93,8 @@
                     <MenuItem Header="Add condition" Click="Menu_AddCond"/>
                     <MenuItem Header="Add condition group" Click="Menu_AddGroup"/>
                     <MenuItem Name="menuDel" Header="Remove condition" Click="Menu_RemoveCond"/>
+                    <Separator/>
+                    <MenuItem Header="Reset all condition" Click="Menu_ResetCond"/>
                 </ContextMenu>
             </TreeView.ContextMenu>
         </TreeView>

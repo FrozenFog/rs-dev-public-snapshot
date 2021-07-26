@@ -301,6 +301,7 @@ namespace RelertSharp.Wpf
                     if (selector(item, target))
                     {
                         src.SelectedItem = o;
+                        src.ScrollIntoView(o);
                         return;
                     }
                 }

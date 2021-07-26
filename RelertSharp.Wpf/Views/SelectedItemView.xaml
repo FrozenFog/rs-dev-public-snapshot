@@ -16,9 +16,22 @@
         </Grid.RowDefinitions>
         <GridSplitter Grid.Row="1" Height="3" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
         <TabControl x:Name="tabMain">
+            <TabControl.Resources>
+                <Style x:Key="item" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                    <EventSetter Event="MouseDoubleClick" Handler="ObjectItemDoubleClick"/>
+                </Style>
+            </TabControl.Resources>
             <TabItem Header="Objects">
-                <ListView x:Name="lvObjects" Style="{DynamicResource lvDark}"
-                          cmds:ListViewColumnSortCommand.AutoSort="True">
+                <ListView x:Name="lvObjects" Style="{DynamicResource lvDark}" ItemContainerStyle="{StaticResource item}"
+                          cmds:ListViewColumnSortCommand.AutoSort="True" MouseRightButtonDown="MenuRightDown">
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Name="menuAddSearch" Header="Add to global search result" Click="Menu_AddGlobal"/>
+                            <Separator/>
+                            <MenuItem Name="menuReport" Header="Generate report" Click="Menu_Report"/>
+                            <MenuItem Name="menuShowIni" Header="Show ini content" Click="Menu_ShowIni"/>
+                        </ContextMenu>
+                    </ListView.ContextMenu>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}" cmds:ListViewColumnSortCommand.PropertyName="Type"/>

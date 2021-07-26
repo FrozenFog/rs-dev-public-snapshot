@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace RelertSharp.Wpf.Views
 {
-    interface IListContainer
+    interface IListContainer : IRsView
     {
         void SortBy(bool ascending);
         void ShowingId(bool enable);
@@ -19,7 +19,7 @@ namespace RelertSharp.Wpf.Views
         event ContentCarrierHandler ItemSelected;
     }
 
-    interface IObjectReciver
+    interface IObjectReciver : IRsView
     {
         void ReciveObject(object sender, object recived);
     }

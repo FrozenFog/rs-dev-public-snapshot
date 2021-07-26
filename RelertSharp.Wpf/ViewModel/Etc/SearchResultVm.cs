@@ -20,6 +20,7 @@ namespace RelertSharp.Wpf.ViewModel
         #region Public
         public string GenerateReport()
         {
+            if (data is IExtractableObject ext) return ext.ExtractParameter().JoinBy("\t");
             return string.Empty;
         }
         #endregion

@@ -99,6 +99,25 @@ namespace RelertSharp.MapStructure.Logic
             }
             return result;
         }
+        public string[] ExtractParameter()
+        {
+            List<string> r = new List<string>()
+            {
+                Id,
+                Name,
+                data.Count.ToString()
+            };
+            foreach (var item in data)
+            {
+                string[] sub = new string[]
+                {
+                    item.ScriptActionIndex.ToString(),
+                    item.ActionValue
+                };
+                r.AddRange(sub);
+            }
+            return r.ToArray();
+        }
         public TeamScriptItem AddItemAt(int pos)
         {
             TeamScriptItem item = new TeamScriptItem();

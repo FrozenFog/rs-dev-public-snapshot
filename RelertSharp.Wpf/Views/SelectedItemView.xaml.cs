@@ -18,6 +18,7 @@ using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Common;
 using RelertSharp.Wpf.MapEngine.Helper;
 using RelertSharp.Engine.Api;
+using RelertSharp.Wpf.Dialogs;
 
 namespace RelertSharp.Wpf.Views
 {
@@ -87,6 +88,13 @@ namespace RelertSharp.Wpf.Views
                 vmInspector.SetFacing(result);
             }
         }
+        private void ObjectItemDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (((FrameworkElement)sender).DataContext is SearchResultVm vm)
+            {
+                NavigationHub.AutoTrace(vm.Data);
+            }
+        }
         #endregion
 
 
@@ -96,5 +104,50 @@ namespace RelertSharp.Wpf.Views
             cbbStatus.ItemsSource = GlobalVar.GlobalConfig.ModConfig.GetCombo(Constant.Config.DefaultComboType.TYPE_MAP_OBJSTATE).CastToCombo();
             cbbSpotlight.ItemsSource = GlobalVar.GlobalConfig.ModConfig.GetCombo(Constant.Config.DefaultComboType.TYPE_MAP_SPOTLIGHT).CastToCombo();
         }
+
+
+        #region Menu
+        private void MenuRightDown(object sender, MouseButtonEventArgs e)
+        {
+            bool hasSelected = lvObjects.SelectedItems.Count > 0;
+            menuShowIni.IsEnabled = hasSelected;
+            menuAddSearch.IsEnabled = hasSelected;
+            menuReport.IsEnabled = hasSelected;
+        }
+        private void Menu_ShowIni(object sender, RoutedEventArgs e)
+        {
+            DlgIniInspector ini = new DlgIniInspector();
+            List<string> selectedReg = new List<string>();
+            foreach (SearchResultVm vm in lvObjects.SelectedItems)
+            {
+                if (vm.Data is IRegistable reg)
+                {
+                    selectedReg.Add(reg.RegName);
+                }
+            }
+            ini.SetContents(selectedReg);
+            ini.ShowDialog();
+        }
+
+        private void Menu_Report(object sender, RoutedEventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (SearchResultVm vm in lvObjects.SelectedItems)
+            {
+                sb.AppendLine(vm.GenerateReport());
+            }
+            Clipboard.SetText(sb.ToString());
+        }
+
+        private void Menu_AddGlobal(object sender, RoutedEventArgs e)
+        {
+            List<object> push = new List<object>();
+            foreach (SearchResultVm vm in lvObjects.SelectedItems)
+            {
+                push.Add(vm.Data);
+            }
+            SearchHub.PushSearchResult(push, false);
+        }
+        #endregion
     }
 }

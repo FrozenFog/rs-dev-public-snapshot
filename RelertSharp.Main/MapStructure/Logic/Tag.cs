@@ -159,6 +159,20 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
 
 
+        #region Public Methods
+        public string[] ExtractParameter()
+        {
+            return new string[]
+            {
+                Id,
+                Name,
+                AssoTrigger,
+                Repeating.ToString()
+            };
+        }
+        #endregion
+
+
         #region Public Calls - TagItem
         public IEnumerable<object> SaveData
         {

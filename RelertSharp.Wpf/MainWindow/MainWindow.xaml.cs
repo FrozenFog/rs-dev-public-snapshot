@@ -37,6 +37,7 @@ namespace RelertSharp.Wpf
         public MainWindow()
         {
             InitializeComponent();
+            LayoutManagerHub.BindManager(dockMain, this);
             LoadAllTools();
             AddReciveListener();
             BindNavigation();
@@ -86,37 +87,6 @@ namespace RelertSharp.Wpf
                 }
             }
         }
-        private void LoadTargetTool(GuiViewType type)
-        {
-            FieldInfo[] fields = typeof(MainWindow).GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
-            foreach (FieldInfo info in fields)
-            {
-                RsViewComponentAttribute attr = info.GetCustomAttribute<RsViewComponentAttribute>();
-                if (attr != null && attr.ViewType == type)
-                {
-                    IRsView control = info.GetValue(this) as IRsView;
-                    switch (attr.Side)
-                    {
-                        case GuiViewSide.Top:
-                            dockMain.Layout.AddToolToTop(attr.Title, control);
-                            break;
-                        case GuiViewSide.Bottom:
-                            dockMain.Layout.AddToolToBottom(attr.Title, control);
-                            break;
-                        case GuiViewSide.Left:
-                            dockMain.Layout.AddToolToLeft(attr.Title, control);
-                            break;
-                        case GuiViewSide.Right:
-                            dockMain.Layout.AddToolToRight(attr.Title, control);
-                            break;
-                        case GuiViewSide.Center:
-                            dockMain.AddCenterPage(attr.Title, control);
-                            break;
-                    }
-                    return;
-                }
-            }
-        }
         #endregion
 
         #region Reciver Logics
@@ -152,6 +122,7 @@ namespace RelertSharp.Wpf
         private void BindListener(IObjectReciver reciver, IListContainer sender)
         {
             sender.ItemSelected += reciver.ReciveObject;
+            dockMain.ActiveContent = reciver.ParentAncorable;
         }
         private void RedrawListener()
         {

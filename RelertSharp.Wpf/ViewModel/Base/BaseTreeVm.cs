@@ -55,6 +55,10 @@ namespace RelertSharp.Wpf.ViewModel
         {
             Items.Remove(item);
         }
+        public virtual void RemoveAllItem()
+        {
+            Items.Clear();
+        }
         public virtual bool IsDescendantOf(IBaseTreeVm<TData> ancestor)
         {
             if (!ancestor.IsTree) return false;

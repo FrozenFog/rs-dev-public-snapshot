@@ -166,6 +166,40 @@ namespace RelertSharp.MapStructure.Logic
             foreach (LogicItem lg in Events) lg.OnInfoRefreshInvoked();
             foreach (LogicItem lg in Actions) lg.OnInfoRefreshInvoked();
         }
+        public string[] ExtractParameter()
+        {
+            List<string> r = new List<string>()
+            {
+                Id,
+                Name,
+                Owner,
+                LinkedWith,
+                Disabled.ZeroOne(),
+                EasyOn.ZeroOne(),
+                NormalOn.ZeroOne(),
+                HardOn.ZeroOne(),
+                ((int)Repeating).ToString(),
+                Events.Count().ToString(),
+                Actions.Count().ToString()
+            };
+            foreach (var e in Events)
+            {
+                r.Add(e.ID.ToString());
+                foreach (var param in e.Info.Parameters)
+                {
+                    r.Add(e.GetParameter(param));
+                }
+            }
+            foreach (var a in Actions)
+            {
+                r.Add(a.ID.ToString());
+                foreach (var param in a.Info.Parameters)
+                {
+                    r.Add(a.GetParameter(param));
+                }
+            }
+            return r.ToArray();
+        }
         #endregion
 
 

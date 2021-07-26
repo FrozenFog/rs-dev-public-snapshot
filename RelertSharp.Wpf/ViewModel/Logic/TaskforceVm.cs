@@ -150,7 +150,7 @@ namespace RelertSharp.Wpf.ViewModel
         {
             get
             {
-                return string.Format("{0}\n{1}\n{2}", data.UiName, data.RegName, data.UnitNum);
+                return string.Format("{0}\n{1}\n{2}", data.UiName, data.RegName, data.Count);
             }
         }
         public ImageSource CameoImage
@@ -163,10 +163,10 @@ namespace RelertSharp.Wpf.ViewModel
         }
         public int UnitNum
         {
-            get { return data.UnitNum; }
+            get { return data.Count; }
             set
             {
-                data.UnitNum = value;
+                data.Count = value;
                 SetProperty();
             }
         }

@@ -16,7 +16,7 @@ namespace RelertSharp.Wpf
 
 
         #region Api
-        public static void PushResult(IEnumerable<object> src, bool clearAllPreviousResult = true)
+        public static void PushSearchResult(IEnumerable<object> src, bool clearAllPreviousResult = true)
         {
             if (clearAllPreviousResult) SearchClearRequested?.Invoke(null, null);
             SearchResultPushed?.Invoke(src);

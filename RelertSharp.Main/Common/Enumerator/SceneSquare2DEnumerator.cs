@@ -68,7 +68,7 @@ namespace RelertSharp.Common
             width = mapwidth;
             current = begin;
             current.X--;
-            invalid = begin.X <= 0 || begin.Y <= 0 || end.X <= 0 || end.Y <= 0;
+            invalid = begin.X < 0 || begin.Y < 0 || end.X < 0 || end.Y < 0;
         }
 
         public I2dLocateable Current

@@ -15,6 +15,32 @@ namespace RelertSharp.Wpf
     internal static class NavigationHub
     {
         #region Main Distribution
+        public static void AutoTrace(object src)
+        {
+            if (src is IMapObject obj)
+            {
+                GoToPosition(obj, obj.GetHeight());
+            }
+            else if (src is ILogicItem logic)
+            {
+                IIndexableItem item = logic as IIndexableItem;
+                switch (logic.ItemType)
+                {
+                    case LogicType.Trigger:
+                        GoToTrigger(item);
+                        break;
+                    case LogicType.Team:
+                        GoToTeam(item);
+                        break;
+                    case LogicType.Script:
+                        GoToScript(item);
+                        break;
+                    case LogicType.Taskforce:
+                        GoToTaskforce(item);
+                        break;
+                }
+            }
+        }
         public static void HandleTrace(TriggerInfoTraceType type, string value, IIndexableItem target)
         {
             switch (type)
@@ -75,6 +101,7 @@ namespace RelertSharp.Wpf
         public static void GoToTrigger(IIndexableItem trigger)
         {
             AddHistory(trgList);
+            LayoutManagerHub.SwitchToActivateContent(trgList);
             GoToTriggerRequest?.Invoke(trigger);
         }
         public static void BindTriggerList(IListContainer target)
@@ -87,6 +114,7 @@ namespace RelertSharp.Wpf
         public static void GoToTeam(IIndexableItem team)
         {
             AddHistory(teamList);
+            LayoutManagerHub.SwitchToActivateContent(teamList);
             GoToTeamRequest?.Invoke(team);
         }
         public static void BindTeamList(IListContainer target)
@@ -99,6 +127,7 @@ namespace RelertSharp.Wpf
         public static void GoToScript(IIndexableItem script)
         {
             AddHistory(scriptList);
+            LayoutManagerHub.SwitchToActivateContent(scriptList);
             GoToScriptRequest?.Invoke(script);
         }
         public static void BindScriptList(IListContainer target)
@@ -111,6 +140,7 @@ namespace RelertSharp.Wpf
         public static void GoToTaskforce(IIndexableItem taskforce)
         {
             AddHistory(tfList);
+            LayoutManagerHub.SwitchToActivateContent(tfList);
             GoToTaskforceRequest?.Invoke(taskforce);
         }
         public static void BindTaskforceList(IListContainer target)

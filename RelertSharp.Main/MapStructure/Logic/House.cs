@@ -120,6 +120,20 @@ namespace RelertSharp.MapStructure.Logic
             }
             return data;
         }
+        public string[] ExtractParameter()
+        {
+            return new string[]
+            {
+                Name,
+                Country,
+                ColorName,
+                TechLevel.ToString(),
+                PercentBuilt.ToString(),
+                PlayerControl.ZeroOne(),
+                Edge.ToString(),
+                BaseNodes.Count.ToString()
+            };
+        }
         public override string ToString()
         {
             return Name;

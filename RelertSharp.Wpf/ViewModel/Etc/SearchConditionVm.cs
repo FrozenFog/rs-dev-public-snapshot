@@ -47,6 +47,11 @@ namespace RelertSharp.Wpf.ViewModel
                 if (!vm.IsLogicOperEnable) vm.LogicOper = LogicOperator.None;
             }
         }
+        public override void RemoveAllItem()
+        {
+            base.RemoveAllItem();
+            SetProperty(nameof(IsLogicOperEnable));
+        }
         public bool IsValidObject(object validate)
         {
             bool r = true;

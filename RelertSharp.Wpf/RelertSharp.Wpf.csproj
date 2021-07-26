@@ -87,6 +87,9 @@
     <Compile Include="Dialogs\DlgCmdInput.xaml.cs">
       <DependentUpon>DlgCmdInput.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\DlgIniInspector.xaml.cs">
+      <DependentUpon>DlgIniInspector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\DlgNampInput.xaml.cs">
       <DependentUpon>DlgNampInput.xaml</DependentUpon>
     </Compile>
@@ -94,6 +97,7 @@
       <DependentUpon>DlgTriggerListAddGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\Components.cs" />
+    <Compile Include="MainWindow\Hubs\LayoutManagerHub.cs" />
     <Compile Include="MainWindow\Menu.cs" />
     <Compile Include="MainWindow\Hubs\NavigationHub.cs" />
     <Compile Include="MainWindow\Hubs\SearchHub.cs" />
@@ -211,6 +215,10 @@
       <DependentUpon>AiTriggerView.xaml</DependentUpon>
     </Compile>
     <Page Include="Dialogs\DlgCmdInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DlgIniInspector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

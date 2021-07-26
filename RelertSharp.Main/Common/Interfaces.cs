@@ -64,12 +64,17 @@ namespace RelertSharp.Common
         int Coord { get; }
     }
 
+    public interface IExtractableObject
+    {
+        string[] ExtractParameter();
+    }
+
     public interface IBaseObject
     {
         MapObjectType ObjectType { get; }
     }
 
-    public interface ILogicItem
+    public interface ILogicItem : IExtractableObject
     {
         LogicType ItemType { get; }
     }
@@ -85,7 +90,7 @@ namespace RelertSharp.Common
         int Z { get; set; }
     }
 
-    public interface IMapObject : IRegistable, I2dLocateable, IBaseObject
+    public interface IMapObject : IRegistable, I2dLocateable, IBaseObject, IExtractableObject
     {
         ISceneObject SceneObject { get; }
         int GetHeight(Map source = null);
@@ -97,7 +102,6 @@ namespace RelertSharp.Common
         void CancelSelection();
         void Hide(bool force = false);
         void Reveal();
-        string[] ExtractParameter();
         IMapObject ConstructFromParameter(string[] commands);
         string Id { get; }
         bool IsSelected { get; }

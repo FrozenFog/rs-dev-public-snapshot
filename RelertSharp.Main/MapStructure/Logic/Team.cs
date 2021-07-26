@@ -127,6 +127,18 @@ namespace RelertSharp.MapStructure.Logic
             else result.AddPair(Residue.Values);
             return result;
         }
+        public string[] ExtractParameter()
+        {
+            return new string[]
+            {
+                Id,
+                Name,
+                TaskforceID,
+                ScriptID,
+                Owner,
+                Group
+            };
+        }
         #endregion
 
 

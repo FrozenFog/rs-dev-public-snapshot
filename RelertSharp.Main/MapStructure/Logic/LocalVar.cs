@@ -122,6 +122,19 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
 
 
+        #region Public methods
+        public string[] ExtractParameter()
+        {
+            return new string[]
+            {
+                Id,
+                Name,
+                InitState.ZeroOne()
+            };
+        }
+        #endregion
+
+
         #region Public Calls - LocalVarItem
         public override string ToString() { return string.Format("{0}: {1} ({2})", Id, Name, InitState); }
         public bool InitState { get; set; }

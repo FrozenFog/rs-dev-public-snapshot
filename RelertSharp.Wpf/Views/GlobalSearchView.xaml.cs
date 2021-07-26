@@ -46,12 +46,15 @@ namespace RelertSharp.Wpf.Views
 
         private void RemoveResultHandler(object sender, EventArgs e)
         {
-            ResultVm.Clear();
+            SearchResult.Clear();
+            SetResult();
         }
 
         private void AddRequestedResult(IEnumerable<object> objects)
         {
-            objects.Foreach(x => ResultVm.Add(new SearchResultVm(x)));
+            SearchResult.AddRange(objects);
+            SearchResult = SearchResult.Distinct().ToList();
+            SetResult();
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -184,54 +187,53 @@ namespace RelertSharp.Wpf.Views
                 SelectedCondition.RemoveFromAncestor();
             }
         }
+
+        private void Menu_ResetCond(object sender, RoutedEventArgs e)
+        {
+            Root.RemoveAllItem();
+        }
         #endregion
         #region Results
-        private void Menu_ResSelectAll(object sender, RoutedEventArgs e)
-        {
-            foreach (SearchResultVm vm in ResultVm)
-            {
-                vm.IsSelected = true;
-            }
-        }
-
-        private void Menu_ResUnselectAll(object sender, RoutedEventArgs e)
-        {
-            foreach (SearchResultVm vm in ResultVm)
-            {
-                vm.IsSelected = false;
-            }
-        }
 
         private void Menu_ResGenReport(object sender, RoutedEventArgs e)
         {
             StringBuilder sb = new StringBuilder();
             foreach (SearchResultVm vm in ResultVm)
             {
-                if (vm.IsSelected) sb.Append(vm.GenerateReport());
+                if (vm.IsSelected) sb.AppendLine(vm.GenerateReport());
             }
             Clipboard.SetText(sb.ToString());
         }
-
-        private void Menu_ResDiscard(object sender, RoutedEventArgs e)
+        private void ResMenuRightDown(object sender, MouseButtonEventArgs e)
         {
-            SearchResult.Remove(resultMouseAt);
-        }
-        private SearchResultVm resultMouseAt;
-        private void ResPrevRightDown(object sender, MouseButtonEventArgs e)
-        {
-            resultMouseAt = lvResult.GetItemAtMouse<SearchResultVm, TextBlock>(e);
-            bool canDiscard = resultMouseAt != null;
-            menuDiscardRes.IsEnabled = canDiscard;
-            e.Handled = true;
+            bool hasItem = lvResult.SelectedItems.Count > 0;
+            menuDiscardRes.IsEnabled = hasItem;
+            menuSelectScene.IsEnabled = hasItem;
+            menuReport.IsEnabled = hasItem;
         }
         private void Menu_ResDiscardSel(object sender, RoutedEventArgs e)
         {
             List<SearchResultVm> remove = new List<SearchResultVm>();
+            List<object> removeObj = new List<object>();
+            foreach (SearchResultVm vm in lvResult.SelectedItems)
+            {
+                remove.Add(vm);
+                removeObj.Add(vm.Data);
+            }
+            removeObj.ForEach(x => SearchResult.Remove(x));
+            remove.ForEach(x => ResultVm.Remove(x));
+        }
+        private void Menu_AddSelection(object sender, RoutedEventArgs e)
+        {
+            List<IMapObject> src = new List<IMapObject>();
             foreach (SearchResultVm vm in ResultVm)
             {
-                if (vm.IsSelected) remove.Add(vm);
+                if (vm.IsSelected && vm.Data is IMapObject obj)
+                {
+                    src.Add(obj);
+                }
             }
-            remove.ForEach(x => ResultVm.Remove(x));
+            SearchHub.PushSelection(src);
         }
         #endregion
         #endregion
@@ -303,6 +305,16 @@ namespace RelertSharp.Wpf.Views
         {
             Point current = e.GetPosition(trvConditions);
             dragCond.MouseMoveDrag(current);
+        }
+        #endregion
+
+        #region Mouse
+        private void ResTraceDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (((FrameworkElement)sender).DataContext is SearchResultVm vm)
+            {
+                NavigationHub.AutoTrace(vm.Data);
+            }
         }
         #endregion
     }
