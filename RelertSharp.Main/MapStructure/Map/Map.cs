@@ -142,6 +142,15 @@ namespace RelertSharp.MapStructure
         //public ActionCollection Actions { get; private set; }
         //public EventCollection Events { get; private set; }
         public MapInfo Info { get; private set; } 
+        public IEnumerable<BaseNode> AllBaseNodes
+        {
+            get
+            {
+                IEnumerable<BaseNode> nodes = new List<BaseNode>();
+                foreach (var house in Houses) nodes = nodes.Concat(house.BaseNodes);
+                return nodes;
+            }
+        }
         public INIEntity[] InfoEntity
         {
             get { return new INIEntity[3] { Info.Basic, Info.Map, Info.SpecialFlags }; }

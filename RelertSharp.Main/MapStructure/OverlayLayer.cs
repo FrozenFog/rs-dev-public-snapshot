@@ -179,13 +179,7 @@ namespace RelertSharp.MapStructure
         public override int Coord { get { return Misc.CoordInt(X, Y); } }
         public string RegName { get; private set; }
         public override MapObjectType ObjectType { get { return MapObjectType.Overlay; } }
-        #endregion
-
-
-        #region Drawing
-        public ISceneOverlay SceneObject { get; set; }
-
-        ISceneObject IMapObject.SceneObject { get { return SceneObject; } }
+        public ISceneOverlay SceneOverlay { get { return SceneObject as ISceneOverlay; } }
         #endregion
     }
 }

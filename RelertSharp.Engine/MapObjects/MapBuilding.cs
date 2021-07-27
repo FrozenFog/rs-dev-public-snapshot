@@ -92,7 +92,7 @@ namespace RelertSharp.Engine.MapObjects
         {
             if (!IsHidden)
             {
-                foreach (int p in Pointers) SetColor(Vec4.HideCompletely);
+                foreach (int p in Pointers) SetColor(p, Vec4.HideCompletely);
                 IsHidden = true;
             }
         }
@@ -101,7 +101,7 @@ namespace RelertSharp.Engine.MapObjects
             if (IsHidden)
             {
                 SetColorStrict(ColorVector);
-                foreach (int p in Shadows) SetColor(Vec4.One);
+                foreach (int p in Shadows) SetColor(p, Vec4.One);
                 SetColor(pAlphaImg, Vec4.One);
                 IsHidden = false;
             }

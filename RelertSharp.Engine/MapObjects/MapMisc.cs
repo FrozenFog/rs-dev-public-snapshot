@@ -77,6 +77,7 @@ namespace RelertSharp.Engine.MapObjects
             {
                 SetColorStrict(Vec4.HideCompletely);
                 SetColor(pSelfShadow, Vec4.HideCompletely);
+                foreach (int pNum in WaypointNums) SetColor(pNum, Vec4.HideCompletely);
                 IsHidden = true;
             }
         }
@@ -86,6 +87,7 @@ namespace RelertSharp.Engine.MapObjects
             {
                 SetColorStrict(ColorVector);
                 SetColor(pSelfShadow, Vec4.One);
+                foreach (int pNum in WaypointNums) SetColor(pNum, Vec4.One);
                 IsHidden = false;
             }
         }

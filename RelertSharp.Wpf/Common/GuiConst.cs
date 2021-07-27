@@ -44,7 +44,8 @@ namespace RelertSharp.Wpf.Common
         HousePanel,
         LocalVarPanel,
         GlobalSearch,
-        InspectorPanel
+        InspectorPanel,
+        LayerControl
     }
     public class RsViewComponentAttribute : Attribute
     {

@@ -57,6 +57,8 @@ namespace RelertSharp.Wpf
         private readonly GlobalSearchView globalSearch = new GlobalSearchView();
         [RsViewComponent(GuiViewType.InspectorPanel, GuiViewSide.Right, "Inspector")]
         private readonly SelectedItemView inspector = new SelectedItemView();
+        [RsViewComponent(GuiViewType.LayerControl, GuiViewSide.Right, "Layer Control")]
+        private readonly LayerView layerControl = new LayerView();
         #endregion
     }
 }

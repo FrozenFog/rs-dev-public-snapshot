@@ -5,5 +5,7 @@
     </ResourceDictionary.MergedDictionaries>
     <Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
         <Setter Property="Foreground" Value="{StaticResource textFront}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Height" Value="23"/>
     </Style>
 </ResourceDictionary>

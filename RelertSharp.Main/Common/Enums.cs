@@ -70,7 +70,9 @@ namespace RelertSharp.Common
         MinimapRenderable = Building | Unit | Infantry | Overlay | Terrain,
 
         RsObjects = LightSource,
-        AllSelectableObjects = CombatObject | MiscObject | LogicObject | BaseNode | RsObjects
+        AllSelectableObjects = CombatObject | MiscObject | LogicObject | BaseNode | RsObjects,
+
+        Anything = int.MaxValue
     }
     public enum LogicType
     {

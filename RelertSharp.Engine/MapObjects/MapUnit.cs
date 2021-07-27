@@ -79,6 +79,7 @@ namespace RelertSharp.Engine.MapObjects
             if (!IsHidden)
             {
                 SetColorStrict(Vec4.HideCompletely);
+                SetShadow(Vec4.HideCompletely);
                 IsHidden = true;
             }
         }
@@ -86,7 +87,8 @@ namespace RelertSharp.Engine.MapObjects
         {
             if (IsHidden)
             {
-                SetColorStrict(Vec4.HideCompletely);
+                SetColorStrict(ColorVector);
+                SetShadow(Vec4.One);
                 IsHidden = false;
             }
         }
@@ -113,6 +115,12 @@ namespace RelertSharp.Engine.MapObjects
             SetColor(pSelf, color);
             SetColor(pTurret, color);
             SetColor(pBarrel, color);
+        }
+        private void SetShadow(Vec4 color)
+        {
+            SetColor(pSelfShadow, color);
+            SetColor(pTurretShadow, color);
+            SetColor(pBarrelShadow, color);
         }
         #endregion
 

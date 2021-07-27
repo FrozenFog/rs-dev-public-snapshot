@@ -104,8 +104,8 @@ namespace RelertSharp.Engine
                 {
                     if (obj is OverlayUnit o)
                     {
-                        if (o.SceneObject.IsWall) o.SceneObject.SetColor(ambientLight);
-                        else if (o.SceneObject.IsHiBridge)
+                        if (o.SceneOverlay.IsWall) o.SceneObject.SetColor(ambientLight);
+                        else if (o.SceneOverlay.IsHiBridge)
                         {
                             Vec4 hicolor = Vec4.Unit3(light.Level * (o.SceneObject.Z + 4)) + sceneColor;
                             o.SceneObject.SetColor(hicolor);

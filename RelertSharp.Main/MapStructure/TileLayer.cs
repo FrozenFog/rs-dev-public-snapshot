@@ -762,7 +762,7 @@ namespace RelertSharp.MapStructure
                     if (t == typeof(StructureItem)) return false;
                     if (t == typeof(OverlayUnit))
                     {
-                        ISceneOverlay p = (obj as OverlayUnit).SceneObject;
+                        ISceneOverlay p = (obj as OverlayUnit).SceneOverlay;
                         result = result && (p.IsTiberiumOverlay || p.IsRubble) && !p.IsMoveBlockingOverlay;
                     }
                 }

@@ -1,0 +1,59 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RelertSharp.Wpf.Views"
+             xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel" x:Class="RelertSharp.Wpf.Views.LayerView"
+             mc:Ignorable="d">
+    <Grid>
+        <ScrollViewer>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="10,0,0,0">
+                    <Label Content="Layer" HorizontalContentAlignment="Center"/>
+                    <Label Content="Aircrafts"/>
+                    <Label Content="Infantries"/>
+                    <Label Content="Structures"/>
+                    <Label Content="Units"/>
+                    <Label Content="Terrains"/>
+                    <Label Content="Overlays"/>
+                    <Label Content="Smudges"/>
+                    <Label Content="Celltags"/>
+                    <Label Content="Base nodes"/>
+                    <Label Content="Waypoints"/>
+                </StackPanel>
+                <StackPanel x:Name="stkSelectable" Grid.Column="1">
+                    <Label Content="Selectable" HorizontalContentAlignment="Center"/>
+                    <CheckBox Click="SelectableChanged" Tag="Aircraft" IsChecked="True"/>
+                    <CheckBox Click="SelectableChanged" Tag="Infantry" IsChecked="True"/>
+                    <CheckBox Click="SelectableChanged" Tag="Building" IsChecked="True"/>
+                    <CheckBox Click="SelectableChanged" Tag="Vehicle" IsChecked="True"/>
+                    <CheckBox Click="SelectableChanged" Tag="Terrain" IsChecked="True"/>
+                    <CheckBox Click="SelectableChanged" Tag="Overlay" IsChecked="True"/>
+                    <CheckBox Click="SelectableChanged" Tag="Smudge" IsChecked="True"/>
+                    <CheckBox Click="SelectableChanged" Tag="Celltag" IsChecked="True"/>
+                    <CheckBox Click="SelectableChanged" Tag="BaseNode" IsChecked="True"/>
+                    <CheckBox Click="SelectableChanged" Tag="Waypoint" IsChecked="True"/>
+                </StackPanel>
+                <StackPanel x:Name="stkVisible" Grid.Column="2">
+                    <Label Content="Visible" HorizontalContentAlignment="Center"/>
+                    <CheckBox Click="VisibleChanged" Tag="Aircraft" IsChecked="True"/>
+                    <CheckBox Click="VisibleChanged" Tag="Infantry" IsChecked="True"/>
+                    <CheckBox Click="VisibleChanged" Tag="Building" IsChecked="True"/>
+                    <CheckBox Click="VisibleChanged" Tag="Vehicle" IsChecked="True"/>
+                    <CheckBox Click="VisibleChanged" Tag="Terrain" IsChecked="True"/>
+                    <CheckBox Click="VisibleChanged" Tag="Overlay" IsChecked="True"/>
+                    <CheckBox Click="VisibleChanged" Tag="Smudge" IsChecked="True"/>
+                    <CheckBox Click="VisibleChanged" Tag="Celltag" IsChecked="True"/>
+                    <CheckBox Click="VisibleChanged" Tag="BaseNode" IsChecked="True"/>
+                    <CheckBox Click="VisibleChanged" Tag="Waypoint" IsChecked="True"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

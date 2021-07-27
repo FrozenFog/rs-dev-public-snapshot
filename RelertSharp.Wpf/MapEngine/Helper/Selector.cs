@@ -254,6 +254,16 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             selectedObjects.Clear();
             OnSelectionChanged();
         }
+        public static void UnselectObject(IEnumerable<IMapObject> src)
+        {
+            IEnumerable<IMapObject> intersect = selectedObjects.Intersect(src);
+            foreach (IMapObject obj in intersect)
+            {
+                obj.CancelSelection();
+                selectedObjects.Remove(obj);
+            }
+            OnSelectionChanged();
+        }
         public static void AddSelectionFlag(MapObjectType typeAdd)
         {
             selectFlag |= typeAdd;
@@ -266,6 +276,11 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             /// 1 0 1
             /// 1 1 0
             selectFlag &= ~typeRemove;
+        }
+        public static void SetSelectionFlag(MapObjectType type, bool isEnable)
+        {
+            if (isEnable) AddSelectionFlag(type);
+            else RemoveSelectionFlag(type);
         }
         #endregion
         #region Moving and deleting
@@ -335,6 +350,10 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             OnSelectionChanged();
         }
         #endregion
+        public static void CallUpdateSelection()
+        {
+            OnSelectionChanged();
+        }
         #endregion
 
 

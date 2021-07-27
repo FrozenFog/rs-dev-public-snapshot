@@ -10,6 +10,7 @@ using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
 using RelertSharp.MapStructure;
 using RelertSharp.Wpf.Common;
+using RelertSharp.Wpf.MapEngine.Helper;
 
 namespace RelertSharp.Wpf
 {
@@ -126,7 +127,7 @@ namespace RelertSharp.Wpf
         }
         public static void AddBrushObjectToMap()
         {
-            if (currentObject != null)
+            if (currentObject != null && LayerControl.IsTypeVisible(currentObject.ObjectType))
             {
                 IMapObject drawedObject = null;
                 IObjectBrushFilter dummyFilter = new ObjectBrushFilter();

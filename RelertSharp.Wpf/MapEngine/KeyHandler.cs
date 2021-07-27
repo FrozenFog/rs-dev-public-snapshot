@@ -16,6 +16,7 @@ namespace RelertSharp.Wpf.MapEngine
         private DelayedAction keyClickAction;
         #region Handler Firstpass
         private bool isLoaded = false;
+        private bool keyIsDown = false;
         private void PanelLoaded(object sender, RoutedEventArgs e)
         {
             if (!isLoaded)
@@ -28,7 +29,7 @@ namespace RelertSharp.Wpf.MapEngine
         }
         private void HandleKeyDown(object sender, KeyEventArgs e)
         {
-            if (drew && ParentDocument.IsActive)
+            if (drew && ParentDocument.IsActive && !keyIsDown)
             {
                 if (e.Key == Key.Z && GuiUtil.IsKeyDown(Key.LeftCtrl))
                 {
@@ -58,14 +59,15 @@ namespace RelertSharp.Wpf.MapEngine
                             break;
                     }
                 }
+                keyIsDown = true;
             }
         }
 
         private void HandleKeyUp(object sender, KeyEventArgs e)
         {
-            if (drew && ParentDocument.IsActive)
+            if (drew && ParentDocument.IsActive && keyIsDown)
             {
-
+                keyIsDown = false;
             }
         }
 
