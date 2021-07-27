@@ -164,6 +164,7 @@ namespace RelertSharp.Wpf
                 if (drawedObject != null)
                 {
                     EngineApi.DrawObject(drawedObject);
+                    EngineApi.ApplyLightningToObject(drawedObject);
                     UndoRedoHub.PushCommand(drawedObject);
                 }
             }

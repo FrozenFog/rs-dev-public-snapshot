@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:RelertSharp.Wpf.Views"
              xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="{x:Type ListViewItem}"/>
+    </UserControl.Resources>
     <UserControl.DataContext>
         <ViewModel:TaskforceVm/>
     </UserControl.DataContext>

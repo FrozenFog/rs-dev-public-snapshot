@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.MapStructure
 {
-    public abstract class BaseVisibleObject : IndexableItem, I2dLocateable
+    public abstract class BaseVisibleObject<TSceneInterface> : IndexableItem, I2dLocateable where TSceneInterface : ISceneObject
     {
         protected bool isSelected = false;
         protected bool isHidden = false;
@@ -69,7 +69,7 @@ namespace RelertSharp.MapStructure
             SceneObject?.Dispose();
         }
 
-        public virtual ISceneObject SceneObject { get; set; }
+        public virtual TSceneInterface SceneObject { get; set; }
         public abstract int X { get; set; }
         public abstract int Y { get; set; }
         public virtual MapObjectType ObjectType { get; protected set; } 

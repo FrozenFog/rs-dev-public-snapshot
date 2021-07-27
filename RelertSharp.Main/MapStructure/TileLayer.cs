@@ -344,7 +344,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class Tile : BaseVisibleObject, I3dLocateable
+    public class Tile : BaseVisibleObject<ISceneTile>, I3dLocateable
     {
         private int tileIndex;
         private List<IMapObject> objectsOnTile = new List<IMapObject>();
@@ -762,7 +762,7 @@ namespace RelertSharp.MapStructure
                     if (t == typeof(StructureItem)) return false;
                     if (t == typeof(OverlayUnit))
                     {
-                        ISceneOverlay p = (obj as OverlayUnit).SceneOverlay;
+                        ISceneOverlay p = (obj as OverlayUnit).SceneObject;
                         result = result && (p.IsTiberiumOverlay || p.IsRubble) && !p.IsMoveBlockingOverlay;
                     }
                 }
@@ -788,7 +788,6 @@ namespace RelertSharp.MapStructure
         public byte IceGrowth { get; set; }
         public override int Coord { get { return Misc.CoordInt(X, Y); } }
         public int MinimapRenderableObjectCount { get { return objectsOnTile.Where(x => (x.ObjectType & MapObjectType.MinimapRenderable) != 0).Count(); } }
-        public new ISceneTile SceneObject { get; set; }
         public bool IsHyte { get; set; }
         public int TileTerrainType { get; set; }
         public bool Disposed { get; private set; }

@@ -79,7 +79,7 @@ namespace RelertSharp.MapStructure.Objects
     }
 
 
-    public class ObjectItemBase : BaseVisibleObject, IRegistable, ITaggableObject
+    public class ObjectItemBase : BaseVisibleObject<ISceneObject>, IRegistable, ITaggableObject
     {
 
 

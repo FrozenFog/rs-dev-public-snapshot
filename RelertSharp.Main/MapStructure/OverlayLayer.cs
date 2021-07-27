@@ -96,7 +96,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class OverlayUnit : BaseVisibleObject, IMapObject, IRegistable
+    public class OverlayUnit : BaseVisibleObject<ISceneOverlay>, IMapObject, IRegistable
     {
 
 
@@ -179,7 +179,8 @@ namespace RelertSharp.MapStructure
         public override int Coord { get { return Misc.CoordInt(X, Y); } }
         public string RegName { get; private set; }
         public override MapObjectType ObjectType { get { return MapObjectType.Overlay; } }
-        public ISceneOverlay SceneOverlay { get { return SceneObject as ISceneOverlay; } }
+
+        ISceneObject IMapObject.SceneObject => base.SceneObject;
         #endregion
     }
 }

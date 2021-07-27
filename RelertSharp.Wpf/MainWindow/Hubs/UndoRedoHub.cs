@@ -282,6 +282,7 @@ namespace RelertSharp.Wpf
                         IMapObject add = refers[i]/*.ConstructFromParameter(arr)*/;
                         MapApi.AddObject(add);
                         EngineApi.DrawObject(add);
+                        EngineApi.ApplyLightningToObject(add);
                     }
                 }
                 else
@@ -293,6 +294,7 @@ namespace RelertSharp.Wpf
                     //IMapObject add = referance.ConstructFromParameter(arr);
                     MapApi.AddObject(obj);
                     EngineApi.DrawObject(obj);
+                    EngineApi.ApplyLightningToObject(obj);
                 }
             }
 

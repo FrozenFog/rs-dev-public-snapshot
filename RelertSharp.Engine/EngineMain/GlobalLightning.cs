@@ -87,7 +87,7 @@ namespace RelertSharp.Engine
                 ApplyLampAt(src, color * LightSource.IntensityShift(src.Intensity), src.Range);
             }
         }
-        public static void SetSceneLightning(LightningItem light)
+        public static void SetSceneLightning(LightningItem light, out Vec4 vecScene, out Vec4 vecObject)
         {
             Vec4 color = new Vec4(light.Red, light.Green, light.Blue, 1);
             Vec4 amb = Vec4.Unit3(light.Ambient);
@@ -95,6 +95,8 @@ namespace RelertSharp.Engine
             sceneColor = color;
             ambientLight = amb;
             lightningLevel = light.Level;
+            vecObject = ambientLight;
+            vecScene = sceneColor;
             foreach (Tile t in GlobalMap.TilesData)
             {
                 Vec4 tilecolor = sceneColor;
@@ -104,8 +106,8 @@ namespace RelertSharp.Engine
                 {
                     if (obj is OverlayUnit o)
                     {
-                        if (o.SceneOverlay.IsWall) o.SceneObject.SetColor(ambientLight);
-                        else if (o.SceneOverlay.IsHiBridge)
+                        if (o.SceneObject.IsWall) o.SceneObject.SetColor(ambientLight);
+                        else if (o.SceneObject.IsHiBridge)
                         {
                             Vec4 hicolor = Vec4.Unit3(light.Level * (o.SceneObject.Z + 4)) + sceneColor;
                             o.SceneObject.SetColor(hicolor);
@@ -113,6 +115,26 @@ namespace RelertSharp.Engine
                         else o.SceneObject.SetColor(sceneColor);
                     }
                     else obj.SceneObject.SetColor(ambientLight);
+                }
+            }
+        }
+        public static void SetObjectLightning(IMapObject obj)
+        {
+            if (obj.ObjectType == MapObjectType.Overlay)
+            {
+                if (obj.SceneObject is ISceneOverlay ov)
+                {
+                    if (ov.IsWall) ov.SetColor(ambientLight);
+                    else if (ov.IsHiBridge)
+                    {
+                        Vec4 hicolor = Vec4.Unit3(lightningLevel * (ov.Z + 4)) + sceneColor;
+                        ov.SetColor(hicolor);
+                    }
+                    else ov.SetColor(sceneColor);
+                }
+                else
+                {
+                    obj.SceneObject.SetColor(ambientLight);
                 }
             }
         }

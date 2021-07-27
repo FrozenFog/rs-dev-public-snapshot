@@ -60,7 +60,7 @@ namespace RelertSharp.MapStructure.Points
 
 
 
-    public class PointItemBase : BaseVisibleObject, I2dLocateable
+    public class PointItemBase : BaseVisibleObject<ISceneObject>, I2dLocateable
     {
         public PointItemBase()
         {

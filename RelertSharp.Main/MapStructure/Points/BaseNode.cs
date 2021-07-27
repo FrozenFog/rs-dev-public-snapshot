@@ -4,7 +4,7 @@ using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.MapStructure.Points
 {
-    public class BaseNode : BaseVisibleObject, IMapObject, IOwnableObject
+    public class BaseNode : BaseVisibleObject<ISceneObject>, IMapObject, IOwnableObject
     {
         public BaseNode(string _name, int _x, int _y, HouseItem parent)
         {
