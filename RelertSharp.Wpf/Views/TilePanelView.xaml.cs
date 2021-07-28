@@ -35,7 +35,7 @@ namespace RelertSharp.Wpf.Views
         public TilePanelView()
         {
             InitializeComponent();
-            GlobalVar.MapDocumentLoaded += MapReloadedHandler;
+            GlobalVar.MapLoadCompleteAsync += MapLoadComplete;
             TilePaintBrush.SelectTileForwardRequest += ForwardSelection;
             TilePaintBrush.SelectTileBackwardRequest += BackwardSelection;
         }
@@ -115,10 +115,8 @@ namespace RelertSharp.Wpf.Views
 
         #region Handler
         #region Load & selection
-        private void MapReloadedHandler(object sender, EventArgs e)
+        private async void MapLoadComplete()
         {
-            trvMain.Items.Clear();
-            favTilesets = GlobalVar.GlobalConfig.UserConfig.GetFavTilesetsByTheater(GlobalVar.GlobalMap.Info.TheaterName);
             void add_to(MapStructure.TileSet set, TileSetTreeVm dest)
             {
                 if (set.AllowPlace && !set.IsFramework)
@@ -127,7 +125,7 @@ namespace RelertSharp.Wpf.Views
                     dest.AddItem(src);
                 }
             }
-            void loadGeneral()
+            TileSetTreeVm loadGeneral()
             {
                 TileSetTreeVm general = new TileSetTreeVm("General Tile Sets");
                 foreach (var p in GlobalVar.TileDictionary.GeneralTilesets)
@@ -135,10 +133,11 @@ namespace RelertSharp.Wpf.Views
                     var tileset = GlobalVar.TileDictionary.GetTileSetFromIndex(p.Value);
                     add_to(tileset, general);
                 }
-                trvMain.Items.Add(general);
+                return general;
             }
-            void loadCustom()
+            List<TileSetTreeVm> loadCustom()
             {
+                List<TileSetTreeVm> result = new List<TileSetTreeVm>();
                 foreach (var classInfo in GlobalVar.GlobalConfig.ModConfig.TileSetInfo.Classes)
                 {
                     TileSetTreeVm root = new TileSetTreeVm(classInfo.Title);
@@ -147,16 +146,17 @@ namespace RelertSharp.Wpf.Views
                     {
                         if (re.Match(tileset.SetName).Success) add_to(tileset, root);
                     }
-                    trvMain.Items.Add(root);
+                    result.Add(root);
                 }
                 TileSetTreeVm all = new TileSetTreeVm("All tile sets");
                 foreach (var tileset in GlobalVar.TileDictionary.TileSets)
                 {
                     add_to(tileset, all);
                 }
-                trvMain.Items.Add(all);
+                result.Add(all);
+                return result;
             }
-            void loadFav()
+            TileSetTreeVm loadFav()
             {
                 TileSetTreeVm extractAsVm(FavouriteItemTree src)
                 {
@@ -184,13 +184,23 @@ namespace RelertSharp.Wpf.Views
                     var vm = extractAsVm(favTree);
                     root.AddItem(vm);
                 }
-                trvMain.Items.Add(root);
                 vmFav = root;
+                return root;
             }
-            loadGeneral();
-            loadCustom();
-            loadFav();
-            _isLoaded = true;
+            favTilesets = GlobalVar.GlobalConfig.UserConfig.GetFavTilesetsByTheater(GlobalVar.GlobalMap.Info.TheaterName);
+            List<TileSetTreeVm> vms = new List<TileSetTreeVm>();
+            await Task.Run(() =>
+            {
+                vms.Add(loadGeneral());
+                vms.AddRange(loadCustom());
+                vms.Add(loadFav());
+            });
+            Dispatcher.Invoke(() =>
+            {
+                trvMain.Items.Clear();
+                trvMain.Items.AddRange(vms);
+                _isLoaded = true;
+            });
         }
 
         private void SelectedSetChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

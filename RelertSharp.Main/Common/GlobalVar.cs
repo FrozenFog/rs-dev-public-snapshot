@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace RelertSharp.Common
 {
     public static class GlobalVar
     {
         public static event EventHandler MapDocumentLoaded;
+        public static event Action MapLoadComplete;
+        public static event Action MapLoadCompleteAsync;
         public static event EventHandler MapDocumentRedrawRequested;
         public static FileSystem.MapFile CurrentMapDocument { get; private set; }
         public static MapStructure.Map GlobalMap
@@ -16,11 +20,20 @@ namespace RelertSharp.Common
             }
         }
         public static bool HasMap { get { return GlobalMap != null; } }
-        public static void LoadMapDocument(string path)
+        public static async void LoadMapDocument(string path)
         {
             CurrentMapDocument = new FileSystem.MapFile(path);
             MapDocumentLoaded?.Invoke(null, null);
             MapDocumentRedrawRequested?.Invoke(null, null);
+            MapLoadComplete?.Invoke();
+            await MapLoadedAsync();
+        }
+        private static async Task MapLoadedAsync()
+        {
+            await Task.Run(() =>
+            {
+                MapLoadCompleteAsync?.Invoke();
+            });
         }
         public static ELanguage CurrentLanguage { get; set; } = ELanguage.EnglishUS;
         public static RSConfig GlobalConfig { get; set; }
