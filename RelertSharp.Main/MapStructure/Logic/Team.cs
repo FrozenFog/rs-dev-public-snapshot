@@ -42,15 +42,6 @@ namespace RelertSharp.MapStructure.Logic
             //item.Residue = new Dictionary<string, INIPair>();
             return item;
         }
-        public IEnumerable<TechnoPair> ToTechno()
-        {
-            List<TechnoPair> result = new List<TechnoPair>();
-            foreach (TeamItem team in this)
-            {
-                result.Add(new TechnoPair(team.Id, team.Name));
-            }
-            return result;
-        }
         #endregion
 
     }

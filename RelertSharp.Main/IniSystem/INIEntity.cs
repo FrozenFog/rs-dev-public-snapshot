@@ -167,20 +167,6 @@ namespace RelertSharp.IniSystem
             }
         }
         /// <summary>
-        /// Transform entire IniEnt into an abstract struct, see TechnoPair. 
-        /// Result Eg: "index value". Value depends on two types.
-        /// Use along with LogicEditor.
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="type"></param>
-        /// <param name="indexType"></param>
-        /// <returns></returns>
-        public TechnoPair ToTechno(string index, TechnoPair.AbstractType type = TechnoPair.AbstractType.RegName, TechnoPair.IndexType indexType = TechnoPair.IndexType.Index)
-        {
-            TechnoPair tp = new TechnoPair(this, index, type, indexType);
-            return tp;
-        }
-        /// <summary>
         /// Find and delete a specified Pair, return a NullPair(not null) if not found.
         /// </summary>
         /// <param name="pairKey"></param>

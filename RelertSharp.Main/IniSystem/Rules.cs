@@ -43,17 +43,6 @@ namespace RelertSharp.IniSystem
 
 
         #region Private Methods - Rules
-        private List<TechnoPair> GetTechnoPairs(string entName, TechnoPair.AbstractType type, TechnoPair.IndexType indexType = TechnoPair.IndexType.Index)
-        {
-            INIEntity entLs = this[entName];
-            List<TechnoPair> result = new List<TechnoPair>();
-            foreach (INIPair p in entLs)
-            {
-                INIEntity ent = this[p.Value.ToString()];
-                result.Add(ent.ToTechno(p.Name, type, indexType));
-            }
-            return result;
-        }
         private IEnumerable<IIndexableItem> GetIdxItem_Reg_Name(string entName)
         {
             INIEntity entList = this[entName];

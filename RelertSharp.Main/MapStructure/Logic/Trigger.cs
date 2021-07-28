@@ -33,16 +33,6 @@ namespace RelertSharp.MapStructure.Logic
                 data[p.Name] = new TriggerItem(p.Name, l[0], l[1], l[2], IniParseBool(l[3]), IniParseBool(l[4]), IniParseBool(l[5]), IniParseBool(l[6]), int.Parse(l[7]));
             }
         }
-        public IEnumerable<TechnoPair> ToTechno()
-        {
-            List<TechnoPair> result = new List<TechnoPair>();
-            foreach (TriggerItem trigger in data.Values)
-            {
-                TechnoPair p = new TechnoPair(trigger.Id, trigger.Name);
-                result.Add(p);
-            }
-            return result;
-        }
         #endregion
 
 

@@ -214,7 +214,6 @@ namespace RelertSharp.Wpf
                             if (GlobalVar.GlobalDir.HasFile(csfname)) GlobalVar.GlobalCsf.AddCsfLib(GlobalVar.GlobalDir.GetFile(csfname, FileExtension.CSF));
                         }
                     }
-                    GlobalVar.GlobalCsf.ToTechno();
                 }
             }
             else GlobalVar.GlobalCsf = new CsfFile();

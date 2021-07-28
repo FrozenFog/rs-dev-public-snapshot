@@ -80,15 +80,6 @@ namespace RelertSharp.FileSystem
 
 
         #region Public Methods - CsfFile
-        public void ToTechno()
-        {
-            TechnoPairs.Clear();
-            foreach (CsfString csf in this)
-            {
-                TechnoPair p = new TechnoPair(csf.UIName, "");
-                TechnoPairs.Add(p);
-            }
-        }
         public bool HasString(string _uiTag) { return data.Keys.Contains(_uiTag); }
         public void AddCsfLib(CsfFile csf)
         {
@@ -112,7 +103,6 @@ namespace RelertSharp.FileSystem
 
 
         #region Public Calls - CsfFile
-        public List<TechnoPair> TechnoPairs { get; set; } = new List<TechnoPair>();
         public int CsfVersion { get; private set; }
         public int LabelCount { get; private set; }
         public int StringCount { get; private set; }
