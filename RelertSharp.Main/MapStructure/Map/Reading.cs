@@ -1,6 +1,7 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
+using RelertSharp.IniSystem.Serialization;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
@@ -135,9 +136,12 @@ namespace RelertSharp.MapStructure
             List<string> _taskforceList = f.PopEnt("TaskForces").TakeValuesToList();
             List<string> _scriptList = f.PopEnt("ScriptTypes").TakeValuesToList();
 
+            IniEntitySerializer serTeam = new IniEntitySerializer(typeof(TeamItem));
             foreach (string teamID in _teamList)
             {
-                Teams[teamID] = new TeamItem(f.PopEnt(teamID));
+                TeamItem team = new TeamItem();
+                serTeam.Deserialize(f.PopEnt(teamID), team);
+                Teams[teamID] = team;
             }
             foreach (string tfID in _taskforceList)
             {
@@ -152,12 +156,17 @@ namespace RelertSharp.MapStructure
             INIEntity _countryList = f.PopEnt("Countries");
 
             Countries = new CountryCollection();
+            IniEntitySerializer serCon = new IniEntitySerializer(typeof(CountryItem));
             foreach (INIPair p in _countryList)
             {
-                CountryItem item = new CountryItem(f.PopEnt(p.Value));
-                item.CountryNameChanged += CountryNameChanged;
-                //if (string.IsNullOrEmpty(item.Name)) item.Name = p.Value;
-                Countries[p.Name] = item;
+                CountryItem con = new CountryItem();
+                serCon.Deserialize(f.PopEnt(p.Value), con);
+                con.CountryNameChanged += CountryNameChanged;
+                Countries[p.Name] = con;
+                //CountryItem item = new CountryItem(f.PopEnt(p.Value));
+                //item.CountryNameChanged += CountryNameChanged;
+                ////if (string.IsNullOrEmpty(item.Name)) item.Name = p.Value;
+                //Countries[p.Name] = item;
             }
             foreach (INIPair p in _houseList)
             {

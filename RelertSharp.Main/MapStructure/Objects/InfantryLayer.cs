@@ -1,4 +1,5 @@
 ﻿using RelertSharp.Common;
+using RelertSharp.IniSystem.Serialization;
 using System;
 using System.Collections.Generic;
 using static RelertSharp.Utils.Misc;
@@ -140,6 +141,7 @@ namespace RelertSharp.MapStructure.Objects
                 };
             }
         }
+        [IniPairItem(5)]
         public int SubCell
         {
             get { return subcell; }
@@ -155,6 +157,20 @@ namespace RelertSharp.MapStructure.Objects
                 }
             }
         }
+        [IniPairItem(7)]
+        public override int Rotation { get => base.Rotation; set => base.Rotation = value; }
+        [IniPairItem(8)]
+        public override string TagId { get => base.TagId; set => base.TagId = value; }
+        [IniPairItem(9)]
+        public override int VeterancyPercentage { get => base.VeterancyPercentage; set => base.VeterancyPercentage = value; }
+        [IniPairItem(10)]
+        public override string Group { get => base.Group; set => base.Group = value; }
+        [IniPairItem(11, IniBoolCastType.ZeroOne)]
+        public override bool IsAboveGround { get => base.IsAboveGround; set => base.IsAboveGround = value; }
+        [IniPairItem(12, IniBoolCastType.ZeroOne)]
+        public override bool AutoNORecruitType { get => base.AutoNORecruitType; set => base.AutoNORecruitType = value; }
+        [IniPairItem(13, IniBoolCastType.ZeroOne)]
+        public override bool AutoYESRecruitType { get => base.AutoYESRecruitType; set => base.AutoYESRecruitType = value; }
         #endregion
     }
 }

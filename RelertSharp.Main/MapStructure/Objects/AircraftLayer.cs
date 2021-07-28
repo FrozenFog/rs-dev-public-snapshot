@@ -1,4 +1,5 @@
 ﻿using RelertSharp.Common;
+using RelertSharp.IniSystem.Serialization;
 using System;
 using System.Collections.Generic;
 using static RelertSharp.Utils.Misc;
@@ -114,6 +115,10 @@ namespace RelertSharp.MapStructure.Objects
                 };
             }
         }
+        [IniPairItem(10, IniBoolCastType.ZeroOne)]
+        public override bool AutoNORecruitType { get => base.AutoNORecruitType; set => base.AutoNORecruitType = value; }
+        [IniPairItem(11, IniBoolCastType.ZeroOne)]
+        public override bool AutoYESRecruitType { get => base.AutoYESRecruitType; set => base.AutoYESRecruitType = value; }
         #endregion
     }
 }

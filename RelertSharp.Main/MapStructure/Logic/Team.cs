@@ -1,5 +1,6 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
+using RelertSharp.IniSystem.Serialization;
 using System.Collections.Generic;
 
 namespace RelertSharp.MapStructure.Logic
@@ -95,6 +96,7 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - TeamItem
+        [IniPair]
         public override string Name
         {
             get { return this[Constant.KEY_NAME].Value; }
@@ -134,11 +136,13 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - TeamItem
+        [IniPair("TaskForce")]
         public string TaskforceID
         {
             get { return this[Constant.MapStructure.KEY_TASKFORCE].Value; }
             set { this[Constant.MapStructure.KEY_TASKFORCE] = new INIPair(Constant.MapStructure.KEY_TASKFORCE, value); }
         }
+        [IniPair("Script")]
         public string ScriptID
         {
             get { return this[Constant.MapStructure.KEY_SCRIPT].Value; }
@@ -147,16 +151,20 @@ namespace RelertSharp.MapStructure.Logic
         /// <summary>
         /// House
         /// </summary>
+        [IniPair("House")]
         public string Owner
         {
             get { return this[Constant.MapStructure.KEY_HOUSE].Value; }
             set { this[Constant.MapStructure.KEY_HOUSE] = new INIPair(Constant.MapStructure.KEY_HOUSE, value); }
         }
+        [IniPair("Group")]
         public string Group
         {
             get { return this[Constant.MapStructure.KEY_GROUP].GetString(Constant.ID_INVALID); }
             set { this[Constant.MapStructure.KEY_GROUP] = new INIPair(Constant.MapStructure.KEY_GROUP, value); }
         }
+        [IniHeader]
+        public override string Id { get => base.Id; set => base.Id = value; }
         //public BitArray Attributes { get; set; } = new BitArray(21);
         public Dictionary<string, INIPair> Residue { get; set; }
         public INIPair this[string key]

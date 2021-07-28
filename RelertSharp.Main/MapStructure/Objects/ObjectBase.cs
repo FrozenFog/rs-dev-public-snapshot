@@ -1,4 +1,5 @@
 ﻿using RelertSharp.Common;
+using RelertSharp.IniSystem.Serialization;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -139,32 +140,43 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Public Calls - ObjectItemBase
+        [IniHeader]
         public override string Id { get; set; } = Constant.ITEM_NONE;
+        [IniPairItem(1)]
         public string RegName { get; set; } = "(NOTHING)";
+        [IniPairItem(0)]
         public string Owner { get; set; } = Constant.ITEM_NONE;
         /// <summary>
         /// Default: 256
         /// </summary>
+        [IniPairItem(2)]
         public int HealthPoint { get; set; } = 256;
-        public string Status { get; set; } = Constant.ITEM_NONE;
-        public string TagId { get; set; } = Constant.VALUE_NONE;
+        [IniPairItem(6)]
+        public virtual string Status { get; set; } = Constant.ITEM_NONE;
+        [IniPairItem(7)]
+        public virtual string TagId { get; set; } = Constant.VALUE_NONE;
+        [IniPairItem(3)]
         public override int X { get; set; } = 0;
+        [IniPairItem(4)]
         public override int Y { get; set; } = 0;
-        public int Rotation { get; set; } = 0;
+        [IniPairItem(5)]
+        public virtual int Rotation { get; set; } = 0;
         /// <summary>
         /// Default: 100
         /// </summary>
-        public int VeterancyPercentage { get; set; } = 100;
+        [IniPairItem(8)]
+        public virtual int VeterancyPercentage { get; set; } = 100;
         /// <summary>
         /// Default: -1
         /// </summary>
-        public string Group { get; set; } = Constant.ID_INVALID;
-        public bool IsAboveGround { get; set; } = false;
-        public bool AutoNORecruitType { get; set; } = false;
+        [IniPairItem(9)]
+        public virtual string Group { get; set; } = Constant.ID_INVALID;
+        public virtual bool IsAboveGround { get; set; } = false;
+        public virtual bool AutoNORecruitType { get; set; } = false;
         /// <summary>
         /// Default: true
         /// </summary>
-        public bool AutoYESRecruitType { get; set; } = true;
+        public virtual bool AutoYESRecruitType { get; set; } = true;
         public override string Name
         {
             get
@@ -176,11 +188,6 @@ namespace RelertSharp.MapStructure.Objects
         }
 
         public override string Value { get { return RegName; } }
-        #endregion
-
-
-        #region Protected
-
         #endregion
     }
 

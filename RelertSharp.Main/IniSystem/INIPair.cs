@@ -115,37 +115,15 @@ namespace RelertSharp.IniSystem
 
         #region Public Methods - INIPair
         /// <summary>
-        /// Try convert Pair value into destinate type.
-        /// Eg: string to bool, int, etc.
-        /// Works well with IniInterpreter, not recommended using elsewhere
-        /// </summary>
-        public void ConvValue()
-        {
-            if (Constant.BoolFalse.Contains((string)Value)) Value = false;
-            else if (Constant.BoolTrue.Contains((string)Value)) Value = true;
-            else if (Constant.NullString.Contains((string)Value) && keytype != INIKeyType.Armor)
-            {
-                Value = null;
-            }
-            if (Constant.KeyName.IntKey.Contains(Name)) Value = int.Parse(Value);
-            else if (Constant.KeyName.FloatKey.Contains(Name)) Value = float.Parse(Value);
-            else if (Constant.KeyName.PercentKey.Contains(Name)) Value = float.Parse(Value.Replace("%", string.Empty)) / 100;
-        }
-        /// <summary>
         /// Try parse the value as bool
         /// </summary>
         /// <param name="def"></param>
         /// <returns></returns>
         public bool ParseBool(bool def = false)
         {
-            if (Value.GetType() == typeof(bool)) return Value;
-            if ((string)Value != "")
-            {
-                if (Constant.BoolTrue.Contains((string)Value)) return true;
-                else if (Constant.BoolFalse.Contains((string)Value)) return false;
-                else if (int.Parse(Value) == 1) return true;
-                else if (int.Parse(Value) == 0) return false;
-            }
+            if (Constant.BoolTrue.Contains(Value)) return true;
+            else if (Constant.BoolFalse.Contains(Value)) return false;
+            if (bool.TryParse(Value, out bool b)) return b;
             return def;
         }
         /// <summary>
@@ -155,16 +133,8 @@ namespace RelertSharp.IniSystem
         /// <returns></returns>
         public int ParseInt(int def = 0)
         {
-            try
-            {
-                if (Value.GetType() == typeof(int)) return Value;
-                if ((string)Value != "")
-                {
-                    return int.Parse(Value);
-                }
-                return def;
-            }
-            catch { return def; }
+            if (int.TryParse(Value, out int i)) return i;
+            return def;
         }
         public string GetString(string def = null)
         {
@@ -234,7 +204,7 @@ namespace RelertSharp.IniSystem
 
         #region Public Calls - INIPair
         public string Name { get; set; }
-        public dynamic Value { get; set; }
+        public string Value { get; set; }
         public string Comment { get { return comment; } }
         public string PreComment { get { return preComment; } }
         public bool HasComment { get { return !string.IsNullOrEmpty(comment); } }

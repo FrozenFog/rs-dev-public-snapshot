@@ -254,16 +254,6 @@ namespace RelertSharp.IniSystem
             return data.Keys.Contains(keyname);
         }
         /// <summary>
-        /// Try convert all Pair value into destinate type.
-        /// Eg: string to bool, int, etc.
-        /// Works well with IniInterpreter, not recommended using elsewhere
-        /// </summary>
-        public void ConvPairs()
-        {
-            if (entitytype != INIEntType.SystemType || entitytype != INIEntType.MapType)
-                foreach (INIPair p in data.Values) p.ConvValue();
-        }
-        /// <summary>
         /// Remove a specified IniPair
         /// </summary>
         /// <param name="key"></param>

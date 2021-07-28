@@ -1,5 +1,6 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
+using RelertSharp.IniSystem.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,16 +92,23 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Calls - CountryItem
+        [IniHeader]
         public override string Id
         {
             get { return Name; }
             set { Name = value; }
         }
+        [IniPair]
         public string Side { get; set; }
+        [IniPair("Color")]
         public string ColorName { get; set; }
+        [IniPair("ParentCountry")]
         public string ParentCountryName { get; set; }
+        [IniPair]
         public string Suffix { get; set; }
+        [IniPair("Prefix")]
         public string Prefix { get; set; }
+        [IniPair("SmartAI")]
         public bool SmartAi { get; set; }
         public IEnumerable<INIPair> Residual
         {
@@ -112,6 +120,7 @@ namespace RelertSharp.MapStructure.Logic
                 residual = r;
             }
         }
+        [IniPair]
         public override string Name
         {
             get { return base.Name; }

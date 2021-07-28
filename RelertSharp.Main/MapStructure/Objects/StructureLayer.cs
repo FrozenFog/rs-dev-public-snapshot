@@ -1,5 +1,6 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
+using RelertSharp.IniSystem.Serialization;
 using System;
 using System.Collections.Generic;
 using static RelertSharp.Utils.Misc;
@@ -154,6 +155,7 @@ namespace RelertSharp.MapStructure.Objects
         /// <summary>
         /// Default: true
         /// </summary>
+        [IniPairItem(7)]
         public bool AISellable { get; set; } = true;
         /// <summary>
         /// Default: true
@@ -162,15 +164,22 @@ namespace RelertSharp.MapStructure.Objects
         /// <summary>
         /// Default: true
         /// </summary>
+        [IniPairItem(9)]
         public bool IsPowered { get; set; } = true;
+        [IniPairItem(10)]
         public int UpgradeNum { get; set; }
+        [IniPairItem(11)]
         public BuildingSpotlightType SpotlightType { get; set; }
-        public string Upgrade1 { get; set; } = "None";
-        public string Upgrade2 { get; set; } = "None";
-        public string Upgrade3 { get; set; } = "None";
+        [IniPairItem(12)]
+        public string Upgrade1 { get; set; } = Constant.VALUE_NONE;
+        [IniPairItem(13)]
+        public string Upgrade2 { get; set; } = Constant.VALUE_NONE;
+        [IniPairItem(14)]
+        public string Upgrade3 { get; set; } = Constant.VALUE_NONE;
         /// <summary>
         /// Default: true
         /// </summary>
+        [IniPairItem(15)]
         public bool AIRepairable { get; set; } = true;
         public bool Nominal { get; private set; } = false;
         public int SizeX
@@ -216,6 +225,10 @@ namespace RelertSharp.MapStructure.Objects
                 return shape;
             }
         }
+        [IniPairItem(6)]
+        public override string TagId { get => base.TagId; set => base.TagId = value; }
+        public override int VeterancyPercentage { get => 0; set { } }
+        public override string Group { get => Constant.ID_INVALID; set { } }
         #endregion
 
 
