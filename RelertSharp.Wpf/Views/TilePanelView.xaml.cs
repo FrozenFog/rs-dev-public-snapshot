@@ -31,6 +31,7 @@ namespace RelertSharp.Wpf.Views
     {
         private bool _isLoaded = false;
         private TileSetTreeVm vmFav;
+        private List<FavouriteItemTree> favTilesets;
         public TilePanelView()
         {
             InitializeComponent();
@@ -90,7 +91,7 @@ namespace RelertSharp.Wpf.Views
                     }
                     return dest;
                 }
-                GlobalVar.GlobalConfig.UserConfig.FavouriteTileSet.Items.Clear();
+                favTilesets.Clear();
                 foreach (TileSetTreeVm vm in trvMain.Items)
                 {
                     if (vm.IsCustomRoot)
@@ -98,7 +99,7 @@ namespace RelertSharp.Wpf.Views
                         foreach (TileSetTreeVm tree in vm.Items)
                         {
                             var favItem = packAsFavItem(tree);
-                            GlobalVar.GlobalConfig.UserConfig.FavouriteTileSet.Items.Add(favItem);
+                            favTilesets.Add(favItem);
                         }
                         break;
                     }
@@ -117,6 +118,7 @@ namespace RelertSharp.Wpf.Views
         private void MapReloadedHandler(object sender, EventArgs e)
         {
             trvMain.Items.Clear();
+            favTilesets = GlobalVar.GlobalConfig.UserConfig.GetFavTilesetsByTheater(GlobalVar.GlobalMap.Info.TheaterName);
             void add_to(MapStructure.TileSet set, TileSetTreeVm dest)
             {
                 if (set.AllowPlace && !set.IsFramework)
@@ -177,7 +179,7 @@ namespace RelertSharp.Wpf.Views
                 {
                     IsCustomRoot = true
                 };
-                foreach (var favTree in GlobalVar.GlobalConfig.UserConfig.FavouriteTileSet.Items)
+                foreach (var favTree in favTilesets)
                 {
                     var vm = extractAsVm(favTree);
                     root.AddItem(vm);

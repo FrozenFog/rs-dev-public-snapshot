@@ -12,8 +12,17 @@ namespace RelertSharp.Common.Config.Model
     {
         [XmlElement(ElementName = "Objects")]
         public FavouriteItemTree Objects { get; set; }
-        [XmlElement(ElementName = "TileSets")]
-        public FavouriteItemTree TileSets { get; set; }
+        [XmlArrayItem("theater")]
+        public List<TheaterTilesets> TileSets { get; set; }
+    }
+
+
+    public class TheaterTilesets
+    {
+        [XmlAttribute("name")]
+        public string TheaterName { get; set; }
+        [XmlArrayItem("items")]
+        public List<FavouriteItemTree> Items { get; set; }
     }
 
 

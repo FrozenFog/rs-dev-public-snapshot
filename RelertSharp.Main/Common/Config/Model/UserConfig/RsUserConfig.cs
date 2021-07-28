@@ -25,7 +25,7 @@ namespace RelertSharp.Common.Config.Model
                 FavouriteItems = new FavouriteItems()
                 {
                     Objects = new FavouriteItemTree(),
-                    TileSets = new FavouriteItemTree()
+                    TileSets = new List<TheaterTilesets>()
                 }
             };
             return cfg;

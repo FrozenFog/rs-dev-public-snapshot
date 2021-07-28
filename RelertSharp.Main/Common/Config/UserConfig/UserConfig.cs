@@ -52,12 +52,25 @@ namespace RelertSharp.Common
         {
             return GuiStatus.Width > 5 && GuiStatus.Height > 5;
         }
+        public List<FavouriteItemTree> GetFavTilesetsByTheater(string theaterName)
+        {
+            var fav = FavouriteTileSet.Find(x => x.TheaterName == theaterName);
+            if (fav == null)
+            {
+                fav = new TheaterTilesets()
+                {
+                    TheaterName = theaterName,
+                    Items = new List<FavouriteItemTree>()
+                };
+            }
+            return fav.Items;
+        }
         #endregion
 
 
         #region Calls
         public GuiStatus GuiStatus { get { return data.GuiStatus; } }
-        public FavouriteItemTree FavouriteTileSet { get { return data.FavouriteItems.TileSets; } }
+        public List<TheaterTilesets> FavouriteTileSet { get { return data.FavouriteItems.TileSets; } }
         public FavouriteItemTree FavouriteObjects { get { return data.FavouriteItems.Objects; } }
         #endregion
     }

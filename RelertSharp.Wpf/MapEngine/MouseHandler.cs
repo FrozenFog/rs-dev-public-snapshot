@@ -21,7 +21,7 @@ namespace RelertSharp.Wpf.MapEngine
         private bool rmbMoving = false;
         private bool NeedIndicating
         {
-            get { return !rmbMoving && !Selector.IsSelecting; }
+            get { return !rmbMoving && !Selector.IsSelecting && MouseState.State != PanelMouseState.TileBrush; }
         }
         private Point downPos, downPosOrg;
         private MouseButton downBtn;

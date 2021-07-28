@@ -284,7 +284,7 @@ namespace RelertSharp.MapStructure
             {
                 isHyte = false;
                 TileSet set = GetTileSet(t.TileIndex);
-                if (set.FrameworkSet != 0)
+                if (set.FrameworkSet != 0 && tileSets.ContainsKey(set.FrameworkSet))
                 {
                     string name = tileSets[set.FrameworkSet].GetName(t.TileIndex - set.Offset, false);
                     return GetFrameworkNameSafe(name);
