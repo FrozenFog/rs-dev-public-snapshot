@@ -109,7 +109,16 @@ namespace RelertSharp.Wpf.Views
 
 
         #region Public
-
+        public void SetFramework(bool isEnable)
+        {
+            foreach (TileSetTreeVm vm in trvMain.Items)
+            {
+                vm.All(x =>
+                {
+                    if (x is TileSetTreeVm y) y.SetFramework(isEnable);
+                });
+            }
+        }
         #endregion
 
 

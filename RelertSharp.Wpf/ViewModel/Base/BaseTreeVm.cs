@@ -92,6 +92,14 @@ namespace RelertSharp.Wpf.ViewModel
         {
             _title = title;
         }
+        public virtual void All(Action<IBaseTreeVm<TData>> action)
+        {
+            foreach (IBaseTreeVm<TData> item in Items)
+            {
+                action(item);
+                item.All(action);
+            }
+        }
         #endregion
 
 
@@ -161,5 +169,6 @@ namespace RelertSharp.Wpf.ViewModel
         void RemoveItem(IBaseTreeVm<TData> item);
         void UnselectAllDescendant();
         void SetTitle(string name);
+        void All(Action<IBaseTreeVm<TData>> action);
     }
 }

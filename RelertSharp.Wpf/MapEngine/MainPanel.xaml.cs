@@ -87,8 +87,9 @@ namespace RelertSharp.Wpf.MapEngine
                 RenderFrame();
             }
         }
-        public void SaveMapScreenshotAs(string path)
+        public bool SaveMapScreenshotAs(string path)
         {
+            bool result = false;
             if (drew)
             {
                 lock (lockRender)
@@ -142,7 +143,20 @@ namespace RelertSharp.Wpf.MapEngine
                         EngineApi.MoveCameraTo(cell);
                         d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, drawHandle);
                         EngineApi.RenderFrame();
-                        BitmapSource src = d3dimg.DrawBackBuffer().Clone();
+                        var buffer = d3dimg.DrawBackBuffer(); int redrawCount = 0;
+                        while (buffer == null && redrawCount++ < 10)
+                        {
+                            drawHandle = EngineApi.ResetHandle((int)wWindow, (int)hWindow);
+                            d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, drawHandle);
+                            EngineApi.RenderFrame();
+                            buffer = d3dimg.DrawBackBuffer();
+                        }
+                        if (buffer == null)
+                        {
+                            result = false;
+                            goto end;
+                        }
+                        BitmapSource src = buffer.Clone();
                         CroppedBitmap crp = new CroppedBitmap(src, new Int32Rect(1, 1, src.PixelWidth - 2, src.PixelHeight - 2));
                         sections.Add(crp);
                     }
@@ -150,13 +164,13 @@ namespace RelertSharp.Wpf.MapEngine
                     // combine sections
                     DrawingGroup scene = new DrawingGroup();
                     double yOffset = 0;
-                    for (int y = 0; y < countHeight + 1; y++)
+                    for (int y = 0, i = 0; y < countHeight + 1; y++)
                     {
                         double xOffset = 0;
                         for (int x = 0; x < countWidth + 1; x++)
                         {
                             ImageDrawing section = new ImageDrawing();
-                            section.ImageSource = sections[y * (countHeight + 1) + x];
+                            section.ImageSource = sections[i++];
                             section.Rect = new Rect(xOffset - 1, yOffset - 1, wWindow, hWindow);
                             scene.Children.Add(section);
                             xOffset += wCell * 60;
@@ -174,6 +188,9 @@ namespace RelertSharp.Wpf.MapEngine
                         encoder.Save(fs);
                     }
 
+                    result = true;
+
+                end:
                     // revert
                     _handle = EngineApi.ResetHandle(nWidth, nHeight);
                     EngineApi.SetScaleFactor(prevScale);
@@ -185,8 +202,6 @@ namespace RelertSharp.Wpf.MapEngine
                     d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
                     EngineApi.InvokeUnlock();
                     ResumeEvent();
-                    
-
 
                     //EngineApi.InvokeLock();
                     //EngineApi.ChangeScaleFactor(1);
@@ -214,6 +229,7 @@ namespace RelertSharp.Wpf.MapEngine
                     //ResumeEvent();
                 }
             }
+            return result;
         }
         public async void DrawMap()
         {

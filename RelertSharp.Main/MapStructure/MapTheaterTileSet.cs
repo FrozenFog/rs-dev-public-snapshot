@@ -310,7 +310,7 @@ namespace RelertSharp.MapStructure
         public TileSet GetFrameworkFromSet(TileSet src, out bool isHyte)
         {
             isHyte = false;
-            if (src.FrameworkSet != 0)
+            if (src.FrameworkSet != 0 && tileSets.ContainsKey(src.FrameworkSet))
             {
                 TileSet framework = new TileSet(tileSets[src.FrameworkSet]);
                 framework.SetMaxIndex(src.Count);

@@ -22,13 +22,28 @@ namespace RelertSharp.Wpf.ViewModel
             data = set;
             Title = set.SetName;
             int idx = 0;
+            TileSet framework = TileDictionary.GetFrameworkFromSet(set, out bool isHyte);
+            List<string> frameworkNames = framework.GetNames();
             foreach (string name in set.GetNames())
             {
                 string filename = TileDictionary.GetFrameworkNameSafe(name);
                 if (filename.IsNullOrEmpty()) continue;
                 TmpFile file = new TmpFile(GlobalVar.GlobalDir.GetRawByte(filename), filename);
                 file.LoadColor(GlobalVar.TilePalette);
-                subtiles.Add(new TileSetItemVm(file, set.Offset + idx++));
+                if (!set.IsFramework && !isHyte && frameworkNames.Count > idx)
+                {
+                    string fmwName = TileDictionary.GetFrameworkNameSafe(frameworkNames[idx]);
+                    if (!fmwName.IsNullOrEmpty())
+                    {
+                        TmpFile fmw = new TmpFile(GlobalVar.GlobalDir.GetRawByte(fmwName), fmwName);
+                        fmw.LoadColor(GlobalVar.TilePalette);
+                        subtiles.Add(new TileSetItemVm(file, set.Offset + idx++, fmw));
+                    }
+                }
+                else
+                {
+                    subtiles.Add(new TileSetItemVm(file, set.Offset + idx++, null));
+                }
             }
         }
         public TileSetTreeVm(TileSetTreeVm src)
@@ -36,15 +51,41 @@ namespace RelertSharp.Wpf.ViewModel
             data = src.data;
             Title = src.Title;
             int idx = 0;
+            TileSet framework = TileDictionary.GetFrameworkFromSet(data, out bool isHyte);
+            List<string> frameworkNames = framework.GetNames();
             foreach (string name in data.GetNames())
             {
                 string filename = TileDictionary.GetFrameworkNameSafe(name);
                 if (filename.IsNullOrEmpty()) continue;
                 TmpFile file = new TmpFile(GlobalVar.GlobalDir.GetRawByte(filename), filename);
                 file.LoadColor(GlobalVar.TilePalette);
-                subtiles.Add(new TileSetItemVm(file, data.Offset + idx++));
+                if (!data.IsFramework && !isHyte && frameworkNames.Count > idx)
+                {
+                    string fmwName = TileDictionary.GetFrameworkNameSafe(frameworkNames[idx]);
+                    if (!fmwName.IsNullOrEmpty())
+                    {
+                        TmpFile fmw = new TmpFile(GlobalVar.GlobalDir.GetRawByte(fmwName), fmwName);
+                        fmw.LoadColor(GlobalVar.TilePalette);
+                        subtiles.Add(new TileSetItemVm(file, data.Offset + idx++, fmw));
+                    }
+                }
+                else
+                {
+                    subtiles.Add(new TileSetItemVm(file, data.Offset + idx++, null));
+                }
             }
         }
+
+
+        #region Public
+        public void SetFramework(bool enable)
+        {
+            foreach (TileSetItemVm item in subtiles)
+            {
+                item.IsFrameworkEnabled = enable;
+            }
+        }
+        #endregion
 
 
         #region Calls

@@ -63,6 +63,7 @@ namespace RelertSharp.Wpf
             bool enable = (sender as MenuItem).IsChecked;
             MapApi.SetFramework(enable);
             TilePaintBrush.SwitchToFramework(enable);
+            tiles.SetFramework(enable);
             EngineApi.InvokeUnlock();
             EngineApi.InvokeRedraw();
         }
@@ -90,10 +91,14 @@ namespace RelertSharp.Wpf
                 TilePaintBrush.SuspendBrush();
                 PaintBrush.SuspendBrush();
                 EngineApi.SuspendTileIndicator();
-                pnlMain.SaveMapScreenshotAs(dlg.FileName);
+                bool success = pnlMain.SaveMapScreenshotAs(dlg.FileName);
                 TilePaintBrush.ResumeBrush();
                 PaintBrush.ResumeBrush();
                 EngineApi.ResumeTileIndicator();
+                if (!success)
+                {
+                    GuiUtil.Warning("Save failed, please try again.");
+                }
             }
         }
         #endregion

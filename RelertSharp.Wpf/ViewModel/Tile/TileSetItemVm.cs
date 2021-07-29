@@ -13,14 +13,22 @@ namespace RelertSharp.Wpf.ViewModel
     internal class TileSetItemVm : BaseVm<TileSet>
     {
         private ImageSource image;
+        private ImageSource framework;
+        private bool isFramework;
         public TileSetItemVm()
         {
             data = new TileSet(false, false, -1);
         }
-        public TileSetItemVm(TmpFile file, int tileIndex)
+        public TileSetItemVm(TmpFile file, int tileIndex, TmpFile frameworkFile)
         {
             SubTiles = new List<SubTileInfo>();
             image = file.AssembleImage.ToWpfImage();
+            image.Freeze();
+            if (frameworkFile != null)
+            {
+                framework = frameworkFile.AssembleImage.ToWpfImage();
+                framework.Freeze();
+            }
             TileIndex = tileIndex;
             byte idx = 0;
             foreach (var img in file.Images)
@@ -45,19 +53,28 @@ namespace RelertSharp.Wpf.ViewModel
 
 
         #region Call
+        public bool IsFrameworkEnabled
+        {
+            get { return isFramework; }
+            set
+            {
+                isFramework = value;
+                SetProperty(nameof(TileSetImage));
+            }
+        }
         #region Binding
         public ImageSource TileSetImage
         {
-            get { return image; }
-            set
+            get
             {
-                image = value;
-                SetProperty();
+                if (IsFrameworkEnabled) return framework ?? image;
+                return image;
             }
         }
         #endregion
 
         public int TileIndex { get; private set; }
+        public int FrameworkIndex { get; private set; }
         public List<SubTileInfo> SubTiles { get; private set; }
         public bool IsLat { get; private set; }
         #endregion
