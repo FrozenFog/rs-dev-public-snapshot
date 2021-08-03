@@ -21,6 +21,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         private static I3dLocateable prevPos;
         private static Pnt3 offset;
         private static bool isLat, isSuspended, isFlat;
+        private static TileSetItemVm currentSet;
 
         private static TileLayer Tiles { get { return GlobalVar.GlobalMap.TilesData; } }
 
@@ -62,6 +63,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         }
         public static void LoadTileBrush(TileSetItemVm src)
         {
+            currentSet = src;
             EngineApi.InvokeLock();
             tileSetOffset.Clear();
             foreach (Tile t in body) t.Dispose();
@@ -200,6 +202,53 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             foreach (Tile t in body) t.FlatToGround(enable);
             foreach (Tile t in surroundLat) t.FlatToGround(enable);
             isFlat = enable;
+        }
+        #endregion
+        #region Bucket
+        public static void BucketTileAt(I2dLocateable center, IEnumerable<Predicate<Tile>> predicates = null)
+        {
+            var tiles = GlobalVar.GlobalMap.TilesData;
+            if (currentSet != null && tiles[center] is Tile seed)
+            {
+                EngineApi.InvokeLock();
+                if (predicates == null || !predicates.Any())
+                {
+                    predicates = new List<Predicate<Tile>>()
+                    {
+                        x => x.IsSelected
+                    };
+                }
+                Bfs2D bfs = new Bfs2D(tiles, seed, predicates);
+                HashSet<Tile> targets = new HashSet<Tile>();
+                foreach (Tile t in bfs) targets.Add(t);
+                int xMax = targets.Max(x => x.X), yMax = targets.Max(x => x.Y);
+                int xMin = targets.Min(x => x.X), yMin = targets.Min(x => x.Y);
+                int dx = xMax - xMin;
+                int dy = yMax - yMin;
+                int xNum = RsMath.Ceil(dx / (double)currentSet.SetWidth), yNum = RsMath.Ceil(dy / (double)currentSet.SetHeight);
+
+                // begin position: xMin, yMin
+                for (int y = yMin; y <= yMax; y += currentSet.SetHeight)
+                {
+                    for (int x = xMin; x <= xMax; x += currentSet.SetWidth)
+                    {
+                        foreach (var subtile in currentSet.SubTiles)
+                        {
+                            int targetX = x + subtile.Dx;
+                            int targetY = y + subtile.Dy;
+                            if (tiles[targetX, targetY] is Tile target && target.IsSelected)
+                            {
+                                Tile t = new Tile(currentSet.TileIndex, subtile.SubIndex, targetX, targetY, target.RealHeight + subtile.Dz);
+                                t.FlatToGround(isFlat);
+                                MapApi.SetTile(t);
+                            }
+                        }
+                    }
+                }
+                EngineApi.InvokeUnlock();
+            }
+
+
         }
         #endregion
         #endregion

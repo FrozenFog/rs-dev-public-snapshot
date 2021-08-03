@@ -21,7 +21,7 @@ namespace RelertSharp.Wpf.MapEngine
         private bool rmbMoving = false;
         private bool NeedIndicating
         {
-            get { return !rmbMoving && !Selector.IsSelecting && MouseState.State != PanelMouseState.TileBrush; }
+            get { return !rmbMoving && !Selector.IsSelecting && MouseState.State != PanelMouseState.TileSingleBrush; }
         }
         private Point downPos, downPosOrg;
         private MouseButton downBtn;
@@ -103,7 +103,7 @@ namespace RelertSharp.Wpf.MapEngine
                         ScaleFactorChanged?.Invoke(null, null);
                         EngineApi.ScaleFactorInvoke();
                         break;
-                    case PanelMouseState.TileBrush:
+                    case PanelMouseState.TileSingleBrush:
                         if (wheelUp) TilePaintBrush.InvokeBackward();
                         else TilePaintBrush.InvokeForward();
                         break;
@@ -148,7 +148,7 @@ namespace RelertSharp.Wpf.MapEngine
                 case PanelMouseState.ObjectBrush:
                     PaintBrush.SuspendBrush();
                     break;
-                case PanelMouseState.TileBrush:
+                case PanelMouseState.TileSingleBrush:
                     TilePaintBrush.SuspendBrush();
                     break;
             }
@@ -219,10 +219,23 @@ namespace RelertSharp.Wpf.MapEngine
                     PaintBrush.AddBrushObjectToMap();
                     EngineApi.InvokeRedraw();
                     break;
-                case PanelMouseState.TileBrush:
+                case PanelMouseState.TileSingleBrush:
                     TilePaintBrush.AddTileToMap();
                     EngineApi.InvokeRedraw();
                     break;
+                case PanelMouseState.TileLineSelecting:
+                    TileSelector.AddLineControlNode(cell);
+                    EngineApi.InvokeRedraw();
+                    break;
+                case PanelMouseState.TileBucketSelecting:
+                    TileSelector.BucketAt(cell);
+                    EngineApi.InvokeRedraw();
+                    break;
+                case PanelMouseState.TileBucketFill:
+                    TilePaintBrush.BucketTileAt(cell);
+                    EngineApi.InvokeRedraw();
+                    break;
+
             }
         }
         #endregion
@@ -278,7 +291,7 @@ namespace RelertSharp.Wpf.MapEngine
                 case PanelMouseState.ObjectBrush:
                     redraw = PaintBrush.MoveBrushObjectTo(cell, subcell);
                     break;
-                case PanelMouseState.TileBrush:
+                case PanelMouseState.TileSingleBrush:
                     if (!notFound)
                     {
                         redraw = TilePaintBrush.MoveTileBrushTo(cell);

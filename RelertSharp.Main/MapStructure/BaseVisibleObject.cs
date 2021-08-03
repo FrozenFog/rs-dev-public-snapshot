@@ -47,6 +47,7 @@ namespace RelertSharp.MapStructure
             if (isHidden)
             {
                 SceneObject?.Reveal();
+                if (isSelected) Select(true);
                 isHidden = false;
             }
         }

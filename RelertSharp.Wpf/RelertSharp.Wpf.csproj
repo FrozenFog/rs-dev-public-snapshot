@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Common\BrushConfig.cs" />
     <Compile Include="Common\Commands\ListViewColumnSortCommand.cs" />
+    <Compile Include="Common\Commands\MenuItemGroup.cs" />
     <Compile Include="Common\DelayedAction.cs" />
     <Compile Include="Common\Delegates.cs" />
     <Compile Include="Common\DragDropHelper.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="MapEngine\Helper\PaintBrush.cs" />
     <Compile Include="MapEngine\Helper\Selector.cs" />
     <Compile Include="MapEngine\Helper\TilePaintBrush.cs" />
+    <Compile Include="MapEngine\Helper\TileSelector.cs" />
     <Compile Include="MapEngine\KeyHandler.cs" />
     <Compile Include="MapEngine\MainPanel.xaml.cs">
       <DependentUpon>MainPanel.xaml</DependentUpon>

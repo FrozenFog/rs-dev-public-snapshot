@@ -467,8 +467,7 @@ namespace RelertSharp.MapStructure
             }
             if (isSelected)
             {
-                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
-                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
+                base.Select(true);
             }
         }
         public void SetHeightTo(int height)

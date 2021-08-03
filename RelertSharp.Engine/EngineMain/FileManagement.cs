@@ -47,6 +47,7 @@ namespace RelertSharp.Engine
                     d.SubTiles.Add(subtile);
                 }
                 Buffer.Buffers.Tiles[filename] = d;
+                tmp.Dispose();
             }
             else d = Buffer.Buffers.Tiles[filename];
             return d;

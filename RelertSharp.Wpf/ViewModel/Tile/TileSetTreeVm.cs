@@ -38,12 +38,14 @@ namespace RelertSharp.Wpf.ViewModel
                         TmpFile fmw = new TmpFile(GlobalVar.GlobalDir.GetRawByte(fmwName), fmwName);
                         fmw.LoadColor(GlobalVar.TilePalette);
                         subtiles.Add(new TileSetItemVm(file, set.Offset + idx++, fmw));
+                        fmw.Dispose();
                     }
                 }
                 else
                 {
                     subtiles.Add(new TileSetItemVm(file, set.Offset + idx++, null));
                 }
+                file.Dispose();
             }
         }
         public TileSetTreeVm(TileSetTreeVm src)
@@ -67,12 +69,14 @@ namespace RelertSharp.Wpf.ViewModel
                         TmpFile fmw = new TmpFile(GlobalVar.GlobalDir.GetRawByte(fmwName), fmwName);
                         fmw.LoadColor(GlobalVar.TilePalette);
                         subtiles.Add(new TileSetItemVm(file, data.Offset + idx++, fmw));
+                        fmw.Dispose();
                     }
                 }
                 else
                 {
                     subtiles.Add(new TileSetItemVm(file, data.Offset + idx++, null));
                 }
+                file.Dispose();
             }
         }
 

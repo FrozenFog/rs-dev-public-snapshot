@@ -42,11 +42,37 @@ namespace RelertSharp.Wpf.MapEngine
                     if (UndoRedoHub.Redo()) EngineApi.InvokeRedraw();
                     EngineApi.InvokeUnlock();
                 }
+                else if (e.Key == Key.D && GuiUtil.IsKeyDown(Key.LeftCtrl))
+                {
+                    EngineApi.InvokeLock();
+                    TileSelector.CancelAllTileSelection();
+                    EngineApi.InvokeRedraw();
+                    EngineApi.InvokeUnlock();
+                }
+                else if (MouseState.IsState(PanelMouseState.TileSelecting))
+                {
+                    bool affected = false;
+                    if (e.Key == Key.PageUp)
+                    {
+                        TileSelector.RiseAllSelectedTile();
+                        affected = true;
+                    }
+                    else if (e.Key == Key.PageDown)
+                    {
+                        TileSelector.SinkAllSelectedTile();
+                        affected = true;
+                    }
+                    if (affected)
+                    {
+                        e.Handled = true;
+                        EngineApi.InvokeRedraw();
+                    }
+                }
                 else
                 {
                     switch (MouseState.State)
                     {
-                        case PanelMouseState.TileBrush:
+                        case PanelMouseState.TileSingleBrush:
                             TileBrushKeyHandler(e);
                             EngineApi.InvokeRedraw();
                             e.Handled = true;

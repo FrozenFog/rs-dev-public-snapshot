@@ -6,24 +6,7 @@ using System.Linq;
 
 namespace RelertSharp.Common
 {
-    public class Bfs2D : IEnumerable
-    {
-        private IEnumerable<Predicate<Tile>> predicates;
-        TileLayer referance;
-        Tile begin;
-
-
-        public Bfs2D(TileLayer src, Tile pos, IEnumerable<Predicate<Tile>> predicates)
-        {
-            this.predicates = predicates;
-            referance = src;
-            begin = pos;
-        }
-        public IEnumerator GetEnumerator() { return new Bfs2DEnumerator(referance, begin, predicates); }
-    }
-
-
-    internal class Bfs2DEnumerator : IEnumerator<Tile>
+    public class Bfs2D : IEnumerator<Tile>
     {
         private IEnumerable<Predicate<Tile>> predicates;
         private TileLayer referance;
@@ -33,7 +16,7 @@ namespace RelertSharp.Common
         private HashSet<Tile> marked = new HashSet<Tile>();
 
 
-        public Bfs2DEnumerator(TileLayer referance, Tile begin, IEnumerable<Predicate<Tile>> predicates)
+        public Bfs2D(TileLayer referance, Tile begin, IEnumerable<Predicate<Tile>> predicates)
         {
             this.referance = referance;
             this.begin = begin;
@@ -87,6 +70,11 @@ namespace RelertSharp.Common
             marked.Clear();
             queue.Clear();
             queue.Enqueue(begin);
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return this;
         }
     }
 }

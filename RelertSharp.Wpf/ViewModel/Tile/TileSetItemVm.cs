@@ -22,6 +22,7 @@ namespace RelertSharp.Wpf.ViewModel
         public TileSetItemVm(TmpFile file, int tileIndex, TmpFile frameworkFile)
         {
             SubTiles = new List<SubTileInfo>();
+            SetWidth = file.Width; SetHeight = file.Height;
             image = file.AssembleImage.ToWpfImage();
             image.Freeze();
             if (frameworkFile != null)
@@ -53,6 +54,8 @@ namespace RelertSharp.Wpf.ViewModel
 
 
         #region Call
+        public int SetWidth { get; private set; }
+        public int SetHeight { get; private set; }
         public bool IsFrameworkEnabled
         {
             get { return isFramework; }

@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.Wpf.MapEngine.Helper
 {
+    [Flags]
     public enum PanelMouseState
     {
         None = 0,
         ObjectBrush = 1,
-        TileBrush = 2,
+        TileSingleBrush = 1 << 1,
+        TileLineSelecting = 1 << 2,
+        TileBucketSelecting = 1 << 3,
+        TileSingleSelecting = 1 << 4,
+        TileSelecting = TileLineSelecting | TileBucketSelecting | TileSingleSelecting,
+        TileBucketFill = 1 << 5,
+        TileBrush = TileSingleBrush | TileBucketFill,
         DEBUG = 65535
     }
     internal static class MouseState
@@ -20,10 +27,14 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         {
             if (State != state)
             {
-                if (State == PanelMouseState.TileBrush) TilePaintBrush.SuspendBrush();
+                if (State == PanelMouseState.TileSingleBrush) TilePaintBrush.SuspendBrush();
                 else if (State == PanelMouseState.ObjectBrush) PaintBrush.SuspendBrush();
                 State = state;
             }
+        }
+        public static bool IsState(PanelMouseState state)
+        {
+            return (State & state) != 0;
         }
     }
 }

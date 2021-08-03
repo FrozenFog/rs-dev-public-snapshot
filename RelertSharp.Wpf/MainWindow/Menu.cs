@@ -14,6 +14,7 @@ using System.IO;
 using RelertSharp.Wpf.Views;
 using RelertSharp.Wpf.MapEngine.Helper;
 using RelertSharp.Engine.Api;
+using RelertSharp.Wpf.Dialogs;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 using System.Windows.Controls;
@@ -45,12 +46,27 @@ namespace RelertSharp.Wpf
 
         private void DebugClick2(object sender, RoutedEventArgs e)
         {
-
+            MouseState.SetState(PanelMouseState.TileLineSelecting);
         }
         #endregion
 
 
         #region Edits
+        #region Tiles
+        private void MenuSetHeight(object sender, RoutedEventArgs e)
+        {
+            DlgNameInput dlg = new DlgNameInput(string.Format("Input height, range between 0 and {0}", Constant.DrawingEngine.MapMaxHeight));
+            if (dlg.ShowDialog().Value)
+            {
+                string value = dlg.ResultName;
+                if (int.TryParse(value, out int height) && RsMath.InRange(height, 0, Constant.DrawingEngine.MapMaxHeight))
+                {
+                    TileSelector.AllSetHeightTo(height);
+                    EngineApi.InvokeRedraw();
+                }
+                else GuiUtil.Warning("Invalid height!");
+            }
+        }
         private void MenuIsoSelect(object sender, RoutedEventArgs e)
         {
             bool enable = (sender as MenuItem).IsChecked;
@@ -77,6 +93,43 @@ namespace RelertSharp.Wpf
             EngineApi.InvokeUnlock();
             EngineApi.InvokeRedraw();
         }
+        #region Tile Selecting
+        private void MenuTileSelSingle(object sender, RoutedEventArgs e)
+        {
+            MouseState.SetState(PanelMouseState.TileSingleSelecting);
+        }
+
+        private void MenuTileSelBucket(object sender, RoutedEventArgs e)
+        {
+            MouseState.SetState(PanelMouseState.TileBucketSelecting);
+        }
+
+        private void MenuTileSelLine(object sender, RoutedEventArgs e)
+        {
+            MouseState.SetState(PanelMouseState.TileLineSelecting);
+        }
+        private void MenuTileSelFiltSet(object sender, RoutedEventArgs e)
+        {
+            TileSelector.BucketTilesetFilter((sender as MenuItem).IsChecked);
+        }
+
+        private void MenuTileSelFiltHeight(object sender, RoutedEventArgs e)
+        {
+            TileSelector.BucketHeightFilter((sender as MenuItem).IsChecked);
+        }
+        #endregion
+        #region Tile Editing
+        private void MenuTileBrsSingle(object sender, RoutedEventArgs e)
+        {
+            MouseState.SetState(PanelMouseState.TileSingleBrush);
+        }
+
+        private void MenuTileBrsBucket(object sender, RoutedEventArgs e)
+        {
+            MouseState.SetState(PanelMouseState.TileBucketFill);
+        }
+        #endregion
+        #endregion
 
         private void MenuSaveShot(object sender, RoutedEventArgs e)
         {

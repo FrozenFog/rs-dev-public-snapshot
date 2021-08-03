@@ -38,12 +38,12 @@ namespace RelertSharp.Engine.MapObjects
 
 
         #region Public
-        public void ApplyTempColor(Vec4 color)
+        public virtual void ApplyTempColor(Vec4 color)
         {
             SetColorStrict(color);
         }
 
-        public void RemoveTempColor()
+        public virtual void RemoveTempColor()
         {
             SetColorStrict(ColorVector);
         }

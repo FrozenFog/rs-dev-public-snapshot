@@ -229,7 +229,10 @@ namespace RelertSharp.Wpf.Views
         {
             if (!_isTileSelectingLocked)
             {
-                MouseState.SetState(PanelMouseState.TileBrush);
+                if (!MouseState.IsState(PanelMouseState.TileBrush))
+                {
+                    MouseState.SetState(PanelMouseState.TileSingleBrush);
+                }
                 if (lvMain.SelectedItem is TileSetItemVm vm)
                 {
                     TilePaintBrush.ResumeBrush();

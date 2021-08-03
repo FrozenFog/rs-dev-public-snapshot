@@ -1680,4 +1680,215 @@
       <info title="Fixes" re="[fF]ix" />
     </Classes>
   </TileSetInfo>
+  <CliffInfo>
+    <set theater="NEWURBAN" name="Pavement Cliff">
+      <Sections>
+        <section set="10" sub="0" in="1" out="5" len="3">
+          <Cells>
+            <cell in="1" out="7" next="6"/>
+            <cell in="1" out="5" next="4"/>
+            <cell in="7" out="5"/>
+          </Cells>
+        </section>
+        <section set="10" sub="1" in="1" out="5" len="1">
+          <Cells>
+            <cell in="1" out="5" bend="7"/>
+          </Cells>
+        </section>
+        <section set="10" sub="2" in="1" out="5" len="2">
+          <Cells>
+            <cell in="1" out="4" next="4"/>
+            <cell in="8" out="5"/>
+          </Cells>
+        </section>
+        <section set="10" sub="4" in="7" out="5" len="2">
+          <Cells>
+            <cell in="7" out="5" next="4"/>
+            <cell in="7" out="5"/>
+          </Cells>
+        </section>
+        <section set="10" sub="7" in="7" out="5" len="1">
+          <Cells>
+            <cell in="7" out="5"/>
+          </Cells>
+        </section>
+        <section set="10" sub="8" in="7" out="3" len="2">
+          <Cells>
+            <cell in="7" out="3" next="3"/>
+            <cell in="7" out="3" />
+          </Cells>
+        </section>
+        <section set="10" sub="11" in="7" out="3" len="1">
+          <Cells>
+            <cell in="7" out="3"/>
+          </Cells>
+        </section>
+        <section set="10" sub="14" in="5" out="3" len="2">
+          <Cells>
+            <cell in="5" out="3" next="2"/>
+            <cell in="5" out="3"/>
+          </Cells>
+        </section>
+        <section set="10" sub="17" in="5" out="3" len="1">
+          <Cells>
+            <cell in="5" out="3"/>
+          </Cells>
+        </section>
+        <section set="10" sub="18" in="5" out="1" len="2">
+          <Cells>
+            <cell in="5" out="2" next="2"/>
+            <cell in="6" out="1"/>
+          </Cells>
+        </section>
+        <section set="10" sub="20" in="5" out="1" len="3">
+          <Cells>
+            <cell in="5" out="3" next="2"/>
+            <cell in="5" out="1" next="8"/>
+            <cell in="3" out="1"/>
+          </Cells>
+        </section>
+        <section set="10" sub="21" in="5" out="1" len="1">
+          <Cells>
+            <cell in="5" out="1" bend="3"/>
+          </Cells>
+        </section>
+        <section set="10" sub="22" in="3" out="1" len="2">
+          <Cells>
+            <cell in="3" out="1" next="8"/>
+            <cell in="3" out="1"/>
+          </Cells>
+        </section>
+        <section set="10" sub="23" in="3" out="1" len="2">
+          <Cells>
+            <cell in="3" out="1" next="8"/>
+            <cell in="3" out="1"/>
+          </Cells>
+        </section>
+        <section set="10" sub="24" in="3" out="1" len="2">
+          <Cells>
+            <cell in="3" out="1" next="8"/>
+            <cell in="3" out="1"/>
+          </Cells>
+        </section>
+        <section set="10" sub="25" in="3" out="1" len="1">
+          <Cells>
+            <cell in="3" out="1"/>
+          </Cells>
+        </section>
+        <section set="10" sub="26" in="3" out="7" len="3">
+          <Cells>
+            <cell in="3" out="1" next="8"/>
+            <cell in="3" out="7" bend="1" next="6"/>
+            <cell in="1" out="7"/>
+          </Cells>
+        </section>
+        <section set="10" sub="27" in="3" out="7" len="3">
+          <Cells>
+            <cell in="3" out="7" bend="1" next="6"/>
+            <cell in="1" out="1" next="8"/>
+            <cell in="3" out="7" bend="1"/>
+          </Cells>
+        </section>
+        <section set="10" sub="28" in="3" out="7" len="1">
+          <Cells>
+            <cell in="3" out="7" bend="1"/>
+          </Cells>
+        </section>
+        <section set="10" sub="29" in="3" out="7" len="1">
+          <Cells>
+            <cell in="3" out="7" bend="1"/>
+          </Cells>
+        </section>
+        <section set="10" sub="31" in="1" out="1" len="3">
+          <Cells>
+            <cell in="1" out="5" next="6"/>
+            <cell in="1" out="1" next="8"/>
+            <cell in="3" out="1"/>
+          </Cells>
+        </section>
+        <section set="10" sub="32" in="1" out="1" len="1">
+          <Cells>
+            <cell in="1" out="1"/>
+          </Cells>
+        </section>
+        <section set="10" sub="33" in="5" out="5" len="1">
+          <Cells>
+            <cell in="5" out="5"/>
+          </Cells>
+        </section>
+        <section set="10" sub="34" in="1" out="7" len="2">
+          <Cells>
+            <cell in="1" out="7" next="6"/>
+            <cell in="1" out="7"/>
+          </Cells>
+        </section>
+        <section set="10" sub="35" in="1" out="7" len="2">
+          <Cells>
+            <cell in="1" out="7" next="6"/>
+            <cell in="1" out="7"/>
+          </Cells>
+        </section>
+        <section set="10" sub="36" in="1" out="7" len="2">
+          <Cells>
+            <cell in="1" out="7" next="6"/>
+            <cell in="1" out="7"/>
+          </Cells>
+        </section>
+        <section set="10" sub="37" in="1" out="7" len="1">
+          <Cells>
+            <cell in="1" out="7"/>
+          </Cells>
+        </section>
+        <section set="10" sub="38" in="7" out="7" len="1">
+          <Cells>
+            <cell in="7" out="7"/>
+          </Cells>
+        </section>
+        <section set="10" sub="39" in="3" out="3" len="1">
+          <Cells>
+            <cell in="3" out="3"/>
+          </Cells>
+        </section>
+        <section set="85" sub="0" in="3" out="7" len="3">
+          <Cells>
+            <cell in="3" out="7" next="6"/>
+            <cell in="1" out="1" next="8"/>
+            <cell in="3" out="7"/>
+          </Cells>
+        </section>
+        <section set="85" sub="1" in="2" out="8" len="1">
+          <Cells>
+            <cell in="2" out="8" bend="1"/>
+          </Cells>
+        </section>
+        <section set="85" sub="2" in="5" out="1" len="2">
+          <Cells>
+            <cell in="5" out="8" next="8"/>
+            <cell in="4" out="1"/>
+          </Cells>
+        </section>
+        <section set="85" sub="3" in="1" out="5" len="2">
+          <Cells>
+            <cell in="1" out="6" next="6"/>
+            <cell in="2" out="5"/>
+          </Cells>
+        </section>
+        <section set="172" sub="0" in="7" out="3" len="1">
+          <Cells>
+            <cell in="7" out="3" bend="5"/>
+          </Cells>
+        </section>
+        <section set="225" sub="0" in="5" out="1" len="1">
+          <Cells>
+            <cell in="5" out="1"/>
+          </Cells>
+        </section>
+        <section set="225" sub="2" in="1" out="5" len="1">
+          <Cells>
+            <cell in="1" out="5"/>
+          </Cells>
+        </section>
+      </Sections>
+    </set>
+  </CliffInfo>
 </RsModConfig>

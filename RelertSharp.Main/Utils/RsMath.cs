@@ -68,6 +68,10 @@ namespace RelertSharp
         {
             return src >= 0 ? (int)src : (int)src - 1;
         }
+        public static int Ceil(double src)
+        {
+            return src >= 0 ? (int)src + 1 : (int)src;
+        }
         public static int Round(double src)
         {
             return (int)Math.Round(src);
