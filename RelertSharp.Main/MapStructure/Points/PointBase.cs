@@ -15,9 +15,9 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Public Methods - ObjectBase
-        public virtual void AddObject(T item)
+        public virtual void AddObject(T item, bool forceRenewId = false)
         {
-            if (string.IsNullOrEmpty(item.Id))
+            if (string.IsNullOrEmpty(item.Id) || forceRenewId)
             {
                 for (int i = 0; i < 10000; i++)
                 {

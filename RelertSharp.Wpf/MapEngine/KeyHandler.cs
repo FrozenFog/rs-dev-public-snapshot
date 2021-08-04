@@ -30,19 +30,19 @@ namespace RelertSharp.Wpf.MapEngine
         {
             if (drew && ParentDocument.IsActive)
             {
-                if (e.Key == Key.Z && GuiUtil.IsKeyDown(Key.LeftCtrl))
+                if (e.Key == Key.Z && GuiUtil.IsControlDown())
                 {
                     EngineApi.InvokeLock();
                     if (UndoRedoHub.Undo()) EngineApi.InvokeRedraw();
                     EngineApi.InvokeUnlock();
                 }
-                else if (e.Key == Key.Y && GuiUtil.IsKeyDown(Key.LeftCtrl))
+                else if (e.Key == Key.Y && GuiUtil.IsControlDown())
                 {
                     EngineApi.InvokeLock();
                     if (UndoRedoHub.Redo()) EngineApi.InvokeRedraw();
                     EngineApi.InvokeUnlock();
                 }
-                else if (e.Key == Key.D && GuiUtil.IsKeyDown(Key.LeftCtrl))
+                else if (e.Key == Key.D && GuiUtil.IsControlDown())
                 {
                     EngineApi.InvokeLock();
                     TileSelector.CancelAllTileSelection();
@@ -60,6 +60,17 @@ namespace RelertSharp.Wpf.MapEngine
                     else if (e.Key == Key.PageDown)
                     {
                         TileSelector.SinkAllSelectedTile();
+                        affected = true;
+                    }
+                    else if (e.Key == Key.C && GuiUtil.IsControlDown())
+                    {
+                        MapClipboard.AddTileToClipboard();
+                    }
+                    else if (e.Key == Key.V && GuiUtil.IsControlDown())
+                    {
+                        MapClipboard.LoadToTileBrush();
+                        TileSelector.CancelAllTileSelection();
+                        MouseState.SetState(PanelMouseState.TileSingleBrush);
                         affected = true;
                     }
                     if (affected)
@@ -136,6 +147,20 @@ namespace RelertSharp.Wpf.MapEngine
             {
                 case Key.Delete:
                     Selector.DeleteSelectedObjects();
+                    break;
+                case Key.C:
+                    if (GuiUtil.IsControlDown())
+                    {
+                        MapClipboard.AddObjectToClipboard();
+                    }
+                    break;
+                case Key.V:
+                    if (GuiUtil.IsControlDown())
+                    {
+                        MapClipboard.LoadToObjectBrush();
+                        Selector.UnselectAll();
+                        MouseState.SetState(PanelMouseState.ObjectPasteBrush);
+                    }
                     break;
             }
         }

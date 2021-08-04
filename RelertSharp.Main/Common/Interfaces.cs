@@ -90,6 +90,12 @@ namespace RelertSharp.Common
         int Z { get; set; }
     }
 
+    public interface ITile : I3dLocateable
+    {
+        int TileIndex { get; set; }
+        byte SubIndex { get; set; }
+    }
+
     public interface IMapObject : IRegistable, I2dLocateable, IBaseObject, IExtractableObject
     {
         ISceneObject SceneObject { get; }

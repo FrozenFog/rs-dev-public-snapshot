@@ -21,9 +21,9 @@ namespace RelertSharp.MapStructure.Objects
         /// Only use this to generate id
         /// </summary>
         /// <param name="item"></param>
-        public virtual void AddItem(T item)
+        public virtual void AddItem(T item, bool forceRenewId = false)
         {
-            if (item.Id != Constant.ITEM_NONE) data[item.Id] = item;
+            if (item.Id != Constant.ITEM_NONE && !forceRenewId) data[item.Id] = item;
             else
             {
                 for (int i = 0; i < 10000; i++)

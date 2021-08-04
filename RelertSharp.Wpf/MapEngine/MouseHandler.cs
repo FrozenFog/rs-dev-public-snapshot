@@ -151,6 +151,9 @@ namespace RelertSharp.Wpf.MapEngine
                 case PanelMouseState.TileSingleBrush:
                     TilePaintBrush.SuspendBrush();
                     break;
+                case PanelMouseState.ObjectPasteBrush:
+                    MapClipboard.SuspendClipObjects();
+                    break;
             }
             MouseState.SetState(PanelMouseState.None);
             EngineApi.InvokeRedraw();
@@ -168,7 +171,7 @@ namespace RelertSharp.Wpf.MapEngine
                 case PanelMouseState.None:
                     if (Selector.IsSelecting)
                     {
-                        Selector.EndSelecting(GuiUtil.IsKeyDown(Key.LeftAlt, Key.RightAlt));
+                        Selector.EndSelecting(GuiUtil.IsAltDown());
                     }
                     else if (Selector.IsMoving) Selector.EndSelectedObjectsMoving();
                     EngineApi.InvokeRedraw();
@@ -209,8 +212,8 @@ namespace RelertSharp.Wpf.MapEngine
             switch (MouseState.State)
             {
                 case PanelMouseState.None:
-                    bool addSelect = GuiUtil.IsKeyDown(Key.LeftShift, Key.RightShift);
-                    bool reverseSelect = GuiUtil.IsKeyDown(Key.LeftAlt, Key.RightAlt);
+                    bool addSelect = GuiUtil.IsShiftDown();
+                    bool reverseSelect = GuiUtil.IsAltDown();
                     if (!addSelect && !reverseSelect) Selector.UnselectAll();
                     Selector.SelectAt(cell, subcell, reverseSelect);
                     EngineApi.InvokeRedraw();
@@ -233,6 +236,10 @@ namespace RelertSharp.Wpf.MapEngine
                     break;
                 case PanelMouseState.TileBucketFill:
                     TilePaintBrush.BucketTileAt(cell);
+                    EngineApi.InvokeRedraw();
+                    break;
+                case PanelMouseState.ObjectPasteBrush:
+                    MapClipboard.AddClipObjectToMap();
                     EngineApi.InvokeRedraw();
                     break;
 
@@ -290,6 +297,9 @@ namespace RelertSharp.Wpf.MapEngine
             {
                 case PanelMouseState.ObjectBrush:
                     redraw = PaintBrush.MoveBrushObjectTo(cell, subcell);
+                    break;
+                case PanelMouseState.ObjectPasteBrush:
+                    redraw = MapClipboard.MoveClipObjectTo(cell);
                     break;
                 case PanelMouseState.TileSingleBrush:
                     if (!notFound)

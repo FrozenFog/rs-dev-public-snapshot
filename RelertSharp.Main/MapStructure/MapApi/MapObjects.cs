@@ -108,39 +108,39 @@ namespace RelertSharp.MapStructure
             AddToTile(o);
             return o;
         }
-        public static void AddObject(IMapObject obj)
+        public static void AddObject(IMapObject obj, bool forceRenewId = false)
         {
             switch (obj.ObjectType)
             {
                 case MapObjectType.Aircraft:
-                    Map.Aircrafts.AddItem(obj as AircraftItem);
+                    Map.Aircrafts.AddItem(obj as AircraftItem, forceRenewId);
                     break;
                 case MapObjectType.Building:
-                    Map.Buildings.AddItem(obj as StructureItem);
+                    Map.Buildings.AddItem(obj as StructureItem, forceRenewId);
                     break;
                 case MapObjectType.Vehicle:
-                    Map.Units.AddItem(obj as UnitItem);
+                    Map.Units.AddItem(obj as UnitItem, forceRenewId);
                     break;
                 case MapObjectType.Infantry:
-                    Map.Infantries.AddItem(obj as InfantryItem);
+                    Map.Infantries.AddItem(obj as InfantryItem, forceRenewId);
                     break;
                 case MapObjectType.Smudge:
-                    Map.Smudges.AddObject(obj as SmudgeItem);
+                    Map.Smudges.AddObject(obj as SmudgeItem, forceRenewId);
                     break;
                 case MapObjectType.Terrain:
-                    Map.Terrains.AddObject(obj as TerrainItem);
+                    Map.Terrains.AddObject(obj as TerrainItem, forceRenewId);
                     break;
                 case MapObjectType.Celltag:
-                    Map.Celltags.AddObject(obj as CellTagItem);
+                    Map.Celltags.AddObject(obj as CellTagItem, forceRenewId);
                     break;
                 case MapObjectType.Waypoint:
-                    Map.Waypoints.AddObject(obj as WaypointItem);
+                    Map.Waypoints.AddObject(obj as WaypointItem, forceRenewId);
                     break;
                 case MapObjectType.Overlay:
                     Map.Overlays[obj] = obj as OverlayUnit;
                     break;
                 case MapObjectType.LightSource:
-                    Map.LightSources.AddObject(obj as LightSource);
+                    Map.LightSources.AddObject(obj as LightSource, forceRenewId);
                     break;
                 case MapObjectType.BaseNode:
                     BaseNode node = obj as BaseNode;

@@ -20,7 +20,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         private static List<I3dLocateable> tileSetOffset = new List<I3dLocateable>();
         private static I3dLocateable prevPos;
         private static Pnt3 offset;
-        private static bool isLat, isSuspended, isFlat;
+        private static bool isLat, isSuspended, isFlat, isClipboard;
         private static TileSetItemVm currentSet;
 
         private static TileLayer Tiles { get { return GlobalVar.GlobalMap.TilesData; } }
@@ -63,6 +63,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         }
         public static void LoadTileBrush(TileSetItemVm src)
         {
+            isClipboard = false;
             currentSet = src;
             EngineApi.InvokeLock();
             tileSetOffset.Clear();
@@ -83,6 +84,36 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 body.Add(t);
             }
             isLat = src.IsLat;
+            MoveTileBrushTo(prevPos);
+            EngineApi.InvokeUnlock();
+        }
+        /// <summary>
+        /// used by clipboard
+        /// </summary>
+        /// <param name="src"></param>
+        public static void LoadTileBrush(IEnumerable<ITile> src)
+        {
+            isClipboard = true;
+            currentSet = null;
+            EngineApi.InvokeLock();
+            tileSetOffset.Clear();
+            foreach (Tile t in body) t.Dispose();
+            foreach (Tile t in under) t.Reveal();
+            foreach (Tile t in surroundLat) t.Dispose();
+            foreach (Tile t in surroundUnder) t.Reveal();
+            body.Clear();
+            under.Clear();
+            surroundLat.Clear();
+            surroundUnder.Clear();
+            foreach (ITile tile in src)
+            {
+                Tile t = new Tile(tile.TileIndex, tile.SubIndex, INIT_X + tile.X, INIT_Y + tile.Y, tile.Z);
+                EngineApi.DrawTile(t);
+                t.FlatToGround(isFlat);
+                tileSetOffset.Add(new Pnt3(tile));
+                body.Add(t);
+            }
+            isLat = false;
             MoveTileBrushTo(prevPos);
             EngineApi.InvokeUnlock();
         }
@@ -170,13 +201,21 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         #region Brush suspending
         public static void SuspendBrush()
         {
-            if (!isSuspended)
+            if (isClipboard)
             {
-                foreach (Tile t in body) t.Hide();
-                foreach (Tile t in surroundUnder) t.Reveal();
-                foreach (Tile t in surroundLat) t.Hide();
-                foreach (Tile t in under) t.Reveal();
-                isSuspended = true;
+                foreach (Tile t in body) t.Dispose();
+                isClipboard = false;
+            }
+            else
+            {
+                if (!isSuspended)
+                {
+                    foreach (Tile t in body) t.Hide();
+                    foreach (Tile t in surroundUnder) t.Reveal();
+                    foreach (Tile t in surroundLat) t.Hide();
+                    foreach (Tile t in under) t.Reveal();
+                    isSuspended = true;
+                }
             }
         }
         public static void ResumeBrush()

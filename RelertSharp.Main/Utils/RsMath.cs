@@ -104,6 +104,14 @@ namespace RelertSharp
         {
             return new Pnt(a.X + b.X, a.Y + b.Y);
         }
+        public static I3dLocateable I3dSubi(I3dLocateable value, I3dLocateable minusBy)
+        {
+            return new Pnt3(value.X - minusBy.X, value.Y - minusBy.Y, value.Z - minusBy.Z);
+        }
+        public static I3dLocateable I3dAddi(I3dLocateable a, I3dLocateable b)
+        {
+            return new Pnt3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+        }
 
 
         public static T[] Mirror2dArray<T>(this T[] arr, int width, int height, bool isXArray = true)

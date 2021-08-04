@@ -17,6 +17,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         TileSingleSelecting = 1 << 4,
         TileSelecting = TileLineSelecting | TileBucketSelecting | TileSingleSelecting,
         TileBucketFill = 1 << 5,
+        ObjectPasteBrush = 1 << 6,
         TileBrush = TileSingleBrush | TileBucketFill,
         DEBUG = 65535
     }

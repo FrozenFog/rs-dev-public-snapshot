@@ -18,7 +18,7 @@ namespace RelertSharp.MapStructure.Points
 
 
         #region Public Methods
-        public override void AddObject(LightSource item)
+        public override void AddObject(LightSource item, bool forceRenew = false)
         {
             item.index = _i++.ToString();
             data[item.index] = item;

@@ -36,10 +36,10 @@ namespace RelertSharp.MapStructure.Points
         {
             return !wpnum.Contains(num.ToString());
         }
-        public override void AddObject(WaypointItem item)
+        public override void AddObject(WaypointItem item, bool forceRenewId = false)
         {
+            base.AddObject(item, forceRenewId);
             wpnum.Add(item.Id);
-            base.AddObject(item);
         }
         public int NewID()
         {

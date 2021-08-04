@@ -92,6 +92,18 @@ namespace RelertSharp.Wpf
             }
             return false;
         }
+        public static bool IsControlDown()
+        {
+            return Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+        }
+        public static bool IsShiftDown()
+        {
+            return Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
+        }
+        public static bool IsAltDown()
+        {
+            return Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt);
+        }
         public static bool IsKeyUp(params Key[] keys)
         {
             foreach (var k in keys)
