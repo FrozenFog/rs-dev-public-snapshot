@@ -22,6 +22,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
     }
     internal static class MouseState
     {
+        public static event Action MouseStateChanged;
         public static PanelMouseState State { get; private set; } = PanelMouseState.None;
         public static void SetState(PanelMouseState state)
         {
@@ -30,6 +31,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 if (State == PanelMouseState.TileSingleBrush) TilePaintBrush.SuspendBrush();
                 else if (State == PanelMouseState.ObjectBrush) PaintBrush.SuspendBrush();
                 State = state;
+                MouseStateChanged?.Invoke();
             }
         }
         public static bool IsState(PanelMouseState state)

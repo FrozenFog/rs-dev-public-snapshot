@@ -7,8 +7,12 @@
         xmlns:local="clr-namespace:RelertSharp.Wpf"
         xmlns:Views="clr-namespace:RelertSharp.Wpf.Views" x:Class="RelertSharp.Wpf.MainWindow"
         xmlns:mn="clr-namespace:RelertSharp.Wpf.Common.Commands"
+        xmlns:vm="clr-namespace:RelertSharp.Wpf.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Background="{DynamicResource dimBack}" Loaded="WindowLoadedInitializer" Closed="MainWindowClosed">
+    <Window.DataContext>
+        <vm:MainWindowVm/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -28,24 +32,22 @@
                 <MenuItem Header="Exit"/>
             </MenuItem>
             <MenuItem Header="Edit">
-                <MenuItem Header="Tile Editing">
-                    <MenuItem Header="Switch To Framework" Click="MenuSwitchFramework" IsCheckable="True"/>
-                    <MenuItem Header="Switch To Flat" Click="MenuSwitchFlat" IsCheckable="True"/>
-                    <MenuItem Header="Switch To Isometric Selecting" Click="MenuIsoSelect" IsCheckable="True"/>
-                    <MenuItem Header="Set Height To..." Click="MenuSetHeight"/>
+                <MenuItem Header="Switch To Framework" Click="MenuSwitchFramework" IsCheckable="True"/>
+                <MenuItem Header="Switch To Flat" Click="MenuSwitchFlat" IsCheckable="True"/>
+                <MenuItem Header="Switch To Isometric Selecting" Click="MenuIsoSelect" IsCheckable="True"/>
+                <MenuItem Header="Set Height To..." Click="MenuSetHeight"/>
+                <Separator/>
+                <MenuItem Header="Tile Selecting Mode">
+                    <MenuItem Header="Single Selecting" IsCheckable="True" IsChecked="{Binding IsSingleTileSelecting}"/>
+                    <MenuItem Header="Bucket Selecting" IsCheckable="True" IsChecked="{Binding IsBucketTileSelecting}"/>
+                    <MenuItem Header="Line Selecting" IsCheckable="True" IsChecked="{Binding IsLineTileSelecting}"/>
                     <Separator/>
-                    <MenuItem Header="Tile Selecting Mode">
-                        <MenuItem Header="Single Selecting" IsCheckable="True" IsChecked="True" mn:MenuItemGroup.GroupName="TileSelect" Click="MenuTileSelSingle"/>
-                        <MenuItem Header="Bucket Selecting" IsCheckable="True" mn:MenuItemGroup.GroupName="TileSelect" Click="MenuTileSelBucket"/>
-                        <MenuItem Header="Line Selecting" IsCheckable="True" mn:MenuItemGroup.GroupName="TileSelect" Click="MenuTileSelLine"/>
-                        <Separator/>
-                        <MenuItem Header="Same TileSet" IsCheckable="True" Click="MenuTileSelFiltSet"/>
-                        <MenuItem Header="Same Height" IsCheckable="True" Click="MenuTileSelFiltHeight"/>
-                    </MenuItem>
-                    <MenuItem Header="Tile Brush Mode">
-                        <MenuItem Header="Single Brush" IsCheckable="True" IsChecked="True" mn:MenuItemGroup.GroupName="TileBrush" Click="MenuTileBrsSingle"/>
-                        <MenuItem Header="Bucket Fill" IsCheckable="True" mn:MenuItemGroup.GroupName="TileBrush" Click="MenuTileBrsBucket"/>
-                    </MenuItem>
+                    <MenuItem Header="Same TileSet" IsCheckable="True" IsChecked="{Binding IsTileSetFilter}"/>
+                    <MenuItem Header="Same Height" IsCheckable="True" IsChecked="{Binding IsHeightFilter}"/>
+                </MenuItem>
+                <MenuItem Header="Tile Brush Mode">
+                    <MenuItem Header="Single Brush" IsCheckable="True" IsChecked="{Binding IsBrushSingle}"/>
+                    <MenuItem Header="Bucket Fill" IsCheckable="True" IsChecked="{Binding IsBrushFill}"/>
                 </MenuItem>
                 <Separator/>
                 <MenuItem Header="Save Map Render Picture" Click="MenuSaveShot"/>

@@ -109,6 +109,8 @@ namespace RelertSharp.Wpf.MapEngine.Helper
 
         #region Calls
         public static IEnumerable<Tile> SelectedTile { get { return selected; } }
+        public static bool IsTileSetFilter { get { return filtSet; } }
+        public static bool IsHeightFilter { get { return filtHeight; } }
         #endregion
     }
 }

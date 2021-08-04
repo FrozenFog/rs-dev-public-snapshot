@@ -212,14 +212,6 @@ namespace RelertSharp.IniSystem.Serialization.Helper
         {
             return Utils.Misc.IniParseBool(value);
         }
-        public static TAttribute GetAttribute<TAttribute>(Type targetType) where TAttribute : Attribute
-        {
-            foreach (var prop in targetType.GetProperties())
-            {
-                if (prop.GetCustomAttribute<TAttribute>() is TAttribute attr) return attr;
-            }
-            return null;
-        }
         public static PropertyInfo GetProperty<TAttribute>(Type targetType) where TAttribute : Attribute
         {
             foreach (var prop in targetType.GetProperties())

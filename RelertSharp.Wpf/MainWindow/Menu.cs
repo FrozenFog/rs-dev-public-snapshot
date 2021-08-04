@@ -93,42 +93,6 @@ namespace RelertSharp.Wpf
             EngineApi.InvokeUnlock();
             EngineApi.InvokeRedraw();
         }
-        #region Tile Selecting
-        private void MenuTileSelSingle(object sender, RoutedEventArgs e)
-        {
-            MouseState.SetState(PanelMouseState.TileSingleSelecting);
-        }
-
-        private void MenuTileSelBucket(object sender, RoutedEventArgs e)
-        {
-            MouseState.SetState(PanelMouseState.TileBucketSelecting);
-        }
-
-        private void MenuTileSelLine(object sender, RoutedEventArgs e)
-        {
-            MouseState.SetState(PanelMouseState.TileLineSelecting);
-        }
-        private void MenuTileSelFiltSet(object sender, RoutedEventArgs e)
-        {
-            TileSelector.BucketTilesetFilter((sender as MenuItem).IsChecked);
-        }
-
-        private void MenuTileSelFiltHeight(object sender, RoutedEventArgs e)
-        {
-            TileSelector.BucketHeightFilter((sender as MenuItem).IsChecked);
-        }
-        #endregion
-        #region Tile Editing
-        private void MenuTileBrsSingle(object sender, RoutedEventArgs e)
-        {
-            MouseState.SetState(PanelMouseState.TileSingleBrush);
-        }
-
-        private void MenuTileBrsBucket(object sender, RoutedEventArgs e)
-        {
-            MouseState.SetState(PanelMouseState.TileBucketFill);
-        }
-        #endregion
         #endregion
 
         private void MenuSaveShot(object sender, RoutedEventArgs e)

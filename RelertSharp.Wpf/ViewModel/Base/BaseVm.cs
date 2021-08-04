@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Reflection;
 
 namespace RelertSharp.Wpf.ViewModel
 {
@@ -42,5 +43,28 @@ namespace RelertSharp.Wpf.ViewModel
             OnPropertyChanged(propertyName);
             return true;
         }
+        protected virtual void AutoUpdateAll(Type src, string group = null)
+        {
+            foreach (var info in src.GetProperties())
+            {
+                if (info.GetCustomAttribute<AutoUpdateAttribute>() is AutoUpdateAttribute auto)
+                {
+                    if (group != null)
+                    {
+                        if (auto.GroupName == group) OnPropertyChanged(info.Name);
+                    }
+                    else OnPropertyChanged(info.Name);
+                }
+            }
+        }
+    }
+
+    internal class AutoUpdateAttribute : Attribute
+    {
+        public AutoUpdateAttribute(string groupname = null)
+        {
+            GroupName = groupname;
+        }
+        public string GroupName { get; private set; }
     }
 }

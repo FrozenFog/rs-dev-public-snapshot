@@ -221,6 +221,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 Bfs2D bfs = new Bfs2D(tiles, seed, predicates);
                 HashSet<Tile> targets = new HashSet<Tile>();
                 foreach (Tile t in bfs) targets.Add(t);
+                if (targets.Count == 0) goto end;
                 int xMax = targets.Max(x => x.X), yMax = targets.Max(x => x.Y);
                 int xMin = targets.Min(x => x.X), yMin = targets.Min(x => x.Y);
                 int dx = xMax - xMin;
@@ -245,6 +246,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                         }
                     }
                 }
+                end:
                 EngineApi.InvokeUnlock();
             }
 

@@ -169,6 +169,27 @@ namespace System.Collections.Generic
 }
 
 
+namespace System.Reflection
+{
+    public static class AttributeExtensions
+    {
+        public static TAttribute GetAttributeInProperties<TAttribute>(this Type targetType, out PropertyInfo info) where TAttribute : Attribute
+        {
+            foreach (var prop in targetType.GetProperties())
+            {
+                if (prop.GetCustomAttribute<TAttribute>() is TAttribute attr)
+                {
+                    info = prop;
+                    return attr;
+                }
+            }
+            info = null;
+            return null;
+        }
+    }
+}
+
+
 
 
 
