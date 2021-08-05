@@ -13,6 +13,7 @@ using RelertSharp.Common;
 using System.Runtime.InteropServices;
 using System.Threading;
 using static RelertSharp.Wpf.GuiUtil;
+using System.Text;
 
 namespace RelertSharp.Wpf
 {

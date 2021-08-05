@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using RelertSharp.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RelertSharp.FileSystem
 {
@@ -112,9 +114,54 @@ namespace RelertSharp.FileSystem
         #endregion
 
 
+        #region Public Methods
+        public void CalculateCoord(HvaFile f)
+        {
+            foreach (var sec in data)
+            {
+                if (f.GetSectionMatrix(sec.SectionName) is float[] hva)
+                {
+                    Mat4 matHva = new Mat4(hva);
+                    float dx = sec.MinBounds[0];
+                    float dy = sec.MinBounds[1];
+                    float dz = sec.MinBounds[2];
+                    Vec4 delta = new Vec4(dx, dy, dz, 0);
+                    matHva.AddToColumn(3, delta);
+                    matHva *= sec.Scale;
+                    foreach (var span in sec.Spans)
+                    {
+                        foreach (var vox in span.Units)
+                        {
+                            Vec4 vec = new Vec4(vox.VoxX, vox.VoxY, vox.VoxZ, 1);
+                            Vec4 r = matHva * vec;
+                            vox.VoxX = (int)r.X ; vox.VoxY = (int)r.Y; vox.VoxZ = (int)r.Z;
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
+
+
         #region Public Calls - VxlFile
         public int SectionCount { get; private set; }
         public uint SectionBodySize { get; private set; }
+        public List<VoxelSection> Sections { get { return data; } }
+        public IEnumerable<VoxelUnit> AllVoxels
+        {
+            get
+            {
+                IEnumerable<VoxelUnit> result = new List<VoxelUnit>();
+                foreach (var sec in Sections)
+                {
+                    foreach (var seg in sec.Spans)
+                    {
+                        result = result.Concat(seg.Units);
+                    }
+                }
+                return result;
+            }
+        }
         #endregion
     }
 
@@ -137,6 +184,7 @@ namespace RelertSharp.FileSystem
         internal void AddSpanSeg(VoxelSpanSeg seg)
         {
             data.Add(seg);
+            seg.Parent = this;
         }
         #endregion
 
@@ -151,12 +199,22 @@ namespace RelertSharp.FileSystem
         public float[] TransMatrix { get; internal set; }
         public float[] MinBounds { get; internal set; }
         public float[] MaxBounds { get; internal set; }
+        /// <summary>
+        /// dx
+        /// </summary>
         public byte Width { get; internal set; }
+        /// <summary>
+        /// dy
+        /// </summary>
         public byte Depth { get; internal set; }
+        /// <summary>
+        /// dz
+        /// </summary>
         public byte Height { get; internal set; }
         public byte NormalType { get; internal set; }
         public int[] SpanStart { get; internal set; }
         public int[] SpanEnd { get; internal set; }
+        public List<VoxelSpanSeg> Spans { get { return data; } }
         #endregion
     }
 
@@ -187,6 +245,8 @@ namespace RelertSharp.FileSystem
         #region Public Call - VoxelSpanSeg
         public int SpanX { get; private set; }
         public int SpanY { get; private set; }
+        public List<VoxelUnit> Units { get { return data; } }
+        public VoxelSection Parent { get; internal set; }
         #endregion
     }
 

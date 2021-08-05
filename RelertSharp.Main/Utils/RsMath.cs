@@ -49,6 +49,13 @@ namespace RelertSharp
             return src;
         }
 
+        /// <summary>
+        /// include both
+        /// </summary>
+        /// <param name="src"></param>
+        /// <param name="floor"></param>
+        /// <param name="ceil"></param>
+        /// <returns></returns>
         public static bool InRange(this double src, double floor, double ceil)
         {
             return src >= floor && src <= ceil;

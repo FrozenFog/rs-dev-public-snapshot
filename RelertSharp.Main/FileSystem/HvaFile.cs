@@ -37,11 +37,32 @@ namespace RelertSharp.FileSystem
                 HvaFrame f = new HvaFrame();
                 for (int i = 0; i < SectionNum; i++)
                 {
-                    float[] mat = ReadFloats(12);
-                    f.AddFrameMatrix(mat);
+                    float[] tmp = ReadFloats(12);
+                    //// rearrange matrix as follow order:
+                    //// 5 6 4 7
+                    //// 9 10 8 11
+                    //// 1 2 0 3
+                    //// fuck you westwood
+                    //float[] mat = new float[12]
+                    //{
+                    //    tmp[5], tmp[6], tmp[4], tmp[7],
+                    //    tmp[9], tmp[10], tmp[8], tmp[11],
+                    //    tmp[1], tmp[2], tmp[0], tmp[3]
+                    //};
+                    f.AddFrameMatrix(tmp);
                 }
                 frames.Add(f);
             }
+        }
+        #endregion
+
+
+        #region Public Methods
+        public float[] GetSectionMatrix(string sectionName)
+        {
+            int i = sectionNames.IndexOf(sectionName);
+            if (i >= 0) return frames[0][i];
+            return null;
         }
         #endregion
 

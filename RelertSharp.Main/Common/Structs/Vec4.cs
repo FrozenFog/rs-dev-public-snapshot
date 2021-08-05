@@ -20,6 +20,10 @@ namespace RelertSharp.Common
         {
             X = r; Y = g; Z = b; V = a;
         }
+        public Vec4(double r, double g, double b, double a)
+        {
+            X = (float)r; Y = (float)g;Z = (float)b;V = (float)a;
+        }
         public Vec4 ToNormalize3(out float scale)
         {
             float max = Math.Max(Math.Max(X, Y), Z);
@@ -83,6 +87,10 @@ namespace RelertSharp.Common
 
 
         #region operator
+        public static double operator^(Vec4 a, Vec4 b)
+        {
+            return a.X * b.X + a.Y * b.Y + a.Z * b.Z + a.V * b.V;
+        }
         public static Vec4 operator +(Vec4 a, Vec4 b)
         {
             return new Vec4(a.X + b.X, a.Y + b.Y, a.Z + b.Z, a.V + b.V);
