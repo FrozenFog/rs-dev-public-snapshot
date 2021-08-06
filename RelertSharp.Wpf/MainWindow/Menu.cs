@@ -67,11 +67,6 @@ namespace RelertSharp.Wpf
                 else GuiUtil.Warning("Invalid height!");
             }
         }
-        private void MenuIsoSelect(object sender, RoutedEventArgs e)
-        {
-            bool enable = (sender as MenuItem).IsChecked;
-            Selector.SetIsometricSelecting(enable);
-        }
 
         private void MenuSwitchFramework(object sender, RoutedEventArgs e)
         {

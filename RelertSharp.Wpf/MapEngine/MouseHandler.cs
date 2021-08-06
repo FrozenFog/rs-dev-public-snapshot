@@ -176,6 +176,13 @@ namespace RelertSharp.Wpf.MapEngine
                     else if (Selector.IsMoving) Selector.EndSelectedObjectsMoving();
                     EngineApi.InvokeRedraw();
                     break;
+                case PanelMouseState.TileBoxSelecting:
+                    if (TileSelector.IsSelecting)
+                    {
+                        TileSelector.EndSelecting(GuiUtil.IsAltDown());
+                    }
+                    EngineApi.InvokeRedraw();
+                    break;
             }
         }
 
@@ -200,6 +207,14 @@ namespace RelertSharp.Wpf.MapEngine
                         }
                         Selector.BeginSelecting(unscaled, graphicTop, cell);
                     }
+                    break;
+                case PanelMouseState.TileBoxSelecting:
+                    if (!GuiUtil.IsShiftDown() && !GuiUtil.IsAltDown())
+                    {
+                        TileSelector.UnselectAll();
+                        EngineApi.InvokeRedraw();
+                    }
+                    TileSelector.BeginSelecting(unscaled, graphicTop, cell);
                     break;
             }
         }
@@ -292,6 +307,12 @@ namespace RelertSharp.Wpf.MapEngine
             {
                 Selector.MoveSelectedObjectsTo(cell, subcell);
                 redraw = true;
+            }
+            if (TileSelector.IsSelecting)
+            {
+                TileSelector.UpdateSelectingRectangle(unscaled, cell);
+                redraw = false;
+                goto nop;
             }
             switch (MouseState.State)
             {

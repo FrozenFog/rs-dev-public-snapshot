@@ -34,11 +34,11 @@
             <MenuItem Header="Edit">
                 <MenuItem Header="Switch To Framework" Click="MenuSwitchFramework" IsCheckable="True"/>
                 <MenuItem Header="Switch To Flat" Click="MenuSwitchFlat" IsCheckable="True"/>
-                <MenuItem Header="Switch To Isometric Selecting" Click="MenuIsoSelect" IsCheckable="True"/>
+                <MenuItem Header="Switch To Isometric Selecting" IsCheckable="True" IsChecked="{Binding IsIsoSelect}"/>
                 <MenuItem Header="Set Height To..." Click="MenuSetHeight"/>
                 <Separator/>
                 <MenuItem Header="Tile Selecting Mode">
-                    <MenuItem Header="Single Selecting" IsCheckable="True" IsChecked="{Binding IsSingleTileSelecting}"/>
+                    <MenuItem Header="Box Selecting" IsCheckable="True" IsChecked="{Binding IsBoxTileSelecting}"/>
                     <MenuItem Header="Bucket Selecting" IsCheckable="True" IsChecked="{Binding IsBucketTileSelecting}"/>
                     <MenuItem Header="Line Selecting" IsCheckable="True" IsChecked="{Binding IsLineTileSelecting}"/>
                     <Separator/>

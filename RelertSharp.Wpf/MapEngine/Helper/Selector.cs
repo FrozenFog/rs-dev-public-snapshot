@@ -130,7 +130,12 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             {
                 dragingSelectBox = false;
                 src.Children.Clear();
-                if (beginCell.Coord == endCell.Coord) return;
+                if (beginCell.Coord == endCell.Coord)
+                {
+                    isoLines.Clear();
+                    rect = null;
+                    return;
+                }
                 IEnumerable<I2dLocateable> enumerator;
                 if (isIsometric)
                 {
@@ -212,11 +217,11 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 {
                     double xRight, yRight, xLeft, yLeft;
                     double x1 = selectDown.X, x2 = selectNew.X, y1 = selectDown.Y, y2 = selectNew.Y;
-                    double sq3 = Math.Sqrt(3);
-                    xRight = (sq3 * (y1 - y2) + x1 + x2) / 2;
-                    yRight = (sq3 * (y1 + y2) + x1 - x2) / 2 / sq3;
-                    xLeft = (x1 + x2 - sq3 * (y1 - y2)) / 2;
-                    yLeft = (x2 - x1 + sq3 * (y2 + y1)) / 2 / sq3;
+                    double invK = 2;
+                    xRight = (invK * (y1 - y2) + x1 + x2) / 2;
+                    yRight = (invK * (y1 + y2) + x1 - x2) / 2 / invK;
+                    xLeft = (x1 + x2 - invK * (y1 - y2)) / 2;
+                    yLeft = (x2 - x1 + invK * (y2 + y1)) / 2 / invK;
                     // up right line(persume)
                     isoLines[0].X2 = xRight;
                     isoLines[0].Y2 = yRight;
@@ -378,5 +383,6 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         public static IEnumerable<IMapObject> SelectedObjects { get { return selectedObjects; } }
         public static bool IsMoving { get { return isMoving; } }
         public static bool IsSelecting { get { return dragingSelectBox; } }
+        public static bool IsIsometric { get { return isIsometric; } }
     }
 }

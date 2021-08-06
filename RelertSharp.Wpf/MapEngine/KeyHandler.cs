@@ -45,7 +45,7 @@ namespace RelertSharp.Wpf.MapEngine
                 else if (e.Key == Key.D && GuiUtil.IsControlDown())
                 {
                     EngineApi.InvokeLock();
-                    TileSelector.CancelAllTileSelection();
+                    TileSelector.UnselectAll();
                     EngineApi.InvokeRedraw();
                     EngineApi.InvokeUnlock();
                 }
@@ -69,7 +69,7 @@ namespace RelertSharp.Wpf.MapEngine
                     else if (e.Key == Key.V && GuiUtil.IsControlDown())
                     {
                         MapClipboard.LoadToTileBrush();
-                        TileSelector.CancelAllTileSelection();
+                        TileSelector.UnselectAll();
                         MouseState.SetState(PanelMouseState.TileSingleBrush);
                         affected = true;
                     }

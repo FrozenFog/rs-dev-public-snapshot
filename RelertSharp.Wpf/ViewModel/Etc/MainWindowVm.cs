@@ -26,12 +26,12 @@ namespace RelertSharp.Wpf.ViewModel
         #region Calls
         #region TileSelect
         [AutoUpdate(GROUP_MOUSE)]
-        public bool IsSingleTileSelecting
+        public bool IsBoxTileSelecting
         {
-            get { return MouseState.State == PanelMouseState.TileSingleSelecting; }
+            get { return MouseState.State == PanelMouseState.TileBoxSelecting; }
             set
             {
-                MouseState.SetState(PanelMouseState.TileSingleSelecting);
+                MouseState.SetState(PanelMouseState.TileBoxSelecting);
                 SetProperty();
             }
         }
@@ -92,6 +92,18 @@ namespace RelertSharp.Wpf.ViewModel
             set
             {
                 MouseState.SetState(PanelMouseState.TileBucketFill);
+            }
+        }
+        #endregion
+        #region Object Select
+        public bool IsIsoSelect
+        {
+            get { return Selector.IsIsometric; }
+            set
+            {
+                Selector.SetIsometricSelecting(value);
+                TileSelector.SetIsometricSelecting(value);
+                SetProperty();
             }
         }
         #endregion
