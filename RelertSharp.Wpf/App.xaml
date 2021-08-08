@@ -18,6 +18,7 @@
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/ListView.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/RadioButton.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/TabControl.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/ToolBar.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/CheckBox.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/StatusBar.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/ScrollBar.xaml"/>

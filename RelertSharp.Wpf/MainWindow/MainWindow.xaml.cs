@@ -26,12 +26,8 @@ namespace RelertSharp.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region Timer
-        #endregion
         #region Else
         private SoundManager soundManager = new SoundManager();
-        #endregion
-        #region Dispatcher
         #endregion
 
         public MainWindow()

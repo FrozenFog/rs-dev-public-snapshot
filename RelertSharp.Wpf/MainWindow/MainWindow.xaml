@@ -15,6 +15,8 @@
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="23"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="23"/>
         </Grid.RowDefinitions>
@@ -103,12 +105,26 @@
                 <MenuItem Header="Go Back" Click="DebugClick2"/>
             </MenuItem>
         </Menu>
-        <DockingManager x:Name="dockMain" Grid.Row="0" Margin="0,23,0,0">
+        <ToolBarTray VerticalAlignment="Top" Grid.Row="1" Height="Auto">
+            <ToolBar Band="1" BandIndex="1" HorizontalAlignment="Left">
+                <Button Content="123"/>
+                <Button Content="2345"/>
+            </ToolBar>
+            <ToolBar Band="1" BandIndex="2" HorizontalAlignment="Left">
+                <Button Content="55555"/>
+                <ComboBox>
+                    <ComboBoxItem Content="DropDownItem"/>
+                    <ComboBoxItem Content="Drop2"/>
+                    <ComboBoxItem Content="Drop3"/>
+                </ComboBox>
+            </ToolBar>
+        </ToolBarTray>
+        <DockingManager x:Name="dockMain" Grid.Row="2">
             <DockingManager.Theme>
                 <Vs2013DarkTheme/>
             </DockingManager.Theme>
         </DockingManager>
-        <StatusBar Name="bar" Grid.Row="2" Style="{DynamicResource barDark}">
+        <StatusBar Name="bar" Grid.Row="3" Style="{DynamicResource barDark}">
             <TextBlock x:Name="position">Ready</TextBlock>
         </StatusBar>
         <!--<Button Content="Button" VerticalAlignment="Top" Click="Button_Click"/>-->
