@@ -37,6 +37,8 @@
                 <MenuItem Header="Switch To Isometric Selecting" IsCheckable="True" IsChecked="{Binding IsIsoSelect}"/>
                 <MenuItem Header="Set Height To..." Click="MenuSetHeight"/>
                 <Separator/>
+                <MenuItem Header="Flat Ramp Brush" Click="MenuFlatRampBrush"/>
+                <Separator/>
                 <MenuItem Header="Tile Selecting Mode">
                     <MenuItem Header="Box Selecting" IsCheckable="True" IsChecked="{Binding IsBoxTileSelecting}"/>
                     <MenuItem Header="Bucket Selecting" IsCheckable="True" IsChecked="{Binding IsBucketTileSelecting}"/>

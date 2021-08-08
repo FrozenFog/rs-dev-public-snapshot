@@ -292,8 +292,41 @@ namespace RelertSharp.Wpf.MapEngine.Helper
 
         }
         #endregion
+        #region Ramp Flatting
+        public static void BeginRampFlat(int height)
+        {
+            if (!IsRampFlatOn)
+            {
+                IsRampFlatOn = true;
+                RampFlatHeight = height;
+            }
+        }
+        public static bool RampFlatAt(I2dLocateable cell)
+        {
+            if (IsRampFlatOn && Tiles[cell] is Tile t)
+            {
+                if (t.IsRamp || t.RealHeight != RampFlatHeight)
+                {
+                    EngineApi.InvokeLock();
+                    MapApi.SetTile(0, 0, t, RampFlatHeight);
+                    EngineApi.InvokeUnlock();
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static void EndRampFlat()
+        {
+            if (IsRampFlatOn)
+            {
+                IsRampFlatOn = false;
+            }
+        }
+        #endregion
         #endregion
 
         public static bool LatEnable { get; set; } = true;
+        public static bool IsRampFlatOn { get; private set; }
+        public static int RampFlatHeight { get; private set; }
     }
 }

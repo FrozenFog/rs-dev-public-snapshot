@@ -28,6 +28,7 @@ namespace RelertSharp.Engine.MapObjects
             WaterPassable = tile[subtile].WaterPassable;
             Buildable = tile[subtile].Buildable;
             LandPassable = tile[subtile].LandPassable;
+            RampType = tile[subtile].RampType;
             pFramework = frm;
             pExFramework = frmex;
             SetColor(pFramework, Vec4.HideCompletely);
@@ -210,6 +211,7 @@ namespace RelertSharp.Engine.MapObjects
         public bool Buildable { get; set; }
         public bool WaterPassable { get; set; }
         public bool LandPassable { get; set; }
+        public byte RampType { get; set; }
         #endregion
     }
 }

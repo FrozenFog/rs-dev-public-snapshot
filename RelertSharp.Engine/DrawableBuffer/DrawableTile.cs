@@ -36,6 +36,7 @@ namespace RelertSharp.Engine.DrawableBuffer
             public bool LandPassable { get; set; }
             public bool WaterPassable { get; set; }
             public int TerrainType { get; set; }
+            public byte RampType { get; set; }
             #endregion
         }
 

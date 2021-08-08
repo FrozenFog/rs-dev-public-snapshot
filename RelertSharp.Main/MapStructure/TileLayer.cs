@@ -713,6 +713,13 @@ namespace RelertSharp.MapStructure
         public override int X { get { return X16; } set { X16 = (short)value; } }
         public override int Y { get { return Y16; } set { Y16 = (short)value; } }
         public int Z { get { return Height; } set { Height = (byte)value; } }
+        public bool IsRamp
+        {
+            get
+            {
+                return SceneObject?.RampType != 0;
+            }
+        }
         public bool Buildable
         {
             get

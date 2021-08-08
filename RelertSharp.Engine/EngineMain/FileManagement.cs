@@ -44,6 +44,7 @@ namespace RelertSharp.Engine
                     subtile.LandPassable = Constant.DrawingEngine.Tiles.Passable.Contains(img.TerrainType);
                     subtile.Buildable = Constant.DrawingEngine.Tiles.Buildables.Contains(img.TerrainType) && img.RampType == 0;
                     subtile.TerrainType = img.TerrainType;
+                    subtile.RampType = img.RampType;
                     d.SubTiles.Add(subtile);
                 }
                 Buffer.Buffers.Tiles[filename] = d;

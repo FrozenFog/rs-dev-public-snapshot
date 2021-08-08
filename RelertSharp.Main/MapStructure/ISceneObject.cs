@@ -24,6 +24,7 @@ namespace RelertSharp.MapStructure
     }
     public interface ISceneTile : ISceneObject
     {
+        byte RampType { get; }
         bool WaterPassable { get; }
         bool LandPassable { get; }
         bool Buildable { get; }

@@ -183,6 +183,13 @@ namespace RelertSharp.Wpf.MapEngine
                     }
                     EngineApi.InvokeRedraw();
                     break;
+                case PanelMouseState.TileFlatting:
+                    if (TilePaintBrush.IsRampFlatOn)
+                    {
+                        TilePaintBrush.EndRampFlat();
+                        EngineApi.InvokeRedraw();
+                    }
+                    break;
             }
         }
 
@@ -215,6 +222,9 @@ namespace RelertSharp.Wpf.MapEngine
                         EngineApi.InvokeRedraw();
                     }
                     TileSelector.BeginSelecting(unscaled, graphicTop, cell);
+                    break;
+                case PanelMouseState.TileFlatting:
+                    TilePaintBrush.BeginRampFlat(cell.Z);
                     break;
             }
         }
@@ -312,6 +322,11 @@ namespace RelertSharp.Wpf.MapEngine
             {
                 TileSelector.UpdateSelectingRectangle(unscaled, cell);
                 redraw = false;
+                goto nop;
+            }
+            if (TilePaintBrush.IsRampFlatOn)
+            {
+                redraw = TilePaintBrush.RampFlatAt(cell);
                 goto nop;
             }
             switch (MouseState.State)

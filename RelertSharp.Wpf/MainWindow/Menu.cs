@@ -53,6 +53,10 @@ namespace RelertSharp.Wpf
 
         #region Edits
         #region Tiles
+        private void MenuFlatRampBrush(object sender, RoutedEventArgs e)
+        {
+            MouseState.SetState(PanelMouseState.TileFlatting);
+        }
         private void MenuSetHeight(object sender, RoutedEventArgs e)
         {
             DlgNameInput dlg = new DlgNameInput(string.Format("Input height, range between 0 and {0}", Constant.DrawingEngine.MapMaxHeight));
