@@ -23,7 +23,7 @@ namespace RelertSharp.Wpf.ViewModel
         }
 
         #region Methods
-        public void SetIcon(ImageSource src)
+        public void SetIcon(object src)
         {
             Icon = src;
         }
@@ -41,7 +41,7 @@ namespace RelertSharp.Wpf.ViewModel
         #region Calls
         public override string Title { get; }
         public string RegName { get; private set; }
-        public ImageSource Icon { get; private set; }
+        public object Icon { get; private set; }
         public MapObjectType Type { get; private set; } = MapObjectType.Undefined;
         #endregion
     }

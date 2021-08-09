@@ -1,4 +1,7 @@
-﻿using RelertSharp.Wpf.MapEngine.Helper;
+﻿using RelertSharp.Engine.Api;
+using RelertSharp.MapStructure;
+using RelertSharp.Wpf.MapEngine.Helper;
+using RelertSharp.Wpf.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +13,17 @@ namespace RelertSharp.Wpf.ViewModel
     internal class MainWindowVm : BaseVm<object>
     {
         private const string GROUP_MOUSE = "mouse";
-        public MainWindowVm()
+        private readonly TilePanelView tiles;
+        public MainWindowVm(TilePanelView tile)
         {
             data = new object();
+            tiles = tile;
             MouseState.MouseStateChanged += HandleMouseStateChanged;
         }
+        public MainWindowVm()
+        {
 
+        }
         private void HandleMouseStateChanged()
         {
             AutoUpdateAll(typeof(MainWindowVm), GROUP_MOUSE);
@@ -24,6 +32,7 @@ namespace RelertSharp.Wpf.ViewModel
 
 
         #region Calls
+        #region Tiles
         #region TileSelect
         [AutoUpdate(GROUP_MOUSE)]
         public bool IsBoxTileSelecting
@@ -95,7 +104,6 @@ namespace RelertSharp.Wpf.ViewModel
             }
         }
         #endregion
-        #region Object Select
         public bool IsIsoSelect
         {
             get { return Selector.IsIsometric; }
@@ -104,6 +112,36 @@ namespace RelertSharp.Wpf.ViewModel
                 Selector.SetIsometricSelecting(value);
                 TileSelector.SetIsometricSelecting(value);
                 SetProperty();
+            }
+        }
+        private bool framework = false;
+        public bool IsFrameworkEnable
+        {
+            get { return framework; }
+            set
+            {
+                framework = value;
+                EngineApi.InvokeLock();
+                MapApi.SetFramework(framework);
+                TilePaintBrush.SwitchToFramework(framework);
+                tiles.SetFramework(framework);
+                EngineApi.InvokeUnlock();
+                EngineApi.InvokeRedraw();
+                SetProperty();
+            }
+        }
+        private bool flat = false;
+        public bool IsFlatEnable
+        {
+            get { return flat; }
+            set
+            {
+                flat = value;
+                EngineApi.InvokeLock();
+                MapApi.SetFlatGround(flat);
+                TilePaintBrush.SwitchToFlatGround(flat);
+                EngineApi.InvokeUnlock();
+                EngineApi.InvokeRedraw();
             }
         }
         #endregion

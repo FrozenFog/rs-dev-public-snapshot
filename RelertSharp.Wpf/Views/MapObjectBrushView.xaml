@@ -33,7 +33,7 @@
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:ObjectPickVm}" ItemsSource="{Binding Items}">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding Icon}" Stretch="Fill" Width="16" Height="16" Margin="0,1,8,1"/>
+                        <Label Content="{Binding Icon}" Width="16" Height="16" Margin="0,1,8,1"/>
                         <TextBlock Text="{Binding Title}" Height="16"/>
                     </StackPanel>
                 </HierarchicalDataTemplate>

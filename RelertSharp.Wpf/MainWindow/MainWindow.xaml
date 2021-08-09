@@ -9,7 +9,8 @@
         xmlns:mn="clr-namespace:RelertSharp.Wpf.Common.Commands"
         xmlns:vm="clr-namespace:RelertSharp.Wpf.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="{DynamicResource dimBack}" Loaded="WindowLoadedInitializer" Closed="MainWindowClosed">
+    Title="Relert Sharp" Height="450" Width="800" Background="{DynamicResource dimBack}" 
+    Loaded="WindowLoadedInitializer" Closed="MainWindowClosed" Icon="{StaticResource Logo}">
     <Window.DataContext>
         <vm:MainWindowVm/>
     </Window.DataContext>
@@ -34,8 +35,8 @@
                 <MenuItem Header="Exit"/>
             </MenuItem>
             <MenuItem Header="Edit">
-                <MenuItem Header="Switch To Framework" Click="MenuSwitchFramework" IsCheckable="True"/>
-                <MenuItem Header="Switch To Flat" Click="MenuSwitchFlat" IsCheckable="True"/>
+                <MenuItem Header="Switch To Framework" IsCheckable="True" IsChecked="{Binding IsFrameworkEnable}"/>
+                <MenuItem Header="Switch To Flat" IsCheckable="True" IsChecked="{Binding IsFlatEnable}"/>
                 <MenuItem Header="Switch To Isometric Selecting" IsCheckable="True" IsChecked="{Binding IsIsoSelect}"/>
                 <MenuItem Header="Set Height To..." Click="MenuSetHeight"/>
                 <Separator/>
@@ -107,16 +108,19 @@
         </Menu>
         <ToolBarTray VerticalAlignment="Top" Grid.Row="1" Height="Auto">
             <ToolBar Band="1" BandIndex="1" HorizontalAlignment="Left">
-                <Button Content="123"/>
-                <Button Content="2345"/>
-            </ToolBar>
-            <ToolBar Band="1" BandIndex="2" HorizontalAlignment="Left">
-                <Button Content="55555"/>
-                <ComboBox>
-                    <ComboBoxItem Content="DropDownItem"/>
-                    <ComboBoxItem Content="Drop2"/>
-                    <ComboBoxItem Content="Drop3"/>
-                </ComboBox>
+                <Button Content="{StaticResource NavigateBack}" ToolTip="Navigate Back"/>
+                <Button Content="{StaticResource NavigateForward}" ToolTip="Navigate Forward"/>
+                <Separator/>
+                <Button Content="{StaticResource Copy}"/>
+                <Button Content="{StaticResource Paste}"/>
+                <Button Content="{StaticResource Cut}"/>
+                <Separator/>
+                <Button Content="{StaticResource Undo}"/>
+                <Button Content="{StaticResource Redo}"/>
+                <Separator/>
+                <ToggleButton Content="{StaticResource Flat}" IsChecked="{Binding IsFlatEnable}"/>
+                <ToggleButton Content="{StaticResource Framework}" IsChecked="{Binding IsFrameworkEnable}"/>
+                <ToggleButton Content="{StaticResource Isometric}" IsChecked="{Binding IsIsoSelect}"/>
             </ToolBar>
         </ToolBarTray>
         <DockingManager x:Name="dockMain" Grid.Row="2">
@@ -127,6 +131,5 @@
         <StatusBar Name="bar" Grid.Row="3" Style="{DynamicResource barDark}">
             <TextBlock x:Name="position">Ready</TextBlock>
         </StatusBar>
-        <!--<Button Content="Button" VerticalAlignment="Top" Click="Button_Click"/>-->
     </Grid>
 </Window>

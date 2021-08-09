@@ -68,7 +68,7 @@ namespace RelertSharp.Wpf.Views
             void building()
             {
                 ObjectPickVm root = new ObjectPickVm("Buildings");
-                root.SetIcon(Properties.Resources.iconObjBud.ToWpfImage(true));
+                root.SetIcon(FindResource("HeadBud"));
                 List<ObjectPickVm> sides = init_side();
                 ObjectPickVm tech = new ObjectPickVm("Tech Buildings");
                 foreach (INIPair p in Rules[Constant.RulesHead.HEAD_BUILDING])
@@ -88,7 +88,7 @@ namespace RelertSharp.Wpf.Views
                 sides.ForEach(x => root.AddItem(x));
                 trvMain.Items.Add(root);
             }
-            void generic(string title, string rulesHead, ImageSource icon, CombatObjectType combatType, MapObjectType objType)
+            void generic(string title, string rulesHead, object icon, CombatObjectType combatType, MapObjectType objType)
             {
                 ObjectPickVm root = new ObjectPickVm(title);
                 root.SetIcon(icon);
@@ -105,7 +105,7 @@ namespace RelertSharp.Wpf.Views
             void favourites()
             {
                 ObjectPickVm root = new ObjectPickVm("Favourites");
-                root.SetIcon(Properties.Resources.iconObjFav.ToWpfImage(true));
+                root.SetIcon(FindResource("HeadFav"));
                 void readInto(RelertSharp.Common.Config.Model.FavouriteItemTree src, ObjectPickVm parent)
                 {
                     ObjectPickVm dest = new ObjectPickVm(src.Title, src.Value, src.Type);
@@ -118,9 +118,9 @@ namespace RelertSharp.Wpf.Views
             void unit()
             {
                 ObjectPickVm uRoot = new ObjectPickVm("Units");
-                uRoot.SetIcon(Properties.Resources.iconObjUnit.ToWpfImage(true));
+                uRoot.SetIcon(FindResource("HeadUnit"));
                 ObjectPickVm nRoot = new ObjectPickVm("Navals");
-                nRoot.SetIcon(Properties.Resources.iconObjNaval.ToWpfImage(true));
+                nRoot.SetIcon(FindResource("HeadNaval"));
                 List<ObjectPickVm> uSides = init_side();
                 List<ObjectPickVm> nSides = init_side();
                 foreach (INIPair p in Rules[Constant.RulesHead.HEAD_VEHICLE])
@@ -144,9 +144,9 @@ namespace RelertSharp.Wpf.Views
                 trvMain.Items.Add(nRoot);
             }
             building();
-            generic("Infantries", Constant.RulesHead.HEAD_INFANTRY, Properties.Resources.iconObjInf.ToWpfImage(true), CombatObjectType.Infantry, MapObjectType.Infantry);
+            generic("Infantries", Constant.RulesHead.HEAD_INFANTRY, FindResource("HeadInf"), CombatObjectType.Infantry, MapObjectType.Infantry);
             unit();
-            generic("Aircrafts", Constant.RulesHead.HEAD_AIRCRAFT, Properties.Resources.iconObjAir.ToWpfImage(true), CombatObjectType.Aircraft, MapObjectType.Aircraft);
+            generic("Aircrafts", Constant.RulesHead.HEAD_AIRCRAFT, FindResource("HeadAir"), CombatObjectType.Aircraft, MapObjectType.Aircraft);
             favourites();
             ReloadAttributeCombo();
         }

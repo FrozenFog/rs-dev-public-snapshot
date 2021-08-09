@@ -71,27 +71,6 @@ namespace RelertSharp.Wpf
                 else GuiUtil.Warning("Invalid height!");
             }
         }
-
-        private void MenuSwitchFramework(object sender, RoutedEventArgs e)
-        {
-            EngineApi.InvokeLock();
-            bool enable = (sender as MenuItem).IsChecked;
-            MapApi.SetFramework(enable);
-            TilePaintBrush.SwitchToFramework(enable);
-            tiles.SetFramework(enable);
-            EngineApi.InvokeUnlock();
-            EngineApi.InvokeRedraw();
-        }
-
-        private void MenuSwitchFlat(object sender, RoutedEventArgs e)
-        {
-            EngineApi.InvokeLock();
-            bool enable = (sender as MenuItem).IsChecked;
-            MapApi.SetFlatGround(enable);
-            TilePaintBrush.SwitchToFlatGround(enable);
-            EngineApi.InvokeUnlock();
-            EngineApi.InvokeRedraw();
-        }
         #endregion
 
         private void MenuSaveShot(object sender, RoutedEventArgs e)

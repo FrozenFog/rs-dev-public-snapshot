@@ -38,6 +38,7 @@ namespace RelertSharp.Wpf
             AddReciveListener();
             BindNavigation();
             InitializeGuiStatus();
+            DataContext = new MainWindowVm(tiles);
         }
 
         #region Initialization

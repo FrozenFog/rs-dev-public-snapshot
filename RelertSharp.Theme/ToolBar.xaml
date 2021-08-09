@@ -198,6 +198,7 @@
     <Style x:Key="{x:Static ToolBar.ButtonStyleKey}" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Background" Value="{StaticResource dimBack}"/>
         <Setter Property="BorderBrush" Value="{StaticResource dimBack}"/>
+        <Setter Property="Width" Value="23"/>
         <Setter Property="Margin" Value="1,0,1,0"/>
     </Style>
     <Style x:Key="{x:Static ToolBar.MenuStyleKey}" TargetType="Menu" BasedOn="{StaticResource {x:Type Menu}}">
@@ -206,6 +207,24 @@
     <Style x:Key="{x:Static ToolBar.ComboBoxStyleKey}" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
         <Setter Property="BorderBrush" Value="{StaticResource dimBack}"/>
         <Setter Property="Margin" Value="1,0,1,0"/>
+    </Style>
+    <Style x:Key="{x:Static ToolBar.SeparatorStyleKey}" TargetType="Separator">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Separator}">
+                    <Grid>
+                        <Rectangle Width="1" Stroke="{DynamicResource textDisable}" Margin="0"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="{x:Static ToolBar.CheckBoxStyleKey}" TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+        
+    </Style>
+    <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}" TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
+        <Setter Property="Width" Value="23"/>
+        <Setter Property="Height" Value="23"/>
     </Style>
     <!--#endregion-->
 </ResourceDictionary>
