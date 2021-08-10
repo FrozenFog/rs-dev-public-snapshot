@@ -33,6 +33,7 @@ struct TransformationMatrix
 	D3DXMATRIX AsD3dMatrixWithMove(D3DXVECTOR3&& Move);
 	D3DXMATRIX GetTranslationMatrix(float Scale = 1.0);
 	D3DXMATRIX GetScaleRotationMatrix();
+	D3DXMATRIX AsIntegrateMatrix(const D3DXVECTOR3& scale, const float det);
 
 	void Print();
 	static void PrintMatrix(D3DXMATRIX Matrix);

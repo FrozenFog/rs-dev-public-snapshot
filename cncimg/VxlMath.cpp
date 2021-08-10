@@ -87,6 +87,31 @@ D3DXMATRIX TransformationMatrix::GetScaleRotationMatrix()
 	return Medium * Matrix * Medium;
 }
 
+D3DXMATRIX TransformationMatrix::AsIntegrateMatrix(const D3DXVECTOR3& scale, const float det)
+{
+	D3DXMATRIX matrix;
+
+	D3DXMatrixIdentity(&matrix);
+
+	matrix.m[0][0] = this->Data[0][0];
+	matrix.m[0][1] = this->Data[1][0];
+	matrix.m[0][2] = this->Data[2][0];
+
+	matrix.m[1][0] = this->Data[0][1];
+	matrix.m[1][1] = this->Data[1][1];
+	matrix.m[1][2] = this->Data[2][1];
+
+	matrix.m[2][0] = this->Data[0][2];
+	matrix.m[2][1] = this->Data[1][2];
+	matrix.m[2][2] = this->Data[2][2];
+
+	matrix.m[3][0] = this->Data[0][3] * det * scale.x;
+	matrix.m[3][1] = this->Data[1][3] * det * scale.y;
+	matrix.m[3][2] = this->Data[2][3] * det * scale.z;
+
+	return matrix;
+}
+
 void TransformationMatrix::Print()
 {
 	for (int i = 0; i < 3; i++)

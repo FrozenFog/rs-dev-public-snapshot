@@ -410,16 +410,15 @@ int VxlFile::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
 		auto MinBounds = TailerInfo.MinBounds;
 		auto MaxBounds = TailerInfo.MaxBounds;
 
-		FLOAT xScale = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
-		FLOAT yScale = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
-		FLOAT zScale = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
-		D3DXMatrixScaling(&Scale, xScale, yScale, zScale);
+		D3DXVECTOR3 scales;
+		scales.x = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
+		scales.y = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
+		scales.z = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
 		
 		//Origin is multiplied before Hva
 		TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
-		Origin = TailerInfo.Matrix.GetScaleRotationMatrix();
-		Matrix = this->AssociatedHVA.GetTransformMatrix(0, i)->AsD3dMatrix(TailerInfo.fScale);
-		Matrix = Identity*Scale*TranslationCenter*Origin*Matrix*RotateX*RotateY*RotateZ*Translation;
+		Matrix = this->AssociatedHVA.GetTransformMatrix(0, i)->AsIntegrateMatrix(scales, TailerInfo.fScale);
+		Matrix = Identity*TranslationCenter*Matrix*RotateX*RotateY*RotateZ*Translation;
 		NormalMatrix = Matrix;
 		
 		NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
@@ -682,16 +681,15 @@ bool VxlFile::MakeSingleFrameCaches(LPDIRECT3DDEVICE9 pDevice, int idxFrame,
 		auto MinBounds = TailerInfo.MinBounds;
 		auto MaxBounds = TailerInfo.MaxBounds;
 
-		FLOAT xScale = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
-		FLOAT yScale = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
-		FLOAT zScale = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
-		D3DXMatrixScaling(&Scale, xScale, yScale, zScale);
+		D3DXVECTOR3 scales;
+		scales.x = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
+		scales.y = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
+		scales.z = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
 
 		//Origin is multiplied before Hva
 		TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
-		Origin = TailerInfo.Matrix.AsD3dMatrix(TailerInfo.fScale);
-		Matrix = this->AssociatedHVA.GetTransformMatrix(idxFrame, i)->AsD3dMatrix(TailerInfo.fScale);
-		Matrix = Identity * Scale * TranslationCenter * Origin * Matrix * RotateX * RotateY * RotateZ;
+		Matrix = this->AssociatedHVA.GetTransformMatrix(idxFrame, i)->AsIntegrateMatrix(scales, TailerInfo.fScale);
+		Matrix = Identity * TranslationCenter * Matrix * RotateX * RotateY * RotateZ;
 		NormalMatrix = Matrix;
 
 		NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
@@ -884,16 +882,15 @@ void VxlFile::MakeFrameScreenShot(
 		auto MinBounds = TailerInfo.MinBounds;
 		auto MaxBounds = TailerInfo.MaxBounds;
 
-		FLOAT xScale = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
-		FLOAT yScale = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
-		FLOAT zScale = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
-		D3DXMatrixScaling(&Scale, xScale, yScale, zScale);
+		D3DXVECTOR3 scales;
+		scales.x = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
+		scales.y = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
+		scales.z = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
 
 		//Origin is multiplied before Hva
 		TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
-		Origin = TailerInfo.Matrix.AsD3dMatrix(TailerInfo.fScale);
-		Matrix = this->AssociatedHVA.GetTransformMatrix(idxFrame, i)->AsD3dMatrix(TailerInfo.fScale);
-		Matrix = Identity*Scale*TranslationCenter*Origin*Matrix*RotateX*RotateY*RotateZ;
+		Matrix = this->AssociatedHVA.GetTransformMatrix(idxFrame, i)->AsIntegrateMatrix(scales, TailerInfo.fScale);
+		Matrix = Identity * TranslationCenter * Matrix * RotateX * RotateY * RotateZ;
 		NormalMatrix = Matrix;
 
 		NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
@@ -1108,16 +1105,15 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, V
 		auto MinBounds = TailerInfo.MinBounds;
 		auto MaxBounds = TailerInfo.MaxBounds;
 
-		FLOAT xScale = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
-		FLOAT yScale = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
-		FLOAT zScale = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
-		D3DXMatrixScaling(&Scale, xScale, yScale, zScale);
+		D3DXVECTOR3 scales;
+		scales.x = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
+		scales.y = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
+		scales.z = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
 
 		//Origin is multiplied before Hva
 		TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
-		Origin = TailerInfo.Matrix.AsD3dMatrix(TailerInfo.fScale);
-		Matrix = this->AssociatedHVA.GetTransformMatrix(idxFrame, i)->AsD3dMatrix(TailerInfo.fScale);
-		Matrix = Identity*Scale*TranslationCenter*Origin*Matrix*Offset*RotateX*RotateY*RotateZ;
+		Matrix = this->AssociatedHVA.GetTransformMatrix(idxFrame, i)->AsIntegrateMatrix(scales, TailerInfo.fScale);
+		Matrix = Identity * TranslationCenter * Matrix * Offset * RotateX * RotateY * RotateZ;
 		NormalMatrix = Matrix;
 
 		NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
@@ -1189,16 +1185,15 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, V
 			auto MinBounds = TailerInfo.MinBounds;
 			auto MaxBounds = TailerInfo.MaxBounds;
 
-			FLOAT xScale = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
-			FLOAT yScale = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
-			FLOAT zScale = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
-			D3DXMatrixScaling(&Scale, xScale, yScale, zScale);
+			D3DXVECTOR3 scales;
+			scales.x = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
+			scales.y = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
+			scales.z = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
 
 			//Origin is multiplied before Hva
 			TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
-			Origin = TailerInfo.Matrix.AsD3dMatrix(TailerInfo.fScale);
-			Matrix = Barl->AssociatedHVA.GetTransformMatrix(0, i)->AsD3dMatrix(TailerInfo.fScale);
-			Matrix = Identity*Scale*TranslationCenter*Origin*Matrix*Offset*RotateX*RotateY*RotateZ;
+			Matrix = Barl->AssociatedHVA.GetTransformMatrix(0, i)->AsIntegrateMatrix(scales, TailerInfo.fScale);
+			Matrix = Identity * TranslationCenter * Matrix * Offset * RotateX * RotateY * RotateZ;
 			NormalMatrix = Matrix;
 
 			NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
@@ -1270,16 +1265,15 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, V
 			auto MinBounds = TailerInfo.MinBounds;
 			auto MaxBounds = TailerInfo.MaxBounds;
 
-			FLOAT xScale = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
-			FLOAT yScale = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
-			FLOAT zScale = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
-			D3DXMatrixScaling(&Scale, xScale, yScale, zScale);
+			D3DXVECTOR3 scales;
+			scales.x = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
+			scales.y = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
+			scales.z = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
 
 			//Origin is multiplied before Hva
 			TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
-			Origin = TailerInfo.Matrix.AsD3dMatrix(TailerInfo.fScale);
-			Matrix = Body->AssociatedHVA.GetTransformMatrix(0, i)->AsD3dMatrix(TailerInfo.fScale);
-			Matrix = Identity*Scale*TranslationCenter*Origin*Matrix*Offset*RotateX*RotateY*RotateZ;
+			Matrix = Body->AssociatedHVA.GetTransformMatrix(0, i)->AsIntegrateMatrix(scales, TailerInfo.fScale);
+			Matrix = Identity*TranslationCenter*Matrix*Offset*RotateX*RotateY*RotateZ;
 			NormalMatrix = Matrix;
 
 			NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
