@@ -53,10 +53,6 @@ namespace RelertSharp.Wpf
 
         #region Edits
         #region Tiles
-        private void MenuFlatRampBrush(object sender, RoutedEventArgs e)
-        {
-            MouseState.SetState(PanelMouseState.TileFlatting);
-        }
         private void MenuSetHeight(object sender, RoutedEventArgs e)
         {
             DlgNameInput dlg = new DlgNameInput(string.Format("Input height, range between 0 and {0}", Constant.DrawingEngine.MapMaxHeight));
@@ -72,7 +68,69 @@ namespace RelertSharp.Wpf
             }
         }
         #endregion
+        #region Universal
+        private void MenuUndo(object sender, RoutedEventArgs e)
+        {
+            EngineApi.InvokeLock();
+            if (UndoRedoHub.Undo()) EngineApi.InvokeRedraw();
+            EngineApi.InvokeUnlock();
+        }
 
+        private void MenuRedo(object sender, RoutedEventArgs e)
+        {
+            EngineApi.InvokeLock();
+            if (UndoRedoHub.Redo()) EngineApi.InvokeRedraw();
+            EngineApi.InvokeUnlock();
+        }
+
+        private void MenuCopy(object sender, RoutedEventArgs e)
+        {
+            if (MouseState.IsState(PanelMouseState.TileSelecting)) MapClipboard.AddTileToClipboard();
+            else if (MouseState.State == PanelMouseState.None) MapClipboard.AddObjectToClipboard();
+        }
+
+        private void MenuPaste(object sender, RoutedEventArgs e)
+        {
+            EngineApi.InvokeLock();
+            if (MapClipboard.ObjectsCount > 0)
+            {
+                MapClipboard.LoadToObjectBrush();
+                Selector.UnselectAll();
+                MouseState.SetState(PanelMouseState.ObjectPasteBrush);
+            }
+            else if (MapClipboard.TilesCount > 0)
+            {
+                MapClipboard.LoadToTileBrush();
+                TileSelector.UnselectAll();
+                MouseState.SetState(PanelMouseState.TileSingleBrush);
+            }
+            EngineApi.InvokeUnlock();
+        }
+
+        private void MenuCut(object sender, RoutedEventArgs e)
+        {
+            EngineApi.InvokeLock();
+            if (MouseState.IsState(PanelMouseState.TileSelecting))
+            {
+                MapClipboard.AddTileToClipboard();
+            }
+            else if (MouseState.State == PanelMouseState.None)
+            {
+                MapClipboard.AddObjectToClipboard();
+                Selector.DeleteSelectedObjects();
+                EngineApi.InvokeRedraw();
+            }
+            EngineApi.InvokeUnlock();
+        }
+        private void MenuCalcelSel(object sender, RoutedEventArgs e)
+        {
+            EngineApi.InvokeLock();
+            TileSelector.UnselectAll();
+            Selector.UnselectAll();
+            EngineApi.InvokeRedraw();
+            EngineApi.InvokeUnlock();
+        }
+        #endregion
         private void MenuSaveShot(object sender, RoutedEventArgs e)
         {
             SaveFileDialog dlg = new SaveFileDialog()

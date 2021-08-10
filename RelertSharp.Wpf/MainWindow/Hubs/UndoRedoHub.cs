@@ -12,6 +12,7 @@ namespace RelertSharp.Wpf
 {
     internal static class UndoRedoHub
     {
+        public static event Action CommandExecuted, CommandPushed;
         private static Stack<IUndoRedoCommand> undoCommands = new Stack<IUndoRedoCommand>();
         private static Stack<IUndoRedoCommand> redoCommands = new Stack<IUndoRedoCommand>();
         private enum CommandType
@@ -31,6 +32,7 @@ namespace RelertSharp.Wpf
                 var cmd = undoCommands.Pop();
                 cmd.ReverseExecute();
                 redoCommands.Push(cmd);
+                CommandExecuted?.Invoke();
                 return true;
             }
             return false;
@@ -42,6 +44,7 @@ namespace RelertSharp.Wpf
                 var cmd = redoCommands.Pop();
                 cmd.Execute();
                 undoCommands.Push(cmd);
+                CommandExecuted?.Invoke();
                 return true;
             }
             return false;
@@ -169,6 +172,7 @@ namespace RelertSharp.Wpf
         {
             redoCommands.Clear();
             undoCommands.Push(cmd);
+            CommandPushed?.Invoke();
         }
 
 
@@ -340,6 +344,19 @@ namespace RelertSharp.Wpf
             {
                 referance = src;
             }
+        }
+        #endregion
+
+
+
+        #region Calls
+        public static int UndoCount
+        {
+            get { return undoCommands.Count; }
+        }
+        public static int RedoCount
+        {
+            get { return redoCommands.Count; }
         }
         #endregion
     }

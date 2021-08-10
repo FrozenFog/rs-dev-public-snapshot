@@ -75,7 +75,7 @@
                             <Setter Property="Background" Value="{StaticResource btnBack}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" Value="{StaticResource dimDisable}"/>
+                            <Setter Property="Foreground" Value="{StaticResource textDisable}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

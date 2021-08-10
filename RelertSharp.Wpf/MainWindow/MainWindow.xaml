@@ -35,29 +35,33 @@
                 <MenuItem Header="Exit"/>
             </MenuItem>
             <MenuItem Header="Edit">
-                <MenuItem Header="Switch To Framework" IsCheckable="True" IsChecked="{Binding IsFrameworkEnable}"/>
-                <MenuItem Header="Switch To Flat" IsCheckable="True" IsChecked="{Binding IsFlatEnable}"/>
-                <MenuItem Header="Switch To Isometric Selecting" IsCheckable="True" IsChecked="{Binding IsIsoSelect}"/>
-                <MenuItem Header="Set Height To..." Click="MenuSetHeight"/>
+                <MenuItem Header="Undo" IsEnabled="{Binding IsUndoEnable}" Click="MenuUndo"/>
+                <MenuItem Header="Redo" IsEnabled="{Binding IsRedoEnable}" Click="MenuRedo"/>
                 <Separator/>
-                <MenuItem Header="Flat Ramp Brush" Click="MenuFlatRampBrush"/>
+                <MenuItem Header="Copy" IsEnabled="{Binding IsSelectorHasAnything}" Click="MenuCopy"/>
+                <MenuItem Header="Paste" IsEnabled="{Binding IsClipboardHasAnything}" Click="MenuPaste"/>
+                <MenuItem Header="Cut" IsEnabled="{Binding IsSelectorHasAnything}" Click="MenuCut"/>
+                <MenuItem Header="Cancel Selection" IsEnabled="{Binding IsSelectorHasAnything}" Click="MenuCalcelSel"/>
                 <Separator/>
-                <MenuItem Header="Tile Selecting Mode">
-                    <MenuItem Header="Box Selecting" IsCheckable="True" IsChecked="{Binding IsBoxTileSelecting}"/>
-                    <MenuItem Header="Bucket Selecting" IsCheckable="True" IsChecked="{Binding IsBucketTileSelecting}"/>
-                    <MenuItem Header="Line Selecting" IsCheckable="True" IsChecked="{Binding IsLineTileSelecting}"/>
-                    <Separator/>
-                    <MenuItem Header="Same TileSet" IsCheckable="True" IsChecked="{Binding IsTileSetFilter}"/>
-                    <MenuItem Header="Same Height" IsCheckable="True" IsChecked="{Binding IsHeightFilter}"/>
-                </MenuItem>
-                <MenuItem Header="Tile Brush Mode">
-                    <MenuItem Header="Single Brush" IsCheckable="True" IsChecked="{Binding IsBrushSingle}"/>
-                    <MenuItem Header="Bucket Fill" IsCheckable="True" IsChecked="{Binding IsBrushFill}"/>
-                </MenuItem>
+                <MenuItem Header="Switch To Framework" IsCheckable="True" IsChecked="{Binding IsFrameworkEnable}" IsEnabled="{Binding IsEngineDrawed}"/>
+                <MenuItem Header="Switch To Flat" IsCheckable="True" IsChecked="{Binding IsFlatEnable}" IsEnabled="{Binding IsEngineDrawed}"/>
+                <MenuItem Header="Switch To Isometric Selecting" IsCheckable="True" IsChecked="{Binding IsIsoSelect}" IsEnabled="{Binding IsEngineDrawed}"/>
+                <MenuItem Header="Set Height To..." Click="MenuSetHeight" IsEnabled="{Binding IsSelectorHasTile}"/>
                 <Separator/>
-                <MenuItem Header="Save Map Render Picture" Click="MenuSaveShot"/>
+                <MenuItem Header="Save Map Render Picture" Click="MenuSaveShot" IsEnabled="{Binding IsEngineDrawed}"/>
                 <Separator/>
-                <MenuItem Header="Clear Map"/>
+                <MenuItem Header="Clear Map" IsEnabled="{Binding IsEngineDrawed}"/>
+            </MenuItem>
+            <MenuItem Header="Tiles" IsEnabled="{Binding IsEngineDrawed}">
+                <MenuItem Header="Box Selecting" IsCheckable="True" IsChecked="{Binding IsBoxTileSelecting}"/>
+                <MenuItem Header="Bucket Selecting" IsCheckable="True" IsChecked="{Binding IsBucketTileSelecting}"/>
+                <MenuItem Header="Line Selecting" IsCheckable="True" IsChecked="{Binding IsLineTileSelecting}"/>
+                <Separator/>
+                <MenuItem Header="Same TileSet" IsCheckable="True" IsChecked="{Binding IsTileSetFilter}"/>
+                <MenuItem Header="Same Height" IsCheckable="True" IsChecked="{Binding IsHeightFilter}"/>
+                <Separator/>
+                <MenuItem Header="Single Brush" IsCheckable="True" IsChecked="{Binding IsBrushSingle}"/>
+                <MenuItem Header="Bucket Fill" IsCheckable="True" IsChecked="{Binding IsBrushFill}"/>
             </MenuItem>
             <MenuItem Header="Views">
                 <MenuItem Header="Logics">
@@ -107,20 +111,38 @@
             </MenuItem>
         </Menu>
         <ToolBarTray VerticalAlignment="Top" Grid.Row="1" Height="Auto">
-            <ToolBar Band="1" BandIndex="1" HorizontalAlignment="Left">
-                <Button Content="{StaticResource NavigateBack}" ToolTip="Navigate Back"/>
-                <Button Content="{StaticResource NavigateForward}" ToolTip="Navigate Forward"/>
+            <ToolBar BandIndex="0" HorizontalAlignment="Left">
+                <Button Content="{StaticResource NavigateBack}" IsEnabled="{Binding IsNavigateBackwardEnable}" ToolTip="Navigate Back"/>
+                <Button Content="{StaticResource NavigateForward}" IsEnabled="{Binding IsNavigateForwardEnable}" ToolTip="Navigate Forward"/>
                 <Separator/>
-                <Button Content="{StaticResource Copy}"/>
-                <Button Content="{StaticResource Paste}"/>
-                <Button Content="{StaticResource Cut}"/>
+                <Button Content="{StaticResource Copy}" IsEnabled="{Binding IsSelectorHasAnything}" Click="MenuCopy"/>
+                <Button Content="{StaticResource Paste}" IsEnabled="{Binding IsClipboardHasAnything}" Click="MenuPaste"/>
+                <Button Content="{StaticResource Cut}" IsEnabled="{Binding IsSelectorHasAnything}" Click="MenuCut"/>
                 <Separator/>
-                <Button Content="{StaticResource Undo}"/>
-                <Button Content="{StaticResource Redo}"/>
+                <Button Content="{StaticResource Undo}" IsEnabled="{Binding IsUndoEnable}" Click="MenuUndo"/>
+                <Button Content="{StaticResource Redo}" IsEnabled="{Binding IsRedoEnable}" Click="MenuRedo"/>
                 <Separator/>
-                <ToggleButton Content="{StaticResource Flat}" IsChecked="{Binding IsFlatEnable}"/>
-                <ToggleButton Content="{StaticResource Framework}" IsChecked="{Binding IsFrameworkEnable}"/>
-                <ToggleButton Content="{StaticResource Isometric}" IsChecked="{Binding IsIsoSelect}"/>
+                <ToggleButton Content="{StaticResource Flat}" IsChecked="{Binding IsFlatEnable}" IsEnabled="{Binding IsEngineDrawed}"/>
+                <ToggleButton Content="{StaticResource Framework}" IsChecked="{Binding IsFrameworkEnable}" IsEnabled="{Binding IsEngineDrawed}"/>
+                <ToggleButton Content="{StaticResource Isometric}" IsChecked="{Binding IsIsoSelect}" IsEnabled="{Binding IsEngineDrawed}"/>
+            </ToolBar>
+            <ToolBar BandIndex="1" HorizontalAlignment="Left">
+                <ToggleButton Content="{StaticResource Arrow}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseNone}"/>
+                <Separator/>
+                <ToggleButton Content="{StaticResource FlatRamp}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseFlatRamp}"/>
+                <Separator/>
+                <ToggleButton Content="{StaticResource TileSelect}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsBoxTileSelecting}"/>
+                <ToggleButton Content="{StaticResource TileLine}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsLineTileSelecting}"/>
+                <ToggleButton Content="{StaticResource TileWand}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsBucketTileSelecting}"/>
+                <Separator/>
+                <ToggleButton Content="{StaticResource TileFiltHeight}" IsEnabled="{Binding IsBucketTileSelecting}" IsChecked="{Binding IsHeightFilter}"/>
+                <ToggleButton Content="{StaticResource TileFiltSet}" IsEnabled="{Binding IsBucketTileSelecting}" IsChecked="{Binding IsTileSetFilter}"/>
+                <ToggleButton Content="{StaticResource TileFlood}" IsEnabled="{Binding IsTileBrushMode}" IsChecked="{Binding IsBrushFill}"/>
+            </ToolBar>
+            <ToolBar BandIndex="2" HorizontalAlignment="Left">
+                <Button Content="{StaticResource RiseTile}" IsEnabled="{Binding IsSelectorHasTile}"/>
+                <Button Content="{StaticResource SinkTile}" IsEnabled="{Binding IsSelectorHasTile}"/>
+                <Button Content="{StaticResource RoughRamp}" IsEnabled="{Binding IsSelectorHasTile}"/>
             </ToolBar>
         </ToolBarTray>
         <DockingManager x:Name="dockMain" Grid.Row="2">

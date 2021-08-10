@@ -17,7 +17,7 @@ namespace RelertSharp.Engine.Api
     {
         public static event MapDrawingProgressEventHandler DrawingProgressTick;
         public static event EventHandler MapDrawingBegin;
-        public static event EventHandler MapDrawingComplete;
+        public static event Action MapDrawingComplete;
         public static void SetTheater(TheaterType type)
         {
             EngineMain.SetTheater(type);
@@ -110,7 +110,8 @@ namespace RelertSharp.Engine.Api
             MoveCameraTo(map.CenterPoint, map.GetHeightFromTile(map.CenterPoint));
             RedrawMinimapAll();
             EngineApi.InvokeUnlock();
-            MapDrawingComplete?.Invoke(null, null);
+            MapDrawed = true;
+            MapDrawingComplete?.Invoke();
         }
 #else
         public static async Task DrawMap(Map map)
@@ -132,5 +133,6 @@ namespace RelertSharp.Engine.Api
             });
         }
 #endif
+        public static bool MapDrawed { get; private set; } = false;
     }
 }

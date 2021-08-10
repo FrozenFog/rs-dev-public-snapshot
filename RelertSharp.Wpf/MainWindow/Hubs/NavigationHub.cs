@@ -14,6 +14,11 @@ namespace RelertSharp.Wpf
 {
     internal static class NavigationHub
     {
+        public static event Action NavigatePushed;
+        private static void BaseTrace()
+        {
+            NavigatePushed?.Invoke();
+        }
         #region Main Distribution
         public static void AutoTrace(object src)
         {
@@ -103,6 +108,7 @@ namespace RelertSharp.Wpf
             AddHistory(trgList);
             LayoutManagerHub.SwitchToActivateContent(trgList);
             GoToTriggerRequest?.Invoke(trigger);
+            BaseTrace();
         }
         public static void BindTriggerList(IListContainer target)
         {
@@ -116,6 +122,7 @@ namespace RelertSharp.Wpf
             AddHistory(teamList);
             LayoutManagerHub.SwitchToActivateContent(teamList);
             GoToTeamRequest?.Invoke(team);
+            BaseTrace();
         }
         public static void BindTeamList(IListContainer target)
         {
@@ -129,6 +136,7 @@ namespace RelertSharp.Wpf
             AddHistory(scriptList);
             LayoutManagerHub.SwitchToActivateContent(scriptList);
             GoToScriptRequest?.Invoke(script);
+            BaseTrace();
         }
         public static void BindScriptList(IListContainer target)
         {
@@ -142,6 +150,7 @@ namespace RelertSharp.Wpf
             AddHistory(tfList);
             LayoutManagerHub.SwitchToActivateContent(tfList);
             GoToTaskforceRequest?.Invoke(taskforce);
+            BaseTrace();
         }
         public static void BindTaskforceList(IListContainer target)
         {
@@ -221,6 +230,19 @@ namespace RelertSharp.Wpf
             }
             public IIndexableItem Value { get; set; }
             public IListContainer Invoker { get; set; }
+        }
+        #endregion
+
+
+
+        #region Calls
+        public static int NavitationCount
+        {
+            get { return navigateHistory.Count; }
+        }
+        public static int BackTraceCount
+        {
+            get { return navigateRedo.Count; }
         }
         #endregion
     }

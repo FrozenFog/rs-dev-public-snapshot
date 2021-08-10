@@ -39,7 +39,7 @@ namespace RelertSharp.Wpf.MapEngine
             EngineApi.MinimapRedrawed += MinimapRedrawed;
         }
 
-        private void MapDrawingCompleteHandler(object sender, EventArgs e)
+        private void MapDrawingCompleteHandler()
         {
             drew = true;
             PanelSizeChanged(null, null);

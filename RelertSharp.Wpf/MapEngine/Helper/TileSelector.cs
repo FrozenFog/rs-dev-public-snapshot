@@ -46,6 +46,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                     }
                 }
                 EngineApi.InvokeUnlock();
+                OnSelectionChanged();
             }
             prevCell = cell;
         }
@@ -72,6 +73,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                     selected.Add(t);
                 }
                 EngineApi.InvokeUnlock();
+                OnSelectionChanged();
             }
         }
         public static void BucketTilesetFilter(bool enable)
@@ -148,6 +150,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 {
                     isoLines.Clear();
                     rect = null;
+                    OnSelectionChanged();
                     return;
                 }
                 IEnumerable<I2dLocateable> enumerator;
@@ -254,6 +257,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         {
             selected.Foreach(x => x.CancelSelection());
             selected.Clear();
+            OnSelectionChanged();
         }
         #endregion
         #region Editing

@@ -43,9 +43,9 @@ namespace RelertSharp.Wpf.ViewModel
             OnPropertyChanged(propertyName);
             return true;
         }
-        protected virtual void AutoUpdateAll(Type src, string group = null)
+        protected virtual void AutoUpdateAll(string group = null)
         {
-            foreach (var info in src.GetProperties())
+            foreach (var info in GetType().GetProperties())
             {
                 if (info.GetCustomAttribute<AutoUpdateAttribute>() is AutoUpdateAttribute auto)
                 {

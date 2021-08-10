@@ -11,6 +11,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
 {
     internal static class MapClipboard
     {
+        public static event Action ObjectAdded, TileAdded;
         private static List<ClipboardTile> clipTiles = new List<ClipboardTile>();
         private static List<ClipboardObject> clipObjects = new List<ClipboardObject>();
         private static readonly I3dLocateable INIT_POS = new Pnt3(-100, -100, 0);
@@ -21,7 +22,8 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         public static void AddTileToClipboard()
         {
             clipTiles.Clear();
-            if (!TileSelector.SelectedTile.Any()) return;
+            clipObjects.Clear();
+            if (!TileSelector.SelectedTile.Any()) goto end;
             I3dLocateable align = GetAlignment(TileSelector.SelectedTile);
             TileSelector.SelectedTile.Foreach(x =>
             {
@@ -29,11 +31,14 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 clip.Offset = RsMath.I3dSubi(x, align);
                 clipTiles.Add(clip);
             });
+            end:
+            TileAdded?.Invoke();
         }
         public static void AddObjectToClipboard()
         {
             clipObjects.Clear();
-            if (!Selector.SelectedObjects.Any()) return;
+            clipTiles.Clear();
+            if (!Selector.SelectedObjects.Any()) goto end;
             I2dLocateable align = GetAlignment(Selector.SelectedObjects);
             Selector.SelectedObjects.Foreach(x =>
             {
@@ -41,6 +46,8 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 clip.Offset = RsMath.I2dSubi(x, align);
                 clipObjects.Add(clip);
             });
+            end:
+            ObjectAdded?.Invoke();
         }
         public static void LoadToTileBrush()
         {
@@ -112,6 +119,19 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             int x = src.Min(d => d.X);
             int y = src.Min(d => d.Y);
             return new Pnt(x, y);
+        }
+        #endregion
+
+
+
+        #region Calls
+        public static int ObjectsCount
+        {
+            get { return clipObjects.Count; }
+        }
+        public static int TilesCount
+        {
+            get { return clipTiles.Count; }
         }
         #endregion
 
