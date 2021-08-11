@@ -259,7 +259,7 @@ namespace RelertSharp.Wpf.MapEngine
                     TileSelector.BucketAt(cell);
                     EngineApi.InvokeRedraw();
                     break;
-                case PanelMouseState.TileBucketFill:
+                case PanelMouseState.TileBucketFlood:
                     TilePaintBrush.BucketTileAt(cell);
                     EngineApi.InvokeRedraw();
                     break;
@@ -267,7 +267,14 @@ namespace RelertSharp.Wpf.MapEngine
                     MapClipboard.AddClipObjectToMap();
                     EngineApi.InvokeRedraw();
                     break;
-
+                case PanelMouseState.TileSingleRising:
+                    TileSelector.RiseTile(cell);
+                    EngineApi.InvokeRedraw();
+                    break;
+                case PanelMouseState.TileSingleSinking:
+                    TileSelector.SinkTile(cell);
+                    EngineApi.InvokeRedraw();
+                    break;
             }
         }
         #endregion

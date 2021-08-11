@@ -72,6 +72,7 @@ namespace RelertSharp.Engine
             for (int height = 0; height < Constant.DrawingEngine.MapMaxHeightDrawing * 2; height++)
             {
                 Vec3 tilepos = ScenePosToCoord(pos);
+                if (HoverNavigation && HoverNavHeight == tilepos.Z) return tilepos;
                 if (_cellFindingReferance.HasTileOn(tilepos)) return tilepos;
                 pos -= _NormTileVec / 2f;
             }
@@ -94,6 +95,11 @@ namespace RelertSharp.Engine
             for (; tileCoord.Z >= 0; )
             {
                 tileCoord = ScenePosToCoord(scenepos);
+                if (HoverNavigation && HoverNavHeight == tileCoord.Z)
+                {
+                    infsubcell = GetSubCellFromCoord(scenepos, tileCoord.To2dLocateable());
+                    return tileCoord;
+                }
                 if (_cellFindingReferance.HasTileOn(tileCoord))
                 {
                     infsubcell = GetSubCellFromCoord(scenepos, tileCoord.To2dLocateable());
@@ -237,5 +243,8 @@ namespace RelertSharp.Engine
             else if (dy - dx < -0.25f && dy < 0.5f) subcell = 2;
             return subcell;
         }
+
+        public static bool HoverNavigation { get; internal set; }
+        public static int HoverNavHeight { get; internal set; }
     }
 }

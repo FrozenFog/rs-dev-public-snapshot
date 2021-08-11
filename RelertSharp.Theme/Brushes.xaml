@@ -29,4 +29,5 @@
     
     <!--Selected-->
     <SolidColorBrush x:Key="selectedBlue" Color="#0078D7"/>
+    <SolidColorBrush x:Key="disableBlue" Color="#00457c"/>
 </ResourceDictionary>

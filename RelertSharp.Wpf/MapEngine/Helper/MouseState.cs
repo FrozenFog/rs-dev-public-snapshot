@@ -16,10 +16,12 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         TileBucketSelecting = 1 << 3,
         TileBoxSelecting = 1 << 4,
         TileSelecting = TileLineSelecting | TileBucketSelecting | TileBoxSelecting,
-        TileBucketFill = 1 << 5,
+        TileBucketFlood = 1 << 5,
         ObjectPasteBrush = 1 << 6,
         TileFlatting = 1 << 7,
-        TileBrush = TileSingleBrush | TileBucketFill,
+        TileSingleRising = 1 << 8,
+        TileSingleSinking = 1 << 9,
+        TileBrush = TileSingleBrush | TileBucketFlood,
         DEBUG = 65535
     }
     internal static class MouseState

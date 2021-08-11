@@ -218,9 +218,10 @@ namespace RelertSharp.Terraformer
             }
             if (iteration > 0) RoughRampIn(reRamp, iteration - 1);
         }
-        public static void SmoothRampIn(IEnumerable<Tile> targets)
+        public static void SmoothRampIn(IEnumerable<Tile> targets, bool isBorderUnaffect = false, bool isBorderTreatAsFlat = false)
         {
             InitializeRampLookup();
+            ReloadBaseData();
             targets = targets.OrderBy(x => x.X).ThenBy(x => x.Y);
             HashSet<Tile> ramped = new HashSet<Tile>();
             HashSet<Tile> org = targets.ToHashSet();
@@ -229,18 +230,20 @@ namespace RelertSharp.Terraformer
                 IEnumerable<Tile> currentLevel = targets.Where(x => x.Height == lvl);
                 foreach (Tile center in currentLevel)
                 {
-                    bool skipCenter(Tile t)
+                    bool skipCondition(Tile t)
                     {
-                        return ramped.Contains(t);
+                        if (ramped.Contains(t)) return true;
+                        if (isBorderUnaffect) return !targets.Contains(t);
+                        return false;
                     }
                     void callback(Tile t)
                     {
                         ramped.Add(t);
                     }
                     MapApi.GetAdjacentTileAround(center, out Tile[] adjs, out WallDirection[] _);
-                    adjs.Foreach(x => SmoothRampAt(x, skipCenter, callback));
+                    adjs.Foreach(x => SmoothRampAt(x, skipCondition, callback, isBorderTreatAsFlat));
                     MapApi.GetDiagonalTileAround(center, out Tile[] diags, out WallDirection[] _);
-                    diags.Foreach(x => SmoothRampAt(x, skipCenter, callback));
+                    diags.Foreach(x => SmoothRampAt(x, skipCondition, callback, isBorderTreatAsFlat));
                 }
             }
         }
@@ -290,10 +293,10 @@ namespace RelertSharp.Terraformer
                 isRampLookupInitialized = true;
             }
         }
-        private static void SmoothRampAt(Tile center, Predicate<Tile> skipCenter, Action<Tile> callback)
+        private static void SmoothRampAt(Tile center, Predicate<Tile> skipCondition, Action<Tile> callback, bool borderFlat, bool riseUnsolved = true)
         {
             RampSideSection ul = RampSideSection.Ignore, ur = RampSideSection.Ignore, dl = RampSideSection.Ignore, dr = RampSideSection.Ignore;
-            if (skipCenter(center)) return;
+            if (skipCondition(center)) return;
             MapApi.GetAdjacentTileAround(center, out Tile[] adjs, out WallDirection[] dirs);
             for (int i = 0; i < adjs.Length; i++)
             {
@@ -303,9 +306,12 @@ namespace RelertSharp.Terraformer
                 if (IsNotRamp(referance))
                 {
                     // higher flat ground
-                    if (referance.Height > center.Height) bindCondition = true;
+                    if (referance.RealHeight > center.RealHeight) bindCondition = true;
+                    if (borderFlat) bindCondition = true;
                 }
                 else bindCondition = true;
+
+                // if bind, this side will strictly use referance ramp as lookup condition
                 if (bindCondition)
                 {
                     RampData ramp = GetRampData(referance);
@@ -334,7 +340,7 @@ namespace RelertSharp.Terraformer
             if (failed)
             {
                 MapApi.SetTile(0, 0, center);
-                center.Rise();
+                if (riseUnsolved) center.Rise();
             }
             else
             {

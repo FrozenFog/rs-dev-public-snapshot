@@ -21,6 +21,11 @@ namespace RelertSharp.Engine.Api
             subcell = sub;
             return pos;
         }
+        public static void SetHoverNavigation(bool enable, int lockHeight = 0)
+        {
+            EngineMain.HoverNavHeight = lockHeight;
+            EngineMain.HoverNavigation = enable;
+        }
         public static void CallMoveCameraTo(I3dLocateable pos)
         {
             MoveCameraRequested?.Invoke(pos);

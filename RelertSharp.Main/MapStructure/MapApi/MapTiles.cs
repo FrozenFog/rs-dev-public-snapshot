@@ -44,6 +44,15 @@ namespace RelertSharp.MapStructure
                 org.Redraw();
             }
         }
+        public static List<Tile> SelectTile(IEnumerable<I2dLocateable> posTile)
+        {
+            List<Tile> result = new List<Tile>();
+            foreach (I2dLocateable pos in posTile)
+            {
+                if (Map.TilesData[pos] is Tile t) result.Add(t);
+            }
+            return result;
+        }
         public static void SetTile(Tile src)
         {
             if (Map.TilesData[src] is Tile org)

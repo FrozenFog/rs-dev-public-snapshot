@@ -71,6 +71,13 @@
                             </MultiTrigger.Conditions>
                             <Setter Property="Background" Value="{StaticResource textFront}"/>
                         </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True"/>
+                                <Condition Property="IsEnabled" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="{StaticResource disableBlue}"/>
+                        </MultiTrigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Background" Value="{StaticResource btnBack}"/>
                         </Trigger>

@@ -11,6 +11,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Media;
+using RelertSharp.Terraformer;
+using RelertSharp.Engine;
 
 namespace RelertSharp.Wpf.MapEngine.Helper
 {
@@ -23,6 +25,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         private static HashSet<Tile> selected = new HashSet<Tile>();
         private static bool filtSet, filtHeight;
         private static bool isIsometric = false;
+        private static TileLayer Tiles { get { return GlobalVar.GlobalMap.TilesData; } }
 
 
 
@@ -263,30 +266,81 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         #region Editing
         public static void RiseAllSelectedTile()
         {
-            EngineApi.InvokeLock();
-            foreach (Tile t in selected)
+            using (var _ = new EngineRegion())
             {
-                t.Rise();
+                UndoRedoHub.BeginCommand(selected);
+                foreach (Tile t in selected)
+                {
+                    t.Rise();
+                }
+                UndoRedoHub.EndCommand(selected);
             }
-            EngineApi.InvokeUnlock();
+        }
+        public static void RiseTile(I2dLocateable cell)
+        {
+            using (var _ = new EngineRegion())
+            {
+                if (Tiles[cell] is Tile t)
+                {
+                    UndoRedoHub.BeginCommand(t);
+                    t.Rise();
+                    UndoRedoHub.EndCommand(t);
+                }
+            }
         }
         public static void SinkAllSelectedTile()
         {
-            EngineApi.InvokeLock();
-            foreach (Tile t in selected)
+            using (var _ = new EngineRegion())
             {
-                t.Sink();
+                UndoRedoHub.BeginCommand(selected);
+                foreach (Tile t in selected)
+                {
+                    t.Sink();
+                }
+                UndoRedoHub.EndCommand(selected);
             }
-            EngineApi.InvokeUnlock();
+        }
+        public static void SinkTile(I2dLocateable cell)
+        {
+            using (var _ = new EngineRegion())
+            {
+                if (Tiles[cell] is Tile t)
+                {
+                    UndoRedoHub.BeginCommand(t);
+                    t.Sink();
+                    UndoRedoHub.EndCommand(t);
+                }
+            }
         }
         public static void AllSetHeightTo(int height)
         {
-            EngineApi.InvokeLock();
-            foreach (Tile t in selected)
+            using (var _ = new EngineRegion())
             {
-                t.SetHeightTo(height);
+                UndoRedoHub.BeginCommand(selected);
+                foreach (Tile t in selected)
+                {
+                    t.SetHeightTo(height);
+                }
+                UndoRedoHub.EndCommand(selected);
             }
-            EngineApi.InvokeUnlock();
+        }
+        public static void RoughRampInSelectedTile()
+        {
+            using (var _ = new EngineRegion())
+            {
+                UndoRedoHub.BeginCommand(SelectedTile.ToList());
+                HillGenerator.RoughRampIn(SelectedTile);
+                UndoRedoHub.EndCommand(SelectedTile.ToList());
+            }
+        }
+        public static void FixRampInSelectedTile()
+        {
+            using (var _ = new EngineRegion())
+            {
+                UndoRedoHub.BeginCommand(SelectedTile.ToList());
+                HillGenerator.SmoothRampIn(SelectedTile);
+                UndoRedoHub.EndCommand(SelectedTile.ToList());
+            }
         }
         #endregion
         #endregion

@@ -140,6 +140,29 @@ namespace RelertSharp.Wpf
             cmd.SetReferance(referance);
             PushCommand(cmd);
         }
+        private static List<Tile> tileCommandBuffer = new List<Tile>();
+        public static void BeginCommand(IEnumerable<Tile> before)
+        {
+            tileCommandBuffer.Clear();
+            foreach (Tile t in before)
+            {
+                Tile buff = new Tile(t);
+                tileCommandBuffer.Add(buff);
+            }
+        }
+        public static void EndCommand(IEnumerable<Tile> target)
+        {
+            PushCommand(target.ToList(), tileCommandBuffer);
+        }
+        public static void BeginCommand(Tile before)
+        {
+            tileCommandBuffer.Clear();
+            tileCommandBuffer.Add(new Tile(before));
+        }
+        public static void EndCommand(Tile now)
+        {
+            PushCommand(new List<Tile>() { now }, tileCommandBuffer);
+        }
         public static void PushCommand(List<Tile> target, List<Tile> before)
         {
             List<string> cmds = new List<string>();

@@ -112,8 +112,8 @@
         </Menu>
         <ToolBarTray VerticalAlignment="Top" Grid.Row="1" Height="Auto">
             <ToolBar BandIndex="0" HorizontalAlignment="Left">
-                <Button Content="{StaticResource NavigateBack}" IsEnabled="{Binding IsNavigateBackwardEnable}" ToolTip="Navigate Back"/>
-                <Button Content="{StaticResource NavigateForward}" IsEnabled="{Binding IsNavigateForwardEnable}" ToolTip="Navigate Forward"/>
+                <Button Content="{StaticResource NavigateBack}" IsEnabled="{Binding IsNavigateBackwardEnable}" ToolTip="Navigate Back" Click="ToolNavigateBack"/>
+                <Button Content="{StaticResource NavigateForward}" IsEnabled="{Binding IsNavigateForwardEnable}" ToolTip="Navigate Forward" Click="ToolNavigateForward"/>
                 <Separator/>
                 <Button Content="{StaticResource Copy}" IsEnabled="{Binding IsSelectorHasAnything}" Click="MenuCopy"/>
                 <Button Content="{StaticResource Paste}" IsEnabled="{Binding IsClipboardHasAnything}" Click="MenuPaste"/>
@@ -129,6 +129,8 @@
             <ToolBar BandIndex="1" HorizontalAlignment="Left">
                 <ToggleButton Content="{StaticResource Arrow}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseNone}"/>
                 <Separator/>
+                <ToggleButton Content="{StaticResource SingleRise}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseRiseSingle}"/>
+                <ToggleButton Content="{StaticResource SingleSink}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseSinkSingle}"/>
                 <ToggleButton Content="{StaticResource FlatRamp}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseFlatRamp}"/>
                 <Separator/>
                 <ToggleButton Content="{StaticResource TileSelect}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsBoxTileSelecting}"/>
@@ -140,9 +142,9 @@
                 <ToggleButton Content="{StaticResource TileFlood}" IsEnabled="{Binding IsTileBrushMode}" IsChecked="{Binding IsBrushFill}"/>
             </ToolBar>
             <ToolBar BandIndex="2" HorizontalAlignment="Left">
-                <Button Content="{StaticResource RiseTile}" IsEnabled="{Binding IsSelectorHasTile}"/>
-                <Button Content="{StaticResource SinkTile}" IsEnabled="{Binding IsSelectorHasTile}"/>
-                <Button Content="{StaticResource RoughRamp}" IsEnabled="{Binding IsSelectorHasTile}"/>
+                <Button Content="{StaticResource RiseTile}" IsEnabled="{Binding IsSelectorHasTile}" Click="ToolRiseTile"/>
+                <Button Content="{StaticResource SinkTile}" IsEnabled="{Binding IsSelectorHasTile}" Click="ToolSinkTile"/>
+                <Button Content="{StaticResource RoughRamp}" IsEnabled="{Binding IsSelectorHasTile}" Click="ToolRoughRamp"/>
             </ToolBar>
         </ToolBarTray>
         <DockingManager x:Name="dockMain" Grid.Row="2">

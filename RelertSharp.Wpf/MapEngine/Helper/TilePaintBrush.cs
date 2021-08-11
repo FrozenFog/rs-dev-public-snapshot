@@ -249,6 +249,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             var tiles = GlobalVar.GlobalMap.TilesData;
             if (currentSet != null && tiles[center] is Tile seed)
             {
+                affectedTile.Clear();
                 EngineApi.InvokeLock();
                 if (predicates == null || !predicates.Any())
                 {
@@ -278,6 +279,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                             int targetY = y + subtile.Dy;
                             if (tiles[targetX, targetY] is Tile target && target.IsSelected)
                             {
+                                affectedTile.Add(new Tile(target));
                                 Tile t = new Tile(currentSet.TileIndex, subtile.SubIndex, targetX, targetY, target.RealHeight + subtile.Dz);
                                 t.FlatToGround(isFlat);
                                 MapApi.SetTile(t);
@@ -285,6 +287,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                         }
                     }
                 }
+                UndoRedoHub.PushCommand(MapApi.SelectTile(affectedTile), affectedTile.ToList());
                 end:
                 EngineApi.InvokeUnlock();
             }
@@ -293,10 +296,13 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         }
         #endregion
         #region Ramp Flatting
+        private static HashSet<Tile> affectedTile = new HashSet<Tile>();
         public static void BeginRampFlat(int height)
         {
             if (!IsRampFlatOn)
             {
+                affectedTile.Clear();
+                EngineApi.SetHoverNavigation(true, height);
                 IsRampFlatOn = true;
                 RampFlatHeight = height;
             }
@@ -305,10 +311,17 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         {
             if (IsRampFlatOn && Tiles[cell] is Tile t)
             {
+                int index = t.TileIndex;
+                byte subindex = t.SubIndex;
+                if (t.IsRamp)
+                {
+                    index = 0; subindex = 0;
+                }
                 if (t.IsRamp || t.RealHeight != RampFlatHeight)
                 {
+                    affectedTile.Add(new Tile(t));
                     EngineApi.InvokeLock();
-                    MapApi.SetTile(0, 0, t, RampFlatHeight);
+                    MapApi.SetTile(index, subindex, t, RampFlatHeight);
                     EngineApi.InvokeUnlock();
                     return true;
                 }
@@ -319,6 +332,8 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         {
             if (IsRampFlatOn)
             {
+                UndoRedoHub.PushCommand(MapApi.SelectTile(affectedTile), affectedTile.ToList());
+                EngineApi.SetHoverNavigation(false);
                 IsRampFlatOn = false;
             }
         }

@@ -52,6 +52,7 @@
     <Compile Include="Common\Buffers\Files.cs" />
     <Compile Include="Common\Buffers\Scene\Scene.cs" />
     <Compile Include="Common\BuildingData.cs" />
+    <Compile Include="Common\EngineRegion.cs" />
     <Compile Include="Common\Transform.cs" />
     <Compile Include="CppExtern.cs" />
     <Compile Include="Api\EngineApi.cs" />

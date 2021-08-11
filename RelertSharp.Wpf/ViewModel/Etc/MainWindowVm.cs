@@ -110,10 +110,10 @@ namespace RelertSharp.Wpf.ViewModel
         [AutoUpdate(GROUP_MOUSE)]
         public bool IsBrushFill
         {
-            get { return MouseState.State == PanelMouseState.TileBucketFill; }
+            get { return MouseState.State == PanelMouseState.TileBucketFlood; }
             set
             {
-                MouseState.SetState(PanelMouseState.TileBucketFill);
+                MouseState.SetState(PanelMouseState.TileBucketFlood);
             }
         }
         #endregion
@@ -220,6 +220,26 @@ namespace RelertSharp.Wpf.ViewModel
             set
             {
                 MouseState.SetState(PanelMouseState.None);
+                SetProperty();
+            }
+        }
+        [AutoUpdate(GROUP_MOUSE)]
+        public bool IsMouseRiseSingle
+        {
+            get { return MouseState.State == PanelMouseState.TileSingleRising; }
+            set
+            {
+                MouseState.SetState(PanelMouseState.TileSingleRising);
+                SetProperty();
+            }
+        }
+        [AutoUpdate(GROUP_MOUSE)]
+        public bool IsMouseSinkSingle
+        {
+            get { return MouseState.State == PanelMouseState.TileSingleSinking; }
+            set
+            {
+                MouseState.SetState(PanelMouseState.TileSingleSinking);
                 SetProperty();
             }
         }
