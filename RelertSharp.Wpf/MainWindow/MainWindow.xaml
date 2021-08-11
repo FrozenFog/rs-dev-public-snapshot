@@ -145,6 +145,7 @@
                 <Button Content="{StaticResource RiseTile}" IsEnabled="{Binding IsSelectorHasTile}" Click="ToolRiseTile"/>
                 <Button Content="{StaticResource SinkTile}" IsEnabled="{Binding IsSelectorHasTile}" Click="ToolSinkTile"/>
                 <Button Content="{StaticResource RoughRamp}" IsEnabled="{Binding IsSelectorHasTile}" Click="ToolRoughRamp"/>
+                <Button Content="{StaticResource HeadTerrain}"/>
             </ToolBar>
         </ToolBarTray>
         <DockingManager x:Name="dockMain" Grid.Row="2">

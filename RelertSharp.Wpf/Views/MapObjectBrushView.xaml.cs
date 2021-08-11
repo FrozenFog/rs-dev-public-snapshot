@@ -1,4 +1,5 @@
 ﻿using RelertSharp.Common;
+using RelertSharp.Common.Config.Model;
 using RelertSharp.IniSystem;
 using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.ViewModel;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -50,6 +52,26 @@ namespace RelertSharp.Wpf.Views
         public void ReloadAllObjects()
         {
             trvMain.Items.Clear();
+            var cfg = GlobalVar.GlobalConfig.ModConfig.ObjectInfo;
+            ObjectPickVm load_custom(IEnumerable<CustomItemInfo> classes, IEnumerable<INIPair> src, MapObjectType type)
+            {
+                ObjectPickVm root = new ObjectPickVm("Custom");
+                foreach (var info in classes)
+                {
+                    ObjectPickVm vm = new ObjectPickVm(info.Title);
+                    Regex re = new Regex(info.RegexFormat);
+                    foreach (INIPair p in src)
+                    {
+                        string name = Rules[p.Value].GetString(Constant.KEY_NAME);
+                        if (!name.IsNullOrEmpty() && re.IsMatch(name))
+                        {
+                            add_to_node(vm, p.Value, type);
+                        }
+                    }
+                    root.AddItem(vm);
+                }
+                return root;
+            }
             void add_to_node(ObjectPickVm dest, string regname, MapObjectType type = MapObjectType.Undefined)
             {
                 dest.AddItem(new ObjectPickVm(regname, Rules.FormatTreeNodeName(regname), type));
@@ -86,9 +108,10 @@ namespace RelertSharp.Wpf.Views
                 }
                 sides.Insert(sides.Count - 1, tech);
                 sides.ForEach(x => root.AddItem(x));
+                root.AddItem(load_custom(cfg.Buildings, Rules[Constant.RulesHead.HEAD_BUILDING], MapObjectType.Building));
                 trvMain.Items.Add(root);
             }
-            void generic(string title, string rulesHead, object icon, CombatObjectType combatType, MapObjectType objType)
+            void generic(string title, string rulesHead, object icon, CombatObjectType combatType, MapObjectType objType, IEnumerable<CustomItemInfo> classes)
             {
                 ObjectPickVm root = new ObjectPickVm(title);
                 root.SetIcon(icon);
@@ -100,13 +123,14 @@ namespace RelertSharp.Wpf.Views
                     else add_to_node(sides.Last(), p.Value, objType);
                 }
                 sides.ForEach(x => root.AddItem(x));
+                root.AddItem(load_custom(classes, Rules[rulesHead], objType));
                 trvMain.Items.Add(root);
             }
             void favourites()
             {
                 ObjectPickVm root = new ObjectPickVm("Favourites");
                 root.SetIcon(FindResource("HeadFav"));
-                void readInto(RelertSharp.Common.Config.Model.FavouriteItemTree src, ObjectPickVm parent)
+                void readInto(FavouriteItemTree src, ObjectPickVm parent)
                 {
                     ObjectPickVm dest = new ObjectPickVm(src.Title, src.Value, src.Type);
                     if (src.Items != null) foreach (var sub in src.Items) readInto(sub, dest);
@@ -140,13 +164,32 @@ namespace RelertSharp.Wpf.Views
                 }
                 uSides.ForEach(x => uRoot.AddItem(x));
                 nSides.ForEach(x => nRoot.AddItem(x));
+                uRoot.AddItem(load_custom(cfg.Units, Rules[Constant.RulesHead.HEAD_VEHICLE], MapObjectType.Vehicle));
                 trvMain.Items.Add(uRoot);
                 trvMain.Items.Add(nRoot);
             }
+            void terrain()
+            {
+                ObjectPickVm root = new ObjectPickVm("Terrains");
+                root.SetIcon(FindResource("HeadTerrain"));
+                ObjectPickVm tib = new ObjectPickVm("Resource Fountain");
+                ObjectPickVm all = new ObjectPickVm("All Terrain");
+                foreach (INIPair p in Rules[Constant.RulesHead.HEAD_TERRAIN])
+                {
+                    if (Rules[p.Value].ParseBool("SpawnsTiberium")) add_to_node(tib, p.Value, MapObjectType.Terrain);
+                    add_to_node(all, p.Value, MapObjectType.Terrain);
+                }
+                ObjectPickVm custom = new ObjectPickVm("Custom");
+                root.AddItem(tib);
+                root.AddItem(load_custom(cfg.Terrains, Rules[Constant.RulesHead.HEAD_TERRAIN], MapObjectType.Terrain));
+                root.AddItem(all);
+                trvMain.Items.Add(root);
+            }
             building();
-            generic("Infantries", Constant.RulesHead.HEAD_INFANTRY, FindResource("HeadInf"), CombatObjectType.Infantry, MapObjectType.Infantry);
+            generic("Infantries", Constant.RulesHead.HEAD_INFANTRY, FindResource("HeadInf"), CombatObjectType.Infantry, MapObjectType.Infantry, cfg.Infantries);
             unit();
-            generic("Aircrafts", Constant.RulesHead.HEAD_AIRCRAFT, FindResource("HeadAir"), CombatObjectType.Aircraft, MapObjectType.Aircraft);
+            generic("Aircrafts", Constant.RulesHead.HEAD_AIRCRAFT, FindResource("HeadAir"), CombatObjectType.Aircraft, MapObjectType.Aircraft, cfg.Aircrafts);
+            terrain();
             favourites();
             ReloadAttributeCombo();
         }

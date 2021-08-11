@@ -18,6 +18,8 @@ namespace RelertSharp.Common.Config.Model
         public TriggerInfo TriggerInfo { get; set; }
         [XmlElement(ElementName = "TileSetInfo")]
         public TileSetInfo TileSetInfo { get; set; }
+        [XmlElement(ElementName = "ObjectInfo")]
+        public ObjectInfo ObjectInfo { get; set; }
         [XmlArrayItem("set")]
         public List<TheaterCliffSet> CliffInfo { get; set; }
     }

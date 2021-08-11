@@ -27,6 +27,9 @@ namespace RelertSharp.Common
             public const string HEAD_INFANTRY = "InfantryTypes";
             public const string HEAD_VEHICLE = "VehicleTypes";
             public const string HEAD_AIRCRAFT = "AircraftTypes";
+            public const string HEAD_TERRAIN = "TerrainTypes";
+            public const string HEAD_SMUDGE = "SmudgeTypes";
+            public const string HEAD_OVERLAY = "OverlayTypes";
         }
 
         public const string KEY_IMAGE = "Image";

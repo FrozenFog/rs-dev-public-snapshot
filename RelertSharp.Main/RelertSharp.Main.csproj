@@ -133,7 +133,7 @@
     <Compile Include="Common\Config\Model\ModConfig\LanguageControl.cs" />
     <Compile Include="Common\Config\Model\ModConfig\LogicAttributes.cs" />
     <Compile Include="Common\Config\Model\ModConfig\RsModConfig.cs" />
-    <Compile Include="Common\Config\Model\ModConfig\TileSetInfo.cs" />
+    <Compile Include="Common\Config\Model\ModConfig\CustomItemInfo.cs" />
     <Compile Include="Common\Config\Model\ModConfig\TriggerInfo.cs" />
     <Compile Include="Common\Config\ModConfig\TriggerScriptInfo.cs" />
     <Compile Include="Common\Config\Model\UserConfig\FavouriteItems.cs" />

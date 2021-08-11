@@ -262,6 +262,25 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
+    <Viewbox x:Key="HeadTerrain" Width="16" Height="16">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="7,10,3,6" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M1,11L1,11 8.5,4.5 16,11z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M3,6L3,6 8.5,0.5 14,6z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
     <Viewbox x:Key="HeadUnit" Width="16" Height="16">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>

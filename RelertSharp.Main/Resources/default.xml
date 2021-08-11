@@ -1680,6 +1680,29 @@
       <info title="Fixes" re="[fF]ix" />
     </Classes>
   </TileSetInfo>
+  <ObjectInfo>
+    <Buildings>
+      <info title="RA1 Building" re="^Old"/>
+      <info title="New York" re="Building NY"/>
+      <info title="Light Post" re="(Invisible.*(Lamp|Light Post))|(Light Post)"/>
+    </Buildings>
+    <Infantries>
+      <info title="Civilian" re="Civilian"/>
+    </Infantries>
+    <Units>
+      <info title="Trucks" re="[tT]ruck"/>
+    </Units>
+    <Aircrafts>
+      <info title="Missile" re="[mM]issile|[rR]ocket"/>
+    </Aircrafts>
+    <Terrains>
+      <info title="Light Poles" re="[pP]ole|Traffic|Lightpost"/>
+    </Terrains>
+    <Overlays>
+      <info title="Railroad" re="[tT]rack"/>
+      <info title="Bridges" re="[bB]ridge"/>
+    </Overlays>
+  </ObjectInfo>
   <CliffInfo>
     <set theater="NEWURBAN" name="Pavement Cliff">
       <Sections>
