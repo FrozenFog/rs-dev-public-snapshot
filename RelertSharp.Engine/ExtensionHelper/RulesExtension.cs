@@ -59,6 +59,7 @@ namespace RelertSharp.Engine
             else
             {
                 data.nTurretAnim = 0;
+                data.TurretOffset = Rules[name].ParseInt("TurretAnimZAdjust");
                 bTurret = false;
             }
 
@@ -172,10 +173,11 @@ namespace RelertSharp.Engine
             frame = GlobalDir.GetShpFrameCount(img, out bool b);
             return img;
         }
-        public static string GetUnitImgName(this Rules r, string id, ref string tur, ref string barl, ref bool vxl)
+        public static string GetUnitInfo(this Rules r, string id, ref string tur, ref string barl, ref bool vxl, out int turretOffset)
         {
             string artname = Rules.GetArtEntityName(id);
             INIEntity art = Art[artname];
+            turretOffset = art.ParseInt("TurretOffset");
             vxl = IsVxl(artname);
             VxlFormating(artname, vxl, ref artname, ref tur, ref barl);
             return artname;

@@ -506,7 +506,7 @@ int VxlFile::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
 
 void VxlFile::DrawCached(LPDIRECT3DDEVICE9 pDevice, 
 	D3DXVECTOR3 Position, D3DXVECTOR3 ShadowPosition, float RotationZ, 
-	int nPaletteID, DWORD dwRemapColor,
+	int nPaletteID, DWORD dwRemapColor, int offset,
 	int& returnedID, int& returnedShadowID,
 	VPLFile& Vpl)
 {
@@ -527,7 +527,7 @@ void VxlFile::DrawCached(LPDIRECT3DDEVICE9 pDevice,
 	pCache = pShadowCache = nullptr;
 
 	if (this->CachedVoxels.empty() || this->CachedShadows.empty())
-		this->MakeAllCache(pDevice);
+		this->MakeAllCache(pDevice, offset);
 
 	RotationZ /= D3DX_PI * 2;
 	RotationZ -= std::floor(RotationZ);
@@ -1449,7 +1449,7 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, V
 	delete[] ZBuffer;
 }
 
-bool VxlFile::MakeAllCache(LPDIRECT3DDEVICE9 pDevice, VPLFile& Vpl)
+bool VxlFile::MakeAllCache(LPDIRECT3DDEVICE9 pDevice, int offset, VPLFile& Vpl)
 {
 	const int idxFrame = 0;
 
@@ -1474,7 +1474,7 @@ bool VxlFile::MakeAllCache(LPDIRECT3DDEVICE9 pDevice, VPLFile& Vpl)
 	for (size_t i = 0; i < 32u; i++)
 	{
 		float RotationZ = (i / 32.0) * (2.0 * D3DX_PI);
-		Result &= MakeSingleFrameCaches(pDevice, idxFrame, 0.0, 0.0, RotationZ, pCache, pShadowCache, 0, Vpl);
+		Result &= MakeSingleFrameCaches(pDevice, idxFrame, 0.0, 0.0, RotationZ, pCache, pShadowCache, offset, Vpl);
 
 		if (!Result)
 		{

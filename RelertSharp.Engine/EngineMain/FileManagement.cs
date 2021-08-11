@@ -88,10 +88,11 @@ namespace RelertSharp.Engine
                 d = new DrawableUnit(name);
                 string self = "", turret = "", barl = "";
                 bool vxl = true;
-                self = GlobalRules.GetUnitImgName(name, ref turret, ref barl, ref vxl);
+                self = GlobalRules.GetUnitInfo(name, ref turret, ref barl, ref vxl, out int turretOffset);
                 if (!vxl) d.Framecount = GlobalDir.GetShpFrameCount(self, out bool b);
                 d.IsVxl = vxl;
                 d.RemapColor = color;
+                d.TurretOffset = turretOffset;
                 string customPalName = GlobalRules.GetCustomPaletteName(name);
                 if (!string.IsNullOrEmpty(customPalName))
                 {
@@ -251,6 +252,7 @@ namespace RelertSharp.Engine
 
                 d.Height = height; d.FoundationX = foundx; d.FoundationY = foundy;
                 d.VoxelTurret = data.TurretAnimIsVoxel;
+                d.TurretOffset = data.TurretOffset;
                 d.RemapColor = color;
                 d.MinimapColor = ToColor(color);
 

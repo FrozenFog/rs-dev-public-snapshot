@@ -138,7 +138,7 @@ public:
 
 	void DrawCached(LPDIRECT3DDEVICE9 pDevice,
 		D3DXVECTOR3 Position, D3DXVECTOR3 ShadowPosition, float RotationZ,
-		int nPaletteID, DWORD dwRemapColor,
+		int nPaletteID, DWORD dwRemapColor, int offset,
 		int& returnedID, int& returnedShadowID, 
 		VPLFile& Vpl = VPLFile::GlobalVPL);
 	
@@ -162,7 +162,7 @@ public:
 private:
 #endif
 
-	bool MakeAllCache(LPDIRECT3DDEVICE9 pDevice, VPLFile& Vpl = VPLFile::GlobalVPL);
+	bool MakeAllCache(LPDIRECT3DDEVICE9 pDevice, int offset, VPLFile& Vpl = VPLFile::GlobalVPL);
 
 	PBYTE pFileBuffer;
 	VxlFileHeader FileHeader;

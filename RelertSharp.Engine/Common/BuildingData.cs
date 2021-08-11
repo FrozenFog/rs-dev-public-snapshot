@@ -49,6 +49,7 @@
         public bool TurretAnimIsVoxel { get; set; }
         public string TurretBarrel { get; set; }
         public int TurretAnimZAdjust { get; set; }
+        public int TurretOffset { get; set; }
 
         public string AlphaImage { get; set; }
 

@@ -232,24 +232,24 @@ bool WINAPI RemoveCommonTextureFile(int nFileId)
 	return true;
 }
 
-int WINAPI CreateVxlObjectAtScene(int nFileId, D3DXVECTOR3 Position, float RotationX, float RotationY, float RotationZ, int nColorSchemeID, DWORD dwRemap)
+int WINAPI CreateVxlObjectAtScene(int nFileId, D3DXVECTOR3 Position, float RotationX, float RotationY, float RotationZ, int nColorSchemeID, DWORD dwRemap, int offset)
 {
 	auto find = VxlFile::FileObjectTable.find(nFileId);
 	if (find == VxlFile::FileObjectTable.end())
 		return 0;
 
-	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position, RotationX, RotationY, RotationZ, nColorSchemeID, dwRemap);
+	return find->second->DrawAtScene(SceneClass::Instance.GetDevice(), Position, RotationX, RotationY, RotationZ, nColorSchemeID, dwRemap, offset);
 }
 
 bool WINAPI CreateVxlObjectCached(int nFileID, D3DXVECTOR3 Position, D3DXVECTOR3 ShadowPosition, float RotationZ, 
-	int nPaletteID, DWORD dwRemapColor, int& nID, int& nShadowID)
+	int nPaletteID, DWORD dwRemapColor, int offset, int& nID, int& nShadowID)
 {
 	auto find = VxlFile::FileObjectTable.find(nFileID);
 	if (find == VxlFile::FileObjectTable.end())
 		return false;
 
 	auto& File = find->second;
-	File->DrawCached(SceneClass::Instance.GetDevice(), Position, ShadowPosition, RotationZ, nPaletteID, dwRemapColor, nID, nShadowID);
+	File->DrawCached(SceneClass::Instance.GetDevice(), Position, ShadowPosition, RotationZ, nPaletteID, dwRemapColor, offset, nID, nShadowID);
 
 	return nID && nShadowID;
 }

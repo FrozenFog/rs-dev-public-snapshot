@@ -145,9 +145,9 @@ namespace RelertSharp.Engine
         public static class ObjectUtils
         {
             [DllImport(name)]
-            public static extern int CreateVxlObjectAtScene(int idVxl, Vec3 pos, float rotateX, float rotateY, float rotateZ, int idPal, uint dwRemapColor);
+            public static extern int CreateVxlObjectAtScene(int idVxl, Vec3 pos, float rotateX, float rotateY, float rotateZ, int idPal, uint dwRemapColor, int ofset);
             [DllImport(name)]
-            public static extern bool CreateVxlObjectCached(int idVxl, Vec3 pos, Vec3 shadowPos, float rotateZ, int idPal, uint dwRemapColor, ref int outId, ref int outShadowId);
+            public static extern bool CreateVxlObjectCached(int idVxl, Vec3 pos, Vec3 shadowPos, float rotateZ, int idPal, uint dwRemapColor, int offset, ref int outId, ref int outShadowId);
             [DllImport(name)]
             public static extern bool CreateTmpObjectAtScene(int idTmp, Vec3 pos, int pPal, int tileIndex, ref int outTileIndex, ref int outExIndex);
             [DllImport(name)]

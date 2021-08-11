@@ -33,6 +33,7 @@ namespace RelertSharp.Engine.DrawableBuffer
         public int pTurretAnim { get; set; }
         public int pShadowTurretAnim { get; set; }
         public short TurretAnimCount { get; set; }
+        public int TurretOffset { get; set; }
         public int pTurretBarl { get; set; }
         public Pnt offsetTurret { get; set; }
         public int pBib { get; set; }

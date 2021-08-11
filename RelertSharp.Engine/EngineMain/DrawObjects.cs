@@ -129,12 +129,12 @@ namespace RelertSharp.Engine
                 if (src.VoxelTurret)
                 {
                     Vec3 turret = pos + src.offsetTurret;
-                    RenderAndPresent(src.pTurretAnim, turret + OffsetTo(Offset.Turret), turRotation, src.RemapColor, pPal, out int vid, out int sid, turret + OffsetTo(Offset.ShadowTurret));
+                    RenderAndPresent(src.pTurretAnim, turret + OffsetTo(Offset.Turret), turRotation, 0, src.RemapColor, pPal, out int vid, out int sid, turret + OffsetTo(Offset.ShadowTurret));
                     dest.pTurretAnimShadow = sid;
                     dest.pTurretAnim = vid;
                     if (src.pTurretBarl != 0)
                     {
-                        RenderAndPresent(src.pTurretBarl, turret + OffsetTo(Offset.Barrel), turRotation, src.RemapColor, pPal, out int turBarrel, out int turBarrShadow, turret + OffsetTo(Offset.ShadowBarrel));
+                        RenderAndPresent(src.pTurretBarl, turret + OffsetTo(Offset.Barrel), turRotation, src.TurretOffset, src.RemapColor, pPal, out int turBarrel, out int turBarrShadow, turret + OffsetTo(Offset.ShadowBarrel));
                         dest.pTurretBarl = turBarrel;
                         dest.pTurretBarlShadow = turBarrShadow;
                     }
@@ -208,19 +208,19 @@ namespace RelertSharp.Engine
             {
                 if (src.pSelf != 0)
                 {
-                    RenderAndPresent(src.pSelf, pos + OffsetTo(Offset.Self), rotation, src.RemapColor, pPal, out int selfId, out int selfShadow, pos + OffsetTo(Offset.ShadowSelf));
+                    RenderAndPresent(src.pSelf, pos + OffsetTo(Offset.Self), rotation, 0, src.RemapColor, pPal, out int selfId, out int selfShadow, pos + OffsetTo(Offset.ShadowSelf));
                     dest.pSelf = selfId;
                     dest.pSelfShadow = selfShadow;
                 }
                 if (src.pBarrel != 0)
                 {
-                    RenderAndPresent(src.pBarrel, pos + OffsetTo(Offset.Barrel), rotation, src.RemapColor, pPal, out int barlId, out int barlShadow, pos + OffsetTo(Offset.ShadowBarrel));
+                    RenderAndPresent(src.pBarrel, pos + OffsetTo(Offset.Barrel), rotation, src.TurretOffset, src.RemapColor, pPal, out int barlId, out int barlShadow, pos + OffsetTo(Offset.ShadowBarrel));
                     dest.pBarrel = barlId;
                     dest.pBarrelShadow = barlShadow;
                 }
                 if (src.pTurret != 0)
                 {
-                    RenderAndPresent(src.pTurret, pos + OffsetTo(Offset.Turret), rotation, src.RemapColor, pPal, out int turId, out int turShadow, pos + OffsetTo(Offset.ShadowTurret));
+                    RenderAndPresent(src.pTurret, pos + OffsetTo(Offset.Turret), rotation, src.TurretOffset, src.RemapColor, pPal, out int turId, out int turShadow, pos + OffsetTo(Offset.ShadowTurret));
                     dest.pTurret = turId;
                     dest.pTurretShadow = turShadow;
                 }
@@ -551,15 +551,15 @@ namespace RelertSharp.Engine
         /// <param name="color"></param>
         /// <param name="pPal"></param>
         /// <returns></returns>
-        private static int RenderAndPresent(int vxlID, Vec3 pos, Vec3 ro, uint color, int pPal)
+        private static int RenderAndPresent(int vxlID, Vec3 pos, Vec3 ro, uint color, int pPal, int offset)
         {
-            return CppExtern.ObjectUtils.CreateVxlObjectAtScene(vxlID, pos, ro.X, ro.Y, ro.Z, pPal, color);
+            return CppExtern.ObjectUtils.CreateVxlObjectAtScene(vxlID, pos, ro.X, ro.Y, ro.Z, pPal, color, offset);
         }
-        private static void RenderAndPresent(int vxlFile, Vec3 pos, Vec3 rotation, uint color, int pPal, out int vxlId, out int shadowId, Vec3 shadowPos = default)
+        private static void RenderAndPresent(int vxlFile, Vec3 pos, Vec3 rotation, int offset, uint color, int pPal, out int vxlId, out int shadowId, Vec3 shadowPos = default)
         {
             if (shadowPos == Vec3.Zero) shadowPos = pos;
             vxlId = 0; shadowId = 0;
-            CppExtern.ObjectUtils.CreateVxlObjectCached(vxlFile, pos, shadowPos, rotation.Z, pPal, color, ref vxlId, ref shadowId);
+            CppExtern.ObjectUtils.CreateVxlObjectCached(vxlFile, pos, shadowPos, rotation.Z, pPal, color, offset, ref vxlId, ref shadowId);
         }
         #endregion
     }

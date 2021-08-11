@@ -300,7 +300,7 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion,
 		}*/
 		int nShadowID;
 		if (CreateVxlObjectCached(VxlFiles[0], { 0.0f,0.0f,0.3f }, { 0.0f,0.0f,0.15f }, 
-			D3DX_PI / 2.0, UnitPalette, RGB(252, 0, 252), nCachedObject, nCachedShadow))
+			D3DX_PI / 2.0, UnitPalette, RGB(252, 0, 252), 0, nCachedObject, nCachedShadow))
 		{
 			Logger::WriteLine(__FUNCTION__" : ""All Successful!.\n");
 		}
@@ -333,8 +333,8 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion,
 		if (auto tid = CreateVxlFile("images\\ytnktur.vxl"))
 		{
 			auto Position = D3DXVECTOR3(200.0, 0, 0);
-			CreateVxlObjectAtScene(vid, Position, 0, 0, 0, UnitPalette, INVALID_COLOR_VALUE);
-			CreateVxlObjectAtScene(tid, Position, 0, 0, -D3DX_PI / 4.0f , UnitPalette, INVALID_COLOR_VALUE);
+			CreateVxlObjectAtScene(vid, Position, 0, 0, 0, UnitPalette, INVALID_COLOR_VALUE, 0);
+			CreateVxlObjectAtScene(tid, Position, 0, 0, -D3DX_PI / 4.0f , UnitPalette, INVALID_COLOR_VALUE, 0);
 		}
 	}
 	D3DXVECTOR3 Position{ 100.0f,0.0f,0.0f };
@@ -362,7 +362,7 @@ bool Graphic::PrepareVertexBuffer(const char* pShotFileName, bool bUnion,
 
 			CreateShpObjectAtScene(vid, Position, 0, UnitPalette, INVALID_COLOR_VALUE, 1, 1, 1, 4, false);
 			Position.z -= delta;
-			if (!CreateVxlObjectAtScene(tid, Position, 0, 0, D3DX_PI, UnitPalette, RGB(252, 0, 0)))
+			if (!CreateVxlObjectAtScene(tid, Position, 0, 0, D3DX_PI, UnitPalette, RGB(252, 0, 0), 0))
 				Logger::WriteLine(__FUNCTION__" : ""failed to put vxl.\n");
 		}
 	}
@@ -468,8 +468,7 @@ void Graphic::WorldRotation()
 		RemoveObjectFromScene(nCachedObject);
 		RemoveObjectFromScene(nCachedShadow);
 		CreateVxlObjectCached(VxlFiles[0], 
-			{ 0.0,0.0,height + 0.3f }, { 0.0,0.0,0.15f }, angle, UnitPalette, RGB(0, 252, 252),
-			nCachedObject, nCachedShadow);
+			{ 0.0,0.0,height + 0.3f }, { 0.0,0.0,0.15f }, angle, UnitPalette, RGB(0, 252, 252), 0, nCachedObject, nCachedShadow);
 
 		if (!nCachedShadow)
 			Logger::WriteLine(__FUNCTION__" : ""No shadow.\n");
@@ -533,7 +532,7 @@ void Graphic::PlaceVXL(POINT Position)
 
 		ClientPositionToScenePosition(Position, ScenePositon);
 
-		if (auto id = CreateVxlObjectAtScene(VxlFiles[0], ScenePositon, 0.0, 0.0, StaticAngle, UnitPalette,RGB(252,0,252))) {
+		if (auto id = CreateVxlObjectAtScene(VxlFiles[0], ScenePositon, 0.0, 0.0, StaticAngle, UnitPalette,RGB(252,0,252), 0)) {
 			//RotateObject(id, -atan(CellHeight / TileLength), 0.0, 0.0);
 			SceneObjects.push_back(id);
 		}
