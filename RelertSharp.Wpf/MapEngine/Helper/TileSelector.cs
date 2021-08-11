@@ -328,18 +328,31 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         {
             using (var _ = new EngineRegion())
             {
-                UndoRedoHub.BeginCommand(SelectedTile.ToList());
+                UndoRedoHub.BeginCommand(SelectedTile);
                 HillGenerator.RoughRampIn(SelectedTile);
-                UndoRedoHub.EndCommand(SelectedTile.ToList());
+                UndoRedoHub.EndCommand(SelectedTile);
             }
         }
         public static void FixRampInSelectedTile()
         {
             using (var _ = new EngineRegion())
             {
-                UndoRedoHub.BeginCommand(SelectedTile.ToList());
+                UndoRedoHub.BeginCommand(SelectedTile);
                 HillGenerator.SmoothRampIn(SelectedTile);
-                UndoRedoHub.EndCommand(SelectedTile.ToList());
+                UndoRedoHub.EndCommand(SelectedTile);
+            }
+        }
+        public static void ClearAllTileAsZero(bool alsoSetHeightToZero)
+        {
+            using (var _ = new EngineRegion())
+            {
+                UndoRedoHub.BeginCommand(SelectedTile);
+                foreach (Tile t in SelectedTile)
+                {
+                    if (alsoSetHeightToZero) MapApi.SetTile(0, 0, t, 0);
+                    else MapApi.SetTile(0, 0, t);
+                }
+                UndoRedoHub.EndCommand(SelectedTile);
             }
         }
         #endregion

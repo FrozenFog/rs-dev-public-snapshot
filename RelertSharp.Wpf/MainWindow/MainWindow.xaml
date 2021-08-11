@@ -145,7 +145,9 @@
                 <Button Content="{StaticResource RiseTile}" IsEnabled="{Binding IsSelectorHasTile}" Click="ToolRiseTile"/>
                 <Button Content="{StaticResource SinkTile}" IsEnabled="{Binding IsSelectorHasTile}" Click="ToolSinkTile"/>
                 <Button Content="{StaticResource RoughRamp}" IsEnabled="{Binding IsSelectorHasTile}" Click="ToolRoughRamp"/>
-                <Button Content="{StaticResource HeadTerrain}"/>
+                <Button Content="{StaticResource SmoothRamp}" IsEnabled="{Binding IsSelectorHasTile}" Click="ToolSmoothRamp"/>
+                <Button Content="{StaticResource TileClearAll}" IsEnabled="{Binding IsSelectorHasTile}" Click="ToolClearTile"/>
+                <Button Content="{StaticResource TileZeroAll}" IsEnabled="{Binding IsSelectorHasTile}" Click="ToolZeroTile"/>
             </ToolBar>
         </ToolBarTray>
         <DockingManager x:Name="dockMain" Grid.Row="2">

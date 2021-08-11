@@ -332,6 +332,21 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
+    <Viewbox x:Key="SmoothRamp" Width="16" Height="16">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M1.141,2.156L1.141,2.156 6.141,2.156 11.141,11.156 15.141,11.156 15.141,13.156 10.141,13.156 5.141,4.156 1.141,4.156z" />
+                            <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M3.394,8.975L3.394,8.975 2.019,9.744 2.357,5.226 6.384,7.304 5.01,8.073 8.427,14.186 6.811,15.089z" />
+                            <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M10.175,4.6L10.175,4.6 8.801,5.369 9.139,0.851 13.165,2.929 11.791,3.698 15.208,9.811 13.592,10.714z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
     <Viewbox x:Key="RiseTile" Width="16" Height="16">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
@@ -621,6 +636,39 @@
                                 </GeometryDrawing.Geometry>
                             </GeometryDrawing>
                             <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M7,0L7,0 9,0 9,10.625 11,10.625 8,15.266 5,10.625 7,10.625z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="TileClearAll" Width="16" Height="16">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M8.041,8L8.041,8 14.957,11.204 8.041,14.406 1.043,11.204z" />
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Brush="#FFC1272D" Geometry="F1 M16,16z M0,0z M5.561,3.827L7.532,5.798 6.471,6.858 4.502,4.888 2.531,6.858 1.471,5.797 3.44,3.827 1.471,1.858 2.531,0.797 4.502,2.768 6.471,0.797 7.532,1.858 5.561,3.827z" />
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="TileZeroAll" Width="16" Height="16">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M8.041,8L8.041,8 14.957,11.204 8.041,14.406 1.043,11.204z" />
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Brush="#FFC1272D" Geometry="F1 M16,16z M0,0z M5.561,3.827L7.532,5.798 6.471,6.858 4.502,4.888 2.531,6.858 1.471,5.797 3.44,3.827 1.471,1.858 2.531,0.797 4.502,2.768 6.471,0.797 7.532,1.858 5.561,3.827z" />
+                            </DrawingGroup>
+                            <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M11.258,0.798L11.258,0.798 13.258,0.798 13.258,5.798 14.957,5.798 12.258,8.498 9.558,5.798 11.258,5.798z" />
                         </DrawingGroup>
                     </DrawingBrush.Drawing>
                 </DrawingBrush>

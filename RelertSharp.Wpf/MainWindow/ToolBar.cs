@@ -1,4 +1,5 @@
-﻿using RelertSharp.Wpf.MapEngine.Helper;
+﻿using RelertSharp.Engine.Api;
+using RelertSharp.Wpf.MapEngine.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace RelertSharp.Wpf
         private void ToolRiseTile(object sender, RoutedEventArgs e)
         {
             TileSelector.RiseAllSelectedTile();
+            EngineApi.InvokeRedraw();
         }
 
         private void ToolNavigateForward(object sender, RoutedEventArgs e)
@@ -28,11 +30,31 @@ namespace RelertSharp.Wpf
         private void ToolSinkTile(object sender, RoutedEventArgs e)
         {
             TileSelector.SinkAllSelectedTile();
+            EngineApi.InvokeRedraw();
+        }
+
+        private void ToolSmoothRamp(object sender, RoutedEventArgs e)
+        {
+            TileSelector.FixRampInSelectedTile();
+            EngineApi.InvokeRedraw();
         }
 
         private void ToolRoughRamp(object sender, RoutedEventArgs e)
         {
-            TileSelector.FixRampInSelectedTile();
+            TileSelector.RoughRampInSelectedTile();
+            EngineApi.InvokeRedraw();
+        }
+
+        private void ToolClearTile(object sender, RoutedEventArgs e)
+        {
+            TileSelector.ClearAllTileAsZero(false);
+            EngineApi.InvokeRedraw();
+        }
+
+        private void ToolZeroTile(object sender, RoutedEventArgs e)
+        {
+            TileSelector.ClearAllTileAsZero(true);
+            EngineApi.InvokeRedraw();
         }
     }
 }
