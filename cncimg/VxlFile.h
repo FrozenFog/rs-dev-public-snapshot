@@ -133,7 +133,8 @@ public:
 	bool GetVoxelLH(int nLimb, int x, int y, int z, Voxel& Voxel);
 	void LoadPalette(const char* pPaletteName);
 	int DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
-		float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor, VPLFile& Vpl = VPLFile::GlobalVPL);
+		float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor,
+		const int nOffset = 0, VPLFile& Vpl = VPLFile::GlobalVPL);
 
 	void DrawCached(LPDIRECT3DDEVICE9 pDevice,
 		D3DXVECTOR3 Position, D3DXVECTOR3 ShadowPosition, float RotationZ,
@@ -145,12 +146,12 @@ public:
 		LPDIRECT3DDEVICE9 pDevice, int idxFrame,
 		float RotationX, float RotationY, float RotationZ,
 		VxlCacheStruct& pReturnedCache, VxlCacheStruct& pReturnedShadow,
-		VPLFile& Vpl = VPLFile::GlobalVPL);
+		const int nOffset = 0, VPLFile& Vpl = VPLFile::GlobalVPL);
 
 	void MakeFrameScreenShot(
 		LPDIRECT3DDEVICE9 pDevice, const char* pDestFile, const char* pShadow, int idxFrame,
 		float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor,
-		VPLFile& Vpl = VPLFile::GlobalVPL);
+		const int nOffset = 0, VPLFile& Vpl = VPLFile::GlobalVPL);
 
 	void MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile* Barl, VxlFile* Body, const char* pDestFile, const char* pShadow, int idxFrame, float RotationX, float RotationY, 
 		float RotationZ, int nPaletteID, DWORD dwRemapColor, int TurretOff = 0, VPLFile&Vpl = VPLFile::GlobalVPL);

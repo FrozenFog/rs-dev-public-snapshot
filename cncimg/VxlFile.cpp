@@ -370,14 +370,15 @@ void VxlFile::LoadPalette(const char * pPaletteName)
 }
 
 int VxlFile::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
-	float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor, VPLFile& Vpl)
+	float RotationX, float RotationY, float RotationZ, int nPaletteID,
+	DWORD dwRemapColor, const int nOffset, VPLFile& Vpl)
 {
 	if (!this->IsLoaded() || !pDevice)
 		return 0;
 
 	//this->RemoveFromScene(Position);
 
-	D3DXMATRIX Matrix, Scale, RotateX, RotateY, RotateZ, Translation, Identity, NormalMatrix, Origin, TranslationCenter;
+	D3DXMATRIX Matrix, Scale, RotateX, RotateY, RotateZ, Translation, Offset, Identity, NormalMatrix, TranslationCenter;
 	LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
 	LPDIRECT3DBASETEXTURE9 pLastTexture;
 	LPVOID pVertexData;
@@ -387,6 +388,12 @@ int VxlFile::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
 	std::vector<D3DXVECTOR3> BufferedNormals;
 	Voxel Buffer;
 	Palette Entries;
+
+	D3DXMatrixRotationX(&RotateX, RotationX);
+	D3DXMatrixRotationY(&RotateY, RotationY);
+	D3DXMatrixRotationZ(&RotateZ, RotationZ);
+	D3DXMatrixTranslation(&Translation, Position.x, Position.y, Position.z);
+	D3DXMatrixTranslation(&Offset, nOffset * 30.0 * 1.4142135623730950488017 / 256.0, 0.0, 0.0); // nOffset*30*sqrt(2)/256
 
 	if (auto palette = Palette::FindPaletteByID(nPaletteID)) {
 		Entries = *palette;
@@ -401,10 +408,6 @@ int VxlFile::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
 	{
 		auto&TailerInfo = this->LimbTailers[i];
 
-		D3DXMatrixRotationX(&RotateX, RotationX);
-		D3DXMatrixRotationY(&RotateY, RotationY);
-		D3DXMatrixRotationZ(&RotateZ, RotationZ);
-		D3DXMatrixTranslation(&Translation, Position.x, Position.y, Position.z);
 		D3DXMatrixIdentity(&Identity);
 
 		auto MinBounds = TailerInfo.MinBounds;
@@ -414,11 +417,12 @@ int VxlFile::DrawAtScene(LPDIRECT3DDEVICE9 pDevice, D3DXVECTOR3 Position,
 		scales.x = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
 		scales.y = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
 		scales.z = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
-		
+		D3DXMatrixScaling(&Scale, scales.x, scales.y, scales.z);
+
 		//Origin is multiplied before Hva
 		TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
 		Matrix = this->AssociatedHVA.GetTransformMatrix(0, i)->AsIntegrateMatrix(scales, TailerInfo.fScale);
-		Matrix = Identity*TranslationCenter*Matrix*RotateX*RotateY*RotateZ*Translation;
+		Matrix = Identity * TranslationCenter * Scale * Matrix * Offset * RotateX * RotateY * RotateZ * Translation;
 		NormalMatrix = Matrix;
 		
 		NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
@@ -647,7 +651,7 @@ void VxlFile::DrawCached(LPDIRECT3DDEVICE9 pDevice,
 bool VxlFile::MakeSingleFrameCaches(LPDIRECT3DDEVICE9 pDevice, int idxFrame, 
 	float RotationX, float RotationY, float RotationZ, 
 	VxlCacheStruct& pReturnedCache, VxlCacheStruct& pReturnedShadow, 
-	VPLFile& Vpl)
+	const int nOffset, VPLFile& Vpl)
 {
 	if (!this->IsLoaded() || !pDevice)
 		return false;
@@ -657,7 +661,7 @@ bool VxlFile::MakeSingleFrameCaches(LPDIRECT3DDEVICE9 pDevice, int idxFrame,
 
 	//this->RemoveFromScene(Position);
 
-	D3DXMATRIX Matrix, Scale, RotateX, RotateY, RotateZ, Identity, NormalMatrix, Origin, TranslationCenter;
+	D3DXMATRIX Matrix, Scale, Offset, RotateX, RotateY, RotateZ, Identity, NormalMatrix, TranslationCenter;
 	//LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
 	com_ptr<IDirect3DTexture9> pTexture, pShadowT;
 	LPVOID pVertexData;
@@ -667,15 +671,17 @@ bool VxlFile::MakeSingleFrameCaches(LPDIRECT3DDEVICE9 pDevice, int idxFrame,
 	std::vector<D3DXVECTOR3> BufferedNormals;
 	Voxel Buffer;
 
+	D3DXMatrixRotationX(&RotateX, RotationX);
+	D3DXMatrixRotationY(&RotateY, RotationY);
+	D3DXMatrixRotationZ(&RotateZ, RotationZ);
+	D3DXMatrixTranslation(&Offset, nOffset * 30.0 * 1.4142135623730950488017 / 256.0, 0.0, 0.0); // nOffset*30*sqrt(2)/256
+
 	auto& Scene = SceneClass::Instance;
 
 	for (int i = 0; i < this->FileHeader.nNumberOfLimbs; i++)
 	{
 		auto& TailerInfo = this->LimbTailers[i];
-
-		D3DXMatrixRotationX(&RotateX, RotationX);
-		D3DXMatrixRotationY(&RotateY, RotationY);
-		D3DXMatrixRotationZ(&RotateZ, RotationZ);
+		
 		D3DXMatrixIdentity(&Identity);
 
 		auto MinBounds = TailerInfo.MinBounds;
@@ -685,11 +691,12 @@ bool VxlFile::MakeSingleFrameCaches(LPDIRECT3DDEVICE9 pDevice, int idxFrame,
 		scales.x = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
 		scales.y = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
 		scales.z = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
+		D3DXMatrixScaling(&Scale, scales.x, scales.y, scales.z);
 
 		//Origin is multiplied before Hva
 		TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
 		Matrix = this->AssociatedHVA.GetTransformMatrix(idxFrame, i)->AsIntegrateMatrix(scales, TailerInfo.fScale);
-		Matrix = Identity * TranslationCenter * Matrix * RotateX * RotateY * RotateZ;
+		Matrix = Identity * TranslationCenter * Scale * Matrix * Offset * RotateX * RotateY * RotateZ;
 		NormalMatrix = Matrix;
 
 		NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
@@ -839,7 +846,7 @@ bool VxlFile::MakeSingleFrameCaches(LPDIRECT3DDEVICE9 pDevice, int idxFrame,
 void VxlFile::MakeFrameScreenShot(
 	LPDIRECT3DDEVICE9 pDevice, const char* pDestFile, const char* pShadow, int idxFrame, 
 	float RotationX, float RotationY, float RotationZ, int nPaletteID, DWORD dwRemapColor,
-	VPLFile & Vpl
+	const int nOffset, VPLFile & Vpl
 )
 {
 	if (!this->IsLoaded() || !pDevice)
@@ -850,7 +857,7 @@ void VxlFile::MakeFrameScreenShot(
 
 	//this->RemoveFromScene(Position);
 
-	D3DXMATRIX Matrix, Scale, RotateX, RotateY, RotateZ, Identity, NormalMatrix, Origin, TranslationCenter;
+	D3DXMATRIX Matrix, Scale, Offset, RotateX, RotateY, RotateZ, Identity, NormalMatrix, TranslationCenter;
 	//LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
 	LPDIRECT3DTEXTURE9 pTexture;
 	LPVOID pVertexData;
@@ -860,6 +867,11 @@ void VxlFile::MakeFrameScreenShot(
 	std::vector<D3DXVECTOR3> BufferedNormals;
 	Voxel Buffer;
 	Palette Entries;
+
+	D3DXMatrixRotationX(&RotateX, RotationX);
+	D3DXMatrixRotationY(&RotateY, RotationY);
+	D3DXMatrixRotationZ(&RotateZ, RotationZ);
+	D3DXMatrixTranslation(&Offset, nOffset * 30.0 * 1.4142135623730950488017 / 256.0, 0.0, 0.0); // nOffset*30*sqrt(2)/256
 
 	if (auto palette = Palette::FindPaletteByID(nPaletteID)) {
 		Entries = *palette;
@@ -874,9 +886,6 @@ void VxlFile::MakeFrameScreenShot(
 	{
 		auto&TailerInfo = this->LimbTailers[i];
 
-		D3DXMatrixRotationX(&RotateX, RotationX);
-		D3DXMatrixRotationY(&RotateY, RotationY);
-		D3DXMatrixRotationZ(&RotateZ, RotationZ);
 		D3DXMatrixIdentity(&Identity);
 
 		auto MinBounds = TailerInfo.MinBounds;
@@ -886,11 +895,11 @@ void VxlFile::MakeFrameScreenShot(
 		scales.x = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
 		scales.y = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
 		scales.z = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
+		D3DXMatrixScaling(&Scale, scales.x, scales.y, scales.z);
 
-		//Origin is multiplied before Hva
 		TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
 		Matrix = this->AssociatedHVA.GetTransformMatrix(idxFrame, i)->AsIntegrateMatrix(scales, TailerInfo.fScale);
-		Matrix = Identity * TranslationCenter * Matrix * RotateX * RotateY * RotateZ;
+		Matrix = Identity * TranslationCenter * Scale * Matrix * Offset * RotateX * RotateY * RotateZ;
 		NormalMatrix = Matrix;
 
 		NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
@@ -1072,7 +1081,7 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, V
 
 	//this->RemoveFromScene(Position);
 
-	D3DXMATRIX Matrix, Offset, Scale, RotateX, RotateY, RotateZ, Identity, NormalMatrix, Origin, TranslationCenter;
+	D3DXMATRIX Matrix, Offset, Scale, RotateX, RotateY, RotateZ, Identity, NormalMatrix, TranslationCenter;
 	//LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
 	LPDIRECT3DTEXTURE9 pTexture;
 	LPVOID pVertexData;
@@ -1082,6 +1091,12 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, V
 	std::vector<D3DXVECTOR3> BufferedNormals;
 	Voxel Buffer;
 	Palette Entries;
+
+	D3DXMatrixRotationX(&RotateX, RotationX);
+	D3DXMatrixRotationY(&RotateY, RotationY);
+	D3DXMatrixRotationZ(&RotateZ, RotationZ);
+	D3DXMatrixTranslation(&Offset, TurretOff * 30.0 * 1.4142135623730950488017 / 256.0, 0.0, 0.0); // nOffset*30*sqrt(2)/256
+
 
 	if (auto palette = Palette::FindPaletteByID(nPaletteID)) {
 		Entries = *palette;
@@ -1094,26 +1109,22 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, V
 
 	for (int i = 0; i < this->FileHeader.nNumberOfLimbs; i++)
 	{
-		auto&TailerInfo = this->LimbTailers[i];
-
-		D3DXMatrixTranslation(&Offset, TurretOff*30.0*sqrt(2.0) / 256.0, 0.0, 0.0);
-		D3DXMatrixRotationX(&RotateX, RotationX);
-		D3DXMatrixRotationY(&RotateY, RotationY);
-		D3DXMatrixRotationZ(&RotateZ, RotationZ);
-		D3DXMatrixIdentity(&Identity);
+		auto& TailerInfo = this->LimbTailers[i];
 
 		auto MinBounds = TailerInfo.MinBounds;
 		auto MaxBounds = TailerInfo.MaxBounds;
+
+		D3DXMatrixIdentity(&Identity);
 
 		D3DXVECTOR3 scales;
 		scales.x = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
 		scales.y = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
 		scales.z = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
+		D3DXMatrixScaling(&Scale, scales.x, scales.y, scales.z);
 
-		//Origin is multiplied before Hva
 		TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
 		Matrix = this->AssociatedHVA.GetTransformMatrix(idxFrame, i)->AsIntegrateMatrix(scales, TailerInfo.fScale);
-		Matrix = Identity * TranslationCenter * Matrix * Offset * RotateX * RotateY * RotateZ;
+		Matrix = Identity * TranslationCenter * Scale * Matrix * Offset * RotateX * RotateY * RotateZ;
 		NormalMatrix = Matrix;
 
 		NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
@@ -1176,10 +1187,6 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, V
 		{
 			auto&TailerInfo = Barl->LimbTailers[i];
 
-			D3DXMatrixTranslation(&Offset, TurretOff*30.0*sqrt(2.0) / 256.0, 0.0, 0.0);
-			D3DXMatrixRotationX(&RotateX, RotationX);
-			D3DXMatrixRotationY(&RotateY, RotationY);
-			D3DXMatrixRotationZ(&RotateZ, RotationZ);
 			D3DXMatrixIdentity(&Identity);
 
 			auto MinBounds = TailerInfo.MinBounds;
@@ -1189,11 +1196,11 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, V
 			scales.x = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
 			scales.y = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
 			scales.z = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
+			D3DXMatrixScaling(&Scale, scales.x, scales.y, scales.z);
 
-			//Origin is multiplied before Hva
 			TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
 			Matrix = Barl->AssociatedHVA.GetTransformMatrix(0, i)->AsIntegrateMatrix(scales, TailerInfo.fScale);
-			Matrix = Identity * TranslationCenter * Matrix * Offset * RotateX * RotateY * RotateZ;
+			Matrix = Identity * TranslationCenter * Scale * Matrix * Offset * RotateX * RotateY * RotateZ;
 			NormalMatrix = Matrix;
 
 			NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
@@ -1254,12 +1261,8 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, V
 	{
 		for (int i = 0; i < Body->FileHeader.nNumberOfLimbs; i++)
 		{
-			auto&TailerInfo = Body->LimbTailers[i];
+			auto& TailerInfo = Body->LimbTailers[i];
 
-			D3DXMatrixTranslation(&Offset, TurretOff*30.0*sqrt(2.0) / 256.0, 0.0, 0.0);
-			D3DXMatrixRotationX(&RotateX, RotationX);
-			D3DXMatrixRotationY(&RotateY, RotationY);
-			D3DXMatrixRotationZ(&RotateZ, RotationZ);
 			D3DXMatrixIdentity(&Identity);
 
 			auto MinBounds = TailerInfo.MinBounds;
@@ -1269,11 +1272,11 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, V
 			scales.x = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
 			scales.y = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
 			scales.z = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
+			D3DXMatrixScaling(&Scale, scales.x, scales.y, scales.z);
 
-			//Origin is multiplied before Hva
 			TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
 			Matrix = Body->AssociatedHVA.GetTransformMatrix(0, i)->AsIntegrateMatrix(scales, TailerInfo.fScale);
-			Matrix = Identity*TranslationCenter*Matrix*Offset*RotateX*RotateY*RotateZ;
+			Matrix = Identity * TranslationCenter * Scale * Matrix * Offset * RotateX * RotateY * RotateZ;
 			NormalMatrix = Matrix;
 
 			NormalMatrix.m[3][0] = NormalMatrix.m[3][1] = NormalMatrix.m[3][2] = 0.0;
@@ -1471,7 +1474,7 @@ bool VxlFile::MakeAllCache(LPDIRECT3DDEVICE9 pDevice, VPLFile& Vpl)
 	for (size_t i = 0; i < 32u; i++)
 	{
 		float RotationZ = (i / 32.0) * (2.0 * D3DX_PI);
-		Result &= MakeSingleFrameCaches(pDevice, idxFrame, 0.0, 0.0, RotationZ, pCache, pShadowCache, Vpl);
+		Result &= MakeSingleFrameCaches(pDevice, idxFrame, 0.0, 0.0, RotationZ, pCache, pShadowCache, 0, Vpl);
 
 		if (!Result)
 		{
