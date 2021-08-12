@@ -69,7 +69,6 @@ namespace RelertSharp.Wpf.MapEngine
                     else if (e.Key == Key.V && GuiUtil.IsControlDown())
                     {
                         MapClipboard.LoadToTileBrush();
-                        TileSelector.UnselectAll();
                         MouseState.SetState(PanelMouseState.TileSingleBrush);
                         affected = true;
                     }

@@ -28,24 +28,46 @@ namespace RelertSharp.Wpf
             else obj = view.ParentAncorable;
             manager.ActiveContent = obj;
         }
+        public static IRsView GetView(GuiViewType type)
+        {
+            FieldInfo[] fields = typeof(MainWindow).GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+            foreach (FieldInfo info in fields)
+            {
+                RsViewComponentAttribute attr = info.GetCustomAttribute<RsViewComponentAttribute>();
+                if (attr != null && attr.ViewType == type)
+                {
+                    IRsView control = info.GetValue(mwnd) as IRsView;
+                    return control;
+                }
+            }
+            return null;
+        }
         public static void ShowView(IRsView src)
         {
             if (src.ParentAncorable != null)
             {
+                bool loaded = false;
                 foreach (LayoutAnchorable anc in manager.Layout.Hidden)
                 {
                     if (anc.ContentId == src.ViewType.ToString())
                     {
                         manager.Layout.Hidden.Remove(anc);
                         LoadTargetTool(src.ViewType);
+                        loaded = true;
                         break;
                     }
                 }
+                if (!loaded) LoadTargetTool(src.ViewType);
             }
             if (src.ParentDocument != null && !manager.HasDocumentWithContentId(src.ViewType.ToString()))
             {
                 manager.AddCenterPage(RsViewComponentAttribute.GetViewTitle(src), src);
             }
+        }
+        public static void ShowView(GuiViewType type)
+        {
+            IRsView view = GetView(type);
+            ShowView(view);
         }
         #endregion
 

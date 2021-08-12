@@ -254,7 +254,7 @@ namespace RelertSharp.Common
         }
         public static class DrawingEngine
         {
-            public const int MapMaxHeight = 13;
+            public const int MapMaxHeight = 14;
             public const int MapMaxHeightDrawing = 17;
             public const int WaypointHeightMultiplier = 150;
             public const int CelltagHeightMultiplier = 99;

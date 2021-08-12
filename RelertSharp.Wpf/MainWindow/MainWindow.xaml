@@ -8,6 +8,7 @@
         xmlns:Views="clr-namespace:RelertSharp.Wpf.Views" x:Class="RelertSharp.Wpf.MainWindow"
         xmlns:mn="clr-namespace:RelertSharp.Wpf.Common.Commands"
         xmlns:vm="clr-namespace:RelertSharp.Wpf.ViewModel"
+        xmlns:ex="clr-namespace:RelertSharp.Wpf.Common.CustomProperties"
         mc:Ignorable="d"
     Title="Relert Sharp" Height="450" Width="800" Background="{DynamicResource dimBack}" 
     Loaded="WindowLoadedInitializer" Closed="MainWindowClosed" Icon="{StaticResource Logo}">
@@ -65,45 +66,45 @@
             </MenuItem>
             <MenuItem Header="Views">
                 <MenuItem Header="Logics">
-                    <MenuItem Header="Trigger View" Click="MenuShowTrigger"/>
-                    <MenuItem Header="Trigger Event" Click="MenuShowEvent"/>
-                    <MenuItem Header="Trigger Action" Click="MenuShowAction"/>
-                    <MenuItem Header="Trigger List" Click="MenupenTriggerList"/>
-                    <MenuItem Header="Team View" Click="MenuShowTeam"/>
-                    <MenuItem Header="Team List" Click="MenuShowTeamList"/>
-                    <MenuItem Header="Taskforce View" Click="MenuShowTaskforce"/>
-                    <MenuItem Header="Taskforce List" Click="MenuShowTaskforceList"/>
-                    <MenuItem Header="Script View" Click="MenuShowScript"/>
-                    <MenuItem Header="Script List" Click="MenuShowScriptList"/>
-                    <MenuItem Header="Houses" Click="MenuShowHouses"/>
+                    <MenuItem Header="Trigger View" ex:Ex.RsView="Trigger"/>
+                    <MenuItem Header="Trigger Event" ex:Ex.RsView="Event"/>
+                    <MenuItem Header="Trigger Action" ex:Ex.RsView="Action"/>
+                    <MenuItem Header="Trigger List" ex:Ex.RsView="TriggerList"/>
                     <Separator/>
-                    <MenuItem Header="Ai-Trigger View" Click="MenuShowAiTrigger"/>
-                    <MenuItem Header="Ai-Trigger List" Click="MenuShowAiTriggerList"/>
-                    <MenuItem Header="Local Variables" Click="MenuShowLocalVar"/>
+                    <MenuItem Header="Team View" ex:Ex.RsView="Team"/>
+                    <MenuItem Header="Team List" ex:Ex.RsView="TeamList"/>
+                    <MenuItem Header="Taskforce View" ex:Ex.RsView="Taskforce"/>
+                    <MenuItem Header="Taskforce List" ex:Ex.RsView="TaskforceList"/>
+                    <MenuItem Header="Script View" ex:Ex.RsView="Script"/>
+                    <MenuItem Header="Script List" ex:Ex.RsView="ScriptList"/>
+                    <Separator/>
+                    <MenuItem Header="Houses" ex:Ex.RsView="HousePanel"/>
+                    <MenuItem Header="Local Variables" ex:Ex.RsView="LocalVarPanel"/>
+                    <MenuItem Header="Global Lightning" ex:Ex.RsView="LightningPanel"/>
+                    <Separator/>
+                    <MenuItem Header="Ai-Trigger View" ex:Ex.RsView="AiTrigger"/>
+                    <MenuItem Header="Ai-Trigger List" ex:Ex.RsView="AiTriggerList"/>
                 </MenuItem>
                 <MenuItem Header="Map and Objects">
-                    <MenuItem Header="Map" Click="MenuShowMapPanel"/>
-                    <MenuItem Header="Minimap" Click="MenuShowMinimap"/>
+                    <MenuItem Header="Map" ex:Ex.RsView="MainPanel"/>
+                    <MenuItem Header="Minimap" ex:Ex.RsView="Minimap"/>
                     <Separator/>
-                    <MenuItem Header="Object Brush" Click="MenuShowObjectBrush"/>
-                    <MenuItem Header="Tile Brush" Click="MenuShowTileBrush"/>
-                    <MenuItem Header="Format Painter" Click="MenuShowFmtBrush"/>
+                    <MenuItem Header="Object Brush" ex:Ex.RsView="ObjctPanel"/>
+                    <MenuItem Header="Tile Brush" ex:Ex.RsView="TilePanel"/>
                     <Separator/>
-                    <MenuItem Header="Layer Control" Click="MenuShowLayerControl"/>
-                    <Separator/>
-                    <MenuItem Header="Global Lightning" Click="MenuShowLightning"/>
-                    <MenuItem Header="Light Sources" Click="MenuShowLightSource"/>
+                    <MenuItem Header="Inspector" ex:Ex.RsView="InspectorPanel"/>
+                    <MenuItem Header="Layer Control" ex:Ex.RsView="LayerControl"/>
                 </MenuItem>
                 <MenuItem Header="Tools">
-                    <MenuItem Header="Animation Preview" Click="MenuShowAnimPreview"/>
-                    <MenuItem Header="Statistics" Click="MenuShowStatistics"/>
+                    <MenuItem Header="Animation Preview" ex:Ex.RsView="AnimationPreview"/>
+                    <MenuItem Header="Global Search" ex:Ex.RsView="GlobalSearch"/>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Layout">
-                <MenuItem Header="Load Layout" Click="MenuLoadLayout"/>
-                <MenuItem Header="Save Layout" Click="MenuSaveLayout"/>
+                <MenuItem Header="Load Layout"/>
+                <MenuItem Header="Save Layout"/>
                 <Separator/>
-                <MenuItem Header="Default Layout" Click="MenuDefaultLayout"/>
+                <MenuItem Header="Default Layout"/>
             </MenuItem>
             <MenuItem Header="Debug">
                 <MenuItem Header="Debug Button" Click="DebugClick"/>

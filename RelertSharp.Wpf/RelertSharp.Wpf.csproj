@@ -82,7 +82,8 @@
   <ItemGroup>
     <Compile Include="Common\BrushConfig.cs" />
     <Compile Include="Common\Commands\ListViewColumnSortCommand.cs" />
-    <Compile Include="Common\Commands\MenuItemGroup.cs" />
+    <Compile Include="Common\CustomProperties\MenuItemGroup.cs" />
+    <Compile Include="Common\CustomProperties\RsViewProperty.cs" />
     <Compile Include="Common\DelayedAction.cs" />
     <Compile Include="Common\Delegates.cs" />
     <Compile Include="Common\DragDropHelper.cs" />

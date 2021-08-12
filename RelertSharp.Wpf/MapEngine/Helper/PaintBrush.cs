@@ -23,6 +23,19 @@ namespace RelertSharp.Wpf
         private static IMapObject currentObject;
         private static bool isSuspended;
         #endregion
+
+
+        static PaintBrush()
+        {
+            MouseState.MouseStateChanged += HandleStateChanged;
+        }
+
+        private static void HandleStateChanged()
+        {
+            if (MouseState.PrevState == PanelMouseState.ObjectBrush) SuspendBrush();
+        }
+
+
         #region Api
         public static void SetConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter)
         {

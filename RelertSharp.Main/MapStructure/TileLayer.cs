@@ -400,22 +400,18 @@ namespace RelertSharp.MapStructure
                 obj.MoveTo(new Pnt3(pos, height));
             }
         }
-        private void MoveTileTo(I2dLocateable cell, int height, bool isFlatMode = false)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <param name="height"></param>
+        /// <param name="isFlatMode">used by flat mode toggle</param>
+        private void MoveTileTo(I2dLocateable cell, int height)
         {
             SceneObject.MoveTo(new Pnt3(cell, height));
             X = cell.X;
             Y = cell.Y;
-            if (height != Height && !isFlatMode)
-            {
-                Height = (byte)height;
-                if (IsHyte)
-                {
-                    SceneObject.Dispose();
-                    SceneObject.RedrawTile(this);
-                    //Engine.DrawGeneralItem(this);
-                }
-                if (isFramework) SwitchToFramework(true);
-            }
+            SetHeightTo(height);
             if (isSelected)
             {
                 if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
@@ -457,12 +453,12 @@ namespace RelertSharp.MapStructure
             if (color != Vec4.Zero) SceneObject.SetColor(color);
             if (isFlat)
             {
-                isFlat = false;
+                FlatToGround(false);
                 FlatToGround(true);
             }
             if (isFramework)
             {
-                isFramework = false;
+                SwitchToFramework(false);
                 SwitchToFramework(true);
             }
             if (isSelected)
@@ -470,28 +466,66 @@ namespace RelertSharp.MapStructure
                 base.Select(true);
             }
         }
-        public void SetHeightTo(int height)
+        public void SetHeightTo(int height, bool isFlatMode = false)
         {
-            if (height >= 0 && height < Constant.DrawingEngine.MapMaxHeight)
+            if (height >= 0 && height <= Constant.DrawingEngine.MapMaxHeight)
             {
-                MoveTileTo(this, height);
-                MoveTileObjectsTo(this, height);
+                if (isFlatMode)
+                {
+                    if (isFlat)
+                    {
+                        originalHeight = Height;
+                        Height = (byte)height;
+                    }
+                    else
+                    {
+                        Height = (byte)originalHeight;
+                        originalHeight = 0;
+                    }
+                    SceneObject?.MoveTo(new Pnt3(this, Height));
+                }
+                else
+                {
+                    if (isFlat)
+                    {
+                        originalHeight = height;
+                        SceneObject?.MoveTo(new Pnt3(this, 0));
+                    }
+                    else
+                    {
+                        bool changed = height != Height;
+                        Height = (byte)height;
+                        if (changed)
+                        {
+                            if (IsHyte)
+                            {
+                                SceneObject?.Dispose();
+                                SceneObject?.RedrawTile(this);
+                                if (isFramework) SwitchToFramework(true);
+                            }
+                            else
+                            {
+                                SceneObject?.MoveTo(new Pnt3(this, Height));
+                            }
+                        }
+                    }
+                }
             }
         }
         public void Rise()
         {
-            if (Height < Constant.DrawingEngine.MapMaxHeight)
+            if (Height <= Constant.DrawingEngine.MapMaxHeight)
             {
-                MoveTileTo(this, Height + 1);
-                MoveTileObjectsTo(this, Height);
+                SetHeightTo(RealHeight + 1);
+                if (!isFlat) MoveTileObjectsTo(this, Height);
             }
         }
         public void Sink()
         {
-            if (Height > 0)
+            if (RealHeight > 0)
             {
-                MoveTileTo(this, Height - 1);
-                MoveTileObjectsTo(this, Height);
+                SetHeightTo(RealHeight - 1);
+                if (!isFlat) MoveTileObjectsTo(this, Height);
             }
         }
         public void Mark(bool marked)
@@ -528,63 +562,31 @@ namespace RelertSharp.MapStructure
         {
             if (enable && !isFlat)
             {
-                originalHeight = Height;
+                isFlat = true;
                 I3dLocateable pos = new Pnt3(this, 0);
                 MoveTileObjectsTo(this, 0);
-                MoveTileTo(this, 0, true);
-                Height = 0;
+                SetHeightTo(0, true);
                 HideExtraImg();
-                isFlat = true;
             }
             else if (!enable && isFlat)
             {
                 I3dLocateable pos = new Pnt3(this, originalHeight);
                 MoveTileObjectsTo(this, originalHeight);
-                MoveTileTo(this, originalHeight, true);
-                Height = (byte)originalHeight;
+                SetHeightTo(originalHeight, true);
                 RevealExtraImg();
                 isFlat = false;
             }
         }
-        public void MoveObjectsToNewTile(Tile newtile)
-        {
-            foreach (IMapObject obj in objectsOnTile)
-            {
-                if (obj is StructureItem bud)
-                {
-                    if (obj.Coord == newtile.Coord) obj.MoveTo(newtile);
-                }
-                else if (obj is SmudgeItem smg)
-                {
-                    if (obj.Coord == newtile.Coord) obj.MoveTo(newtile);
-                }
-                else obj.MoveTo(newtile);
-                newtile.AddObject(obj);
-            }
-        }
-        public void MoveTo(I3dLocateable pos, bool flatEnable)
-        {
-            X = pos.X;
-            Y = pos.Y;
-            originalHeight = pos.Z;
-            if (flatEnable)
-            {
-                MoveTileTo(pos, 0, true);
-                MoveTileObjectsTo(pos, 0);
-            }
-            else
-            {
-                SetHeightTo(pos.Z);
-            }
-        }
         /// <summary>
-        /// do nothing for tile
+        /// 
         /// </summary>
         /// <param name="pos"></param>
         /// <param name="subcell"></param>
         public override void MoveTo(I3dLocateable pos, int subcell = -1)
         {
-            
+            X = pos.X;
+            Y = pos.Y;
+            MoveTileTo(pos, pos.Z);
         }
         /// <summary>
         /// do nothing for tile

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace RelertSharp.Wpf.Common.Commands
+namespace RelertSharp.Wpf.Common.CustomProperties
 {
     public class MenuItemGroup : DependencyObject
     {

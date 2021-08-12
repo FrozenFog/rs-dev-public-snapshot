@@ -29,6 +29,20 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         {
             prevPos = new Pnt3(INIT_X, INIT_Y, 0);
             offset = new Pnt3();
+            MouseState.MouseStateChanged += HandleStateChanged;
+        }
+
+        private static void HandleStateChanged()
+        {
+            if (isClipboard && MouseState.State == PanelMouseState.TileBucketFlood)
+            {
+                foreach (Tile t in body) t.Hide();
+                foreach (Tile t in under) t.Reveal();
+            }
+            else if (MouseState.PrevState == PanelMouseState.TileSingleBrush)
+            {
+                SuspendBrush();
+            }
         }
 
 
@@ -138,9 +152,9 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 /// otherwise reveal and move
                 if (Tiles[tileDest] is Tile)
                 {
-                    body[i].MoveTo(tileDest, isFlat);
-                    body[i].Reveal();
+                    body[i].MoveTo(tileDest);
                     body[i].FlatToGround(isFlat);
+                    body[i].Reveal();
                 }
                 else
                 {
@@ -247,7 +261,19 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         public static void BucketTileAt(I2dLocateable center, IEnumerable<Predicate<Tile>> predicates = null)
         {
             var tiles = GlobalVar.GlobalMap.TilesData;
-            if (currentSet != null && tiles[center] is Tile seed)
+            bool canBucket = isClipboard || currentSet != null;
+            double brushWidth = 0, brushHeight = 0;
+            if (isClipboard)
+            {
+                brushWidth = body.Max(x => x.X) - body.Min(x => x.X) + 1;
+                brushHeight = body.Max(x => x.Y) - body.Min(x => x.Y) + 1;
+            }
+            else if (currentSet != null)
+            {
+                brushWidth = currentSet.SetWidth;
+                brushHeight = currentSet.SetHeight;
+            }
+            if (canBucket && tiles[center] is Tile seed)
             {
                 affectedTile.Clear();
                 EngineApi.InvokeLock();
@@ -266,23 +292,43 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 int xMin = targets.Min(x => x.X), yMin = targets.Min(x => x.Y);
                 int dx = xMax - xMin;
                 int dy = yMax - yMin;
-                int xNum = RsMath.Ceil(dx / (double)currentSet.SetWidth), yNum = RsMath.Ceil(dy / (double)currentSet.SetHeight);
+                if (brushHeight == 0 || brushWidth == 0) goto end;
+                int xNum = RsMath.Ceil(dx / brushWidth), yNum = RsMath.Ceil(dy / brushHeight);
 
                 // begin position: xMin, yMin
-                for (int y = yMin; y <= yMax; y += currentSet.SetHeight)
+                for (int y = yMin; y <= yMax; y += (int)brushHeight)
                 {
-                    for (int x = xMin; x <= xMax; x += currentSet.SetWidth)
+                    for (int x = xMin; x <= xMax; x += (int)brushWidth)
                     {
-                        foreach (var subtile in currentSet.SubTiles)
+                        if (isClipboard)
                         {
-                            int targetX = x + subtile.Dx;
-                            int targetY = y + subtile.Dy;
-                            if (tiles[targetX, targetY] is Tile target && target.IsSelected)
+                            for (int i = 0; i < body.Count; i++)
                             {
-                                affectedTile.Add(new Tile(target));
-                                Tile t = new Tile(currentSet.TileIndex, subtile.SubIndex, targetX, targetY, target.RealHeight + subtile.Dz);
-                                t.FlatToGround(isFlat);
-                                MapApi.SetTile(t);
+                                int targetX = x + tileSetOffset[i].X;
+                                int targetY = y + tileSetOffset[i].Y;
+                                if (tiles[targetX, targetY] is Tile target && target.IsSelected)
+                                {
+                                    affectedTile.Add(new Tile(target));
+                                    Tile src = body[i];
+                                    Tile t = new Tile(src.TileIndex, src.SubIndex, targetX, targetY, target.RealHeight);
+                                    t.FlatToGround(isFlat);
+                                    MapApi.SetTile(t);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var subtile in currentSet.SubTiles)
+                            {
+                                int targetX = x + subtile.Dx;
+                                int targetY = y + subtile.Dy;
+                                if (tiles[targetX, targetY] is Tile target && target.IsSelected)
+                                {
+                                    affectedTile.Add(new Tile(target));
+                                    Tile t = new Tile(currentSet.TileIndex, subtile.SubIndex, targetX, targetY, target.RealHeight + subtile.Dz);
+                                    t.FlatToGround(isFlat);
+                                    MapApi.SetTile(t);
+                                }
                             }
                         }
                     }

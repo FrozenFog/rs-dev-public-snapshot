@@ -28,14 +28,14 @@ namespace RelertSharp.Wpf.MapEngine.Helper
     {
         public static event Action MouseStateChanged;
         public static PanelMouseState State { get; private set; } = PanelMouseState.None;
+        public static PanelMouseState PrevState { get; private set; } = PanelMouseState.None;
         public static void SetState(PanelMouseState state)
         {
             if (State != state)
             {
-                if (State == PanelMouseState.TileSingleBrush) TilePaintBrush.SuspendBrush();
-                else if (State == PanelMouseState.ObjectBrush) PaintBrush.SuspendBrush();
                 State = state;
                 MouseStateChanged?.Invoke();
+                PrevState = state;
             }
         }
         public static bool IsState(PanelMouseState state)

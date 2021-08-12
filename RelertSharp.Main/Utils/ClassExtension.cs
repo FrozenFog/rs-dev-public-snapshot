@@ -1,5 +1,6 @@
 ﻿using RelertSharp.Common;
 using System.Linq;
+using System.Text;
 
 namespace System.Drawing
 {
@@ -87,15 +88,16 @@ namespace System.Collections.Generic
         }
         public static string JoinBy<T>(this IEnumerable<T> src, string joint = ",")
         {
-            string result = "";
+            StringBuilder sb = new StringBuilder();
             bool empty = true;
             foreach (T item in src)
             {
                 empty = false;
-                result += item.ToString() + joint;
+                sb.Append(item.ToString());
+                sb.Append(joint);
             }
-            if (!empty) result = result.Substring(0, result.Length - joint.Length);
-            return result;
+            if (!empty) sb.Remove(sb.Length - 1, 1);
+            return sb.ToString();
         }
         public static IIndexableItem ValueEqual(this IEnumerable<IIndexableItem> src, string target)
         {
