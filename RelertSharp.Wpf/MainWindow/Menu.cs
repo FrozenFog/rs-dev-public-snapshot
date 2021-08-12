@@ -46,7 +46,7 @@ namespace RelertSharp.Wpf
 
         private void DebugClick2(object sender, RoutedEventArgs e)
         {
-            MouseState.SetState(PanelMouseState.TileLineSelecting);
+
         }
         #endregion
 

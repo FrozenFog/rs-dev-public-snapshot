@@ -39,6 +39,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 foreach (Tile t in body) t.Hide();
                 foreach (Tile t in under) t.Reveal();
             }
+            else if (isClipboard && MouseState.State == PanelMouseState.None) SuspendBrush();
             else if (MouseState.PrevState == PanelMouseState.TileSingleBrush)
             {
                 SuspendBrush();

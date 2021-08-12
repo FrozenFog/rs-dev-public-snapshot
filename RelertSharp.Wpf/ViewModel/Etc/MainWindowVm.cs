@@ -259,6 +259,16 @@ namespace RelertSharp.Wpf.ViewModel
             get { return MouseState.IsState(PanelMouseState.TileBrush); }
         }
         [AutoUpdate(GROUP_MOUSE)]
+        public bool IsSingleTileSelecting
+        {
+            get { return MouseState.State == PanelMouseState.TileSingleSelecting; }
+            set
+            {
+                MouseState.SetState(PanelMouseState.TileSingleSelecting);
+                SetProperty();
+            }
+        }
+        [AutoUpdate(GROUP_MOUSE)]
         public bool IsBoxTileSelecting
         {
             get { return MouseState.State == PanelMouseState.TileBoxSelecting; }

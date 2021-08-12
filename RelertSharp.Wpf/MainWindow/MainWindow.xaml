@@ -134,6 +134,7 @@
                 <ToggleButton Content="{StaticResource SingleSink}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseSinkSingle}"/>
                 <ToggleButton Content="{StaticResource FlatRamp}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseFlatRamp}"/>
                 <Separator/>
+                <ToggleButton Content="{StaticResource TileSingleSelect}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsSingleTileSelecting}"/>
                 <ToggleButton Content="{StaticResource TileSelect}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsBoxTileSelecting}"/>
                 <ToggleButton Content="{StaticResource TileLine}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsLineTileSelecting}"/>
                 <ToggleButton Content="{StaticResource TileWand}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsBucketTileSelecting}"/>

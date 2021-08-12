@@ -675,6 +675,33 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
+    <Viewbox x:Key="TileSingleSelect" Width="16" Height="16">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M9.033,9.779L9.033,9.779 16,12.007 9.033,14.234 1.984,12.007z" />
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Miter" MiterLimit="10">
+                                            <Pen.DashStyle>
+                                                <DashStyle Offset="0" Dashes="1.9962 1.9962" />
+                                            </Pen.DashStyle>
+                                        </Pen>
+                                    </GeometryDrawing.Pen>
+                                    <GeometryDrawing.Geometry>
+                                        <EllipseGeometry RadiusX="3.5" RadiusY="3.5" Center="4.344,5.594" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
     <!--<Viewbox x:Key="None" Width="16" Height="16">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>

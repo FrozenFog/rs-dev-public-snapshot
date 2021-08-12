@@ -183,6 +183,13 @@ namespace RelertSharp.Wpf.MapEngine
                     }
                     EngineApi.InvokeRedraw();
                     break;
+                case PanelMouseState.TileSingleSelecting:
+                    if (TileSelector.IsSingleSelecting)
+                    {
+                        TileSelector.EndSingleSelect();
+                        EngineApi.InvokeRedraw();
+                    }
+                    break;
                 case PanelMouseState.TileFlatting:
                     if (TilePaintBrush.IsRampFlatOn)
                     {
@@ -222,6 +229,14 @@ namespace RelertSharp.Wpf.MapEngine
                         EngineApi.InvokeRedraw();
                     }
                     TileSelector.BeginSelecting(unscaled, graphicTop, cell);
+                    break;
+                case PanelMouseState.TileSingleSelecting:
+                    if (!GuiUtil.IsShiftDown() && !GuiUtil.IsAltDown())
+                    {
+                        TileSelector.UnselectAll();
+                        EngineApi.InvokeRedraw();
+                    }
+                    TileSelector.BeginSingleSelect(GuiUtil.IsAltDown());
                     break;
                 case PanelMouseState.TileFlatting:
                     TilePaintBrush.BeginRampFlat(cell.Z);
@@ -324,6 +339,12 @@ namespace RelertSharp.Wpf.MapEngine
             {
                 Selector.MoveSelectedObjectsTo(cell, subcell);
                 redraw = true;
+            }
+            if (TileSelector.IsSingleSelecting)
+            {
+                TileSelector.SingleSelectAt(cell);
+                redraw = true;
+                goto nop;
             }
             if (TileSelector.IsSelecting)
             {

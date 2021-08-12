@@ -27,6 +27,15 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         private static bool isIsometric = false;
         private static TileLayer Tiles { get { return GlobalVar.GlobalMap.TilesData; } }
 
+        static TileSelector()
+        {
+            MouseState.MouseStateChanged += HandleStateChanged;
+        }
+
+        private static void HandleStateChanged()
+        {
+            if (MouseState.PrevState == PanelMouseState.TileLineSelecting) controlNodes.Clear();
+        }
 
 
         #region Api
@@ -189,26 +198,6 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 OnSelectionChanged();
             }
         }
-        public static void SelectAt(I2dLocateable cell, bool reverseSelect)
-        {
-            var Map = GlobalVar.GlobalMap;
-            if (Map.TilesData[cell] is Tile t)
-            {
-                bool reverse = reverseSelect && selected.Contains(t);
-                bool select = !(reverseSelect || selected.Contains(t));
-                if (reverse)
-                {
-                    t.CancelSelection();
-                    selected.Remove(t);
-                }
-                if (select)
-                {
-                    t.Select();
-                    selected.Add(t);
-                }
-                OnSelectionChanged();
-            }
-        }
         public static void UpdateSelectingRectangle(Point newPos, I3dLocateable end)
         {
             if (dragingSelectBox)
@@ -254,6 +243,38 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                     rect.Height = Math.Abs(selectNew.Y - selectDown.Y);
                 }
             }
+        }
+        #endregion
+        #region SingleSelect
+        private static bool isSingleSelect, isReverseSingleSelect;
+        public static void BeginSingleSelect(bool reverseSelect)
+        {
+            isReverseSingleSelect = reverseSelect;
+            isSingleSelect = true;
+        }
+        public static void SingleSelectAt(I2dLocateable cell)
+        {
+            var Map = GlobalVar.GlobalMap;
+            if (Map.TilesData[cell] is Tile t)
+            {
+                bool reverse = isReverseSingleSelect && selected.Contains(t);
+                bool select = !(isReverseSingleSelect || selected.Contains(t));
+                if (reverse)
+                {
+                    t.CancelSelection();
+                    selected.Remove(t);
+                }
+                if (select)
+                {
+                    t.Select();
+                    selected.Add(t);
+                }
+                OnSelectionChanged();
+            }
+        }
+        public static void EndSingleSelect()
+        {
+            isSingleSelect = false;
         }
         #endregion
         public static void UnselectAll()
@@ -373,6 +394,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         public static bool IsHeightFilter { get { return filtHeight; } }
         public static bool IsIsoSeleect { get { return isIsometric; } }
         public static bool IsSelecting { get { return dragingSelectBox; } }
+        public static bool IsSingleSelecting { get { return isSingleSelect; } }
         #endregion
     }
 }
