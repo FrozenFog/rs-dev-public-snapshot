@@ -156,6 +156,7 @@
     <Compile Include="ViewModel\Logic\TriggerLogicVm.cs" />
     <Compile Include="ViewModel\Logic\TriggerTreeItemVm.cs" />
     <Compile Include="ViewModel\Logic\TriggerVm.cs" />
+    <Compile Include="ViewModel\Tile\TileVm.cs" />
     <Compile Include="Views\AiTriggerListView.xaml.cs">
       <DependentUpon>AiTriggerListView.xaml</DependentUpon>
     </Compile>

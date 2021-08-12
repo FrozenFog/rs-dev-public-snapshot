@@ -9,6 +9,51 @@ using static RelertSharp.Terraformer.RampBase;
 
 namespace RelertSharp.Terraformer
 {
+    public class HillGeneratorConfig
+    {
+        /// <summary>
+        /// The max Z height of the generated hill
+        /// </summary>
+        public int MaxHeight { get; set; }
+        /// <summary>
+        /// The min Z height of the generated hill
+        /// </summary>
+        public int BaseHeight { get; set; }
+        /// <summary>
+        /// Will hill generator generate canyon
+        /// currently useless
+        /// </summary>
+        public bool GenerateCanyon { get; set; }
+        /// <summary>
+        /// Ramp smooth iteration
+        /// default 2, more iteration may not help
+        /// </summary>
+        public int Iteration { get; set; } = 2;
+        /// <summary>
+        /// The X range of the generated hill
+        /// </summary>
+        public int HillWidth { get; set; }
+        /// <summary>
+        /// The Y range of the generated hill
+        /// </summary>
+        public int HillHeight { get; set; }
+        /// <summary>
+        /// Will treat all border(not included in area) tile as flat?
+        /// if use Rough/Smooth ramp in map, set to false
+        /// because Rough/Smooth ramp will use border tile as referance to fix ramp
+        /// </summary>
+        public bool RampFixBorderTreatAsFlat { get; set; }
+        /// <summary>
+        /// Will unsolved tile be risen?
+        /// set to false if used in Rough/Smooth ramp Api.
+        /// Default true
+        /// </summary>
+        public bool RiseUnsolvedTile { get; set; } = true;
+        /// <summary>
+        /// Will border(not included in area) be affected?
+        /// </summary>
+        public bool RampBorderUnaffect { get; set; }
+    }
     public static class HillGenerator
     {
         #region Components
@@ -62,19 +107,19 @@ namespace RelertSharp.Terraformer
         #region Api
         public static void RunTest()
         {
-            Algorithm.PerlinNoiseGeneratorConfig cfg = new Algorithm.PerlinNoiseGeneratorConfig()
-            {
-                Amplify = false,
-                Width = 300,
-                Height = 300,
-                Iteration = 5,
-                Scale = 50f,
-                SmoothIteration = 4,
-                Seed = 1234
-            };
-            double[] noise = Algorithm.PerlinNoiseGenerator.Generate2DNoise(cfg);
-            GenerateRandomHill(Map.TilesData, 300, 300, noise, 10, 0);
-            GlobalVar.CurrentMapDocument.SaveMapAs("D:\\", "111.map");
+            //Algorithm.PerlinNoiseGeneratorConfig cfg = new Algorithm.PerlinNoiseGeneratorConfig()
+            //{
+            //    Amplify = false,
+            //    Width = 300,
+            //    Height = 300,
+            //    Iteration = 5,
+            //    Scale = 50f,
+            //    SmoothIteration = 4,
+            //    Seed = 1234
+            //};
+            //double[] noise = Algorithm.PerlinNoiseGenerator.Generate2DNoise(cfg);
+            //GenerateRandomHill(Map.TilesData, 300, 300, noise, 10, 0);
+            //GlobalVar.CurrentMapDocument.SaveMapAs("D:\\", "111.map");
         }
         /// <summary>
         /// require normalized noise array
@@ -86,11 +131,11 @@ namespace RelertSharp.Terraformer
         /// <param name="maxTileHeight"></param>
         /// <param name="baseHeight"></param>
         /// <param name="canyon"></param>
-        public static void GenerateRandomHill(IEnumerable<Tile> targets, int width, int height, double[] randomNoise, int maxTileHeight, int baseHeight, bool canyon = false, int iteration = 2)
+        public static void GenerateRandomHill(IEnumerable<Tile> targets, double[] randomNoise, HillGeneratorConfig cfg)
         {
             double getHeight(I2dLocateable pos)
             {
-                return randomNoise[pos.Y * width + pos.X];
+                return randomNoise[pos.Y * cfg.HillWidth + pos.X];
             }
             /// centerHeight = normalizedDelta + referanceHeight
             int normalizeDelta(double centerNoise, byte referanceHeight)
@@ -102,7 +147,7 @@ namespace RelertSharp.Terraformer
             if (targets.Count() == 0) return;
             ReloadBaseData();
             // pre-process noise
-            ProcessNoise(ref randomNoise, width, height, maxTileHeight, baseHeight, !canyon);
+            ProcessNoise(ref randomNoise, cfg.HillWidth, cfg.HillHeight, cfg.MaxHeight, cfg.BaseHeight, !cfg.GenerateCanyon);
 
             // set height first, then deal with ramp slope
             void applyNoiseHeight()
@@ -133,9 +178,9 @@ namespace RelertSharp.Terraformer
 
             applyNoiseHeight();
             GlobalVar.CurrentMapDocument.SaveMapAs("D:\\", "org.map");
-            while (iteration-- > 0) SmoothRampIn(targets);
+            while (cfg.Iteration-- > 0) SmoothRampIn(targets, cfg);
         }
-        public static void RoughRampIn(IEnumerable<Tile> targets, int iteration = 2)
+        public static void RoughRampIn(IEnumerable<Tile> targets, HillGeneratorConfig cfg)
         {
             InitializeRampLookup();
             if (targets.Count() == 0) return;
@@ -216,9 +261,9 @@ namespace RelertSharp.Terraformer
                 //    centerData = Data[centerRamp];
                 //}
             }
-            if (iteration > 0) RoughRampIn(reRamp, iteration - 1);
+            if (cfg.Iteration-- > 0) RoughRampIn(reRamp, cfg);
         }
-        public static void SmoothRampIn(IEnumerable<Tile> targets, bool isBorderUnaffect = false, bool isBorderTreatAsFlat = false)
+        public static void SmoothRampIn(IEnumerable<Tile> targets, HillGeneratorConfig cfg)
         {
             InitializeRampLookup();
             ReloadBaseData();
@@ -233,17 +278,18 @@ namespace RelertSharp.Terraformer
                     bool skipCondition(Tile t)
                     {
                         if (ramped.Contains(t)) return true;
-                        if (isBorderUnaffect) return !targets.Contains(t);
+                        if (cfg.RampBorderUnaffect) return !targets.Contains(t);
                         return false;
                     }
                     void callback(Tile t)
                     {
                         ramped.Add(t);
                     }
+                    SmoothRampAt(center, skipCondition, callback, cfg.RampFixBorderTreatAsFlat, cfg.RiseUnsolvedTile);
                     MapApi.GetAdjacentTileAround(center, out Tile[] adjs, out WallDirection[] _);
-                    adjs.Foreach(x => SmoothRampAt(x, skipCondition, callback, isBorderTreatAsFlat));
+                    adjs.Foreach(x => SmoothRampAt(x, skipCondition, callback, cfg.RampFixBorderTreatAsFlat, cfg.RiseUnsolvedTile));
                     MapApi.GetDiagonalTileAround(center, out Tile[] diags, out WallDirection[] _);
-                    diags.Foreach(x => SmoothRampAt(x, skipCondition, callback, isBorderTreatAsFlat));
+                    diags.Foreach(x => SmoothRampAt(x, skipCondition, callback, cfg.RampFixBorderTreatAsFlat, cfg.RiseUnsolvedTile));
                 }
             }
         }
@@ -307,9 +353,12 @@ namespace RelertSharp.Terraformer
                 {
                     // higher flat ground
                     if (referance.RealHeight > center.RealHeight) bindCondition = true;
-                    if (borderFlat) bindCondition = true;
                 }
-                else bindCondition = true;
+                else
+                {
+                    if (referance.RealHeight < center.RealHeight) bindCondition = false;
+                    else bindCondition = true;
+                }
 
                 // if bind, this side will strictly use referance ramp as lookup condition
                 if (bindCondition)
@@ -383,12 +432,13 @@ namespace RelertSharp.Terraformer
         private static RampData GetRampData(Tile src)
         {
             if (IsNotRamp(src)) return RampData.FlatRamp;
-            int offset = src.TileIndex - rampBaseIndex;
+            int offset = src.RampType - 1;
+            //int offset = src.TileIndex - rampBaseIndex;
             return Data[offset];
         }
         private static bool IsNotRamp(Tile src)
         {
-            return src.TileIndex < rampBaseIndex || src.TileIndex >= rampBaseIndex + 20;
+            return !src.IsRamp;
         }
         private static RampData GetFirstValidRamp(RampSideSection ul, RampSideSection ur, RampSideSection dr, RampSideSection dl, out bool solutionFailed)
         {
@@ -402,7 +452,11 @@ namespace RelertSharp.Terraformer
                     (dr.IsNoBindFlat || (x.Sections[2] == dr)) &&
                     (dl.IsNoBindFlat || (x.Sections[3] == dl));
             });
-            if (results.Any()) return results.First();
+            if (results.Any())
+            {
+                int minumunHeight = results.Min(x => x.Sections.Sum(sec => sec.Height));
+                return results.Where(x => x.Sections.Sum(sec => sec.Height) == minumunHeight).First();
+            }
             solutionFailed = true;
             return RampData.FlatRamp;
         }

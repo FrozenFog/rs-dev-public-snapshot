@@ -50,9 +50,22 @@
                 </ListView>
             </TabItem>
             <TabItem Header="Tiles">
-                <ListView x:Name="lvTiles" Style="{DynamicResource lvDark}">
+                <ListView x:Name="lvTiles" Style="{DynamicResource lvDark}" ItemContainerStyle="{StaticResource item}"
+                          cmds:ListViewColumnSortCommand.AutoSort="True">
                     <ListView.View>
-                        <GridView/>
+                        <GridView>
+                            <GridViewColumn Header="Tile index" DisplayMemberBinding="{Binding TileIndex}" cmds:ListViewColumnSortCommand.PropertyName="TileIndex"/>
+                            <GridViewColumn Header="Subindex" DisplayMemberBinding="{Binding SubIndex}" cmds:ListViewColumnSortCommand.PropertyName="SubIndex"/>
+                            <GridViewColumn Header="File name" DisplayMemberBinding="{Binding FileName}" cmds:ListViewColumnSortCommand.PropertyName="FileName"/>
+                            <GridViewColumn Header="Tileset name" DisplayMemberBinding="{Binding SetName}" cmds:ListViewColumnSortCommand.PropertyName="SetName"/>
+                            <GridViewColumn Header="Position.X" DisplayMemberBinding="{Binding X}" cmds:ListViewColumnSortCommand.PropertyName="X"/>
+                            <GridViewColumn Header="Position.Y" DisplayMemberBinding="{Binding Y}" cmds:ListViewColumnSortCommand.PropertyName="Y"/>
+                            <GridViewColumn Header="Height" DisplayMemberBinding="{Binding Height}" cmds:ListViewColumnSortCommand.PropertyName="Height"/>
+                            <GridViewColumn Header="Is passable" DisplayMemberBinding="{Binding Passable}" cmds:ListViewColumnSortCommand.PropertyName="Passable"/>
+                            <GridViewColumn Header="Is buildable" DisplayMemberBinding="{Binding Buildable}" cmds:ListViewColumnSortCommand.PropertyName="Buildable"/>
+                            <GridViewColumn Header="Terrain type" DisplayMemberBinding="{Binding TerrainType}" cmds:ListViewColumnSortCommand.PropertyName="TerrainType"/>
+                            <GridViewColumn Header="Ramp type" DisplayMemberBinding="{Binding RampType}" cmds:ListViewColumnSortCommand.PropertyName="RampType"/>
+                        </GridView>
                     </ListView.View>
                 </ListView>
             </TabItem>

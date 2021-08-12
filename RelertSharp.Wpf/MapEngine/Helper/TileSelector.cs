@@ -275,6 +275,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         public static void EndSingleSelect()
         {
             isSingleSelect = false;
+            isReverseSingleSelect = false;
         }
         #endregion
         public static void UnselectAll()
@@ -350,7 +351,13 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             using (var _ = new EngineRegion())
             {
                 UndoRedoHub.BeginCommand(SelectedTile);
-                HillGenerator.RoughRampIn(SelectedTile);
+                HillGeneratorConfig cfg = new HillGeneratorConfig()
+                {
+                    RampBorderUnaffect = true,
+                    RiseUnsolvedTile = false,
+                    RampFixBorderTreatAsFlat = false
+                };
+                HillGenerator.RoughRampIn(SelectedTile, cfg);
                 UndoRedoHub.EndCommand(SelectedTile);
             }
         }
@@ -359,7 +366,14 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             using (var _ = new EngineRegion())
             {
                 UndoRedoHub.BeginCommand(SelectedTile);
-                HillGenerator.SmoothRampIn(SelectedTile);
+                HillGeneratorConfig cfg = new HillGeneratorConfig()
+                {
+                    RampBorderUnaffect = true,
+                    RiseUnsolvedTile = false,
+                    RampFixBorderTreatAsFlat = false
+                };
+                HillGenerator.SmoothRampIn(SelectedTile, cfg);
+                HillGenerator.SmoothRampIn(SelectedTile, cfg);
                 UndoRedoHub.EndCommand(SelectedTile);
             }
         }

@@ -25,11 +25,22 @@ namespace RelertSharp.Wpf.ViewModel
         private List<IMapObject> selectedObjects = new List<IMapObject>();
         private List<Tile> selectedTile = new List<Tile>();
         private ObservableCollection<SearchResultVm> listviewVm = new ObservableCollection<SearchResultVm>();
+        private ObservableCollection<TileVm> tileVm = new ObservableCollection<TileVm>();
         private bool isCombat, isTag, isOwnable, isBuding;
         public SelectedInspectorVm()
         {
             data = new VirtualMapObject();
             Selector.SelectionChanged += SelectionChangedHandler;
+            TileSelector.SelectedTileChanged += SelectedTileChangedHandler;
+        }
+
+        private void SelectedTileChangedHandler()
+        {
+            selectedTile = TileSelector.SelectedTile.ToList();
+
+            tileVm.Clear();
+            selectedTile.ForEach(x => tileVm.Add(new TileVm(x)));
+            SetProperty(nameof(SelectedTiles));
         }
 
         private void SelectionChangedHandler()
@@ -172,6 +183,10 @@ namespace RelertSharp.Wpf.ViewModel
             {
                 return listviewVm;
             }
+        }
+        public ObservableCollection<TileVm> SelectedTiles
+        {
+            get { return tileVm; }
         }
         public Visibility IsOwnerHouseEnable
         {

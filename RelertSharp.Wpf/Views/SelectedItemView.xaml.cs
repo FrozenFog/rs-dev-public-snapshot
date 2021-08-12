@@ -35,6 +35,7 @@ namespace RelertSharp.Wpf.Views
         {
             InitializeComponent();
             lvObjects.ItemsSource = vmInspector.SelectedObjects;
+            lvTiles.ItemsSource = vmInspector.SelectedTiles;
             GlobalVar.MapDocumentLoaded += MapLoadedHandler;
             scrvInspect.DataContext = vmInspector;
             vmInspector.RedrawRequested += RedrawHandler;

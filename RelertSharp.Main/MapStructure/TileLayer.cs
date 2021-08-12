@@ -722,6 +722,10 @@ namespace RelertSharp.MapStructure
                 return SceneObject?.RampType != 0;
             }
         }
+        public byte RampType
+        {
+            get { return SceneObject?.RampType ?? 0; }
+        }
         public bool Buildable
         {
             get

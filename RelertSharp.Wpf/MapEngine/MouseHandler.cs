@@ -256,41 +256,36 @@ namespace RelertSharp.Wpf.MapEngine
                     bool reverseSelect = GuiUtil.IsAltDown();
                     if (!addSelect && !reverseSelect) Selector.UnselectAll();
                     Selector.SelectAt(cell, subcell, reverseSelect);
-                    EngineApi.InvokeRedraw();
                     break;
                 case PanelMouseState.ObjectBrush:
                     PaintBrush.AddBrushObjectToMap();
-                    EngineApi.InvokeRedraw();
                     break;
                 case PanelMouseState.TileSingleBrush:
                     TilePaintBrush.AddTileToMap();
-                    EngineApi.InvokeRedraw();
+                    break;
+                case PanelMouseState.TileSingleSelecting:
+                    TileSelector.SingleSelectAt(cell);
                     break;
                 case PanelMouseState.TileLineSelecting:
                     TileSelector.AddLineControlNode(cell);
-                    EngineApi.InvokeRedraw();
                     break;
                 case PanelMouseState.TileBucketSelecting:
                     TileSelector.BucketAt(cell);
-                    EngineApi.InvokeRedraw();
                     break;
                 case PanelMouseState.TileBucketFlood:
                     TilePaintBrush.BucketTileAt(cell);
-                    EngineApi.InvokeRedraw();
                     break;
                 case PanelMouseState.ObjectPasteBrush:
                     MapClipboard.AddClipObjectToMap();
-                    EngineApi.InvokeRedraw();
                     break;
                 case PanelMouseState.TileSingleRising:
                     TileSelector.RiseTile(cell);
-                    EngineApi.InvokeRedraw();
                     break;
                 case PanelMouseState.TileSingleSinking:
                     TileSelector.SinkTile(cell);
-                    EngineApi.InvokeRedraw();
                     break;
             }
+            EngineApi.InvokeRedraw();
         }
         #endregion
 
