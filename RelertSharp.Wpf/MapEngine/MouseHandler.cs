@@ -107,6 +107,12 @@ namespace RelertSharp.Wpf.MapEngine
                         if (wheelUp) TilePaintBrush.InvokeBackward();
                         else TilePaintBrush.InvokeForward();
                         break;
+                    case PanelMouseState.InteliRampBrush:
+                        if (wheelUp) InteliBrush.IncreInteliRamp();
+                        else InteliBrush.DecreInteliRamp();
+                        TilePaintBrush.LoadTileBrush(InteliBrush.CurrentInteliRamp);
+                        EngineApi.InvokeRedraw();
+                        break;
                 }
                 EngineApi.InvokeUnlock();
             }
@@ -284,6 +290,9 @@ namespace RelertSharp.Wpf.MapEngine
                 case PanelMouseState.TileSingleSinking:
                     TileSelector.SinkTile(cell);
                     break;
+                case PanelMouseState.InteliRampBrush:
+                    if (!InteliBrush.CurrentInteliRamp.IsEmptyTile) TilePaintBrush.AddTileToMap();
+                    break;
             }
             EngineApi.InvokeRedraw();
         }
@@ -363,6 +372,17 @@ namespace RelertSharp.Wpf.MapEngine
                 case PanelMouseState.TileSingleBrush:
                     if (!notFound)
                     {
+                        redraw = TilePaintBrush.MoveTileBrushTo(cell);
+                    }
+                    break;
+                case PanelMouseState.InteliRampBrush:
+                    if (!notFound)
+                    {
+                        bool posChanged = InteliBrush.InteliRampAt(cell);
+                        if (posChanged)
+                        {
+                            TilePaintBrush.LoadTileBrush(InteliBrush.CurrentInteliRamp);
+                        }
                         redraw = TilePaintBrush.MoveTileBrushTo(cell);
                     }
                     break;

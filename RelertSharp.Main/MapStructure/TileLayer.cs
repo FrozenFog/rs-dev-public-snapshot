@@ -344,7 +344,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class Tile : BaseVisibleObject<ISceneTile>, I3dLocateable
+    public class Tile : BaseVisibleObject<ISceneTile>, I3dLocateable, ITile
     {
         private int tileIndex;
         private List<IMapObject> objectsOnTile = new List<IMapObject>();
@@ -500,7 +500,7 @@ namespace RelertSharp.MapStructure
                             if (IsHyte)
                             {
                                 SceneObject?.Dispose();
-                                SceneObject?.RedrawTile(this);
+                                Redraw();
                                 if (isFramework) SwitchToFramework(true);
                             }
                             else
@@ -700,7 +700,11 @@ namespace RelertSharp.MapStructure
         }
         public bool IsDefault
         {
-            get { return (tileIndex == 65535 || tileIndex == 0) && RealHeight == 0 && SubIndex == 0; }
+            get { return IsEmptyTile && RealHeight == 0; }
+        }
+        public bool IsZeroTile
+        {
+            get { return IsDefault && IceGrowth == 0; }
         }
         public bool IsRemoveable
         {
@@ -710,6 +714,7 @@ namespace RelertSharp.MapStructure
         {
             return new Tile((short)x, (short)y, 0, 0, 0, 0);
         }
+        public static Tile EmptyTile => new Tile(0, 0, 0, 0, 0);
         public short X16 { get; set; }
         public short Y16 { get; set; }
         public override int X { get { return X16; } set { X16 = (short)value; } }
@@ -804,6 +809,7 @@ namespace RelertSharp.MapStructure
         public int TileTerrainType { get; set; }
         public bool Disposed { get; private set; }
         public bool IsLeagalTile { get; set; }
+        public bool IsEmptyTile { get { return (tileIndex == 65535 || tileIndex == 0) && SubIndex == 0; } }
         #endregion
     }
 }

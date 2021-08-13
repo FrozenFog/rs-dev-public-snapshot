@@ -109,6 +109,7 @@
     <Compile Include="MainWindow\Hubs\SearchHub.cs" />
     <Compile Include="MainWindow\Hubs\UndoRedoHub.cs" />
     <Compile Include="MainWindow\ToolBar.cs" />
+    <Compile Include="MapEngine\Helper\InteliBrush.cs" />
     <Compile Include="MapEngine\Helper\LayerControl.cs" />
     <Compile Include="MapEngine\Helper\MapClipboard.cs" />
     <Compile Include="MapEngine\Helper\MouseState.cs" />

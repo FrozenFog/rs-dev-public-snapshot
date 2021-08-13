@@ -22,7 +22,8 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         TileFlatting = 1 << 8,
         TileSingleRising = 1 << 9,
         TileSingleSinking = 1 << 10,
-        TileBrush = TileSingleBrush | TileBucketFlood,
+        InteliRampBrush = 1 << 11,
+        TileBrush = TileSingleBrush | TileBucketFlood | InteliRampBrush,
         DEBUG = 65535
     }
     internal static class MouseState
@@ -42,6 +43,10 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         public static bool IsState(PanelMouseState state)
         {
             return (State & state) != 0;
+        }
+        public static bool PrevIsState(PanelMouseState state)
+        {
+            return (PrevState & state) != 0;
         }
     }
 }

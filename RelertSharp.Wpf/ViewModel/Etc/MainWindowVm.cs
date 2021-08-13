@@ -224,6 +224,16 @@ namespace RelertSharp.Wpf.ViewModel
             }
         }
         [AutoUpdate(GROUP_MOUSE)]
+        public bool IsMouseInteliRamp
+        {
+            get { return MouseState.State == PanelMouseState.InteliRampBrush; }
+            set
+            {
+                MouseState.SetState(PanelMouseState.InteliRampBrush);
+                SetProperty();
+            }
+        }
+        [AutoUpdate(GROUP_MOUSE)]
         public bool IsMouseRiseSingle
         {
             get { return MouseState.State == PanelMouseState.TileSingleRising; }

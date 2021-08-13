@@ -252,6 +252,7 @@
     <Compile Include="Common\Config\Model\ModConfig\CliffInfo.cs" />
     <Compile Include="Terraformer\HillGenerator.cs" />
     <Compile Include="Terraformer\RampBase.cs" />
+    <Compile Include="Terraformer\RampCalc.cs" />
     <Compile Include="Utils\ClassExtension.cs" />
     <Compile Include="Utils\CMemory.cs" />
     <Compile Include="Utils\Colors.cs" />

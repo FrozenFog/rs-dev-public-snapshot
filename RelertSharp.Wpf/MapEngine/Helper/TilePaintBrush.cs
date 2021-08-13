@@ -40,7 +40,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 foreach (Tile t in under) t.Reveal();
             }
             else if (isClipboard && MouseState.State == PanelMouseState.None) SuspendBrush();
-            else if (MouseState.PrevState == PanelMouseState.TileSingleBrush)
+            else if (MouseState.PrevIsState(PanelMouseState.TileBrush))
             {
                 SuspendBrush();
             }
@@ -101,6 +101,11 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             isLat = src.IsLat;
             MoveTileBrushTo(prevPos);
             EngineApi.InvokeUnlock();
+        }
+        public static void LoadTileBrush(Tile src)
+        {
+            var l = new List<Tile>() { src };
+            LoadTileBrush(l);
         }
         /// <summary>
         /// used by clipboard

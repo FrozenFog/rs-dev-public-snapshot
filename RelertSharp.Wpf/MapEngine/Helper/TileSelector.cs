@@ -357,7 +357,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                     RiseUnsolvedTile = false,
                     RampFixBorderTreatAsFlat = false
                 };
-                HillGenerator.RoughRampIn(SelectedTile, cfg);
+                RampCalc.RoughRampIn(SelectedTile, cfg);
                 UndoRedoHub.EndCommand(SelectedTile);
             }
         }
@@ -372,8 +372,8 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                     RiseUnsolvedTile = false,
                     RampFixBorderTreatAsFlat = false
                 };
-                HillGenerator.SmoothRampIn(SelectedTile, cfg);
-                HillGenerator.SmoothRampIn(SelectedTile, cfg);
+                RampCalc.SmoothRampIn(SelectedTile, cfg);
+                RampCalc.SmoothRampIn(SelectedTile, cfg);
                 UndoRedoHub.EndCommand(SelectedTile);
             }
         }
