@@ -3,6 +3,7 @@ using RelertSharp.Common;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.ViewModel;
+using RelertSharp.Engine;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,6 +19,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Color = System.Drawing.Color;
+using WpfColor = System.Windows.Media.Color;
+using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.Wpf.Views
 {
@@ -34,14 +38,21 @@ namespace RelertSharp.Wpf.Views
         private SearchConditionVm SelectedCondition { get { return trvConditions.SelectedItem as SearchConditionVm; } }
         private List<object> SearchResult = new List<object>();
         private ObservableCollection<SearchResultVm> ResultVm = new ObservableCollection<SearchResultVm>();
+        private MinimapSurface minimap;
         public GlobalSearchView()
         {
             InitializeComponent();
             dragCond = new DragDropHelper<SearchConditionVm.SearchConditionModel, SearchConditionVm>(trvConditions);
             lvResult.ItemsSource = ResultVm;
             trvConditions.Items.Add(Root);
+            GlobalVar.MapDocumentLoaded += HandleMapLoaded;
             SearchHub.SearchResultPushed += AddRequestedResult;
             SearchHub.SearchClearRequested += RemoveResultHandler;
+        }
+
+        private void HandleMapLoaded(object sender, EventArgs e)
+        {
+            minimap = new MinimapSurface(GlobalVar.GlobalMap.Info.Size);
         }
 
         private void RemoveResultHandler(object sender, EventArgs e)
@@ -84,17 +95,47 @@ namespace RelertSharp.Wpf.Views
             SearchResult = results;
             SetResult();
         }
+        private void SearchSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            minimap?.ClearAllObjects();
+            foreach (SearchResultVm vm in ResultVm)
+            {
+                if (vm.IsSelected) SetObjectColorInMinimap(vm.Data, Color.Red);
+                else SetObjectColorInMinimap(vm.Data, Color.White);
+            }
+            imgSearchMinimap.Source = minimap.Image.ToWpfImage();
+        }
 
 
         #region Search
+        private void SetObjectColorInMinimap(object obj, Color c)
+        {
+            if (obj is I2dLocateable i2d)
+            {
+                if (i2d is StructureItem bud)
+                {
+                    foreach (I2dLocateable pos in new Foundation2D(bud))
+                    {
+                        minimap?.SetColor(pos, c);
+                    }
+                }
+                else
+                {
+                    minimap?.SetColor(i2d, c);
+                }
+            }
+        }
         private void SetResult()
         {
             ResultVm.Clear();
+            minimap?.ClearAllObjects();
             foreach (object obj in SearchResult)
             {
                 SearchResultVm vm = new SearchResultVm(obj);
                 ResultVm.Add(vm);
+                SetObjectColorInMinimap(obj, Color.White);
             }
+            imgSearchMinimap.Source = minimap.Image.ToWpfImage();
         }
         private List<object> SearchIn(IEnumerable<object> src)
         {
@@ -317,5 +358,7 @@ namespace RelertSharp.Wpf.Views
             }
         }
         #endregion
+
+
     }
 }

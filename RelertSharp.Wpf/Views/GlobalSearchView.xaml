@@ -7,27 +7,28 @@
              xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel"
              xmlns:cmds="clr-namespace:RelertSharp.Wpf.Common.Commands"
              mc:Ignorable="d">
-    <Grid >
+    <Grid x:Name="grd">
         <Grid.Resources>
             <Style x:Key="item" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
                 <EventSetter Event="MouseDoubleClick" Handler="ResTraceDoubleClick"/>
             </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*" MinHeight="100"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Search Target" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <WrapPanel Name="wrapTargets" Margin="10,33,9.6,10.2"/>
-        <Label Content="Conditions" HorizontalAlignment="Left" Margin="10,9.8,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <Label Content="Search Result" HorizontalAlignment="Left" Margin="10.4,10,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <ListView x:Name="lvResult" Grid.Column="1" Margin="10.4,33,10.4,9.6" Grid.RowSpan="2" Style="{DynamicResource lbxDark}" 
+        <Label Content="Search Target" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="79"/>
+        <WrapPanel Name="wrapTargets" Margin="10,33,9.6,10.6"/>
+        <Label Content="Conditions" HorizontalAlignment="Left" Margin="10,9.4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="62"/>
+        <Label Content="Search Result" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="2" Width="77"/>
+        <ListView x:Name="lvResult" Grid.Column="2" Margin="10,33,10.6,9.2" Grid.RowSpan="2" Style="{DynamicResource lbxDark}" 
                   MouseRightButtonDown="ResMenuRightDown" cmds:ListViewColumnSortCommand.AutoSort="True"
-                  ItemContainerStyle="{StaticResource item}">
+                  ItemContainerStyle="{StaticResource item}" SelectionChanged="SearchSelectionChanged">
             <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Name="menuSelectScene" Header="Select item in scene" Click="Menu_AddSelection"/>
@@ -55,8 +56,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TreeView x:Name="trvConditions" Style="{DynamicResource trvDark}" Grid.Row="1" Margin="10,37.8,9.6,9.6" AllowDrop="True" 
-                  PreviewMouseRightButtonDown="PreviewRightDown" Drop="CondDragDrop" MouseMove="CondDragMove" MouseLeave="CondDragLeave" DragOver="CondDragOver">
+        <TreeView x:Name="trvConditions" Style="{DynamicResource trvDark}" Grid.Row="1" Margin="10,37.4,10,9.2" AllowDrop="True" 
+                  PreviewMouseRightButtonDown="PreviewRightDown" Drop="CondDragDrop" MouseMove="CondDragMove" MouseLeave="CondDragLeave" DragOver="CondDragOver" Grid.ColumnSpan="2">
             <TreeView.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#0078D7" />
             </TreeView.Resources>
@@ -98,8 +99,9 @@
                 </ContextMenu>
             </TreeView.ContextMenu>
         </TreeView>
-        <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Right" Height="23" Margin="0,10,9.6,0" Grid.Row="1" VerticalAlignment="Top" Width="95" Click="btnSearch_Click"/>
-        <Button x:Name="btnSearchInResult" Content="Search in result" HorizontalAlignment="Right" Height="23" Margin="0,10,109.6,0" Grid.Row="1" VerticalAlignment="Top" Width="95" Click="btnSearchIn_Click"/>
+        <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Right" Height="23" Margin="0,10,110,0" Grid.Row="1" VerticalAlignment="Top" Width="95" Click="btnSearch_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnSearchInResult" Content="Search in result" HorizontalAlignment="Right" Height="23" Margin="0,10,10,0" Grid.Row="1" VerticalAlignment="Top" Width="95" Click="btnSearchIn_Click" Grid.Column="1"/>
+        <Image x:Name="imgSearchMinimap" Grid.Column="1" Margin="10" Stretch="UniformToFill"/>
 
     </Grid>
 </UserControl>

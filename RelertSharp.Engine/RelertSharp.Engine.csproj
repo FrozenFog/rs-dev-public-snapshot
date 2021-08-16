@@ -54,6 +54,7 @@
     <Compile Include="Common\BuildingData.cs" />
     <Compile Include="Common\EngineRegion.cs" />
     <Compile Include="Common\Transform.cs" />
+    <Compile Include="Components\MinimapSurface.cs" />
     <Compile Include="CppExtern.cs" />
     <Compile Include="Api\EngineApi.cs" />
     <Compile Include="Common\Delegates.cs" />

@@ -131,6 +131,7 @@
     </Compile>
     <Compile Include="ViewModel\Base\BaseListVm.cs" />
     <Compile Include="ViewModel\Base\BaseTreeVm.cs" />
+    <Compile Include="ViewModel\Etc\GlobalSearchVm.cs" />
     <Compile Include="ViewModel\Etc\MainWindowVm.cs" />
     <Compile Include="ViewModel\Etc\SearchConditionVm.cs" />
     <Compile Include="ViewModel\Etc\SearchResultVm.cs" />
