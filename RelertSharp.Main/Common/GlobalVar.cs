@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RelertSharp.Common.Config;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -36,7 +37,7 @@ namespace RelertSharp.Common
             });
         }
         public static ELanguage CurrentLanguage { get; set; } = ELanguage.EnglishUS;
-        public static RSConfig GlobalConfig { get; set; }
+        public static RsConfig GlobalConfig { get; set; }
         public static FileSystem.VirtualDir GlobalDir { get; set; }
         public static IniSystem.Rules GlobalRules { get; set; }
         public static IniSystem.SoundRules GlobalSound { get; set; }

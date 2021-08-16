@@ -49,6 +49,8 @@ namespace RelertSharp.Common
         public const string EX_SHP = ".shp";
         public const string EX_VXL = ".vxl";
         public const string EX_HVA = ".hva";
+        public const string EX_INI = ".ini";
+        public const string EX_MIX = ".mix";
         public const string SUFF_BARREL = "barr";
         public const string SUFF_TURRET = "tur";
         public const string NULL_ICON = "xxicon.shp";

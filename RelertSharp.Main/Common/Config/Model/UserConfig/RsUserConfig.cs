@@ -10,6 +10,7 @@ namespace RelertSharp.Common.Config.Model
 {
     public class RsUserConfig
     {
+        public UserGeneral General { get; set; }
         [XmlElement(ElementName = "GuiStatus")]
         public GuiStatus GuiStatus { get; set; }
         [XmlElement(ElementName = "Favourites")]
@@ -30,5 +31,15 @@ namespace RelertSharp.Common.Config.Model
             };
             return cfg;
         }
+    }
+
+    public class UserGeneral
+    {
+        [XmlElement]
+        public string GamePath { get; set; }
+        [XmlElement]
+        public bool DevMode { get; set; }
+        [XmlElement("AutoSave")]
+        public int AutoSaveTime { get; set; }
     }
 }

@@ -161,24 +161,22 @@ namespace RelertSharp.Wpf
             //localSetting.Dispose();
             LocalConfig local = new LocalConfig("local.rsc");
             GlobalVar.Language = new RelertSharp.Common.Language();
-            GlobalVar.GlobalConfig = new RSConfig(local.PrimaryConfigName)
-            {
-                Local = local
-            };
+            GlobalVar.GlobalConfig = new RelertSharp.Common.Config.RsConfig();
             Log.Write("Primary config loaded");
+            var general = GlobalVar.GlobalConfig.ModConfig.General;
             if (!SafeRun(() => { GlobalVar.GlobalDir = new VirtualDir(); },
                 "Virtual mix directiory initialization failed!")) return false;
             Log.Write("Loading Rules");
-            if (!SafeRun(() => { GlobalVar.GlobalRules = new Rules(GlobalVar.GlobalDir.GetRawByte(GlobalVar.GlobalConfig.RulesName + ".ini", true), GlobalVar.GlobalConfig.RulesName + ".ini"); },
+            if (!SafeRun(() => { GlobalVar.GlobalRules = new Rules(GlobalVar.GlobalDir.GetRawByte(general.IniFiles.Rules + Constant.EX_INI, true), general.IniFiles.Rules + Constant.EX_INI); },
                 "Rules not found or corrupted!")) return false;
             Log.Write("Loading Art");
-            if (!SafeRun(() => { GlobalVar.GlobalRules.LoadArt(GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.ArtName, FileExtension.INI, true)); },
+            if (!SafeRun(() => { GlobalVar.GlobalRules.LoadArt(GlobalVar.GlobalDir.GetFile(general.IniFiles.Art, FileExtension.INI, true)); },
                 "Art not found or corrupted!")) return false;
             Log.Write("Loading Sound");
             if (!SafeRun(() =>
             {
-                GlobalVar.GlobalSound = new SoundRules(GlobalVar.GlobalConfig.SoundName, GlobalVar.GlobalConfig.EvaName, GlobalVar.GlobalConfig.ThemeName);
-                GlobalVar.GlobalSoundBank = new SoundBank(GlobalVar.GlobalConfig.BagNameList);
+                GlobalVar.GlobalSound = new SoundRules(general.IniFiles.Sound, general.IniFiles.Eva, general.IniFiles.Theme);
+                GlobalVar.GlobalSoundBank = new SoundBank(general.Sound.BagList.Split(','));
             },
             "Sound library initialization failed!")) return false;
 
@@ -194,13 +192,15 @@ namespace RelertSharp.Wpf
         }
         static void LoadCsf()
         {
-            if (GlobalVar.GlobalConfig.StringtableList.Count > 0)
+            var general = GlobalVar.GlobalConfig.ModConfig.General;
+            if (general.StringTable.Count > 0)
             {
-                GlobalVar.GlobalCsf = GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.StringtableList[0], FileExtension.CSF);
-                if (GlobalVar.GlobalConfig.StringtableList.Count > 1)
+                GlobalVar.GlobalCsf = GlobalVar.GlobalDir.GetFile(general.StringTable.First().Name, FileExtension.CSF);
+                if (general.StringTable.Count > 1)
                 {
-                    foreach (string name in GlobalVar.GlobalConfig.StringtableList.Skip(1))
+                    foreach (var entry in general.StringTable.Skip(1))
                     {
+                        string name = entry.Name;
                         if (name.EndsWith("##"))
                         {
                             for (int i = 0; i < 100; i++)

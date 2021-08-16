@@ -18,6 +18,7 @@ namespace RelertSharp.Engine
         #region Public
         internal static BuildingData GetBuildingData(this Rules r, string name)
         {
+            var adjust = GlobalConfig.DrawingAdjust;
             BuildingData data = new BuildingData();
             string artname = Rules.GetArtEntityName(name);
             INIEntity art = Art[artname];
@@ -27,7 +28,7 @@ namespace RelertSharp.Engine
             data.AlphaImage = Rules[name]["AlphaImage"];
             if (!string.IsNullOrEmpty(data.AlphaImage)) data.AlphaImage += EX_SHP;
 
-            if (!GlobalConfig.DeactiveAnimList.Contains(artname))
+            if (!adjust.DeactivateAnim.Any(x => x.Name == artname))
             {
                 data.ActivateAnim = GuessStructureName(Art[art["ActiveAnim"]]);
                 data.ActivateAnimTwo = GuessStructureName(Art[art["ActiveAnimTwo"]]);
@@ -36,7 +37,7 @@ namespace RelertSharp.Engine
 
             data.IdleAnim = GuessStructureName(Art[art["IdleAnim"]]);
             data.SuperAnim = GuessStructureName(Art[art["SuperAnim"]]);
-            if (!GlobalConfig.DeactiveBibList.Contains(artname))
+            if (!adjust.DeactivateBib.Any(x => x.Name == artname))
             {
                 data.BibAnim = GuessStructureName(art["BibShape"]);
             }
@@ -117,7 +118,7 @@ namespace RelertSharp.Engine
         }
         public static void FixWallOverlayName(this Rules rules, ref string filename)
         {
-            if (!GlobalConfig.IgnoreBuildingTheaterArt)
+            if (!GlobalConfig.DrawingAdjust.NoBudAltArt)
             {
                 filename = filename.Replace(1, _suff);
             }
@@ -217,7 +218,7 @@ namespace RelertSharp.Engine
         {
             if (string.IsNullOrEmpty(id)) return "";
             string name = id + ".shp";
-            if (!GlobalConfig.IgnoreBuildingTheaterArt) name = id.Replace(1, _suff) + ".shp";
+            if (!GlobalConfig.DrawingAdjust.NoBudAltArt) name = id.Replace(1, _suff) + ".shp";
             if (GlobalDir.HasFile(name)) return name;
             if (GlobalDir.HasFile(name.Replace(1, 'G'))) return name.Replace(1, 'G');
             if (GlobalDir.HasFile(id + ".shp")) return id + ".shp";

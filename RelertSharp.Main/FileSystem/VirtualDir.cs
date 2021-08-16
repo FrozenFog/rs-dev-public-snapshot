@@ -2,11 +2,13 @@
 using RelertSharp.Common;
 using RelertSharp.Encoding;
 using RelertSharp.IniSystem;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using static RelertSharp.Common.GlobalVar;
 
 namespace RelertSharp.FileSystem
@@ -26,9 +28,7 @@ namespace RelertSharp.FileSystem
             Log.Write("Mix loading begin");
             MixFile framework = new MixFile(RunPath + "framework.mix", MixTatics.Plain);
             AddMixDir(framework);
-            LoadMixIndex(GlobalConfig.MixNameList);
-            LoadMixIndex(GlobalConfig.TheaterMixList);
-            LoadMixIndex(GlobalConfig.ExpandMixList);
+            LoadMixFromConfig();
             Log.Write("General mix loaded");
             if (!File.Exists(RunPath + "data.mix")) System.Windows.Forms.MessageBox.Show("Critical File Missing!");
             MixFile mx = new MixFile(RunPath + "data.mix", MixTatics.Plain, true);
@@ -39,33 +39,82 @@ namespace RelertSharp.FileSystem
 
 
         #region Private Methods - VirtualDir
-        private void LoadMixIndex(List<string> src)
+        private void LoadMixFromConfig()
         {
-            foreach (string mixname in src)
+            List<MixFile> expand = new List<MixFile>();
+            string[] getName(string entryName)
+            {
+                List<string> names = new List<string>();
+                Regex re = new Regex("#+");
+                Match m = re.Match(entryName);
+                if (m.Success)
+                {
+                    int count = m.Length;
+                    for (int i = 0; i < Math.Pow(10, count); i++)
+                    {
+                        string fmt = "{0:D" + count.ToString() + "}";
+                        string name = re.Replace(entryName, string.Format(fmt, i));
+                        names.Add(name + Constant.EX_MIX);
+                    }
+                }
+                else names.Add(entryName + Constant.EX_MIX);
+                return names.ToArray();
+            }
+            void load(string mixname, int tatic, bool isExpand)
             {
                 MixFile mx;
-                string path = GlobalConfig.GamePath + mixname + ".mix";
+                string path = Path.Combine(GlobalConfig.GamePath, mixname);
                 Log.Write(string.Format("Loading mix: {0}. From {1}", mixname, path));
                 if (File.Exists(path))
                 {
-                    if (GlobalConfig.CiphedMix.Contains(mixname)) mx = new MixFile(path, MixTatics.Ciphed);
-                    else mx = new MixFile(path, MixTatics.Plain);
+                    mx = new MixFile(path, (MixTatics)tatic);
                     Log.Write(string.Format("{0} loaded", mixname));
-                    AddMixDir(mx);
-                    mx.Dispose();
-                }
-                else
-                {
-                    if (HasFile(mixname + ".mix"))
+                    if (isExpand) expand.Add(mx);
+                    else
                     {
-                        if (GlobalConfig.CiphedMix.Contains(mixname)) mx = new MixFile(GetRawByte(mixname + ".mix"), mixname + ".mix", MixTatics.Ciphed);
-                        else if (GlobalConfig.OldMix.Contains(mixname)) mx = new MixFile(GetRawByte(mixname + ".mix"), mixname + ".mix", MixTatics.Old);
-                        else mx = new MixFile(GetRawByte(mixname + ".mix"), mixname + ".mix", MixTatics.Plain);
-                        VirtualFileInfo info = fileOrigin[CRC.GetCRC(mixname + ".mix")];
-                        AddMixDir(mx, true, GetParentPath(mixname + ".mix"), info.FileOffset);
+                        AddMixDir(mx);
                         mx.Dispose();
                     }
                 }
+                else
+                {
+                    if (HasFile(mixname))
+                    {
+                        mx = new MixFile(GetRawByte(mixname), mixname, (MixTatics)tatic);
+                        VirtualFileInfo info = fileOrigin[CRC.GetCRC(mixname)];
+                        if (isExpand) expand.Add(mx);
+                        else
+                        {
+                            AddMixDir(mx, true, GetParentPath(mixname), info.FileOffset);
+                            mx.Dispose();
+                        }
+                    }
+                }
+            }
+            /// main info mix
+            foreach (var entry in GlobalConfig.ModGeneral.MixInfo)
+            {
+                MixFile mx;
+                string[] mixNames = getName(entry.Name);
+                foreach (string mixname in mixNames)
+                {
+                    load(mixname, entry.ReadTatic, entry.IsExpand);
+                }
+            }
+            /// theater mix
+            foreach (var theater in GlobalConfig.ModGeneral.Theater)
+            {
+                foreach (string mix in theater.MixList.Split(','))
+                {
+                    MixFile mx;
+                    string mixname = mix + Constant.EX_MIX;
+                    load(mixname, (int)MixTatics.Plain, false);
+                }
+            }
+            /// expand mix, higher priority
+            foreach (MixFile mx in expand)
+            {
+                AddMixDir(mx);
             }
         }
         #endregion
@@ -148,7 +197,7 @@ namespace RelertSharp.FileSystem
         public bool HasFile(string _fullName)
         {
             bool b = fileOrigin.Keys.Contains(CRC.GetCRC(_fullName));
-            if (GlobalConfig.Local.DevMode)
+            if (GlobalConfig.DevMode)
             {
                 string path = GlobalConfig.GamePath + _fullName;
                 b |= File.Exists(path);
@@ -185,7 +234,7 @@ namespace RelertSharp.FileSystem
         }
         public bool TryGetRawByte(string _fullName, out byte[] bytes, bool fromRoot = false)
         {
-            if (fromRoot || GlobalConfig.Local.DevMode)
+            if (fromRoot || GlobalConfig.DevMode)
             {
                 bytes = GetFromRoot(_fullName);
                 if (bytes != null) return true;
@@ -202,7 +251,7 @@ namespace RelertSharp.FileSystem
         public byte[] GetRawByte(string _fullName, bool fromRoot = false)
         {
             Log.Write("Finding " + _fullName);
-            if (fromRoot || GlobalConfig.Local.DevMode)
+            if (fromRoot || GlobalConfig.DevMode)
             {
                 byte[] b = GetFromRoot(_fullName);
                 if (b != null) return b;
@@ -274,41 +323,6 @@ namespace RelertSharp.FileSystem
                     return new CsfFile(GetRawByte(_fileName, fromRoot), _fileName);
                 default:
                     return GetRawByte(_fileName, fromRoot);
-            }
-        }
-        public dynamic GetTheaterTmpFile(string _fileName, TheaterType _type)
-        {
-            switch (_type)
-            {
-                case TheaterType.Temprate:
-                    _fileName += ".tem";
-                    return new TmpFile(GetRawByte(_fileName), _fileName);
-                case TheaterType.Snow:
-                    _fileName += ".sno";
-                    return new TmpFile(GetRawByte(_fileName), _fileName);
-                case TheaterType.Urban:
-                    _fileName += ".urb";
-                    return new TmpFile(GetRawByte(_fileName), _fileName);
-                case TheaterType.Desert:
-                    _fileName += ".des";
-                    return new TmpFile(GetRawByte(_fileName), _fileName);
-                case TheaterType.NewUrban:
-                    _fileName += ".ubn";
-                    return new TmpFile(GetRawByte(_fileName), _fileName);
-                case TheaterType.Lunar:
-                    _fileName += ".lun";
-                    return new TmpFile(GetRawByte(_fileName), _fileName);
-                case TheaterType.Custom1:
-                    _fileName += "." + GlobalConfig["CustomTheater"]["Custom1Sub"];
-                    return new TmpFile(GetRawByte(_fileName), _fileName);
-                case TheaterType.Custom2:
-                    _fileName += "." + GlobalConfig["CustomTheater"]["Custom2Sub"];
-                    return new TmpFile(GetRawByte(_fileName), _fileName);
-                case TheaterType.Custom3:
-                    _fileName += "." + GlobalConfig["CustomTheater"]["Custom3Sub"];
-                    return new TmpFile(GetRawByte(_fileName), _fileName);
-                default:
-                    return GetRawByte(_fileName);
             }
         }
         #endregion

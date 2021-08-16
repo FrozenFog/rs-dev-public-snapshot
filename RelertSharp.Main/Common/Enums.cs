@@ -219,8 +219,15 @@ namespace RelertSharp.Common
     }
     public enum TheaterType
     {
-        Temprate, Snow, Desert, Urban, NewUrban, Lunar,
-        Custom1, Custom2, Custom3,
+        Temprate = 1, 
+        Snow = 2, 
+        Desert = 4, 
+        Urban = 3, 
+        NewUrban = 5, 
+        Lunar = 6,
+        Custom1 = 7, 
+        Custom2 = 8, 
+        Custom3 = 9,
         Unknown = -1
     }
     public enum MixTatics

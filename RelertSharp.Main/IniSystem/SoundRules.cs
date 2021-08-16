@@ -12,9 +12,9 @@ namespace RelertSharp.IniSystem
         #region Ctor - SoundRules
         public SoundRules(string soundname, string evaname, string themename)
         {
-            sound = GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.SoundName, FileExtension.INI, true);
-            eva = GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.EvaName, FileExtension.INI, true);
-            theme = GlobalVar.GlobalDir.GetFile(GlobalVar.GlobalConfig.ThemeName, FileExtension.INI, true);
+            sound = GlobalVar.GlobalDir.GetFile(soundname, FileExtension.INI, true);
+            eva = GlobalVar.GlobalDir.GetFile(evaname, FileExtension.INI, true);
+            theme = GlobalVar.GlobalDir.GetFile(themename, FileExtension.INI, true);
             GetPairs();
         }
         #endregion

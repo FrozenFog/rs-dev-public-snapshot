@@ -130,6 +130,7 @@
     <Compile Include="Common\Config\ModConfig\ComboReading.cs" />
     <Compile Include="Common\Config\ModConfig\Language.cs" />
     <Compile Include="Common\Config\Model\ModConfig\ComboGroup.cs" />
+    <Compile Include="Common\Config\Model\ModConfig\GeneralInfo.cs" />
     <Compile Include="Common\Config\Model\ModConfig\LanguageControl.cs" />
     <Compile Include="Common\Config\Model\ModConfig\LogicAttributes.cs" />
     <Compile Include="Common\Config\Model\ModConfig\RsModConfig.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Common\Config\Model\UserConfig\FavouriteItems.cs" />
     <Compile Include="Common\Config\Model\UserConfig\GuiStatus.cs" />
     <Compile Include="Common\Config\Model\UserConfig\RsUserConfig.cs" />
+    <Compile Include="Common\Config\RsConfig.cs" />
     <Compile Include="Common\Config\UserConfig\UserConfig.cs" />
     <Compile Include="Common\Delegates.cs" />
     <Compile Include="Common\Enumerator\Bfs2DEnumerator.cs" />
@@ -248,7 +250,6 @@
     <Compile Include="MapStructure\Objects\UnitLayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Common\RSConfig.cs" />
     <Compile Include="Common\Config\Model\ModConfig\CliffInfo.cs" />
     <Compile Include="Terraformer\HillGenerator.cs" />
     <Compile Include="Terraformer\RampBase.cs" />

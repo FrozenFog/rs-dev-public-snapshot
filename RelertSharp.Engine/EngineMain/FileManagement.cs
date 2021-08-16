@@ -187,7 +187,7 @@ namespace RelertSharp.Engine
                 {
                     flat = false;
                     d.IsHiBridge = true;
-                    if (GlobalConfig.BridgeOffsetFrames.Contains(overlay.Frame)) d.IsOffsetBridge = true;
+                    if (GlobalConfig.BridgeOffsetContains(overlay.Frame)) d.IsOffsetBridge = true;
                 }
                 if (!rubble)
                 {
@@ -235,6 +235,7 @@ namespace RelertSharp.Engine
             if (isBaseNode) lookup += "n";
             if (!Buffer.Buffers.Structures.Keys.Contains(lookup))
             {
+                var adjust = GlobalConfig.DrawingAdjust;
                 d = new DrawableStructure(name);
                 BuildingData data = GlobalRules.GetBuildingData(name);
                 GlobalRules.GetBuildingShapeData(name, out int height, out int foundx, out int foundy);
@@ -280,7 +281,7 @@ namespace RelertSharp.Engine
                 if (!string.IsNullOrEmpty(data.SelfId))
                 {
                     d.pSelf = CreateFile(data.SelfId, DrawableType.Shp);
-                    if (!GlobalConfig.DeactiveShadow.Contains(name)) d.pShadow = CreateFile(data.SelfId, DrawableType.Shp, d.Framecount / 2);
+                    if (!adjust.DeactivateShadow.Any(x => x.Name == name)) d.pShadow = CreateFile(data.SelfId, DrawableType.Shp, d.Framecount / 2);
                 }
                 if (!string.IsNullOrEmpty(data.ActivateAnim))
                 {

@@ -1,5 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RsModConfig>
+  <General>
+    <Name>Relert Sharp Config for Mental Omega 3.3.5</Name>
+    <Version>1.0</Version>
+    <MixInfo>
+      <entry name="ra2" tatic="0"/>
+      <entry name="ra2md" tatic="0"/>
+      <entry name="local" tatic="1"/>
+      <entry name="localmd" tatic="1"/>
+      <entry name="conquer" tatic="0"/>
+      <entry name="conqmd" tatic="0"/>
+      <entry name="cache" tatic="0"/>
+      <entry name="cachemd" tatic="0"/>
+      <entry name="language" tatic="0"/>
+      <entry name="langmd" tatic="1"/>
+      <entry name="thememo" tatic="1"/>
+      <entry name="audio" tatic="2"/>
+      <entry name="audiomd" tatic="2"/>
+      <entry name="expandmd##" tatic="1" expand="true"/>
+      <entry name="expandmo##" tatic="1" expand="true"/>
+    </MixInfo>
+    <Theater>
+      <theater name="Generic" mix="generic,genermd,isogen,isogenmd" virtual="true"/>
+      <theater name="Temperate" pal="temperat" mix="temperat,temperatmd,isotemp,isotemmd" suffix="tem" ini="temperatmo" type="1"/>
+      <theater name="Snow" pal="snow" mix="snow,snowmd,isosnow,isosnomd" suffix="sno" ini="snowmo" type="2"/>
+      <theater name="Urban" pal="urban" mix="urban,urbanmd,isourb,isourbmd" suffix="urb" ini="urbanmo" type="3"/>
+      <theater name="Desert" pal="desert" mix="desert,isodes,isodesmd" suffix="des" ini="desertmo" type="4"/>
+      <theater name="NewUrban" pal="urbann" mix="urbann,urbannmd,isoubn,isoubnmd" suffix="ubn" ini="urbannmo" type="5"/>
+      <theater name="Lunar" pal="lunar" mix="lunar,lunarmd,isolun,isolunmd" suffix="lun" ini="lunarmo" type="6"/>
+    </Theater>
+    <Sound>
+      <Bags>audio,audio01,audio02</Bags>
+    </Sound>
+    <StringTable>
+      <entry name="ra2"/>
+      <entry name="ra2md"/>
+      <entry name="stringtable##"/>
+    </StringTable>
+    <IniFiles>
+      <Rules>rulesmo</Rules>
+      <Art>artmo</Art>
+      <Sound>soundmo</Sound>
+      <Theme>thememo</Theme>
+      <Ai>aimo</Ai>
+      <Eva>evamo</Eva>
+      <Mission>missionmo</Mission>
+      <Config>ra2mo</Config>
+    </IniFiles>
+    <DrawingAdjust>
+      <BridgeOffsetFrames>9,10,11,12,13,14,15,16,17</BridgeOffsetFrames>
+      <IgnoreBuildingTheaterArt>true</IgnoreBuildingTheaterArt>
+      <IgnoreInfantryTheaterArt>false</IgnoreInfantryTheaterArt>
+      <DeactivateAnim>
+        <reg name="YAPOWR"/>
+      </DeactivateAnim>
+      <DeactivateShadow>
+        <reg name="GAHPAD"/>
+      </DeactivateShadow>
+      <DeactivateBib>
+        <reg name="GAHPAD"/>
+      </DeactivateBib>
+    </DrawingAdjust>
+    <SideInfo>
+      <entry name="Allied" idx="1" side="GDI" evaPrefix="Allied"/>
+      <entry name="Soviet" idx="2" side="Nod" evaPrefix="Russian"/>
+      <entry name="Epsilon" idx="3" side="ThirdSide" evaPrefix="Yuri"/>
+      <entry name="Foehn" idx="4" side="FourthSide" evaPrefix="Foehn"/>
+    </SideInfo>
+  </General>
   <ComboList>
     <cb type="Waypoints" default="true"/>
     <cb type="OwnerCountry" default="true"/>

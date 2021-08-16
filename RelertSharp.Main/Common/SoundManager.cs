@@ -66,8 +66,7 @@ namespace RelertSharp.Common
             switch (type)
             {
                 case SoundType.Eva:
-                    string tmp = GlobalVar.PlayerSide + "Eva";
-                    string evakey = GlobalVar.GlobalConfig["SoundConfigs"][tmp];
+                    string evakey = GlobalVar.GlobalConfig.GetSideInfo(x => x.SideId == GlobalVar.PlayerSide).EvaPrefix;
                     ent = GlobalVar.GlobalSound.GetEva(regname);
                     return ent[evakey] + ".wav";
                 case SoundType.SoundBankRnd:

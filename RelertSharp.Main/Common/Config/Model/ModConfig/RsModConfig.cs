@@ -10,6 +10,8 @@ namespace RelertSharp.Common.Config.Model
 {
     public class RsModConfig
     {
+        [XmlElement(ElementName = "General")]
+        public GeneralInfo General { get; set; }
         [XmlArrayItem("cb")]
         public List<ComboGroup> ComboList { get; set; } 
         [XmlElement(ElementName = "AttributeInfo")]

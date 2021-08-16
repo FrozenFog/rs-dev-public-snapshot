@@ -20,51 +20,9 @@ namespace RelertSharp.MapStructure
         #region Ctor - MapTheaterTileSet
         public MapTheaterTileSet(TheaterType _type)
         {
-            string _theater = "";
-            switch (_type)
-            {
-                case TheaterType.Temprate:
-                    _theater = GlobalConfig["INI"]["TemperateTheme"];
-                    TheaterSub = "tem";
-                    break;
-                case TheaterType.Desert:
-                    _theater = GlobalConfig["INI"]["DesertTheme"];
-                    TheaterSub = "des";
-                    break;
-                case TheaterType.Urban:
-                    _theater = GlobalConfig["INI"]["UrbanTheme"];
-                    TheaterSub = "urb";
-                    break;
-                case TheaterType.NewUrban:
-                    _theater = GlobalConfig["INI"]["NewUrbanTheme"];
-                    TheaterSub = "ubn";
-                    break;
-                case TheaterType.Snow:
-                    _theater = GlobalConfig["INI"]["SnowTheme"];
-                    TheaterSub = "sno";
-                    break;
-                case TheaterType.Lunar:
-                    _theater = GlobalConfig["INI"]["LunarTheme"];
-                    TheaterSub = "lun";
-                    break;
-                case TheaterType.Custom1:
-                    _theater = GlobalConfig["INI"]["Custom1Theater"];
-                    TheaterSub = GlobalConfig["CustomTheater"]["Custom1Sub"];
-                    _subs.Add(TheaterSub);
-                    break;
-                case TheaterType.Custom2:
-                    _theater = GlobalConfig["INI"]["Custom2Theater"];
-                    TheaterSub = GlobalConfig["CustomTheater"]["Custom2Sub"];
-                    _subs.Add(TheaterSub);
-                    break;
-                case TheaterType.Custom3:
-                    _theater = GlobalConfig["INI"]["Custom3Theater"];
-                    TheaterSub = GlobalConfig["CustomTheater"]["Custom3Sub"];
-                    _subs.Add(TheaterSub);
-                    break;
-                default:
-                    return;
-            }
+            var info = GlobalConfig.GetTheaterInfo(x => x.TheaterType == (int)_type);
+            string _theater = info.TheaterIni;
+            TheaterSub = info.Suffix;
             SetGlobalPal();
             INIFile _theaterIni = GlobalDir.GetFile(_theater, FileExtension.INI);
             LoadGeneral(_theaterIni["General"]);

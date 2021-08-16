@@ -69,6 +69,7 @@ namespace RelertSharp.Common
 
 
         #region Calls
+        public UserGeneral General { get { return data.General; } }
         public GuiStatus GuiStatus { get { return data.GuiStatus; } }
         public List<TheaterTilesets> FavouriteTileSet { get { return data.FavouriteItems.TileSets; } }
         public FavouriteItemTree FavouriteObjects { get { return data.FavouriteItems.Objects; } }
