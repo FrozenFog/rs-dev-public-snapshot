@@ -69,9 +69,9 @@ namespace RelertSharp.Engine.MapObjects
         }
         public override void MoveTo(I3dLocateable cell, int subcell = -1)
         {
-            Vec3 pos = Vec3.ToVec3Iso(cell);
-            SetLocation(pos, pSelf, pExtra);
-            SetLocation(pos, pFramework, pExFramework);
+            Vec3 dest = Vec3.ToVec3Iso(cell) + Transformation.OffsetTo(Constant.DrawingEngine.Offset.Ground);
+            SetLocation(dest, pSelf, pExtra);
+            SetLocation(dest, pFramework, pExFramework);
             base.MoveTo(cell);
         }
         /// <summary>
@@ -157,22 +157,6 @@ namespace RelertSharp.Engine.MapObjects
         public void RevealExtra()
         {
             SetColor(Extra, ColorVector);
-        }
-        public void PhaseOut()
-        {
-            if (!IsHidden)
-            {
-                SetColorStrict(Vec4.Hide50);
-                IsHidden = true;
-            }
-        }
-        public void UnPhase()
-        {
-            if (IsHidden)
-            {
-                SetColorStrict(ColorVector);
-                IsHidden = false;
-            }
         }
         public void Hide()
         {

@@ -11,6 +11,7 @@ namespace RelertSharp.MapStructure
     {
         protected bool isSelected = false;
         protected bool isHidden = false;
+        protected bool isPhased = false;
 
         public virtual int GetHeight(Map source = null)
         {
@@ -20,7 +21,7 @@ namespace RelertSharp.MapStructure
         }
         public virtual void Select(bool forceSelect = false)
         {
-            if (forceSelect || !isSelected)
+            if ((forceSelect || !isSelected) && CanSelect)
             {
                 SceneObject?.ApplyTempColor(Vec4.Selector);
                 isSelected = true;
@@ -33,6 +34,32 @@ namespace RelertSharp.MapStructure
                 SceneObject?.RemoveTempColor();
                 isSelected = false;
             }
+        }
+        protected virtual void UpdateSelection()
+        {
+            if (isSelected) SceneObject?.ApplyTempColor(Vec4.Selector);
+            else SceneObject?.RemoveTempColor();
+        }
+        public virtual void PhaseOut(bool forcePhase = false)
+        {
+            if (forcePhase || !isPhased)
+            {
+                SceneObject.PhaseOut();
+                isPhased = true;
+            }
+        }
+        public virtual void UnPhase()
+        {
+            if (isPhased)
+            {
+                SceneObject?.UnPhase();
+                isPhased = false;
+            }
+        }
+        protected virtual void UpdatePhase()
+        {
+            if (IsPhased) SceneObject?.PhaseOut();
+            else SceneObject?.UnPhase();
         }
         public virtual void Hide(bool forceHide = false)
         {
@@ -50,6 +77,11 @@ namespace RelertSharp.MapStructure
                 if (isSelected) Select(true);
                 isHidden = false;
             }
+        }
+        protected virtual void UpdateHide()
+        {
+            if (IsHidden) SceneObject?.Hide();
+            else SceneObject?.Reveal();
         }
         public virtual void MoveTo(I3dLocateable pos, int subcell = -1)
         {
@@ -71,11 +103,19 @@ namespace RelertSharp.MapStructure
         }
 
         public virtual TSceneInterface SceneObject { get; set; }
+        public virtual bool CanSelect
+        {
+            get
+            {
+                return !IsHidden && !IsPhased;
+            }
+        }
         public abstract int X { get; set; }
         public abstract int Y { get; set; }
         public virtual MapObjectType ObjectType { get; protected set; } 
         public virtual bool IsSelected { get { return isSelected; } }
         public virtual bool IsHidden { get { return isHidden; } }
+        public virtual bool IsPhased { get { return isPhased; } }
         public virtual int Coord
         {
             get { return Utils.Misc.CoordInt(X, Y); }

@@ -23,6 +23,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         private static LinkedList<I2dLocateable> controlNodes = new LinkedList<I2dLocateable>();
         private static I2dLocateable prevCell;
         private static HashSet<Tile> selected = new HashSet<Tile>();
+        private static HashSet<Tile> phased = new HashSet<Tile>();
         private static bool filtSet, filtHeight;
         private static bool isIsometric = false;
         private static TileLayer Tiles { get { return GlobalVar.GlobalMap.TilesData; } }
@@ -34,7 +35,11 @@ namespace RelertSharp.Wpf.MapEngine.Helper
 
         private static void HandleStateChanged()
         {
-            if (MouseState.PrevState == PanelMouseState.TileLineSelecting) controlNodes.Clear();
+            if (MouseState.PrevState == PanelMouseState.TileLineSelecting)
+            {
+                controlNodes.Clear();
+                prevCell = null;
+            }
         }
 
 
@@ -51,11 +56,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 EngineApi.InvokeLock();
                 foreach (I2dLocateable pos in dda.GetLineCells())
                 {
-                    if (tiles[pos] is Tile t)
-                    {
-                        t.Select();
-                        selected.Add(t);
-                    }
+                    if (tiles[pos] is Tile t) AddSelection(t);
                 }
                 EngineApi.InvokeUnlock();
                 OnSelectionChanged();
@@ -79,11 +80,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 if (filtHeight) predicates.Add(x => x.RealHeight == center.RealHeight);
                 Bfs2D bfs = new Bfs2D(tiles, center, predicates);
                 EngineApi.InvokeLock();
-                foreach (Tile t in bfs)
-                {
-                    t.Select();
-                    selected.Add(t);
-                }
+                foreach (Tile t in bfs) AddSelection(t);
                 EngineApi.InvokeUnlock();
                 OnSelectionChanged();
             }
@@ -190,8 +187,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                         }
                         else if (!reverseSelect && !selected.Contains(t))
                         {
-                            t.Select();
-                            selected.Add(t);
+                            AddSelection(t);
                         }
                     }
                 }
@@ -264,11 +260,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                     t.CancelSelection();
                     selected.Remove(t);
                 }
-                if (select)
-                {
-                    t.Select();
-                    selected.Add(t);
-                }
+                if (select) AddSelection(t);
                 OnSelectionChanged();
             }
         }
@@ -391,6 +383,32 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             }
         }
         #endregion
+        #region Phasing
+        public static bool PhaseTileAt(I2dLocateable cell)
+        {
+            using (var _ = new EngineRegion())
+            {
+                if (Tiles[cell] is Tile t && !t.IsPhased)
+                {
+                    t.PhaseOut();
+                    phased.Add(t);
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static void UnPhaseAllTile()
+        {
+            using (var _ = new EngineRegion())
+            {
+                foreach (Tile t in phased)
+                {
+                    t.UnPhase();
+                }
+                phased.Clear();
+            }
+        }
+        #endregion
         #endregion
 
 
@@ -398,6 +416,14 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         private static void OnSelectionChanged()
         {
             SelectedTileChanged?.Invoke();
+        }
+        private static void AddSelection(Tile t)
+        {
+            if (t.CanSelect)
+            {
+                t.Select();
+                selected.Add(t);
+            }
         }
         #endregion
 
@@ -409,6 +435,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         public static bool IsIsoSeleect { get { return isIsometric; } }
         public static bool IsSelecting { get { return dragingSelectBox; } }
         public static bool IsSingleSelecting { get { return isSingleSelect; } }
+        public static bool IsPhasing { get; private set; }
         #endregion
     }
 }

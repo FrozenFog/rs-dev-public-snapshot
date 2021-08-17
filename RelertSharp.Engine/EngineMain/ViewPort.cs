@@ -13,7 +13,7 @@ namespace RelertSharp.Engine
 {
     internal static partial class EngineMain
     {
-        private static TileLayer _cellFindingReferance { get { return GlobalVar.GlobalMap.TilesData; } }
+        private static TileLayer Tiles { get { return GlobalVar.GlobalMap.TilesData; } }
         private static Tile previousTile;
         private static List<I2dLocateable> buildingShape = new List<I2dLocateable>();
         private static bool markingBuildingShape = false;
@@ -22,13 +22,13 @@ namespace RelertSharp.Engine
 
         public static bool MarkBuildingShape(StructureItem bud)
         {
-            if (_cellFindingReferance[bud] == null) return false;
+            if (Tiles[bud] == null) return false;
             bool result = true;
             if (buildingShape.Count > 0)
             {
                 foreach (I2dLocateable pos in buildingShape)
                 {
-                    if (_cellFindingReferance.HasTileOn(pos)) _cellFindingReferance[pos].UnMarkForSimulating();
+                    if (Tiles.HasTileOn(pos)) Tiles[pos].UnMarkForSimulating();
                 }
                 buildingShape.Clear();
             }
@@ -42,8 +42,8 @@ namespace RelertSharp.Engine
                 }
                 buildingShape.Add(pos);
                 bool b;
-                if (!_cellFindingReferance.HasTileOn(pos)) b = false;
-                else b = _cellFindingReferance[pos].MarkForSimulating(waterbound);
+                if (!Tiles.HasTileOn(pos)) b = false;
+                else b = Tiles[pos].MarkForSimulating(waterbound);
                 result = result && b;
             }
             return result;
@@ -52,7 +52,7 @@ namespace RelertSharp.Engine
         {
             foreach (I2dLocateable pos in buildingShape)
             {
-                if (_cellFindingReferance.HasTileOn(pos)) _cellFindingReferance[pos].UnMarkForSimulating();
+                if (Tiles.HasTileOn(pos)) Tiles[pos].UnMarkForSimulating();
             }
             buildingShape.Clear();
             markingBuildingShape = false;
@@ -73,7 +73,7 @@ namespace RelertSharp.Engine
             {
                 Vec3 tilepos = ScenePosToCoord(pos);
                 if (HoverNavigation && HoverNavHeight == tilepos.Z) return tilepos;
-                if (_cellFindingReferance.HasTileOn(tilepos)) return tilepos;
+                if (Tiles.HasTileOn(tilepos, out Tile t) && t.CanSelect) return tilepos;
                 pos -= _NormTileVec / 2f;
             }
             return Vec3.Zero;
@@ -100,7 +100,7 @@ namespace RelertSharp.Engine
                     infsubcell = GetSubCellFromCoord(scenepos, tileCoord.To2dLocateable());
                     return tileCoord;
                 }
-                if (_cellFindingReferance.HasTileOn(tileCoord))
+                if (Tiles.HasTileOn(tileCoord, out Tile t) && t.CanSelect)
                 {
                     infsubcell = GetSubCellFromCoord(scenepos, tileCoord.To2dLocateable());
                     return tileCoord;
@@ -131,13 +131,13 @@ namespace RelertSharp.Engine
             {
                 if (!markingBuildingShape)
                 {
-                    if (_cellFindingReferance[newpos.To2dLocateable()] is Tile t)
+                    if (Tiles[newpos.To2dLocateable()] is Tile t && t.CanSelect)
                     {
                         t.Mark(true);
                         previousTile?.Mark(false);
                     }
                 }
-                previousTile = _cellFindingReferance[newpos.To2dLocateable()];
+                previousTile = Tiles[newpos.To2dLocateable()];
                 return true;
             }
             return false;

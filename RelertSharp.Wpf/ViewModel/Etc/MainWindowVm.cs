@@ -234,6 +234,16 @@ namespace RelertSharp.Wpf.ViewModel
             }
         }
         [AutoUpdate(GROUP_MOUSE)]
+        public bool IsMousePhaseTile
+        {
+            get { return MouseState.State == PanelMouseState.TilePhasing; }
+            set
+            {
+                MouseState.SetState(PanelMouseState.TilePhasing);
+                SetProperty();
+            }
+        }
+        [AutoUpdate(GROUP_MOUSE)]
         public bool IsMouseRiseSingle
         {
             get { return MouseState.State == PanelMouseState.TileSingleRising; }

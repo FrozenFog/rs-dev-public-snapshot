@@ -9,6 +9,8 @@ namespace RelertSharp.MapStructure
         void MoveTo(I3dLocateable pos, int subcell = -1);
         void Hide();
         void Reveal();
+        void PhaseOut();
+        void UnPhase();
         void ShiftBy(I3dLocateable delta);
         void SetColor(Vec4 color);
         void ApplyTempColor(Vec4 color);
@@ -36,8 +38,6 @@ namespace RelertSharp.MapStructure
         void RevealSelf();
         void HideExtra();
         void RevealExtra();
-        void PhaseOut();
-        void UnPhase();
         void RedrawTile(Tile t);
     }
 }

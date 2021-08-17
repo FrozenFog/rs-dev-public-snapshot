@@ -29,20 +29,22 @@ namespace RelertSharp.MapStructure
         }
         public static void SetTile(IMapTileBrushConfig config)
         {
-            if (Map.TilesData[config.Pos] is Tile org)
+            if (Map.TilesData[config.Pos] is Tile org && !org.IsFrozen)
             {
                 org.ReplaceWithNewTileConfig(config);
                 org.Redraw();
             }
         }
-        public static void SetTile(int tileIndex, byte subindex, I2dLocateable pos, int height = -1)
+        public static bool SetTile(int tileIndex, byte subindex, I2dLocateable pos, int height = -1)
         {
-            if (Map.TilesData[pos] is Tile org)
+            if (Map.TilesData[pos] is Tile org && !org.IsFrozen)
             {
                 org.SetTileTo(tileIndex, subindex);
                 if (height != -1) org.SetHeightTo(height);
                 org.Redraw();
+                return true;
             }
+            return false;
         }
         public static List<Tile> SelectTile(IEnumerable<I2dLocateable> posTile)
         {
@@ -55,7 +57,7 @@ namespace RelertSharp.MapStructure
         }
         public static void SetTile(Tile src)
         {
-            if (Map.TilesData[src] is Tile org)
+            if (Map.TilesData[src] is Tile org && !org.IsFrozen)
             {
                 org.SetTileTo(src.TileIndex, src.SubIndex);
                 org.SetHeightTo(src.RealHeight);

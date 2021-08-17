@@ -293,6 +293,9 @@ namespace RelertSharp.Wpf.MapEngine
                 case PanelMouseState.InteliRampBrush:
                     if (!InteliBrush.CurrentInteliRamp.IsEmptyTile) TilePaintBrush.AddTileToMap();
                     break;
+                case PanelMouseState.TilePhasing:
+                    TileSelector.PhaseTileAt(cell);
+                    break;
             }
             EngineApi.InvokeRedraw();
         }
@@ -354,6 +357,11 @@ namespace RelertSharp.Wpf.MapEngine
             {
                 TileSelector.UpdateSelectingRectangle(unscaled, cell);
                 redraw = false;
+                goto nop;
+            }
+            if (TileSelector.IsPhasing)
+            {
+                redraw = TileSelector.PhaseTileAt(cell); 
                 goto nop;
             }
             if (TilePaintBrush.IsRampFlatOn)

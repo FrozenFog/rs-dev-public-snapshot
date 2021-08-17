@@ -135,6 +135,9 @@
                 <ToggleButton Content="{StaticResource FlatRamp}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseFlatRamp}"/>
                 <ToggleButton Content="{StaticResource InteliRamp}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseInteliRamp}"/>
                 <Separator/>
+                <ToggleButton Content="{StaticResource TilePhase}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMousePhaseTile}"/>
+                <Button Content="{StaticResource TileUnphase}" IsEnabled="{Binding IsEngineDrawed}" Click="ToolUnPhaseAllTile"/>
+                <Separator/>
                 <ToggleButton Content="{StaticResource TileSingleSelect}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsSingleTileSelecting}"/>
                 <ToggleButton Content="{StaticResource TileSelect}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsBoxTileSelecting}"/>
                 <ToggleButton Content="{StaticResource TileLine}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsLineTileSelecting}"/>

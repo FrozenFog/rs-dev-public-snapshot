@@ -23,8 +23,9 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         TileSingleRising = 1 << 9,
         TileSingleSinking = 1 << 10,
         InteliRampBrush = 1 << 11,
+        TilePhasing = 1 << 12,
         TileBrush = TileSingleBrush | TileBucketFlood | InteliRampBrush,
-        DEBUG = 65535
+        DEBUG = 1 << 31
     }
     internal static class MouseState
     {

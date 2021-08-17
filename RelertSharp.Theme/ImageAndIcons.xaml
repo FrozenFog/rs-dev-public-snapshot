@@ -722,7 +722,173 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
+    <Viewbox x:Key="TilePhase" Width="16" Height="16">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="Transparent" Geometry="F1 M16,16z M0,0z M8.133,4.27L8.133,4.27 15.348,8.236 8.116,12.203 0.801,8.236z" />
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Geometry="F1 M16,16z M0,0z M7.254,4.746L7.254,4.746 8.133,4.27 9.01,4.752">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Bevel" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Bevel">
+                                            <Pen.DashStyle>
+                                                <DashStyle Offset="0" Dashes="2.493 1.8698" />
+                                            </Pen.DashStyle>
+                                        </Pen>
+                                    </GeometryDrawing.Pen>
+                                    <GeometryDrawing.Geometry>
+                                        <LineGeometry StartPoint="10.648,5.652" EndPoint="13.652,7.304" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <GeometryDrawing Geometry="F1 M16,16z M0,0z M14.472,7.754L14.472,7.754 15.348,8.236 14.471,8.717">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Bevel" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Bevel">
+                                            <Pen.DashStyle>
+                                                <DashStyle Offset="0" Dashes="2.4993 1.8745" />
+                                            </Pen.DashStyle>
+                                        </Pen>
+                                    </GeometryDrawing.Pen>
+                                    <GeometryDrawing.Geometry>
+                                        <LineGeometry StartPoint="12.827,9.618" EndPoint="9.814,11.271" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <GeometryDrawing Geometry="F1 M16,16z M0,0z M8.993,11.722L8.993,11.722 8.116,12.203 7.237,11.727">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Bevel" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Bevel">
+                                            <Pen.DashStyle>
+                                                <DashStyle Offset="0" Dashes="2.5286 1.8965" />
+                                            </Pen.DashStyle>
+                                        </Pen>
+                                    </GeometryDrawing.Pen>
+                                    <GeometryDrawing.Geometry>
+                                        <LineGeometry StartPoint="5.57,10.822" EndPoint="2.514,9.165" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <GeometryDrawing Geometry="F1 M16,16z M0,0z M1.68,8.712L1.68,8.712 0.801,8.236 1.681,7.76">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Bevel" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Bevel">
+                                            <Pen.DashStyle>
+                                                <DashStyle Offset="0" Dashes="2.5343 1.9008" />
+                                            </Pen.DashStyle>
+                                        </Pen>
+                                    </GeometryDrawing.Pen>
+                                    <GeometryDrawing.Geometry>
+                                        <LineGeometry StartPoint="3.353,6.856" EndPoint="6.418,5.198" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
 
+    <Viewbox x:Key="TileUnphase" Width="16" Height="16">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="{StaticResource textDisable}" Geometry="F1 M16,16z M0,0z M8.133,4.27L8.133,4.27 15.348,8.236 8.116,12.203 0.801,8.236z" />
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Geometry="F1 M16,16z M0,0z M7.254,4.746L7.254,4.746 8.133,4.27 9.01,4.752">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Bevel" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Bevel">
+                                            <Pen.DashStyle>
+                                                <DashStyle Offset="0" Dashes="2.493 1.8698" />
+                                            </Pen.DashStyle>
+                                        </Pen>
+                                    </GeometryDrawing.Pen>
+                                    <GeometryDrawing.Geometry>
+                                        <LineGeometry StartPoint="10.648,5.652" EndPoint="13.652,7.304" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <GeometryDrawing Geometry="F1 M16,16z M0,0z M14.472,7.754L14.472,7.754 15.348,8.236 14.471,8.717">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Bevel" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Bevel">
+                                            <Pen.DashStyle>
+                                                <DashStyle Offset="0" Dashes="2.4993 1.8745" />
+                                            </Pen.DashStyle>
+                                        </Pen>
+                                    </GeometryDrawing.Pen>
+                                    <GeometryDrawing.Geometry>
+                                        <LineGeometry StartPoint="12.827,9.618" EndPoint="9.814,11.271" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <GeometryDrawing Geometry="F1 M16,16z M0,0z M8.993,11.722L8.993,11.722 8.116,12.203 7.237,11.727">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Bevel" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Bevel">
+                                            <Pen.DashStyle>
+                                                <DashStyle Offset="0" Dashes="2.5286 1.8965" />
+                                            </Pen.DashStyle>
+                                        </Pen>
+                                    </GeometryDrawing.Pen>
+                                    <GeometryDrawing.Geometry>
+                                        <LineGeometry StartPoint="5.57,10.822" EndPoint="2.514,9.165" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <GeometryDrawing Geometry="F1 M16,16z M0,0z M1.68,8.712L1.68,8.712 0.801,8.236 1.681,7.76">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Bevel" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Bevel">
+                                            <Pen.DashStyle>
+                                                <DashStyle Offset="0" Dashes="2.5343 1.9008" />
+                                            </Pen.DashStyle>
+                                        </Pen>
+                                    </GeometryDrawing.Pen>
+                                    <GeometryDrawing.Geometry>
+                                        <LineGeometry StartPoint="3.353,6.856" EndPoint="6.418,5.198" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
     <!--<Viewbox x:Key="None" Width="16" Height="16">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>

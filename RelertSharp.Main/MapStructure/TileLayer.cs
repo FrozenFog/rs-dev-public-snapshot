@@ -155,9 +155,9 @@ namespace RelertSharp.MapStructure
         {
             return this[tile] != null;
         }
-        public bool HasTileOn(Vec3 pos)
+        public bool HasTileOn(Vec3 pos, out Tile t)
         {
-            Tile t = this[pos.ToCoord()];
+            t = this[pos.ToCoord()];
             if (t != null) return t.Z == pos.Z;
             return false;
         }
@@ -435,6 +435,17 @@ namespace RelertSharp.MapStructure
                 isExtraHidden = false;
             }
         }
+        protected override void UpdateHide()
+        {
+            base.UpdateHide();
+            if (isExtraHidden) SceneObject?.HideExtra();
+            else SceneObject?.RevealExtra();
+        }
+        protected override void UpdatePhase()
+        {
+            base.UpdatePhase();
+            if (isExtraHidden) SceneObject?.HideExtra();
+        }
         #endregion
 
 
@@ -532,7 +543,7 @@ namespace RelertSharp.MapStructure
         {
             if (Disposed) return;
             this.marked = marked;
-            if (!isSelected)
+            if (!isSelected && CanSelect)
             {
                 if (marked)
                 {
@@ -546,6 +557,17 @@ namespace RelertSharp.MapStructure
                 }
             }
         }
+        public override void Reveal()
+        {
+            if (isHidden)
+            {
+                SceneObject?.RevealSelf();
+                if (!isExtraHidden) SceneObject?.RevealExtra();
+                if (isSelected) Select(true);
+                isHidden = false;
+                UpdatePhase();
+            }
+        }
         public void SwitchToFramework(bool enable)
         {
             isFramework = enable;
@@ -557,25 +579,26 @@ namespace RelertSharp.MapStructure
                 if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
                 if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
             }
+            UpdatePhase();
         }
         public void FlatToGround(bool enable)
         {
             if (enable && !isFlat)
             {
                 isFlat = true;
-                I3dLocateable pos = new Pnt3(this, 0);
                 MoveTileObjectsTo(this, 0);
                 SetHeightTo(0, true);
                 HideExtraImg();
             }
             else if (!enable && isFlat)
             {
-                I3dLocateable pos = new Pnt3(this, originalHeight);
                 MoveTileObjectsTo(this, originalHeight);
                 SetHeightTo(originalHeight, true);
                 RevealExtraImg();
                 isFlat = false;
             }
+            UpdateHide();
+            UpdatePhase();
         }
         /// <summary>
         /// 
@@ -710,6 +733,10 @@ namespace RelertSharp.MapStructure
         {
             get { return IsDefault && IceGrowth == 0; }
         }
+        public override bool CanSelect
+        {
+            get { return !isPhased; }
+        }
         public static Tile EmptyTileAt(int x, int y)
         {
             return new Tile((short)x, (short)y, 0, 0, 0, 0);
@@ -809,6 +836,7 @@ namespace RelertSharp.MapStructure
         public int TileTerrainType { get; set; }
         public bool Disposed { get; private set; }
         public bool IsLeagalTile { get; set; }
+        public bool IsFrozen { get { return isPhased; } }
         public bool IsEmptyTile { get { return (tileIndex == 65535 || tileIndex == 0) && SubIndex == 0; } }
         #endregion
     }

@@ -47,6 +47,15 @@ namespace RelertSharp.Engine.MapObjects
         {
             SetColorStrict(ColorVector);
         }
+
+        public virtual void PhaseOut()
+        {
+            SetColorStrict(Vec4.Hide75);
+        }
+        public virtual void UnPhase()
+        {
+            SetColorStrict(ColorVector);
+        }
         #endregion
 
 

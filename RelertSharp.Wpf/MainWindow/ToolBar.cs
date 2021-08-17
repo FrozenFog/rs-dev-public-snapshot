@@ -56,5 +56,11 @@ namespace RelertSharp.Wpf
             TileSelector.ClearAllTileAsZero(true);
             EngineApi.InvokeRedraw();
         }
+
+        private void ToolUnPhaseAllTile(object sender, RoutedEventArgs e)
+        {
+            TileSelector.UnPhaseAllTile();
+            EngineApi.InvokeRedraw();
+        }
     }
 }
