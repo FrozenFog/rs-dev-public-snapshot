@@ -133,7 +133,6 @@
                 <ToggleButton Content="{StaticResource SingleRise}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseRiseSingle}"/>
                 <ToggleButton Content="{StaticResource SingleSink}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseSinkSingle}"/>
                 <ToggleButton Content="{StaticResource FlatRamp}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseFlatRamp}"/>
-                <ToggleButton Content="{StaticResource InteliRamp}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseInteliRamp}"/>
                 <Separator/>
                 <ToggleButton Content="{StaticResource TilePhase}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMousePhaseTile}"/>
                 <Button Content="{StaticResource TileUnphase}" IsEnabled="{Binding IsEngineDrawed}" Click="ToolUnPhaseAllTile"/>
@@ -154,6 +153,10 @@
                 <Button Content="{StaticResource SmoothRamp}" IsEnabled="{Binding IsSelectorHasTile}" Click="ToolSmoothRamp"/>
                 <Button Content="{StaticResource TileClearAll}" IsEnabled="{Binding IsSelectorHasTile}" Click="ToolClearTile"/>
                 <Button Content="{StaticResource TileZeroAll}" IsEnabled="{Binding IsSelectorHasTile}" Click="ToolZeroTile"/>
+            </ToolBar>
+            <ToolBar Band="2" BandIndex="1" HorizontalAlignment="Left">
+                <ToggleButton Content="{StaticResource InteliRamp}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseInteliRamp}"/>
+                <ToggleButton Content="{StaticResource InteliWall}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseInteliWall}"/>
             </ToolBar>
         </ToolBarTray>
         <DockingManager x:Name="dockMain" Grid.Row="2">

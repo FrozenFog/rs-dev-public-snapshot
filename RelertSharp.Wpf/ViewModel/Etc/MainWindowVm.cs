@@ -234,6 +234,16 @@ namespace RelertSharp.Wpf.ViewModel
             }
         }
         [AutoUpdate(GROUP_MOUSE)]
+        public bool IsMouseInteliWall
+        {
+            get { return MouseState.State == PanelMouseState.InteliWallBrush; }
+            set
+            {
+                MouseState.SetState(PanelMouseState.InteliWallBrush);
+                SetProperty();
+            }
+        }
+        [AutoUpdate(GROUP_MOUSE)]
         public bool IsMousePhaseTile
         {
             get { return MouseState.State == PanelMouseState.TilePhasing; }

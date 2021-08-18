@@ -147,10 +147,6 @@ namespace RelertSharp.IniSystem
         {
             return this["Sides"].GetPair(index).Name;
         }
-        public bool IsTechBuilding(string regname)
-        {
-            return this["AI"].ParseStringList("NeutralTechBuildings").Contains(regname);
-        }
         public INIPair GetColorInfo(string colorName)
         {
             INIEntity entColor = this["Colors"];

@@ -12,6 +12,7 @@ using RelertSharp.MapStructure;
 using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.MapEngine.Helper;
 using RelertSharp.Wpf.Dialogs;
+using RelertSharp.IniSystem;
 
 namespace RelertSharp.Wpf
 {
@@ -73,6 +74,7 @@ namespace RelertSharp.Wpf
         {
             Config.OverlayIndex = index;
             Config.OverlayFrame = subindex;
+            InteliBrush.CurrentOverlayIndex = index;
         }
         public static void SetWaypointIndex(string idx)
         {

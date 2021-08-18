@@ -634,6 +634,11 @@ namespace RelertSharp.MapStructure
         {
             return objectsOnTile;
         }
+        public IMapObject GetObejct(Predicate<IMapObject> predicate)
+        {
+            foreach (IMapObject obj in objectsOnTile) if (predicate(obj)) return obj;
+            return null;
+        }
         public void AddObject(IMapObject src)
         {
             if (src.ObjectType == MapObjectType.Overlay && objectsOnTile.Any(x => x.ObjectType == MapObjectType.Overlay))

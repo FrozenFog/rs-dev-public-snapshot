@@ -311,4 +311,24 @@ namespace RelertSharp.Common
             return string.Format("X: {0}, Y: {1}, Z: {2}", pos.X, pos.Y, pos.Z);
         }
     }
+
+
+    public static class ExtensionOther
+    {
+        public static WallDirection Reverse(this WallDirection dir)
+        {
+            switch (dir)
+            {
+                case WallDirection.NE:
+                    return WallDirection.SW;
+                case WallDirection.SW:
+                    return WallDirection.NE;
+                case WallDirection.NW:
+                    return WallDirection.SE;
+                case WallDirection.SE:
+                    return WallDirection.NW;
+            }
+            return dir;
+        }
+    }
 }

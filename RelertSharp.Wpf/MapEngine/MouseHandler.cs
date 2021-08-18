@@ -160,6 +160,18 @@ namespace RelertSharp.Wpf.MapEngine
                 case PanelMouseState.ObjectPasteBrush:
                     MapClipboard.SuspendClipObjects();
                     break;
+                case PanelMouseState.InteliWallBrush:
+                    if (InteliBrush.IsDrawingWall)
+                    {
+                        if (InteliBrush.CurrentOverlayIsWall)
+                        {
+                            InteliBrush.EndWallDrawing();
+                            InteliBrush.LayWall(0);
+                        }
+                        else GuiUtil.Warning("Current overlay is not wall.");
+                        return;
+                    }
+                    break;
             }
             MouseState.SetState(PanelMouseState.None);
             EngineApi.InvokeRedraw();
@@ -295,6 +307,10 @@ namespace RelertSharp.Wpf.MapEngine
                     break;
                 case PanelMouseState.TilePhasing:
                     TileSelector.PhaseTileAt(cell);
+                    break;
+                case PanelMouseState.InteliWallBrush:
+                    InteliBrush.BeginWallDrawing();
+                    InteliBrush.AddNodeAt(cell);
                     break;
             }
             EngineApi.InvokeRedraw();

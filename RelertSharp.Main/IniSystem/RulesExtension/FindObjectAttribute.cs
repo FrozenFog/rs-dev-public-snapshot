@@ -180,5 +180,16 @@ namespace RelertSharp.IniSystem
             else result = string.Format("{0}.{1}", result.ToLower(), TileDictionary.TheaterSub);
             return result;
         }
+        public static bool IsWallOverlay(this Rules r, byte overlayIndex)
+        {
+            INIEntity ov = r[RulesHead.HEAD_OVERLAY];
+            string regname = ov[overlayIndex.ToString()];
+            INIEntity ent = r[regname];
+            return ent.ParseBool("Wall");
+        }
+        public static bool IsTechBuilding(this Rules r, string regname)
+        {
+            return r["AI"].ParseStringList("NeutralTechBuildings").Contains(regname);
+        }
     }
 }

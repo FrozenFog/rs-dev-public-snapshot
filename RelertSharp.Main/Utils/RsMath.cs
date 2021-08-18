@@ -115,6 +115,10 @@ namespace RelertSharp
         {
             return a.X == b.X && a.Y == b.Y;
         }
+        public static bool I2dValid(I2dLocateable pos)
+        {
+            return pos.X > 0 && pos.Y > 0;
+        }
         public static I3dLocateable I3dSubi(I3dLocateable value, I3dLocateable minusBy)
         {
             return new Pnt3(value.X - minusBy.X, value.Y - minusBy.Y, value.Z - minusBy.Z);

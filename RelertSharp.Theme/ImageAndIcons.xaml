@@ -819,12 +819,38 @@
                         <DrawingGroup>
                             <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M10,15L10,15 1,13 7,4 16,6z" />
                             <DrawingGroup Opacity="1">
-                                <GeometryDrawing Brush="#FFF2F2F2" Geometry="F1 M16,16z M0,0z M7.581,4.134C7.585,5.291 7.037,6.379 6.107,7.066 5.893,7.21 5.761,7.448 5.749,7.704L5.749,9.275 4.78,10.243 3.052,10.243 2.083,9.274 2.083,7.801C2.087,7.517 1.958,7.25 1.733,7.075 0.107,5.871 -0.234,3.574 0.971,1.948 1.499,1.236 2.267,0.74 3.131,0.55 3.39,0.496 3.653,0.469 3.916,0.469 5.939,0.47 7.58,2.11 7.581,4.134z" />
+                                <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M7.581,4.134C7.585,5.291 7.037,6.379 6.107,7.066 5.893,7.21 5.761,7.448 5.749,7.704L5.749,9.275 4.78,10.243 3.052,10.243 2.083,9.274 2.083,7.801C2.087,7.517 1.958,7.25 1.733,7.075 0.107,5.871 -0.234,3.574 0.971,1.948 1.499,1.236 2.267,0.74 3.131,0.55 3.39,0.496 3.653,0.469 3.916,0.469 5.939,0.47 7.58,2.11 7.581,4.134z" />
                             </DrawingGroup>
                             <DrawingGroup Opacity="1">
                                 <GeometryDrawing Brush="#FF666666" Geometry="F1 M16,16z M0,0z M2.694,9.021L5.138,9.021 4.527,9.634 3.305,9.634 2.694,9.021z M2.694,7.801L2.694,8.411 5.138,8.411 5.138,7.801 2.694,7.801z" />
                                 <GeometryDrawing Brush="#FFFFFF00" Geometry="F1 M16,16z M0,0z M3.916,5.051C3.41,5.051 3,4.641 3,4.134 3,3.627 3.41,3.217 3.916,3.217 4.422,3.217 4.833,3.627 4.833,4.134 4.832,4.641 4.422,5.051 3.916,5.051z M3.257,1.148C1.61,1.513 0.569,3.142 0.931,4.79 1.09,5.509 1.504,6.147 2.095,6.586 2.476,6.874 2.698,7.322 2.694,7.8L3.61,7.8 3.61,5.63C2.783,5.461 2.25,4.656 2.419,3.829 2.587,3.002 3.394,2.469 4.221,2.638 5.048,2.807 5.581,3.613 5.412,4.439 5.29,5.039 4.821,5.508 4.221,5.63L4.221,7.8 5.138,7.8 5.138,7.704C5.148,7.255 5.373,6.836 5.742,6.579 7.093,5.568 7.368,3.654 6.358,2.303 5.639,1.343 4.428,0.892 3.257,1.148z" />
                             </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="InteliWall" Width="16" Height="16">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M7.331,3.665C7.334,4.822 6.787,5.91 5.857,6.598 5.642,6.741 5.511,6.979 5.499,7.235L5.499,8.806 4.529,9.774 2.802,9.774 1.832,8.804 1.832,7.332C1.836,7.049 1.707,6.781 1.482,6.606 -0.144,5.402 -0.485,3.105 0.72,1.479 1.248,0.767 2.016,0.271 2.88,0.0810000000000002 3.14,0.027 3.402,0 3.666,0 5.689,0.001 7.33,1.641 7.331,3.665z" />
+                            </DrawingGroup>
+                            <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M14,8.759L14,8.759 12,10 12,3 14,3z" />
+                            <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="2,8,2,7" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Brush="#FF666666" Geometry="F1 M16,16z M0,0z M2.443,8.553L4.888,8.553 4.277,9.165 3.054,9.165 2.443,8.553z M2.443,7.332L2.443,7.942 4.888,7.942 4.888,7.332 2.443,7.332z" />
+                                <GeometryDrawing Brush="#FFFFFF00" Geometry="F1 M16,16z M0,0z M3.666,4.582C3.16,4.582 2.75,4.172 2.75,3.665 2.75,3.158 3.16,2.748 3.666,2.748 4.172,2.748 4.583,3.158 4.583,3.665 4.582,4.172 4.171,4.582 3.666,4.582z M3.006,0.679C1.359,1.044 0.318,2.673 0.681,4.321 0.839,5.04 1.253,5.678 1.845,6.117 2.226,6.405 2.448,6.853 2.444,7.331L3.36,7.331 3.36,5.161C2.533,4.992 2,4.188 2.168,3.36 2.336,2.533 3.144,2 3.97,2.169 4.797,2.338 5.33,3.144 5.161,3.97 5.04,4.57 4.57,5.039 3.97,5.161L3.97,7.331 4.888,7.331 4.888,7.235C4.898,6.786 5.122,6.367 5.492,6.11 6.843,5.099 7.118,3.185 6.107,1.834 5.388,0.874 4.177,0.423 3.006,0.679z" />
+                            </DrawingGroup>
+                            <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M4,15L4,15 12,9.964 12,6.292 4,11.475z" />
                         </DrawingGroup>
                     </DrawingBrush.Drawing>
                 </DrawingBrush>
