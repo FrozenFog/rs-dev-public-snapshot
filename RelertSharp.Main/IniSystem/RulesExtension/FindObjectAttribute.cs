@@ -1,13 +1,40 @@
 ﻿using RelertSharp.Common;
 using System.Collections.Generic;
+using RelertSharp.IniSystem;
+using RelertSharp.MapStructure.Objects;
 using System.Linq;
+using System;
 using static RelertSharp.Utils.Misc;
 using static RelertSharp.Common.GlobalVar;
+using static RelertSharp.Common.Constant;
 
 namespace RelertSharp.IniSystem
 {
     public static partial class RulesExtension
     {
+        private static char _suff
+        {
+            get
+            {
+                switch (CurrentTheater)
+                {
+                    case TheaterType.Desert:
+                        return 'D';
+                    case TheaterType.Snow:
+                        return 'A';
+                    case TheaterType.Lunar:
+                        return 'L';
+                    case TheaterType.NewUrban:
+                        return 'N';
+                    case TheaterType.Temprate:
+                        return 'T';
+                    case TheaterType.Urban:
+                        return 'U';
+                    default:
+                        return 'G';
+                }
+            }
+        }
         private static Dictionary<string, Vec3> bufferedBuildingShape = new Dictionary<string, Vec3>();
 
         public static List<bool> GetBuildingCustomShape(this Rules r, string regname, int sizeX, int sizeY)
@@ -124,6 +151,34 @@ namespace RelertSharp.IniSystem
                 float b = item.ParseFloat("LightBlueTint") + 1;
                 return new Vec4(r, g, b, 1);
             }
+        }
+
+        public static void FixWallOverlayName(this Rules rules, ref string filename)
+        {
+            if (!GlobalConfig.DrawingAdjust.NoBudAltArt)
+            {
+                filename = filename.Replace(1, _suff);
+            }
+        }
+        public static string GetOverlayPalette(this Rules r, string regName)
+        {
+            INIEntity ov = r[regName];
+            if (ov.ParseBool("Wall")) return string.Format("unit{0}.pal", TileDictionary.TheaterSub);
+            if (ov.ParseBool("Tiberium")) return string.Format("{0}.pal", GlobalConfig.GetTheaterPalName(GlobalMap.Info.TheaterName));
+            return string.Format("iso{0}.pal", TileDictionary.TheaterSub);
+        }
+        public static string GetOverlayFileName(this Rules r, string regName)
+        {
+            string result = regName;
+            string img = r[regName][KEY_IMAGE];
+            bool isWall = r[regName].ParseBool("Wall");
+            if (isWall) r.FixWallOverlayName(ref result);
+            if (!string.IsNullOrEmpty(img) && regName != img) result = img;
+
+            if (GlobalDir.HasFile(result + EX_SHP)) result = result.ToLower() + EX_SHP;
+            else if (isWall) result = result.Replace(1, 'G').ToLower() + EX_SHP;
+            else result = string.Format("{0}.{1}", result.ToLower(), TileDictionary.TheaterSub);
+            return result;
         }
     }
 }

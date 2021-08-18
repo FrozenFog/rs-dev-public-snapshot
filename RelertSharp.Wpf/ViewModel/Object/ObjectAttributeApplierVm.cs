@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using RelertSharp.Common;
+using RelertSharp.FileSystem;
+using RelertSharp.IniSystem;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Wpf.Common;
 
@@ -506,6 +510,14 @@ namespace RelertSharp.Wpf.ViewModel
                 SetProperty();
             }
         }
+        public Visibility IsOverlayPanelEnable
+        {
+            get { return Type == MapObjectType.Overlay ? Visibility.Visible : Visibility.Collapsed; }
+        }
+        public ObservableCollection<ObjectPickVm> OverlayFrames
+        {
+            get { return overlays; }
+        }
         #endregion
 
 
@@ -513,6 +525,65 @@ namespace RelertSharp.Wpf.ViewModel
         public void SetObjectType(MapObjectType type)
         {
             Type = type;
+            OnAllPropertyChanged();
+        }
+        private ObservableCollection<ObjectPickVm> overlays = new ObservableCollection<ObjectPickVm>();
+        public void SetOverlayFrames(byte overlayIndex, string regname, out bool isValid, out byte firstValidFrame)
+        {
+            overlays.Clear();
+            isValid = false;
+            firstValidFrame = 0;
+            string filename = GlobalVar.GlobalRules.GetOverlayFileName(regname);
+            string pal = GlobalVar.GlobalRules.GetOverlayPalette(regname);
+            if (GlobalVar.GlobalDir.HasFile(filename))
+            {
+                ShpFile shp = new ShpFile(GlobalVar.GlobalDir.GetRawByte(filename), filename);
+                PalFile fpal = new PalFile(GlobalVar.GlobalDir.GetRawByte(pal), pal);
+                shp.LoadColor(fpal);
+                int count = shp.Frames.Count;
+                int i = 0;
+                if (count % 2 == 0)
+                {
+                    for (; i < count / 2; i++)
+                    {
+                        ShpFrame frm = shp.Frames[i];
+                        if (!frm.IsNullFrame)
+                        {
+                            if (!isValid)
+                            {
+                                isValid = true;
+                                firstValidFrame = (byte)i;
+                            }
+                            ObjectPickVm vm = new ObjectPickVm(string.Empty, regname, overlayIndex, (byte)i);
+                            vm.OverlayImage = frm.Image.ToWpfImage();
+                            vm.ImgWidth = frm.Width;
+                            vm.ImgHeight = frm.Height;
+                            overlays.Add(vm);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (ShpFrame frm in shp.Frames)
+                    {
+                        if (!frm.IsNullFrame)
+                        {
+                            if (!isValid)
+                            {
+                                isValid = true;
+                                firstValidFrame = (byte)i;
+                            }
+                            ObjectPickVm vm = new ObjectPickVm(string.Empty, regname, overlayIndex, (byte)i);
+                            vm.OverlayImage = frm.Image.ToWpfImage();
+                            vm.ImgWidth = frm.Width;
+                            vm.ImgHeight = frm.Height;
+                            overlays.Add(vm);
+                        }
+                        i++;
+                    }
+                }
+            }
+            SetProperty(nameof(OverlayFrames));
         }
         #endregion
     }

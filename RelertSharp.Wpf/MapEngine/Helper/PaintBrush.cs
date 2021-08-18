@@ -54,6 +54,11 @@ namespace RelertSharp.Wpf
                 isSuspended = true;
             }
         }
+        public static void InvalidateBrushObject()
+        {
+            currentObject?.Dispose();
+            currentObject = null;
+        }
         public static void ResumeBrush()
         {
             if (isSuspended)
@@ -63,6 +68,11 @@ namespace RelertSharp.Wpf
             }
         }
         #region Objects
+        public static void SetOverlayInfo(byte index, byte subindex)
+        {
+            Config.OverlayIndex = index;
+            Config.OverlayFrame = subindex;
+        }
         public static void LoadBrushObject(string regname, MapObjectType type, bool dispose = true)
         {
             bool isValid = true;

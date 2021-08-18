@@ -2,6 +2,7 @@
 using RelertSharp.Common.Config.Model;
 using RelertSharp.IniSystem;
 using RelertSharp.Wpf.Common;
+using RelertSharp.Wpf.MapEngine.Helper;
 using RelertSharp.Wpf.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -185,11 +186,38 @@ namespace RelertSharp.Wpf.Views
                 root.AddItem(all);
                 trvMain.Items.Add(root);
             }
+            void overlay()
+            {
+                ObjectPickVm root = new ObjectPickVm("Overlays");
+                root.SetIcon(FindResource("HeadOverlay"));
+                ObjectPickVm rock = new ObjectPickVm("Rocks");
+                ObjectPickVm resource = new ObjectPickVm("Resources");
+                ObjectPickVm others = new ObjectPickVm("Others");
+                ObjectPickVm walls = new ObjectPickVm("Walls");
+                ObjectPickVm bridges = new ObjectPickVm("Bridges");
+                ObjectPickVm rail = new ObjectPickVm("Railway");
+                int i = 0;
+                foreach (INIPair p in Rules[Constant.RulesHead.HEAD_OVERLAY])
+                {
+                    INIEntity ent = Rules[p.Value];
+                    ObjectPickVm vm = new ObjectPickVm(ent.GetString(Constant.KEY_NAME, p.Value), p.Value, (byte)i);
+                    if (ent.ParseBool("IsARock")) rock.AddItem(vm);
+                    else if (ent.ParseBool("Wall")) walls.AddItem(vm);
+                    else if (ent.ParseBool("Tiberium")) resource.AddItem(vm);
+                    else if (ent.GetString("Land") == "Railroad") rail.AddItem(vm);
+                    else if (ent.ParseBool("Overrides") || ent.GetString("Land") == "Road") bridges.AddItem(vm);
+                    else others.AddItem(vm);
+                    i++;
+                }
+                root.AddItems(walls, rock, bridges, resource, rail, others);
+                trvMain.Items.Add(root);
+            }
             building();
             generic("Infantries", Constant.RulesHead.HEAD_INFANTRY, FindResource("HeadInf"), CombatObjectType.Infantry, MapObjectType.Infantry, cfg.Infantries);
             unit();
             generic("Aircrafts", Constant.RulesHead.HEAD_AIRCRAFT, FindResource("HeadAir"), CombatObjectType.Aircraft, MapObjectType.Aircraft, cfg.Aircrafts);
             terrain();
+            overlay();
             favourites();
             ReloadAttributeCombo();
         }
@@ -204,6 +232,16 @@ namespace RelertSharp.Wpf.Views
         #endregion
 
         #region Handler
+        private void OverlayFrameSelectedChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lvOverlay.SelectedItem is ObjectPickVm selected)
+            {
+                PaintBrush.SetOverlayInfo(selected.OverlayIndex, selected.OverlayData);
+                PaintBrush.ResumeBrush();
+                PaintBrush.LoadBrushObject(selected.RegName, MapObjectType.Overlay);
+                MouseState.SetState(PanelMouseState.ObjectBrush);
+            }
+        }
         private void BrushItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             ObjectPickVm selected = trvMain.SelectedItem as ObjectPickVm;
@@ -212,12 +250,21 @@ namespace RelertSharp.Wpf.Views
             cbbUpg2.ItemsSource = upgradeType;
             cbbUpg3.ItemsSource = upgradeType;
             context.SetObjectType(selected.Type);
-            RefreshContext();
+            if (selected.Type == MapObjectType.Overlay)
+            {
+                context.SetOverlayFrames(selected.OverlayIndex, selected.RegName, out bool isValidOverlay, out byte firstValidFrame);
+                PaintBrush.SetOverlayInfo(selected.OverlayIndex, firstValidFrame);
+                if (!isValidOverlay)
+                {
+                    PaintBrush.InvalidateBrushObject();
+                    return;
+                }
+            }
             if (selected.Type != MapObjectType.Undefined)
             {
                 PaintBrush.ResumeBrush();
                 PaintBrush.LoadBrushObject(selected.RegName, selected.Type);
-                MapEngine.Helper.MouseState.SetState(MapEngine.Helper.PanelMouseState.ObjectBrush);
+                MouseState.SetState(PanelMouseState.ObjectBrush);
             }
         }
         private void HandleAttrubuteRefresh(object sender, EventArgs e)
@@ -228,7 +275,6 @@ namespace RelertSharp.Wpf.Views
             cbbUpg2.ItemsSource = upgradeType;
             cbbUpg3.ItemsSource = upgradeType;
             context.SetObjectType(selected.Type);
-            RefreshContext();
         }
         private void ObjectRefreshHandler(object sender, EventArgs e)
         {
@@ -258,11 +304,6 @@ namespace RelertSharp.Wpf.Views
             cbbOwner.ItemsSource = GlobalCollectionVm.Houses;
             cbbStatus.ItemsSource = GlobalVar.GlobalConfig.ModConfig.GetCombo(Constant.Config.DefaultComboType.TYPE_MAP_OBJSTATE).CastToCombo();
             cbbSpotlight.ItemsSource = GlobalVar.GlobalConfig.ModConfig.GetCombo(Constant.Config.DefaultComboType.TYPE_MAP_SPOTLIGHT).CastToCombo();
-        }
-        private void RefreshContext()
-        {
-            DataContext = null;
-            DataContext = context;
         }
         #endregion
     }

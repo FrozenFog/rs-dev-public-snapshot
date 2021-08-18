@@ -38,6 +38,10 @@ namespace RelertSharp.Wpf.ViewModel
                 Items.Add(item);
             }
         }
+        public virtual void AddItems(params IBaseTreeVm<TData>[] items)
+        {
+            foreach (IBaseTreeVm<TData> item in items) AddItem(item);
+        }
         public virtual void InsertItem(IBaseTreeVm<TData> iitem, int index = 0)
         {
             if (iitem is BaseTreeVm<TData> item)

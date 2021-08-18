@@ -85,25 +85,6 @@ namespace RelertSharp.Engine
             data.IsEmpty = bSelf && bAnim && bAnim2 && bAnim3 && bIdle && bSuper && bBib && bTurret;
             return data;
         }
-        public static string GetOverlayPalette(this Rules r, string regName)
-        {
-            INIEntity ov = Rules[regName];
-            if (ov.ParseBool("Wall")) return string.Format("unit{0}.pal", TileDictionary.TheaterSub);
-            if (ov.ParseBool("Tiberium")) return string.Format("{0}.pal", GlobalConfig.GetTheaterPalName(GlobalMap.Info.TheaterName));
-            return string.Format("iso{0}.pal", TileDictionary.TheaterSub);
-        }
-        public static string GetOverlayFileName(this Rules r, string regName)
-        {
-            string filename = regName;
-            INIEntity ov = Rules[regName];
-            string img = ov[KEY_IMAGE];
-            bool wall = ov.ParseBool("Wall");
-            if (wall) r.FixWallOverlayName(ref filename);
-            if (!string.IsNullOrEmpty(img) && regName != img) filename = img;
-            if (GlobalDir.HasFile(filename + ".shp")) return filename.ToLower() + ".shp";
-            else if (wall) return filename.Replace(1, 'G').ToLower() + ".shp";
-            else return string.Format("{0}.{1}", filename.ToLower(), TileDictionary.TheaterSub);
-        }
         public static string GetOverlayName(this Rules r, byte overlayid)
         {
             INIEntity ov = Rules["OverlayTypes"];
@@ -115,13 +96,6 @@ namespace RelertSharp.Engine
             int index = lst.IndexOfValue(regName);
             if (index > -1 && index < 256) return (byte)index;
             else return 0;
-        }
-        public static void FixWallOverlayName(this Rules rules, ref string filename)
-        {
-            if (!GlobalConfig.DrawingAdjust.NoBudAltArt)
-            {
-                filename = filename.Replace(1, _suff);
-            }
         }
         public static int GetFrameFromDirection(this Rules rules, int direction, string nameID)
         {

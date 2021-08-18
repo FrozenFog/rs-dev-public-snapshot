@@ -12,6 +12,7 @@
     </UserControl.DataContext>
     <UserControl.Resources>
         <CollectionViewSource x:Key="GlobalTag" Source="{Binding GlobalTags}"/>
+        <Style x:Key="{x:Type ListViewItem}"/>
     </UserControl.Resources>
     <Grid Margin="0">
         <Grid.RowDefinitions>
@@ -101,6 +102,19 @@
                 <GridSplitter Grid.Column="2" Grid.Row="0" Width="3" HorizontalAlignment="Left" VerticalAlignment="Stretch"/>
             </Grid>
         </ScrollViewer>
+        <ListView x:Name="lvOverlay" Grid.Row="2" Visibility="{Binding IsOverlayPanelEnable}" Style="{DynamicResource lbxDark}" ItemsSource="{Binding OverlayFrames}"
+                  ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="OverlayFrameSelectedChanged">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ListView.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type ViewModel:ObjectPickVm}">
+                    <Image Source="{Binding OverlayImage}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="{Binding ImgWidth}" Height="{Binding ImgHeight}"/>
+                </HierarchicalDataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
     </Grid>
 </UserControl>

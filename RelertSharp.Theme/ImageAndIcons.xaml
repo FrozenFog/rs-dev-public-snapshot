@@ -296,6 +296,42 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
+    <Viewbox x:Key="HeadOverlay" Width="16" Height="16">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M8.108,5.24L14.303,8.553 8.108,11.868 1.84,8.553 8.108,5.24 M8.111,4.333L0.129,8.553 8.111,12.774 16,8.553 8.111,4.333 8.111,4.333z" />
+                            </DrawingGroup>
+                            <GeometryDrawing Geometry="F1 M16,16z M0,0z M8.087,6.528L8.087,6.528 11.874,8.555 8.087,10.579 4.255,8.555z">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                </GeometryDrawing.Pen>
+                                <GeometryDrawing.Geometry>
+                                    <LineGeometry StartPoint="8.064,4.792" EndPoint="8.064,12.375" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                </GeometryDrawing.Pen>
+                                <GeometryDrawing.Geometry>
+                                    <LineGeometry StartPoint="0.823,8.554" EndPoint="15.177,8.554" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
     <Viewbox x:Key="FlatRamp" Width="16" Height="16">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
