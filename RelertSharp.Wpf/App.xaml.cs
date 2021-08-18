@@ -115,7 +115,6 @@ namespace RelertSharp.Wpf
             //            }
             //            #endregion
             #endregion
-            GlobalVar.Log = new RsLog();
             Initialization();
             App application = new App();
             application.InitializeComponent();

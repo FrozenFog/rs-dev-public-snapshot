@@ -16,6 +16,7 @@ namespace RelertSharp.FileSystem
     public class VirtualDir
     {
         private RsLog Log { get { return GlobalVar.Log; } }
+        private bool isFindFileLogEnable = false;
 
 
         private Dictionary<uint, VirtualFileInfo> fileOrigin = new Dictionary<uint, VirtualFileInfo>();
@@ -121,6 +122,14 @@ namespace RelertSharp.FileSystem
 
 
         #region Public Methods - VirtualDir
+        public void SuspendLog()
+        {
+            isFindFileLogEnable = false;
+        }
+        public void ResumeLog()
+        {
+            isFindFileLogEnable = true;
+        }
         public void DumpFile(string filename)
         {
             if (HasFile(filename))
@@ -250,7 +259,7 @@ namespace RelertSharp.FileSystem
         }
         public byte[] GetRawByte(string _fullName, bool fromRoot = false)
         {
-            Log.Write("Finding " + _fullName);
+            if (isFindFileLogEnable) Log.Write("Finding " + _fullName);
             if (fromRoot || GlobalConfig.DevMode)
             {
                 byte[] b = GetFromRoot(_fullName);

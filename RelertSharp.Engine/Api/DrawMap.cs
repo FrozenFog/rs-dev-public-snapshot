@@ -90,6 +90,7 @@ namespace RelertSharp.Engine.Api
 #if DEBUG
         public static void DrawMap(Map map)
         {
+            GlobalDir.SuspendLog();
             MapDrawingBegin?.Invoke(null, null);
             EngineApi.InvokeLock();
             SetTheater(map.Info.TheaterType);
@@ -112,6 +113,7 @@ namespace RelertSharp.Engine.Api
             EngineApi.InvokeUnlock();
             MapDrawed = true;
             MapDrawingComplete?.Invoke();
+            GlobalDir.ResumeLog();
         }
 #else
         public static async Task DrawMap(Map map)
