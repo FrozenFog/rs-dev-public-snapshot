@@ -332,6 +332,45 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
+    <Viewbox x:Key="HeadCelltag" Width="16" Height="16">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M6.818,8.383L2.77,5.447C1.277,6.182 0.344,7.226 0.344,8.383 0.344,9.541 1.278,10.584 2.772,11.319L6.818,8.383z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M8.023,9.257L4.363,11.921C5.451,12.231 6.698,12.406 8.023,12.406 9.352,12.406 10.602,12.229 11.693,11.918L8.023,9.257z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M13.275,5.447C14.769,6.18 15.703,7.224 15.703,8.383 15.703,9.54 14.77,10.584 13.277,11.319L9.229,8.383 13.275,5.447z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M8,7.525L4.354,4.847C5.444,4.536 6.695,4.359 8.024,4.359 9.349,4.359 10.596,4.535 11.684,4.844L8,7.525z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="HeadWaypoint" Width="16" Height="16">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="5,2,8,5" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="3,2,1,11" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
     <Viewbox x:Key="FlatRamp" Width="16" Height="16">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>

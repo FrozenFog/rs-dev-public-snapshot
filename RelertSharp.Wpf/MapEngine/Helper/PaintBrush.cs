@@ -11,6 +11,7 @@ using RelertSharp.MapStructure.Points;
 using RelertSharp.MapStructure;
 using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.MapEngine.Helper;
+using RelertSharp.Wpf.Dialogs;
 
 namespace RelertSharp.Wpf
 {
@@ -72,6 +73,10 @@ namespace RelertSharp.Wpf
         {
             Config.OverlayIndex = index;
             Config.OverlayFrame = subindex;
+        }
+        public static void SetWaypointIndex(string idx)
+        {
+            Config.WaypointNum = idx;
         }
         public static void LoadBrushObject(string regname, MapObjectType type, bool dispose = true)
         {
@@ -181,6 +186,9 @@ namespace RelertSharp.Wpf
                         drawedObject = MapApi.AddCellTag(Config, dummyFilter);
                         break;
                     case MapObjectType.Waypoint:
+                        string wpId = GetWaypointId(out bool cancel);
+                        if (cancel) return;
+                        Config.WaypointNum = wpId;
                         drawedObject = MapApi.AddWaypoint(Config, dummyFilter);
                         break;
                 }
@@ -189,6 +197,7 @@ namespace RelertSharp.Wpf
                     EngineApi.DrawObject(drawedObject);
                     EngineApi.ApplyLightningToObject(drawedObject);
                     UndoRedoHub.PushCommand(drawedObject);
+                    if (currentObject.ObjectType == MapObjectType.Waypoint) RenewWaypoint();
                 }
             }
         }
@@ -200,6 +209,49 @@ namespace RelertSharp.Wpf
         }
         #endregion
 
+        #endregion
+
+
+        #region Private
+        private static string GetWaypointId(out bool cancel)
+        {
+            string wpId = Config.WaypointNum;
+            cancel = false;
+            if (AssignWaypointId)
+            {
+                DlgNameInput dlg = new DlgNameInput()
+                {
+                    Validation = x =>
+                    {
+                        return int.TryParse(x, out int i);
+                    },
+                    InvalidWarning = "Invalid waypoint!"
+                };
+                if (dlg.ShowDialog().Value)
+                {
+                    wpId = dlg.ResultName;
+                }
+                else
+                {
+                    cancel = true;
+                    return string.Empty;
+                }
+            }
+            else wpId = GlobalVar.GlobalMap.Waypoints.NewID().ToString();
+            return wpId;
+        }
+        private static void RenewWaypoint()
+        {
+            string newWp = GlobalVar.GlobalMap.Waypoints.NewID().ToString();
+            Config.WaypointNum = newWp;
+            RefreshObjectAttribute();
+        }
+        #endregion
+
+
+
+        #region Calls
+        public static bool AssignWaypointId { get; set; }
         #endregion
     }
 }

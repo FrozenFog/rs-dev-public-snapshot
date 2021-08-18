@@ -43,7 +43,7 @@ namespace RelertSharp.MapStructure.Points
         }
         public int NewID()
         {
-            for (int i = 0; i < 701; i++)
+            for (int i = 0; i < int.MaxValue; i++)
             {
                 if (!wpnum.Contains(i.ToString()))
                 {

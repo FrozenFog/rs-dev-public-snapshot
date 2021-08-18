@@ -22,6 +22,7 @@ namespace RelertSharp.Wpf.Dialogs
         public DlgNameInput()
         {
             InitializeComponent();
+            Validation = IsValidName;
         }
         /// <summary>
         /// 
@@ -37,10 +38,10 @@ namespace RelertSharp.Wpf.Dialogs
 
 
         #region Private
-        private bool IsValidName()
+        private bool IsValidName(string name)
         {
-            if (ResultName.IsNullOrEmpty()) return false;
-            if (ResultName.ContainChars('=', ',', '.')) return false;
+            if (name.IsNullOrEmpty()) return false;
+            if (name.ContainChars('=', ',', '.')) return false;
             return true;
         }
         #endregion
@@ -52,9 +53,9 @@ namespace RelertSharp.Wpf.Dialogs
                 GuiUtil.Warning("Name is empty.");
                 return;
             }
-            if (!IsValidName())
+            if (!Validation(ResultName))
             {
-                GuiUtil.Warning("Invalid name, must not contain \"=\", \",\"");
+                GuiUtil.Warning(InvalidWarning);
                 return;
             }
             DialogResult = true;
@@ -67,5 +68,7 @@ namespace RelertSharp.Wpf.Dialogs
 
 
         public string ResultName { get { return txbName.Text; } }
+        public string InvalidWarning { get; set; } = "Invalid name, must not contain \"=\", \",\"";
+        public Predicate<string> Validation { get; set; } 
     }
 }

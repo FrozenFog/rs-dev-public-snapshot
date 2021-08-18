@@ -47,6 +47,8 @@ namespace RelertSharp.Wpf.ViewModel
 
 
         #region Calls
+        public int WaypointIndex { get; set; }
+        public bool AssignWaypoint { get; set; }
         public byte OverlayIndex { get; private set; }
         public byte OverlayData { get; private set; }
         public override string Title { get; }

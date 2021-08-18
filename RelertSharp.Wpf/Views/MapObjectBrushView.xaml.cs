@@ -1,6 +1,7 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.Common.Config.Model;
 using RelertSharp.IniSystem;
+using RelertSharp.MapStructure;
 using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.MapEngine.Helper;
 using RelertSharp.Wpf.ViewModel;
@@ -212,12 +213,28 @@ namespace RelertSharp.Wpf.Views
                 root.AddItems(walls, rock, bridges, resource, rail, others);
                 trvMain.Items.Add(root);
             }
+            void celltagWp()
+            {
+                ObjectPickVm vm = new ObjectPickVm(string.Empty, "Celltag", MapObjectType.Celltag);
+                vm.SetIcon(FindResource("HeadCelltag"));
+                ObjectPickVm waypoint = new ObjectPickVm("Waypoint");
+                ObjectPickVm assign = new ObjectPickVm(string.Empty, "Assign number", MapObjectType.Waypoint)
+                {
+                    AssignWaypoint = true
+                };
+                waypoint.AddItem(new ObjectPickVm(string.Empty, "First available", MapObjectType.Waypoint));
+                waypoint.AddItem(assign);
+                waypoint.SetIcon(FindResource("HeadWaypoint"));
+                trvMain.Items.Add(vm);
+                trvMain.Items.Add(waypoint);
+            }
             building();
             generic("Infantries", Constant.RulesHead.HEAD_INFANTRY, FindResource("HeadInf"), CombatObjectType.Infantry, MapObjectType.Infantry, cfg.Infantries);
             unit();
             generic("Aircrafts", Constant.RulesHead.HEAD_AIRCRAFT, FindResource("HeadAir"), CombatObjectType.Aircraft, MapObjectType.Aircraft, cfg.Aircrafts);
             terrain();
             overlay();
+            celltagWp();
             favourites();
             ReloadAttributeCombo();
         }
@@ -259,6 +276,12 @@ namespace RelertSharp.Wpf.Views
                     PaintBrush.InvalidateBrushObject();
                     return;
                 }
+            }
+            if (selected.Type == MapObjectType.Waypoint)
+            {
+                int wp = GlobalVar.GlobalMap.Waypoints.NewID();
+                PaintBrush.SetWaypointIndex(wp.ToString());
+                PaintBrush.AssignWaypointId = selected.AssignWaypoint;
             }
             if (selected.Type != MapObjectType.Undefined)
             {

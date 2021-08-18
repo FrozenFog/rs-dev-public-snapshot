@@ -123,7 +123,7 @@ namespace RelertSharp.Wpf.ViewModel
                 SetProperty();
             }
         }
-        public TagItem TagItem
+        public IIndexableItem TagItem
         {
             get { return GlobalVar.GlobalMap?.Tags[data.AttatchedTag]; }
             set
