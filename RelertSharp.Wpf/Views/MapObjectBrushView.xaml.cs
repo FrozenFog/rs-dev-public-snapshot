@@ -228,12 +228,32 @@ namespace RelertSharp.Wpf.Views
                 trvMain.Items.Add(vm);
                 trvMain.Items.Add(waypoint);
             }
+            void smudge()
+            {
+                ObjectPickVm root = new ObjectPickVm("Smudges");
+                root.SetIcon(FindResource("HeadSmudge"));
+                ObjectPickVm oneCell = new ObjectPickVm("One Cell");
+                ObjectPickVm multiCell = new ObjectPickVm("Multi Cell");
+                foreach (INIPair p in Rules[Constant.RulesHead.HEAD_SMUDGE])
+                {
+                    INIEntity ent = Rules[p.Value];
+                    if (ent.IsEmpty) continue;
+                    int width = ent.ParseInt("Width", 1);
+                    int height = ent.ParseInt("Height", 1);
+                    ObjectPickVm item = new ObjectPickVm(p.Value, p.Value, MapObjectType.Smudge);
+                    if (width * height == 1) oneCell.AddItem(item);
+                    else multiCell.AddItem(item);
+                }
+                root.AddItems(oneCell, multiCell);
+                trvMain.Items.Add(root);
+            }
             building();
             generic("Infantries", Constant.RulesHead.HEAD_INFANTRY, FindResource("HeadInf"), CombatObjectType.Infantry, MapObjectType.Infantry, cfg.Infantries);
             unit();
             generic("Aircrafts", Constant.RulesHead.HEAD_AIRCRAFT, FindResource("HeadAir"), CombatObjectType.Aircraft, MapObjectType.Aircraft, cfg.Aircrafts);
             terrain();
             overlay();
+            smudge();
             celltagWp();
             favourites();
             ReloadAttributeCombo();

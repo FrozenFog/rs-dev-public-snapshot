@@ -160,7 +160,7 @@ namespace RelertSharp.Wpf
             {
                 Title = title,
                 Content = content,
-                ContentId = RsViewComponentAttribute.GetViewName(content)
+                ContentId = RsViewComponentAttribute.GetViewName(content),
             };
             IRsView con = content as IRsView;
             con.ParentAncorable = anchorable;

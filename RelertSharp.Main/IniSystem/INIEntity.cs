@@ -359,6 +359,7 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Calls
+        public bool IsEmpty { get { return data.Count == 0; } }
         public Dictionary<string, INIPair> DictData { get { return data; } }
         public string Comment { get { return comment; } }
         public string PreComment { get { return preComment; } }

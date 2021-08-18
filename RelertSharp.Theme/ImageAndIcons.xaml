@@ -332,6 +332,40 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
+    <Viewbox x:Key="HeadSmudge" Width="16" Height="16">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
+                            <GeometryDrawing Brush="Transparent">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,16,16" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="3.953" RadiusY="2.466" Center="4.765,5.222" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="2.922" RadiusY="1.641" Center="11.734,8.484" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="1.724" RadiusY="1.044" Center="5.536,10.644" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+
+                        </DrawingGroup>
+
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
     <Viewbox x:Key="HeadCelltag" Width="16" Height="16">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>

@@ -42,6 +42,14 @@ namespace RelertSharp.MapStructure.Points
         {
             if (data.Keys.Contains(item.Id)) data.Remove(item.Id);
         }
+        public bool HasId(string id)
+        {
+            return data.Keys.Contains(id);
+        }
+        public bool HasId(T item)
+        {
+            return data.Keys.Contains(item.Id);
+        }
         #endregion
 
 

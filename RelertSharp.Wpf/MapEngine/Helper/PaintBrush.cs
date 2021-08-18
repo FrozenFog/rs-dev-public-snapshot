@@ -223,9 +223,10 @@ namespace RelertSharp.Wpf
                 {
                     Validation = x =>
                     {
-                        return int.TryParse(x, out int i);
+                        if (!int.TryParse(x, out int i)) return false;
+                        return !GlobalVar.GlobalMap.Waypoints.HasId(x);
                     },
-                    InvalidWarning = "Invalid waypoint!"
+                    InvalidWarning = "Invalid waypoint, or waypoint already exist!"
                 };
                 if (dlg.ShowDialog().Value)
                 {
