@@ -130,6 +130,38 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         #region Resource
 
         #endregion
+        #region Cliff
+        private static I3dLocateable cliffBegin, cliffCurrent, alignEnd;
+        public static void BeginAlignCliffAt(I3dLocateable cell)
+        {
+            cliffBegin = cell;
+            alignEnd = cliffBegin;
+        }
+        public static bool AlignCliffBetween(I3dLocateable dest)
+        {
+            if (RsMath.I3dEmpty(dest)) return false;
+            bool moved = !RsMath.I2dEqual(cliffCurrent, dest);
+            cliffCurrent = dest;
+            using (var _ = new EngineRegion())
+            {
+                var list = CliffManager.AlignCliffBetween(cliffBegin, cliffCurrent, CliffAlignType, out I2dLocateable actualEndCell);
+                alignEnd = new Pnt3(actualEndCell, cliffBegin.Z);
+                TilePaintBrush.SuspendBrush();
+                TilePaintBrush.LoadTileBrush(cliffBegin, list);
+                TilePaintBrush.MoveTileBrushTo(cliffBegin);
+            }
+            return moved;
+        }
+        public static void ApplyCliffAlign()
+        {
+            cliffBegin = alignEnd;
+            cliffCurrent = null;
+        }
+        public static void DisposeCliffAlign()
+        {
+            cliffBegin = cliffCurrent = null;
+        }
+        #endregion
         #endregion
 
 
@@ -157,6 +189,8 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 return GlobalVar.GlobalRules.IsWallOverlay(CurrentOverlayIndex);
             }
         }
+        public static bool IsAligningCliff { get { return cliffBegin != null; } }
+        public static string CliffAlignType { get; set; } = "pCliff";
         #endregion
     }
 }

@@ -19,7 +19,7 @@ namespace RelertSharp.Wpf.ViewModel
         {
             data = new TileSet(false, false, -1);
         }
-        public TileSetItemVm(TmpFile file, int tileIndex, TmpFile frameworkFile)
+        public TileSetItemVm(TmpFile file, int offset, int id, TmpFile frameworkFile)
         {
             SubTiles = new List<SubTileInfo>();
             SetWidth = file.Width; SetHeight = file.Height;
@@ -30,7 +30,8 @@ namespace RelertSharp.Wpf.ViewModel
                 framework = frameworkFile.AssembleImage.ToWpfImage();
                 framework.Freeze();
             }
-            TileIndex = tileIndex;
+            TileIndex = offset + id;
+            Id = id;
             byte idx = 0;
             foreach (var img in file.Images)
             {
@@ -80,6 +81,7 @@ namespace RelertSharp.Wpf.ViewModel
         public int FrameworkIndex { get; private set; }
         public List<SubTileInfo> SubTiles { get; private set; }
         public bool IsLat { get; private set; }
+        public int Id { get; private set; }
         #endregion
 
 

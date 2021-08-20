@@ -60,7 +60,10 @@ namespace RelertSharp
         {
             return src >= floor && src <= ceil;
         }
-
+        public static bool IsInt(this double src)
+        {
+            return (int)src == src;
+        }
         public static double ForcePositive(this double src)
         {
             if (src <= 0) return 0;
@@ -113,6 +116,7 @@ namespace RelertSharp
         }
         public static bool I2dEqual(I2dLocateable a, I2dLocateable b)
         {
+            if (a == null || b == null) return false;
             return a.X == b.X && a.Y == b.Y;
         }
         public static bool I2dValid(I2dLocateable pos)
@@ -126,6 +130,21 @@ namespace RelertSharp
         public static I3dLocateable I3dAddi(I3dLocateable a, I3dLocateable b)
         {
             return new Pnt3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+        }
+        public static bool I3dEmpty(I3dLocateable src)
+        {
+            return src.X == 0 && src.Y == 0 && src.Z == 0;
+        }
+        public static double I2dMagnitude(I2dLocateable vec)
+        {
+            return Math.Sqrt(vec.X * vec.X + vec.Y * vec.Y);
+        }
+        public static double I2dAngle(I2dLocateable a, I2dLocateable b)
+        {
+            double prod = ScalarProduct(a, b);
+            double k = I2dMagnitude(a) * I2dMagnitude(b);
+            if (k == 0) return 360;
+            return Math.Acos(prod / k) / Math.PI * 180;
         }
 
 

@@ -28,6 +28,7 @@
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:TileSetTreeVm}" ItemsSource="{Binding Items}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{Binding HeadImg}" Margin="3" Width="10" Height="10" Stretch="Fill"/>
+                        <TextBlock Text="{Binding SetIndex}"/>
                         <TextBlock Text="{Binding Title}"/>
                     </StackPanel>
                 </HierarchicalDataTemplate>
@@ -49,7 +50,10 @@
             </ItemsControl.ItemsPanel>
             <ListView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:TileSetItemVm}">
-                    <Image Source="{Binding TileSetImage}" HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="None"/>
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="{Binding TileSetImage}" HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="None"/>
+                        <TextBlock Text="{Binding Id}"/>
+                    </StackPanel>
                 </HierarchicalDataTemplate>
             </ListView.ItemTemplate>
         </ListView>

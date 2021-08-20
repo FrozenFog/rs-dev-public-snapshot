@@ -20,83 +20,126 @@ namespace RelertSharp.Common.Config.Model
         TopLelt = 8
     }
 
-    public class CliffCell
-    {
-        [XmlIgnore]
-        public CliffJointPosition In { get; set; }
-        [XmlAttribute("in")]
-        public int InValue
-        {
-            get { return (int)In; }
-            set { In = (CliffJointPosition)value; }
-        }
-        [XmlIgnore]
-        public CliffJointPosition Out;
-        [XmlAttribute("out")]
-        public int OutValue
-        {
-            get { return (int)Out; }
-            set { Out = (CliffJointPosition)value; }
-        }
-        [XmlIgnore]
-        public CliffJointPosition Bend;
-        [XmlAttribute("bend")]
-        public int BendValue
-        {
-            get { return (int)Bend; }
-            set { Bend = (CliffJointPosition)value; }
-        }
-        [XmlIgnore]
-        public CliffJointPosition Next;
-        [XmlAttribute("next")]
-        public int NextValue
-        {
-            get { return (int)Next; }
-            set { Next = (CliffJointPosition)value; }
-        }
-        /// <summary>
-        /// Counter clock wise
-        /// Left is hi-ground
-        /// </summary>
-        [XmlAttribute("isRight")]
-        public bool HiGroundRight;
-    }
-
     public class CliffSection
     {
-        [XmlArrayItem("cell")]
-        public List<CliffCell> Cells = new List<CliffCell>();
-        [XmlAttribute("len")]
-        public int Length;
-        [XmlIgnore]
-        public CliffJointPosition In;
-        [XmlAttribute("in")]
-        public int InValue
-        {
-            get { return (int)In; }
-            set { In = (CliffJointPosition)value; }
-        }
-        [XmlIgnore]
-        public CliffJointPosition Out;
-        [XmlAttribute("out")]
-        public int OutValue
-        {
-            get { return (int)Out; }
-            set { Out = (CliffJointPosition)value; }
-        }
+        [XmlAttribute("begin")]
+        public string BeginPositionString { get; set; }
+        [XmlAttribute("end")]
+        public string EndPositionString { get; set; }
+        [XmlAttribute("offset")]
+        public string OffsetString { get; set; }
+        [XmlAttribute("bend")]
+        public int BendTypeValue { get; set; }
         [XmlAttribute("set")]
         public int SetIndex { get; set; }
         [XmlAttribute("sub")]
         public int SubIndex { get; set; }
+        [XmlElement("Follow")]
+        public CliffSection FollowBy { get; set; }
+        [XmlAttribute("succ")]
+        public int SuccessorType { get; set; }
+        //[XmlArrayItem("sec")]
+        //public List<CliffSection> Allow { get; set; }
+
+
+        [XmlIgnore]
+        public bool IsCorner { get { return BendTypeValue != 0; } }
+        [XmlIgnore]
+        public Pnt Offset
+        {
+            get
+            {
+                if (!bOff)
+                {
+                    if (OffsetString.IsNullOrEmpty()) offset = new Pnt();
+                    else offset = new Pnt(OffsetString);
+                    bOff = true;
+                }
+                return offset;
+            }
+            set { offset = value; bOff = true; }
+        }
+        private bool bOff;
+        private Pnt offset;
+        [XmlIgnore]
+        public Pnt BeginCell
+        {
+            get
+            {
+                if (!bInit)
+                {
+                    if (BeginPositionString.IsNullOrEmpty()) beginCell = new Pnt();
+                    else beginCell = new Pnt(BeginPositionString);
+                    bInit = true;
+                }
+                return beginCell;
+            }
+            set { beginCell = value; bInit = true; }
+        }
+        private Pnt beginCell;
+        private bool bInit;
+        [XmlIgnore]
+        public Pnt EndCell
+        {
+            get
+            {
+                if (!bEnd)
+                {
+                    if (EndPositionString.IsNullOrEmpty()) endCell = new Pnt();
+                    else endCell = new Pnt(EndPositionString);
+                    bEnd = true;
+                }
+                return endCell;
+            }
+            set { endCell = value; bEnd = true; }
+        }
+        private bool bEnd;
+        private Pnt endCell;
+        [XmlIgnore]
+        public WallDirection CornerType
+        {
+            get { return (WallDirection)Math.Abs(BendTypeValue); }
+        }
+        [XmlIgnore]
+        public bool IsReverseCorner { get { return BendTypeValue < 0; } }
+        [XmlIgnore]
+        public Pnt Vector { get { return EndCell - BeginCell; } }
+        [XmlIgnore]
+        public Pnt FullVector
+        {
+            get
+            {
+                if (FollowBy != null) return Vector + FollowBy.Vector;
+                else return Vector;
+            }
+        }
+
+
+        public static bool SectionEqual(CliffSection a, CliffSection b)
+        {
+            return a.SetIndex == b.SetIndex && a.SubIndex == b.SubIndex;
+        }
+    }
+
+    public class SectionLimitation
+    {
+        [XmlArrayItem("sec")]
+        public List<CliffSection> Allow { get; set; } = new List<CliffSection>();
+        [XmlAttribute("type")]
+        public int Type { get; set; }
     }
 
     public class TheaterCliffSet
     {
-        [XmlArrayItem("section")]
+        [XmlArrayItem("sec")]
         public List<CliffSection> Sections { get; set; } = new List<CliffSection>();
+        [XmlArrayItem("suc")]
+        public List<SectionLimitation> Successor { get; set; } = new List<SectionLimitation>();
         [XmlAttribute("theater")]
         public string TheaterType { get; set; }
         [XmlAttribute("name")]
         public string Name { get; set; }
+        [XmlAttribute("key")]
+        public string Key { get; set; }
     }
 }

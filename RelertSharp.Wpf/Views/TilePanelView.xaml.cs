@@ -131,6 +131,7 @@ namespace RelertSharp.Wpf.Views
                 if (set.AllowPlace && !set.IsFramework)
                 {
                     TileSetTreeVm src = new TileSetTreeVm(set);
+                    TilesetLookup.RegistAdd(src);
                     dest.AddItem(src);
                 }
             }

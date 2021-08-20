@@ -157,6 +157,7 @@
             <ToolBar Band="2" BandIndex="1" HorizontalAlignment="Left">
                 <ToggleButton Content="{StaticResource InteliRamp}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseInteliRamp}"/>
                 <ToggleButton Content="{StaticResource InteliWall}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseInteliWall}"/>
+                <ToggleButton IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseInteliCliff}"/>
             </ToolBar>
         </ToolBarTray>
         <DockingManager x:Name="dockMain" Grid.Row="2">

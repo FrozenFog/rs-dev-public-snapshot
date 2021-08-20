@@ -1772,213 +1772,255 @@
     </Overlays>
   </ObjectInfo>
   <CliffInfo>
-    <set theater="NEWURBAN" name="Pavement Cliff">
+    <set theater="NEWURBAN" name="Pavement Cliff" key="pCliff">
+      <Successor>
+        <suc type="1" anno="horizontal">
+          <Allow>
+            <sec set="10" sub="2"/>
+            <sec set="10" sub="4"/>
+            <sec set="10" sub="7"/>
+            <sec set="10" sub="8"/>
+            <sec set="10" sub="11"/>
+            <sec set="85" sub="0" offset="-1,1"/>
+            <sec set="85" sub="3" offset="0,1"/>
+            <sec set="172" sub="0"/>
+            <sec set="225" sub="2" offset="0,1"/>
+          </Allow>
+        </suc>
+        <suc type="2" anno="horSouth">
+          <Allow>
+            <sec set="10" sub="0" offset="0,1"/>
+            <sec set="10" sub="1" offset="0,1"/>
+            <sec set="10" sub="2"/>
+            <sec set="10" sub="4"/>
+            <sec set="10" sub="7"/>
+            <sec set="10" sub="8"/>
+            <sec set="10" sub="11"/>
+            <sec set="10" sub="14" offset="-1,0"/>
+            <sec set="10" sub="17" offset="-1,0"/>
+            <sec set="10" sub="18" offset="-1,0"/>
+            <sec set="10" sub="20" offset="-1,0"/>
+            <sec set="10" sub="21" offset="-1,0"/>
+            <sec set="172" sub="0"/>
+            <sec set="172" sub="3" offset="-1,0"/>
+            <sec set="225" sub="0" offset="-1,0"/>
+            <sec set="225" sub="2" offset="0,1"/>
+          </Allow>
+        </suc>
+        <suc type="3" anno="vertical">
+          <Allow>
+            <sec set="10" sub="8" offset="1,0"/>
+            <sec set="10" sub="11" offset="1,0"/>
+            <sec set="10" sub="14"/>
+            <sec set="10" sub="17"/>
+            <sec set="10" sub="18"/>
+            <sec set="10" sub="20"/>
+            <sec set="10" sub="21"/>
+            <sec set="85" sub="0" offset="0,-1"/>
+            <sec set="172" sub="3"/>
+            <sec set="225" sub="0"/>
+          </Allow>
+        </suc>
+        <suc type="4" anno="horBack">
+          <Allow>
+            <sec set="10" sub="18" offset="0,-1"/>
+            <sec set="10" sub="20" offset="0,-1"/>
+            <sec set="10" sub="21" offset="0,-1"/>
+            <sec set="10" sub="22"/>
+            <sec set="10" sub="25"/>
+            <sec set="10" sub="26"/>
+            <sec set="10" sub="28"/>
+            <sec set="85" sub="0"/>
+            <sec set="85" sub="2"/>
+            <sec set="225" sub="0" offset="0,-1"/>
+          </Allow>
+        </suc>
+        <suc type="5" anno="verBack">
+          <Allow>
+            <sec set="10" sub="0"/>
+            <sec set="10" sub="1"/>
+            <sec set="10" sub="22" offset="-1,0"/>
+            <sec set="10" sub="25" offset="-1,0"/>
+            <sec set="10" sub="26" offset="-1,0"/>
+            <sec set="10" sub="28" offset="-1,0"/>
+            <sec set="10" sub="31"/>
+            <sec set="10" sub="34"/>
+            <sec set="10" sub="37"/>
+            <sec set="85" sub="0" offset="-1,0"/>
+            <sec set="85" sub="3"/>
+          </Allow>
+        </suc>
+        <suc type="6" anno="horNorth">
+          <Allow>
+            <sec set="10" sub="0" offset="1,0"/>
+            <sec set="10" sub="1" offset="1,0"/>
+            <sec set="10" sub="22"/>
+            <sec set="10" sub="25"/>
+            <sec set="10" sub="26"/>
+            <sec set="10" sub="28"/>
+            <sec set="10" sub="31" offset="1,0"/>
+            <sec set="10" sub="34" offset="1,0"/>
+            <sec set="10" sub="37" offset="1,0"/>
+            <sec set="85" sub="0"/>
+            <sec set="85" sub="3" offset="1,0"/>
+            <sec set="225" sub="2" offset="1,0"/>
+          </Allow>
+        </suc>
+        <suc type="7" anno="852">
+          <Allow>
+            <sec set="10" sub="8" offset="1,-1"/>
+            <sec set="10" sub="11" offset="1,-1"/>
+            <sec set="10" sub="14" offset="0,-1"/>
+            <sec set="10" sub="17" offset="0,-1"/>
+            <sec set="10" sub="18" offset="0,-1"/>
+            <set set="10" sub="20" offset="0,-1"/>
+            <sec set="10" sub="21" offset="0,-1"/>
+            <sec set="10" sub="22"/>
+            <sec set="10" sub="25"/>
+            <sec set="10" sub="26"/>
+            <sec set="10" sub="28"/>
+            <sec set="85" sub="0"/>
+            <sec set="85" sub="2"/>
+            <sec set="172" sub="3" offset="0,-1"/>
+            <sec set="225" sub="0" offset="0,-1"/>
+          </Allow>
+        </suc>
+        <suc type="8" anno="853">
+          <Allow>
+            <sec set="10" sub="0"/>
+            <sec set="10" sub="1"/>
+            <sec set="10" sub="22" offset="-1,0"/>
+            <sec set="10" sub="25" offset="-1,0"/>
+            <sec set="10" sub="26" offset="-1,0"/>
+            <sec set="10" sub="28" offset="-1,0"/>
+            <sec set="10" sub="31"/>
+            <sec set="10" sub="34"/>
+            <sec set="10" sub="37"/>
+            <sec set="85" sub="0" offset="-1,0"/>
+            <sec set="85" sub="2" offset="-1,0"/>
+            <sec set="85" sub="3"/>
+            <sec set="225" sub="2"/>
+          </Allow>
+        </suc>
+        <suc type="9" anno="2250">
+          <Allow>
+            <sec set="10" sub="8" offset="1,0"/>
+            <sec set="10" sub="11" offset="1,0"/>
+            <sec set="10" sub="14"/>
+            <sec set="10" sub="17"/>
+            <sec set="10" sub="18"/>
+            <sec set="10" sub="20"/>
+            <sec set="10" sub="21"/>
+            <sec set="10" sub="22" offset="0,-1"/>
+            <sec set="10" sub="25" offset="0,-1"/>
+            <sec set="10" sub="26" offset="0,-1"/>
+            <sec set="10" sub="28" offset="0,-1"/>
+            <sec set="85" sub="0" offset="0,1"/>
+            <sec set="85" sub="2" offset="0,1"/>
+            <sec set="225" sub="0"/>
+          </Allow>
+        </suc>
+        <suc type="10" anno="2252">
+          <Allow>
+            <sec set="10" sub="0"/>
+            <sec set="10" sub="1"/>
+            <sec set="10" sub="2" offset="0,-1"/>
+            <sec set="10" sub="4" offset="0,-1"/>
+            <sec set="10" sub="7" offset="0,-1"/>
+            <sec set="10" sub="8" offset="0,-1"/>
+            <sec set="10" sub="11" offset="0,-1"/>
+            <sec set="10" sub="22" offset="-1,0"/>
+            <sec set="10" sub="25" offset="-1,0"/>
+            <sec set="10" sub="26" offset="-1,0"/>
+            <sec set="10" sub="28" offset="-1,0"/>
+            <sec set="10" sub="31"/>
+            <sec set="10" sub="34"/>
+            <sec set="10" sub="37"/>
+            <sec set="85" sub="0" offset="-1,0"/>
+            <sec set="85" sub="3"/>
+            <sec set="172" sub="0" offset="0,-1"/>
+            <sec set="225" sub="2"/>
+          </Allow>
+        </suc>
+        <suc type="11" anno="102tip">
+          <Allow>
+            <sec set="10" sub="0" offset="0,1"/>
+            <sec set="10" sub="1" offset="0,1"/>
+            <sec set="10" sub="2"/>
+            <sec set="10" sub="4"/>
+            <sec set="10" sub="7"/>
+            <sec set="10" sub="8"/>
+            <sec set="10" sub="11"/>
+            <sec set="10" sub="22" offset="-1,1"/>
+            <sec set="10" sub="25" offset="-1,1"/>
+            <sec set="10" sub="26" offset="-1,1"/>
+            <sec set="10" sub="28" offset="-1,1"/>
+            <sec set="10" sub="31" offset="0,1"/>
+            <sec set="10" sub="34" offset="0,1"/>
+            <sec set="10" sub="27" offset="0,1"/>
+            <sec set="85" sub="0" offset="-1,1"/>
+            <sec set="85" sub="3" offset="0,1"/>
+            <sec set="172" sub="0"/>
+            <sec set="225" sub="2" offset="0,1"/>
+          </Allow>
+        </suc>
+        <suc type="12" anno="1018tip">
+          <Allow>
+            <sec set="10" sub="8" offset="1,0"/>
+            <sec set="10" sub="11" offset="1,0"/>
+            <sec set="10" sub="14"/>
+            <sec set="10" sub="17"/>
+            <sec set="10" sub="18"/>
+            <sec set="10" sub="20"/>
+            <sec set="10" sub="21"/>
+            <sec set="10" sub="22" offset="0,1"/>
+            <sec set="10" sub="25" offset="0,1"/>
+            <sec set="10" sub="26" offset="0,1"/>
+            <sec set="10" sub="28" offset="0,1"/>
+            <sec set="85" sub="0" offset="0,1"/>
+            <sec set="85" sub="2" offset="0,1"/>
+            <sec set="172" sub="3"/>
+            <sec set="225" sub="0"/>
+          </Allow>
+        </suc>
+      </Successor>
       <Sections>
-        <section set="10" sub="0" in="1" out="5" len="3">
-          <Cells>
-            <cell in="1" out="7" next="6"/>
-            <cell in="1" out="5" next="4"/>
-            <cell in="7" out="5"/>
-          </Cells>
-        </section>
-        <section set="10" sub="1" in="1" out="5" len="1">
-          <Cells>
-            <cell in="1" out="5" bend="7"/>
-          </Cells>
-        </section>
-        <section set="10" sub="2" in="1" out="5" len="2">
-          <Cells>
-            <cell in="1" out="4" next="4"/>
-            <cell in="8" out="5"/>
-          </Cells>
-        </section>
-        <section set="10" sub="4" in="7" out="5" len="2">
-          <Cells>
-            <cell in="7" out="5" next="4"/>
-            <cell in="7" out="5"/>
-          </Cells>
-        </section>
-        <section set="10" sub="7" in="7" out="5" len="1">
-          <Cells>
-            <cell in="7" out="5"/>
-          </Cells>
-        </section>
-        <section set="10" sub="8" in="7" out="3" len="2">
-          <Cells>
-            <cell in="7" out="3" next="3"/>
-            <cell in="7" out="3" />
-          </Cells>
-        </section>
-        <section set="10" sub="11" in="7" out="3" len="1">
-          <Cells>
-            <cell in="7" out="3"/>
-          </Cells>
-        </section>
-        <section set="10" sub="14" in="5" out="3" len="2">
-          <Cells>
-            <cell in="5" out="3" next="2"/>
-            <cell in="5" out="3"/>
-          </Cells>
-        </section>
-        <section set="10" sub="17" in="5" out="3" len="1">
-          <Cells>
-            <cell in="5" out="3"/>
-          </Cells>
-        </section>
-        <section set="10" sub="18" in="5" out="1" len="2">
-          <Cells>
-            <cell in="5" out="2" next="2"/>
-            <cell in="6" out="1"/>
-          </Cells>
-        </section>
-        <section set="10" sub="20" in="5" out="1" len="3">
-          <Cells>
-            <cell in="5" out="3" next="2"/>
-            <cell in="5" out="1" next="8"/>
-            <cell in="3" out="1"/>
-          </Cells>
-        </section>
-        <section set="10" sub="21" in="5" out="1" len="1">
-          <Cells>
-            <cell in="5" out="1" bend="3"/>
-          </Cells>
-        </section>
-        <section set="10" sub="22" in="3" out="1" len="2">
-          <Cells>
-            <cell in="3" out="1" next="8"/>
-            <cell in="3" out="1"/>
-          </Cells>
-        </section>
-        <section set="10" sub="23" in="3" out="1" len="2">
-          <Cells>
-            <cell in="3" out="1" next="8"/>
-            <cell in="3" out="1"/>
-          </Cells>
-        </section>
-        <section set="10" sub="24" in="3" out="1" len="2">
-          <Cells>
-            <cell in="3" out="1" next="8"/>
-            <cell in="3" out="1"/>
-          </Cells>
-        </section>
-        <section set="10" sub="25" in="3" out="1" len="1">
-          <Cells>
-            <cell in="3" out="1"/>
-          </Cells>
-        </section>
-        <section set="10" sub="26" in="3" out="7" len="3">
-          <Cells>
-            <cell in="3" out="1" next="8"/>
-            <cell in="3" out="7" bend="1" next="6"/>
-            <cell in="1" out="7"/>
-          </Cells>
-        </section>
-        <section set="10" sub="27" in="3" out="7" len="3">
-          <Cells>
-            <cell in="3" out="7" bend="1" next="6"/>
-            <cell in="1" out="1" next="8"/>
-            <cell in="3" out="7" bend="1"/>
-          </Cells>
-        </section>
-        <section set="10" sub="28" in="3" out="7" len="1">
-          <Cells>
-            <cell in="3" out="7" bend="1"/>
-          </Cells>
-        </section>
-        <section set="10" sub="29" in="3" out="7" len="1">
-          <Cells>
-            <cell in="3" out="7" bend="1"/>
-          </Cells>
-        </section>
-        <section set="10" sub="31" in="1" out="1" len="3">
-          <Cells>
-            <cell in="1" out="5" next="6"/>
-            <cell in="1" out="1" next="8"/>
-            <cell in="3" out="1"/>
-          </Cells>
-        </section>
-        <section set="10" sub="32" in="1" out="1" len="1">
-          <Cells>
-            <cell in="1" out="1"/>
-          </Cells>
-        </section>
-        <section set="10" sub="33" in="5" out="5" len="1">
-          <Cells>
-            <cell in="5" out="5"/>
-          </Cells>
-        </section>
-        <section set="10" sub="34" in="1" out="7" len="2">
-          <Cells>
-            <cell in="1" out="7" next="6"/>
-            <cell in="1" out="7"/>
-          </Cells>
-        </section>
-        <section set="10" sub="35" in="1" out="7" len="2">
-          <Cells>
-            <cell in="1" out="7" next="6"/>
-            <cell in="1" out="7"/>
-          </Cells>
-        </section>
-        <section set="10" sub="36" in="1" out="7" len="2">
-          <Cells>
-            <cell in="1" out="7" next="6"/>
-            <cell in="1" out="7"/>
-          </Cells>
-        </section>
-        <section set="10" sub="37" in="1" out="7" len="1">
-          <Cells>
-            <cell in="1" out="7"/>
-          </Cells>
-        </section>
-        <section set="10" sub="38" in="7" out="7" len="1">
-          <Cells>
-            <cell in="7" out="7"/>
-          </Cells>
-        </section>
-        <section set="10" sub="39" in="3" out="3" len="1">
-          <Cells>
-            <cell in="3" out="3"/>
-          </Cells>
-        </section>
-        <section set="85" sub="0" in="3" out="7" len="3">
-          <Cells>
-            <cell in="3" out="7" next="6"/>
-            <cell in="1" out="1" next="8"/>
-            <cell in="3" out="7"/>
-          </Cells>
-        </section>
-        <section set="85" sub="1" in="2" out="8" len="1">
-          <Cells>
-            <cell in="2" out="8" bend="1"/>
-          </Cells>
-        </section>
-        <section set="85" sub="2" in="5" out="1" len="2">
-          <Cells>
-            <cell in="5" out="8" next="8"/>
-            <cell in="4" out="1"/>
-          </Cells>
-        </section>
-        <section set="85" sub="3" in="1" out="5" len="2">
-          <Cells>
-            <cell in="1" out="6" next="6"/>
-            <cell in="2" out="5"/>
-          </Cells>
-        </section>
-        <section set="172" sub="0" in="7" out="3" len="1">
-          <Cells>
-            <cell in="7" out="3" bend="5"/>
-          </Cells>
-        </section>
-        <section set="225" sub="0" in="5" out="1" len="1">
-          <Cells>
-            <cell in="5" out="1"/>
-          </Cells>
-        </section>
-        <section set="225" sub="2" in="1" out="5" len="1">
-          <Cells>
-            <cell in="1" out="5"/>
-          </Cells>
-        </section>
+        <sec set="10" sub="0" end="2,1" bend="12" succ="1"/>
+        <sec set="10" sub="1" end="1,0" bend="12" succ="1"/>
+        <sec set="10" sub="2" end="2,1" succ="11"/>
+        <sec set="10" sub="4" end="2,0" succ="1"/>
+        <sec set="10" sub="7" end="1,0" succ="1"/>
+        <sec set="10" sub="8" begin="0,1" end="1,-1" succ="2">
+          <Follow set="10" sub="33" end="1,0"/>
+        </sec>
+        <sec set="10" sub="11" end="0,-1" succ="2">
+          <Follow set="10" sub="33" end="1,0"/>
+        </sec>
+        <sec set="10" sub="14" begin="0,1" end="0,-1" succ="3"/>
+        <sec set="10" sub="17" end="0,-1" succ="3"/>
+        <sec set="10" sub="18" begin="1,1" end="0,-1" succ="12"/>
+        <sec set="10" sub="20" begin="1,1" end="-1,0" bend="3" succ="4"/>
+        <sec set="10" sub="21" end="-1,0" bend="3" succ="4"/>
+        <sec set="10" sub="22" begin="1,0" end="-1,0" succ="4"/>
+        <sec set="10" sub="25" end="-1,0" succ="4"/>
+        <sec set="10" sub="26" begin="1,0" end="0,2" bend="9" succ="5"/>
+        <sec set="10" sub="28" end="0,1" bend="9" succ="5"/>
+        <sec set="10" sub="31" begin="1,0" end="-1,1" bend="-6" succ="4"/>
+        <sec set="10" sub="34" end="0,2" succ="5"/>
+        <sec set="10" sub="37" end="0,1" succ="5"/>
+        <sec set="85" sub="0" begin="1,0" end="0,2" succ="6">
+          <Follow set="85" sub="1" end="-1,0"/>
+        </sec>
+        <sec set="85" sub="2" begin="1,1" end="-1,0" succ="7"/>
+        <sec set="85" sub="3" end="1,2" succ="8"/>
+        <sec set="172" sub="0" end="0,-1" bend="6" succ="3"/>
+        <sec set="172" sub="3" begin="0,1" end="2,0" bend="-9" succ="1"/>
+        <sec set="225" sub="0" begin="0,1" end="-1,1" succ="9">
+          <Follow set="225" sub="1" end="0,-1"/>
+        </sec>
+        <sec set="225" sub="2" begin="0,1" end="1,1" succ="10">
+          <Follow set="225" sub="3" end="0,1"/>
+        </sec>
       </Sections>
     </set>
   </CliffInfo>

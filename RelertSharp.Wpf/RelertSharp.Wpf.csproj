@@ -117,6 +117,7 @@
     <Compile Include="MapEngine\Helper\Selector.cs" />
     <Compile Include="MapEngine\Helper\TilePaintBrush.cs" />
     <Compile Include="MapEngine\Helper\TileSelector.cs" />
+    <Compile Include="MapEngine\Helper\TilesetLookup.cs" />
     <Compile Include="MapEngine\KeyHandler.cs" />
     <Compile Include="MapEngine\MainPanel.xaml.cs">
       <DependentUpon>MainPanel.xaml</DependentUpon>

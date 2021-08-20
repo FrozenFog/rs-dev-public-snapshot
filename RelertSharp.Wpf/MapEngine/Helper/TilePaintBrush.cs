@@ -1,4 +1,5 @@
 ﻿using RelertSharp.Common;
+using RelertSharp.Common.Config.Model;
 using RelertSharp.Engine.Api;
 using RelertSharp.MapStructure;
 using RelertSharp.Wpf.ViewModel;
@@ -106,6 +107,31 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         {
             var l = new List<Tile>() { src };
             LoadTileBrush(l);
+        }
+        /// <summary>
+        /// used by inteli cliff brush
+        /// </summary>
+        /// <param name="cliffBegin"></param>
+        /// <param name="sections"></param>
+        public static void LoadTileBrush(I3dLocateable cliffBegin, IEnumerable<CliffSection> sections)
+        {
+            List<Tile> result = new List<Tile>();
+            Pnt currentPos = new Pnt();
+            foreach (var sec in sections)
+            {
+                Pnt tilesetPos = currentPos - sec.BeginCell + sec.Offset;
+                TileSetItemVm vm = TilesetLookup.LookupTileSetInfo(sec.SetIndex, sec.SubIndex);
+                foreach (var subtile in vm.SubTiles)
+                {
+                    Tile t = new Tile(vm.TileIndex, subtile.SubIndex, 
+                        subtile.Dx + tilesetPos.X,
+                        subtile.Dy + tilesetPos.Y,
+                        subtile.Dz);
+                    result.Add(t);
+                }
+                currentPos += sec.Vector + sec.Offset;
+            }
+            LoadTileBrush(result);
         }
         /// <summary>
         /// used by clipboard

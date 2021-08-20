@@ -2,6 +2,7 @@
 using System.IO;
 using RelertSharp.Common.Config.Model;
 using System.Xml.Serialization;
+using System.Collections.Generic;
 
 namespace RelertSharp.Common
 {
@@ -63,6 +64,7 @@ namespace RelertSharp.Common
         public TileSetInfo TileSetInfo { get { return data.TileSetInfo; } }
         public ObjectInfo ObjectInfo { get { return data.ObjectInfo; } }
         public GeneralInfo General { get { return data.General; } }
+        public List<TheaterCliffSet> CliffSets { get { return data.CliffInfo; } }
 #endregion
     }
 }

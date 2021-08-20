@@ -251,6 +251,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\Config\Model\ModConfig\CliffInfo.cs" />
+    <Compile Include="Terraformer\CliffManager.cs" />
     <Compile Include="Terraformer\HillGenerator.cs" />
     <Compile Include="Terraformer\RampBase.cs" />
     <Compile Include="Terraformer\RampCalc.cs" />

@@ -25,7 +25,8 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         InteliRampBrush = 1 << 11,
         TilePhasing = 1 << 12,
         InteliWallBrush = 1 << 13,
-        TileBrush = TileSingleBrush | TileBucketFlood | InteliRampBrush,
+        InteliCliffBrush = 1 << 14,
+        TileBrush = TileSingleBrush | TileBucketFlood | InteliRampBrush | InteliCliffBrush,
         PaintBrush = InteliWallBrush | ObjectBrush,
         DEBUG = 1 << 31
     }

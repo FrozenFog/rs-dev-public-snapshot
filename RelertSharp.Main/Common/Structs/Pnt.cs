@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace RelertSharp.Common
 {
@@ -22,6 +23,13 @@ namespace RelertSharp.Common
         public Pnt(I3dLocateable src)
         {
             X = src.X; Y = src.Y;
+        }
+        public Pnt(string formatString)
+        {
+            string[] arr = formatString.Split(',');
+            int.TryParse(arr[0], out int x);
+            int.TryParse(arr[1], out int y);
+            X = x; Y = y;
         }
 
         public static Pnt Zero { get { return new Pnt(0, 0); } }
@@ -83,6 +91,10 @@ namespace RelertSharp.Common
         public override string ToString()
         {
             return string.Format("{0},{1}", X, Y);
+        }
+        public double Magnitude()
+        {
+            return Math.Sqrt(X * X + Y * Y);
         }
     }
 }

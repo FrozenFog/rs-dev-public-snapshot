@@ -37,13 +37,13 @@ namespace RelertSharp.Wpf.ViewModel
                     {
                         TmpFile fmw = new TmpFile(GlobalVar.GlobalDir.GetRawByte(fmwName), fmwName);
                         fmw.LoadColor(GlobalVar.TilePalette);
-                        subtiles.Add(new TileSetItemVm(file, set.Offset + idx++, fmw));
+                        subtiles.Add(new TileSetItemVm(file, set.Offset, idx++, fmw));
                         fmw.Dispose();
                     }
                 }
                 else
                 {
-                    subtiles.Add(new TileSetItemVm(file, set.Offset + idx++, null));
+                    subtiles.Add(new TileSetItemVm(file, set.Offset, idx++, null));
                 }
                 file.Dispose();
             }
@@ -68,13 +68,13 @@ namespace RelertSharp.Wpf.ViewModel
                     {
                         TmpFile fmw = new TmpFile(GlobalVar.GlobalDir.GetRawByte(fmwName), fmwName);
                         fmw.LoadColor(GlobalVar.TilePalette);
-                        subtiles.Add(new TileSetItemVm(file, data.Offset + idx++, fmw));
+                        subtiles.Add(new TileSetItemVm(file, data.Offset, idx++, fmw));
                         fmw.Dispose();
                     }
                 }
                 else
                 {
-                    subtiles.Add(new TileSetItemVm(file, data.Offset + idx++, null));
+                    subtiles.Add(new TileSetItemVm(file, data.Offset, idx++, null));
                 }
                 file.Dispose();
             }
@@ -98,7 +98,7 @@ namespace RelertSharp.Wpf.ViewModel
         {
             get { return subtiles; }
         }
-        public int SetIndex { get { return data.SetIndex; } }
+        public int SetIndex { get { return data == null ? 0 : data.SetIndex; } }
         public bool IsCustomRoot { get; set; }
         public bool IsCustom
         {
