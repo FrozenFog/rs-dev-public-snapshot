@@ -127,6 +127,24 @@ namespace RelertSharp.Common.Config.Model
         public List<CliffSection> Allow { get; set; } = new List<CliffSection>();
         [XmlAttribute("type")]
         public int Type { get; set; }
+        [XmlAttribute("vec")]
+        public string VectorString { get; set; }
+        [XmlIgnore]
+        public Pnt Vector
+        {
+            get
+            {
+                if (!bVec)
+                {
+                    vector = new Pnt(VectorString);
+                    bVec = true;
+                }
+                return vector;
+            }
+            set { vector = value; bVec = true; }
+        }
+        private Pnt vector;
+        private bool bVec;
     }
 
     public class TheaterCliffSet

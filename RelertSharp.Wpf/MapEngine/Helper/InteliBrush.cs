@@ -34,6 +34,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         private static void HandleStateChanged()
         {
             if (MouseState.PrevState == PanelMouseState.InteliWallBrush) EndWallDrawing();
+            if (MouseState.PrevState == PanelMouseState.InteliCliffBrush) EndCliffAlign();
         }
 
 
@@ -132,34 +133,52 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         #endregion
         #region Cliff
         private static I3dLocateable cliffBegin, cliffCurrent, alignEnd;
+        private static int cliffHeightLock;
         public static void BeginAlignCliffAt(I3dLocateable cell)
         {
-            cliffBegin = cell;
+            cliffBegin = new Pnt3(cell);
             alignEnd = cliffBegin;
+            EngineApi.SetHoverNavigation(true, cell.Z);
+            cliffHeightLock = cell.Z;
         }
         public static bool AlignCliffBetween(I3dLocateable dest)
         {
             if (RsMath.I3dEmpty(dest)) return false;
             bool moved = !RsMath.I2dEqual(cliffCurrent, dest);
-            cliffCurrent = dest;
-            using (var _ = new EngineRegion())
+            if (moved)
             {
-                var list = CliffManager.AlignCliffBetween(cliffBegin, cliffCurrent, CliffAlignType, out I2dLocateable actualEndCell);
-                alignEnd = new Pnt3(actualEndCell, cliffBegin.Z);
-                TilePaintBrush.SuspendBrush();
-                TilePaintBrush.LoadTileBrush(cliffBegin, list);
-                TilePaintBrush.MoveTileBrushTo(cliffBegin);
+                cliffCurrent = new Pnt3(dest, cliffHeightLock);
+                using (var _ = new EngineRegion())
+                {
+                    var list = CliffManager.AlignCliffBetween(cliffBegin, cliffCurrent, CliffAlignType, out I2dLocateable actualEndCell);
+                    alignEnd = new Pnt3(actualEndCell, cliffHeightLock);
+                    TilePaintBrush.SuspendBrush();
+                    TilePaintBrush.LoadTileBrush(cliffBegin, list);
+                    TilePaintBrush.MoveTileBrushTo(cliffBegin, cliffHeightLock);
+                }
             }
             return moved;
         }
         public static void ApplyCliffAlign()
         {
+            using (var _ = new EngineRegion())
+            {
+                TilePaintBrush.AddTileToMap();
+                TilePaintBrush.SuspendBrush();
+                CliffManager.IncreCliffAlignLine(alignEnd);
+            }
             cliffBegin = alignEnd;
             cliffCurrent = null;
         }
-        public static void DisposeCliffAlign()
+        public static void EndCliffAlign()
         {
-            cliffBegin = cliffCurrent = null;
+            using (var _ = new EngineRegion())
+            {
+                cliffBegin = cliffCurrent = null;
+                EngineApi.SetHoverNavigation(false);
+                TilePaintBrush.SuspendBrush();
+                CliffManager.EndCliffAlign();
+            }
         }
         #endregion
         #endregion

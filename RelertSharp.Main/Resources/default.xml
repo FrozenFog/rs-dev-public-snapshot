@@ -1774,7 +1774,7 @@
   <CliffInfo>
     <set theater="NEWURBAN" name="Pavement Cliff" key="pCliff">
       <Successor>
-        <suc type="1" anno="horizontal">
+        <suc type="1" anno="horizontal" vec="1,0">
           <Allow>
             <sec set="10" sub="2"/>
             <sec set="10" sub="4"/>
@@ -1787,7 +1787,7 @@
             <sec set="225" sub="2" offset="0,1"/>
           </Allow>
         </suc>
-        <suc type="2" anno="horSouth">
+        <suc type="2" anno="horSouth" vec="1,-1">
           <Allow>
             <sec set="10" sub="0" offset="0,1"/>
             <sec set="10" sub="1" offset="0,1"/>
@@ -1807,7 +1807,7 @@
             <sec set="225" sub="2" offset="0,1"/>
           </Allow>
         </suc>
-        <suc type="3" anno="vertical">
+        <suc type="3" anno="vertical" vec="0,-1">
           <Allow>
             <sec set="10" sub="8" offset="1,0"/>
             <sec set="10" sub="11" offset="1,0"/>
@@ -1821,7 +1821,7 @@
             <sec set="225" sub="0"/>
           </Allow>
         </suc>
-        <suc type="4" anno="horBack">
+        <suc type="4" anno="horBack" vec="-1,0">
           <Allow>
             <sec set="10" sub="18" offset="0,-1"/>
             <sec set="10" sub="20" offset="0,-1"/>
@@ -1835,7 +1835,7 @@
             <sec set="225" sub="0" offset="0,-1"/>
           </Allow>
         </suc>
-        <suc type="5" anno="verBack">
+        <suc type="5" anno="verBack" vec="0,1">
           <Allow>
             <sec set="10" sub="0"/>
             <sec set="10" sub="1"/>
@@ -1850,7 +1850,7 @@
             <sec set="85" sub="3"/>
           </Allow>
         </suc>
-        <suc type="6" anno="horNorth">
+        <suc type="6" anno="horNorth" vec="-1,1">
           <Allow>
             <sec set="10" sub="0" offset="1,0"/>
             <sec set="10" sub="1" offset="1,0"/>
@@ -1866,7 +1866,7 @@
             <sec set="225" sub="2" offset="1,0"/>
           </Allow>
         </suc>
-        <suc type="7" anno="852">
+        <suc type="7" anno="852" vec="-2,-1">
           <Allow>
             <sec set="10" sub="8" offset="1,-1"/>
             <sec set="10" sub="11" offset="1,-1"/>
@@ -1885,7 +1885,7 @@
             <sec set="225" sub="0" offset="0,-1"/>
           </Allow>
         </suc>
-        <suc type="8" anno="853">
+        <suc type="8" anno="853" vec="1,2">
           <Allow>
             <sec set="10" sub="0"/>
             <sec set="10" sub="1"/>
@@ -1902,7 +1902,7 @@
             <sec set="225" sub="2"/>
           </Allow>
         </suc>
-        <suc type="9" anno="2250">
+        <suc type="9" anno="2250" vec="-1,-1">
           <Allow>
             <sec set="10" sub="8" offset="1,0"/>
             <sec set="10" sub="11" offset="1,0"/>
@@ -1911,16 +1911,16 @@
             <sec set="10" sub="18"/>
             <sec set="10" sub="20"/>
             <sec set="10" sub="21"/>
-            <sec set="10" sub="22" offset="0,-1"/>
-            <sec set="10" sub="25" offset="0,-1"/>
-            <sec set="10" sub="26" offset="0,-1"/>
-            <sec set="10" sub="28" offset="0,-1"/>
+            <sec set="10" sub="22" offset="0,1"/>
+            <sec set="10" sub="25" offset="0,1"/>
+            <sec set="10" sub="26" offset="0,1"/>
+            <sec set="10" sub="28" offset="0,1"/>
             <sec set="85" sub="0" offset="0,1"/>
             <sec set="85" sub="2" offset="0,1"/>
             <sec set="225" sub="0"/>
           </Allow>
         </suc>
-        <suc type="10" anno="2252">
+        <suc type="10" anno="2252" vec="1,1">
           <Allow>
             <sec set="10" sub="0"/>
             <sec set="10" sub="1"/>
@@ -1942,7 +1942,7 @@
             <sec set="225" sub="2"/>
           </Allow>
         </suc>
-        <suc type="11" anno="102tip">
+        <suc type="11" anno="102tip" vec="2,1">
           <Allow>
             <sec set="10" sub="0" offset="0,1"/>
             <sec set="10" sub="1" offset="0,1"/>
@@ -1964,7 +1964,7 @@
             <sec set="225" sub="2" offset="0,1"/>
           </Allow>
         </suc>
-        <suc type="12" anno="1018tip">
+        <suc type="12" anno="1018tip" vec="-1,-2">
           <Allow>
             <sec set="10" sub="8" offset="1,0"/>
             <sec set="10" sub="11" offset="1,0"/>

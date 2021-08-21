@@ -477,7 +477,7 @@ namespace RelertSharp.MapStructure
                 base.Select(true);
             }
         }
-        public void SetHeightTo(int height, bool isFlatMode = false)
+        public void SetHeightTo(int height, bool isFlatMode = false, bool moveObject = false)
         {
             if (height >= 0 && height <= Constant.DrawingEngine.MapMaxHeight)
             {
@@ -494,6 +494,7 @@ namespace RelertSharp.MapStructure
                         originalHeight = 0;
                     }
                     SceneObject?.MoveTo(new Pnt3(this, Height));
+                    if (moveObject) MoveTileObjectsTo(this, Height);
                 }
                 else
                 {
@@ -513,10 +514,12 @@ namespace RelertSharp.MapStructure
                                 SceneObject?.Dispose();
                                 Redraw();
                                 if (isFramework) SwitchToFramework(true);
+                                if (moveObject) MoveTileObjectsTo(this, Height);
                             }
                             else
                             {
                                 SceneObject?.MoveTo(new Pnt3(this, Height));
+                                if (moveObject) MoveTileObjectsTo(this, Height);
                             }
                         }
                     }

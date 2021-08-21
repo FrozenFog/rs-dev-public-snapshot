@@ -163,10 +163,12 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             MoveTileBrushTo(prevPos);
             EngineApi.InvokeUnlock();
         }
-        public static bool MoveTileBrushTo(I3dLocateable pos)
+        public static bool MoveTileBrushTo(I3dLocateable dest, int lockHeight = -1)
         {
+            I3dLocateable pos = new Pnt3(dest);
             /// pre-process height(flat ground or not)
-            if (Tiles[pos] is Tile mapPosition) pos.Z = mapPosition.RealHeight;
+            if (lockHeight > 0) pos.Z = lockHeight;
+            else if (Tiles[pos] is Tile mapPosition) pos.Z = mapPosition.RealHeight;
 
             /// do job
             EngineApi.InvokeLock();
@@ -250,6 +252,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             if (isClipboard)
             {
                 foreach (Tile t in body) t.Dispose();
+                foreach (Tile t in under) t.Reveal();
                 isClipboard = false;
             }
             else

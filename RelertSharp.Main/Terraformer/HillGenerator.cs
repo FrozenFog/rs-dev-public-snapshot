@@ -183,7 +183,7 @@ namespace RelertSharp.Terraformer
         }
         private static void SetHeight(Tile centerTarget, int height)
         {
-            centerTarget.SetHeightTo(height);
+            centerTarget.SetHeightTo(height, false, true);
         }
         #endregion
 

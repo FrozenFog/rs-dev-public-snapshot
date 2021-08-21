@@ -389,11 +389,6 @@ namespace RelertSharp.Wpf.MapEngine
                 redraw = TilePaintBrush.RampFlatAt(cell);
                 goto nop;
             }
-            if (InteliBrush.IsAligningCliff)
-            {
-                redraw = InteliBrush.AlignCliffBetween(cell);
-                goto nop;
-            }
             switch (MouseState.State)
             {
                 case PanelMouseState.ObjectBrush:
@@ -417,6 +412,12 @@ namespace RelertSharp.Wpf.MapEngine
                             TilePaintBrush.LoadTileBrush(InteliBrush.CurrentInteliRamp);
                         }
                         redraw = TilePaintBrush.MoveTileBrushTo(cell);
+                    }
+                    break;
+                case PanelMouseState.InteliCliffBrush:
+                    if (InteliBrush.IsAligningCliff)
+                    {
+                        redraw = InteliBrush.AlignCliffBetween(cell);
                     }
                     break;
             }

@@ -24,9 +24,24 @@ namespace RelertSharp.Terraformer
         }
 
         #region Api
+        private static bool isLastLineAvailable;
+        private static CliffSection lastLineSec, lastCandidate;
+        private static I2dLocateable lastLineBegin;
+        public static void EndCliffAlign()
+        {
+            isLastLineAvailable = false;
+            lastLineSec = lastCandidate = null;
+            lastLineBegin = null;
+        }
+        public static void IncreCliffAlignLine(I2dLocateable lastEnd)
+        {
+            isLastLineAvailable = true;
+            lastLineBegin = lastEnd;
+            lastLineSec = lastCandidate;
+        }
         public static List<CliffSection> AlignCliffBetween(I2dLocateable beginCell, I2dLocateable endCell, string cliffKey, out I2dLocateable actualEnd)
         {
-            Pnt current = new Pnt(beginCell);
+            Pnt current = lastLineBegin == null ? new Pnt(beginCell) : new Pnt(lastLineBegin);
             Pnt end = new Pnt(endCell);
             actualEnd = current;
             List<CliffSection> result = new List<CliffSection>();
@@ -39,9 +54,9 @@ namespace RelertSharp.Terraformer
                 SectionLimitation filter = null;
                 Pnt prevVec = default;
                 Pnt destVec = end - current;
-                bool exit = false;
+                bool exit = false, bendCorner = true;
                 if (destVec == Pnt.Zero) return result;
-                while (destVec.Magnitude() > 1 && !exit)
+                do
                 {
                     CliffSection sec = null;
                     Pnt succOffset = new Pnt();
@@ -49,9 +64,21 @@ namespace RelertSharp.Terraformer
                     IEnumerable<CliffSection> candidates;
                     if (prevSec == null)
                     {
-                        candidates = cfg.Sections
-                        .OrderBy(x => RsMath.I2dAngle(x.FullVector, destVec))
-                        .ThenBy(x => (x.FullVector - destVec).Magnitude());
+                        if (isLastLineAvailable)
+                        {
+                            prevSec = lastLineSec;
+                            filter = limitations.Find(x => x.Type == prevSec.SuccessorType);
+                            candidates = cfg.Sections.Where(x => filter.Allow.Any(filt => CliffSection.SectionEqual(x, filt)))
+                                .OrderBy(x => RsMath.I2dAngle(x.FullVector, destVec))
+                                .ThenBy(x => (x.FullVector - destVec).Magnitude())
+                                .ThenBy(x => !x.IsCorner);
+                        }
+                        else
+                        {
+                            candidates = cfg.Sections
+                                .OrderBy(x => RsMath.I2dAngle(x.FullVector, destVec))
+                                .ThenBy(x => (x.FullVector - destVec).Magnitude());
+                        }
                     }
                     else
                     {
@@ -62,18 +89,30 @@ namespace RelertSharp.Terraformer
                     }
                     foreach (var item in candidates)
                     {
-                        if (!item.IsCorner)
+                        if (bendCorner && isLastLineAvailable)
                         {
                             prevVec = item.FullVector;
                             current += item.FullVector;
                             sec = item;
+                            bendCorner = false;
                             break;
+                        }
+                        else
+                        {
+                            if (!item.IsCorner)
+                            {
+                                prevVec = item.FullVector;
+                                current += item.FullVector;
+                                sec = item;
+                                break;
+                            }
                         }
                     }
                     if (sec != null)
                     {
                         if (filter != null) succOffset = filter.Allow.Find(x => CliffSection.SectionEqual(x, sec)).Offset;
                         result.Add(ApplySectionOffset(sec, succOffset));
+                        current += succOffset;
                         if (sec.FollowBy != null)
                         {
                             result.Add(sec.FollowBy);
@@ -83,7 +122,8 @@ namespace RelertSharp.Terraformer
                     else break;
                     actualEnd = current;
                     prevSec = sec;
-                }
+                    lastCandidate = sec;
+                } while (destVec.Magnitude() > 1 && !exit);
             }
             return result;
         }

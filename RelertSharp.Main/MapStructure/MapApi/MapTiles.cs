@@ -40,7 +40,7 @@ namespace RelertSharp.MapStructure
             if (Map.TilesData[pos] is Tile org && !org.IsFrozen)
             {
                 org.SetTileTo(tileIndex, subindex);
-                if (height != -1) org.SetHeightTo(height);
+                if (height != -1) org.SetHeightTo(height, false, true);
                 org.Redraw();
                 return true;
             }
@@ -60,7 +60,7 @@ namespace RelertSharp.MapStructure
             if (Map.TilesData[src] is Tile org && !org.IsFrozen)
             {
                 org.SetTileTo(src.TileIndex, src.SubIndex);
-                org.SetHeightTo(src.RealHeight);
+                org.SetHeightTo(src.RealHeight, false, true);
                 org.Redraw();
             }
         }
