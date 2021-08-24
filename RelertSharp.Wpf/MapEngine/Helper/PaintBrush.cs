@@ -34,7 +34,7 @@ namespace RelertSharp.Wpf
 
         private static void HandleStateChanged()
         {
-            if (MouseState.PrevState == PanelMouseState.ObjectBrush) SuspendBrush();
+            if (MouseState.PrevIsState(PanelMouseState.PaintBrush)) SuspendBrush();
         }
 
 
@@ -122,6 +122,7 @@ namespace RelertSharp.Wpf
             {
                 currentObject.ApplyConfig(Config, Filter);
                 EngineApi.DrawObject(currentObject);
+                isSuspended = false;
             }
         }
         private static int prevSubcell = -1;
@@ -210,7 +211,6 @@ namespace RelertSharp.Wpf
             EngineApi.DrawObject(currentObject);
         }
         #endregion
-
         #endregion
 
 

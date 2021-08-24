@@ -131,6 +131,14 @@ namespace RelertSharp.Wpf
             EngineApi.InvokeUnlock();
         }
         #endregion
+        #region Brush
+        private void MenuRandomBrushDlg(object sender, RoutedEventArgs e)
+        {
+            DlgRandomizeBrush dlg = new DlgRandomizeBrush();
+            dlg.LoadBrush();
+            dlg.ShowDialog();
+        }
+        #endregion
         private void MenuSaveShot(object sender, RoutedEventArgs e)
         {
             SaveFileDialog dlg = new SaveFileDialog()

@@ -340,7 +340,7 @@ namespace RelertSharp.Engine
             if (src.IsZeroVec) pos = ToVec3Zero(o, height);
             else pos = ToVec3Iso(o, height);
             ShpFlatType type = src.FlatType;
-            if (DrawMisc(src, dest, pos, src.pPal, o.Frame, _white, type, src.Framecount))
+            if (DrawMisc(src, dest, pos, src.pPal, o.OverlayFrame, _white, type, src.Framecount))
             {
                 return true;
             }

@@ -69,6 +69,11 @@ namespace RelertSharp.Common
         string[] ExtractParameter();
     }
 
+    public interface IAbstractObjectDescriber : IBaseObject, IRegistable
+    {
+
+    }
+
     public interface IBaseObject
     {
         MapObjectType ObjectType { get; }
@@ -96,7 +101,13 @@ namespace RelertSharp.Common
         byte SubIndex { get; set; }
     }
 
-    public interface IMapObject : IRegistable, I2dLocateable, IBaseObject, IExtractableObject
+    public interface IOverlay
+    {
+        byte OverlayIndex { get; set; }
+        byte OverlayFrame { get; set; }
+    }
+
+    public interface IMapObject : I2dLocateable, IAbstractObjectDescriber, IExtractableObject
     {
         ISceneObject SceneObject { get; }
         int GetHeight(Map source = null);
@@ -136,7 +147,7 @@ namespace RelertSharp.Common
         Tile ComposeTile();
 
     }
-    public interface IMapObjectBrushConfig
+    public interface IMapObjectBrushConfig : IOverlay
     {
         string Owner { get; }
         string RegName { get; }
@@ -179,8 +190,6 @@ namespace RelertSharp.Common
         BuildingSpotlightType SpotlightType { get; }
 
         string WaypointNum { get; }
-        byte OverlayIndex { get; }
-        byte OverlayFrame { get; }
     }
 
     public interface IObjectBrushFilter

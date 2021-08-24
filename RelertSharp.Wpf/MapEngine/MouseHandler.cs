@@ -26,7 +26,6 @@ namespace RelertSharp.Wpf.MapEngine
         private Point downPos, downPosOrg;
         private MouseButton downBtn;
         private Stopwatch watchClick = new Stopwatch();
-        private int prevSubcell = -1;
         #endregion
 
 
@@ -111,6 +110,10 @@ namespace RelertSharp.Wpf.MapEngine
                         if (wheelUp) InteliBrush.IncreInteliRamp();
                         else InteliBrush.DecreInteliRamp();
                         TilePaintBrush.LoadTileBrush(InteliBrush.CurrentInteliRamp);
+                        EngineApi.InvokeRedraw();
+                        break;
+                    case PanelMouseState.ObjectRandomBrush:
+                        RandomizeBrush.NextRandomObject();
                         EngineApi.InvokeRedraw();
                         break;
                 }
@@ -278,6 +281,9 @@ namespace RelertSharp.Wpf.MapEngine
                 case PanelMouseState.ObjectBrush:
                     PaintBrush.AddBrushObjectToMap();
                     break;
+                case PanelMouseState.ObjectRandomBrush:
+                    if (RandomizeBrush.HasItem) PaintBrush.AddBrushObjectToMap();
+                    break;
                 case PanelMouseState.TileSingleBrush:
                     TilePaintBrush.AddTileToMap();
                     break;
@@ -344,12 +350,16 @@ namespace RelertSharp.Wpf.MapEngine
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
+        private I3dLocateable prevCell;
+        private int prevSubcell;
         private bool MouseMoved(Point point, Point unscaled)
         {
             bool redraw = false, noIndicate = false;
             Vec3 pos = EngineApi.ClientPointToCellPos(point.GdiPoint(), out int subcell);
             I3dLocateable cell = pos.To3dLocateable();
             bool notFound = cell.X == 0 && cell.Y == 0 && cell.Z == 0;
+            bool isCellChanged = !RsMath.I3dEqual(cell, prevCell);
+            bool isSubcellChanged = subcell != prevSubcell;
             if (rmbMoving)
             {
                 Navigating.UpdateDelta(point);
@@ -391,6 +401,14 @@ namespace RelertSharp.Wpf.MapEngine
             }
             switch (MouseState.State)
             {
+                case PanelMouseState.ObjectRandomBrush:
+                    if (isCellChanged)
+                    {
+                        RandomizeBrush.NextRandomObject();
+                        redraw = true;
+                    }
+                    PaintBrush.MoveBrushObjectTo(cell, subcell);
+                    break;
                 case PanelMouseState.ObjectBrush:
                     redraw = PaintBrush.MoveBrushObjectTo(cell, subcell);
                     break;
@@ -423,14 +441,16 @@ namespace RelertSharp.Wpf.MapEngine
             }
             if (!noIndicate)
             {
-                if (EngineApi.MouseOnTile(pos, NeedIndicating) || prevSubcell != subcell)
+                if (isCellChanged || isSubcellChanged)
                 {
+                    EngineApi.MouseOnTile(pos, NeedIndicating);
                     MousePosChanged?.Invoke(pos.To3dLocateable(), subcell);
-                    prevSubcell = subcell;
                     redraw = true;
                 }
             }
             nop:
+            prevSubcell = subcell;
+            prevCell = cell;
             return redraw;
         }
         #endregion

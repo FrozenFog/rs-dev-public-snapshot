@@ -34,6 +34,11 @@
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:ObjectPickVm}" ItemsSource="{Binding Items}">
                     <StackPanel Orientation="Horizontal">
+                        <StackPanel.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Add to randomize brush" IsEnabled="{Binding CanRandomize}" Click="Menu_AddObjToRandomize"/>
+                            </ContextMenu>
+                        </StackPanel.ContextMenu>
                         <Label Content="{Binding Icon}" Width="16" Height="16" Margin="0,1,8,1"/>
                         <TextBlock Text="{Binding Title}" Height="16"/>
                     </StackPanel>
@@ -111,7 +116,14 @@
             </ItemsControl.ItemsPanel>
             <ListView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:ObjectPickVm}">
-                    <Image Source="{Binding OverlayImage}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="{Binding ImgWidth}" Height="{Binding ImgHeight}"/>
+                    <StackPanel>
+                        <StackPanel.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Add to randomize brush" IsEnabled="{Binding CanRandomize}" Click="Menu_AddObjToRandomize"/>
+                            </ContextMenu>
+                        </StackPanel.ContextMenu>
+                        <Image Source="{Binding OverlayImage}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="{Binding ImgWidth}" Height="{Binding ImgHeight}"/>
+                    </StackPanel>
                 </HierarchicalDataTemplate>
             </ListView.ItemTemplate>
         </ListView>

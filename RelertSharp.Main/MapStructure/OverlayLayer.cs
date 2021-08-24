@@ -41,7 +41,7 @@ namespace RelertSharp.MapStructure
             byte[] preCompress = new byte[262144];
             for (int i = 0; i < 262144; i++)
             {
-                if (data.Keys.Contains(i)) preCompress[i] = data[i].Index;
+                if (data.Keys.Contains(i)) preCompress[i] = data[i].OverlayIndex;
                 else preCompress[i] = 0xFF;
             }
             byte[] format80Pack = PackEncoding.EncodeToPack(preCompress, PackType.OverlayPack);
@@ -52,7 +52,7 @@ namespace RelertSharp.MapStructure
             byte[] preCompress = new byte[262144];
             for (int i = 0; i < 262144; i++)
             {
-                if (data.Keys.Contains(i)) preCompress[i] = data[i].Frame;
+                if (data.Keys.Contains(i)) preCompress[i] = data[i].OverlayFrame;
                 else preCompress[i] = 0x00;
             }
             byte[] format80Pack = PackEncoding.EncodeToPack(preCompress, PackType.OverlayPack);
@@ -96,7 +96,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class OverlayUnit : BaseVisibleObject<ISceneOverlay>, IMapObject, IRegistable
+    public class OverlayUnit : BaseVisibleObject<ISceneOverlay>, IMapObject, IRegistable, IOverlay
     {
 
 
@@ -106,13 +106,13 @@ namespace RelertSharp.MapStructure
         {
             X = Misc.CoordByteX(_coord);
             Y = Misc.CoordByteY(_coord);
-            Index = _overlayIndex;
-            Frame = _frameIndex;
+            OverlayIndex = _overlayIndex;
+            OverlayFrame = _frameIndex;
         }
         public OverlayUnit(byte index, byte frame)
         {
-            Index = index;
-            Frame = frame;
+            OverlayIndex = index;
+            OverlayFrame = frame;
             X = -1000;
             Y = -1000;
         }
@@ -120,8 +120,8 @@ namespace RelertSharp.MapStructure
         {
             X = src.X;
             Y = src.Y;
-            Index = src.Index;
-            Frame = src.Frame;
+            OverlayIndex = src.OverlayIndex;
+            OverlayFrame = src.OverlayFrame;
         }
         internal OverlayUnit()
         {
@@ -138,8 +138,8 @@ namespace RelertSharp.MapStructure
             {
                 X = config.Pos.X;
                 Y = config.Pos.Y;
-                Index = config.OverlayIndex;
-                Frame = config.OverlayFrame;
+                OverlayIndex = config.OverlayIndex;
+                OverlayFrame = config.OverlayFrame;
             }
         }
         public string[] ExtractParameter()
@@ -148,8 +148,8 @@ namespace RelertSharp.MapStructure
             {
                 X.ToString(),
                 Y.ToString(),
-                Index.ToString(),
-                Frame.ToString()
+                OverlayIndex.ToString(),
+                OverlayFrame.ToString()
             };
         }
         public IMapObject ConstructFromParameter(string[] command)
@@ -159,8 +159,8 @@ namespace RelertSharp.MapStructure
             {
                 X = reader.ReadInt(),
                 Y = reader.ReadInt(),
-                Index = reader.ReadByte(),
-                Frame = reader.ReadByte()
+                OverlayIndex = reader.ReadByte(),
+                OverlayFrame = reader.ReadByte()
             };
             return o;
         }
@@ -172,8 +172,8 @@ namespace RelertSharp.MapStructure
         /// Overlay won't have id, returns null
         /// </summary>
         public override string Id { get { return null; } }
-        public byte Index { get; set; }
-        public byte Frame { get; set; }
+        public byte OverlayIndex { get; set; }
+        public byte OverlayFrame { get; set; }
         public override int X { get; set; }
         public override int Y { get; set; }
         public override int Coord { get { return Misc.CoordInt(X, Y); } }

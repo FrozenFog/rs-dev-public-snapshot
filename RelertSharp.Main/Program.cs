@@ -46,11 +46,11 @@ namespace RelertSharp
                         string filename = GetNextArg();
                         MapFile m = new MapFile(filename);
                         int maxNum = int.Parse(GetNextArg());
-                        int max = m.Map.Overlays.Max(x => x.Index);
+                        int max = m.Map.Overlays.Max(x => x.OverlayIndex);
                         List<OverlayUnit> toRemove = new List<OverlayUnit>();
                         foreach (OverlayUnit o in m.Map.Overlays)
                         {
-                            if (o.Index >= maxNum) toRemove.Add(o);
+                            if (o.OverlayIndex >= maxNum) toRemove.Add(o);
                             if (m.Map.IsOutOfSize(o, null)) toRemove.Add(o);
                         }
                         foreach (OverlayUnit o in toRemove) MapApi.RemoveObject(o);

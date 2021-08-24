@@ -33,7 +33,7 @@ namespace RelertSharp.Terraformer
                     WallDirection dir = directions[i];
                     if (t.GetObejct(x => x.ObjectType == MapObjectType.Overlay) is OverlayUnit u)
                     {
-                        if (u.Index == wallIndex) result |= dir.Reverse();
+                        if (u.OverlayIndex == wallIndex) result |= dir.Reverse();
                     }
                 }
             }
@@ -41,8 +41,8 @@ namespace RelertSharp.Terraformer
             {
                 X = cell.X,
                 Y = cell.Y,
-                Index = wallIndex,
-                Frame = (byte)result
+                OverlayIndex = wallIndex,
+                OverlayFrame = (byte)result
             };
             return o;
         }

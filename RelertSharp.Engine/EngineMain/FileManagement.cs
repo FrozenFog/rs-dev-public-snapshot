@@ -160,8 +160,8 @@ namespace RelertSharp.Engine
         internal static DrawableMisc CreateDrawableMisc(OverlayUnit overlay, uint color)
         {
             DrawableMisc d;
-            string name = GlobalRules.GetOverlayName(overlay.Index);
-            string lookup = string.Format("{0}{1}.in{2}", name, color, overlay.Frame);
+            string name = GlobalRules.GetOverlayName(overlay.OverlayIndex);
+            string lookup = string.Format("{0}{1}.in{2}", name, color, overlay.OverlayFrame);
             if (!Buffer.Buffers.Miscs.Keys.Contains(lookup))
             {
                 d = new DrawableMisc(MapObjectType.Overlay, name);
@@ -187,7 +187,7 @@ namespace RelertSharp.Engine
                 {
                     flat = false;
                     d.IsHiBridge = true;
-                    if (GlobalConfig.BridgeOffsetContains(overlay.Frame)) d.IsOffsetBridge = true;
+                    if (GlobalConfig.BridgeOffsetContains(overlay.OverlayFrame)) d.IsOffsetBridge = true;
                 }
                 if (!rubble)
                 {
@@ -221,8 +221,8 @@ namespace RelertSharp.Engine
                 if (d.FlatType == ShpFlatType.FlatGround) d.IsFlatOnly = true;
 
                 d.Framecount = GlobalDir.GetShpFrameCount(filename, out bool b);
-                d.pSelf = CreateFile(filename, DrawableType.Shp, overlay.Frame);
-                if (wall || !rubble || !isTiberium) d.pShadow = CreateFile(filename, DrawableType.Shp, overlay.Frame + d.Framecount / 2);
+                d.pSelf = CreateFile(filename, DrawableType.Shp, overlay.OverlayFrame);
+                if (wall || !rubble || !isTiberium) d.pShadow = CreateFile(filename, DrawableType.Shp, overlay.OverlayFrame + d.Framecount / 2);
                 Buffer.Buffers.Miscs[lookup] = d;
             }
             else d = Buffer.Buffers.Miscs[lookup];

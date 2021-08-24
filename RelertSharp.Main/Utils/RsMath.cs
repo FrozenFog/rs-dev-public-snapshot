@@ -119,6 +119,11 @@ namespace RelertSharp
             if (a == null || b == null) return false;
             return a.X == b.X && a.Y == b.Y;
         }
+        public static bool I3dEqual(I3dLocateable a, I3dLocateable b)
+        {
+            if (a == null || b == null) return false;
+            return a.X == b.X && a.Y == b.Y && a.Z == b.Z;
+        }
         public static bool I2dValid(I2dLocateable pos)
         {
             return pos.X > 0 && pos.Y > 0;

@@ -349,5 +349,16 @@ namespace RelertSharp.Wpf.Views
             cbbSpotlight.ItemsSource = GlobalVar.GlobalConfig.ModConfig.GetCombo(Constant.Config.DefaultComboType.TYPE_MAP_SPOTLIGHT).CastToCombo();
         }
         #endregion
+
+        #region Menu
+        private void Menu_AddObjToRandomize(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement elem && elem.DataContext is ObjectPickVm vm)
+            {
+                if (vm.Type == MapObjectType.Overlay) RandomizeBrush.AddRandomObject(vm.RegName, vm.OverlayIndex, vm.OverlayData);
+                else RandomizeBrush.AddRandomObject(vm.RegName, vm.Type);
+            }
+        }
+        #endregion
     }
 }

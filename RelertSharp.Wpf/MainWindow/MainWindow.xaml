@@ -49,6 +49,7 @@
                 <MenuItem Header="Switch To Isometric Selecting" IsCheckable="True" IsChecked="{Binding IsIsoSelect}" IsEnabled="{Binding IsEngineDrawed}"/>
                 <MenuItem Header="Set Height To..." Click="MenuSetHeight" IsEnabled="{Binding IsSelectorHasTile}"/>
                 <Separator/>
+                <MenuItem Header="Randomize Brush" Click="MenuRandomBrushDlg" IsEnabled="{Binding IsEngineDrawed}"/>
                 <MenuItem Header="Save Map Render Picture" Click="MenuSaveShot" IsEnabled="{Binding IsEngineDrawed}"/>
                 <Separator/>
                 <MenuItem Header="Clear Map" IsEnabled="{Binding IsEngineDrawed}"/>
@@ -157,7 +158,8 @@
             <ToolBar Band="2" BandIndex="1" HorizontalAlignment="Left">
                 <ToggleButton Content="{StaticResource InteliRamp}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseInteliRamp}"/>
                 <ToggleButton Content="{StaticResource InteliWall}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseInteliWall}"/>
-                <ToggleButton IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseInteliCliff}"/>
+                <ToggleButton Content="{StaticResource InteliCliff}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseInteliCliff}"/>
+                <ToggleButton Content="{StaticResource RandomizeBrush}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseRandomBrush}"/>
             </ToolBar>
         </ToolBarTray>
         <DockingManager x:Name="dockMain" Grid.Row="2">

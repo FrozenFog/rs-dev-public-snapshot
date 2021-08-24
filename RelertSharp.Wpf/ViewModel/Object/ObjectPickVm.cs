@@ -58,6 +58,18 @@ namespace RelertSharp.Wpf.ViewModel
         public ImageSource OverlayImage { get; internal set; }
         public int ImgWidth { get; internal set; }
         public int ImgHeight { get; internal set; }
+        public bool CanRandomize
+        {
+            get
+            {
+                if (Type == MapObjectType.Overlay)
+                {
+                    if (Title.IsNullOrEmpty()) return true;
+                    return false;
+                }
+                return (Type & (MapObjectType.CombatObject | MapObjectType.MiscObject)) != 0;
+            }
+        }
         #endregion
     }
 }
