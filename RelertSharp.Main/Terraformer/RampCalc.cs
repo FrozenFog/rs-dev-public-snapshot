@@ -101,7 +101,8 @@ namespace RelertSharp.Terraformer
                 {
                     Tile referance = dests[i];
                     WallDirection dir = dirs[i];
-                    RampData ramp = GetRampData(referance);
+                    RampData ramp = GetRampData(referance).Copy();
+                    ramp.HeightFix += referance.RealHeight - center.RealHeight;
                     if (ramped.Contains(referance))
                     {
                         switch (dir)
@@ -122,36 +123,37 @@ namespace RelertSharp.Terraformer
                     }
                     if (!org.Contains(referance))
                     {
+                        RampData border = cfg.RampFixBorderTreatAsFlat ? RampData.FlatRamp : ramp;
                         switch (dir)
                         {
                             case WallDirection.NW:
-                                dr = RampData.FlatRamp;
+                                dr = border;
                                 break;
                             case WallDirection.NE:
-                                dl = RampData.FlatRamp;
+                                dl = border;
                                 break;
                             case WallDirection.SW:
-                                ur = RampData.FlatRamp;
+                                ur = border;
                                 break;
                             case WallDirection.SE:
-                                ul = RampData.FlatRamp;
+                                ul = border;
                                 break;
                         }
                     }
                 }
-                centerData = GetValidRampData(ul, ur, dr, dl, true);
+                centerData = GetValidRampData(ul, ur, dr, dl);
                 centerRamp = centerData.Offset;
                 if (!centerData.IsFlat)
                 {
                     MapApi.SetTile(centerRamp + rampBaseIndex - 1, 0, center);
                     ramped.Add(center);
                 }
-                else
-                {
-                    MapApi.SetTile(0, 0, center);
-                    ramped.Add(center);
-                    reRamp.Add(center);
-                }
+                //else
+                //{
+                //    MapApi.SetTile(0, 0, center);
+                //    ramped.Add(center);
+                //    reRamp.Add(center);
+                //}
                 //if (IsNotRamp(center))
                 //{
                 //    centerRamp = RandomRampOffsetSameLevel;
@@ -401,31 +403,24 @@ namespace RelertSharp.Terraformer
         /// <param name="dl"></param>
         /// <param name="sameLevel"></param>
         /// <returns></returns>
-        private static RampData GetValidRampData(RampData ul, RampData ur, RampData dr, RampData dl, bool sameLevel = false)
+        private static RampData GetValidRampData(RampData ul, RampData ur, RampData dr, RampData dl)
         {
             RampSideSection ulSide = ul.IsIgnore ? RampSideSection.Ignore : ul.Sections[2];
             RampSideSection urSide = ur.IsIgnore ? RampSideSection.Ignore : ur.Sections[3];
             RampSideSection drSide = dr.IsIgnore ? RampSideSection.Ignore : dr.Sections[0];
             RampSideSection dlSide = dl.IsIgnore ? RampSideSection.Ignore : dl.Sections[1];
+            ulSide.Height += ul.HeightFix;
+            urSide.Height += ur.HeightFix;
+            dlSide.Height += dl.HeightFix;
+            drSide.Height += dr.HeightFix;
             RampData[] results = Data.Where(x =>
             {
-                if (sameLevel)
-                {
-                    return
-                        (ulSide.IsIgnore || x.Sections[0] == ulSide) &&
-                        (urSide.IsIgnore || x.Sections[1] == urSide) &&
-                        (drSide.IsIgnore || x.Sections[2] == drSide) &&
-                        (dlSide.IsIgnore || x.Sections[3] == dlSide) &&
-                        !x.StretchHeight;
-                }
-                else
-                {
-                    return
-                        (ulSide.IsIgnore || x.Sections[0] == ulSide) &&
-                        (urSide.IsIgnore || x.Sections[1] == urSide) &&
-                        (drSide.IsIgnore || x.Sections[2] == drSide) &&
-                        (dlSide.IsIgnore || x.Sections[3] == dlSide);
-                }
+                return
+                    (ulSide.IsIgnore || x.Sections[0] == ulSide) &&
+                    (urSide.IsIgnore || x.Sections[1] == urSide) &&
+                    (drSide.IsIgnore || x.Sections[2] == drSide) &&
+                    (dlSide.IsIgnore || x.Sections[3] == dlSide) &&
+                    x.HeightSum < 6;
             }).ToArray();
             if (results.Length > 0)
             {

@@ -577,12 +577,12 @@ namespace RelertSharp.MapStructure
             SceneObject.SwitchToFramework(enable);
             if (isSelfHidden) SceneObject.HideSelf();
             if (isExtraHidden) SceneObject.HideExtra();
+            UpdatePhase();
             if (isSelected)
             {
                 if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
                 if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
             }
-            UpdatePhase();
         }
         public void FlatToGround(bool enable)
         {

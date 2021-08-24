@@ -99,6 +99,26 @@ namespace RelertSharp.Terraformer
                 Offset = offset;
                 HeightFix = 0;
             }
+            public RampData Copy()
+            {
+                RampData result = new RampData()
+                {
+                    HeightFix = this.HeightFix,
+                    Offset = this.Offset
+                };
+                List<RampSideSection> sections = new List<RampSideSection>();
+                foreach (RampSideSection sec in Sections)
+                {
+                    RampSideSection side = new RampSideSection()
+                    {
+                        SlopeType = sec.SlopeType,
+                        Height = sec.Height
+                    };
+                    sections.Add(side);
+                }
+                result.Sections = sections.ToArray();
+                return result;
+            }
 #if DEBUG
             public override string ToString()
             {
@@ -118,6 +138,10 @@ namespace RelertSharp.Terraformer
             public bool StretchHeight
             {
                 get { return Sections.Any(x => x.Height == 2); }
+            }
+            public int HeightSum
+            {
+                get { return Sections.Sum(x => x.Height); }
             }
             public static RampData FlatRamp
             {
