@@ -1,0 +1,36 @@
+﻿<Window x:Class="RelertSharp.Wpf.Dialogs.DlgLoading"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RelertSharp.Wpf.Dialogs"
+        xmlns:vm="clr-namespace:RelertSharp.Wpf.ViewModel"
+        mc:Ignorable="d"
+        Title="Loading" Background="{DynamicResource dimBack}" Height="278.4" Width="448.8" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Drawing map, please wait..." VerticalAlignment="Top"/>
+        <ListBox x:Name="lbxMain" Margin="10,30,9.6,10.2" Style="{DynamicResource lbxDark}">
+            <ListBox.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type vm:LoadingProgressVm}">
+                    <Grid Width="{Binding ActualWidth, ElementName=bord}">
+                        <StackPanel Orientation="Horizontal" Height="24">
+                            <Grid Width="{Binding ActualWidth, ElementName=bord}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition MinWidth="60" Width="*"/>
+                                    <ColumnDefinition MinWidth="60" Width="*"/>
+                                    <ColumnDefinition MinWidth="240" Width="240"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Label}"  Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding FormatCount}" Margin="0,0,10,0" VerticalAlignment="Center" Grid.Column="1"/>
+                                <ProgressBar Maximum="{Binding MaxCount}" Value="{Binding CurrentCount}" 
+                                         Margin="0,2,0,2" Grid.Column="2" IsEnabled="{Binding CanLoad}"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </HierarchicalDataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Border x:Name="bord" BorderBrush="Transparent" BorderThickness="1" Margin="20,30,20.4,9.8"/>
+
+    </Grid>
+</Window>

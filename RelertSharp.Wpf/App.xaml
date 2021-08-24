@@ -17,6 +17,7 @@
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/GridSplitter.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/ImageAndIcons.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/ListView.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/ProgressBar.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/RadioButton.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/TabControl.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RelertSharp.Theme;component/ToolBar.xaml"/>

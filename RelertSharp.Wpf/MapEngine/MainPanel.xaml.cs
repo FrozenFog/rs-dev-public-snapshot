@@ -22,6 +22,7 @@ using RelertSharp.Wpf.Views;
 using RelertSharp.Wpf.Common;
 using RelertSharp.Engine;
 using RelertSharp.Algorithm;
+using RelertSharp.Wpf.Dialogs;
 
 namespace RelertSharp.Wpf.MapEngine
 {
@@ -64,7 +65,14 @@ namespace RelertSharp.Wpf.MapEngine
             EngineApi.ResizeRequested += ResizeInvokeHandler;
             EngineApi.LockRequested += LockInvokeHandler;
             EngineApi.UnlockRequested += UnlockInvokeHandler;
+            EngineApi.MapDrawingBegin += BeginDrawingHandler;
             NavigationHub.GoToPositionRequest += MoveCameraInvokeHandler;
+        }
+
+        private void BeginDrawingHandler(object sender, EventArgs e)
+        {
+            DlgLoading dlg = new DlgLoading();
+            dlg.Show();
         }
 
         private void MapReloadedHandler(object sender, EventArgs e)
@@ -234,11 +242,7 @@ namespace RelertSharp.Wpf.MapEngine
         public async void DrawMap()
         {
             EngineApi.SuspendRendering();
-#if DEBUG
-            EngineApi.DrawMap(GlobalVar.GlobalMap);
-#else
             await EngineApi.DrawMap(GlobalVar.GlobalMap);
-#endif
             drew = true;
             EngineApi.ResumeRendering();
             RenderFrame();

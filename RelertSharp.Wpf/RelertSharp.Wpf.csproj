@@ -96,6 +96,9 @@
     <Compile Include="Dialogs\DlgIniInspector.xaml.cs">
       <DependentUpon>DlgIniInspector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\DlgLoading.xaml.cs">
+      <DependentUpon>DlgLoading.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\DlgNampInput.xaml.cs">
       <DependentUpon>DlgNampInput.xaml</DependentUpon>
     </Compile>
@@ -137,6 +140,7 @@
     <Compile Include="ViewModel\Base\BaseListVm.cs" />
     <Compile Include="ViewModel\Base\BaseTreeVm.cs" />
     <Compile Include="ViewModel\Etc\GlobalSearchVm.cs" />
+    <Compile Include="ViewModel\Etc\LoadingProgressVm.cs" />
     <Compile Include="ViewModel\Etc\MainWindowVm.cs" />
     <Compile Include="ViewModel\Etc\SearchConditionVm.cs" />
     <Compile Include="ViewModel\Etc\SearchResultVm.cs" />
@@ -241,6 +245,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\DlgIniInspector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DlgLoading.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -18,6 +18,7 @@ using RelertSharp.MapStructure.Logic;
 using RelertSharp.Common.Config.Model;
 using System.Reflection;
 using System.ComponentModel;
+using RelertSharp.Engine.Api;
 
 namespace RelertSharp.Wpf
 {
