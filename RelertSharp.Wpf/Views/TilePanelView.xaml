@@ -14,6 +14,7 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
+        <TextBlock x:Name="txblWait" Text="Tile is loading, please wait..." HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" Panel.ZIndex="5"/>
         <TreeView x:Name="trvMain" Margin="10" Style="{DynamicResource trvDark}" SelectedItemChanged="SelectedSetChanged" PreviewMouseRightButtonDown="PreviewRight">
             <TreeView.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#0078D7" />
@@ -28,7 +29,7 @@
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:TileSetTreeVm}" ItemsSource="{Binding Items}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{Binding HeadImg}" Margin="3" Width="10" Height="10" Stretch="Fill"/>
-                        <TextBlock Text="{Binding SetIndex}"/>
+                        <!--<TextBlock Text="{Binding SetIndex}"/>-->
                         <TextBlock Text="{Binding Title}"/>
                     </StackPanel>
                 </HierarchicalDataTemplate>
@@ -52,7 +53,7 @@
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:TileSetItemVm}">
                     <StackPanel Orientation="Vertical">
                         <Image Source="{Binding TileSetImage}" HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="None"/>
-                        <TextBlock Text="{Binding Id}"/>
+                        <!--<TextBlock Text="{Binding Id}"/>-->
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </ListView.ItemTemplate>

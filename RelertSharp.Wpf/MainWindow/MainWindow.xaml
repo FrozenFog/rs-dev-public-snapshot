@@ -29,8 +29,8 @@
                     <MenuItem Header="Mega Map"/>
                 </MenuItem>
                 <MenuItem Header="Open Map" Click="MenuOpenMap"/>
-                <MenuItem Header="Save Map"/>
-                <MenuItem Header="Save As..."/>
+                <MenuItem Header="Save Map" Click="MenuSaveMap"/>
+                <MenuItem Header="Save As..." Click="MenuSaveMapAs"/>
                 <Separator/>
                 <MenuItem Header="Check Map"/>
                 <MenuItem Header="Exit"/>

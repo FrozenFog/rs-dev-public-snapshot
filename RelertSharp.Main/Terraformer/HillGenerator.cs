@@ -151,7 +151,7 @@ namespace RelertSharp.Terraformer
             }
 
             applyNoiseHeight();
-            GlobalVar.CurrentMapDocument.SaveMapAs("D:\\", "org.map");
+            //GlobalVar.CurrentMapDocument.SaveMapAs(System.IO.Path.Combine("D:\\", "org.map"));
             while (cfg.Iteration-- > 0) SmoothRampIn(targets, cfg);
         }
         #endregion

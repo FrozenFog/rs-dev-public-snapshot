@@ -37,9 +37,9 @@ namespace RelertSharp.FileSystem
             DumpCustomComponents(IniDict);
             SaveIni(savingPath, true);
         }
-        public void SaveMapAs(string savePath, string filename)
+        public void SaveMapAs(string path)
         {
-            INIFile f = new INIFile(filename, true);
+            INIFile f = new INIFile(path, true);
             f.AddEnt(Map.IniResidue.Values);
             Map.DumpOverlayFromTile();
             Map.CompressTile();
@@ -48,7 +48,7 @@ namespace RelertSharp.FileSystem
             DumpMapObjects(f.IniDict);
             DumpLogics(f.IniDict);
             DumpCustomComponents(f.IniDict);
-            f.SaveIni(Path.Combine(savePath, filename), true);
+            f.SaveIni(path, true);
             if (GlobalVar.Log.HasCritical) GlobalVar.Log.ShowCritical();
         }
         #endregion

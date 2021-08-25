@@ -26,12 +26,35 @@ namespace RelertSharp.Wpf
         #region File
         private void MenuOpenMap(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
+            OpenFileDialog dlg = new OpenFileDialog()
+            {
+                Filter = "Map File |*.map;*.mpr;*.yrm"
+            };
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string name = dlg.FileName;
-                Engine.Api.EngineApi.DisposeMap();
+                EngineApi.DisposeMap();
                 GlobalVar.LoadMapDocument(name);
+            }
+        }
+        private void MenuSaveMap(object sender, RoutedEventArgs e)
+        {
+            GlobalVar.CurrentMapDocument.SaveMapAs(GlobalVar.CurrentMapDocument.FilePath);
+            GuiUtil.Asterisk("Save complete!");
+        }
+
+        private void MenuSaveMapAs(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog()
+            {
+                Filter = "Mission map|*.map|YR Multiplayer map|*.yrm|RA2 Multiplayer map|*.mpr",
+                FileName = GlobalVar.GlobalMap.Info.MapName,
+                AddExtension = true
+            };
+            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                GlobalVar.CurrentMapDocument.SaveMapAs(dlg.FileName);
+                GuiUtil.Asterisk("Save complete!");
             }
         }
         #endregion

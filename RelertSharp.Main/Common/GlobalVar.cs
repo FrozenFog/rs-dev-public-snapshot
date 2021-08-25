@@ -10,6 +10,7 @@ namespace RelertSharp.Common
         public static event EventHandler MapDocumentLoaded;
         public static event Action MapLoadComplete;
         public static event Action MapLoadCompleteAsync;
+        public static event Action MapDisposed;
         public static event EventHandler MapDocumentRedrawRequested;
         public static FileSystem.MapFile CurrentMapDocument { get; private set; }
         public static MapStructure.Map GlobalMap
@@ -23,6 +24,7 @@ namespace RelertSharp.Common
         public static bool HasMap { get { return GlobalMap != null; } }
         public static async void LoadMapDocument(string path)
         {
+            if (CurrentMapDocument != null) MapDisposed?.Invoke();
             CurrentMapDocument = new FileSystem.MapFile(path);
             MapDocumentLoaded?.Invoke(null, null);
             MapDocumentRedrawRequested?.Invoke(null, null);

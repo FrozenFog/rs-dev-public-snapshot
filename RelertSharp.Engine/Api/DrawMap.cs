@@ -104,7 +104,6 @@ namespace RelertSharp.Engine.Api
             ProgressRegisted?.Invoke("Celltags", Map.Celltags.Count(), MapObjectType.Celltag);
             ProgressRegisted?.Invoke("Basenodes", Map.Houses.Sum(x => x.BaseNodes.Count), MapObjectType.BaseNode);
         }
-#if DEBUG
         public static async Task DrawMap(Map map)
         {
             GlobalDir.SuspendLog();
@@ -191,26 +190,6 @@ namespace RelertSharp.Engine.Api
             MapDrawingComplete?.Invoke();
             GlobalDir.ResumeLog();
         }
-#else
-        public static async Task DrawMap(Map map)
-        {
-            await Task.Run(() =>
-            {
-                SetTheater(map.Info.TheaterType);
-                foreach (Tile t in map.TilesData) EngineMain.DrawTile(t);
-                foreach (InfantryItem inf in map.Infantries) EngineMain.DrawInfantry(inf, inf.GetHeight(), map.GetHouseColor(inf));
-                foreach (UnitItem u in map.Units) EngineMain.DrawUnit(u, u.GetHeight(), map.GetHouseColor(u));
-                foreach (StructureItem b in map.Buildings) EngineMain.DrawBuilding(b, b.GetHeight(), map.GetHouseColor(b));
-                foreach (TerrainItem terr in map.Terrains) EngineMain.DrawTerrain(terr, terr.GetHeight());
-                foreach (SmudgeItem smg in map.Smudges) EngineMain.DrawSmudge(smg, smg.GetHeight());
-                foreach (OverlayUnit o in map.Overlays) EngineMain.DrawOverlay(o, o.GetHeight());
-                foreach (WaypointItem wp in map.Waypoints) EngineMain.DrawWaypoint(wp, wp.GetHeight());
-                foreach (CellTagItem ct in map.Celltags) EngineMain.DrawCelltag(ct, ct.GetHeight(), true);
-                MoveCameraTo(map.CenterPoint, map.GetHeightFromTile(map.CenterPoint));
-                //RefreshFrame();
-            });
-        }
-#endif
         public static bool MapDrawed { get; private set; } = false;
     }
 }

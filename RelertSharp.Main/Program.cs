@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -54,7 +55,7 @@ namespace RelertSharp
                             if (m.Map.IsOutOfSize(o, null)) toRemove.Add(o);
                         }
                         foreach (OverlayUnit o in toRemove) MapApi.RemoveObject(o);
-                        m.SaveMapAs(StartupPath, filename);
+                        m.SaveMapAs(Path.Combine(StartupPath, filename));
                     }
                     else if (a == "/locker")
                     {
@@ -63,7 +64,7 @@ namespace RelertSharp
                         string seed = GetNextArg();
                         MapFile m = new MapFile(filename);
                         MapLocker.RunLocker(m, mode, seed);
-                        m.SaveMapAs(StartupPath, filename);
+                        m.SaveMapAs(Path.Combine(StartupPath, filename));
                     }
                 }
             }

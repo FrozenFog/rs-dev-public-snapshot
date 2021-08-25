@@ -240,7 +240,7 @@ namespace RelertSharp.Wpf.MapEngine
                             Selector.UnselectAll();
                             EngineApi.InvokeRedraw();
                         }
-                        Selector.BeginSelecting(unscaled, graphicTop, cell);
+                        Selector.BeginSelecting(unscaled, selectorBoxCanvas, cell);
                     }
                     break;
                 case PanelMouseState.TileBoxSelecting:
@@ -249,7 +249,7 @@ namespace RelertSharp.Wpf.MapEngine
                         TileSelector.UnselectAll();
                         EngineApi.InvokeRedraw();
                     }
-                    TileSelector.BeginSelecting(unscaled, graphicTop, cell);
+                    TileSelector.BeginSelecting(unscaled, selectorBoxCanvas, cell);
                     break;
                 case PanelMouseState.TileSingleSelecting:
                     if (!GuiUtil.IsShiftDown() && !GuiUtil.IsAltDown())

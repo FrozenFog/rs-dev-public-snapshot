@@ -20,7 +20,7 @@ namespace RelertSharp.Wpf.ViewModel
         public TileSetTreeVm(TileSet set)
         {
             data = set;
-            Title = set.SetName;
+            Title = string.Format("{0:D4}-{1}", set.SetIndex, set.SetName);
             int idx = 0;
             TileSet framework = TileDictionary.GetFrameworkFromSet(set, out bool isHyte);
             List<string> frameworkNames = framework.GetNames();

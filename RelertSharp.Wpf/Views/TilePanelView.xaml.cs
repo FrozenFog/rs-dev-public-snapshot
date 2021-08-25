@@ -199,6 +199,11 @@ namespace RelertSharp.Wpf.Views
             }
             favTilesets = GlobalVar.GlobalConfig.UserConfig.GetFavTilesetsByTheater(GlobalVar.GlobalMap.Info.TheaterName);
             List<TileSetTreeVm> vms = new List<TileSetTreeVm>();
+            Dispatcher.Invoke(() =>
+            {
+                trvMain.IsEnabled = false;
+                txblWait.Visibility = Visibility.Visible;
+            });
             await Task.Run(() =>
             {
                 vms.Add(loadGeneral());
@@ -210,6 +215,8 @@ namespace RelertSharp.Wpf.Views
                 trvMain.Items.Clear();
                 trvMain.Items.AddRange(vms);
                 _isLoaded = true;
+                txblWait.Visibility = Visibility.Collapsed;
+                trvMain.IsEnabled = true;
             });
         }
 

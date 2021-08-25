@@ -52,7 +52,10 @@ namespace RelertSharp.Wpf
 #endif
         }
 
-
+        public static void Asterisk(string content)
+        {
+            MessageBox.Show(content, "Success", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+        }
         public static void Fatal(string content)
         {
             MessageBox.Show(content, "Fatal", MessageBoxButton.OK, MessageBoxImage.Error);
