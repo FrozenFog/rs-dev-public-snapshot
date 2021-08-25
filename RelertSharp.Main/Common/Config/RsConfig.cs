@@ -16,10 +16,18 @@ namespace RelertSharp.Common.Config
         #endregion
 
 
-        public RsConfig()
+        public RsConfig(string configPath = Constant.Config.Path)
         {
-            ModConfig = new ModConfig(Constant.Config.Path);
-            UserConfig = new UserConfig();
+            UserConfig = new UserConfig(out bool existUserConfig);
+            if (existUserConfig && configPath == Constant.Config.Path)
+            {
+                ModConfig = new ModConfig(UserConfig.General.ConfigPath);
+            }
+            else
+            {
+                ModConfig = new ModConfig(configPath);
+            }
+            UserConfig.General.ConfigPath = configPath;
         }
 
 
@@ -78,6 +86,16 @@ namespace RelertSharp.Common.Config
         }
         public bool DevMode { get { return UserConfig.General.DevMode; } }
         public IniSystem.INIEntity LightPostTemplate { get; }
+        public string Info
+        {
+            get
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine(string.Format("Relert sharp config file:\n{0}\nVersion: {1}", ModGeneral.Name, ModGeneral.Version));
+
+                return sb.ToString();
+            }
+        }
         #endregion
     }
 }

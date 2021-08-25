@@ -27,7 +27,8 @@ namespace RelertSharp.Common.Config.Model
                 {
                     Objects = new FavouriteItemTree(),
                     TileSets = new List<TheaterTilesets>()
-                }
+                },
+                General = new UserGeneral()
             };
             return cfg;
         }
@@ -37,6 +38,8 @@ namespace RelertSharp.Common.Config.Model
     {
         [XmlElement]
         public string GamePath { get; set; }
+        [XmlElement]
+        public string ConfigPath { get; set; }
         [XmlElement]
         public bool DevMode { get; set; }
         [XmlElement("AutoSave")]

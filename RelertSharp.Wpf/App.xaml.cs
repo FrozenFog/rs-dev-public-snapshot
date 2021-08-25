@@ -10,10 +10,12 @@ using System.Diagnostics;
 using RelertSharp.FileSystem;
 using RelertSharp.IniSystem;
 using RelertSharp.Common;
+using RelertSharp.Wpf.Dialogs;
 using System.Runtime.InteropServices;
 using System.Threading;
 using static RelertSharp.Wpf.GuiUtil;
 using System.Text;
+using RelertSharp.Common.Config;
 
 namespace RelertSharp.Wpf
 {
@@ -28,6 +30,8 @@ namespace RelertSharp.Wpf
         private static string StartupPath { get { return AppDomain.CurrentDomain.BaseDirectory; } }
         [DllImport("kernel32.dll")]
         static extern bool SetDllDirectory(string pathname);
+        private bool initialized = false;
+        private DlgInitialize init;
 
         /// <summary>
         /// 应用程序的主入口点。
@@ -115,63 +119,121 @@ namespace RelertSharp.Wpf
             //            }
             //            #endregion
             #endregion
-            Initialization();
-            App application = new App();
+            App application = new App()
+            {
+                ShutdownMode = ShutdownMode.OnExplicitShutdown
+            };
             application.InitializeComponent();
             application.Run();
             Finalization();
         }
 
-
-
-        static void Finalization()
+        protected override void OnStartup(StartupEventArgs e)
         {
-            GlobalVar.GlobalConfig.UserConfig.Save();
+            bool canStart = Start();
+            if (canStart)
+            {
+                MainWindow mw = new MainWindow();
+                Application.Current.MainWindow = mw;
+                mw.Show();
+            }
+            base.OnStartup(e);
+            if (!canStart) Shutdown();
         }
-        static bool Initialization()
+        private bool Start()
         {
+            using (Mutex mutex = new Mutex(false, _guid))
+            {
+                if (!mutex.WaitOne(0, false))
+                {
+                    Fatal("May only run 1 process.");
+                    return false;
+                }
+            }
+            if (!File.Exists("CncVxlRenderText.dll"))
+            {
+                Fatal("Cannot find Render Dll, please check your folder.");
+                return false;
+            }
+            if (Validate(out bool setupMw) && NoWinXP())
+            {
+                init = new DlgInitialize();
+                Initialization();
+                init.CallShowDlg();
+                if (!initialized)
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+        private static void Finalization()
+        {
+            GlobalVar.GlobalConfig?.UserConfig?.Save();
+        }
+        #region Validate
+        private bool Validate(out bool setupMw)
+        {
+            setupMw = false;
 #if DEBUG
             File.Delete(Constant.Config.Path);
 #endif
-            if (!SafeRun(() => { Utils.Misc.Init_Language(); }, "Failed to read language file!")) return false;
-            return SetGlobalVar();
+            try
+            {
+                GlobalVar.Language = new RelertSharp.Common.Language();
+            }
+            catch
+            {
+                GuiUtil.Fatal("Can't find language.json!\nMust have at least one language file.");
+                return false;
+            }
+            try
+            {
+                GlobalVar.GlobalConfig = new RsConfig();
+                Log.Write("Primary config loaded");
+                return true;
+            }
+            catch
+            {
+                DlgConfig config = new DlgConfig();
+                if (config.ShowDialog().Value)
+                {
+                    setupMw = true;
+                    return true;
+                }
+                return false;
+            }
         }
-        static bool SetGlobalVar()
+        #endregion
+        #region Initialization
+        private async Task Initialization()
         {
-            LocalConfig cfgLocal;
-            //LocalSettingWindow localSetting = new LocalSettingWindow();
-            if (!File.Exists("local.rsc"))
+            await Task.Run(() =>
             {
-                Log.Write("Local config not found, creating new one");
-                cfgLocal = new LocalConfig();
-            }
-            else
-            {
-                cfgLocal = new LocalConfig("local.rsc");
-                Log.Write("Local config loaded");
-            }
-            //if (!cfgLocal.IsValid)
-            //{
-            //    localSetting.Reload(cfgLocal);
-            //    Application.Run(localSetting);
-            //    if (localSetting.DialogResult != DialogResult.OK) return false;
-            //    cfgLocal.SaveConfig();
-            //}
-            //localSetting.Dispose();
-            LocalConfig local = new LocalConfig("local.rsc");
-            GlobalVar.Language = new RelertSharp.Common.Language();
-            GlobalVar.GlobalConfig = new RelertSharp.Common.Config.RsConfig();
-            Log.Write("Primary config loaded");
+                init.SetStatus("Initializing language");
+                SafeRun(() => { Utils.Misc.Init_Language(); }, "Failed to read language file!");
+                initialized = SetGlobalVar();
+                init.SetStatus("Initialization Complete.");
+                Thread.Sleep(1000);
+                init.CallClose();
+            });
+        }
+        private bool SetGlobalVar()
+        {
             var general = GlobalVar.GlobalConfig.ModConfig.General;
+            init.SetStatus("Reading Mix...");
             if (!SafeRun(() => { GlobalVar.GlobalDir = new VirtualDir(); },
                 "Virtual mix directiory initialization failed!")) return false;
             Log.Write("Loading Rules");
+            init.SetStatus("Reading Rules and Art");
             if (!SafeRun(() => { GlobalVar.GlobalRules = new Rules(GlobalVar.GlobalDir.GetRawByte(general.IniFiles.Rules + Constant.EX_INI, true), general.IniFiles.Rules + Constant.EX_INI); },
                 "Rules not found or corrupted!")) return false;
             Log.Write("Loading Art");
             if (!SafeRun(() => { GlobalVar.GlobalRules.LoadArt(GlobalVar.GlobalDir.GetFile(general.IniFiles.Art, FileExtension.INI, true)); },
                 "Art not found or corrupted!")) return false;
             Log.Write("Loading Sound");
+            init.SetStatus("Loading sound bag file");
             if (!SafeRun(() =>
             {
                 GlobalVar.GlobalSound = new SoundRules(general.IniFiles.Sound, general.IniFiles.Eva, general.IniFiles.Theme);
@@ -180,6 +242,7 @@ namespace RelertSharp.Wpf
             "Sound library initialization failed!")) return false;
 
             //csf
+            init.SetStatus("Loading csf library");
             Log.Write("Loading Csf");
             if (!SafeRun(() =>
             {
@@ -189,7 +252,7 @@ namespace RelertSharp.Wpf
             Log.Write("INITIALIZATION COMPLETE\n\n\n");
             return true;
         }
-        static void LoadCsf()
+        private void LoadCsf()
         {
             var general = GlobalVar.GlobalConfig.ModConfig.General;
             if (general.StringTable.Count > 0)
@@ -218,14 +281,15 @@ namespace RelertSharp.Wpf
             }
             else GlobalVar.GlobalCsf = new CsfFile();
         }
-        static bool NoWinXP()
+        #endregion
+        private bool NoWinXP()
         {
             if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major < 6)
             {
                 MessageBox.Show("Operating system not support.", "Relert Sharp", MessageBoxButton.OK, MessageBoxImage.Error);
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
     }
 }

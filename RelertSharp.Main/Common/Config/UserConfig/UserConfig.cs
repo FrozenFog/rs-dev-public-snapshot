@@ -13,16 +13,19 @@ namespace RelertSharp.Common
     {
         private const string path = Constant.Config.UserConfig;
         private RsUserConfig data;
-        public UserConfig()
+        public UserConfig(out bool exist)
         {
             if (File.Exists(path))
             {
+                exist = true;
                 XmlSerializer serializer = new XmlSerializer(typeof(RsUserConfig));
                 TextReader reader = new StreamReader(path);
                 data = serializer.Deserialize(reader) as RsUserConfig;
+                reader.Dispose();
             }
             else
             {
+                exist = false;
                 data = RsUserConfig.EmptyConfig();
             }
         }

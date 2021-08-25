@@ -11,7 +11,7 @@ namespace RelertSharp.Common
 {
     public class Language
     {
-        public Language(string fileName = "enUs.json")
+        public Language(string fileName = "language.json")
         {
             TextReader reader = new StreamReader(fileName);
             Data = JsonConvert.DeserializeObject<LanguageControl>(reader.ReadToEnd());

@@ -189,6 +189,8 @@ namespace RelertSharp.Wpf
 
             /// save Gui
             GlobalVar.GlobalConfig.UserConfig.SetGuiStatus(Left, Top, Width, Height, WindowState == WindowState.Maximized);
+
+            Application.Current.Shutdown();
         }
         #endregion
 

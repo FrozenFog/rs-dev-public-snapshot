@@ -98,18 +98,18 @@ namespace RelertSharp.MapStructure
             {
                 general[p.Name] = p.ParseInt();
             }
-            SafeLoad(Constant.TileSetClass.Clear, "ClearTile");
-            SafeLoad(Constant.TileSetClass.Rough, "SandTile");
-            SafeLoad(Constant.TileSetClass.Ramp, "RampBase");
-            SafeLoad(Constant.TileSetClass.Pave, "PaveTile");
-            SafeLoad(Constant.TileSetClass.Green, "RoughTile");
-            SafeLoad(Constant.TileSetClass.Sand, "GreenTile");
-            SafeLoad(Constant.TileSetClass.Water, "WaterSet");
+            SafeLoad("ClearTile");
+            SafeLoad("SandTile");
+            SafeLoad("RampBase");
+            SafeLoad("PaveTile");
+            SafeLoad("RoughTile");
+            SafeLoad("GreenTile");
+            SafeLoad("WaterSet");
             SetLatSystem();
         }
-        private void SafeLoad(string DICTkey, string generalKey)
+        private void SafeLoad(string generalKey)
         {
-            if (general.Keys.Contains(generalKey)) GeneralTilesets[DICT[DICTkey]] = general[generalKey];
+            if (general.Keys.Contains(generalKey)) GeneralTilesets[generalKey] = general[generalKey];
         }
         private TileSet GetTileSet(ref int tileIndex)
         {

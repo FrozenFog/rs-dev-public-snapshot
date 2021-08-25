@@ -13,13 +13,11 @@ namespace RelertSharp.Common
 
         public ModConfig(string path)
         {
-            if (File.Exists(path))
-            {
-                this.path = path;
-                ReadConfig(path);
-            }
-            else CreateDefaultConfig();
-
+            this.path = path;
+            ReadConfig(path);
+#if DEBUG
+            //CreateDefaultConfig();
+#endif
             ReadAttributeInfo();
 
             LoadTriggerLanguage();
@@ -31,6 +29,7 @@ namespace RelertSharp.Common
             XmlSerializer serializer = new XmlSerializer(typeof(RsModConfig));
             TextReader reader = new StreamReader(path);
             data = serializer.Deserialize(reader) as RsModConfig;
+            reader.Dispose();
         }
         private void CreateDefaultConfig()
         {
@@ -38,6 +37,7 @@ namespace RelertSharp.Common
             XmlSerializer serializer = new XmlSerializer(typeof(RsModConfig));
             TextReader reader = new StringReader(Properties.Resources._default);
             data = serializer.Deserialize(reader) as RsModConfig;
+            reader.Dispose();
             SaveConfig();
         }
         #endregion

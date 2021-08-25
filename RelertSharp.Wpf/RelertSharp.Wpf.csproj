@@ -93,8 +93,14 @@
     <Compile Include="Dialogs\DlgCmdInput.xaml.cs">
       <DependentUpon>DlgCmdInput.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\DlgConfig.xaml.cs">
+      <DependentUpon>DlgConfig.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\DlgIniInspector.xaml.cs">
       <DependentUpon>DlgIniInspector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DlgInitialize.xaml.cs">
+      <DependentUpon>DlgInitialize.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\DlgLoading.xaml.cs">
       <DependentUpon>DlgLoading.xaml</DependentUpon>
@@ -139,6 +145,7 @@
     </Compile>
     <Compile Include="ViewModel\Base\BaseListVm.cs" />
     <Compile Include="ViewModel\Base\BaseTreeVm.cs" />
+    <Compile Include="ViewModel\Etc\ConfigDialogVm.cs" />
     <Compile Include="ViewModel\Etc\GlobalSearchVm.cs" />
     <Compile Include="ViewModel\Etc\LoadingProgressVm.cs" />
     <Compile Include="ViewModel\Etc\MainWindowVm.cs" />
@@ -244,7 +251,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dialogs\DlgConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\DlgIniInspector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DlgInitialize.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

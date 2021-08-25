@@ -82,6 +82,7 @@ local.rsc
 !/RelertSharp.Main/Resources/default.xml
 !/RelertSharp.Main/Resources/defaultIni.xml
 !/RelertSharp.Main/Resources/enUs.json
+!/RelertSharp.Main/Resources/language.json
 /RelertSharp.Main/bin/OnPublic
 /RelertSharp.GUI/bin/OnPublic
 _removed
