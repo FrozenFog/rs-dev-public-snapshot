@@ -35,6 +35,48 @@ namespace RelertSharp.MapStructure
             ReadFromMapFile(f);
             TileDictionary = new MapTheaterTileSet(this.Info.TheaterType);
         }
+        public Map(IMapCreationConfig cfg)
+        {
+            CreateFromConfig(cfg);
+            TileDictionary = new MapTheaterTileSet(this.Info.TheaterType);
+        }
+        private void CreateFromConfig(IMapCreationConfig cfg)
+        {
+            Info = new MapInfo(cfg);
+            LightningCollection = new Lightning();
+            headers = new HeaderInfo();
+            ranks = new RankInfo();
+            Tiles = new TileLayer(Info.Size);
+            Overlays = new OverlayLayer();
+            FixEmptyTiles();
+
+            previewSize = new Rectangle(0, 0, cfg.Width + cfg.Height, cfg.Height);
+            Tags = new TagCollection();
+            Countries = new CountryCollection();
+
+            if (cfg.UseDefaultHouse)
+            {
+                INIEntity lsCountry = GlobalRules[Constant.RulesHead.HEAD_COUNTRY];
+                int i = 0;
+                foreach (var pair in lsCountry)
+                {
+                    INIEntity counrty = GlobalRules[pair.Value];
+                    CountryItem c = CountryItem.ParseFromRules(counrty);
+                    Countries[i.ToString()] = c;
+                    HouseItem h = HouseItem.FromCountry(c);
+                    Houses[i.ToString()] = h;
+                    i++;
+                }
+            }
+            else
+            {
+                INIEntity lsCountry = GlobalRules[Constant.RulesHead.HEAD_COUNTRY];
+                CountryItem c = CountryItem.CreateEmpty(GlobalRules[lsCountry.First().Value]);
+                Countries["0"] = c;
+                HouseItem h = HouseItem.FromCountry(c);
+                Houses["0"] = h;
+            }
+        }
         #endregion
 
 

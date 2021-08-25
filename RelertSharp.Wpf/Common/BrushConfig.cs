@@ -39,7 +39,7 @@ namespace RelertSharp.Wpf.Common
             GlobalVar.MapDocumentLoaded += MapLoadedHandler;
         }
 
-        private void MapLoadedHandler(object sender, EventArgs e)
+        private void MapLoadedHandler()
         {
             Owner = GlobalVar.GlobalMap.Houses.First().Name;
         }

@@ -70,7 +70,7 @@ namespace RelertSharp.Wpf.Views
             EngineApi.InvokeRedraw();
         }
 
-        private void MapLoadedHandler(object sender, EventArgs e)
+        private void MapLoadedHandler()
         {
             ReloadCombo();
         }

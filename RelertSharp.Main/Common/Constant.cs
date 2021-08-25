@@ -30,6 +30,7 @@ namespace RelertSharp.Common
             public const string HEAD_TERRAIN = "TerrainTypes";
             public const string HEAD_SMUDGE = "SmudgeTypes";
             public const string HEAD_OVERLAY = "OverlayTypes";
+            public const string HEAD_COUNTRY = "Countries";
         }
 
         public const string KEY_IMAGE = "Image";
@@ -56,6 +57,8 @@ namespace RelertSharp.Common
         public const string NULL_ICON = "xxicon.shp";
         public const string CLONE_SUFFIX = " - Clone";
         public const string TAG_SUFFIX = " - Tag";
+        public const string DefaultHouseName = "US Default";
+        public const string FMT_HOUSE = "{0} House";
 
         public static class TileSetClass
         {

@@ -41,7 +41,7 @@ namespace RelertSharp.Wpf.Views
             NavigationHub.BindTeamList(this);
         }
 
-        private void MapReloadedHandler(object sender, EventArgs e)
+        private void MapReloadedHandler()
         {
             //lbxMain.ItemsSource = null;
             //lbxMain.ItemsSource = GlobalCollectionVm.Teams;

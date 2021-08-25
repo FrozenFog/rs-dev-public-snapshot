@@ -18,7 +18,7 @@ namespace RelertSharp.Wpf.ViewModel
             GlobalVar.MapDocumentLoaded += RefershCollections;
         }
 
-        private static void RefershCollections(object sender, EventArgs e)
+        private static void RefershCollections()
         {
             Teams = new GlobalTeamVm();
             Scripts = new GlobalScriptVm();

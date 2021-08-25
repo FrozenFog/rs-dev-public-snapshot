@@ -50,7 +50,7 @@ namespace RelertSharp.Wpf.Views
             SearchHub.SearchClearRequested += RemoveResultHandler;
         }
 
-        private void HandleMapLoaded(object sender, EventArgs e)
+        private void HandleMapLoaded()
         {
             minimap = new MinimapSurface(GlobalVar.GlobalMap.Info.Size);
         }

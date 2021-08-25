@@ -49,6 +49,38 @@ namespace RelertSharp.MapStructure.Logic
             initialized = true;
         }
         public CountryItem() { initialized = true; }
+        public static CountryItem ParseFromRules(INIEntity src)
+        {
+            CountryItem c = new CountryItem()
+            {
+                Name = src.Name,
+                Side = src.GetString("Side"),
+                ColorName = src.GetString("Color"),
+                Prefix = src.GetString("Prefix"),
+                Suffix = src.GetString("Suffix"),
+                ParentCountryName = src.Name,
+                SmartAi = true,
+                residual = new Dictionary<string, INIPair>(),
+                initialized = true
+            };
+            return c;
+        }
+        public static CountryItem CreateEmpty(INIEntity src)
+        {
+            CountryItem c = new CountryItem()
+            {
+                Name = Constant.DefaultHouseName,
+                Side = src.GetString("Side"),
+                ColorName = src.GetString("Color"),
+                Prefix = src.GetString("Prefix"),
+                Suffix = src.GetString("Suffix"),
+                ParentCountryName = src.Name,
+                SmartAi = true,
+                residual = new Dictionary<string, INIPair>(),
+                initialized = true
+            };
+            return c;
+        }
         #endregion
 
 

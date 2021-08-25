@@ -43,7 +43,7 @@ namespace RelertSharp.Wpf.Views
             dragScript = new DragDropHelper<TeamScriptGroup, ScriptListVm>(lbxMain);
         }
 
-        private void MapReloadedHandler(object sender, EventArgs e)
+        private void MapReloadedHandler()
         {
             lbxMain.Items.Clear();
             foreach (var script in GlobalVar.GlobalMap.Scripts)

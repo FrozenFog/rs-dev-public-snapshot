@@ -19,6 +19,8 @@ using RelertSharp.Common.Config.Model;
 using System.Reflection;
 using System.ComponentModel;
 using RelertSharp.Engine.Api;
+using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
+using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 
 namespace RelertSharp.Wpf
 {
@@ -156,6 +158,54 @@ namespace RelertSharp.Wpf
             position.Text = string.Format("X: {0} Y: {1} Z: {2} Subcell: {4}, Scale: {3}", posMouse.X, posMouse.Y, posMouse.Z, Engine.Api.EngineApi.ScaleFactor, subcell);
         }
 
+        #region Save
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cancel">dont save map and cancel upcomming action</param>
+        private void MapSaveFailsave(out bool cancel)
+        {
+            cancel = false;
+            if (GlobalVar.HasMap)
+            {
+                var result = GuiUtil.YesNoCancel("Map is not save. Save now ?");
+                if (result == MessageBoxResult.Cancel)
+                {
+                    cancel = true;
+                }
+                else if (result == MessageBoxResult.OK)
+                {
+                    SaveMap();
+                }
+            }
+        }
+        private void SaveAs()
+        {
+            SaveFileDialog dlg = new SaveFileDialog()
+            {
+                Filter = "Mission map|*.map|YR Multiplayer map|*.yrm|RA2 Multiplayer map|*.mpr",
+                FileName = GlobalVar.GlobalMap.Info.MapName,
+                AddExtension = true
+            };
+            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                GlobalVar.CurrentMapDocument.SaveMapAs(dlg.FileName);
+                GuiUtil.Asterisk("Save complete!");
+            }
+        }
+        private void SaveMap()
+        {
+            if (File.Exists(GlobalVar.CurrentMapDocument.FilePath))
+            {
+                GlobalVar.CurrentMapDocument.SaveMapAs(GlobalVar.CurrentMapDocument.FilePath);
+                GuiUtil.Asterisk("Save complete!");
+            }
+            else
+            {
+                SaveAs();
+            }
+        }
+        #endregion
 
         #region Handler
         #region Loaded & Closed

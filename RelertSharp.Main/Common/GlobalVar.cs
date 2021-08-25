@@ -7,7 +7,7 @@ namespace RelertSharp.Common
 {
     public static class GlobalVar
     {
-        public static event EventHandler MapDocumentLoaded;
+        public static event Action MapDocumentLoaded;
         public static event Action MapLoadComplete;
         public static event Action MapLoadCompleteAsync;
         public static event Action MapDisposed;
@@ -22,11 +22,28 @@ namespace RelertSharp.Common
             }
         }
         public static bool HasMap { get { return GlobalMap != null; } }
+        public static void DisposeMapDocument()
+        {
+            bool launchEvent = CurrentMapDocument != null;
+            CurrentMapDocument = null;
+            if (launchEvent) MapDisposed?.Invoke();
+            MapDocumentLoaded?.Invoke();
+        }
         public static async void LoadMapDocument(string path)
         {
             if (CurrentMapDocument != null) MapDisposed?.Invoke();
             CurrentMapDocument = new FileSystem.MapFile(path);
-            MapDocumentLoaded?.Invoke(null, null);
+            MapDocumentLoaded?.Invoke();
+            MapDocumentRedrawRequested?.Invoke(null, null);
+            MapLoadComplete?.Invoke();
+            await MapLoadedAsync();
+        }
+        public static async void CreateNewMap(IMapCreationConfig cfg)
+        {
+            var file = new FileSystem.MapFile(cfg);
+            if (CurrentMapDocument != null) MapDisposed?.Invoke();
+            CurrentMapDocument = file;
+            MapDocumentLoaded?.Invoke();
             MapDocumentRedrawRequested?.Invoke(null, null);
             MapLoadComplete?.Invoke();
             await MapLoadedAsync();

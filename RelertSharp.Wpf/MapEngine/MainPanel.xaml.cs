@@ -75,7 +75,7 @@ namespace RelertSharp.Wpf.MapEngine
             dlg.Show();
         }
 
-        private void MapReloadedHandler(object sender, EventArgs e)
+        private void MapReloadedHandler()
         {
             InitializePanel();
         }

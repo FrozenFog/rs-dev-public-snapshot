@@ -43,6 +43,10 @@ namespace RelertSharp.MapStructure
                 indexs.Add(coord);
             }
         }
+        public TileLayer(Rectangle size)
+        {
+
+        }
         #endregion
 
 

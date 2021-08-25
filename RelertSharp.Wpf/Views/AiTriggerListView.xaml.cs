@@ -39,7 +39,7 @@ namespace RelertSharp.Wpf.Views
             GlobalVar.MapDocumentLoaded += MapReloadedHandler;
         }
 
-        private void MapReloadedHandler(object sender, EventArgs e)
+        private void MapReloadedHandler()
         {
             lbxMain.ItemsSource = null;
             lbxMain.ItemsSource = GlobalCollectionVm.AiTriggers;

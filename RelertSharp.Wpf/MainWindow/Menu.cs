@@ -39,23 +39,40 @@ namespace RelertSharp.Wpf
         }
         private void MenuSaveMap(object sender, RoutedEventArgs e)
         {
-            GlobalVar.CurrentMapDocument.SaveMapAs(GlobalVar.CurrentMapDocument.FilePath);
-            GuiUtil.Asterisk("Save complete!");
+            SaveMap();
         }
 
         private void MenuSaveMapAs(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog dlg = new SaveFileDialog()
+            SaveAs();
+        }
+
+        private void MenuNewStandardMap(object sender, RoutedEventArgs e)
+        {
+            bool cancel = false;
+            if (GlobalVar.HasMap)
             {
-                Filter = "Mission map|*.map|YR Multiplayer map|*.yrm|RA2 Multiplayer map|*.mpr",
-                FileName = GlobalVar.GlobalMap.Info.MapName,
-                AddExtension = true
-            };
-            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                GlobalVar.CurrentMapDocument.SaveMapAs(dlg.FileName);
-                GuiUtil.Asterisk("Save complete!");
+                MapSaveFailsave(out bool c);
+                cancel = c;
             }
+            if (!cancel)
+            {
+                EngineApi.DisposeMap();
+                DlgCreateMap dlg = new DlgCreateMap();
+                if (dlg.ShowDialog().Value)
+                {
+                    GlobalVar.CreateNewMap(dlg.Config);
+                }
+                else
+                {
+                    GlobalVar.DisposeMapDocument();
+                }
+            }
+        }
+
+        private void MenuExit(object sender, RoutedEventArgs e)
+        {
+
         }
         #endregion
         #region Debug

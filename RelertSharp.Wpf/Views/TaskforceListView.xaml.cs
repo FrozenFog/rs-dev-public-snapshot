@@ -42,7 +42,7 @@ namespace RelertSharp.Wpf.Views
             dragTaskforce = new DragDropHelper<TaskforceItem, TaskforceListVm>(lbxMain);
         }
 
-        private void MapReloadedHandler(object sender, EventArgs e)
+        private void MapReloadedHandler()
         {
             lbxMain.Items.Clear();
             foreach (var tf in GlobalVar.GlobalMap.Taskforces)

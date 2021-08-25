@@ -17,8 +17,6 @@ namespace RelertSharp.MapStructure
     {
         private void ReadFromMapFile(MapFile f)
         {
-            mapFileName = f.FileName;
-            mapPath = f.FilePath;
             isomappack5String = f.PopEnt("IsoMapPack5").JoinString();
             overlayString = f.PopEnt("OverlayPack").JoinString();
             overlaydataString = f.PopEnt("OverlayDataPack").JoinString();

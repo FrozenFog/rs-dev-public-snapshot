@@ -147,6 +147,16 @@ namespace RelertSharp.Common
         Tile ComposeTile();
 
     }
+    public interface IMapCreationConfig
+    {
+        int Width { get; }
+        int Height { get; }
+        string TheaterKey { get; }
+        bool UseDefaultHouse { get; }
+        string MapName { get; }
+        bool IsSinglePlayer { get; }
+        string PlayerHouseName { get; }
+    }
     public interface IMapObjectBrushConfig : IOverlay
     {
         string Owner { get; }

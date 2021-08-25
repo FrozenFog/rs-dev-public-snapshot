@@ -21,22 +21,28 @@ namespace RelertSharp.FileSystem
             Map = new Map(this);
             ClearAllIniEnt();
         }
+        public MapFile(IMapCreationConfig cfg)
+        {
+            INIType = INIFileType.MapFile;
+            ClearAllIniEnt();
+            Map = new Map(cfg);
+        }
         #endregion
 
 
         #region Public Methods - MapFile
-        public void SaveMap(string savingPath)
-        {
-            IniDict = Map.IniResidue;
-            Map.DumpOverlayFromTile();
-            Map.CompressTile();
-            Map.CompressOverlay();
-            DumpGeneralInfo(IniDict);
-            DumpMapObjects(IniDict);
-            DumpLogics(IniDict);
-            DumpCustomComponents(IniDict);
-            SaveIni(savingPath, true);
-        }
+        //public void SaveMap(string savingPath)
+        //{
+        //    IniDict = Map.IniResidue;
+        //    Map.DumpOverlayFromTile();
+        //    Map.CompressTile();
+        //    Map.CompressOverlay();
+        //    DumpGeneralInfo(IniDict);
+        //    DumpMapObjects(IniDict);
+        //    DumpLogics(IniDict);
+        //    DumpCustomComponents(IniDict);
+        //    SaveIni(savingPath, true);
+        //}
         public void SaveMapAs(string path)
         {
             INIFile f = new INIFile(path, true);
@@ -50,6 +56,8 @@ namespace RelertSharp.FileSystem
             DumpCustomComponents(f.IniDict);
             f.SaveIni(path, true);
             if (GlobalVar.Log.HasCritical) GlobalVar.Log.ShowCritical();
+            FilePath = path;
+            FileName = Path.GetFileName(path);
         }
         #endregion
 

@@ -92,6 +92,23 @@ namespace RelertSharp.MapStructure.Logic
             //GetToUnit = new HouseUnit(this);
         }
         public HouseItem() { initialized = true; }
+        private HouseItem(bool _) { }
+        public static HouseItem FromCountry(CountryItem country)
+        {
+            HouseItem house = new HouseItem(false)
+            {
+                IQ = 5,
+                Edge = HouseEdges.North,
+                ColorName = country.ColorName,
+                alliesWith = new List<string>(),
+                Country = country.Name,
+                TechLevel = 10,
+                residual = new Dictionary<string, INIPair>(),
+                Name = string.Format(Constant.FMT_HOUSE, country.Name),
+                initialized = true,
+            };
+            return house;
+        }
         #endregion
 
 

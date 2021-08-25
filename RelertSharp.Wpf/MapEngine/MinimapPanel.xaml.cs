@@ -45,7 +45,7 @@ namespace RelertSharp.Wpf.MapEngine
             PanelSizeChanged(null, null);
         }
 
-        private void MapReloadedHandler(object sender, EventArgs e)
+        private void MapReloadedHandler()
         {
             EngineApi.ResetMinimap(GlobalVar.GlobalMap.Info.Size, (int)ActualWidth, (int)ActualHeight, GuiUtil.MonitorScale);
         }

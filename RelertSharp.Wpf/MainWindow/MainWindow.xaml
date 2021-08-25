@@ -25,15 +25,15 @@
         <Menu Height="23" VerticalAlignment="Top" Style="{DynamicResource menuDark}" IsMainMenu="True">
             <MenuItem Header="Files" Height="23">
                 <MenuItem Header="New Map">
-                    <MenuItem Header="Standard Map"/>
-                    <MenuItem Header="Mega Map"/>
+                    <MenuItem Header="Standard Map" Click="MenuNewStandardMap"/>
+                    <MenuItem Header="Mega Map" IsEnabled="False"/>
                 </MenuItem>
                 <MenuItem Header="Open Map" Click="MenuOpenMap"/>
                 <MenuItem Header="Save Map" Click="MenuSaveMap"/>
                 <MenuItem Header="Save As..." Click="MenuSaveMapAs"/>
                 <Separator/>
-                <MenuItem Header="Check Map"/>
-                <MenuItem Header="Exit"/>
+                <MenuItem Header="Check Map" IsEnabled="False"/>
+                <MenuItem Header="Exit" Click="MenuExit"/>
             </MenuItem>
             <MenuItem Header="Edit">
                 <MenuItem Header="Undo" IsEnabled="{Binding IsUndoEnable}" Click="MenuUndo"/>

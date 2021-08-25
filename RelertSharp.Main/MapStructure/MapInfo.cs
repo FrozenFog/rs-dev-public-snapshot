@@ -38,6 +38,22 @@ namespace RelertSharp.MapStructure
             BasicResidue = Basic;
             SpecialFlagsResidue = SpecialFlags;
         }
+        public MapInfo(IMapCreationConfig cfg)
+        {
+            MapName = cfg.MapName;
+            Size = new Rectangle(0, 0, cfg.Width, cfg.Height);
+            LocalSize = new Rectangle(2, 4, cfg.Width - 4, cfg.Height - 6);
+            TheaterName = cfg.TheaterKey.ToUpper();
+            if (cfg.IsSinglePlayer)
+            {
+                PlayerHouseName = string.Format(Constant.FMT_HOUSE, cfg.PlayerHouseName);
+            }
+            Basic = new INIEntity("Basic");
+            Map = new INIEntity("Map");
+            SpecialFlags = new INIEntity("SpecialFlags");
+            BasicResidue = Basic;
+            SpecialFlagsResidue = SpecialFlags;
+        }
         #endregion
 
 
@@ -112,6 +128,13 @@ namespace RelertSharp.MapStructure
             Dominator = new LightningItem(ent["DominatorRed"], ent["DominatorGreen"], ent["DominatorBlue"],
                 ent["DominatorLevel"], ent["DominatorGround"], ent["DominatorAmbient"]);
             DominatorChangeRate = ParseDouble(ent["DominatorAmbientChangeRate"]);
+        }
+        public Lightning()
+        {
+            Normal = new LightningItem();
+            Ion = new LightningItem();
+            Dominator = new LightningItem();
+            DominatorChangeRate = 0.009;
         }
         #endregion
 
@@ -215,6 +238,10 @@ namespace RelertSharp.MapStructure
             MsgUnder = new CsfString(rankEnt["UnderParMessage"]);
             MsgOver = new CsfString(rankEnt["OverParMessage"]);
         }
+        public RankInfo()
+        {
+            
+        }
         #endregion
 
 
@@ -234,7 +261,13 @@ namespace RelertSharp.MapStructure
     {
         public HeaderInfo(INIEntity entHeader)
         {
-
+            Data = entHeader;
         }
+        public HeaderInfo()
+        {
+            Data = new INIEntity("Header");
+        }
+
+        public INIEntity Data { get; set; }
     }
 }

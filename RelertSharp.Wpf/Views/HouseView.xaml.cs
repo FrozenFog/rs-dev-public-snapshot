@@ -37,7 +37,7 @@ namespace RelertSharp.Wpf.Views
             dragAllies = new DragDropHelper<HouseItem, HouseListVm>(lbxHouse);
         }
 
-        private void MapReloadedHandler(object sender, EventArgs e)
+        private void MapReloadedHandler()
         {
             //lbxHouse.ItemsSource = null;
             //lbxHouse.ItemsSource = GlobalCollectionVm.Houses;
@@ -48,8 +48,8 @@ namespace RelertSharp.Wpf.Views
             }
 
             cbbInherit.Items.Clear();
-            INIEntity rulesHouses = GlobalVar.GlobalRules["Countries"];
-            foreach (INIPair p in rulesHouses)
+            INIEntity rulesCountries = GlobalVar.GlobalRules[Constant.RulesHead.HEAD_COUNTRY];
+            foreach (INIPair p in rulesCountries)
             {
                 cbbInherit.Items.Add(new ComboItem(p.Value.ToString()));
             }

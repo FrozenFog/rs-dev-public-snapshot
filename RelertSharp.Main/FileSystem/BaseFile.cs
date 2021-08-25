@@ -240,6 +240,7 @@ namespace RelertSharp.FileSystem
         public string FilePath
         {
             get { return filepath; }
+            protected set { filepath = value; }
         }
         public string NameExt
         {

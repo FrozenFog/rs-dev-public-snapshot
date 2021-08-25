@@ -41,7 +41,7 @@ namespace RelertSharp.Wpf.Views
             dragDrop = new DragDropHelper<LocalVarItem, LocalVarVm>(lbxMain);
         }
 
-        private void MapReloadedHandler(object sender, EventArgs e)
+        private void MapReloadedHandler()
         {
             foreach (LocalVarItem local in GlobalVar.GlobalMap.LocalVariables)
             {

@@ -45,7 +45,7 @@ namespace RelertSharp.Wpf.Views
         }
 
         private bool initialized = false;
-        private void MapLoadedHandler(object sender, EventArgs e)
+        private void MapLoadedHandler()
         {
             if (!initialized)
             {

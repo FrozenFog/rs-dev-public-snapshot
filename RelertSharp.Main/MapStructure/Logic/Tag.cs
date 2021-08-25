@@ -18,6 +18,10 @@ namespace RelertSharp.MapStructure.Logic
                 }
             }
         }
+        public TagCollection()
+        {
+
+        }
         #endregion
 
 

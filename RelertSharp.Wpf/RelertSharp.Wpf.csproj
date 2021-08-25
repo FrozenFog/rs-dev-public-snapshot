@@ -96,6 +96,9 @@
     <Compile Include="Dialogs\DlgConfig.xaml.cs">
       <DependentUpon>DlgConfig.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\DlgCreateMap.xaml.cs">
+      <DependentUpon>DlgCreateMap.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\DlgIniInspector.xaml.cs">
       <DependentUpon>DlgIniInspector.xaml</DependentUpon>
     </Compile>
@@ -149,6 +152,7 @@
     <Compile Include="ViewModel\Etc\GlobalSearchVm.cs" />
     <Compile Include="ViewModel\Etc\LoadingProgressVm.cs" />
     <Compile Include="ViewModel\Etc\MainWindowVm.cs" />
+    <Compile Include="ViewModel\Etc\MapCreatingVm.cs" />
     <Compile Include="ViewModel\Etc\SearchConditionVm.cs" />
     <Compile Include="ViewModel\Etc\SearchResultVm.cs" />
     <Compile Include="ViewModel\Etc\SelectedInspectorVm.cs" />
@@ -252,6 +256,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\DlgConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DlgCreateMap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -27,6 +27,10 @@ namespace RelertSharp.MapStructure
                 if (_ovlOut[i] != 0xFF) data[i] = new OverlayUnit(i, _ovlOut[i], _ovldOut[i]);
             }
         }
+        public OverlayLayer()
+        {
+
+        }
         #endregion
 
 
