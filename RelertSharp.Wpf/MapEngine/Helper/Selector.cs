@@ -350,7 +350,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             {
                 MapApi.RemoveObject(obj);
             }
-            if (selectedObjects.Count > 0) UndoRedoHub.PushCommand(selectedObjects);
+            if (selectedObjects.Count > 0) UndoRedoHub.PushCommand(selectedObjects, true);
             selectedObjects.Clear();
             OnSelectionChanged();
         }

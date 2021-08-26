@@ -11,7 +11,7 @@
     </UserControl.Resources>
     <Grid x:Name="gridMain" MouseMove="HandleMouseMove" MouseWheel="HandleMouseWheel" SizeChanged="HandleSizeChanged" MouseDown="HandleMouseDown" MouseUp="HandleMouseUp">
         <Canvas x:Name="selectorBoxCanvas" Panel.ZIndex="3"/>
-        <Canvas x:Name="canvasMain" Panel.ZIndex="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Canvas x:Name="cnvMain" Panel.ZIndex="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Image x:Name="imgelt" Stretch="Fill" Panel.ZIndex="1">
 
         </Image>

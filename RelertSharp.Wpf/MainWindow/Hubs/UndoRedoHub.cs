@@ -50,6 +50,47 @@ namespace RelertSharp.Wpf
             return false;
         }
         /// <summary>
+        /// Replace object in map
+        /// </summary>
+        /// <param name="dest"></param>
+        /// <param name="before"></param>
+        public static void PushCommand(IEnumerable<IMapObject> dest, IEnumerable<IMapObject> before)
+        {
+            List<string> cmdNow = new List<string>();
+            cmdNow.Add(dest.Count().ToString());
+            foreach (IMapObject d in dest)
+            {
+                string[] arr = d.ExtractParameter();
+                cmdNow.Add(arr.Length.ToString());
+                cmdNow.AddRange(arr);
+            }
+            List<string> cmdBefore = new List<string>();
+            cmdBefore.Add(before.Count().ToString());
+            foreach (IMapObject b in before)
+            {
+                string[] arr = b.ExtractParameter();
+                cmdBefore.Add(arr.Length.ToString());
+                cmdBefore.AddRange(arr);
+            }
+            AddObjectCommand remove = new AddObjectCommand()
+            {
+                CommandLine = cmdBefore.JoinBy(),
+                IsMultipleObject = true,
+                IsRemove = true
+            };
+            remove.SetReferance(new List<IMapObject>(before));
+            AddObjectCommand add = new AddObjectCommand()
+            {
+                CommandLine = cmdNow.JoinBy(),
+                IsMultipleObject = true
+            };
+            add.SetReferance(new List<IMapObject>(dest));
+            CompositeCommand cmd = new CompositeCommand();
+            cmd.Commands.Add(remove);
+            cmd.Commands.Add(add);
+            PushCommand(cmd);
+        } 
+        /// <summary>
         /// Add object to map
         /// </summary>
         /// <param name="obj"></param>
@@ -68,10 +109,10 @@ namespace RelertSharp.Wpf
             PushCommand(cmd);
         }
         /// <summary>
-        /// Remove object from map
+        /// Remove/add object from map
         /// </summary>
         /// <param name="obj"></param>
-        public static void PushCommand(IEnumerable<IMapObject> src)
+        public static void PushCommand(IEnumerable<IMapObject> src, bool isRemove)
         {
             List<string> cmds = new List<string>();
             cmds.Add(src.Count().ToString());
@@ -84,7 +125,8 @@ namespace RelertSharp.Wpf
             AddObjectCommand cmd = new AddObjectCommand()
             {
                 CommandLine = cmds.JoinBy(),
-                IsMultipleObject = true
+                IsMultipleObject = true,
+                IsRemove = isRemove
             };
             cmd.SetReferance(new List<IMapObject>(src));
             PushCommand(cmd);
@@ -294,8 +336,16 @@ namespace RelertSharp.Wpf
         private class AddObjectCommand : BaseCommand
         {
             public bool IsMultipleObject { get; set; }
+            public bool IsRemove { get; set; }
+            private bool exec;
             public override void Execute()
             {
+                if (IsRemove && !exec)
+                {
+                    exec = true;
+                    ReverseExecute();
+                    return;
+                }
                 if (IsMultipleObject)
                 {
                     IEnumerable<IMapObject> objs = referance as IEnumerable<IMapObject>;
@@ -323,15 +373,40 @@ namespace RelertSharp.Wpf
                     EngineApi.DrawObject(obj);
                     EngineApi.ApplyLightningToObject(obj);
                 }
+                exec = false;
             }
 
             public override void ReverseExecute()
             {
+                if (IsRemove && !exec)
+                {
+                    exec = true;
+                    Execute();
+                    return;
+                }
                 if (IsMultipleObject)
                 {
                     foreach (IMapObject obj in referance as IEnumerable<IMapObject>) MapApi.RemoveObject(obj);
                 }
                 else MapApi.RemoveObject(referance as IMapObject);
+                exec = false;
+            }
+        }
+        private class CompositeCommand : BaseCommand
+        {
+            public List<IUndoRedoCommand> Commands = new List<IUndoRedoCommand>();
+            public CompositeCommand()
+            {
+
+            }
+            public override void Execute()
+            {
+                foreach (IUndoRedoCommand cmd in Commands) cmd.Execute();
+            }
+
+            public override void ReverseExecute()
+            {
+                foreach (IUndoRedoCommand cmd in Commands.Reverse<IUndoRedoCommand>()) cmd.ReverseExecute();
             }
         }
         #endregion

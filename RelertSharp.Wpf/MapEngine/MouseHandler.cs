@@ -214,6 +214,9 @@ namespace RelertSharp.Wpf.MapEngine
                         EngineApi.InvokeRedraw();
                     }
                     break;
+                case PanelMouseState.WallBreakdownBrush:
+                    InteliBrush.EndBreakdownWall();
+                    break;
             }
         }
 
@@ -258,6 +261,9 @@ namespace RelertSharp.Wpf.MapEngine
                 case PanelMouseState.TileFlatting:
                     TilePaintBrush.BeginRampFlat(cell.Z);
                     break;
+                case PanelMouseState.WallBreakdownBrush:
+                    InteliBrush.BeginBreakDownWall();
+                    break;
             }
         }
 
@@ -265,7 +271,7 @@ namespace RelertSharp.Wpf.MapEngine
         {
             Vec3 pos = EngineApi.ClientPointToCellPos(point.GdiPoint(), out int subcell);
             I3dLocateable cell = pos.To3dLocateable();
-
+            EngineApi.InvokeLock();
             switch (MouseState.State)
             {
                 case PanelMouseState.None:
@@ -319,6 +325,7 @@ namespace RelertSharp.Wpf.MapEngine
                     else InteliBrush.BeginAlignCliffAt(cell);
                     break;
             }
+            EngineApi.InvokeUnlock();
             EngineApi.InvokeRedraw();
         }
         #endregion
@@ -438,6 +445,13 @@ namespace RelertSharp.Wpf.MapEngine
                     if (InteliBrush.IsAligningWall && InteliBrush.CurrentOverlayIsWall)
                     {
                         redraw = InteliBrush.AlignWallBetween(cell, InteliBrush.CurrentOverlayIndex);
+                    }
+                    break;
+                case PanelMouseState.WallBreakdownBrush:
+                    if (InteliBrush.IsBreakdownWall)
+                    {
+                        InteliBrush.BreakdownwallAt(cell);
+                        redraw = isCellChanged;
                     }
                     break;
             }

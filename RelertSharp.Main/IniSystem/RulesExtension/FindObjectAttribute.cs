@@ -187,6 +187,19 @@ namespace RelertSharp.IniSystem
             INIEntity ent = r[regname];
             return ent.ParseBool("Wall");
         }
+        private static Dictionary<byte, int> overlayFrames = new Dictionary<byte, int>();
+        public static int GetOverlayFrameCount(this Rules r, byte overlayIndex)
+        {
+            if (overlayFrames.ContainsKey(overlayIndex)) return overlayFrames[overlayIndex];
+            else
+            {
+                string regname = r[RulesHead.HEAD_OVERLAY].ElementAt(overlayIndex).Value;
+                string filename = r.GetOverlayFileName(regname);
+                FileSystem.ShpFile shp = new FileSystem.ShpFile(GlobalDir.GetRawByte(filename), filename);
+                overlayFrames[overlayIndex] = shp.Frames.Count % 2 == 0 ? shp.Frames.Count / 2 : shp.Frames.Count;
+                return overlayFrames[overlayIndex];
+            }
+        }
         public static bool IsTechBuilding(this Rules r, string regname)
         {
             return r["AI"].ParseStringList("NeutralTechBuildings").Contains(regname);

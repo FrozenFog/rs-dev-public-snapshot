@@ -1084,6 +1084,34 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
+    <Viewbox x:Key="BreakWall" Width="16" Height="16">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup Opacity="1">
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}">
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,1,4,13" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M7.596,11.52L7.596,11.52 5.276,10.004 7.142,7 0,7 0,14 6.966,14z" />
+                            </DrawingGroup>
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}">
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="0" RadiusY="0" Rect="12,1,4,13" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M9.789,7L9.789,7 8.583,9.683 10.521,11.688 9.453,14 16,14 16,7z" />
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
     <!--<Viewbox x:Key="None" Width="16" Height="16">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>

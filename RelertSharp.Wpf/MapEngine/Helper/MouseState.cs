@@ -28,6 +28,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         InteliCliffBrush = 1 << 14,
         ObjectRandomBrush = 1 << 15,
         ObjectArrayBrush = 1 << 16,
+        WallBreakdownBrush = 1 << 17,
         TileBrush = TileSingleBrush | TileBucketFlood | InteliRampBrush | InteliCliffBrush,
         PaintBrush = InteliWallBrush | ObjectBrush | ObjectRandomBrush | ObjectArrayBrush,
         DEBUG = 1 << 31

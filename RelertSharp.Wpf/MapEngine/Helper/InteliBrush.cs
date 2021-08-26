@@ -94,7 +94,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                     WallCalc.FixWallAt(o, o.OverlayIndex);
                     EngineApi.DrawObject(o);
                 }
-                UndoRedoHub.PushCommand(targets);
+                UndoRedoHub.PushCommand(targets, false);
             }
             BeginWallAlignAt(wallEnd);
         }
@@ -133,6 +133,52 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 wallEnd = null;
                 PaintBrush.SuspendArrayBrush();
             }
+        }
+        private static Dictionary<Pnt, OverlayUnit> wallReplaced = new Dictionary<Pnt, OverlayUnit>();
+        private static Dictionary<Pnt, OverlayUnit> wallAdded = new Dictionary<Pnt, OverlayUnit>();
+        public static void BreakdownwallAt(I2dLocateable pos)
+        {
+            if (RsMath.I2dEqual(prevPos, pos)) return;
+            prevPos = new Pnt(pos);
+            var tiles = GlobalVar.GlobalMap.TilesData;
+            if (tiles[pos] is Tile t && t.GetObejct(x => x.ObjectType == MapObjectType.Overlay) is OverlayUnit o)
+            {
+                if (GlobalVar.GlobalRules.IsWallOverlay(o.OverlayIndex))
+                {
+                    using (var _ = new EngineRegion())
+                    {
+                        int ceil = GlobalVar.GlobalRules.GetOverlayFrameCount(o.OverlayIndex) - 16;
+                        OverlayUnit replace = new OverlayUnit(o);
+                        Pnt replaceCell = new Pnt(pos);
+                        if (o.OverlayFrame >= 0 && o.OverlayFrame <= ceil)
+                        {
+                            replace.OverlayFrame += 16;
+                            if (!wallReplaced.ContainsKey(replaceCell)) wallReplaced[replaceCell] = new OverlayUnit(o);
+                            MapApi.RemoveObject(o);
+                            EngineApi.DrawObject(replace);
+                            MapApi.AddObject(replace);
+                            if (wallAdded.ContainsKey(replaceCell)) wallAdded[replaceCell].Dispose();
+                            wallAdded[replaceCell] = replace;
+                        }
+                        else if (o.OverlayFrame > ceil)
+                        {
+                            if (!wallReplaced.ContainsKey(replaceCell)) wallReplaced[replaceCell] = new OverlayUnit(o);
+                            MapApi.RemoveObject(o);
+                        }
+                    }
+                }
+            }
+        }
+        public static void BeginBreakDownWall()
+        {
+            wallAdded.Clear();
+            wallReplaced.Clear();
+            IsBreakdownWall = true;
+        }
+        public static void EndBreakdownWall()
+        {
+            IsBreakdownWall = false;
+            if (wallAdded.Count > 0 || wallReplaced.Count > 0) UndoRedoHub.PushCommand(wallAdded.Values, wallReplaced.Values);
         }
         #endregion
         #region Resource
@@ -216,6 +262,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         }
         public static bool IsAligningCliff { get { return cliffBegin != null; } }
         public static bool IsAligningWall { get { return wallBegin != null; } }
+        public static bool IsBreakdownWall { get; private set; }
         public static string CliffAlignType { get; set; } = "pCliff";
         #endregion
     }
