@@ -48,6 +48,7 @@ namespace RelertSharp.Wpf.Dialogs
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
+            if (Validation == null) Validation = IsValidName;
             if (ResultName.IsNullOrEmpty())
             {
                 GuiUtil.Warning("Name is empty.");

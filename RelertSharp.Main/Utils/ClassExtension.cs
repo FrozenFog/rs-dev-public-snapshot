@@ -88,6 +88,7 @@ namespace System.Collections.Generic
         }
         public static string JoinBy<T>(this IEnumerable<T> src, string joint = ",")
         {
+            if (src == null) return string.Empty;
             StringBuilder sb = new StringBuilder();
             bool empty = true;
             foreach (T item in src)

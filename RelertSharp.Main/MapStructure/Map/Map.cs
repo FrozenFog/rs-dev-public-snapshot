@@ -53,6 +53,7 @@ namespace RelertSharp.MapStructure
             previewSize = new Rectangle(0, 0, cfg.Width + cfg.Height, cfg.Height);
             Tags = new TagCollection();
             Countries = new CountryCollection();
+            residual = new Dictionary<string, INIEntity>();
 
             if (cfg.UseDefaultHouse)
             {

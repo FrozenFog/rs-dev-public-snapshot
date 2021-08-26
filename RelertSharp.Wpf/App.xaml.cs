@@ -97,7 +97,7 @@ namespace RelertSharp.Wpf
         {
             setupMw = false;
 #if DEBUG
-            File.Delete(Constant.Config.Path);
+            //File.Delete(Constant.Config.Path);
 #endif
             try
             {

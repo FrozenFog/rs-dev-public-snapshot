@@ -97,7 +97,7 @@ namespace RelertSharp.MapStructure.Logic
         {
             HouseItem house = new HouseItem(false)
             {
-                IQ = 5,
+                IQ = 0,
                 Edge = HouseEdges.North,
                 ColorName = country.ColorName,
                 alliesWith = new List<string>(),
@@ -210,7 +210,7 @@ namespace RelertSharp.MapStructure.Logic
         public int TechLevel { get; set; }
         public bool PlayerControl { get; set; }
         public int NodeCounts { get; set; }
-        public double PercentBuilt { get; set; }
+        public double PercentBuilt { get; set; } = 100;
         public System.Drawing.Color DrawingColor { get; internal set; }
         public override string Value { get { return Id; } }
         public override string Name { get { return Id; } set { Id = value; } }

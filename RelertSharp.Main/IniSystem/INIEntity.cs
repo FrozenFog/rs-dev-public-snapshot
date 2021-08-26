@@ -195,7 +195,8 @@ namespace RelertSharp.IniSystem
 
         public void AddPair(string key, object value)
         {
-            if (!data.Keys.Contains(key)) data[key] = new INIPair(key, value.ToString());
+            string s = value == null ? string.Empty : value.ToString();
+            if (!data.Keys.Contains(key)) data[key] = new INIPair(key, s);
         }
         public void AddPair(IEnumerable<INIPair> src)
         {

@@ -37,9 +37,13 @@ namespace RelertSharp.Common
         public void Play()
         {
             if (!isValid) return;
-            player.Load();
-            watch.Restart();
-            player.Play();
+            try
+            {
+                player.Load();
+                watch.Restart();
+                player.Play();
+            }
+            catch { Stop(); }
         }
         public void LoadWav(WavFile wav)
         {
