@@ -439,16 +439,11 @@ namespace RelertSharp.MapStructure
                 isExtraHidden = false;
             }
         }
-        protected override void UpdateHide()
+        protected override void UpdateStatusColor()
         {
-            base.UpdateHide();
-            if (isExtraHidden) SceneObject?.HideExtra();
-            else SceneObject?.RevealExtra();
-        }
-        protected override void UpdatePhase()
-        {
-            base.UpdatePhase();
-            if (isExtraHidden) SceneObject?.HideExtra();
+            base.UpdateStatusColor();
+            if (isExtraHidden) SceneObject.HideExtra();
+            else if (!IsPhased && !IsHidden) SceneObject?.RevealExtra();
         }
         #endregion
 
@@ -572,7 +567,7 @@ namespace RelertSharp.MapStructure
                 if (!isExtraHidden) SceneObject?.RevealExtra();
                 if (isSelected) Select(true);
                 isHidden = false;
-                UpdatePhase();
+                UpdateStatusColor();
             }
         }
         public void SwitchToFramework(bool enable)
@@ -581,7 +576,7 @@ namespace RelertSharp.MapStructure
             SceneObject.SwitchToFramework(enable);
             if (isSelfHidden) SceneObject.HideSelf();
             if (isExtraHidden) SceneObject.HideExtra();
-            UpdatePhase();
+            UpdateStatusColor();
             if (isSelected)
             {
                 if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
@@ -604,8 +599,7 @@ namespace RelertSharp.MapStructure
                 RevealExtraImg();
                 isFlat = false;
             }
-            UpdateHide();
-            UpdatePhase();
+            UpdateStatusColor();
         }
         /// <summary>
         /// 

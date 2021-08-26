@@ -9,6 +9,17 @@ namespace RelertSharp.MapStructure
 {
     public abstract class BaseVisibleObject<TSceneInterface> : IndexableItem, I2dLocateable where TSceneInterface : ISceneObject
     {
+        [Flags]
+        protected enum ObjectStatus
+        {
+            Normal = 0,
+            Selected = 1,
+            Phased = 1 << 1,
+            Hide = 1 << 2,
+            TileExtraHide = 1 << 3,
+            Lighted = 1 << 4
+        }
+        protected ObjectStatus status = ObjectStatus.Normal;
         protected bool isSelected = false;
         protected bool isHidden = false;
         protected bool isPhased = false;
@@ -25,6 +36,8 @@ namespace RelertSharp.MapStructure
             {
                 SceneObject?.ApplyTempColor(Vec4.Selector);
                 isSelected = true;
+                status |= ObjectStatus.Selected;
+                UpdateStatusColor();
             }
         }
         public virtual void CancelSelection()
@@ -33,12 +46,9 @@ namespace RelertSharp.MapStructure
             {
                 SceneObject?.RemoveTempColor();
                 isSelected = false;
+                status &= ~ObjectStatus.Selected;
+                UpdateStatusColor();
             }
-        }
-        protected virtual void UpdateSelection()
-        {
-            if (isSelected) SceneObject?.ApplyTempColor(Vec4.Selector);
-            else SceneObject?.RemoveTempColor();
         }
         public virtual void PhaseOut(bool forcePhase = false)
         {
@@ -46,6 +56,8 @@ namespace RelertSharp.MapStructure
             {
                 SceneObject.PhaseOut();
                 isPhased = true;
+                status |= ObjectStatus.Phased;
+                UpdateStatusColor();
             }
         }
         public virtual void UnPhase()
@@ -54,12 +66,21 @@ namespace RelertSharp.MapStructure
             {
                 SceneObject?.UnPhase();
                 isPhased = false;
+                status &= ~ObjectStatus.Phased;
+                UpdateStatusColor();
             }
         }
-        protected virtual void UpdatePhase()
+        protected virtual void UpdateStatusColor()
         {
-            if (IsPhased) SceneObject?.PhaseOut();
-            else SceneObject?.UnPhase();
+            bool phase = IsPhased && !isSelected && !IsHidden;
+            bool select = isSelected && !IsPhased && !IsHidden;
+            bool hide = IsHidden;
+            if (hide) SceneObject?.Hide();
+            else SceneObject?.Reveal();
+            if (phase) SceneObject?.PhaseOut();
+            else if (!hide) SceneObject?.UnPhase();
+            if (select) SceneObject?.ApplyTempColor(Vec4.Selector);
+            else if (!phase && !hide) SceneObject?.RemoveTempColor();
         }
         public virtual void Hide(bool forceHide = false)
         {
@@ -67,6 +88,8 @@ namespace RelertSharp.MapStructure
             {
                 SceneObject?.Hide();
                 isHidden = true;
+                status |= ObjectStatus.Hide;
+                UpdateStatusColor();
             }
         }
         public virtual void Reveal()
@@ -76,12 +99,9 @@ namespace RelertSharp.MapStructure
                 SceneObject?.Reveal();
                 if (isSelected) Select(true);
                 isHidden = false;
+                status &= ~ObjectStatus.Hide;
+                UpdateStatusColor();
             }
-        }
-        protected virtual void UpdateHide()
-        {
-            if (IsHidden) SceneObject?.Hide();
-            else SceneObject?.Reveal();
         }
         public virtual void MoveTo(I3dLocateable pos, int subcell = -1)
         {

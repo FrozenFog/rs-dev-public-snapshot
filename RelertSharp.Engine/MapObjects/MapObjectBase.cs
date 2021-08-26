@@ -9,7 +9,7 @@ namespace RelertSharp.Engine.MapObjects
 {
     internal abstract class MapObjectBase : I3dLocateable
     {
-        protected bool selected = false;
+        protected bool selected, phased;
         protected enum PresentFileTypeFlag
         {
             Shp,
@@ -45,15 +45,17 @@ namespace RelertSharp.Engine.MapObjects
 
         public virtual void RemoveTempColor()
         {
-            SetColorStrict(ColorVector);
+            if (!phased) SetColorStrict(ColorVector);
         }
 
         public virtual void PhaseOut()
         {
+            phased = true;
             SetColorStrict(Vec4.Hide75);
         }
         public virtual void UnPhase()
         {
+            phased = false;
             SetColorStrict(ColorVector);
         }
         #endregion
