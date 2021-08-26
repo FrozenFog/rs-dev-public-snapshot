@@ -1,4 +1,5 @@
-﻿using RelertSharp.Common;
+﻿using RelertSharp.Algorithm;
+using RelertSharp.Common;
 using RelertSharp.MapStructure;
 using System;
 using System.Collections.Generic;
@@ -10,22 +11,21 @@ namespace RelertSharp.Terraformer
 {
     public static class WallCalc
     {
-
-
         #region Api
         /// <summary>
-        /// return wall index of that cell
+        /// will directly alter the frame of the input overlay
+        /// will not draw or update other info
         /// </summary>
         /// <param name="cell"></param>
         /// <param name="wallIndex"></param>
         /// <returns></returns>
-        public static OverlayUnit FixWallAt(I2dLocateable cell, byte wallIndex)
+        public static void FixWallAt(OverlayUnit src, byte wallIndex)
         {
             var tiles = GlobalVar.GlobalMap.TilesData;
             WallDirection result = WallDirection.Sole;
-            if (tiles[cell] is Tile)
+            if (tiles[src] is Tile)
             {
-                MapApi.GetAdjacentTileAround(cell, out Tile[] adjs, out WallDirection[] directions);
+                MapApi.GetAdjacentTileAround(src, out Tile[] adjs, out WallDirection[] directions);
                 
                 for (int i = 0; i < adjs.Length; i++)
                 {
@@ -37,14 +37,22 @@ namespace RelertSharp.Terraformer
                     }
                 }
             }
-            OverlayUnit o = new OverlayUnit()
+            src.OverlayFrame = (byte)result;
+        }
+        public static void FixWallIn(IEnumerable<OverlayUnit> src)
+        {
+            Dictionary<Pnt, OverlayUnit> cells = new Dictionary<Pnt, OverlayUnit>();
+            foreach (var o in src) cells[new Pnt(o)] = o;
+
+            foreach (var o in cells.Values)
             {
-                X = cell.X,
-                Y = cell.Y,
-                OverlayIndex = wallIndex,
-                OverlayFrame = (byte)result
-            };
-            return o;
+                WallDirection dir = WallDirection.Sole;
+                if (cells.ContainsKey(new Pnt(o.X + 1, o.Y))) dir |= WallDirection.SE;
+                if (cells.ContainsKey(new Pnt(o.X, o.Y + 1))) dir |= WallDirection.SW;
+                if (cells.ContainsKey(new Pnt(o.X - 1, o.Y))) dir |= WallDirection.NW;
+                if (cells.ContainsKey(new Pnt(o.X, o.Y - 1))) dir |= WallDirection.NE;
+                o.OverlayFrame = (byte)dir;
+            }
         }
         #endregion
     }

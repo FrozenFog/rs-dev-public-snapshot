@@ -164,14 +164,10 @@ namespace RelertSharp.Wpf.MapEngine
                     MapClipboard.SuspendClipObjects();
                     break;
                 case PanelMouseState.InteliWallBrush:
-                    if (InteliBrush.IsDrawingWall)
+                    if (InteliBrush.IsAligningWall)
                     {
-                        if (InteliBrush.CurrentOverlayIsWall)
-                        {
-                            InteliBrush.EndWallDrawing();
-                            InteliBrush.LayWall(0);
-                        }
-                        else GuiUtil.Warning("Current overlay is not wall.");
+                        InteliBrush.EndWallAligning();
+                        EngineApi.InvokeRedraw();
                         return;
                     }
                     break;
@@ -315,8 +311,8 @@ namespace RelertSharp.Wpf.MapEngine
                     TileSelector.PhaseTileAt(cell);
                     break;
                 case PanelMouseState.InteliWallBrush:
-                    InteliBrush.BeginWallDrawing();
-                    InteliBrush.AddNodeAt(cell);
+                    if (InteliBrush.IsAligningWall) InteliBrush.ApplyWallAlign();
+                    else InteliBrush.BeginWallAlignAt(cell);
                     break;
                 case PanelMouseState.InteliCliffBrush:
                     if (InteliBrush.IsAligningCliff) InteliBrush.ApplyCliffAlign();
@@ -436,6 +432,12 @@ namespace RelertSharp.Wpf.MapEngine
                     if (InteliBrush.IsAligningCliff)
                     {
                         redraw = InteliBrush.AlignCliffBetween(cell);
+                    }
+                    break;
+                case PanelMouseState.InteliWallBrush:
+                    if (InteliBrush.IsAligningWall && InteliBrush.CurrentOverlayIsWall)
+                    {
+                        redraw = InteliBrush.AlignWallBetween(cell, InteliBrush.CurrentOverlayIndex);
                     }
                     break;
             }

@@ -19,7 +19,6 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         private static List<Tile> inteliRampResult = new List<Tile>();
         private static I2dLocateable prevPos = new Pnt();
         private static DdaLineDrawing dda;
-        private static LinkedList<I2dLocateable> wallNodes = new LinkedList<I2dLocateable>();
 
        
         static InteliBrush()
@@ -33,7 +32,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
 
         private static void HandleStateChanged()
         {
-            if (MouseState.PrevState == PanelMouseState.InteliWallBrush) EndWallDrawing();
+            if (MouseState.PrevState == PanelMouseState.InteliWallBrush) EndWallAligning();
             if (MouseState.PrevState == PanelMouseState.InteliCliffBrush) EndCliffAlign();
         }
 
@@ -72,60 +71,68 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         }
         #endregion
         #region Wall
-        public static void BeginWallDrawing()
+        private static I2dLocateable wallBegin, wallEnd;
+        private static List<OverlayUnit> wallLine = new List<OverlayUnit>();
+        public static void BeginWallAlignAt(I2dLocateable cell)
         {
-            if (!IsDrawingWall)
-            {
-                wallNodes.Clear();
-                IsDrawingWall = true;
-            }
+            wallBegin = new Pnt(cell);
+            wallEnd = wallBegin;
         }
-        public static void AddNodeAt(I2dLocateable cell)
+        public static void ApplyWallAlign()
         {
-            if (RsMath.I2dValid(cell) && IsDrawingWall)
+            using (var _ = new EngineRegion())
             {
-                wallNodes.AddLast(cell);
-            }
-        }
-        public static void LayWall(int damage)
-        {
-            if (wallNodes.Count > 0)
-            {
-                HashSet<I2dLocateable> path = new HashSet<I2dLocateable>();
-                I2dLocateable prev = wallNodes.First.Value;
-                var node = wallNodes.First;
-                while (node.Next != null)
+                List<OverlayUnit> targets = new List<OverlayUnit>();
+                foreach (OverlayUnit o in wallLine)
                 {
-                    dda.SetControlNode(prev, node.Next.Value);
-                    node = node.Next;
-                    prev = node.Value;
-                    foreach (I2dLocateable cell in dda.GetLineCells()) path.Add(cell);
+                    OverlayUnit dest = new OverlayUnit(o);
+                    MapApi.AddObject(dest);
+                    targets.Add(dest);
                 }
+                foreach (OverlayUnit o in targets)
+                {
+                    WallCalc.FixWallAt(o, o.OverlayIndex);
+                    EngineApi.DrawObject(o);
+                }
+                UndoRedoHub.PushCommand(targets);
+            }
+            BeginWallAlignAt(wallEnd);
+        }
+        public static bool AlignWallBetween(I2dLocateable endCell, byte wallIndex)
+        {
+            if (RsMath.I2dEmpty(endCell)) return false;
+            bool moved = !RsMath.I2dEqual(wallEnd, endCell);
+            if (moved)
+            {
                 using (var _ = new EngineRegion())
                 {
-                    // lay wall
-                    foreach (I2dLocateable cell in path)
+                    wallEnd = new Pnt(endCell);
+                    dda.SetControlNode(wallBegin, wallEnd);
+                    PaintBrush.SuspendArrayBrush();
+                    wallLine.Clear();
+                    foreach (I2dLocateable cell in dda.GetLineCells())
                     {
-                        OverlayUnit o = new OverlayUnit(CurrentOverlayIndex, 0)
+                        wallLine.Add(new OverlayUnit(wallIndex, 0)
                         {
                             X = cell.X,
                             Y = cell.Y
-                        };
-                        MapApi.AddObject(o);
+                        });
                     }
-                    // fix wall
-                    foreach (I2dLocateable cell in path)
-                    {
-                        OverlayUnit o = WallCalc.FixWallAt(cell, CurrentOverlayIndex);
-                        MapApi.AddObject(o);
-                        EngineApi.DrawObject(o);
-                    }
+                    WallCalc.FixWallIn(wallLine);
+                    PaintBrush.LoadObjectToArrayBrush(wallLine);
                 }
+                return true;
             }
+            return false;
         }
-        public static void EndWallDrawing()
+        public static void EndWallAligning()
         {
-            IsDrawingWall = false;
+            using (var _ = new EngineRegion())
+            {
+                wallBegin = null;
+                wallEnd = null;
+                PaintBrush.SuspendArrayBrush();
+            }
         }
         #endregion
         #region Resource
@@ -199,7 +206,6 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                 _currentRamp = value;
             }
         }
-        public static bool IsDrawingWall { get; private set; }
         public static byte CurrentOverlayIndex { get; set; }
         public static bool CurrentOverlayIsWall
         {
@@ -209,6 +215,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
             }
         }
         public static bool IsAligningCliff { get { return cliffBegin != null; } }
+        public static bool IsAligningWall { get { return wallBegin != null; } }
         public static string CliffAlignType { get; set; } = "pCliff";
         #endregion
     }

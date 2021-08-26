@@ -23,6 +23,8 @@ namespace RelertSharp.Wpf
         public static ObjectBrushFilter Filter { get; private set; }
         private static Map Map { get { return GlobalVar.GlobalMap; } }
         private static IMapObject currentObject;
+        private static List<IMapObject> arrayObjects = new List<IMapObject>();
+        private static List<I2dLocateable> arrayOffset = new List<I2dLocateable>();
         private static bool isSuspended;
         #endregion
 
@@ -35,6 +37,7 @@ namespace RelertSharp.Wpf
         private static void HandleStateChanged()
         {
             if (MouseState.PrevIsState(PanelMouseState.PaintBrush)) SuspendBrush();
+            if (MouseState.PrevState == PanelMouseState.ObjectArrayBrush) SuspendArrayBrush();
         }
 
 
@@ -209,6 +212,26 @@ namespace RelertSharp.Wpf
             currentObject.ApplyConfig(Config, Filter);
             currentObject?.Dispose();
             EngineApi.DrawObject(currentObject);
+        }
+        #endregion
+        #region ArrayBrush
+        public static void LoadObjectToArrayBrush(IEnumerable<IMapObject> src)
+        {
+            foreach (IMapObject o in src)
+            {
+                arrayObjects.Add(o);
+                arrayOffset.Add(new Pnt(o));
+                EngineApi.DrawObject(o);
+            }
+        }
+        public static void SuspendArrayBrush()
+        {
+            foreach (IMapObject obj in arrayObjects)
+            {
+                obj.Dispose();
+            }
+            arrayObjects.Clear();
+            arrayOffset.Clear();
         }
         #endregion
         #endregion
