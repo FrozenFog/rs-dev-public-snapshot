@@ -38,6 +38,15 @@ namespace RelertSharp.Wpf.ViewModel
                 SetProperty();
             }
         }
+        public int Altitude
+        {
+            get { return data.Altitude; }
+            set
+            {
+                data.Altitude = value.TrimTo(0, 13);
+                SetProperty();
+            }
+        }
         public string Theater
         {
             get { return data.TheaterKey; }
@@ -96,6 +105,8 @@ namespace RelertSharp.Wpf.ViewModel
             public int Width { get; set; } = 50;
 
             public int Height { get; set; } = 50;
+
+            public int Altitude { get; set; } = 0;
 
             public string TheaterKey { get; set; } = "Temperate";
 

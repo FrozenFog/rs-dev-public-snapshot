@@ -18,9 +18,9 @@
             }
             //Engine.Refresh();
         }
-        public void FixEmptyTiles()
+        public void FixEmptyTiles(int altitude = 0)
         {
-            Tiles.FixEmptyTiles(Info.Size.Width, Info.Size.Height);
+            Tiles.FixEmptyTiles(Info.Size.Width, Info.Size.Height, altitude);
         }
     }
 }

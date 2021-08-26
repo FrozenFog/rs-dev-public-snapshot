@@ -48,7 +48,7 @@ namespace RelertSharp.MapStructure
             ranks = new RankInfo();
             Tiles = new TileLayer(Info.Size);
             Overlays = new OverlayLayer();
-            FixEmptyTiles();
+            FixEmptyTiles(cfg.Altitude);
 
             previewSize = new Rectangle(0, 0, cfg.Width + cfg.Height, cfg.Height);
             Tags = new TagCollection();

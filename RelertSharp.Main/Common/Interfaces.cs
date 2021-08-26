@@ -151,6 +151,7 @@ namespace RelertSharp.Common
     {
         int Width { get; }
         int Height { get; }
+        int Altitude { get; }
         string TheaterKey { get; }
         bool UseDefaultHouse { get; }
         string MapName { get; }

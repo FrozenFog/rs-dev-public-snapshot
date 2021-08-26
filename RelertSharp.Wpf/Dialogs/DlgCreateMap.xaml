@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RelertSharp.Wpf.Dialogs"
         xmlns:vm="clr-namespace:RelertSharp.Wpf.ViewModel"
         mc:Ignorable="d"
-        Title="Create Map" Background="{StaticResource dimBack}" Height="286" Width="279.2" ResizeMode="NoResize"
+        Title="Create Map" Background="{StaticResource dimBack}" Height="311.6" Width="276.8" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:MapCreatingVm/>
@@ -23,23 +23,26 @@
         <TextBox Margin="10,38,10,0" TextWrapping="Wrap" Text="{Binding Height}" 
                  VerticalAlignment="Top" Grid.Column="2"/>
         <Label Content="Height" HorizontalAlignment="Right" Margin="0,38,10,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <Label Content="Theater" HorizontalAlignment="Right" Margin="0,66,10,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <ComboBox Name="cbbTheater" Margin="10,66,10,0" VerticalAlignment="Top" Grid.Column="2" SelectedItem="{Binding Theater}"/>
-        <Label Content="Map Name" HorizontalAlignment="Right" Margin="0,94,10,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <TextBox Margin="10,94,10,0" TextWrapping="Wrap" Text="{Binding MapName}" 
+        <Label Content="Theater" HorizontalAlignment="Right" Margin="0,94,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <ComboBox Name="cbbTheater" Margin="10,94,10,0" VerticalAlignment="Top" Grid.Column="2" SelectedItem="{Binding Theater}"/>
+        <Label Content="Map Name" HorizontalAlignment="Right" Margin="0,122,10,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <TextBox Margin="10,122,10,0" TextWrapping="Wrap" Text="{Binding MapName}" 
                  VerticalAlignment="Top" Grid.Column="2"/>
-        <CheckBox Grid.Column="2" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top"
-                  IsChecked="{Binding IsSingle}"/>
-        <Label Content="Single Player" HorizontalAlignment="Right" Margin="0,122,10,0" VerticalAlignment="Top" Grid.Column="1"/>
         <CheckBox Grid.Column="2" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top"
+                  IsChecked="{Binding IsSingle}"/>
+        <Label Content="Single Player" HorizontalAlignment="Right" Margin="0,150,10,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <CheckBox Grid.Column="2" HorizontalAlignment="Left" Margin="10,178,0,0" VerticalAlignment="Top"
                   IsChecked="{Binding IsRulesDefHouse}"/>
-        <Label Content="Def Rules House" HorizontalAlignment="Right" Margin="0,150,10,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <ComboBox Name="cbbHouse" Margin="10,178,10,0" VerticalAlignment="Top" Grid.Column="2" IsEnabled="{Binding IsPlayerHouseEnable}"
+        <Label Content="Def Rules House" HorizontalAlignment="Right" Margin="0,178,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <ComboBox Name="cbbHouse" Margin="10,206,10,0" VerticalAlignment="Top" Grid.Column="2" IsEnabled="{Binding IsPlayerHouseEnable}"
                   SelectedItem="{Binding PlayerHouseName}"/>
-        <Label Content="Player House" HorizontalAlignment="Right" Margin="0,178,10,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label Content="Player House" HorizontalAlignment="Right" Margin="0,206,10,0" VerticalAlignment="Top" Grid.Column="1"/>
         <Grid Grid.ColumnSpan="2" Grid.Column="1" Height="23" Margin="0,0,10,10" VerticalAlignment="Bottom">
             <Button Content="Accept" HorizontalAlignment="Left" Width="80" Margin="20,0,0,0" Click="Accept"/>
             <Button Content="Cancel" HorizontalAlignment="Right" Width="80" Margin="20,0,20,0" Click="Cancel"/>
         </Grid>
+        <Label Content="Initial Height" HorizontalAlignment="Right" Margin="0,66,10,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <TextBox Margin="10,66,10,0" TextWrapping="Wrap" Text="{Binding Altitude}" 
+            VerticalAlignment="Top" Grid.Column="2"/>
     </Grid>
 </Window>

@@ -48,7 +48,11 @@ namespace RelertSharp.Wpf.Dialogs
 
         private void Accept(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
+            if (vm.Width + vm.Height >= 512)
+            {
+                GuiUtil.Fatal("Map width + height must less than 512!");
+            }
+            else DialogResult = true;
         }
 
         private void Cancel(object sender, RoutedEventArgs e)

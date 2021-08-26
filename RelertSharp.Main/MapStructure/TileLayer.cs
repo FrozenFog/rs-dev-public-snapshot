@@ -51,7 +51,7 @@ namespace RelertSharp.MapStructure
 
 
         #region Private Methods - TileLayer
-        private void LayTileWeb(int xmin, int ymax, int width, int height)
+        private void LayTileWeb(int xmin, int ymax, int width, int height, int altitude = 0)
         {
             for (int i = 0; i < height; i++)
             {
@@ -59,7 +59,7 @@ namespace RelertSharp.MapStructure
                 int y = ymax;
                 for (int j = 0; j < width; j++)
                 {
-                    if (this[x, y] == null) this[x, y] = Tile.EmptyTileAt(x, y);
+                    if (this[x, y] == null) this[x, y] = Tile.EmptyTileAt(x, y, altitude);
                     x++;
                     y--;
                 }
@@ -185,10 +185,10 @@ namespace RelertSharp.MapStructure
         }
         #endregion
         #region Saving io
-        public void FixEmptyTiles(int width, int height)
+        public void FixEmptyTiles(int width, int height, int altitude = 0)
         {
-            LayTileWeb(1, width, width, height);
-            LayTileWeb(2, width, width - 1, height);
+            LayTileWeb(1, width, width, height, altitude);
+            LayTileWeb(2, width, width - 1, height, altitude);
         }
         public void Sort()
         {
@@ -749,9 +749,9 @@ namespace RelertSharp.MapStructure
         {
             get { return !isPhased; }
         }
-        public static Tile EmptyTileAt(int x, int y)
+        public static Tile EmptyTileAt(int x, int y, int height = 0)
         {
-            return new Tile((short)x, (short)y, 0, 0, 0, 0);
+            return new Tile((short)x, (short)y, 0, 0, (byte)height, 0);
         }
         public static Tile EmptyTile => new Tile(0, 0, 0, 0, 0);
         public short X16 { get; set; }
