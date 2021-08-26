@@ -27,6 +27,20 @@ namespace RelertSharp.MapStructure
             diagonal = Map.TilesData.GetDiagonalTile(pos, out List<WallDirection> dir).ToArray();
             directions = dir.ToArray();
         }
+        public static List<Tile> GetBorderTileAround(IEnumerable<Tile> src)
+        {
+            HashSet<Pnt> center = src.Select(x => new Pnt(x.X, x.Y)).ToHashSet();
+            Dictionary<Pnt, Tile> result = new Dictionary<Pnt, Tile>();
+            foreach (Tile body in src)
+            {
+                GetAdjacentTileAround(body, out Tile[] adjs, out WallDirection[] _);
+                foreach (Tile adj in adjs)
+                {
+                    if (!center.Contains(new Pnt(adj))) result[new Pnt(adj)] = adj;
+                }
+            }
+            return result.Values.ToList();
+        }
         public static void SetTile(IMapTileBrushConfig config)
         {
             if (Map.TilesData[config.Pos] is Tile org && !org.IsFrozen)
@@ -66,6 +80,7 @@ namespace RelertSharp.MapStructure
         }
         /// <summary>
         /// Will use map data for adjacent 4 referance tile
+        /// Center tile will be redrawn
         /// </summary>
         /// <param name="center"></param>
         public static void SwitchCenterTileToLat(Tile center)

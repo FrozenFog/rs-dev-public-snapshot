@@ -368,6 +368,33 @@ namespace RelertSharp.Wpf.MapEngine.Helper
                         }
                     }
                 }
+                // lat
+                if (LatEnable)
+                {
+                    foreach (var tile in MapApi.GetBorderTileAround(affectedTile))
+                    {
+                        //MapApi.GetAdjacentTileAround(tile, out Tile[] adjs, out WallDirection[] dirs);
+                        //for (int j = 0; j < adjs.Length; j++)
+                        //{
+                        //    Tile adj = adjs[j];
+                        //    if (MapApi.NeedLat(adj))
+                        //    {
+                        //        if (!affectedTile.Contains(adj))
+                        //        {
+                        //            if (!additionalLat.ContainsKey(new Pnt(adj))) additionalLat[new Pnt(adj)] = new Tile(adj);
+                        //            MapApi.SwitchCenterTileToLat(adj, tile, dirs[j]);
+                        //            adj.Redraw();
+                        //        }
+                        //    }
+                        //}
+                        affectedTile.Add(new Tile(tile));
+                        MapApi.SwitchCenterTileToLat(tile);
+                        //if (tiles[tile] is Tile target && MapApi.NeedLat(target))
+                        //{
+                        //    MapApi.SwitchCenterTileToLat(target);
+                        //}
+                    }
+                }
                 UndoRedoHub.PushCommand(MapApi.SelectTile(affectedTile), affectedTile.ToList());
                 end:
                 EngineApi.InvokeUnlock();

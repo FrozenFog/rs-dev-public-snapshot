@@ -113,7 +113,9 @@ namespace RelertSharp.Wpf.ViewModel
             get { return MouseState.State == PanelMouseState.TileBucketFlood; }
             set
             {
-                MouseState.SetState(PanelMouseState.TileBucketFlood);
+                if (value) MouseState.SetState(PanelMouseState.TileBucketFlood);
+                else MouseState.SetState(PanelMouseState.TileSingleBrush);
+                SetProperty();
             }
         }
         #endregion
@@ -153,6 +155,16 @@ namespace RelertSharp.Wpf.ViewModel
                 TilePaintBrush.SwitchToFlatGround(data.FlatEnable);
                 EngineApi.InvokeUnlock();
                 EngineApi.InvokeRedraw();
+                SetProperty();
+            }
+        }
+        public bool IsLatEnable
+        {
+            get { return TilePaintBrush.LatEnable; }
+            set
+            {
+                TilePaintBrush.LatEnable = value;
+                SetProperty();
             }
         }
         #endregion

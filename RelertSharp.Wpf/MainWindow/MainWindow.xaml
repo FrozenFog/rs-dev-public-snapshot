@@ -127,6 +127,7 @@
                 <ToggleButton Content="{StaticResource Flat}" IsChecked="{Binding IsFlatEnable}" IsEnabled="{Binding IsEngineDrawed}"/>
                 <ToggleButton Content="{StaticResource Framework}" IsChecked="{Binding IsFrameworkEnable}" IsEnabled="{Binding IsEngineDrawed}"/>
                 <ToggleButton Content="{StaticResource Isometric}" IsChecked="{Binding IsIsoSelect}" IsEnabled="{Binding IsEngineDrawed}"/>
+                <ToggleButton Content="{StaticResource LatEnable}" IsChecked="{Binding IsLatEnable}" IsEnabled="{Binding IsEngineDrawed}"/>
             </ToolBar>
             <ToolBar BandIndex="1" HorizontalAlignment="Left">
                 <ToggleButton Content="{StaticResource Arrow}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseNone}"/>
