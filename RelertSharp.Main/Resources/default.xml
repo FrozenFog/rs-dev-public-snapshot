@@ -67,6 +67,12 @@
       <entry name="Epsilon" idx="3" side="ThirdSide" evaPrefix="Yuri"/>
       <entry name="Foehn" idx="4" side="FourthSide" evaPrefix="Foehn"/>
     </SideInfo>
+    <TiberiumInfo>
+      <tib min="27" max="38" type="1"/>
+      <tib min="102" max="121" type="0"/>
+      <tib min="147" max="166" type="3"/>
+      <tib min="127" max="146" type="2" disable="true"/>
+    </TiberiumInfo>
   </General>
   <ComboList>
     <cb type="Waypoints" default="true"/>
@@ -1816,7 +1822,7 @@
             <sec set="10" sub="18"/>
             <sec set="10" sub="20"/>
             <sec set="10" sub="21"/>
-            <sec set="85" sub="0" offset="0,-1"/>
+            <sec set="85" sub="0" offset="0,1"/>
             <sec set="172" sub="3"/>
             <sec set="225" sub="0"/>
           </Allow>

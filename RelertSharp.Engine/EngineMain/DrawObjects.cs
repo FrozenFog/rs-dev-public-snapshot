@@ -264,7 +264,7 @@ namespace RelertSharp.Engine
             Vec4 color = Vec4.Zero;
             if (t.SceneObject != null)
             {
-                color = t.SceneObject.ColorVector;
+                color = t.SceneObject.ActualColor;
             }
             framework = TileDictionary.GetFrameworkFromTile(t, out bool isHyte);
             t.IsHyte = isHyte;

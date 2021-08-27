@@ -27,6 +27,20 @@ namespace RelertSharp.Common.Config.Model
         public EngineAdjust DrawingAdjust { get; set; }
         [XmlArrayItem("entry")]
         public List<SideEntryInfo> SideInfo { get; set; }
+        [XmlArrayItem("tib")]
+        public List<TiberiumInfo> TiberiumInfo { get; set; }
+    }
+
+    public class TiberiumInfo
+    {
+        [XmlAttribute("min")]
+        public int RangeMin { get; set; }
+        [XmlAttribute("max")]
+        public int RangeMax { get; set; }
+        [XmlAttribute("type")]
+        public int Type { get; set; }
+        [XmlAttribute("disable")]
+        public bool Disabled { get; set; }
     }
 
     public class SideEntryInfo : NamedEntry

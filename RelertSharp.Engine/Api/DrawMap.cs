@@ -75,11 +75,15 @@ namespace RelertSharp.Engine.Api
         public static void RedrawObject(IMapObject src)
         {
             Vec4 color = Vec4.Zero;
-            if (src.SceneObject != null) color = src.SceneObject.ColorVector;
+            if (src.SceneObject != null) color = src.SceneObject.ActualColor;
             src.SceneObject?.Dispose();
             DrawObject(src);
             if (color != Vec4.Zero) src.SceneObject.SetColor(color);
-            if (src.IsSelected) src.Select(true);
+            if (src.IsSelected)
+            {
+                src.CancelSelection();
+                src.Select();
+            }
         }
         public static void DrawTile(Tile t)
         {

@@ -12,6 +12,7 @@ namespace RelertSharp.Engine.MapObjects
 {
     internal sealed class MapTile : MapObjectBase, ISceneTile
     {
+        private bool isBodyHidden, isExtraHidden;
         private bool isFramework = false;
         private int Body { get { if (isFramework) return pFramework; else return pSelf; } }
         private int Extra { get { if (isFramework) return pExFramework; else return pExtra; } }
@@ -92,81 +93,55 @@ namespace RelertSharp.Engine.MapObjects
         //    SetColor(Body, main);
         //    SetColor(Extra, extra);
         //}
+        /// <summary>
+        /// bypass everything
+        /// </summary>
+        /// <param name="color"></param>
+        /// <param name="deSelect"></param>
         public void MarkSelf(Vec4 color, bool deSelect = false)
         {
             if (deSelect) SetColor(Body, ColorVector);
             else SetColor(Body, color);
         }
+        /// <summary>
+        /// bypass everything
+        /// </summary>
+        /// <param name="color"></param>
+        /// <param name="deSelect"></param>
         public void MarkExtra(Vec4 color, bool deSelect = false)
         {
             if (deSelect) SetColor(Extra, ColorVector);
             else SetColor(Extra, color);
         }
-        public void SetColor(Vec4 color)
-        {
-            ColorVector = color;
-            if (!selected)
-            {
-                SetColorStrict(color);
-            }
-        }
-        public void MarkForBuildable(Vec4 color)
-        {
-            SetColorStrict(color);
-        }
-        public void UnMarkForBuildable()
-        {
-            SetColorStrict(ColorVector);
-        }
-        public void MultiplyColor(Vec4 color)
-        {
-            ColorVector *= color;
-            SetColor(ColorVector);
-        }
-        public void DivColor(Vec4 color)
-        {
-            ColorVector /= color;
-        }
-        public void AddColor(Vec4 color)
-        {
-            ColorVector += color;
-            SetColor(ColorVector);
-        }
-        public void MarkSelected()
-        {
-            SetColorStrict(Vec4.Selector);
-            selected = true;
-        }
-        public void Unmark()
-        {
-            selected = false;
-            SetColorStrict(ColorVector);
-        }
         public void HideSelf()
         {
+            isBodyHidden = true;
             SetColor(Body, Vec4.HideCompletely);
         }
         public void HideExtra()
         {
+            isExtraHidden = true;
             SetColor(Extra, Vec4.HideCompletely);
         }
         public void RevealSelf()
         {
+            isBodyHidden = false;
             SetColor(Body, ColorVector);
         }
         public void RevealExtra()
         {
+            isExtraHidden = false;
             SetColor(Extra, ColorVector);
         }
-        public void Hide()
+        public override void Hide()
         {
             HideSelf();
-            HideExtra();
+            SetColor(Extra, Vec4.HideCompletely);
         }
-        public void Reveal()
+        public override void Reveal()
         {
             RevealSelf();
-            RevealExtra();
+            if (!isExtraHidden) SetColor(Extra, ColorVector);
         }
         #endregion
 
@@ -186,6 +161,11 @@ namespace RelertSharp.Engine.MapObjects
 
 
         #region Public Calls - MapTile
+        public override bool IsHidden 
+        { 
+            get => isBodyHidden || isExtraHidden;
+            protected set { }
+        }
         public byte Height { get; set; }
         public int pExtra { get; set; }
         public int pFramework { get; set; }

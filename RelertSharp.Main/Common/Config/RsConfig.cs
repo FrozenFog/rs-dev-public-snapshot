@@ -19,14 +19,11 @@ namespace RelertSharp.Common.Config
         public RsConfig(string configPath = Constant.Config.Path)
         {
             UserConfig = new UserConfig(out bool existUserConfig);
-            if (existUserConfig && configPath == Constant.Config.Path)
+            if (existUserConfig)
             {
-                ModConfig = new ModConfig(UserConfig.General.ConfigPath);
+                configPath = UserConfig.General.ConfigPath;
             }
-            else
-            {
-                ModConfig = new ModConfig(configPath);
-            }
+            ModConfig = new ModConfig(configPath);
             UserConfig.General.ConfigPath = configPath;
         }
 

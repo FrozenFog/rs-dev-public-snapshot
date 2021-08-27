@@ -261,7 +261,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         }
         public static void UnselectObject(IEnumerable<IMapObject> src)
         {
-            IEnumerable<IMapObject> intersect = selectedObjects.Intersect(src);
+            IEnumerable<IMapObject> intersect = selectedObjects.Intersect(src).ToList();
             foreach (IMapObject obj in intersect)
             {
                 obj.CancelSelection();

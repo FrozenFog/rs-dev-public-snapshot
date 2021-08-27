@@ -115,9 +115,9 @@ namespace RelertSharp.Common
         void MoveTo(I3dLocateable pos, int subcell = -1);
         void ShiftBy(I3dLocateable delta);
         void ApplyConfig(IMapObjectBrushConfig config, IObjectBrushFilter filter, bool applyPosAndNameAndName = true);
-        void Select(bool force = false);
+        void Select();
         void CancelSelection();
-        void Hide(bool force = false);
+        void Hide();
         void Reveal();
         IMapObject ConstructFromParameter(string[] commands);
         string Id { get; }

@@ -388,8 +388,6 @@ namespace RelertSharp.MapStructure
             isFramework = src.isFramework;
             isSelected = src.isSelected;
             marked = src.marked;
-            isSelfHidden = src.isSelfHidden;
-            isExtraHidden = src.isExtraHidden;
         }
         #endregion
 
@@ -416,34 +414,23 @@ namespace RelertSharp.MapStructure
             X = cell.X;
             Y = cell.Y;
             SetHeightTo(height);
-            if (isSelected)
-            {
-                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
-                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
-            }
+            //if (isSelected)
+            //{
+            //    if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
+            //    if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
+            //}
         }
         private void HideExtraImg()
         {
-            if (!isExtraHidden)
-            {
-                SceneObject.HideExtra();
-                isExtraHidden = true;
-            }
+            if (Disposed) return;
+            SceneObject.HideExtra();
+            isExtraHidden = true;
         }
         private void RevealExtraImg()
         {
             if (Disposed) return;
-            if (isExtraHidden)
-            {
-                SceneObject.RevealExtra();
-                isExtraHidden = false;
-            }
-        }
-        protected override void UpdateStatusColor()
-        {
-            base.UpdateStatusColor();
-            if (isExtraHidden) SceneObject.HideExtra();
-            else if (!IsPhased && !IsHidden) SceneObject?.RevealExtra();
+            SceneObject.RevealExtra();
+            isExtraHidden = false;
         }
         #endregion
 
@@ -456,10 +443,9 @@ namespace RelertSharp.MapStructure
         public void Redraw()
         {
             Vec4 color = Vec4.Zero;
-            if (SceneObject != null) color = SceneObject.ColorVector;
+            if (SceneObject != null) color = SceneObject.ActualColor;
             SceneObject?.Dispose();
             SceneObject?.RedrawTile(this);
-            //Engine.DrawGeneralItem(this);
             if (color != Vec4.Zero) SceneObject.SetColor(color);
             if (isFlat)
             {
@@ -473,7 +459,13 @@ namespace RelertSharp.MapStructure
             }
             if (isSelected)
             {
-                base.Select(true);
+                CancelSelection();
+                Select();
+            }
+            if (isPhased)
+            {
+                UnPhase();
+                PhaseOut();
             }
         }
         public void SetHeightTo(int height, bool isFlatMode = false, bool moveObject = false)
@@ -554,33 +546,39 @@ namespace RelertSharp.MapStructure
                 }
                 else
                 {
-                    if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Zero, true);
-                    if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Zero, true);
+                    if (!isSelfHidden) SceneObject.MarkSelf(SceneObject.ColorVector, true);
+                    if (!isExtraHidden) SceneObject.MarkExtra(SceneObject.ColorVector, true);
                 }
+            }
+        }
+        public override void Hide()
+        {
+            if (!isSelfHidden)
+            {
+                SceneObject?.HideSelf();
+                SceneObject?.HideExtra();
+                isSelfHidden = true;
+                status |= ObjectStatus.Hide;
             }
         }
         public override void Reveal()
         {
-            if (isHidden)
+            if (isSelfHidden)
             {
                 SceneObject?.RevealSelf();
                 if (!isExtraHidden) SceneObject?.RevealExtra();
-                if (isSelected) Select(true);
-                isHidden = false;
-                UpdateStatusColor();
+                isSelfHidden = false;
+                status &= ~ObjectStatus.Hide;
             }
         }
         public void SwitchToFramework(bool enable)
         {
             isFramework = enable;
             SceneObject.SwitchToFramework(enable);
-            if (isSelfHidden) SceneObject.HideSelf();
-            if (isExtraHidden) SceneObject.HideExtra();
-            UpdateStatusColor();
-            if (isSelected)
+            if (isFlat)
             {
-                if (!isSelfHidden) SceneObject.MarkSelf(Vec4.Selector);
-                if (!isExtraHidden) SceneObject.MarkExtra(Vec4.Selector);
+                FlatToGround(false);
+                FlatToGround(true);
             }
         }
         public void FlatToGround(bool enable)
@@ -599,7 +597,6 @@ namespace RelertSharp.MapStructure
                 RevealExtraImg();
                 isFlat = false;
             }
-            UpdateStatusColor();
         }
         /// <summary>
         /// 

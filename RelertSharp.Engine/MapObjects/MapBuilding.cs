@@ -62,49 +62,23 @@ namespace RelertSharp.Engine.MapObjects
                 Disposed = true;
             }
         }
-        public void SetColor(Vec4 color)
+        public override void SetColor(Vec4 color)
         {
             if (!IsBaseNode)
             {
-                ColorVector = color;
-                if (!selected)
-                {
-                    SetColorStrict(ColorVector);
-                }
+                base.SetColor(color);
             }
         }
-        public void MultiplyColor(Vec4 color)
+        public override void Hide()
         {
-            ColorVector *= color;
-            SetColor(ColorVector);
+            foreach (int p in Pointers) SetColor(p, Vec4.HideCompletely);
+            IsHidden = true;
         }
-        public void MarkSelected()
+        public override void Reveal()
         {
-            SetColorStrict(Vec4.Selector);
-            selected = true;
-        }
-        public void Unmark()
-        {
-            selected = false;
-            SetColorStrict(ColorVector);
-        }
-        public void Hide()
-        {
-            if (!IsHidden)
-            {
-                foreach (int p in Pointers) SetColor(p, Vec4.HideCompletely);
-                IsHidden = true;
-            }
-        }
-        public void Reveal()
-        {
-            if (IsHidden)
-            {
-                SetColorStrict(ColorVector);
-                foreach (int p in Shadows) SetColor(p, Vec4.One);
-                SetColor(pAlphaImg, Vec4.One);
-                IsHidden = false;
-            }
+            base.Reveal();
+            foreach (int p in Shadows) SetColor(p, Vec4.One);
+            SetColor(pAlphaImg, Vec4.One);
         }
         #endregion
 

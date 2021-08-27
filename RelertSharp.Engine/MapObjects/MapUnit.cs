@@ -51,46 +51,15 @@ namespace RelertSharp.Engine.MapObjects
             ShiftBy(distant, pTurret, pTurretShadow);
             base.ShiftBy(delta);
         }
-        public void SetColor(Vec4 color)
+        public override void Hide()
         {
-            ColorVector = color;
-            if (!selected)
-            {
-                SetColorStrict(ColorVector);
-            }
+            base.Hide();
+            SetShadow(Vec4.HideCompletely);
         }
-        public void MultiplyColor(Vec4 color)
+        public override void Reveal()
         {
-            ColorVector *= color;
-            SetColor(ColorVector);
-        }
-        public void MarkSelected()
-        {
-            SetColorStrict(Vec4.Selector);
-            selected = true;
-        }
-        public void Unmark()
-        {
-            selected = false;
-            SetColorStrict(ColorVector);
-        }
-        public void Hide()
-        {
-            if (!IsHidden)
-            {
-                SetColorStrict(Vec4.HideCompletely);
-                SetShadow(Vec4.HideCompletely);
-                IsHidden = true;
-            }
-        }
-        public void Reveal()
-        {
-            if (IsHidden)
-            {
-                SetColorStrict(ColorVector);
-                SetShadow(Vec4.One);
-                IsHidden = false;
-            }
+            base.Reveal();
+            SetShadow(Vec4.One);
         }
         #endregion
 

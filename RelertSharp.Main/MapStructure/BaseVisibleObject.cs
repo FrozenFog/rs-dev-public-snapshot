@@ -30,79 +30,6 @@ namespace RelertSharp.MapStructure
             else if (GlobalVar.HasMap) return GlobalVar.GlobalMap.GetHeightFromTile(this);
             else return Constant.MapStructure.INVALID_HEIGHT;
         }
-        public virtual void Select(bool forceSelect = false)
-        {
-            if ((forceSelect || !isSelected) && CanSelect)
-            {
-                SceneObject?.ApplyTempColor(Vec4.Selector);
-                isSelected = true;
-                status |= ObjectStatus.Selected;
-                UpdateStatusColor();
-            }
-        }
-        public virtual void CancelSelection()
-        {
-            if (isSelected)
-            {
-                SceneObject?.RemoveTempColor();
-                isSelected = false;
-                status &= ~ObjectStatus.Selected;
-                UpdateStatusColor();
-            }
-        }
-        public virtual void PhaseOut(bool forcePhase = false)
-        {
-            if (forcePhase || !isPhased)
-            {
-                SceneObject.PhaseOut();
-                isPhased = true;
-                status |= ObjectStatus.Phased;
-                UpdateStatusColor();
-            }
-        }
-        public virtual void UnPhase()
-        {
-            if (isPhased)
-            {
-                SceneObject?.UnPhase();
-                isPhased = false;
-                status &= ~ObjectStatus.Phased;
-                UpdateStatusColor();
-            }
-        }
-        protected virtual void UpdateStatusColor()
-        {
-            bool phase = IsPhased && !isSelected && !IsHidden;
-            bool select = isSelected && !IsPhased && !IsHidden;
-            bool hide = IsHidden;
-            if (hide) SceneObject?.Hide();
-            else SceneObject?.Reveal();
-            if (phase) SceneObject?.PhaseOut();
-            else if (!hide) SceneObject?.UnPhase();
-            if (select) SceneObject?.ApplyTempColor(Vec4.Selector);
-            else if (!phase && !hide) SceneObject?.RemoveTempColor();
-        }
-        public virtual void Hide(bool forceHide = false)
-        {
-            if (forceHide || !isHidden)
-            {
-                SceneObject?.Hide();
-                isHidden = true;
-                status |= ObjectStatus.Hide;
-                UpdateStatusColor();
-            }
-        }
-        public virtual void Reveal()
-        {
-            if (isHidden)
-            {
-                SceneObject?.Reveal();
-                if (isSelected) Select(true);
-                isHidden = false;
-                status &= ~ObjectStatus.Hide;
-                UpdateStatusColor();
-            }
-        }
         public virtual void MoveTo(I3dLocateable pos, int subcell = -1)
         {
             X = pos.X;
@@ -121,6 +48,62 @@ namespace RelertSharp.MapStructure
             isHidden = false;
             SceneObject?.Dispose();
         }
+        #region Colors
+        public virtual void Select()
+        {
+            if (!isSelected && CanSelect)
+            {
+                SceneObject?.ApplyTempColor(Vec4.Selector);
+                isSelected = true;
+                status |= ObjectStatus.Selected;
+            }
+        }
+        public virtual void CancelSelection()
+        {
+            if (isSelected)
+            {
+                SceneObject?.RemoveTempColor();
+                isSelected = false;
+                status &= ~ObjectStatus.Selected;
+            }
+        }
+        public virtual void PhaseOut()
+        {
+            if (!isPhased && !isHidden)
+            {
+                SceneObject.ApplyTempColor(Vec4.Hide75);
+                isPhased = true;
+                status |= ObjectStatus.Phased;
+            }
+        }
+        public virtual void UnPhase()
+        {
+            if (isPhased)
+            {
+                SceneObject?.RemoveTempColor();
+                isPhased = false;
+                status &= ~ObjectStatus.Phased;
+            }
+        }
+        public virtual void Hide()
+        {
+            if (!isHidden)
+            {
+                SceneObject?.Hide();
+                isHidden = true;
+                status |= ObjectStatus.Hide;
+            }
+        }
+        public virtual void Reveal()
+        {
+            if (isHidden)
+            {
+                SceneObject?.Reveal();
+                isHidden = false;
+                status &= ~ObjectStatus.Hide;
+            }
+        }
+        #endregion
 
         public virtual TSceneInterface SceneObject { get; set; }
         public virtual bool CanSelect

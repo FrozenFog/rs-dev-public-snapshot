@@ -9,7 +9,8 @@ namespace RelertSharp.Engine.MapObjects
 {
     internal abstract class MapObjectBase : I3dLocateable
     {
-        protected bool selected, phased;
+        private bool lightLocked, hasTempColor;
+        protected Vec4 tempColor = Vec4.One, colorVector = Vec4.One;
         protected enum PresentFileTypeFlag
         {
             Shp,
@@ -38,30 +39,71 @@ namespace RelertSharp.Engine.MapObjects
 
 
         #region Public
+        public virtual void Hide()
+        {
+            SetColorStrict(Vec4.HideCompletely);
+            IsHidden = true;
+        }
+        public virtual void Reveal()
+        {
+            IsHidden = false;
+            RefreshColor();
+        }
         public virtual void ApplyTempColor(Vec4 color)
         {
-            SetColorStrict(color);
+            tempColor = color;
+            hasTempColor = true;
+            if (!IsHidden) RefreshColor();
         }
-
         public virtual void RemoveTempColor()
         {
-            if (!phased) SetColorStrict(ColorVector);
+            hasTempColor = false;
+            tempColor = colorVector;
+            if (!IsHidden) RefreshColor();
         }
-
-        public virtual void PhaseOut()
+        public virtual void LockLight()
         {
-            phased = true;
-            SetColorStrict(Vec4.Hide75);
+            lightLocked = true;
         }
-        public virtual void UnPhase()
+        public virtual void UnlockLight()
         {
-            phased = false;
-            SetColorStrict(ColorVector);
+            lightLocked = false;
+            RefreshColor();
+        }
+        public void MultiplyColor(Vec4 color)
+        {
+            colorVector *= color;
+            SetColor(ColorVector);
+        }
+        public void DivColor(Vec4 color)
+        {
+            colorVector /= color;
+            SetColor(ColorVector);
+        }
+        public void AddColor(Vec4 color)
+        {
+            colorVector += color;
+            SetColor(ColorVector);
+        }
+        public virtual void SetColor(Vec4 color)
+        {
+            colorVector = color;
+            if (!IsColorLocked)
+            {
+                RefreshColor();
+            }
         }
         #endregion
 
 
         #region Protected - MapObjectBase
+        /// <summary>
+        /// SetColorStrict : ColorVector
+        /// </summary>
+        protected virtual void RefreshColor()
+        {
+            SetColorStrict(ColorVector);
+        }
         protected abstract void SetColorStrict(Vec4 color);
         protected virtual void RemoveProp(PresentFileTypeFlag flag, int pself, int pextra = 0)
         {
@@ -139,16 +181,29 @@ namespace RelertSharp.Engine.MapObjects
 
 
         #region Public Calls - MapObjectBase
-        public bool IsHidden { get; protected set; }
+        public virtual bool IsHidden { get; protected set; }
+        public bool IsColorLocked { get { return lightLocked || IsHidden; } }
         public int ID { get; set; }
-        public Vec4 ColorVector { get; set; } = Vec4.One;
+        public Vec4 ActualColor { get { return colorVector; } }
+        public Vec4 ColorVector
+        {
+            get
+            {
+                if (hasTempColor) return tempColor;
+                else return colorVector;
+            }
+            set
+            {
+                if (hasTempColor) tempColor = value;
+                else colorVector = value;
+            }
+        }
         public int Coord { get { return Utils.Misc.CoordInt(X, Y); } }
         public int X { get; set; }
         public int Y { get; set; }
         public int Z { get; set; }
         public int pSelf { get; set; }
         public int pSelfShadow { get; set; }
-        public bool Selected { get { return selected; } set { selected = value; } }
         public bool Disposed { get; set; }
         public RadarColor RadarColor { get; set; }
         #endregion

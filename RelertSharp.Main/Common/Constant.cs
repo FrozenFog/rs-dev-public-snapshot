@@ -31,6 +31,7 @@ namespace RelertSharp.Common
             public const string HEAD_SMUDGE = "SmudgeTypes";
             public const string HEAD_OVERLAY = "OverlayTypes";
             public const string HEAD_COUNTRY = "Countries";
+            public const string HEAD_TIBERIUM = "Tiberiums";
         }
 
         public const string KEY_IMAGE = "Image";

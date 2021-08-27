@@ -204,5 +204,17 @@ namespace RelertSharp.IniSystem
         {
             return r["AI"].ParseStringList("NeutralTechBuildings").Contains(regname);
         }
+        public static int GetTiberiumValue(this Rules r, byte overlayIndex, byte overlayFrame)
+        {
+            int value = 0;
+            INIEntity tiberium = r[RulesHead.HEAD_TIBERIUM];
+            var info = GlobalConfig.ModGeneral.TiberiumInfo.Find(x => x.RangeMin <= overlayIndex && x.RangeMax >= overlayIndex);
+            if (info != null && tiberium.HasPair(info.Type.ToString()))
+            {
+                INIEntity tib = r[tiberium.GetPair(info.Type.ToString()).Value];
+                value = overlayFrame * tib.ParseInt("Value");
+            }
+            return value;
+        }
     }
 }
