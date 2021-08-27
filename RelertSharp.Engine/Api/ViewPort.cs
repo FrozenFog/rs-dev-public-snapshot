@@ -11,6 +11,10 @@ namespace RelertSharp.Engine.Api
     public static partial class EngineApi
     {
         public static event I3dLocateableHandler MoveCameraRequested;
+        public static void DrawMapBorder()
+        {
+            EngineMain.DrawMapBorder(GlobalVar.GlobalMap.Info.Size.Width, GlobalVar.GlobalMap.Info.LocalSize);
+        }
         public static Vec3 ClientPointToCellPos(Point src)
         {
             return EngineMain.ClientPointToCellPos(src);

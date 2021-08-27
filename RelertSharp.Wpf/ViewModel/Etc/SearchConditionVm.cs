@@ -121,6 +121,9 @@ namespace RelertSharp.Wpf.ViewModel
             extraInfo = extra;
             switch (data.ConditionType)
             {
+                case ConditionType.OwnerHouse:
+                    if (validate is IOwnableObject own) return own.Owner;
+                    break;
                 case ConditionType.AttachedTagId:
                     if (validate is ITaggableObject taggable) return taggable.TagId;
                     break;
@@ -329,6 +332,7 @@ namespace RelertSharp.Wpf.ViewModel
             NoCondition = -1,
             Id,
             Name,
+            OwnerHouse,
             HealthPoint,
             CoordinateX,
             CoordinateY,

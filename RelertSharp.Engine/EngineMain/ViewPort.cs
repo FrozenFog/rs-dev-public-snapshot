@@ -183,6 +183,7 @@ namespace RelertSharp.Engine
             Pnt3 pos = new Pnt3(x, y, z);
             CppExtern.Scene.SetFocusOnScene(ToVec3Iso(pos));
             SetMinimapClientPos();
+            RefreshCanvasPosition();
         }
         public static void MoveTo(I3dLocateable pos)
         {
@@ -204,6 +205,7 @@ namespace RelertSharp.Engine
         {
             CppExtern.Scene.MoveFocusOnScreen(dx, dy);
             SetMinimapClientPos();
+            RefreshCanvasPosition();
         }
         public static void ViewShift(Point previous, Point now)
         {

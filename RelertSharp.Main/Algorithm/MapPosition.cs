@@ -68,29 +68,39 @@ namespace RelertSharp.Algorithm
             cell = new Pnt((x + y + 2) / 2, mapWidth + (y - x) / 2);
         }
         /// <summary>
-        /// Used only in Map local size(player visible size) tile position calc
+        /// Used only in Map local size(player visible size) tile position calc.
+        /// This area is visible to player, include border
         /// </summary>
         /// <param name="mapWidth">Map width, height is irrelevant</param>
         /// <param name="size">Map local size(visible size)</param>
         /// <param name="LT">Out tile Left-Top position</param>
         /// <param name="RB">Out tile Right-Bottom position</param>
-        public static void VisiblePointToTile(int mapWidth, Rectangle size, out I2dLocateable LT, out I2dLocateable RB)
+        public static void GetVisibleArea(int mapWidth, Rectangle size, out I2dLocateable LT, out I2dLocateable RB)
         {
             int xLt = size.X;
             int yLt = size.Y;
             int xRb = size.X + size.Width - 1;
             int yRb = size.Y + size.Height + 2;
-            LT = new Pnt(xLt + yLt - 1, mapWidth + yLt - xLt - 2);
-            RB = new Pnt(xRb + yRb - 1, mapWidth + yRb - xRb - 2);
+            LT = new Pnt(xLt + yLt - 3, mapWidth + yLt - xLt - 3);
+            RB = new Pnt(xRb + yRb - 3, mapWidth + yRb - xRb - 3);
         }
         /// <summary>
-        /// Used only in Map local size(player visible size) tile position calc
+        /// Used only in Map local size(player visible size) tile position calc.
+        /// This area is movable for player, include border
         /// </summary>
         /// <param name="mapWidth">Map width, height is irrelevant</param>
         /// <param name="size">Map local size(visible size)</param>
         /// <param name="LT">Out tile Left-Top position</param>
-        /// <param name="w">Real rectangle Width, used by enumerator</param>
-        /// <param name="h">Real rectangle Height, used by enumerator</param>
+        /// <param name="RB">Out tile Right-Bottom position</param>
+        public static void GetMovableArea(int mapWidth, Rectangle size, out I2dLocateable LT, out I2dLocateable RB)
+        {
+            int xLt = size.X;
+            int yLt = size.Y;
+            int xRb = size.X + size.Width - 1;
+            int yRb = size.Y + size.Height + 2;
+            LT = new Pnt(xLt + yLt + 1, mapWidth + yLt - xLt);
+            RB = new Pnt(xRb + yRb - 4, mapWidth + yRb - xRb - 3);
+        }
         public static void VisiblePointToTile(int mapWidth, Rectangle size, out I2dLocateable LT, out int w, out int h)
         {
             int xLt = size.X;

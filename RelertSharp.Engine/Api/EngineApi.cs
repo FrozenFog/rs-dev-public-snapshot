@@ -32,6 +32,10 @@ namespace RelertSharp.Engine.Api
             initialized = true;
             return true;
         }
+        public static void BindTopWpfCanvas(System.Windows.Controls.Canvas canvas)
+        {
+            EngineMain.BindCanvas(canvas);
+        }
         public static void SuspendRendering()
         {
             renderEnable = false;

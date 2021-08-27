@@ -254,6 +254,7 @@ namespace RelertSharp.Wpf.MapEngine
             {
                 dpi = this.GetScale();
                 EngineApi.EngineCtor(nWidth, nHeight);
+                EngineApi.BindTopWpfCanvas(cnvMain);
                 _handle = EngineApi.ResetHandle(nWidth, nHeight);
                 d3dimg.IsFrontBufferAvailableChanged += FrontBufferChanged;
                 initialized = true;
