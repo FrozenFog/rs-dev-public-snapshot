@@ -29,8 +29,9 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         ObjectRandomBrush = 1 << 15,
         ObjectArrayBrush = 1 << 16,
         WallBreakdownBrush = 1 << 17,
+        TiberiumBrush = 1 << 18,
         TileBrush = TileSingleBrush | TileBucketFlood | InteliRampBrush | InteliCliffBrush,
-        PaintBrush = InteliWallBrush | ObjectBrush | ObjectRandomBrush | ObjectArrayBrush,
+        PaintBrush = InteliWallBrush | ObjectBrush | ObjectRandomBrush | ObjectArrayBrush | TiberiumBrush,
         DEBUG = 1 << 31
     }
     internal static class MouseState

@@ -127,6 +127,7 @@ namespace RelertSharp.Common
         IMapObject ConstructFromParameter(string[] commands);
         string Id { get; }
         bool IsSelected { get; }
+        bool Disposed { get; }
     }
 
     public interface ICombatObject : IMapObject, IGroupable, IOwnableObject

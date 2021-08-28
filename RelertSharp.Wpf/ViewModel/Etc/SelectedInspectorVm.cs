@@ -3,6 +3,7 @@ using RelertSharp.MapStructure;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.Wpf.MapEngine.Helper;
+using RelertSharp.IniSystem;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -62,6 +63,7 @@ namespace RelertSharp.Wpf.ViewModel
 
             OnAllPropertyChanged();
             SetProperty(nameof(SelectedObjects));
+            SetProperty(nameof(TiberiumValue));
         }
 
 
@@ -177,6 +179,21 @@ namespace RelertSharp.Wpf.ViewModel
 
         #region Calls
         #region Bind Call
+        public string TiberiumValue
+        {
+            get
+            {
+                int sum = selectedObjects.Sum(x =>
+                {
+                    if (x is IOverlay o)
+                    {
+                        return GlobalVar.GlobalRules.GetTiberiumValue(o.OverlayIndex, o.OverlayFrame);
+                    }
+                    return 0;
+                });
+                return string.Format("Resource Value: {0}", sum);
+            }
+        }
         public ObservableCollection<SearchResultVm> SelectedObjects
         {
             get

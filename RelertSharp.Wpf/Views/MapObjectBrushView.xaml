@@ -16,9 +16,9 @@
     </UserControl.Resources>
     <Grid Margin="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
             <RowDefinition Height="3"/>
-            <RowDefinition Height="*" MinHeight="250"/>
+            <RowDefinition Height="Auto" MinHeight="150"/>
         </Grid.RowDefinitions>
         <GridSplitter Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="3"/>
         <TreeView x:Name="trvMain" Style="{DynamicResource trvDark}" SelectedItemChanged="BrushItemChanged" Grid.Row="0">

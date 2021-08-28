@@ -286,6 +286,16 @@ namespace RelertSharp.Wpf.ViewModel
             }
         }
         [AutoUpdate(GROUP_MOUSE)]
+        public bool IsMouseFixTiberium
+        {
+            get { return MouseState.State == PanelMouseState.TiberiumBrush; }
+            set
+            {
+                MouseState.SetState(PanelMouseState.TiberiumBrush);
+                SetProperty();
+            }
+        }
+        [AutoUpdate(GROUP_MOUSE)]
         public bool IsMousePhaseTile
         {
             get { return MouseState.State == PanelMouseState.TilePhasing; }

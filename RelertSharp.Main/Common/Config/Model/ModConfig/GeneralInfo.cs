@@ -41,6 +41,16 @@ namespace RelertSharp.Common.Config.Model
         public int Type { get; set; }
         [XmlAttribute("disable")]
         public bool Disabled { get; set; }
+        private Random r = new Random();
+
+        public bool BelongsToThis(byte overlayIndex)
+        {
+            return RangeMin <= overlayIndex && RangeMax >= overlayIndex;
+        }
+        public byte Rand()
+        {
+            return (byte)r.Next(RangeMin, RangeMax + 1);
+        }
     }
 
     public class SideEntryInfo : NamedEntry

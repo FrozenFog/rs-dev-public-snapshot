@@ -446,6 +446,7 @@ namespace RelertSharp.MapStructure
             if (SceneObject != null) color = SceneObject.ActualColor;
             SceneObject?.Dispose();
             SceneObject?.RedrawTile(this);
+            Disposed = false;
             if (color != Vec4.Zero) SceneObject.SetColor(color);
             if (isFlat)
             {

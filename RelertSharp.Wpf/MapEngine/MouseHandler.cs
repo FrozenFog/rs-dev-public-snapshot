@@ -324,6 +324,9 @@ namespace RelertSharp.Wpf.MapEngine
                     if (InteliBrush.IsAligningCliff) InteliBrush.ApplyCliffAlign();
                     else InteliBrush.BeginAlignCliffAt(cell);
                     break;
+                case PanelMouseState.TiberiumBrush:
+                    InteliBrush.ApplyTiberiumFix();
+                    break;
             }
             EngineApi.InvokeUnlock();
             EngineApi.InvokeRedraw();
@@ -453,6 +456,10 @@ namespace RelertSharp.Wpf.MapEngine
                         InteliBrush.BreakdownwallAt(cell);
                         redraw = isCellChanged;
                     }
+                    break;
+                case PanelMouseState.TiberiumBrush:
+                    InteliBrush.FixTiberiumAt(cell);
+                    redraw = isCellChanged;
                     break;
             }
             if (!noIndicate)

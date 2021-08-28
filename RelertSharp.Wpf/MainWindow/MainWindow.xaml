@@ -161,8 +161,10 @@
                 <ToggleButton Content="{StaticResource InteliRamp}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseInteliRamp}"/>
                 <ToggleButton Content="{StaticResource InteliWall}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseInteliWall}"/>
                 <ToggleButton Content="{StaticResource InteliCliff}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseInteliCliff}"/>
+                <Separator/>
                 <ToggleButton Content="{StaticResource RandomizeBrush}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseRandomBrush}"/>
                 <ToggleButton Content="{StaticResource BreakWall}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseBreakWall}"/>
+                <ToggleButton Content="{StaticResource InteliTiberium}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseFixTiberium}"/>
             </ToolBar>
         </ToolBarTray>
         <DockingManager x:Name="dockMain" Grid.Row="2">

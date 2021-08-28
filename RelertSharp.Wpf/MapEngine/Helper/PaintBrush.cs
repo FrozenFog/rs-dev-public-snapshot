@@ -215,12 +215,21 @@ namespace RelertSharp.Wpf
         }
         #endregion
         #region ArrayBrush
+        private static List<OverlayUnit> hiddenOverlay = new List<OverlayUnit>();
         public static void LoadObjectToArrayBrush(IEnumerable<IMapObject> src)
         {
+            var tiles = GlobalVar.GlobalMap.TilesData;
+            foreach (var ov in hiddenOverlay) if (!ov.Disposed) ov.Reveal();
+            hiddenOverlay.Clear();
             foreach (IMapObject o in src)
             {
                 arrayObjects.Add(o);
                 arrayOffset.Add(new Pnt(o));
+                if (tiles[o] is Tile t && t.GetObejct(x => x.ObjectType == MapObjectType.Overlay) is OverlayUnit prevOverlay)
+                {
+                    prevOverlay.Hide();
+                    hiddenOverlay.Add(prevOverlay);
+                }
                 EngineApi.DrawObject(o);
             }
         }

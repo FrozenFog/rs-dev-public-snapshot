@@ -47,6 +47,7 @@ namespace RelertSharp.MapStructure
             isSelected = false;
             isHidden = false;
             SceneObject?.Dispose();
+            Disposed = true;
         }
         #region Colors
         public virtual void Select()
@@ -96,7 +97,7 @@ namespace RelertSharp.MapStructure
         }
         public virtual void Reveal()
         {
-            if (isHidden)
+            if (isHidden && !Disposed)
             {
                 SceneObject?.Reveal();
                 isHidden = false;
@@ -110,7 +111,7 @@ namespace RelertSharp.MapStructure
         {
             get
             {
-                return !IsHidden && !IsPhased;
+                return !IsHidden && !IsPhased && !Disposed;
             }
         }
         public abstract int X { get; set; }
@@ -119,6 +120,7 @@ namespace RelertSharp.MapStructure
         public virtual bool IsSelected { get { return isSelected; } }
         public virtual bool IsHidden { get { return isHidden; } }
         public virtual bool IsPhased { get { return isPhased; } }
+        public bool Disposed { get; protected set; }
         public virtual int Coord
         {
             get { return Utils.Misc.CoordInt(X, Y); }

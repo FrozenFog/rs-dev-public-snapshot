@@ -182,7 +182,41 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         }
         #endregion
         #region Resource
-
+        private static List<OverlayUnit> fixedTiberium = new List<OverlayUnit>();
+        /// <summary>
+        /// mouse move
+        /// </summary>
+        /// <param name="cell"></param>
+        public static void FixTiberiumAt(I2dLocateable cell)
+        {
+            if (RsMath.I2dEqual(prevPos, cell)) return;
+            prevPos = new Pnt(cell);
+            using (var _ = new EngineRegion())
+            {
+                fixedTiberium.ForEach(x => x.Dispose());
+                fixedTiberium = TiberiumCalc.AutoFixTiberiumAt(cell, CurrentOverlayIndex);
+                if (fixedTiberium.Count > 0)
+                {
+                    PaintBrush.SuspendArrayBrush();
+                    PaintBrush.LoadObjectToArrayBrush(fixedTiberium);
+                }
+            }
+        }
+        public static void ApplyTiberiumFix()
+        {
+            using (var _ = new EngineRegion())
+            {
+                List<OverlayUnit> targets = new List<OverlayUnit>();
+                foreach (OverlayUnit o in fixedTiberium)
+                {
+                    OverlayUnit dest = new OverlayUnit(o);
+                    MapApi.AddObject(dest);
+                    targets.Add(dest);
+                    EngineApi.DrawObject(dest);
+                }
+                UndoRedoHub.PushCommand(targets, false);
+            }
+        }
         #endregion
         #region Cliff
         private static I3dLocateable cliffBegin, cliffCurrent, alignEnd;

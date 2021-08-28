@@ -10,9 +10,9 @@
              mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
             <RowDefinition Height="3"/>
-            <RowDefinition Height="*" MinHeight="50"/>
+            <RowDefinition Height="Auto" MinHeight="250"/>
         </Grid.RowDefinitions>
         <GridSplitter Grid.Row="1" Height="3" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
         <TabControl x:Name="tabMain">
@@ -23,7 +23,7 @@
             </TabControl.Resources>
             <TabItem Header="Objects">
                 <ListView x:Name="lvObjects" Style="{DynamicResource lvDark}" ItemContainerStyle="{StaticResource item}"
-                          cmds:ListViewColumnSortCommand.AutoSort="True" MouseRightButtonDown="MenuRightDown">
+                              cmds:ListViewColumnSortCommand.AutoSort="True" MouseRightButtonDown="MenuRightDown">
                     <ListView.ContextMenu>
                         <ContextMenu>
                             <MenuItem Name="menuAddSearch" Header="Add to global search result" Click="Menu_AddGlobal"/>
@@ -48,6 +48,7 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
+
             </TabItem>
             <TabItem Header="Tiles">
                 <ListView x:Name="lvTiles" Style="{DynamicResource lvDark}" ItemContainerStyle="{StaticResource item}"
@@ -78,101 +79,108 @@
                 <CollectionViewSource x:Key="GlobalTags" Source="{Binding GlobalTags}"/>
             </ScrollViewer.Resources>
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="3"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel x:Name="stkLbl" Grid.Column="0" >
-                    <Label Content="Owner House" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsOwnerHouseEnable}"/>
-                    <Label Content="Status" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsMissionEnable}"/>
-                    <Label Content="Health Point" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsHpEnable}"/>
-                    <Label Content="Facing" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsFacingEnable}"/>
-                    <Label Content="Tag" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsTagEnable}"/>
-                    <Label Content="Veterancy" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsVeterancyEnable}"/>
-                    <Label Content="Powered" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsPoweredEnable}"/>
-                    <Label Content="Upgrade Num" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsUpgNumEnable}"/>
-                    <Label Content="Upgrade 1" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsUpg1Enable}"/>
-                    <Label Content="Upgrade 2" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsUpg2Enable}"/>
-                    <Label Content="Upgrade 3" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsUpg3Enable}"/>
-                    <Label Content="Group" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsGroupEnable}"/>
-                    <Label Content="Is Above Ground" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsAboveGroundEnable}"/>
-                    <Label Content="Follows Index" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsFollowsEnable}"/>
-                    <Label Content="Recruitable" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsRecruitNEnable}"/>
-                    <Label Content="Ai Recruitable" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsRecruitYEnable}"/>
-                    <Label Content="Sellable" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsSellableEnable}"/>
-                    <Label Content="Ai Rebuild" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsRebuildEnable}"/>
-                    <Label Content="Ai Repair" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsRepairEnable}"/>
-                    <Label Content="Spotlight Type" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsSpotlightEnable}"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="23"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock HorizontalAlignment="Right" Text="{Binding TiberiumValue}" Margin="0,0,10,0"/>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="3"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel x:Name="stkLbl" Grid.Column="0" >
+                        <Label Content="Owner House" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsOwnerHouseEnable}"/>
+                        <Label Content="Status" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsMissionEnable}"/>
+                        <Label Content="Health Point" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsHpEnable}"/>
+                        <Label Content="Facing" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsFacingEnable}"/>
+                        <Label Content="Tag" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsTagEnable}"/>
+                        <Label Content="Veterancy" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsVeterancyEnable}"/>
+                        <Label Content="Powered" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsPoweredEnable}"/>
+                        <Label Content="Upgrade Num" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsUpgNumEnable}"/>
+                        <Label Content="Upgrade 1" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsUpg1Enable}"/>
+                        <Label Content="Upgrade 2" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsUpg2Enable}"/>
+                        <Label Content="Upgrade 3" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsUpg3Enable}"/>
+                        <Label Content="Group" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsGroupEnable}"/>
+                        <Label Content="Is Above Ground" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsAboveGroundEnable}"/>
+                        <Label Content="Follows Index" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsFollowsEnable}"/>
+                        <Label Content="Recruitable" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsRecruitNEnable}"/>
+                        <Label Content="Ai Recruitable" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsRecruitYEnable}"/>
+                        <Label Content="Sellable" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsSellableEnable}"/>
+                        <Label Content="Ai Rebuild" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsRebuildEnable}"/>
+                        <Label Content="Ai Repair" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsRepairEnable}"/>
+                        <Label Content="Spotlight Type" HorizontalAlignment="Left" Height="27" Margin="10,5,0,0" VerticalAlignment="Top" Visibility="{Binding IsSpotlightEnable}"/>
 
-                </StackPanel>
-                <StackPanel x:Name="stkControl" Grid.Column="3">
-                    <ComboBox x:Name="cbbOwner" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
+                    </StackPanel>
+                    <StackPanel x:Name="stkControl" Grid.Column="3">
+                        <ComboBox x:Name="cbbOwner" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
                               SelectedItem="{Binding OwnerHouseItem}" Visibility="{Binding IsOwnerHouseEnable}"
                               IsEditable="True" IsReadOnly="True" Text="{Binding OwnerText, Mode=OneWay}"/>
-                    <ComboBox x:Name="cbbStatus" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
+                        <ComboBox x:Name="cbbStatus" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
                               SelectedItem="{Binding MissionStatusItem}" Visibility="{Binding IsMissionEnable}"
                               IsEditable="True" IsReadOnly="True" Text="{Binding StatusText, Mode=OneWay}"/>
-                    <Slider x:Name="sldHp" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
+                        <Slider x:Name="sldHp" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
                             Maximum="256" Minimum="0" 
                             Value="{Binding HealthPoint}" Visibility="{Binding IsHpEnable}" 
                             AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="16"/>
-                    <TextBox x:Name="txbFacing" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
+                        <TextBox x:Name="txbFacing" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
                              Visibility="{Binding IsFacingEnable}" Text="{Binding Facing}" 
                              MouseWheel="FacingWheel"/>
-                    <ComboBox x:Name="cbbTag" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
+                        <ComboBox x:Name="cbbTag" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
                               SelectedItem="{Binding TagItem}" Visibility="{Binding IsTagEnable}"
                               IsEditable="True" IsReadOnly="True" Text="{Binding TagText, Mode=OneWay}">
-                        <ComboBox.ItemsSource>
-                            <CompositeCollection>
-                                <model:ComboItem Id="None"/>
-                                <CollectionContainer Collection="{Binding Source={StaticResource GlobalTags}}"/>
-                            </CompositeCollection>
-                        </ComboBox.ItemsSource>
-                    </ComboBox>
-                    <Slider x:Name="sldVeterancy" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
+                            <ComboBox.ItemsSource>
+                                <CompositeCollection>
+                                    <model:ComboItem Id="None"/>
+                                    <CollectionContainer Collection="{Binding Source={StaticResource GlobalTags}}"/>
+                                </CompositeCollection>
+                            </ComboBox.ItemsSource>
+                        </ComboBox>
+                        <Slider x:Name="sldVeterancy" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
                             Maximum="200" Minimum="0" Value="{Binding Veterancy}" Visibility="{Binding IsVeterancyEnable}" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="20"/>
-                    <CheckBox x:Name="ckbPowered" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" 
+                        <CheckBox x:Name="ckbPowered" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" 
                               IsChecked="{Binding Powered}" Visibility="{Binding IsPoweredEnable}"
                               IsThreeState="True"/>
-                    <TextBox x:Name="txbUpgNum" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
+                        <TextBox x:Name="txbUpgNum" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
                              Visibility="{Binding IsUpgNumEnable}" Text="{Binding UpgradeNum}"/>
-                    <ComboBox x:Name="cbbUpg1" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
+                        <ComboBox x:Name="cbbUpg1" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
                               SelectedItem="{Binding Upg1Item}" Visibility="{Binding IsUpg1Enable}"
                               IsEditable="True" IsReadOnly="True" Text="{Binding Upg1Text, Mode=OneWay}"/>
-                    <ComboBox x:Name="cbbUpg2" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
+                        <ComboBox x:Name="cbbUpg2" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
                               SelectedItem="{Binding Upg2Item}" Visibility="{Binding IsUpg2Enable}"
                               IsEditable="True" IsReadOnly="True" Text="{Binding Upg2Text, Mode=OneWay}"/>
-                    <ComboBox x:Name="cbbUpg3" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
+                        <ComboBox x:Name="cbbUpg3" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
                               SelectedItem="{Binding Upg3Item}" Visibility="{Binding IsUpg3Enable}"
                               IsEditable="True" IsReadOnly="True" Text="{Binding Upg3Text, Mode=OneWay}"/>
-                    <TextBox x:Name="txbGroup" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
+                        <TextBox x:Name="txbGroup" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
                              Visibility="{Binding IsGroupEnable}" Text="{Binding Group}"/>
-                    <CheckBox x:Name="ckbAboveGround" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" 
+                        <CheckBox x:Name="ckbAboveGround" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" 
                               IsChecked="{Binding AboveGround}" Visibility="{Binding IsAboveGroundEnable}"
                               IsThreeState="True"/>
-                    <TextBox x:Name="txbFollows" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
+                        <TextBox x:Name="txbFollows" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
                              Visibility="{Binding IsFollowsEnable}" Text="{Binding FollowsIndex}"/>
-                    <CheckBox x:Name="ckbRecN" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" 
+                        <CheckBox x:Name="ckbRecN" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" 
                               IsChecked="{Binding RecruitNo}" Visibility="{Binding IsRecruitNEnable}"
                               IsThreeState="True"/>
-                    <CheckBox x:Name="ckbRecY" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" 
+                        <CheckBox x:Name="ckbRecY" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" 
                               IsChecked="{Binding RecruitYes}" Visibility="{Binding IsRecruitYEnable}"
                               IsThreeState="True"/>
-                    <CheckBox x:Name="ckbSell" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" 
+                        <CheckBox x:Name="ckbSell" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" 
                               IsChecked="{Binding Sellable}" Visibility="{Binding IsSellableEnable}"
                               IsThreeState="True"/>
-                    <CheckBox x:Name="ckbRebuild" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" 
+                        <CheckBox x:Name="ckbRebuild" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" 
                               IsChecked="{Binding AiRebuild}" Visibility="{Binding IsRebuildEnable}"
                               IsThreeState="True"/>
-                    <CheckBox x:Name="ckbRepair" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" 
+                        <CheckBox x:Name="ckbRepair" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" 
                               IsChecked="{Binding AiRepair}" Visibility="{Binding IsRepairEnable}"
                               IsThreeState="True"/>
-                    <ComboBox x:Name="cbbSpotlight" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
+                        <ComboBox x:Name="cbbSpotlight" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
                               SelectedItem="{Binding SpotlightItem}" Visibility="{Binding IsSpotlightEnable}"
                               IsEditable="True" IsReadOnly="True" Text="{Binding SpotlightText, Mode=OneWay}"/>
-                </StackPanel>
-                <GridSplitter Grid.Column="2" Grid.Row="0" Width="3" HorizontalAlignment="Left" VerticalAlignment="Stretch"/>
+                    </StackPanel>
+                    <GridSplitter Grid.Column="2" Grid.Row="0" Width="3" HorizontalAlignment="Left" VerticalAlignment="Stretch"/>
+                </Grid>
             </Grid>
         </ScrollViewer>
     </Grid>
