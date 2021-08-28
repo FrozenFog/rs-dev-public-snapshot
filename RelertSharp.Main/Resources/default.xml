@@ -432,7 +432,7 @@
         <attr name="Autocreate" desc="" type="bool" class="1" default="no"/>
         <attr name="GuardSlower" desc="" type="bool" class="2" default="no"/>
         <attr name="OnTransOnly" label="Must on Trans" desc="" type="bool" class="1" default="no"/>
-        <attr name="AvoidThreats" desc="" type="bool" class="2" default="false"/>
+        <attr name="AvoidThreats" desc="" type="bool" class="2" default="no1"/>
         <attr name="LooseRecruit" label="Dismiss on success" desc="" type="bool" class="1" default="no"/>
         <attr name="Tag" desc="" type="TagWithNone" class="0"/>
         <attr name="VeteranLevel" label="Veteran" desc="" type="TeamVeteranLevel" class="0" default="1"/>

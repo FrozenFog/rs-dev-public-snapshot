@@ -138,7 +138,9 @@ namespace RelertSharp.MapStructure
             foreach (string teamID in _teamList)
             {
                 TeamItem team = new TeamItem();
-                serTeam.Deserialize(f.PopEnt(teamID), team);
+                INIEntity ent = f.PopEnt(teamID);
+                serTeam.Deserialize(ent, team, false);
+                team.Residue = ent;
                 Teams[teamID] = team;
             }
             foreach (string tfID in _taskforceList)
@@ -158,7 +160,9 @@ namespace RelertSharp.MapStructure
             foreach (INIPair p in _countryList)
             {
                 CountryItem con = new CountryItem();
-                serCon.Deserialize(f.PopEnt(p.Value), con);
+                INIEntity ent = f.PopEnt(p.Value);
+                serCon.Deserialize(ent, con);
+                con.Residual = ent;
                 con.CountryNameChanged += CountryNameChanged;
                 Countries[p.Name] = con;
                 //CountryItem item = new CountryItem(f.PopEnt(p.Value));

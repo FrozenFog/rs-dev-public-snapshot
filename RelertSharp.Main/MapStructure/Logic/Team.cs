@@ -53,26 +53,26 @@ namespace RelertSharp.MapStructure.Logic
     public class TeamItem : TeamLogicItem, IGroupable, IOwnableObject, ILogicItem
     {
         #region Ctor - TeamItem
-        public TeamItem(INIEntity ent) : base(ent)
-        {
-            //TaskforceID = ent.PopPair("TaskForce").Value;
-            //ScriptID = ent.PopPair("Script").Value;
-            //TagID = ent.PopPair("Tag").Value;
-            //Waypoint = WaypointInt(ent.PopPair("Waypoint").Value);
-            //House = ent.PopPair("House").Value;
-            //VeteranLevel = (TeamVeteranLevel)ent.PopPair("VeteranLevel").ParseInt(1);
-            //MCDecision = (TeamMCDecision)ent.PopPair("MindControlDecision").ParseInt(0);
-            //TeamCapacity = ent.PopPair("Max").ParseInt(5);
-            //Priority = ent.PopPair("Priority").ParseInt(5);
-            //TechLevel = ent.PopPair("TechLevel").ParseInt();
-            //Group = ent.PopPair("Group").ParseInt(-1);
-            Residue = ent.DictData;
-            //LoadAttributes();
-            //GetToUnit = new TeamUnit(this);
-        }
+        //public TeamItem(INIEntity ent) : base(ent)
+        //{
+        //    TaskforceID = ent.PopPair("TaskForce").Value;
+        //    ScriptID = ent.PopPair("Script").Value;
+        //    TagID = ent.PopPair("Tag").Value;
+        //    Waypoint = WaypointInt(ent.PopPair("Waypoint").Value);
+        //    House = ent.PopPair("House").Value;
+        //    VeteranLevel = (TeamVeteranLevel)ent.PopPair("VeteranLevel").ParseInt(1);
+        //    MCDecision = (TeamMCDecision)ent.PopPair("MindControlDecision").ParseInt(0);
+        //    TeamCapacity = ent.PopPair("Max").ParseInt(5);
+        //    Priority = ent.PopPair("Priority").ParseInt(5);
+        //    TechLevel = ent.PopPair("TechLevel").ParseInt();
+        //    Group = ent.PopPair("Group").ParseInt(-1);
+        //    Residue = ent.DictData;
+        //    LoadAttributes();
+        //    GetToUnit = new TeamUnit(this);
+        //}
         public TeamItem() : base()
         {
-            Residue = new Dictionary<string, INIPair>();
+            Residue = new INIEntity();
         }
         #endregion
 
@@ -111,13 +111,13 @@ namespace RelertSharp.MapStructure.Logic
             if (GlobalVar.GlobalConfig?.ModConfig != null)
             {
                 ModConfig cfg = GlobalVar.GlobalConfig.ModConfig;
-                foreach (INIPair p in Residue.Values)
+                foreach (INIPair p in Residue)
                 {
                     var attr = cfg.TeamItems[p.Name];
                     if (attr.DefaultValue == null || attr.DefaultValue != p.Value) result.AddPair(p);
                 }
             }
-            else result.AddPair(Residue.Values);
+            else result.AddPair(Residue);
             return result;
         }
         public string[] ExtractParameter()
@@ -166,17 +166,17 @@ namespace RelertSharp.MapStructure.Logic
         [IniHeader]
         public override string Id { get => base.Id; set => base.Id = value; }
         //public BitArray Attributes { get; set; } = new BitArray(21);
-        public Dictionary<string, INIPair> Residue { get; set; }
+        public INIEntity Residue { get; set; }
         public INIPair this[string key]
         {
             get
             {
-                if (Residue.ContainsKey(key)) return Residue[key];
+                if (Residue.HasPair(key)) return Residue.GetPair(key);
                 else return new INIPair(key);
             }
             set
             {
-                Residue[key] = value;
+                Residue.SetPair(value);
             }
         }
         public LogicType ItemType { get { return LogicType.Team; } }

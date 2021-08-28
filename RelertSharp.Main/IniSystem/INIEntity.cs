@@ -273,6 +273,14 @@ namespace RelertSharp.IniSystem
         /// <summary>
         /// Set a specified IniPair's Value
         /// </summary>
+        /// <param name="p"></param>
+        public void SetPair(INIPair p)
+        {
+            data[p.Name] = p;
+        }
+        /// <summary>
+        /// Set a specified IniPair's Value
+        /// </summary>
         /// <param name="key"></param>
         /// <param name="val"></param>
         public void SetPair(string key, dynamic val)
@@ -330,15 +338,16 @@ namespace RelertSharp.IniSystem
         }
         public string SaveString(bool ignoreComment = false)
         {
+            StringBuilder sb = new StringBuilder();
             string result = string.Format("[{0}]", Name);
             if (!ignoreComment)
             {
                 result = preComment + result;
                 if (!comment.IsNullOrEmpty()) result += string.Format(";{0}", comment);
             }
-            result += "\n";
-            foreach (INIPair p in this) result += p.SaveString(ignoreComment) + "\n";
-            return result + "\n";
+            sb.AppendLine(result);
+            foreach (INIPair p in this) sb.AppendLine(p.SaveString(ignoreComment));
+            return sb.ToString() + "\n";
         }
         // Just for using, no real use
         public void Dispose()
