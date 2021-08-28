@@ -151,6 +151,17 @@ namespace RelertSharp.MapStructure.Logic
                 BaseNodes.Count.ToString()
             };
         }
+        public int GetChecksum()
+        {
+            unchecked
+            {
+                int hash = Constant.BASE_HASH;
+                hash = hash * 31 + ExtractParameter().GetHashCode();
+                hash = hash * 31 + alliesWith.GetHashCode();
+                hash = hash * 31 + residual.GetHashCode();
+                return hash;
+            }
+        }
         public override string ToString()
         {
             return Name;

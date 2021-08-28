@@ -21,8 +21,6 @@ namespace RelertSharp.MapStructure
         private HashSet<string> globalid = new HashSet<string>();
         private int genID = 1000000;
 
-        private RankInfo ranks;
-        private HeaderInfo headers;
         private Rectangle previewSize;
 
         private TileLayer Tiles;
@@ -44,8 +42,8 @@ namespace RelertSharp.MapStructure
         {
             Info = new MapInfo(cfg);
             LightningCollection = new Lightning();
-            headers = new HeaderInfo();
-            ranks = new RankInfo();
+            Header = new HeaderInfo();
+            Rank = new RankInfo();
             Tiles = new TileLayer(Info.Size);
             Overlays = new OverlayLayer();
             FixEmptyTiles(cfg.Altitude);
@@ -162,6 +160,18 @@ namespace RelertSharp.MapStructure
 
         #region Public Calls - Map
         public IEnumerable<ICombatObject> AllCombatObjects { get { return Infantries.Union<ICombatObject>(Aircrafts).Union(Buildings).Union(Units); } }
+        public IEnumerable<IChecksum> AllChecksum
+        {
+            get
+            {
+                return AllCombatObjects
+                    .Union<IChecksum>(Triggers).Union(AiTriggers).Union(LocalVariables).Union(Tags)
+                    .Union(Teams).Union(Taskforces).Union(Scripts)
+                    .Union(Houses).Union(Countries)
+                    .Union(Terrains).Union(Smudges).Union(Waypoints)
+                    .Union(Overlays).Union(TilesData);
+            }
+        }
         public WaypointCollection Waypoints { get; private set; } = new WaypointCollection();
         public CellTagCollection Celltags { get; private set; } = new CellTagCollection();
         public Lightning LightningCollection { get; private set; }
@@ -182,6 +192,8 @@ namespace RelertSharp.MapStructure
         public TriggerCollection Triggers { get; private set; } = new TriggerCollection();
         public TagCollection Tags { get; private set; }
         public OverlayLayer Overlays { get; private set; }
+        public RankInfo Rank { get; set; } = new RankInfo();
+        public HeaderInfo Header { get; set; } = new HeaderInfo();
         //public ActionCollection Actions { get; private set; }
         //public EventCollection Events { get; private set; }
         public MapInfo Info { get; private set; } 

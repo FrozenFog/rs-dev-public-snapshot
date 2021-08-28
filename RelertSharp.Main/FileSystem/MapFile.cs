@@ -43,6 +43,20 @@ namespace RelertSharp.FileSystem
         //    DumpCustomComponents(IniDict);
         //    SaveIni(savingPath, true);
         //}
+        public int GetMapChecksum()
+        {
+            unchecked
+            {
+                int hash = Constant.BASE_HASH;
+                foreach (var obj in Map.AllChecksum) hash = hash * 486187739 + obj.GetChecksum();
+                hash = hash * 486187739 + Map.IniResidue.GetHashCode();
+                hash = hash * 486187739 + Map.Info.GetChecksum();
+                hash = hash * 486187739 + Map.LightningCollection.GetChecksum();
+                hash = hash * 486187739 + Map.Rank.GetChecksum();
+                hash = hash * 486187739 + Map.Header.GetChecksum();
+                return hash;
+            }
+        }
         public void SaveMapAs(string path)
         {
             INIFile f = new INIFile(path, true);

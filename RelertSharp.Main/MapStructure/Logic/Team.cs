@@ -120,6 +120,10 @@ namespace RelertSharp.MapStructure.Logic
             else result.AddPair(Residue);
             return result;
         }
+        public int GetChecksum()
+        {
+            return GetSaveData().GetChecksum();
+        }
         public string[] ExtractParameter()
         {
             return new string[]

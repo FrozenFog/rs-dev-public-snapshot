@@ -64,9 +64,14 @@ namespace RelertSharp.Common
         int Coord { get; }
     }
 
-    public interface IExtractableObject
+    public interface IExtractableObject : IChecksum
     {
         string[] ExtractParameter();
+    }
+
+    public interface IChecksum
+    {
+        int GetChecksum();
     }
 
     public interface IAbstractObjectDescriber : IBaseObject, IRegistable

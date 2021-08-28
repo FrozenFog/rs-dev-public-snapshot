@@ -11,6 +11,8 @@ namespace RelertSharp.Common
         public static event Action MapLoadComplete;
         public static event Action MapLoadCompleteAsync;
         public static event Action MapDisposed;
+        public static event Action MapSaveBegin;
+        public static event Action MapSaved;
         public static event EventHandler MapDocumentRedrawRequested;
         public static FileSystem.MapFile CurrentMapDocument { get; private set; }
         public static MapStructure.Map GlobalMap
@@ -22,6 +24,12 @@ namespace RelertSharp.Common
             }
         }
         public static bool HasMap { get { return GlobalMap != null; } }
+        public static void SaveMapDocument(string path)
+        {
+            MapSaveBegin?.Invoke();
+            CurrentMapDocument.SaveMapAs(path);
+            MapSaved?.Invoke();
+        }
         public static void DisposeMapDocument()
         {
             bool launchEvent = CurrentMapDocument != null;

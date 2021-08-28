@@ -98,6 +98,10 @@ namespace RelertSharp.MapStructure.Logic
             }
             return result;
         }
+        public int GetChecksum()
+        {
+            return GetSaveData().GetChecksum();
+        }
         public string[] ExtractParameter()
         {
             List<string> r = new List<string>()

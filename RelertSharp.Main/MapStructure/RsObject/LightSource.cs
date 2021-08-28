@@ -188,6 +188,10 @@ namespace RelertSharp.MapStructure.Points
                 Y.ToString()
             };
         }
+        public int GetChecksum()
+        {
+            return FormatString().GetHashCode();
+        }
         public IMapObject ConstructFromParameter(string[] command)
         {
             ParameterReader reader = new ParameterReader(command);

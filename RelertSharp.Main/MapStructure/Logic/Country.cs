@@ -111,6 +111,10 @@ namespace RelertSharp.MapStructure.Logic
                 SmartAi.ZeroOne()
             };
         }
+        public int GetChecksum()
+        {
+            return GetSaveData().GetChecksum();
+        }
         public override string Value { get { return Name; } }
         public override string ToString()
         {

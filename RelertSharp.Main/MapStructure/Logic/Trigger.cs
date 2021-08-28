@@ -190,6 +190,10 @@ namespace RelertSharp.MapStructure.Logic
             }
             return r.ToArray();
         }
+        public int GetChecksum()
+        {
+            return ExtractParameter().GetHashCode();
+        }
         #endregion
 
 
@@ -207,6 +211,12 @@ namespace RelertSharp.MapStructure.Logic
         #endregion
 
         #region Public Calls - TriggerItem
+        private string compileName;
+        public string CompileName
+        {
+            get { if (compileName.IsNullOrEmpty()) return Name; return compileName; }
+            set { compileName = value; }
+        }
         public LogicGroup Events { get; set; }
         public LogicGroup Actions { get; set; }
         /// <summary>
@@ -236,7 +246,7 @@ namespace RelertSharp.MapStructure.Logic
             {
                 return new List<object>()
                 {
-                    Owner, LinkedWith, Name, Disabled.ZeroOne(), EasyOn.ZeroOne(), NormalOn.ZeroOne(), HardOn.ZeroOne(), (int)Repeating
+                    Owner, LinkedWith, CompileName, Disabled.ZeroOne(), EasyOn.ZeroOne(), NormalOn.ZeroOne(), HardOn.ZeroOne(), (int)Repeating
                 };
             }
         }

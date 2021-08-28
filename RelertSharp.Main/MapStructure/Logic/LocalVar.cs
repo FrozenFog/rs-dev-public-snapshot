@@ -132,6 +132,10 @@ namespace RelertSharp.MapStructure.Logic
                 InitState.ZeroOne()
             };
         }
+        public int GetChecksum()
+        {
+            return ExtractParameter().GetHashCode();
+        }
         #endregion
 
 

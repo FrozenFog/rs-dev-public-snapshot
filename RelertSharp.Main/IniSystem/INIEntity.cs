@@ -8,7 +8,7 @@ using System.Text;
 namespace RelertSharp.IniSystem
 {
     [Serializable]
-    public class INIEntity : IEnumerable<INIPair>, IDisposable
+    public class INIEntity : IEnumerable<INIPair>, IDisposable, IChecksum
     {
         private string name, comment, preComment;
         private Dictionary<string, INIPair> data = new Dictionary<string, INIPair>();
@@ -54,6 +54,15 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Methods - INIEntity
+        public int GetChecksum()
+        {
+            unchecked
+            {
+                int hash = Constant.BASE_HASH;
+                foreach (INIPair p in this) hash = hash * 23 + p.GetChecksum();
+                return hash;
+            }
+        }
         public int GetMaxIndex()
         {
             int mx = 0;

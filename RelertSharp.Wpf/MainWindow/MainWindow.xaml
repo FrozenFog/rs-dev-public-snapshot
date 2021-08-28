@@ -11,7 +11,8 @@
         xmlns:ex="clr-namespace:RelertSharp.Wpf.Common.CustomProperties"
         mc:Ignorable="d"
     Title="Relert Sharp" Height="450" Width="800" Background="{DynamicResource dimBack}" 
-    Loaded="WindowLoadedInitializer" Closed="MainWindowClosed" Icon="{StaticResource Logo}">
+    Loaded="WindowLoadedInitializer" Closed="MainWindowClosed" Icon="{StaticResource Logo}"
+    Closing="MainWindowClosing">
     <Window.DataContext>
         <vm:MainWindowVm/>
     </Window.DataContext>

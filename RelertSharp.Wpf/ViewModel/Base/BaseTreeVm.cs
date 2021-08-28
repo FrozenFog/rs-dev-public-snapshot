@@ -95,6 +95,7 @@ namespace RelertSharp.Wpf.ViewModel
         public virtual void SetTitle(string title)
         {
             _title = title;
+            SetProperty(nameof(Title));
         }
         public virtual void All(Action<IBaseTreeVm<TData>> action)
         {

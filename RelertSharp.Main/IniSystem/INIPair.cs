@@ -6,9 +6,9 @@ using System.Linq;
 namespace RelertSharp.IniSystem
 {
     [Serializable]
-    public class INIPair
+    public class INIPair : IChecksum
     {
-        private string comment, preComment;
+        private string comment = "", preComment = "";
         private INIKeyType keytype;
 
 
@@ -114,6 +114,10 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Methods - INIPair
+        public int GetChecksum()
+        {
+            return Name.GetHashCode() << Value.GetHashCode() << preComment.GetHashCode() << comment.GetHashCode();
+        }
         /// <summary>
         /// Try parse the value as bool
         /// </summary>

@@ -22,6 +22,24 @@ namespace RelertSharp.Wpf.ViewModel
             Data.NameUpdated += SetName;
         }
 
+
+        public void Compile(string ancestorName = null)
+        {
+            if (data != null)
+            {
+                data.CompileName = ancestorName.IsNullOrEmpty() ? data.Name : string.Format("[{0}] {1}", ancestorName, data.Name);
+            }
+            else
+            {
+                foreach (TriggerTreeItemVm child in Items)
+                {
+                    string anc;
+                    if (ancestorName.IsNullOrEmpty()) anc = Title;
+                    else anc = string.Format("{0}.{1}", ancestorName, Title);
+                    child.Compile(anc);
+                }
+            }
+        }
         public void AddItem(TriggerItem trg, string title)
         {
             TriggerTreeItemVm vm = new TriggerTreeItemVm(trg);

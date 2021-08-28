@@ -7,7 +7,7 @@ using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure
 {
-    public class MapInfo
+    public class MapInfo : IChecksum
     {
         private static int iniformat = 4;
         private INIEntity _basic, _map, _specialFlags;
@@ -59,6 +59,17 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - MapInfo
+        public int GetChecksum()
+        {
+            unchecked
+            {
+                int hash = GetMapEnt().GetChecksum() * 17 + GetBasicEnt().GetChecksum();
+                hash = hash * 31 + Size.GetHashCode();
+                hash = hash * 31 + LocalSize.GetHashCode();
+                hash = hash * 31 + SpecialFlags.GetChecksum();
+                return hash;
+            }
+        }
         public INIEntity GetMapEnt()
         {
             INIEntity map = new INIEntity("Map");
@@ -114,7 +125,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class Lightning
+    public class Lightning : IChecksum
     {
 
 
@@ -150,6 +161,17 @@ namespace RelertSharp.MapStructure
             ent.AddPair("DominatorAmbientChangeRate", DominatorChangeRate);
             return ent;
         }
+        public int GetChecksum()
+        {
+            unchecked
+            {
+                int hash = Constant.BASE_HASH;
+                hash = hash * 67 + Normal.GetChecksum();
+                hash = hash * 67 + Ion.GetChecksum();
+                hash = hash * 67 + Dominator.GetChecksum();
+                return hash;
+            }
+        }
         #endregion
 
 
@@ -162,7 +184,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class LightningItem
+    public class LightningItem : IChecksum
     {
 
 
@@ -208,6 +230,21 @@ namespace RelertSharp.MapStructure
             dest.AddPair(prefix + "Level", Level);
             dest.AddPair(prefix + "Ground", Ground);
         }
+        public int GetChecksum()
+        {
+            unsafe
+            {
+                int cast(float src) { return *(int*)&src; }
+                int hash = Constant.BASE_HASH;
+                hash = hash * 11 + cast(Red);
+                hash = hash * 11 + cast(Green);
+                hash = hash * 11 + cast(Blue);
+                hash = hash * 11 + cast(Level);
+                hash = hash * 11 + cast(Ambient);
+                hash = hash * 11 + cast(Ground);
+                return hash;
+            }
+        }
         #endregion
 
 
@@ -223,7 +260,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class RankInfo
+    public class RankInfo : IChecksum
     {
 
 
@@ -241,9 +278,30 @@ namespace RelertSharp.MapStructure
         }
         public RankInfo()
         {
-            
+            TitleUnder = new CsfString(Constant.VALUE_NONE);
+            TitleOver = new CsfString(Constant.VALUE_NONE);
+            MsgUnder = new CsfString(Constant.VALUE_NONE);
+            MsgOver = new CsfString(Constant.VALUE_NONE);
         }
         #endregion
+
+
+
+        public int GetChecksum()
+        {
+            unchecked
+            {
+                int hash = Constant.BASE_HASH;
+                hash = hash * 11 + ETime;
+                hash = hash * 11 + MTime;
+                hash = hash * 11 + HTime;
+                hash = hash * 11 + TitleUnder.Id.GetHashCode();
+                hash = hash * 11 + TitleOver.Id.GetHashCode();
+                hash = hash * 11 + MsgUnder.Id.GetHashCode();
+                hash = hash * 11 + MsgOver.Id.GetHashCode();
+                return hash;
+            }
+        }
 
 
         #region Public Calls - RankInfo
@@ -258,7 +316,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class HeaderInfo
+    public class HeaderInfo : IChecksum
     {
         public HeaderInfo(INIEntity entHeader)
         {
@@ -267,6 +325,11 @@ namespace RelertSharp.MapStructure
         public HeaderInfo()
         {
             Data = new INIEntity("Header");
+        }
+
+        public int GetChecksum()
+        {
+            return Data.GetChecksum();
         }
 
         public INIEntity Data { get; set; }

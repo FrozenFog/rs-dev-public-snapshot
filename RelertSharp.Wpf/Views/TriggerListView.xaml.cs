@@ -48,6 +48,16 @@ namespace RelertSharp.Wpf.Views
             NavigationHub.GoToTriggerRequest += SelectItem;
             NavigationHub.BindTriggerList(this);
             GlobalVar.MapDocumentLoaded += MapReloadedHandler;
+            GlobalVar.MapSaveBegin += CompileTriggerName;
+        }
+
+        private void CompileTriggerName()
+        {
+            foreach (object o in trvMain.Items)
+            {
+                TriggerTreeItemVm vm = o as TriggerTreeItemVm;
+                vm.Compile();
+            }
         }
 
         private void MapReloadedHandler()
@@ -182,12 +192,14 @@ namespace RelertSharp.Wpf.Views
                 menuCopyTrg.IsEnabled = !b;
                 menuDelTrg.IsEnabled = !b;
                 menuDelGrp.IsEnabled = b;
+                menuRenameGrp.IsEnabled = b;
             }
             else
             {
                 menuCopyTrg.IsEnabled = false;
                 menuDelTrg.IsEnabled = false;
                 menuDelGrp.IsEnabled = false;
+                menuRenameGrp.IsEnabled = false;
             }
         }
         #endregion
@@ -358,6 +370,18 @@ namespace RelertSharp.Wpf.Views
                 remove(item);
                 if (item.IsRoot) trvMain.Items.Remove(item);
                 else item.RemoveFromAncestor();
+            }
+        }
+
+        private void Menu_RenameGroup(object sender, RoutedEventArgs e)
+        {
+            DlgNameInput dlg = new DlgNameInput("Group name")
+            {
+                InitialName = SelectedItem.Title
+            };
+            if (dlg.ShowDialog().Value)
+            {
+                SelectedItem.SetTitle(dlg.ResultName);
             }
         }
 

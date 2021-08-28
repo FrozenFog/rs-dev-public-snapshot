@@ -348,7 +348,7 @@ namespace RelertSharp.MapStructure
     }
 
 
-    public class Tile : BaseVisibleObject<ISceneTile>, I3dLocateable, ITile
+    public class Tile : BaseVisibleObject<ISceneTile>, I3dLocateable, ITile, IChecksum
     {
         private int tileIndex;
         private List<IMapObject> objectsOnTile = new List<IMapObject>();
@@ -697,6 +697,20 @@ namespace RelertSharp.MapStructure
         public override int GetHeight(Map source = null)
         {
             return Z;
+        }
+        public int GetChecksum()
+        {
+            unchecked
+            {
+                int hash = Constant.BASE_HASH;
+                hash = hash * 53 + X;
+                hash = hash * 53 + Y;
+                hash = hash * 53 + RealHeight;
+                hash = hash * 53 + TileIndex;
+                hash = hash * 53 + SubIndex;
+                hash = hash * 53 + IceGrowth;
+                return hash;
+            }
         }
         #endregion
 

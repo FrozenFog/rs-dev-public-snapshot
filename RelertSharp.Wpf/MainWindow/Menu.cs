@@ -52,7 +52,7 @@ namespace RelertSharp.Wpf
             bool cancel = false;
             if (GlobalVar.HasMap)
             {
-                MapSaveFailsave(out bool c);
+                MapSaveFailsafe(out bool c);
                 cancel = c;
             }
             if (!cancel)

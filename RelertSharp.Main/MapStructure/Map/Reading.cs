@@ -80,8 +80,8 @@ namespace RelertSharp.MapStructure
         {
             Info = new MapInfo(f.PopEnt("Basic"), f.PopEnt("Map"), f.PopEnt("SpecialFlags"));
             LightningCollection = new Lightning(f.PopEnt("Lighting"));
-            if (f.IniDict.Keys.Contains("Header")) headers = new HeaderInfo(f.PopEnt("Header"));
-            if (f.IniDict.Keys.Contains("Ranking")) ranks = new RankInfo(f.PopEnt("Ranking"));
+            if (f.IniDict.Keys.Contains("Header")) Header = new HeaderInfo(f.PopEnt("Header"));
+            if (f.IniDict.Keys.Contains("Ranking")) Rank = new RankInfo(f.PopEnt("Ranking"));
             digest = f.PopEnt("Digest").JoinString();
         }
         private void GetObjects(MapFile f, Action dumpFunc = null)

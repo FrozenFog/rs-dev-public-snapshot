@@ -55,6 +55,17 @@ namespace RelertSharp.MapStructure.Points
                 TagId
             };
         }
+        public int GetChecksum()
+        {
+            unchecked
+            {
+                int hash = Constant.BASE_HASH;
+                hash = hash * 31 + X;
+                hash = hash * 31 + Y;
+                hash = hash * 31 + TagId.GetHashCode();
+                return hash;
+            }
+        }
         public IMapObject ConstructFromParameter(string[] command)
         {
             ParameterReader reader = new ParameterReader(command);

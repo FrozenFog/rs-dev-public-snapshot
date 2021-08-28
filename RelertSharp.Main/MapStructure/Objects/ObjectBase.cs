@@ -202,5 +202,9 @@ namespace RelertSharp.MapStructure.Objects
         {
             return new string[0];
         }
+        public int GetChecksum()
+        {
+            return 0;
+        }
     }
 }

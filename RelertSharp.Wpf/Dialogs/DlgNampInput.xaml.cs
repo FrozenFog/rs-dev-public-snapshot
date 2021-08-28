@@ -68,6 +68,7 @@ namespace RelertSharp.Wpf.Dialogs
         }
 
 
+        public string InitialName { set { txbName.Text = value; } }
         public string ResultName { get { return txbName.Text; } }
         public string InvalidWarning { get; set; } = "Invalid name, must not contain \"=\", \",\"";
         public Predicate<string> Validation { get; set; } 

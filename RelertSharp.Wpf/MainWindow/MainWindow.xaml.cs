@@ -42,6 +42,7 @@ namespace RelertSharp.Wpf
             BindNavigation();
             InitializeGuiStatus();
             DataContext = new MainWindowVm(tiles);
+            GlobalVar.MapLoadComplete += HandleMapLoaded;
         }
 
         #region Initialization
@@ -90,6 +91,10 @@ namespace RelertSharp.Wpf
         #endregion
 
         #region Reciver Logics
+        private void HandleMapLoaded()
+        {
+
+        }
         private void BindNavigation()
         {
             NavigationHub.PlaySoundRequest += NavigateSound;
@@ -163,7 +168,7 @@ namespace RelertSharp.Wpf
         /// 
         /// </summary>
         /// <param name="cancel">dont save map and cancel upcomming action</param>
-        private void MapSaveFailsave(out bool cancel)
+        private void MapSaveFailsafe(out bool cancel)
         {
             cancel = false;
             if (GlobalVar.HasMap)
@@ -173,7 +178,7 @@ namespace RelertSharp.Wpf
                 {
                     cancel = true;
                 }
-                else if (result == MessageBoxResult.OK)
+                else if (result == MessageBoxResult.Yes)
                 {
                     SaveMap();
                 }
@@ -189,7 +194,7 @@ namespace RelertSharp.Wpf
             };
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                GlobalVar.CurrentMapDocument.SaveMapAs(dlg.FileName);
+                GlobalVar.SaveMapDocument(dlg.FileName);
                 GuiUtil.Asterisk("Save complete!");
             }
         }
@@ -197,7 +202,7 @@ namespace RelertSharp.Wpf
         {
             if (File.Exists(GlobalVar.CurrentMapDocument.FilePath))
             {
-                GlobalVar.CurrentMapDocument.SaveMapAs(GlobalVar.CurrentMapDocument.FilePath);
+                GlobalVar.SaveMapDocument(GlobalVar.CurrentMapDocument.FilePath);
                 GuiUtil.Asterisk("Save complete!");
             }
             else
@@ -223,6 +228,14 @@ namespace RelertSharp.Wpf
             ObjectBrushFilter filter = new ObjectBrushFilter();
             PaintBrush.SetConfig(cfg, filter);
             objectBrush.BindBrushConfig(cfg, filter);
+        }
+        private void MainWindowClosing(object sender, CancelEventArgs e)
+        {
+            MapSaveFailsafe(out bool cancel);
+            if (cancel)
+            {
+                e.Cancel = true;
+            }
         }
         private void MainWindowClosed(object sender, EventArgs e)
         {

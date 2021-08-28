@@ -103,6 +103,10 @@ namespace RelertSharp.MapStructure.Objects
                 AutoYESRecruitType.ZeroOne()
             };
         }
+        public int GetChecksum()
+        {
+            return ExtractParameter().GetHashCode();
+        }
         public IMapObject ConstructFromParameter(string[] command)
         {
             ParameterReader reader = new ParameterReader(command);

@@ -104,6 +104,17 @@ namespace RelertSharp.MapStructure.Points
                 Y.ToString()
             };
         }
+        public int GetChecksum()
+        {
+            unchecked
+            {
+                int hash = Constant.BASE_HASH;
+                hash = hash * 11 + X;
+                hash = hash * 11 + Y;
+                hash = hash * 11 + Num.GetHashCode();
+                return hash;
+            }
+        }
         public IMapObject ConstructFromParameter(string[] command)
         {
             ParameterReader reader = new ParameterReader(command);

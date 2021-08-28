@@ -6,6 +6,7 @@ namespace RelertSharp.Common
     public static class Constant
     {
         //public const string ReleaseDate = " - ver. 2020.11.21-1907 - UNSTABLE";
+        public const int BASE_HASH = 19260817;
         public static string VersionInfo
         {
             get

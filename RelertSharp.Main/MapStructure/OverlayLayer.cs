@@ -156,6 +156,18 @@ namespace RelertSharp.MapStructure
                 OverlayFrame.ToString()
             };
         }
+        public int GetChecksum()
+        {
+            unchecked
+            {
+                int hash = Constant.BASE_HASH;
+                hash = hash * 51 + X;
+                hash = hash * 51 + Y;
+                hash = hash * 51 + OverlayIndex;
+                hash = hash * 51 + OverlayFrame;
+                return hash;
+            }
+        }
         public IMapObject ConstructFromParameter(string[] command)
         {
             ParameterReader reader = new ParameterReader(command);

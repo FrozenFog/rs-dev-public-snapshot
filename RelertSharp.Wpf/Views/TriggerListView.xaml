@@ -35,6 +35,7 @@
                     <MenuItem Name="menuDelTrg" Header="Delete trigger" Click="Menu_DeleteTrigger"/>
                     <Separator/>
                     <MenuItem Header="Add trigger group" Click="Menu_AddGroup"/>
+                    <MenuItem Name="menuRenameGrp" Header="Rename trigger group" Click="Menu_RenameGroup"/>
                     <MenuItem Name="menuDelGrp" Header="Delete trigger group" Click="Menu_DeleteGroup"/>
                     <Separator/>
                     <MenuItem Header="Ascending sort" Click="Menu_Ascending"/>
