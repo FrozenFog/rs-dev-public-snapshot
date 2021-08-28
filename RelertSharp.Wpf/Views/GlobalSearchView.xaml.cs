@@ -39,6 +39,7 @@ namespace RelertSharp.Wpf.Views
         private List<object> SearchResult = new List<object>();
         private ObservableCollection<SearchResultVm> ResultVm = new ObservableCollection<SearchResultVm>();
         private MinimapSurface minimap;
+        private GlobalSearchVm vm = new GlobalSearchVm();
         public GlobalSearchView()
         {
             InitializeComponent();
@@ -48,6 +49,8 @@ namespace RelertSharp.Wpf.Views
             GlobalVar.MapDocumentLoaded += HandleMapLoaded;
             SearchHub.SearchResultPushed += AddRequestedResult;
             SearchHub.SearchClearRequested += RemoveResultHandler;
+            DataContext = null;
+            DataContext = vm;
         }
 
         private void HandleMapLoaded()
@@ -71,22 +74,31 @@ namespace RelertSharp.Wpf.Views
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             var map = GlobalVar.GlobalMap;
-            List<object> results = new List<object>();
-            results = results
-                .Concat(SearchIn(map.Buildings))
-                .Concat(SearchIn(map.Infantries))
-                .Concat(SearchIn(map.Units))
-                .Concat(SearchIn(map.Aircrafts))
-                .Concat(SearchIn(map.Celltags))
-                .Concat(SearchIn(map.Terrains))
-                .Concat(SearchIn(map.Smudges))
-                .Concat(SearchIn(map.Triggers))
-                .Concat(SearchIn(map.Teams))
-                .Concat(SearchIn(map.Taskforces))
-                .Concat(SearchIn(map.Scripts))
-                .Concat(SearchIn(map.Tags))
-                .Concat(SearchIn(map.Waypoints)).ToList();
-            SearchResult = results;
+            IEnumerable<object> results = new List<object>();
+            if (vm.IsSearchAircraft) results = results.Concat(SearchIn(map.Aircrafts));
+            if (vm.IsSearchBuilding) results = results.Concat(SearchIn(map.Buildings));
+            if (vm.IsSearchBaseNode)
+            {
+                IEnumerable<IMapObject> nodes = map.Houses.SelectMany<HouseItem, IMapObject>(x => x.BaseNodes);
+                results = results.Concat(SearchIn(nodes));
+            }
+            if (vm.IsSearchUnit) results = results.Concat(SearchIn(map.Units));
+            if (vm.IsSearchInfantry) results = results.Concat(SearchIn(map.Infantries));
+            if (vm.IsSearchOverlay) results = results.Concat(SearchIn(map.Overlays));
+            if (vm.IsSearchTerrain) results = results.Concat(SearchIn(map.Terrains));
+            if (vm.IsSearchSmudge) results = results.Concat(SearchIn(map.Smudges));
+            if (vm.IsSearchCelltag) results = results.Concat(SearchIn(map.Celltags));
+            if (vm.IsSearchWaypoint) results = results.Concat(SearchIn(map.Waypoints));
+            if (vm.IsSearchTrigger) results = results.Concat(SearchIn(map.Triggers));
+            if (vm.IsSearchTag) results = results.Concat(SearchIn(map.Tags));
+            if (vm.IsSearchScript) results = results.Concat(SearchIn(map.Scripts));
+            if (vm.IsSearchTaskforce) results = results.Concat(SearchIn(map.Taskforces));
+            if (vm.IsSearchTeam) results = results.Concat(SearchIn(map.Teams));
+            if (vm.IsSearchCsf) results = results.Concat(SearchIn(GlobalVar.GlobalCsf));
+            if (vm.IsSearchSound) results = results.Concat(SearchIn(GlobalVar.GlobalSound.SoundList));
+            if (vm.IsSearchMusic) results = results.Concat(SearchIn(GlobalVar.GlobalSound.ThemeList));
+            if (vm.IsSearchEva) results = results.Concat(SearchIn(GlobalVar.GlobalSound.EvaList));
+            SearchResult = results.ToList();
             SetResult();
         }
         private void btnSearchIn_Click(object sender, RoutedEventArgs e)

@@ -7,6 +7,9 @@
              xmlns:ViewModel="clr-namespace:RelertSharp.Wpf.ViewModel"
              xmlns:cmds="clr-namespace:RelertSharp.Wpf.Common.Commands"
              mc:Ignorable="d">
+    <UserControl.DataContext>
+        <ViewModel:GlobalSearchVm/>
+    </UserControl.DataContext>
     <Grid x:Name="grd">
         <Grid.Resources>
             <Style x:Key="item" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
@@ -23,7 +26,84 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Label Content="Search Target" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="79"/>
-        <WrapPanel Name="wrapTargets" Margin="10,33,9.6,10.6"/>
+        <WrapPanel Margin="10,33,10,10" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical" Margin="2,2,2,0">
+                <Label Content="{DynamicResource SearchHeadAir}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchAircraft}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadUnit}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchUnit}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadInf}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchInfantry}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadBud}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchBuilding}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadBaseNode}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchBaseNode}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadTerrain}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchTerrain}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadOverlay}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchOverlay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadSmudge}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchSmudge}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadCelltag}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchCelltag}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadWaypoint}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchWaypoint}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadTrigger}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchTrigger}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadTag}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchTag}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadScript}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchScript}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadTaskforce}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchTaskforce}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadTeam}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchTeam}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadCsf}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchCsf}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadSound}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchSound}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadTheme}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchMusic}"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="2">
+                <Label Content="{DynamicResource SearchHeadEva}" Width="50" Height="50"/>
+                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSearchEva}"/>
+            </StackPanel>
+        </WrapPanel>
         <Label Content="Conditions" HorizontalAlignment="Left" Margin="10,9.4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="62"/>
         <Label Content="Search Result" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="2" Width="77"/>
         <ListView x:Name="lvResult" Grid.Column="2" Margin="10,33,10.6,9.2" Grid.RowSpan="2" Style="{DynamicResource lbxDark}" 

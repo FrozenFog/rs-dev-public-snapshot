@@ -203,7 +203,8 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
-    <Viewbox x:Key="HeadAir" Width="16" Height="16">
+    <!--#region Search -->
+    <Viewbox x:Key="SearchHeadAir">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
                 <DrawingBrush>
@@ -220,7 +221,7 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
-    <Viewbox x:Key="HeadBud" Width="16" Height="16">
+    <Viewbox x:Key="SearchHeadBud">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
                 <DrawingBrush>
@@ -238,7 +239,147 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
-    <Viewbox x:Key="HeadFav" Width="16" Height="16">
+    <Viewbox x:Key="SearchHeadBaseNode">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <DrawingGroup Opacity="1">
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing Geometry="F1 M16,16z M0,0z M8.755,1.624L8.755,1.624 7.999,0.969 7.243,1.624">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                        </GeometryDrawing.Pen>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Miter" MiterLimit="10">
+                                                <Pen.DashStyle>
+                                                    <DashStyle Offset="0" Dashes="4.1486 2.0742" />
+                                                </Pen.DashStyle>
+                                            </Pen>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <LineGeometry StartPoint="6.459,2.303" EndPoint="2.147,6.037" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing Geometry="F1 M16,16z M0,0z M1.755,6.376L1.755,6.376 0.999,7.031 1.999,7.031">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                        </GeometryDrawing.Pen>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Miter" MiterLimit="10">
+                                                <Pen.DashStyle>
+                                                    <DashStyle Offset="0" Dashes="3.6926 1.8464" />
+                                                </Pen.DashStyle>
+                                            </Pen>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <LineGeometry StartPoint="2.922,7.031" EndPoint="13.538,7.031" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing Geometry="F1 M16,16z M0,0z M14,7.031L14,7.031 15,7.031 14.244,6.376">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                        </GeometryDrawing.Pen>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Miter" MiterLimit="10">
+                                                <Pen.DashStyle>
+                                                    <DashStyle Offset="0" Dashes="4.149 2.0746" />
+                                                </Pen.DashStyle>
+                                            </Pen>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <LineGeometry StartPoint="13.46,5.698" EndPoint="9.147,1.963" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                </DrawingGroup>
+                            </DrawingGroup>
+                            <DrawingGroup Opacity="1">
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing Geometry="F1 M16,16z M0,0z M2.999,9.031L2.999,9.031 2.999,8.031 3.999,8.031">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                        </GeometryDrawing.Pen>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Miter" MiterLimit="10">
+                                                <Pen.DashStyle>
+                                                    <DashStyle Offset="0" Dashes="4.572 2.286" />
+                                                </Pen.DashStyle>
+                                            </Pen>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <LineGeometry StartPoint="5.142,8.031" EndPoint="11.429,8.031" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing Geometry="F1 M16,16z M0,0z M12,8.031L12,8.031 13,8.031 13,9.031">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                        </GeometryDrawing.Pen>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Miter" MiterLimit="10">
+                                                <Pen.DashStyle>
+                                                    <DashStyle Offset="0" Dashes="5 2.5" />
+                                                </Pen.DashStyle>
+                                            </Pen>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <LineGeometry StartPoint="13,10.281" EndPoint="13,13.406" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing Geometry="F1 M16,16z M0,0z M13,14.031L13,14.031 13,15.031 12,15.031">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                        </GeometryDrawing.Pen>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Miter" MiterLimit="10">
+                                                <Pen.DashStyle>
+                                                    <DashStyle Offset="0" Dashes="4.572 2.286" />
+                                                </Pen.DashStyle>
+                                            </Pen>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <LineGeometry StartPoint="10.857,15.031" EndPoint="4.57,15.031" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing Geometry="F1 M16,16z M0,0z M3.999,15.031L3.999,15.031 2.999,15.031 2.999,14.031">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                        </GeometryDrawing.Pen>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" DashCap="Flat" LineJoin="Miter" MiterLimit="10">
+                                                <Pen.DashStyle>
+                                                    <DashStyle Offset="0" Dashes="5 2.5" />
+                                                </Pen.DashStyle>
+                                            </Pen>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <LineGeometry StartPoint="2.999,12.781" EndPoint="2.999,9.656" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                </DrawingGroup>
+                            </DrawingGroup>
+
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="SearchHeadFav">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
                 <DrawingBrush>
@@ -251,7 +392,7 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
-    <Viewbox x:Key="HeadInf" Width="16" Height="16">
+    <Viewbox x:Key="SearchHeadInf">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
                 <DrawingBrush>
@@ -271,7 +412,7 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
-    <Viewbox x:Key="HeadNaval" Width="16" Height="16">
+    <Viewbox x:Key="SearchHeadNaval">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
                 <DrawingBrush>
@@ -284,7 +425,7 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
-    <Viewbox x:Key="HeadTerrain" Width="16" Height="16">
+    <Viewbox x:Key="SearchHeadTerrain">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
                 <DrawingBrush>
@@ -303,7 +444,7 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
-    <Viewbox x:Key="HeadUnit" Width="16" Height="16">
+    <Viewbox x:Key="SearchHeadUnit">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
                 <DrawingBrush>
@@ -318,7 +459,7 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
-    <Viewbox x:Key="HeadOverlay" Width="16" Height="16">
+    <Viewbox x:Key="SearchHeadOverlay">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
                 <DrawingBrush>
@@ -354,7 +495,7 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
-    <Viewbox x:Key="HeadSmudge" Width="16" Height="16">
+    <Viewbox x:Key="SearchHeadSmudge">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
                 <DrawingBrush>
@@ -388,7 +529,7 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
-    <Viewbox x:Key="HeadCelltag" Width="16" Height="16">
+    <Viewbox x:Key="SearchHeadCelltag">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
                 <DrawingBrush>
@@ -404,7 +545,7 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
-    <Viewbox x:Key="HeadWaypoint" Width="16" Height="16">
+    <Viewbox x:Key="SearchHeadWaypoint">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
                 <DrawingBrush>
@@ -427,6 +568,564 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
+    <Viewbox x:Key="SearchHeadScript">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="0.5" RadiusY="0.5" Center="2.5,3" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="4,2.5,11,1" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="0.5" RadiusY="0.5" Center="2.5,6" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="4,5.5,11,1" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="0.5" RadiusY="0.5" Center="2.5,9" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="4,8.5,11,1" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M2.779,13.6L2.779,13.6 2.779,12.6 11.495,12.6 11.495,12.2 14.195,13.1 11.495,14 11.495,13.6z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="SearchHeadTag">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M5,5L1,8 5,11 15,11 15,5 5,5z M5,9C4.448,9 4,8.552 4,8 4,7.448 4.448,7 5,7 5.553,7 6,7.448 6,8 6,8.552 5.553,9 5,9z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="SearchHeadTrigger">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="0.5" RadiusY="0.5" Center="4,8" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M4.664,7.668C4.715,7.769 4.75,7.879 4.75,8 4.75,8.121 4.715,8.231 4.664,8.332L10,11 10,5 4.664,7.668z" />
+                            <DrawingGroup Opacity="1">
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <LineGeometry StartPoint="15,8" EndPoint="12.084,8" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <DrawingGroup Opacity="1">
+                                        <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M12.48,7.419L12.48,7.419 10.313,8 12.48,8.581z" />
+                                    </DrawingGroup>
+                                </DrawingGroup>
+                            </DrawingGroup>
+                            <DrawingGroup Opacity="1">
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing Brush="#FFE6E6E6">
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="4,11.292,2,0.5" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing Brush="#FFE6E6E6">
+                                        <GeometryDrawing.Geometry>
+                                            <LineGeometry StartPoint="6.813,11.792" EndPoint="6.313,11.792" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing Brush="#FFE6E6E6">
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="7.144,11.292,6.011,0.5" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <GeometryDrawing Brush="#FFE6E6E6">
+                                        <GeometryDrawing.Geometry>
+                                            <LineGeometry StartPoint="6.313,11.292" EndPoint="6.813,11.292" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                </DrawingGroup>
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M12.758,12.123L12.758,12.123 14.926,11.542 12.758,10.961z" />
+                                </DrawingGroup>
+                            </DrawingGroup>
+                            <DrawingGroup Opacity="1">
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <LineGeometry StartPoint="14.926,13.625" EndPoint="2.948,13.625" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <DrawingGroup Opacity="1">
+                                        <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M3.344,13.044L3.344,13.044 1.176,13.625 3.344,14.206z" />
+                                    </DrawingGroup>
+                                </DrawingGroup>
+                            </DrawingGroup>
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M6.313,6.543L6.313,6.543 6.313,5.491 6.813,5.491 6.813,6.293" />
+                                <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M6.813,9.706L6.813,9.706 6.813,13.625 6.313,13.625 6.313,9.456" />
+                            </DrawingGroup>
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M7.144,5.887L7.144,5.887 6.563,3.719 5.981,5.887z" />
+                            </DrawingGroup>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Square" EndLineCap="Square" LineJoin="Miter" MiterLimit="10" />
+                                </GeometryDrawing.Pen>
+                                <GeometryDrawing.Geometry>
+                                    <LineGeometry StartPoint="4,9.188" EndPoint="4,11.542" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <DrawingGroup Opacity="1">
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Square" EndLineCap="Square" LineJoin="Miter" MiterLimit="10" />
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <LineGeometry StartPoint="1.25,8" EndPoint="1.25,2.897" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <DrawingGroup Opacity="1">
+                                        <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M1.831,3.293L1.831,3.293 1.25,1.125 0.669,3.293z" />
+                                    </DrawingGroup>
+                                </DrawingGroup>
+                            </DrawingGroup>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                </GeometryDrawing.Pen>
+                                <GeometryDrawing.Geometry>
+                                    <LineGeometry StartPoint="3.104,8" EndPoint="1.25,8" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <DrawingGroup Opacity="1">
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Square" EndLineCap="Square" LineJoin="Miter" MiterLimit="10" />
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <LineGeometry StartPoint="13.688,2.708" EndPoint="3.938,2.708" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <DrawingGroup Opacity="1">
+                                        <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M4.334,2.127L4.334,2.127 2.167,2.708 4.334,3.29z" />
+                                    </DrawingGroup>
+                                </DrawingGroup>
+                            </DrawingGroup>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                </GeometryDrawing.Pen>
+                                <GeometryDrawing.Geometry>
+                                    <LineGeometry StartPoint="13.688,8" EndPoint="13.688,2.708" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="SearchHeadTeam">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="2.172" RadiusY="2.172" Center="8.063,3" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M5.578,5.422L5.578,5.422 6.878,5.422 8.078,7.422 9.277,5.422 10.578,5.422 10.578,12.422 8.578,12.422 8.578,10.247 7.578,10.236 7.578,12.422 5.578,12.422z" />
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="2.172" RadiusY="2.172" Center="2.484,3" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M0,5.422L0,5.422 1.3,5.422 2.5,7.422 3.7,5.422 5,5.422 5,12.422 3,12.422 3,10.247 2,10.236 2,12.422 0,12.422z" />
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="2.172" RadiusY="2.172" Center="13.484,3" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M11,5.422L11,5.422 12.299,5.422 13.5,7.422 14.699,5.422 16,5.422 16,12.422 14,12.422 14,10.247 13,10.236 13,12.422 11,12.422z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M0.5,15.1L0.5,15.1 0.5,14.1 12.801,14.1 12.801,13.7 15.5,14.6 12.801,15.5 12.801,15.1z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="SearchHeadTaskforce">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="2.172" RadiusY="2.172" Center="8.063,3" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M5.578,5.422L5.578,5.422 6.878,5.422 8.078,7.422 9.278,5.422 10.578,5.422 10.578,15.422 8.578,15.422 8.578,10.247 7.578,10.236 7.578,15.422 5.578,15.422z" />
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="2.172" RadiusY="2.172" Center="2.484,3" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M0,5.422L0,5.422 1.3,5.422 2.5,7.422 3.7,5.422 5,5.422 5,15.422 3,15.422 3,10.247 2,10.236 2,15.422 0,15.422z" />
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="2.172" RadiusY="2.172" Center="13.484,3" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M11,5.422L11,5.422 12.299,5.422 13.5,7.422 14.699,5.422 16,5.422 16,15.422 14,15.422 14,10.247 13,10.236 13,15.422 11,15.422z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="SearchHeadCsf">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="1" RadiusY="1" Center="4.797,4.922" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="1" RadiusY="1" Center="4.797,10.922" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FFE6E6E6" Thickness="1" StartLineCap="Round" EndLineCap="Round" LineJoin="Miter" MiterLimit="10" />
+                                </GeometryDrawing.Pen>
+                                <GeometryDrawing.Geometry>
+                                    <LineGeometry StartPoint="7,13.5" EndPoint="13,13.5" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="Transparent">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,16,16" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="SearchHeadSound">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M1.165,5.528L1.165,5.528 1.165,10.218 4.387,10.218 8.407,13.357 8.407,2.389 4.388,5.528z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M12.171,3.258L11.246,4.714C12.008,5.394 12.524,6.567 12.524,7.873 12.524,9.14 12.038,10.284 11.312,10.972L12.224,12.446C13.456,11.472 14.272,9.789 14.272,7.874 14.272,5.93 13.434,4.226 12.171,3.258z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="SearchHeadTheme">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M14.232,11.45L14.244,11.45 14.244,1.621 14.249,1.588 14.244,1.588 14.244,1.588 14.234,1.59 4.671,2.87 4.67,2.87 4.67,10.636C4.292,10.515 3.866,10.466 3.421,10.509 2.016,10.646 0.963,11.646 1.07,12.743 1.177,13.841 2.402,14.62 3.807,14.483 5.212,14.347 6.265,13.346 6.158,12.249 6.156,12.23 6.152,12.213 6.149,12.194L6.161,12.194 6.161,5.458 12.753,4.496 12.753,9.891C12.374,9.77 11.948,9.721 11.504,9.764 10.1,9.9 9.047,10.901 9.153,11.999 9.26,13.096 10.485,13.876 11.89,13.739 13.295,13.602 14.348,12.602 14.241,11.505 14.239,11.486 14.235,11.469 14.232,11.45z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="SearchHeadEva">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M30,30z M0,0z M10.656,17L10.656,17 12.594,20 0,20 0,8 5.813,8 7.75,11 4,11 4,13 8.719,13 9.93,15 4,15 4,17z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M30,30z M0,0z M10.656,8L10.656,8 6.781,8 13.563,20 14.531,20 21.313,8 17.438,8 14.531,13 13.563,13z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M30,30z M0,0z M26.156,20L26.156,20 30.031,20 23.25,8 22.281,8 15.5,20 19.375,20 22.281,15 23.25,15z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M30,30z M0,0z M21.118,17L21.118,17 24.413,17 22.665,19.875z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <!--#endregion-->
+    <!--#region Head -->
+    <Viewbox x:Key="HeadAir">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <DrawingGroup.Children>
+                                <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M8,0.266L8,0.266 4,6 4,15 8,12.328 12,15 12,6z" />
+                                <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M3.375,8.069L3.375,8.069 0.8,11.762 0.8,14.109 3.375,14.109z" />
+                                <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M12.625,8.069L12.625,8.069 15.2,11.762 15.2,14.109 12.625,14.109z" />
+                            </DrawingGroup.Children>
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="HeadBud">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M8,0.938L8,0.938 1,7 15,7z" />
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="3,8,10,7" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="HeadFav">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M8,0.531L8,0.531 10.388,5.369 15.727,6.145 11.864,9.911 12.775,15.228 8,12.717 3.226,15.228 4.137,9.911 0.274,6.145 5.613,5.369z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="HeadInf">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="2.172" RadiusY="2.172" Center="7.484,2.578" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M5,5L5,5 6.3,5 7.5,7 8.7,5 10,5 10,15 8,15 8,9.825 7,9.815 7,15 5,15z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M3,12.016L3,12.016 4.5,12 4.5,5 3,5z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M10.5,12.016L10.5,12.016 12,12 12,5 10.5,5z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="HeadNaval">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M5,1L5,1 7,1 15,9 7,9 7,11 16,11 13,15 3,15 0,11 5,11z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="HeadTerrain">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="7,10,3,6" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M1,11L1,11 8.5,4.5 16,11z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M3,6L3,6 8.5,0.5 14,6z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="HeadUnit">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M5,15L5,15 1,15 1,4 5,4 5,6 3,8 3,11 5,13z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M9,15L9,15 13,15 13,4 9,4 9,6 11,8 11,11 9,13z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M8,6L8,6 8,2 9,2 9,1 5,1 5,2 6,2 6,6 4,8 4,11 6,13 6,14 8,14 8,13 10,11 10,8z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="HeadOverlay">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M8.108,5.24L14.303,8.553 8.108,11.868 1.84,8.553 8.108,5.24 M8.111,4.333L0.129,8.553 8.111,12.774 16,8.553 8.111,4.333 8.111,4.333z" />
+                            </DrawingGroup>
+                            <GeometryDrawing Geometry="F1 M16,16z M0,0z M8.087,6.528L8.087,6.528 11.874,8.555 8.087,10.579 4.255,8.555z">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                </GeometryDrawing.Pen>
+                                <GeometryDrawing.Geometry>
+                                    <LineGeometry StartPoint="8.064,4.792" EndPoint="8.064,12.375" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#FFE6E6E6" Thickness="0.5" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" />
+                                </GeometryDrawing.Pen>
+                                <GeometryDrawing.Geometry>
+                                    <LineGeometry StartPoint="0.823,8.554" EndPoint="15.177,8.554" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="HeadSmudge">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
+                            <GeometryDrawing Brush="Transparent">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,16,16" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="3.953" RadiusY="2.466" Center="4.765,5.222" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="2.922" RadiusY="1.641" Center="11.734,8.484" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <EllipseGeometry RadiusX="1.724" RadiusY="1.044" Center="5.536,10.644" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+
+                        </DrawingGroup>
+
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="HeadCelltag">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M6.818,8.383L2.77,5.447C1.277,6.182 0.344,7.226 0.344,8.383 0.344,9.541 1.278,10.584 2.772,11.319L6.818,8.383z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M8.023,9.257L4.363,11.921C5.451,12.231 6.698,12.406 8.023,12.406 9.352,12.406 10.602,12.229 11.693,11.918L8.023,9.257z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M13.275,5.447C14.769,6.18 15.703,7.224 15.703,8.383 15.703,9.54 14.77,10.584 13.277,11.319L9.229,8.383 13.275,5.447z" />
+                            <GeometryDrawing Brush="#FFE6E6E6" Geometry="F1 M16,16z M0,0z M8,7.525L4.354,4.847C5.444,4.536 6.695,4.359 8.024,4.359 9.349,4.359 10.596,4.535 11.684,4.844L8,7.525z" />
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <Viewbox x:Key="HeadWaypoint">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="5,2,8,5" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="#FFE6E6E6">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="3,2,1,11" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    <!--#endregion-->
     <Viewbox x:Key="FlatRamp" Width="16" Height="16">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
