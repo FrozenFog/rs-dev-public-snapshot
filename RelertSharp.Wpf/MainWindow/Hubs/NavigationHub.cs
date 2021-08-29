@@ -50,6 +50,15 @@ namespace RelertSharp.Wpf
         {
             switch (type)
             {
+                case TriggerInfoTraceType.WpItemTrace:
+                    if (target is IMapObject cell) GoToPosition(cell, cell.GetHeight());
+                    break;
+                case TriggerInfoTraceType.ScriptRegTrace:
+                    GoToScript(target);
+                    break;
+                case TriggerInfoTraceType.TaskforceRegTrace:
+                    GoToTaskforce(target);
+                    break;
                 case TriggerInfoTraceType.TriggerRegTrace:
                     GoToTrigger(target);
                     break;
@@ -257,5 +266,6 @@ namespace RelertSharp.Wpf
 
         public FrameworkElement SourceControl { get; set; }
         public LogicInfoParameter Param { get; set; }
+        public TriggerInfoTraceType TraceType { get; set; }
     }
 }

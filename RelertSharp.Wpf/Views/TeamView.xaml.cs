@@ -70,6 +70,7 @@ namespace RelertSharp.Wpf.Views
         }
         private FrameworkElement CreateGroup(AttributeClass cls)
         {
+            #region Grids
             StackPanel container = new StackPanel();
             Button head = new Button()
             {
@@ -101,6 +102,7 @@ namespace RelertSharp.Wpf.Views
             split.SetColumn(1);
             grd.Children.Add(split);
             double y = 10d;
+            #endregion
             foreach (AttributeItem item in ModConfig.TeamItems.Values.Where(x => x.Parent == cls.Id))
             {
                 Label lbl = new Label()
@@ -110,11 +112,23 @@ namespace RelertSharp.Wpf.Views
                     VerticalAlignment = VerticalAlignment.Top
                 };
                 lbl.Margin = new Thickness(0, y, 10, 0);
+                lbl.MouseDoubleClick += ClickLabelTrace;
                 lbl.SetColumn(0);
                 FrameworkElement control = AcquireControlFromAttribute(item, out double yOffset);
                 control.Height = ROW_HEIGHT;
                 control.Margin = new Thickness(10, y + yOffset, 10, 0);
                 control.SetColumn(2);
+                TraceHelper trace = new TraceHelper()
+                {
+                    SourceControl = control,
+                    TraceType = item.Trace
+                };
+                if (item.Trace != TriggerInfoTraceType.None)
+                {
+                    lbl.Drop += DraggedItemDropped;
+                    lbl.AllowDrop = true;
+                }
+                lbl.Tag = trace;
                 grd.AddControls(lbl, control);
                 y += ROW_DELTA;
             }
@@ -246,6 +260,49 @@ namespace RelertSharp.Wpf.Views
         {
             context = new TeamVm(recived as TeamItem);
             RefreshControl();
+        }
+
+
+        private void ClickLabelTrace(object sender, MouseButtonEventArgs e)
+        {
+            if (!isLoading)
+            {
+                Label lbl = sender as Label;
+                TraceHelper bind = lbl.Tag as TraceHelper;
+                string value = string.Empty;
+                IIndexableItem target = new SimpleIndexableItem();
+                if (bind.SourceControl is ComboBox cbb)
+                {
+                    target = cbb.SelectedItem as IIndexableItem;
+                }
+                else if (bind.SourceControl is TextBox txb)
+                {
+                    value = txb.Text;
+                }
+                NavigationHub.HandleTrace(bind.TraceType, value, target);
+            }
+        }
+        private void DraggedItemDropped(object sender, DragEventArgs e)
+        {
+            IDataObject data = new DataObject();
+            data = e.Data;
+            string value = data.TryGetDroppedDataObjectId(out Type valueType);
+            if (!value.IsNullOrEmpty()) TryWriteDroppedValue(sender as Label, value, valueType);
+        }
+        private void TryWriteDroppedValue(Label lbl, string value, Type valueType)
+        {
+            if (lbl != null && lbl.Tag is TraceHelper trace)
+            {
+                FrameworkElement elem = trace.SourceControl;
+                if (elem is ComboBox cbb && cbb.Items.Count > 0)
+                {
+                    IIndexableItem item = cbb.Items.OfType<IIndexableItem>().Where(x => x.Id == value).FirstOrDefault();
+                    if (item != null)
+                    {
+                        cbb.SelectedItem = item;
+                    }
+                }
+            }
         }
     }
 }

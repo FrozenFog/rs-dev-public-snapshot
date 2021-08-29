@@ -22,9 +22,12 @@ namespace RelertSharp.Common.Config.Model
         AnimIdxTrace,
         TagIdxTrace,
         ScriptIdxTrace,
-        I2dWaypointTrace,
+        I2dWaypointTrace = 13,
         I2dBase128Trace,
-        CsfTrace
+        CsfTrace,
+        ScriptRegTrace = 16,
+        TaskforceRegTrace = 17,
+        WpItemTrace = 18
     }
     public enum ParamParseMethod
     {

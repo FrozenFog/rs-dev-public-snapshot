@@ -414,19 +414,19 @@
         <attr name="Name" desc="" type="string" class="0"/>
         <attr name="Group" desc="" type="int" class="1" default="-1"/>
         <attr name="House" desc="" type="CountryMultiExtend" class="0"/>
-        <attr name="Script" desc="" type="ScriptWithNone" class="0"/>
+        <attr name="Script" desc="" type="ScriptWithNone" trace="16" class="0"/>
         <attr name="Whiner" label="Is pool team" desc="" type="bool" class="1" default="no"/>
         <attr name="Droppod" label="Paradrop" desc="" type="bool" class="3" default="no"/>
         <attr name="Suicide" label="No retaliate" desc="" type="bool" class="2" default="no"/>
         <attr name="Loadable" desc="" type="bool" class="4" default="no"/>
         <attr name="Prebuild" desc="" type="bool" class="1" default="no"/>
         <attr name="Priority" desc="" type="int" class="1" default="7"/>
-        <attr name="Waypoint" desc="" type="Waypoints" class="3"/>
+        <attr name="Waypoint" desc="" type="Waypoints" class="3" trace="18"/>
         <attr name="Annoyance" label="Replenish member" desc="" type="bool" class="1" default="no"/>
         <attr name="IonImmune" desc="" type="bool" class="4" default="no"/>
         <attr name="Recruiter" desc="" type="bool" class="1" default="no"/>
         <attr name="Reinforce" desc="" type="bool" class="3" default="no"/>
-        <attr name="TaskForce" desc="" type="TaskforceWithNone" class="0"/>
+        <attr name="TaskForce" desc="" type="TaskforceWithNone" class="0" trace="17"/>
         <attr name="TechLevel" desc="" type="int" class="3" default="0"/>
         <attr name="Aggressive" desc="" type="bool" class="2" default="no"/>
         <attr name="Autocreate" desc="" type="bool" class="1" default="no"/>
@@ -437,7 +437,7 @@
         <attr name="Tag" desc="" type="TagWithNone" class="0"/>
         <attr name="VeteranLevel" label="Veteran" desc="" type="TeamVeteranLevel" class="0" default="1"/>
         <attr name="IsBaseDefense" label="Base defense" desc="" type="bool" class="1" default="no"/>
-        <attr name="TransportWaypoint" label="Trans-WP" desc="" type="WaypointWithNone" class="3"/>
+        <attr name="TransportWaypoint" label="Trans-WP" desc="" type="WaypointWithNone" class="3" trace="18"/>
         <attr name="UseTransportOrigin" label="Team in Trans" desc="" type="bool" class="3" default="no"/>
         <attr name="MindControlDecision" label="Mind-C decision" desc="" type="MCDecisions" class="2" default="0"/>
         <attr name="OnlyTargetHouseEnemy" label="Attack enemy only" desc="" type="bool" class="2" default="no"/>

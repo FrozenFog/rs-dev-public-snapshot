@@ -92,5 +92,12 @@ namespace RelertSharp.Common.Config.Model
         /// </summary>
         [XmlAttribute("default")]
         public string DefaultValue { get; set; }
+        [XmlAttribute("trace")]
+        public int TraceTypeInt { get; set; }
+        [XmlIgnore]
+        public TriggerInfoTraceType Trace
+        {
+            get { return (TriggerInfoTraceType)TraceTypeInt; }
+        }
     }
 }
