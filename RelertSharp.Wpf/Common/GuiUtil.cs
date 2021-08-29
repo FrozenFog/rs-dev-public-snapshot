@@ -51,10 +51,17 @@ namespace RelertSharp.Wpf
             }
 #endif
         }
-
+        public static string FormatException(Exception e)
+        {
+            return string.Format("Error message: {0}\nStack trace:\n{1}", e.Message, e.StackTrace);
+        }
         public static void Asterisk(string content)
         {
             MessageBox.Show(content, "Success", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+        }
+        public static void Fatal(string content, Exception ex)
+        {
+            Fatal(string.Format("{0}\nException:\n{1}", content, FormatException(ex)));
         }
         public static void Fatal(string content)
         {

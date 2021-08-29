@@ -29,6 +29,7 @@ namespace RelertSharp.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string DEF_LAYOUT = "layout.xml";
         #region Else
         private SoundManager soundManager = new SoundManager();
         #endregion
@@ -85,6 +86,17 @@ namespace RelertSharp.Wpf
                             dockMain.AddCenterPage(attr.Title, control);
                             break;
                     }
+                }
+            }
+            if (File.Exists(DEF_LAYOUT))
+            {
+                try
+                {
+                    dockMain.LoadLayoutFromXml(DEF_LAYOUT, this);
+                }
+                catch
+                {
+                    GuiUtil.Warning("Default layout is invalid!");
                 }
             }
         }
@@ -235,6 +247,11 @@ namespace RelertSharp.Wpf
             if (cancel)
             {
                 e.Cancel = true;
+            }
+            else
+            {
+                try { dockMain.SaveLayoutToXml(DEF_LAYOUT); }
+                catch { }
             }
         }
         private void MainWindowClosed(object sender, EventArgs e)

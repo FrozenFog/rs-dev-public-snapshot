@@ -103,8 +103,8 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Layout">
-                <MenuItem Header="Load Layout"/>
-                <MenuItem Header="Save Layout"/>
+                <MenuItem Header="Load Layout" Click="MenuLoadLayout"/>
+                <MenuItem Header="Save Layout" Click="MenuSaveLayout"/>
                 <Separator/>
                 <MenuItem Header="Default Layout"/>
             </MenuItem>

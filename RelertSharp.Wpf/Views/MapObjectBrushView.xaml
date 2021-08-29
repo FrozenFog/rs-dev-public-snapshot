@@ -14,11 +14,11 @@
         <CollectionViewSource x:Key="GlobalTag" Source="{Binding GlobalTags}"/>
         <Style x:Key="{x:Type ListViewItem}"/>
     </UserControl.Resources>
-    <Grid Margin="0">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="300"/>
             <RowDefinition Height="3"/>
-            <RowDefinition Height="Auto" MinHeight="150"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <GridSplitter Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="3"/>
         <TreeView x:Name="trvMain" Style="{DynamicResource trvDark}" SelectedItemChanged="BrushItemChanged" Grid.Row="0">

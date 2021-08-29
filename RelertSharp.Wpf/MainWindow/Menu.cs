@@ -215,7 +215,14 @@ namespace RelertSharp.Wpf
             };
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                dockMain.LoadLayoutFromXml(dlg.FileName, this);
+                try
+                {
+                    dockMain.LoadLayoutFromXml(dlg.FileName, this);
+                }
+                catch (Exception ex)
+                {
+                    GuiUtil.Fatal("Invalid layout file, or version is not acceptable", ex);
+                }
             }
         }
 
@@ -228,7 +235,15 @@ namespace RelertSharp.Wpf
             };
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                dockMain.SaveLayoutToXml(dlg.FileName);
+                try
+                {
+                    dockMain.SaveLayoutToXml(dlg.FileName);
+                    GuiUtil.Asterisk("Save complete!");
+                }
+                catch (Exception ex)
+                {
+                    GuiUtil.Fatal("Cannot save current layout.", ex);
+                }
             }
         }
 

@@ -108,7 +108,6 @@ namespace RelertSharp.Wpf.Views
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top
                 };
-                lbl.SetStyle(this, "lblDark");
                 lbl.Margin = new Thickness(10, y, 0, 0);
                 lbl.SetColumn(0);
                 lbl.MouseDoubleClick += ClickLabelTrace;
