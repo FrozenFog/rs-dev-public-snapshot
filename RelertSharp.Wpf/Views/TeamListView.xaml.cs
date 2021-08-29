@@ -17,6 +17,7 @@ using RelertSharp.Wpf.ViewModel;
 using RelertSharp.Common;
 using RelertSharp.Wpf.Common;
 using System.Windows.Threading;
+using RelertSharp.Wpf.Dialogs;
 
 namespace RelertSharp.Wpf.Views
 {
@@ -30,6 +31,7 @@ namespace RelertSharp.Wpf.Views
         public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
         private MapStructure.Map Map { get { return GlobalVar.GlobalMap; } }
         private IndexableDisplayType displayType = IndexableDisplayType.IdAndName;
+        private TeamListVm SelectedItem { get { return lbxMain.SelectedItem as TeamListVm; } }
 
         public TeamListView()
         {
@@ -169,6 +171,50 @@ namespace RelertSharp.Wpf.Views
         private void DragMouseLeave(object sender, MouseEventArgs e)
         {
             dragTeam.EndDrag();
+        }
+        #endregion
+
+
+        #region Menu
+        private void PreviewRightDown(object sender, MouseButtonEventArgs e)
+        {
+            bool hasItem = SelectedItem != null;
+            menuCopy.IsEnabled = hasItem;
+            menuDel.IsEnabled = hasItem;
+        }
+        private void Menu_Add(object sender, RoutedEventArgs e)
+        {
+            DlgNameInput dlg = new DlgNameInput("Team name");
+            if (dlg.ShowDialog().Value)
+            {
+                var team = Map.AddTeam(dlg.ResultName);
+                team.ChangeDisplay(displayType);
+                TeamListVm vm = new TeamListVm(team);
+                if (lbxMain.SelectedIndex == -1) lbxMain.Items.Add(vm);
+                else lbxMain.Items.Insert(lbxMain.SelectedIndex + 1, vm);
+                lbxMain.SelectedItem = vm;
+            }
+        }
+
+        private void Menu_Remove(object sender, RoutedEventArgs e)
+        {
+            var team = SelectedItem.Data;
+            if (Map.RemoveTeam(team))
+            {
+                lbxMain.Items.Remove(SelectedItem);
+            }
+        }
+
+        private void Menu_Copy(object sender, RoutedEventArgs e)
+        {
+            if (SelectedItem != null)
+            {
+                var copy = Map.AddTeam(SelectedItem.Data);
+                copy.ChangeDisplay(displayType);
+                TeamListVm vm = new TeamListVm(copy);
+                lbxMain.Items.Insert(lbxMain.SelectedIndex, vm);
+                lbxMain.SelectedItem = vm;
+            }
         }
         #endregion
     }

@@ -10,7 +10,8 @@
         <ViewModel:GlobalTeamVm/>
     </UserControl.DataContext>
     <Grid>
-        <ListBox x:Name="lbxMain" Margin="10,10,10.4,9.4" Style="{DynamicResource lbxDark}" SelectionChanged="SelectedItemChanged" MouseMove="DragMouseMove" MouseLeave="DragMouseLeave" >
+        <ListBox x:Name="lbxMain" Margin="10,10,10.4,9.4" Style="{DynamicResource lbxDark}" SelectionChanged="SelectedItemChanged" MouseMove="DragMouseMove" MouseLeave="DragMouseLeave" 
+                 PreviewMouseRightButtonDown="PreviewRightDown">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
@@ -25,6 +26,9 @@
             </ListBox.ItemTemplate>
             <ListBox.ContextMenu>
                 <ContextMenu>
+                    <MenuItem Header="Add Team" Click="Menu_Add"/>
+                    <MenuItem Name="menuCopy" Header="Copy Team" Click="Menu_Copy"/>
+                    <MenuItem Name="menuDel" Header="Remove Team" Click="Menu_Remove"/>
                     <MenuItem Header="Show Team Id" IsCheckable="True" Unchecked="IdUnchecked" Checked="IdChecked"/>
                     <Separator/>
                     <MenuItem Header="Ascending Sort" Click="AscendingSort"/>

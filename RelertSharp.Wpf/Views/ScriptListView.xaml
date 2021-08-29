@@ -10,7 +10,8 @@
         <ViewModel:GlobalScriptVm/>
     </UserControl.DataContext>
     <Grid>
-        <ListBox x:Name="lbxMain" Margin="10,10,10,9.6" Style="{DynamicResource lbxDark}" SelectionChanged="SelectedItemChanged" PreviewMouseRightButtonDown="PreviewRightDown" MouseMove="DragMouseMove" MouseLeave="DragMouseLeave">
+        <ListBox x:Name="lbxMain" Margin="10,10,10,9.6" Style="{DynamicResource lbxDark}" SelectionChanged="SelectedItemChanged" PreviewMouseRightButtonDown="PreviewRightDown" 
+                 MouseMove="DragMouseMove" MouseLeave="DragMouseLeave">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>

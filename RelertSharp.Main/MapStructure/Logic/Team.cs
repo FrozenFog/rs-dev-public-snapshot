@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class TeamCollection : TeamLogicCollection<TeamItem>
+    public class TeamCollection : TeamLogicCollection<TeamItem>, ICurdContainer<TeamItem>
     {
         #region Ctor - TeamCollection
         public TeamCollection() : base() { }
@@ -13,35 +13,38 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - TeamCollection
-        public TeamItem NewTeam(string id)
+        public TeamItem AddItem(string id, string name)
         {
-            TeamItem item = new TeamItem();
-            item.Id = id;
-            item.Name = "New Team";
-            //item.TaskforceID =
-            //    GlobalVar.GlobalMap.Taskforces.Count() > 0 ?
-            //    GlobalVar.GlobalMap.Taskforces.ElementAt(0).Id :
-            //    string.Empty;
-            //item.ScriptID =
-            //    GlobalVar.GlobalMap.Scripts.Count() > 0 ?
-            //    GlobalVar.GlobalMap.Scripts.ElementAt(0).Id :
-            //    string.Empty;
-            //item.TagID = string.Empty;
-            //item.Waypoint = 0;
-            //item.House =
-            //    GlobalVar.GlobalMap.Countries.Count() > 0 ?
-            //    GlobalVar.GlobalMap.Countries.ElementAt(0).Name :
-            //    string.Empty;
-            //item.VeteranLevel = TeamVeteranLevel.Rookie;
-            //item.MCDecision = TeamMCDecision.Default;
-            //item.TeamCapacity = 5;
-            //item.Priority = 5;
-            //item.TechLevel = 0;
-            //item.Group = -1;
-            //item.Attributes = new BitArray(21);
-            //item.GetToUnit = new TeamUnit(item);
-            //item.Residue = new Dictionary<string, INIPair>();
-            return item;
+            TeamItem team = new TeamItem()
+            {
+                Id = id,
+                Name = name
+            };
+            this[id] = team;
+            return team;
+        }
+
+        public bool ContainsItem(TeamItem look)
+        {
+            return data.ContainsKey(look.Id);
+        }
+
+        public bool ContainsItem(string id, string param2)
+        {
+            return data.ContainsKey(id);
+        }
+
+        public TeamItem CopyItem(TeamItem src, string id)
+        {
+            TeamItem team = new TeamItem(src, id);
+            this[id] = team;
+            return team;
+        }
+
+        public bool RemoveItem(TeamItem target)
+        {
+            if (ContainsItem(target)) return data.Remove(target.Id);
+            return false;
         }
         #endregion
 
@@ -73,6 +76,16 @@ namespace RelertSharp.MapStructure.Logic
         public TeamItem() : base()
         {
             Residue = new INIEntity();
+        }
+        public TeamItem(TeamItem src, string id) : base()
+        {
+            Id = id;
+            Residue = new INIEntity(src.Residue);
+            Name = src.Name + Constant.CLONE_SUFFIX;
+            TaskforceID = src.TaskforceID;
+            ScriptID = src.ScriptID;
+            Group = src.Group;
+            Owner = src.Owner;
         }
         #endregion
 

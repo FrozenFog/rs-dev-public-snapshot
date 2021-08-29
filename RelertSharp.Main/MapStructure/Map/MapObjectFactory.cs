@@ -80,6 +80,24 @@ namespace RelertSharp.MapStructure
         }
         #endregion
 
+        #region Teams
+        public TeamItem AddTeam(string name)
+        {
+            TeamItem team = Teams.AddItem(NewID, name);
+            return team;
+        }
+        public TeamItem AddTeam(TeamItem src)
+        {
+            TeamItem copy = Teams.CopyItem(src, NewID);
+            return copy;
+        }
+        public bool RemoveTeam(TeamItem item)
+        {
+            DelID(item.Id);
+            return Teams.RemoveItem(item);
+        }
+        #endregion
+
 
         #region House & Country
         /// <summary>
