@@ -65,6 +65,8 @@
                 <Separator/>
                 <MenuItem Header="Single Brush" IsCheckable="True" IsChecked="{Binding IsBrushSingle}"/>
                 <MenuItem Header="Bucket Fill" IsCheckable="True" IsChecked="{Binding IsBrushFill}"/>
+                <Separator/>
+                <MenuItem Name="menuInteliCliff" Header="Inteli Cliff Type"/>
             </MenuItem>
             <MenuItem Header="Views">
                 <MenuItem Header="Logics">

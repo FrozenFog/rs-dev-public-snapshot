@@ -107,6 +107,12 @@ namespace RelertSharp.Wpf
                 else GuiUtil.Warning("Invalid height!");
             }
         }
+        private void MenuCliffSelected(object sender, RoutedEventArgs e)
+        {
+            MenuItem menu = sender as MenuItem;
+            RelertSharp.Common.Config.Model.TheaterCliffSet cliff = menu.DataContext as RelertSharp.Common.Config.Model.TheaterCliffSet;
+            InteliBrush.CliffAlignType = cliff.Key;
+        }
         #endregion
         #region Universal
         private void MenuUndo(object sender, RoutedEventArgs e)

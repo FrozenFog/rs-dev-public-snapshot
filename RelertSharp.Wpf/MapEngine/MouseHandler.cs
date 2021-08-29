@@ -356,13 +356,14 @@ namespace RelertSharp.Wpf.MapEngine
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        private I3dLocateable prevCell;
+        private I3dLocateable prevCell, cellNow;
         private int prevSubcell;
         private bool MouseMoved(Point point, Point unscaled)
         {
             bool redraw = false, noIndicate = false;
             Vec3 pos = EngineApi.ClientPointToCellPos(point.GdiPoint(), out int subcell);
             I3dLocateable cell = pos.To3dLocateable();
+            cellNow = cell;
             bool notFound = cell.X == 0 && cell.Y == 0 && cell.Z == 0;
             bool isCellChanged = !RsMath.I3dEqual(cell, prevCell);
             bool isSubcellChanged = subcell != prevSubcell;

@@ -87,6 +87,11 @@ namespace RelertSharp.Wpf.MapEngine
                             EngineApi.InvokeRedraw();
                             e.Handled = true;
                             break;
+                        case PanelMouseState.InteliRampBrush:
+                            InteliRampBrushHandler(e);
+                            EngineApi.InvokeRedraw();
+                            e.Handled = true;
+                            break;
                         case PanelMouseState.None:
                             SelectorKeyHandler(e);
                             EngineApi.InvokeRedraw();
@@ -113,6 +118,18 @@ namespace RelertSharp.Wpf.MapEngine
 
 
         #region State
+        private void InteliRampBrushHandler(KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.PageDown:
+                    TileSelector.SinkTile(prevCell);
+                    break;
+                case Key.PageUp:
+                    TileSelector.RiseTile(prevCell);
+                    break;
+            }
+        }
         private void TileBrushKeyHandler(KeyEventArgs e)
         {
             switch (e.Key)

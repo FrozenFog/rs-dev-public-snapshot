@@ -21,6 +21,7 @@ using System.ComponentModel;
 using RelertSharp.Engine.Api;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
+using System.Windows.Controls;
 
 namespace RelertSharp.Wpf
 {
@@ -105,7 +106,17 @@ namespace RelertSharp.Wpf
         #region Reciver Logics
         private void HandleMapLoaded()
         {
-
+            menuInteliCliff.Items.Clear();
+            foreach (var cliff in GlobalVar.GlobalConfig.ModConfig.CliffSets.Where(x => x.TheaterType.ToUpper() == GlobalVar.GlobalMap.Info.TheaterName))
+            {
+                MenuItem menu = new MenuItem()
+                {
+                    Header = cliff.Name,
+                    DataContext = cliff
+                };
+                menu.Click += MenuCliffSelected;
+                menuInteliCliff.Items.Add(menu);
+            }
         }
         private void BindNavigation()
         {
