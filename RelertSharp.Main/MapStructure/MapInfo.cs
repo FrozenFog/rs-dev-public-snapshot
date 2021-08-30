@@ -49,7 +49,7 @@ namespace RelertSharp.MapStructure
                 PlayerHouseName = string.Format(Constant.FMT_HOUSE, cfg.PlayerHouseName);
             }
             Basic = new INIEntity("Basic");
-            Basic.AddPair(new INIPair("NewINIFormat", 4));
+            Basic.AddPair(new INIPair("NewINIFormat", "4"));
             Map = new INIEntity("Map");
             SpecialFlags = new INIEntity("SpecialFlags");
             BasicResidue = Basic;

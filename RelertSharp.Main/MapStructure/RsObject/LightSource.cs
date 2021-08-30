@@ -35,11 +35,11 @@ namespace RelertSharp.MapStructure.Points
                     string name = string.Format("{0}_{1}", Constant.EntName.RsLightCompileHead, i);
                     string index = string.Format("{0}{1}", Constant.EntName.RsLightTocIndex, i);
                     INIEntity template = new INIEntity(GlobalVar.GlobalConfig.LightPostTemplate, name);
-                    template["LightVisibility"] = light.Visibility;
-                    template["LightIntensity"] = light.Intensity;
-                    template["LightRedTint"] = light.Red;
-                    template["LightGreenTint"] = light.Green;
-                    template["LightBlueTint"] = light.Blue * 2;
+                    template["LightVisibility"] = light.Visibility.ToString();
+                    template["LightIntensity"] = light.Intensity.ToString();
+                    template["LightRedTint"] = light.Red.ToString();
+                    template["LightGreenTint"] = light.Green.ToString();
+                    template["LightBlueTint"] = (light.Blue * 2).ToString();
                     template["Name"] = string.Format("{0} {1} - {2}", Constant.EntName.RsLightCompileName, i, light.Name);
                     compiledLightPost[name] = template;
                     toc[index] = name;

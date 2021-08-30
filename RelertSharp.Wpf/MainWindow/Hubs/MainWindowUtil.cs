@@ -1,6 +1,7 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.Engine.Api;
 using RelertSharp.MapStructure;
+using RelertSharp.Wpf.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +13,7 @@ using System.Windows.Threading;
 
 namespace RelertSharp.Wpf
 {
-    internal static class AutoSave
+    internal static class MainWindowUtil
     {
         private static DispatcherTimer timer;
         private static Stopwatch watch = new Stopwatch();
@@ -20,14 +21,25 @@ namespace RelertSharp.Wpf
         private static bool autosaveFailed = false;
 
 
-        static AutoSave()
+        static MainWindowUtil()
         {
             timer = new DispatcherTimer()
             {
                 Interval = new TimeSpan(0, 0, 60),
             };
+            GlobalVar.MapDocumentLoaded += HandleMapLoaded;
             EngineApi.MapDrawingComplete += MapLoadComplete;
             timer.Tick += AutoSaveTick;
+        }
+
+        private static void HandleMapLoaded()
+        {
+            if (GlobalVar.Monitor.HasLog)
+            {
+                DlgMonitorResult dlg = new DlgMonitorResult();
+                dlg.ReadFromMonitor(GlobalVar.Monitor);
+                dlg.ShowDialog();
+            }
         }
 
         private static void MapLoadComplete()

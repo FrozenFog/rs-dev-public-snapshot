@@ -1,4 +1,5 @@
 ﻿using RelertSharp.IniSystem;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -48,7 +49,7 @@ namespace RelertSharp.Common
             }
             set
             {
-                this["General"]["DevMode"] = value;
+                this["General"]["DevMode"] = value.YesNo();
             }
         }
         public bool IsValid { get { return !(string.IsNullOrEmpty(GamePath) || string.IsNullOrEmpty(PrimaryConfigName)); } }

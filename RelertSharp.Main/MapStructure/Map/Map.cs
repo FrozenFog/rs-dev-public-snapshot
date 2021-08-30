@@ -4,6 +4,7 @@ using RelertSharp.IniSystem;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.MapStructure.Objects;
 using RelertSharp.MapStructure.Points;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -173,8 +174,15 @@ namespace RelertSharp.MapStructure
             {
                 if (t.GetObjects().Any(x => x.ObjectType == MapObjectType.Overlay))
                 {
-                    OverlayUnit o = t.GetObjects().First(x => x.ObjectType == MapObjectType.Overlay) as OverlayUnit;
-                    Overlays[o.X, o.Y] = o;
+                    try
+                    {
+                        OverlayUnit o = t.GetObjects().First(x => x.ObjectType == MapObjectType.Overlay) as OverlayUnit;
+                        Overlays[o.X, o.Y] = o;
+                    }
+                    catch (Exception e)
+                    {
+                        Monitor.LogFatal(t, MapObjectType.Overlay, e);
+                    }
                 }
             }
         }

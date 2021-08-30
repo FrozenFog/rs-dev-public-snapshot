@@ -76,6 +76,7 @@ namespace RelertSharp.Common
     }
     public enum LogicType
     {
+        None = -1,
         Team = 0,
         Taskforce = 1,
         Script = 2,
@@ -84,7 +85,9 @@ namespace RelertSharp.Common
         AiTrigger = 5,
         LocalVariable = 6,
         House = 7,
-        Country = 8
+        Country = 8,
+        Event = 9,
+        Action = 10
     }
     [Flags]
     public enum AudType

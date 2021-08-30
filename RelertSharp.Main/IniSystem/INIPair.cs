@@ -19,11 +19,6 @@ namespace RelertSharp.IniSystem
             Value = value;
             keytype = GetKeyType(key);
         }
-        public INIPair(string key, dynamic value)
-        {
-            Name = key;
-            Value = value;
-        }
         public INIPair(string n, string val, string com, string _preComment)
         {
             Name = n;

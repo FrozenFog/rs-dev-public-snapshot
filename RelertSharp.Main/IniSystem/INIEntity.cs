@@ -389,7 +389,7 @@ namespace RelertSharp.IniSystem
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public dynamic this[string key]
+        public string this[string key]
         {
             get
             {
@@ -399,7 +399,7 @@ namespace RelertSharp.IniSystem
             set
             {
                 if (data.Keys.Contains(key)) data[key].Value = value;
-                else data[key] = new INIPair(key, value.ToString());
+                else data[key] = new INIPair(key, value);
             }
         }
         public List<INIPair> DataList { get { return data.Values.ToList(); } }

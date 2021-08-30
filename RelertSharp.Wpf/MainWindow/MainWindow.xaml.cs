@@ -22,6 +22,7 @@ using RelertSharp.Engine.Api;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 using System.Windows.Controls;
+using RelertSharp.Wpf.Dialogs;
 
 namespace RelertSharp.Wpf
 {
@@ -46,13 +47,14 @@ namespace RelertSharp.Wpf
             DataContext = new MainWindowVm(tiles);
             GlobalVar.MapLoadComplete += HandleMapLoaded;
             GlobalVar.MapDisposed += HandleMapDisposed;
+            GlobalVar.MapSaved += HandleMapSaved;
 #if RELEASE
             menuMain.Items.Remove(DEBUG);
             Title = Constant.VersionInfo;
 #endif
         }
 
-#region Initialization
+        #region Initialization
         private void InitializeGuiStatus()
         {
             if (GlobalVar.GlobalConfig.UserConfig.IsGuiValid())
@@ -106,12 +108,21 @@ namespace RelertSharp.Wpf
                 }
             }
         }
-#endregion
+        #endregion
 
-#region Reciver Logics
+        #region Reciver Logics
+        private void HandleMapSaved()
+        {
+            if (GlobalVar.Monitor.HasLog)
+            {
+                DlgMonitorResult dlg = new DlgMonitorResult();
+                dlg.ReadFromMonitor(GlobalVar.Monitor);
+                dlg.ShowDialog();
+            }
+        }
         private void HandleMapDisposed()
         {
-            AutoSave.SuspendAutoSave();
+            MainWindowUtil.SuspendAutoSave();
         }
         private void HandleMapLoaded()
         {
@@ -126,7 +137,7 @@ namespace RelertSharp.Wpf
                 menu.Click += MenuCliffSelected;
                 menuInteliCliff.Items.Add(menu);
             }
-            AutoSave.BeginAutoSave();
+            MainWindowUtil.BeginAutoSave();
         }
         private void BindNavigation()
         {

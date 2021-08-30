@@ -27,6 +27,7 @@ namespace System.Windows.Media
     {
         public static BitmapImage ToWpfImage(this System.Drawing.Image src, bool isPng = false)
         {
+            if (src == null) return null;
             MemoryStream ms = new MemoryStream();
             BitmapImage img = new BitmapImage();
             ImageFormat fmt;

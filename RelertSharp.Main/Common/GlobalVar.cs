@@ -1,4 +1,5 @@
 ﻿using RelertSharp.Common.Config;
+using RelertSharp.MapStructure;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -30,8 +31,10 @@ namespace RelertSharp.Common
         public static bool HasMap { get { return GlobalMap != null; } }
         public static void SaveMapDocument(string path)
         {
+            Monitor.EnableMonitor();
             MapSaveBegin?.Invoke();
             CurrentMapDocument.SaveMapAs(path);
+            Monitor.EndMonitorLog();
             MapSaved?.Invoke();
         }
         public static void DisposeMapDocument()
@@ -44,7 +47,9 @@ namespace RelertSharp.Common
         public static async void LoadMapDocument(string path)
         {
             if (CurrentMapDocument != null) MapDisposed?.Invoke();
+            Monitor.EnableMonitor();
             CurrentMapDocument = new FileSystem.MapFile(path);
+            Monitor.EndMonitorLog();
             MapDocumentLoaded?.Invoke();
             MapDocumentRedrawRequested?.Invoke(null, null);
             MapLoadComplete?.Invoke();
@@ -74,6 +79,7 @@ namespace RelertSharp.Common
         public static IniSystem.SoundRules GlobalSound { get; set; }
         public static FileSystem.SoundBank GlobalSoundBank { get; set; }
         public static FileSystem.CsfFile GlobalCsf { get; set; }
+        public static MapReadingMonitor Monitor { get; set; } = new MapReadingMonitor();
         public static FileSystem.PalFile TilePalette { get; set; }
         public static string PlayerSide { get; set; }
         public static MapStructure.MapTheaterTileSet TileDictionary { get; set; }

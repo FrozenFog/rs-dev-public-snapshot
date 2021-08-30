@@ -4,6 +4,20 @@ namespace RelertSharp.Common
 {
     public class RSException : ApplicationException
     {
+        public class IndexableException : ApplicationException
+        {
+            private IIndexableItem indexableItem;
+            private string message;
+            public IndexableException(IIndexableItem src, string message)
+            {
+                this.message = message;
+                indexableItem = src;
+            }
+            public override string Message
+            {
+                get { return string.Format("{0} Id: {1}, Name: {2}", message, indexableItem.Id, indexableItem.Name); }
+            }
+        }
         public class INIEntityNotFoundException : ApplicationException
         {
             private string entityname, parent;
@@ -14,10 +28,13 @@ namespace RelertSharp.Common
         public class MixEntityNotFoundException : ApplicationException
         {
             private string mixName, fileName;
-            public MixEntityNotFoundException(string mixname, string filename) { mixName = mixname; fileName = filename; RSMessage = "File not found in virtual mix directory!"; }
+            public MixEntityNotFoundException(string mixname, string filename) { mixName = mixname; fileName = filename; }
             public string MixName { get { return mixName; } }
             public string FileName { get { return fileName; } }
-            public string RSMessage { get; private set; }
+            public override string Message
+            {
+                get { return string.Format("Cannot find file {0} in any mix directory!", FileName); }
+            }
         }
         public class OverlayOutOfIndexException : ApplicationException
         {
@@ -25,6 +42,10 @@ namespace RelertSharp.Common
             public OverlayOutOfIndexException(string _x, string _y) { x = _x; y = _y; }
             public string X { get { return x; } }
             public string Y { get { return y; } }
+            public override string Message
+            {
+                get { return string.Format("Overlay is out of map! X: {0}, Y: {1}", X, Y); }
+            }
         }
         public class InvalidWaypointException : ApplicationException
         {

@@ -5,6 +5,8 @@ obj
 *.cache
 *.iobj
 *.ipdb
+*.application
+*.manifest
 packages
 _*.*
 *.dll

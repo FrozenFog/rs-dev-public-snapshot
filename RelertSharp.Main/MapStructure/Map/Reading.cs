@@ -15,6 +15,7 @@ namespace RelertSharp.MapStructure
 {
     public partial class Map
     {
+        private MapReadingMonitor Monitor { get { return GlobalVar.Monitor; } }
         private void ReadFromMapFile(MapFile f)
         {
             isomappack5String = f.PopEnt("IsoMapPack5").JoinString();
@@ -98,30 +99,72 @@ namespace RelertSharp.MapStructure
 
             foreach (INIPair p in entSmudge.DataList)
             {
-                string[] tmp = p.ParseStringList();
-                int x = int.Parse(tmp[1]);
-                int y = int.Parse(tmp[2]);
-                AddSmudge(tmp[0], x, y, IniParseBool(tmp[3]));
+                try
+                {
+                    string[] tmp = p.ParseStringList();
+                    int x = int.Parse(tmp[1]);
+                    int y = int.Parse(tmp[2]);
+                    AddSmudge(tmp[0], x, y, IniParseBool(tmp[3]));
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(p.Value, string.Empty, MapObjectType.Smudge, e);
+                }
             }
             foreach (INIPair p in entUnit.DataList)
             {
-                AddUnit(p.Name, p.ParseStringList());
+                try
+                {
+                    AddUnit(p.Name, p.ParseStringList());
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(p.Name, string.Empty, MapObjectType.Unit, e);
+                }
             }
             foreach (INIPair p in entInf.DataList)
             {
-                AddInfantry(p.Name, p.ParseStringList());
+                try
+                {
+                    AddInfantry(p.Name, p.ParseStringList());
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(p.Name, string.Empty, MapObjectType.Infantry, e);
+                }
             }
             foreach (INIPair p in entStructure.DataList)
             {
-                AddStructure(p.Name, p.ParseStringList());
+                try
+                {
+                    AddStructure(p.Name, p.ParseStringList());
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(p.Name, string.Empty, MapObjectType.Building, e);
+                }
             }
             foreach (INIPair p in entAircraft.DataList)
             {
-                AddAircraft(p.Name, p.ParseStringList());
+                try
+                {
+                    AddAircraft(p.Name, p.ParseStringList());
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(p.Name, string.Empty, MapObjectType.Aircraft, e);
+                }
             }
             foreach (INIPair p in entTerrain.DataList)
             {
-                AddTerrain(p.Name, p.Value);
+                try
+                {
+                    AddTerrain(p.Name, p.Value);
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(p.Name, p.Value, MapObjectType.Terrain, e);
+                }
             }
             foreach (INIPair p in entLight.DataList)
             {
@@ -137,19 +180,40 @@ namespace RelertSharp.MapStructure
             IniEntitySerializer serTeam = new IniEntitySerializer(typeof(TeamItem));
             foreach (string teamID in _teamList)
             {
-                TeamItem team = new TeamItem();
-                INIEntity ent = f.PopEnt(teamID);
-                serTeam.Deserialize(ent, team, false);
-                team.Residue = ent;
-                Teams[teamID] = team;
+                try
+                {
+                    TeamItem team = new TeamItem();
+                    INIEntity ent = f.PopEnt(teamID);
+                    serTeam.Deserialize(ent, team, false);
+                    team.Residue = ent;
+                    Teams[teamID] = team;
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(teamID, string.Empty, LogicType.Team, e);
+                }
             }
             foreach (string tfID in _taskforceList)
             {
-                Taskforces[tfID] = new TaskforceItem(f.PopEnt(tfID));
+                try
+                {
+                    Taskforces[tfID] = new TaskforceItem(f.PopEnt(tfID));
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(tfID, string.Empty, LogicType.Team, e);
+                }
             }
             foreach (string scptID in _scriptList)
             {
-                Scripts[scptID] = new TeamScriptGroup(f.PopEnt(scptID));
+                try
+                {
+                    Scripts[scptID] = new TeamScriptGroup(f.PopEnt(scptID));
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(scptID, string.Empty, LogicType.Script, e);
+                }
             }
 
             INIEntity _houseList = f.PopEnt("Houses");
@@ -159,31 +223,41 @@ namespace RelertSharp.MapStructure
             IniEntitySerializer serCon = new IniEntitySerializer(typeof(CountryItem));
             foreach (INIPair p in _countryList)
             {
-                CountryItem con = new CountryItem();
-                INIEntity ent = f.PopEnt(p.Value);
-                serCon.Deserialize(ent, con);
-                con.Residual = ent;
-                con.CountryNameChanged += CountryNameChanged;
-                Countries[p.Name] = con;
-                //CountryItem item = new CountryItem(f.PopEnt(p.Value));
-                //item.CountryNameChanged += CountryNameChanged;
-                ////if (string.IsNullOrEmpty(item.Name)) item.Name = p.Value;
-                //Countries[p.Name] = item;
+                try
+                {
+                    CountryItem con = new CountryItem();
+                    INIEntity ent = f.PopEnt(p.Value);
+                    serCon.Deserialize(ent, con);
+                    con.Residual = ent;
+                    con.CountryNameChanged += CountryNameChanged;
+                    Countries[p.Name] = con;
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(p.Name, p.Value, LogicType.Country, e);
+                }
             }
             foreach (INIPair p in _houseList)
             {
-                HouseItem item = new HouseItem(f.PopEnt(p.Value));
-                item.HouseNameChanged += HouseNameChanged;
-                foreach (BaseNode node in item.BaseNodes) AddObjectToTile(node);
-                Houses[p.Name] = item;
-
-                if (item.PlayerControl)
+                try
                 {
-                    CountryItem c = Countries.GetCountry(item.Country);
-                    if (c != null)
+                    HouseItem item = new HouseItem(f.PopEnt(p.Value));
+                    item.HouseNameChanged += HouseNameChanged;
+                    foreach (BaseNode node in item.BaseNodes) AddObjectToTile(node);
+                    Houses[p.Name] = item;
+
+                    if (item.PlayerControl)
                     {
-                        GlobalVar.PlayerSide = c.Side;
+                        CountryItem c = Countries.GetCountry(item.Country);
+                        if (c != null)
+                        {
+                            GlobalVar.PlayerSide = c.Side;
+                        }
                     }
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(p.Name, p.Value, LogicType.House, e);
                 }
             }
         }
@@ -203,41 +277,83 @@ namespace RelertSharp.MapStructure
 
             foreach (INIPair p in entTrigger.DataList)
             {
-                Triggers.ReadTriggerFromIni(p);
-                if (entEvent.DictData.Keys.Contains(p.Name))
+                try
                 {
-                    Triggers[p.Name].Events = new LogicGroup(entEvent.GetPair(p.Name), TriggerSubType.EventLogic);
+                    Triggers.ReadTriggerFromIni(p);
+                    if (entEvent.DictData.Keys.Contains(p.Name))
+                    {
+                        Triggers[p.Name].Events = new LogicGroup(entEvent.GetPair(p.Name), TriggerSubType.EventLogic);
+                    }
+                    if (entAction.DictData.Keys.Contains(p.Name))
+                    {
+                        Triggers[p.Name].Actions = new LogicGroup(entAction.GetPair(p.Name), TriggerSubType.ActionLogic);
+                    }
                 }
-                if (entAction.DictData.Keys.Contains(p.Name))
+                catch (Exception e)
                 {
-                    Triggers[p.Name].Actions = new LogicGroup(entAction.GetPair(p.Name), TriggerSubType.ActionLogic);
+                    Monitor.LogFatal(p.Name, string.Empty, LogicType.Trigger, e);
                 }
             }
             foreach (INIPair p in entVar.DataList)
             {
-                string[] tmp = p.ParseStringList();
-                LocalVariables[p.Name] = new LocalVarItem(tmp[0], IniParseBool(tmp[1]), p.Name);
+                try
+                {
+                    string[] tmp = p.ParseStringList();
+                    LocalVariables[p.Name] = new LocalVarItem(tmp[0], IniParseBool(tmp[1]), p.Name);
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(p.Name, string.Empty, LogicType.LocalVariable, e);
+                }
             }
             foreach (INIPair p in entAITrigger.DataList)
             {
-                AiTriggers[p.Name] = new AITriggerItem(p.Name, p.ParseStringList());
+                try
+                {
+                    AiTriggers[p.Name] = new AITriggerItem(p.Name, p.ParseStringList());
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(p.Name, string.Empty, LogicType.AiTrigger, e);
+                }
             }
             foreach (INIPair p in entAITriggerEnable.DataList)
             {
-                if (AiTriggers[p.Name] != null) AiTriggers[p.Name].Enabled = IniParseBool(p.Value);
-                AiTriggers.GlobalEnables[p.Name] = IniParseBool(p.Value);
+                try
+                {
+                    if (AiTriggers[p.Name] != null) AiTriggers[p.Name].Enabled = IniParseBool(p.Value);
+                    AiTriggers.GlobalEnables[p.Name] = IniParseBool(p.Value);
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(p.Name, string.Empty, LogicType.AiTrigger, e);
+                }
             }
             foreach (INIPair p in entCelltags.DataList)
             {
-                CellTagItem cell = new CellTagItem(p.Name, p.Value);
-                Celltags.AddObject(cell);
-                AddObjectToTile(cell);
+                try
+                {
+                    CellTagItem cell = new CellTagItem(p.Name, p.Value);
+                    Celltags.AddObject(cell);
+                    AddObjectToTile(cell);
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(p.Name, p.Value, MapObjectType.Celltag, e);
+                }
             }
             foreach (INIPair p in entWaypoints.DataList)
             {
-                WaypointItem w = new WaypointItem(p.Value, p.Name);
-                Waypoints.AddObject(w);
-                AddObjectToTile(w);
+                try
+                {
+                    WaypointItem w = new WaypointItem(p.Value, p.Name);
+                    Waypoints.AddObject(w);
+                    AddObjectToTile(w);
+                }
+                catch (Exception e)
+                {
+                    Monitor.LogFatal(p.Name, p.Value, MapObjectType.Waypoint, e);
+                }
             }
         }
         private void GetPreview(MapFile f)

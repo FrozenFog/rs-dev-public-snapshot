@@ -124,6 +124,9 @@
     <Compile Include="Dialogs\DlgLoading.xaml.cs">
       <DependentUpon>DlgLoading.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\DlgMonitorResult.xaml.cs">
+      <DependentUpon>DlgMonitorResult.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\DlgNampInput.xaml.cs">
       <DependentUpon>DlgNampInput.xaml</DependentUpon>
     </Compile>
@@ -134,7 +137,7 @@
       <DependentUpon>DlgTriggerListAddGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\Components.cs" />
-    <Compile Include="MainWindow\Hubs\AutoSave.cs" />
+    <Compile Include="MainWindow\Hubs\MainWindowUtil.cs" />
     <Compile Include="MainWindow\Hubs\LayoutManagerHub.cs" />
     <Compile Include="MainWindow\Menu.cs" />
     <Compile Include="MainWindow\Hubs\NavigationHub.cs" />
@@ -294,6 +297,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\DlgLoading.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DlgMonitorResult.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
