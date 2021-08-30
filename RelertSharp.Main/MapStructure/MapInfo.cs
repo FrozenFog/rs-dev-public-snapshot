@@ -99,6 +99,11 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Calls - MapInfo
+        public string Author
+        {
+            get { if (Basic.HasPair(Constant.KEY_AUTHOR)) return Basic[Constant.KEY_AUTHOR]; return string.Empty; }
+            set { Basic.SetPair(new INIPair(Constant.KEY_AUTHOR, value)); }
+        }
         public INIEntity Basic
         {
             get { return _basic; }

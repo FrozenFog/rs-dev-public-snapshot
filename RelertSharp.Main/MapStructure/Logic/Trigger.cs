@@ -33,6 +33,10 @@ namespace RelertSharp.MapStructure.Logic
                 data[p.Name] = new TriggerItem(p.Name, l[0], l[1], l[2], IniParseBool(l[3]), IniParseBool(l[4]), IniParseBool(l[5]), IniParseBool(l[6]), int.Parse(l[7]));
             }
         }
+        internal void Clear()
+        {
+            data.Clear();
+        }
         #endregion
 
 

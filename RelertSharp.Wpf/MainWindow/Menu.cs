@@ -86,7 +86,7 @@ namespace RelertSharp.Wpf
 
         private void DebugClick2(object sender, RoutedEventArgs e)
         {
-            EngineApi.DrawMapBorder();
+            
         }
         #endregion
 
@@ -205,6 +205,26 @@ namespace RelertSharp.Wpf
                 if (!success)
                 {
                     GuiUtil.Warning("Save failed, please try again.");
+                }
+            }
+        }
+        private void MenuEraseEverything(object sender, RoutedEventArgs e)
+        {
+            if (GuiUtil.YesNoWarning("Everything in map will be removed, include tiles.\nThis cannot be undone, are you sure?"))
+            {
+                DlgDangerousCommit dlg = new DlgDangerousCommit();
+                List<string> contents = new List<string>();
+                if (!GlobalVar.GlobalMap.Info.Author.IsNullOrEmpty()) contents.Add(string.Format("Map created by {0}", GlobalVar.GlobalMap.Info.Author));
+                contents.Add(GlobalVar.GlobalMap.Info.MapName);
+                dlg.SetContents(contents);
+                if (dlg.ShowDialog().Value)
+                {
+                    EngineApi.InvokeLock();
+                    EngineApi.DisposeAllObjects();
+                    GlobalVar.GlobalMap.VoidOut();
+                    GlobalVar.ForceReload();
+                    EngineApi.InvokeRedraw();
+                    EngineApi.InvokeUnlock();
                 }
             }
         }

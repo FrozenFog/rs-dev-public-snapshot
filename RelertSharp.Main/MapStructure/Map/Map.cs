@@ -79,8 +79,37 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - Map
+        /// <summary>
+        /// ERASE EVERYTHING
+        /// </summary>
+        public void VoidOut()
+        {
+            Infantries.Clear();
+            Units.Clear();
+            Aircrafts.Clear();
+            Buildings.Clear();
+            Overlays.Clear();
+            Terrains.Clear();
+            Smudges.Clear();
+            Celltags.Clear();
+            Waypoints.Clear();
+            Houses.Clear();
+            Countries.Clear();
+            Teams.Clear();
+            Triggers.Clear();
+            AiTriggers.Clear();
+            Taskforces.Clear();
+            Tags.Clear();
+            Scripts.Clear();
+            LocalVariables.Clear();
+            TilesData.VoidOut();
 
-
+            // house & country
+            CountryItem c = CountryItem.CreateEmpty(GlobalRules.GetFirstCountry());
+            Countries["0"] = c;
+            HouseItem h = HouseItem.FromCountry(c);
+            Houses["0"] = h;
+        }
         public I3dLocateable ReferanceDeltaCell(I2dLocateable originalLocation, I2dLocateable groundDelta)
         {
             Pnt3 result = new Pnt3(groundDelta.X, groundDelta.Y, 0);
@@ -159,6 +188,7 @@ namespace RelertSharp.MapStructure
 
         #region Public Calls - Map
         public IEnumerable<ICombatObject> AllCombatObjects { get { return Infantries.Union<ICombatObject>(Aircrafts).Union(Buildings).Union(Units); } }
+        public IEnumerable<IMapObject> AllMapObject { get { return AllCombatObjects.Union<IMapObject>(Terrains).Union(Overlays).Union(Smudges).Union(Waypoints).Union(Celltags); } }
         public IEnumerable<IChecksum> AllChecksum
         {
             get

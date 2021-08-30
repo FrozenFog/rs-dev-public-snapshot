@@ -24,6 +24,10 @@ namespace RelertSharp.MapStructure.Logic
         {
             return data.ContainsValue(Value);
         }
+        internal virtual void Clear()
+        {
+            data.Clear();
+        }
         #endregion
 
 

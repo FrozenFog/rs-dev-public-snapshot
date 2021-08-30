@@ -62,6 +62,10 @@ namespace RelertSharp.MapStructure
             byte[] format80Pack = PackEncoding.EncodeToPack(preCompress, PackType.OverlayPack);
             return Convert.ToBase64String(format80Pack);
         }
+        internal void Clear()
+        {
+            data.Clear();
+        }
         #region Enumerator
         public IEnumerator<OverlayUnit> GetEnumerator()
         {

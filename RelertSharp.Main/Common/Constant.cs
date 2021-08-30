@@ -38,6 +38,7 @@ namespace RelertSharp.Common
         public const string KEY_IMAGE = "Image";
         public const string KEY_ALPHA = "AlphaImage";
         public const string KEY_NAME = "Name";
+        public const string KEY_AUTHOR = "Author";
         public const string KEY_CUSPAL = "CustomPalette";
         public const string KEY_NEXTANIM = "Next";
         public const string KEY_TRAILER = "TrailerAnim";

@@ -53,7 +53,7 @@
                 <MenuItem Header="Randomize Brush" Click="MenuRandomBrushDlg" IsEnabled="{Binding IsEngineDrawed}"/>
                 <MenuItem Header="Save Map Render Picture" Click="MenuSaveShot" IsEnabled="{Binding IsEngineDrawed}"/>
                 <Separator/>
-                <MenuItem Header="Clear Map" IsEnabled="{Binding IsEngineDrawed}"/>
+                <MenuItem Header="Clear Map" IsEnabled="{Binding IsEngineDrawed}" Click="MenuEraseEverything"/>
             </MenuItem>
             <MenuItem Header="Tiles" IsEnabled="{Binding IsEngineDrawed}">
                 <MenuItem Header="Box Selecting" IsCheckable="True" IsChecked="{Binding IsBoxTileSelecting}"/>

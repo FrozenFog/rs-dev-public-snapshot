@@ -94,6 +94,10 @@ namespace RelertSharp.Engine.Api
             CppExtern.Scene.ClearSceneObjects();
             MapDrawed = false;
         }
+        public static void DisposeAllObjects()
+        {
+            CppExtern.Scene.ClearSceneObjects();
+        }
         private static void RegistDrawingProgress()
         {
             ProgressRegisted?.Invoke("Tiles", Map.TilesData.Count(), MapObjectType.Tile);

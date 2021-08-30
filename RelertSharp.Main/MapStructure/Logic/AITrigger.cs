@@ -38,6 +38,10 @@ namespace RelertSharp.MapStructure.Logic
             if (!data.ContainsKey(ID)) return false;
             return data.Remove(ID);
         }
+        internal void Clear()
+        {
+            data.Clear();
+        }
         #endregion
 
         #region Public Calls - AITriggerCollection

@@ -78,6 +78,12 @@ namespace RelertSharp.MapStructure
 
 
         #region Public Methods - TileLayer
+        #region Etc
+        internal void VoidOut()
+        {
+            foreach (Tile t in this) t.VoidOut();
+        }
+        #endregion
         #region Tile finding
         public IEnumerable<Tile> GetNeighbor(I2dLocateable src)
         {
@@ -712,6 +718,13 @@ namespace RelertSharp.MapStructure
                 hash = hash * 53 + IceGrowth;
                 return hash;
             }
+        }
+        internal void VoidOut()
+        {
+            objectsOnTile.Clear();
+            TileIndex = SubIndex = Height = 0;
+            originalHeight = 0;
+            Redraw();
         }
         #endregion
 

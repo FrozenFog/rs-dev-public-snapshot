@@ -26,23 +26,10 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - TagCollection
-        ///// <summary>
-        ///// return a tag with certain trigger id, return null tag if not found
-        ///// </summary>
-        ///// <param name="triggerID"></param>
-        ///// <returns></returns>
-        //public List<TagItem> GetTagFromTrigger(string triggerID, TriggerItem item = null)
-        //{
-        //    if (triggerID == "TEMPLATE") return new List<TagItem>(new TagItem[] { new TagItem(item, "TGMPLATE") });
-        //    List<TagItem> ret = new List<TagItem>();
-        //    if (trigger_tag.ContainsKey(triggerID))
-        //        foreach (var i in trigger_tag[triggerID])
-        //            ret.Add(data[i]);
-        //    return
-        //        ret.Count > 0
-        //        ? ret
-        //        : new List<TagItem>(new TagItem[] { new TagItem("xxxxxxxx", new string[3] { "0", "!NO AVAIABLE TAG!", "<none>" }) });
-        //}
+        internal void Clear()
+        {
+            data.Clear();
+        }
 
         #region Curd
         //public void Remove(TagItem t, string triggerid)

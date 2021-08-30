@@ -50,6 +50,10 @@ namespace RelertSharp.MapStructure.Points
         {
             return data.Keys.Contains(item.Id);
         }
+        internal void Clear()
+        {
+            data.Clear();
+        }
         #endregion
 
 

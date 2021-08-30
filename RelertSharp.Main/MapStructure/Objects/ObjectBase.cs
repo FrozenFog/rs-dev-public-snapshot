@@ -37,6 +37,10 @@ namespace RelertSharp.MapStructure.Objects
                 }
             }
         }
+        internal virtual void Clear()
+        {
+            data.Clear();
+        }
         #endregion
 
 

@@ -27,6 +27,10 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Public Methods - LocalVarCollection
+        internal void Clear()
+        {
+            data.Clear();
+        }
         /// <summary>
         /// id is obsoleted
         /// </summary>

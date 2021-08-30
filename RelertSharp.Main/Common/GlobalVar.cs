@@ -23,6 +23,10 @@ namespace RelertSharp.Common
                 return null;
             }
         }
+        public static void ForceReload()
+        {
+            MapDocumentLoaded?.Invoke();
+        }
         public static bool HasMap { get { return GlobalMap != null; } }
         public static void SaveMapDocument(string path)
         {
