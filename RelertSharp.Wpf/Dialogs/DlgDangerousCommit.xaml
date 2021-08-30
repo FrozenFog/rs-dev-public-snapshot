@@ -5,23 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RelertSharp.Wpf.Dialogs"
         mc:Ignorable="d"
-        Title="Commit Console" Background="{DynamicResource dimBack}" Height="200.8" Width="345.6" 
-        ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterOwner">
+        Title="Commit Console" Background="{DynamicResource dimBack}" 
+        ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterOwner" 
+        SizeToContent="WidthAndHeight">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="8*"/>
+            <RowDefinition/>
             <RowDefinition Height="23"/>
-            <RowDefinition />
+            <RowDefinition Height="10" />
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Enter following text to commit your action." VerticalAlignment="Top"/>
-        <TextBlock x:Name="content" HorizontalAlignment="Center" Text="TextBlock" VerticalAlignment="Center" FontSize="20" Grid.Row="1"/>
+        <Grid Grid.Row="1" Margin="0,20,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="content" HorizontalAlignment="Center" Text="TextBlock" VerticalAlignment="Center" 
+                       FontSize="20" Grid.Column="1"/>
+        </Grid>
         <TextBox x:Name="txbContent" Grid.Row="2" Margin="50,0,50,0" TextChanged="InputChanged"/>
         <Grid Grid.Row="4" Margin="25,0,25,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
-                <ColumnDefinition/>
+                <ColumnDefinition MinWidth="50"/>
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="btnCommit" IsEnabled="False" Grid.Column="0" Margin="10,0,10,0" Content="Commit" Click="Commit"/>
