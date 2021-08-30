@@ -10,7 +10,8 @@
         <ViewModel:GlobalTriggerVm/>
     </UserControl.DataContext>
     <Grid>
-        <TreeView x:Name="trvMain" Margin="10,10,10,10" AllowDrop="True" Style="{DynamicResource trvDark}" DragOver="TrgDragOver" Drop="TrgDragDrop" MouseMove="DragMouseMove" PreviewMouseRightButtonDown="PreviewRightDown" SelectedItemChanged="SelectedItemChanged" MouseLeave="DragMouseLeave">
+        <TreeView x:Name="trvMain" Margin="10,10,10,10" AllowDrop="True" Style="{DynamicResource trvDark}" MouseMove="DragMouseMove" 
+                  PreviewMouseRightButtonDown="PreviewRightDown" SelectedItemChanged="SelectedItemChanged" MouseLeave="DragMouseLeave">
             <TreeView.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#0078D7" />
             </TreeView.Resources>
@@ -23,20 +24,28 @@
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type ViewModel:TriggerTreeItemVm}" ItemsSource="{Binding Items}">
                     <StackPanel Orientation="Horizontal" PreviewMouseDown="DragMouseDown" MouseUp="DragMouseUp">
+                        <StackPanel.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Add trigger" Click="Menu_AddTrigger"/>
+                                <MenuItem Header="Copy trigger" Click="Menu_CopyTrigger" IsEnabled="{Binding IsNotTree}"/>
+                                <MenuItem Header="Delete trigger" Click="Menu_DeleteTrigger" IsEnabled="{Binding IsNotTree}"/>
+                                <Separator/>
+                                <MenuItem Header="Add trigger group" Click="Menu_AddGroup"/>
+                                <MenuItem Header="Rename trigger group" Click="Menu_RenameGroup" IsEnabled="{Binding IsTree}"/>
+                                <MenuItem Header="Delete trigger group" Click="Menu_DeleteGroup" IsEnabled="{Binding IsTree}"/>
+                                <Separator/>
+                                <MenuItem Header="Move to root" Click="Menu_MoveToRoot"/>
+                            </ContextMenu>
+                        </StackPanel.ContextMenu>
                         <Image Source="{Binding HeadImg}" Margin="3" Width="10" Height="10" Stretch="Fill"/>
-                        <TextBlock Text="{Binding Title}"/>
+                        <TextBlock Text="{Binding Title}" AllowDrop="True" Drop="TrgDragDrop"/>
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
             <TreeView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add trigger" Click="Menu_AddTrigger"/>
-                    <MenuItem Name="menuCopyTrg" Header="Copy trigger" Click="Menu_CopyTrigger"/>
-                    <MenuItem Name="menuDelTrg" Header="Delete trigger" Click="Menu_DeleteTrigger"/>
-                    <Separator/>
                     <MenuItem Header="Add trigger group" Click="Menu_AddGroup"/>
-                    <MenuItem Name="menuRenameGrp" Header="Rename trigger group" Click="Menu_RenameGroup"/>
-                    <MenuItem Name="menuDelGrp" Header="Delete trigger group" Click="Menu_DeleteGroup"/>
                     <Separator/>
                     <MenuItem Header="Ascending sort" Click="Menu_Ascending"/>
                     <MenuItem Header="Descending sort" Click="Menu_Descending"/>

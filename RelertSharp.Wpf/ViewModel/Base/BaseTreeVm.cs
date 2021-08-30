@@ -148,6 +148,7 @@ namespace RelertSharp.Wpf.ViewModel
             }
         }
         public virtual bool IsTree { get { return data == null; } }
+        public virtual bool IsNotTree { get { return !IsTree; } }
         public bool IsRoot { get { return Ancestor == null; } }
         public ObservableCollection<IBaseTreeVm<TData>> Items { get; set; } = new ObservableCollection<IBaseTreeVm<TData>>();
         protected string _title;

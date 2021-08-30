@@ -40,11 +40,7 @@ namespace RelertSharp.Wpf.Views
         {
             InitializeComponent();
             DataContext = GlobalCollectionVm.Triggers;
-            _dragTimer = new DispatcherTimer()
-            {
-                Interval = new TimeSpan(0, 0, 0, 0, DRAG_INTERVAL)
-            };
-            _dragTimer.Tick += DragTimerTick;
+            dragDrop = new DragDropHelper<TriggerTreeItemVm, TriggerTreeItemVm>(trvMain);
             NavigationHub.GoToTriggerRequest += SelectItem;
             NavigationHub.BindTriggerList(this);
             GlobalVar.MapDocumentLoaded += MapReloadedHandler;
@@ -63,6 +59,12 @@ namespace RelertSharp.Wpf.Views
         private void MapReloadedHandler()
         {
             ReloadMapTrigger();
+        }
+
+        private TriggerTreeItemVm GetVm(object sender)
+        {
+            if (sender is FrameworkElement elem && elem.DataContext is TriggerTreeItemVm vm) return vm;
+            return null;
         }
         #endregion
 
@@ -186,50 +188,22 @@ namespace RelertSharp.Wpf.Views
         }
         private void PreviewMenuShowing()
         {
-            if (SelectedItem != null)
-            {
-                bool b = SelectedItem.IsTree;
-                menuCopyTrg.IsEnabled = !b;
-                menuDelTrg.IsEnabled = !b;
-                menuDelGrp.IsEnabled = b;
-                menuRenameGrp.IsEnabled = b;
-            }
-            else
-            {
-                menuCopyTrg.IsEnabled = false;
-                menuDelTrg.IsEnabled = false;
-                menuDelGrp.IsEnabled = false;
-                menuRenameGrp.IsEnabled = false;
-            }
+
         }
         #endregion
 
 
         #region DragDrop
-        private bool isDraging = false;
-        private Point prevMouseDown;
-        private TriggerTreeItemVm dragItem;
-        private void TrgDragOver(object sender, DragEventArgs e)
-        {
-            Point current = e.GetPosition(trvMain);
-            if (RsMath.ChebyshevDistance(current, prevMouseDown) > 10)
-            {
-                TriggerTreeItemVm src = GetItemOnDrag(e);
-                if (src == null) e.Effects = DragDropEffects.Scroll;
-                else if (src.Title != dragItem.Title) e.Effects = DragDropEffects.Move;
-                else e.Effects = DragDropEffects.None;
-            }
-            e.Handled = true;
-        }
+        private DragDropHelper<TriggerTreeItemVm, TriggerTreeItemVm> dragDrop;
 
         private void TrgDragDrop(object sender, DragEventArgs e)
         {
-            e.Effects = DragDropEffects.None;
-            e.Handled = true;
-            TriggerTreeItemVm target = GetItemOnDrag(e);
-            if (dragItem != null)
+            IDataObject data = new DataObject();
+            data = e.Data;
+            if (data.GetData(typeof(TriggerTreeItemVm)) is TriggerTreeItemVm dragItem && 
+                (sender as FrameworkElement).DataContext is TriggerTreeItemVm target)
             {
-                if (target != null && target.Title != dragItem.Title && !target.IsDescendantOf(dragItem))
+                if (target != null && !target.IsEqualWith(dragItem) && !target.IsDescendantOf(dragItem))
                 {
                     bool sameAncestor = !target.IsTree && (dragItem.Ancestor == target.Ancestor);
                     // remove from ancestor: anything other than a root, and they share same ancestor
@@ -252,44 +226,29 @@ namespace RelertSharp.Wpf.Views
                     trvMain.Items.Add(dragItem);
                 }
             }
-            isDraging = false;
         }
 
         private void DragMouseMove(object sender, MouseEventArgs e)
         {
-            if (isDraging && e.LeftButton == MouseButtonState.Pressed)
+            if (dragDrop.IsDraging && e.LeftButton == MouseButtonState.Pressed)
             {
                 Point current = e.GetPosition(trvMain);
-                if (RsMath.ChebyshevDistance(current, prevMouseDown) > 10)
-                {
-                    //dragItem = trvMain.SelectedItem as TriggerTreeItemVm;
-                    if (dragItem != null)
-                    {
-                        DataObject obj = new DataObject(dragItem);
-                        DragDropEffects effect = DragDrop.DoDragDrop(trvMain, obj, DragDropEffects.Move);
-                    }
-                }
+                dragDrop.MouseMoveDrag(current);
             }
         }
 
         private void DragMouseLeave(object sender, MouseEventArgs e)
         {
-            if (isDraging)
-            {
-                isDraging = false;
-            }
+            dragDrop.EndDrag();
         }
 
-        private DispatcherTimer _dragTimer;
-        private const int DRAG_INTERVAL = 200;
         private void DragMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                _dragTimer.Stop();
-                _dragTimer.Start();
-                prevMouseDown = e.GetPosition(trvMain);
-                dragItem = GetItemAtMouse(trvMain, e);
+                dragDrop.BeginDrag(e.GetPosition(trvMain));
+                dragDrop.SetReferanceVm(GetItemAtMouse(trvMain, e));
+                dragDrop.SetDragItem(dragDrop.ReferanceVm);
                 e.Handled = true;
             }
         }
@@ -297,21 +256,9 @@ namespace RelertSharp.Wpf.Views
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                _dragTimer.Stop();
-                if (!isDraging && dragItem != null) dragItem.IsSelected = true;
-                else isDraging = false;
+                dragDrop.EndDrag();
+                if (dragDrop.ReferanceVm != null) dragDrop.ReferanceVm.IsSelected = true;
             }
-        }
-        private void DragTimerTick(object sender, EventArgs e)
-        {
-            _dragTimer.Stop();
-            isDraging = true;
-        }
-
-        private TriggerTreeItemVm GetItemOnDrag(DragEventArgs e)
-        {
-            if (!(e.OriginalSource is TextBlock b)) return null;
-            return b.DataContext as TriggerTreeItemVm;
         }
         #endregion
 
@@ -323,15 +270,11 @@ namespace RelertSharp.Wpf.Views
             {
                 TriggerTreeItemVm group = new TriggerTreeItemVm();
                 group.SetTitle(addGroup.ResultName);
-                if (trvMain.SelectedItem is TriggerTreeItemVm ancestor)
+                if (GetVm(sender) is TriggerTreeItemVm target)
                 {
-                    if (addGroup.IsRoot) trvMain.Items.Add(group);
-                    else
-                    {
-                        if (ancestor.IsTree) ancestor.AddItem(group);
-                        else if (!ancestor.IsRoot) ancestor.Ancestor.AddItem(group);
-                        else trvMain.Items.Add(group);
-                    }
+                    if (target.IsTree) target.AddItem(group);
+                    else if (!target.IsRoot) target.Ancestor.AddItem(group);
+                    else trvMain.Items.Add(group);
                 }
                 else trvMain.Items.Add(group);
                 group.IsSelected = true;
@@ -341,14 +284,14 @@ namespace RelertSharp.Wpf.Views
 
         private void Menu_DeleteTrigger(object sender, RoutedEventArgs e)
         {
-            TriggerTreeItemVm item = SelectedItem;
-            TriggerItem trigger = item.Data;
-            if (map.RemoveTrigger(trigger))
+            if (GetVm(sender) is TriggerTreeItemVm item && item.Data is TriggerItem trigger)
             {
-                if (item.IsRoot) trvMain.Items.Remove(item);
-                else item.RemoveFromAncestor();
+                if (map.RemoveTrigger(trigger))
+                {
+                    if (item.IsRoot) trvMain.Items.Remove(item);
+                    else item.RemoveFromAncestor();
+                }
             }
-
         }
 
         private void Menu_DeleteGroup(object sender, RoutedEventArgs e)
@@ -364,24 +307,38 @@ namespace RelertSharp.Wpf.Views
                     map.RemoveTrigger(tree.Data);
                 }
             }
-            if (GuiUtil.YesNoWarning("All child trigger and associated tag will be deleted.\nAre you sure?"))
+            if (GetVm(sender) is TriggerTreeItemVm item)
             {
-                TriggerTreeItemVm item = SelectedItem;
-                remove(item);
-                if (item.IsRoot) trvMain.Items.Remove(item);
-                else item.RemoveFromAncestor();
+                if (GuiUtil.YesNoWarning("All child trigger and associated tag will be deleted.\nAre you sure?"))
+                {
+                    remove(item);
+                    if (item.IsRoot) trvMain.Items.Remove(item);
+                    else item.RemoveFromAncestor();
+                }
             }
         }
 
         private void Menu_RenameGroup(object sender, RoutedEventArgs e)
         {
-            DlgNameInput dlg = new DlgNameInput("Group name")
+            if (GetVm(sender) is TriggerTreeItemVm vm)
             {
-                InitialName = SelectedItem.Title
-            };
-            if (dlg.ShowDialog().Value)
+                DlgNameInput dlg = new DlgNameInput("Group name")
+                {
+                    InitialName = vm.Title
+                };
+                if (dlg.ShowDialog().Value)
+                {
+                    vm.SetTitle(dlg.ResultName);
+                }
+            }
+        }
+
+        private void Menu_MoveToRoot(object sender, RoutedEventArgs e)
+        {
+            if (GetVm(sender) is TriggerTreeItemVm vm && !vm.IsRoot)
             {
-                SelectedItem.SetTitle(dlg.ResultName);
+                vm.RemoveFromAncestor();
+                trvMain.Items.Add(vm);
             }
         }
 
@@ -394,9 +351,13 @@ namespace RelertSharp.Wpf.Views
                 trigger.Owner = map.Countries.First().Name;
                 TriggerTreeItemVm vm = new TriggerTreeItemVm(trigger);
 
-                if (SelectedItem == null || (!SelectedItem.IsTree && SelectedItem.IsRoot)) trvMain.Items.Add(vm);
-                else if (SelectedItem.IsTree) SelectedItem.AddItem(vm);
-                else if (!SelectedItem.IsTree && !SelectedItem.IsRoot) SelectedItem.Ancestor.AddItem(vm);
+                if (GetVm(sender) is TriggerTreeItemVm target)
+                {
+                    if (target.IsTree) target.AddItem(vm);
+                    else if (!target.IsRoot) target.Ancestor.AddItem(vm);
+                    else trvMain.Items.Add(vm);
+                }
+                else trvMain.Items.Add(vm);
                 vm.IsSelected = true;
                 vm.ExpandAllAncestor();
             }
@@ -404,13 +365,13 @@ namespace RelertSharp.Wpf.Views
 
         private void Menu_CopyTrigger(object sender, RoutedEventArgs e)
         {
-            if (SelectedItem != null && !SelectedItem.IsTree)
+            if (GetVm(sender) is TriggerTreeItemVm item)
             {
-                TriggerItem copy = map.AddTrigger(SelectedItem.Data);
+                TriggerItem copy = map.AddTrigger(item.Data);
                 TriggerTreeItemVm vm = new TriggerTreeItemVm(copy);
 
-                if (SelectedItem.IsRoot) trvMain.Items.Add(vm);
-                else SelectedItem.Ancestor.AddItem(vm);
+                if (item.IsRoot) trvMain.Items.Add(vm);
+                else item.Ancestor.AddItem(vm);
 
                 vm.IsSelected = true;
                 vm.ExpandAllAncestor();

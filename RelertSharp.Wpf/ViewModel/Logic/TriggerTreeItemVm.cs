@@ -105,5 +105,14 @@ namespace RelertSharp.Wpf.ViewModel
         {
             get { if (Data != null) return Data.Name; return _title; }
         }
+        public bool IsEqualWith(TriggerTreeItemVm target)
+        {
+            if (target.IsTree && IsTree) return target.Title == Title;
+            else if (!target.IsTree && !IsTree)
+            {
+                return target.Data.ExtractParameter().Equals(Data.ExtractParameter());
+            }
+            else return false;
+        }
     }
 }
