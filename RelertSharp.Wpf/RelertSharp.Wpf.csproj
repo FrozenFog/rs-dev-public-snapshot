@@ -99,6 +99,9 @@
     <Compile Include="Dialogs\DlgCreateMap.xaml.cs">
       <DependentUpon>DlgCreateMap.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\DlgDangerousCommit.xaml.cs">
+      <DependentUpon>DlgDangerousCommit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\DlgIniInspector.xaml.cs">
       <DependentUpon>DlgIniInspector.xaml</DependentUpon>
     </Compile>
@@ -260,6 +263,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\DlgCreateMap.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DlgDangerousCommit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -48,6 +48,19 @@ namespace RelertSharp.MapStructure.Logic
             residual = ent.DictData;
             initialized = true;
         }
+        internal CountryItem(string name)
+        {
+            Name = name;
+            INIEntity src = GlobalVar.GlobalRules.GetFirstCountry();
+            Side = src.GetString("Side");
+            ColorName = src.GetString("Color");
+            Prefix = src.GetString("Prefix");
+            Suffix = src.GetString("Suffix");
+            ParentCountryName = src.Name;
+            SmartAi = true;
+            residual = new Dictionary<string, INIPair>();
+            initialized = true;
+        }
         public CountryItem() { initialized = true; }
         public static CountryItem ParseFromRules(INIEntity src)
         {

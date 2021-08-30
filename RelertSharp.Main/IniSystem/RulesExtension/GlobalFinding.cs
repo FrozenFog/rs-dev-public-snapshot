@@ -1,4 +1,7 @@
-﻿using static RelertSharp.Common.GlobalVar;
+﻿using RelertSharp.Common;
+using RelertSharp.MapStructure.Logic;
+using System.Linq;
+using static RelertSharp.Common.GlobalVar;
 
 namespace RelertSharp.IniSystem
 {
@@ -9,6 +12,11 @@ namespace RelertSharp.IniSystem
             if (!r.HasIniEnt(regid)) return GlobalCsf[regid].ContentString;
             string uiname = r[regid]["UIName"];
             return GlobalCsf[uiname].ContentString;
+        }
+        public static INIEntity GetFirstCountry(this Rules r)
+        {
+            INIEntity lsCountry = r[Constant.RulesHead.HEAD_COUNTRY];
+            return r[lsCountry.First().Value];
         }
     }
 }

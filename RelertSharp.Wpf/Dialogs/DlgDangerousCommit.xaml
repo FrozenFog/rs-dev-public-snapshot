@@ -1,0 +1,31 @@
+﻿<Window x:Class="RelertSharp.Wpf.Dialogs.DlgDangerousCommit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RelertSharp.Wpf.Dialogs"
+        mc:Ignorable="d"
+        Title="Commit Console" Background="{DynamicResource dimBack}" Height="200.8" Width="345.6" 
+        ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="23"/>
+            <RowDefinition />
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Enter following text to commit your action." VerticalAlignment="Top"/>
+        <TextBlock x:Name="content" HorizontalAlignment="Center" Text="TextBlock" VerticalAlignment="Center" FontSize="20" Grid.Row="1"/>
+        <TextBox x:Name="txbContent" Grid.Row="2" Margin="50,0,50,0" TextChanged="InputChanged"/>
+        <Grid Grid.Row="4" Margin="25,0,25,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnCommit" IsEnabled="False" Grid.Column="0" Margin="10,0,10,0" Content="Commit" Click="Commit"/>
+            <Button Grid.Column="2" Margin="10,0,10,0" Content="Abort" Click="Abort"/>
+        </Grid>
+    </Grid>
+</Window>

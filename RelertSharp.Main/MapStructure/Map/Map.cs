@@ -69,8 +69,7 @@ namespace RelertSharp.MapStructure
             }
             else
             {
-                INIEntity lsCountry = GlobalRules[Constant.RulesHead.HEAD_COUNTRY];
-                CountryItem c = CountryItem.CreateEmpty(GlobalRules[lsCountry.First().Value]);
+                CountryItem c = CountryItem.CreateEmpty(GlobalRules.GetFirstCountry());
                 Countries["0"] = c;
                 HouseItem h = HouseItem.FromCountry(c);
                 Houses["0"] = h;

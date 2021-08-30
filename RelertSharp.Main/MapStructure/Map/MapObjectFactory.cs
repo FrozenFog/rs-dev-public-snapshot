@@ -100,6 +100,35 @@ namespace RelertSharp.MapStructure
 
 
         #region House & Country
+        public void AddHouse(string houseName, out HouseItem house, out CountryItem country)
+        {
+            CountryItem c = new CountryItem(houseName);
+            HouseItem h = HouseItem.FromCountry(c);
+            bool bCountry = false, bHouse = false;
+            for (int i = 0; !bCountry || !bHouse; i++)
+            {
+                string id = i.ToString();
+                if (!bCountry && !Countries.AllId.Contains(id))
+                {
+                    Countries[id] = c;
+                    bCountry = true;
+                }
+                if (!bHouse && Houses.AllId.Contains(id))
+                {
+                    Houses[id] = h;
+                    bHouse = true;
+                }
+            }
+            house = h;
+            country = c;
+        }
+        public bool RemoveHouse(HouseItem house)
+        {
+            Houses.Remove(house.Id);
+            CountryItem c = Countries.GetCountry(house.Country);
+            Countries.Remove(c.Id);
+            return true;
+        }
         /// <summary>
         /// Only used by listener
         /// </summary>

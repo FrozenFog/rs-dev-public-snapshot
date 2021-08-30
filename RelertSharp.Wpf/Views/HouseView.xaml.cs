@@ -17,6 +17,7 @@ using RelertSharp.IniSystem;
 using RelertSharp.MapStructure;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Wpf.Common;
+using RelertSharp.Wpf.Dialogs;
 using RelertSharp.Wpf.ViewModel;
 
 namespace RelertSharp.Wpf.Views
@@ -29,6 +30,8 @@ namespace RelertSharp.Wpf.Views
         public GuiViewType ViewType => GuiViewType.HousePanel;
         public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
         public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
+        private HouseListVm SelectedHouse { get { return lbxHouse.SelectedItem as HouseListVm; } }
+        private Map Map { get { return GlobalVar.GlobalMap; } }
 
         public CountryHouseView()
         {
@@ -132,5 +135,40 @@ namespace RelertSharp.Wpf.Views
         #endregion
 
         #endregion
+
+        private void PrevRightDown(object sender, MouseButtonEventArgs e)
+        {
+            bool hasItem = SelectedHouse != null;
+            menuRemove.IsEnabled = hasItem;
+        }
+
+        private void Menu_AddHouse(object sender, RoutedEventArgs e)
+        {
+            DlgNameInput dlg = new DlgNameInput("House name");
+            if (dlg.ShowDialog().Value)
+            {
+                Map.AddHouse(dlg.ResultName, out HouseItem h, out CountryItem c);
+                HouseListVm listvm = new HouseListVm(h);
+                lbxHouse.Items.Add(listvm);
+            }
+        }
+
+        private void Menu_RemoveHouse(object sender, RoutedEventArgs e)
+        {
+            if (GuiUtil.YesNoWarning("Remove a house may cause unexpected error.\nMake sure you know how many items referanced this house.\nAre you sure to remove?"))
+            {
+                DlgDangerousCommit commit = new DlgDangerousCommit(SelectedHouse.Data.Name);
+                if (commit.ShowDialog().Value)
+                {
+                    Map.RemoveHouse(SelectedHouse.Data);
+                    lbxHouse.Items.Remove(SelectedHouse);
+                }
+            }
+        }
+
+        private void AlliesDelDown(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }
