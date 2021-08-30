@@ -44,15 +44,19 @@ namespace RelertSharp.Wpf
                 ShutdownMode = ShutdownMode.OnExplicitShutdown
             };
             application.InitializeComponent();
+#if RELEASE
             try
             {
+#endif
                 application.Run();
-            }
+#if RELEASE
+        }
             catch (Exception e)
             {
                 GuiUtil.Fatal("Unexpected Error!\nMap will save as backup.map\n", e);
                 GlobalVar.CurrentMapDocument?.SaveMapAs("backup.map");
             }
+#endif
             Finalization();
         }
 
@@ -100,7 +104,7 @@ namespace RelertSharp.Wpf
         {
             GlobalVar.GlobalConfig?.UserConfig?.Save();
         }
-        #region Validate
+#region Validate
         private bool Validate(out bool setupMw)
         {
             setupMw = false;
@@ -133,8 +137,8 @@ namespace RelertSharp.Wpf
                 return false;
             }
         }
-        #endregion
-        #region Initialization
+#endregion
+#region Initialization
         private async Task Initialization()
         {
             await Task.Run(() =>
@@ -209,7 +213,7 @@ namespace RelertSharp.Wpf
             }
             else GlobalVar.GlobalCsf = new CsfFile();
         }
-        #endregion
+#endregion
         private bool NoWinXP()
         {
             if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major < 6)

@@ -13,10 +13,10 @@ namespace RelertSharp.Common
             {
                 string v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 #if DEBUG
-                string type = "DEBUG ver";
+                string type = "Relert Sharp - DEBUG";
 #endif
 #if RELEASE
-                string type = "RELEASE ver";
+                string type = "Relert Sharp - Preview Version";
 #endif
                 string r = string.Format("{0} {1}", type, v);
                 return r;

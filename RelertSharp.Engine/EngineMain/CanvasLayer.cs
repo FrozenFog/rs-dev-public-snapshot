@@ -53,7 +53,7 @@ namespace RelertSharp.Engine
         {
             movableArea = null;
             visibleArea = null;
-            cnvMain.Children.Clear();
+            cnvMain?.Children.Clear();
         }
         public static void DrawMapBorder(int mapWidth, System.Drawing.Rectangle visArea)
         {

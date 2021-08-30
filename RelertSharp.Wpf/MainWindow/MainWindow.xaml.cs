@@ -46,9 +46,13 @@ namespace RelertSharp.Wpf
             DataContext = new MainWindowVm(tiles);
             GlobalVar.MapLoadComplete += HandleMapLoaded;
             GlobalVar.MapDisposed += HandleMapDisposed;
+#if RELEASE
+            menuMain.Items.Remove(DEBUG);
+            Title = Constant.VersionInfo;
+#endif
         }
 
-        #region Initialization
+#region Initialization
         private void InitializeGuiStatus()
         {
             if (GlobalVar.GlobalConfig.UserConfig.IsGuiValid())
@@ -102,9 +106,9 @@ namespace RelertSharp.Wpf
                 }
             }
         }
-        #endregion
+#endregion
 
-        #region Reciver Logics
+#region Reciver Logics
         private void HandleMapDisposed()
         {
             AutoSave.SuspendAutoSave();
@@ -167,7 +171,7 @@ namespace RelertSharp.Wpf
             pnlMain.MousePosChanged += PnlMain_MousePosChanged;
             pnlMain.ScaleFactorChanged += PnlMain_ScaleFactorChanged;
         }
-        #endregion
+#endregion
 
         private void RedrawRequestHandler(object sender, EventArgs e)
         {
@@ -192,7 +196,7 @@ namespace RelertSharp.Wpf
             position.Text = string.Format("X: {0} Y: {1} Z: {2} Subcell: {4}, Scale: {3:0.#}", posMouse.X, posMouse.Y, posMouse.Z, Engine.Api.EngineApi.ScaleFactor, subcell);
         }
 
-        #region Save
+#region Save
         /// <summary>
         /// 
         /// </summary>
@@ -239,10 +243,10 @@ namespace RelertSharp.Wpf
                 SaveAs();
             }
         }
-        #endregion
+#endregion
 
-        #region Handler
-        #region Loaded & Closed
+#region Handler
+#region Loaded & Closed
         private void WindowLoadedInitializer(object sender, RoutedEventArgs e)
         {
             GuiUtil.MonitorScale = this.GetScale();
@@ -289,8 +293,8 @@ namespace RelertSharp.Wpf
 
             Application.Current.Shutdown();
         }
-        #endregion
+#endregion
 
-        #endregion
+#endregion
     }
 }

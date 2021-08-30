@@ -23,7 +23,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="23"/>
         </Grid.RowDefinitions>
-        <Menu Height="23" VerticalAlignment="Top" Style="{DynamicResource menuDark}" IsMainMenu="True">
+        <Menu x:Name="menuMain" Height="23" VerticalAlignment="Top" Style="{DynamicResource menuDark}" IsMainMenu="True">
             <MenuItem Header="Files" Height="23">
                 <MenuItem Header="New Map">
                     <MenuItem Header="Standard Map" Click="MenuNewStandardMap"/>
@@ -110,7 +110,7 @@
                 <Separator/>
                 <MenuItem Header="Default Layout"/>
             </MenuItem>
-            <MenuItem Header="Debug">
+            <MenuItem x:Name="DEBUG" Header="Debug">
                 <MenuItem Header="Debug Button" Click="DebugClick"/>
                 <MenuItem Header="Go Back" Click="DebugClick2"/>
             </MenuItem>

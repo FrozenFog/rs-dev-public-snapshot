@@ -135,7 +135,7 @@ namespace RelertSharp.Wpf.Views
             }
             void favourites()
             {
-                favRoot = new ObjectPickVm("Favourites")
+                favRoot = new ObjectPickVm("Stars")
                 {
                     IsFavourite = true,
                     IsFavRoot = true

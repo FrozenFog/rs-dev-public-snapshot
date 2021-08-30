@@ -185,7 +185,7 @@ namespace RelertSharp.Wpf.Views
                     }
                     return vm;
                 }
-                TileSetTreeVm root = new TileSetTreeVm("Favourite")
+                TileSetTreeVm root = new TileSetTreeVm("Stars")
                 {
                     IsCustomRoot = true
                 };
