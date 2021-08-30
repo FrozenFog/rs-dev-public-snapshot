@@ -69,7 +69,13 @@ namespace RelertSharp.Wpf.MapEngine
             EngineApi.LockRequested += LockInvokeHandler;
             EngineApi.UnlockRequested += UnlockInvokeHandler;
             EngineApi.MapDrawingBegin += BeginDrawingHandler;
+            EngineApi.MapDrawingComplete += EndDrawingHandler;
             NavigationHub.GoToPositionRequest += MoveCameraInvokeHandler;
+        }
+
+        private void EndDrawingHandler()
+        {
+            Resize();
         }
 
         private void BeginDrawingHandler(object sender, EventArgs e)

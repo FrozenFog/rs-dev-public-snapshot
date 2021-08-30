@@ -183,7 +183,7 @@ namespace RelertSharp.Wpf
         }
         private void RefreshStatus()
         {
-            position.Text = string.Format("X: {0} Y: {1} Z: {2} Subcell: {4}, Scale: {3}", posMouse.X, posMouse.Y, posMouse.Z, Engine.Api.EngineApi.ScaleFactor, subcell);
+            position.Text = string.Format("X: {0} Y: {1} Z: {2} Subcell: {4}, Scale: {3:0.#}", posMouse.X, posMouse.Y, posMouse.Z, Engine.Api.EngineApi.ScaleFactor, subcell);
         }
 
         #region Save
