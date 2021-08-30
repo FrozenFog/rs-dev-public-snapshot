@@ -2,12 +2,12 @@
 <RsModConfig>
   <General>
     <Name>Relert Sharp Config for Mental Omega 3.3.5</Name>
-    <Version>1.0</Version>
+    <Version>1.0.0.1</Version>
     <MixInfo>
       <entry name="ra2" tatic="0"/>
       <entry name="ra2md" tatic="0"/>
-      <entry name="local" tatic="1"/>
-      <entry name="localmd" tatic="1"/>
+      <entry name="local" tatic="0"/>
+      <entry name="localmd" tatic="0"/>
       <entry name="conquer" tatic="0"/>
       <entry name="conqmd" tatic="0"/>
       <entry name="cache" tatic="0"/>

@@ -53,7 +53,7 @@
                 </CompositeCollection>
             </ListBox.ItemsSource>
         </ListBox>
-        <ComboBox x:Name="cbbCurrent" Margin="10,9.8,10,0" Grid.Row="1" VerticalAlignment="Top" DataContext="{Binding SelectedItem}" SelectedIndex="{Binding CurrentItemTypeIndex}" SelectionChanged="CurrentTypeChanged"/>
+        <ComboBox x:Name="cbbCurrent" Margin="10,9.8,10,0" Grid.Row="1" VerticalAlignment="Top" DataContext="{Binding SelectedItem}" SelectedItem="{Binding CurrentItemType}" SelectionChanged="CurrentTypeChanged"/>
         <ScrollViewer Margin="10,37.8,10,10.4" Grid.Row="1" VerticalContentAlignment="Top">
             <Grid>
                 <TextBox x:Name="txbDetail" TextWrapping="Wrap" DataContext="{Binding SelectedItem}" Text="{Binding DetailInformation, Mode=OneWay}" IsEnabled="False" IsUndoEnabled="False" IsReadOnly="True" Height="Auto" VerticalContentAlignment="Top"/>

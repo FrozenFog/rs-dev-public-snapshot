@@ -33,7 +33,7 @@ namespace RelertSharp.Wpf
                 if (e.GetType() == typeof(RSException.MixEntityNotFoundException))
                 {
                     RSException.MixEntityNotFoundException mx = e as RSException.MixEntityNotFoundException;
-                    Fatal(string.Format("{0}\nError message: {1}\nFile name: {3}\n\nTrace:\n{2}", errorMsg, mx.RSMessage, e.StackTrace, mx.FileName));
+                    Fatal(string.Format("{0}\nError message: {1}\nFile name: {3}\n\nTrace:\n{2}", errorMsg, mx.Message, e.StackTrace, mx.FileName));
                 }
                 else
                 {

@@ -142,12 +142,13 @@ namespace RelertSharp.Wpf.ViewModel
         {
             get { return data.ToString(); }
         }
-        public int CurrentItemTypeIndex
+        public LogicInfo CurrentItemType
         {
-            get { return data.ID; }
+            get { return data.Info; }
             set
             {
-                data.SetIdTo(value);
+                int id = value.Id;
+                data.SetIdTo(id);
                 SetProperty();
             }
         }

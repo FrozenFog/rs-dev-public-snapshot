@@ -369,16 +369,21 @@ namespace RelertSharp.Engine
         private static int CreateShp(string filename, int shpframe)
         {
             int id;
-            string lookup = string.Format("{0}.in{1}", filename, shpframe);
+            string lookup = string.Format(filename);
             if (!Buffer.Files.Shp.Keys.Contains(lookup))
             {
                 if (!GlobalDir.HasFile(filename)) return 0;
                 VFileInfo info = GetPtrFromGlobalDir(filename);
                 id = CppExtern.Files.CreateShpFileFromFileInMemory(info.ptr, info.size);
-                CppExtern.Files.LoadShpTextures(id, shpframe);
                 Buffer.Files.Shp[lookup] = id;
             }
-            else id = Buffer.Files.Shp[lookup];
+            id = Buffer.Files.Shp[lookup];
+            int frameLookup = id << 16 | shpframe;
+            if (!Buffer.Files.ShpLoaded.Contains(frameLookup))
+            {
+                CppExtern.Files.LoadShpTextures(id, shpframe);
+                Buffer.Files.ShpLoaded.Add(frameLookup);
+            }
             return id;
         }
         private static int CreateVxl(string filename)

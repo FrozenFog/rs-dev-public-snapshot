@@ -33,6 +33,7 @@ namespace RelertSharp.Engine
 
             #region Public Calls - File
             public Dictionary<string, int> Shp { get; private set; } = new Dictionary<string, int>();
+            public HashSet<int> ShpLoaded { get; private set; } = new HashSet<int>();
             public Dictionary<string, int> Vxl { get; private set; } = new Dictionary<string, int>();
             public Dictionary<string, int> Tmp { get; private set; } = new Dictionary<string, int>();
             public Dictionary<string, int> Pal { get; private set; } = new Dictionary<string, int>();

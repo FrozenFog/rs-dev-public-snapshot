@@ -126,7 +126,7 @@ namespace RelertSharp.Wpf
                 Log.Write("Primary config loaded");
                 return true;
             }
-            catch
+            catch (Exception e)
             {
                 DlgConfig config = new DlgConfig();
                 if (config.ShowDialog().Value)

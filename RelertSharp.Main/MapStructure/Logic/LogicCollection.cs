@@ -285,7 +285,7 @@ namespace RelertSharp.MapStructure.Logic
             private set
             {
                 id = value;
-                info = group[id];
+                info = group.Find(x => x.Id == id);
                 if (initialized) InitializeParameter();
             }
         }
