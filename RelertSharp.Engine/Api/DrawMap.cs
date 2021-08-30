@@ -92,6 +92,7 @@ namespace RelertSharp.Engine.Api
         public static void DisposeMap()
         {
             CppExtern.Scene.ClearSceneObjects();
+            EngineMain.DisposeBorder();
             MapDrawed = false;
         }
         public static void DisposeAllObjects()
@@ -192,6 +193,7 @@ namespace RelertSharp.Engine.Api
                 DrawingProgressCompleted?.Invoke(MapObjectType.BaseNode);
             });
             EngineMain.SetCanvasSize(map.Info.Size);
+            EngineMain.DrawMapBorder(map.Info.Size.Width, map.Info.LocalSize);
             MoveCameraTo(map.CenterPoint, map.GetHeightFromTile(map.CenterPoint));
             RedrawMinimapAll();
             EngineApi.InvokeUnlock();

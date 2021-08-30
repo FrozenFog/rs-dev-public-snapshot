@@ -45,6 +45,7 @@ namespace RelertSharp.Wpf
             InitializeGuiStatus();
             DataContext = new MainWindowVm(tiles);
             GlobalVar.MapLoadComplete += HandleMapLoaded;
+            GlobalVar.MapDisposed += HandleMapDisposed;
         }
 
         #region Initialization
@@ -104,6 +105,10 @@ namespace RelertSharp.Wpf
         #endregion
 
         #region Reciver Logics
+        private void HandleMapDisposed()
+        {
+            AutoSave.SuspendAutoSave();
+        }
         private void HandleMapLoaded()
         {
             menuInteliCliff.Items.Clear();
@@ -117,6 +122,7 @@ namespace RelertSharp.Wpf
                 menu.Click += MenuCliffSelected;
                 menuInteliCliff.Items.Add(menu);
             }
+            AutoSave.BeginAutoSave();
         }
         private void BindNavigation()
         {

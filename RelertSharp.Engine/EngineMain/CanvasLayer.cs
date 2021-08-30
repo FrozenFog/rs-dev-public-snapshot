@@ -49,6 +49,12 @@ namespace RelertSharp.Engine
             cnvMain.Height = Scale(size.Height * 30 + 15);
             mapWidth = size.Width;
         }
+        public static void DisposeBorder()
+        {
+            movableArea = null;
+            visibleArea = null;
+            cnvMain.Children.Clear();
+        }
         public static void DrawMapBorder(int mapWidth, System.Drawing.Rectangle visArea)
         {
             bool add = visibleArea == null || movableArea == null;

@@ -73,6 +73,11 @@ namespace RelertSharp.Common
 
         #region Calls
         public UserGeneral General { get { return data.General; } }
+        public int AutoSaveTile
+        {
+            get { return General.AutoSaveTime; }
+            set { General.AutoSaveTime = value.TrimTo(10, int.MaxValue); }
+        }
         public GuiStatus GuiStatus { get { return data.GuiStatus; } }
         public List<TheaterTilesets> FavouriteTileSet { get { return data.FavouriteItems.TileSets; } }
         public FavouriteItemTree FavouriteObjects { get { return data.FavouriteItems.Objects; } }

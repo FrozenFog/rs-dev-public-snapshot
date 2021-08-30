@@ -121,6 +121,7 @@
       <DependentUpon>DlgTriggerListAddGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\Components.cs" />
+    <Compile Include="MainWindow\Hubs\AutoSave.cs" />
     <Compile Include="MainWindow\Hubs\LayoutManagerHub.cs" />
     <Compile Include="MainWindow\Menu.cs" />
     <Compile Include="MainWindow\Hubs\NavigationHub.cs" />

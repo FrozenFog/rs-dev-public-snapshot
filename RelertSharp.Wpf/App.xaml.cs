@@ -44,7 +44,15 @@ namespace RelertSharp.Wpf
                 ShutdownMode = ShutdownMode.OnExplicitShutdown
             };
             application.InitializeComponent();
-            application.Run();
+            try
+            {
+                application.Run();
+            }
+            catch (Exception e)
+            {
+                GuiUtil.Fatal("Unexpected Error!\nMap will save as backup.map\n", e);
+                GlobalVar.CurrentMapDocument?.SaveMapAs("backup.map");
+            }
             Finalization();
         }
 
