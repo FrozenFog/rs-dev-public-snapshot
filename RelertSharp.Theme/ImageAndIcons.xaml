@@ -1833,6 +1833,50 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
+    <Viewbox x:Key="WaypointPick" Width="16" Height="16">
+        <Rectangle Width="16" Height="16">
+            <Rectangle.Fill>
+                <DrawingBrush>
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="2.567,2.369,7.725,5.215" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.776,2.369,0.896,12.236" />
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}">
+                                    <GeometryDrawing.Geometry>
+                                        <LineGeometry StartPoint="6.896,14.271" EndPoint="15.625,2.333" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Thickness="0.5" StartLineCap="Square" EndLineCap="Square" LineJoin="Miter" MiterLimit="10" />
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <LineGeometry StartPoint="6.896,14.271" EndPoint="13.011,5.909" />
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                    <DrawingGroup Opacity="1">
+                                        <GeometryDrawing Brush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ButtonBase}}}" Geometry="F1 M16,16z M0,0z M13.599,7.566L13.599,7.566 15.625,2.333 11.253,5.852z" />
+                                    </DrawingGroup>
+                                </DrawingGroup>
+                            </DrawingGroup>
+
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+
     <!--<Viewbox x:Key="None" Width="16" Height="16">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>

@@ -23,6 +23,8 @@ using RelertSharp.Wpf.Common;
 using RelertSharp.Engine;
 using RelertSharp.Algorithm;
 using RelertSharp.Wpf.Dialogs;
+using RelertSharp.MapStructure.Points;
+using RelertSharp.Wpf.MapEngine.Helper;
 
 namespace RelertSharp.Wpf.MapEngine
 {
@@ -59,6 +61,7 @@ namespace RelertSharp.Wpf.MapEngine
             InitializeComponent();
             imgelt.Source = d3dimg;
             keyClickAction = new DelayedAction(null, KeyHoldToClick, CLICK_INTERVAL);
+            ExtentedFunc.BindControl(gridMain);
             GlobalVar.MapDocumentRedrawRequested += MapRedrawHandler;
             GlobalVar.MapDocumentLoaded += MapReloadedHandler;
             EngineApi.RedrawRequested += RedrawInvokeHandler;

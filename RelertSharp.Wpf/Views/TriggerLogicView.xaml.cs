@@ -2,6 +2,7 @@
 using RelertSharp.Common.Config.Model;
 using RelertSharp.FileSystem;
 using RelertSharp.MapStructure.Logic;
+using RelertSharp.MapStructure.Points;
 using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.Dialogs;
 using RelertSharp.Wpf.ViewModel;
@@ -299,6 +300,7 @@ namespace RelertSharp.Wpf.Views
                         HorizontalAlignment = HorizontalAlignment.Stretch
                     };
                     txb.TextChanged += TxbUpdate;
+                    txb.DataContext = src;
                     elem = txb;
                     break;
                 default:
@@ -432,6 +434,14 @@ namespace RelertSharp.Wpf.Views
                                     cbb.SelectedItem = item;
                                     return;
                                 }
+                            }
+                        }
+                        else if (c is TextBox txb && txb.DataContext is LogicInfoParameter param)
+                        {
+                            if (param.ParamFormat == ParamFormatType.WpPos && refType == typeof(WaypointItem))
+                            {
+                                txb.Text = value;
+                                return;
                             }
                         }
                     }

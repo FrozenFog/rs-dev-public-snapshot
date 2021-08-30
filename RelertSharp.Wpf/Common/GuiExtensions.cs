@@ -19,6 +19,7 @@ using RelertSharp.MapStructure.Logic;
 using RelertSharp.Common;
 using RelertSharp.Wpf.Views;
 using RelertSharp.Wpf;
+using RelertSharp.MapStructure.Points;
 
 namespace System.Windows.Media
 {
@@ -351,6 +352,11 @@ namespace RelertSharp.Wpf
             {
                 dataType = typeof(LocalVarItem);
                 return local.Id;
+            }
+            else if (src.GetData(typeof(WaypointItem)) is WaypointItem wp)
+            {
+                dataType = typeof(WaypointItem);
+                return wp.Num;
             }
             return string.Empty;
         }

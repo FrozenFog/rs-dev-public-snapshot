@@ -236,6 +236,16 @@ namespace RelertSharp.Wpf.ViewModel
             }
         }
         [AutoUpdate(GROUP_MOUSE)]
+        public bool IsMouseWaypointDrag
+        {
+            get { return MouseState.State == PanelMouseState.WaypointPicker; }
+            set
+            {
+                MouseState.SetState(PanelMouseState.WaypointPicker);
+                SetProperty();
+            }
+        }
+        [AutoUpdate(GROUP_MOUSE)]
         public bool IsMouseInteliRamp
         {
             get { return MouseState.State == PanelMouseState.InteliRampBrush; }

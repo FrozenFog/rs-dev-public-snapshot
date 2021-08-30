@@ -134,6 +134,7 @@
             </ToolBar>
             <ToolBar BandIndex="1" HorizontalAlignment="Left">
                 <ToggleButton Content="{StaticResource Arrow}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseNone}"/>
+                <ToggleButton Content="{StaticResource WaypointPick}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseWaypointDrag}"/>
                 <Separator/>
                 <ToggleButton Content="{StaticResource SingleRise}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseRiseSingle}"/>
                 <ToggleButton Content="{StaticResource SingleSink}" IsEnabled="{Binding IsEngineDrawed}" IsChecked="{Binding IsMouseSinkSingle}"/>

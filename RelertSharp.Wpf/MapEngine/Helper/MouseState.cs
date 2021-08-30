@@ -30,6 +30,7 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         ObjectArrayBrush = 1 << 16,
         WallBreakdownBrush = 1 << 17,
         TiberiumBrush = 1 << 18,
+        WaypointPicker = 1 << 19,
         TileBrush = TileSingleBrush | TileBucketFlood | InteliRampBrush | InteliCliffBrush,
         PaintBrush = InteliWallBrush | ObjectBrush | ObjectRandomBrush | ObjectArrayBrush | TiberiumBrush,
         DEBUG = 1 << 31

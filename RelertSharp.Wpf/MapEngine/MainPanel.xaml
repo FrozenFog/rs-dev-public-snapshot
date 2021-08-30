@@ -9,7 +9,8 @@
     <UserControl.Resources>
         <ImageBrush x:Key="SceneResource"/>
     </UserControl.Resources>
-    <Grid x:Name="gridMain" MouseMove="HandleMouseMove" MouseWheel="HandleMouseWheel" SizeChanged="HandleSizeChanged" MouseDown="HandleMouseDown" MouseUp="HandleMouseUp">
+    <Grid x:Name="gridMain" MouseMove="HandleMouseMove" MouseWheel="HandleMouseWheel" SizeChanged="HandleSizeChanged" 
+          MouseDown="HandleMouseDown" MouseUp="HandleMouseUp" MouseLeave="HandleMouseLeave">
         <Canvas x:Name="selectorBoxCanvas" Panel.ZIndex="3"/>
         <Canvas x:Name="cnvMain" Panel.ZIndex="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Image x:Name="imgelt" Stretch="Fill" Panel.ZIndex="1">

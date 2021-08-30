@@ -30,6 +30,15 @@ namespace RelertSharp.Wpf.MapEngine
 
 
         #region Handler Firstpass
+        private void HandleMouseLeave(object sender, MouseEventArgs e)
+        {
+            if (drew)
+            {
+                bool redraw = MouseLeaved();
+
+                if (redraw) EngineApi.InvokeRedraw();
+            }
+        }
 
         private void HandleMouseMove(object sender, MouseEventArgs e)
         {
@@ -217,6 +226,9 @@ namespace RelertSharp.Wpf.MapEngine
                 case PanelMouseState.WallBreakdownBrush:
                     InteliBrush.EndBreakdownWall();
                     break;
+                case PanelMouseState.WaypointPicker:
+                    if (ExtentedFunc.IsDraggingWaypoint) ExtentedFunc.EndWaypointDrag();
+                    break;
             }
         }
 
@@ -263,6 +275,9 @@ namespace RelertSharp.Wpf.MapEngine
                     break;
                 case PanelMouseState.WallBreakdownBrush:
                     InteliBrush.BeginBreakDownWall();
+                    break;
+                case PanelMouseState.WaypointPicker:
+                    ExtentedFunc.BeginWaypointDrag(unscaled, cell);
                     break;
             }
         }
@@ -406,6 +421,11 @@ namespace RelertSharp.Wpf.MapEngine
                 redraw = TilePaintBrush.RampFlatAt(cell);
                 goto nop;
             }
+            if (ExtentedFunc.IsDraggingWaypoint)
+            {
+                ExtentedFunc.WpDragMove(unscaled);
+                goto nop;
+            }
             switch (MouseState.State)
             {
                 case PanelMouseState.ObjectRandomBrush:
@@ -476,6 +496,17 @@ namespace RelertSharp.Wpf.MapEngine
             prevSubcell = subcell;
             prevCell = cell;
             return redraw;
+        }
+        private bool MouseLeaved()
+        {
+            switch (MouseState.State)
+            {
+                case PanelMouseState.WaypointPicker:
+                    if (ExtentedFunc.IsDraggingWaypoint) ExtentedFunc.EndWaypointDrag();
+                    break;
+            }
+
+            return false;
         }
         #endregion
     }
