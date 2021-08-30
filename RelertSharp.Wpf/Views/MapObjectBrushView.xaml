@@ -37,6 +37,11 @@
                         <StackPanel.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Add to randomize brush" IsEnabled="{Binding CanRandomize}" Click="Menu_AddObjToRandomize"/>
+                                <MenuItem Header="Add to favourite" IsEnabled="{Binding CanFavourite}" 
+                                          PreviewMouseLeftButtonDown="Menu_PrevClickFav"/>
+                                <Separator/>
+                                <MenuItem Header="Add favourite group" IsEnabled="{Binding IsFavourite}" Click="Menu_AddFavGroup"/>
+                                <MenuItem Header="Remove from favourite" IsEnabled="{Binding CanRemoveFromFav}" Click="Menu_RemoveFav"/>
                             </ContextMenu>
                         </StackPanel.ContextMenu>
                         <Label Content="{Binding Icon}" Width="16" Height="16" Margin="0,1,8,1"/>

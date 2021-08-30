@@ -61,5 +61,9 @@ namespace RelertSharp.Common.Config.Model
         }
         [XmlArrayItem("item")]
         public List<FavouriteItemTree> Items { get; set; } = new List<FavouriteItemTree>();
+
+
+        [XmlIgnore]
+        public bool IsNull { get { return Title.IsNullOrEmpty() && Value.IsNullOrEmpty() && Type == MapObjectType.Undefined && Items.Count == 0; } }
     }
 }

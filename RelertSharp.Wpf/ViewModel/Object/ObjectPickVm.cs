@@ -47,6 +47,9 @@ namespace RelertSharp.Wpf.ViewModel
 
 
         #region Calls
+        public override bool IsTree => Type == MapObjectType.Undefined;
+        public bool IsFavourite { get; set; }
+        public bool IsFavRoot { get; set; }
         public int WaypointIndex { get; set; }
         public bool AssignWaypoint { get; set; }
         public byte OverlayIndex { get; private set; }
@@ -68,6 +71,23 @@ namespace RelertSharp.Wpf.ViewModel
                     return false;
                 }
                 return (Type & (MapObjectType.CombatObject | MapObjectType.MiscObject)) != 0;
+            }
+        }
+        public bool CanFavourite
+        {
+            get
+            {
+                if (IsFavourite || IsTree) return false;
+                if (Type == MapObjectType.Overlay) return false;
+                return (Type & (MapObjectType.CombatObject | MapObjectType.MiscObject)) != 0;
+            }
+        }
+        public bool CanRemoveFromFav
+        {
+            get
+            {
+                if (IsFavourite) return !IsFavRoot;
+                return false;
             }
         }
         #endregion

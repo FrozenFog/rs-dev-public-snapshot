@@ -1,4 +1,5 @@
 ﻿using RelertSharp.Common;
+using RelertSharp.Engine.Api;
 using RelertSharp.MapStructure;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace RelertSharp.Wpf
     {
         private static DispatcherTimer timer;
         private static Stopwatch watch = new Stopwatch();
-        private const string PATH = "./AutoSave";
+        private const string PATH = "AutoSave";
         private static bool autosaveFailed = false;
 
 
@@ -25,13 +26,13 @@ namespace RelertSharp.Wpf
             {
                 Interval = new TimeSpan(0, 0, 60),
             };
-            GlobalVar.MapLoadComplete += MapLoadComplete;
+            EngineApi.MapDrawingComplete += MapLoadComplete;
             timer.Tick += AutoSaveTick;
         }
 
         private static void MapLoadComplete()
         {
-            timer.Interval = new TimeSpan(0, 0, GlobalVar.GlobalConfig.UserConfig.AutoSaveTile);
+            timer.Interval = new TimeSpan(0, 0, GlobalVar.GlobalConfig.UserConfig.AutoSaveTime);
             timer.Start();
         }
 
@@ -48,7 +49,8 @@ namespace RelertSharp.Wpf
             try
             {
                 if (!Directory.Exists(PATH)) Directory.CreateDirectory(PATH);
-                string filename = Path.Combine(PATH, string.Format("AutoSave - {0}", DateTime.Now.ToString()));
+                string date = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
+                string filename = Path.Combine(PATH, string.Format("AutoSave - {0}.map", date));
                 GlobalVar.CurrentMapDocument.SaveMapAs(filename);
                 autosaveFailed = false;
             }

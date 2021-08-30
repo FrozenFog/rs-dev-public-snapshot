@@ -46,7 +46,7 @@ namespace RelertSharp.Common.Config.Model
 #endif
 #if RELEASE
         [XmlElement]
-        public bool DevMode { get; set; };
+        public bool DevMode { get; set; }
 #endif
         [XmlElement("AutoSave")]
         public int AutoSaveTime { get; set; } = 60;

@@ -73,7 +73,7 @@ namespace RelertSharp.Common
 
         #region Calls
         public UserGeneral General { get { return data.General; } }
-        public int AutoSaveTile
+        public int AutoSaveTime
         {
             get { return General.AutoSaveTime; }
             set { General.AutoSaveTime = value.TrimTo(10, int.MaxValue); }

@@ -1,8 +1,11 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.Common.Config.Model;
+using RelertSharp.Engine;
+using RelertSharp.Engine.Api;
 using RelertSharp.IniSystem;
 using RelertSharp.MapStructure;
 using RelertSharp.Wpf.Common;
+using RelertSharp.Wpf.Dialogs;
 using RelertSharp.Wpf.MapEngine.Helper;
 using RelertSharp.Wpf.ViewModel;
 using System;
@@ -27,17 +30,19 @@ namespace RelertSharp.Wpf.Views
     /// <summary>
     /// MapObjectBrushView.xaml 的交互逻辑
     /// </summary>
-    public partial class MapObjectBrushView : UserControl, IRsView
+    public partial class MapObjectBrushView : UserControl, IRsView, IFinalizeableView
     {
         private Rules Rules { get { return GlobalVar.GlobalRules; } }
 
         public GuiViewType ViewType => GuiViewType.ObjctPanel;
         public AvalonDock.Layout.LayoutAnchorable ParentAncorable { get; set; }
         public AvalonDock.Layout.LayoutDocument ParentDocument { get; set; }
+        private bool isObjLoaded = false;
 
         private ObjectBrushConfig cfg;
         private ObjectBrushFilter filter;
         private ObjectAttributeApplierVm context;
+        private ObjectPickVm favRoot;
         public MapObjectBrushView()
         {
             InitializeComponent();
@@ -130,16 +135,24 @@ namespace RelertSharp.Wpf.Views
             }
             void favourites()
             {
-                ObjectPickVm root = new ObjectPickVm("Favourites");
-                root.SetIcon(FindResource("HeadFav"));
+                favRoot = new ObjectPickVm("Favourites")
+                {
+                    IsFavourite = true,
+                    IsFavRoot = true
+                };
+                favRoot.SetIcon(FindResource("HeadFav"));
                 void readInto(FavouriteItemTree src, ObjectPickVm parent)
                 {
-                    ObjectPickVm dest = new ObjectPickVm(src.Title, src.Value, src.Type);
+                    if (src.IsNull) return;
+                    ObjectPickVm dest = new ObjectPickVm(src.Value, src.Title, src.Type);
                     if (src.Items != null) foreach (var sub in src.Items) readInto(sub, dest);
                     parent.AddItem(dest);
                 }
-                readInto(GlobalVar.GlobalConfig.UserConfig.FavouriteObjects, root);
-                trvMain.Items.Add(root);
+                foreach (var fav in GlobalVar.GlobalConfig.UserConfig.FavouriteObjects.Items)
+                {
+                    readInto(fav, favRoot);
+                }
+                trvMain.Items.Add(favRoot);
             }
             void unit()
             {
@@ -257,6 +270,7 @@ namespace RelertSharp.Wpf.Views
             celltagWp();
             favourites();
             ReloadAttributeCombo();
+            isObjLoaded = true;
         }
         internal void BindBrushConfig(ObjectBrushConfig config, ObjectBrushFilter filter)
         {
@@ -265,6 +279,32 @@ namespace RelertSharp.Wpf.Views
             context.AttributeRefreshRequest += HandleAttrubuteRefresh;
             context.ObjectRefreshRequest += ObjectRefreshHandler;
             DataContext = context;
+        }
+        public void DoFinalization()
+        {
+            if (isObjLoaded)
+            {
+                FavouriteItemTree packAsFavItem(ObjectPickVm vm)
+                {
+                    var dest = new FavouriteItemTree()
+                    {
+                        Title = vm.Title,
+                        Value = vm.RegName,
+                        Type = vm.Type
+                    };
+                    foreach (ObjectPickVm sub in vm.Items)
+                    {
+                        var item = packAsFavItem(sub);
+                        dest.Items.Add(item);
+                    }
+                    return dest;
+                }
+                GlobalVar.GlobalConfig.UserConfig.FavouriteObjects.Items.Clear();
+                foreach (ObjectPickVm vm in favRoot.Items)
+                {
+                    GlobalVar.GlobalConfig.UserConfig.FavouriteObjects.Items.Add(packAsFavItem(vm));
+                }
+            }
         }
         #endregion
 
@@ -358,6 +398,68 @@ namespace RelertSharp.Wpf.Views
                 if (vm.Type == MapObjectType.Overlay) RandomizeBrush.AddRandomObject(vm.RegName, vm.OverlayIndex, vm.OverlayData);
                 else RandomizeBrush.AddRandomObject(vm.RegName, vm.Type);
             }
+        }
+        private ObjectPickVm waitToAdd;
+        private void Menu_PrevClickFav(object sender, RoutedEventArgs e)
+        {
+            MenuItem menu = sender as MenuItem;
+            menu.Items.Clear();
+            MenuItem castAsMenu(ObjectPickVm src)
+            {
+                MenuItem item = new MenuItem()
+                {
+                    Header = src.Title,
+                    DataContext = src
+                };
+                if (src.IsTree)
+                {
+                    item.Click += MenuAddToDesignated;
+                }
+                foreach (ObjectPickVm sub in src.Items)
+                {
+                    if (sub.IsTree) item.Items.Add(castAsMenu(sub));
+                }
+                return item;
+            }
+            waitToAdd = menu.DataContext as ObjectPickVm;
+            foreach (ObjectPickVm fav in favRoot.Items)
+            {
+                menu.Items.Add(castAsMenu(fav));
+            }
+        }
+
+        private void MenuAddToDesignated(object sender, RoutedEventArgs e)
+        {
+            if (waitToAdd != null)
+            {
+                using (var _ = new EngineRegion())
+                {
+                    var dest = (sender as MenuItem).DataContext as ObjectPickVm;
+                    dest.AddItem(waitToAdd);
+                }
+            }
+        }
+
+        private void Menu_AddFavGroup(object sender, RoutedEventArgs e)
+        {
+            DlgNameInput dlg = new DlgNameInput("Group name");
+            var dest = (sender as MenuItem).DataContext as ObjectPickVm;
+            if (dlg.ShowDialog().Value)
+            {
+                string name = dlg.ResultName;
+                ObjectPickVm vm = new ObjectPickVm(name)
+                {
+                    IsFavourite = true
+                };
+                if (dest.IsRoot) dest.AddItem(vm);
+                else dest.Ancestor.AddItem(vm);
+            }
+        }
+
+        private void Menu_RemoveFav(object sender, RoutedEventArgs e)
+        {
+            ObjectPickVm vm = (sender as MenuItem).DataContext as ObjectPickVm;
+            vm.RemoveFromAncestor();
         }
         #endregion
     }
