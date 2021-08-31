@@ -28,6 +28,22 @@ namespace RelertSharp.Wpf.ViewModel
 
 
         #region Bind Calls
+        public int OverlayIndex
+        {
+            get
+            {
+                if (data is IOverlay o) return o.OverlayIndex;
+                return -1;
+            }
+        }
+        public int OverlayFrame
+        {
+            get
+            {
+                if (data is IOverlay o) return o.OverlayFrame;
+                return -1;
+            }
+        }
         public string Id
         {
             get

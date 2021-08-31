@@ -45,6 +45,9 @@
                             <GridViewColumn Header="TagId" DisplayMemberBinding="{Binding TagId}" cmds:ListViewColumnSortCommand.PropertyName="TagId"/>
                             <GridViewColumn Header="Health point" DisplayMemberBinding="{Binding Health}" cmds:ListViewColumnSortCommand.PropertyName="Health"/>
                             <GridViewColumn Header="Facing" DisplayMemberBinding="{Binding Facing}" cmds:ListViewColumnSortCommand.PropertyName="Facing"/>
+                            <GridViewColumn Header="Overlay Index" DisplayMemberBinding="{Binding OverlayIndex}" cmds:ListViewColumnSortCommand.PropertyName="OverlayIndex"/>
+                            <GridViewColumn Header="Overlay Frame" DisplayMemberBinding="{Binding OverlayFrame}" cmds:ListViewColumnSortCommand.PropertyName="OverlayFrame"/>
+
                         </GridView>
                     </ListView.View>
                 </ListView>
