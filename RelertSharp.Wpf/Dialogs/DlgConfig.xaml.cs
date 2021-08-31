@@ -103,8 +103,9 @@ namespace RelertSharp.Wpf.Dialogs
         private bool ValidGamePath(string path)
         {
             if (path.IsNullOrEmpty()) return false;
-            return File.Exists(System.IO.Path.Combine(path, "gamemd.exe")) ||
-                    File.Exists(System.IO.Path.Combine(path, "game.exe"));
+            return true;
+            //return File.Exists(System.IO.Path.Combine(path, "gamemd.exe")) ||
+            //        File.Exists(System.IO.Path.Combine(path, "game.exe"));
         }
     }
 }

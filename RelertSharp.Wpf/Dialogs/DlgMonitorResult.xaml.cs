@@ -36,12 +36,18 @@ namespace RelertSharp.Wpf.Dialogs
                     Message = log.Message,
                     Name = log.Name,
                     Type = log.Type,
-                    Data = log.Data
+                    Data = log.Data,
+                    Exception = log.Exception
                 };
                 lvMain.Items.Add(vm);
             }
         }
 
+        private void ObjectItemDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var vm = (sender as FrameworkElement).DataContext as MonitorResultVm;
+            GuiUtil.Fatal("Detail", vm.Exception);
+        }
 
 
         internal class MonitorResultVm
@@ -59,6 +65,7 @@ namespace RelertSharp.Wpf.Dialogs
             public string Message { get; set; }
             public string Name { get; set; }
             public string Id { get; set; }
+            public Exception Exception { get; set; }
         }
 
         private void Accept(object sender, RoutedEventArgs e)

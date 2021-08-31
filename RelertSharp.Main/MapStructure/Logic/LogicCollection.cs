@@ -26,7 +26,7 @@ namespace RelertSharp.MapStructure.Logic
             LogicType = type;
             ParentID = p.Name;
             List<LogicInfo> infoList;
-            if (type == TriggerSubType.ActionLogic) infoList = cfg.TriggerActions;
+            if (type == TriggerSubType.Action) infoList = cfg.TriggerActions;
             else infoList = cfg.TriggerEvents;
             string[] ls = p.ParseStringList();
             if (int.TryParse(ls[0], out int num))
@@ -41,7 +41,8 @@ namespace RelertSharp.MapStructure.Logic
                         id = i;
                     }
                     catch { }
-                    LogicInfo info = infoList[id];
+                    LogicInfo info = infoList.Find(x => x.Id == id);
+                    if (info == null) throw new RSException.InvalidLogicException(p.Name, id, (LogicType)(int)type);
                     string[] param;
                     try
                     {
@@ -106,7 +107,7 @@ namespace RelertSharp.MapStructure.Logic
         public void ApplyCommandLine(string cmd)
         {
             List<LogicItem> results = new List<LogicItem>();
-            List<LogicInfo> group = LogicType == TriggerSubType.ActionLogic ? cfg.TriggerActions : cfg.TriggerEvents;
+            List<LogicInfo> group = LogicType == TriggerSubType.Action ? cfg.TriggerActions : cfg.TriggerEvents;
             try
             {
                 ParameterReader reader = new ParameterReader(cmd, '\t');
@@ -138,7 +139,7 @@ namespace RelertSharp.MapStructure.Logic
             {
                 obj.Add(lg.ID);
                 string[] param = lg.Parameters;
-                if (LogicType == TriggerSubType.EventLogic && param[0] != "2") param = param.Take(2).ToArray();
+                if (LogicType == TriggerSubType.Event && param[0] != "2") param = param.Take(2).ToArray();
                 obj.AddRange(param);
             }
             return obj.JoinBy();
@@ -173,7 +174,7 @@ namespace RelertSharp.MapStructure.Logic
         private bool initialized = false;
         public event EventHandler InfoUpdated;
         private TriggerInfo cfg { get { return GlobalVar.GlobalConfig.ModConfig.TriggerInfo; } }
-        private List<LogicInfo> group { get { if (Type == TriggerSubType.ActionLogic) return cfg.TriggerActions; return cfg.TriggerEvents; } }
+        private List<LogicInfo> group { get { if (Type == TriggerSubType.Action) return cfg.TriggerActions; return cfg.TriggerEvents; } }
         private LogicInfo info;
         //public int idx;
 

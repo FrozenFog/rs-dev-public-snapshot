@@ -63,6 +63,25 @@ namespace RelertSharp.Common
                 public InvalidIdx() { }
             }
         }
+        public class InvalidLogicException : ApplicationException
+        {
+            public InvalidLogicException(string id, int idx, LogicType type)
+            {
+                Id = id;
+                Idx = idx;
+                Type = type;
+            }
+            public string Id { get; private  set; }
+            public int Idx { get; private set; }
+            public LogicType Type { get; private set; }
+            public override string Message
+            {
+                get
+                {
+                    return string.Format("Invalid {0} info, id {1}, invalid index: {2}", Type, Id, Idx);
+                }
+            }
+        }
         //private string error;
         //private Exception innerException;
 

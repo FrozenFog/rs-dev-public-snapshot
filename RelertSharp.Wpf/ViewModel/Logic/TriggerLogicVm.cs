@@ -102,7 +102,7 @@ namespace RelertSharp.Wpf.ViewModel
     {
         public TriggerLogicItemVm()
         {
-            data = new LogicItem(TriggerSubType.EventLogic, null);
+            data = new LogicItem(TriggerSubType.Event, null);
             data.InfoUpdated += UpdateTitle;
         }
 

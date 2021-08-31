@@ -7,6 +7,11 @@
         mc:Ignorable="d"
         Title="Relert Sharp" Background="{DynamicResource dimBack}" Height="301.6" Width="364.8" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterOwner">
     <Grid>
+        <Grid.Resources>
+            <Style x:Key="item" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                <EventSetter Event="MouseDoubleClick" Handler="ObjectItemDoubleClick"/>
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition/>
@@ -14,17 +19,19 @@
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Some error occured when reading map." VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,25,0,0" TextWrapping="Wrap" Text="These objects will not be loaded and will be removed." VerticalAlignment="Top"/>
-        <ListView x:Name="lvMain" Style="{DynamicResource lvDark}" Grid.Row="1" Margin="10">
-            <GridView>
-                <GridView.Columns>
-                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}"/>
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Message" DisplayMemberBinding="{Binding Message}"/>
-                    <GridViewColumn Header="X" DisplayMemberBinding="{Binding X}"/>
-                    <GridViewColumn Header="Y" DisplayMemberBinding="{Binding Y}"/>
-                </GridView.Columns>
-            </GridView>
+        <ListView x:Name="lvMain" Style="{DynamicResource lvDark}" Grid.Row="1" Margin="10" ItemContainerStyle="{StaticResource item}">
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}"/>
+                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Header="Message" DisplayMemberBinding="{Binding Message}"/>
+                        <GridViewColumn Header="X" DisplayMemberBinding="{Binding X}"/>
+                        <GridViewColumn Header="Y" DisplayMemberBinding="{Binding Y}"/>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
         </ListView>
         <Button Content="OK" x:Name="btnOk" Width="100" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Accept"/>
     </Grid>

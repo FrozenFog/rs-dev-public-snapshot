@@ -79,12 +79,12 @@ namespace RelertSharp.MapStructure.Logic
             t.Events = new LogicGroup()
             {
                 ParentID = t.Id,
-                LogicType = TriggerSubType.EventLogic
+                LogicType = TriggerSubType.Event
             };
             t.Actions = new LogicGroup()
             {
                 ParentID = t.Id,
-                LogicType = TriggerSubType.ActionLogic
+                LogicType = TriggerSubType.Action
             };
             this[id] = t;
             return t;

@@ -54,6 +54,8 @@
                 <MenuItem Header="Save Map Render Picture" Click="MenuSaveShot" IsEnabled="{Binding IsEngineDrawed}"/>
                 <Separator/>
                 <MenuItem Header="Clear Map" IsEnabled="{Binding IsEngineDrawed}" Click="MenuEraseEverything"/>
+                <Separator/>
+                <MenuItem Header="Inspect Rules" Click="MenuInspectRules"/>
             </MenuItem>
             <MenuItem Header="Tiles" IsEnabled="{Binding IsEngineDrawed}">
                 <MenuItem Header="Box Selecting" IsCheckable="True" IsChecked="{Binding IsBoxTileSelecting}"/>

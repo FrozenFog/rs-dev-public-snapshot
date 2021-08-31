@@ -176,8 +176,9 @@ namespace RelertSharp.Common
     }
     public enum TriggerSubType
     {
-        ActionLogic,
-        EventLogic
+        None = 0,
+        Action = 10,
+        Event = 9
     }
     public enum TriggerRepeatingType
     {

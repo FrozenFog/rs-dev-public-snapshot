@@ -21,7 +21,7 @@ namespace RelertSharp.Wpf
         private static bool autosaveFailed = false;
 
 
-        static MainWindowUtil()
+        public static void Init()
         {
             timer = new DispatcherTimer()
             {

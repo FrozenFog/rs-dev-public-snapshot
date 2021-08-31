@@ -339,9 +339,21 @@ namespace RelertSharp.Wpf.MapEngine
             }
         }
 
+        private bool requireRenewDevice = false;
         private void FrontBufferChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            RenderFrame();
+            if ((bool)e.NewValue)
+            {
+                int w = (int)(nWidth * EngineApi.ScaleFactor);
+                int h = (int)(nHeight * EngineApi.ScaleFactor);
+                _handle = EngineApi.ResetHandle(w, h);
+                d3dimg.Lock();
+                d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, IntPtr.Zero);
+                //d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
+                EngineApi.RenderFrame();
+                d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
+                d3dimg.Unlock();
+            }
         }
 
         private void Resize()
@@ -382,7 +394,24 @@ namespace RelertSharp.Wpf.MapEngine
                                 {
                                     d3dimg.Lock();
                                 }
-                                d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
+                                try
+                                {
+                                    d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
+                                }
+                                catch (Exception ex)
+                                {
+                                    int w = (int)(nWidth * EngineApi.ScaleFactor);
+                                    int h = (int)(nHeight * EngineApi.ScaleFactor);
+                                    _handle = EngineApi.ResetHandle(w, h);
+                                    EngineApi.RenderFrame();
+                                    d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
+                                    if (!manualLockOverride)
+                                    {
+                                        d3dimg.Unlock();
+                                    }
+                                    rendering = false;
+                                    return;
+                                }
                                 EngineApi.RenderFrame();
                                 d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
                                 if (!manualLockOverride)
@@ -392,6 +421,18 @@ namespace RelertSharp.Wpf.MapEngine
                                 rendering = false;
                                 //lastRender = arg.RenderingTime;
                             }
+                        }
+                        else if (requireRenewDevice)
+                        {
+                            requireRenewDevice = false;
+                            d3dimg.Lock();
+                            d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, IntPtr.Zero, true);
+                            d3dimg.Unlock();
+                            //d3dimg = new D3dImg();
+                            //d3dimg.IsFrontBufferAvailableChanged += FrontBufferChanged;
+                            //imgelt.Source = d3dimg;
+                            //Resize();
+                            //RenderFrame();
                         }
                     }
                 }

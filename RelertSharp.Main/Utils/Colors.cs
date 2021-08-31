@@ -102,6 +102,7 @@ namespace RelertSharp.Utils
         }
         public static Color FromHSB(string[] stringlist, bool base256 = true)
         {
+            if (stringlist.Length != 3) return Color.Black;
             return FromHSB(int.Parse(stringlist[0]), int.Parse(stringlist[1]), int.Parse(stringlist[2]), base256);
         }
         public static Color FromHSB(Color hsbcolor)

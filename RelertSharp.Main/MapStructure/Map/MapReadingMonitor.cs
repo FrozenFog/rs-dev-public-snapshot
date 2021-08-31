@@ -37,7 +37,9 @@ namespace RelertSharp.MapStructure
                 {
                     Data = new ComboItem(id, name),
                     LogicType = logic,
-                    Exception = e
+                    Exception = e,
+                    Id = id,
+                    Name = name
                 };
                 logs.Add(log);
             }

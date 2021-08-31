@@ -88,6 +88,17 @@ namespace RelertSharp.Wpf
         {
             
         }
+
+        private void MenuInspectRules(object sender, RoutedEventArgs e)
+        {
+            DlgNameInput dlg = new DlgNameInput("Ini section name");
+            if (dlg.ShowDialog().Value)
+            {
+                DlgIniInspector ins = new DlgIniInspector();
+                ins.SetContent(dlg.ResultName);
+                ins.ShowDialog();
+            }
+        }
         #endregion
 
 

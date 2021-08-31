@@ -187,10 +187,10 @@ namespace RelertSharp.Wpf.ViewModel
                     }
                     break;
                 case ConditionType.TriggerActionType:
-                    if (validate is LogicItem act && act.Type == TriggerSubType.ActionLogic) return act.ID.ToString();
+                    if (validate is LogicItem act && act.Type == TriggerSubType.Action) return act.ID.ToString();
                     break;
                 case ConditionType.TriggerEventType:
-                    if (validate is LogicItem evnt && evnt.Type == TriggerSubType.EventLogic) return evnt.ID.ToString();
+                    if (validate is LogicItem evnt && evnt.Type == TriggerSubType.Event) return evnt.ID.ToString();
                     break;
                 case ConditionType.TriggerParameter:
                     if (validate is LogicItem lg)

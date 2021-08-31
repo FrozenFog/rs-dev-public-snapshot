@@ -282,16 +282,18 @@ namespace RelertSharp.MapStructure
                     Triggers.ReadTriggerFromIni(p);
                     if (entEvent.DictData.Keys.Contains(p.Name))
                     {
-                        Triggers[p.Name].Events = new LogicGroup(entEvent.GetPair(p.Name), TriggerSubType.EventLogic);
+                        Triggers[p.Name].Events = new LogicGroup(entEvent.GetPair(p.Name), TriggerSubType.Event);
                     }
                     if (entAction.DictData.Keys.Contains(p.Name))
                     {
-                        Triggers[p.Name].Actions = new LogicGroup(entAction.GetPair(p.Name), TriggerSubType.ActionLogic);
+                        Triggers[p.Name].Actions = new LogicGroup(entAction.GetPair(p.Name), TriggerSubType.Action);
                     }
                 }
                 catch (Exception e)
                 {
                     Monitor.LogFatal(p.Name, string.Empty, LogicType.Trigger, e);
+                    var item = Triggers[p.Name];
+                    Triggers.RemoveItem(item);
                 }
             }
             foreach (INIPair p in entVar.DataList)

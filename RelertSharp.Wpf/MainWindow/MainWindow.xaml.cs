@@ -48,6 +48,7 @@ namespace RelertSharp.Wpf
             GlobalVar.MapLoadComplete += HandleMapLoaded;
             GlobalVar.MapDisposed += HandleMapDisposed;
             GlobalVar.MapSaved += HandleMapSaved;
+            MainWindowUtil.Init();
 #if RELEASE
             menuMain.Items.Remove(DEBUG);
             Title = Constant.VersionInfo;
@@ -94,17 +95,6 @@ namespace RelertSharp.Wpf
                             dockMain.AddCenterPage(attr.Title, control);
                             break;
                     }
-                }
-            }
-            if (File.Exists(DEF_LAYOUT))
-            {
-                try
-                {
-                    dockMain.LoadLayoutFromXml(DEF_LAYOUT, this);
-                }
-                catch
-                {
-                    GuiUtil.Warning("Default layout is invalid!");
                 }
             }
         }
@@ -272,6 +262,19 @@ namespace RelertSharp.Wpf
             ObjectBrushFilter filter = new ObjectBrushFilter();
             PaintBrush.SetConfig(cfg, filter);
             objectBrush.BindBrushConfig(cfg, filter);
+
+            // layout
+            if (File.Exists(DEF_LAYOUT))
+            {
+                try
+                {
+                    dockMain.LoadLayoutFromXml(DEF_LAYOUT, this);
+                }
+                catch
+                {
+                    GuiUtil.Warning("Default layout is invalid!");
+                }
+            }
         }
         private void MainWindowClosing(object sender, CancelEventArgs e)
         {
@@ -304,8 +307,8 @@ namespace RelertSharp.Wpf
 
             Application.Current.Shutdown();
         }
-#endregion
+        #endregion
 
-#endregion
+        #endregion
     }
 }
