@@ -4,6 +4,7 @@ using System.Linq;
 using static RelertSharp.Common.GlobalVar;
 using static RelertSharp.Utils.Misc;
 using static RelertSharp.Common.Constant;
+using static RelertSharp.Common.Constant.RulesHead;
 using RelertSharp.FileSystem;
 
 namespace RelertSharp.IniSystem
@@ -39,7 +40,11 @@ namespace RelertSharp.IniSystem
         public Rules(string path, INIFileType itype = INIFileType.RulesINI) : base(path, INIFileType.RulesINI) { }
         public Rules(byte[] _data, string _filename) : base(_data, _filename, INIFileType.RulesINI)
         {
-            this["OverlayTypes"].Reorganize();
+            this[HEAD_OVERLAY].Reorganize();
+            this[HEAD_BUILDING].Reorganize();
+            this[HEAD_INFANTRY].Reorganize();
+            this[HEAD_AIRCRAFT].Reorganize();
+            this[HEAD_VEHICLE].Reorganize();
         }
         #endregion
 

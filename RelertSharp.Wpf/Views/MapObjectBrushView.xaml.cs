@@ -85,11 +85,12 @@ namespace RelertSharp.Wpf.Views
             }
             List<ObjectPickVm> init_side()
             {
-                int num = Rules.GetSideCount();
+                var sideInfo = GlobalVar.GlobalConfig.ModGeneral.SideInfo;
+                int num = sideInfo.Count;
                 List<ObjectPickVm> result = new List<ObjectPickVm>();
                 for (int i = 0; i< num; i++)
                 {
-                    result.Add(new ObjectPickVm(Rules.GetSideName(i).ToLang()));
+                    result.Add(new ObjectPickVm(sideInfo[i].Name.ToLang()));
                 }
                 result.Add(new ObjectPickVm("Others"));
                 return result;

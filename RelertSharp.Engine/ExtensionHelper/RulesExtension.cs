@@ -87,7 +87,7 @@ namespace RelertSharp.Engine
         }
         public static string GetOverlayName(this Rules r, byte overlayid)
         {
-            INIEntity ov = Rules["OverlayTypes"];
+            INIEntity ov = r[RulesHead.HEAD_OVERLAY];
             return ov[overlayid.ToString()];
         }
         public static byte GetOverlayIndex(this Rules r, string regName)
@@ -201,7 +201,7 @@ namespace RelertSharp.Engine
                 name = id.Replace(1, _suff) + ".shp";
             }
             if (GlobalDir.HasFile(name)) return name;
-            //if (GlobalDir.HasFile(name.Replace(1, 'G'))) return name.Replace(1, 'G');
+            if (GlobalDir.HasFile(name.Replace(1, 'G'))) return name.Replace(1, 'G');
             if (GlobalDir.HasFile(id + ".shp")) return id + ".shp";
             return "";
         }
