@@ -321,33 +321,35 @@ namespace RelertSharp.Wpf.Views
         }
         private void BrushItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            ObjectPickVm selected = trvMain.SelectedItem as ObjectPickVm;
-            IEnumerable<IIndexableItem> upgradeType = GlobalVar.GlobalRules.GetBuildingUpgradeList(selected.RegName);
-            cbbUpg1.ItemsSource = upgradeType;
-            cbbUpg2.ItemsSource = upgradeType;
-            cbbUpg3.ItemsSource = upgradeType;
-            context.SetObjectType(selected.Type);
-            if (selected.Type == MapObjectType.Overlay)
+            if (trvMain.SelectedItem is ObjectPickVm selected)
             {
-                context.SetOverlayFrames(selected.OverlayIndex, selected.RegName, out bool isValidOverlay, out byte firstValidFrame);
-                PaintBrush.SetOverlayInfo(selected.OverlayIndex, firstValidFrame);
-                if (!isValidOverlay)
+                IEnumerable<IIndexableItem> upgradeType = GlobalVar.GlobalRules.GetBuildingUpgradeList(selected.RegName);
+                cbbUpg1.ItemsSource = upgradeType;
+                cbbUpg2.ItemsSource = upgradeType;
+                cbbUpg3.ItemsSource = upgradeType;
+                context.SetObjectType(selected.Type);
+                if (selected.Type == MapObjectType.Overlay)
                 {
-                    PaintBrush.InvalidateBrushObject();
-                    return;
+                    context.SetOverlayFrames(selected.OverlayIndex, selected.RegName, out bool isValidOverlay, out byte firstValidFrame);
+                    PaintBrush.SetOverlayInfo(selected.OverlayIndex, firstValidFrame);
+                    if (!isValidOverlay)
+                    {
+                        PaintBrush.InvalidateBrushObject();
+                        return;
+                    }
                 }
-            }
-            if (selected.Type == MapObjectType.Waypoint)
-            {
-                int wp = GlobalVar.GlobalMap.Waypoints.NewID();
-                PaintBrush.SetWaypointIndex(wp.ToString());
-                PaintBrush.AssignWaypointId = selected.AssignWaypoint;
-            }
-            if (selected.Type != MapObjectType.Undefined)
-            {
-                PaintBrush.ResumeBrush();
-                PaintBrush.LoadBrushObject(selected.RegName, selected.Type);
-                MouseState.SetState(PanelMouseState.ObjectBrush);
+                if (selected.Type == MapObjectType.Waypoint)
+                {
+                    int wp = GlobalVar.GlobalMap.Waypoints.NewID();
+                    PaintBrush.SetWaypointIndex(wp.ToString());
+                    PaintBrush.AssignWaypointId = selected.AssignWaypoint;
+                }
+                if (selected.Type != MapObjectType.Undefined)
+                {
+                    PaintBrush.ResumeBrush();
+                    PaintBrush.LoadBrushObject(selected.RegName, selected.Type);
+                    MouseState.SetState(PanelMouseState.ObjectBrush);
+                }
             }
         }
         private void HandleAttrubuteRefresh(object sender, EventArgs e)
