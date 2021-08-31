@@ -4,11 +4,13 @@ using System.Linq;
 using static RelertSharp.Common.GlobalVar;
 using static RelertSharp.Utils.Misc;
 using static RelertSharp.Common.Constant;
+using RelertSharp.FileSystem;
 
 namespace RelertSharp.IniSystem
 {
     public class Rules : INIFile
     {
+        private Dictionary<string, INIEntity> includes = new Dictionary<string, INIEntity>();
         private static char _suff
         {
             get
@@ -58,6 +60,37 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Methods - Rules
+        public void MergeIncludes(MapFile src, VirtualDir dir)
+        {
+            void merge(INIEntity target)
+            {
+                foreach (INIPair p in target)
+                {
+                    if (dir.TryGetRawByte(p.Value, out byte[] ini))
+                    {
+                        INIFile f = new INIFile(ini, p.Value);
+                        Override(f);
+                    }
+                }
+            }
+            if (src.Map.IniResidue.ContainsKey(RulesHead.HEAD_INCLUDE)) merge(src.Map.IniResidue[RulesHead.HEAD_INCLUDE]);
+        }
+        public void MergeIncludes(VirtualDir dir)
+        {
+            void merge(INIEntity target, INIFile dest)
+            {
+                foreach (INIPair p in target)
+                {
+                    if (dir.TryGetRawByte(p.Value, out byte[] ini))
+                    {
+                        INIFile f = new INIFile(ini, p.Value);
+                        dest.Override(f);
+                    }
+                }
+            }
+            if (HasIniEnt(RulesHead.HEAD_INCLUDE)) merge(this[RulesHead.HEAD_INCLUDE], this);
+            if (Art.HasIniEnt(RulesHead.HEAD_INCLUDE)) merge(this[RulesHead.HEAD_INCLUDE], Art);
+        }
         public string GetPcxName(string regid)
         {
             string art = GetArtEntityName(regid);
@@ -101,12 +134,12 @@ namespace RelertSharp.IniSystem
         }
         private void InitializePowerupDictionary()
         {
-            foreach (INIEntity ent in IniData)
+            foreach (INIEntity ent in this)
             {
                 if (ent.HasPair("PowersUpBuilding"))
                 {
                     INIPair p = ent.GetPair("PowersUpBuilding");
-                    string host = p.Value as string;
+                    string host = p.Value;
                     if (!powerups.Keys.Contains(host))
                     {
                         powerups[host] = new List<IIndexableItem>();

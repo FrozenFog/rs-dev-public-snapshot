@@ -33,6 +33,7 @@ namespace RelertSharp.Common
             public const string HEAD_OVERLAY = "OverlayTypes";
             public const string HEAD_COUNTRY = "Countries";
             public const string HEAD_TIBERIUM = "Tiberiums";
+            public const string HEAD_INCLUDE = "#include";
         }
 
         public const string KEY_IMAGE = "Image";

@@ -214,7 +214,7 @@ namespace RelertSharp.MapStructure.Objects
         {
             get
             {
-                return GlobalVar.GlobalRules.GetEnt(RegName).ParseBool("WaterBound");
+                return GlobalVar.GlobalRules[RegName].ParseBool("WaterBound");
             }
         }
         private List<bool> shape;

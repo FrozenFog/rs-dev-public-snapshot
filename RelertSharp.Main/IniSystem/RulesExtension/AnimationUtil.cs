@@ -49,7 +49,7 @@ namespace RelertSharp.IniSystem
             {
                 string img = ent[KEY_IMAGE];
                 if (img == regname) return regname;
-                INIEntity imgEnt = art.GetEnt(img);
+                INIEntity imgEnt = art[img];
                 if (imgEnt == null) return img;
                 else return GetShpName(art, imgEnt, img);
             }

@@ -192,9 +192,16 @@ namespace RelertSharp.Engine
         {
             if (string.IsNullOrEmpty(id)) return "";
             string name = id + ".shp";
-            if (!GlobalConfig.DrawingAdjust.NoBudAltArt) name = id.Replace(1, _suff) + ".shp";
+            if (GlobalConfig.DrawingAdjust.NoBudAltArt)
+            {
+                name = id.Replace(1, 'G') + ".shp";
+            }
+            else
+            {
+                name = id.Replace(1, _suff) + ".shp";
+            }
             if (GlobalDir.HasFile(name)) return name;
-            if (GlobalDir.HasFile(name.Replace(1, 'G'))) return name.Replace(1, 'G');
+            //if (GlobalDir.HasFile(name.Replace(1, 'G'))) return name.Replace(1, 'G');
             if (GlobalDir.HasFile(id + ".shp")) return id + ".shp";
             return "";
         }

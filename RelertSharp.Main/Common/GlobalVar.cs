@@ -47,9 +47,11 @@ namespace RelertSharp.Common
         public static async void LoadMapDocument(string path)
         {
             if (CurrentMapDocument != null) MapDisposed?.Invoke();
+            ReloadRules();
             Monitor.EnableMonitor();
             CurrentMapDocument = new FileSystem.MapFile(path);
             Monitor.EndMonitorLog();
+            GlobalRules?.MergeIncludes(CurrentMapDocument, GlobalDir);
             MapDocumentLoaded?.Invoke();
             MapDocumentRedrawRequested?.Invoke(null, null);
             MapLoadComplete?.Invoke();
@@ -71,6 +73,14 @@ namespace RelertSharp.Common
             {
                 MapLoadCompleteAsync?.Invoke();
             });
+        }
+        private static void ReloadRules()
+        {
+            string rules = GlobalConfig.ModGeneral.IniFiles.Rules + Constant.EX_INI;
+            string arts = GlobalConfig.ModGeneral.IniFiles.Art + Constant.EX_INI;
+            GlobalRules = new IniSystem.Rules(GlobalDir.GetRawByte(rules, true), rules);
+            GlobalRules.LoadArt(GlobalDir.GetFile(arts, FileExtension.INI, true));
+            GlobalRules.MergeIncludes(GlobalDir);
         }
         public static ELanguage CurrentLanguage { get; set; } = ELanguage.EnglishUS;
         public static RsConfig GlobalConfig { get; set; }
