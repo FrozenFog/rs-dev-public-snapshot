@@ -330,19 +330,28 @@ namespace RelertSharp.Wpf.MapEngine.Helper
         }
         public static bool IsPositionHasSelectedItem(I2dLocateable pos, int subcell = -1)
         {
-            foreach (IMapObject obj in selectedObjects)
+            if (GlobalVar.GlobalMap.TilesData[pos] is Tile t)
             {
-                if (obj.Coord == pos.Coord)
+                return t.GetObjects().Any(x =>
                 {
-                    if (obj is InfantryItem inf)
-                    {
-                        if (inf.SubCell == subcell) return true;
-                        else continue;
-                    }
-                    else return true;
-                }
+                    if (x is IPosition subPos) return x.IsSelected && subcell == subPos.SubCell;
+                    else return x.IsSelected;
+                });
             }
             return false;
+            //foreach (IMapObject obj in selectedObjects)
+            //{
+            //    if (obj.Coord == pos.Coord)
+            //    {
+            //        if (obj is InfantryItem inf)
+            //        {
+            //            if (inf.SubCell == subcell) return true;
+            //            else continue;
+            //        }
+            //        else return true;
+            //    }
+            //}
+            //return false;
         }
         public static void DeleteSelectedObjects()
         {
