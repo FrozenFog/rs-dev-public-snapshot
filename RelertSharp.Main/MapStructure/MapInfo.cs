@@ -23,7 +23,7 @@ namespace RelertSharp.MapStructure
             _map = MapSize;
             _specialFlags = SpecialFlags;
             //string value
-            MapName = Basic.PopPair("Name").Value;
+            MapName = Basic.PopPair(Constant.KEY_NAME).Value;
             ThemeName = Basic.PopPair("Theme").Value;
             PostScoreFilmName = Basic.PopPair("PostScore").Value;
             AltNextScene = Basic.PopPair("AltNextScenario").Value;
@@ -81,7 +81,7 @@ namespace RelertSharp.MapStructure
         public INIEntity GetBasicEnt()
         {
             INIEntity basic = new INIEntity("Basic");
-            basic.AddPair("Name", MapName);
+            basic.AddPair(Constant.KEY_NAME, MapName);
             basic.AddPair("Theme", ThemeName);
             basic.AddPair("PostScore", PostScoreFilmName);
             basic.AddPair("AltNextScenario", AltNextScene);

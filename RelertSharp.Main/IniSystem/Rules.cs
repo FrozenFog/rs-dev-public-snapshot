@@ -78,12 +78,13 @@ namespace RelertSharp.IniSystem
                     }
                 }
             }
-            if (src.Map.IniResidue.ContainsKey(RulesHead.HEAD_INCLUDE)) merge(src.Map.IniResidue[RulesHead.HEAD_INCLUDE]);
+            if (src.Map.IniResidue.ContainsKey(HEAD_INCLUDE)) merge(src.Map.IniResidue[HEAD_INCLUDE]);
         }
         public void MergeIncludes(VirtualDir dir)
         {
             void merge(INIEntity target, INIFile dest)
             {
+                if (target == null) return;
                 foreach (INIPair p in target)
                 {
                     if (dir.TryGetRawByte(p.Value, out byte[] ini))
@@ -93,8 +94,8 @@ namespace RelertSharp.IniSystem
                     }
                 }
             }
-            if (HasIniEnt(RulesHead.HEAD_INCLUDE)) merge(this[RulesHead.HEAD_INCLUDE], this);
-            if (Art.HasIniEnt(RulesHead.HEAD_INCLUDE)) merge(this[RulesHead.HEAD_INCLUDE], Art);
+            merge(this[HEAD_INCLUDE], this);
+            merge(Art[HEAD_INCLUDE], Art);
         }
         public string GetPcxName(string regid)
         {
@@ -103,8 +104,8 @@ namespace RelertSharp.IniSystem
             string shp = Art[art]["Cameo"].ToLower();
             if (string.IsNullOrEmpty(pcx))
             {
-                if (string.IsNullOrEmpty(shp)) return Constant.NULL_ICON;
-                else return shp + Constant.EX_SHP;
+                if (string.IsNullOrEmpty(shp)) return NULL_ICON;
+                else return shp + EX_SHP;
             }
             return pcx;
         }
@@ -149,7 +150,7 @@ namespace RelertSharp.IniSystem
                     {
                         powerups[host] = new List<IIndexableItem>();
                     }
-                    IIndexableItem pwups = new ComboItem(ent.Name, ent["Name"]);
+                    IIndexableItem pwups = new ComboItem(ent.Name, ent[KEY_NAME]);
                     powerups[host].Add(pwups);
                 }
             }
@@ -258,10 +259,10 @@ namespace RelertSharp.IniSystem
                 return string.Format("{1}:{2}({0})",
                     regname,
                     GlobalCsf[this[regname]["UIName"]].ContentString,
-                    this[regname]["Name"]);
+                    this[regname][KEY_NAME]);
             else
                 return string.Format("{0}({1})",
-                    this[regname]["Name"],
+                    this[regname][KEY_NAME],
                     regname);
         }
         /// <summary>
@@ -302,10 +303,10 @@ namespace RelertSharp.IniSystem
             get
             {
                 List<IIndexableItem> result = new List<IIndexableItem>();
-                result.AddRange(GetIdxItem_Reg_Name("InfantryTypes"));
-                result.AddRange(GetIdxItem_Reg_Name("VehicleTypes"));
-                result.AddRange(GetIdxItem_Reg_Name("AircraftTypes"));
-                result.AddRange(GetIdxItem_Reg_Name("BuildingTypes"));
+                result.AddRange(GetIdxItem_Reg_Name(HEAD_INFANTRY));
+                result.AddRange(GetIdxItem_Reg_Name(HEAD_VEHICLE));
+                result.AddRange(GetIdxItem_Reg_Name(HEAD_AIRCRAFT));
+                result.AddRange(GetIdxItem_Reg_Name(HEAD_BUILDING));
                 return result;
             }
         }
@@ -314,9 +315,9 @@ namespace RelertSharp.IniSystem
             get
             {
                 List<IIndexableItem> result = new List<IIndexableItem>();
-                result.AddRange(GetIdxItem_Reg_Name("InfantryTypes"));
-                result.AddRange(GetIdxItem_Reg_Name("VehicleTypes"));
-                result.AddRange(GetIdxItem_Reg_Name("AircraftTypes")); 
+                result.AddRange(GetIdxItem_Reg_Name(HEAD_INFANTRY));
+                result.AddRange(GetIdxItem_Reg_Name(HEAD_VEHICLE));
+                result.AddRange(GetIdxItem_Reg_Name(HEAD_AIRCRAFT)); 
                 return result;
             }
         }
@@ -325,7 +326,7 @@ namespace RelertSharp.IniSystem
             get
             {
                 List<ComboItem> result = new List<ComboItem>();
-                INIEntity ent = this["VariableNames"];
+                INIEntity ent = this[HEAD_GLOBVAR];
                 foreach (INIPair p in ent)
                 {
                     result.Add(new ComboItem(p.Name, p.Value));

@@ -220,7 +220,7 @@ namespace RelertSharp.FileSystem
         }
         private byte[] GetFromRoot(string _filename)
         {
-            string path = GlobalConfig.GamePath + _filename;
+            string path = Path.Combine(GlobalConfig.GamePath, _filename);
             if (File.Exists(path))
                 return File.ReadAllBytes(path);
             else

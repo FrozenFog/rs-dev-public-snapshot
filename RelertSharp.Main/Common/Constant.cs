@@ -33,12 +33,14 @@ namespace RelertSharp.Common
             public const string HEAD_OVERLAY = "OverlayTypes";
             public const string HEAD_COUNTRY = "Countries";
             public const string HEAD_TIBERIUM = "Tiberiums";
+            public const string HEAD_GLOBVAR = "VariableNames";
             public const string HEAD_INCLUDE = "#include";
         }
 
         public const string KEY_IMAGE = "Image";
         public const string KEY_ALPHA = "AlphaImage";
         public const string KEY_NAME = "Name";
+        public const string KEY_GROUP = "Group";
         public const string KEY_AUTHOR = "Author";
         public const string KEY_CUSPAL = "CustomPalette";
         public const string KEY_NEXTANIM = "Next";

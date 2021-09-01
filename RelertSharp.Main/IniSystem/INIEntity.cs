@@ -160,11 +160,21 @@ namespace RelertSharp.IniSystem
         {
             if (entitytype == INIEntType.ListType)
             {
-                int maxindex = Reorganize();
+                HashSet<string> org = data.Values.Select(x => x.Value).ToHashSet();
                 foreach (INIPair p in newEnt)
                 {
-                    p.Name = maxindex++.ToString();
-                    data[p.Name] = p;
+                    if (org.Contains(p.Value))
+                    {
+                        org.Remove(p.Value);
+                    }
+                    org.Add(p.Value);
+                }
+                data.Clear();
+                int i = 0;
+                foreach (string s in org)
+                {
+                    string key = i++.ToString();
+                    data[key] = new INIPair(key, s);
                 }
             }
             else
@@ -379,6 +389,7 @@ namespace RelertSharp.IniSystem
 
         #region Public Calls
         public bool IsEmpty { get { return data.Count == 0; } }
+        public bool IsSystemList { get { return entitytype == INIEntType.ListType; } }
         public Dictionary<string, INIPair> DictData { get { return data; } }
         public string Comment { get { return comment; } }
         public string PreComment { get { return preComment; } }

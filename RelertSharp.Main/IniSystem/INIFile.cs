@@ -138,7 +138,13 @@ namespace RelertSharp.IniSystem
                 }
                 else
                 {
-                    AddEnt(newent);
+                    if (newent.IsSystemList)
+                    {
+                        INIEntity convert = new INIEntity(newent);
+                        convert.Reorganize();
+                        AddEnt(convert);
+                    }
+                    else AddEnt(newent);
                 }
             }
         }

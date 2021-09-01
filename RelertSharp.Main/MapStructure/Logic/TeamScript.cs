@@ -63,7 +63,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Ctor
         public TeamScriptGroup(INIEntity ent) : base(ent)
         {
-            Name = ent.PopPair("Name").Value;
+            Name = ent.PopPair(Constant.KEY_NAME).Value;
             foreach (INIPair p in ent.DataList)
             {
                 string[] tmp = p.ParseStringList();
@@ -92,7 +92,7 @@ namespace RelertSharp.MapStructure.Logic
         public INIEntity GetSaveData()
         {
             INIEntity result = new INIEntity(Id);
-            result.AddPair(new INIPair("Name", Name));
+            result.AddPair(new INIPair(Constant.KEY_NAME, Name));
             for (int i = 0; i < data.Count; i++)
             {
                 result.AddPair(new INIPair(i.ToString(), data[i].SaveData));

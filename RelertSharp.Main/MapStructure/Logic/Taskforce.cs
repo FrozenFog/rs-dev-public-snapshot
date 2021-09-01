@@ -61,8 +61,8 @@ namespace RelertSharp.MapStructure.Logic
         #region Ctor - TaskforceItem
         public TaskforceItem(INIEntity ent) : base(ent)
         {
-            Name = ent.PopPair("Name").Value;
-            Group = ent.PopPair("Group").Value;
+            Name = ent.PopPair(Constant.KEY_NAME).Value;
+            Group = ent.PopPair(Constant.KEY_GROUP).Value;
             foreach (INIPair p in ent.DataList)
             {
                 Members.Add(new TaskforceUnit(p));
@@ -90,8 +90,8 @@ namespace RelertSharp.MapStructure.Logic
         public INIEntity GetSaveData()
         {
             INIEntity result = new INIEntity(Id);
-            result.AddPair(new INIPair("Name", Name));
-            result.AddPair(new INIPair("Group", Group));
+            result.AddPair(new INIPair(Constant.KEY_NAME, Name));
+            result.AddPair(new INIPair(Constant.KEY_GROUP, Group));
             for (int i = 0; i < Members.Count; i++)
             {
                 result.AddPair(new INIPair(i.ToString(), Members[i].SaveData));

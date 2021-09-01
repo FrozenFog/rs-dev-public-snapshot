@@ -38,7 +38,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Ctor - CountryItem
         public CountryItem(INIEntity ent) : base(ent)
         {
-            Name = ent.PopPair("Name").Value;
+            Name = ent.PopPair(Constant.KEY_NAME).Value;
             Side = ent.PopPair("Side").Value;
             ColorName = ent.PopPair("Color").Value;
             Prefix = ent.PopPair("Prefix").Value;
@@ -101,7 +101,7 @@ namespace RelertSharp.MapStructure.Logic
         public INIEntity GetSaveData()
         {
             INIEntity data = new INIEntity(Name);
-            data.AddPair("Name", Name);
+            data.AddPair(Constant.KEY_NAME, Name);
             data.AddPair("Color", ColorName);
             data.AddPair("ParentCountry", ParentCountryName);
             data.AddPair("Suffix", Suffix);

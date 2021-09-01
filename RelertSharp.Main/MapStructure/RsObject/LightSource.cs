@@ -40,7 +40,7 @@ namespace RelertSharp.MapStructure.Points
                     template["LightRedTint"] = light.Red.ToString();
                     template["LightGreenTint"] = light.Green.ToString();
                     template["LightBlueTint"] = (light.Blue * 2).ToString();
-                    template["Name"] = string.Format("{0} {1} - {2}", Constant.EntName.RsLightCompileName, i, light.Name);
+                    template[Constant.KEY_NAME] = string.Format("{0} {1} - {2}", Constant.EntName.RsLightCompileName, i, light.Name);
                     compiledLightPost[name] = template;
                     toc[index] = name;
 
