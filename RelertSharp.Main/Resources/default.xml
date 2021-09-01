@@ -22,12 +22,12 @@
     </MixInfo>
     <Theater>
       <theater name="Generic" mix="generic,isogen,isogenmd,genermd" virtual="true"/>
-      <theater name="Temperate" pal="temperat" mix="temperat,isotemp,isotemmd" suffix="tem" ini="temperatmo" type="1"/>
-      <theater name="Snow" pal="snow" mix="snow,snowmd,isosnow,isosnomd" suffix="sno" ini="snowmo" type="2"/>
-      <theater name="Urban" pal="urban" mix="urban,isourb,isourbmd" suffix="urb" ini="urbanmo" type="3"/>
-      <theater name="Desert" pal="desert" mix="desert,isodes,isodesmd" suffix="des" ini="desertmo" type="4"/>
-      <theater name="NewUrban" pal="urbann" mix="urbann,isoubn,isoubnmd" suffix="ubn" ini="urbannmo" type="5"/>
-      <theater name="Lunar" pal="lunar" mix="lunar,isolun,isolunmd" suffix="lun" ini="lunarmo" type="6"/>
+      <theater name="Temperate" pal="temperat" mix="tem,temperat,isotemp,isotemmd" suffix="tem" ini="temperatmo" type="1"/>
+      <theater name="Snow" pal="snow" mix="sno,snow,snowmd,isosnow,isosnomd" suffix="sno" ini="snowmo" type="2"/>
+      <theater name="Urban" pal="urban" mix="urb,urban,isourb,isourbmd" suffix="urb" ini="urbanmo" type="3"/>
+      <theater name="Desert" pal="desert" mix="des,desert,isodes,isodesmd" suffix="des" ini="desertmo" type="4"/>
+      <theater name="NewUrban" pal="urbann" mix="ubn,urbann,isoubn,isoubnmd" suffix="ubn" ini="urbannmo" type="5"/>
+      <theater name="Lunar" pal="lunar" mix="lun,lunar,isolun,isolunmd" suffix="lun" ini="lunarmo" type="6"/>
     </Theater>
     <Sound>
       <Bags>audio,audio01,audio02</Bags>

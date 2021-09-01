@@ -86,7 +86,7 @@ namespace RelertSharp.Wpf
 
         private void DebugClick2(object sender, RoutedEventArgs e)
         {
-            
+            var a = GlobalVar.GlobalSoundBank.GetSound("icraloop");
         }
 
         private void MenuInspectRules(object sender, RoutedEventArgs e)

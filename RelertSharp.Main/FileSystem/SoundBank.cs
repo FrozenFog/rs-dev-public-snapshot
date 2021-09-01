@@ -45,11 +45,18 @@ namespace RelertSharp.FileSystem
             {
                 if (indexs[bagname].HasFile(name))
                 {
-                    byte[] bag = GlobalVar.GlobalDir.GetRawByte(bagname + ".bag");
-                    IdxBagFile f = new IdxBagFile(indexs[bagname], bag);
-                    wav = f.ReadAudFile(name).ToWav();
-                    f.Dispose();
-                    GC.Collect();
+                    try
+                    {
+                        byte[] bag = GlobalVar.GlobalDir.GetRawByte(bagname + ".bag");
+                        IdxBagFile f = new IdxBagFile(indexs[bagname], bag);
+                        wav = f.ReadAudFile(name).ToWav();
+                        f.Dispose();
+                    }
+                    catch { }
+                    finally
+                    {
+                        GC.Collect();
+                    }
                     return wav;
                 }
             }

@@ -161,9 +161,9 @@ namespace RelertSharp.IniSystem
             Art = f;
         }
         private bool sideInitialized = false;
-        private int side = -1;
         public int GetSideCount()
         {
+            int side = GlobalConfig.ModGeneral.SideInfo.Count;
             if (!sideInitialized)
             {
                 side = 0;

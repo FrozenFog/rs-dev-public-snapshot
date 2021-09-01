@@ -94,7 +94,8 @@ namespace RelertSharp.Common
     {
         None = 0,
         Stereo = 1,
-        Bit16 = 2
+        Bit16 = 2,
+        UnknownBit = 3
     }
     public enum SoundType
     {

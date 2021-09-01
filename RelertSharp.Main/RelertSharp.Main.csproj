@@ -312,6 +312,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\configmd_noAres.xml" />
+    <Content Include="Resources\configmo.xml" />
     <Content Include="Resources\defaultIni.xml" />
     <Content Include="Resources\user.xml" />
   </ItemGroup>

@@ -110,7 +110,7 @@ namespace RelertSharp.Wpf.Views
                     else
                     {
                         int side = Rules.GuessSide(p.Value, CombatObjectType.Building, true);
-                        if (side >= 0) add_to_node(sides[side], p.Value, MapObjectType.Building);
+                        if (side >= 0 && side < sides.Count) add_to_node(sides[side], p.Value, MapObjectType.Building);
                         else add_to_node(sides.Last(), p.Value, MapObjectType.Building);
                     }
                 }

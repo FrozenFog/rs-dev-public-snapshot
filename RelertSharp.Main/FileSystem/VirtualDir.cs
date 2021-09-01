@@ -69,7 +69,7 @@ namespace RelertSharp.FileSystem
                 if (File.Exists(path))
                 {
                     mx = new MixFile(path, (MixTatics)tatic);
-                    Log.Write(string.Format("{0} loaded", mixname));
+                    Log.Write(string.Format("{0} found in game path.", mixname));
                     if (isExpand) expand.Add(mx);
                     else
                     {
@@ -90,6 +90,7 @@ namespace RelertSharp.FileSystem
                             mx.Dispose();
                         }
                     }
+                    else Log.Write("{0} not found.", mixname);
                 }
             }
             /// main info mix
@@ -208,7 +209,7 @@ namespace RelertSharp.FileSystem
             bool b = fileOrigin.Keys.Contains(CRC.GetCRC(_fullName));
             if (GlobalConfig.DevMode)
             {
-                string path = GlobalConfig.GamePath + _fullName;
+                string path = Path.Combine(GlobalConfig.GamePath, _fullName);
                 b |= File.Exists(path);
             }
             return b;

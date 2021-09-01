@@ -46,7 +46,7 @@ namespace RelertSharp.Engine
             if (data.TurretAnimIsVoxel)
             {
                 data.TurretAnim = Rules[name]["TurretAnim"] + EX_VXL;
-                if (data.TurretAnim.Contains("tur"))
+                if (data.TurretAnim.ToLower().Contains("tur"))
                 {
                     data.TurretBarrel = data.TurretAnim.ToLower().Replace("tur", "barl");
                 }

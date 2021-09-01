@@ -99,13 +99,19 @@ namespace RelertSharp.FileSystem
             foreach (AudBlock b in data)
             {
                 if (b.ID == 57007) b.Decode(flag, ref sample, ref index);
+                else if ((flag & AudType.Bit16) != 0)
+                {
+                    sample = (short)(b.ID & 0xFF);
+                    index = (int)((b.ID & 0xFF00) >> 8);
+                    b.Decode(flag, ref sample, ref index);
+                }
                 else b.Decode(flag, (short)(b.ID & 0xFFFF), (int)(b.ID & 0xFFFF0000) >> 16);
             }
         }
         public WavFile ToWav()
         {
             WavFile wav;
-            if ((int)flag == 13)
+            if ((flag & AudType.Stereo) != 0)
             {
                 DecodeStrero();
                 wav = new WavFile(AudioBytes, SampleRate, 2);
@@ -191,6 +197,11 @@ namespace RelertSharp.FileSystem
         {
             if (IsDecoded) return;
             decompressedData = AudEncoding.DecodeBlock(compressedData, ref _sample, ref _index);
+        }
+        public void Decode16(ref short sample, ref int index)
+        {
+            if (IsDecoded) return;
+            decompressedData = AudEncoding.DecodeBlock(compressedData, ref sample, ref index);
         }
         #endregion
 

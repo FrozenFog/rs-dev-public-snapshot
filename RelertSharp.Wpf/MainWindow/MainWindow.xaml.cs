@@ -141,11 +141,18 @@ namespace RelertSharp.Wpf
                 soundManager.Stop();
             }
             string name = soundManager.GetSoundName(regname, type);
-            await Task.Run(() =>
+            try
             {
-                soundManager.LoadWav(GlobalVar.GlobalSoundBank.GetSound(name));
-            });
-            soundManager.Play();
+                await Task.Run(() =>
+                {
+                    soundManager.LoadWav(GlobalVar.GlobalSoundBank.GetSound(name));
+                });
+                soundManager.Play();
+            }
+            catch
+            {
+                GlobalVar.Log.Critical("Find {0} error! Regist name: {1}, sound name: {2}", type, regname, name);
+            }
         }
 
         private void AddReciveListener()
