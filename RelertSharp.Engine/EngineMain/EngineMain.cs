@@ -49,7 +49,7 @@ namespace RelertSharp.Engine
             //Log.Write("Resetting complete");
 
 
-            Log.Info("Done.");
+            Log.Asterisk("Engine initialized.");
         }
         internal static bool ResetMiniMap(Rectangle mapsize, Size panelSize, double scaleFactor = 1)
         {

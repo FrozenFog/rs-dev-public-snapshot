@@ -33,7 +33,7 @@ namespace RelertSharp.Wpf
     {
         private const string DEF_LAYOUT = "layout.xml";
         #region Else
-        private SoundManager soundManager = new SoundManager();
+        private SoundManager soundManager;
         #endregion
 
         public MainWindow()
@@ -45,6 +45,8 @@ namespace RelertSharp.Wpf
             BindNavigation();
             InitializeGuiStatus();
             DataContext = new MainWindowVm(tiles);
+            soundManager = new SoundManager();
+            soundManager.SoundStopped += SoundStopped;
             GlobalVar.MapLoadComplete += HandleMapLoaded;
             GlobalVar.MapDisposed += HandleMapDisposed;
             GlobalVar.MapSaved += HandleMapSaved;
@@ -147,11 +149,12 @@ namespace RelertSharp.Wpf
                 {
                     soundManager.LoadWav(GlobalVar.GlobalSoundBank.GetSound(name));
                 });
+                if (soundManager.IsValid) btnStopSound.Visibility = Visibility.Visible;
                 soundManager.Play();
             }
             catch
             {
-                GlobalVar.Log.Critical("Find {0} error! Regist name: {1}, sound name: {2}", type, regname, name);
+                GlobalVar.Log.Warning("Find {0} error! Regist name: {1}, sound name: {2}", type, regname, name);
             }
         }
 
@@ -315,7 +318,18 @@ namespace RelertSharp.Wpf
             Application.Current.Shutdown();
         }
         #endregion
-
+        private void StopSoundPlaying(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (soundManager.IsPlaying)
+            {
+                soundManager.Stop();
+            }
+            btnStopSound.Visibility = Visibility.Hidden;
+        }
+        private void SoundStopped()
+        {
+            btnStopSound.Visibility = Visibility.Hidden;
+        }
         #endregion
     }
 }

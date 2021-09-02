@@ -5,14 +5,17 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Media;
+using System.Windows.Threading;
 
 namespace RelertSharp.Common
 {
     public class SoundManager
     {
+        public event Action SoundStopped;
         private SoundPlayer player = new SoundPlayer();
         private MemoryStream ms = new MemoryStream();
         private Stopwatch watch = new Stopwatch();
+        private DispatcherTimer timer;
         private bool isValid = false;
 
 
@@ -20,6 +23,20 @@ namespace RelertSharp.Common
         public SoundManager()
         {
             watch.Start();
+            timer = new DispatcherTimer()
+            {
+                Interval = new TimeSpan(0, 0, 0, 0, 100)
+            };
+            timer.Tick += CheckStopped;
+        }
+
+        private void CheckStopped(object sender, EventArgs e)
+        {
+            if (!IsPlaying)
+            {
+                timer.Stop();
+                SoundStopped?.Invoke();
+            }
         }
         #endregion
 
@@ -32,6 +49,8 @@ namespace RelertSharp.Common
             ms.Dispose();
             watch.Reset();
             CurrentLength = -1;
+            timer.Stop();
+            SoundStopped?.Invoke();
             GC.Collect();
         }
         public void Play()
@@ -41,6 +60,7 @@ namespace RelertSharp.Common
             {
                 player.Load();
                 watch.Restart();
+                timer.Start();
                 player.Play();
             }
             catch { Stop(); }
@@ -139,6 +159,7 @@ namespace RelertSharp.Common
         #region Public Calls - SoundManager
         public int CurrentLength { get; private set; } = -1;
         public bool IsPlaying { get { return watch.ElapsedMilliseconds <= CurrentLength; } }
+        public bool IsValid { get => isValid; }
         #endregion
     }
 }

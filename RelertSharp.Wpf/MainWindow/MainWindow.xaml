@@ -178,7 +178,13 @@
             </DockingManager.Theme>
         </DockingManager>
         <StatusBar Name="bar" Grid.Row="3" Style="{DynamicResource barDark}">
-            <TextBlock x:Name="position">Ready</TextBlock>
+            <StatusBarItem>
+                <TextBlock x:Name="position">Ready</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <Rectangle x:Name="btnStopSound" Fill="Red" Stroke="{StaticResource btnBorder}" 
+                           Width="12" Height="12" MouseDown="StopSoundPlaying" Visibility="Hidden"/>
+            </StatusBarItem>
         </StatusBar>
     </Grid>
 </Window>

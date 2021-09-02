@@ -1876,7 +1876,6 @@
             </Rectangle.Fill>
         </Rectangle>
     </Viewbox>
-
     <!--<Viewbox x:Key="None" Width="16" Height="16">
         <Rectangle Width="16" Height="16">
             <Rectangle.Fill>
