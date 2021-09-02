@@ -265,7 +265,6 @@
     <Compile Include="Common\RSException.cs" />
     <Compile Include="Utils\FastBitmap.cs" />
     <Compile Include="Utils\Interpreter.cs" />
-    <Compile Include="Utils\Lang.cs" />
     <Compile Include="MapStructure\Map\MapVerification\Verification.cs" />
     <Compile Include="MapStructure\Map\MapVerification\VerifyModels.cs" />
     <Compile Include="Utils\Misc.cs" />

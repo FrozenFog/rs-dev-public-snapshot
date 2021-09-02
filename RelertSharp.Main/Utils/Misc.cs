@@ -13,37 +13,37 @@ namespace RelertSharp.Utils
         private static RsLog Log { get { return GlobalVar.Log; } }
 
 
-        public static void Init_Language()
-        {
-            GlobalVar.CurrentLanguage = ELanguage.EnglishUS;
-            Dictionary<string, string> dict = new Dictionary<string, string>();
-            LangFile f = null;
-            switch (GlobalVar.CurrentLanguage)
-            {
-                case ELanguage.EnglishUS:
-                    f = new LangFile("en-us.lang");
-                    Log.Info("Language set as English-US");
-                    break;
-                case ELanguage.Chinese:
-                    f = new LangFile("chs.lang");
-                    Log.Info("Language set as Chinese");
-                    break;
-            }
-            if (System.IO.File.Exists("external.lang"))
-            {
-                INIFile ext = new INIFile("external.lang");
-                f.Merge(ext);
-            }
-            foreach (INIEntity ent in f.IniData)
-            {
-                foreach (INIPair p in ent.DataList)
-                {
-                    if (!dict.Keys.Contains(p.Name)) dict[p.Name] = p.Value;
-                }
-            }
-            Language.DICT = new Lang(dict);
-            Log.Info("Language Init complete");
-        }
+        //public static void Init_Language()
+        //{
+        //    GlobalVar.CurrentLanguage = ELanguage.EnglishUS;
+        //    Dictionary<string, string> dict = new Dictionary<string, string>();
+        //    LangFile f = null;
+        //    switch (GlobalVar.CurrentLanguage)
+        //    {
+        //        case ELanguage.EnglishUS:
+        //            f = new LangFile("en-us.lang");
+        //            Log.Info("Language set as English-US");
+        //            break;
+        //        case ELanguage.Chinese:
+        //            f = new LangFile("chs.lang");
+        //            Log.Info("Language set as Chinese");
+        //            break;
+        //    }
+        //    if (System.IO.File.Exists("external.lang"))
+        //    {
+        //        INIFile ext = new INIFile("external.lang");
+        //        f.Merge(ext);
+        //    }
+        //    foreach (INIEntity ent in f.IniData)
+        //    {
+        //        foreach (INIPair p in ent.DataList)
+        //        {
+        //            if (!dict.Keys.Contains(p.Name)) dict[p.Name] = p.Value;
+        //        }
+        //    }
+        //    Language.DICT = new Lang(dict);
+        //    Log.Info("Language Init complete");
+        //}
         public static List<T> InitializeListWithCap<T>(int size)
         {
             List<T> result = new List<T>();

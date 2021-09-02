@@ -51,6 +51,6 @@ namespace RelertSharp.Common.Config.Model
         [XmlElement("AutoSave")]
         public int AutoSaveTime { get; set; } = 60;
         [XmlElement]
-        public LogLevel LogLevel { get; set; } = LogLevel.Warning;
+        public LogLevel LogLevel { get; set; } = LogLevel.Asterisk;
     }
 }

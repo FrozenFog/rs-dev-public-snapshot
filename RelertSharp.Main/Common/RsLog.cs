@@ -11,7 +11,7 @@ namespace RelertSharp.Common
         private StreamWriter sw;
         private StringBuilder criticalMsg;
         private bool isStream = false, logOverride = false;
-        private LogLevel _logLvl = LogLevel.Warning;
+        private LogLevel _logLvl = LogLevel.Asterisk;
 
 
         #region Ctor
@@ -38,8 +38,8 @@ namespace RelertSharp.Common
             if ((int)logLevel >= (int)lvl)
             {
                 string msg = string.Format("[{0}]\t{1}: {2}", logLevel, DateTime.Now, message);
-                sw.WriteLineAsync(msg);
-                if (!isStream) sw.FlushAsync();
+                sw.WriteLine(msg);
+                if (!isStream) sw.Flush();
             }
         }
         #endregion

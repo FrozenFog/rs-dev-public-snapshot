@@ -219,11 +219,6 @@ namespace System
         {
             return src.Remove(pos, 1).Insert(pos, c.ToString());
         }
-
-        public static string ToLang(this string src)
-        {
-            return RelertSharp.Language.DICT[src];
-        }
         public static bool IsNullOrEmpty(this string src)
         {
             return string.IsNullOrEmpty(src);

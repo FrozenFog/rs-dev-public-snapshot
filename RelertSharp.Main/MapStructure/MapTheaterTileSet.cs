@@ -4,7 +4,6 @@ using RelertSharp.IniSystem;
 using System.Collections.Generic;
 using System.Linq;
 using static RelertSharp.Common.GlobalVar;
-using static RelertSharp.Language;
 
 namespace RelertSharp.MapStructure
 {

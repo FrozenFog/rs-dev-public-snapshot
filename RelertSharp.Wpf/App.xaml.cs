@@ -144,7 +144,6 @@ namespace RelertSharp.Wpf
             await Task.Run(() =>
             {
                 init.SetStatus("Initializing language");
-                SafeRun(() => { Utils.Misc.Init_Language(); }, "Failed to read language file!");
                 initialized = SetGlobalVar();
                 init.SetStatus("Initialization Complete.");
                 Thread.Sleep(1000);
