@@ -90,7 +90,7 @@ namespace RelertSharp.Wpf.Views
                 List<ObjectPickVm> result = new List<ObjectPickVm>();
                 for (int i = 0; i< num; i++)
                 {
-                    result.Add(new ObjectPickVm(sideInfo[i].Name.ToLang()));
+                    result.Add(new ObjectPickVm(sideInfo[i].Name));
                 }
                 result.Add(new ObjectPickVm("Others"));
                 return result;

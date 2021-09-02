@@ -1,7 +1,51 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace RelertSharp.Common
 {
+    public enum LogLevel
+    {
+        /// <summary>
+        /// just anything you want, blablabla
+        /// </summary>
+        [XmlEnum("0")]
+        Anything = 0,
+        /// <summary>
+        /// log such as engine established
+        /// </summary>
+        [XmlEnum("1")]
+        Info = 1,
+        /// <summary>
+        /// progress info that cannot be ignored
+        /// </summary>
+        [XmlEnum("2")]
+        Asterisk = 2,
+        /// <summary>
+        /// some error occured and CAN still operate
+        /// </summary>
+        [XmlEnum("3")]
+        Warning = 3,
+        /// <summary>
+        /// some error occured and CAUSE INFORMATION LOSS
+        /// </summary>
+        [XmlEnum("4")]
+        Critical = 4,
+        /// <summary>
+        /// some error occured and GUI may not work properly
+        /// </summary>
+        [XmlEnum("5")]
+        Error = 5,
+        /// <summary>
+        /// cause entire program shutdown
+        /// </summary>
+        [XmlEnum("6")]
+        Fatal = 6,
+        /// <summary>
+        /// debug only, anything that need debug
+        /// </summary>
+        [XmlEnum("7")]
+        DEBUG = 7
+    }
     public enum MapLightningType
     {
         Normal = 0,

@@ -31,25 +31,25 @@ namespace RelertSharp.Engine
 
         internal static void EngineCtor(int width, int height)
         {
-            Log.Write("Engine Begin");
+            Log.Info("Engine Begin");
             _30SQ2 = (float)(30F * Math.Sqrt(2));
             _10SQ3 = (float)(10F * Math.Sqrt(3));
             _15SQ2 = _30SQ2 / 2;
             _rad45 = (float)Math.PI / 4;
-            Log.Write("Minimap Begin");
+            Log.Info("Minimap Begin");
             minimap = new GdipSurface();
-            Log.Write("Setup Scene...");
+            Log.Info("Setup Scene...");
             CppExtern.Scene.SetUpScene(width, height);
             //Handle = CppExtern.Scene.SetSceneSize(1, 1);
-            Log.Write("Setup complete");
-            Log.Write("Initializing Waypoint");
+            Log.Info("Setup complete");
+            Log.Info("Initializing Waypoint");
             InitWaypointNum();
             //Log.Write("Resetting Viewport...");
             //CppExtern.Scene.ResetSceneView();
             //Log.Write("Resetting complete");
 
 
-            Log.Write("Done.");
+            Log.Info("Done.");
         }
         internal static bool ResetMiniMap(Rectangle mapsize, Size panelSize, double scaleFactor = 1)
         {

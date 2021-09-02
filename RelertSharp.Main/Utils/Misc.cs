@@ -22,11 +22,11 @@ namespace RelertSharp.Utils
             {
                 case ELanguage.EnglishUS:
                     f = new LangFile("en-us.lang");
-                    Log.Write("Language set as English-US");
+                    Log.Info("Language set as English-US");
                     break;
                 case ELanguage.Chinese:
                     f = new LangFile("chs.lang");
-                    Log.Write("Language set as Chinese");
+                    Log.Info("Language set as Chinese");
                     break;
             }
             if (System.IO.File.Exists("external.lang"))
@@ -42,7 +42,7 @@ namespace RelertSharp.Utils
                 }
             }
             Language.DICT = new Lang(dict);
-            Log.Write("Language Init complete");
+            Log.Info("Language Init complete");
         }
         public static List<T> InitializeListWithCap<T>(int size)
         {

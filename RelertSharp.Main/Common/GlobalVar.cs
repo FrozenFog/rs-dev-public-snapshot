@@ -31,7 +31,7 @@ namespace RelertSharp.Common
         public static bool HasMap { get { return GlobalMap != null; } }
         public static void SaveMapDocument(string path)
         {
-            Log.Write("Saving {0}", path);
+            Log.Info("Saving {0}", path);
             Monitor.EnableMonitor();
             MapSaveBegin?.Invoke();
             CurrentMapDocument.SaveMapAs(path);

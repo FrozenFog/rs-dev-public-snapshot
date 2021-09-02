@@ -231,7 +231,7 @@ namespace RelertSharp.MapStructure
                     string name = filename.Substring(0, filename.Length - 3) + sub;
                     if (GlobalDir.HasFile(name)) return name;
                 }
-                Log.Write(string.Format("Framework name {0} not found!", filename));
+                Log.Warning(string.Format("Framework name {0} not found!", filename));
                 return string.Empty;
                 //throw new RSException.InvalidFileException(filename);
             }
@@ -253,7 +253,7 @@ namespace RelertSharp.MapStructure
             }
             catch (RSException.InvalidFileException e)
             {
-                Log.Write("Framework {0} has not found!", e.FileName);
+                Log.Critical("Framework {0} has not found!", e.FileName);
                 isHyte = true;
                 string hyte = tileSets[general["HeightBase"]].GetBaseHeightName(t.Height + 1);
                 return GetFrameworkNameSafe(hyte);

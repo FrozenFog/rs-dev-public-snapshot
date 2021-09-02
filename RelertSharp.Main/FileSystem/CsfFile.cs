@@ -16,7 +16,7 @@ namespace RelertSharp.FileSystem
         #region Ctor - CsfFile
         public CsfFile(byte[] _rawData, string _fullName) : base(_rawData, _fullName)
         {
-            GlobalVar.Log.Write("Reading Csf, name: " + _fullName);
+            GlobalVar.Log.Info("Reading Csf, name: " + _fullName);
             Read();
         }
         public CsfFile(Stream _baseStream, string _fullName) : base(_baseStream, _fullName)

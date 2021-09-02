@@ -4,13 +4,14 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace RelertSharp.Common
-{
+{ 
     public class RsLog
     {
         private FileStream _fs;
         private StreamWriter sw;
         private StringBuilder criticalMsg;
-        private bool isStream = false;
+        private bool isStream = false, logOverride = false;
+        private LogLevel _logLvl = LogLevel.Warning;
 
 
         #region Ctor
@@ -26,18 +27,88 @@ namespace RelertSharp.Common
         #endregion
 
 
+        #region Private
+        private void BaseWrite(string message, LogLevel logLevel)
+        {
+            LogLevel lvl = _logLvl;
+            if (!logOverride && GlobalVar.GlobalConfig != null)
+            {
+                lvl = GlobalVar.GlobalConfig.UserConfig.LogLevel;
+            }
+            if ((int)logLevel >= (int)lvl)
+            {
+                string msg = string.Format("[{0}]\t{1}: {2}", logLevel, DateTime.Now, message);
+                sw.WriteLineAsync(msg);
+                if (!isStream) sw.FlushAsync();
+            }
+        }
+        #endregion
+
+
         #region Public Methods
+        /// <summary>
+        /// some error occured and CAUSE INFORMATION LOSS
+        /// </summary>
+        /// <param name="msg"></param>
         public void Critical(string msg)
         {
             HasCritical = true;
-            sw.WriteLineAsync(string.Format("{0}: {1}", DateTime.Now, msg));
-            if (!isStream) sw.Flush();
+            BaseWrite(msg, LogLevel.Critical);
             criticalMsg.AppendLine(msg);
         }
+        /// <summary>
+        /// some error occured and CAUSE INFORMATION LOSS
+        /// </summary>
+        /// <param name="formatMsg"></param>
+        /// <param name="param"></param>
         public void Critical(string formatMsg, params object[] param)
         {
             string msg = string.Format(formatMsg, param);
             Critical(msg);
+        }
+        /// <summary>
+        /// log such as engine established
+        /// </summary>
+        /// <param name="format"></param>
+        /// <param name="param"></param>
+        public void Info(string format, params object[] param)
+        {
+            string msg = string.Format(format, param);
+            BaseWrite(msg, LogLevel.Info);
+        }
+        /// <summary>
+        /// log such as engine established
+        /// </summary>
+        /// <param name="msg"></param>
+        public void Info(string msg)
+        {
+            BaseWrite(msg, LogLevel.Info);
+        }
+        /// <summary>
+        /// some error occured and CAN still operate
+        /// </summary>
+        /// <param name="format"></param>
+        /// <param name="param"></param>
+        public void Warning(string format, params object[] param)
+        {
+            string msg = string.Format(format, param);
+            BaseWrite(msg, LogLevel.Warning);
+        }
+        /// <summary>
+        /// some error occured and CAN still operate
+        /// </summary>
+        /// <param name="message"></param>
+        public void Warning(string message)
+        {
+            BaseWrite(message, LogLevel.Warning);
+        }
+        /// <summary>
+        /// progress info that cannot be ignored
+        /// </summary>
+        /// <param name="message"></param>
+        public void Asterisk(string message)
+        {
+            BaseWrite(message, LogLevel.Asterisk);
         }
         public string ShowCritical()
         {
@@ -46,14 +117,9 @@ namespace RelertSharp.Common
             HasCritical = false;
             return msg;
         }
-        public void Write(string msg)
+        public void Write(string msg, LogLevel logLevel = LogLevel.Anything)
         {
-            sw.WriteLineAsync(string.Format("{0}: {1}", DateTime.Now, msg));
-            if (!isStream) sw.Flush();
-        }
-        public void Write(string format, params object[] args)
-        {
-            Write(string.Format(format, args));
+            BaseWrite(msg, logLevel);
         }
         public void BeginWrite()
         {
@@ -68,6 +134,12 @@ namespace RelertSharp.Common
         {
             sw.Flush();
             _fs.Dispose();
+        }
+        public bool SetLogLevel(LogLevel lvl)
+        {
+            _logLvl = lvl;
+            logOverride = true;
+            return true;
         }
         #endregion
 

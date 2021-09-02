@@ -26,15 +26,15 @@ namespace RelertSharp.FileSystem
         #region Ctor - VirtualDir
         public VirtualDir()
         {
-            Log.Write("Mix loading begin");
+            Log.Info("Mix loading begin");
             MixFile framework = new MixFile(RunPath + "framework.mix", MixTatics.Plain);
             AddMixDir(framework);
             LoadMixFromConfig();
-            Log.Write("General mix loaded");
+            Log.Info("General mix loaded");
             if (!File.Exists(RunPath + "data.mix")) System.Windows.Forms.MessageBox.Show("Critical File Missing!");
             MixFile mx = new MixFile(RunPath + "data.mix", MixTatics.Plain, true);
             AddMixDir(mx);
-            Log.Write("Virtual Dir Initialization Complete");
+            Log.Info("Virtual Dir Initialization Complete");
         }
         #endregion
 
@@ -65,11 +65,11 @@ namespace RelertSharp.FileSystem
             {
                 MixFile mx;
                 string path = Path.Combine(GlobalConfig.GamePath, mixname);
-                Log.Write(string.Format("Loading mix: {0}. From {1}", mixname, path));
+                Log.Info(string.Format("Loading mix: {0}. From {1}", mixname, path));
                 if (File.Exists(path))
                 {
                     mx = new MixFile(path, (MixTatics)tatic);
-                    Log.Write(string.Format("{0} found in game path.", mixname));
+                    Log.Info(string.Format("{0} found in game path.", mixname));
                     if (isExpand) expand.Add(mx);
                     else
                     {
@@ -90,7 +90,7 @@ namespace RelertSharp.FileSystem
                             mx.Dispose();
                         }
                     }
-                    else Log.Write("{0} not found.", mixname);
+                    else Log.Warning("{0} not found.", mixname);
                 }
             }
             /// main info mix
@@ -180,7 +180,7 @@ namespace RelertSharp.FileSystem
         }
         public void AddMixDir(MixFile _mixfile, bool _isSub = false, string _parentMixPath = "", int parentOffset = 0)
         {
-            if (_isSub) Log.Write(string.Format("Loading mix {0} from {1}", _mixfile.FileName, _parentMixPath));
+            if (_isSub) Log.Info(string.Format("Loading mix {0} from {1}", _mixfile.FileName, _parentMixPath));
             mixTatics[_mixfile.FileName] = _mixfile.Tatics;
             foreach (MixEntry ent in _mixfile.Index.Entries.Values)
             {
@@ -192,7 +192,7 @@ namespace RelertSharp.FileSystem
                 else info = new VirtualFileInfo(_mixfile.FilePath, _mixfile.FileName, ent, _mixfile.BodyPos);
                 fileOrigin[ent.fileID] = info;
             }
-            Log.Write(string.Format("{0} virtualization complete, {1} file(s) loaded", _mixfile.FileName, _mixfile.Index.Entries.Count));
+            Log.Info(string.Format("{0} virtualization complete, {1} file(s) loaded", _mixfile.FileName, _mixfile.Index.Entries.Count), LogLevel.Asterisk);
         }
         public VFileInfo GetFilePtr(string filename)
         {
@@ -260,7 +260,7 @@ namespace RelertSharp.FileSystem
         }
         public byte[] GetRawByte(string _fullName, bool fromRoot = false)
         {
-            if (isFindFileLogEnable) Log.Write("Finding " + _fullName);
+            if (isFindFileLogEnable) Log.Info("Finding " + _fullName);
             if (fromRoot || GlobalConfig.DevMode)
             {
                 byte[] b = GetFromRoot(_fullName);

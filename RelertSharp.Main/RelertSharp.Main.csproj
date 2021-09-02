@@ -204,7 +204,6 @@
     <Compile Include="IniSystem\RulesExtension\FindObjectAttribute.cs" />
     <Compile Include="IniSystem\RulesExtension\GlobalFinding.cs" />
     <Compile Include="IniSystem\SoundRules.cs" />
-    <Compile Include="Common\LocalConfig.cs" />
     <Compile Include="MapStructure\BaseVisibleObject.cs" />
     <Compile Include="MapStructure\ISceneObject.cs" />
     <Compile Include="MapStructure\Logic\AITrigger.cs" />

@@ -177,7 +177,7 @@ namespace RelertSharp.IniSystem
                 UnitRoots = InitializeListWithCap<string>(side);
                 NavalRoots = InitializeListWithCap<string>(side);
                 AircraftRoots = InitializeListWithCap<string>(side);
-                Log.Write(string.Format("{0} sides loaded", side));
+                Log.Info(string.Format("{0} sides loaded", side));
                 sideInitialized = true;
             }
             return side;

@@ -78,6 +78,11 @@ namespace RelertSharp.Common
             get { return General.AutoSaveTime; }
             set { General.AutoSaveTime = value.TrimTo(10, int.MaxValue); }
         }
+        public LogLevel LogLevel
+        {
+            get { return General.LogLevel; }
+            set { General.LogLevel = value; }
+        }
         public GuiStatus GuiStatus { get { return data.GuiStatus; } }
         public List<TheaterTilesets> FavouriteTileSet { get { return data.FavouriteItems.TileSets; } }
         public FavouriteItemTree FavouriteObjects { get { return data.FavouriteItems.Objects; } }

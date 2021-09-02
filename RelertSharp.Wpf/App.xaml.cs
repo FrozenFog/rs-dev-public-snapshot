@@ -66,7 +66,7 @@ namespace RelertSharp.Wpf
             if (canStart)
             {
                 MainWindow mw = new MainWindow();
-                Application.Current.MainWindow = mw;
+                Current.MainWindow = mw;
                 mw.Show();
             }
             base.OnStartup(e);
@@ -123,7 +123,7 @@ namespace RelertSharp.Wpf
             try
             {
                 GlobalVar.GlobalConfig = new RsConfig();
-                Log.Write("Primary config loaded");
+                Log.Info("Primary config loaded");
                 return true;
             }
             catch (Exception e)
@@ -157,14 +157,14 @@ namespace RelertSharp.Wpf
             init.SetStatus("Reading Mix...");
             if (!SafeRun(() => { GlobalVar.GlobalDir = new VirtualDir(); },
                 "Virtual mix directiory initialization failed!")) return false;
-            Log.Write("Loading Rules");
+            Log.Info("Loading Rules");
             init.SetStatus("Reading Rules and Art");
             if (!SafeRun(() => { GlobalVar.GlobalRules = new Rules(GlobalVar.GlobalDir.GetRawByte(general.IniFiles.Rules + Constant.EX_INI, true), general.IniFiles.Rules + Constant.EX_INI); },
                 "Rules not found or corrupted!")) return false;
-            Log.Write("Loading Art");
+            Log.Info("Loading Art");
             if (!SafeRun(() => { GlobalVar.GlobalRules.LoadArt(GlobalVar.GlobalDir.GetFile(general.IniFiles.Art, FileExtension.INI, true)); },
                 "Art not found or corrupted!")) return false;
-            Log.Write("Loading Sound");
+            Log.Info("Loading Sound");
             init.SetStatus("Loading sound bag file");
             if (!SafeRun(() =>
             {
@@ -175,13 +175,13 @@ namespace RelertSharp.Wpf
 
             //csf
             init.SetStatus("Loading csf library");
-            Log.Write("Loading Csf");
+            Log.Info("Loading Csf");
             if (!SafeRun(() =>
             {
                 LoadCsf();
             },
             "Csf library initialization failed!")) return false;
-            Log.Write("INITIALIZATION COMPLETE\n\n\n");
+            Log.Asterisk("INITIALIZATION COMPLETE\n\n\n");
             return true;
         }
         private void LoadCsf()

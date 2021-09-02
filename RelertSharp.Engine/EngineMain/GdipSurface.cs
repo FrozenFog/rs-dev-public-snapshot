@@ -46,7 +46,7 @@ namespace RelertSharp.Engine
             }
             catch
             {
-                GlobalVar.Log.Write("Minimap init failed!");
+                GlobalVar.Log.Write("Minimap init failed!", LogLevel.Error);
                 return false;
             }
         }
