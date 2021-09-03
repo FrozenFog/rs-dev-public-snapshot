@@ -105,8 +105,21 @@ namespace RelertSharp.MapStructure
             }
         }
         #endregion
+        private TSceneInterface _sceneobject;
 
-        public virtual TSceneInterface SceneObject { get; set; }
+        public virtual TSceneInterface SceneObject
+        {
+            get { return _sceneobject; }
+            set
+            {
+                if (value != null)
+                {
+                    _sceneobject = value;
+                    Disposed = false;
+                }
+                else Disposed = true;
+            }
+        }
         public virtual bool CanSelect
         {
             get
