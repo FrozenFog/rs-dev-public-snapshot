@@ -35,8 +35,15 @@ namespace RelertSharp.Wpf.MapEngine
             if (drew)
             {
                 bool redraw = MouseLeaved();
-
+                isActivate = false;
                 if (redraw) EngineApi.InvokeRedraw();
+            }
+        }
+        private void HandleMouseEnter(object sender, MouseEventArgs e)
+        {
+            if (drew)
+            {
+                isActivate = true;
             }
         }
 

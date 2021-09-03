@@ -14,6 +14,7 @@ namespace RelertSharp.Wpf.MapEngine
     public partial class MainPanel
     {
         private DelayedAction keyClickAction;
+        private bool isActivate;
         #region Handler Firstpass
         private bool isLoaded = false;
         private void PanelLoaded(object sender, RoutedEventArgs e)
@@ -28,7 +29,7 @@ namespace RelertSharp.Wpf.MapEngine
         }
         private void HandleKeyDown(object sender, KeyEventArgs e)
         {
-            if (drew && ParentDocument.IsActive)
+            if (drew && isActivate)
             {
                 if (e.Key == Key.Z && GuiUtil.IsControlDown())
                 {
@@ -104,7 +105,7 @@ namespace RelertSharp.Wpf.MapEngine
 
         private void HandleKeyUp(object sender, KeyEventArgs e)
         {
-            if (drew && ParentDocument.IsActive)
+            if (drew && isActivate)
             {
 
             }
