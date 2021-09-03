@@ -20,6 +20,11 @@ namespace RelertSharp.Engine.Api
         public static event MapDrawingProgressEventHandler DrawingProgressCompleted;
         public static event EventHandler MapDrawingBegin;
         public static event Action MapDrawingComplete;
+        public static void UpdateHouseAllObjectColor(IEnumerable<IMapObject> objects)
+        {
+            foreach (var o in objects) RedrawObject(o);
+            RedrawMinimapAll();
+        }
         public static void SetTheater(TheaterType type)
         {
             EngineMain.SetTheater(type);

@@ -126,6 +126,13 @@ namespace RelertSharp.Wpf.ViewModel
                 country.ColorName = c;
                 SetProperty();
                 SetProperty(nameof(ColorIndicator));
+                var objects = GlobalVar.GlobalMap?.AllCombatObjects;
+                if (objects != null)
+                {
+                    IEnumerable<IMapObject> targets = objects.Where(x => x.Owner == house.Name);
+                    Engine.Api.EngineApi.UpdateHouseAllObjectColor(targets);
+                    Engine.Api.EngineApi.UpdateHouseAllObjectColor(house.BaseNodes);
+                }
             }
         }
         public Brush ColorIndicator
