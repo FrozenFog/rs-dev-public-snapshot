@@ -196,7 +196,7 @@ namespace RelertSharp.Algorithm
         /// </summary>
         public bool Amplify { get; set; }
         /// <summary>
-        /// Leave for 0 will use time-based random seed
+        /// Leave it 0 will use time-based random seed
         /// </summary>
         public int Seed { get; set; }
         /// <summary>

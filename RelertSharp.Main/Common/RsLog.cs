@@ -37,7 +37,7 @@ namespace RelertSharp.Common
             }
             if ((int)logLevel >= (int)lvl)
             {
-                string msg = string.Format("[{0}]\t{1}: {2}", logLevel, DateTime.Now, message);
+                string msg = string.Format("[{0}({3})]\t{1}: {2}", logLevel, DateTime.Now, message, (int)logLevel);
                 sw.WriteLine(msg);
                 if (!isStream) sw.Flush();
             }
