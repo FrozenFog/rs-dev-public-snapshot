@@ -57,7 +57,7 @@ namespace RelertSharp.FileSystem
                 return hash;
             }
         }
-        public void SaveMapAs(string path)
+        public void SaveMapAs(string path, bool bypassPathSave = false)
         {
             INIFile f = new INIFile(path, true);
             f.AddEnt(Map.IniResidue.Values);
@@ -70,7 +70,7 @@ namespace RelertSharp.FileSystem
             DumpCustomComponents(f.IniDict);
             f.SaveIni(path, true);
             if (GlobalVar.Log.HasCritical) GlobalVar.Log.ShowCritical();
-            FilePath = path;
+            if (!bypassPathSave) FilePath = path;
             FileName = Path.GetFileName(path);
         }
         #endregion

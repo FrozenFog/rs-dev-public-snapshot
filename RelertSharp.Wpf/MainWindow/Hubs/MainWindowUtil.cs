@@ -63,7 +63,7 @@ namespace RelertSharp.Wpf
                 if (!Directory.Exists(PATH)) Directory.CreateDirectory(PATH);
                 string date = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
                 string filename = Path.Combine(PATH, string.Format("AutoSave - {0}.map", date));
-                GlobalVar.CurrentMapDocument.SaveMapAs(filename);
+                GlobalVar.CurrentMapDocument.SaveMapAs(filename, true);
                 autosaveFailed = false;
             }
             catch (Exception e)
