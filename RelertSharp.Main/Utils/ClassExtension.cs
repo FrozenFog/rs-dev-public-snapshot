@@ -272,6 +272,10 @@ namespace System
             }
             return false;
         }
+        public static string[] SplitOnce(this string s, char splitBy)
+        {
+            return s.Split(new char[] { splitBy }, 2);
+        }
         #endregion
 
 

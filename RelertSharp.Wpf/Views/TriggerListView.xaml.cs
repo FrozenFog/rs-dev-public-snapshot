@@ -87,42 +87,72 @@ namespace RelertSharp.Wpf.Views
         public void ReloadMapTrigger()
         {
             trvMain.Items.Clear();
-            Regex group = new Regex("\\[.*\\]");
+            Regex re = new Regex("\\[.*\\]");
             Dictionary<string, TriggerTreeItemVm> groups = new Dictionary<string, TriggerTreeItemVm>();
+            List<TriggerTreeItemVm> singles = new List<TriggerTreeItemVm>();
+            TriggerTreeItemVm create_group(string fullName)
+            {
+                string[] arr = fullName.Split('.');
+                if (arr.Length == 1)
+                {
+                    TriggerTreeItemVm single = new TriggerTreeItemVm();
+                    single.SetTitle(arr[0]);
+                    groups[fullName] = single;
+                    return single;
+                }
+                else
+                {
+                    string groupFullname = "";
+                    TriggerTreeItemVm ancestor = null;
+                    foreach (string title in arr)
+                    {
+                        if (groupFullname.IsNullOrEmpty()) groupFullname = title;
+                        else groupFullname = string.Format("{0}.{1}", groupFullname, title);
+                        if (groups.ContainsKey(groupFullname)) ancestor = groups[groupFullname];
+                        else
+                        {
+                            TriggerTreeItemVm newItem = new TriggerTreeItemVm();
+                            newItem.SetTitle(title);
+                            groups[groupFullname] = newItem;
+                            if (ancestor != null) ancestor.AddItem(newItem);
+                            ancestor = newItem;
+                        }
+                    }
+                    return ancestor;
+                }
+            }
             foreach (TriggerItem trg in map.Triggers)
             {
-                Match m = group.Match(trg.Name);
+                Match m = re.Match(trg.Name);
                 if (m.Success)
                 {
                     string groupName = m.Value.Peel();
                     string trgName = trg.Name.Substring(m.Index + m.Length).Trim();
                     trg.Name = trgName;
-                    TriggerTreeItemVm item = new TriggerTreeItemVm();
-                    item.SetTitle(groupName);
                     if (groups.ContainsKey(groupName))
                     {
                         groups[groupName].AddItem(trg, trgName);
                     }
                     else
                     {
-                        item.AddItem(trg, trgName);
-                        groups[groupName] = item;
+                        TriggerTreeItemVm newGroup = create_group(groupName);
+                        newGroup.AddItem(trg, trgName);
                     }
                 }
                 else
                 {
                     TriggerTreeItemVm item = new TriggerTreeItemVm(trg);
                     item.SetTitle(trg.ToString());
-                    groups[trg.Name] = item;
+                    singles.Add(item);
                 }
             }
             groups.Values.Foreach(x =>
             {
-                if (x.IsTree) trvMain.Items.Add(x);
+                if (x.IsRoot) trvMain.Items.Add(x);
             });
-            groups.Values.Foreach(x =>
+            singles.Foreach(x =>
             {
-                if (!x.IsTree) trvMain.Items.Add(x);
+                trvMain.Items.Add(x);
             });
         }
 
