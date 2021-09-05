@@ -193,8 +193,8 @@ namespace RelertSharp.MapStructure.Logic
             Type = _type;
             Parent = parent;
             //idx = num;
-            //if (_type == TriggerSubType.EventLogic) Parameters = new string[] { "0", "0", "0" };
-            //else Parameters = new string[] { "0", "0", "0", "0", "0", "0", "A" };
+            if (_type == TriggerSubType.Event) Parameters = new string[] { "0", "0", "0" };
+            else Parameters = new string[] { "0", "0", "0", "0", "0", "0", "A" };
             ID = 0;
             initialized = true;
         }
