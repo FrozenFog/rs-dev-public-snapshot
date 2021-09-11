@@ -25,6 +25,21 @@ namespace RelertSharp
             return src;
         }
 
+        /// <summary>
+        /// include both
+        /// </summary>
+        /// <param name="src"></param>
+        /// <param name="floor"></param>
+        /// <param name="ceil"></param>
+        /// <returns></returns>
+        public static long TrimTo(this long src, long floor, long ceil)
+        {
+            if (floor > ceil) throw new ArgumentException("Floor is grater than Ceil");
+            if (src >= ceil) return ceil;
+            if (src <= floor) return floor;
+            return src;
+        }
+
         public static short TrimTo(this short src, short floor, short ceil)
         {
             if (floor > ceil) throw new ArgumentException("Floor is grater than Ceil");

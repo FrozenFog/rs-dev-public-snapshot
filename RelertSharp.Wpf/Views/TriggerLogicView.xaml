@@ -24,8 +24,8 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Label Name="lblType" Content="Events" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="37"/>
-        <ListBox x:Name="lbxMain" Margin="10,33,9.8,9.8" Style="{DynamicResource lbxDark}" SelectedValue="{Binding SelectedItem}" SelectionChanged="CurrentSelectionChanged" PreviewMouseRightButtonDown="PreviewRightDown">
+        <Label Name="lblType" Content="Events" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="lbxMain" Margin="10,33,10,10" Style="{DynamicResource lbxDark}" SelectedValue="{Binding SelectedItem}" SelectionChanged="CurrentSelectionChanged" PreviewMouseRightButtonDown="PreviewRightDown">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add new item" Click="Menu_Add"/>
@@ -53,8 +53,8 @@
                 </CompositeCollection>
             </ListBox.ItemsSource>
         </ListBox>
-        <ComboBox x:Name="cbbCurrent" Margin="10,9.8,10,0" Grid.Row="1" VerticalAlignment="Top" DataContext="{Binding SelectedItem}" SelectedItem="{Binding CurrentItemType}" SelectionChanged="CurrentTypeChanged"/>
-        <ScrollViewer Margin="10,37.8,10,10.4" Grid.Row="1" VerticalContentAlignment="Top">
+        <ComboBox x:Name="cbbCurrent" Margin="10,0,10,0" Grid.Row="1" VerticalAlignment="Top" DataContext="{Binding SelectedItem}" SelectedItem="{Binding CurrentItemType}" SelectionChanged="CurrentTypeChanged"/>
+        <ScrollViewer Margin="10,30,10,10" Grid.Row="1" VerticalContentAlignment="Top">
             <Grid>
                 <TextBox x:Name="txbDetail" TextWrapping="Wrap" DataContext="{Binding SelectedItem}" Text="{Binding DetailInformation, Mode=OneWay}" IsEnabled="False" IsUndoEnabled="False" IsReadOnly="True" Height="Auto" VerticalContentAlignment="Top"/>
             </Grid>

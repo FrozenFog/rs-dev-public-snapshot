@@ -13,6 +13,11 @@ namespace RelertSharp.Wpf.Common
     {
         public const double PARAM_ROW_HEIGHT = 23d;
         public const double PARAM_ROW_DELTA = 28d;
+
+        internal static class Strings
+        {
+            public const string FILTER_CONFIG = "Relert sharp xml config file (*.xml)|*.xml";
+        }
     }
     public enum GuiViewSide
     {

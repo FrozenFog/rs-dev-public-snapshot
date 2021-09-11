@@ -56,11 +56,31 @@ namespace RelertSharp.Wpf
             }
         }
 
+        private static void CheckAutosaveSizeLimit()
+        {
+            string filter = "AutoSave - *.map";
+            try
+            {
+                long size = GuiUtil.CalcFileSizes(PATH, filter);
+                if (size / 1024 >= GlobalVar.GlobalConfig.UserConfig.General.MaxAutoSaveSizeKb)
+                {
+                    IEnumerable<string> files = Directory.GetFiles(PATH, filter);
+                    files = files.OrderBy(x => x);
+                    GuiUtil.SafeDelete(files.First());
+                }
+            }
+            catch
+            {
+                GlobalVar.Log.Warning("Autosave limit check failed!");
+            }
+        }
+
         private static void Save()
         {
             try
             {
                 if (!Directory.Exists(PATH)) Directory.CreateDirectory(PATH);
+                CheckAutosaveSizeLimit();
                 string date = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
                 string filename = Path.Combine(PATH, string.Format("AutoSave - {0}.map", date));
                 GlobalVar.CurrentMapDocument.SaveMapAs(filename, true);
@@ -87,6 +107,12 @@ namespace RelertSharp.Wpf
         {
             timer.Stop();
             AutosaveEnabled = false;
+        }
+        public static void UpdateAutosaveTime()
+        {
+            timer.Stop();
+            timer.Interval = new TimeSpan(0, 0, GlobalVar.GlobalConfig.UserConfig.AutoSaveTime);
+            timer.Start();
         }
         #endregion
 

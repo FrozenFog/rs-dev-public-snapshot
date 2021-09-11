@@ -1,5 +1,6 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.Common.Config;
+using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace RelertSharp.Wpf.Dialogs
             OpenFileDialog dlg = new OpenFileDialog()
             {
                 AddExtension = true,
-                Filter = "Relert sharp xml config file (*.xml)|*.xml"
+                Filter = GuiConst.Strings.FILTER_CONFIG
             };
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {

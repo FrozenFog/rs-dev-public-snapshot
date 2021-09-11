@@ -56,6 +56,8 @@
                 <MenuItem Header="Clear Map" IsEnabled="{Binding IsEngineDrawed}" Click="MenuEraseEverything"/>
                 <Separator/>
                 <MenuItem Header="Inspect Rules" Click="MenuInspectRules"/>
+                <Separator/>
+                <MenuItem Header="Setting" Click="MenuCallSetting"/>
             </MenuItem>
             <MenuItem Header="Tiles" IsEnabled="{Binding IsEngineDrawed}">
                 <MenuItem Header="Box Selecting" IsCheckable="True" IsChecked="{Binding IsBoxTileSelecting}"/>

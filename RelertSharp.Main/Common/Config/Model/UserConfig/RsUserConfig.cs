@@ -36,21 +36,19 @@ namespace RelertSharp.Common.Config.Model
 
     public class UserGeneral
     {
-        [XmlElement]
         public string GamePath { get; set; }
-        [XmlElement]
         public string ConfigPath { get; set; }
 #if DEBUG
-        [XmlElement]
         public bool DevMode { get; set; } = true;
 #endif
 #if RELEASE
         [XmlElement]
-        public bool DevMode { get; set; }
+        public bool DevMode { get; set; } = true;
 #endif
         [XmlElement("AutoSave")]
         public int AutoSaveTime { get; set; } = 60;
-        [XmlElement]
         public LogLevel LogLevel { get; set; } = LogLevel.Asterisk;
+        public long MaxLogSizeKb { get; set; } = 10240;
+        public long MaxAutoSaveSizeKb { get; set; } = 10240;
     }
 }

@@ -3,6 +3,7 @@
     <!--Main-->
     <SolidColorBrush x:Key="textFront" Color="#FFF1F1F1"/>
     <SolidColorBrush x:Key="dimBack" Color="#FF2E2E2E"/>
+    <SolidColorBrush x:Key="dimGray" Color="#FF393939"/>
     <SolidColorBrush x:Key="textDisable" Color="#FF7D7D7D"/>
     <SolidColorBrush x:Key="dimDisable" Color="#FF222222"/>
 

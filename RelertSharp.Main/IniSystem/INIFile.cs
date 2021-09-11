@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace RelertSharp.IniSystem
 {
@@ -106,6 +107,70 @@ namespace RelertSharp.IniSystem
 
 
         #region Public Methods - INIFile
+        /// <summary>
+        /// Compare two ini files, will not modify either of them
+        /// </summary>
+        /// <param name="newversion">the NEW version of ini file</param>
+        /// <returns></returns>
+        public IniFileCompareLog Distinct(INIFile newversion)
+        {
+            IniFileCompareLog log = new IniFileCompareLog();
+            foreach (INIEntity newent in newversion)
+            {
+                if (HasIniEnt(newent))
+                {
+                    INIEntity exist = this[newent.Name];
+                    IniEntityCompareLog entLog = new IniEntityCompareLog(newent.Name);
+                    if (exist.IsSystemList)
+                    {
+                        HashSet<string> listOrg = exist.TakeValuesToList().ToHashSet();
+                        HashSet<string> listNew = newent.TakeValuesToList().ToHashSet();
+                        var removed = listOrg.Except(listNew);
+                        foreach (string value in removed) entLog.RemovedPairs.Add(new IniPairCompareLog(value));
+                        var added = listNew.Except(listOrg);
+                        foreach (string value in added) entLog.AddedPairs.Add(new IniPairCompareLog(value));
+                    }
+                    else
+                    {
+                        foreach (INIPair pOrg in exist)
+                        {
+                            if (newent.HasPair(pOrg))
+                            {
+                                INIPair pNew = newent.GetPair(pOrg.Name);
+                                if (pNew.Value != pOrg.Value)
+                                {
+                                    IniPairCompareLog pLog = new IniPairCompareLog()
+                                    {
+                                        Name = pNew.Name,
+                                        NewValue = pNew.Value,
+                                        OldValue = pOrg.Value
+                                    };
+                                    entLog.ModifiedPairs.Add(pLog);
+                                }
+                            }
+                            else
+                            {
+                                entLog.RemovedPairs.Add(new IniPairCompareLog(pOrg, true));
+                            }
+                        }
+                        foreach (INIPair newPair in newent)
+                        {
+                            if (!exist.HasPair(newPair)) entLog.AddedPairs.Add(new IniPairCompareLog(newPair, false));
+                        }
+                    }
+                    if (!entLog.IsEmpty) log.Modified.Add(entLog);
+                }
+                else
+                {
+                    log.Added.Add(new IniEntityCompareLog(newent, false));
+                }
+            }
+            foreach (INIEntity oldent in this)
+            {
+                if (!newversion.HasIniEnt(oldent)) log.Removed.Add(new IniEntityCompareLog(oldent, true));
+            }
+            return log;
+        }
         /// <summary>
         /// Similar to Override, but remain original key/value when src have same key/value 
         /// </summary>
@@ -283,5 +348,120 @@ namespace RelertSharp.IniSystem
             set { initype = value; }
         }
         #endregion
+    }
+
+
+
+
+    public class IniFileCompareLog
+    {
+        public List<IniEntityCompareLog> Removed { get; set; } = new List<IniEntityCompareLog>();
+        public List<IniEntityCompareLog> Added { get; set; } = new List<IniEntityCompareLog>();
+        public List<IniEntityCompareLog> Modified { get; set; } = new List<IniEntityCompareLog>();
+
+
+        public void SaveReport(string filepath)
+        {
+            using (FileStream fs = new FileStream(filepath, FileMode.Create, FileAccess.Write))
+            {
+                StreamWriter sw = new StreamWriter(fs);
+                StringBuilder sb = new StringBuilder();
+                void process(List<IniEntityCompareLog> src, string title)
+                {
+                    sb.AppendLine(title);
+                    foreach (IniEntityCompareLog log in src)
+                    {
+                        sb.AppendLine(log.GenerateReport());
+                    }
+                }
+                process(Removed, "Removed:");
+                process(Added, "Added:");
+                process(Modified, "Modified:");
+                sw.WriteLine(sb.ToString());
+                sw.Flush();
+            }
+        }
+    }
+
+    public class IniEntityCompareLog
+    {
+        public IniEntityCompareLog(INIEntity src, bool isRemoved)
+        {
+            Name = src.Name;
+            foreach (INIPair p in src)
+            {
+                var log = new IniPairCompareLog(p, isRemoved);
+                if (isRemoved) RemovedPairs.Add(log);
+                else AddedPairs.Add(log);
+            }
+        }
+        public IniEntityCompareLog(string name)
+        {
+            Name = name;
+        }
+        public string GenerateReport()
+        {
+            StringBuilder sb = new StringBuilder(string.Format("[{0}]\n", Name));
+            if (RemovedPairs.Count > 0)
+            {
+                sb.AppendLine("Removed Pairs:");
+                foreach (var p in RemovedPairs) sb.AppendLine(p.AsRemoved());
+                sb.AppendLine();
+            }
+            if (AddedPairs.Count > 0)
+            {
+                sb.AppendLine("Added Pairs:");
+                foreach (var p in AddedPairs) sb.AppendLine(p.AsAdded());
+                sb.AppendLine();
+            }
+            if (ModifiedPairs.Count > 0)
+            {
+                sb.AppendLine("Modified Pairs:");
+                foreach (var p in ModifiedPairs) sb.AppendLine(p.GenerateReport());
+                sb.AppendLine();
+            }
+            return sb.ToString();
+        }
+        public string Name { get; set; }
+        public List<IniPairCompareLog> RemovedPairs { get; set; } = new List<IniPairCompareLog>();
+        public List<IniPairCompareLog> AddedPairs { get; set; } = new List<IniPairCompareLog>();
+        public List<IniPairCompareLog> ModifiedPairs { get; set; } = new List<IniPairCompareLog>();
+        public bool IsEmpty { get { return RemovedPairs.Count + AddedPairs.Count + ModifiedPairs.Count == 0; } }
+    }
+
+    public class IniPairCompareLog
+    {
+        public IniPairCompareLog(INIPair src, bool isRemoved)
+        {
+            Name = src.Name;
+            if (isRemoved) OldValue = src.Value;
+            else NewValue = src.Value;
+        }
+        public IniPairCompareLog(string value)
+        {
+            Name = value;
+        }
+        public IniPairCompareLog()
+        {
+
+        }
+        public string GenerateReport()
+        {
+            return string.Format("{0}\tfrom {1}\tto {2}", Name, OldValue, NewValue);
+        }
+        public string AsRemoved()
+        {
+            if (IsListValue) return Name;
+            return string.Format("{0}={1}", Name, OldValue);
+        }
+        public string AsAdded()
+        {
+            if (IsListValue) return Name;
+            return string.Format("{0}={1}", Name, NewValue);
+        }
+        public string Name { get; set; }
+        public string OldValue { get; set; }
+        public string NewValue { get; set; }
+        public bool IsListValue { get { return string.IsNullOrEmpty(OldValue) && string.IsNullOrEmpty(NewValue) && !string.IsNullOrEmpty(Name); } }
     }
 }

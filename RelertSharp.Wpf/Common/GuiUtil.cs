@@ -11,6 +11,7 @@ using RelertSharp.Common;
 using Microsoft.Win32;
 using RelertSharp.Engine.Api;
 using System.Windows.Input;
+using System.IO;
 
 namespace RelertSharp.Wpf
 {
@@ -121,6 +122,22 @@ namespace RelertSharp.Wpf
                 if (Keyboard.IsKeyDown(k)) return false;
             }
             return true;
+        }
+        public static long CalcFileSizes(string pathToFind, string fileFilter)
+        {
+            string[] files = Directory.GetFiles(pathToFind, fileFilter);
+            long sum = 0;
+            foreach (string name in files)
+            {
+                FileInfo info = new FileInfo(name);
+                sum += info.Length;
+            }
+            return sum;
+        }
+        public static void SafeDelete(string filePath)
+        {
+            if (filePath.IsNullOrEmpty()) return;
+            if (File.Exists(filePath)) File.Delete(filePath);
         }
     }
 }

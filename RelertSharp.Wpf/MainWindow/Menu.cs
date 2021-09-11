@@ -239,6 +239,14 @@ namespace RelertSharp.Wpf
                 }
             }
         }
+        private void MenuCallSetting(object sender, RoutedEventArgs e)
+        {
+            DlgSetting dlg = new DlgSetting();
+            if (dlg.ShowDialog().Value)
+            {
+                MainWindowUtil.UpdateAutosaveTime();
+            }
+        }
         #endregion
 
 
