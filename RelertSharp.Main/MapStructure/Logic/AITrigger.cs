@@ -5,7 +5,7 @@ using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class AITriggerCollection : IndexableItemCollection<AITriggerItem>
+    public class AITriggerCollection : IndexableItemCollection<AITriggerItem>, ICurdContainer<AITriggerItem>
     {
         private Dictionary<string, bool> globalEnables = new Dictionary<string, bool>();
 
@@ -17,9 +17,11 @@ namespace RelertSharp.MapStructure.Logic
         #region Public Methods - AITriggerCollection
         public AITriggerItem NewAITrigger(string id)
         {
-            AITriggerItem item = new AITriggerItem();
-            item.Id = id;
-            item.Name = "New AI Trigger";
+            AITriggerItem item = new AITriggerItem
+            {
+                Id = id,
+                Name = "New AI Trigger"
+            };
             item.Team1ID = item.Team2ID = "<none>";
             item.OwnerHouse = "<all>";
             item.ConditionObjID = "<none>";
@@ -42,6 +44,43 @@ namespace RelertSharp.MapStructure.Logic
         {
             data.Clear();
         }
+
+        public AITriggerItem AddItem(string id, string name)
+        {
+            AITriggerItem item = new AITriggerItem(id, name);
+            this[id] = item;
+            GlobalEnables[id] = true;
+            return item;
+        }
+
+        public AITriggerItem CopyItem(AITriggerItem src, string id)
+        {
+            AITriggerItem copy = new AITriggerItem(src, id);
+            this[id] = copy;
+            GlobalEnables[id] = true;
+            return copy;
+        }
+
+        public bool ContainsItem(AITriggerItem look)
+        {
+            return data.ContainsKey(look.Id);
+        }
+
+        public bool ContainsItem(string id, string param2)
+        {
+            return data.ContainsKey(id);
+        }
+
+        public bool RemoveItem(AITriggerItem target)
+        {
+            if (ContainsItem(target))
+            {
+                data.Remove(target.Id);
+                globalEnables.Remove(target.Id);
+                return true;
+            }
+            return false;
+        }
         #endregion
 
         #region Public Calls - AITriggerCollection
@@ -60,6 +99,34 @@ namespace RelertSharp.MapStructure.Logic
         public AITriggerItem()
         {
 
+        }
+        public AITriggerItem(string _id, string _name)
+        {
+            Id = _id;
+            Name = _name;
+        }
+        public AITriggerItem(AITriggerItem src, string id)
+        {
+            Id = id;
+            Name = src.Name + Constant.CLONE_SUFFIX;
+            Team1ID = src.Team1ID;
+            Team2ID = src.Team2ID;
+            OwnerHouse = src.OwnerHouse;
+            TechLevel = src.TechLevel;
+            ConditionObjID = src.ConditionObjID;
+            ConditionType = src.ConditionType;
+            Comparator = new AITriggerComparator(src.Comparator);
+            StartingWeight = src.StartingWeight;
+            MinimumWeight = src.MinimumWeight;
+            MaximumWeight = src.MaximumWeight;
+            IsForSkirmish = src.IsForSkirmish;
+            Residual = "0";
+            SideIndex = src.SideIndex;
+            IsBaseDefense = src.IsBaseDefense;
+            EasyOn = src.EasyOn;
+            NormalOn = src.NormalOn;
+            HardOn = src.HardOn;
+            Enabled = true;
         }
         public AITriggerItem(string _id, string[] _args)
         {
@@ -104,7 +171,12 @@ namespace RelertSharp.MapStructure.Logic
             List<object> objs = new List<object>();
             objs.AddRange(new object[] { Name, Team1ID, OwnerHouse, TechLevel, (int)ConditionType, ConditionObjID });
             string oper = Comparator.ToCmpString;
-            objs.AddRange(new object[] { oper, (double)StartingWeight, (double)MinimumWeight, (double)MaximumWeight, IsForSkirmish, 0, SideIndex, IsBaseDefense, Team2ID, EasyOn, NormalOn, HardOn });
+            objs.AddRange(new object[] 
+            { 
+                oper, (double)StartingWeight, (double)MinimumWeight, (double)MaximumWeight, 
+                IsForSkirmish.ZeroOne(), 0, SideIndex, IsBaseDefense.ZeroOne(), Team2ID, 
+                EasyOn.ZeroOne(), NormalOn.ZeroOne(), HardOn.ZeroOne() 
+            });
             return objs.JoinBy();
         }
         public string[] ExtractParameter()
@@ -142,11 +214,11 @@ namespace RelertSharp.MapStructure.Logic
 
         public bool Enabled { get; set; }
         public string Team1ID { get; set; } = Constant.ITEM_NONE;
-        public string OwnerHouse { get; set; }
+        public string OwnerHouse { get; set; } = Constant.ITEM_ALL;
         public int TechLevel { get; set; }
         public LogicType ItemType { get { return LogicType.AiTrigger; } }
         public AITriggerConditionType ConditionType { get; set; } = AITriggerConditionType.ConditionTrue;
-        public string ConditionObjID { get; set; }
+        public string ConditionObjID { get; set; } = Constant.ITEM_NONE;
         public AITriggerConditionOperator Operator { get { return Comparator.Operator; } set { Comparator.Operator = value; } }
         public AITriggerComparator Comparator { get; set; } = new AITriggerComparator();
         public int StartingWeight { get; set; }
@@ -177,6 +249,11 @@ namespace RelertSharp.MapStructure.Logic
         {
             Num1 = 0;
             Operator = AITriggerConditionOperator.LessThan;
+        }
+        public AITriggerComparator(AITriggerComparator src)
+        {
+            Num1 = src.Num1;
+            Operator = src.Operator;
         }
         #endregion
 

@@ -13,6 +13,10 @@
         <ListBox x:Name="lbxMain" Margin="10,10,9.6,10.2" Style="{DynamicResource lbxDark}" SelectionChanged="SelectedItemChanged">
             <ListBox.ContextMenu>
                 <ContextMenu>
+                    <MenuItem Header="Add Ai Trigger" Click="Menu_Add"/>
+                    <MenuItem Header="Copy Ai Trigger" Click="Menu_Copy"/>
+                    <MenuItem Header="Delete Ai Trigger" Click="Menu_Delete"/>
+                    <Separator/>
                     <MenuItem Header="Show Ai Trigger Id" IsCheckable="True" Unchecked="IdUnchecked" Checked="IdChecked"/>
                     <Separator/>
                     <MenuItem Header="Ascending Sort" Click="AscendingSort"/>

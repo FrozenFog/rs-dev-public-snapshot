@@ -17,6 +17,7 @@ using RelertSharp.Wpf.ViewModel;
 using RelertSharp.MapStructure.Logic;
 using RelertSharp.Wpf.Common;
 using AvalonDock.Layout;
+using RelertSharp.Wpf.Dialogs;
 
 namespace RelertSharp.Wpf.Views
 {
@@ -26,8 +27,10 @@ namespace RelertSharp.Wpf.Views
     public partial class AiTriggerListView : UserControl, IListContainer, IRsView
     {
         private GlobalAiTriggerVm context { get { return DataContext as GlobalAiTriggerVm; } }
+        private AITriggerItem SelectedItem { get { return lbxMain.SelectedItem as AITriggerItem; } }
 
         public GuiViewType ViewType { get { return GuiViewType.AiTriggerList; } }
+        private IndexableDisplayType displayType = IndexableDisplayType.IdAndName;
 
         public LayoutAnchorable ParentAncorable { get; set; }
         public LayoutDocument ParentDocument { get; set; }
@@ -49,13 +52,15 @@ namespace RelertSharp.Wpf.Views
 
         private void IdUnchecked(object sender, RoutedEventArgs e)
         {
-            GlobalVar.GlobalMap?.AiTriggers.ChangeDisplay(IndexableDisplayType.NameOnly);
+            displayType = IndexableDisplayType.NameOnly;
+            GlobalVar.GlobalMap?.AiTriggers.ChangeDisplay(displayType);
             GlobalCollectionVm.AiTriggers.UpdateAll();
         }
 
         private void IdChecked(object sender, RoutedEventArgs e)
         {
-            GlobalVar.GlobalMap?.AiTriggers.ChangeDisplay(IndexableDisplayType.IdAndName);
+            displayType = IndexableDisplayType.IdAndName;
+            GlobalVar.GlobalMap?.AiTriggers.ChangeDisplay(displayType);
             GlobalCollectionVm.AiTriggers.UpdateAll();
         }
 
@@ -112,6 +117,36 @@ namespace RelertSharp.Wpf.Views
         public IIndexableItem GetSelectedItem()
         {
             return lbxMain.SelectedItem as IIndexableItem;
+        }
+
+        private void Menu_Add(object sender, RoutedEventArgs e)
+        {
+            DlgNameInput dlg = new DlgNameInput("Ai Trigger name");
+            if (dlg.ShowDialog().Value)
+            {
+                var item = GlobalVar.GlobalMap.AddAiTrigger(dlg.ResultName);
+                lbxMain.SelectedItem = item;
+                GlobalCollectionVm.AiTriggers.UpdateAll();
+            }
+        }
+
+        private void Menu_Copy(object sender, RoutedEventArgs e)
+        {
+            if (SelectedItem != null)
+            {
+                var copy = GlobalVar.GlobalMap.AddAiTrigger(SelectedItem);
+                lbxMain.SelectedItem = copy;
+                GlobalCollectionVm.AiTriggers.UpdateAll();
+            }
+        }
+
+        private void Menu_Delete(object sender, RoutedEventArgs e)
+        {
+            if (SelectedItem != null)
+            {
+                GlobalVar.GlobalMap.RemoveAiTrigger(SelectedItem);
+                GlobalCollectionVm.AiTriggers.UpdateAll();
+            }
         }
     }
 }

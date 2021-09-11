@@ -38,6 +38,10 @@ namespace RelertSharp.Common
             Monitor.EndMonitorLog();
             MapSaved?.Invoke();
         }
+        public static void CallBeginSave()
+        {
+            MapSaveBegin?.Invoke();
+        }
         public static void DisposeMapDocument()
         {
             bool launchEvent = CurrentMapDocument != null;

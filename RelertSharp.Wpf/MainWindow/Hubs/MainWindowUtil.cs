@@ -83,6 +83,7 @@ namespace RelertSharp.Wpf
                 CheckAutosaveSizeLimit();
                 string date = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
                 string filename = Path.Combine(PATH, string.Format("AutoSave - {0}.map", date));
+                GlobalVar.CallBeginSave();
                 GlobalVar.CurrentMapDocument.SaveMapAs(filename, true);
                 autosaveFailed = false;
             }

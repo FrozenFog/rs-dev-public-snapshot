@@ -80,6 +80,24 @@ namespace RelertSharp.MapStructure
         }
         #endregion
 
+        #region AiTrigger
+        public AITriggerItem AddAiTrigger(string name)
+        {
+            AITriggerItem trg = AiTriggers.AddItem(NewID, name);
+            return trg;
+        }
+        public AITriggerItem AddAiTrigger(AITriggerItem src)
+        {
+            AITriggerItem copy = AiTriggers.CopyItem(src, NewID);
+            return copy;
+        }
+        public bool RemoveAiTrigger(AITriggerItem item)
+        {
+            DelID(item.Id);
+            return AiTriggers.RemoveItem(item);
+        }
+        #endregion
+
         #region Teams
         public TeamItem AddTeam(string name)
         {

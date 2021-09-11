@@ -39,7 +39,7 @@ namespace RelertSharp.Wpf.Views
 
         public void ReciveObject(object sender, object recived)
         {
-            DataContext = new AiTriggerVm(recived);
+            if (recived != null) DataContext = new AiTriggerVm(recived);
         }
     }
 }
