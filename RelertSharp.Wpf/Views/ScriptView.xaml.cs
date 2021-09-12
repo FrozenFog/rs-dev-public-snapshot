@@ -112,7 +112,7 @@ namespace RelertSharp.Wpf.Views
                 lbl.Margin = new Thickness(10, y, 0, 0);
                 lbl.SetColumn(0);
                 lbl.MouseDoubleClick += ClickLabelTrace;
-                FrameworkElement control = GenerateControl(param, out double yOffset);
+                FrameworkElement control = GenerateControl(param);
                 TraceHelper binder = new TraceHelper()
                 {
                     SourceControl = control,
@@ -120,7 +120,7 @@ namespace RelertSharp.Wpf.Views
                 };
                 lbl.Tag = binder;
                 control.Height = PARAM_ROW_HEIGHT;
-                control.Margin = new Thickness(10, y + yOffset, 10, 0);
+                control.Margin = new Thickness(10, y, 10, 0);
                 control.SetColumn(2);
                 grd.AddControls(lbl, control);
                 y += PARAM_ROW_DELTA;
@@ -177,10 +177,9 @@ namespace RelertSharp.Wpf.Views
         }
 
 
-        private FrameworkElement GenerateControl(LogicInfoParameter src, out double yOffset)
+        private FrameworkElement GenerateControl(LogicInfoParameter src)
         {
             FrameworkElement elem;
-            yOffset = 1;
             switch (src.ValueType)
             {
                 case Constant.Config.TYPE_BOOL:
@@ -189,7 +188,6 @@ namespace RelertSharp.Wpf.Views
                         VerticalAlignment = VerticalAlignment.Top,
                         HorizontalAlignment = HorizontalAlignment.Left
                     };
-                    yOffset = 6;
                     ckb.Click += CkbUpdate;
                     elem = ckb;
                     break;
@@ -342,7 +340,9 @@ namespace RelertSharp.Wpf.Views
                             object first = cbb.Items[0];
                             if (first.GetType() == refType)
                             {
-                                IIndexableItem item = cbb.ItemsSource.OfType<IIndexableItem>().Where(x => x.Id == value).FirstOrDefault();
+                                IEnumerable<IIndexableItem> items = Config.GetCombo((cbb.DataContext as LogicInfoParameter).ValueType);
+                                IIndexableItem item = items.Where(x => x.Id == value).FirstOrDefault();
+                                cbb.ItemsSource = items;
                                 if (item != null)
                                 {
                                     cbb.SelectedItem = item;

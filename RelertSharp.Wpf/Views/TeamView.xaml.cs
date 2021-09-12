@@ -243,7 +243,7 @@ namespace RelertSharp.Wpf.Views
                                 else if (c is ComboBox cbb)
                                 {
                                     IEnumerable<IIndexableItem> items = GlobalVar.GlobalConfig.ModConfig.GetCombo((cbb.DataContext as AttributeItem).ValueType);
-                                    IIndexableItem item = items.OfType<IIndexableItem>().Where(x => x.Value == Team[tag].Value).FirstOrDefault();
+                                    IIndexableItem item = items.Where(x => x.Value == Team[tag].Value).FirstOrDefault();
                                     cbb.ItemsSource = items;
                                     if (item == null) cbb.SelectedIndex = 0;
                                     else cbb.SelectedItem = item;
@@ -297,7 +297,7 @@ namespace RelertSharp.Wpf.Views
                 if (elem is ComboBox cbb && cbb.Items.Count > 0)
                 {
                     IEnumerable<IIndexableItem> items = GlobalVar.GlobalConfig.ModConfig.GetCombo((cbb.DataContext as AttributeItem).ValueType);
-                    IIndexableItem item = items.OfType<IIndexableItem>().Where(x => x.Id == value).FirstOrDefault();
+                    IIndexableItem item = items.Where(x => x.Id == value).FirstOrDefault();
                     cbb.ItemsSource = items;
                     if (item != null)
                     {
