@@ -66,7 +66,7 @@ namespace RelertSharp.Wpf.Views
         private static AttributeItem GetFrmElemTagAtribute(object src)
         {
             FrameworkElement elem = src as FrameworkElement;
-            return elem.Tag as AttributeItem;
+            return elem.DataContext as AttributeItem;
         }
         private FrameworkElement CreateGroup(AttributeClass cls)
         {
@@ -114,9 +114,9 @@ namespace RelertSharp.Wpf.Views
                 lbl.Margin = new Thickness(0, y, 10, 0);
                 lbl.MouseDoubleClick += ClickLabelTrace;
                 lbl.SetColumn(0);
-                FrameworkElement control = AcquireControlFromAttribute(item, out double yOffset);
+                FrameworkElement control = AcquireControlFromAttribute(item);
                 control.Height = ROW_HEIGHT;
-                control.Margin = new Thickness(10, y + yOffset, 10, 0);
+                control.Margin = new Thickness(10, y, 10, 0);
                 control.SetColumn(2);
                 TraceHelper trace = new TraceHelper()
                 {
@@ -178,10 +178,9 @@ namespace RelertSharp.Wpf.Views
                 }
             }
         }
-        private FrameworkElement AcquireControlFromAttribute(AttributeItem src, out double yOffset)
+        private FrameworkElement AcquireControlFromAttribute(AttributeItem src)
         {
             FrameworkElement r;
-            yOffset = 1;
             switch (src.ValueType)
             {
                 case Constant.Config.TYPE_BOOL:
@@ -190,7 +189,6 @@ namespace RelertSharp.Wpf.Views
                         VerticalAlignment = VerticalAlignment.Top,
                         HorizontalAlignment = HorizontalAlignment.Left
                     };
-                    yOffset = 6;
                     ckb.Click += CkbUpdate;
                     r = ckb;
                     break;
@@ -216,7 +214,7 @@ namespace RelertSharp.Wpf.Views
                     r = cbb;
                     break;
             }
-            r.Tag = src;
+            r.DataContext = src;
             return r;
         }
         private void RefreshControl()
@@ -244,7 +242,9 @@ namespace RelertSharp.Wpf.Views
                                 }
                                 else if (c is ComboBox cbb)
                                 {
-                                    IIndexableItem item = cbb.ItemsSource.OfType<IIndexableItem>().Where(x => x.Value == Team[tag].Value).FirstOrDefault();
+                                    IEnumerable<IIndexableItem> items = GlobalVar.GlobalConfig.ModConfig.GetCombo((cbb.DataContext as AttributeItem).ValueType);
+                                    IIndexableItem item = items.OfType<IIndexableItem>().Where(x => x.Value == Team[tag].Value).FirstOrDefault();
+                                    cbb.ItemsSource = items;
                                     if (item == null) cbb.SelectedIndex = 0;
                                     else cbb.SelectedItem = item;
                                 }
@@ -296,7 +296,9 @@ namespace RelertSharp.Wpf.Views
                 FrameworkElement elem = trace.SourceControl;
                 if (elem is ComboBox cbb && cbb.Items.Count > 0)
                 {
-                    IIndexableItem item = cbb.Items.OfType<IIndexableItem>().Where(x => x.Id == value).FirstOrDefault();
+                    IEnumerable<IIndexableItem> items = GlobalVar.GlobalConfig.ModConfig.GetCombo((cbb.DataContext as AttributeItem).ValueType);
+                    IIndexableItem item = items.OfType<IIndexableItem>().Where(x => x.Id == value).FirstOrDefault();
+                    cbb.ItemsSource = items;
                     if (item != null)
                     {
                         cbb.SelectedItem = item;

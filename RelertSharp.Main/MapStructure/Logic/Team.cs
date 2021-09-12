@@ -1,6 +1,7 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
 using RelertSharp.IniSystem.Serialization;
+using System;
 using System.Collections.Generic;
 
 namespace RelertSharp.MapStructure.Logic
@@ -127,7 +128,8 @@ namespace RelertSharp.MapStructure.Logic
                 foreach (INIPair p in Residue)
                 {
                     var attr = cfg.TeamItems[p.Name];
-                    if (attr.DefaultValue == null || attr.DefaultValue != p.Value) result.AddPair(p);
+                    if (!p.Value.IsNullOrEmpty() && (attr.DefaultValue == null || attr.DefaultValue != p.Value)) result.AddPair(p);
+                    else if (p.Value.IsNullOrEmpty() && attr.DefaultValue != null) result.AddPair(new INIPair(p.Name, attr.DefaultValue));
                 }
             }
             else result.AddPair(Residue);
@@ -189,7 +191,18 @@ namespace RelertSharp.MapStructure.Logic
             get
             {
                 if (Residue.HasPair(key)) return Residue.GetPair(key);
-                else return new INIPair(key);
+                else
+                {
+                    INIPair p = new INIPair(key);
+                    if (GlobalVar.GlobalConfig?.ModConfig != null)
+                    {
+                        ModConfig cfg = GlobalVar.GlobalConfig.ModConfig;
+                        var attr = cfg.TeamItems[p.Name];
+                        p.Value = attr.DefaultValue;
+                    }
+                    Residue.SetPair(p);
+                    return p;
+                }
             }
             set
             {
