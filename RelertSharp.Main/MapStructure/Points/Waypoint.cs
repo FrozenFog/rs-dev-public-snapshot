@@ -21,6 +21,7 @@ namespace RelertSharp.MapStructure.Points
         }
         public WaypointItem FindByAlphabet(string alphabetId)
         {
+            if (int.TryParse(alphabetId, out int i)) return FindByID(i.ToString());
             string id = Utils.Misc.WaypointInt(alphabetId).ToString();
             return FindByID(id);
         }

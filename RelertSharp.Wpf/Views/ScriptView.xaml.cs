@@ -16,6 +16,7 @@ using RelertSharp.Common;
 using RelertSharp.Common.Config.Model;
 using RelertSharp.FileSystem;
 using RelertSharp.MapStructure.Logic;
+using RelertSharp.MapStructure.Points;
 using RelertSharp.Wpf.Common;
 using RelertSharp.Wpf.ViewModel;
 using static RelertSharp.Wpf.Common.GuiConst;
@@ -83,7 +84,7 @@ namespace RelertSharp.Wpf.Views
         }
         private LogicInfoParameter GetInfoFromElem(FrameworkElement src)
         {
-            return src.Tag as LogicInfoParameter;
+            return src.DataContext as LogicInfoParameter;
         }
         private void LoadStack()
         {
@@ -221,7 +222,7 @@ namespace RelertSharp.Wpf.Views
                     }
                     break;
             }
-            elem.Tag = src;
+            elem.DataContext = src;
             return elem;
         }
         #endregion
@@ -347,6 +348,14 @@ namespace RelertSharp.Wpf.Views
                                     cbb.SelectedItem = item;
                                     return;
                                 }
+                            }
+                        }
+                        else if (c is TextBox txb && txb.DataContext is LogicInfoParameter param)
+                        {
+                            if (refType == typeof(WaypointItem))
+                            {
+                                txb.Text = value;
+                                return;
                             }
                         }
                     }
