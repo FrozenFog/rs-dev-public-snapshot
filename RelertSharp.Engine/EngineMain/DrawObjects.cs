@@ -246,7 +246,7 @@ namespace RelertSharp.Engine
         public static bool DrawAircraft(AircraftItem air, int height, uint color)
         {
             DrawableUnit src = CreateDrawableUnit(air.RegName, color, pPalUnit, 0);
-            MapUnit dest = new MapUnit(air, height);
+            MapUnit dest = new MapUnit(src, air, height);
             air.SceneObject = dest;
             Vec3 pos = ToVec3Iso(dest);
             Vec3 ro = VxlRotation(air.RegName, air.Rotation, true);

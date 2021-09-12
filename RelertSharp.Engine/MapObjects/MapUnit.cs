@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RelertSharp.Common;
+using RelertSharp.Engine.DrawableBuffer;
 using RelertSharp.MapStructure;
 using RelertSharp.MapStructure.Objects;
 
@@ -16,9 +17,9 @@ namespace RelertSharp.Engine.MapObjects
         {
             IsVxl = vxl;
         }
-        public MapUnit(AircraftItem air, int height) : base(air, height)
+        public MapUnit(DrawableUnit src, AircraftItem air, int height) : base(air, height)
         {
-            IsVxl = true;
+            IsVxl = src.IsVxl;
         }
         #endregion
 

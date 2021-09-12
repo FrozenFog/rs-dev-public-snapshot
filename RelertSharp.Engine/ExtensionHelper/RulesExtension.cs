@@ -20,38 +20,38 @@ namespace RelertSharp.Engine
         {
             var adjust = GlobalConfig.DrawingAdjust;
             BuildingData data = new BuildingData();
-            string artname = Rules.GetArtEntityName(name);
-            INIEntity art = Art[artname];
+            string artname = r.GetArtEntityName(name);
+            INIEntity art = r.Art[artname];
             if (string.IsNullOrEmpty(art.Name)) data.SelfId = name + EX_SHP;
             else data.SelfId = GuessStructureName(art);
 
-            data.AlphaImage = Rules[name]["AlphaImage"];
+            data.AlphaImage = r[name]["AlphaImage"];
             if (!string.IsNullOrEmpty(data.AlphaImage)) data.AlphaImage += EX_SHP;
 
             if (!adjust.DeactivateAnim.Any(x => x.Name == artname))
             {
-                data.ActivateAnim = GuessStructureName(Art[art["ActiveAnim"]]);
-                data.ActivateAnimTwo = GuessStructureName(Art[art["ActiveAnimTwo"]]);
-                data.ActivateAnimThree = GuessStructureName(Art[art["ActiveAnimThree"]]);
+                data.ActivateAnim = GuessStructureName(r.Art[art["ActiveAnim"]]);
+                data.ActivateAnimTwo = GuessStructureName(r.Art[art["ActiveAnimTwo"]]);
+                data.ActivateAnimThree = GuessStructureName(r.Art[art["ActiveAnimThree"]]);
             }
 
-            data.IdleAnim = GuessStructureName(Art[art["IdleAnim"]]);
-            data.SuperAnim = GuessStructureName(Art[art["SuperAnim"]]);
+            data.IdleAnim = GuessStructureName(r.Art[art["IdleAnim"]]);
+            data.SuperAnim = GuessStructureName(r.Art[art["SuperAnim"]]);
             if (!adjust.DeactivateBib.Any(x => x.Name == artname))
             {
                 data.BibAnim = GuessStructureName(art["BibShape"]);
             }
 
-            data.TurretAnimIsVoxel = Rules[name].ParseBool("TurretAnimIsVoxel");
+            data.TurretAnimIsVoxel = r[name].ParseBool("TurretAnimIsVoxel");
             if (data.TurretAnimIsVoxel)
             {
-                data.TurretAnim = Rules[name]["TurretAnim"] + EX_VXL;
+                data.TurretAnim = r[name]["TurretAnim"] + EX_VXL;
                 if (data.TurretAnim.ToLower().Contains("tur"))
                 {
                     data.TurretBarrel = data.TurretAnim.ToLower().Replace("tur", "barl");
                 }
             }
-            else data.TurretAnim = GuessStructureName(Art[Rules[name]["TurretAnim"]]);
+            else data.TurretAnim = GuessStructureName(r.Art[r[name]["TurretAnim"]]);
 
             data.nSelf = GlobalDir.GetShpFrameCount(data.SelfId, out bool bSelf);
             bool bTurret = true;
@@ -63,11 +63,11 @@ namespace RelertSharp.Engine
             else
             {
                 data.nTurretAnim = 0;
-                data.TurretOffset = Rules[name].ParseInt("TurretAnimZAdjust");
+                data.TurretOffset = r[name].ParseInt("TurretAnimZAdjust");
                 bTurret = false;
             }
 
-            data.TurretAnimZAdjust = Rules[name].ParseInt("TurretAnimZAdjust");
+            data.TurretAnimZAdjust = r[name].ParseInt("TurretAnimZAdjust");
             data.ActiveAnimZAdjust = art.ParseInt("ActiveAnimZAdjust");
             data.ActiveAnimTwoZAdjust = art.ParseInt("ActiveAnimTwoZAdjust");
             data.ActiveAnimThreeZAdjust = art.ParseInt("ActiveAnimThreeZAdjust");
@@ -95,15 +95,15 @@ namespace RelertSharp.Engine
         }
         public static byte GetOverlayIndex(this Rules r, string regName)
         {
-            INIEntity lst = Rules["OverlayTypes"];
+            INIEntity lst = r["OverlayTypes"];
             int index = lst.IndexOfValue(regName);
             if (index > -1 && index < 256) return (byte)index;
             else return 0;
         }
-        public static int GetFrameFromDirection(this Rules rules, int direction, string nameID)
+        public static int GetFrameFromDirection(this Rules r, int direction, string nameID)
         {
-            string art = Rules.GetArtEntityName(nameID);
-            INIEntity sequence = Art[Art[art]["Sequence"]];
+            string art = r.GetArtEntityName(nameID);
+            INIEntity sequence = r.Art[r.Art[art]["Sequence"]];
             direction >>= 5;
             if (sequence.Name == "") return direction;
             int[] ready = sequence.ParseIntList("Ready");
@@ -113,8 +113,8 @@ namespace RelertSharp.Engine
         }
         public static string GetCustomPaletteName(this Rules r, string nameid)
         {
-            string artname = Rules.GetArtEntityName(nameid);
-            INIEntity art = Art[artname];
+            string artname = r.GetArtEntityName(nameid);
+            INIEntity art = r.Art[artname];
 
             string pal = art["Palette"];
             if (string.IsNullOrEmpty(pal)) return pal;
@@ -122,8 +122,8 @@ namespace RelertSharp.Engine
         }
         public static Pnt GetVoxTurOffset(this Rules r, string id)
         {
-            string x = Rules[id]["TurretAnimX"];
-            string y = Rules[id]["TurretAnimY"];
+            string x = r[id]["TurretAnimX"];
+            string y = r[id]["TurretAnimY"];
             return new Pnt()
             {
                 X = string.IsNullOrEmpty(x) ? 0 : int.Parse(x),
@@ -134,29 +134,29 @@ namespace RelertSharp.Engine
         {
             string xKey = string.Format("PowerUp{0}LocXX", plugNum);
             string yKey = string.Format("PowerUp{0}LocYY", plugNum);
-            INIEntity art = Art[parent];
+            INIEntity art = r.Art[parent];
             int x = art.ParseInt(xKey);
             int y = art.ParseInt(yKey);
             return new Pnt(x, y);
         }
         public static INIEntity GetBuildingTurret(this Rules r, string nameid)
         {
-            string turanim = Rules[nameid]["TurretAnim"];
-            return Art[turanim];
+            string turanim = r[nameid]["TurretAnim"];
+            return r.Art[turanim];
         }
         public static string GetObjectImgName(this Rules r, ObjectItemBase inf, out short frame)
         {
             frame = 0;
-            string img = Rules.GetArtEntityName(inf.RegName) + ".shp";
+            string img = r.GetArtEntityName(inf.RegName) + ".shp";
             frame = GlobalDir.GetShpFrameCount(img, out bool b);
             return img;
         }
         public static string GetUnitInfo(this Rules r, string id, ref string tur, ref string barl, ref bool vxl, out int turretOffset)
         {
-            string artname = Rules.GetArtEntityName(id);
-            INIEntity art = Art[artname];
+            string artname = r.GetArtEntityName(id);
+            INIEntity art = r.Art[artname];
             turretOffset = art.ParseInt("TurretOffset");
-            vxl = IsVxl(artname);
+            vxl = IsVxl(r, artname);
             VxlFormating(artname, vxl, ref artname, ref tur, ref barl);
             return artname;
         }
@@ -189,8 +189,6 @@ namespace RelertSharp.Engine
                 }
             }
         }
-        private static INIFile Art { get { return GlobalRules.Art; } }
-        private static Rules Rules { get { return GlobalRules; } }
         private static string GuessStructureName(string id)
         {
             if (string.IsNullOrEmpty(id)) return "";
@@ -214,13 +212,13 @@ namespace RelertSharp.Engine
             if (string.IsNullOrEmpty(img)) return GuessStructureName(ent.Name);
             else return GuessStructureName(img);
         }
-        private static string GetArtName(string regname)
-        {
-            string img = Rules[regname][KEY_IMAGE];
-            if (string.IsNullOrEmpty(img)) return regname;
-            if (Art.HasIniEnt(img)) return img;
-            else return regname;
-        }
+        //private static string GetArtName(string regname)
+        //{
+        //    string img = Rules[regname][KEY_IMAGE];
+        //    if (string.IsNullOrEmpty(img)) return regname;
+        //    if (Art.HasIniEnt(img)) return img;
+        //    else return regname;
+        //}
         private static void VxlFormating(string id, bool vxl, ref string name, ref string tur, ref string barl)
         {
             if (vxl)
@@ -231,9 +229,9 @@ namespace RelertSharp.Engine
             }
             else name = id + ".shp";
         }
-        private static bool IsVxl(string id)
+        private static bool IsVxl(Rules rules, string id)
         {
-            return IniParseBool(Art[id]["Voxel"]);
+            return IniParseBool(rules.Art[id]["Voxel"]);
         }
         #endregion
     }

@@ -16,6 +16,10 @@ namespace RelertSharp.Engine
 {
     internal static partial class EngineMain
     {
+        public static void ReleaseAllFiles()
+        {
+            Buffer.ReleaseFiles();
+        }
         #region Create File
         private static int CreateTileFile(string name)
         {

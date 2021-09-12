@@ -150,7 +150,7 @@ namespace RelertSharp.MapStructure.Logic
                 IsForSkirmish = IniParseBool(_args[10]);
                 Residual = "0";
                 SideIndex = int.Parse(_args[12]);
-                IsBaseDefense = true;
+                IsBaseDefense = IniParseBool(_args[13]);
                 Team2ID = _args[14];
                 EasyOn = IniParseBool(_args[15]);
                 NormalOn = IniParseBool(_args[16]);

@@ -239,6 +239,8 @@ namespace RelertSharp.Wpf
             {
                 obj.Dispose();
             }
+            foreach (var o in hiddenOverlay) if (!o.Disposed) o.Reveal();
+            hiddenOverlay.Clear();
             arrayObjects.Clear();
             arrayOffset.Clear();
         }

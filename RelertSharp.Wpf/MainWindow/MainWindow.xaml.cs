@@ -230,6 +230,7 @@ namespace RelertSharp.Wpf
         }
         private void SaveAs()
         {
+            if (GlobalVar.CurrentMapDocument == null) return;
             SaveFileDialog dlg = new SaveFileDialog()
             {
                 Filter = "Mission map|*.map|YR Multiplayer map|*.yrm|RA2 Multiplayer map|*.mpr",
@@ -244,6 +245,7 @@ namespace RelertSharp.Wpf
         }
         private void SaveMap()
         {
+            if (GlobalVar.CurrentMapDocument == null) return;
             if (File.Exists(GlobalVar.CurrentMapDocument.FilePath))
             {
                 GlobalVar.SaveMapDocument(GlobalVar.CurrentMapDocument.FilePath);

@@ -164,6 +164,7 @@ namespace RelertSharp.Wpf.MapEngine
             {
                 case Key.Delete:
                     Selector.DeleteSelectedObjects();
+                    EngineApi.RedrawMinimapAll();
                     break;
                 case Key.C:
                     if (GuiUtil.IsControlDown())

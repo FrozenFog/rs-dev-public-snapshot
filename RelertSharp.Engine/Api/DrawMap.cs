@@ -97,6 +97,7 @@ namespace RelertSharp.Engine.Api
         public static void DisposeMap()
         {
             CppExtern.Scene.ClearSceneObjects();
+            //EngineMain.ReleaseAllFiles();
             EngineMain.DisposeBorder();
             MapDrawed = false;
         }
