@@ -84,6 +84,14 @@ namespace RelertSharp.FileSystem
 
 
         #region Public Methods - WavFile
+        public void SaveAs(string path)
+        {
+            using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write))
+            {
+                fs.Write(data, 0, data.Length);
+                fs.Flush();
+            }
+        }
         #endregion
 
 

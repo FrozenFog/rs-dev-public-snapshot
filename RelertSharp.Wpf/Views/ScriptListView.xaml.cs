@@ -45,11 +45,13 @@ namespace RelertSharp.Wpf.Views
 
         private void MapReloadedHandler()
         {
+            GlobalVar.Log.Info("Loading Scripts");
             lbxMain.Items.Clear();
             foreach (var script in GlobalVar.GlobalMap.Scripts)
             {
                 lbxMain.Items.Add(new ScriptListVm(script));
             }
+            GlobalVar.Log.Info("Scripts Loaded");
         }
 
 

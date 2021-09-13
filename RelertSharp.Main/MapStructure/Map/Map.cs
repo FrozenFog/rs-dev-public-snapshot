@@ -181,6 +181,8 @@ namespace RelertSharp.MapStructure
                     }
                     catch (Exception e)
                     {
+                        string msg = string.Format("Overlay error at {0}, {1}", t.X, t.Y);
+                        Log.Write(msg, LogLevel.Critical);
                         Monitor.LogFatal(t, MapObjectType.Overlay, e);
                     }
                 }

@@ -44,8 +44,10 @@ namespace RelertSharp.Wpf.Views
 
         private void MapReloadedHandler()
         {
+            GlobalVar.Log.Info("Loading Ai trigger");
             lbxMain.ItemsSource = null;
             lbxMain.ItemsSource = GlobalCollectionVm.AiTriggers;
+            GlobalVar.Log.Info("Ai trigger Loaded");
         }
 
         public event ContentCarrierHandler ItemSelected;

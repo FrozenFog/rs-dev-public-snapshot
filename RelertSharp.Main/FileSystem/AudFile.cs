@@ -94,32 +94,36 @@ namespace RelertSharp.FileSystem
         #region Public Methods - AudFile
         public void DecodeBlocks()
         {
+            if ((flag & AudType.Bit16) != 0) return;
             short sample = 0;
             int index = 0;
             foreach (AudBlock b in data)
             {
                 if (b.ID == 57007) b.Decode(flag, ref sample, ref index);
-                else if ((flag & AudType.Bit16) != 0)
-                {
-                    sample = (short)(b.ID & 0xFF);
-                    index = (int)((b.ID & 0xFF00) >> 8);
-                    b.Decode(flag, ref sample, ref index);
-                }
                 else b.Decode(flag, (short)(b.ID & 0xFFFF), (int)(b.ID & 0xFFFF0000) >> 16);
             }
         }
         public WavFile ToWav()
         {
             WavFile wav;
-            if ((flag & AudType.Stereo) != 0)
+            if ((flag & AudType.Bit16) != 0)
             {
-                DecodeStrero();
-                wav = new WavFile(AudioBytes, SampleRate, 2);
+                // this means NO COMPRESS
+                ReadSeek(0, SeekOrigin.Begin);
+                wav = new WavFile(ReadAll(), SampleRate, (flag & AudType.Stereo) > 0 ? 2 : 1);
             }
             else
             {
-                DecodeBlocks();
-                wav = new WavFile(AudioBytes, SampleRate, 1);
+                if ((flag & AudType.Stereo) != 0)
+                {
+                    DecodeStrero();
+                    wav = new WavFile(AudioBytes, SampleRate, 2);
+                }
+                else
+                {
+                    DecodeBlocks();
+                    wav = new WavFile(AudioBytes, SampleRate, 1);
+                }
             }
             return wav;
         }

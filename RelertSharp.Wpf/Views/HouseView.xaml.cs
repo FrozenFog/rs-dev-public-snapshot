@@ -44,6 +44,7 @@ namespace RelertSharp.Wpf.Views
         {
             //lbxHouse.ItemsSource = null;
             //lbxHouse.ItemsSource = GlobalCollectionVm.Houses;
+            GlobalVar.Log.Info("Loading House");
             lbxHouse.Items.Clear();
             foreach (HouseItem house in GlobalVar.GlobalMap.Houses)
             {
@@ -63,6 +64,7 @@ namespace RelertSharp.Wpf.Views
             {
                 cbbColor.Items.Add(new ComboItem(p.Name));
             }
+            GlobalVar.Log.Info("House Loaded");
         }
 
 

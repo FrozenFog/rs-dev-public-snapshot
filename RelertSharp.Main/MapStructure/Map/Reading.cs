@@ -79,6 +79,7 @@ namespace RelertSharp.MapStructure
         }
         private void GetGeneralInfo(MapFile f)
         {
+            GlobalVar.Log.Info("Read Map general info");
             Info = new MapInfo(f.PopEnt("Basic"), f.PopEnt("Map"), f.PopEnt("SpecialFlags"));
             LightningCollection = new Lightning(f.PopEnt("Lighting"));
             if (f.IniDict.Keys.Contains("Header")) Header = new HeaderInfo(f.PopEnt("Header"));
@@ -97,6 +98,7 @@ namespace RelertSharp.MapStructure
 
             dumpFunc?.Invoke();
 
+            GlobalVar.Log.Info("Read Map Smudge");
             foreach (INIPair p in entSmudge.DataList)
             {
                 try
@@ -111,6 +113,7 @@ namespace RelertSharp.MapStructure
                     Monitor.LogFatal(p.Value, string.Empty, MapObjectType.Smudge, e);
                 }
             }
+            GlobalVar.Log.Info("Read Map Units");
             foreach (INIPair p in entUnit.DataList)
             {
                 try
@@ -122,6 +125,7 @@ namespace RelertSharp.MapStructure
                     Monitor.LogFatal(p.Name, string.Empty, MapObjectType.Unit, e);
                 }
             }
+            GlobalVar.Log.Info("Read Map Infantries");
             foreach (INIPair p in entInf.DataList)
             {
                 try
@@ -133,6 +137,7 @@ namespace RelertSharp.MapStructure
                     Monitor.LogFatal(p.Name, string.Empty, MapObjectType.Infantry, e);
                 }
             }
+            GlobalVar.Log.Info("Read Map Buildings");
             foreach (INIPair p in entStructure.DataList)
             {
                 try
@@ -144,6 +149,7 @@ namespace RelertSharp.MapStructure
                     Monitor.LogFatal(p.Name, string.Empty, MapObjectType.Building, e);
                 }
             }
+            GlobalVar.Log.Info("Read Map Aircrafts");
             foreach (INIPair p in entAircraft.DataList)
             {
                 try
@@ -155,6 +161,7 @@ namespace RelertSharp.MapStructure
                     Monitor.LogFatal(p.Name, string.Empty, MapObjectType.Aircraft, e);
                 }
             }
+            GlobalVar.Log.Info("Read Map Terrains");
             foreach (INIPair p in entTerrain.DataList)
             {
                 try
@@ -166,6 +173,7 @@ namespace RelertSharp.MapStructure
                     Monitor.LogFatal(p.Name, p.Value, MapObjectType.Terrain, e);
                 }
             }
+            GlobalVar.Log.Info("Read Map Lightsources");
             foreach (INIPair p in entLight.DataList)
             {
                 LightSources.AddObject(new LightSource(p));
@@ -178,6 +186,7 @@ namespace RelertSharp.MapStructure
             List<string> _scriptList = f.PopEnt("ScriptTypes").TakeValuesToList();
 
             IniEntitySerializer serTeam = new IniEntitySerializer(typeof(TeamItem));
+            GlobalVar.Log.Info("Read Map Teams");
             foreach (string teamID in _teamList)
             {
                 try
@@ -193,6 +202,7 @@ namespace RelertSharp.MapStructure
                     Monitor.LogFatal(teamID, string.Empty, LogicType.Team, e);
                 }
             }
+            GlobalVar.Log.Info("Read Map Taskforces");
             foreach (string tfID in _taskforceList)
             {
                 try
@@ -204,6 +214,7 @@ namespace RelertSharp.MapStructure
                     Monitor.LogFatal(tfID, string.Empty, LogicType.Team, e);
                 }
             }
+            GlobalVar.Log.Info("Read Map Scripts");
             foreach (string scptID in _scriptList)
             {
                 try
@@ -221,6 +232,7 @@ namespace RelertSharp.MapStructure
 
             Countries = new CountryCollection();
             IniEntitySerializer serCon = new IniEntitySerializer(typeof(CountryItem));
+            GlobalVar.Log.Info("Read Map Countries");
             foreach (INIPair p in _countryList)
             {
                 try
@@ -237,6 +249,7 @@ namespace RelertSharp.MapStructure
                     Monitor.LogFatal(p.Name, p.Value, LogicType.Country, e);
                 }
             }
+            GlobalVar.Log.Info("Read Map Houses");
             foreach (INIPair p in _houseList)
             {
                 try
@@ -274,7 +287,7 @@ namespace RelertSharp.MapStructure
             INIEntity entWaypoints = f.PopEnt("Waypoints");
 
             Tags = new TagCollection(entTag);
-
+            GlobalVar.Log.Info("Read Map Triggers");
             foreach (INIPair p in entTrigger.DataList)
             {
                 try
@@ -296,6 +309,7 @@ namespace RelertSharp.MapStructure
                     Triggers.RemoveItem(item);
                 }
             }
+            GlobalVar.Log.Info("Read Map Local");
             foreach (INIPair p in entVar.DataList)
             {
                 try
@@ -308,6 +322,7 @@ namespace RelertSharp.MapStructure
                     Monitor.LogFatal(p.Name, string.Empty, LogicType.LocalVariable, e);
                 }
             }
+            GlobalVar.Log.Info("Read Map AiTrigger");
             foreach (INIPair p in entAITrigger.DataList)
             {
                 try
@@ -331,6 +346,7 @@ namespace RelertSharp.MapStructure
                     Monitor.LogFatal(p.Name, string.Empty, LogicType.AiTrigger, e);
                 }
             }
+            GlobalVar.Log.Info("Read Map Celltags");
             foreach (INIPair p in entCelltags.DataList)
             {
                 try
@@ -344,6 +360,7 @@ namespace RelertSharp.MapStructure
                     Monitor.LogFatal(p.Name, p.Value, MapObjectType.Celltag, e);
                 }
             }
+            GlobalVar.Log.Info("Read Map Waypoints");
             foreach (INIPair p in entWaypoints.DataList)
             {
                 try
@@ -360,6 +377,7 @@ namespace RelertSharp.MapStructure
         }
         private void GetPreview(MapFile f)
         {
+            GlobalVar.Log.Info("Read Map Preview");
             INIEntity preview = f.PopEnt("Preview");
             if (preview.DataList.Count == 0)
             {

@@ -51,7 +51,9 @@ namespace RelertSharp.Wpf.Views
 
         private void MapReloadedHandler()
         {
+            GlobalVar.Log.Info("Reading All Available Brush Objects");
             ReloadAllObjects();
+            GlobalVar.Log.Info("Brush Objects Loaded");
         }
 
 

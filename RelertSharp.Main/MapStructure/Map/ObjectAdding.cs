@@ -54,13 +54,6 @@ namespace RelertSharp.MapStructure
             AddObjectToTile(bud);
             return bud;
         }
-        internal void DumpStructure()
-        {
-            foreach (StructureItem bud in Buildings)
-            {
-                AddObjectToTile(bud);
-            }
-        }
         internal AircraftItem AddAircraft(string id, string[] args)
         {
             AircraftItem air = new AircraftItem(id, args);

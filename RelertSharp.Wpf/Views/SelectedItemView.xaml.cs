@@ -72,7 +72,9 @@ namespace RelertSharp.Wpf.Views
 
         private void MapLoadedHandler()
         {
+            GlobalVar.Log.Info("Initializing Inspector");
             ReloadCombo();
+            GlobalVar.Log.Info("Inspector Loaded");
         }
 
 

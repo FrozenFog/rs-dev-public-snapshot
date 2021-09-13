@@ -47,12 +47,14 @@ namespace RelertSharp.Wpf.Views
         private bool initialized = false;
         private void MapLoadedHandler()
         {
+            GlobalVar.Log.Info("Initializing Team Panel");
             if (!initialized)
             {
                 InitializeTeamClasses();
                 initialized = true;
             }
             RefreshControl();
+            GlobalVar.Log.Info("Team Panel Complete");
         }
 
         private void InitializeTeamClasses()

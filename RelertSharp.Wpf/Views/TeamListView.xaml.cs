@@ -45,6 +45,7 @@ namespace RelertSharp.Wpf.Views
 
         private void MapReloadedHandler()
         {
+            GlobalVar.Log.Info("Reading Teams");
             //lbxMain.ItemsSource = null;
             //lbxMain.ItemsSource = GlobalCollectionVm.Teams;
             lbxMain.Items.Clear();
@@ -52,6 +53,7 @@ namespace RelertSharp.Wpf.Views
             {
                 lbxMain.Items.Add(new TeamListVm(t));
             }
+            GlobalVar.Log.Info("Teams Loaded");
         }
 
         public event ContentCarrierHandler ItemSelected;

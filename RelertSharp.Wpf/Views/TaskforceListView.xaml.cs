@@ -44,11 +44,13 @@ namespace RelertSharp.Wpf.Views
 
         private void MapReloadedHandler()
         {
+            GlobalVar.Log.Info("Reading Taskforce");
             lbxMain.Items.Clear();
             foreach (var tf in GlobalVar.GlobalMap.Taskforces)
             {
                 lbxMain.Items.Add(new TaskforceListVm(tf));
             }
+            GlobalVar.Log.Info("Taskforce Loaded");
         }
 
         public event ContentCarrierHandler ItemSelected;

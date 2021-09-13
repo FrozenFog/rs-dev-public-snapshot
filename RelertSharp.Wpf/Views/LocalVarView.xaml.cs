@@ -43,10 +43,12 @@ namespace RelertSharp.Wpf.Views
 
         private void MapReloadedHandler()
         {
+            GlobalVar.Log.Info("Loading Local Var");
             foreach (LocalVarItem local in GlobalVar.GlobalMap.LocalVariables)
             {
                 lbxMain.Items.Add(new LocalVarVm(local));
             }
+            GlobalVar.Log.Info("Local Var Loaded");
         }
 
         private void SelectedItemChanged(object sender, SelectionChangedEventArgs e)

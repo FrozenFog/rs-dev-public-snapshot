@@ -58,7 +58,9 @@ namespace RelertSharp.Wpf.Views
 
         private void MapReloadedHandler()
         {
+            GlobalVar.Log.Info("Reading Trigger");
             ReloadMapTrigger();
+            GlobalVar.Log.Info("Trigger Loaded");
         }
 
         private TriggerTreeItemVm GetVm(object sender)
