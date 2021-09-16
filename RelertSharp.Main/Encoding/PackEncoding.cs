@@ -45,7 +45,7 @@ namespace RelertSharp.Encoding
             {
                 byte[] buffer = brIn.ReadBytes(Math.Min(8192, remain));
                 if (type == PackType.IsoMapPack) compressResult = MiniLZO.Compress(buffer);
-                else compressResult = Format80.Encode(buffer);
+                else compressResult = Format80.LcwCompress(buffer);
                 ushort resultSize = (ushort)compressResult.Length;
                 outputSize += resultSize + 4;
                 bwOut.Write(resultSize);
