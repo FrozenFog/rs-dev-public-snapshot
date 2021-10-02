@@ -1,9 +1,11 @@
 ﻿using RelertSharp.Common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace RelertSharp.IniSystem
 {
@@ -57,6 +59,7 @@ namespace RelertSharp.IniSystem
             INIEntity ent = new INIEntity();
             string rootname = "";
             string rootcom = "";
+            Regex re = new Regex("\\[.+\\]");
             while (CanRead())
             {
                 string line = Readline();
@@ -80,13 +83,15 @@ namespace RelertSharp.IniSystem
                     if (init)
                     {
                         init = false;
-                        rootname = line.Replace("[", string.Empty).Replace("]", string.Empty);
+                        rootname = re.Match(line).Value.Peel();
+                        //rootname = line.Replace("[", string.Empty).Replace("]", string.Empty);
                         ent = new INIEntity(rootname, preCommentBuffer, combuf);
                         preCommentBuffer = "";
                         continue;
                     }
                     AddEnt(ent);
-                    rootname = line.Replace("[", string.Empty).Replace("]", string.Empty);
+                    rootname = re.Match(line).Value.Peel();
+                    //rootname = line.Replace("[", string.Empty).Replace("]", string.Empty);
                     ent = new INIEntity(rootname, preCommentBuffer, combuf);
                     rootcom = combuf;
                 }

@@ -156,7 +156,8 @@ namespace RelertSharp.Engine
             string artname = r.GetArtEntityName(id);
             INIEntity art = r.Art[artname];
             turretOffset = art.ParseInt("TurretOffset");
-            vxl = IsVxl(r, artname);
+            if (art.IsEmpty) vxl = true;
+            else vxl = IsVxl(r, artname);
             VxlFormating(artname, vxl, ref artname, ref tur, ref barl);
             return artname;
         }

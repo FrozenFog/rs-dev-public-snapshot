@@ -159,6 +159,7 @@ namespace RelertSharp.IniSystem
         public void LoadArt(INIFile f)
         {
             Art = f;
+            var ent = f["LEVI"];
         }
         private bool sideInitialized = false;
         public int GetSideCount()
