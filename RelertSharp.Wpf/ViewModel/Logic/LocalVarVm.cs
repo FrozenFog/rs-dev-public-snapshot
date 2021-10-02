@@ -43,6 +43,7 @@ namespace RelertSharp.Wpf.ViewModel
             set
             {
                 data.InitState = value;
+                data.OnNameUpdated();
                 SetProperty();
             }
         }
