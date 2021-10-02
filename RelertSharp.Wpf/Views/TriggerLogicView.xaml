@@ -59,9 +59,9 @@
                 <TextBox x:Name="txbDetail" TextWrapping="Wrap" DataContext="{Binding SelectedItem}" Text="{Binding DetailInformation, Mode=OneWay}" IsEnabled="False" IsUndoEnabled="False" IsReadOnly="True" Height="Auto" VerticalContentAlignment="Top"/>
             </Grid>
         </ScrollViewer>
-        <ScrollViewer Grid.Column="1" Margin="10.2,33,10.2,9.6" Grid.RowSpan="2">
+        <ScrollViewer Grid.Column="1" Margin="0,33,10.2,9.6" Grid.RowSpan="2">
             <StackPanel x:Name="stkMain" Drop="DraggedItemDropped" AllowDrop="True"/>
         </ScrollViewer>
-        <Label Content="Parameters" HorizontalAlignment="Left" Margin="10.6,10,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label Content="Parameters" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Grid.Column="1"/>
     </Grid>
 </UserControl>

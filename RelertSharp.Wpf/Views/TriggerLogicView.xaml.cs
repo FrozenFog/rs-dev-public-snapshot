@@ -298,7 +298,6 @@ namespace RelertSharp.Wpf.Views
                         HorizontalAlignment = HorizontalAlignment.Stretch
                     };
                     txb.TextChanged += TxbUpdate;
-                    txb.DataContext = src;
                     elem = txb;
                     break;
                 default:
@@ -320,14 +319,14 @@ namespace RelertSharp.Wpf.Views
                     }
                     break;
             }
-            elem.Tag = src;
+            elem.DataContext = src;
             return elem;
         }
 
 
         private LogicInfoParameter GetInfoFromElem(FrameworkElement src)
         {
-            return src.Tag as LogicInfoParameter;
+            return src.DataContext as LogicInfoParameter;
         }
         #endregion
 
