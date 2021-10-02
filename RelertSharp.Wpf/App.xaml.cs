@@ -55,6 +55,8 @@ namespace RelertSharp.Wpf
             {
                 GuiUtil.Fatal("Unexpected Error!\nMap will save as backup.map\n", e);
                 GlobalVar.CurrentMapDocument?.SaveMapAs("backup.map");
+                string msg = string.Format("Unhandled Exception!\nMessage:{0}\nSource:{1}\nFunction:{2}\nStack trace:{3}", e.Message, e.Source, e.TargetSite, e.StackTrace);
+                Log.Write(msg, LogLevel.Fatal);
             }
 #endif
             Finalization();
