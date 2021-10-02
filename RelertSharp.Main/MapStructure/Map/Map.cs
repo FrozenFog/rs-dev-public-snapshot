@@ -54,26 +54,18 @@ namespace RelertSharp.MapStructure
             Countries = new CountryCollection();
             residual = new Dictionary<string, INIEntity>();
 
-            if (cfg.UseDefaultHouse)
+            INIEntity lsCountry = GlobalRules[Constant.RulesHead.HEAD_COUNTRY];
+            int i = 0;
+            foreach (var pair in lsCountry)
             {
-                INIEntity lsCountry = GlobalRules[Constant.RulesHead.HEAD_COUNTRY];
-                int i = 0;
-                foreach (var pair in lsCountry)
-                {
-                    INIEntity counrty = GlobalRules[pair.Value];
-                    CountryItem c = CountryItem.ParseFromRules(counrty);
-                    Countries[i.ToString()] = c;
-                    HouseItem h = HouseItem.FromCountry(c);
-                    Houses[i.ToString()] = h;
-                    i++;
-                }
-            }
-            else
-            {
-                CountryItem c = CountryItem.CreateEmpty(GlobalRules.GetFirstCountry());
-                Countries["0"] = c;
+                INIEntity counrty = GlobalRules[pair.Value];
+                CountryItem c = CountryItem.ParseFromRules(counrty);
+                c.CountryNameChanged += CountryNameChanged;
+                Countries[i.ToString()] = c;
                 HouseItem h = HouseItem.FromCountry(c);
-                Houses["0"] = h;
+                h.HouseNameChanged += HouseNameChanged;
+                Houses[i.ToString()] = h;
+                i++;
             }
         }
         #endregion

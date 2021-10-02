@@ -86,7 +86,7 @@ namespace RelertSharp.Wpf
 
         private void DebugClick2(object sender, RoutedEventArgs e)
         {
-
+            GlobalVar.GlobalDir.DumpFile("ETWRWP.MAP");
         }
 
         private void MenuInspectRules(object sender, RoutedEventArgs e)

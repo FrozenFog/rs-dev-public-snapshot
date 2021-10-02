@@ -63,31 +63,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Ctor - HouseItem
         public HouseItem(INIEntity ent) : base(ent)
         {
-            IQ = ent.PopPair("IQ").ParseInt();
-            try
-            {
-                Edge = (HouseEdges)Enum.Parse(typeof(HouseEdges), ent.PopPair("Edge").Value, true);
-            }
-            catch
-            {
-                Edge = HouseEdges.North;
-            }
-            ColorName = ent.PopPair("Color").Value;
-            alliesWith = ent.PopPair("Allies").ParseStringList().ToList();
-            Country = ent.PopPair("Country").Value;
-            Credits = ent.PopPair("Credits").ParseInt();
-            TechLevel = ent.PopPair("TechLevel").ParseInt();
-            PlayerControl = ent.PopPair("PlayerControl").ParseBool();
-            PercentBuilt = ent.PopPair("PercentBuilt").ParseFloat();
-            NodeCounts = ent.PopPair("NodeCount").ParseInt();
-            for (int i = 0; i < NodeCounts; i++)
-            {
-                string num = string.Format("{0:D3}", i);
-                string[] tmp = ent.PopPair(num).ParseStringList();
-                BaseNode node = new BaseNode(tmp[0], int.Parse(tmp[1]), int.Parse(tmp[2]), this);
-                BaseNodes.Add(node);
-            }
-            residual = ent.DictData;
+            OverwriteBy(ent);
             initialized = true;
             //GetToUnit = new HouseUnit(this);
         }
@@ -183,6 +159,34 @@ namespace RelertSharp.MapStructure.Logic
         internal void OnAllInfoUpdate()
         {
             AllInfoUpdate?.Invoke(null, null);
+        }
+        internal void OverwriteBy(INIEntity ent)
+        {
+            IQ = ent.PopPair("IQ").ParseInt();
+            try
+            {
+                Edge = (HouseEdges)Enum.Parse(typeof(HouseEdges), ent.PopPair("Edge").Value, true);
+            }
+            catch
+            {
+                Edge = HouseEdges.North;
+            }
+            ColorName = ent.PopPair("Color").Value;
+            alliesWith = ent.PopPair("Allies").ParseStringList().ToList();
+            Country = ent.PopPair("Country").Value;
+            Credits = ent.PopPair("Credits").ParseInt();
+            TechLevel = ent.PopPair("TechLevel").ParseInt();
+            PlayerControl = ent.PopPair("PlayerControl").ParseBool();
+            PercentBuilt = ent.PopPair("PercentBuilt").ParseFloat();
+            NodeCounts = ent.PopPair("NodeCount").ParseInt();
+            for (int i = 0; i < NodeCounts; i++)
+            {
+                string num = string.Format("{0:D3}", i);
+                string[] tmp = ent.PopPair(num).ParseStringList();
+                BaseNode node = new BaseNode(tmp[0], int.Parse(tmp[1]), int.Parse(tmp[2]), this);
+                BaseNodes.Add(node);
+            }
+            residual = ent.DictData;
         }
         #endregion
 

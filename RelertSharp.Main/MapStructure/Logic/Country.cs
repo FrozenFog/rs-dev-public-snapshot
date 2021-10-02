@@ -38,14 +38,7 @@ namespace RelertSharp.MapStructure.Logic
         #region Ctor - CountryItem
         public CountryItem(INIEntity ent) : base(ent)
         {
-            Name = ent.PopPair(Constant.KEY_NAME).Value;
-            Side = ent.PopPair("Side").Value;
-            ColorName = ent.PopPair("Color").Value;
-            Prefix = ent.PopPair("Prefix").Value;
-            Suffix = ent.PopPair("Suffix").Value;
-            ParentCountryName = ent.PopPair("ParentCountry").Value;
-            SmartAi = ent.PopPair("SmartAI").ParseBool(true);
-            residual = ent.DictData;
+            OverwriteBy(ent);
             initialized = true;
         }
         internal CountryItem(string name)
@@ -136,6 +129,17 @@ namespace RelertSharp.MapStructure.Logic
         internal void OnAllInfoUpdated()
         {
             AllInfoUpdated?.Invoke(null, null);
+        }
+        internal void OverwriteBy(INIEntity ent)
+        {
+            Name = ent.PopPair(Constant.KEY_NAME).Value;
+            Side = ent.PopPair("Side").Value;
+            ColorName = ent.PopPair("Color").Value;
+            Prefix = ent.PopPair("Prefix").Value;
+            Suffix = ent.PopPair("Suffix").Value;
+            ParentCountryName = ent.PopPair("ParentCountry").Value;
+            SmartAi = ent.PopPair("SmartAI").ParseBool(true);
+            residual = ent.DictData;
         }
         #endregion
 

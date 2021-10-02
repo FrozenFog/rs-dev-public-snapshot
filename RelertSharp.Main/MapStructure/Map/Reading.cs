@@ -229,35 +229,68 @@ namespace RelertSharp.MapStructure
 
             INIEntity _houseList = f.PopEnt("Houses");
             INIEntity _countryList = f.PopEnt("Countries");
+            int iHouseMax = 0;
+            void initDefaultHouse()
+            {
+                var countries = GlobalVar.GlobalRules[Constant.RulesHead.HEAD_COUNTRY];
+                foreach (INIPair p in countries)
+                {
+                    var entCon = GlobalVar.GlobalRules[p.Value];
+                    CountryItem con = CountryItem.ParseFromRules(entCon);
+                    HouseItem house = HouseItem.FromCountry(con);
+                    Countries[iHouseMax.ToString()] = con;
+                    Houses[iHouseMax.ToString()] = house;
+                    iHouseMax++;
+                }
+            }
 
             Countries = new CountryCollection();
-            IniEntitySerializer serCon = new IniEntitySerializer(typeof(CountryItem));
+            initDefaultHouse();
             GlobalVar.Log.Info("Read Map Countries");
+            int idx = iHouseMax;
             foreach (INIPair p in _countryList)
             {
                 try
                 {
-                    CountryItem con = new CountryItem();
+                    CountryItem con;
                     INIEntity ent = f.PopEnt(p.Value);
-                    serCon.Deserialize(ent, con);
+                    bool alreadyExist = false;
+                    if (Countries.GetCountry(p.Value) is CountryItem c)
+                    {
+                        con = c;
+                        con.OverwriteBy(ent);
+                        alreadyExist = true;
+                    }
+                    else con = new CountryItem(ent);
                     con.Residual = ent;
                     con.CountryNameChanged += CountryNameChanged;
-                    Countries[p.Name] = con;
+                    if (!alreadyExist) Countries[idx.ToString()] = con;
                 }
                 catch (Exception e)
                 {
                     Monitor.LogFatal(p.Name, p.Value, LogicType.Country, e);
                 }
+                finally { idx++; }
             }
             GlobalVar.Log.Info("Read Map Houses");
+            idx = iHouseMax;
             foreach (INIPair p in _houseList)
             {
                 try
                 {
-                    HouseItem item = new HouseItem(f.PopEnt(p.Value));
+                    INIEntity ent = f.PopEnt(p.Value);
+                    HouseItem item;
+                    bool alreadyExist = false;
+                    if (Houses.GetHouse(p.Value) is HouseItem h)
+                    {
+                        item = h;
+                        item.OverwriteBy(ent);
+                        alreadyExist = true;
+                    }
+                    else item = new HouseItem(ent);
                     item.HouseNameChanged += HouseNameChanged;
                     foreach (BaseNode node in item.BaseNodes) AddObjectToTile(node);
-                    Houses[p.Name] = item;
+                    if (!alreadyExist) Houses[idx.ToString()] = item;
 
                     if (item.PlayerControl)
                     {
@@ -272,6 +305,7 @@ namespace RelertSharp.MapStructure
                 {
                     Monitor.LogFatal(p.Name, p.Value, LogicType.House, e);
                 }
+                finally { idx++; }
             }
         }
         private void GetAbstractLogics(MapFile f)

@@ -29,7 +29,8 @@ namespace RelertSharp.MapStructure.Objects
                 {
                     throw new Exception();
                 }
-                SubCell = int.Parse(_args[5]);
+                int.TryParse(_args[5], out int sub);
+                SubCell = sub;
                 Status = _args[6];
                 Rotation = int.Parse(_args[7]);
                 TagId = _args[8];
