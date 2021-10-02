@@ -56,6 +56,7 @@
                 <MenuItem Header="Clear Map" IsEnabled="{Binding IsEngineDrawed}" Click="MenuEraseEverything"/>
                 <Separator/>
                 <MenuItem Header="Inspect Rules" Click="MenuInspectRules"/>
+                <MenuItem Header="Edit Ranking Data" Click="MenuEditRank" IsEnabled="{Binding IsMapLoaded}"/>
                 <Separator/>
                 <MenuItem Header="Setting" Click="MenuCallSetting"/>
             </MenuItem>

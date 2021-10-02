@@ -135,6 +135,7 @@ namespace RelertSharp.FileSystem
             dest["Map"] = Map.Info.GetMapEnt();
             dest["SpecialFlags"] = Map.Info.SpecialFlags;
             dest["Lighting"] = Map.LightningCollection.GetSaveData();
+            dest[Constant.MapStructure.ENT_RANK] = Map.Rank?.GetSaveData();
         }
 
         #endregion

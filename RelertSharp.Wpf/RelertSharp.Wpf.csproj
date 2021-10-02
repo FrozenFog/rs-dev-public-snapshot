@@ -133,6 +133,9 @@
     <Compile Include="Dialogs\DlgRandomizeBrush.xaml.cs">
       <DependentUpon>DlgRandomizeBrush.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\DlgRanking.xaml.cs">
+      <DependentUpon>DlgRanking.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\DlgSetting.xaml.cs">
       <DependentUpon>DlgSetting.xaml</DependentUpon>
     </Compile>
@@ -177,6 +180,7 @@
     <Compile Include="ViewModel\Etc\LoadingProgressVm.cs" />
     <Compile Include="ViewModel\Etc\MainWindowVm.cs" />
     <Compile Include="ViewModel\Etc\MapCreatingVm.cs" />
+    <Compile Include="ViewModel\Etc\RankingVm.cs" />
     <Compile Include="ViewModel\Etc\SearchConditionVm.cs" />
     <Compile Include="ViewModel\Etc\SearchResultVm.cs" />
     <Compile Include="ViewModel\Etc\SelectedInspectorVm.cs" />
@@ -313,6 +317,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\DlgRandomizeBrush.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DlgRanking.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

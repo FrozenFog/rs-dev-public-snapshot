@@ -319,19 +319,6 @@ namespace RelertSharp.Utils
             else if (src.Length == 4) return new Rectangle(src[0], src[1], src[2], src[3]);
             else return new Rectangle();
         }
-        public static int TimeInt(string s)
-        {
-            string[] tmp = s.Split(new char[] { ':' });
-            try
-            {
-                int result = int.Parse(tmp[2]);
-                return result + int.Parse(tmp[1]) * 60 + int.Parse(tmp[0]) * 3600;
-            }
-            catch
-            {
-                return 0;
-            }
-        }
         public static string TimeString(int seconds)
         {
             int h = seconds / 3600;

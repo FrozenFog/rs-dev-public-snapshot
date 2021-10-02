@@ -136,16 +136,19 @@ namespace RelertSharp.Common
             public const string CivilianCountrySide = "Civilian";
             public const string DefaultCivilianHouse = "Neutral";
 
-            public const string KEY_HOUSE = "House";
-            public const string KEY_SCRIPT = "Script";
-            public const string KEY_TASKFORCE = "TaskForce";
+            public const string ENT_HOUSE = "House";
+            public const string ENT_SCRIPT = "Script";
+            public const string ENT_TASKFORCE = "TaskForce";
             public const string KEY_GROUP = "Group";
+            public const string ENT_RANK = "Ranking";
+            public const string KEY_RANK_ET = "ParTimeEasy";
+            public const string KEY_RANK_MT = "ParTimeMedium";
+            public const string KEY_RANK_HT = "ParTimeHard";
+            public const string KEY_RANK_OT = "OverParTitle";
+            public const string KEY_RANK_OS = "OverParMessage";
+            public const string KEY_RANK_UT = "UnderParTitle";
+            public const string KEY_RANK_US = "UnderParMessage";
 
-            public static readonly string[] ObjectStatus =
-            {
-                "Area Guard", "Attack", "Capture", "Construction", "Enter", "Guard", "Harmless", "Harvest", "Hunt", "Missile", "Move", "Open", "Patrol", "QMove", "Repair", "Rescue",
-                "Retreat", "Sabotage", "Selling", "Sleep", "Sticky", "Stop", "Unload"
-            };
             public static class CustomComponents
             {
                 public const string LightsourceTitle = "Rs_LightSource";

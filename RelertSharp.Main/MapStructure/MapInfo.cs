@@ -4,6 +4,7 @@ using RelertSharp.IniSystem;
 using System.Collections.Generic;
 using System.Drawing;
 using static RelertSharp.Utils.Misc;
+using static RelertSharp.Common.Constant.MapStructure;
 
 namespace RelertSharp.MapStructure
 {
@@ -273,50 +274,82 @@ namespace RelertSharp.MapStructure
         #region Ctor - RankInfo
         public RankInfo(INIEntity rankEnt)
         {
-            ETime = TimeInt(rankEnt["ParTimeEasy"]);
-            MTime = TimeInt(rankEnt["ParTimeMedium"]);
-            HTime = TimeInt(rankEnt["ParTimeHard"]);
-            TitleUnder = new CsfString(rankEnt["UnderParTitle"]);
-            TitleOver = new CsfString(rankEnt["OverParTitle"]);
-            MsgUnder = new CsfString(rankEnt["UnderParMessage"]);
-            MsgOver = new CsfString(rankEnt["OverParMessage"]);
+            ETime = TimeInt(rankEnt[KEY_RANK_ET]);
+            NTime = TimeInt(rankEnt[KEY_RANK_MT]);
+            HTime = TimeInt(rankEnt[KEY_RANK_HT]);
+            TitleUnder = rankEnt[KEY_RANK_UT];
+            TitleOver = rankEnt[KEY_RANK_OT];
+            MsgUnder = rankEnt[KEY_RANK_US];
+            MsgOver = rankEnt[KEY_RANK_OS];
         }
         public RankInfo()
         {
-            TitleUnder = new CsfString(Constant.VALUE_NONE);
-            TitleOver = new CsfString(Constant.VALUE_NONE);
-            MsgUnder = new CsfString(Constant.VALUE_NONE);
-            MsgOver = new CsfString(Constant.VALUE_NONE);
+            TitleUnder = Constant.VALUE_NONE;
+            TitleOver = Constant.VALUE_NONE;
+            MsgUnder = Constant.VALUE_NONE;
+            MsgOver = Constant.VALUE_NONE;
         }
         #endregion
 
 
 
+        public INIEntity GetSaveData()
+        {
+            INIEntity ent = new INIEntity(ENT_RANK);
+            ent[KEY_RANK_ET] = TimeString(ETime);
+            ent[KEY_RANK_MT] = TimeString(NTime);
+            ent[KEY_RANK_HT] = TimeString(HTime);
+            ent[KEY_RANK_UT] = TitleUnder;
+            ent[KEY_RANK_OT] = TitleOver;
+            ent[KEY_RANK_US] = MsgUnder;
+            ent[KEY_RANK_OS] = MsgOver;
+            return ent;
+        }
         public int GetChecksum()
         {
             unchecked
             {
                 int hash = Constant.BASE_HASH;
                 hash = hash * 11 + ETime;
-                hash = hash * 11 + MTime;
+                hash = hash * 11 + NTime;
                 hash = hash * 11 + HTime;
-                hash = hash * 11 + TitleUnder.Id.GetHashCode();
-                hash = hash * 11 + TitleOver.Id.GetHashCode();
-                hash = hash * 11 + MsgUnder.Id.GetHashCode();
-                hash = hash * 11 + MsgOver.Id.GetHashCode();
+                hash = hash * 11 + TitleUnder.GetHashCode();
+                hash = hash * 11 + TitleOver.GetHashCode();
+                hash = hash * 11 + MsgUnder.GetHashCode();
+                hash = hash * 11 + MsgOver.GetHashCode();
                 return hash;
             }
         }
 
+        public static int TimeInt(string s)
+        {
+            string[] tmp = s.Split(new char[] { ':' });
+            try
+            {
+                int result = int.Parse(tmp[2]);
+                return result + int.Parse(tmp[1]) * 60 + int.Parse(tmp[0]) * 3600;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public static string TimeString(int time)
+        {
+            int h = time / 3600;
+            int min = (time - 3600 * h) / 60;
+            int s = (time - 3600 * h - 60 * min);
+            return string.Format("{0:D2}:{1:D2}:{2:D2}", h, min, s);
+        }
 
         #region Public Calls - RankInfo
         public int ETime { get; set; }
-        public int MTime { get; set; }
+        public int NTime { get; set; }
         public int HTime { get; set; }
-        public CsfString TitleUnder { get; set; }
-        public CsfString TitleOver { get; set; }
-        public CsfString MsgUnder { get; set; }
-        public CsfString MsgOver { get; set; }
+        public string TitleUnder { get; set; }
+        public string TitleOver { get; set; }
+        public string MsgUnder { get; set; }
+        public string MsgOver { get; set; }
         #endregion
     }
 

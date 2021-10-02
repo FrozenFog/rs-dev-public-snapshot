@@ -247,6 +247,11 @@ namespace RelertSharp.Wpf
                 MainWindowUtil.UpdateAutosaveTime();
             }
         }
+        private void MenuEditRank(object sender, RoutedEventArgs e)
+        {
+            DlgRanking dlg = new DlgRanking(GlobalVar.GlobalMap.Rank);
+            dlg.ShowDialog();
+        }
         #endregion
 
 
