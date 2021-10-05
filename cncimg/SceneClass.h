@@ -118,6 +118,8 @@ public:
 	void DrawAlphaImageToAlphaSurface(const PaintingStruct& paint);
 
 private:
+	//thread handler
+	CRITICAL_SECTION MutualExclusion;
 	//for color & calculation
 	TheaterType Theater;
 	D3DXVECTOR3 CurrentFocusLocation;

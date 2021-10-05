@@ -79,6 +79,7 @@ EXPORT void WINAPI SetObjectZAdjust(int nID, float zAdjust);
 
 //scene api
 EXPORT bool WINAPI SetUpScene(int nWidth, int nHeight);
+EXPORT bool WINAPI HandleDeviceLost();
 EXPORT LPDIRECT3DSURFACE9 WINAPI SetSceneSize(int nWidth, int nHeight);
 EXPORT void WINAPI SetBackgroundColor(BYTE R, BYTE G, BYTE B);
 EXPORT bool WINAPI ResetSceneView();

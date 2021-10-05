@@ -93,6 +93,10 @@ namespace RelertSharp.Engine.Api
             }
             return IntPtr.Zero;
         }
+        public static bool HandleDeviceLost()
+        {
+            return CppExtern.Scene.HandleDeviceLost();
+        }
         public static void SetBackgroundColor(Color color)
         {
             CppExtern.Scene.SetBackgroundColor(color.R, color.G, color.B);

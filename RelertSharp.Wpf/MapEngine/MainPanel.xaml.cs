@@ -348,8 +348,21 @@ namespace RelertSharp.Wpf.MapEngine
                 int h = (int)(nHeight * EngineApi.ScaleFactor);
                 _handle = EngineApi.ResetHandle(w, h);
                 d3dimg.Lock();
-                d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, IntPtr.Zero);
-                //d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
+                //d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, IntPtr.Zero);
+                try
+                {
+                    d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
+                }
+                catch(ArgumentException)
+                {
+                    //release the referenced buffer because the resource is in the default pool
+                    //and if it's not released, device will never be reset.
+                    d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, IntPtr.Zero);
+                    while (!EngineApi.HandleDeviceLost());
+
+                    _handle = EngineApi.ResetHandle(w, h);
+                    d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
+                }
                 EngineApi.RenderFrame();
                 d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
                 d3dimg.Unlock();

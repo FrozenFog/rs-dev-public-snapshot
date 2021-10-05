@@ -346,6 +346,11 @@ bool WINAPI SetUpScene(int nWidth, int nHeight)
 	// set render target via SetSceneSize method
 }
 
+bool WINAPI HandleDeviceLost()
+{
+	return SceneClass::Instance.HandleDeviceLost();
+}
+
 LPDIRECT3DSURFACE9 WINAPI SetSceneSize(int nWidth, int nHeight)
 {
 	return SceneClass::Instance.SetSceneSize(nWidth, nHeight);

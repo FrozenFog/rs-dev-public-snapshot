@@ -24,6 +24,7 @@ SceneClass::SceneClass() :pResource(nullptr),
 {
 	ZeroMemory(this, sizeof *this);
 	dwBackgroundColor = D3DCOLOR_XRGB(0, 0, 252);
+	InitializeCriticalSection(&this->MutualExclusion);
 }
 
 SceneClass::SceneClass(HWND hWnd,int nWidth, int nHeight) :SceneClass()
@@ -128,7 +129,8 @@ LPDIRECT3DSURFACE9 SceneClass::SetUpScene(HWND hWnd, int nWidth, int nHeight)
 
 	SAFE_RELEASE(this->pDevice);
 	if (FAILED(this->pResource->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
-		D3DCREATE_HARDWARE_VERTEXPROCESSING, &Para, &this->pDevice)))
+		D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED | D3DCREATE_FPU_PRESERVE,
+		&Para, &this->pDevice)))
 	{
 		Logger::WriteLine(__FUNCTION__" : ""Unable to CreateDevice.\n");
 		this->ClearDevice();
@@ -166,16 +168,24 @@ LPDIRECT3DSURFACE9 SceneClass::SetSceneSize(int nWidth, int nHeight)
 	this->Width = nWidth;
 	this->Height = nHeight;
 
+	EnterCriticalSection(&this->MutualExclusion);
+
 	Logger::WriteLine(__FUNCTION__" : Prepare to reset scene size as %d, %d.\n", nWidth, nHeight);
 	if (!this->CreateSurfaces())
 	{
 		Logger::WriteLine(__FUNCTION__"Unable to reset buffers sizes.\n");
 		this->Width = oldSize.cx;
 		this->Height = oldSize.cy;
+			
+		LeaveCriticalSection(&this->MutualExclusion);
 		return nullptr;
 	}
 
+	//while (!this->HandleDeviceLost());
+
 	Logger::WriteLine(__FUNCTION__" : ""Scene size reset, returning surface = %p.\n", this->pRenderTarget);
+
+	LeaveCriticalSection(&this->MutualExclusion);
 	return this->pRenderTarget;
 }
 
@@ -463,19 +473,26 @@ ShaderStruct& SceneClass::GetPassShader()
 
 bool SceneClass::HandleDeviceLost()
 {
-	if (!this->IsDeviceLoaded())
+	EnterCriticalSection(&MutualExclusion);
+
+	if (!this->IsDeviceLoaded()){
+		LeaveCriticalSection(&MutualExclusion);
 		return false;
+	}
 
 	auto hResult = this->pDevice->TestCooperativeLevel();
 	if (SUCCEEDED(hResult) || hResult == D3DERR_DEVICENOTRESET)
 	{
-		return this->ResetDevice();
+		bool bRes = this->ResetDevice();
+		LeaveCriticalSection(&MutualExclusion);
+		return bRes;
 	}
 	else if(hResult == D3DERR_DEVICELOST)
 	{
 		Sleep(200u);
 	}
 
+	LeaveCriticalSection(&MutualExclusion);
 	return SUCCEEDED(hResult);
 }
 

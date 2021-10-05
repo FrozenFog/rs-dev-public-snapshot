@@ -20,6 +20,8 @@ namespace RelertSharp.Engine
         public static class Scene
         {
             [DllImport(name)]
+            public static extern bool HandleDeviceLost();
+            [DllImport(name)]
             public static extern bool SetSceneFont(string fontName, int size);
             [DllImport(name)]
             private static extern void ScenePositionToClientPosition(Vec3 pos, ref Pnt result);
