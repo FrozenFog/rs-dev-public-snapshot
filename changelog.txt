@@ -1,0 +1,34 @@
+如果有对自己的config或者language.json进行改动，记得以其他名字备份。
+如果config或者language.json需要更新，会在日志中说明详细部分，以便自行合并。
+
+211006:
+fix	修复设备丢失问题，现可和游戏同时启动
+fix	ToolTip现在正常显示了
+fix	触发预览摘要中的触发参数名现直接显示编译后触发名称（带分组）
+fix	填写触发参数时，不会再因新增过小队等物件而崩溃
+
+211002:
+add	报错时会将所有可用信息保存至log，若发生错误请查看log最后一条信息
+add	添加ranking窗口，从Edit菜单中进入
+fix	局部变量开关更改会同时更改表中的描述
+fix	修复event/action的drop问题
+fix	针对原版任务修复house index偏移问题
+
+210913:
+config修正（所有mod的config）：
+AttributeInfo->Team->Items AvoidThreats项的默认值（default）由no1修正为no
+fix	脚本拖路径点功能可以正常运作了
+fix	小队读写正常运作
+fix	所有含拖拽功能的ComboBox将在拖拽时自动更新下拉列表（如新增了小队脚本触发等）
+fix	Ai触发的BaseDefense项现读写正常
+
+210912:
+add	ai触发可增删
+add	Setting窗口，从菜单栏Edit->Setting进入
+add	自动保存和log可自行设定容量上限，默认10MB
+fix	自动保存会正常保存触发的分组了
+
+210906:
+fix	保存功能正常运作
+fix	空触发能正常保存了
+fix	触发分组可正常读取
