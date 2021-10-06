@@ -300,7 +300,7 @@ namespace RelertSharp.Wpf.Views
                 {
                     IEnumerable<IIndexableItem> items = GlobalVar.GlobalConfig.ModConfig.GetCombo((cbb.DataContext as AttributeItem).ValueType);
                     IIndexableItem item = items.Where(x => x.Id == value).FirstOrDefault();
-                    cbb.ItemsSource = items;
+                    cbb.ItemsSource = items.ToList();
                     if (item != null)
                     {
                         cbb.SelectedItem = item;

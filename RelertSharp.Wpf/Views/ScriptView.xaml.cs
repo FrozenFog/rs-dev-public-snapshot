@@ -342,7 +342,7 @@ namespace RelertSharp.Wpf.Views
                             {
                                 IEnumerable<IIndexableItem> items = Config.GetCombo((cbb.DataContext as LogicInfoParameter).ValueType);
                                 IIndexableItem item = items.Where(x => x.Id == value).FirstOrDefault();
-                                cbb.ItemsSource = items;
+                                cbb.ItemsSource = items.ToList();
                                 if (item != null)
                                 {
                                     cbb.SelectedItem = item;
