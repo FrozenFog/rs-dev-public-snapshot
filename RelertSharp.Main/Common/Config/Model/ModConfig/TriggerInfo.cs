@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Linq;
 using static RelertSharp.Common.Constant.Config;
+using RelertSharp.MapStructure.Logic;
 
 namespace RelertSharp.Common.Config.Model
 {
@@ -307,7 +308,7 @@ namespace RelertSharp.Common.Config.Model
             {ParamFormatType.Bool, BoolFormat },
             {ParamFormatType.WpPos, WpPosFormat },
             {ParamFormatType.HighMask16, HiFormat16 },
-            {ParamFormatType.LowMask16,  LoFormat16 }
+            {ParamFormatType.LowMask16,  LoFormat16 },
         };
         private static string HiFormat16(string @in, IEnumerable<IIndexableItem> lookup)
         {
@@ -334,6 +335,7 @@ namespace RelertSharp.Common.Config.Model
         private static string KvValueFormat(string @in, IEnumerable<IIndexableItem> lookup)
         {
             IIndexableItem item = lookup.FirstOrDefault(x => x.Id == @in);
+            if (item is TriggerItem trg) return trg.CompileName;
             if (item != null) return item.Name;
             return @in;
         }

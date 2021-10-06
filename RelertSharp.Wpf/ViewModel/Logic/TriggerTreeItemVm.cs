@@ -45,6 +45,7 @@ namespace RelertSharp.Wpf.ViewModel
             TriggerTreeItemVm vm = new TriggerTreeItemVm(trg);
             vm.SetTitle(title);
             base.AddItem(vm);
+            Compile();
         }
         public void Sort(bool ascending)
         {
@@ -93,6 +94,7 @@ namespace RelertSharp.Wpf.ViewModel
         {
             base.RemoveItem(item);
             SetProperty(nameof(HeadImg));
+            Compile();
         }
 
 
