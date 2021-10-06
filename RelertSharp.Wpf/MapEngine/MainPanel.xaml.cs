@@ -358,7 +358,7 @@ namespace RelertSharp.Wpf.MapEngine
                     //release the referenced buffer because the resource is in the default pool
                     //and if it's not released, device will never be reset.
                     d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, IntPtr.Zero);
-                    while (!EngineApi.HandleDeviceLost());
+                    while (!EngineApi.HandleDeviceLost()) Thread.Sleep(1000);
 
                     _handle = EngineApi.ResetHandle(w, h);
                     d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);

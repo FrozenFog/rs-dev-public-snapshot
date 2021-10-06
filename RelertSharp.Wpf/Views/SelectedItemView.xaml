@@ -126,7 +126,7 @@
                         <Slider x:Name="sldHp" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
                             Maximum="256" Minimum="0" 
                             Value="{Binding HealthPoint}" Visibility="{Binding IsHpEnable}" 
-                            AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="16"/>
+                            AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="16" ToolTip="{Binding HealthPoint}"/>
                         <TextBox x:Name="txbFacing" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
                              Visibility="{Binding IsFacingEnable}" Text="{Binding Facing}" 
                              MouseWheel="FacingWheel"/>
@@ -141,7 +141,8 @@
                             </ComboBox.ItemsSource>
                         </ComboBox>
                         <Slider x:Name="sldVeterancy" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" 
-                            Maximum="200" Minimum="0" Value="{Binding Veterancy}" Visibility="{Binding IsVeterancyEnable}" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="20"/>
+                            Maximum="200" Minimum="0" Value="{Binding Veterancy}" Visibility="{Binding IsVeterancyEnable}" 
+                                AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="20" ToolTip="{Binding Veterancy}"/>
                         <CheckBox x:Name="ckbPowered" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" 
                               IsChecked="{Binding Powered}" Visibility="{Binding IsPoweredEnable}"
                               IsThreeState="True"/>

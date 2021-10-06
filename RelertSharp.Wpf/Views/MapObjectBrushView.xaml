@@ -83,7 +83,8 @@
                 <StackPanel x:Name="stkControl" Grid.Column="3">
                     <ComboBox Name="cbbOwner" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" SelectedItem="{Binding OwnerHouseItem}" Visibility="{Binding IsOwnerHouseEnable}"/>
                     <ComboBox Name="cbbStatus" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" SelectedItem="{Binding MissionStatusItem}" Visibility="{Binding IsMissionEnable}"/>
-                    <Slider x:Name="sldHp" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Maximum="256" Minimum="0" Value="{Binding HealthPoint}" Visibility="{Binding IsHpEnable}" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="16"/>
+                    <Slider x:Name="sldHp" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Maximum="256" Minimum="0" Value="{Binding HealthPoint}" 
+                            Visibility="{Binding IsHpEnable}" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="16" ToolTip="{Binding HealthPoint}"/>
                     <TextBox x:Name="txbFacing" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Visibility="{Binding IsFacingEnable}" Text="{Binding Facing}" MouseWheel="FacingWheel"/>
                     <ComboBox Name="cbbTag" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" SelectedItem="{Binding TagItem}" Visibility="{Binding IsTagEnable}">
                         <ComboBox.ItemsSource>
@@ -93,7 +94,8 @@
                             </CompositeCollection>
                         </ComboBox.ItemsSource>
                     </ComboBox>
-                    <Slider x:Name="sldVeterancy" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Maximum="200" Minimum="0" Value="{Binding Veterancy}" Visibility="{Binding IsVeterancyEnable}" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="20"/>
+                    <Slider x:Name="sldVeterancy" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Maximum="200" Minimum="0" Value="{Binding Veterancy}" 
+                            Visibility="{Binding IsVeterancyEnable}" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="20" ToolTip="{Binding Veterancy}"/>
                     <CheckBox x:Name="ckbPowered" Height="22" Margin="10,10,10,0" VerticalAlignment="Top" IsChecked="{Binding Powered}" Visibility="{Binding IsPoweredEnable}"/>
                     <TextBox x:Name="txbUpgNum" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" Visibility="{Binding IsUpgNumEnable}" Text="{Binding UpgradeNum}"/>
                     <ComboBox Name="cbbUpg1" Height="27" Margin="10,5,10,0" VerticalAlignment="Top" SelectedItem="{Binding Upg1Item}" Visibility="{Binding IsUpg1Enable}"/>
