@@ -339,34 +339,43 @@ namespace RelertSharp.Wpf.MapEngine
             }
         }
 
-        private bool requireRenewDevice = false;
+        private bool deviceLost = false;
         private void FrontBufferChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue)
             {
-                int w = (int)(nWidth * EngineApi.ScaleFactor);
-                int h = (int)(nHeight * EngineApi.ScaleFactor);
-                _handle = EngineApi.ResetHandle(w, h);
-                d3dimg.Lock();
-                //d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, IntPtr.Zero);
-                try
-                {
-                    d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
-                }
-                catch(ArgumentException)
+                deviceLost = true;
+            }
+        }
+
+        private bool SolveDeviceLost()
+        {
+            int w = (int)(nWidth * EngineApi.ScaleFactor);
+            int h = (int)(nHeight * EngineApi.ScaleFactor);
+            _handle = EngineApi.ResetHandle(w, h);
+            d3dimg.Lock();
+            //d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, IntPtr.Zero);
+            try
+            {
+                d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
+            }
+            catch (ArgumentException)
+            {
+                Dispatcher.Invoke(() =>
                 {
                     //release the referenced buffer because the resource is in the default pool
                     //and if it's not released, device will never be reset.
                     d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, IntPtr.Zero);
-                    while (!EngineApi.HandleDeviceLost()) Thread.Sleep(1000);
+                    while (!EngineApi.HandleDeviceLost()) ;
 
                     _handle = EngineApi.ResetHandle(w, h);
                     d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, _handle);
-                }
-                EngineApi.RenderFrame();
-                d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
-                d3dimg.Unlock();
+                });
             }
+            EngineApi.RenderFrame();
+            d3dimg.AddDirtyRect(new Int32Rect(0, 0, d3dimg.PixelWidth, d3dimg.PixelHeight));
+            d3dimg.Unlock();
+            return true;
         }
 
         private void Resize()
@@ -397,7 +406,11 @@ namespace RelertSharp.Wpf.MapEngine
                     if (drew && !rendering)
                     {
                         //EngineApi.RefreshFrame();
-                        if (d3dimg.IsFrontBufferAvailable /*&& arg.RenderingTime != lastRender*/)
+                        if (deviceLost)
+                        {
+                            deviceLost = SolveDeviceLost();
+                        }
+                        else if (d3dimg.IsFrontBufferAvailable /*&& arg.RenderingTime != lastRender*/)
                         {
                             //_handle = EngineApi.ResetHandle(nWidth, nHeight);
                             if (_handle != IntPtr.Zero)
@@ -434,18 +447,6 @@ namespace RelertSharp.Wpf.MapEngine
                                 rendering = false;
                                 //lastRender = arg.RenderingTime;
                             }
-                        }
-                        else if (requireRenewDevice)
-                        {
-                            requireRenewDevice = false;
-                            d3dimg.Lock();
-                            d3dimg.SetBackBuffer(D3DResourceType.IDirect3DSurface9, IntPtr.Zero, true);
-                            d3dimg.Unlock();
-                            //d3dimg = new D3dImg();
-                            //d3dimg.IsFrontBufferAvailableChanged += FrontBufferChanged;
-                            //imgelt.Source = d3dimg;
-                            //Resize();
-                            //RenderFrame();
                         }
                     }
                 }

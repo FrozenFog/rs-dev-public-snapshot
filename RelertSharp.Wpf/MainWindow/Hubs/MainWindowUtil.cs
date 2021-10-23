@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace RelertSharp.Wpf
@@ -17,11 +18,12 @@ namespace RelertSharp.Wpf
     {
         private static DispatcherTimer timer;
         private static Stopwatch watch = new Stopwatch();
+        private static MainWindow mw;
         private const string PATH = "AutoSave";
         private static bool autosaveFailed = false;
 
 
-        public static void Init()
+        public static void Init(MainWindow window)
         {
             timer = new DispatcherTimer()
             {
@@ -30,6 +32,7 @@ namespace RelertSharp.Wpf
             GlobalVar.MapDocumentLoaded += HandleMapLoaded;
             EngineApi.MapDrawingComplete += MapLoadComplete;
             timer.Tick += AutoSaveTick;
+            mw = window;
         }
 
         private static void HandleMapLoaded()
@@ -120,5 +123,6 @@ namespace RelertSharp.Wpf
 
 
         public static bool AutosaveEnabled { get; private set; }
+        public static bool IsWindowMinimized { get { return mw.WindowState == WindowState.Minimized; } }
     }
 }

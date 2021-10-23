@@ -258,6 +258,7 @@ namespace System
         }
         public static string Peel(this string s, int level = 1)
         {
+            if (s.IsNullOrEmpty()) return s;
             return s.Substring(level, s.Length - 2 * level);
         }
         public static string CoverWith(this string s, string left, string right)
@@ -292,6 +293,17 @@ namespace System
         public static string ZeroOne(this bool src)
         {
             return src ? "1" : "0";
+        }
+        #endregion
+
+
+
+        #region Etc
+        public static string FullExceptionLog(this Exception ex)
+        {
+            string innerEx = "null";
+            if (ex.InnerException != null) innerEx = ex.InnerException.FullExceptionLog();
+            return string.Format("Message:{0}\nSource:{1}\nFunction:{2}\nStackTrace:{3}\n\nInnerException:{4}", ex.Message, ex.Source, ex.TargetSite, ex.StackTrace, innerEx);
         }
         #endregion
     }

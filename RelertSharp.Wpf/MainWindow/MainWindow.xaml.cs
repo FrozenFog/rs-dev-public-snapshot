@@ -50,7 +50,7 @@ namespace RelertSharp.Wpf
             GlobalVar.MapLoadComplete += HandleMapLoaded;
             GlobalVar.MapDisposed += HandleMapDisposed;
             GlobalVar.MapSaved += HandleMapSaved;
-            MainWindowUtil.Init();
+            MainWindowUtil.Init(this);
 #if RELEASE
             menuMain.Items.Remove(DEBUG);
             Title = Constant.VersionInfo;

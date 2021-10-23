@@ -82,8 +82,9 @@ namespace RelertSharp.IniSystem
                 {
                     if (init)
                     {
-                        init = false;
                         rootname = re.Match(line).Value.Peel();
+                        if (rootname.IsNullOrEmpty()) continue;
+                        init = false;
                         //rootname = line.Replace("[", string.Empty).Replace("]", string.Empty);
                         ent = new INIEntity(rootname, preCommentBuffer, combuf);
                         preCommentBuffer = "";
@@ -91,6 +92,7 @@ namespace RelertSharp.IniSystem
                     }
                     AddEnt(ent);
                     rootname = re.Match(line).Value.Peel();
+                    if (rootname.IsNullOrEmpty()) continue;
                     //rootname = line.Replace("[", string.Empty).Replace("]", string.Empty);
                     ent = new INIEntity(rootname, preCommentBuffer, combuf);
                     rootcom = combuf;
@@ -230,6 +232,7 @@ namespace RelertSharp.IniSystem
             StreamWriter sw = new StreamWriter(msbuffer);
             foreach (INIEntity ent in IniData)
             {
+                if (ent.Name.IsNullOrEmpty()) continue;
                 sw.Write(ent.SaveString(ignoreComment));
                 sw.Flush();
             }

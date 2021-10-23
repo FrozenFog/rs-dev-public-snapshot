@@ -111,5 +111,19 @@ namespace RelertSharp.Algorithm
             w = size.Width;
             h = size.Height + 3;
         }
+        /// <summary>
+        /// Only use in expanding map, all object coordnate will shift with following algorithm
+        /// </summary>
+        /// <param name="in">Coord object, pos will not change</param>
+        /// <param name="dLeft">Delta Left</param>
+        /// <param name="dTop">Delta Top</param>
+        /// <param name="dRight">Delta Right</param>
+        /// <param name="x">out x pos</param>
+        /// <param name="y">out y pos</param>
+        public static void MapExpandCoord(I2dLocateable @in, int dLeft, int dTop, int dRight, out int x, out int y)
+        {
+            x = dLeft + dTop + @in.X;
+            y = dRight + dTop + @in.Y;
+        }
     }
 }

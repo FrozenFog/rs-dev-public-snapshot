@@ -132,10 +132,6 @@ namespace RelertSharp.MapStructure.Logic
         {
             try
             {
-                if (_args.Length != Constant.MapStructure.ArgLenAiTrigger)
-                {
-                    throw new Exception();
-                }
                 Id = _id;
                 Name = _args[0];
                 Team1ID = _args[1];
