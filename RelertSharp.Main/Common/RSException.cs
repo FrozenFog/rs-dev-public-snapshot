@@ -40,6 +40,11 @@ namespace RelertSharp.Common
         {
             private string x, y;
             public OverlayOutOfIndexException(string _x, string _y) { x = _x; y = _y; }
+            public OverlayOutOfIndexException(int x, int y)
+            {
+                this.x = x.ToString();
+                this.y = y.ToString();
+            }
             public string X { get { return x; } }
             public string Y { get { return y; } }
             public override string Message

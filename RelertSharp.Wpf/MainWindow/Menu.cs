@@ -89,6 +89,33 @@ namespace RelertSharp.Wpf
 
         }
 
+        private void DebugDumpFile(object sender, RoutedEventArgs e)
+        {
+            DlgNameInput dlg = new DlgNameInput("File name:");
+            dlg.Validation = s => { return true; };
+            if (dlg.ShowDialog().Value)
+            {
+                SaveFileDialog save = new SaveFileDialog();
+                if (GlobalVar.GlobalDir.HasFile(dlg.ResultName))
+                {
+                    var data = GlobalVar.GlobalDir.GetRawByte(dlg.ResultName);
+                    save.FileName = dlg.ResultName;
+                    if (save.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        FileStream fs = new FileStream(save.FileName, FileMode.Create, FileAccess.Write);
+                        fs.Write(data, 0, data.Length);
+                        fs.Flush();
+                        fs.Dispose();
+                        GuiUtil.Asterisk("Save complete.");
+                    }
+                }
+                else
+                {
+                    GuiUtil.Fatal("File not found.");
+                }
+            }
+        }
+
         private void MenuInspectRules(object sender, RoutedEventArgs e)
         {
             DlgNameInput dlg = new DlgNameInput("Ini section name");

@@ -166,17 +166,14 @@ namespace RelertSharp.MapStructure
             {
                 if (t.GetObjects().Any(x => x.ObjectType == MapObjectType.Overlay))
                 {
-                    try
-                    {
-                        OverlayUnit o = t.GetObjects().First(x => x.ObjectType == MapObjectType.Overlay) as OverlayUnit;
-                        Overlays[o.X, o.Y] = o;
-                    }
-                    catch (Exception e)
+                    OverlayUnit o = t.GetObjects().First(x => x.ObjectType == MapObjectType.Overlay) as OverlayUnit;
+                    if (o.X + o.Y > Constant.OVERLAY_XY_MAX)
                     {
                         string msg = string.Format("Overlay error at {0}, {1}", t.X, t.Y);
                         Log.Write(msg, LogLevel.Critical);
-                        Monitor.LogFatal(t, MapObjectType.Overlay, e);
+                        Monitor.LogFatal(t, MapObjectType.Overlay, new RSException.OverlayOutOfIndexException(t.X, t.Y));
                     }
+                    else Overlays[o.X, o.Y] = o;
                 }
             }
         }

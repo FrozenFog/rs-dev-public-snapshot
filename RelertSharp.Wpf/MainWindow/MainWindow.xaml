@@ -118,6 +118,7 @@
             <MenuItem x:Name="DEBUG" Header="Debug">
                 <MenuItem Header="Debug Button" Click="DebugClick"/>
                 <MenuItem Header="Go Back" Click="DebugClick2"/>
+                <MenuItem Header="Save File From Mix" Click="DebugDumpFile"/>
             </MenuItem>
         </Menu>
         <ToolBarTray VerticalAlignment="Top" Grid.Row="1" Height="Auto">
