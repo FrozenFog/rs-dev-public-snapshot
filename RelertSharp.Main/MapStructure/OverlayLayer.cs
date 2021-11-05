@@ -91,7 +91,7 @@ namespace RelertSharp.MapStructure
             }
             set
             {
-                if (x + y > Constant.OVERLAY_XY_MAX) throw new RSException.OverlayOutOfIndexException(x.ToString(), y.ToString());
+                if (x >= Constant.OVERLAY_XY_MAX || y >= Constant.OVERLAY_XY_MAX) throw new RSException.OverlayOutOfIndexException(x.ToString(), y.ToString());
                 data[(y << 9) + x] = value;
             }
         }

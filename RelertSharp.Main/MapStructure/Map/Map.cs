@@ -167,7 +167,7 @@ namespace RelertSharp.MapStructure
                 if (t.GetObjects().Any(x => x.ObjectType == MapObjectType.Overlay))
                 {
                     OverlayUnit o = t.GetObjects().First(x => x.ObjectType == MapObjectType.Overlay) as OverlayUnit;
-                    if (o.X + o.Y > Constant.OVERLAY_XY_MAX)
+                    if (o.X >= Constant.OVERLAY_XY_MAX || o.Y >= Constant.OVERLAY_XY_MAX)
                     {
                         string msg = string.Format("Overlay error at {0}, {1}", t.X, t.Y);
                         Log.Write(msg, LogLevel.Critical);

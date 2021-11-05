@@ -48,7 +48,7 @@ namespace RelertSharp.Common
         public const string KEY_TRALSEP = "TrailerSeperation";
 
         public const int IniMaxLineLength = 512;
-        public const int OVERLAY_XY_MAX = 513;
+        public const int OVERLAY_XY_MAX = 512;
         public const string ITEM_NONE = "<none>";
         public const string VALUE_NONE = "None";
         public const string ITEM_ALL = "<all>";
