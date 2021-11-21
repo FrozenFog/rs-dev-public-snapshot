@@ -37,6 +37,7 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	LPDIRECT3DSURFACE9 PassSurface = nullptr;
 	LPDIRECT3DVERTEXBUFFER9 TempVertex = nullptr;
 	LPVOID pLockedData;
+	RECT ViewPort;
 	
 	auto& Scene = SceneClass::Instance;
 
@@ -53,6 +54,7 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	DrawingOpaqueObject.reserve(GlobalOpaqueObjects.size());
 	DrawingTransperantObject.reserve(GlobalTransperantObjects.size());
 	DrawingTopObject.reserve(GlobalTopObjects.size());
+	ViewPort = Scene.GetWindowRect();
 
 	for (auto& pair : GlobalOpaqueObjects) {
 		if (pair.second->IsWithinSight())
@@ -151,11 +153,18 @@ void DrawObject::UpdateScene(LPDIRECT3DDEVICE9 pDevice, DWORD dwBackground)
 	TempVertex->Unlock();
 	if (SUCCEEDED(pDevice->BeginScene()))
 	{
+		D3DVECTOR ScreenDimension;
+
 		pDevice->SetFVF(FixedVertecies[0].dwFVFType);
 		pDevice->SetStreamSource(0, TempVertex, 0, sizeof FixedVertecies[0]);
 		pDevice->SetPixelShader(PassShader.GetShaderObject());
 		pDevice->SetTexture(0, pPassTexture);
 		pDevice->SetTexture(1, pAlphaTexture);
+
+		ScreenDimension.x = ViewPort.right - ViewPort.left;
+		ScreenDimension.y = ViewPort.bottom - ViewPort.top;
+		ScreenDimension.z = 0.0f;
+		pDevice->SetPixelShaderConstantF(0, &ScreenDimension.x, 1);
 //#define LINEAR_SMOOTH
 #ifdef LINEAR_SMOOTH
 		pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
