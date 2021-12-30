@@ -12,7 +12,8 @@
 //Palette VxlFile::RANormals();
 //Palette VxlFile::TSNormals();
 
-D3DXVECTOR3 VxlFile::LightReversed = { 0.0,1.0,0.0 };
+//D3DXVECTOR3 VxlFile::LightReversed = { -1.0f / sqrtf(2.0f),1.0f,1.0f / sqrtf(2.0f) };
+D3DXVECTOR3 VxlFile::LightReversed = { 0.0,1.0f,0.0f };
 
 std::unordered_map<int, std::unique_ptr<VxlFile>> VxlFile::FileObjectTable;
 
@@ -662,6 +663,8 @@ bool VxlFile::MakeSingleFrameCaches(LPDIRECT3DDEVICE9 pDevice, int idxFrame,
 	//this->RemoveFromScene(Position);
 
 	D3DXMATRIX Matrix, Scale, Offset, RotateX, RotateY, RotateZ, Identity, NormalMatrix, TranslationCenter;
+	//D3DXMATRIX LightRotation;
+	//D3DXVECTOR3 LightDir = { -1.0f / sqrtf(2.0f),1.0f,1.0f / sqrtf(2.0f) };
 	//LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
 	com_ptr<IDirect3DTexture9> pTexture, pShadowT;
 	LPVOID pVertexData;
@@ -675,7 +678,10 @@ bool VxlFile::MakeSingleFrameCaches(LPDIRECT3DDEVICE9 pDevice, int idxFrame,
 	D3DXMatrixRotationY(&RotateY, RotationY);
 	D3DXMatrixRotationZ(&RotateZ, RotationZ);
 	D3DXMatrixTranslation(&Offset, nOffset * 30.0 * 1.4142135623730950488017 / 256.0, 0.0, 0.0); // nOffset*30*sqrt(2)/256
-
+	//D3DXMatrixRotationX(&LightRotation, -D3DX_PI / 4.0f);
+	//D3DXVec3TransformNormal(&LightDir, &LightDir, &LightRotation);
+	//LightDir = -LightDir;
+	//LightDir = { 0.0,1.0,0 };
 	auto& Scene = SceneClass::Instance;
 
 	for (int i = 0; i < this->FileHeader.nNumberOfLimbs; i++)
@@ -720,13 +726,43 @@ bool VxlFile::MakeSingleFrameCaches(LPDIRECT3DDEVICE9 pDevice, int idxFrame,
 							continue;
 
 						D3DXVECTOR3 NormalVec = pNormalTable[Buffer.nNormal];//{ (float)Normal.R - 128.0f,(float)Normal.G - 128.0f,(float)Normal.B - 128.0f };
+						//D3DXVec3Normalize(&NormalVec, &NormalVec);
 						D3DCOLOR dwColor;
+						D3DXVECTOR3 Up = { 0.0f,0.0f,1.0f };
+						/*D3DXVECTOR3 OrigNormal = NormalVec,
+							Up = { 0.0f,0.0f,1.0f };*/
+						
 						NormalVec *= NormalMatrix;
+						/*LightDir *= NormalMatrix;
+						D3DXVECTOR3 UpPlusDir = Up + LightDir;
+						D3DXVec3Normalize(&LightDir, &LightDir);
+						D3DXVec3Normalize(&UpPlusDir, &UpPlusDir);
+						if (D3DXVec3Length(&UpPlusDir) == 0.0f)
+							UpPlusDir = Up + LightDir;
 
-						auto fAngle = std::acos((VxlFile::LightReversed * NormalVec) /
-							D3DXVec3Length(&VxlFile::LightReversed) / D3DXVec3Length(&NormalVec));
+						float NormalDotDir = OrigNormal * LightDir;
+						float NormalDotUPD = OrigNormal * UpPlusDir;
+						NormalDotUPD /= (3.0f - NormalDotUPD * 3.0f + NormalDotUPD);
 
-						if (fAngle >= D3DX_PI / 2)
+						if (NormalDotDir <= 0.0f)
+							NormalDotDir = 0.0f;
+						if (NormalDotUPD <= 0.0f)
+							NormalDotUPD = 0.0f;*/
+
+						D3DXVECTOR3 LightDir = VxlFile::LightReversed;
+						D3DXVec3Normalize(&LightDir, &LightDir);
+						D3DXVECTOR3 UpPlusLight = Up + LightDir;
+						float fAngleCos = (LightDir * NormalVec) /
+							D3DXVec3Length(&LightDir) / D3DXVec3Length(&NormalVec);
+						float fAngleCos2 = (NormalVec * UpPlusLight) /
+							D3DXVec3Length(&NormalVec) / D3DXVec3Length(&UpPlusLight);
+						
+						//fAngleCos2 /= (3.0f - 2.0f * fAngleCos2);
+						if (fAngleCos <= 0.0f)
+							fAngleCos = 0.0f;
+						if (fAngleCos2 <= 0.0f)
+							fAngleCos2 = 0.0f;
+						/*if (fAngle >= D3DX_PI / 2)
 						{
 							auto& Color = Vpl[0].Table[Buffer.nColor];
 							dwColor = Color;
@@ -736,7 +772,9 @@ bool VxlFile::MakeSingleFrameCaches(LPDIRECT3DDEVICE9 pDevice, int idxFrame,
 							int nIndex = 31 - int(fAngle / (D3DX_PI / 2) * 32.0);
 							auto& Color = Vpl[nIndex].Table[Buffer.nColor];
 							dwColor = Color;
-						}
+						}*/
+
+						dwColor = Vpl[(fAngleCos + fAngleCos2) * 16.0f].Table[Buffer.nColor];
 
 						UsedVertecies.push_back({
 							(float)x,(float)y,(float)z,
@@ -1269,10 +1307,14 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, V
 			auto MaxBounds = TailerInfo.MaxBounds;
 
 			D3DXVECTOR3 scales;
+			D3DXVECTOR3 dirLight = { -1.0f,-1.0f,0.0f };
+			D3DXMATRIX lightRotate;
 			scales.x = (MaxBounds.X - MinBounds.X) / TailerInfo.nXSize;
 			scales.y = (MaxBounds.Y - MinBounds.Y) / TailerInfo.nYSize;
 			scales.z = (MaxBounds.Z - MinBounds.Z) / TailerInfo.nZSize;
 			D3DXMatrixScaling(&Scale, scales.x, scales.y, scales.z);
+			D3DXMatrixRotationY(&lightRotate, D3DX_PI / 4.0);
+			D3DXVec3TransformNormal(&dirLight, &dirLight, &lightRotate);
 
 			TranslationCenter = TailerInfo.MinBounds.AsTranslationMatrix();
 			Matrix = Body->AssociatedHVA.GetTransformMatrix(0, i)->AsIntegrateMatrix(scales, TailerInfo.fScale);
@@ -1303,8 +1345,8 @@ void VxlFile::MakeBarlTurScreenShot(LPDIRECT3DDEVICE9 pDevice, VxlFile * Barl, V
 							D3DCOLOR dwColor;
 							NormalVec *= NormalMatrix;
 
-							auto fAngle = std::acos((VxlFile::LightReversed * NormalVec) /
-								D3DXVec3Length(&VxlFile::LightReversed) / D3DXVec3Length(&NormalVec));
+							auto fAngle = std::acos((dirLight * NormalVec) /
+								D3DXVec3Length(&dirLight) / D3DXVec3Length(&NormalVec));
 
 							if (fAngle >= D3DX_PI / 2)
 							{
