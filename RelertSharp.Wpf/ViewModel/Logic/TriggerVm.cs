@@ -15,11 +15,15 @@ namespace RelertSharp.Wpf.ViewModel
         public GlobalTriggerVm Triggers { get { return GlobalCollectionVm.Triggers; } }
         public GlobalCountryVm Owners { get { return GlobalCollectionVm.Countries; } }
         private Map map { get { return GlobalVar.GlobalMap; } }
+        private TagCollection Tags { get { return map?.Tags; } }
         public TriggerVm()
         {
             data = new TriggerItem();
         }
         public TriggerVm(object obj) : base(obj) { }
+
+
+        private bool HasItem { get { return map != null && Tags != null && data != null; } }
 
         public string Name
         {
@@ -115,37 +119,64 @@ namespace RelertSharp.Wpf.ViewModel
         }
         public bool Rep0Checked
         {
-            get { return data.Repeating == TriggerRepeatingType.NoRepeating; }
+            get
+            {
+                if (Tags != null && Tags.FirstOrDefault(x => x.AssoTrigger == data.Id) is TagItem tg)
+                {
+                    return tg.Repeating == TriggerRepeatingType.NoRepeating;
+                }
+                return true;
+            }
             set
             {
-                if (value)
+                if (value && HasItem)
                 {
-                    data.Repeating = TriggerRepeatingType.NoRepeating;
-                    SetProperty();
+                    Tags.ModifyTagRepeating(data.Id, TriggerRepeatingType.NoRepeating);
+                    SetProperty(nameof(Rep0Checked));
+                    SetProperty(nameof(Rep1Checked));
+                    SetProperty(nameof(Rep2Checked));
                 }
             }
         }
         public bool Rep1Checked
         {
-            get { return data.Repeating == TriggerRepeatingType.OneTimeLogicAND; }
+            get
+            {
+                if (Tags != null && Tags.FirstOrDefault(x => x.AssoTrigger == data.Id) is TagItem tg)
+                {
+                    return tg.Repeating == TriggerRepeatingType.OneTimeLogicAND;
+                }
+                return false;
+            }
             set
             {
-                if (value)
+                if (value && HasItem)
                 {
-                    data.Repeating = TriggerRepeatingType.OneTimeLogicAND;
-                    SetProperty();
+                    Tags.ModifyTagRepeating(data.Id, TriggerRepeatingType.OneTimeLogicAND);
+                    SetProperty(nameof(Rep0Checked));
+                    SetProperty(nameof(Rep1Checked));
+                    SetProperty(nameof(Rep2Checked));
                 }
             }
         }
         public bool Rep2Checked
         {
-            get { return data.Repeating == TriggerRepeatingType.RepeatLogicOR; }
+            get
+            {
+                if (Tags != null && Tags.FirstOrDefault(x => x.AssoTrigger == data.Id) is TagItem tg)
+                {
+                    return tg.Repeating == TriggerRepeatingType.RepeatLogicOR;
+                }
+                return false;
+            }
             set
             {
-                if (value)
+                if (value && HasItem)
                 {
-                    data.Repeating = TriggerRepeatingType.RepeatLogicOR;
-                    SetProperty();
+                    Tags.ModifyTagRepeating(data.Id, TriggerRepeatingType.RepeatLogicOR);
+                    SetProperty(nameof(Rep0Checked));
+                    SetProperty(nameof(Rep1Checked));
+                    SetProperty(nameof(Rep2Checked));
                 }
             }
         }

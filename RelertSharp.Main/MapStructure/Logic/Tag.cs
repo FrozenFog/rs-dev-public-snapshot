@@ -30,6 +30,13 @@ namespace RelertSharp.MapStructure.Logic
         {
             data.Clear();
         }
+        public void ModifyTagRepeating(string triggerId, TriggerRepeatingType repeating)
+        {
+            foreach (var tag in this.Where(x => x.AssoTrigger == triggerId))
+            {
+                tag.Repeating = repeating;
+            }
+        }
 
         #region Curd
         //public void Remove(TagItem t, string triggerid)

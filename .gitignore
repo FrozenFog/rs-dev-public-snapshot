@@ -68,6 +68,7 @@ local.rsc
 *.py
 *.config
 *.txt
+*.docx
 *.ini
 *.vpl
 *.xml

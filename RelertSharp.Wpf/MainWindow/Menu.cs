@@ -63,10 +63,6 @@ namespace RelertSharp.Wpf
                 {
                     GlobalVar.CreateNewMap(dlg.Config);
                 }
-                else
-                {
-                    GlobalVar.DisposeMapDocument();
-                }
             }
         }
 

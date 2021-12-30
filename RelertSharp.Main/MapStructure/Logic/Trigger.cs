@@ -133,7 +133,6 @@ namespace RelertSharp.MapStructure.Logic
             EasyOn = e;
             NormalOn = n;
             HardOn = h;
-            Repeating = (TriggerRepeatingType)repeating;
         }
         public TriggerItem(TriggerItem src, string id)
         {
@@ -145,7 +144,6 @@ namespace RelertSharp.MapStructure.Logic
             EasyOn = src.EasyOn;
             NormalOn = src.NormalOn;
             HardOn = src.HardOn;
-            Repeating = src.Repeating;
             Events = new LogicGroup(src.Events);
             Actions = new LogicGroup(src.Actions);
 
@@ -202,16 +200,6 @@ namespace RelertSharp.MapStructure.Logic
 
 
         #region Private Methods
-        /// <summary>
-        /// modify all tag repeating type that related to this trigger
-        /// </summary>
-        private void ModifyRepeating()
-        {
-            GlobalVar.GlobalMap?.Tags?.Foreach(x =>
-            {
-                if (x.AssoTrigger == this.Id) x.Repeating = repeating;
-            });
-        }
         #endregion
 
         #region Public Calls - TriggerItem
@@ -232,16 +220,10 @@ namespace RelertSharp.MapStructure.Logic
         public bool EasyOn { get; set; } = true;
         public bool NormalOn { get; set; } = true;
         public bool HardOn { get; set; } = true;
-        private TriggerRepeatingType repeating = TriggerRepeatingType.NoRepeating;
-        public TriggerRepeatingType Repeating
-        {
-            get { return repeating; }
-            set
-            {
-                repeating = value;
-                ModifyRepeating();
-            }
-        }
+        /// <summary>
+        /// Obsolete
+        /// </summary>
+        public TriggerRepeatingType Repeating { get { return TriggerRepeatingType.NoRepeating; } }
         public string IDName { get { return Id + ":" + Name; } }
 
         public IEnumerable<object> SaveData
