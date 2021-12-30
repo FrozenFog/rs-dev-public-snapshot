@@ -134,6 +134,8 @@ namespace RelertSharp.Common
             public const int ArgLenLightSource = 7;
             public const int CAPACITY_LOCALVAR = 100;
             public const int INVALID_HEIGHT = -1;
+            public const int ACTION_ENABLE_TRG = 53;
+            public const int ACTION_DISABLE_TRG = 54;
             public const string CivilianCountrySide = "Civilian";
             public const string DefaultCivilianHouse = "Neutral";
 

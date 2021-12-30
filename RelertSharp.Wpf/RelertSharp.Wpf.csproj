@@ -145,6 +145,7 @@
     <Compile Include="MainWindow\Components.cs" />
     <Compile Include="MainWindow\Hubs\MainWindowUtil.cs" />
     <Compile Include="MainWindow\Hubs\LayoutManagerHub.cs" />
+    <Compile Include="MainWindow\Hubs\TriggerUtilHub.cs" />
     <Compile Include="MainWindow\Menu.cs" />
     <Compile Include="MainWindow\Hubs\NavigationHub.cs" />
     <Compile Include="MainWindow\Hubs\SearchHub.cs" />

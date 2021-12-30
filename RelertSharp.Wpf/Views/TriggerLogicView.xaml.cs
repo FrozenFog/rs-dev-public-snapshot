@@ -51,6 +51,11 @@ namespace RelertSharp.Wpf.Views
                 ViewType = GuiViewType.Action;
                 lblType.Content = "Actions";
             }
+            else
+            {
+                menuDisableNew.Visibility = Visibility.Collapsed;
+                menuEnableNew.Visibility = Visibility.Collapsed;
+            }
             SetDataContext(null);
         }
 
@@ -151,6 +156,34 @@ namespace RelertSharp.Wpf.Views
             if (idx >= last) return;
             Context.MoveItemTo(idx, last);
             lbxMain.SelectedIndex = last;
+        }
+
+        private void Menu_DisableNew(object sender, RoutedEventArgs e)
+        {
+            DlgNameInput dlg = new DlgNameInput("Trigger name");
+            if (dlg.ShowDialog().Value)
+            {
+                int idx = lbxMain.SelectedIndex;
+                if (idx < 0) idx = Context.Count;
+                else idx++;
+                TriggerItem newTrigger = GlobalVar.CurrentMapDocument.Map.AddTrigger(dlg.ResultName);
+                Context.DisableNewTrigger(idx, newTrigger.Id);
+                TriggerUtilHub.PushNewTriggerToList(newTrigger);
+            }
+        }
+
+        private void Menu_EnableNew(object sender, RoutedEventArgs e)
+        {
+            DlgNameInput dlg = new DlgNameInput("Trigger name");
+            if (dlg.ShowDialog().Value)
+            {
+                int idx = lbxMain.SelectedIndex;
+                if (idx < 0) idx = Context.Count;
+                else idx++;
+                TriggerItem newTrigger = GlobalVar.CurrentMapDocument.Map.AddTrigger(dlg.ResultName);
+                Context.EnableNewTrigger(idx, newTrigger.Id);
+                TriggerUtilHub.PushNewTriggerToList(newTrigger);
+            }
         }
 
         private void Menu_RemoveAll(object sender, RoutedEventArgs e)

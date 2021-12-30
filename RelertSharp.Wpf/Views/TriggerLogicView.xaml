@@ -31,6 +31,8 @@
                     <MenuItem Header="Add new item" Click="Menu_Add"/>
                     <MenuItem Name="menuDelete" Header="Delete item" Click="Menu_Delete"/>
                     <MenuItem Name="menuCopy" Header="Copy item" Click="Menu_Copy"/>
+                    <MenuItem Name="menuDisableNew" Header="Disable a new trigger" Click="Menu_DisableNew" IsEnabled="{Binding MapLoaded}"/>
+                    <MenuItem Name="menuEnableNew" Header="Enable a new trigger" Click="Menu_EnableNew" IsEnabled="{Binding MapLoaded}"/>
                     <Separator/>
                     <MenuItem Name="menuUp" Header="Move up" Click="Menu_MoveUp"/>
                     <MenuItem Name="menuDown" Header="Move down" Click="Menu_MoveDown"/>

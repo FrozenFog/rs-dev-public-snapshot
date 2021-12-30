@@ -29,6 +29,8 @@
                                 <MenuItem Header="Add trigger" Click="Menu_AddTrigger"/>
                                 <MenuItem Header="Copy trigger" Click="Menu_CopyTrigger" IsEnabled="{Binding IsNotTree}"/>
                                 <MenuItem Header="Delete trigger" Click="Menu_DeleteTrigger" IsEnabled="{Binding IsNotTree}"/>
+                                <MenuItem Header="Create trigger to disable current" Click="Menu_NewTrgDisableCurrent" IsEnabled="{Binding IsNotTree}"/>
+                                <MenuItem Header="Create trigger to enable current" Click="Menu_NewTrgEnableCurrent" IsEnabled="{Binding IsNotTree}"/>
                                 <Separator/>
                                 <MenuItem Header="Add trigger group" Click="Menu_AddGroup"/>
                                 <MenuItem Header="Rename trigger group" Click="Menu_RenameGroup" IsEnabled="{Binding IsTree}"/>

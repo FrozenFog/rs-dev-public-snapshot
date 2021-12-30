@@ -45,6 +45,24 @@ namespace RelertSharp.Wpf.Views
             NavigationHub.BindTriggerList(this);
             GlobalVar.MapDocumentLoaded += MapReloadedHandler;
             GlobalVar.MapSaveBegin += CompileTriggerName;
+            TriggerUtilHub.NewTriggerPushed += PushTriggerToListHandler;
+        }
+
+        private void PushTriggerToListHandler(IIndexableItem item)
+        {
+            TriggerItem trigger = item as TriggerItem;
+            trigger.Owner = map.Countries.First().Name;
+            TriggerTreeItemVm vm = new TriggerTreeItemVm(trigger);
+
+            if (SelectedItem is TriggerTreeItemVm target)
+            {
+                if (target.IsTree) target.AddItem(vm);
+                else if (!target.IsRoot) target.Ancestor.AddItem(vm);
+                else trvMain.Items.Add(vm);
+            }
+            else trvMain.Items.Add(vm);
+            vm.IsSelected = true;
+            vm.ExpandAllAncestor();
         }
 
         private void CompileTriggerName()
@@ -407,6 +425,52 @@ namespace RelertSharp.Wpf.Views
 
                 vm.IsSelected = true;
                 vm.ExpandAllAncestor();
+            }
+        }
+
+        private void Menu_NewTrgDisableCurrent(object sender, RoutedEventArgs e)
+        {
+            DlgNameInput dlg = new DlgNameInput("Trigger name");
+            if (dlg.ShowDialog().Value)
+            {
+                if (GetVm(sender) is TriggerTreeItemVm item)
+                {
+                    string disableTarget = item.Data.Id;
+                    TriggerItem trigger = map.AddTrigger(dlg.ResultName);
+                    var action = trigger.Actions.AddItemAt(0);
+                    action.SetIdTo(Constant.MapStructure.ACTION_DISABLE_TRG);
+                    action.SetParameter(action.Info.Parameters.First(), disableTarget);
+                    trigger.Owner = map.Countries.First().Name;
+                    TriggerTreeItemVm vm = new TriggerTreeItemVm(trigger);
+                    if (item.IsTree) item.AddItem(vm);
+                    else if (!item.IsRoot) item.Ancestor.AddItem(vm);
+                    else trvMain.Items.Add(vm);
+                    vm.IsSelected = true;
+                    vm.ExpandAllAncestor();
+                }
+            }
+        }
+
+        private void Menu_NewTrgEnableCurrent(object sender, RoutedEventArgs e)
+        {
+            DlgNameInput dlg = new DlgNameInput("Trigger name");
+            if (dlg.ShowDialog().Value)
+            {
+                if (GetVm(sender) is TriggerTreeItemVm item)
+                {
+                    string disableTarget = item.Data.Id;
+                    TriggerItem trigger = map.AddTrigger(dlg.ResultName);
+                    var action = trigger.Actions.AddItemAt(0);
+                    action.SetIdTo(Constant.MapStructure.ACTION_ENABLE_TRG);
+                    action.SetParameter(action.Info.Parameters.First(), disableTarget);
+                    trigger.Owner = map.Countries.First().Name;
+                    TriggerTreeItemVm vm = new TriggerTreeItemVm(trigger);
+                    if (item.IsTree) item.AddItem(vm);
+                    else if (!item.IsRoot) item.Ancestor.AddItem(vm);
+                    else trvMain.Items.Add(vm);
+                    vm.IsSelected = true;
+                    vm.ExpandAllAncestor();
+                }
             }
         }
 

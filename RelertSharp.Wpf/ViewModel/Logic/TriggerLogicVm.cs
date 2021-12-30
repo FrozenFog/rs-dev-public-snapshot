@@ -50,6 +50,18 @@ namespace RelertSharp.Wpf.ViewModel
             data.RemoveAll();
             SetProperty(nameof(Items));
         }
+        public void DisableNewTrigger(int pos, string triggerId)
+        {
+            var logic = data.AddItemAt(pos);
+            logic.SetIdTo(Constant.MapStructure.ACTION_DISABLE_TRG);
+            logic.SetParameter(logic.Info.Parameters.First(), triggerId);
+        }
+        public void EnableNewTrigger(int pos, string triggerId)
+        {
+            var logic = data.AddItemAt(pos);
+            logic.SetIdTo(Constant.MapStructure.ACTION_ENABLE_TRG);
+            logic.SetParameter(logic.Info.Parameters.First(), triggerId);
+        }
         #region Command
         public void ApplyCommand(string commandLine)
         {
@@ -73,6 +85,7 @@ namespace RelertSharp.Wpf.ViewModel
             }
         }
         public int Count { get { return data.Count(); } }
+        public bool MapLoaded { get { return GlobalVar.CurrentMapDocument != null; } }
     }
 
     internal class TriggerLogicCollectionVm : BaseNotifyCollectionVm<TriggerLogicItemVm>, IEnumerable
