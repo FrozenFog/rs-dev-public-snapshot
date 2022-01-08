@@ -104,6 +104,7 @@ namespace RelertSharp.FileSystem
             dest["CellTags"] = Map.DumpCelltagData();
             dest["Waypoints"] = Map.DumpWaypointData();
             dest["VariableNames"] = Map.DumpLocalVar();
+            dest[Constant.MapStructure.ENT_TUBE] = Map.Tubes.SaveAsIni();
         }
         private void DumpLogics(Dictionary<string, INIEntity> dest)
         {
