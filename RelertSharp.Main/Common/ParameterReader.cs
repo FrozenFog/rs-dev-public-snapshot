@@ -68,6 +68,13 @@ namespace RelertSharp.Common
             Skip(count);
             return result;
         }
+        public string[] TakeToEnd()
+        {
+            int length = parameters.Length - i;
+            string[] result = parameters.Skip(i).Take(length).ToArray();
+            Skip(length);
+            return result;
+        }
         public void Skip(int count = 1)
         {
             while (count-- > 0) Incre();
@@ -77,6 +84,55 @@ namespace RelertSharp.Common
         {
             if (i == parameters.Length) i = 0;
             else i++;
+        }
+
+
+
+        public bool CanRead { get { return i < parameters.Length; } }
+    }
+
+    public class ParameterWriter
+    {
+        private StringBuilder sb;
+        private string sep = ",";
+        private bool begin = true;
+        public ParameterWriter(string separator = ",")
+        {
+            sb = new StringBuilder();
+            sep = separator;
+        }
+
+
+        public void Write(int value)
+        {
+            Write(value.ToString());
+        }
+        public void Write(string value)
+        {
+            if (begin)
+            {
+                sb.Append(value);
+                begin = false;
+            }
+            else
+            {
+                sb.Append(sep);
+                sb.Append(value);
+            }
+        }
+        public void Write(string[] arr)
+        {
+            Write(arr.JoinBy(sep));
+        }
+        public override string ToString()
+        {
+            return sb.ToString();
+        }
+        public void Reset(string separator = ",")
+        {
+            begin = true;
+            sb.Clear();
+            sep = separator;
         }
     }
 }

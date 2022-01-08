@@ -156,7 +156,7 @@
     <Compile Include="Common\Interfaces.cs" />
     <Compile Include="Common\Config\ModConfig\ModConfig.cs" />
     <Compile Include="Common\MiniTimer.cs" />
-    <Compile Include="CliFunction\ParameterReader.cs" />
+    <Compile Include="Common\ParameterReader.cs" />
     <Compile Include="Common\RsLog.cs" />
     <Compile Include="Common\SoundManager.cs" />
     <Compile Include="Common\Enumerator\Square2DEnumerator.cs" />
@@ -240,6 +240,7 @@
     <Compile Include="MapStructure\Points\CellTag.cs" />
     <Compile Include="MapStructure\Points\PointBase.cs" />
     <Compile Include="MapStructure\Points\Smudge.cs" />
+    <Compile Include="MapStructure\Points\TunnelTubes.cs" />
     <Compile Include="MapStructure\Points\Waypoint.cs" />
     <Compile Include="MapStructure\Points\TerrainLayer.cs" />
     <Compile Include="MapStructure\RsObject\LightSource.cs" />

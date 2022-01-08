@@ -86,6 +86,10 @@ namespace System.Collections.Generic
                 src[i] = value;
             }
         }
+        public static void SetValueAll<T>(this T[] src, T value)
+        {
+            for (int i = 0; i < src.Length; i++) src[i] = value;
+        }
         public static string JoinBy<T>(this IEnumerable<T> src, string joint = ",")
         {
             if (src == null) return string.Empty;
@@ -314,13 +318,41 @@ namespace RelertSharp.Common
 {
     public static class ExtensionLocateable
     {
+        /// <summary>
+        /// X: (x), Y: (y)
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         public static string FormatXY(this I2dLocateable pos)
         {
             return string.Format("X: {0}, Y: {1}", pos.X, pos.Y);
         }
+        /// <summary>
+        /// (x),(y)
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public static string FormatXYIni(this I2dLocateable pos)
+        {
+            return string.Format("{0},{1}", pos.X, pos.Y);
+        }
+        /// <summary>
+        /// X: (x), Y: (y), Z: (z)
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         public static string FormatXYZ(this I3dLocateable pos)
         {
             return string.Format("X: {0}, Y: {1}, Z: {2}", pos.X, pos.Y, pos.Z);
+        }
+        /// <summary>
+        /// (x),(y),(z)
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public static string FormatXYZIni(this I3dLocateable pos)
+        {
+            return string.Format("{0},{1},{2}", pos.X, pos.Y, pos.Z);
         }
     }
 

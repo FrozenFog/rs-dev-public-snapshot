@@ -222,6 +222,7 @@ namespace RelertSharp.MapStructure
         public OverlayLayer Overlays { get; private set; }
         public RankInfo Rank { get; set; } = new RankInfo();
         public HeaderInfo Header { get; set; } = new HeaderInfo();
+        public MapTunnels Tubes { get; private set; } = new MapTunnels();
         //public ActionCollection Actions { get; private set; }
         //public EventCollection Events { get; private set; }
         public MapInfo Info { get; private set; } 

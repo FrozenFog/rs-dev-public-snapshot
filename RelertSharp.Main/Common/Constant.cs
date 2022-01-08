@@ -152,6 +152,7 @@ namespace RelertSharp.Common
             public const string KEY_RANK_UT = "UnderParTitle";
             public const string KEY_RANK_US = "UnderParMessage";
 
+            public const string ENT_TUBE = "Tube";
             public static class CustomComponents
             {
                 public const string LightsourceTitle = "Rs_LightSource";

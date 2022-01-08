@@ -77,6 +77,18 @@ namespace RelertSharp.Common
         TriSW = SE | SW | NW,
         All = NE | SE | SW | NW
     }
+    public enum TubeDirection
+    {
+        _END = -1,
+        NE = 0,
+        E = 1,
+        SE = 2,
+        S = 3,
+        SW = 4,
+        W = 5,
+        NW = 6,
+        N = 7
+    }
     [Flags]
     public enum CombatObjectType
     {

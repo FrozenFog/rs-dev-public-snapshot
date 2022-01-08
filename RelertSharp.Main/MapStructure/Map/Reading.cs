@@ -94,6 +94,7 @@ namespace RelertSharp.MapStructure
             INIEntity entAircraft = f.PopEnt("Aircraft");
             INIEntity entTerrain = f.PopEnt("Terrain");
             INIEntity entSmudge = f.PopEnt("Smudge");
+            INIEntity entTube = f.PopEnt(Constant.MapStructure.ENT_TUBE);
             INIEntity entLight = f.PopEnt(Constant.MapStructure.CustomComponents.LightsourceTitle);
 
             dumpFunc?.Invoke();
@@ -173,6 +174,8 @@ namespace RelertSharp.MapStructure
                     Monitor.LogFatal(p.Name, p.Value, MapObjectType.Terrain, e);
                 }
             }
+            GlobalVar.Log.Info("Read Map Tunnels");
+            Tubes.ReadFromIni(entTube);
             GlobalVar.Log.Info("Read Map Lightsources");
             foreach (INIPair p in entLight.DataList)
             {
