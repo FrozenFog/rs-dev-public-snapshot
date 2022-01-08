@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using static RelertSharp.Common.Constant.MapStructure;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure
@@ -28,16 +29,10 @@ namespace RelertSharp.MapStructure
             FixEmptyTiles();
             DumpOverlayToTile();
 
-            void func()
-            {
-                residual = new Dictionary<string, INIEntity>(f.IniDict);
-                GlobalVar.GlobalRules?.SetLocalRules(residual);
-            }
-
             GetPreview(f);
             GetAbstractLogics(f);
             GetTeam(f);
-            GetObjects(f, func);
+            GetObjects(f);
             if (GlobalVar.GlobalRules != null) LoadHouseColor();
 
             globalid.AddRange(Triggers.AllId);
@@ -86,101 +81,42 @@ namespace RelertSharp.MapStructure
             if (f.IniDict.Keys.Contains("Ranking")) Rank = new RankInfo(f.PopEnt("Ranking"));
             digest = f.PopEnt("Digest").JoinString();
         }
-        private void GetObjects(MapFile f, Action dumpFunc = null)
+        private void GetObjects(MapFile f)
         {
-            INIEntity entUnit = f.PopEnt("Units");
-            INIEntity entInf = f.PopEnt("Infantry");
-            INIEntity entStructure = f.PopEnt("Structures");
-            INIEntity entAircraft = f.PopEnt("Aircraft");
-            INIEntity entTerrain = f.PopEnt("Terrain");
-            INIEntity entSmudge = f.PopEnt("Smudge");
-            INIEntity entTube = f.PopEnt(Constant.MapStructure.ENT_TUBE);
-            INIEntity entLight = f.PopEnt(Constant.MapStructure.CustomComponents.LightsourceTitle);
+            INIEntity entUnit = f.PopEnt(ENT_UNIT);
+            INIEntity entInf = f.PopEnt(ENT_INF);
+            INIEntity entStructure = f.PopEnt(ENT_STR);
+            INIEntity entAircraft = f.PopEnt(ENT_AIR);
+            INIEntity entTerrain = f.PopEnt(ENT_TERR);
+            INIEntity entSmudge = f.PopEnt(ENT_SMG);
+            INIEntity entTube = f.PopEnt(ENT_TUBE);
+            INIEntity entLight = f.PopEnt(ENT_RS_LIGHT);
 
-            dumpFunc?.Invoke();
+            residual = new Dictionary<string, INIEntity>(f.IniDict);
+            GlobalVar.GlobalRules?.SetLocalRules(residual);
 
             GlobalVar.Log.Info("Read Map Smudge");
-            foreach (INIPair p in entSmudge.DataList)
-            {
-                try
-                {
-                    string[] tmp = p.ParseStringList();
-                    int x = int.Parse(tmp[1]);
-                    int y = int.Parse(tmp[2]);
-                    AddSmudge(tmp[0], x, y, IniParseBool(tmp[3]));
-                }
-                catch (Exception e)
-                {
-                    Monitor.LogFatal(p.Value, string.Empty, MapObjectType.Smudge, e);
-                }
-            }
+            Smudges.ReadFromIni(entSmudge);
+            Smudges.Foreach(x => AddObjectToTile(x));
             GlobalVar.Log.Info("Read Map Units");
-            foreach (INIPair p in entUnit.DataList)
-            {
-                try
-                {
-                    AddUnit(p.Name, p.ParseStringList());
-                }
-                catch (Exception e)
-                {
-                    Monitor.LogFatal(p.Name, string.Empty, MapObjectType.Unit, e);
-                }
-            }
+            Units.ReadFromIni(entUnit);
+            Units.Foreach(x => AddObjectToTile(x));
             GlobalVar.Log.Info("Read Map Infantries");
-            foreach (INIPair p in entInf.DataList)
-            {
-                try
-                {
-                    AddInfantry(p.Name, p.ParseStringList());
-                }
-                catch (Exception e)
-                {
-                    Monitor.LogFatal(p.Name, string.Empty, MapObjectType.Infantry, e);
-                }
-            }
+            Infantries.ReadFromIni(entInf);
+            Infantries.Foreach(x => AddObjectToTile(x));
             GlobalVar.Log.Info("Read Map Buildings");
-            foreach (INIPair p in entStructure.DataList)
-            {
-                try
-                {
-                    AddStructure(p.Name, p.ParseStringList());
-                }
-                catch (Exception e)
-                {
-                    Monitor.LogFatal(p.Name, string.Empty, MapObjectType.Building, e);
-                }
-            }
+            Buildings.ReadFromIni(entStructure);
+            Buildings.Foreach(x => AddObjectToTile(x));
             GlobalVar.Log.Info("Read Map Aircrafts");
-            foreach (INIPair p in entAircraft.DataList)
-            {
-                try
-                {
-                    AddAircraft(p.Name, p.ParseStringList());
-                }
-                catch (Exception e)
-                {
-                    Monitor.LogFatal(p.Name, string.Empty, MapObjectType.Aircraft, e);
-                }
-            }
+            Aircrafts.ReadFromIni(entAircraft);
+            Aircrafts.Foreach(x => AddObjectToTile(x));
             GlobalVar.Log.Info("Read Map Terrains");
-            foreach (INIPair p in entTerrain.DataList)
-            {
-                try
-                {
-                    AddTerrain(p.Name, p.Value);
-                }
-                catch (Exception e)
-                {
-                    Monitor.LogFatal(p.Name, p.Value, MapObjectType.Terrain, e);
-                }
-            }
+            Terrains.ReadFromIni(entTerrain);
+            Terrains.Foreach(x => AddObjectToTile(x));
             GlobalVar.Log.Info("Read Map Tunnels");
             Tubes.ReadFromIni(entTube);
             GlobalVar.Log.Info("Read Map Lightsources");
-            foreach (INIPair p in entLight.DataList)
-            {
-                LightSources.AddObject(new LightSource(p));
-            }
+            LightSources.ReadFromIni(entLight);
         }
         private void GetTeam(MapFile f)
         {
@@ -323,7 +259,7 @@ namespace RelertSharp.MapStructure
             INIEntity entCelltags = f.PopEnt("CellTags");
             INIEntity entWaypoints = f.PopEnt("Waypoints");
 
-            Tags = new TagCollection(entTag);
+            Tags.ReadFromIni(entTag);
             GlobalVar.Log.Info("Read Map Triggers");
             foreach (INIPair p in entTrigger.DataList)
             {
@@ -347,75 +283,21 @@ namespace RelertSharp.MapStructure
                 }
             }
             GlobalVar.Log.Info("Read Map Local");
-            foreach (INIPair p in entVar.DataList)
-            {
-                try
-                {
-                    string[] tmp = p.ParseStringList();
-                    LocalVariables[p.Name] = new LocalVarItem(tmp[0], IniParseBool(tmp[1]), p.Name);
-                }
-                catch (Exception e)
-                {
-                    Monitor.LogFatal(p.Name, string.Empty, LogicType.LocalVariable, e);
-                }
-            }
+            LocalVariables.ReadFromIni(entVar);
             GlobalVar.Log.Info("Read Map AiTrigger");
-            foreach (INIPair p in entAITrigger.DataList)
-            {
-                try
-                {
-                    AiTriggers[p.Name] = new AITriggerItem(p.Name, p.ParseStringList());
-                }
-                catch (Exception e)
-                {
-                    Monitor.LogFatal(p.Name, string.Empty, LogicType.AiTrigger, e);
-                }
-            }
-            foreach (INIPair p in entAITriggerEnable.DataList)
-            {
-                try
-                {
-                    if (AiTriggers[p.Name] != null) AiTriggers[p.Name].Enabled = IniParseBool(p.Value);
-                    AiTriggers.GlobalEnables[p.Name] = IniParseBool(p.Value);
-                }
-                catch (Exception e)
-                {
-                    Monitor.LogFatal(p.Name, string.Empty, LogicType.AiTrigger, e);
-                }
-            }
+            AiTriggers.ReadFromIni(entAITrigger);
+            AiTriggers.SetEnables(entAITriggerEnable);
             GlobalVar.Log.Info("Read Map Celltags");
-            foreach (INIPair p in entCelltags.DataList)
-            {
-                try
-                {
-                    CellTagItem cell = new CellTagItem(p.Name, p.Value);
-                    Celltags.AddObject(cell);
-                    AddObjectToTile(cell);
-                }
-                catch (Exception e)
-                {
-                    Monitor.LogFatal(p.Name, p.Value, MapObjectType.Celltag, e);
-                }
-            }
+            Celltags.ReadFromIni(entCelltags);
+            Celltags.Foreach(x => AddObjectToTile(x));
             GlobalVar.Log.Info("Read Map Waypoints");
-            foreach (INIPair p in entWaypoints.DataList)
-            {
-                try
-                {
-                    WaypointItem w = new WaypointItem(p.Value, p.Name);
-                    Waypoints.AddObject(w);
-                    AddObjectToTile(w);
-                }
-                catch (Exception e)
-                {
-                    Monitor.LogFatal(p.Name, p.Value, MapObjectType.Waypoint, e);
-                }
-            }
+            Waypoints.ReadFromIni(entWaypoints);
+            Waypoints.Foreach(x => AddObjectToTile(x));
         }
         private void GetPreview(MapFile f)
         {
             GlobalVar.Log.Info("Read Map Preview");
-            INIEntity preview = f.PopEnt("Preview");
+            INIEntity preview = f.PopEnt(ENT_PREV);
             if (preview.DataList.Count == 0)
             {
                 f.PopEnt("PreviewPack");
@@ -423,7 +305,27 @@ namespace RelertSharp.MapStructure
             }
             int[] buf = preview.ParseIntList("Size");
             previewSize = new Rectangle(buf[0], buf[1], buf[2], buf[3]);
-            previewString = f.PopEnt("PreviewPack").JoinString();
+            previewString = f.PopEnt(ENT_PREV_PACK).JoinString();
+        }
+        private void AddObjectToTile(IMapObject obj)
+        {
+            if (obj.GetType() == typeof(StructureItem))
+            {
+                StructureItem bud = obj as StructureItem;
+                foreach (I2dLocateable pos in new Foundation2D(bud))
+                {
+                    Tiles.AddObjectOnTile(pos, obj);
+                }
+            }
+            else if (obj.GetType() == typeof(SmudgeItem))
+            {
+                SmudgeItem smg = obj as SmudgeItem;
+                foreach (I2dLocateable pos in new Square2D(smg, smg.SizeX, smg.SizeY))
+                {
+                    Tiles.AddObjectOnTile(pos, obj);
+                }
+            }
+            else Tiles.AddObjectOnTile(obj);
         }
     }
 }

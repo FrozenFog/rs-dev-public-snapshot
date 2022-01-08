@@ -158,14 +158,14 @@ namespace RelertSharp.MapStructure.Logic
         [IniPair("TaskForce")]
         public string TaskforceID
         {
-            get { return this[Constant.MapStructure.ENT_TASKFORCE].Value; }
-            set { this[Constant.MapStructure.ENT_TASKFORCE] = new INIPair(Constant.MapStructure.ENT_TASKFORCE, value); }
+            get { return this[Constant.MapStructure.KEY_TASKFORCE].Value; }
+            set { this[Constant.MapStructure.KEY_TASKFORCE] = new INIPair(Constant.MapStructure.KEY_TASKFORCE, value); }
         }
         [IniPair("Script")]
         public string ScriptID
         {
-            get { return this[Constant.MapStructure.ENT_SCRIPT].Value; }
-            set { this[Constant.MapStructure.ENT_SCRIPT] = new INIPair(Constant.MapStructure.ENT_SCRIPT, value); }
+            get { return this[Constant.MapStructure.KEY_SCRIPT].Value; }
+            set { this[Constant.MapStructure.KEY_SCRIPT] = new INIPair(Constant.MapStructure.KEY_SCRIPT, value); }
         }
         /// <summary>
         /// House
@@ -173,8 +173,8 @@ namespace RelertSharp.MapStructure.Logic
         [IniPair("House")]
         public string Owner
         {
-            get { return this[Constant.MapStructure.ENT_HOUSE].Value; }
-            set { this[Constant.MapStructure.ENT_HOUSE] = new INIPair(Constant.MapStructure.ENT_HOUSE, value); }
+            get { return this[Constant.MapStructure.KEY_HOUSE].Value; }
+            set { this[Constant.MapStructure.KEY_HOUSE] = new INIPair(Constant.MapStructure.KEY_HOUSE, value); }
         }
         [IniPair("Group")]
         public string Group

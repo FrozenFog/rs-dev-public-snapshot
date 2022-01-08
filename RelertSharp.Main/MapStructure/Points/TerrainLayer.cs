@@ -1,10 +1,16 @@
 ﻿using RelertSharp.Common;
+using RelertSharp.IniSystem;
 
 namespace RelertSharp.MapStructure.Points
 {
+    [IniEntitySerialize(Constant.MapStructure.ENT_TERR)]
     public class TerrainLayer : PointCollectionBase<TerrainItem>
     {
         public TerrainLayer() { }
+        protected override TerrainItem InvokeCtor()
+        {
+            return new TerrainItem();
+        }
     }
 
 
@@ -28,6 +34,17 @@ namespace RelertSharp.MapStructure.Points
         internal TerrainItem()
         {
             ObjectType = MapObjectType.Terrain;
+        }
+        public override void ReadFromIni(INIPair src)
+        {
+            RegName = src.Value;
+            if (!base.ReadCoord(src.Name)) GlobalVar.Monitor.LogCritical(Id, RegName, ObjectType, this);
+        }
+        public override INIPair SaveAsIni()
+        {
+            INIPair p = new INIPair(CoordString);
+            p.Value = RegName;
+            return p;
         }
 
 

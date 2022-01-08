@@ -1,41 +1,63 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem.Serialization;
+using RelertSharp.IniSystem;
 using System;
 using System.Collections.Generic;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Objects
 {
+    [IniEntitySerialize(Constant.MapStructure.ENT_AIR)]
     public class AircraftLayer : ObjectBase<AircraftItem>
     {
         public AircraftLayer() { }
+
+        protected override AircraftItem InvokeCtor()
+        {
+            return new AircraftItem();
+        }
+        public override void ReadFromIni(INIEntity src)
+        {
+            foreach (var p in src)
+            {
+                var item = new AircraftItem();
+                item.ReadFromIni(p);
+                this[p.Name] = item;
+            }
+        }
     }
 
 
     public class AircraftItem : ObjectItemBase, ICombatObject
     {
-        public AircraftItem(string _id, string[] _args) : base(_id, _args)
+        public override void ReadFromIni(INIPair src)
         {
-            try
-            {
-                if (_args.Length != Constant.MapStructure.ArgLenAircraft)
-                {
-                    throw new Exception();
-                }
-                Rotation = int.Parse(_args[5]);
-                Status = _args[6];
-                TagId = _args[7];
-                VeterancyPercentage = int.Parse(_args[8]);
-                Group = _args[9];
-                AutoNORecruitType = IniParseBool(_args[10]);
-                AutoYESRecruitType = IniParseBool(_args[11]);
-                ObjectType = MapObjectType.Aircraft;
-            }
-            catch
-            {
-                GlobalVar.Log.Critical(string.Format("Aircraft item id: {0} has unreadable data, please verify in map file!", _id));
-                ObjectType = MapObjectType.Aircraft;
-            }
+            ParameterReader reader = new ParameterReader(src.ParseStringList());
+            base.ReadFromIni(reader, src.Name);
+            Rotation = reader.ReadInt();
+            Status = reader.ReadString();
+            TagId = reader.ReadString();
+            VeterancyPercentage = reader.ReadInt();
+            Group = reader.ReadString();
+            AutoNORecruitType = reader.ReadBool();
+            AutoYESRecruitType = reader.ReadBool();
+            if (reader.ReadError) GlobalVar.Monitor.LogCritical(Id, RegName, ObjectType, this);
+        }
+
+        public override INIPair SaveAsIni()
+        {
+            INIPair p = new INIPair(Id);
+            ParameterWriter writer = new ParameterWriter();
+            base.SaveToWriter(writer);
+            writer.Write(Rotation);
+            writer.Write(Status);
+            writer.Write(TagId);
+            writer.Write(VeterancyPercentage);
+            writer.Write(Group);
+            writer.Write(AutoNORecruitType);
+            writer.Write(AutoYESRecruitType);
+            p.Value = writer.ToString();
+            return p;
         }
         public AircraftItem(AircraftItem src) : base(src)
         {

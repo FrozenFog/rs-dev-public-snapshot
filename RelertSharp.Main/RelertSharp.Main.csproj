@@ -203,6 +203,7 @@
     <Compile Include="IniSystem\RulesExtension\ComboReading.cs" />
     <Compile Include="IniSystem\RulesExtension\FindObjectAttribute.cs" />
     <Compile Include="IniSystem\RulesExtension\GlobalFinding.cs" />
+    <Compile Include="IniSystem\Serializing.cs" />
     <Compile Include="IniSystem\SoundRules.cs" />
     <Compile Include="MapStructure\BaseVisibleObject.cs" />
     <Compile Include="MapStructure\ISceneObject.cs" />
@@ -216,7 +217,6 @@
     <Compile Include="MapStructure\MapTheaterTileSet.cs" />
     <Compile Include="MapStructure\Map\MapObjectFactory.cs" />
     <Compile Include="MapStructure\Map\MapReadingMonitor.cs" />
-    <Compile Include="MapStructure\Map\ObjectAdding.cs" />
     <Compile Include="MapStructure\Map\Reading.cs" />
     <Compile Include="MapStructure\Map\Saving.cs" />
     <Compile Include="MapStructure\Map\TileAdd.cs" />

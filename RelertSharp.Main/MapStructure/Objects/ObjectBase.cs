@@ -1,17 +1,37 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem.Serialization;
+using RelertSharp.IniSystem;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace RelertSharp.MapStructure.Objects
 {
-    public class ObjectBase<T> : IEnumerable<T> where T : ObjectItemBase
+    public abstract class ObjectBase<T> : IIniEntitySerializable, IEnumerable<T> where T : ObjectItemBase
     {
         private Dictionary<string, T> data = new Dictionary<string, T>();
+        protected abstract T InvokeCtor();
         public ObjectBase() { }
 
+        public virtual void ReadFromIni(INIEntity src)
+        {
+            foreach (var p in src)
+            {
+                var item = InvokeCtor();
+                item.ReadFromIni(p);
+                this[p.Name] = item;
+            }
+        }
 
+        public virtual INIEntity SaveAsIni()
+        {
+            INIEntity ent = this.GetNamedEnt();
+            foreach (T item in this)
+            {
+                ent.AddPair(item.SaveAsIni());
+            }
+            return ent;
+        }
         #region Public Methods - ObjectBase
         public virtual void RemoveByID(string id)
         {
@@ -84,21 +104,12 @@ namespace RelertSharp.MapStructure.Objects
     }
 
 
-    public class ObjectItemBase : BaseVisibleObject<ISceneObject>, IRegistable, ITaggableObject
+    public abstract class ObjectItemBase : BaseVisibleObject<ISceneObject>, IRegistable, ITaggableObject, IIniPairSerializable
     {
 
 
         #region Ctor
-        public ObjectItemBase(string _id, string[] _args)
-        {
-            Id = _id;
-            Owner = _args[0];
-            RegName = _args[1];
-            HealthPoint = int.Parse(_args[2]);
-            X = int.Parse(_args[3]);
-            Y = int.Parse(_args[4]);
-        }
-        public ObjectItemBase(ObjectItemBase src)
+        protected ObjectItemBase(ObjectItemBase src)
         {
             Id = src.Id;
             Owner = src.Owner;
@@ -107,7 +118,30 @@ namespace RelertSharp.MapStructure.Objects
             X = src.X;
             Y = src.Y;
         }
-        public ObjectItemBase() { }
+        protected ObjectItemBase() { }
+
+
+        protected void ReadFromIni(ParameterReader reader, string id)
+        {
+            Id = id;
+            Owner = reader.ReadString();
+            RegName = reader.ReadString();
+            HealthPoint = reader.ReadInt();
+            X = reader.ReadInt();
+            Y = reader.ReadInt();
+        }
+        protected void SaveToWriter(ParameterWriter writer)
+        {
+            writer.Write(Id);
+            writer.Write(Owner);
+            writer.Write(RegName);
+            writer.Write(HealthPoint);
+            writer.Write(X);
+            writer.Write(Y);
+        }
+        public abstract void ReadFromIni(INIPair src);
+
+        public abstract INIPair SaveAsIni();
         #endregion
 
 
@@ -209,6 +243,24 @@ namespace RelertSharp.MapStructure.Objects
         public int GetChecksum()
         {
             return 0;
+        }
+
+        /// <summary>
+        /// do nothing
+        /// </summary>
+        /// <param name="src"></param>
+        public override void ReadFromIni(INIPair src)
+        {
+            
+        }
+
+        /// <summary>
+        /// return null
+        /// </summary>
+        /// <returns></returns>
+        public override INIPair SaveAsIni()
+        {
+            return null;
         }
     }
 }

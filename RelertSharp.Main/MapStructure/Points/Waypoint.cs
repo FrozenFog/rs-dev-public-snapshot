@@ -1,15 +1,20 @@
 ﻿using RelertSharp.Common;
+using RelertSharp.IniSystem;
 using System.Collections.Generic;
 
 namespace RelertSharp.MapStructure.Points
 {
+    [IniEntitySerialize(Constant.MapStructure.ENT_WP)]
     public class WaypointCollection : PointCollectionBase<WaypointItem>
     {
         private HashSet<string> wpnum = new HashSet<string>();
 
 
         public WaypointCollection() { }
-
+        protected override WaypointItem InvokeCtor()
+        {
+            return new WaypointItem();
+        }
 
         public WaypointItem FindByID(string id)
         {
@@ -84,6 +89,17 @@ namespace RelertSharp.MapStructure.Points
         internal WaypointItem()
         {
             ObjectType = MapObjectType.Waypoint;
+        }
+        public override void ReadFromIni(INIPair src)
+        {
+            Id = src.Name;
+            if (!base.ReadCoord(src.Name)) GlobalVar.Monitor.LogCritical(Id, string.Empty, ObjectType, this);
+        }
+        public override INIPair SaveAsIni()
+        {
+            INIPair p = new INIPair(Id);
+            p.Value = CoordString;
+            return p;
         }
 
         #region Public Methods

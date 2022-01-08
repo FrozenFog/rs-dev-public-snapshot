@@ -15,8 +15,6 @@ namespace RelertSharp.MapStructure
 {
     public partial class Map
     {
-        private string mapFileName;
-        private string mapPath;
         private string isomappack5String, overlayString, overlaydataString, previewString;
         private string digest;
         private HashSet<string> globalid = new HashSet<string>();
@@ -200,9 +198,19 @@ namespace RelertSharp.MapStructure
                     .Union(Overlays).Union(TilesData);
             }
         }
+        public IIniEntitySerializable[] AllSerializeable
+        {
+            get
+            {
+                return new IIniEntitySerializable[]
+                {
+                    Infantries, Aircrafts, Buildings, Units, Terrains, Smudges, Waypoints, Celltags, LocalVariables, Tags, Tubes
+                };
+            }
+        }
         public WaypointCollection Waypoints { get; private set; } = new WaypointCollection();
         public CellTagCollection Celltags { get; private set; } = new CellTagCollection();
-        public Lightning LightningCollection { get; private set; }
+        public Lightning LightningCollection { get; private set; } = new Lightning();
         public InfantryLayer Infantries { get; private set; } = new InfantryLayer();
         public AircraftLayer Aircrafts { get; private set; } = new AircraftLayer();
         public StructureLayer Buildings { get; private set; } = new StructureLayer();
@@ -216,9 +224,9 @@ namespace RelertSharp.MapStructure
         public HouseCollection Houses { get; private set; } = new HouseCollection();
         public LocalVarCollection LocalVariables { get; private set; } = new LocalVarCollection();
         public TeamCollection Teams { get; private set; } = new TeamCollection();
-        public CountryCollection Countries { get; private set; }
+        public CountryCollection Countries { get; private set; } = new CountryCollection();
         public TriggerCollection Triggers { get; private set; } = new TriggerCollection();
-        public TagCollection Tags { get; private set; }
+        public TagCollection Tags { get; private set; } = new TagCollection();
         public OverlayLayer Overlays { get; private set; }
         public RankInfo Rank { get; set; } = new RankInfo();
         public HeaderInfo Header { get; set; } = new HeaderInfo();

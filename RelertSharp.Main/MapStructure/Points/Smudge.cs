@@ -4,9 +4,14 @@ using System.Collections.Generic;
 
 namespace RelertSharp.MapStructure.Points
 {
+    [IniEntitySerialize(Constant.MapStructure.ENT_SMG)]
     public class SmudgeLayer : PointCollectionBase<SmudgeItem>
     {
         public SmudgeLayer() { }
+        protected override SmudgeItem InvokeCtor()
+        {
+            return new SmudgeItem();
+        }
     }
 
 
@@ -32,6 +37,27 @@ namespace RelertSharp.MapStructure.Points
         internal SmudgeItem()
         {
             ObjectType = MapObjectType.Smudge;
+        }
+        public override void ReadFromIni(INIPair src)
+        {
+            Id = src.Name;
+            ParameterReader r = new ParameterReader(src.ParseStringList());
+            RegName = r.ReadString();
+            X = r.ReadInt();
+            Y = r.ReadInt();
+            IgnoreSmudge = r.ReadBool(true);
+            if (r.ReadError) GlobalVar.Monitor.LogCritical(Id, RegName, ObjectType, this);
+        }
+        public override INIPair SaveAsIni()
+        {
+            INIPair p = new INIPair(Id);
+            ParameterWriter w = new ParameterWriter();
+            w.Write(RegName);
+            w.Write(X);
+            w.Write(Y);
+            w.Write(IgnoreSmudge);
+            p.Value = w.ToString();
+            return p;
         }
 
 

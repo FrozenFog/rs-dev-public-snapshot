@@ -16,7 +16,7 @@ namespace RelertSharp.MapStructure
             logs.Clear();
             IsMonitoring = true;
         }
-        public void LogFatal(string id, string name, MapObjectType objectType, Exception e)
+        public void LogFatal(string id, string name, MapObjectType objectType, Exception e = null)
         {
             if (IsMonitoring)
             {
@@ -29,7 +29,7 @@ namespace RelertSharp.MapStructure
                 logs.Add(log);
             }
         }
-        public void LogFatal(string id, string name, LogicType logic, Exception e)
+        public void LogFatal(string id, string name, LogicType logic, Exception e = null)
         {
             if (IsMonitoring)
             {
@@ -44,7 +44,7 @@ namespace RelertSharp.MapStructure
                 logs.Add(log);
             }
         }
-        public void LogFatal(I2dLocateable obj, MapObjectType type, Exception e)
+        public void LogFatal(I2dLocateable obj, MapObjectType type, Exception e = null)
         {
             if (IsMonitoring)
             {
@@ -55,6 +55,36 @@ namespace RelertSharp.MapStructure
                     Exception = e
                 };
                 logs.Add(log);
+            }
+        }
+        public void LogCritical(string id, string name, MapObjectType type, object obj)
+        {
+            if (IsMonitoring)
+            {
+                MonitorLog log = new MonitorLog()
+                {
+                    Id = id,
+                    Name = name,
+                    Data = obj,
+                    ObjectType = type
+                };
+                logs.Add(log);
+                GlobalVar.Log.Critical(string.Format("Reading error at {0} type, id {1}, name {2}", type, id, name));
+            }
+        }
+        public void LogCritical(string id, string name, LogicType type, object obj)
+        {
+            if (IsMonitoring)
+            {
+                MonitorLog log = new MonitorLog()
+                {
+                    Id = id,
+                    Name = name,
+                    Data = obj,
+                    LogicType = type
+                };
+                logs.Add(log);
+                GlobalVar.Log.Critical(string.Format("Reading error at {0} type, id {1}, name {2}", type, id, name));
             }
         }
         public void EndMonitorLog()

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 using System.IO;
+using static RelertSharp.Common.Constant.MapStructure;
 
 namespace RelertSharp.FileSystem
 {
@@ -64,8 +65,8 @@ namespace RelertSharp.FileSystem
             Map.DumpOverlayFromTile();
             Map.CompressTile();
             Map.CompressOverlay();
+            DumpSerializeable(f.IniDict);
             DumpGeneralInfo(f.IniDict);
-            DumpMapObjects(f.IniDict);
             DumpLogics(f.IniDict);
             DumpCustomComponents(f.IniDict);
             f.SaveIni(path, true);
@@ -79,7 +80,7 @@ namespace RelertSharp.FileSystem
         #region Private Methods - MapFile
         private void DumpCustomComponents(Dictionary<string, INIEntity> dest)
         {
-            dest[Constant.MapStructure.CustomComponents.LightsourceTitle] = Map.DumpLightSourceData();
+            dest[ENT_RS_LIGHT] = Map.LightSources.SaveAsIni();
             if (!dest.TryGetValue("BuildingTypes", out INIEntity toc))
             {
                 toc = new INIEntity("BuildingTypes");
@@ -93,23 +94,19 @@ namespace RelertSharp.FileSystem
                 dest["Structures"].AddPair(new INIPair(i++.ToString(), bud.SaveData.JoinBy()));
             }
         }
-        private void DumpMapObjects(Dictionary<string, INIEntity> dest)
+        private void DumpSerializeable(Dictionary<string, INIEntity> dest)
         {
-            dest["Structures"] = Map.DumpBuildingData();
-            dest["Infantry"] = Map.DumpInfantryData();
-            dest["Units"] = Map.DumpUnitData();
-            dest["Aircraft"] = Map.DumpAircraftData();
-            dest["Terrain"] = Map.DumpTerrainData();
-            dest["Smudge"] = Map.DumpSmudgeData();
-            dest["CellTags"] = Map.DumpCelltagData();
-            dest["Waypoints"] = Map.DumpWaypointData();
-            dest["VariableNames"] = Map.DumpLocalVar();
-            dest[Constant.MapStructure.ENT_TUBE] = Map.Tubes.SaveAsIni();
+            foreach (IIniEntitySerializable serializeable in Map.AllSerializeable)
+            {
+                string entName = serializeable.GetEntName();
+                dest[entName] = serializeable.SaveAsIni();
+            }
         }
         private void DumpLogics(Dictionary<string, INIEntity> dest)
         {
             Map.DumpTriggerData(out INIEntity trigger, out INIEntity events, out INIEntity actions, out INIEntity tags);
-            Map.DumpAiTriggerData(out INIEntity type, out INIEntity enable);
+            INIEntity aiType = Map.AiTriggers.SaveAsIni();
+            INIEntity aiEnable = Map.AiTriggers.DumpEnables();
             Map.DumpTeam(out INIEntity team, out INIEntity[] teams);
             Map.DumpScriptData(out INIEntity script, out INIEntity[] scripts);
             Map.DumpHouse(out INIEntity house, out INIEntity[] houses);
@@ -117,7 +114,7 @@ namespace RelertSharp.FileSystem
             Map.DumpTaskforce(out INIEntity task, out INIEntity[] tasks);
             List<INIEntity> result = new List<INIEntity>
             {
-                type, enable, trigger, events, actions, tags,
+                aiType, aiEnable, trigger, events, actions, tags,
                 team, script, task, house, con
             };
             result.AddRange(teams.Concat(scripts).Concat(houses).Concat(cons).Concat(tasks));
@@ -136,9 +133,8 @@ namespace RelertSharp.FileSystem
             dest["Map"] = Map.Info.GetMapEnt();
             dest["SpecialFlags"] = Map.Info.SpecialFlags;
             dest["Lighting"] = Map.LightningCollection.GetSaveData();
-            dest[Constant.MapStructure.ENT_RANK] = Map.Rank?.GetSaveData();
+            dest[ENT_RANK] = Map.Rank?.GetSaveData();
         }
-
         #endregion
     }
 }

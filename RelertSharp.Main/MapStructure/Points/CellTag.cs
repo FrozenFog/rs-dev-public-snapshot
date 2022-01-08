@@ -1,10 +1,16 @@
 ﻿using RelertSharp.Common;
+using RelertSharp.IniSystem;
 
 namespace RelertSharp.MapStructure.Points
 {
+    [IniEntitySerialize(Constant.MapStructure.ENT_CELLTAG)]
     public class CellTagCollection : PointCollectionBase<CellTagItem>
     {
         public CellTagCollection() { }
+        protected override CellTagItem InvokeCtor()
+        {
+            return new CellTagItem();
+        }
     }
 
 
@@ -33,6 +39,17 @@ namespace RelertSharp.MapStructure.Points
         internal CellTagItem()
         {
             ObjectType = MapObjectType.Celltag;
+        }
+        public override void ReadFromIni(INIPair src)
+        {
+            TagId = src.Value;
+            if (!base.ReadCoord(src.Name)) GlobalVar.Monitor.LogCritical(Id, TagId, ObjectType, this);
+        }
+        public override INIPair SaveAsIni()
+        {
+            INIPair p = new INIPair(CoordString);
+            p.Value = TagId;
+            return p;
         }
 
 

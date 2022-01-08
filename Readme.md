@@ -1,6 +1,9 @@
 You'll need a fully functionable Command and Conquer Red Alert 2 game and it's resources to run this editor.
 
 
+![Preview Screenshot, with mission map Epsilon 24: The Babel from Mental Omega](pic/preview-migdal.png)
+
+
 # TODO
 
 ## 绘图界面

@@ -80,7 +80,7 @@ namespace RelertSharp.Wpf.ViewModel
                 SetProperty();
             }
         }
-        public int WeightInit
+        public float WeightInit
         {
             get { return data.StartingWeight; }
             set
@@ -89,7 +89,7 @@ namespace RelertSharp.Wpf.ViewModel
                 SetProperty();
             }
         }
-        public int WeightMin
+        public float WeightMin
         {
             get { return data.MinimumWeight; }
             set
@@ -98,7 +98,7 @@ namespace RelertSharp.Wpf.ViewModel
                 SetProperty();
             }
         }
-        public int WeightMax
+        public float WeightMax
         {
             get { return data.MaximumWeight; }
             set

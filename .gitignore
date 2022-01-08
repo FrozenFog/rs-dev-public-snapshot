@@ -87,6 +87,7 @@ local.rsc
 !/RelertSharp.Main/Resources/enUs.json
 !/RelertSharp.Main/Resources/language.json
 !changelog.txt
+!/pic/*.png
 /RelertSharp.Main/bin/OnPublic
 /RelertSharp.GUI/bin/OnPublic
 _removed

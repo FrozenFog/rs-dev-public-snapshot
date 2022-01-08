@@ -10,6 +10,7 @@ namespace RelertSharp.Common
     {
         private string[] parameters;
         private int i = 0;
+        private bool error;
         private bool IsEmpty { get { return parameters.Length == 0; } }
         public ParameterReader(string parameter, char spliter = ',')
         {
@@ -25,33 +26,43 @@ namespace RelertSharp.Common
         {
             if (IsEmpty) return def;
             string value = parameters[i].Trim();
-            def = (byte)value.ParseInt(def);
+            bool b = byte.TryParse(value, out byte r);
+            error = error || !b;
+            if (!b) r = def;
             Incre();
-            return def;
+            return r;
         }
         public float ReadFloat(float def = 0f)
         {
             if (IsEmpty) return def;
             string value = parameters[i].Trim();
-            def = value.ParseFloat(def);
+            bool b = float.TryParse(value, out float r);
+            error = error || !b;
+            if (!b) r = def;
             Incre();
-            return def;
+            return r;
         }
         public int ReadInt(int def = 0)
         {
             if (IsEmpty) return def;
             string value = parameters[i].Trim();
-            def = value.ParseInt(def);
+            bool b = int.TryParse(value, out int r);
+            error = error || !b;
+            if (!b) r = def;
             Incre();
-            return def;
+            return r;
         }
         public bool ReadBool(bool def = false)
         {
             if (IsEmpty) return def;
             string value = parameters[i].Trim();
-            def = value.ParseBool(def);
             Incre();
-            return def;
+            if (value == "0") return false;
+            if (value == "1") return true;
+            bool b = bool.TryParse(value, out bool r);
+            error = error || !b;
+            if (!b) r = def;
+            return r;
         }
         public string ReadString(bool trim = true)
         {
@@ -82,13 +93,19 @@ namespace RelertSharp.Common
 
         private void Incre()
         {
-            if (i == parameters.Length) i = 0;
+            if (i == parameters.Length)
+            {
+                i = 0;
+                ReadOverflow = true;
+            }
             else i++;
         }
 
 
 
         public bool CanRead { get { return i < parameters.Length; } }
+        public bool ReadOverflow { get; private set; }
+        public bool ReadError { get { return ReadOverflow || error; } }
     }
 
     public class ParameterWriter
@@ -123,6 +140,39 @@ namespace RelertSharp.Common
         public void Write(string[] arr)
         {
             Write(arr.JoinBy(sep));
+        }
+        public void Write(double value, int digits = 1)
+        {
+            digits = digits.TrimTo(0, 8);
+            string format = "0.";
+            if (digits <= 0) Write(value.ToString("0"));
+            else
+            {
+                while (digits-- > 0) format += "0";
+            }
+            Write(value.ToString(format));
+        }
+        /// <summary>
+        /// 0: Zero / One
+        /// 1: Yes / No
+        /// else: ToString()
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="type"></param>
+        public void Write(bool value, int type = 0)
+        {
+            switch (type)
+            {
+                case 0:
+                    Write(value.ZeroOne());
+                    break;
+                case 1:
+                    Write(value.YesNo());
+                    break;
+                default:
+                    Write(value.ToString());
+                    break;
+            }
         }
         public override string ToString()
         {

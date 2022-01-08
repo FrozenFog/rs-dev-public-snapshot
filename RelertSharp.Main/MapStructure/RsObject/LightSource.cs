@@ -8,12 +8,17 @@ using RelertSharp.MapStructure.Objects;
 
 namespace RelertSharp.MapStructure.Points
 {
+    [IniEntitySerialize(Constant.MapStructure.ENT_RS_LIGHT)]
     public class LightSourceCollection : PointCollectionBase<LightSource>
     {
         private int _i = 0;
         public LightSourceCollection()
         {
 
+        }
+        protected override LightSource InvokeCtor()
+        {
+            return new LightSource();
         }
 
 
@@ -69,7 +74,6 @@ namespace RelertSharp.MapStructure.Points
 
     public class LightSource : PointItemBase, IMapObject
     {
-        private object[] SaveData { get { return new object[] { Name, Visibility, Intensity, Red, Green, Blue, IsEnable ? 1 : 0 }; } }
         internal string index;
 
 
@@ -112,9 +116,40 @@ namespace RelertSharp.MapStructure.Points
             Green = src.Green;
             Blue = src.Blue;
         }
-        private LightSource()
+        public LightSource()
         {
 
+        }
+        public override void ReadFromIni(INIPair src)
+        {
+            Id = src.Name;
+            ParameterReader r = new ParameterReader(src.ParseStringList());
+            Name = r.ReadString();
+            X = r.ReadInt();
+            Y = r.ReadInt();
+            Visibility = r.ReadInt(5000);
+            Intensity = r.ReadFloat(0.2f);
+            Red = r.ReadFloat(0.05f);
+            Green = r.ReadFloat(0.05f);
+            Blue = r.ReadFloat(0.05f);
+            IsEnable = r.ReadBool();
+            if (r.ReadError) GlobalVar.Monitor.LogCritical(Id, Name, ObjectType, this);
+        }
+        public override INIPair SaveAsIni()
+        {
+            INIPair p = new INIPair(Id);
+            ParameterWriter w = new ParameterWriter();
+            w.Write(Name);
+            w.Write(X);
+            w.Write(Y);
+            w.Write(Visibility);
+            w.Write(Intensity, 4);
+            w.Write(Red, 4);
+            w.Write(Green, 4);
+            w.Write(Blue, 4);
+            w.Write(IsEnable);
+            p.Value = w.ToString();
+            return p;
         }
         #endregion
 
@@ -150,11 +185,6 @@ namespace RelertSharp.MapStructure.Points
                 Red,
                 Green,
                 Blue);
-        }
-        public INIPair SaveToPair()
-        {
-            string value = SaveData.JoinBy();
-            return new INIPair(Coord.ToString(), value);
         }
         public override string ToString()
         {

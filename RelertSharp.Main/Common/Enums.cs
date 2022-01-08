@@ -121,7 +121,8 @@ namespace RelertSharp.Common
         Celltag = 1 << 9,
         Waypoint = 1 << 10,
         LogicObject = Celltag | Waypoint,
-        LightSource = 1 << 11,
+        TubeTunnel = 1 << 11,
+        LightSource = 1 << 12,
 
         MinimapRenderable = Building | Unit | Infantry | Overlay | Terrain,
 

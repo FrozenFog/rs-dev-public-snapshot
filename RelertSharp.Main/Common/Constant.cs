@@ -139,9 +139,9 @@ namespace RelertSharp.Common
             public const string CivilianCountrySide = "Civilian";
             public const string DefaultCivilianHouse = "Neutral";
 
-            public const string ENT_HOUSE = "House";
-            public const string ENT_SCRIPT = "Script";
-            public const string ENT_TASKFORCE = "TaskForce";
+            public const string KEY_HOUSE = "House";
+            public const string KEY_SCRIPT = "Script";
+            public const string KEY_TASKFORCE = "TaskForce";
             public const string KEY_GROUP = "Group";
             public const string ENT_RANK = "Ranking";
             public const string KEY_RANK_ET = "ParTimeEasy";
@@ -152,11 +152,36 @@ namespace RelertSharp.Common
             public const string KEY_RANK_UT = "UnderParTitle";
             public const string KEY_RANK_US = "UnderParMessage";
 
+            public const string ENT_TILE = "IsoMapPack5";
+            public const string ENT_OVERLAY = "OverlayPack";
+            public const string ENT_OVL_D = "OverlayDataPack";
+            public const string ENT_PREV = "Preview";
+            public const string ENT_PREV_PACK = "PreviewPack";
+
+            public const string ENT_HOUSE = "Houses";
+            public const string ENT_COUNTRY = "Countries";
+            public const string ENT_TRIGGER = "Triggers";
+            public const string ENT_TAG = "Tags";
+            public const string ENT_EVENT = "Events";
+            public const string ENT_ACTION = "Actions";
+            public const string ENT_AITRG = "AiTriggerTypes";
+            public const string ENT_AI_ENABLE = "AiTriggerTypesEnable";
+            public const string ENT_TEAM = "TeamTypes";
+            public const string ENT_TF = "TaskForces";
+            public const string ENT_SCRIPT = "ScriptTypes";
+            public const string ENT_UNIT = "Units";
+            public const string ENT_INF = "Infantry";
+            public const string ENT_STR = "Structures";
+            public const string ENT_AIR = "Aircrafts";
+            public const string ENT_TERR = "Terrain";
+            public const string ENT_SMG = "Smudge";
+            public const string ENT_CELLTAG = "CellTags";
+            public const string ENT_WP = "Waypoints";
+            public const string ENT_VAR = "VariableNames";
             public const string ENT_TUBE = "Tube";
-            public static class CustomComponents
-            {
-                public const string LightsourceTitle = "Rs_LightSource";
-            }
+
+
+            public const string ENT_RS_LIGHT = "Rs_LightSource";
         }
         public static class EntName
         {

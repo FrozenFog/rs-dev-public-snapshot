@@ -1,5 +1,6 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem;
+using RelertSharp.MapStructure.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace RelertSharp.MapStructure.Points
 {
-    public class MapTunnels
+    [IniEntitySerialize(Constant.MapStructure.ENT_TUBE)]
+    public class MapTunnels : IIniEntitySerializable
     {
         public MapTunnels()
         {
@@ -25,7 +27,7 @@ namespace RelertSharp.MapStructure.Points
         }
         public INIEntity SaveAsIni()
         {
-            INIEntity ent = new INIEntity(Constant.MapStructure.ENT_TUBE);
+            INIEntity ent = this.GetNamedEnt();
             int i = 0;
             foreach (TubeSection section in Sections)
             {
@@ -38,13 +40,13 @@ namespace RelertSharp.MapStructure.Points
         public List<TubeSection> Sections { get; set; } = new List<TubeSection>();
     }
 
-    public class TubeSection : PointItemBase
+    public class TubeSection : PointItemBase, IIniPairSerializable
     {
-        public TubeSection()
+        internal TubeSection()
         {
             Directions.SetValueAll(TubeDirection._END);
         }
-        public void ReadFromIni(INIPair src)
+        public override void ReadFromIni(INIPair src)
         {
             Id = src.Name;
             ParameterReader reader = new ParameterReader(src.ParseStringList());
@@ -58,8 +60,9 @@ namespace RelertSharp.MapStructure.Points
             {
                 Directions[i++] = (TubeDirection)reader.ReadInt(-1);
             }
+            if (reader.ReadError) GlobalVar.Monitor.LogCritical(Id, Name, ObjectType, this);
         }
-        public INIPair SaveAsIni()
+        public override INIPair SaveAsIni()
         {
             INIPair p = new INIPair(Id);
             ParameterWriter writer = new ParameterWriter();
@@ -78,13 +81,14 @@ namespace RelertSharp.MapStructure.Points
             p.Value = writer.ToString();
             return p;
         }
-        public PointItemBase StartPos { get; set; } = new PointItemBase();
-        public PointItemBase EndPos { get; set; } = new PointItemBase();
+        public I2dLocateable StartPos { get; set; } = new Pnt();
+        public I2dLocateable EndPos { get; set; } = new Pnt();
         public TubeDirection StartFacing { get; set; } = TubeDirection.NE;
         public override int X { get => StartPos.X; set => StartPos.X = value; }
         public override int Y { get => StartPos.Y; set => StartPos.Y = value; }
         public TubeDirection[] Directions { get; } = new TubeDirection[100];
         public override string Name { get { return Id; } set { } }
         public override string RegName { get { return Constant.VALUE_NONE; } set { } }
+        public override MapObjectType ObjectType { get => MapObjectType.TubeTunnel; }
     }
 }

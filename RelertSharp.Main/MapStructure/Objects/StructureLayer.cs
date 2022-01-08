@@ -7,10 +7,14 @@ using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Objects
 {
+    [IniEntitySerialize(Constant.MapStructure.ENT_STR)]
     public class StructureLayer : ObjectBase<StructureItem>
     {
         public StructureLayer() { }
-
+        protected override StructureItem InvokeCtor()
+        {
+            return new StructureItem();
+        }
 
         #region Public Methods - StructureLayer
         #endregion
@@ -23,37 +27,49 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Ctor
-        private StructureItem()
+        internal StructureItem()
         {
             ObjectType = MapObjectType.Building;
         }
-        public StructureItem(string _id, string[] _args) : base(_id, _args)
+        public override void ReadFromIni(INIPair src)
         {
-            try
-            {
-                if (_args.Length != Constant.MapStructure.ArgLenStructure)
-                {
-                    throw new Exception();
-                }
-                Rotation = int.Parse(_args[5]);
-                TagId = _args[6];
-                AISellable = IniParseBool(_args[7]);
-                IsPowered = IniParseBool(_args[9]);
-                UpgradeNum = int.Parse(_args[10]);
-                SpotlightType = (BuildingSpotlightType)(int.Parse(_args[11]));
-                Upgrade1 = _args[12];
-                Upgrade2 = _args[13];
-                Upgrade3 = _args[14];
-                AIRepairable = IniParseBool(_args[15]);
-                ObjectType = MapObjectType.Building;
-            }
-            catch
-            {
-                GlobalVar.Log.Critical(string.Format("Building item id: {0} has unreadable data, please verify in map file!", _id));
-                ObjectType = MapObjectType.Building;
-            }
+            ParameterReader reader = new ParameterReader(src.ParseStringList());
+            base.ReadFromIni(reader, src.Name);
+            Rotation = reader.ReadInt();
+            TagId = reader.ReadString();
+            AISellable = reader.ReadBool();
+            reader.Skip();
+            IsPowered = reader.ReadBool();
+            UpgradeNum = reader.ReadInt();
+            SpotlightType = (BuildingSpotlightType)reader.ReadInt();
+            Upgrade1 = reader.ReadString();
+            Upgrade2 = reader.ReadString();
+            Upgrade3 = reader.ReadString();
+            AIRepairable = reader.ReadBool();
+            if (reader.ReadError) GlobalVar.Monitor.LogCritical(Id, RegName, ObjectType, this);
         }
-        public StructureItem(StructureItem src) : base(src)
+
+        public override INIPair SaveAsIni()
+        {
+            ParameterWriter w = new ParameterWriter();
+            INIPair p = new INIPair(Id);
+            base.SaveToWriter(w);
+            w.Write(Rotation);
+            w.Write(TagId);
+            w.Write(AISellable);
+            w.Write(AIRebuildable);
+            w.Write(IsPowered);
+            w.Write(UpgradeNum);
+            w.Write((int)SpotlightType);
+            w.Write(Upgrade1);
+            w.Write(Upgrade2);
+            w.Write(Upgrade3);
+            w.Write(AIRepairable);
+            w.Write(Nominal);
+            p.Value = w.ToString();
+            return p;
+        }
+        internal StructureItem(StructureItem src) : base(src)
         {
             Rotation = src.Rotation;
             TagId = src.TagId;

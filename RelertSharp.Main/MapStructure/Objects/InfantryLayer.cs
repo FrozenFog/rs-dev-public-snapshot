@@ -1,15 +1,20 @@
 ﻿using RelertSharp.Common;
 using RelertSharp.IniSystem.Serialization;
+using RelertSharp.IniSystem;
 using System;
 using System.Collections.Generic;
 using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Objects
 {
+    [IniEntitySerialize(Constant.MapStructure.ENT_INF)]
     public class InfantryLayer : ObjectBase<InfantryItem>
     {
         public InfantryLayer() { }
-
+        protected override InfantryItem InvokeCtor()
+        {
+            return new InfantryItem();
+        }
 
         #region Public Methods - InfantryLayer
         #endregion
@@ -21,32 +26,6 @@ namespace RelertSharp.MapStructure.Objects
 
 
         #region Ctor - InfantryItem
-        public InfantryItem(string _id, string[] _args) : base(_id, _args)
-        {
-            try
-            {
-                if (_args.Length != Constant.MapStructure.ArgLenInfantry)
-                {
-                    throw new Exception();
-                }
-                int.TryParse(_args[5], out int sub);
-                SubCell = sub;
-                Status = _args[6];
-                Rotation = int.Parse(_args[7]);
-                TagId = _args[8];
-                VeterancyPercentage = int.Parse(_args[9]);
-                Group = _args[10];
-                IsAboveGround = IniParseBool(_args[11]);
-                AutoNORecruitType = IniParseBool(_args[12]);
-                AutoYESRecruitType = IniParseBool(_args[13]);
-                ObjectType = MapObjectType.Infantry;
-            }
-            catch
-            {
-                GlobalVar.Log.Critical(string.Format("Infantry item id: {0} has unreadable data, please verify in map file!", _id));
-                ObjectType = MapObjectType.Infantry;
-            }
-        }
         public InfantryItem(InfantryItem src) : base(src)
         {
             SubCell = src.SubCell;
@@ -68,6 +47,40 @@ namespace RelertSharp.MapStructure.Objects
         internal InfantryItem()
         {
             ObjectType = MapObjectType.Infantry;
+        }
+
+        public override void ReadFromIni(INIPair src)
+        {
+            ParameterReader reader = new ParameterReader(src.ParseStringList());
+            base.ReadFromIni(reader, src.Name);
+            SubCell = reader.ReadInt();
+            Status = reader.ReadString();
+            Rotation = reader.ReadInt();
+            TagId = reader.ReadString();
+            VeterancyPercentage = reader.ReadInt();
+            Group = reader.ReadString();
+            IsAboveGround = reader.ReadBool();
+            AutoNORecruitType = reader.ReadBool();
+            AutoYESRecruitType = reader.ReadBool();
+            if (reader.ReadError) GlobalVar.Monitor.LogCritical(Id, RegName, ObjectType, this);
+        }
+
+        public override INIPair SaveAsIni()
+        {
+            ParameterWriter writer = new ParameterWriter();
+            INIPair p = new INIPair(Id);
+            base.SaveToWriter(writer);
+            writer.Write(SubCell);
+            writer.Write(Status);
+            writer.Write(Rotation);
+            writer.Write(TagId);
+            writer.Write(VeterancyPercentage);
+            writer.Write(Group);
+            writer.Write(IsAboveGround);
+            writer.Write(AutoNORecruitType);
+            writer.Write(AutoYESRecruitType);
+            p.Value = writer.ToString();
+            return p;
         }
         #endregion
 

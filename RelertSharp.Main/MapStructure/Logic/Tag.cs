@@ -5,22 +5,34 @@ using System.Linq;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class TagCollection : IndexableItemCollection<TagItem>, ICurdContainer<TagItem>
+    [IniEntitySerialize(Constant.MapStructure.ENT_TAG)]
+    public class TagCollection : IndexableItemCollection<TagItem>, ICurdContainer<TagItem>, IIniEntitySerializable
     {
         #region Ctor - TagCollection
-        public TagCollection(INIEntity entTag)
-        {
-            foreach (INIPair p in entTag.DataList)
-            {
-                if (!data.Keys.Contains(p.Name))
-                {
-                    this[p.Name] = new TagItem(p.Name, p.ParseStringList());
-                }
-            }
-        }
         public TagCollection()
         {
 
+        }
+
+
+        public void ReadFromIni(INIEntity src)
+        {
+            foreach (INIPair p in src)
+            {
+                TagItem t = new TagItem();
+                t.ReadFromIni(p);
+                this[p.Name] = t;
+            }
+        }
+
+        public INIEntity SaveAsIni()
+        {
+            INIEntity ent = this.GetNamedEnt();
+            foreach (TagItem t in this)
+            {
+                ent.AddPair(t.SaveAsIni());
+            }
+            return ent;
         }
         #endregion
 
@@ -99,6 +111,7 @@ namespace RelertSharp.MapStructure.Logic
             target.Foreach(x => RemoveItem(x));
             return target.Select((x) => { return x.Id; });
         }
+
         #endregion
         #endregion
 
@@ -120,39 +133,49 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class TagItem : IndexableItem, ILogicItem
+    public class TagItem : IndexableItem, ILogicItem, IIniPairSerializable
     {
         #region Ctor - TagItem
-        public TagItem(string _id, string[] dataList)
-        {
-            Id = _id;
-            if (dataList.Length != 3)
-            {
-                //logger
-                return;
-            }
-            Repeating = (TriggerRepeatingType)(int.Parse(dataList[0]));
-            Name = dataList[1];
-            AssoTrigger = dataList[2];
-        }
-        public TagItem(TagItem src, string id)
+        internal TagItem() { }
+        internal TagItem(TagItem src, string id)
         {
             Id = id;
             Repeating = src.Repeating;
             Name = src.Name + Constant.CLONE_SUFFIX;
             AssoTrigger = src.AssoTrigger;
         }
-        public TagItem(TriggerItem trg, string _id)
+        internal TagItem(TriggerItem trg, string _id)
         {
             Id = _id;
             Repeating = trg.Repeating;
             Name = trg.Name + Constant.TAG_SUFFIX;
             AssoTrigger = trg.Id;
         }
-        public TagItem(string id, string name)
+        internal TagItem(string id, string name)
         {
             Id = id;
             Name = name;
+        }
+
+        public void ReadFromIni(INIPair src)
+        {
+            Id = src.Name;
+            ParameterReader reader = new ParameterReader(src.ParseStringList());
+            Repeating = (TriggerRepeatingType)reader.ReadInt();
+            Name = reader.ReadString();
+            AssoTrigger = reader.ReadString();
+            if (reader.ReadError) GlobalVar.Monitor.LogCritical(Id, Name, LogicType.Tag, this);
+        }
+
+        public INIPair SaveAsIni()
+        {
+            ParameterWriter writer = new ParameterWriter();
+            INIPair dest = new INIPair(Id);
+            writer.Write((int)Repeating);
+            writer.Write(Name);
+            writer.Write(AssoTrigger);
+            dest.Value = writer.ToString();
+            return dest;
         }
         #endregion
 
@@ -187,6 +210,7 @@ namespace RelertSharp.MapStructure.Logic
             }
         }
         public override string ToString() { return Id + ' ' + Name; }
+
         public TriggerRepeatingType Repeating { get; set; }
         public string AssoTrigger { get; set; }
         public static TagItem NullTag { get { return new TagItem("None", ""); } }

@@ -1,4 +1,5 @@
 ﻿using RelertSharp.Common;
+using RelertSharp.IniSystem;
 using RelertSharp.IniSystem.Serialization;
 using System;
 using System.Collections.Generic;
@@ -6,10 +7,14 @@ using static RelertSharp.Utils.Misc;
 
 namespace RelertSharp.MapStructure.Objects
 {
+    [IniEntitySerialize(Constant.MapStructure.ENT_UNIT)]
     public class UnitLayer : ObjectBase<UnitItem>
     {
         public UnitLayer() { }
-
+        protected override UnitItem InvokeCtor()
+        {
+            return new UnitItem();
+        }
 
         #region Public Calls - UnitLayer
 
@@ -18,30 +23,37 @@ namespace RelertSharp.MapStructure.Objects
 
     public class UnitItem : ObjectItemBase, ICombatObject
     {
-        public UnitItem(string _id, string[] _args) : base(_id, _args)
+        public override void ReadFromIni(INIPair src)
         {
-            try
-            {
-                if (_args.Length != Constant.MapStructure.ArgLenUnit)
-                {
-                    throw new Exception();
-                }
-                Rotation = int.Parse(_args[5]);
-                Status = _args[6];
-                TagId = _args[7];
-                VeterancyPercentage = int.Parse(_args[8]);
-                Group = _args[9];
-                IsAboveGround = IniParseBool(_args[10]);
-                FollowsIndex = _args[11];
-                AutoNORecruitType = IniParseBool(_args[12]);
-                AutoYESRecruitType = IniParseBool(_args[13]);
-                ObjectType = MapObjectType.Vehicle;
-            }
-            catch
-            {
-                GlobalVar.Log.Critical(string.Format("Unit item id: {0} has unreadable data, please verify in map file!", _id));
-                ObjectType = MapObjectType.Vehicle;
-            }
+            ParameterReader r = new ParameterReader(src.ParseStringList());
+            base.ReadFromIni(r, src.Name);
+            Rotation = r.ReadInt();
+            Status = r.ReadString();
+            TagId = r.ReadString();
+            VeterancyPercentage = r.ReadInt();
+            Group = r.ReadString();
+            IsAboveGround = r.ReadBool();
+            FollowsIndex = r.ReadString();
+            AutoNORecruitType = r.ReadBool();
+            AutoYESRecruitType = r.ReadBool();
+            if (r.ReadError) GlobalVar.Monitor.LogCritical(Id, RegName, ObjectType, this);
+        }
+        public override INIPair SaveAsIni()
+        {
+            ParameterWriter w = new ParameterWriter();
+            INIPair p = new INIPair(Id);
+            base.SaveToWriter(w);
+            w.Write(Rotation);
+            w.Write(Status);
+            w.Write(TagId);
+            w.Write(VeterancyPercentage);
+            w.Write(Group);
+            w.Write(IsAboveGround);
+            w.Write(FollowsIndex);
+            w.Write(AutoNORecruitType);
+            w.Write(AutoYESRecruitType);
+            p.Value = w.ToString();
+            return p;
         }
         public UnitItem(UnitItem src) : base(src)
         {

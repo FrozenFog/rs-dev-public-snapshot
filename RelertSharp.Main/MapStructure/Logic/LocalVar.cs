@@ -1,4 +1,5 @@
 ﻿using RelertSharp.Common;
+using RelertSharp.IniSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,8 @@ using System.Linq;
 
 namespace RelertSharp.MapStructure.Logic
 {
-    public class LocalVarCollection : IEnumerable<LocalVarItem>, ICurdContainer<LocalVarItem>
+    [IniEntitySerialize(Constant.MapStructure.ENT_VAR)]
+    public class LocalVarCollection : IEnumerable<LocalVarItem>, ICurdContainer<LocalVarItem>, IIniEntitySerializable
     {
         private Dictionary<string, LocalVarItem> data = new Dictionary<string, LocalVarItem>();
         private string NewId
@@ -23,6 +25,25 @@ namespace RelertSharp.MapStructure.Logic
 
         #region Ctor - LocalVarCollection
         public LocalVarCollection() { }
+        public void ReadFromIni(INIEntity src)
+        {
+            foreach (INIPair p in src)
+            {
+                LocalVarItem var = new LocalVarItem();
+                var.ReadFromIni(p);
+                this[p.Name] = var;
+            }
+        }
+
+        public INIEntity SaveAsIni()
+        {
+            INIEntity dest = this.GetNamedEnt();
+            foreach (var item in this)
+            {
+                dest.AddPair(item.SaveAsIni());
+            }
+            return dest;
+        }
         #endregion
 
 
@@ -103,7 +124,7 @@ namespace RelertSharp.MapStructure.Logic
     }
 
 
-    public class LocalVarItem : IndexableItem, ILogicItem
+    public class LocalVarItem : IndexableItem, ILogicItem, IIniPairSerializable
     {
         #region Ctor - LocalVarItem
         public LocalVarItem(string name, bool init, string index) : this(name, init, int.Parse(index)) { }
@@ -122,6 +143,25 @@ namespace RelertSharp.MapStructure.Logic
         {
             Name = src.Name + Constant.CLONE_SUFFIX;
             Id = id;
+        }
+
+        public void ReadFromIni(INIPair src)
+        {
+            Id = src.Name;
+            ParameterReader reader = new ParameterReader(src.ParseStringList());
+            Name = reader.ReadString();
+            InitState = reader.ReadBool();
+            if (reader.ReadError) GlobalVar.Monitor.LogCritical(Id, Name, LogicType.LocalVariable, this);
+        }
+
+        public INIPair SaveAsIni()
+        {
+            INIPair dest = new INIPair(Id);
+            ParameterWriter writer = new ParameterWriter();
+            writer.Write(Name);
+            writer.Write(InitState);
+            dest.Value = writer.ToString();
+            return dest;
         }
         #endregion
 
