@@ -1,3 +1,6 @@
+This snapshot is currently licenced under CC-BY-NC-ND-4.0, you may consider it is not public.
+
+
 You'll need a fully functionable Command and Conquer Red Alert 2 game and it's resources to run this editor.
 
 
